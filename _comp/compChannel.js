@@ -1,10 +1,13 @@
-/*/////////////////////////////////////////////
-
- Channel
-
- /////////////////////////////////////////////*/
 
 Channel.CAMPAIGN_TIMELINE_CHANNEL_SELECTED = 'CAMPAIGN_TIMELINE_CHANNEL_SELECTED';
+
+/**
+ The Channel class is created under and managed by a timeline instance.
+ @class Channel
+ @constructor
+ @param {string} i_campaign_timeline_chanel_id channel id managed by instance
+ @return {object} Channel instance
+ **/
 
 function Channel(i_campaign_timeline_chanel_id) {
 

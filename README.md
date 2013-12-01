@@ -1,4 +1,4 @@
 signagestudio_web-lite
 ======================
 
-signagestudio web lite
+An Enterprise level, open source Digital Signage platform.

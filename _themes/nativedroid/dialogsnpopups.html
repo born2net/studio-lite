@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>nativeDroid - Theme for jQuery Mobile</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		
+		<!-- FontAwesome - http://fortawesome.github.io/Font-Awesome/ -->
+        <link rel="stylesheet" href="css/font-awesome.min.css" />
+
+		<!-- jQueryMobileCSS - original without styling -->
+        <link rel="stylesheet" href="css/jquerymobile.css" />
+
+		<!-- nativeDroid core CSS -->
+        <link rel="stylesheet" href="css/jquerymobile.nativedroid.css" />
+
+		<!-- nativeDroid: Light/Dark -->
+        <link rel="stylesheet" href="css/jquerymobile.nativedroid.dark.css"  id='jQMnDTheme' />
+
+		<!-- nativeDroid: Color Schemes -->
+        <link rel="stylesheet" href="css/jquerymobile.nativedroid.color.green.css" id='jQMnDColor' />
+
+		<!-- jQuery / jQueryMobile Scripts -->
+		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
+
+
+    </head>
+    <body>
+        
+    <div data-role="page" data-theme='b'>
+
+
+        <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme='b'>
+            <a href="index.html" data-ajax="false"><i class='icon-ellipsis-vertical'></i></a>
+            <h1>Dialogs &amp; Popups</h1>
+        </div>
+        
+        <div data-role="content">   
+
+		<div class='message info'>
+			<i class='icon-info-sign'></i>
+			<p>Dialogs &amp; Popups are working fine but they will get some improvements in an update.</p>
+		</div>
+
+        <div class='inset'>
+
+        	<h2>Dialog (external link)</h2>
+            <a href="dialog.html" data-rel="dialog" data-role="button" data-icon="external-link" data-inline="true" >Open dialog</a>
+			<h3>Code</h3>
+			<h4>Link</h4>
+			<p><pre>&lt;a href='dialog.html' data-rel='dialog' data-role='button' data-icon='external-link' data-inline='true'&gt;Open Dialog&lt;/a&gt;</pre></p>
+			<h4>dialog.html</h4>
+			<p><pre>&lt;div data-role='popup' id='popupDialog' data-theme='b'&gt;<br />&ensp;div data-role='header' data-theme='b'&gt;<br />&ensp;&ensp;&lt;h1&gt;Delete from library?&lt;/h1&gt;<br />&ensp;&lt;/div&gt;<br />&ensp;&lt;div data-role='content' data-theme='b'&gt;<br />&ensp;&ensp;&lt;p&gt;This is a popup description...&lt;/p&gt;<br />&ensp;&ensp;&lt;div class='showastabs center nobg'&gt;<br />&ensp;&ensp;&ensp;&lt;a href='#' data-rel='back' data-icon='ok' data-iconpos='left' data-role='button' data-inline='true'&gt;Okay&lt;/a&gt;<br />&ensp;&ensp;&ensp;&lt;a href='#' data-rel='back' data-icon='delete' data-iconpos='left' data-role='button' data-inline='true'&gt;Cancel&lt;/a&gt;<br />&ensp;&ensp;&lt;/div&gt;<br />&ensp;&lt;/div&gt;<br />&lt;/div&gt;</pre></p>
+
+		</div>
+		<hr />
+		<div class='inset'>
+
+
+        	<h2>Popup Dialog</h2>
+            <a href="#popupDialog" data-rel="popup" data-position-to="window" data-role="button" data-inline="true" data-transition="pop" data-icon="external-link">Open popup dialog</a>
+			
+			<h3>Code</h3>
+			<h4>Link</h4>
+			<p><pre>&lt;a href='#popupDialog' data-rel='popup' data-position-to='window' data-role='button' data-icon='external-link' data-transition='pop' data-inline='true'&gt;Open popup dialog&lt;/a&gt;</pre></p>
+			<h4>Popup <code>#popupDialog</code></h4>
+			<p><pre>&lt;div data-role='popup' id='popupDialog' data-theme='b'&gt;<br />&ensp;div data-role='header' data-theme='b'&gt;<br />&ensp;&ensp;&lt;h1&gt;Delete from library?&lt;/h1&gt;<br />&ensp;&lt;/div&gt;<br />&ensp;&lt;div data-role='content' data-theme='b'&gt;<br />&ensp;&ensp;&lt;p&gt;This is a popup description...&lt;/p&gt;<br />&ensp;&ensp;&lt;div class='showastabs center nobg'&gt;<br />&ensp;&ensp;&ensp;&lt;a href='#' data-rel='back' data-icon='ok' data-iconpos='left' data-role='button' data-inline='true'&gt;Okay&lt;/a&gt;<br />&ensp;&ensp;&ensp;&lt;a href='#' data-rel='back' data-icon='delete' data-iconpos='left' data-role='button' data-inline='true'&gt;Cancel&lt;/a&gt;<br />&ensp;&ensp;&lt;/div&gt;<br />&ensp;&lt;/div&gt;<br />&lt;/div&gt;</pre></p>
+
+    
+            <div data-role="popup" id="popupDialog" data-theme="b">
+            
+                <div data-role="header" data-theme="b">
+                    <h1>Delete from library?</h1>
+                </div>
+        
+                <div data-role="content" data-theme="b">
+                    <p>This is a regular page, styled as a dialog. To create a dialog, just link to a normal page and include a transition and <code>data-rel="dialog"</code> attribute.</p>
+                    <div class='showastabs center nobg'>
+                            <a href="dialog/index.html" data-rel="back" data-icon="ok" data-iconpos="left" data-role="button" data-inline="true">Sounds good</a>
+                            <a href="dialog/index.html" data-rel="back" data-icon="delete" data-iconpos="left" data-role="button" data-inline="true">Cancel</a>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+	        
+	        
+        </div>
+
+    </div>
+    
+    </body>
+</html>

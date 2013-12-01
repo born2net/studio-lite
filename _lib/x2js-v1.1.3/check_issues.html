@@ -1,0 +1,36 @@
+<html>
+<head>
+    <script type="text/javascript" src="xml2json.js"></script>
+</head>
+<body>
+<h1>Check issues html</h1>
+<script type="text/javascript">
+    var x2js = new X2JS({
+    	arrayAccessFormPaths : [
+    	   /.*\.test3\.item/,
+    	   "MyOperation.test4.item",
+    	   function(obj, childName, path) {
+    		   return false;
+    	   }
+    	]
+    });
+
+    var xmlText =
+    	"<!-- Test comment -->"+
+    "<MyOperation myAttr='SuccessAttrValue'>"+
+    "<txtAttrChild sAttr='SUCCESS TXT ATTR CHILD'>SUCCESS TXT<!-- comment --></txtAttrChild><test>Success</test>"+
+    "<test2 myAttr='SuccessAttrValueTest2'><item>first</item><item>second</item></test2>"+
+    "<test3><item>first</item></test3>"+
+    "<test4><item>first</item></test4>"+
+    "<test5><item>first</item></test5>"+
+    "<!-- comment2 -->"+
+    "</MyOperation>";
+    var jsonObj = x2js.xml_str2json( xmlText );
+    console.log(jsonObj.MyOperation._myAttr);
+    console.log(jsonObj.MyOperation.test2._myAttr);
+    console.log(jsonObj.MyOperation.txtAttrChild._sAttr);
+    console.log(jsonObj.MyOperation.txtAttrChild.__text);
+    console.log(jsonObj.MyOperation.txtAttrChild.toString());
+    	
+</script>
+</body>

@@ -1,0 +1,112 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>nativeDroid - Theme for jQuery Mobile</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		
+		<!-- FontAwesome - http://fortawesome.github.io/Font-Awesome/ -->
+        <link rel="stylesheet" href="css/font-awesome.min.css" />
+
+		<!-- jQueryMobileCSS - original without styling -->
+        <link rel="stylesheet" href="css/jquerymobile.css" />
+
+		<!-- nativeDroid core CSS -->
+        <link rel="stylesheet" href="css/jquerymobile.nativedroid.css" />
+
+		<!-- nativeDroid: Light/Dark -->
+        <link rel="stylesheet" href="css/jquerymobile.nativedroid.dark.css"  id='jQMnDTheme' />
+
+		<!-- nativeDroid: Color Schemes -->
+        <link rel="stylesheet" href="css/jquerymobile.nativedroid.color.green.css" id='jQMnDColor' />
+
+		<!-- jQuery / jQueryMobile Scripts -->
+		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
+
+
+    </head>
+    <body data-nativedroid-progress-animation='6'>
+        
+    <div data-role="page" data-theme='b'>
+
+
+        <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme='b'>
+            <a href="index.html" data-ajax="false"><i class='icon-ellipsis-vertical'></i></a>
+            <h1>Gallery</h1>
+        </div>
+        
+        <div data-role="content">  
+        	 
+<!--
+			USING FLICKR FOR YOUR GALLERY
+			------------------------------	
+	
+			GET PUBLIC PHOTOS ORDERED BY interestingness-desc
+			----
+			
+ 			<ul data-nativedroid-plugin='flickr'
+				data-nativedroid-flickr-apikey='YOUR_API_KEY_HERE'
+				data-nativedroid-flickr-cat='photos'
+				data-nativedroid-flickr-method='search'
+				data-nativedroid-flickr-parameter="user_id=49253686@N04&per_page=48&extras=description,date_upload,geo,views,url_sq,url_l,url_t&sort=interestingness-desc"
+			></ul>
+
+			
+			GET A PHOTOSET LIST BY USER
+			----
+			
+			<ul data-role='listview'
+				data-nativedroid-plugin='flickr'
+				data-nativedroid-flickr-apikey='YOUR_API_KEY_HERE'
+				data-nativedroid-flickr-cat='photosets'
+				data-nativedroid-flickr-method='getList'
+				data-nativedroid-flickr-parameter="user_id=49253686@N04"
+			></ul>
+			
+ -->
+ 
+ 
+ 			<ul data-nativedroid-plugin='gallery'>
+				<li style='background-image:url("http://www.placehold.it/150x75/111111")' data-image-large='http://www.placehold.it/450x300/111111' data-image-thumb='http://www.placehold.it/150x75/111111'><div class='closeTrigger'><i class='icon-remove'></i> close</div><span>Image Title</span></li>
+				<li style='background-image:url("http://www.placehold.it/150x75/111122")' data-image-large='http://www.placehold.it/450x300/111122' data-image-thumb='http://www.placehold.it/150x75/111122'><div class='closeTrigger'><i class='icon-remove'></i> close</div><span>Image Title</span></li>
+				<li style='background-image:url("http://www.placehold.it/150x75/111133")' data-image-large='http://www.placehold.it/450x300/111133' data-image-thumb='http://www.placehold.it/150x75/111133'><div class='closeTrigger'><i class='icon-remove'></i> close</div><span>Image Title</span></li>
+				<li style='background-image:url("http://www.placehold.it/150x75/111144")' data-image-large='http://www.placehold.it/450x300/111144' data-image-thumb='http://www.placehold.it/150x75/111144'><div class='closeTrigger'><i class='icon-remove'></i> close</div><span>Image Title</span></li>
+				<li style='background-image:url("http://www.placehold.it/150x75/111155")' data-image-large='http://www.placehold.it/450x300/111155' data-image-thumb='http://www.placehold.it/150x75/111155'><div class='closeTrigger'><i class='icon-remove'></i> close</div><span>Image Title</span></li>
+				<li style='background-image:url("http://www.placehold.it/150x75/111166")' data-image-large='http://www.placehold.it/450x300/111166' data-image-thumb='http://www.placehold.it/150x75/111166'><div class='closeTrigger'><i class='icon-remove'></i> close</div><span>Image Title</span></li>
+				<li style='background-image:url("http://www.placehold.it/150x75/111177")' data-image-large='http://www.placehold.it/450x300/111177' data-image-thumb='http://www.placehold.it/150x75/111177'><div class='closeTrigger'><i class='icon-remove'></i> close</div><span>Image Title</span></li>
+				<li style='background-image:url("http://www.placehold.it/150x75/111188")' data-image-large='http://www.placehold.it/450x300/111188' data-image-thumb='http://www.placehold.it/150x75/111188'><div class='closeTrigger'><i class='icon-remove'></i> close</div><span>Image Title</span></li>
+				<li style='background-image:url("http://www.placehold.it/150x75/111199")' data-image-large='http://www.placehold.it/450x300/111199' data-image-thumb='http://www.placehold.it/150x75/111199'><div class='closeTrigger'><i class='icon-remove'></i> close</div><span>Image Title</span></li>
+				<li style='background-image:url("http://www.placehold.it/150x75/221111")' data-image-large='http://www.placehold.it/450x300/221111' data-image-thumb='http://www.placehold.it/150x75/221111'><div class='closeTrigger'><i class='icon-remove'></i> close</div><span>Image Title</span></li>
+				<li style='background-image:url("http://www.placehold.it/150x75/331111")' data-image-large='http://www.placehold.it/450x300/331111' data-image-thumb='http://www.placehold.it/150x75/331111'><div class='closeTrigger'><i class='icon-remove'></i> close</div><span>Image Title</span></li>
+				<li style='background-image:url("http://www.placehold.it/150x75/441111")' data-image-large='http://www.placehold.it/450x300/441111' data-image-thumb='http://www.placehold.it/150x75/441111'><div class='closeTrigger'><i class='icon-remove'></i> close</div><span>Image Title</span></li>
+				<li style='background-image:url("http://www.placehold.it/150x75/551111")' data-image-large='http://www.placehold.it/450x300/551111' data-image-thumb='http://www.placehold.it/150x75/551111'><div class='closeTrigger'><i class='icon-remove'></i> close</div><span>Image Title</span></li>
+				<li style='background-image:url("http://www.placehold.it/150x75/661111")' data-image-large='http://www.placehold.it/450x300/661111' data-image-thumb='http://www.placehold.it/150x75/661111'><div class='closeTrigger'><i class='icon-remove'></i> close</div><span>Image Title</span></li>
+				<li style='background-image:url("http://www.placehold.it/150x75/771111")' data-image-large='http://www.placehold.it/450x300/771111' data-image-thumb='http://www.placehold.it/150x75/771111'><div class='closeTrigger'><i class='icon-remove'></i> close</div><span>Image Title</span></li>
+				<li style='background-image:url("http://www.placehold.it/150x75/881111")' data-image-large='http://www.placehold.it/450x300/881111' data-image-thumb='http://www.placehold.it/150x75/881111'><div class='closeTrigger'><i class='icon-remove'></i> close</div><span>Image Title</span></li>
+				<li style='background-image:url("http://www.placehold.it/150x75/991111")' data-image-large='http://www.placehold.it/450x300/991111' data-image-thumb='http://www.placehold.it/150x75/991111'><div class='closeTrigger'><i class='icon-remove'></i> close</div><span>Image Title</span></li>
+				<li style='background-image:url("http://www.placehold.it/150x75/112211")' data-image-large='http://www.placehold.it/450x300/112211' data-image-thumb='http://www.placehold.it/150x75/112211'><div class='closeTrigger'><i class='icon-remove'></i> close</div><span>Image Title</span></li>
+				<li style='background-image:url("http://www.placehold.it/150x75/113311")' data-image-large='http://www.placehold.it/450x300/113311' data-image-thumb='http://www.placehold.it/150x75/113311'><div class='closeTrigger'><i class='icon-remove'></i> close</div><span>Image Title</span></li>
+				<li style='background-image:url("http://www.placehold.it/150x75/114411")' data-image-large='http://www.placehold.it/450x300/114411' data-image-thumb='http://www.placehold.it/150x75/114411'><div class='closeTrigger'><i class='icon-remove'></i> close</div><span>Image Title</span></li>
+				<li style='background-image:url("http://www.placehold.it/150x75/115511")' data-image-large='http://www.placehold.it/450x300/115511' data-image-thumb='http://www.placehold.it/150x75/115511'><div class='closeTrigger'><i class='icon-remove'></i> close</div><span>Image Title</span></li>
+				<li style='background-image:url("http://www.placehold.it/150x75/116611")' data-image-large='http://www.placehold.it/450x300/116611' data-image-thumb='http://www.placehold.it/150x75/116611'><div class='closeTrigger'><i class='icon-remove'></i> close</div><span>Image Title</span></li>
+				<li style='background-image:url("http://www.placehold.it/150x75/117711")' data-image-large='http://www.placehold.it/450x300/117711' data-image-thumb='http://www.placehold.it/150x75/117711'><div class='closeTrigger'><i class='icon-remove'></i> close</div><span>Image Title</span></li>
+				<li style='background-image:url("http://www.placehold.it/150x75/118811")' data-image-large='http://www.placehold.it/450x300/118811' data-image-thumb='http://www.placehold.it/150x75/118811'><div class='closeTrigger'><i class='icon-remove'></i> close</div><span>Image Title</span></li>
+				<li style='background-image:url("http://www.placehold.it/150x75/119911")' data-image-large='http://www.placehold.it/450x300/119911' data-image-thumb='http://www.placehold.it/150x75/119911'><div class='closeTrigger'><i class='icon-remove'></i> close</div><span>Image Title</span></li>
+				<div class='overlay'></div>
+ 			</ul>
+				      
+			
+ 			<div class='inset'>
+ 				<div class="message info">
+					<i class="icon-lightbulb"></i>
+					<p>You can also use the flickr API easily - check out the examples <a href='flickrgallery.html' data-ajax='false'>here</a>.</p>
+				</div>
+ 			</div>
+				        
+        </div>
+
+    </div>
+    
+    <script src="js/nativedroid.script.js"></script>
+    </body>
+</html>

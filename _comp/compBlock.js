@@ -1,0 +1,292 @@
+/**
+ block.PLACEMENT_SCENE indicates the insertion is inside a Scene
+ @property Block.PLACEMENT_SCENE
+ @static
+ @final
+ @type String
+ */
+
+Block.PLACEMENT_SCENE = 'PLACEMENT_SCENE';
+
+/**
+ block.PLACEMENT_CHANNEL indicates the insertion is on the timeline_channel
+ @property Block.PLACEMENT_CHANNEL
+ @static
+ @final
+ @type String
+ */
+
+Block.PLACEMENT_CHANNEL = 'PLACEMENT_CHANNEL';
+
+/**
+ event fires when block timeline_channel is selected
+ @event Block.BLOCK_ON_CHANNEL_SELECTED
+ @param {this} caller
+ @param {String} selected block_id
+ **/
+
+Block.BLOCK_ON_CHANNEL_SELECTED = 'BLOCK_ON_CHANNEL_SELECTED';
+
+/**
+ event fires when block timeline_channel length has changed
+ @event Block.BLOCK_LENGTH_CHANGED
+ @param {object} this
+ @param {object} caller the firing knob element
+ @param {number} value the knob's position value (hours / minutes / seconds)
+ **/
+
+Block.BLOCK_LENGTH_CHANGED = 'BLOCK_LENGTH_CHANGED';
+
+/**
+ this base class for all block / players which reside on the timeline_channel or inside scenes
+ the base class implements basic timeline and scene methods including the management
+ of its properties UI.
+ @class Block
+ @constructor
+ @param {string} i_placement indicates if the block is set to exist inside a timeline or inside a scene
+ @return none
+ **/
+
+function Block(i_placement, i_block_id) {
+    var self = this;
+
+    this.m_placement = i_placement;
+    this.m_block_id = i_block_id;
+    this.m_selected = false;
+
+    switch (i_placement) {
+
+        case Block.PLACEMENT_CHANNEL:
+        {
+            this.m_helperSDK = commBroker.getService('HelperSDK');
+            this.m_property = commBroker.getService('CompProperty');
+
+            self._onTimelineChannelBlockSelected();
+            self._onTimelineChannelBlockLengthChanged();
+            var initiated = self.m_property.initPanel('#blockProperties', true);
+            if (initiated) {
+                self._propLengthKnobsInit();
+                self.m_property.createSubPanel('#blockSubProperties');
+            }
+            break;
+        }
+        case Block.PLACEMENT_SCENE:
+        {
+            break;
+        }
+    }
+};
+
+/**
+ Notify this object that it has been selected so it can populate the properties box etc
+ @method _onTimelineChannelBlockSelected
+ @return none
+ **/
+
+Block.prototype._onTimelineChannelBlockSelected = function () {
+    var self = this;
+
+    commBroker.listen(Block.BLOCK_ON_CHANNEL_SELECTED, function (e) {
+        var blockID = e.edata;
+        if (self.m_block_id != blockID) {
+            self._onTimelineChannelBlockDeselected();
+            return;
+        }
+
+        self.m_selected = true;
+        // log('block selected ' + self.m_block_id);
+
+        switch (self.m_placement) {
+            case Block.PLACEMENT_CHANNEL:
+            {
+                self.m_property.viewPanel('#blockProperties');
+                self._updateTitle();
+                self._getBlockLength();
+                break;
+            }
+            // Future support
+            case Block.PLACEMENT_SCENE:
+            {
+                break;
+            }
+        }
+
+        if (self._loadCommonProperties)
+            self._loadCommonProperties();
+
+    });
+}
+
+/**
+ reset a timeline_channel block if it is no longer the selected one
+ @method _onTimelineChannelBlockDeselected
+ @return none
+ **/
+
+Block.prototype._updateTitle = function () {
+    var self = this;
+    $('#selectedChannelResourceName').text(self.m_blockName);
+}
+
+/**
+ reset a timeline_channel block if it is no longer the selected one
+ @method _onTimelineChannelBlockDeselected
+ @return none
+ **/
+
+Block.prototype._onTimelineChannelBlockDeselected = function () {
+    var self = this;
+    self.m_selected = false;
+}
+
+/**
+ update the length properties of the block
+ @method _getBlockLength
+ @return none
+ **/
+
+Block.prototype._getBlockLength = function () {
+    var self = this;
+
+    var lengthData = self.m_helperSDK.getBlockTimelineChannelBlockLength(self.m_block_id);
+    $('#blockLengthHours').val(lengthData.hours).trigger('change');
+    $('#blockLengthMinutes').val(lengthData.minutes).trigger('change');
+    $('#blockLengthSeconds').val(lengthData.seconds).trigger('change');
+}
+
+/**
+ the set length of the block on the timeline_channel has changed
+ @method _onTimelineChannelBlockLengthChanged
+ @return none
+ **/
+
+Block.prototype._onTimelineChannelBlockLengthChanged = function () {
+    var self = this;
+
+    commBroker.listen(Block.BLOCK_LENGTH_CHANGED, function (e) {
+
+        if (self.m_selected) {
+            var hours = $('#blockLengthHours').val();
+            var minutes = $('#blockLengthMinutes').val();
+            var seconds = $('#blockLengthSeconds').val();
+
+            switch (e.caller) {
+                case 'blockLengthHours':
+                {
+                    hours = e.edata;
+                    break;
+                }
+                case 'blockLengthMinutes':
+                {
+                    minutes = e.edata;
+                    break;
+                }
+                case 'blockLengthSeconds':
+                {
+                    seconds = e.edata;
+                    break;
+                }
+            }
+            log('upd: ' + self.m_block_id + ' ' + hours + ' ' + minutes + ' ' + seconds);
+
+            self.m_helperSDK.setBlockTimelineChannelBlockLength(self.m_block_id, hours, minutes, seconds);
+            // log(self.m_block_id + ' ' + self.m_blockName);
+        }
+    });
+}
+
+
+/**
+ Create the block length knobs so user can set the length of the block on the timeline_channel
+ @method _propLengthKnobsInit
+ @return none
+ **/
+
+Block.prototype._propLengthKnobsInit = function () {
+    var self = this;
+
+    var snippet = '<input id="blockLengthHours" data-displayPrevious="false" data-min="0" data-max="23" data-skin="tron" data-width="75" data-height="75"  data-thickness=".2" type="text" class="knob" data-fgColor="gray">' +
+        '<input id="blockLengthMinutes" data-displayPrevious="false" data-min="0" data-max="59" data-skin="tron" data-width="75" data-height="75" data-thickness=".2" type="text" class="knob" data-fgColor="gray">' +
+        '<input id="blockLengthSeconds" data-displayPrevious="false" data-min="0" data-max="59" data-skin="tron" data-width="75" data-height="75"  data-thickness=".2" type="text" class="knob" data-fgColor="gray">';
+
+    $('#timelimeChannelBlockLength').append(snippet);
+
+    $(".knob").knob({
+        /*change: function (value) {
+         console.log("change : " + value);
+         var caller = this['i'][0].id;
+         },*/
+        release: function (value) {
+            // console.log(this.$.attr('value'));
+            // console.log("release : " + value + ' ' + this['i'][0].id);
+            var caller = this['i'][0].id;
+            commBroker.fire(Block.BLOCK_LENGTH_CHANGED, this, caller, value);
+
+        },
+        /*cancel: function () {
+         console.log("cancel : ", this);
+         },*/
+        draw: function () {
+            if (this.$.data('skin') == 'tron') {
+
+                var a = this.angle(this.cv)  // Angle
+                    , sa = this.startAngle          // Previous start angle
+                    , sat = this.startAngle         // Start angle
+                    , ea                            // Previous end angle
+                    , eat = sat + a                 // End angle
+                    , r = 1;
+
+                this.g.lineWidth = this.lineWidth;
+
+                this.o.cursor
+                    && (sat = eat - 0.3)
+                && (eat = eat + 0.3);
+
+                if (this.o.displayPrevious) {
+                    ea = this.startAngle + this.angle(this.v);
+                    this.o.cursor
+                        && (sa = ea - 0.3)
+                    && (ea = ea + 0.3);
+                    this.g.beginPath();
+                    this.g.strokeStyle = this.pColor;
+                    this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, sa, ea, false);
+                    this.g.stroke();
+                }
+
+                this.g.beginPath();
+                this.g.strokeStyle = r ? this.o.fgColor : this.fgColor;
+                this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, sat, eat, false);
+                this.g.stroke();
+
+                this.g.lineWidth = 2;
+                this.g.beginPath();
+                this.g.strokeStyle = this.o.fgColor;
+                this.g.arc(this.xy, this.xy, this.radius - this.lineWidth + 1 + this.lineWidth * 2 / 3, 0, 2 * Math.PI, false);
+                this.g.stroke();
+
+                return false;
+            }
+        }
+    });
+}
+
+/**
+ Get block data
+ @method getBlockData
+ @return data {object}
+ entire block's data members
+ **/
+
+Block.prototype.getBlockData = function () {
+    var self = this;
+    var data = {
+        blockID: self.m_block_id,
+        blockType: self.m_blockType,
+        blockName: self.m_blockName,
+        blockDescription: self.m_blockDescription,
+        blockIcon: self.m_blockIcon
+    }
+    return data;
+}
+
+

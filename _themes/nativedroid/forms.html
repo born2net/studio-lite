@@ -1,0 +1,209 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>nativeDroid - Theme for jQuery Mobile</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		
+		<!-- FontAwesome - http://fortawesome.github.io/Font-Awesome/ -->
+        <link rel="stylesheet" href="css/font-awesome.min.css" />
+
+		<!-- jQueryMobileCSS - original without styling -->
+        <link rel="stylesheet" href="css/jquerymobile.css" />
+
+		<!-- nativeDroid core CSS -->
+        <link rel="stylesheet" href="css/jquerymobile.nativedroid.css" />
+
+		<!-- nativeDroid: Light/Dark -->
+        <link rel="stylesheet" href="css/jquerymobile.nativedroid.dark.css"  id='jQMnDTheme' />
+
+		<!-- nativeDroid: Color Schemes -->
+        <link rel="stylesheet" href="css/jquerymobile.nativedroid.color.green.css" id='jQMnDColor' />
+
+		<!-- jQuery / jQueryMobile Scripts -->
+		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
+
+
+    </head>
+    <body>
+        
+    <div data-role="page" data-theme='b'>
+
+
+        <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme='b'>
+            <a href="index.html" data-ajax="false"><i class='icon-ellipsis-vertical'></i></a>
+            <h1>Form Elements</h1>
+        </div>
+        
+        <div data-role="content">   
+
+			    
+            <form>
+                <ul data-role="listview" data-inset="true">
+        
+                    <li data-role="fieldcontain">
+                        <fieldset data-role="controlgroup">
+                            <legend>Checkboxes</legend>
+                            <input type="checkbox" name="checkbox-1a" id="checkbox-1ab" checked="">
+                            <label for="checkbox-1ab">Cheetos</label>
+                            <input type="checkbox" name="checkbox-2a" id="checkbox-2ab">
+                            <label for="checkbox-2ab">Doritos</label>
+                            <input type="checkbox" name="checkbox-3a" id="checkbox-3ab">
+                            <label for="checkbox-3ab">Fritos</label>
+                            <input type="checkbox" name="checkbox-4a" id="checkbox-4ab">
+                            <label for="checkbox-4ab">Sun Chips</label>
+                        </fieldset>
+                    </li>
+                    <li data-role="fieldcontain">
+                        <fieldset data-role="controlgroup"  data-type="horizontal"  data-mini="true">
+                            <legend>Checkboxes horizontal</legend>
+                            <input type="checkbox" name="checkbox-6" id="checkbox-6b">
+                            <label for="checkbox-6b">b</label>
+                            <input type="checkbox" name="checkbox-7" id="checkbox-7b" checked="">
+                            <label for="checkbox-7b"><em>i</em></label>
+                            <input type="checkbox" name="checkbox-8" id="checkbox-8b">
+                            <label for="checkbox-8b">u</label>
+                        </fieldset>
+                    </li>
+                    <li data-role="fieldcontain">
+                        <fieldset data-role="controlgroup">
+                            <legend>Radio Buttons</legend>
+                            <input type="radio" name="radio-choice-1" id="radio-choice-1b" value="choice-1" checked="checked">
+                            <label for="radio-choice-1b">Cat</label>
+                            <input type="radio" name="radio-choice-1" id="radio-choice-2b" value="choice-2">
+                            <label for="radio-choice-2b">Dog</label>
+                            <input type="radio" name="radio-choice-1" id="radio-choice-3b" value="choice-3">
+                            <label for="radio-choice-3b">Hamster</label>
+                            <input type="radio" name="radio-choice-1" id="radio-choice-4b" value="choice-4">
+                            <label for="radio-choice-4b">Lizard</label>
+                        </fieldset>
+                    </li>
+                    <li data-role="fieldcontain">
+                        <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                            <legend>Radio Buttons</legend>
+                            <input type="radio" name="radio-choice-a" id="radio-choice-ab" value="choice-a" checked="checked">
+                            <label for="radio-choice-ab">Select</label>
+                            <input type="radio" name="radio-choice-a" id="radio-choice-bb" value="choice-b">
+                            <label for="radio-choice-bb">one</label>
+                            <input type="radio" name="radio-choice-a" id="radio-choice-cb" value="choice-c">
+                            <label for="radio-choice-cb">thing</label>
+                            <input type="radio" name="radio-choice-a" id="radio-choice-db" value="choice-d">
+                            <label for="radio-choice-db">here!</label>
+                        </fieldset>
+                    </li>
+                    <li data-role="fieldcontain">
+                        <label for="name2b">Text Input:</label>
+                        <input type="text" name="name2" id="name2b" value="" data-clear-btn="true" placeholder="Type your text here...">
+                    </li>
+                    <li data-role="fieldcontain">
+                        <label for="inputDate">Input type Date:</label>
+                        <input type="date" name="inputDate" id="inputDate" value="" data-clear-btn="true" placeholder="">
+                    </li>
+                    <li data-role="fieldcontain">
+                        <label for="inputColor">Input type Color:</label>
+                        <input type="color" name="inputColor" id="inputColor" value="" data-clear-btn="true" placeholder="">
+                    </li>
+                    <li data-role="fieldcontain">
+                        <label for="inputDatetime">Input type datetime:</label>
+                        <input type="datetime" name="inputDatetime" id="inputDatetime" value="" data-clear-btn="true" placeholder="">
+                    </li>
+                    <li data-role="fieldcontain">
+                        <label for="inputEmail">Input type email:</label>
+                        <input type="email" name="inputEmail" id="inputEmail" value="" data-clear-btn="true" placeholder="">
+                    </li>
+                    <li data-role="fieldcontain">
+                        <label for="inputMonth">Input type month:</label>
+                        <input type="month" name="inputMonth" id="inputMonth" value="" data-clear-btn="true" placeholder="">
+                    </li>
+
+                    <li data-role="fieldcontain">
+                        <label for="inputTime">Input type time:</label>
+                        <input type="time" name="inputTime" id="inputTime" value="" data-clear-btn="true" placeholder="">
+                    </li>
+                    <li data-role="fieldcontain">
+                        <label for="inputUrl">Input type url:</label>
+                        <input type="url" name="inputUrl" id="inputUrl" value="" data-clear-btn="true" placeholder="">
+                    </li>
+                    <li data-role="fieldcontain">
+                        <label for="inputWeek">Input type week:</label>
+                        <input type="week" name="inputWeek" id="inputWeek" value="" data-clear-btn="true" placeholder="">
+                    </li>
+
+                    <li data-role="fieldcontain">
+                        <label for="textarea2b">Textarea:</label>
+                    <textarea cols="40" rows="8" name="textarea2" id="textarea2b" placeholder="This is a textarea"></textarea>
+                    </li>
+                    <li data-role="fieldcontain">
+                        <label for="flip2b">Flip switch:</label>
+                        <select name="flip2" id="flip2b" data-role="slider">
+                            <option value="off">Off</option>
+                            <option value="on">On</option>
+                        </select>
+                    </li>
+                    <li data-role="fieldcontain">
+                        <label for="slider2b">Slider:</label>
+                        <input type="range" name="slider2" id="slider2b" value="0" min="0" max="100" data-highlight="true">
+                    </li>
+                    <li data-role="fieldcontain">
+                        <div data-role='rangeslider'>
+                            <label for='rangeslider1a'>RangeSlider:</label>
+                                <input type='range' name='range1a' id='range1a' min='0' max='100' value='40'>
+                            <label for='rangeslider1b'>RangeSlider:</label>
+                                <input type='range' name='range1b' id='range1b' min='0' max='100' value='80'>
+                        </div>
+                    </li>                    
+                    <li data-role="fieldcontain">
+                        <label for="select-choice-1b" class="select">Select</label>
+                        <select name="select-choice-1" id="select-choice-1b" data-native-menu="true">
+                            <option value="javascript">JavaScript</option>
+                            <option value="css">CSS</option>
+                            <option value="html">HTML</option>
+                            <option value="csharp">C#</option>
+                            <option value="java">Java</option>
+                        </select>
+                    </li>
+                    <li data-role="fieldcontain">
+                        <label for="select-choice-8b" class="select">Multi-select</label>
+                        <select name="select-choice-8" id="select-choice-8b" multiple="multiple" data-native-menu="true" data-icon="grid" data-iconpos="left">
+                            <option>Choose a few options:</option>
+                            <optgroup label="USPS">
+                                <option value="standard" selected="">Standard: 7 day</option>
+                                <option value="rush">Rush: 3 days</option>
+                                <option value="express">Express: next day</option>
+                                <option value="overnight">Overnight</option>
+                            </optgroup>
+                            <optgroup label="FedEx">
+                                <option value="firstOvernight">First Overnight</option>
+                                <option value="expressSaver">Express Saver</option>
+                                <option value="ground">Ground</option>
+                            </optgroup>
+                        </select>
+                    </li>
+                    <li>
+                        <fieldset class="ui-grid-a">
+                                <div class="ui-block-a"><button type="submit" data-theme="b">Cancel</button></div>
+                                <div class="ui-block-b"><button type="submit" data-theme="b">Submit</button></div>
+                        </fieldset>
+                    </li>
+                </ul>
+            </form>
+	       
+  
+	        <div class='inset'>
+	        	<h2>Code</h2>
+				<div class='message warning'>
+					<i class='icon-warning-sign'></i>
+					<p>The <code>select</code> and <code>multiselect</code> elements are only working fine with <code>data-native-menu='true'</code> on mobile devices.</p>
+				</div>
+				<div class='message info'>
+					<i class='icon-info-sign'></i>
+					<p>For code examples read the official jQueryMobile api. <a href='http://api.jquerymobile.com/category/widgets/' target='_blank'>api.jquerymobile.com</a></p>
+				</div>
+	        </div>
+	        
+        </div>
+
+    </div>
+    
+    </body>
+</html>

@@ -13,3 +13,10 @@ The world's only enterprise level, open source, Digital Signage platform
 
 
 
+SignageStudio Web Lite on-line documentation: [Docs]: http://www.digitalsignage.com/msdocs/
+
+Autonomous Helper SDK on-line documentation: [Docs]: http://www.digitalsignage.com/msdocs/classes/HelperSDK.html
+
+
+
+

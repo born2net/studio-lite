@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SignageStudio Web Lite</title>
+
+
+    <!-- Theme used http://nativedroid.godesign.ch/ -->
+    <link rel="stylesheet" href="https://secure.dynawebs.net/_msportal/_themes/nativedroid/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://secure.dynawebs.net/_msportal/_themes/nativedroid/css/jquerymobile.css"/>
+    <link rel="stylesheet"
+          href="https://secure.dynawebs.net/_msportal/_themes/nativedroid/css/jquerymobile.nativedroid.css"/>
+    <link rel="stylesheet"
+          href="https://secure.dynawebs.net/_msportal/_themes/nativedroid/css/jquerymobile.nativedroid.light.css"
+          id='jQMnDTheme'/>
+    <link rel="stylesheet"
+          href="https://secure.dynawebs.net/_msportal/_themes/nativedroid/css/jquerymobile.nativedroid.color.blue.css"
+          id='jQMnDColor'/>
+
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_lib/_jq1.9.1/jquery-1.9.1.js"
+            type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_lib/_jq1.10.1/jquery-ui-1.10.1.js"
+            type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_lib/TouchPunch.js" type="text/javascript"></script>
+
+    <link rel="stylesheet" href="https://secure.dynawebs.net/_studiolite-dev/_lib/_minicolors/jquery.minicolors.css"/>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_lib/_minicolors/jquery.minicolors.js"
+            type="text/javascript"></script>
+
+
+    <script src="https://js.signage.me/SignageSDK.js" type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/MSDB.js" type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/HelperSDK.js" type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/ComBroker.js" type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/AjaxJsonGetter.js" type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Campaign.js" type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/ScreenArrowSelector.js"
+            type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/TemplateWizard.js" type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/ScreenOrientation.js"
+            type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/ScreenResolution.js" type="text/javascript"></script>
+
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Scheduler.js" type="text/javascript"></script>
+
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Sequences.js" type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/ScreenTemplateFactory.js"
+            type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/AjaxRPC.js" type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Login.js" type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Viewstacks.js" type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Navigator.js" type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/CampaginSelector.js" type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Property.js" type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/ResourcesList.js" type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Stations.js" type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/CampaignNavigator.js"
+            type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Timeline.js" type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Settings.js" type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/AddBlockWizard.js" type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/ChannelList.js" type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Channel.js" type="text/javascript"></script>
+
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/_blocks/Block.js" type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/_blocks/BlockImage.js"
+            type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/_blocks/BlockVideo.js"
+            type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/_blocks/BlockQR.js" type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/_blocks/BlockRSS.js" type="text/javascript"></script>
+
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_model/studioLiteModel.js" type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_model/TemplateCollection.js"
+            type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_lib/jquery.base64.js" type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_lib/jquery.cookie.js" type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_lib/jquery.knob.js" type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_lib/breakpoints.js" type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_lib/x2js-v1.1.3/xml2json.js"
+            type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_lib/studioLiteLib.js" type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/studiolite.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $(function () {
+
+            theme = {
+                theme: "dark",
+                color: "green",
+                pathCSS: "https://secure.dynawebs.net/_msportal/_themes/nativedroid/css/",
+                oppositeTheme: function () {
+                    return (this.theme == "light") ? "dark" : "light";
+                },
+                switchTheme: function () {
+                    $(".theme-trigger a").removeClass("active");
+                    $(".theme-trigger ." + this.oppositeTheme()).addClass("active");
+                    this.theme = this.oppositeTheme();
+                    $("html").contents().find("#jQMnDTheme").attr("href", this.pathCSS + this.getCSS[this.theme]);
+                },
+                t1: function () {
+                    alert(this.pathCSS + this.getCSS[this.theme]);
+                },
+                getCSS: {
+                    dark: "jquerymobile.nativedroid.dark.css",
+                    light: "jquerymobile.nativedroid.light.css",
+                    blue: "jquerymobile.nativedroid.color.blue.css",
+                    green: "jquerymobile.nativedroid.color.green.css",
+                    purple: "jquerymobile.nativedroid.color.purple.css",
+                    red: "jquerymobile.nativedroid.color.red.css",
+                    yellow: "jquerymobile.nativedroid.color.yellow.css"
+                },
+                updateIframe: function () {
+                    $("head").contents().find("#jQMnDTheme").attr("href", this.pathCSS + this.getCSS[this.theme]);
+
+                }
+            }
+
+
+            $(".theme-trigger").on("click", "a", function (e) {
+                if (!$(this).hasClass("active")) {
+                    theme.switchTheme();
+                    e.preventDefault();
+                } else {
+                    e.preventDefault();
+                }
+            });
+
+        });
+
+    </script>
+
+
+    <script type="text/javascript">
+        $(document).bind("mobileinit", function () {
+            mobileInit();
+        });
+    </script>
+
+    <script src="https://secure.dynawebs.net/_msportal/_js/_studioLite/_lib/_jq1.3.2/jquery.mobile-1.3.2.js"
+            type="text/javascript"></script>
+
+
+</head>
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+CSS
+
+////////////////////////////////////////////////////////////////////////// -->
+
+
+<STYLE type="text/css">
+<!--
+fonts
+
+-->
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 100;
+    src: local('Roboto Thin'), local('Roboto-Thin'), url(https://secure.dynawebs.net/_studiolite-dev/_themes/nativedroid/fonts/vzIUHo9z-oJ4WgkpPOtg1_esZW2xOQ-xsNqO47m55DA.woff) format('woff');
+
+    src: local('Roboto Thin'), local('Roboto-Thin'), url(https://secure.dynawebs.net/_studiolite-dev/_themes/nativedroid/fonts/Roboto-Thin.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Roboto Light'), local('Roboto-Light'), url(https://secure.dynawebs.net/_studiolite-dev/_themes/nativedroid/fonts/Hgo13k-tfSpn0qi1SFdUfT8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
+    src: local('Roboto Light'), local('Roboto-Light'), url(https://secure.dynawebs.net/_studiolite-dev/_themes/nativedroid/fonts/Roboto-Light.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Roboto Regular'), local('Roboto-Regular'), url(https://secure.dynawebs.net/_studiolite-dev/_themes/nativedroid/fonts/2UX7WLTfW3W8TclTUvlFyQ.woff) format('woff');
+
+    src: local('Roboto Regular'), local('Roboto-Regular'), url(https://secure.dynawebs.net/_studiolite-dev/_themes/nativedroid/fonts/Roboto-Regular.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    src: local('Roboto Medium'), local('Roboto-Medium'), url(https://secure.dynawebs.net/_studiolite-dev/_themes/nativedroid/fonts/RxZJdnzeo3R5zSexge8UUT8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
+    src: local('Roboto Medium'), local('Roboto-Medium'), url(https://secure.dynawebs.net/_studiolite-dev/_themes/nativedroid/fonts/Roboto-Medium.ttf) format('truetype');
+
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Roboto Bold'), local('Roboto-Bold'), url(https://secure.dynawebs.net/_studiolite-dev/_themes/nativedroid/fonts/d-6IYplOFocCacKzxwXSOD8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
+
+    src: local('Roboto Bold'), local('Roboto-Bold'), url(https://secure.dynawebs.net/_studiolite-dev/_themes/nativedroid/fonts/Roboto-Bold.ttf) format('truetype');
+
+}
+
+<!--
+fonts
+
+-->
+@import url("fonts.googleapis.com/css?family=Roboto:400,100,300,500,700");
+
+.ui-page {
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+}
+
+.ui-loader h1 {
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+}
+
+#navPanel {
+    background-color: #fff;
+}
+
+.ui-btn-icon-notext {
+    float: none;
+    margin: -7px;
+
+}
+
+.ui-btn,
+label.ui-btn {
+    font-weight: normal;
+    color: #d0d0d1;
+
+}
+
+.ui-btn:link {
+    text-decoration: none !important;
+}
+
+.ui-btn-down-b {
+
+    background-color: #b6db49;
+    color: #fff;
+}
+
+.ui-btn-active {
+    cursor: pointer;
+}
+
+@import url(http://fonts.googleapis.com/css?family=Quantico:400,400italic,700,700italic);
+@media (min-width: 35em) {
+    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-open.ui-panel-content-fixed-toolbar-display-push,
+    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-open.ui-panel-content-fixed-toolbar-display-reveal,
+    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-open.ui-panel-content-wrap-display-push,
+    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-open.ui-panel-content-wrap-display-reveal {
+        margin-right: 17em;
+    }
+
+    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-open.ui-panel-content-wrap-display-push.ui-panel-content-fixed-toolbar-position-right,
+    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-open.ui-panel-content-wrap-display-reveal.ui-panel-content-fixed-toolbar-position-right,
+    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-open.ui-panel-content-wrap-display-push.ui-panel-content-wrap-position-right,
+    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-open.ui-panel-content-wrap-display-reveal.ui-panel-content-wrap-position-right {
+        margin: 0 0 0 17em;
+    }
+
+    .ui-responsive-panel .ui-panel-dismiss-display-push {
+        display: none;
+    }
+}
+
+.ui-icon-capture-cmd {
+    background: url(https://secure.dynawebs.net/_msportal/_images/icons-white/86-camera.png) 50% 50% no-repeat;
+    width: 24px;
+    height: 18px;
+    border-radius: 0px !important;
+    top: 10px !important;
+    -webkit-box-shadow: none !important;
+    left: 25px !important;
+}
+
+.ui-icon-play-cmd {
+    background: url(https://secure.dynawebs.net/_msportal/_images/icons-white/play.png) 50% 50% no-repeat;
+    width: 22px;
+    height: 22px;
+    border-radius: 0px !important;
+    -webkit-box-shadow: none !important;
+    top: 10px !important;
+    left: 25px !important;
+}
+
+.ui-icon-stop-cmd {
+    background: url(https://secure.dynawebs.net/_msportal/_images/icons-white/stop.png) 50% 50% no-repeat;
+    width: 22px;
+    height: 22px;
+    border: hidden !important;
+    border-radius: 0px !important;
+    top: 10px !important;
+    -webkit-box-shadow: none !important;
+    left: 25px !important;
+}
+
+.ui-icon-reload-cmd {
+    background: url(https://secure.dynawebs.net/_msportal/_images/icons-white/02-redo.png) 50% 50% no-repeat;
+    width: 30px;
+    height: 25px;
+    border-radius: none !important;
+    -webkit-box-shadow: none !important;
+    top: 6px !important;
+    left: 23px !important;
+}
+
+#playbackResourcesDiv {
+    border: 1px solid #999;
+    border-radius: 15px;
+    box-shadow: 1px 2px 3px #999999;
+    background-color: #EEE;
+    padding: 30px;
+    margin: 20px;
+    background-image: linear-gradient(bottom, rgb(235, 235, 235) 0%, rgb(255, 255, 255) 72%);
+    background-image: -o-linear-gradient(bottom, rgb(235, 235, 235) 0%, rgb(255, 255, 255) 72%);
+    background-image: -moz-linear-gradient(bottom, rgb(235, 235, 235) 0%, rgb(255, 255, 255) 72%);
+    background-image: -webkit-linear-gradient(bottom, rgb(235, 235, 235) 0%, rgb(255, 255, 255) 72%);
+    background-image: -ms-linear-gradient(bottom, rgb(235, 235, 235) 0%, rgb(255, 255, 255) 72%);
+}
+
+#timeLinePropDiv {
+    float: right;
+    margin-top: -45px;
+}
+
+#timeLinePropTitle {
+    padding-top: 1px;
+}
+
+.ui-custom-icon30 .ui-icon {
+    width: 200px !important;
+    height: 200px !important;
+    box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    -webkit-border-radius: none !important;
+    border-radius: none !important;
+    margin-left: -15px !important;
+}
+
+.screenDivisionClass {
+    cursor: pointer;
+}
+
+.showPointer {
+    cursor: pointer;
+}
+
+.ButtonClass {
+    background-image: url(https://secure.dynawebs.net/_msportal/_images/orientationV.png);
+    background-repeat: no-repeat;
+    border: none;
+    background-size: 200px 200px;
+    min-width: 200px !important;
+    min-height: 200px !important;
+    width: 200px !important;
+    height: 200px !important;
+
+}
+
+.centerContent {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.sizeByWidth {
+    width: 100%;
+}
+
+.sizeByHeight {
+    height: 100%;
+}
+
+#imgHorizontal {
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+#imgVertical {
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+#playListSelectArrowLeft:active, #playListSelectArrowRight:active {
+    background: #E4E4E4;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 10px 0 -4px #EEE, 0 10px 2px -5px rgba(0, 0, 0, 0.15), 0 20px 0 -11px #EEE
+}
+
+.draggableScreenPlaceHolder {
+    position: relative;
+    top: 0px;
+    height: 3px;
+    width: 3px;
+    background-color: red;
+    opacity: 0.6
+}
+
+#screenSelectorContainer ul {
+    width: 1500px;
+    padding: 5px;
+    overflow: hidden;
+}
+
+#screenLayoutsUL {
+
+}
+
+.dottedHR {
+    height: 6px;
+    width: 1500px;
+    position: relative;
+    border-top: 12px dotted #c1c1c1;
+    top: 20px;
+}
+
+aside > aside > div > ul > li {
+    display: block;
+    width: 100px;
+    list-style: none;
+    height: 60px;
+    float: left;
+    background: #E2E2E2;
+    border: 1px solid #666;
+    margin-right: 30px;
+    margin-left: 30px;
+}
+
+#screenSelectorContainer {
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+#openTimeLinePropButton {
+
+}
+
+.ui-icon-long-prop {
+    background: url(https://secure.dynawebs.net/_msportal/_images/icons-gray/longgears.png) 50% 50% no-repeat;
+    background-size: 39px 23px;
+    margin-right: 20px;
+    margin-bottom: 14px !important;
+
+    width: 39px !important;
+    height: 23px !important;
+    opacity: 0.5;
+    box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    -webkit-border-radius: none !important;
+    border-radius: none !important;
+}
+
+.currentSelectedStation {
+    /* border-top: 1px solid #666;
+    border-bottom: 1px solid #666; */
+    background: #bebebe;
+    font-weight: bold;
+    color: #000000;
+    text-shadow: 0 1px 0 #eeeeee;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fff, to(#666));
+    background-image: -webkit-linear-gradient(#fff, #666);
+    background-image: -moz-linear-gradient(#fff, #666);
+    background-image: -ms-linear-gradient(#fff, #666);
+    background-image: -o-linear-gradient(#fff, #666);
+    background-image: linear-gradient(#fff, #666);
+}
+
+.currentSelectedResource {
+    background-image: linear-gradient(red, red) !important;
+}
+
+.fileinput-button {
+    position: relative;
+    overflow: hidden;
+    float: left;
+    margin-right: 4px;
+}
+
+.fileinput-button input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    transform: translate(-300px, 0) scale(4);
+    font-size: 23px;
+    direction: ltr;
+    cursor: pointer;
+}
+
+body {
+    color: #404040;
+}
+
+</STYLE>
+
+
+<body>
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Logo
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div data-role="page" id="appLogoID">
+    <div data-role="content">
+        <div class="ui-grid-b">
+            <div style="width:10%" class="ui-block-a">
+            </div>
+            <div style="width:80%" class="ui-block-b">
+                <h1 style="color:#666; text-align:center">StudioLite</h1>
+                <h6 style="color:#CCC; text-align:center">Signage.me&copy; Inc</h6>
+            </div>
+            <div style="width:10%" class="ui-block-c">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Login page
+
+////////////////////////////////////////////////////////////////////////// -->
+
+
+<div data-role="page" id="loginPage" data-theme="b">
+    <div style="margin:10% auto 10% auto;width:60%; border:solid 5px #99cc00;padding:3%;-webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px;">
+        <div data-role="header">
+            <div class="ui-grid-a">
+                <div class="ui-block-a" style="width:120px">
+                    <embed src="https://secure.dynawebs.net/_msportal/_images/logo.svg" height="80" width="120"
+                           type="image/svg+xml"/>
+                </div>
+                <div class="ui-block-b">
+                    <h2>StudioLite - Digital Signage for everyone...</h2>
+                </div>
+            </div>
+        </div>
+        <div data-role="content">
+            <form id="loginFormID">
+
+                <fieldset data-role="controlgroup">
+                    <div data-role="fieldcontain">
+                        <input type="text" data-inset="true" data-clear-btn="true" name="text-7" id="userName" value=""
+                               placeholder="User name" class="ui-input-text ui-body-b">
+                    </div>
+                    <div data-role="fieldcontain">
+                        <input type="password" data-inset="true" data-clear-btn="true" name="text-7" id="userPass"
+                               value="" placeholder="Password" class="ui-input-text ui-body-b">
+                    </div>
+                    <div data-role="fieldcontain">
+                        <input type="button" data-inset="true" data-corners="true" id="loginButton" value="Login"/>
+                    </div>
+                    <style type="text/css" media="screen">
+                        #rememberMeContainer.containing-element .ui-slider-switch {
+                            width: 11em;
+                        }
+                    </style>
+
+
+                    <div data-role="fieldcontain">
+                        <div id="rememberMeContainer" class="containing-element">
+                            <select name="flip-min" id="rememberMe" class="rememberMe" data-role="slider">
+                                <option value="off">Don't remember</option>
+                                <option value="on" selected>Remember me</option>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+        </div>
+        <h6 style="color:#CCC; text-align:center">MediaSignage&copy; Inc via http://www.DigitalSignage.com</h6>
+        </form>
+    </div>
+</div>
+
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Studio Lite - Application
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div data-role="page" id="studioLite" class="ui-responsive-panel ui-panel-display-reveal">
+    <div data-role="header" data-theme="b" style="box-shadow:-5px 0 5px rgba(0, 0, 0, 0.15) inset;">
+
+        <a href="#navPanel" data-role='button' data-icon='back' data-iconpos='notext' data-display="push"
+           style="margin-right:5px ;position:relative; top: 10px"></a>
+        <!--<a id="toggleNavigation" data-transition="fade" data-iconpos="notext" style="margin-right:5px ;position:relative; top: 10px"  data-icon="back" data-theme="b"></a>-->
+        <h1>&nbsp;</h1>
+
+        <div data-role="controlgroup" data-type="horizontal"
+             style="position:absolute; top: 0px; right: 10px;font-weight:normal;">
+            <a id="campainManager" data-theme="b" data-role="button" data-icon="star">campaign manager</a>
+            <a id="campainSave" href="index.html" data-role="button" data-icon="check">save</a>
+        </div>
+    </div>
+
+    <div data-role="panel" data-position="right" id="propertiesPanel" class="main_nav ui-responsive-panel"
+         data-display="push" data-swipe-close="false" data-dismissible="true" data-theme="a">
+        <div>
+            <!-- <h2 style="float: left; position: relative; top: -25px">resource</h2> -->
+            <a id="closeProperties" style="float: left; position:relative; top: -10px" data-theme="b" data-role="button"
+               data-iconpos="notext" data-icon="arrow-r"></a>
+
+            <div style="clear:both"></div>
+        </div>
+        <div id="propertiesPanelView">
+        </div>
+    </div>
+
+    <div data-role="panel" id="navPanel" data-display="push" class="main_nav" data-dismissible="false" data-theme="b"
+         style="box-shadow:-5px 0 5px rgba(0, 0, 0, 0.15) inset;">
+        <ul data-role="listview" style="margin-left:-20px; font-weight:normal;">
+            <li data-role="list-divider" style="padding-top:0px;border-bottom:solid 2px #b6db49;">
+                <h2 style="color: #666;margin-left:20px; text-transform:none;font-size:26px;">Signage Studio</h2></li>
+
+            <li data-icon="coffee"><a id="navPlaylist" class="ui-btn-active" data-role="button"
+                                      data-theme="b">Campaigns</a></li>
+            <li data-icon="beer"><a id="navFiles" data-role="button" data-theme="b">Resources</a></li>
+            <li data-icon="music"><a id="navPlaylers" data-role="button" data-theme="b">Stations</a></li>
+            <li data-icon="fire"><a id="navSettings" data-role="button" data-theme="b">Settings</a></li>
+            <li data-icon="bullhorn"><a id="navHelp" data-role="button" data-theme="b">Help</a></li>
+            <li data-icon="group"><a id="navLogout" data-role="button" data-theme="b">Logout</a></li>
+
+            <li data-icon="trophy"><a id="navAdvance" data-corners="false" data-role="button" data-theme="b">Standard
+                mode (FREE)</a></li>
+        </ul>
+
+    </div>
+
+    <!--<div data-role="panel" id="navPanel" class="main_nav" data-display="push"  data-dismissible="true" data-theme="b">
+        <h2 style="color: #666">SignageStudio Lite</h2>
+        <div class="nav_profile">
+			<div id="navButtons" data-role="controlgroup">
+                <a id="navPlaylist" class="ui-btn-active" data-role="button">Campaigns</a>
+                <a id="navFiles" data-role="button">Resources</a>
+                <a id="navPlaylers" data-role="button">Stations</a>
+                <a id="navSettings" data-role="button">Settings</a>
+                <a id="navHelp" data-role="button">Help</a>
+                <a id="navLogout" data-role="button">Logout</a>
+	        </div>
+        </div>
+         <button id="navAdvance" data-corners="false" data-theme="e">Standard mode (FREE)</button>
+    </div>-->
+    <div data-role="content" style="padding: 0px; margin: 0px ">
+        <div data-role="content" style="padding: 0px; margin: 0px" id="mainContent" class="ui-panel-display-reveal">
+        </div>
+    </div>
+</div>
+
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Screen Layout page
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div data-role="page" id="screenLayoutList" class="ui-responsive-panel">
+    <div data-role="header" data-theme="b">
+        <a id="goBackFromScreenList" data-role="button" data-theme="b" data-icon="arrow-l" data-iconpos="notext"
+           class="ui-btn-left">Close</a>
+
+        <h2>Select screen layout</h2>
+    </div>
+    <div align="center" id="screenLayoutItemsList" style="padding-top:50px">
+    </div>
+</div>
+
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Add Resource page
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div data-role="page" id="addResourceView" class="ui-responsive-panel">
+    <div data-role="header" data-theme="b">
+        <a id="goBackFromAddResourceView" data-rel="back" data-role="button" data-theme="b" data-icon="arrow-l"
+           data-iconpos="notext" class="ui-btn-left">Close</a>
+
+        <h2>Add component / resource</h2>
+    </div>
+    <div data-role="collapsible-set" data-theme="b" data-content-theme="b" style="margin: 30px">
+        <div data-role="collapsible" data-collapsed=false>
+            <h2>Components</h2>
+            <ul id="addComponentList" data-role="listview" data-filter="true" data-filter-theme="c"
+                data-divider-theme="b">
+            </ul>
+        </div>
+        <div data-role="collapsible">
+            <h2>Resources</h2>
+            <ul id="addResourceList" data-role="listview" data-filter="true" data-filter-theme="c"
+                data-divider-theme="b">
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Campaign view stack
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div id="playlist" style="min-height:1080px;display: :SET:">
+    <div id="playListMainNavigation">
+        <table width="100%" border="0" cellspacing="" cellpadding="0">
+            <tr>
+                <td align="left" style="padding-left:50px"><img id="playListSelectArrowLeft"
+                                                                src="https://secure.dynawebs.net/_msportal/_images/arrow_l.png">
+                </td>
+                <td><h3 id="playListSelectTitle" align="center"> :orientation:</h3></td>
+                <td align="right" style="padding-right:50px"><img id="playListSelectArrowRight"
+                                                                  src="https://secure.dynawebs.net/_msportal/_images/arrow_r.png">
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="playListMain">
+    </div>
+</div>
+
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Campaign Selector view
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div id="campaignSelectorView" style="display: :SET:">
+    <br/>
+    <a href="#" id="startNewCampaign" data-role="button" style="position: relative; left: 40px" data-theme="b"
+       data-icon="star" data-iconpos="right" data-inline="true">New campaign wizard</a>
+    <ul id="campaignSelectorList" style="padding-left: 40px; padding-right: 40px" data-role="listview"
+        data-inset="true">
+    </ul>
+</div>
+
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Resources
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div align="center" id="files" style="min-height:1080px; display: :SET:">
+    <div align="left">
+        <label data-role="button" align="left" data-icon="plus" data-inline="true" class="file-upload">Add file
+            <input id="fileSelection" name="file" id="fileSelection" type="file" multiple data-role="none">
+        </label>
+        <a id="fileRemove" align="left" data-theme="c" data-inline="true" data-icon="delete"
+           data-role="button">Remove</a>
+    </div>
+    <br/>
+    <br/>
+    <ul id="resourceLibList" style="padding: 40px" data-role="listview" data-filter="true"
+        data-filter-placeholder="Search resources..." data-inset="true">
+    </ul>
+</div>
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Stations
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div align="center" id="stations" style="min-height:1080px; display: :SET:">
+    <ul id="stationList" data-role="listview" data-inset="true" data-dividertheme="b">
+    </ul>
+</div>
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Settings
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div align="center" id="settings" style="min-height:1080px; display: :SET:">
+    <div id="settingsContainer" data-role="fieldcontain" style="padding:5px;margin-left:-5px;">
+        <label for="stationsRefreshRate">Station refresh rate (in seconds):</label>
+        <input id="stationsRefreshRate" type="range" value="60" min="60" max="300" data-theme="a" data-track-theme="b"/>
+
+        <label for="defResourceLength">Default resource length (in seconds):</label>
+        <input id="defResourceLength" type="range" value="5" min="5" max="8640" data-theme="a" data-track-theme="b"/>
+
+    </div>
+    <div class="theme-trigger" style="text-align=center;">
+        <h2>Change theme background</h2>
+        <a class="light" href="#theme-light">
+            <i class="icon-circle-blank"></i>
+            <strong>light</strong>
+        </a>
+        <a class="dark active" href="#theme-dark">
+            <i class="icon-circle"></i>
+            <strong>dark</strong>
+        </a>
+    </div>
+
+    <div>
+        <label for="hue-demo">Hue (default)</label>
+        <input type="text" id="hue-demo" class="demo" data-control="hue" value="#ff6161">
+    </div>
+
+</div>
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Help
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div align="center" id="help" style="min-height:1080px; display: :SET:">
+
+</div>
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Logout
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div align="center" id="logout" style="min-height:1080px; display: :SET:">
+    <br/>
+    <img src="https://secure.dynawebs.net/_msportal/_images/logoutIcon.png"/>
+</div>
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Advanced
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div align="center" id="advanded" style="min-height:1080px; display: :SET:">
+    <br/>
+    <img src="https://secure.dynawebs.net/_msportal/_images/advancedIcon.png"/>
+</div>
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Timeline properties
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div id="propEntireScreen" style="display: :SET:">
+    <div>
+        <input type="text" name="name" id="timeLinePropTitleID" value="" placeholder="Timeline Title"/>
+    </div>
+</div>
+
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Viewer properties
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div id="propScreenDivision" style="display: :SET:">
+    <h5>Channel properties</h5>
+    <label for="randomPlayback">Random Playback</label>
+    <select id="randomPlayback" name="Random playback" data-role="slider">
+        <option value="off">Off</option>
+        <option value="on">On</option>
+    </select>
+</div>
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Properties C
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div id="propResource" style="display: :SET:">
+    <p>CC properies info...</p>
+</div>
+
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Block Properties
+
+////////////////////////////////////////////////////////////////////////// -->
+
+
+<div id="blockProperties" style="display: :SET:">
+    <div>
+        <h2 id="selectedChannelResourceName"></h2>
+    </div>
+    <h3>hours / minutes / seconds</h3>
+
+    <div id="timelimeChannelBlockLength" style="display: inline; width: 100%; height: 75px">
+    </div>
+    <p/>
+    <hr style="opacity: 0.1"/>
+
+    <!-- //////////////////////////////////////////////////////////////////////////
+	Block common properties
+	////////////////////////////////////////////////////////////////////////// -->
+
+    <div id="blockSubProperties">
+    </div>
+</div>
+
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Block RSS common properties
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div id="blockRSSCommonProperties" style="display: :SET:">
+    <div>
+        <h5>RSS</h5>
+
+        <div>
+            <input type="text" name="name" id="rssLink" value="" placeholder="Enter RSS Link Text"/>
+        </div>
+    </div>
+</div>
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Block QR common properties
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div id="blockQRCommonProperties" style="display: :SET:">
+    <div>
+        <input type="text" name="name" id="qrText" value="" placeholder="Enter QR Text"/>
+    </div>
+</div>
+
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Block Video common properties
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div id="blockVideoCommonProperties" style="display: :SET:">
+    <h5>Video</h5>
+    <label for="videoAspectRatio">Aspect ratio</label>
+    <select id="videoAspectRatio" name="Aspect ratio" data-role="slider">
+        <option value="off">Off</option>
+        <option value="on">On</option>
+    </select>
+</div>
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Block Image common properties
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div id="blockImageCommonProperties" style="display: :SET:">
+    <h5>Image</h5>
+    <label for="imageAspectRatio">Aspect ratio</label>
+    <select id="imageAspectRatio" name="Aspect ratio" data-role="slider">
+        <option value="off">Off</option>
+        <option value="on">On</option>
+    </select>
+</div>
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Dialog - Can't login
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div data-role="dialog" id="dialogMessageID">
+    <div data-role="header">
+        <h1>Sorry, no go...</h1>
+    </div>
+
+    <div data-role="content">
+        <h1 id="dialogTextID"></h1>
+    </div>
+</div>
+
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Orientation view
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div id="orientationView" style="display: :SET:">
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="50">
+        <tr>
+            <td align="right"><img id="imgVertical"
+                                   src="https://secure.dynawebs.net/_msportal/_images/orientationV.png"/></td>
+            <td align="left"><img id="imgHorizontal"
+                                  src="https://secure.dynawebs.net/_msportal/_images/orientationH.png"/></td>
+        </tr>
+    </table>
+</div>
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Resolution view
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div id="resolutionView" data-theme='b' style="display: :SET:">
+    <form>
+        <h4 align="center" style="padding-left:20px; padding-right: 20px" id="stationOrientationTitle">:station
+            orientation:</h4>
+        <fieldset data-corners="false" style="padding:20px" id="stationResolution" data-role="controlgroup">
+        </fieldset>
+    </form>
+</div>
+
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Campaign view
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div id="campaignView" style="display: :SET:">
+
+    <div id="campainViewMainContainer">
+    </div>
+
+    <div data-role="collapsible-set" data-content-theme="b" style="padding:20px">
+        <div data-role="collapsible">
+            <h3><p id="timeLinePropTitle">&nbsp;</p>
+
+                <div id="timeLinePropDiv">
+                    <input type='button' data-icon="long-prop" data-theme='b' value='&nbsp;' data-mini='true'
+                           data-inline='true' data-icon-pos='top' id="openTimeLineProperties"/>
+                </div>
+            </h3>
+
+            <div id="selectScreenActions" class="data-tap-toggle=false" data-role="navbar">
+                <ul>
+                    <li><a id="addNewScreenButton" href="#" data-icon="plus" data-theme='b' data-role="button">add
+                        timeline</a></li>
+                    <li><a id="delScreenButton" href="#" data-icon="minus" data-theme='b' data-role="button">remove
+                        timeline</a></li>
+                </ul>
+            </div>
+
+
+            <aside style="margin: 0px; padding: 0px">
+                <aside style="margin: 0px; padding: 0px">
+                    <div style="margin: 0px; padding: 0px" vertical-align="middle" id="screenSelectorContainer">
+                        <hr style="margin: 0px; padding: 0px" class="dottedHR">
+                        <ul id="screenLayoutsUL">
+                        </ul>
+                    </div>
+                </aside>
+            </aside>
+
+        </div>
+        <a href="index.html" style="display:none" id="attachDragDropMainScreenSelection" data-role="button">Link
+            button</a>
+        <a href="index.html" style="display:none" id="dettachDragDropMainScreenSelection" data-role="button">Link
+            button</a>
+    </div>
+
+    <!--
+    <div class="ui-popup-container ui-popup-active" id="popupUndismissible-popup" tabindex="0" >
+        <div data-role="popup" id="popupUndismissible" class="ui-content ui-popup ui-body-e ui-overlay-shadow
+            ui-corner-all" data-theme="e" style="width:300px; height: 300px" aria-disabled="false" data-disabled="false"
+            data-shadow="true" data-corners="true" data-transition="flip" data-dismissible="true">
+              <a href="#" data-rel="back" data-role="button" data-theme="e" data-icon="delete"
+                data-iconpos="notext" class="ui-btn-left ui-btn ui-shadow ui-btn-corner-all
+                ui-btn-icon-notext ui-btn-up-a" data-corners="true" data-shadow="true" data-iconshadow="true"
+                data-wrapperels="span" title="Close"><span class="ui-btn-inner">
+                <span class="ui-btn-text">Close</span>
+                <span class="ui-icon ui-icon-delete ui-icon-shadow">
+                    &nbsp;</span>
+                </span>
+            </a>
+            <h3 style="color:#333">Select each screen division to display the list of content that you wish to play in the selected screen area.</h3>
+            <h3 style="color:#333"><br/>
+            Once selected, click the + sign to add videos, images, weather and other components.</h3>
+         </div>
+    </div>
+    -->
+
+    <div id="transparent" style="position:absolute" data-role="popup" data-theme="none" data-shadow="false">
+        <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext"
+           class="ui-btn-right">Close</a>
+        <img src="https://secure.dynawebs.net/_msportal/_images/quickTip1.png" class="popphoto"
+             alt="firefox logo on a transparent popup">
+    </div>
+
+
+    <div align="center" id="selectedLayoutContainer" class="centerContent">
+    </div>
+
+    <div id="playbackResourcesDiv">
+        <!-- <h4 style="padding-left:20px; padding-bottom: 0px ; padding-right:20px">Playback resources</h4>-->
+        <div data-role="controlgroup" data-type="horizontal">
+            <a id="channelAddResource" data-role="button" data-theme="b" data-icon="plus">Add</a>
+            <a id="channelRemoveResource" data-role="button" data-theme="b" data-icon="minus">Remove</a>
+        </div>
+
+
+        <ul data-role="listview" data-split-icon="plus" id="sortable" data-split-theme="d" data-inset="true"
+            style="padding:20px">
+        </ul>
+    </div>
+
+    <div data-role="popup" id="noResourceSelectedAlert" data-theme="d" data-overlay-theme="b" class="ui-content"
+         style="max-width:340px; padding-bottom:2em;">
+        <h3>Can't delete a resource</h3>
+
+        <p>You must first select a resource from the list. Press ok to continue.</p>
+        <a href="index.html" data-role="button" data-rel="back" data-theme="b" data-inline="true" data-icon="check"
+           data-mini="true">OK</a>
+        <!-- <a href="index.html" data-role="button" data-rel="back" data-inline="true" data-mini="true">Cancel</a> -->
+    </div>
+</div>
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+None selected screen layout view
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div id="noneSelectedScreenLayout" style="display: :SET:">
+    <div align="center" id="screenMainSelector" style="width:100%">
+        <div align="center" id="addNewScreenButtonPlus" class="showPointer"
+             style="border:dashed #666666 3px; width: 240px; height: 150px">
+            <h1 style="color:#999;margin-top:0px; font-weight:200 ; font-size:110px">+</h1>
+            <h4 style="position: relative; top: -90px ; color:#999;margin-top:0px; color: #999">new Screen layout</h4>
+        </div>
+    </div>
+</div>
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Selected Screen layout view
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div id="selectedScreenLayout" style="display: :SET:">
+    <div align="center">
+        <div id="screenMainSelected" align="center">
+        </div>
+    </div>
+</div>
+
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Station Properties
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div id="stationProperties" style="display: :SET:">
+
+
+    <h4 id="stationName" style="text-align:center"></h4>
+    <hr width="100%"
+        style="color:#333; display: block; height: 1px; border: 0; border-top: 1px solid #000; margin: 0em 1; padding: 0;"/>
+    <div style="width:242px; height: 130px">
+        <svg width="320" height="140" xmlns="http://www.w3.org/2000/svg">
+            <g>
+                <rect stroke-width="7" stroke="#191919" height="120" width="220" y="9.5" x="10" fill="#cccccc"/>
+            </g>
+        </svg>
+        <img id="snapShotImage" height="113" width="214"
+             style="position: relative; top: -131px; left: 13px; padding: 0; margin:0"/>
+        <img id="snapShotSpinner" style="position: relative; top: -95px; left: 100px; padding: 0; margin:0"
+             src="https://secure.dynawebs.net/_msportal/_images/_cart/preload2_gray.gif"/>
+    </div>
+
+    <div data-role="navbar" class="ui-navbar ui-mini" data-grid="c" role="navigation">
+        <ul class="ui-grid-c">
+            <li class="ui-block-a"><a href="#" id="captureCommand" data-role="button" data-icon="capture-cmd"
+                                      data-theme="b"></a></li>
+            <li class="ui-block-b"><a href="#" id="playCommand" data-role="button" data-icon="play-cmd"
+                                      data-theme="b"></a></li>
+            <li class="ui-block-c"><a href="#" id="stopCommand" data-role="button" data-icon="stop-cmd"
+                                      data-theme="b"></a></li>
+            <li class="ui-block-d"><a href="#" id="reloadCommand" data-role="button" data-icon="reload-cmd"
+                                      data-theme="b"></a></li>
+        </ul>
+    </div>
+
+
+    <hr width="100%"
+        style="color:#333; display: block; height: 1px; border: 0; border-top: 1px solid #000; margin: 1em 0; padding: 0;"/>
+
+    <div class="ui-grid-a">
+        <div class="ui-block-a">
+            <h5>Name:</h5>
+        </div>
+        <div class="ui-block-b">
+            <h5 id="selName"></h5>
+        </div>
+        <div class="ui-block-a">
+            <h5>OS:</h5>
+        </div>
+        <div class="ui-block-b">
+            <h5 id="selOS"></h5>
+        </div>
+        <div class="ui-block-a">
+            <h5>AIR Ver:</h5>
+        </div>
+        <div class="ui-block-b">
+            <h5 id="selAirVer"></h5>
+        </div>
+        <div class="ui-block-a">
+            <h5>Player Ver:</h5>
+        </div>
+        <div class="ui-block-b">
+            <h5 id="selPlayerVer"></h5>
+        </div>
+        <div class="ui-block-a">
+            <h5>Peak mem:</h5>
+        </div>
+        <div class="ui-block-b">
+            <h5 id="selPeakMem"></h5>
+        </div>
+        <div class="ui-block-a">
+            <h5>Total mem:</h5>
+        </div>
+        <div class="ui-block-b">
+            <h5 id="selTotMem"></h5>
+        </div>
+        <div class="ui-block-a">
+            <h5>Running:</h5>
+        </div>
+        <div class="ui-block-b">
+            <h5 id="selRunning"></h5>
+        </div>
+        <div class="ui-block-a">
+            <h5>Watchdog:</h5>
+        </div>
+        <div class="ui-block-b">
+            <h5 id="selWD"></h5>
+        </div>
+        <div class="ui-block-a">
+            <h5>Last upd:</h5>
+        </div>
+        <div class="ui-block-b">
+            <h5 id="selLastUpd"></h5>
+        </div>
+    </div>
+
+    <hr width="100%"
+        style="color:#333; display: block; height: 1px; border: 0; border-top: 1px solid #000; margin: 1em 0; padding: 0;"/>
+    <input type="text" data-inline="true" name="eventName" data-theme="b" data-icon="search" placeholder="event name"
+           id="sendEventID" value=""/>
+    <button id="eventSendButton" data-role="button" data-icon="alert" data-theme="b">Send event</button>
+    <hr width="100%"
+        style="color:#333; display: block; height: 1px; border: 0; border-top: 1px solid #000; margin: 1em 0; padding: 0;"/>
+    <a id="uptotop" data-role="button" class="ui-btn-right" data-icon="arrow-u" data-theme="b">Top</a>
+</div>
+
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Resource Properties
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div id="resourceProperties" style="display: :SET:">
+    <div>
+        <input type="text" name="name" id="selectedLibResourceName" value="" placeholder="Enter resource name"/>
+    </div>
+</div>
+
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Campaign Properties
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div id="campaignProperties" style="display: :SET:">
+    <input type="text" name="name" id="selectedCampaignProperties" value="" placeholder="Enter campaign name"/>
+</div>
+
+
+<!-- //////////////////////////////////////////////////////////////////////////
+
+Empty Properties
+
+////////////////////////////////////////////////////////////////////////// -->
+
+<div id="emptyProperties" style="display: :SET:">
+</div>
+
+
+</body>
+</html>

@@ -95,6 +95,7 @@ CompProperty.prototype = {
         var wrapDiv = $(i_panelID + ' > div');
         wrapDiv.find('a').button();
         wrapDiv.find('[type="text"]').textinput();
+        $(i_panelID).find('select').slider();
 
         return true;
     },

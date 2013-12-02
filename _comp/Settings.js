@@ -41,8 +41,6 @@ CompSettings.prototype = {
     },
 
     initAppColorPicker: function () {
-        return;
-        //todo enable color picker
         $('#hue-demo').minicolors({
             control: $(this).attr('data-control') || 'hue',
             defaultValue: $(this).attr('data-defaultValue') || '',

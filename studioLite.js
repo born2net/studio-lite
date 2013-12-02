@@ -2,6 +2,24 @@
  SignageLite is an open source framework for Digital Signage
 
  @module SignageLite
+ @example
+ <pre>
+ // boards (aka screen)
+ // board_templates (aka screen template)
+ // board_template_viewers (aka screen divisions)
+ //
+ // ---------------------------------------------------
+ // Campaign table relationship
+ // ---------------------------------------------------
+ // |- campaigns
+ // |--- campaign_boards (aka output)
+ // |- campaign_timelines
+ // |--- campaign_timeline_board_templates (aka screen template on the output)
+ // |- campaign_timeline_board_viewer_chanels (aka colors of screen divisions)
+ // |- campaign_timeline_chanels
+ // |--- campaign_timeline_chanel_players
+ </pre>
+
  **/
 
 var globs = {};
@@ -17,34 +35,17 @@ var model = new StudioLiteModel();
 commBroker.setService(StudioLiteModel.servicename, model);
 
 
-// boards * = screen
-// board_templates * = screen template
-// board_template_viewers * = screen divisions
-//
-// campaigns *
-//     campaign_boards * = output
-// campaign_timelines *
-//     campaign_timeline_board_templates * = screen template on the output
-// campaign_timeline_board_viewer_chanels * = colors to screen divisions
-// campaign_timeline_chanels *
-//     campaign_timeline_chanel_players *
-
-
 $(document).bind('pageinit', function () {
 
     $('#navLogout').on('tap', function (e) {
         $.removeCookie('digitalsignage', {path: '/'});
-        var url = 'https://secure.dynawebs.net/_php/msPortal.php?logout=1';
-        $(location).attr('href', url);
+        $.cookie('digitalsignage', '', { expires: -300 });
+        $('body').empty();
+        $('body').append('<div style="font-family: arial; text-align:center;"><h2>Thank you for using SignageStudio Web Lite</h2></div>');
         e.preventDefault();
-        e.stopPropagation()
         e.stopImmediatePropagation();
-
         return false;
     });
-
-
-
 });
 
 
@@ -133,6 +134,7 @@ $(document).ready(function () {
         $.mobile.changePage('#dialogMessageID');
     });
 
+
     commBroker.listen(globs.WAITSCREENON, function (e) {
         loginUIState(false);
         $.mobile.showPageLoadingMsg("a", "Authenticating");
@@ -165,3 +167,164 @@ $(document).ready(function () {
     }
 });
 
+
+/*/////////////////////////////////////////////
+ loginUIState
+ /////////////////////////////////////////////*/
+
+function loginUIState(i_state) {
+
+    if (i_state) {
+        $('#loginButton').button('enable');
+    } else {
+        $('#loginButton').button('disable');
+    }
+}
+
+
+/*/////////////////////////////////////////////
+ wireNavigation
+ /////////////////////////////////////////////*/
+
+function wireNavigation() {
+
+    viewStackMain = commBroker.getService('mainViewStack');
+
+    $('#navPlaylist').on('tap', function () {
+        deselectNav();
+        viewStackMain.selectIndex(0);
+        $(this).addClass('ui-btn-active');
+        return false;
+    });
+    $('#navFiles').on('tap', function () {
+        deselectNav();
+        $('#navButtons').children().removeClass('ui-btn-active');
+        viewStackMain.selectIndex(1);
+        $(this).addClass('ui-btn-active');
+        return false;
+    });
+    $('#navPlaylers').on('tap', function () {
+        deselectNav();
+        $('#navButtons').children().removeClass('ui-btn-active');
+        viewStackMain.selectIndex(2);
+        $(this).addClass('ui-btn-active');
+        return false;
+    });
+    $('#navSettings').on('tap', function () {
+        deselectNav();
+        $('#navSettings').children().removeClass('ui-btn-active');
+        viewStackMain.selectIndex(3);
+        $(this).addClass('ui-btn-active');
+        return false;
+    });
+    $('#navHelp').on('tap', function () {
+        deselectNav();
+        $('#navHelp').children().removeClass('ui-btn-active');
+        viewStackMain.selectIndex(4);
+        $(this).addClass('ui-btn-active');
+        return false;
+    });
+    $('#navLogout').on('tap', function () {
+        deselectNav();
+        $('#navLogout').children().removeClass('ui-btn-active');
+        viewStackMain.selectIndex(5);
+        $(this).addClass('ui-btn-active');
+        return false;
+    });
+    $('#navAdvance').on('tap', function () {
+        deselectNav();
+        viewStackMain.selectIndex(6);
+        return false;
+    });
+}
+
+
+/*/////////////////////////////////////////////
+ wireStudioUI
+ /////////////////////////////////////////////*/
+
+function wireStudioUI() {
+
+    $('#toggleNavigation').tap(function () {
+
+        switch ($('#navPanel').css('visibility')) {
+            case 'visible':
+            {
+                $("#toggleNavigation .ui-icon").addClass("ui-icon-arrow-r").removeClass("ui-icon-arrow-l")
+                $("#navPanel").panel("close");
+                break;
+            }
+            case 'hidden':
+            {
+                $("#toggleNavigation .ui-icon").addClass("ui-icon-arrow-l").removeClass("ui-icon-arrow-r")
+                $("#navPanel").panel("open");
+            }
+        }
+    });
+
+    $('#closeProperties').tap(function () {
+        $("#propertiesPanel").panel("close");
+    });
+
+    $('#campainManager').tap(function () {
+        if (confirm('Changes will be lost, would you like to save your changes first before exiting to campaign manager?')) {
+            window.location.reload();
+        }
+        return false;
+    });
+
+    $('#campainSave').tap(function () {
+        commBroker.getService('CompMSDB').save();
+        return false;
+    });
+
+    setTimeout(function () {
+        $("#navPanel").panel("open");
+    }, 300);
+
+}
+
+
+/*/////////////////////////////////////////////
+ wireLogin
+ /////////////////////////////////////////////*/
+
+function wireLogin(i_loginComponent) {
+
+    commBroker.listen(i_loginComponent.AUTHENTICATED, function (e) {
+        var crumb = e.edata.responce.data;
+
+        if ($("option:selected", '#rememberMe').val() == 'on')
+            $.cookie('digitalsignage', crumb, { expires: 300 });
+
+        var key = initKey();
+        commBroker.getService('CompMSDB').dbConnect();
+
+    });
+
+    commBroker.fire(i_loginComponent.USERID, $('#userName'));
+    commBroker.fire(i_loginComponent.USERPASSID, $('#userPass'));
+    commBroker.fire(i_loginComponent.LOGINBUTTON, $('#loginButton'));
+
+}
+
+
+/*/////////////////////////////////////////////
+ initKey
+ /////////////////////////////////////////////*/
+
+function initKey() {
+
+    var accountKey1 = $.cookie('digitalsignage') == undefined ? undefined : $.cookie('digitalsignage').split(' ')[0];
+    var accountKey2 = getComment('ACCOUNT_KEY');
+
+    if (accountKey1 !== undefined) {
+        commBroker.setValue('key', accountKey1);
+    } else if (accountKey2 !== undefined) {
+        commBroker.setValue('key', accountKey2.split(':')[1]);
+    } else {
+        commBroker.setValue('key', undefined);
+    }
+    return commBroker.getValue('key');
+
+}

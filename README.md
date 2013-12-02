@@ -9,7 +9,7 @@ The world's only enterprise level, open source, 100% FREE, Digital Signage platf
  - Connected to a private mediaSERVER or the public mediaCLOUD
  - 100% open source based on MIT license
  - Built using jQuery Mobile and designed with responsive layout in mind
- - Contributors are welcome, fork to kick off
+ - Contributors are welcome, fork and notify
 
 
 

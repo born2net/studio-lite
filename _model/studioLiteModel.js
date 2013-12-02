@@ -285,7 +285,9 @@ StudioLiteModel.prototype = {
         ajaxWrapper.getData(srvCmd, onServerReply);
 
         function onServerReply(data) {
-            var counter = 0;
+            if (data.responce['Stations']==undefined)
+                return;
+
             var stationsArray = data.responce['Stations']['Station'];
 
             // Build JSON data model from server reply
@@ -361,6 +363,6 @@ StudioLiteModel.prototype = {
     },
 
     getScreenCollection: function () {
-        return screenCollection;
+        return TemplateCollection;
     }
 }

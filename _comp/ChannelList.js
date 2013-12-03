@@ -104,7 +104,7 @@ ChannelList.prototype = {
         });
     },
 
-    _openAddBlockWizard: function(e){
+    _openAddBlockWizard: function (e) {
         var self = this;
         var addBlockWizard = new AddBlockWizard();
         addBlockWizard.newChannelBlockPage();
@@ -181,7 +181,11 @@ ChannelList.prototype = {
             var blockData = blocks[block_id].getBlockData();
             $('#sortable').append($('<li class="selectedResource" data-theme="b" data-block_id="' + blockData.blockID + '"><a href="#">' +
                 '<img style="width: 50px ; height: 50px; margin-left: 20px; padding-top: 14px" src="' + blockData.blockIcon + '">' +
-                '<h2>' + blockData.blockName + '</h2><p>' + blockData.blockDescription + '</p></a><a data-icon="gear" class="selectedResource resourceOpenProperties"></a></li>'));
+                '<h2>' + blockData.blockName + '</h2>' +
+                '<p>' + blockData.blockDescription + '</p>' +
+                '</a>' +
+                '<a data-icon="gear" class="fixPropOpenLiButtonPosition selectedResource resourceOpenProperties"> </a>' +
+                '</li>'));
         }
 
         $('#sortable').listview('refresh');
@@ -196,9 +200,13 @@ ChannelList.prototype = {
         $('.selectedResource').tap(function (e) {
             var openProps = $(e.target).closest('a').hasClass('resourceOpenProperties') ? true : false;
             var resourceElem = $(e.target).closest('li');
-            var resourceProp = $(resourceElem).find('.resourceOpenProperties');
+            // var resourceProp = $(resourceElem).find('.resourceOpenProperties');
             self.selected_block_id = $(resourceElem).data('block_id');
 
+            $('.selectedResource').removeClass('liSelectedItem');
+            $(resourceElem).addClass('liSelectedItem');
+
+            /*
             $('.selectedResource').css({
                 'background-image': 'none',
                 'border-top': 'none',
@@ -212,9 +220,9 @@ ChannelList.prototype = {
             });
 
             $(resourceProp).css({
-                // 'background-image': 'linear-gradient(#f0f0f0 , #f0f0f0)'
-                // 'border-bottom': '1px solid red'
-            });
+                'background-image': 'linear-gradient(#ededed , #ededed)',
+                'border-bottom': '1px solid #d5d5d5'
+            });*/
 
 
             // $('.selectedResource').css('background-image', 'linear-gradient(#fff , #f1f1f1)');

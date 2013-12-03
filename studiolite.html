@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SignageStudio Web Lite</title>
 
+    <!-- NEW
+
+    https://secure.dynawebs.net/_studiolite-dev/_themes/fontsawesome/css/font-awesome.css
+    https://secure.dynawebs.net/_studiolite-dev/_themes/fontsawesome/fonts/fontawesome-webfont.ttf
+    https://secure.dynawebs.net/_studiolite-dev/_themes/fontsawesome/fonts/...
+
+    -->
 
     <!-- Theme used http://nativedroid.godesign.ch/ -->
     <link rel="stylesheet" href="https://secure.dynawebs.net/_msportal/_themes/nativedroid/css/font-awesome.min.css"/>
@@ -152,10 +159,28 @@ CSS
 
 
 <STYLE type="text/css">
-<!--
-fonts
 
--->
+#playbackResourcesDiv {
+    border: 1px solid #e7e7e7;
+    border-radius: 3px;
+    padding: 20px;
+    margin: 20px;
+    background-color: WHITE;
+
+}
+
+.liSelectedItem {
+    background-image: linear-gradient(#e5e5e5, #e5e5e5);
+    border-bottom: 1px solid #cfcfcf;
+}
+
+.fixPropOpenLiButtonPosition {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+}
+
+
 @font-face {
     font-family: 'Roboto';
     font-style: normal;
@@ -201,10 +226,6 @@ fonts
 
 }
 
-<!--
-fonts
-
--->
 @import url("fonts.googleapis.com/css?family=Roboto:400,100,300,500,700");
 
 .ui-page {
@@ -310,14 +331,6 @@ label.ui-btn {
     left: 23px !important;
 }
 
-<!-- NEW -->
-#playbackResourcesDiv {
-    border: 1px solid #e2e2e2;
-    border-radius: 1px;
-    padding: 30px;
-    margin: 20px;
-
-}
 
 #timeLinePropDiv {
     float: right;

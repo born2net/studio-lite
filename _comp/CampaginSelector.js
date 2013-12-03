@@ -53,7 +53,7 @@ CompCampaignSelector.prototype = {
                 '<img src="https://secure.dynawebs.net/_msportal/_images/campaign.png">' +
                 '<h2>' + recCampain.campaign_name + '</h2>' +
                 '<p>play list mode: ' + playListMode + '</p></a>' +
-                '<a data-theme="b" class="selectedLibResource resourceLibOpenProps"></a>' +
+                '<a data-theme="b" class="fixPropOpenLiButtonPosition selectedLibResource resourceLibOpenProps"></a>' +
                 '</li>';
             $(self.m_container).append($(snippet));
         });

@@ -101,7 +101,7 @@ CompResourcesList.prototype = {
                 '<img src="' + model.getIcon(recResources[i]['resource_type']) + '">' +
                 '<h2>' + recResources[i]['resource_name'] + '</h2>' +
                 '<p>' + resourceDescription + '</p></a>' +
-                '<a data-theme="b" class="selectedLibResource resourceLibOpenProps"></a>' +
+                '<a data-theme="b" class="fixPropOpenLiButtonPosition selectedLibResource resourceLibOpenProps"></a>' +
                 '</li>';
 
             $(self.m_container).append($(snippet));
@@ -123,9 +123,12 @@ CompResourcesList.prototype = {
 
             self.m_property.viewPanel('#resourceProperties');
 
-            $('.selectedLibResource').css('background-image', 'linear-gradient(#fff , #f1f1f1)');
-            $(resourceElem).css('background-image', 'linear-gradient(#bebebe , #bebebe)');
-            $(resourceProp).css('background-image', 'linear-gradient(#bebebe , #bebebe)');
+            $('.selectedLibResource').removeClass('liSelectedItem');
+            $(resourceElem).addClass('liSelectedItem');
+
+            // $('.selectedLibResource').css('background-image', 'linear-gradient(#fff , #f1f1f1)');
+            // $(resourceElem).css('background-image', 'linear-gradient(#bebebe , #bebebe)');
+            // $(resourceProp).css('background-image', 'linear-gradient(#bebebe , #bebebe)');
 
             var recResource = self.m_helperSDK.getResourceRecord(self.m_selected_resource_id);
 

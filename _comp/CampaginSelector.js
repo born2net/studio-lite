@@ -49,11 +49,11 @@ CompCampaignSelector.prototype = {
         $(keys).each(function (key, campaign_id) {
             var recCampain = tableCampaigns.getRec(campaign_id);
             var playListMode = recCampain.campaign_playlist_mode == 0 ? 'sequencer' : 'scheduler';
-            var snippet = '<li data-campaignid="' + campaign_id + '"data-icon="gear" class="selectedLibResource" data-theme="c"><a href="#">' +
+            var snippet = '<li data-campaignid="' + campaign_id + '"data-icon="gear" class="selectedLibResource" data-theme="b"><a href="#">' +
                 '<img src="https://secure.dynawebs.net/_msportal/_images/campaign.png">' +
                 '<h2>' + recCampain.campaign_name + '</h2>' +
                 '<p>play list mode: ' + playListMode + '</p></a>' +
-                '<a data-theme="c" class="selectedLibResource resourceLibOpenProps"></a>' +
+                '<a data-theme="b" class="selectedLibResource resourceLibOpenProps"></a>' +
                 '</li>';
             $(self.m_container).append($(snippet));
         });

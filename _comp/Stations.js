@@ -69,17 +69,17 @@ CompStations.prototype = {
                 case CompStations.stationListEmpty:
                 {
                     var station = model.getStation(dbmid);
-                    var stationHTML = '<li data-role="list-divider" data-theme="c" >' + station['name'] + '</li>' +
-                        '<li data-dbmid="' + dbmid + '" data-icon="gear" data-theme="c" class="station">' +
+                    var stationHTML = '<li data-role="list-divider" data-theme="b" >' + station['name'] + '</li>' +
+                        '<li data-dbmid="' + dbmid + '" data-icon="gear" data-theme="b" class="station">' +
                         '<span style="float:left; padding-left: 7px" id="stationIcon' + i + '"></span>' +
                         '<a class="lastStatus" style="float: left" data-transition="slide">Last status: ' + station['status'] + '</a>' +
                         '<div style="padding-left: 4em" class="stationDetailsDiv">' +
                         '<br/><span style="margin-left:10px;"></span>' +
-                        '</div><a data-theme="c" data-icon="gear" class="station stationOpenProps"></a>' +
+                        '</div><a data-theme="b" data-icon="gear" class="station stationOpenProps"></a>' +
                         '</li>';
 
-                    /* var stationHTML =   '<li data-role="list-divider" data-theme="c" >' + station['name'] + '</li>'+
-                     '<li data-dbmid="' + dbmid + '" data-icon="gear" data-theme="c" class="station">'+
+                    /* var stationHTML =   '<li data-role="list-divider" data-theme="b" >' + station['name'] + '</li>'+
+                     '<li data-dbmid="' + dbmid + '" data-icon="gear" data-theme="b" class="station">'+
                      '<span style="float:left; padding-left: 7px" id="stationIcon'+i+'"></span>'+
                      '<a class="lastStatus" style="float: left" data-transition="slide">Last status:'+ station['status'] +'</a>'+
                      '<div style="padding-left: 4em" class="stationDetailsDiv">'+
@@ -87,7 +87,7 @@ CompStations.prototype = {
                      'Last update: '+ station['lastUpdate'] + ' seconds ago<br/>'+
                      '</span>'+
                      '<span class="lastRunTime" style="margin-left:10px; font-size: 0.5em">Running time: '+ station['runningTime'] +'</span>'+
-                     '</div>'+ '<a data-theme="c" data-icon="gear" class="station stationOpenProps"></a>' +
+                     '</div>'+ '<a data-theme="b" data-icon="gear" class="station stationOpenProps"></a>' +
                      '</li>'; */
 
                     $('#stationList').append(stationHTML)

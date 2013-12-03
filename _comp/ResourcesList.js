@@ -97,11 +97,11 @@ CompResourcesList.prototype = {
             var size = (parseInt(recResources[i]['resource_bytes_total']) / 1000).toFixed(2);
             var resourceDescription = 'size: ' + size + 'K dimenstion: ' + recResources[i]['resource_pixel_width'] + 'x' + recResources[i]['resource_pixel_height'];
 
-            var snippet = '<li data-resource_id="' + recResources[i]['resource_id'] + '"data-icon="gear" class="selectedLibResource" data-theme="c"><a href="#">' +
+            var snippet = '<li data-resource_id="' + recResources[i]['resource_id'] + '"data-icon="gear" class="selectedLibResource" data-theme="b"><a href="#">' +
                 '<img src="' + model.getIcon(recResources[i]['resource_type']) + '">' +
                 '<h2>' + recResources[i]['resource_name'] + '</h2>' +
                 '<p>' + resourceDescription + '</p></a>' +
-                '<a data-theme="c" class="selectedLibResource resourceLibOpenProps"></a>' +
+                '<a data-theme="b" class="selectedLibResource resourceLibOpenProps"></a>' +
                 '</li>';
 
             $(self.m_container).append($(snippet));

@@ -48,7 +48,7 @@ ScreenResolution.prototype = {
 
         var collection = model.getScreenCollection();
         for (var screenResolution in collection[i_orientation]) {
-            screens += '<input class="resolutionRadioSelection" data-screen="' + screenResolution + '" type="radio" data-theme="c" data-corners="false" name="stationResolutionOption" id="stationResolutionOption' + i + '" ' +
+            screens += '<input class="resolutionRadioSelection" data-screen="' + screenResolution + '" type="radio" data-theme="b" data-corners="false" name="stationResolutionOption" id="stationResolutionOption' + i + '" ' +
                 _checkToSelectRadio(preSetResolution, screenResolution, i) +
                 '<label class="resolutionRadioSelection" data-corners="false" for="stationResolutionOption' + i + '">' + screenResolution + '</label>';
             i++;

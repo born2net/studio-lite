@@ -179,7 +179,7 @@ ChannelList.prototype = {
 
         for (var block_id in blocks) {
             var blockData = blocks[block_id].getBlockData();
-            $('#sortable').append($('<li class="selectedResource" data-theme="c" data-block_id="' + blockData.blockID + '"><a href="#">' +
+            $('#sortable').append($('<li class="selectedResource" data-theme="b" data-block_id="' + blockData.blockID + '"><a href="#">' +
                 '<img style="width: 50px ; height: 50px; margin-left: 20px; padding-top: 14px" src="' + blockData.blockIcon + '">' +
                 '<h2>' + blockData.blockName + '</h2><p>' + blockData.blockDescription + '</p></a><a data-icon="gear" class="selectedResource resourceOpenProperties"></a></li>'));
         }
@@ -199,9 +199,27 @@ ChannelList.prototype = {
             var resourceProp = $(resourceElem).find('.resourceOpenProperties');
             self.selected_block_id = $(resourceElem).data('block_id');
 
-            $('.selectedResource').css('background-image', 'linear-gradient(#fff , #f1f1f1)');
-            $(resourceElem).css('background-image', 'linear-gradient(#bebebe , #bebebe)');
-            $(resourceProp).css('background-image', 'linear-gradient(#bebebe , #bebebe)');
+            $('.selectedResource').css({
+                'background-image': 'none',
+                'border-top': 'none',
+                'border-bottom': '1px solid #e0e0e0'
+            });
+
+            $(resourceElem).css({
+                'background-image': 'linear-gradient(#ededed , #ededed)',
+                'border-bottom': '1px solid #d5d5d5'
+                // 'border-top': '1px solid #d5d5d5',
+            });
+
+            $(resourceProp).css({
+                // 'background-image': 'linear-gradient(#f0f0f0 , #f0f0f0)'
+                // 'border-bottom': '1px solid red'
+            });
+
+
+            // $('.selectedResource').css('background-image', 'linear-gradient(#fff , #f1f1f1)');
+            // $(resourceElem).css('background-image', 'linear-gradient(#e0e0e0 , #e0e0e0)');
+            // $(resourceProp).css('background-image', 'linear-gradient(#bebebe , #bebebe)');
 
             self._blockChannelSelected();
 

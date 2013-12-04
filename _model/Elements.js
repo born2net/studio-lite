@@ -1,5 +1,5 @@
 /**
- Constants of DOM Element IDs
+ Constants used to query the DOM
  @class Elements
  @constructor
  @return none

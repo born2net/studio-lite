@@ -1,9 +1,9 @@
 /**
- SignageStudio Web Lite (a.k.a SignageLite) is an free, open source Web application and
- framework for Digital Signage available under GNU GENERAL PUBLIC LICENSE Version 3 (see LICENSE).
+ SignageStudio Web Lite (a.k.a SignageLite) is a free, open source Web application and
+ framework for Digital Signage that's available under GNU GENERAL PUBLIC LICENSE Version 3 (see LICENSE).
 
  The App and SDK connect to the free Digital Signage web service available from http://www.DigitalSignage.com
- To fork and to view online docs visit:  http://git.DigitalSignage.com
+ To fork and to view the online docs visit: http://git.DigitalSignage.com
 
  MediaSignage Inc (c)
 

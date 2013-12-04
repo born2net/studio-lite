@@ -25,7 +25,7 @@ Block.PLACEMENT_CHANNEL = 'PLACEMENT_CHANNEL';
 Block.BLOCK_ON_CHANNEL_SELECTED = 'BLOCK_ON_CHANNEL_SELECTED';
 
 /**
- event fires when block length has changed, normally by a knob widget
+ event fires when block length has changed, normally by a knob property widget
  @event Block.BLOCK_LENGTH_CHANGED
  @param {object} this
  @param {object} caller the firing knob element

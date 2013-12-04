@@ -1,3 +1,5 @@
+// Element IDs
+
 Elements.STUDIO_LITE = '#studioLite';
 
 

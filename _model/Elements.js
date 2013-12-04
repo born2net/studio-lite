@@ -44,6 +44,7 @@ Elements.USER_NAME = '#userName';
 Elements.USER_PASS = '#userPass';
 
 Elements.CAMPAIN_MANAGER = '#campainManager';
+Elements.CAMPAIN_SAVE = '#campainSave';
 
 
 function Elements() {

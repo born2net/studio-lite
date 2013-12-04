@@ -237,13 +237,13 @@ function wireStudioUI() {
         return false;
     });
 
-    $('#campainSave').tap(function () {
+    $(Elements.CAMPAIN_SAVE).tap(function () {
         commBroker.getService('CompMSDB').save();
         return false;
     });
 
     setTimeout(function () {
-        $("#navPanel").panel("open");
+        $(Elements.NAV_PANEL).panel("open");
     }, 300);
 
 }

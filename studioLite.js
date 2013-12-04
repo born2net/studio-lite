@@ -41,34 +41,34 @@ $(document).ready(function () {
         return;
     }
 
-    var viewStackMain = new Viewstacks('#mainContent');
+    var viewStackMain = new Viewstacks(Elements.MAIN_CONTENT);
     commBroker.setService('mainViewStack', viewStackMain)
 
-    viewStackMain.addChild('#playlist');
-    viewStackMain.addChild('#files');
-    viewStackMain.addChild('#stations');
-    viewStackMain.addChild('#settings');
-    viewStackMain.addChild('#help');
-    viewStackMain.addChild('#logout');
-    viewStackMain.addChild('#advanded');
+    viewStackMain.addChild(Elements.PLAYLIST);
+    viewStackMain.addChild(Elements.FILES);
+    viewStackMain.addChild(Elements.STATIONS);
+    viewStackMain.addChild(Elements.SETTINGS);
+    viewStackMain.addChild(Elements.HELP);
+    viewStackMain.addChild(Elements.LOGOUT);
+    viewStackMain.addChild(Elements.ADVANDED);
     viewStackMain.selectIndex(0);
 
-    var compProperty = new CompProperty('#propertiesPanelView');
+    var compProperty = new CompProperty(Elements.PROPERTIES_PANEL_VIEW);
     commBroker.setService('CompProperty', compProperty);
 
-    var compSettings = new CompSettings('#settingsContainer');
+    var compSettings = new CompSettings(Elements.SETTING_SCONTAINER);
     commBroker.setService('CompSettings', compSettings);
 
-    var compPlaylist = new CompCampaignNavigator('#playListMain');
+    var compPlaylist = new CompCampaignNavigator(Elements.PLAYLIST_MAIN);
     commBroker.setService('CompCampaignNavigator', compPlaylist);
 
-    var compResources = new CompResourcesList('#resourceLibList');
+    var compResources = new CompResourcesList(Elements.RESOURCE_LIB_LIST);
     commBroker.setService('CompResourcesList', compResources);
 
-    var compCampaignSelector = new CompCampaignSelector('#campaignSelectorList');
+    var compCampaignSelector = new CompCampaignSelector(Elements.CAMPAIGN_SELECTOR_LIST);
     commBroker.setService('CompCampaignNavigator', compCampaignSelector);
 
-    var compStations = new CompStations('#stations');
+    var compStations = new CompStations(Elements.STATIONS);
     commBroker.setService('CompStations', compStations);
 
     var compMSDB = new CompMSDB();
@@ -80,7 +80,7 @@ $(document).ready(function () {
     var compX2JS = new X2JS({escapeMode: true, attributePrefix: "_", arrayAccessForm: "none", emptyNodeForm: "text", enableToStringFunc: true, arrayAccessFormPaths: [], skipEmptyTextNodesForObj: true});
     commBroker.setService('compX2JS', compX2JS);
 
-    $("#studioLite").on("pageinit", function (event) {
+    $(Elements.STUDIO_LITE).on("pageinit", function (event) {
         bindScreenSizeQueries();
         wireStudioUI();
         wireNavigation();
@@ -95,8 +95,8 @@ $(document).ready(function () {
     var data = {'@functionName': 'f_accountType'}
 
     commBroker.listen(loginComponent.ALERT_MSG, function (event) {
-        $('#dialogTextID').text(event.edata);
-        $.mobile.changePage('#dialogMessageID');
+        $(Elements.DIALOG_TEXT_ID).text(event.edata);
+        $.mobile.changePage(Elements.DIALOG_MESSAGE_ID);
     });
 
     commBroker.listen(globs.WAITSCREENON, function (e) {
@@ -119,7 +119,7 @@ $(document).ready(function () {
 
         wireLogin(loginComponent);
         setTimeout(function () {
-            $.mobile.changePage('#loginPage');
+            $.mobile.changePage(Elements.LOGIN_PAGE);
         }, 3000);
 
     } else {
@@ -148,9 +148,9 @@ function initServices() {
 function loginUIState(i_state) {
 
     if (i_state) {
-        $('#loginButton').button('enable');
+        $(Elements.LOGIN_BUTTON).button('enable');
     } else {
-        $('#loginButton').button('disable');
+        $(Elements.LOGIN_BUTTON).button('disable');
     }
 }
 
@@ -158,69 +158,70 @@ function wireNavigation() {
 
     var viewStackMain = commBroker.getService('mainViewStack');
 
-    $('#navPlaylist').on('tap', function () {
+    $(Elements.NAV_PLAY_LIST).on('tap', function () {
         deselectNav();
         viewStackMain.selectIndex(0);
         $(this).addClass('ui-btn-active');
         return false;
     });
-    $('#navFiles').on('tap', function () {
+    $(Elements.NAV_FILES).on('tap', function () {
         deselectNav();
-        $('#navButtons').children().removeClass('ui-btn-active');
+        $(Elements.NAV_BUTTONS).children().removeClass('ui-btn-active');
         viewStackMain.selectIndex(1);
         $(this).addClass('ui-btn-active');
         return false;
     });
-    $('#navPlaylers').on('tap', function () {
+    $(Elements.NAV_PLAYLERS).on('tap', function () {
         deselectNav();
-        $('#navButtons').children().removeClass('ui-btn-active');
+        $(Elements.NAV_BUTTONS).children().removeClass('ui-btn-active');
         viewStackMain.selectIndex(2);
         $(this).addClass('ui-btn-active');
         return false;
     });
-    $('#navSettings').on('tap', function () {
+    $(Elements.NAV_SETTINGS).on('tap', function () {
         deselectNav();
-        $('#navSettings').children().removeClass('ui-btn-active');
+        $(Elements.NAV_SETTINGS).children().removeClass('ui-btn-active');
         viewStackMain.selectIndex(3);
         $(this).addClass('ui-btn-active');
         return false;
     });
-    $('#navHelp').on('tap', function () {
+    $(Elements.NAV_HELP).on('tap', function () {
         deselectNav();
-        $('#navHelp').children().removeClass('ui-btn-active');
+        $(Elements.NAV_HELP).children().removeClass('ui-btn-active');
         viewStackMain.selectIndex(4);
         $(this).addClass('ui-btn-active');
         return false;
     });
-    $('#navLogout').on('tap', function () {
+    $(Elements.NAV_LOGOUT).on('tap', function () {
         deselectNav();
-        $('#navLogout').children().removeClass('ui-btn-active');
+        $(Elements.NAV_LOGOUT).children().removeClass('ui-btn-active');
         viewStackMain.selectIndex(5);
         $(this).addClass('ui-btn-active');
         return false;
     });
-    $('#navAdvance').on('tap', function () {
+    $(Elements.NAV_ADVANCE).on('tap', function () {
         deselectNav();
         viewStackMain.selectIndex(6);
         return false;
     });
 }
 
+
 function wireStudioUI() {
 
-    $('#toggleNavigation').tap(function () {
+    $(Elements.TOGGLE_NAVIGATION).tap(function () {
 
-        switch ($('#navPanel').css('visibility')) {
+        switch ($(Elements.NAV_PANEL).css('visibility')) {
             case 'visible':
             {
-                $("#toggleNavigation .ui-icon").addClass("ui-icon-arrow-r").removeClass("ui-icon-arrow-l")
-                $("#navPanel").panel("close");
+                $(Elements.TOGGLE_NAVIGATION + " .ui-icon").addClass("ui-icon-arrow-r").removeClass("ui-icon-arrow-l")
+                $(Elements.NAV_PANEL).panel("close");
                 break;
             }
             case 'hidden':
             {
-                $("#toggleNavigation .ui-icon").addClass("ui-icon-arrow-l").removeClass("ui-icon-arrow-r")
-                $("#navPanel").panel("open");
+                $(Elements.TOGGLE_NAVIGATION + " .ui-icon").addClass("ui-icon-arrow-l").removeClass("ui-icon-arrow-r")
+                $(Elements.NAV_PANEL).panel("open");
             }
         }
     });

@@ -1,11 +1,21 @@
-/*/////////////////////////////////////////////
-
- AddBlockWizard
-
- /////////////////////////////////////////////*/
-
+/**
+ Custom event fired when a new block is selected and added to timeline_channel
+ @event AddBlockWizard
+ @param {this} caller
+ @param {self} context caller
+ @param {event} player_code which represents a specific code assigned for each block type
+ @static
+ @final
+ **/
 AddBlockWizard.ADD_NEW_BLOCK = 'ADD_NEW_BLOCK';
 
+/**
+ Add block wizard is a UI component which allows selection and insertion of a new component (i.e. QR / RSS ...)
+ or a resource to be added to the currently selected timeline_channel
+ @class AddBlockWizard
+ @constructor
+ @return {object} instantiated AddBlockWizard
+ **/
 function AddBlockWizard() {
     this.self = this;
     this._init();
@@ -14,7 +24,22 @@ function AddBlockWizard() {
 AddBlockWizard.prototype = {
     constructor: AddBlockWizard,
 
+    /**
+     init and wire UI
+     @method _init
+     @return none
+     **/
     _init: function () {
+        var self = this;
+        self._wireUI();
+    },
+
+    /**
+     Wire going back from AddBlockWizard via element back button
+     @method _wireUI
+     @return none
+     **/
+    _wireUI: function () {
         var self = this;
         $('#goBackFromAddResourceView').tap(function (e) {
             self.close();
@@ -24,6 +49,12 @@ AddBlockWizard.prototype = {
         });
     },
 
+    /**
+     Build two lists, components and resources that can be selected from.
+     Once an LI is selected AddBlockWizard.ADD_NEW_BLOCK is fired to announce a new block is being added.
+     @method newChannelBlockPage
+     @return none
+     **/
     newChannelBlockPage: function () {
         var self = this;
 
@@ -83,6 +114,11 @@ AddBlockWizard.prototype = {
 
     },
 
+    /**
+     Return back to calling page.
+     @method close
+     @return {boolean} false;
+     **/
     close: function () {
         var self = this;
         // self._emptyNewChannelPage();
@@ -94,9 +130,13 @@ AddBlockWizard.prototype = {
         return false;
     },
 
+    /**
+     Empty selection lists
+     @method destroy
+     @return none
+     **/
     destroy: function () {
         $('#addResourceList').empty();
         $('#addComponentList').empty();
     }
-
 }

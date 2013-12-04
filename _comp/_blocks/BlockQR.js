@@ -45,6 +45,11 @@ BlockQR.prototype._wireUI = function () {
     });
 };
 
+/**
+ Populate the QR block common properties panel
+ @method _loadCommonProperties
+ @return none
+ **/
 BlockQR.prototype._loadCommonProperties = function () {
     var self = this;
 
@@ -52,6 +57,11 @@ BlockQR.prototype._loadCommonProperties = function () {
     this.m_property.viewSubPanel('#blockQRCommonProperties');
 };
 
+/**
+ Load up property values in the common panel
+ @method _populate
+ @return none
+ **/
 BlockQR.prototype._populate = function () {
     var self = this;
 
@@ -67,6 +77,14 @@ BlockQR.prototype._populate = function () {
     }
 }
 
+/**
+ When user changes QR text update msdb.
+ We use xSavePlayerData as a json boilerplate that we append values to
+ and save it in msdb as player_data
+ @method _onChange
+ @param {event} e event from target input element
+ @return none
+ **/
 BlockQR.prototype._onChange = function (e) {
     var self = this;
 
@@ -84,7 +102,7 @@ BlockQR.prototype._onChange = function (e) {
             Data: {
                 Text: {
                     _textSource: 'static',
-                    __text: text,
+                    __text: text
                 }
             },
             _label: 'QR Code',
@@ -94,6 +112,5 @@ BlockQR.prototype._onChange = function (e) {
 
     var xData = x2js.json2xml_str(xSavePlayerData);
     self.m_helperSDK.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', xData);
-
 }
 

@@ -25,6 +25,11 @@ function BlockVideo(i_placement, i_campaign_timeline_chanel_player_id) {
 
 BlockVideo.prototype = new Block(null);
 
+/**
+ Bind listener events to related UI elements
+ @method _wireUI
+ @return none
+ **/
 BlockVideo.prototype._wireUI = function () {
     var self = this;
 
@@ -36,10 +41,9 @@ BlockVideo.prototype._wireUI = function () {
 };
 
 /**
- Returns this model's attributes as...
- @method setPlayerData
- @param i_playerData {string} json object representing block data
- @return {String} Unique clientId.
+ Populate the image's common properties panel
+ @method _loadCommonProperties
+ @return none
  **/
 BlockVideo.prototype._loadCommonProperties = function () {
     var self = this;
@@ -49,10 +53,9 @@ BlockVideo.prototype._loadCommonProperties = function () {
 };
 
 /**
- Returns this model's attributes as...
- @method setPlayerData
- @param i_playerData {string} json object representing block data
- @return {String} Unique clientId.
+ Load up property values in the common panel
+ @method _populate
+ @return none
  **/
 BlockVideo.prototype._populate = function () {
     var self = this;
@@ -74,34 +77,31 @@ BlockVideo.prototype._populate = function () {
 }
 
 /**
- Returns this model's attributes as...
- @method setPlayerData
- @param i_playerData {string} json object representing block data
- @return {String} Unique clientId.
+ Set the icon (image) by the file type (i.e.: mp4/flv/m4v)
+ @method _setIcon
+ @param {string} i_fileFormat format of the file
+ @return none
  **/
 BlockVideo.prototype._setIcon = function (i_fileFormat) {
     var self = this;
     self.m_blockIcon = model.getIcon(i_fileFormat);
 };
 
-
 /**
- Update properties title
+ Update the video's properties title
  @method override _updateTitle
  @return none
  **/
-
 BlockVideo.prototype._updateTitle = function () {
     var self = this;
     $('#selectedChannelResourceName').text(self.m_blockDescription);
 }
 
 /**
- Get a default Video XML player_data which we use to add a new Video component
+ Build a boilerplate XML that's used as the default player_data for the new video component
  @method _getDefaultPlayerVideoData
  @return {xml} xml data
  **/
-
 BlockVideo.prototype._getDefaultPlayerVideoData = function () {
     var self = this;
 
@@ -114,25 +114,14 @@ BlockVideo.prototype._getDefaultPlayerVideoData = function () {
         '</Data>' +
         '</Player>';
     return xml;
-
-    //<Player player="3100" label="" interactive="0">
-    //    <Data>
-    //        <Resource resource="387">
-    //            <AspectRatio maintain="1" />
-    //            <Video autoRewind="1" volume="1" backgroundAlpha="1" />
-    //        </Resource>
-    //    </Data>
-    //</Player>
-
 };
 
 /**
- When user changes aspect ratio checkbox we update db
+ When user changes aspect ratio checkbox we update msdb
  @method _onChange
- @param e {event} event from target input
+ @param {event} e event from target input element
  @return none
  **/
-
 BlockVideo.prototype._onChange = function (e) {
     var self = this;
     var state = $('#videoAspectRatio option:selected').val() == "on" ? 1 : 0;
@@ -157,13 +146,13 @@ BlockVideo.prototype._onChange = function (e) {
     self.m_helperSDK.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', xmlString);
 }
 
+
 /**
- Get block data
- @method override getBlockData
- @return data {object}
+ Get block data in json object literal
+ @method getBlockData override
+ @return {object} object literal
  entire block's data members
  **/
-
 BlockVideo.prototype.getBlockData = function () {
     var self = this;
     var data = {
@@ -176,7 +165,15 @@ BlockVideo.prototype.getBlockData = function () {
     return data;
 }
 
-
+/**
+ Set the instance player_data from msdb which includes native_resource_id (handle of a resource)
+ as well as the description of the resource and icon. This function is called upon instantiation
+ and it is a special method which applies only to image/swf/video blocks as they hold a reference
+ to an external resource (i.e.: a native_id).
+ @method setPlayerData
+ @param {string} i_playerData
+ @return {String} Unique clientId.
+ **/
 BlockVideo.prototype.setPlayerData = function (i_playerData) {
     var self = this;
 

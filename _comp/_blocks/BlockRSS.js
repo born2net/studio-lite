@@ -25,6 +25,11 @@ function BlockRSS(i_placement, i_campaign_timeline_chanel_player_id) {
 
 BlockRSS.prototype = new Block(null);
 
+/**
+ Bind listener events to related UI elements
+ @method _wireUI
+ @return none
+ **/
 BlockRSS.prototype._wireUI = function () {
     var self = this;
 
@@ -40,7 +45,8 @@ BlockRSS.prototype._wireUI = function () {
 };
 
 /**
- Get a default RSS XML player_data which we use to add a new RSS component
+ Get a default RSS XML player_data which is a boilerplate xml structure used
+ to add a new RSS component with
  @method _getDefaultPlayerRSSData
  @return {xml} xml data
  **/
@@ -61,8 +67,9 @@ BlockRSS.prototype._getDefaultPlayerRSSData = function () {
     return xml;
 };
 
+
 /**
- Populate the changes in the common properties panel for BlockRSS
+ Populate the RSS block common properties panel
  @method _loadCommonProperties
  @return none
  **/
@@ -73,7 +80,11 @@ BlockRSS.prototype._loadCommonProperties = function () {
     this.m_property.viewSubPanel('#blockRSSCommonProperties');
 };
 
-
+/**
+ Load up property values in the common panel
+ @method _populate
+ @return none
+ **/
 BlockRSS.prototype._populate = function () {
     var self = this;
 
@@ -91,7 +102,7 @@ BlockRSS.prototype._populate = function () {
 }
 
 /**
- When user changes a URL link for feed, update internal db
+ When user changes a URL link for the RSS feed, update the msdb
  @method _onChange
  @param e {event} event from target input
  @return none
@@ -107,7 +118,7 @@ BlockRSS.prototype._onChange = function (e) {
     var xml = $(xmlDoc);
     var rss = xml.find('Rss');
 
-    // this is a new component so we need to add a boilerplate xml
+    // this is a new component so we need to add a boilerplate XML
     if (rss.length == 0) {
         xPlayerData = self._getDefaultPlayerRSSData();
         xmlDoc = $.parseXML(xPlayerData);

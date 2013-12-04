@@ -104,7 +104,7 @@ BlockImage.prototype._onChange = function (e) {
     var xml = $(xmlDoc);
     var aspectRatio = xml.find('AspectRatio');
 
-    // this is a new component so we need to add a boilerplate xml
+    // this is a new component so we need to add a boilerplate XML
     if (aspectRatio.length == 0) {
         xPlayerData = self._getDefaultPlayerImageData();
         xmlDoc = $.parseXML(xPlayerData);

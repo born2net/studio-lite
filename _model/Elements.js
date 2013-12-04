@@ -46,6 +46,7 @@ Elements.NAV_ADVANCE = '#navAdvance';
 Elements.NAV_BUTTONS = '#navButtons';
 
 
+
 function Elements() {
 };
 

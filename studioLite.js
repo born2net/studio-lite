@@ -253,7 +253,7 @@ function wireLogin(i_loginComponent) {
     commBroker.listen(i_loginComponent.AUTHENTICATED, function (e) {
         var crumb = e.edata.responce.data;
 
-        if ($("option:selected", '#rememberMe').val() == 'on')
+        if ($("option:selected", Elements.REMEMBER_ME).val() == 'on')
             $.cookie('digitalsignage', crumb, { expires: 300 });
 
         var key = initAccount();
@@ -261,9 +261,9 @@ function wireLogin(i_loginComponent) {
 
     });
 
-    commBroker.fire(i_loginComponent.USERID, $('#userName'));
-    commBroker.fire(i_loginComponent.USERPASSID, $('#userPass'));
-    commBroker.fire(i_loginComponent.LOGINBUTTON, $('#loginButton'));
+    commBroker.fire(i_loginComponent.USERID, $(Elements.USER_NAME));
+    commBroker.fire(i_loginComponent.USERPASSID, $(Elements.USER_PASS));
+    commBroker.fire(i_loginComponent.LOGINBUTTON, $(Elements.LOGIN_BUTTON));
 
 }
 

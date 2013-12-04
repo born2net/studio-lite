@@ -36,6 +36,10 @@ Elements.NAV_BUTTONS = '#navButtons';
 
 Elements.TOGGLE_NAVIGATION = '#toggleNavigation';
 
+Elements.REMEMBER_ME = '#rememberMe';
+Elements.USER_NAME = '#userName';
+Elements.USER_PASS = '#userPass';
+
 
 
 function Elements() {

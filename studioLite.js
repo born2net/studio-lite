@@ -1,5 +1,11 @@
 /**
- SignageLite is an open source framework for Digital Signage
+ SignageStudio Web Lite (a.k.a SignageLite) is an free, open source Web application and
+ framework for Digital Signage available under GNU GENERAL PUBLIC LICENSE Version 3 (see LICENSE).
+
+ The App and SDK connect to the free Digital Signage web service available from http://www.DigitalSignage.com
+ To fork and to view online docs visit:  http://git.DigitalSignage.com
+
+ MediaSignage Inc (c)
 
  @module SignageLite
  @example
@@ -19,56 +25,21 @@
  // |- campaign_timeline_chanels
  // |--- campaign_timeline_chanel_players
  </pre>
-
  **/
 
-var globs = {};
-globs['WAITSCREENON'] = 'WAITSCREENON';
-globs['WAITSCREENOFF'] = 'WAITSCREENOFF';
-globs['UNIQUE_COUNTER'] = 0;
-globs['SCREEN_WIDTH'] = 0;
-
-var commBroker = new ComBroker();
-var ajax = new AjaxRPC(15000);
-commBroker.setService(AjaxRPC.serviceName, ajax);
-var model = new StudioLiteModel();
-commBroker.setService(StudioLiteModel.servicename, model);
-
-
-$(document).bind('pageinit', function () {
-
-    $('#navLogout').on('tap', function (e) {
-        $.removeCookie('digitalsignage', {path: '/'});
-        $.cookie('digitalsignage', '', { expires: -300 });
-        $('body').empty();
-        $('body').append('<div style="font-family: arial; text-align:center;"><h2>Thank you for using SignageStudio Web Lite</h2></div>');
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        return false;
-    });
-});
-
+var globs = {}, commBroker, model;
 
 $(document).ready(function () {
 
+    initServices();
     initUserAgent();
     setDebugMode();
-
-    // disable back button
-    // $(document).bind('pagebeforechange', function (event, data) {
-    //    if (typeof data.toPage === "string") {
-    //        if (data.options.reverse == true) {
-    //            event.preventDefault();
-    //            return false;
-    //        }
-    //    }
-    // });/
+    // disableBack();
 
     if ($.browser.msie && $.browser.version < 10) {
         alert('You are using an unsupported browser, please use IE10+, Chrome, Safari or mobile browser!')
         return;
     }
-
 
     var viewStackMain = new Viewstacks('#mainContent');
     commBroker.setService('mainViewStack', viewStackMain)
@@ -109,31 +80,24 @@ $(document).ready(function () {
     var compX2JS = new X2JS({escapeMode: true, attributePrefix: "_", arrayAccessForm: "none", emptyNodeForm: "text", enableToStringFunc: true, arrayAccessFormPaths: [], skipEmptyTextNodesForObj: true});
     commBroker.setService('compX2JS', compX2JS);
 
-    ///////////////
-    // Init App //
-    /////////////
-
     $("#studioLite").on("pageinit", function (event) {
         bindScreenSizeQueries();
         wireStudioUI();
         wireNavigation();
-
+        wireLogout();
         commBroker.getService('CompSettings').initAppColorPicker();
     });
 
     var loginComponent = new LoginComponent(globs['debug'] ? 'https://secure.dynawebs.net/_php/msWS-debug.php' : 'https://secure.dynawebs.net/_php/msWS.php');
-
-    // only pass autnetication if credentials are of a standard user
     loginComponent.typeAccountEnforce('USER');
 
-    var key = initKey();
+    var key = initAccount();
     var data = {'@functionName': 'f_accountType'}
 
     commBroker.listen(loginComponent.ALERT_MSG, function (event) {
         $('#dialogTextID').text(event.edata);
         $.mobile.changePage('#dialogMessageID');
     });
-
 
     commBroker.listen(globs.WAITSCREENON, function (e) {
         loginUIState(false);
@@ -167,10 +131,19 @@ $(document).ready(function () {
     }
 });
 
+function initServices() {
 
-/*/////////////////////////////////////////////
- loginUIState
- /////////////////////////////////////////////*/
+    globs['WAITSCREENON'] = 'WAITSCREENON';
+    globs['WAITSCREENOFF'] = 'WAITSCREENOFF';
+    globs['UNIQUE_COUNTER'] = 0;
+    globs['SCREEN_WIDTH'] = 0;
+
+    commBroker = new ComBroker();
+    var ajax = new AjaxRPC(15000);
+    commBroker.setService(AjaxRPC.serviceName, ajax);
+    model = new StudioLiteModel();
+    commBroker.setService(StudioLiteModel.servicename, model);
+}
 
 function loginUIState(i_state) {
 
@@ -181,14 +154,9 @@ function loginUIState(i_state) {
     }
 }
 
-
-/*/////////////////////////////////////////////
- wireNavigation
- /////////////////////////////////////////////*/
-
 function wireNavigation() {
 
-    viewStackMain = commBroker.getService('mainViewStack');
+    var viewStackMain = commBroker.getService('mainViewStack');
 
     $('#navPlaylist').on('tap', function () {
         deselectNav();
@@ -238,11 +206,6 @@ function wireNavigation() {
     });
 }
 
-
-/*/////////////////////////////////////////////
- wireStudioUI
- /////////////////////////////////////////////*/
-
 function wireStudioUI() {
 
     $('#toggleNavigation').tap(function () {
@@ -284,11 +247,6 @@ function wireStudioUI() {
 
 }
 
-
-/*/////////////////////////////////////////////
- wireLogin
- /////////////////////////////////////////////*/
-
 function wireLogin(i_loginComponent) {
 
     commBroker.listen(i_loginComponent.AUTHENTICATED, function (e) {
@@ -297,7 +255,7 @@ function wireLogin(i_loginComponent) {
         if ($("option:selected", '#rememberMe').val() == 'on')
             $.cookie('digitalsignage', crumb, { expires: 300 });
 
-        var key = initKey();
+        var key = initAccount();
         commBroker.getService('CompMSDB').dbConnect();
 
     });
@@ -308,12 +266,19 @@ function wireLogin(i_loginComponent) {
 
 }
 
+function wireLogout() {
+    $('#navLogout').on('tap', function (e) {
+        $.removeCookie('digitalsignage', {path: '/'});
+        $.cookie('digitalsignage', '', { expires: -300 });
+        $('body').empty();
+        $('body').append('<div style="font-family: arial; text-align:center;"><h2>Thank you for using SignageStudio Web Lite</h2></div>');
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        return false;
+    });
+}
 
-/*/////////////////////////////////////////////
- initKey
- /////////////////////////////////////////////*/
-
-function initKey() {
+function initAccount() {
 
     var accountKey1 = $.cookie('digitalsignage') == undefined ? undefined : $.cookie('digitalsignage').split(' ')[0];
     var accountKey2 = getComment('ACCOUNT_KEY');
@@ -326,5 +291,19 @@ function initKey() {
         commBroker.setValue('key', undefined);
     }
     return commBroker.getValue('key');
-
 }
+
+function disableBack() {
+    $(document).bind('pagebeforechange', function (event, data) {
+        if (typeof data.toPage === "string") {
+            if (data.options.reverse == true) {
+                event.preventDefault();
+                return false;
+            }
+        }
+    });
+}
+
+$(document).bind('pageinit', function () {
+    // wrap additional hooks
+});

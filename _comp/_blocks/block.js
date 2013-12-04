@@ -5,7 +5,6 @@
  @final
  @type String
  */
-
 Block.PLACEMENT_SCENE = 'PLACEMENT_SCENE';
 
 /**
@@ -15,38 +14,34 @@ Block.PLACEMENT_SCENE = 'PLACEMENT_SCENE';
  @final
  @type String
  */
-
 Block.PLACEMENT_CHANNEL = 'PLACEMENT_CHANNEL';
 
 /**
- event fires when block timeline_channel is selected
+ event fires when block on timeline_channel is selected
  @event Block.BLOCK_ON_CHANNEL_SELECTED
  @param {this} caller
  @param {String} selected block_id
  **/
-
 Block.BLOCK_ON_CHANNEL_SELECTED = 'BLOCK_ON_CHANNEL_SELECTED';
 
 /**
- event fires when block timeline_channel length has changed
+ event fires when block length has changed, normally by a knob widget
  @event Block.BLOCK_LENGTH_CHANGED
  @param {object} this
  @param {object} caller the firing knob element
  @param {number} value the knob's position value (hours / minutes / seconds)
  **/
-
 Block.BLOCK_LENGTH_CHANGED = 'BLOCK_LENGTH_CHANGED';
 
 /**
- this base class for all block / players which reside on the timeline_channel or inside scenes
- the base class implements basic timeline and scene methods including the management
- of its properties UI.
+ This base class for all blocks / players which reside on the timeline_channel or inside scenes.
+ The base class implements basic timeline and scene interfaces including the management the properties UI.
  @class Block
  @constructor
  @param {string} i_placement indicates if the block is set to exist inside a timeline or inside a scene
+ @param {string} i_block_id block / player id, only required if block inserted onto channel_timeline
  @return none
  **/
-
 function Block(i_placement, i_block_id) {
     var self = this;
 
@@ -78,11 +73,11 @@ function Block(i_placement, i_block_id) {
 };
 
 /**
- Notify this object that it has been selected so it can populate the properties box etc
+ Notify this object that it has been selected so it can populate it's own the properties box etc
+ The function triggers from the BLOCK_ON_CHANNEL_SELECTED event.
  @method _onTimelineChannelBlockSelected
  @return none
  **/
-
 Block.prototype._onTimelineChannelBlockSelected = function () {
     var self = this;
 
@@ -101,7 +96,7 @@ Block.prototype._onTimelineChannelBlockSelected = function () {
             {
                 self.m_property.viewPanel('#blockProperties');
                 self._updateTitle();
-                self._getBlockLength();
+                self._updateBlockLength();
                 break;
             }
             // Future support
@@ -118,34 +113,31 @@ Block.prototype._onTimelineChannelBlockSelected = function () {
 }
 
 /**
- reset a timeline_channel block if it is no longer the selected one
- @method _onTimelineChannelBlockDeselected
+ Update the title of the block inside the assigned element.
+ @method _updateTitle
  @return none
  **/
-
 Block.prototype._updateTitle = function () {
     var self = this;
     $('#selectedChannelResourceName').text(self.m_blockName);
 }
 
 /**
- reset a timeline_channel block if it is no longer the selected one
+ Reset a timeline_channel block if it is no longer the chosen one
  @method _onTimelineChannelBlockDeselected
  @return none
  **/
-
 Block.prototype._onTimelineChannelBlockDeselected = function () {
     var self = this;
     self.m_selected = false;
 }
 
 /**
- update the length properties of the block
- @method _getBlockLength
+ Update the length properties of the block with respect to position on the timeline_channel
+ @method _updateBlockLength
  @return none
  **/
-
-Block.prototype._getBlockLength = function () {
+Block.prototype._updateBlockLength = function () {
     var self = this;
 
     var lengthData = self.m_helperSDK.getBlockTimelineChannelBlockLength(self.m_block_id);
@@ -155,11 +147,10 @@ Block.prototype._getBlockLength = function () {
 }
 
 /**
- the set length of the block on the timeline_channel has changed
+ Take action when block length has changed which is triggered by the BLOCK_LENGTH_CHANGED event
  @method _onTimelineChannelBlockLengthChanged
  @return none
  **/
-
 Block.prototype._onTimelineChannelBlockLengthChanged = function () {
     var self = this;
 
@@ -187,7 +178,7 @@ Block.prototype._onTimelineChannelBlockLengthChanged = function () {
                     break;
                 }
             }
-            log('upd: ' + self.m_block_id + ' ' + hours + ' ' + minutes + ' ' + seconds);
+            // log('upd: ' + self.m_block_id + ' ' + hours + ' ' + minutes + ' ' + seconds);
 
             self.m_helperSDK.setBlockTimelineChannelBlockLength(self.m_block_id, hours, minutes, seconds);
             // log(self.m_block_id + ' ' + self.m_blockName);
@@ -197,7 +188,7 @@ Block.prototype._onTimelineChannelBlockLengthChanged = function () {
 
 
 /**
- Create the block length knobs so user can set the length of the block on the timeline_channel
+ Create the block length knobs so a user can set the length of the block with respect to timeline_channel
  @method _propLengthKnobsInit
  @return none
  **/
@@ -271,12 +262,11 @@ Block.prototype._propLengthKnobsInit = function () {
 }
 
 /**
- Get block data
+ Get block data as a json formatted object literal and return to caller
  @method getBlockData
  @return data {object}
- entire block's data members
+ The entire block data members which can be made public
  **/
-
 Block.prototype.getBlockData = function () {
     var self = this;
     var data = {
@@ -288,5 +278,3 @@ Block.prototype.getBlockData = function () {
     }
     return data;
 }
-
-

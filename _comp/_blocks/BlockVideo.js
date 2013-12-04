@@ -6,7 +6,7 @@
  * @constructor
  * @param {string} i_placement location where objects resides which can be scene or timeline
  * @param {string} i_campaign_timeline_chanel_player_id required and set as block id when block is inserted onto timeline_channel
- * @return {Object} Block instance
+ * @return {object} Block instance
  */
 function BlockVideo(i_placement, i_campaign_timeline_chanel_player_id) {
 

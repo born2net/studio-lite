@@ -19,7 +19,7 @@ function BlockRSS(i_placement, i_campaign_timeline_chanel_player_id) {
     self.m_rssUrl = 'http://rss.news.yahoo.com/rss/world';
 
     Block.call(this, i_placement, i_campaign_timeline_chanel_player_id);
-    self.m_property.initSubPanel('#blockRSSCommonProperties');
+    self.m_property.initSubPanel(Elements.BLOCK_RSS_COMMON_PROPERTIES);
     self._wireUI();
 }
 
@@ -34,7 +34,7 @@ BlockRSS.prototype._wireUI = function () {
     var self = this;
 
     var rssLink;
-    $("#rssLink").on("input", function (e) {
+    $(Elements.RSS_LINK).on("input", function (e) {
         if (!self.m_selected)
             return;
         window.clearTimeout(rssLink);
@@ -77,7 +77,7 @@ BlockRSS.prototype._loadCommonProperties = function () {
     var self = this;
 
     self._populate();
-    this.m_property.viewSubPanel('#blockRSSCommonProperties');
+    this.m_property.viewSubPanel(Elements.BLOCK_RSS_COMMON_PROPERTIES);
 };
 
 /**
@@ -94,9 +94,9 @@ BlockRSS.prototype._populate = function () {
     var jPlayerData = x2js.xml_str2json(xml);
 
     if ((jPlayerData)["Player"]["Data"]["Rss"]) {
-        $('#rssLink').val((jPlayerData)["Player"]["Data"]["Rss"]["_url"]);
+        $(Elements.RSS_LINK).val((jPlayerData)["Player"]["Data"]["Rss"]["_url"]);
     } else {
-        $('#rssLink').val(self.m_rssUrl);
+        $(Elements.RSS_LINK).val(self.m_rssUrl);
     }
 
 }

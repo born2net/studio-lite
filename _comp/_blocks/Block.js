@@ -58,10 +58,10 @@ function Block(i_placement, i_block_id) {
 
             self._onTimelineChannelBlockSelected();
             self._onTimelineChannelBlockLengthChanged();
-            var initiated = self.m_property.initPanel('#blockProperties', true);
+            var initiated = self.m_property.initPanel(Elements.BLOCK_PROPERTIES, true);
             if (initiated) {
                 self._propLengthKnobsInit();
-                self.m_property.createSubPanel('#blockSubProperties');
+                self.m_property.createSubPanel(Elements.BLOCK_SUBPROPERTIES);
             }
             break;
         }
@@ -94,7 +94,7 @@ Block.prototype._onTimelineChannelBlockSelected = function () {
         switch (self.m_placement) {
             case Block.PLACEMENT_CHANNEL:
             {
-                self.m_property.viewPanel('#blockProperties');
+                self.m_property.viewPanel(Elements.BLOCK_PROPERTIES);
                 self._updateTitle();
                 self._updateBlockLength();
                 break;
@@ -119,7 +119,7 @@ Block.prototype._onTimelineChannelBlockSelected = function () {
  **/
 Block.prototype._updateTitle = function () {
     var self = this;
-    $('#selectedChannelResourceName').text(self.m_blockName);
+    $(Elements.SELECTED_CHANNEL_RESOURCE_NAME).text(self.m_blockName);
 }
 
 /**
@@ -141,9 +141,9 @@ Block.prototype._updateBlockLength = function () {
     var self = this;
 
     var lengthData = self.m_helperSDK.getBlockTimelineChannelBlockLength(self.m_block_id);
-    $('#blockLengthHours').val(lengthData.hours).trigger('change');
-    $('#blockLengthMinutes').val(lengthData.minutes).trigger('change');
-    $('#blockLengthSeconds').val(lengthData.seconds).trigger('change');
+    $(Elements.BLOCK_LENGTH_HOURS).val(lengthData.hours).trigger('change');
+    $(Elements.BLOCK_LENGTH_MINUTES).val(lengthData.minutes).trigger('change');
+    $(Elements.BLOCK_LENGTH_SECONDS).val(lengthData.seconds).trigger('change');
 }
 
 /**
@@ -157,9 +157,9 @@ Block.prototype._onTimelineChannelBlockLengthChanged = function () {
     commBroker.listen(Block.BLOCK_LENGTH_CHANGED, function (e) {
 
         if (self.m_selected) {
-            var hours = $('#blockLengthHours').val();
-            var minutes = $('#blockLengthMinutes').val();
-            var seconds = $('#blockLengthSeconds').val();
+            var hours = $(Elements.BLOCK_LENGTH_HOURS).val();
+            var minutes = $(Elements.BLOCK_LENGTH_MINUTES).val();
+            var seconds = $(Elements.BLOCK_LENGTH_SECONDS).val();
 
             switch (e.caller) {
                 case 'blockLengthHours':
@@ -199,9 +199,9 @@ Block.prototype._propLengthKnobsInit = function () {
         '<input id="blockLengthMinutes" data-displayPrevious="false" data-min="0" data-max="59" data-skin="tron" data-width="75" data-height="75" data-thickness=".2" type="text" class="knob" data-fgColor="gray">' +
         '<input id="blockLengthSeconds" data-displayPrevious="false" data-min="0" data-max="59" data-skin="tron" data-width="75" data-height="75"  data-thickness=".2" type="text" class="knob" data-fgColor="gray">';
 
-    $('#timelimeChannelBlockLength').append(snippet);
+    $(Elements.TIMELIME_CHANNEL_BLOCK_LENGTH).append(snippet);
 
-    $(".knob").knob({
+    $(Elements.CLASS_KNOB).knob({
         /*change: function (value) {
          console.log("change : " + value);
          var caller = this['i'][0].id;

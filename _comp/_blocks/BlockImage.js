@@ -20,7 +20,7 @@ function BlockImage(i_placement, i_campaign_timeline_chanel_player_id) {
     self.m_blockIcon = undefined;
 
     Block.call(this, i_placement, i_campaign_timeline_chanel_player_id);
-    self.m_property.initSubPanel('#blockImageCommonProperties');
+    self.m_property.initSubPanel(Elements.BLOCK_IMAGE_COMMON_PROPERTIES);
     self._wireUI();
 }
 
@@ -46,7 +46,7 @@ BlockImage.prototype._loadCommonProperties = function () {
     var self = this;
 
     self._populate();
-    this.m_property.viewSubPanel('#blockImageCommonProperties');
+    this.m_property.viewSubPanel(Elements.BLOCK_IMAGE_COMMON_PROPERTIES);
 };
 
 /**
@@ -66,11 +66,11 @@ BlockImage.prototype._populate = function () {
     // update checkbox for respect content length
     if ((jPlayerData)["Player"]["Data"]["Resource"]["AspectRatio"]) {
         var state = jPlayerData["Player"]["Data"]["Resource"]["AspectRatio"]["_maintain"] == '1' ? 'on' : 'off';
-        $('#imageAspectRatio option[value="' + state + '"]').attr("selected", "selected");
+        $(Elements.IMAGE_ASPECT_RATIO + ' option[value="' + state + '"]').attr("selected", "selected");
     } else {
-        $('#imageAspectRatio option[value="off"]').attr("selected", "selected");
+        $(Elements.IMAGE_ASPECT_RATIO + ' option[value="off"]').attr("selected", "selected");
     }
-    $('#imageAspectRatio').slider('refresh');
+    $(Elements.IMAGE_ASPECT_RATIO).slider('refresh');
 }
 
 /**
@@ -81,7 +81,7 @@ BlockImage.prototype._populate = function () {
 BlockImage.prototype._wireUI = function () {
     var self = this;
 
-    $('#imageAspectRatio').change(function (e) {
+    $(Elements.IMAGE_ASPECT_RATIO).change(function (e) {
         if (!self.m_selected)
             return;
         self._onChange(e);
@@ -97,7 +97,7 @@ BlockImage.prototype._wireUI = function () {
 BlockImage.prototype._onChange = function (e) {
     var self = this;
 
-    var state = $('#imageAspectRatio option:selected').val() == "on" ? 1 : 0;
+    var state = $(Elements.IMAGE_ASPECT_RATIO + ' option:selected').val() == "on" ? 1 : 0;
     var recBlock = self.m_helperSDK.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
     var xPlayerData = recBlock['player_data'];
     var xmlDoc = $.parseXML(xPlayerData);
@@ -126,7 +126,7 @@ BlockImage.prototype._onChange = function (e) {
  **/
 BlockImage.prototype._updateTitle = function () {
     var self = this;
-    $('#selectedChannelResourceName').text(self.m_blockDescription);
+    $(Elements.SELECTED_CHANNEL_RESOURCE_NAME).text(self.m_blockDescription);
 }
 
 /**

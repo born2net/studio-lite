@@ -19,7 +19,7 @@ function BlockQR(i_placement, i_campaign_timeline_chanel_player_id) {
     self.m_qrText = 'Hello World';
 
     Block.call(this, i_placement, i_campaign_timeline_chanel_player_id);
-    self.m_property.initSubPanel('#blockQRCommonProperties');
+    self.m_property.initSubPanel(Elements.BLOCK_QR_COMMON_PROPERTIES);
     self._wireUI();
 }
 
@@ -34,7 +34,7 @@ BlockQR.prototype._wireUI = function () {
     var self = this;
 
     var qrText;
-    $("#qrText").on("input", function (e) {
+    $(Elements.QR_TEXT).on("input", function (e) {
         if (!self.m_selected)
             return;
         window.clearTimeout(qrText);
@@ -54,7 +54,7 @@ BlockQR.prototype._loadCommonProperties = function () {
     var self = this;
 
     self._populate();
-    this.m_property.viewSubPanel('#blockQRCommonProperties');
+    this.m_property.viewSubPanel(Elements.BLOCK_QR_COMMON_PROPERTIES);
 };
 
 /**
@@ -71,9 +71,9 @@ BlockQR.prototype._populate = function () {
     var jPlayerData = x2js.xml_str2json(xml);
 
     if (jPlayerData["Player"]["Data"]["Text"]) {
-        $('#qrText').val(jPlayerData["Player"]["Data"]["Text"]["__text"]);
+        $(Elements.QR_TEXT).val(jPlayerData["Player"]["Data"]["Text"]["__text"]);
     } else {
-        $('#qrText').val(self.m_qrText);
+        $(Elements.QR_TEXT).val(self.m_qrText);
     }
 }
 

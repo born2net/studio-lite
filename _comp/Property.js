@@ -6,7 +6,7 @@
  The property manager is also capable of managing common properties which are often used in blocks;
  for example, all blocks (QR, RSS etc) have a border color, the property value for the border will appear
  in the sub-panel (m_subViewStack)
- @class Property
+ @class CompProperty
  @constructor
  @param {string} i_elementID is the the main property HTML ID (div element).
  @return {object} CompProperty instance.

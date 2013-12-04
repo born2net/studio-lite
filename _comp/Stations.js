@@ -18,6 +18,8 @@ function CompStations(i_container) {
     this.m_imageReloadCount = 0;
     this.m_stationDataMode = CompStations.stationListEmpty;
     this.m_property = commBroker.getService('CompProperty');
+
+
     this._init();
 };
 

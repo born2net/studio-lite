@@ -1,11 +1,13 @@
 /**
- BlockQR which can reside as part of timeline channel or inside scenes
- @class BlockQR
- @constructor
- @param {string} i_placement indicates if the block is set to exist inside a timeline or inside a scene
- @param {string} i_campaign_timeline_chanel_player_id player id of instance
- @return {object} BlockQR instance
- **/
+ * BlockQR block resided inside a Scenes or timeline
+ *
+ * @class BlockQR
+ * @extends Block
+ * @constructor
+ * @param {string} i_placement location where objects resides which can be scene or timeline
+ * @param {string} i_campaign_timeline_chanel_player_id required and set as block id when block is inserted onto timeline_channel
+ * @return {Object} Block instance
+ */
 function BlockQR(i_placement, i_campaign_timeline_chanel_player_id) {
 
     var self = this;
@@ -23,6 +25,11 @@ function BlockQR(i_placement, i_campaign_timeline_chanel_player_id) {
 
 BlockQR.prototype = new Block(null);
 
+/**
+ Wire's elements to event handlers
+ @method _wireUI
+ @return none
+ **/
 BlockQR.prototype._wireUI = function () {
     var self = this;
 

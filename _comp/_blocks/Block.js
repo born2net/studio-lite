@@ -34,7 +34,7 @@ Block.BLOCK_ON_CHANNEL_SELECTED = 'BLOCK_ON_CHANNEL_SELECTED';
 Block.BLOCK_LENGTH_CHANGED = 'BLOCK_LENGTH_CHANGED';
 
 /**
- This base class for all blocks / players which reside on the timeline_channel or inside scenes.
+ This base class for all Blocks / players which reside on the timeline_channel or inside scenes.
  The base class implements basic timeline and scene interfaces including the management the properties UI.
  @class Block
  @constructor
@@ -263,7 +263,7 @@ Block.prototype._propLengthKnobsInit = function () {
 /**
  Get block data as a json formatted object literal and return to caller
  @method getBlockData
- @return data {object}
+ @return {object} data
  The entire block data members which can be made public
  **/
 Block.prototype.getBlockData = function () {

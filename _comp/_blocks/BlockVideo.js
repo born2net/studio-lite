@@ -1,14 +1,13 @@
 /**
- * Video block resided inside Scenes or timeline
+ * BlockVideo block resided inside a Scenes or timeline
  *
  * @class BlockVideo
  * @extends Block
  * @constructor
  * @param {string} i_placement location where objects resides which can be scene or timeline
- * @return {String} Unique clientId.
+ * @param {string} i_campaign_timeline_chanel_player_id required and set as block id when block is inserted onto timeline_channel
+ * @return {Object} Block instance
  */
-
-
 function BlockVideo(i_placement, i_campaign_timeline_chanel_player_id) {
 
     var self = this;
@@ -36,6 +35,12 @@ BlockVideo.prototype._wireUI = function () {
     });
 };
 
+/**
+ Returns this model's attributes as...
+ @method setPlayerData
+ @param i_playerData {string} json object representing block data
+ @return {String} Unique clientId.
+ **/
 BlockVideo.prototype._loadCommonProperties = function () {
     var self = this;
 
@@ -43,6 +48,12 @@ BlockVideo.prototype._loadCommonProperties = function () {
     this.m_property.viewSubPanel('#blockVideoCommonProperties');
 };
 
+/**
+ Returns this model's attributes as...
+ @method setPlayerData
+ @param i_playerData {string} json object representing block data
+ @return {String} Unique clientId.
+ **/
 BlockVideo.prototype._populate = function () {
     var self = this;
 
@@ -62,6 +73,12 @@ BlockVideo.prototype._populate = function () {
     $('#videoAspectRatio').slider('refresh');
 }
 
+/**
+ Returns this model's attributes as...
+ @method setPlayerData
+ @param i_playerData {string} json object representing block data
+ @return {String} Unique clientId.
+ **/
 BlockVideo.prototype._setIcon = function (i_fileFormat) {
     var self = this;
     self.m_blockIcon = model.getIcon(i_fileFormat);

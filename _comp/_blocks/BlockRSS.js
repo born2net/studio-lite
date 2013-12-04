@@ -1,13 +1,12 @@
 /**
- * RSS Block resided inside Scenes and on timeline
- * base class is Block
+ * BlockRSS block resided inside a Scenes or timeline
  *
  * @class BlockRSS
  * @extends Block
  * @constructor
  * @param {string} i_placement location where objects resides which can be scene or timeline
- * @param {string} i_campaign_timeline_chanel_player_id required only when block is inserted into timeline_channel (not scene)
- * @return {Object} Block RSS instance
+ * @param {string} i_campaign_timeline_chanel_player_id required and set as block id when block is inserted onto timeline_channel
+ * @return {Object} Block instance
  */
 function BlockRSS(i_placement, i_campaign_timeline_chanel_player_id) {
 
@@ -92,7 +91,7 @@ BlockRSS.prototype._populate = function () {
 }
 
 /**
- When user changes URL link for feed, update internal db
+ When user changes a URL link for feed, update internal db
  @method _onChange
  @param e {event} event from target input
  @return none

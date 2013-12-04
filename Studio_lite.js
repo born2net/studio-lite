@@ -268,7 +268,7 @@ function wireLogin(i_loginComponent) {
 }
 
 function wireLogout() {
-    $('#navLogout').on('tap', function (e) {
+    $(Elements.NAV_LOGOUT).on('tap', function (e) {
         $.removeCookie('digitalsignage', {path: '/'});
         $.cookie('digitalsignage', '', { expires: -300 });
         $('body').empty();

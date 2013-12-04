@@ -1,7 +1,6 @@
 Elements.STUDIO_LITE = '#studioLite';
 
 
-
 Elements.MAIN_CONTENT = '#mainContent';
 Elements.PLAYLIST = '#playlist'
 Elements.FILES = '#files';
@@ -40,6 +39,7 @@ Elements.REMEMBER_ME = '#rememberMe';
 Elements.USER_NAME = '#userName';
 Elements.USER_PASS = '#userPass';
 
+Elements.CAMPAIN_MANAGER = '#campainManager';
 
 
 function Elements() {

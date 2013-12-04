@@ -230,7 +230,7 @@ function wireStudioUI() {
         $("#propertiesPanel").panel("close");
     });
 
-    $('#campainManager').tap(function () {
+    $(Elements.CAMPAIN_MANAGER).tap(function () {
         if (confirm('Changes will be lost, would you like to save your changes first before exiting to campaign manager?')) {
             window.location.reload();
         }

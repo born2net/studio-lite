@@ -226,8 +226,8 @@ function wireStudioUI() {
         }
     });
 
-    $('#closeProperties').tap(function () {
-        $("#propertiesPanel").panel("close");
+    $(Elements.CLOSE_PROPERTIES).tap(function () {
+        $(Elements.PROPERTIES_PANEL).panel("close");
     });
 
     $(Elements.CAMPAIN_MANAGER).tap(function () {

@@ -10,6 +10,7 @@ Elements.HELP = '#help';
 Elements.LOGOUT = '#logout';
 Elements.ADVANDED = '#advanded';
 
+Elements.PROPERTIES_PANEL = '#propertiesPanel';
 Elements.PROPERTIES_PANEL_VIEW = '#propertiesPanelView';
 Elements.SETTING_SCONTAINER = '#settingsContainer';
 Elements.PLAYLIST_MAIN = '#playListMain';
@@ -34,6 +35,7 @@ Elements.NAV_ADVANCE = '#navAdvance';
 Elements.NAV_BUTTONS = '#navButtons';
 
 Elements.TOGGLE_NAVIGATION = '#toggleNavigation';
+Elements.CLOSE_PROPERTIES = '#closeProperties';
 
 Elements.REMEMBER_ME = '#rememberMe';
 Elements.USER_NAME = '#userName';

@@ -27,15 +27,6 @@ function BlockImage(i_placement, i_campaign_timeline_chanel_player_id) {
 
 BlockImage.prototype = new Block(null);
 
-BlockImage.prototype.setPlayerData = function (i_playerData) {
-    var self = this;
-
-    self.m_playerData = i_playerData;
-    self.m_nativeResourceID = parseInt(self.m_playerData["Player"]["Data"]["Resource"]["_resource"])
-    self.m_blockDescription = self.m_helperSDK.getResourceName(self.m_nativeResourceID);
-    var fileFormat = self.m_helperSDK.getResourceType(self.m_nativeResourceID);
-    self._setIcon(fileFormat);
-};
 
 BlockImage.prototype._setIcon = function (i_fileFormat) {
     var self = this;
@@ -61,7 +52,7 @@ BlockImage.prototype._populate = function () {
     // update checkbox for respect content length
     if ((jPlayerData)["Player"]["Data"]["Resource"]["AspectRatio"]) {
         var state = jPlayerData["Player"]["Data"]["Resource"]["AspectRatio"]["_maintain"] == '1' ? 'on' : 'off';
-        $('#imageAspectRatio option[value="'+state+'"]').attr("selected", "selected");
+        $('#imageAspectRatio option[value="' + state + '"]').attr("selected", "selected");
     } else {
         $('#imageAspectRatio option[value="off"]').attr("selected", "selected");
     }
@@ -160,3 +151,12 @@ BlockImage.prototype.getBlockData = function () {
     return data;
 }
 
+BlockImage.prototype.setPlayerData = function (i_playerData) {
+    var self = this;
+
+    self.m_playerData = i_playerData;
+    self.m_nativeResourceID = parseInt(self.m_playerData["Player"]["Data"]["Resource"]["_resource"])
+    self.m_blockDescription = self.m_helperSDK.getResourceName(self.m_nativeResourceID);
+    var fileFormat = self.m_helperSDK.getResourceType(self.m_nativeResourceID);
+    self._setIcon(fileFormat);
+};

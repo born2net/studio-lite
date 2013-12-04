@@ -62,17 +62,6 @@ BlockVideo.prototype._populate = function () {
     $('#videoAspectRatio').slider('refresh');
 }
 
-BlockVideo.prototype.setPlayerData = function (i_playerData) {
-    var self = this;
-
-    self.m_playerData = i_playerData;
-
-    self.m_nativeResourceID = parseInt(self.m_playerData["Player"]["Data"]["Resource"]["_resource"])
-    self.m_blockDescription = self.m_helperSDK.getResourceName(self.m_nativeResourceID);
-    var fileFormat = self.m_helperSDK.getResourceType(self.m_nativeResourceID);
-    self._setIcon(fileFormat);
-};
-
 BlockVideo.prototype._setIcon = function (i_fileFormat) {
     var self = this;
     self.m_blockIcon = model.getIcon(i_fileFormat);
@@ -120,26 +109,6 @@ BlockVideo.prototype._getDefaultPlayerVideoData = function () {
 
 };
 
-
-/**
- Get block data
- @method override getBlockData
- @return data {object}
- entire block's data members
- **/
-
-BlockVideo.prototype.getBlockData = function () {
-    var self = this;
-    var data = {
-        blockID: self.m_block_id,
-        blockType: self.m_blockType,
-        blockName: self.m_blockDescription,
-        blockDescription: self.m_blockName,
-        blockIcon: self.m_blockIcon
-    }
-    return data;
-}
-
 /**
  When user changes aspect ratio checkbox we update db
  @method _onChange
@@ -170,3 +139,34 @@ BlockVideo.prototype._onChange = function (e) {
     var xmlString = (new XMLSerializer()).serializeToString(xml[0]);
     self.m_helperSDK.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', xmlString);
 }
+
+/**
+ Get block data
+ @method override getBlockData
+ @return data {object}
+ entire block's data members
+ **/
+
+BlockVideo.prototype.getBlockData = function () {
+    var self = this;
+    var data = {
+        blockID: self.m_block_id,
+        blockType: self.m_blockType,
+        blockName: self.m_blockDescription,
+        blockDescription: self.m_blockName,
+        blockIcon: self.m_blockIcon
+    }
+    return data;
+}
+
+
+BlockVideo.prototype.setPlayerData = function (i_playerData) {
+    var self = this;
+
+    self.m_playerData = i_playerData;
+
+    self.m_nativeResourceID = parseInt(self.m_playerData["Player"]["Data"]["Resource"]["_resource"])
+    self.m_blockDescription = self.m_helperSDK.getResourceName(self.m_nativeResourceID);
+    var fileFormat = self.m_helperSDK.getResourceType(self.m_nativeResourceID);
+    self._setIcon(fileFormat);
+};

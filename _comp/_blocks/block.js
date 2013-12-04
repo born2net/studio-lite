@@ -192,7 +192,6 @@ Block.prototype._onTimelineChannelBlockLengthChanged = function () {
  @method _propLengthKnobsInit
  @return none
  **/
-
 Block.prototype._propLengthKnobsInit = function () {
     var self = this;
 

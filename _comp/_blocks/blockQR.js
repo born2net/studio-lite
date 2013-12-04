@@ -6,7 +6,6 @@
  @param {string} i_campaign_timeline_chanel_player_id player id of instance
  @return {object} BlockQR instance
  **/
-
 function BlockQR(i_placement, i_campaign_timeline_chanel_player_id) {
 
     var self = this;

@@ -6,9 +6,9 @@
  * @extends Block
  * @constructor
  * @param {string} i_placement location where objects resides which can be scene or timeline
- * @return {Object} Block RSS
+ * @param {string} i_campaign_timeline_chanel_player_id required only when block is inserted into timeline_channel (not scene)
+ * @return {Object} Block RSS instance
  */
-
 function BlockRSS(i_placement, i_campaign_timeline_chanel_player_id) {
 
     var self = this;
@@ -45,7 +45,6 @@ BlockRSS.prototype._wireUI = function () {
  @method _getDefaultPlayerRSSData
  @return {xml} xml data
  **/
-
 BlockRSS.prototype._getDefaultPlayerRSSData = function () {
     var xml = '<Player player="3345" label="Rss news" interactive="0">' +
         '<Data>' +
@@ -63,7 +62,11 @@ BlockRSS.prototype._getDefaultPlayerRSSData = function () {
     return xml;
 };
 
-
+/**
+ Populate the changes in the common properties panel for BlockRSS
+ @method _loadCommonProperties
+ @return none
+ **/
 BlockRSS.prototype._loadCommonProperties = function () {
     var self = this;
 
@@ -95,7 +98,6 @@ BlockRSS.prototype._populate = function () {
  @return none
  @example see code _getDefaultPlayerRSSData for sample XML structure
  **/
-
 BlockRSS.prototype._onChange = function (e) {
     var self = this;
 

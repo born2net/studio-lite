@@ -1,7 +1,7 @@
 /**
  Communication wrapper for jQuery Ajax class.
  The Wrapper handles json and xml serialization as well as support for queued messaging and callbacks.
- @class Ajax RPC
+ @class AjaxRPC
  @constructor
  @param {string} i_timeout how long before ajax gives up on server reply
  @return {Object} AjaxRPC

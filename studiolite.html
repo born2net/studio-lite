@@ -253,6 +253,9 @@ CSS
 
 @import url("fonts.googleapis.com/css?family=Roboto:400,100,300,500,700");
 
+.navIcons {
+    font-size: 20px !important;
+}
 
 #playbackResourcesDiv {
     border: 1px solid #e7e7e7;
@@ -821,22 +824,22 @@ Studio Lite - Application
             <div style="clear:both"></div>
         </div>
         <div id="propertiesPanelView">
-        </div>
+        </div>                      u
     </div>
 
     <div data-role="panel" id="navPanel" data-display="push" data-dismissible="false" data-theme="b"
          style="box-shadow:-5px 0 5px rgba(0, 0, 0,0.15) inset;">
         <ul data-role="listview" style="margin-left:-20px; font-weight:normal;">
             <li data-role="list-divider">
-                <h2 id="tt1" style="color: #666; margin-left:20px; text-transform:none;font-size:30px;">Signage Studio</h2></li>
+                <h2 id="tt1" style="color: #666; margin-left:20px; text-transform:none;font-size:33px;">Signage Studio</h2></li>
 
-            <li><a id="navPlaylist"  data-role="button" data-theme="b">Campaigns <i class="fa fa-coffee fa-lg"></i> </a></li>
-            <li><a id="navFiles"  data-role="button" data-theme="b">Resources <i class="fa fa-beer fa-lg"></i></a></li>
-            <li><a id="navPlaylers" data-role="button" data-theme="b">Stations <i class="fa fa-music fa-lg"></i></a></li>
-            <li><a id="navSettings" data-role="button" data-theme="b">Settings <i class="fa fa-fire fa-lg"></i></a></li>
-            <li><a id="navHelp" data-role="button" data-theme="b">Help <i class="fa fa-bullhorn fa-lg"></i></a></li>
-            <li><a id="navLogout" data-role="button" data-theme="b">Logout <i class="fa fa-group fa-lg"></i></a></li>
-            <li><a id="navAdvance" data-corners="false" data-role="button" data-theme="b">Standardmode(FREE) <i class="fa fa-trophy"></i></a></li>
+            <li><a id="navPlaylist" data-role="button" data-theme="b"><span class="navIcons" >Campaigns </span><i style="float: right" class="fa fa-sitemap fa-lg"></i> </a></li>
+            <li><a id="navFiles"  data-role="button" data-theme="b"><span class="navIcons" >Resoucres </span> <i style="float: right"  class="fa fa-spinner fa-lg"></i></a></li>
+            <li><a id="navPlaylers" data-role="button" data-theme="b"><span class="navIcons" >Stations </span> <i style="float: right"  class="fa fa-tachometer fa-lg"></i></a></li>
+            <li><a id="navSettings" data-role="button" data-theme="b"><span class="navIcons" >Settings </span> <i style="float: right"  class="fa fa-cogs fa-lg"></i></a></li>
+            <li><a id="navHelp" data-role="button" data-theme="b"><span class="navIcons" >Help </span> <i style="float: right"  class="fa fa-comments fa-lg"></i></a></li>
+            <li><a id="navLogout" data-role="button" data-theme="b"><span class="navIcons" >Logout </span> <i style="float: right"  class="fa fa-sign-out fa-lg"></i></a></li>
+            <li><a id="navAdvance" data-corners="false" data-role="button" data-theme="b">Upgrade (FREE) <i style="float: right" class="fa fa-cloud-upload"></i></a></li>
         </ul>
 
     </div>

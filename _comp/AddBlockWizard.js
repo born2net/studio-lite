@@ -1,5 +1,5 @@
 /**
- Custom event fired when a new block is selected and added to timeline_channel
+ Custom event fired when a new block is added to timeline_channel
  @event AddBlockWizard
  @param {this} caller
  @param {self} context caller
@@ -41,7 +41,7 @@ AddBlockWizard.prototype = {
      **/
     _wireUI: function () {
         var self = this;
-        $('#goBackFromAddResourceView').tap(function (e) {
+        $(Elements.GO_BACK_FROM_ADD_RESOURCE_VIEW).tap(function (e) {
             self.close();
             self.destroy();
             e.stopImmediatePropagation();
@@ -50,15 +50,15 @@ AddBlockWizard.prototype = {
     },
 
     /**
-     Build two lists, components and resources that can be selected from.
-     Once an LI is selected AddBlockWizard.ADD_NEW_BLOCK is fired to announce a new block is being added.
+     Build two lists, components and resources allowing for item selection.
+     Once an LI is selected AddBlockWizard.ADD_NEW_BLOCK is fired to announce block is added.
      @method newChannelBlockPage
      @return none
      **/
     newChannelBlockPage: function () {
         var self = this;
 
-        $.mobile.changePage('#addResourceView', {transition: "pop"});
+        $.mobile.changePage(Elements.ADD_RESOURCE_VIEW, {transition: "pop"});
         var helperSDK = commBroker.getService('HelperSDK');
 
         /////////////////////////////////////////////////////////
@@ -75,7 +75,7 @@ AddBlockWizard.prototype = {
                 '<h1>' + components[componentID].name + '</h1>' +
                 '<p>' + components[componentID].description + '</p></a>' +
                 '</li>';
-            $('#addComponentList').append(snippet);
+            $(Elements.ADD_COMPONENT_LIST).append(snippet);
         }
 
         /////////////////////////////////////////////////////////
@@ -97,13 +97,13 @@ AddBlockWizard.prototype = {
                 '<h1>' + recResources[i]['resource_name'] + '</h1>' +
                 '<p>' + resourceDescription + '</p></a>' +
                 '</li>';
-            $('#addResourceList').append(snippet);
+            $(Elements.ADD_RESOURCE_LIST).append(snippet);
         });
 
-        $('#addComponentList').listview('refresh');
-        $('#addResourceList').listview('refresh');
+        $(Elements.ADD_COMPONENT_LIST).listview('refresh');
+        $(Elements.ADD_RESOURCE_LIST).listview('refresh');
 
-        $('.addResoureToChannel').on('tap', function (e) {
+        $(Elements.ADD_RESOURE_TO_CHANNEL).on('tap', function (e) {
             var helperSDK = commBroker.getService('HelperSDK');
             var component_id = $(e.target).closest('li').data('component_id');
             var resource_id = $(e.target).closest('li').data('resource_id');
@@ -124,7 +124,7 @@ AddBlockWizard.prototype = {
         // self._emptyNewChannelPage();
         // var back = $.mobile.activePage.prev('[data-role=page]');
         // $.mobile.changePage(back, {transition: 'pop', reverse: true });
-        // $.mobile.changePage('#studioLite',{transition: "pop"});
+        // $.mobile.changePage(Elements.STUDIO_LITE,{transition: "pop"});
         // todo: fix back so we dont use history to prevent false popups
         history.back();
         return false;
@@ -136,7 +136,7 @@ AddBlockWizard.prototype = {
      @return none
      **/
     destroy: function () {
-        $('#addResourceList').empty();
-        $('#addComponentList').empty();
+        $(Elements.ADD_RESOURCE_LIST).empty();
+        $(Elements.ADD_COMPONENT_LIST).empty();
     }
 }

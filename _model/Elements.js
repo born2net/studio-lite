@@ -66,6 +66,12 @@ Elements.RSS_LINK = '#rssLink';
 Elements.VIDEO_ASPECT_RATIO = '#videoAspectRatio';
 Elements.BLOCK_VIDEO_COMMON_PROPERTIES = '#blockVideoCommonProperties';
 
+Elements.ADD_COMPONENT_LIST = '#addComponentList';
+Elements.ADD_RESOURCE_LIST = '#addResourceList';
+Elements.GO_BACK_FROM_ADD_RESOURCE_VIEW = '#goBackFromAddResourceView';
+Elements.ADD_RESOURCE_VIEW = '#addResourceView';
+
+
 
 
 
@@ -73,7 +79,7 @@ Elements.BLOCK_VIDEO_COMMON_PROPERTIES = '#blockVideoCommonProperties';
 // Classes
 
 Elements.CLASS_KNOB = '.knob';
-
+Elements.ADD_RESOURE_TO_CHANNEL = '.addResoureToChannel';
 
 
 

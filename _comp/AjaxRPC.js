@@ -1,10 +1,11 @@
 /**
  Communication wrapper for jQuery Ajax class.
  The Wrapper handles json and xml serialization as well as support for queued messaging and callbacks.
+ If the ToastMessage jQuery lib is available, it will be used for status notifications.
  @class AjaxRPC
  @constructor
  @param {string} i_timeout how long before ajax gives up on server reply
- @return {Object} AjaxRPC
+ @return {Object} AjaxRPC instantiation
  @example
 
  requires: ComBroker
@@ -45,15 +46,35 @@ function AjaxRPC(i_timeout) {
 AjaxRPC.prototype = {
     constructor: AjaxRPC,
 
+    /**
+     Stop all subsequent server calls
+     @method abortAll
+     @return none
+     **/
     abortAll: function () {
         this.m_abort = true;
         // this.m_ajax.abort();
     },
 
+    /**
+     Begin accepting new server calls after a stop
+     @method resumeAll
+     @return none
+     **/
     resumeAll: function () {
         this.m_abort = false;
     },
 
+    /**
+     Get the data from specified server url and callback on server reply
+     @method getData
+     @param {object} i_data data to send to server
+     @param {string} i_url server http/s address
+     @param {function} i_callBack on data back from server
+     @param {string} i_type set to xml or json call
+     @param {object} i_context pass back i_context on callback to preserve 'this'
+     @return {object} AjaxJsonGetter instantiated
+     **/
     getData: function (i_data, i_url, i_callback, i_type, i_context) {
         var self = this;
         if (self.m_abort)
@@ -68,6 +89,14 @@ AjaxRPC.prototype = {
         }, i_callback, i_type)
     },
 
+    /**
+     Add new server request to queue and release calls in fifo
+     @method ajaxQueue
+     @param {object} i_ajaxOpts data to send to server
+     @param {function} i_callBack on data back from server
+     @param {string} i_type set to xml or json call
+     @return none
+     **/
     ajaxQueue: function (i_ajaxOpts, i_callBack, i_type) {
 
         var self = this;
@@ -178,6 +207,11 @@ AjaxRPC.prototype = {
         return promise;
     },
 
+    /**
+     Returns current queue size
+     @method getQueueSize
+     @return {number} size of queue
+     **/
     getQueueSize: function () {
         var self = this;
         var a = self.m_queue[0];
@@ -188,10 +222,16 @@ AjaxRPC.prototype = {
         return 0;
     },
 
-    checkReplyStatus: function (status) {
+    /**
+     Check the server reply status and push notifications to ToastMessage if available.
+     @method checkReplyStatus
+     @param {string} i_status server reply code
+     @return {boolean} false
+     **/
+    checkReplyStatus: function (i_status) {
 
         var msg = '';
-        switch (String(status)) {
+        switch (String(i_status)) {
             case '200':
             {
                 return true;
@@ -230,10 +270,7 @@ AjaxRPC.prototype = {
             position: 'middle-center',
             type: 'warning'
         });
-
         commBroker.fire(this.AJAXERROR, this);
-
         return false;
     }
-
 };

@@ -103,7 +103,7 @@ AddBlockWizard.prototype = {
         $(Elements.ADD_COMPONENT_LIST).listview('refresh');
         $(Elements.ADD_RESOURCE_LIST).listview('refresh');
 
-        $(Elements.ADD_RESOURE_TO_CHANNEL).on('tap', function (e) {
+        $(Elements.CLASS_ADD_RESOURE_TO_CHANNEL).on('tap', function (e) {
             var helperSDK = commBroker.getService('HelperSDK');
             var component_id = $(e.target).closest('li').data('component_id');
             var resource_id = $(e.target).closest('li').data('resource_id');

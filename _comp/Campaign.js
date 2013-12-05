@@ -216,7 +216,7 @@ Campaign.prototype = {
 
                 }
 
-                campaign_timeline_id = helperSDK.createNewTimeline(self.m_selected_campaign_id, board_template_id);
+                campaign_timeline_id = helperSDK.createNewTimeline(self.m_selected_campaign_id);
 
                 var campaign_timeline_board_template_id = helperSDK.assignTemplateToTimeline(campaign_timeline_id, board_template_id, campaign_board_id);
                 var channels = helperSDK.createTimelineChannels(campaign_timeline_id, viewers);

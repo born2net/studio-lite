@@ -1,12 +1,11 @@
 /**
- The Helper SDK is a wrapper for the Soap API used to communicate with MediaSignage servers
- The SDK makes programming easier by abstracting some of the tasks such as for loops
- and internal comparisons for you don't have to enumerate repetitively.
+ The Helper SDK is a wrapper for the Soap API used to communicate with MediaSignage servers.
+ The SDK makes programming easier by abstracting some of the tedious tasks such as enumeration.
 
- The internal Database is the magic sauce as it maps against the actual mediaSERVER database via
- local generated handles (aka IDs). Once a user saves the his local configuration, the local Database is serialized
- and pushed onto the remote mediaSERVER. This allows for the user to work offline without the need for constant network
- communication until a save process is executed.
+ The msdb internal Database is the magic sauce as it maps against the actual mediaSERVER remote database via
+ local generated handles (a.k.a IDs). Once a user saves the local configuration, the local Database is serialized
+ and pushed onto the a remote mediaSERVER. This allows for the user to work offline without the need for constant network
+ communication until a save is initiated.
 
  The internal database is referenced as msdb in both code and documentation.
 
@@ -20,7 +19,7 @@ function HelperSDK() {
     this.self = this;
 
     /**
-     m_msdb is the reference to the internal Database we use to save/load/modify all application data through
+     m_msdb hold reference to the internal db object used to serialize all app data.
      @property m_msdb
      @type Object
      */
@@ -31,6 +30,13 @@ function HelperSDK() {
 HelperSDK.prototype = {
     constructor: HelperSDK,
 
+    /**
+     Init the helper sdk upon user authentication
+     @method init
+     @param {Object} i_loaderManager hold a reference to the loader manager instance that is used to communicate with MediaSignage servers.
+     @param {Object} i_msdb hold a reference to the internal json formatted db.
+     @return none
+     **/
     init: function (i_loaderManager, i_msdb) {
         var self = this;
         self.m_loaderManager = i_loaderManager;
@@ -40,10 +46,9 @@ HelperSDK.prototype = {
     /**
      Create a new campaign in the local database
      @method createCampaign
-     @param i_campgianName {string} name of campaign to create
-     @return {Number} campaign id
+     @param {Number} i_campgianName
+     @return {Number} campaign id created
      **/
-
     createCampaign: function (i_campgianName) {
         var self = this;
         var campaigns = self.m_msdb.table_campaigns();
@@ -56,12 +61,11 @@ HelperSDK.prototype = {
     /**
      Create a new board, also known as Screen (screen divisions reside inside the board as viewers)
      @method createBoard
-     @param i_boardName {string} the board's name
-     @param i_width {string} board width
-     @param i_height {string} board's height
-     @return {Number} the board's id
+     @param {Number} i_boardName
+     @param {Number} i_width of the board
+     @param {Number} i_height of the board
+     @return {Number} the board id
      **/
-
     createBoard: function (i_boardName, i_width, i_height) {
         var self = this;
         var boards = self.m_msdb.table_boards();
@@ -73,12 +77,13 @@ HelperSDK.prototype = {
         return board['board_id'];
     },
 
-    /////////////////////////////////////////////////////////
-    //
-    // assignCampaignToBoard
-    //
-    /////////////////////////////////////////////////////////
-
+    /**
+     Assign a campaign to a board, binding the to by referenced ids
+     @method assignCampaignToBoard
+     @param {Number} i_campaign_id the campaign id to assign to board
+     @param {Number} i_board_id the board id to assign to campaign
+     @return none
+     **/
     assignCampaignToBoard: function (i_campaign_id, i_board_id) {
         var self = this;
         var campaign_boards = self.m_msdb.table_campaign_boards();
@@ -88,18 +93,12 @@ HelperSDK.prototype = {
         campaign_boards.addRecord(board);
     },
 
-    /////////////////////////////////////////////////////////
-    //
-    // getFirstBoardIDofCampaign
-    //
-    //      get the first board_id (output) that is assigned
-    //      to the specified campaign_id
-    //
-    // return:
-    //      campaign_board_id
-    //
-    /////////////////////////////////////////////////////////
-
+    /**
+     Get the first board_id (output) that is assigned to the specified campaign_id
+     @method getFirstBoardIDofCampaign
+     @param {Number} i_campaign_id
+     @return {Number} foundBoardID of the board, or -1 if none found
+     **/
     getFirstBoardIDofCampaign: function (i_campaign_id) {
         var self = this;
         var totalBoardsFound = 0;
@@ -116,18 +115,13 @@ HelperSDK.prototype = {
         return foundBoardID;
     },
 
-    /////////////////////////////////////////////////////////
-    //
-    // createTimelineChannels
-    //
-    //      create channels and assign these channels
-    //      to the timeline
-    //
-    // return array:
-    //      createdChanels
-    //
-    /////////////////////////////////////////////////////////
-
+    /**
+     Create channels and assign these channels to the timeline
+     @method createTimelineChannels
+     @param {Number} i_campaign_timeline_id the timeline id to assign channel to
+     @param {Object} i_viewers we use viewer as a reference count to know how many channels to create (i.e.: one per channel)
+     @return {Array} createdChanels array of channel ids created
+     **/
     createTimelineChannels: function (i_campaign_timeline_id, i_viewers) {
         var self = this;
         var createdChanels = [];
@@ -145,20 +139,13 @@ HelperSDK.prototype = {
         return createdChanels;
     },
 
-    /////////////////////////////////////////////////////////
-    //
-    // createNewTemplate
-    //
-    //      create a new global template (screen divisions)
-    //      and assign the new template to the given global
-    //      board_id
-    //
-    // return object:
-    //      board_template_id
-    //      viewer ids created
-    //
-    /////////////////////////////////////////////////////////
-
+    /**
+     Create a new global template (screen and viewers) and assign the new template to the given global board_id
+     @method createNewTemplate
+     @param {Number} i_board_id
+     @param {Object} i_screenProps json object with all the viewers and attributes to create in msdb
+     @return {Object} returnData encapsulates the board_template_id and board_template_viewer_ids created
+     **/
     createNewTemplate: function (i_board_id, i_screenProps) {
         var self = this;
 
@@ -193,26 +180,16 @@ HelperSDK.prototype = {
         }
 
         returnData['board_template_id'] = board_template_id
-
         return returnData;
-
     },
 
-    /////////////////////////////////////////////////////////
-    //
-    // createNewTimeline
-    //
-    //      create a new timeline under the specified
-    //      campaign_id and assign the specified
-    //      i_board_template_id (screen division template)
-    //      to that campaign
-    //
-    // return:
-    //      campaign_timeline_id
-    //
-    /////////////////////////////////////////////////////////
-
-    createNewTimeline: function (i_campaign_id, i_board_template_id) {
+    /**
+     Create a new timeline under the specified campaign_id
+     @method createNewTimeline
+     @param {Number} i_campaign_id
+     @return {Number} campaign_timeline_id the timeline id created
+     **/
+    createNewTimeline: function (i_campaign_id) {
         var self = this;
         var timelines = self.m_msdb.table_campaign_timelines();
         var timeline = timelines.createRecord();
@@ -220,21 +197,16 @@ HelperSDK.prototype = {
         timeline.timeline_name = "Timeline";
         timelines.addRecord(timeline);
         return timeline['campaign_timeline_id'];
-
     },
 
-    /////////////////////////////////////////////////////////
-    //
-    // createNewPlayer
-    //
-    //      create a new player and add it to the specified
-    //      channel_id
-    //
-    // return:
-    //      player_id
-    //
-    /////////////////////////////////////////////////////////
-
+    /**
+     Create a new player (a.k.a block) and add it to the specified channel_id
+     @method createNewPlayer
+     @param {Number} i_campaign_timeline_chanel_id is the channel id assign player to
+     @param {Number} i_playerCode is a unique pre-set code that exists per type of block (see component list for all available code)
+     @param {Number} i_offset set in seconds of when to begin playing the content with respect to timeline_channel
+     @return {Object} campaign_timeline_chanel_player_id and campaign_timeline_chanel_player_data as json object
+     **/
     createNewPlayer: function (i_campaign_timeline_chanel_id, i_playerCode, i_offset) {
         var self = this;
 
@@ -253,27 +225,20 @@ HelperSDK.prototype = {
         };
     },
 
-
-    /////////////////////////////////////////////////////////
-    //
-    // assignTemplateToTimeline
-    //
-    //      bind the template (screen division template)
-    //      to the specified timeline (i_campaign_timeline_id).
-    //
-    //      we need to also provide the board_template_id
-    //      (screen template of the global board) as well as
-    //      the campaign's board_id to complete the binding
-    //
-    // return:
-    //      campaign_timeline_id
-    //
-    /////////////////////////////////////////////////////////
-
+    /**
+     Bind the template (screen division template)to the specified timeline (i_campaign_timeline_id).
+     We need to also provide the board_template_id (screen template of the global board) as well as
+     the campaign's board_id to complete the binding
+     @method assignTemplateToTimeline
+     @param {Number} i_campaign_timeline_id to assign to template
+     @param {Number} i_board_template_id is the global board id (does not belong to campaign) to assign to the template
+     @param {Number} i_campaign_board_id is the campaign specific board id that will be bound to the template
+     @return {Number} campaign_timeline_board_template_id
+     **/
     assignTemplateToTimeline: function (i_campaign_timeline_id, i_board_template_id, i_campaign_board_id) {
         var self = this;
         var timelineTemplate = self.m_msdb.table_campaign_timeline_board_templates();
-        timelineScreen = timelineTemplate.createRecord();
+        var timelineScreen = timelineTemplate.createRecord();
         timelineScreen.campaign_timeline_id = i_campaign_timeline_id;
         timelineScreen.board_template_id = i_board_template_id;
         timelineScreen.campaign_board_id = i_campaign_board_id;
@@ -282,43 +247,32 @@ HelperSDK.prototype = {
         return timelineScreen['campaign_timeline_board_template_id'];
     },
 
-    /////////////////////////////////////////////////////////
-    //
-    // assignViewersToTimelineChannels
-    //
-    //      assign viewers (division colors) on the timeline
-    //      to screen divisions
-    //
-    // return
-    //      none
-    //
-    /////////////////////////////////////////////////////////
-
+    /**
+     Assign viewers (screen divisions) on the timeline to channels, so we get one viewer per channel
+     @method assignViewersToTimelineChannels
+     @param {Number} i_campaign_timeline_board_template_id
+     @param {Object} i_viewers a json object with all viewers
+     @param {Array} i_channels a json object with all channels
+     @return none
+     **/
     assignViewersToTimelineChannels: function (i_campaign_timeline_board_template_id, i_viewers, i_channels) {
         var self = this;
         var viewerChanels = self.m_msdb.table_campaign_timeline_board_viewer_chanels();
         for (var i in i_viewers) {
             var viewerChanel = viewerChanels.createRecord();
             viewerChanel.campaign_timeline_board_template_id = i_campaign_timeline_board_template_id;
-            // viewerChanel.board_template_viewer_id = viewer_id.board_template_viewer_id;
             viewerChanel.board_template_viewer_id = i_viewers[i];
             viewerChanel.campaign_timeline_chanel_id = i_channels.shift();
             viewerChanels.addRecord(viewerChanel);
         }
     },
 
-
-    /////////////////////////////////////////////////////////
-    //
-    // getCampaignTimelineSequencerIndex
-    //
-    //      get the sequence index of a timeline in campaign
-    //
-    // return
-    //      sequenceIndex
-    //
-    /////////////////////////////////////////////////////////
-
+    /**
+     Get the sequence index of a timeline in the specified campaign
+     @method getCampaignTimelineSequencerIndex
+     @param {Number} i_campaign_timeline_id
+     @return {Number} sequenceIndex
+     **/
     getCampaignTimelineSequencerIndex: function (i_campaign_timeline_id) {
         var self = this;
         var sequenceIndex = -1;
@@ -332,19 +286,14 @@ HelperSDK.prototype = {
         return sequenceIndex;
     },
 
-    /////////////////////////////////////////////////////////
-    //
-    // setCampaignTimelineSequencerIndex
-    //
-    //      set the sequence index of a timeline in campaign
-    //      if timeline is not found in sequencer, we insert
-    //      it with supplied i_sequenceIndex
-    //
-    // return
-    //      none
-    //
-    /////////////////////////////////////////////////////////
-
+    /**
+     Set the sequence index of a timeline in campaign. If timeline is not found in sequencer, we insert it with the supplied i_sequenceIndex
+     @method setCampaignTimelineSequencerIndex
+     @param {Number} i_campaign_id
+     @param {Number} i_campaign_timeline_id
+     @param {Number} i_sequenceIndex is the index to use for the timeline so we can playback the timeline in the specified index order
+     @return none
+     **/
     setCampaignTimelineSequencerIndex: function (i_campaign_id, i_campaign_timeline_id, i_sequenceIndex) {
         var self = this;
         var updatedSequence = false;
@@ -368,22 +317,16 @@ HelperSDK.prototype = {
             table_campaign_timeline_sequence.campaign_timeline_id = i_campaign_timeline_id;
             table_campaign_timeline_sequence.campaign_id = i_campaign_id;
             table_campaign_timeline_sequences.addRecord(table_campaign_timeline_sequence);
-
         }
     },
 
-    /////////////////////////////////////////////////////////
-    //
-    // getCampaignTimelineIdOfSequencerIndex
-    //
-    //      get the timeline id of the specifiec squence
-    //      index offset (0 based)
-    //
-    // return
-    //      sequenceIndex
-    //
-    /////////////////////////////////////////////////////////
-
+    /**
+     Get the timeline id of the specific sequencer index offset (0 based) under the specified campaign
+     @method getCampaignTimelineIdOfSequencerIndex
+     @param {Number} i_campaign_id
+     @param {Number} i_sequence_index
+     @return {Number} timeline_id
+     **/
     getCampaignTimelineIdOfSequencerIndex: function (i_campaign_id, i_sequence_index) {
         var self = this;
         var timeline_id = -1;
@@ -396,17 +339,11 @@ HelperSDK.prototype = {
         return timeline_id;
     },
 
-    /////////////////////////////////////////////////////////
-    //
-    // getResources
-    //
-    //      get all none deleted (!=3) resources
-    //
-    // return array
-    //      resources
-    //
-    /////////////////////////////////////////////////////////
-
+    /**
+     Get all none deleted (!=3) resources per current account
+     @method getResources
+     @return {Array} all records of all resources in current account
+     **/
     getResources: function () {
         var self = this;
         var resources = [];
@@ -421,31 +358,14 @@ HelperSDK.prototype = {
         return resources;
     },
 
-    /////////////////////////////////////////////////////////
-    //
-    // getResourceRecordByNative
-    //
-    //      get all data of on related resource
-    //
-    // return
-    //      resource record
-    //
-    /////////////////////////////////////////////////////////
-
-    getResourceRecordByNative: function (i_native_id) {
-        var self = this;
-        var foundResourceRecord = undefined;
-
-        $(self.m_msdb.table_resources().getAllPrimaryKeys()).each(function (k, resource_id) {
-            var recResource = self.m_msdb.table_resources().getRec(resource_id);
-            if (recResource['native_id'] == i_native_id) {
-                foundResourceRecord = recResource;
-                return;
-            }
-        });
-        return foundResourceRecord;
-    },
-
+    /**
+     Get the native id mapping of a resource_id.
+     A native is is the actual primary key that is used on the remote server, compared to normal id
+     which is an internal mapping of msdb to its native id.
+     @method getNativeByResoueceID
+     @param {Number} i_resource_id
+     @return {Number} native_id
+     **/
     getNativeByResoueceID: function (i_resource_id) {
         var self = this;
         var native_id = undefined;
@@ -460,17 +380,12 @@ HelperSDK.prototype = {
         return parseInt(native_id);
     },
 
-    /////////////////////////////////////////////////////////
-    //
-    // getResourceRecord
-    //
-    //      get all data of on related resource
-    //
-    // return
-    //      resource record
-    //
-    /////////////////////////////////////////////////////////
-
+    /**
+     Get a resource record via its resource_id.
+     @method getResourceRecord
+     @param {Number} i_resource_id
+     @return {Object} foundResourceRecord
+     **/
     getResourceRecord: function (i_resource_id) {
         var self = this;
         var foundResourceRecord = undefined;
@@ -485,6 +400,15 @@ HelperSDK.prototype = {
         return foundResourceRecord;
     },
 
+    /**
+     Set a resource record via its resource_id.
+     The method uses generic key / value fields so it can set any part of the record.
+     @method setResourceRecord
+     @param {Number} i_resource_id
+     @param {Number} i_key
+     @param {String} i_value
+     @return {Object} foundResourceRecord
+     **/
     setResourceRecord: function (i_resource_id, i_key, i_value) {
         var self = this;
 
@@ -497,6 +421,12 @@ HelperSDK.prototype = {
         });
     },
 
+    /**
+     Get a campaign table record for the specified i_campaign_id.
+     @method getCampaignRecord
+     @param {Number} i_campaign_id
+     @return {Object} foundCampaignRecord
+     **/
     getCampaignRecord: function (i_campaign_id) {
         var self = this;
         var foundCampaignRecord = undefined;
@@ -511,6 +441,15 @@ HelperSDK.prototype = {
         return foundCampaignRecord;
     },
 
+    /**
+     Set a campaign table record for the specified i_campaign_id.
+     The method uses generic key / value fields so it can set any part of the record.
+     @method setCampaignRecord
+     @param {Number} i_campaign_id
+     @param {Number} i_key
+     @param {String} i_value
+     @return {Object} foundCampaignRecord
+     **/
     setCampaignRecord: function (i_campaign_id, i_key, i_value) {
         var self = this;
 
@@ -523,17 +462,12 @@ HelperSDK.prototype = {
         });
     },
 
-    /////////////////////////////////////////////////////////
-    //
-    // getResourceType
-    //
-    //      return resource type of given i_native_id
-    //
-    // return
-    //      resource type
-    //
-    /////////////////////////////////////////////////////////
-
+    /**
+     Get the type of a resource (png/jpg...) for specified native_id
+     @method getResourceType
+     @param {Number} i_native_id
+     @return {String} resourceType
+     **/
     getResourceType: function (i_native_id) {
         var self = this;
         var resourceType = undefined;
@@ -548,18 +482,12 @@ HelperSDK.prototype = {
         return resourceType;
     },
 
-
-    /////////////////////////////////////////////////////////
-    //
-    // getResourceType
-    //
-    //      return resource type of given i_native_id
-    //
-    // return
-    //      resource type
-    //
-    /////////////////////////////////////////////////////////
-
+    /**
+     Get the name of a resource from the resources table using it's native_id
+     @method getResourceName
+     @param {Number} i_native_id
+     @return {Number} resourceName
+     **/
     getResourceName: function (i_native_id) {
         var self = this;
         var resourceName = undefined;
@@ -574,17 +502,13 @@ HelperSDK.prototype = {
         return resourceName;
     },
 
-    /////////////////////////////////////////////////////////
-    //
-    // uploadResources
-    //
-    //      upload files to server
-    //
-    // return
-    //      resource list
-    //
-    /////////////////////////////////////////////////////////
-
+    /**
+     Upload new resources onto the remote server and return matching ids.
+     The element id is of an HTML id of a multi-part upload element.
+     @method uploadResources
+     @param {String} i_elementID
+     @return {Array} list of resources created from newly attached files
+     **/
     uploadResources: function (i_elementID) {
         var self = this;
         var resourceList = self.m_loaderManager.createResources(document.getElementById(i_elementID));
@@ -593,15 +517,14 @@ HelperSDK.prototype = {
     },
 
     /**
-     set a block on the timeline_channel to specified length in seconds
+     Set a block (a.k.a player) on the timeline_channel to a specified length in total seconds.
      @method setBlockTimelineChannelBlockLength
-     @param i_campaign_timeline_chanel_player_id {string} plyer / block id
-     @param i_hours {number} total hours to play
-     @param i_minutes {number} total minutes to play
-     @param i_seconds {number} total seconds to play
+     @param {Number} i_campaign_timeline_chanel_player_id {string} plyer / block id
+     @param {Number} i_hours total hours to play
+     @param {Number} i_minutes total minutes to play
+     @param {Number} i_seconds total seconds to play
      @return none
      **/
-
     setBlockTimelineChannelBlockLength: function (i_campaign_timeline_chanel_player_id, i_hours, i_minutes, i_seconds) {
         var self = this;
 
@@ -617,23 +540,19 @@ HelperSDK.prototype = {
                 recPlayer.player_duration = totalSeconds;
             }
         });
-        // self.getBlockTimelineChannelBlockLength(i_campaign_timeline_chanel_player_id);
     },
 
-
     /**
-     get a block's total hours / minutes / seconds playback length on timeline_channel
+     Get a block's (a.k.a player) total hours / minutes / seconds playback length on the timeline_channel.
      @method getBlockTimelineChannelBlockLength
-     @param i_campaign_timeline_chanel_player_id {string} player / block id
-     @return {object} playbackLength as a json object with keys of hours minutes seconds
+     @param {Number} i_campaign_timeline_chanel_player_id
+     @return {Object} playbackLength as a json object with keys of hours minutes seconds
      **/
-
     getBlockTimelineChannelBlockLength: function (i_campaign_timeline_chanel_player_id) {
         var self = this;
         var seconds = 0;
         var minutes = 0;
         var hours = 0;
-
 
         $(self.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
             var recCampaignTimelineChannelPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
@@ -660,12 +579,11 @@ HelperSDK.prototype = {
     },
 
     /**
-     Get a player_id records from msdb by player_id primary key.
+     Get a player_id record from msdb by player_id primary key.
      @method getCampaignTimelineChannelPlayerRecord
-     @param {number} i_player_id player id
-     @return {object} player record
+     @param {Number} i_player_id
+     @return {Object} player record
      **/
-
     getCampaignTimelineChannelPlayerRecord: function (i_player_id) {
         var self = this;
         var recPlayer = undefined;
@@ -677,14 +595,14 @@ HelperSDK.prototype = {
     },
 
     /**
-     Set a player_id records from msdb on key with value
+     Set a player_id record in msdb on key with value
+     The method uses generic key / value fields so it can set any part of the record.
      @method setCampaignTimelineChannelPlayerRecord
-     @param {number} i_player_id
-     @param {string} i_key the key to set
-     @param {string} i_value the value to set
+     @param {Number} i_player_id
+     @param {Number} i_key
+     @param {String} i_value
      @return none
      **/
-
     setCampaignTimelineChannelPlayerRecord: function (i_player_id, i_key, i_value) {
         var self = this;
         self.m_msdb.table_campaign_timeline_chanel_players().openForEdit(i_player_id);
@@ -692,14 +610,12 @@ HelperSDK.prototype = {
         recPlayer[i_key] = i_value;
     },
 
-
     /**
-     Get a channel_id record from msdb by channel_id primary key.
+     Get a channel_id record from table channels msdb by channel_id
      @method getCampaignTimelineChannelRecord
-     @param {number} i_channel_id player id
-     @return {object} channel record
+     @param {Number} i_channel_id
+     @return {Object} channel record
      **/
-
     getCampaignTimelineChannelRecord: function (i_channel_id) {
         var self = this;
         var recChannel = undefined;
@@ -711,14 +627,14 @@ HelperSDK.prototype = {
     },
 
     /**
-     Set a channel_id records from msdb on key with value
+     Set a channel_id record in channels table using key and value
+     The method uses generic key / value fields so it can set any part of the record.
      @method setCampaignTimelineChannelRecord
-     @param {number} i_channel_id
-     @param {string} i_key the key to set
-     @param {string} i_value the value to set
+     @param {Number} i_channel_id
+     @param {Number} i_key
+     @param {String} i_value
      @return none
      **/
-
     setCampaignTimelineChannelRecord: function (i_channel_id, i_key, i_value) {
         var self = this;
         self.m_msdb.table_campaign_timeline_chanels().openForEdit(i_channel_id);
@@ -727,12 +643,11 @@ HelperSDK.prototype = {
     },
 
     /**
-     Get a timeline's record from msdb by i_campaign_timeline_id primary key.
+     Get a timeline record from msdb using i_campaign_timeline_id primary key.
      @method getCampaignTimelineRecord
-     @param {number} i_campaign_timeline_id
-     @return {object} player record
+     @param {Number} i_campaign_timeline_id
+     @return {Object} player record
      **/
-
     getCampaignTimelineRecord: function (i_campaign_timeline_id) {
         var self = this;
         var recTimeline = undefined;
@@ -744,14 +659,14 @@ HelperSDK.prototype = {
     },
 
     /**
-     Set a timeline's records from msdb on key with value
+     Set a timeline records in msdb using i_campaign_timeline_id primary key.
+     The method uses generic key / value fields so it can set any part of the record.
      @method setCampaignTimelineRecord
      @param {number} i_player_id
      @param {string} i_key the key to set
      @param {string} i_value the value to set
      @return none
      **/
-
     setCampaignTimelineRecord: function (i_campaign_timeline_id, i_key, i_value) {
         var self = this;
         self.m_msdb.table_campaign_timelines().openForEdit(i_campaign_timeline_id);
@@ -759,40 +674,15 @@ HelperSDK.prototype = {
         recTimeline[i_key] = i_value;
     },
 
-    /////////////////////////////////////////////////////////
-    //
-    // populateBoardTemplate
-    //
-    /////////////////////////////////////////////////////////
-
-    populateBoardTemplate: function (i_campaign_timeline_board_template_id) {
-        var self = this;
-
-        var recCampaignTimelineBoardTemplate = self.m_msdb.table_campaign_timeline_board_templates().getRec(i_campaign_timeline_board_template_id);
-
-        // Get global board > board template so we can get the total width / height resolution of the board
-
-        var recBoardTemplate = self.m_msdb.table_board_templates().getRec(recCampaignTimelineBoardTemplate['board_template_id']);
-        var recBoard = self.m_msdb.table_boards().getRec(recBoardTemplate['board_id']);
-
-        $(self.m_msdb.table_campaign_timeline_board_viewer_chanels().getAllPrimaryKeys()).each(function (k, campaign_timeline_board_viewer_chanel_id) {
-            var recCampaignTimelineBoardViewerChanel = self.m_msdb.table_campaign_timeline_board_viewer_chanels().getRec(campaign_timeline_board_viewer_chanel_id);
-            if (recCampaignTimelineBoardViewerChanel['campaign_timeline_board_template_id'] == i_campaign_timeline_board_template_id) {
-                var recBoardTemplateViewer = self.m_msdb.table_board_template_viewers().getRec(recCampaignTimelineBoardViewerChanel['board_template_viewer_id']);
-                // log(i_campaign_timeline_board_template_id);
-            }
-        });
-    },
-
-    /////////////////////////////////////////////////////////
-    //
-    // Viewer selected on Timeline so we reverse enumerate over
-    // the mapping of viewers to channels:
-    // campaign_timeline_viewer_chanels -> table_campaign_timeline_chanels
-    // to find the channel selected
-    //
-    /////////////////////////////////////////////////////////
-
+    /**
+     Use a viewer_id to reverse enumerate over the mapping of viewers to channels via:
+     campaign_timeline_viewer_chanels -> table_campaign_timeline_chanels
+     so we can find the channel assigned to the viewer_id provided.
+     @method getChannelIdFromCampaignTimelineBoardViewer
+     @param {Number} i_campaign_timeline_board_viewer_id
+     @param {Number} i_campaign_timeline_id
+     @return {Object} recCampaignTimelineViewerChanelsFound
+     **/
     getChannelIdFromCampaignTimelineBoardViewer: function (i_campaign_timeline_board_viewer_id, i_campaign_timeline_id) {
         var self = this;
 
@@ -819,15 +709,42 @@ HelperSDK.prototype = {
         return recCampaignTimelineViewerChanelsFound;
     },
 
-    /////////////////////////////////////////////////////////
-    //
-    // populateCampaign
-    //
-    /////////////////////////////////////////////////////////
-
-    populateCampaign: function () {
-
+    /**
+     Sample function to demonstrate how to enumerate over records to query for specified template_id
+     @method populateBoardTemplate
+     @param {Number} i_campaign_timeline_board_template_id
+     @return none
+     **/
+    populateBoardTemplate: function (i_campaign_timeline_board_template_id) {
         var self = this;
+
+        var recCampaignTimelineBoardTemplate = self.m_msdb.table_campaign_timeline_board_templates().getRec(i_campaign_timeline_board_template_id);
+
+        // Get global board > board template so we can get the total width / height resolution of the board
+
+        var recBoardTemplate = self.m_msdb.table_board_templates().getRec(recCampaignTimelineBoardTemplate['board_template_id']);
+        var recBoard = self.m_msdb.table_boards().getRec(recBoardTemplate['board_id']);
+
+        $(self.m_msdb.table_campaign_timeline_board_viewer_chanels().getAllPrimaryKeys()).each(function (k, campaign_timeline_board_viewer_chanel_id) {
+            var recCampaignTimelineBoardViewerChanel = self.m_msdb.table_campaign_timeline_board_viewer_chanels().getRec(campaign_timeline_board_viewer_chanel_id);
+            if (recCampaignTimelineBoardViewerChanel['campaign_timeline_board_template_id'] == i_campaign_timeline_board_template_id) {
+                var recBoardTemplateViewer = self.m_msdb.table_board_template_viewers().getRec(recCampaignTimelineBoardViewerChanel['board_template_viewer_id']);
+                // log(i_campaign_timeline_board_template_id);
+            }
+        });
+    },
+
+    /**
+     Sample function to demonstrate how to enumerate over records to query related tables of a campaign
+     @method populateBoardTemplate
+     @param {Number} i_campaign_timeline_board_template_id
+     @return none
+     **/
+    populateCampaign: function () {
+        var self = this;
+
+        // demo campaign_id
+        var campaign_id = 1;
 
         // Get all timelines
         $(self.m_msdb.table_campaign_timelines().getAllPrimaryKeys()).each(function (k, campaign_timeline_id) {
@@ -835,7 +752,7 @@ HelperSDK.prototype = {
             var recCampaignTimeline = self.m_msdb.table_campaign_timelines().getRec(campaign_timeline_id);
 
             // if timeline belongs to selected campaign
-            if (recCampaignTimeline['campaign_id'] == self.m_selected_campaign_id) {
+            if (recCampaignTimeline['campaign_id'] == campaign_id) {
 
                 // get all campaign timeline board templates (screen divison inside output, gets all outputs, in our case only 1)
                 $(self.m_msdb.table_campaign_timeline_board_templates().getAllPrimaryKeys()).each(function (k, table_campaign_timeline_board_template_id) {
@@ -862,5 +779,5 @@ HelperSDK.prototype = {
                 });
             }
         });
-    },
+    }
 }

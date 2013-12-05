@@ -71,6 +71,10 @@ Elements.ADD_RESOURCE_LIST = '#addResourceList';
 Elements.GO_BACK_FROM_ADD_RESOURCE_VIEW = '#goBackFromAddResourceView';
 Elements.ADD_RESOURCE_VIEW = '#addResourceView';
 
+Elements.CAMPAIGN_PROPERTIES = '#campaignProperties';
+Elements.SELECTED_CAMPAIGN_PROPERTIES = '#selectedCampaignProperties';
+Elements.START_NEW_CAMPAIGN = '#startNewCampaign';
+
 
 
 
@@ -79,7 +83,9 @@ Elements.ADD_RESOURCE_VIEW = '#addResourceView';
 // Classes
 
 Elements.CLASS_KNOB = '.knob';
-Elements.ADD_RESOURE_TO_CHANNEL = '.addResoureToChannel';
+Elements.CLASS_ADD_RESOURE_TO_CHANNEL = '.addResoureToChannel';
+Elements.CLASS_SELECTED_LIB_RESOURCE = '.selectedLibResource';
+Elements.CLASS_RESOURCE_LIB_OPEN_PROPS = '.resourceLibOpenProps';
 
 
 

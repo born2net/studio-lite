@@ -1,9 +1,10 @@
-/*/////////////////////////////////////////////
-
- CompCampaignSelector
-
- /////////////////////////////////////////////*/
-
+/**
+ The class manages the UI of campaign selection, creation of new campaign or opening an existing campaign.
+ @class CompCampaignSelector
+ @param i_container element to append the list of campaigns
+ @constructor
+ @return {object} instantiated AddBlockWizard
+ **/
 function CompCampaignSelector(i_container) {
 
     var self = this;
@@ -12,7 +13,6 @@ function CompCampaignSelector(i_container) {
     self.seletedCampaignID = -1;
     self.m_screenArrowSelector = undefined;
 
-
     self._wireUI();
     self._init();
 };
@@ -20,30 +20,39 @@ function CompCampaignSelector(i_container) {
 CompCampaignSelector.prototype = {
     constructor: CompCampaignSelector,
 
+    /**
+     Init the properties panel, and allow creation of new campaign
+     @method _init
+     @return none
+     **/
     _init: function () {
         var self = this;
-        self.m_property.initPanel('#campaignProperties', true);
-
+        self.m_property.initPanel(Elements.CAMPAIGN_PROPERTIES, true);
         self.m_screenArrowSelector = commBroker.getService('ScreenArrowSelector');
 
-        $('#startNewCampaign').on('tap', function () {
+        $(Elements.START_NEW_CAMPAIGN).on('tap', function () {
             self.m_screenArrowSelector.selectNext();
         });
 
         commBroker.listen(CompMSDB.databaseReady, function (e) {
             self._loadCampaignList();
-            $('#campaignSelectorList').listview('refresh');
+            $(Elements.CAMPAIGN_SELECTOR_LIST).listview('refresh');
             self._listenOpenProps();
         });
     },
 
+    /**
+     Populate the LI with all available campaigns from msdb
+     @method _loadCampaignList
+     @return none
+     **/
     _loadCampaignList: function () {
         var self = this;
         self.m_selected_resource_id = undefined;
 
         var self = this;
-        var compeMSDB = commBroker.getService('CompMSDB');
-        var tableCampaigns = compeMSDB.m_db.table_campaigns();
+        var msdb = commBroker.getService('CompMSDB');
+        var tableCampaigns = msdb.m_db.table_campaigns();
 
         var keys = tableCampaigns.getAllPrimaryKeys();
         $(keys).each(function (key, campaign_id) {
@@ -59,11 +68,16 @@ CompCampaignSelector.prototype = {
         });
     },
 
-    _wireUI: function(){
+    /**
+     Wire changing of campaign name through campaign properties
+     @method _wireUI
+     @return none
+     **/
+    _wireUI: function () {
         var self = this;
 
         var campaignSelName;
-        $("#selectedCampaignProperties").on("input", function (e) {
+        $(Elements.SELECTED_CAMPAIGN_PROPERTIES).on("input", function (e) {
             window.clearTimeout(campaignSelName);
             campaignSelName = window.setTimeout(function () {
                 self._onChange(e);
@@ -71,33 +85,44 @@ CompCampaignSelector.prototype = {
         });
     },
 
-    _onChange: function(e) {
+    /**
+     Update the msdb with newly updated campaign name
+     @method _onChange
+     @param {event} event on change
+     @return none
+     **/
+    _onChange: function (e) {
         var self = this;
         var text = $(e.target).val();
         var helperSDK = commBroker.getService('HelperSDK');
         helperSDK.setCampaignRecord(self.seletedCampaignID, 'campaign_name', text);
     },
 
+    /**
+     Listen for user trigger on campaign selection and populate the properties panel
+     @method _listenOpenProps
+     @return none
+     **/
     _listenOpenProps: function () {
         var self = this;
 
-        $('.selectedLibResource').tap(function (e) {
+        $(Elements.CLASS_SELECTED_LIB_RESOURCE).tap(function (e) {
 
             var openProps = $(e.target).closest('a').hasClass('resourceLibOpenProps') ? true : false;
             var resourceElem = $(e.target).closest('li');
-            var resourceProp = $(resourceElem).find('.resourceLibOpenProps');
+            var resourceProp = $(resourceElem).find(Elements.CLASS_RESOURCE_LIB_OPEN_PROPS);
             self.seletedCampaignID = $(resourceElem).data('campaignid');
 
-            self.m_property.viewPanel('#campaignProperties');
+            self.m_property.viewPanel(Elements.CAMPAIGN_PROPERTIES);
 
-            $('.selectedLibResource').css('background-image', 'linear-gradient(#fff , #f1f1f1)');
+            $(Elements.CLASS_SELECTED_LIB_RESOURCE).css('background-image', 'linear-gradient(#fff , #f1f1f1)');
             $(resourceElem).css('background-image', 'linear-gradient(#bebebe , #bebebe)');
             $(resourceProp).css('background-image', 'linear-gradient(#bebebe , #bebebe)');
 
             var helperSDK = commBroker.getService('HelperSDK');
             var recCampaign = helperSDK.getCampaignRecord(self.seletedCampaignID);
 
-            $('#selectedCampaignProperties').val(recCampaign['campaign_name']);
+            $(Elements.SELECTED_CAMPAIGN_PROPERTIES).val(recCampaign['campaign_name']);
 
             $(self.m_container).listview('refresh');
 
@@ -112,6 +137,11 @@ CompCampaignSelector.prototype = {
         });
     },
 
+    /**
+     When a campaign is selected disable the arrow navigation component
+     @method _campaignSelected
+     @return none
+     **/
     _campaignSelected: function () {
         var self = this;
         commBroker.getService('Campaign').setSelectedCampaign(self.seletedCampaignID);

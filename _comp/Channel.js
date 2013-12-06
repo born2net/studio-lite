@@ -1,14 +1,22 @@
-
+/**
+ Event fires when a channel is selected on a timeline. The event includes the channel id that was selected.
+ @event Channel.CAMPAIGN_TIMELINE_CHANNEL_SELECTED
+ @param {This} caller
+ @param {Event} campaign_timeline_channel_id
+ @static
+ @final
+ **/
 Channel.CAMPAIGN_TIMELINE_CHANNEL_SELECTED = 'CAMPAIGN_TIMELINE_CHANNEL_SELECTED';
 
 /**
- The Channel class is created under and managed by a timeline instance.
+ The Channel class is created under, and managed by, a timeline instance.
+ So if for example a timeline has three channels, each channel would have a corresponding channel instance referenced within the timeline instance.
+ Also, a channel creates, and holds a reference to, all the blocks that are contained within that channel, via the block_id.
  @class Channel
  @constructor
- @param {string} i_campaign_timeline_chanel_id channel id managed by instance
- @return {object} Channel instance
+ @param {string} i_campaign_timeline_chanel_id
+ @return {object} Channel instantiated
  **/
-
 function Channel(i_campaign_timeline_chanel_id) {
 
     this.self = this;
@@ -28,46 +36,57 @@ function Channel(i_campaign_timeline_chanel_id) {
 Channel.prototype = {
     constructor: Channel,
 
+    /**
+     Wire UI and listen to change in random playback on channel.
+     @method _wireUI
+     @return none
+     **/
     _wireUI: function () {
         var self = this;
 
-        $('#randomPlayback').change(function (e) {
+        $(Elements.RANDOM_PLAYBACK).change(function (e) {
             if (!self.m_selected)
                 return;
             self._onChange(e);
         });
     },
 
+    /**
+     On change in random playback value update msdb with new value.
+     @method _onChange
+     @param {Event} e
+     @return none
+     **/
     _onChange: function (e) {
-
         var self = this;
 
-        var state = $('#randomPlayback option:selected').val() == "on" ? 'True' : 'False';
+        var state = $(Elements.RANDOM_PLAYBACK + ' option:selected').val() == "on" ? 'True' : 'False';
         self.m_helperSDK.setCampaignTimelineChannelRecord(self.m_campaign_timeline_chanel_id, 'random_order', state)
     },
 
+    /**
+     Update the properties panel with the state of random playback.
+     @method _propLoadChannel
+     @return none
+     **/
     _propLoadChannel: function () {
         var self = this;
 
         var recChannel = self.m_helperSDK.getCampaignTimelineChannelRecord(self.m_campaign_timeline_chanel_id);
         var state = recChannel['random_order'] == 'True' ? 'on' : 'off';
 
-        $('#randomPlayback option[value=' + state + ']').attr("selected", "selected");
+        $(Elements.RANDOM_PLAYBACK + ' option[value=' + state + ']').attr("selected", "selected");
 
         // todo change name of propScreenDivision to propChannel after css done
-        self.m_property.viewPanel('#propScreenDivision');
-        $('#randomPlayback').slider('refresh');
+        self.m_property.viewPanel(Elements.PROP_SCREEN_DIVISION);
+        $(Elements.RANDOM_PLAYBACK).slider('refresh');
     },
 
-    /////////////////////////////////////////////////////////
-    //
-    // _createBlocks
-    //
-    //      create blocks instances for all the channel's
-    //      players / resources
-    //
-    /////////////////////////////////////////////////////////
-
+    /**
+     Create blocks instances for all the channel's blocs (i.e.: players / resources).
+     @method _createBlocks
+     @return none
+     **/
     _createBlocks: function () {
         var self = this;
 
@@ -82,6 +101,11 @@ Channel.prototype = {
         });
     },
 
+    /**
+     Listen to even when timeline is selected and it it's this instance's channel_id, populate properties panel.
+     @method _onTimelineChannelSelected
+     @return none
+     **/
     _onTimelineChannelSelected: function () {
         var self = this;
 
@@ -98,15 +122,12 @@ Channel.prototype = {
         });
     },
 
-    /////////////////////////////////////////////////////////
-    //
-    // getBlocks
-    //
-    //      return all blocks that belong to channel instance
-    //      but push them into an array so they are properly
-    //      sorted by player offset time
-    //
-    /////////////////////////////////////////////////////////
+    /**
+     Get all blocks that belong to this channel instance but push them into an array
+     so they are properly sorted by player offset time.
+     @method getBlocks
+     @return {Object} blocksSorted
+     **/
 
     getBlocks: function () {
         var self = this;
@@ -125,38 +146,33 @@ Channel.prototype = {
         return blocksSorted;
     },
 
-    /////////////////////////////////////////////////////////
-    //
-    // getBlockInstance
-    //
-    //      return block instance of given played_id
-    //
-    /////////////////////////////////////////////////////////
-
+    /**
+     Return a block instance for the selected i_campaign_timeline_chanel_player_id (i.e.: block_id).
+     @method getBlockInstance
+     @param {Number} i_campaign_timeline_chanel_player_id
+     @return {Object} reference to the block instance
+     **/
     getBlockInstance: function (i_campaign_timeline_chanel_player_id) {
         var self = this;
         return self.m_blocks[i_campaign_timeline_chanel_player_id];
     },
 
-    /////////////////////////////////////////////////////////
-    //
-    // createBlock
-    //
-    //      adds a new block instance
-    //
-    // return
-    //      newly created Block instance
-    //
-    /////////////////////////////////////////////////////////
-
+    /**
+     This is factory method produces block instances which will reside on the timeline and referenced within this
+     channel instance. The factory will parse the blockCode and create the appropriate block type.
+     @method createBlock
+     @param {Number} i_campaign_timeline_chanel_player_id
+     @param {XML} i_playerData
+     @return {Object} reference to the block instance
+     **/
     createBlock: function (i_campaign_timeline_chanel_player_id, i_player_data) {
         var self = this;
 
         var x2js = commBroker.getService('compX2JS');
         var playerData = x2js.xml_str2json(i_player_data);
-        var blockType = playerData['Player']['_player'];
+        var blockCode = playerData['Player']['_player'];
 
-        switch (parseInt(blockType)) {
+        switch (parseInt(blockCode)) {
             case 3345:
             {
                 self.m_blocks[i_campaign_timeline_chanel_player_id] = new BlockRSS(Block.PLACEMENT_CHANNEL, i_campaign_timeline_chanel_player_id);
@@ -180,8 +196,6 @@ Channel.prototype = {
                 break;
             }
         }
-
-
         return self.m_blocks[i_campaign_timeline_chanel_player_id];
     }
 }

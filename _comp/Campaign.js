@@ -1,15 +1,19 @@
-/*/////////////////////////////////////////////
-
- Campaign
-
- /////////////////////////////////////////////*/
+/**
+ The campaign is a singleton class that manages the campaign UI.
+ The campaign UI can switch the view of a selected timeline through the view stack instance it creates.
+ In addition, the campaign instance holds reference to all of the timeline instances which exist within the campaign.
+ A new timeline reference is created upon timeline creation and deleted upon timeline removal.
+ @class Campaign
+ @constructor
+ @return {Object} instantiated Campaign
+ **/
 
 function Campaign() {
 
     this.self = this;
     this.m_msdb = undefined;
     this.m_timelines = {}; // hold references to all created timeline instances
-    this.m_timelineViewStack = new Viewstacks('#campainViewMainContainer');
+    this.m_timelineViewStack = new Viewstacks(Elements.CAMPAIN_VIEW_MAIN_CONTAINER);
     this.m_selected_timeline_id = -1;
     this.m_selected_campaign_id = -1;
     this.m_property = commBroker.getService('CompProperty');
@@ -18,6 +22,13 @@ function Campaign() {
 Campaign.prototype = {
     constructor: Campaign,
 
+    /**
+     Init the instance and listen to VIEW_CHANGED event so we know when it's time to act.
+     If no campaign was selected, we launch the campaign wizard creator, otherwise we populate the campaign / timelines.
+     We also use this method to wire the rest of the campaigns elements.
+     @method init
+     @return none
+     **/
     init: function () {
         var self = this;
 
@@ -46,39 +57,59 @@ Campaign.prototype = {
         self._onWireDelTimeline();
         self._listenTimelineOrViewerSelected();
 
-        self.m_timelineViewStack.addChild('#noneSelectedScreenLayout');
+        self.m_timelineViewStack.addChild(Elements.NONE_SELECTED_SCREEN_LAYOUT);
 
-        self.m_property.initPanel('#propScreenDivision', false);
-        self.m_property.initPanel('#propEntireScreen', false);
+        self.m_property.initPanel(Elements.PROP_SCREEN_DIVISION, false);
+        self.m_property.initPanel(Elements.PROP_ENTIRE_SCREEN, false);
 
     },
 
+    /**
+     Launch the new campaign wizard UI.
+     @method _onLaunchTimelineWizard
+     @return none
+     **/
     _onLaunchTimelineWizard: function () {
         var self = this;
-        $.mobile.changePage('#screenLayoutList', {transition: "pop"});
-        var compTemplateWizard = new TemplateWizard('#screenLayoutItemsList');
+        $.mobile.changePage(Elements.SCREEN_LAYOUT_LIST, {transition: "pop"});
+        var compTemplateWizard = new TemplateWizard(Elements.SCREEN_LAYOUT_ITEMS_LIST);
     },
 
+    /**
+     Wire the UI for new campaign wizard launch.
+     @method _onWireNewTimelineWizard
+     @return none
+     **/
     _onWireNewTimelineWizard: function () {
-        $('#addNewScreenButton').tap(function (e) {
-            $.mobile.changePage('#screenLayoutList', {transition: "pop"});
-            var compTemplateWizard = new TemplateWizard('#screenLayoutItemsList');
+        $(Elements.ADD_NEW_SCREEN_BUTTON).tap(function (e) {
+            $.mobile.changePage(Elements.SCREEN_LAYOUT_LIST, {transition: "pop"});
+            var compTemplateWizard = new TemplateWizard(Elements.SCREEN_LAYOUT_ITEMS_LIST);
         });
     },
 
+    /**
+     Wire the UI for timeline deletion.
+     @method _onWireDelTimeline
+     @return none
+     **/
     _onWireDelTimeline: function () {
         var self = this;
-        $('#delScreenButton').tap(function (e) {
+        $(Elements.DEL_SCREEN_BUTTON).tap(function (e) {
             self._onDeleteTimeline(e, self);
         });
     },
 
+    /**
+     Wire the UI to open a timeline property panel upon selection.
+     @method _onWireOpenTimeLineProperties
+     @return none
+     **/
     _onWireOpenTimeLineProperties: function () {
-        $('#openTimeLineProperties').on('click', function (e) {
+        $(Elements.OPEN_TIMELINE_PROPERTIES).on('click', function (e) {
             var comProp = commBroker.getService('CompProperty');
 
-            if (comProp.getSelectedPanelID() != '#propScreenDivision' && comProp.getSelectedPanelID() != '#propEntireScreen')
-                comProp.viewPanel('#propScreenDivision');
+            if (comProp.getSelectedPanelID() != Elements.PROP_SCREEN_DIVISION && comProp.getSelectedPanelID() != Elements.PROP_ENTIRE_SCREEN)
+                comProp.viewPanel(Elements.PROP_SCREEN_DIVISION);
 
             comProp.openPanel(e);
             e.stopPropagation();
@@ -87,6 +118,11 @@ Campaign.prototype = {
         });
     },
 
+    /**
+     Load all of the campaign's timelines from msdb and populate the sequencer.
+     @method _loadTimelinesFromDB
+     @return none
+     **/
     _loadTimelinesFromDB: function () {
 
         var self = this;
@@ -118,15 +154,11 @@ Campaign.prototype = {
 
     },
 
-    /////////////////////////////////////////////////////////
-    //
-    // _loadSequencerFirstTimeline
-    //
-    //      select the first timeline in the sequencer UI
-    //      and if fails select Main Campaign > timeline
-    //
-    /////////////////////////////////////////////////////////
-
+    /**
+     Select the first timeline in the sequencer UI and if fails, select main Campaign > timeline.
+     @method _loadSequencerFirstTimeline
+     @return none
+     **/
     _loadSequencerFirstTimeline: function () {
         var self = this;
 
@@ -141,6 +173,13 @@ Campaign.prototype = {
         }, 250);
     },
 
+    /**
+     This is a key method that we use to listen to fire event of ScreenTemplateFactory.ON_VIEWER_SELECTED.
+     Upon the event we examine e.context.m_owner to find out who was the owner if the fired event (i.e.: instanceof)
+     so we can select tha appropriate campaign or timeline in the UI. See further notes in code.
+     @method _listenTimelineOrViewerSelected
+     @return none
+     **/
     _listenTimelineOrViewerSelected: function () {
         var self = this;
         commBroker.listen(ScreenTemplateFactory.ON_VIEWER_SELECTED, function (e) {
@@ -163,10 +202,9 @@ Campaign.prototype = {
             //// Timeline selected from Scheduler class  (future support)
             ////////////////////////////////////////////////
 
-            //todo take off comment after css done
-            //if (e.context.m_owner instanceof Scheduler) {
-            //    return;
-            //}
+            if (e.context.m_owner instanceof Scheduler) {
+                return;
+            }
 
             ////////////////////////////////////////////////
             //// Timeline selected from Timeline class
@@ -233,13 +271,13 @@ Campaign.prototype = {
         });
     },
 
-    /* _propLoadTemplateViewer: function (i_campaign_timeline_board_viewer_id, i_campaign_timeline_id) {
-        var self = this;
-        self.m_property.viewPanel('#propScreenDivision');
-        var a = $('#divName').attr('value', i_campaign_timeline_board_viewer_id + ' ' + i_campaign_timeline_id);
-    },
-    */
-
+    /**
+     When a timeline is deleted, remove it from the local timelines hash and notify sequencer.
+     @method _onDeleteTimeline
+     @param {Event} e
+     @param {Object} i_caller
+     @return none
+     **/
     _onDeleteTimeline: function (e, i_caller) {
         var self = this;
 
@@ -253,21 +291,43 @@ Campaign.prototype = {
 
     },
 
+    /**
+     Get currently selected campaign, which we hold a reference to.
+     @method getSelectedCampaign
+     @return {Number} m_selected_campaign_id
+     **/
     getSelectedCampaign: function () {
         var self = this;
         return self.m_selected_campaign_id;
     },
 
+    /**
+     Set selected campaign, which we hold a reference to.
+     @method setSelectedCampaign
+     @param {Number} i_selected_campaign_id
+     @return none
+     **/
     setSelectedCampaign: function (i_selected_campaign_id) {
         var self = this;
         self.m_selected_campaign_id = i_selected_campaign_id;
     },
 
+    /**
+     Get selected timeline instance, which we hold a reference to, via it's timeline_id.
+     @method getTimelineInstance
+     @param {Number} i_campaign_timeline_id
+     @return {Object} timeline instance
+     **/
     getTimelineInstance: function (i_campaign_timeline_id) {
         var self = this;
         return self.m_timelines[i_campaign_timeline_id];
     },
 
+    /**
+     Get the timeline viewstack and provide to others.
+     @method getTimelineViewStack
+     @return {Object} timeline viewStack instance
+     **/
     getTimelineViewStack: function () {
         var self = this;
         return self.m_timelineViewStack;

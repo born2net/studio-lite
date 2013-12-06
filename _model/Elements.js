@@ -75,6 +75,36 @@ Elements.CAMPAIGN_PROPERTIES = '#campaignProperties';
 Elements.SELECTED_CAMPAIGN_PROPERTIES = '#selectedCampaignProperties';
 Elements.START_NEW_CAMPAIGN = '#startNewCampaign';
 
+Elements.CAMPAIN_VIEW_MAIN_CONTAINER = '#campainViewMainContainer';
+Elements.NONE_SELECTED_SCREEN_LAYOUT = '#noneSelectedScreenLayout';
+Elements.SCREEN_LAYOUT_ITEMS_LIST = '#screenLayoutItemsList';
+Elements.DEL_SCREEN_BUTTON = '#delScreenButton';
+Elements.OPEN_TIMELINE_PROPERTIES = '#openTimeLineProperties';
+Elements.PROP_SCREEN_DIVISION = '#propScreenDivision';
+Elements.PROP_ENTIRE_SCREEN = '#propEntireScreen';
+Elements.SCREEN_LAYOUT_LIST = '#screenLayoutList';
+Elements.ADD_NEW_SCREEN_BUTTON = '#addNewScreenButton';
+
+Elements.IMG_VERTICAL = '#imgVertical';
+Elements.IMG_HORIZONTAL = '#imgHorizontal';
+Elements.CAMPAIGN_SELECTOR_VIEW = '#campaignSelectorView';
+Elements.ORIENTATION_VIEW = '#orientationView';
+Elements.RESOLUTION_VIEW = '#resolutionView';
+Elements.CAMPAIGN_VIEW = '#campaignView';
+
+Elements.PLAYLIST_SELECT_ARROW_LEFT = '#playListSelectArrowLeft';
+Elements.PLAYLIST_SELECT_ARROW_RIGHT = '#playListSelectArrowRight';
+Elements.PLAYLIST_SELECT_TITLE = '#playListSelectTitle';
+Elements.SCREEN_LAYOUTS_UL = '#screenLayoutsUL';
+Elements.RANDOM_PLAYBACK = '#randomPlayback';
+
+
+
+
+
+
+
+
 
 
 

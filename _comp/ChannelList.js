@@ -1,11 +1,10 @@
 /**
- the component is responsible for managing the UI list of blocks (i.e. resources and components such as QR etc)
- that a user is presented with, once a viewer inside a template is selected.
+ The ChannelList component is responsible for managing the UI list of blocks (i.e. resources and components such as QR, videos etc)
+ that a user is presented with, once a viewer inside a template, is selected.
  @class ChannelList
  @constructor
  @return none
  **/
-
 function ChannelList() {
 
     this.m_property = commBroker.getService('CompProperty');
@@ -20,13 +19,18 @@ function ChannelList() {
 ChannelList.prototype = {
     constructor: ChannelList,
 
+    /**
+     Init the ChannelList component and enable sortable channels UI via drag and drop operations.
+     @method _init
+     @return none
+     **/
     _init: function () {
         var self = this;
 
-        $("#sortable").sortable();
-        $("#sortable").disableSelection();
-        $("#sortable").bind("sortstop", function (event, ui) {
-            $("#sortable").listview('refresh');
+        $(Elements.SORTABLE).sortable();
+        $(Elements.SORTABLE).disableSelection();
+        $(Elements.SORTABLE).bind("sortstop", function (event, ui) {
+            $(Elements.SORTABLE).listview('refresh');
             self._reOrderChannelBlocks();
         });
 
@@ -34,18 +38,38 @@ ChannelList.prototype = {
         self._listenTimelineSelected();
     },
 
-    /////////////////////////////////////////////////////////
-    //
-    // _reOrderChannelBlocks
-    //
-    //      update block / player offset times according
-    //      to current state of LI
-    //
-    /////////////////////////////////////////////////////////
+    /**
+     Wire the UI and listen to channel remove and channel add button events.
+     @method _wireUI
+     @return none
+     **/
+    _wireUI: function () {
+        var self = this;
+        $(Elements.CHANNEL_REMOVE_RESOURCE).tap(function (e) {
+            if (self.selected_block_id == undefined) {
+                $(Elements.NO_RESOURCE_SELECTED_ALERT).popup("open", {transition: 'pop', 'position-to': 'window', width: '400', height: '400'});
+                return;
+            }
+            self._deleteChannelBlock();
+        });
 
+        $(Elements.CHANNEL_ADD_RESOURCE).tap(function (e) {
+            if (self.selected_campaign_timeline_id == undefined) {
+                alert('Please first select a channel to associate asset with');
+                return;
+            }
+            self._openAddBlockWizard(e);
+        });
+    },
+
+    /**
+     Update the blocks offset times according to current order of LI elements and reorder accordingly in msdb.
+     @method _reOrderChannelBlocks
+     @return none
+     **/
     _reOrderChannelBlocks: function () {
         var self = this
-        var blocks = $("#sortable").children();
+        var blocks = $(Elements.SORTABLE).children();
         var playerOffsetTime = 0;
 
         $(blocks).each(function (i) {
@@ -65,9 +89,14 @@ ChannelList.prototype = {
         });
     },
 
+    /**
+     Get the total duration in seconds of the channel
+     @method _getTotalDurationChannel
+     @return {Number} totalChannelLength
+     **/
     _getTotalDurationChannel: function () {
         var self = this
-        var blocks = $("#sortable").children();
+        var blocks = $(Elements.SORTABLE).children();
         var totalChannelLength = 0;
 
         $(blocks).each(function (i) {
@@ -85,25 +114,11 @@ ChannelList.prototype = {
         return totalChannelLength;
     },
 
-    _wireUI: function () {
-        var self = this;
-        $('#channelRemoveResource').tap(function (e) {
-            if (self.selected_block_id == undefined) {
-                $("#noResourceSelectedAlert").popup("open", {transition: 'pop', 'position-to': 'window', width: '400', height: '400'});
-                return;
-            }
-            self._deleteChannelBlock();
-        });
-
-        $('#channelAddResource').tap(function (e) {
-            if (self.selected_campaign_timeline_id == undefined) {
-                alert('Please first select a channel to associate asset with');
-                return;
-            }
-            self._openAddBlockWizard(e);
-        });
-    },
-
+    /**
+     Launch the add new block wizard UI component.
+     @method _openAddBlockWizard
+     @return none
+     **/
     _openAddBlockWizard: function (e) {
         var self = this;
         var addBlockWizard = new AddBlockWizard();
@@ -118,6 +133,12 @@ ChannelList.prototype = {
         });
     },
 
+    /**
+     Create a new block (player) on the current channel and refresh UI bindings such as properties open events.
+     @method _createNewChannelBlock
+     @param {Number} i_block_code
+     @return {Boolean} false
+     **/
     _createNewChannelBlock: function (i_block_code) {
         var self = this;
 
@@ -136,14 +157,21 @@ ChannelList.prototype = {
         var campaign_timeline_chanel_id = self.selected_campaign_timeline_chanel_id;
 
         // self._resetChannel();
-        $('#sortable').empty();
+        $(Elements.SORTABLE).empty();
         self._loadChannelBlocks(campaign_timeline_id, campaign_timeline_chanel_id);
-        self._listenOpenProps();
+        self._listenBlockSelected();
         // self._deselectBlocksFromChannel();
         self._selectLastBlockOnChannel();
         return false;
     },
 
+    /**
+     Listen to the ScreenTemplateFactory.ON_VIEWER_SELECTED so we know when a timeline has been selected.
+     Once a timeline selection was done we check if the event if one of a timeline owner or other; if of timeline
+     we populate channel list, if latter reset list.
+     @method _listenTimelineSelected
+     @return none
+     **/
     _listenTimelineSelected: function () {
         var self = this;
 
@@ -168,6 +196,13 @@ ChannelList.prototype = {
         });
     },
 
+    /**
+     Load the channel list with its own blocks and refresh the UI.
+     @method _loadChannelBlocks
+     @param {Number} i_campaign_timeline_id
+     @param {Number} i_campaign_timeline_chanel_id
+     @return none
+     **/
     _loadChannelBlocks: function (i_campaign_timeline_id, i_campaign_timeline_chanel_id) {
         var self = this;
 
@@ -179,7 +214,7 @@ ChannelList.prototype = {
 
         for (var block_id in blocks) {
             var blockData = blocks[block_id].getBlockData();
-            $('#sortable').append($('<li class="selectedResource" data-theme="b" data-block_id="' + blockData.blockID + '"><a href="#">' +
+            $(Elements.SORTABLE).append($('<li class="selectedResource" data-theme="b" data-block_id="' + blockData.blockID + '"><a href="#">' +
                 '<img style="width: 50px ; height: 50px; margin-left: 20px; padding-top: 14px" src="' + blockData.blockIcon + '">' +
                 '<h2>' + blockData.blockName + '</h2>' +
                 '<p>' + blockData.blockDescription + '</p>' +
@@ -188,41 +223,45 @@ ChannelList.prototype = {
                 '</li>'));
         }
 
-        $('#sortable').listview('refresh');
-        self._listenOpenProps();
+        $(Elements.SORTABLE).listview('refresh');
+        self._listenBlockSelected();
     },
 
-
-    _listenOpenProps: function () {
+    /**
+     Listen when a block is selected, if its properties need to be open than open panel.
+     Also, reference the selected block internally and fire event announcing it was selected.
+     @method _listenBlockSelected
+     @return none
+     **/
+    _listenBlockSelected: function () {
         var self = this;
 
-
-        $('.selectedResource').tap(function (e) {
+        $(Elements.CLASS_SELECTED_RESOURCE).tap(function (e) {
             var openProps = $(e.target).closest('a').hasClass('resourceOpenProperties') ? true : false;
             var resourceElem = $(e.target).closest('li');
             // var resourceProp = $(resourceElem).find('.resourceOpenProperties');
             self.selected_block_id = $(resourceElem).data('block_id');
 
-            $('.selectedResource').removeClass('liSelectedItem');
+            $(Elements.CLASS_SELECTED_RESOURCE).removeClass('liSelectedItem');
             $(resourceElem).addClass('liSelectedItem');
 
             /*
-            $('.selectedResource').css({
-                'background-image': 'none',
-                'border-top': 'none',
-                'border-bottom': '1px solid #e2e2e2'
-            });
+             $('.selectedResource').css({
+             'background-image': 'none',
+             'border-top': 'none',
+             'border-bottom': '1px solid #e2e2e2'
+             });
 
-            $(resourceElem).css({
-                'background-image': 'linear-gradient(#ededed , #ededed)',
-                'border-bottom': '1px solid #d5d5d5'
-                // 'border-top': '1px solid #d5d5d5',
-            });
+             $(resourceElem).css({
+             'background-image': 'linear-gradient(#ededed , #ededed)',
+             'border-bottom': '1px solid #d5d5d5'
+             // 'border-top': '1px solid #d5d5d5',
+             });
 
-            $(resourceProp).css({
-                'background-image': 'linear-gradient(#ededed , #ededed)',
-                'border-bottom': '1px solid #d5d5d5'
-            });*/
+             $(resourceProp).css({
+             'background-image': 'linear-gradient(#ededed , #ededed)',
+             'border-bottom': '1px solid #d5d5d5'
+             });*/
 
 
             // $('.selectedResource').css('background-image', 'linear-gradient(#fff , #f1f1f1)');
@@ -235,36 +274,56 @@ ChannelList.prototype = {
                 commBroker.getService('CompProperty').openPanel(e);
 
             e.stopImmediatePropagation();
-            $('#sortable').listview('refresh');
+            $(Elements.SORTABLE).listview('refresh');
             return false;
         });
     },
 
+    /**
+     Fire event when block has been selected.
+     @method _blockChannelSelected
+     @return none
+     **/
     _blockChannelSelected: function () {
         var self = this;
         commBroker.fire(Block.BLOCK_ON_CHANNEL_SELECTED, this, null, self.selected_block_id);
     },
 
+    /**
+     Forget the selected channel and reset channel member references.@method _resetChannel
+     @param {Number} i_playerData
+     @return {Number} Unique clientId.
+     **/
     _resetChannel: function () {
         var self = this;
-        $('#sortable').empty();
+        $(Elements.SORTABLE).empty();
         self.selected_block_id = undefined;
         self.selected_campaign_timeline_board_viewer_id = undefined;
         self.selected_campaign_timeline_id = undefined;
         self.selected_campaign_timeline_chanel_id = undefined;
     },
 
+    /**
+     Reset the UI when no block on channel is selected.
+     @method _deselectBlocksFromChannel
+     @return none
+     **/
     _deselectBlocksFromChannel: function () {
         var self = this;
         self.selected_block_id = undefined;
-        $('.selectedResource').css('background-image', 'linear-gradient(#fff , #f1f1f1)');
+        $(Elements.CLASS_SELECTED_RESOURCE).css('background-image', 'linear-gradient(#fff , #f1f1f1)');
         self.m_property.noPanel();
-        $('#sortable').listview('refresh');
+        $(Elements.SORTABLE).listview('refresh');
     },
 
+    /**
+     Select the last block on the channel (last LI element) and fire a tap event on it.
+     @method _selectLastBlockOnChannel
+     @return none
+     **/
     _selectLastBlockOnChannel: function () {
         var self = this
-        var blocks = $("#sortable").children();
+        var blocks = $(Elements.SORTABLE).children();
         var block = undefined;
         $(blocks).each(function (i) {
             block = this;
@@ -273,14 +332,17 @@ ChannelList.prototype = {
             $(block).tap();
     },
 
+    /**
+     Delete the selected block from the channel.
+     @method _deleteChannelBlock
+     @return none
+     **/
     _deleteChannelBlock: function () {
         var self = this;
-        var selectedLI = $('#sortable').find('[data-block_id="' + self.selected_block_id + '"]');
+        var selectedLI = $(Elements.SORTABLE).find('[data-block_id="' + self.selected_block_id + '"]');
         selectedLI.remove();
         // self.m_property.noPanel();
-        // self.m_dbidSelected = undefined;
-        // $('#sortable').listview('refresh');
+        // $(Elements.SORTABLE).listview('refresh');
         self._deselectBlocksFromChannel();
-
     }
 }

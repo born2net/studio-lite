@@ -98,15 +98,10 @@ Elements.PLAYLIST_SELECT_TITLE = '#playListSelectTitle';
 Elements.SCREEN_LAYOUTS_UL = '#screenLayoutsUL';
 Elements.RANDOM_PLAYBACK = '#randomPlayback';
 
-
-
-
-
-
-
-
-
-
+Elements.SORTABLE = '#sortable';
+Elements.CHANNEL_REMOVE_RESOURCE = '#channelRemoveResource';
+Elements.NO_RESOURCE_SELECTED_ALERT = '#noResourceSelectedAlert';
+Elements.CHANNEL_ADD_RESOURCE = '#channelAddResource';
 
 
 
@@ -116,6 +111,7 @@ Elements.CLASS_KNOB = '.knob';
 Elements.CLASS_ADD_RESOURE_TO_CHANNEL = '.addResoureToChannel';
 Elements.CLASS_SELECTED_LIB_RESOURCE = '.selectedLibResource';
 Elements.CLASS_RESOURCE_LIB_OPEN_PROPS = '.resourceLibOpenProps';
+Elements.CLASS_SELECTED_RESOURCE = '.selectedResource';
 
 
 

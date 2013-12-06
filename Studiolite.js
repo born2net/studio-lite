@@ -10,20 +10,19 @@
  @module SignageLite
  @example
  <pre>
- // boards (aka screen)
- // board_templates (aka screen template)
- // board_template_viewers (aka screen divisions)
- //
- // ---------------------------------------------------
- // Campaign table relationship
- // ---------------------------------------------------
- // |- campaigns
- // |--- campaign_boards (aka output)
- // |- campaign_timelines
- // |--- campaign_timeline_board_templates (aka screen template on the output)
- // |- campaign_timeline_board_viewer_chanels (aka colors of screen divisions)
- // |- campaign_timeline_chanels
- // |--- campaign_timeline_chanel_players
+ boards (aka screen)
+ board_templates (aka screen template)
+ board_template_viewers (aka screen divisions)
+ ---------------------------------------------------
+ Campaign table relationship
+ ---------------------------------------------------
+ |- campaigns
+ |--- campaign_boards (aka output)
+ |- campaign_timelines
+ |--- campaign_timeline_board_templates (aka screen template on the output)
+ |- campaign_timeline_board_viewer_chanels (aka colors of screen divisions)
+ |- campaign_timeline_chanels
+ |--- campaign_timeline_chanel_players
  </pre>
  **/
 

@@ -117,7 +117,7 @@ Channel.prototype = {
             }
 
             self.m_selected = true;
-            log('channel selected ' + self.m_campaign_timeline_chanel_id);
+            // log('channel selected ' + self.m_campaign_timeline_chanel_id);
             self._propLoadChannel();
         });
     },
@@ -139,7 +139,7 @@ Channel.prototype = {
                     var recCampaignTimelineChannelPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
                     offsetTime = parseInt(recCampaignTimelineChannelPlayer['player_offset_time']);
                     blocksSorted[offsetTime] = self.m_blocks[block_id];
-                    log(self.m_blocks[block_id]);
+                    // log(self.m_blocks[block_id]);
                 }
             });
         }

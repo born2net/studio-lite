@@ -73,19 +73,14 @@ ChannelList.prototype = {
         var playerOffsetTime = 0;
 
         $(blocks).each(function (i) {
-            var block_id = $(this).data('block_id');
-            $(self.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
-                if (block_id == campaign_timeline_chanel_player_id) {
-                    var recCampaignTimelineChannelPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
-                    var playerDuration = recCampaignTimelineChannelPlayer['player_duration']
 
-                    self.m_msdb.table_campaign_timeline_chanel_players().openForEdit(campaign_timeline_chanel_player_id);
-                    var recEditCampaignTimelineSequence = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
-                    recEditCampaignTimelineSequence.player_offset_time = playerOffsetTime;
-                    // log('player ' + block_id + ' offset ' + playerOffsetTime + ' playerDuration ' + playerDuration);
-                    playerOffsetTime = parseFloat(playerOffsetTime) + parseFloat(playerDuration);
-                }
-            });
+            var block_id = $(this).data('block_id');
+            var recBlock = jalapeno.getBlockRecord(block_id);
+            var playerDuration = recBlock['player_duration']
+
+            jalapeno.setBlockRecord(block_id, 'player_offset_time', playerOffsetTime);
+            log('player ' + block_id + ' offset ' + playerOffsetTime + ' playerDuration ' + playerDuration);
+            playerOffsetTime = parseFloat(playerOffsetTime) + parseFloat(playerDuration);
         });
     },
 

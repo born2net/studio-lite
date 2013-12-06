@@ -126,24 +126,15 @@ Campaign.prototype = {
     _loadTimelinesFromDB: function () {
 
         var self = this;
-        var recCampaign = self.m_msdb.table_campaigns().getRec(self.m_selected_campaign_id);
-        var helperSDK = commBroker.getService('HelperSDK');
         var sequenceOrder = [];
 
-        // Get all timelines
-        $(self.m_msdb.table_campaign_timelines().getAllPrimaryKeys()).each(function (k, campaign_timeline_id) {
-
-            var recCampaignTimeline = self.m_msdb.table_campaign_timelines().getRec(campaign_timeline_id);
-            var sequenceIndex = helperSDK.getCampaignTimelineSequencerIndex(campaign_timeline_id);
-
-            // if timeline belongs to selected campaign
-            if (recCampaignTimeline['campaign_id'] == self.m_selected_campaign_id) {
-                var campaign_timeline_id = recCampaignTimeline['campaign_timeline_id'];
-                // build sequenced order of timelines to create
-                sequenceOrder[parseInt(sequenceIndex)] = parseInt(campaign_timeline_id);
-
-            }
-        });
+        var timelineIDs = jalapeno.getCampaignTimelines(self.m_selected_campaign_id);
+        for (var i = 0; i < timelineIDs.length; i++) {
+            var campaign_timeline_id = timelineIDs[i];
+            // var recCampaignTimeline = jalapeno.getCampaignTimelineRecord(campaign_timeline_id);
+            var sequenceIndex = jalapeno.getCampaignTimelineSequencerIndex(campaign_timeline_id);
+            sequenceOrder[parseInt(sequenceIndex)] = parseInt(campaign_timeline_id);
+        }
 
         $(sequenceOrder).each(function (sequenceIndex, campaign_timeline_id) {
             // create the timelines
@@ -151,7 +142,6 @@ Campaign.prototype = {
         });
 
         self._loadSequencerFirstTimeline();
-
     },
 
     /**

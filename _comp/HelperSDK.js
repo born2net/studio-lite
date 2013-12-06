@@ -265,6 +265,40 @@ HelperSDK.prototype = {
     },
 
     /**
+     Get a block's record using it's block_id
+     @method getBlockRecord
+     @param {Number} i_block_id
+     @return {Object} recBlock
+     **/
+    getBlockRecord: function (i_block_id) {
+        var self = this;
+        var recBlock = undefined;
+
+        $(jalapeno.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
+            if (i_block_id == campaign_timeline_chanel_player_id) {
+                recBlock = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
+            }
+        });
+        return recBlock;
+    },
+
+    /**
+     Set a block's record using key value pair
+     The method uses generic key / value fields so it can set any part of the record.
+     @method setBlockRecord
+     @param {Number} i_block_id
+     @param {String} i_key
+     @param {Number} i_value
+     @return none
+     **/
+    setBlockRecord: function (i_block_id, i_key, i_value) {
+        var self = this;
+        jalapeno.m_msdb.table_campaign_timeline_chanel_players().openForEdit(i_block_id);
+        var recEditBlock = self.m_msdb.table_campaign_timeline_chanel_players().getRec(i_block_id);
+        recEditBlock[i_key] = i_value;
+    },
+
+    /**
      Get the total duration in seconds of all given block ids
      @method getTotalDurationOfBlocks
      @param {Array} i_blocks
@@ -274,14 +308,14 @@ HelperSDK.prototype = {
         var self = this;
         var totalChannelLength = 0;
 
-        for (var i = 0 ; i < i_blocks.length; i++){
+        for (var i = 0; i < i_blocks.length; i++) {
             var block_id = i_blocks[i];
             $(jalapeno.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
                 if (block_id == campaign_timeline_chanel_player_id) {
                     var recCampaignTimelineChannelPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
                     var playerDuration = recCampaignTimelineChannelPlayer['player_duration']
                     jalapeno.m_msdb.table_campaign_timeline_chanel_players().openForEdit(campaign_timeline_chanel_player_id);
-                    log('player ' + block_id + ' offset ' + totalChannelLength + ' playerDuration ' + playerDuration);
+                    // log('player ' + block_id + ' offset ' + totalChannelLength + ' playerDuration ' + playerDuration);
                     totalChannelLength = totalChannelLength + parseFloat(playerDuration);
                 }
             });
@@ -505,6 +539,21 @@ HelperSDK.prototype = {
     },
 
     /**
+     Get a list of all campaigns per the account
+     @method getCampaignIDs
+     @return {Array} campaigns
+     **/
+    getCampaignIDs: function () {
+        var self = this;
+        var campaigns = [];
+
+        $(self.m_msdb.table_campaigns().getAllPrimaryKeys()).each(function (k, campaign_id) {
+            campaigns.push(campaign_id);
+        });
+        return campaigns;
+    },
+
+    /**
      Get a campaign table record for the specified i_campaign_id.
      @method getCampaignRecord
      @param {Number} i_campaign_id
@@ -626,6 +675,25 @@ HelperSDK.prototype = {
     },
 
     /**
+     Get all the block IDs of a particular channel.
+     Push them into an array so they are properly sorted by player offset time.
+     @method getChannelBlocksIDs
+     @param {Number} i_campaign_timeline_chanel_id
+     @return {Array} foundBlocks
+     **/
+    getChannelBlocks: function (i_campaign_timeline_chanel_id) {
+        var self = this;
+        var foundBlocks = [];
+        $(jalapeno.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
+            var recCampaignTimelineChannelPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
+            if (i_campaign_timeline_chanel_id == recCampaignTimelineChannelPlayer['campaign_timeline_chanel_id']) {
+                foundBlocks.push(campaign_timeline_chanel_player_id);
+            }
+        });
+        return foundBlocks;
+    },
+
+    /**
      Get a block's (a.k.a player) total hours / minutes / seconds playback length on the timeline_channel.
      @method getBlockTimelineChannelBlockLength
      @param {Number} i_campaign_timeline_chanel_player_id
@@ -739,6 +807,25 @@ HelperSDK.prototype = {
                 recTimeline = self.m_msdb.table_campaign_timelines().getRec(campaign_timeline_id);
         });
         return recTimeline;
+    },
+
+    /**
+     Get all timeline ids for specified campaign
+     @method getCampaignTimelines
+     @param {Number} i_campaign_id
+     @return {Array} timeline ids
+     **/
+    getCampaignTimelines: function (i_campaign_id) {
+        var self = this;
+
+        var timelineIDs = [];
+        $(self.m_msdb.table_campaign_timelines().getAllPrimaryKeys()).each(function (k, campaign_timeline_id) {
+            var recCampaignTimeline = self.m_msdb.table_campaign_timelines().getRec(campaign_timeline_id);
+            if (recCampaignTimeline['campaign_id'] == i_campaign_id) {
+                timelineIDs.push(campaign_timeline_id);
+            }
+        });
+        return timelineIDs;
     },
 
     /**

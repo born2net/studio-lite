@@ -90,15 +90,12 @@ Channel.prototype = {
     _createBlocks: function () {
         var self = this;
 
-        // get all blocks that belong channel
-        $(self.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
-            var recCampaignTimelineChannelPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
-            if (self.m_campaign_timeline_chanel_id == recCampaignTimelineChannelPlayer['campaign_timeline_chanel_id']) {
-                // log('ch ' + self.m_campaign_timeline_chanel_id + ' ' + campaign_timeline_chanel_player_id);
-                // self.m_blocks[campaign_timeline_chanel_player_id] = new Block(campaign_timeline_chanel_player_id, recCampaignTimelineChannelPlayer['player_data']);
-                self.createBlock(campaign_timeline_chanel_player_id, recCampaignTimelineChannelPlayer['player_data'])
-            }
-        });
+        var blockIDs = jalapeno.getChannelBlocks(self.m_campaign_timeline_chanel_id);
+        for (var i = 0 ; i < blockIDs.length; i++){
+            var blockID = blockIDs[i];
+            var recBlock = jalapeno.getBlockRecord(blockID);
+            self.createBlock(blockID, recBlock['player_data'])
+        }
     },
 
     /**
@@ -123,8 +120,7 @@ Channel.prototype = {
     },
 
     /**
-     Get all blocks that belong to this channel instance but push them into an array
-     so they are properly sorted by player offset time.
+     Get all blocks that belong to this channel instance but push them into an array so they are properly sorted by player offset time.
      @method getBlocks
      @return {Object} blocksSorted
      **/
@@ -134,14 +130,9 @@ Channel.prototype = {
         var blocksSorted = [];
 
         for (var block_id in self.m_blocks) {
-            $(self.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
-                if (block_id == campaign_timeline_chanel_player_id) {
-                    var recCampaignTimelineChannelPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
-                    offsetTime = parseInt(recCampaignTimelineChannelPlayer['player_offset_time']);
-                    blocksSorted[offsetTime] = self.m_blocks[block_id];
-                    // log(self.m_blocks[block_id]);
-                }
-            });
+            var recBlock = jalapeno.getBlockRecord(block_id);
+            var offsetTime = parseInt(recBlock['player_offset_time']);
+            blocksSorted[offsetTime] = self.m_blocks[block_id];
         }
         return blocksSorted;
     },

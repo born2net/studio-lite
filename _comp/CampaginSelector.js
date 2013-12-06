@@ -48,24 +48,21 @@ CompCampaignSelector.prototype = {
      **/
     _loadCampaignList: function () {
         var self = this;
+
         self.m_selected_resource_id = undefined;
-
-        var self = this;
-        var msdb = commBroker.getService('CompMSDB');
-        var tableCampaigns = msdb.m_db.table_campaigns();
-
-        var keys = tableCampaigns.getAllPrimaryKeys();
-        $(keys).each(function (key, campaign_id) {
-            var recCampain = tableCampaigns.getRec(campaign_id);
-            var playListMode = recCampain.campaign_playlist_mode == 0 ? 'sequencer' : 'scheduler';
-            var snippet = '<li data-campaignid="' + campaign_id + '"data-icon="gear" class="selectedLibResource" data-theme="b"><a href="#">' +
+        var campaignIDs = jalapeno.getCampaignIDs();
+        for (var i = 0 ; i < campaignIDs.length ; i++ ){
+            var campaignID = campaignIDs[i];
+            var recCampaign = jalapeno.getCampaignRecord(campaignID);
+            var playListMode = recCampaign['campaign_playlist_mode'] == 0 ? 'sequencer' : 'scheduler';
+            var snippet = '<li data-campaignid="' + campaignID + '"data-icon="gear" class="selectedLibResource" data-theme="b"><a href="#">' +
                 '<img src="https://secure.dynawebs.net/_msportal/_images/campaign.png">' +
-                '<h2>' + recCampain.campaign_name + '</h2>' +
+                '<h2>' + recCampaign['campaign_name'] + '</h2>' +
                 '<p>play list mode: ' + playListMode + '</p></a>' +
                 '<a data-theme="b" class="fixPropOpenLiButtonPosition selectedLibResource resourceLibOpenProps"></a>' +
                 '</li>';
             $(self.m_container).append($(snippet));
-        });
+        }
     },
 
     /**

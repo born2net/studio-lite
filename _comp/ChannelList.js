@@ -97,20 +97,13 @@ ChannelList.prototype = {
     _getTotalDurationChannel: function () {
         var self = this
         var blocks = $(Elements.SORTABLE).children();
-        var totalChannelLength = 0;
+        var blocksIDs = [];
 
         $(blocks).each(function (i) {
             var block_id = $(this).data('block_id');
-            $(self.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
-                if (block_id == campaign_timeline_chanel_player_id) {
-                    var recCampaignTimelineChannelPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
-                    var playerDuration = recCampaignTimelineChannelPlayer['player_duration']
-                    self.m_msdb.table_campaign_timeline_chanel_players().openForEdit(campaign_timeline_chanel_player_id);
-                    // log('player ' + block_id + ' offset ' + totalChannelLength + ' playerDuration ' + playerDuration);
-                    totalChannelLength = totalChannelLength + parseFloat(playerDuration);
-                }
-            });
+            blocksIDs.push(block_id);
         });
+        var totalChannelLength = jalapeno.getTotalDurationOfBlocks(blocksIDs);
         return totalChannelLength;
     },
 

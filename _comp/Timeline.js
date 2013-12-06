@@ -1,11 +1,24 @@
-/*/////////////////////////////////////////////
-
- Timeline
-
- /////////////////////////////////////////////*/
-
+/**
+ Custom event fired when a timeline is selected. If a timeline is not of the one selected,
+ it ignores the event.
+ @event Timeline.CAMPAIGN_TIMELINE_SELECTED
+ @param {This} caller
+ @param {Self} context caller
+ @param {Event} timelineID of the timeline selected
+ @static
+ @final
+ **/
 Timeline.CAMPAIGN_TIMELINE_SELECTED = 'CAMPAIGN_TIMELINE_SELECTED';
 
+/**
+ The timeline instance is created for each timeline in a campaign. It creates its UI, listens to timeline
+ event selections, and holds a reference to its own timeline_id.
+ The timeline instance also creates channel instances for all the channels it hosts and hold references to these
+ channels via m_channels member.
+ @class Timeline
+ @constructor
+ @return {Object} instantiated Timeline
+ **/
 function Timeline(i_campaign_timeline_id) {
 
     var self = this;
@@ -69,9 +82,9 @@ Timeline.prototype = {
         });
     },
 
-    _onChange: function(e){
+    _onChange: function (e) {
         var self = this;
-        this.m_helperSDK.setCampaignTimelineRecord(self.m_campaign_timeline_id, 'timeline_name', $('#timeLinePropTitleID').val() );
+        this.m_helperSDK.setCampaignTimelineRecord(self.m_campaign_timeline_id, 'timeline_name', $('#timeLinePropTitleID').val());
     },
 
     _propLoadTimeline: function () {
@@ -82,39 +95,47 @@ Timeline.prototype = {
         $('#timeLinePropTitleID').val(recTimeline['timeline_name']);
     },
 
+    /**
+     Create the timeline and load up its template (screen divisions) UI
+     @method _populateTimeline
+     @return none
+     **/
     _populateTimeline: function () {
         var self = this;
-
-        $(self.m_msdb.table_campaign_timeline_board_templates().getAllPrimaryKeys()).each(function (k, table_campaign_timeline_board_template_id) {
-            var recCampaignTimelineBoardTemplate = self.m_msdb.table_campaign_timeline_board_templates().getRec(table_campaign_timeline_board_template_id);
-            if (recCampaignTimelineBoardTemplate['campaign_timeline_id'] == self.m_campaign_timeline_id) {
-                self._populateBoardTemplate(table_campaign_timeline_board_template_id);
-            }
-        });
+        var boardTemplateIDs = jalapeno.getTemplatesOfTimeline(self.m_campaign_timeline_id);
+        for (var i = 0; i < boardTemplateIDs.length; i++) {
+            self._populateBoardTemplate(boardTemplateIDs[i]);
+        }
     },
 
+    /**
+     Create a channel instance for every channel this timeline hosts
+     @method _populateChannels
+     @return none
+     **/
     _populateChannels: function () {
         var self = this;
 
-        $(self.m_msdb.table_campaign_timeline_chanels().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_id) {
-            var recCampaignTimelineChannel = self.m_msdb.table_campaign_timeline_chanels().getRec(campaign_timeline_chanel_id);
-            if (self.m_campaign_timeline_id == recCampaignTimelineChannel['campaign_timeline_id']) {
-                self.m_channels[campaign_timeline_chanel_id] = new Channel(campaign_timeline_chanel_id);
-            }
-        });
+        var self = this;
+        var channelIDs = jalapeno.getChannelsOfTimeline(self.m_campaign_timeline_id);
+        for (var i = 0; i < channelIDs.length; i++) {
+            self.m_channels[channelIDs[i]] = new Channel(channelIDs[i]);
+        }
     },
 
+    /**
+     Load up the board template (screen divisions) for this timeline instance.
+     In case sequencer is used, we push it to the sequencer, thus creating the thumbnail template
+     inside the sequencer so this timeline can be selected.
+     Scheduler future support.
+     @method _populateBoardTemplate
+     @param {Number} i_campaign_timeline_board_template_id
+     @return none
+     **/
     _populateBoardTemplate: function (i_campaign_timeline_board_template_id) {
         var self = this;
 
-        var recCampaignTimelineBoardTemplate = self.m_msdb.table_campaign_timeline_board_templates().getRec(i_campaign_timeline_board_template_id);
-
-        // Get global board > board template so we can get the total width / height resolution of the board
-        var board_template_id = recCampaignTimelineBoardTemplate['board_template_id'];
-        var recBoardTemplate = self.m_msdb.table_board_templates().getRec(board_template_id);
-        var board_id = recBoardTemplate['board_id'];
-
-        var recBoard = self.m_msdb.table_boards().getRec(board_id);
+        var recBoard = jalapeno.getGlobalBoardRecFromTemplate(i_campaign_timeline_board_template_id);
         var width = parseInt(recBoard['board_pixel_width']);
         var height = parseInt(recBoard['board_pixel_height']);
 
@@ -125,26 +146,7 @@ Timeline.prototype = {
             commBroker.getService('ScreenOrientation').setOrientation(ScreenOrientation.VERTICAL);
         }
 
-        var counter = -1;
-        var screenProps = {};
-
-        $(self.m_msdb.table_campaign_timeline_board_viewer_chanels().getAllPrimaryKeys()).each(function (k, campaign_timeline_board_viewer_chanel_id) {
-
-            var recCampaignTimelineBoardViewerChanel = self.m_msdb.table_campaign_timeline_board_viewer_chanels().getRec(campaign_timeline_board_viewer_chanel_id);
-            if (recCampaignTimelineBoardViewerChanel['campaign_timeline_board_template_id'] == i_campaign_timeline_board_template_id) {
-                var recBoardTemplateViewer = self.m_msdb.table_board_template_viewers().getRec(recCampaignTimelineBoardViewerChanel['board_template_viewer_id']);
-                // log(i_campaign_timeline_board_template_id + ' ' + recBoardTemplateViewer['board_template_viewer_id']);
-                counter++;
-                screenProps['sd' + counter] = {};
-                screenProps['sd' + counter]['campaign_timeline_board_viewer_id'] = recBoardTemplateViewer['board_template_viewer_id'];
-                screenProps['sd' + counter]['campaign_timeline_id'] = self.m_campaign_timeline_id;
-                screenProps['sd' + counter]['x'] = recBoardTemplateViewer['pixel_x'];
-                screenProps['sd' + counter]['y'] = recBoardTemplateViewer['pixel_y'];
-                screenProps['sd' + counter]['w'] = recBoardTemplateViewer['pixel_width'];
-                screenProps['sd' + counter]['h'] = recBoardTemplateViewer['pixel_height'];
-            }
-        });
-
+        var screenProps = jalapeno.getTemplateViewersScreenProps(self.m_campaign_timeline_id, i_campaign_timeline_board_template_id)
         self._createTimelineUI(screenProps);
 
         // Future support for scheduler
@@ -163,6 +165,13 @@ Timeline.prototype = {
         }
     },
 
+    /**
+     Create the actual UI for this timeline instance. We use the ScreenTemplateFactory for SVG creation
+     and insert the snippet onto timelineViewStack so the timeline UI can be presented when selected.
+     @method _createTimelineUI
+     @param {Object} i_screenProps template properties object
+     @return none
+     **/
     _createTimelineUI: function (i_screenProps) {
 
         var self = this;
@@ -189,7 +198,6 @@ Timeline.prototype = {
         $('body').append(snippetWrapper);
 
         var timelineViewStack = commBroker.getService('Campaign').getTimelineViewStack();
-        ;
         self.m_viewStackIndex = timelineViewStack.addChild('#' + divID1);
 
         $('#' + divID2).append($(snippet));
@@ -198,15 +206,25 @@ Timeline.prototype = {
 
     },
 
+    /**
+     Return the view stack index this timeline occupies in the timelineViewStack manager.
+     @method getViewStackIndex
+     @return {Number} m_viewStackIndex
+     **/
     getViewStackIndex: function () {
         var self = this;
         return self.m_viewStackIndex;
     },
 
+    /**
+     The timeline hold references to all of the channels it creates that exist within it.
+     The getChannelInstance returns a specific channel instance for a channel_id.
+     @method getChannelInstance
+     @param {Number} i_campaign_timeline_chanel_id
+     @return {Object} Channel
+     **/
     getChannelInstance: function (i_campaign_timeline_chanel_id) {
         var self = this;
         return self.m_channels[i_campaign_timeline_chanel_id];
     }
-
-
 }

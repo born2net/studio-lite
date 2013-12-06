@@ -26,7 +26,7 @@
  </pre>
  **/
 
-var globs = {}, commBroker, model;
+var globs = {}, commBroker, model, jalapeno;
 
 $(document).ready(function () {
 
@@ -75,6 +75,9 @@ $(document).ready(function () {
 
     var compHelperSDK = new HelperSDK();
     commBroker.setService('HelperSDK', compHelperSDK);
+    //todo refactor HelperSDK
+    jalapeno = compHelperSDK;
+
 
     var compX2JS = new X2JS({escapeMode: true, attributePrefix: "_", arrayAccessForm: "none", emptyNodeForm: "text", enableToStringFunc: true, arrayAccessFormPaths: [], skipEmptyTextNodesForObj: true});
     commBroker.setService('compX2JS', compX2JS);

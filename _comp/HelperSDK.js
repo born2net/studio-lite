@@ -25,6 +25,7 @@ function HelperSDK() {
      */
 
     this.m_msdb = undefined;
+    this.msdb = undefined;
 };
 
 HelperSDK.prototype = {
@@ -223,6 +224,88 @@ HelperSDK.prototype = {
             campaign_timeline_chanel_player_id: recTimelinePlayer['campaign_timeline_chanel_player_id'],
             campaign_timeline_chanel_player_data: recTimelinePlayer['player_data']
         };
+    },
+
+    /**
+     Get all the campaign > timeline > board > template ids of a timeline
+     @method getTemplatesOfTimeline
+     @param {Number} i_campaign_timeline_id
+     @return {Array} template ids
+     **/
+    getTemplatesOfTimeline: function (i_campaign_timeline_id) {
+        var self = this;
+        var foundTemplatesIDs = [];
+
+        $(jalapeno.m_msdb.table_campaign_timeline_board_templates().getAllPrimaryKeys()).each(function (k, table_campaign_timeline_board_template_id) {
+            var recCampaignTimelineBoardTemplate = jalapeno.m_msdb.table_campaign_timeline_board_templates().getRec(table_campaign_timeline_board_template_id);
+            if (recCampaignTimelineBoardTemplate['campaign_timeline_id'] == i_campaign_timeline_id) {
+                foundTemplatesIDs.push(table_campaign_timeline_board_template_id);
+            }
+        });
+        return foundTemplatesIDs;
+    },
+
+    /**
+     Get all the campaign > timeline > channels ids of a timeline
+     @method getChannelsOfTimeline
+     @param {Number} i_campaign_timeline_id
+     @return {Array} channel ids
+     **/
+    getChannelsOfTimeline: function (i_campaign_timeline_id) {
+        var self = this;
+        var foundChannelsIDs = [];
+
+        $(jalapeno.m_msdb.table_campaign_timeline_chanels().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_id) {
+            var recCampaignTimelineChannel = jalapeno.m_msdb.table_campaign_timeline_chanels().getRec(campaign_timeline_chanel_id);
+            if (i_campaign_timeline_id == recCampaignTimelineChannel['campaign_timeline_id']) {
+                foundChannelsIDs.push(campaign_timeline_chanel_id);
+            }
+        });
+        return foundChannelsIDs;
+    },
+
+    /**
+     Get the total duration in seconds of all given block ids
+     @method getTotalDurationOfBlocks
+     @param {Array} i_blocks
+     @return {Number} totalChannelLength
+     **/
+    getTotalDurationOfBlocks: function (i_blocks) {
+        var self = this;
+        var totalChannelLength = 0;
+
+        for (var i = 0 ; i < i_blocks.length; i++){
+            var block_id = i_blocks[i];
+            $(jalapeno.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
+                if (block_id == campaign_timeline_chanel_player_id) {
+                    var recCampaignTimelineChannelPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
+                    var playerDuration = recCampaignTimelineChannelPlayer['player_duration']
+                    jalapeno.m_msdb.table_campaign_timeline_chanel_players().openForEdit(campaign_timeline_chanel_player_id);
+                    log('player ' + block_id + ' offset ' + totalChannelLength + ' playerDuration ' + playerDuration);
+                    totalChannelLength = totalChannelLength + parseFloat(playerDuration);
+                }
+            });
+        }
+        return totalChannelLength;
+    },
+
+    /**
+     Get a global board record (not the board that assigned to a campaign, but global).
+     Keep in mind that we only give as an argument the campaign > timeline > board > template id, so we have to query it and find
+     out to which global board its pointing so we can grab the correct record for the correct global board.
+     @method getGlobalBoardRecFromTemplate
+     @param {Number} i_campaign_timeline_board_template_id to reverse map into global board
+     @return {Object} global board record;
+     **/
+    getGlobalBoardRecFromTemplate: function (i_campaign_timeline_board_template_id) {
+        var self = this;
+
+        var recCampaignTimelineBoardTemplate = jalapeno.m_msdb.table_campaign_timeline_board_templates().getRec(i_campaign_timeline_board_template_id);
+        var board_template_id = recCampaignTimelineBoardTemplate['board_template_id'];
+        var recBoardTemplate = jalapeno.m_msdb.table_board_templates().getRec(board_template_id);
+        var board_id = recBoardTemplate['board_id'];
+        var recBoard = jalapeno.m_msdb.table_boards().getRec(board_id);
+        return recBoard;
     },
 
     /**
@@ -656,6 +739,38 @@ HelperSDK.prototype = {
                 recTimeline = self.m_msdb.table_campaign_timelines().getRec(campaign_timeline_id);
         });
         return recTimeline;
+    },
+
+    /**
+     Build screenProps json object with all viewers and all of their respective attributes for the given timeline_id / template_id
+     @method getTemplateViewersScreenProps
+     @param {Number} i_campaign_timeline_id
+     @param {Number} i_campaign_timeline_board_template_id
+     @return {Object} screenProps all viewers and all their properties
+     **/
+    getTemplateViewersScreenProps: function (i_campaign_timeline_id, i_campaign_timeline_board_template_id) {
+        var self = this;
+        var counter = -1;
+        var screenProps = {};
+
+        $(jalapeno.m_msdb.table_campaign_timeline_board_viewer_chanels().getAllPrimaryKeys()).each(function (k, campaign_timeline_board_viewer_chanel_id) {
+
+            var recCampaignTimelineBoardViewerChanel = self.m_msdb.table_campaign_timeline_board_viewer_chanels().getRec(campaign_timeline_board_viewer_chanel_id);
+            if (recCampaignTimelineBoardViewerChanel['campaign_timeline_board_template_id'] == i_campaign_timeline_board_template_id) {
+                var recBoardTemplateViewer = self.m_msdb.table_board_template_viewers().getRec(recCampaignTimelineBoardViewerChanel['board_template_viewer_id']);
+                // log(i_campaign_timeline_board_template_id + ' ' + recBoardTemplateViewer['board_template_viewer_id']);
+                counter++;
+                screenProps['sd' + counter] = {};
+                screenProps['sd' + counter]['campaign_timeline_board_viewer_id'] = recBoardTemplateViewer['board_template_viewer_id'];
+                screenProps['sd' + counter]['campaign_timeline_id'] = i_campaign_timeline_id;
+                screenProps['sd' + counter]['x'] = recBoardTemplateViewer['pixel_x'];
+                screenProps['sd' + counter]['y'] = recBoardTemplateViewer['pixel_y'];
+                screenProps['sd' + counter]['w'] = recBoardTemplateViewer['pixel_width'];
+                screenProps['sd' + counter]['h'] = recBoardTemplateViewer['pixel_height'];
+            }
+        });
+
+        return screenProps;
     },
 
     /**

@@ -103,6 +103,18 @@ Elements.CHANNEL_REMOVE_RESOURCE = '#channelRemoveResource';
 Elements.NO_RESOURCE_SELECTED_ALERT = '#noResourceSelectedAlert';
 Elements.CHANNEL_ADD_RESOURCE = '#channelAddResource';
 
+Elements.EMPTY_PROPERTIES = '#emptyProperties';
+Elements.RESOURCE_PROPERTIES = '#resourceProperties';
+Elements.FILE_SELECTION = '#fileSelection';
+Elements.FILE_REMOVE = '#fileRemove';
+Elements.SELECTED_LIB_RESOURCE_NAME = '#selectedLibResourceName';
+
+
+
+
+
+
+
 
 
 // Classes
@@ -111,7 +123,13 @@ Elements.CLASS_KNOB = '.knob';
 Elements.CLASS_ADD_RESOURE_TO_CHANNEL = '.addResoureToChannel';
 Elements.CLASS_SELECTED_LIB_RESOURCE = '.selectedLibResource';
 Elements.CLASS_RESOURCE_LIB_OPEN_PROPS = '.resourceLibOpenProps';
+Elements.CLASS_RESOURCE_LIB_OPEN_PROPS2 = 'resourceLibOpenProps';
 Elements.CLASS_SELECTED_RESOURCE = '.selectedResource';
+Elements.CLASS_UI_ICON = '.ui-icon';
+Elements.CLASS_UI_ICON_ARROW_R = 'ui-icon-arrow-r';
+Elements.CLASS_UI_ICON_ARROW_L = 'ui-icon-arrow-l';
+
+
 
 
 

@@ -289,11 +289,11 @@ StudioLiteModel.prototype = {
                 return;
 
             var stationsArray = data.responce['Stations']['Station'];
-
-            // Build JSON data model from server reply
+            if (stationsArray==undefined)
+                return;
 
             for (var i = 0; i < stationsArray.length; i++) {
-                o = stationsArray[i];
+                var o = stationsArray[i];
                 switch (o['@attributes'].connection) {
                     case    '2':
                     {

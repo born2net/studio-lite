@@ -11,45 +11,40 @@
  @final
  @param {screenData} json encapsulated data of entire configuration of instance
  **/
-
 ScreenTemplateFactory.ON_VIEWER_SELECTED = 'ON_VIEWER_SELECTED';
 
 /**
- Instruct the factory to produce a Template (screen) that can each viewer (screen division) can be selected individually
- as well as the creation of corresponding viewer numbered labels
+ Instruct the factory to produce a Template (screen) that each viewer (screen division) can be selected individually
+ as well as the creation of corresponding viewer numbered labels inside each viewer.
  @property ScreenTemplateFactory.VIEWER_SELECTABLE
  @static
  @final
  @type String
  */
-
 ScreenTemplateFactory.VIEWER_SELECTABLE = 'VIEWER_SELECTABLE';
 
 /**
- Instruct the factory to produce a Template (screen) that can only be selected as a whole (no viewers selectable)
+ Instruct the factory to produce a Template (screen) that can only be selected as a whole (no viewers selectable) and no numbered labels.
  @property ScreenTemplateFactory.ENTIRE_SELECTABLE
  @static
  @final
  @type String
  */
-
 ScreenTemplateFactory.ENTIRE_SELECTABLE = 'ENTIRE_SELECTABLE';
 
 /**
  The class generates the UI for a template (a.k.a Screen Division) that is
  a selectable widget including the drawing of each viewer (division) within
- the screen as well as firing related tap events
-
+ the screen, as well as firing related tap events on action.
  @class ScreenTemplateFactory
  @constructor
- @param {object} i_screenTemplateData hold data as instructions for factory ceration of widget
+ @param {object} i_screenTemplateData hold data as instructions for factory creation component
  @param {String} i_type the type of widget that we will create. This includes
- VIEWER_SELECTABLE as well as ENTIRE_SELECTABLE with respect to the ability to select the widget's viewers individually
+ VIEWER_SELECTABLE as well as ENTIRE_SELECTABLE with respect to the ability to select the components viewers individually
  or the entire screen division
- @param {object} i_owner the owner of this class which we use to know where fire events are coming
- from thus so we can act upon touch events accordingly
+ @param {object} i_owner the owner of this class (parent) that we can query at the listening end, to examine if the event is
+ of any interest to the listener.
  **/
-
 function ScreenTemplateFactory(i_screenTemplateData, i_type, i_owner) {
 
     this.self = this;
@@ -83,17 +78,129 @@ function ScreenTemplateFactory(i_screenTemplateData, i_type, i_owner) {
             break;
         }
     }
-
-    this._init();
 };
 
 ScreenTemplateFactory.prototype = {
     constructor: ScreenTemplateFactory,
 
-    _init: function () {
-        var self = this;
+    /**
+     Method is called when an entire screen frame of the UI is tapped, in contrast to when a single viewer is selected.
+     The difference in dispatch of the event depends on how the factory created this instance.
+     @method _onScreenFrameSelected
+     @param {Event} e
+     @param {Object} i_caller
+     @return {Boolean} false
+     **/
+    _onScreenFrameSelected: function (e, i_caller) {
+        var self = i_caller;
+        var element = e.target;
+
+        var campaign_timeline_board_viewer_id = $(element).data('campaign_timeline_board_viewer_id');
+        var campaign_timeline_id = $(element).data('campaign_timeline_id');
+
+
+        var screenData = {
+            sd: $(element).data('sd'),
+            elementID: i_caller.m_myElementID,
+            owner: i_caller.getOwner(),
+            campaign_timeline_board_viewer_id: campaign_timeline_board_viewer_id,
+            campaign_timeline_id: campaign_timeline_id,
+            screenTemplateData: self.m_screenTemplateData
+        };
+
+        self._deselectViewers();
+
+        commBroker.fire(ScreenTemplateFactory.ON_VIEWER_SELECTED, this, screenData);
+        e.stopImmediatePropagation();
+        return false;
     },
 
+    /**
+     Method is called when a single viewer (screen division) of the UI is tapped, in contrast to when the entire frame of the screen is selected.
+     The difference in dispatch of the event depends on how the factory created this instance.
+     @method _onScreenViewerSelected
+     @param {Event} e
+     @param {Object} i_caller
+     @return {Boolean} false
+     **/
+    _onScreenViewerSelected: function (e, i_caller) {
+        var element = e.target;
+
+        // Label was pressed
+        if ($(element).data('for') != undefined) {
+            var forDivison = $(element).data('for');
+            element = $('#' + forDivison);
+        }
+
+        i_caller._deselectViewers();
+
+        var campaign_timeline_board_viewer_id = $(element).data('campaign_timeline_board_viewer_id');
+        var campaign_timeline_id = $(element).data('campaign_timeline_id');
+
+        $(element).css({'fill': 'rgb(200,200,200)'});
+
+        var screenData = {
+            sd: $(element).data('sd'),
+            campaign_timeline_board_viewer_id: campaign_timeline_board_viewer_id,
+            campaign_timeline_id: campaign_timeline_id,
+            elementID: i_caller.m_myElementID,
+            owner: i_caller.getOwner(),
+            screenTemplateData: self.m_screenTemplateData
+        }
+
+        commBroker.fire(ScreenTemplateFactory.ON_VIEWER_SELECTED, this, screenData);
+        e.stopImmediatePropagation();
+        return false;
+    },
+
+    /**
+     Deselect all viewers, thus change their colors back to default.
+     @method _deselectViewers
+     @return none
+     **/
+    _deselectViewers: function () {
+        var self = this;
+        $(Elements.SCREEN_DIVISION_CLASS).each(function () {
+            if ($(this).is('rect')) {
+                $(this).css({'fill': 'rgb(230,230,230)'});
+            }
+        });
+    },
+
+    /**
+     When enabled, _mouseOverEffect will highlight viewers when mouse is hovered over them.
+     @method _mouseOverEffect
+     @return none
+     **/
+    _mouseOverEffect: function () {
+        var self = this;
+        var a = $('#' + self.m_myElementID);
+        var b = $('#' + self.m_myElementID).find('rect');
+        $('#' + self.m_myElementID).find('rect').each(function () {
+            $(this).on('mouseover',function () {
+                $(this).css({'fill': 'rgb(190,190,190)'});
+            }).mouseout(function () {
+                    $(this).css({'fill': 'rgb(230,230,230)'});
+                });
+        });
+    },
+
+    /**
+     Get the owner (parent) of this instance, i.e., the one who created this.
+     We use the owner attribute as a way to distinguish what type of instance this was created as.
+     @method getOwner
+     @return {Object} m_owner
+     **/
+    getOwner: function () {
+        var self = this;
+        return self.m_owner;
+    },
+
+    /**
+     Create will produce the actual SVG based Template (screen) with inner viewers and return HTML snippet to the caller.
+     @method create
+     @return {Object} html element produced by this factory
+     **/
     create: function () {
 
         var self = this;
@@ -140,6 +247,11 @@ ScreenTemplateFactory.prototype = {
 
     },
 
+    /**
+     Begin listening to events and in turn set the behavior of the instance.
+     @method activate
+     @return none
+     **/
     activate: function () {
         var self = this;
 
@@ -153,14 +265,24 @@ ScreenTemplateFactory.prototype = {
             this.selectablelDivision();
     },
 
+    /**
+     When enabled, selectablelDivision will allow for UI mouse / tap of individual viewers (screen divisions) and not entire frame.
+     @method selectablelDivision
+     @return none
+     **/
     selectablelDivision: function () {
         var self = this;
-        $('.screenDivisionClass').on('tap', function (e) {
+        $(Elements.SCREEN_DIVISION_CLASS).on('tap', function (e) {
             self._onScreenViewerSelected(e, self);
         });
-
     },
 
+    /**
+     When enabled, selectableFrame will allow for UI mouse / tap of the outer frame of the template (screen) and not
+     individual viewers.
+     @method selectableFrame
+     @return none
+     **/
     selectableFrame: function () {
         var self = this;
 
@@ -173,92 +295,17 @@ ScreenTemplateFactory.prototype = {
         });
 
 
-        $('.screenDivisionClass').on('tap', function (e) {
+        $(Elements.SCREEN_DIVISION_CLASS).on('tap', function (e) {
             self._onScreenFrameSelected(e, self);
         });
     },
 
-    _onScreenFrameSelected: function (e, i_caller) {
-        var self = i_caller;
-        var element = e.target;
 
-        var campaign_timeline_board_viewer_id = $(element).data('campaign_timeline_board_viewer_id');
-        var campaign_timeline_id = $(element).data('campaign_timeline_id');
-
-
-        var screenData = {
-            sd: $(element).data('sd'),
-            elementID: i_caller.m_myElementID,
-            owner: i_caller.getOwner(),
-            campaign_timeline_board_viewer_id: campaign_timeline_board_viewer_id,
-            campaign_timeline_id: campaign_timeline_id,
-            screenTemplateData: self.m_screenTemplateData
-        };
-
-        self._deselectViewers();
-
-        commBroker.fire(ScreenTemplateFactory.ON_VIEWER_SELECTED, this, screenData);
-        e.stopImmediatePropagation();
-        return false;
-    },
-
-    _onScreenViewerSelected: function (e, i_caller) {
-        var element = e.target;
-
-        // Label was pressed
-        if ($(element).data('for') != undefined) {
-            var forDivison = $(element).data('for');
-            element = $('#' + forDivison);
-        }
-
-        i_caller._deselectViewers();
-
-        var campaign_timeline_board_viewer_id = $(element).data('campaign_timeline_board_viewer_id');
-        var campaign_timeline_id = $(element).data('campaign_timeline_id');
-
-        $(element).css({'fill': 'rgb(200,200,200)'});
-
-        var screenData = {
-            sd: $(element).data('sd'),
-            campaign_timeline_board_viewer_id: campaign_timeline_board_viewer_id,
-            campaign_timeline_id: campaign_timeline_id,
-            elementID: i_caller.m_myElementID,
-            owner: i_caller.getOwner(),
-            screenTemplateData: self.m_screenTemplateData
-        }
-
-        commBroker.fire(ScreenTemplateFactory.ON_VIEWER_SELECTED, this, screenData);
-        e.stopImmediatePropagation();
-        return false;
-    },
-
-    _deselectViewers: function(){
-        var self = this;
-        $('.screenDivisionClass').each(function () {
-            if ($(this).is('rect')) {
-                $(this).css({'fill': 'rgb(230,230,230)'});
-            }
-        });
-    },
-
-    _mouseOverEffect: function () {
-        var self = this;
-        var a = $('#' + self.m_myElementID);
-        var b = $('#' + self.m_myElementID).find('rect');
-        $('#' + self.m_myElementID).find('rect').each(function () {
-            $(this).on('mouseover',function () {
-                $(this).css({'fill': 'rgb(190,190,190)'});
-            }).mouseout(function () {
-                    $(this).css({'fill': 'rgb(230,230,230)'});
-                });
-        });
-    },
-
-    getOwner: function () {
-        var self = this;
-        return self.m_owner;
-    },
-
+    /**
+     Release all members to allow for garbage collection.
+     @method destroy
+     @return none
+     **/
     destroy: function () {
         this.self = this;
         self.m_owner = null;
@@ -276,5 +323,3 @@ ScreenTemplateFactory.prototype = {
         self.m_screenTemplateData = null;
     }
 }
-
-

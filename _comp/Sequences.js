@@ -1,8 +1,11 @@
-/*/////////////////////////////////////////////
-
- Sequencer
-
- /////////////////////////////////////////////*/
+/**
+ The Sequencer instance manages the UI of timeline selection and controls playback order of timelines.
+ It allows the user to re-order timeline playback through drag and drop operations.
+ We also keep track of all created timelines through a local member m_timelines.
+ @class Sequencer
+ @constructor
+ @return {Object} instantiated Sequencer
+ **/
 
 function Sequencer(i_element) {
 
@@ -15,6 +18,12 @@ function Sequencer(i_element) {
 Sequencer.prototype = {
     constructor: Sequencer,
 
+    /**
+     Init the instance and enable drag and drop operation.
+     We also wire the open properties UI so we can populate a selected timeline through the properties panel.
+     @method _init
+     @return none
+     **/
     _init: function () {
 
         var self = this;
@@ -22,13 +31,13 @@ Sequencer.prototype = {
         commBroker.listen(Viewstacks.VIEW_CHANGED, function (e) {
             if ( $(e.context).data('viewstackname') == 'tab4' && e.caller === commBroker.getService('PlayListViewStack')) {
 
-                var orientation = commBroker.getService('ScreenOrientation').getOrientation();
-                var resolution = commBroker.getService('ScreenResolution').getResolution();
+                // var orientation = commBroker.getService('ScreenOrientation').getOrientation();
+                // var resolution = commBroker.getService('ScreenResolution').getResolution();
 
                 self._initLayoutSelectorDragDrop();
 
                 setTimeout(function () {
-                    $('#attachDragDropMainScreenSelection').trigger('tap');
+                    $(Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).trigger('tap');
                 }, 3000);
 
                 $('.openPropertiesClass').on('tap', function (e) {
@@ -41,6 +50,14 @@ Sequencer.prototype = {
         });
     },
 
+    /**
+     Create the timeline template (a.k.a timeline thumbnail) via the ScreenTemplateFactory
+     and insert it into the sequencer UI. We proceed by activating the newly created timeline thumbnail
+     via the ScreenTemplateFactory public methods.
+     @method createTimelineThumbnailUI
+     @param {Object} i_screenProps
+     @return none
+     **/
     createTimelineThumbnailUI: function (i_screenProps) {
         var self = this;
 
@@ -71,15 +88,20 @@ Sequencer.prototype = {
 
     },
 
+    /**
+     Enable drag and drop operations on the thumbnail timelines within the Sequencer UI.
+     @method _initLayoutSelectorDragDrop
+     @return none
+     **/
     _initLayoutSelectorDragDrop: function () {
         var self = this;
 
         // Regular popup
         // $("#popupUndismissible").popup( "open", {x: 90, y: 90, width: '400', height: '400'});
 
-        $('#attachDragDropMainScreenSelection').on('tap', function () {
+        $(Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).on('tap', function () {
 
-            var h = $('#screenLayoutsUL').height();
+            var h = $(Elements.SCREEN_LAYOUTS_UL).height();
             var t = h * 10 / 100;
             $('.draggableScreenPlaceHolder').css({height: h, top: '-' + h + 'px'});
 
@@ -94,8 +116,8 @@ Sequencer.prototype = {
                 },
 
                 stop: function () {
-                    $('#dettachDragDropMainScreenSelection').trigger('tap');
-                    $('#attachDragDropMainScreenSelection').trigger('tap');
+                    $(Elements.DETTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).trigger('tap');
+                    $(Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).trigger('tap');
                     self.reSequenceTimelines();
                 },
 
@@ -111,21 +133,17 @@ Sequencer.prototype = {
 
         });
 
-        $('#dettachDragDropMainScreenSelection').on('tap', function () {
+        $(Elements.DETTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).on('tap', function () {
             $(self.m_thumbsContainer).disableSelection();
             self.m_thumbsContainer.sortable('destroy');
         });
     },
 
-    /////////////////////////////////////////////////////////
-    //
-    // reSequenceTimelines
-    //
-    //      re-order the timeline sequence in database per
-    //      repsective order of Sequencer UI
-    //
-    /////////////////////////////////////////////////////////
-
+    /**
+     Reorder the timeline in the local msdb to match the UI order of the timeline thumbnails in the Sequencer
+     @method reSequenceTimelines
+     @return none
+     **/
     reSequenceTimelines: function () {
         var self = this;
         var helperSDK = commBroker.getService('HelperSDK');
@@ -138,10 +156,21 @@ Sequencer.prototype = {
         });
     },
 
+    /**
+     Return this instance.
+     @method getOwner
+     @return {Object} this
+     **/
     getOwner: function () {
         return this;
     },
 
+    /**
+     Delete a timeline from the Sequencer UI, as well as from the local member m_timelines.
+     @method deleteTimeline
+     @param {Number} i_campaign_timeline_id
+     @return none
+     **/
     deleteTimeline: function (i_campaign_timeline_id) {
         var self = this;
         var elementID = self.m_timelines[i_campaign_timeline_id];
@@ -152,6 +181,12 @@ Sequencer.prototype = {
         // reorder timelines Sequencer after db delete timeline
     },
 
+    /**
+     Find the campaign_timeline_id within the Sequencer and trigger a tap event on it so it gets selected.
+     @method selectTimeline
+     @param {Number} i_campaign_timeline_id
+     @return {Number} i_campaign_timeline_id or -1
+     **/
     selectTimeline: function (i_campaign_timeline_id) {
         var self = this;
         var total = $(self.m_thumbsContainer).find('[data-campaign_timeline_id="' + i_campaign_timeline_id + '"]').eq(0).trigger('tap');

@@ -109,6 +109,9 @@ Elements.FILE_SELECTION = '#fileSelection';
 Elements.FILE_REMOVE = '#fileRemove';
 Elements.SELECTED_LIB_RESOURCE_NAME = '#selectedLibResourceName';
 
+Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION = '#attachDragDropMainScreenSelection';
+Elements.DETTACH_DRAG_DROP_MAIN_SCREEN_SELECTION = '#dettachDragDropMainScreenSelection';
+
 
 
 
@@ -128,6 +131,9 @@ Elements.CLASS_SELECTED_RESOURCE = '.selectedResource';
 Elements.CLASS_UI_ICON = '.ui-icon';
 Elements.CLASS_UI_ICON_ARROW_R = 'ui-icon-arrow-r';
 Elements.CLASS_UI_ICON_ARROW_L = 'ui-icon-arrow-l';
+
+Elements.SCREEN_DIVISION_CLASS = '.screenDivisionClass';
+
 
 
 

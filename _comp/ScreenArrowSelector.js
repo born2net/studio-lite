@@ -1,9 +1,10 @@
-/*/////////////////////////////////////////////
-
- ScreenArrowSelector
-
- /////////////////////////////////////////////*/
-
+/**
+ The class is the UI manager for moving back and fourth within the campaign creation wizard,
+ by selecting screen orientation, screen resolution etc using arrow elements and controlling the viewstack.
+ @class ScreenArrowSelector
+ @constructor
+ @return {Object} instantiated ScreenArrowSelector
+ **/
 function ScreenArrowSelector (i_leftArrowID, i_rightArrowID, i_titleID, i_viewStack){
 
     this.m_leftArrowID          = i_leftArrowID;
@@ -20,6 +21,11 @@ function ScreenArrowSelector (i_leftArrowID, i_rightArrowID, i_titleID, i_viewSt
 ScreenArrowSelector.prototype = {
     constructor: ScreenArrowSelector,
 
+    /**
+     Init the instance and set the viewstacks that it controls
+     @method init
+     @return none
+     **/
     init: function(){
 
         var self = this;
@@ -46,6 +52,11 @@ ScreenArrowSelector.prototype = {
         self.selectIndex(0);
     },
 
+    /**
+     Select the first viewstack managed by the instance.
+     @method selectFirst
+     @return none
+     **/
     selectFirst: function(){
         var self = this;
         while (self.m_selectedIndex>0){
@@ -54,6 +65,11 @@ ScreenArrowSelector.prototype = {
 
     },
 
+    /**
+     Get the total number of views the instance manages
+     @method totalModelCount
+     @return {Number} total views
+     **/
     totalModelCount: function(){
         var self = this;
         var c = 0;
@@ -63,6 +79,11 @@ ScreenArrowSelector.prototype = {
         return c;
     },
 
+    /**
+     Select the last view in the viewstack managed by the instance.
+     @method selectLast
+     @return none
+     **/
     selectLast: function(){
         var self = this;
         while (self.m_selectedIndex < self.totalModelCount()){
@@ -71,18 +92,33 @@ ScreenArrowSelector.prototype = {
 
     },
 
+    /**
+     Select the next view in the viewstack.
+     @method selectNext
+     @return none
+     **/
     selectNext: function(){
         var self = this;
         self.m_selectedIndex++;
         self.selectIndex(self.m_selectedIndex);
     },
 
+    /**
+     Select the previous view in the viewstack.
+     @method selectPrev
+     @return none
+     **/
     selectPrev: function(){
         var self = this;
         self.m_selectedIndex--;
         self.selectIndex(self.m_selectedIndex);
     },
 
+    /**
+     Disable selection of the viewstack.
+     @method disable
+     @return none
+     **/
     disable: function(){
         var self = this;
         $(self.m_leftArrowID).css({'cursor':'default','opacity': 0.07 });
@@ -91,6 +127,11 @@ ScreenArrowSelector.prototype = {
 
     },
 
+    /**
+     Enable selection of the viewstack.
+     @method enable
+     @return none
+     **/
     enable: function(){
         var self = this;
         $(self.m_leftArrowID).css({'cursor':'default','opacity': 0.7 });
@@ -99,7 +140,12 @@ ScreenArrowSelector.prototype = {
 
     },
 
-
+    /**
+     Select a particular index in the view stack.
+     @method selectIndex
+     @param {Number} i_value
+     @return none
+     **/
     selectIndex: function(i_value){
         var self = this;
 

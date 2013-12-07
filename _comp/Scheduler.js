@@ -1,19 +1,14 @@
-/*/////////////////////////////////////////////
+/**
+ Future support for a Scheduler
+ @class Scheduler
+ @constructor
+ @return {Object} instantiated Scheduler
+ **/
 
- Scheduler
-
- /////////////////////////////////////////////*/
-
-function Scheduler (i_Element, i_insertOffset){
-
-    this.self               = this;
-    this._init();
+function Scheduler() {
+    this.self = this;
 };
 
 Scheduler.prototype = {
-    constructor: Scheduler,
-
-    _init: function(){
-        var self = this;
-    }
+    constructor: Scheduler
 }

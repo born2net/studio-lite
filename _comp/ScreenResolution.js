@@ -1,9 +1,9 @@
-/*/////////////////////////////////////////////
-
- ScreenResolution
-
- /////////////////////////////////////////////*/
-
+/**
+ The ScreenResolution class allows the user to select between pre-set resolution options to configure a new campaign with.
+ @class ScreenResolution
+ @constructor
+ @return {Object} instantiated ScreenResolution
+ **/
 function ScreenResolution() {
     this.self = this;
     this.m_resolution = '1920x1080';
@@ -12,6 +12,11 @@ function ScreenResolution() {
 ScreenResolution.prototype = {
     constructor: ScreenResolution,
 
+    /**
+     Init the instance and bind UI for resolution mode selection.
+     @method init
+     @return none
+     **/
     init: function () {
         var self = this;
         commBroker.listen(Viewstacks.VIEW_CHANGED, function (e) {
@@ -22,6 +27,13 @@ ScreenResolution.prototype = {
         });
     },
 
+    /**
+     This is the main method that builds the UI for screen resolution selection on the creation of a new campaign.
+     Note that the i_orientation is taken into count so we only display resolutions that adhere to the selected orientation.
+     @method _buildResolutionSelector
+     @param {String} i_orientation
+     @return none
+     **/
     _buildResolutionSelector: function (i_orientation) {
 
         var self = this;
@@ -72,10 +84,21 @@ ScreenResolution.prototype = {
         $("#stationResolution div:last-child").css({'border-bottom': "1px solid #CCC"})
     },
 
+    /**
+     Set the resolution of this instance to a given value.
+     @method setResolution
+     @param {String} i_value
+     @return none
+     **/
     setResolution: function (i_value) {
         this.m_resolution = i_value;
     },
 
+    /**
+     Get the set resolution of this instance.
+     @method getResolution
+     @return {String} m_resolution
+     **/
     getResolution: function () {
         return this.m_resolution;
     }

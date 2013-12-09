@@ -87,7 +87,7 @@ $(document).ready(function () {
         wireStudioUI();
         wireNavigation();
         wireLogout();
-        commBroker.getService('CompSettings').initAppColorPicker();
+        // commBroker.getService('CompSettings').initAppColorPicker();
     });
 
     var loginComponent = new LoginComponent(globs['debug'] ? 'https://secure.dynawebs.net/_php/msWS-debug.php' : 'https://secure.dynawebs.net/_php/msWS.php');

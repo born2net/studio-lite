@@ -112,6 +112,50 @@ Elements.SELECTED_LIB_RESOURCE_NAME = '#selectedLibResourceName';
 Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION = '#attachDragDropMainScreenSelection';
 Elements.DETTACH_DRAG_DROP_MAIN_SCREEN_SELECTION = '#dettachDragDropMainScreenSelection';
 
+Elements.STATION_PROPERTIES = '#stationProperties';
+Elements.STATION_LIST = '#stationList';
+Elements.STATION_ICON = '#stationIcon';
+Elements.STATION_PANEL = '#stationPanel';
+Elements.SNAPSHOT_IMAGE = '#snapShotImage';
+Elements.SNAPSHOT_SPINNER = '#snapShotSpinner';
+Elements.STATION_NAME = '#stationName';
+Elements.SEL_NAME = '#selName';
+Elements.SEL_OS = '#selOS';
+Elements.SEL_AIR_VER = '#selAirVer';
+Elements.SEL_PLAYERVER = '#selPlayerVer';
+Elements.SEL_PEAK_MEM = '#selPeakMem';
+Elements.SEL_TOT_MEM = '#selTotMem';
+Elements.SEL_RUNNING = '#selRunning';
+Elements.SEL_WD = '#selWD';
+Elements.SEL_LAST_UPD = '#selLastUpd';
+Elements.RELOAD_COMMAND = '#reloadCommand';
+Elements.PLAY_COMMAND = '#playCommand';
+Elements.STOP_COMMAND = '#stopCommand';
+Elements.EVENT_SEND_BUTTON = '#eventSendButton';
+Elements.CAPTURE_COMMAND = '#captureCommand';
+Elements.SEND_EVENT_ID = '#sendEventID';
+Elements.GO_BACK_FROM_SCREEN_LIST = '#goBackFromScreenList';
+
+Elements.TIME_LINE_PROP_TITLE_ID = '#timeLinePropTitleID';
+Elements.UP_TOTOP = '#uptotop';
+Elements.UP_TOTOP = '#uptotop';
+Elements.UP_TOTOP = '#uptotop';
+Elements.UP_TOTOP = '#uptotop';
+
+
+
+
+
+
+Elements.UP_TOTOP = '#uptotop';
+
+
+
+
+
+
+
+
 
 
 
@@ -131,8 +175,13 @@ Elements.CLASS_SELECTED_RESOURCE = '.selectedResource';
 Elements.CLASS_UI_ICON = '.ui-icon';
 Elements.CLASS_UI_ICON_ARROW_R = 'ui-icon-arrow-r';
 Elements.CLASS_UI_ICON_ARROW_L = 'ui-icon-arrow-l';
+Elements.CLASS_SCREEN_DIVISION = '.screenDivisionClass';
+Elements.CLASS_STATION = '.station';
+Elements.CLASS_STATION_OPEN_PROPS = '.stationOpenProps';
+Elements.CLASS_LAST_STATUS = '.lastStatus';
 
-Elements.SCREEN_DIVISION_CLASS = '.screenDivisionClass';
+
+
 
 
 

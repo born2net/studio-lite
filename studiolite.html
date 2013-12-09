@@ -1,196 +1,207 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SignageStudio Web Lite</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SignageStudio Web Lite</title>
 
 
-    <!-- Theme used http://nativedroid.godesign.ch/   -->
+<!-- Theme used http://nativedroid.godesign.ch/   -->
 
-    <link rel="stylesheet" href="https://secure.dynawebs.net/_msportal/_themes/nativedroid/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="https://secure.dynawebs.net/_studiolite-dev/_themes/fontsawesome/css/font-awesome.css"/>
-    <link rel="stylesheet" href="https://secure.dynawebs.net/_msportal/_themes/nativedroid/css/jquerymobile.css"/>
-    <link rel="stylesheet"
-          href="https://secure.dynawebs.net/_msportal/_themes/nativedroid/css/jquerymobile.nativedroid.css"/>
-    <link rel="stylesheet"
-          href="https://secure.dynawebs.net/_msportal/_themes/nativedroid/css/jquerymobile.nativedroid.light.css"
-          id='jQMnDTheme'/>
-    <link rel="stylesheet"
-          href="https://secure.dynawebs.net/_msportal/_themes/nativedroid/css/jquerymobile.nativedroid.color.green.css"
-          id='jQMnDColor'/>
+<link rel="stylesheet" href="https://secure.dynawebs.net/_msportal/_themes/nativedroid/css/font-awesome.min.css"/>
+<link rel="stylesheet" href="https://secure.dynawebs.net/_studiolite-dev/_themes/fontsawesome/css/font-awesome.css"/>
+<link rel="stylesheet" href="https://secure.dynawebs.net/_msportal/_themes/nativedroid/css/jquerymobile.css"/>
+<link rel="stylesheet"
+      href="https://secure.dynawebs.net/_msportal/_themes/nativedroid/css/jquerymobile.nativedroid.css"/>
+<link rel="stylesheet"
+      href="https://secure.dynawebs.net/_msportal/_themes/nativedroid/css/jquerymobile.nativedroid.light.css"
+      id='jQMnDTheme'/>
+<link rel="stylesheet"
+      href="https://secure.dynawebs.net/_msportal/_themes/nativedroid/css/jquerymobile.nativedroid.color.green.css"
+      id='jQMnDColor'/>
 
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_lib/_jq1.9.1/jquery-1.9.1.js"
-            type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_lib/_jq1.10.1/jquery-ui-1.10.1.js"
-            type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_lib/TouchPunch.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_lib/_jq1.9.1/jquery-1.9.1.js"
+        type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_lib/_jq1.10.1/jquery-ui-1.10.1.js"
+        type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_lib/TouchPunch.js" type="text/javascript"></script>
 
-    <link rel="stylesheet" href="https://secure.dynawebs.net/_studiolite-dev/_lib/_minicolors/jquery.minicolors.css"/>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_lib/_minicolors/jquery.minicolors.js"
-            type="text/javascript"></script>
-
-
-    <script src="https://js.signage.me/SignageSDK.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/MSDB.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/HelperSDK.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/ComBroker.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/AjaxJsonGetter.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Campaign.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/ScreenArrowSelector.js"
-            type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/TemplateWizard.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/ScreenOrientation.js"
-            type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/ScreenResolution.js" type="text/javascript"></script>
-
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Scheduler.js" type="text/javascript"></script>
-
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Sequences.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/ScreenTemplateFactory.js"
-            type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/AjaxRPC.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Login.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Viewstacks.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/CampaginSelector.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Property.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/ResourcesList.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Stations.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/CampaignNavigator.js"
-            type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Timeline.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Settings.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/AddBlockWizard.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/ChannelList.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Channel.js" type="text/javascript"></script>
-
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/_blocks/Block.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/_blocks/BlockImage.js"
-            type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/_blocks/BlockVideo.js"
-            type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/_blocks/BlockQR.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/_blocks/BlockRSS.js" type="text/javascript"></script>
-
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_model/Elements.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_model/Model.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_model/TemplateCollection.js"
-            type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_lib/jquery.base64.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_lib/jquery.cookie.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_lib/jquery.knob.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_lib/breakpoints.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_lib/x2js-v1.1.3/xml2json.js"
-            type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_lib/studioLiteLib.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/Studiolite.js" type="text/javascript"></script>
-
-    <script type="text/javascript">
-        $(function () {
-
-            theme = {
-                theme: "dark",
-                color: "green",
-                pathCSS: "https://secure.dynawebs.net/_msportal/_themes/nativedroid/css/",
-                oppositeTheme: function () {
-                    return (this.theme == "light") ? "dark" : "light";
-                },
-                switchTheme: function () {
-                    $(".theme-trigger a").removeClass("active");
-                    $(".theme-trigger ." + this.oppositeTheme()).addClass("active");
-                    this.theme = this.oppositeTheme();
-                    $("html").contents().find("#jQMnDTheme").attr("href", this.pathCSS + this.getCSS[this.theme]);
-                },
-                t1: function () {
-                    alert(this.pathCSS + this.getCSS[this.theme]);
-                },
-
-                switchColor : function(newColor) {
-                    $(".color-trigger a.active").removeClass("active");
-                    $(".color-trigger a."+newColor).addClass("active");
-                    this.color = newColor;
-                    $("html").contents().find("#jQMnDColor").attr("href",this.pathCSS+this.getCSS[this.color]);
-
-                    $("#tt1").attr("style",this.getborderCSS[this.color]);
-                },
-
-                switchbColor : function(newColor) {
-                    $(".color-trigger a.active").removeClass("active");
-                    $(".color-trigger a."+newColor).addClass("active");
-                    this.color = newColor;
+<link rel="stylesheet" href="https://secure.dynawebs.net/_studiolite-dev/_lib/_minicolors/jquery.minicolors.css"/>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_lib/_minicolors/jquery.minicolors.js"
+        type="text/javascript"></script>
 
 
+<script src="https://js.signage.me/SignageSDK.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/MSDB.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/HelperSDK.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/ComBroker.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/AjaxJsonGetter.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Campaign.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/ScreenArrowSelector.js"
+        type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/TemplateWizard.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/ScreenOrientation.js"
+        type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/ScreenResolution.js" type="text/javascript"></script>
 
-                },
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Scheduler.js" type="text/javascript"></script>
 
-                getCSS: {
-                    dark: "jquerymobile.nativedroid.dark.css",
-                    light: "jquerymobile.nativedroid.light.css",
-                    blue: "jquerymobile.nativedroid.color.blue.css",
-                    green: "jquerymobile.nativedroid.color.green.css",
-                    purple: "jquerymobile.nativedroid.color.purple.css",
-                    red: "jquerymobile.nativedroid.color.red.css",
-                    yellow: "jquerymobile.nativedroid.color.yellow.css"
-                },
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Sequences.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/ScreenTemplateFactory.js"
+        type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/AjaxRPC.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Login.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Viewstacks.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Navigator.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/CampaginSelector.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Property.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/ResourcesList.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Stations.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/CampaignNavigator.js"
+        type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Timeline.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Settings.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/AddBlockWizard.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/ChannelList.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Channel.js" type="text/javascript"></script>
 
-                getborderCSS: {
-                    dark: "",
-                    light: "",
-                    blue: "border-bottom:2px solid #6DCAEC",
-                    green: "border-bottom:2px solid #B6DB49",
-                    purple: "border-bottom:2px solid #CF9FE7",
-                    red: "border-bottom:2px solid #FF7979",
-                    yellow: "border-bottom:2px solid #FFD060"
-                },
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/_blocks/Block.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/_blocks/BlockImage.js"
+        type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/_blocks/BlockVideo.js"
+        type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/_blocks/BlockQR.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_comp/_blocks/BlockRSS.js" type="text/javascript"></script>
+
+<script src="https://secure.dynawebs.net/_studiolite-dev/_model/Elements.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_model/Model.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_model/TemplateCollection.js"
+        type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_lib/jquery.base64.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_lib/jquery.cookie.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_lib/jquery.knob.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_lib/breakpoints.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_lib/x2js-v1.1.3/xml2json.js"
+        type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/_lib/studioLiteLib.js" type="text/javascript"></script>
+<script src="https://secure.dynawebs.net/_studiolite-dev/Studiolite.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(function () {
+
+        theme = {
+            theme: "light",
+            color: "green",
+            pathCSS: "https://secure.dynawebs.net/_msportal/_themes/nativedroid/css/",
+            oppositeTheme: function () {
+                return (this.theme == "light") ? "dark" : "light";
+                $("input[type='radio']").checkboxradio({ theme: "b" });
+            },
+            switchTheme: function () {
+                $(".theme-trigger a").removeClass("active");
+                $(".theme-trigger ." + this.oppositeTheme()).addClass("active");
+                this.theme = this.oppositeTheme();
+                $("html").contents().find("#jQMnDTheme").attr("href", this.pathCSS + this.getCSS[this.theme]);
+            },
+            t1: function () {
+                alert(this.pathCSS + this.getCSS[this.theme]);
+            },
+
+            switchColor: function (newColor) {
+                $(".color-trigger a.active").removeClass("active");
+                $(".color-trigger a." + newColor).addClass("active");
+                this.color = newColor;
+                $("html").contents().find("#jQMnDColor").attr("href", this.pathCSS + this.getCSS[this.color]);
+
+                $("#tt1").attr("style", this.getborderCSS[this.color]);
 
 
+                $("#selectedCampaignProperties, #selectedLibResourceName, #sendEventID, #openTimeLineProperties, #qrText, #rssLink, #randomPlayback, #timeLinePropTitleID").attr("style", this.getborderCSS1[this.color]);
 
-                updateIframe: function () {
-                    $("head").contents().find("#jQMnDTheme").attr("href", this.pathCSS + this.getCSS[this.theme]);
+            },
 
-                }
+            switchbColor: function (newColor) {
+                $(".color-trigger a.active").removeClass("active");
+                $(".color-trigger a." + newColor).addClass("active");
+                this.color = newColor;
+
+
+            },
+
+            getCSS: {
+                dark: "jquerymobile.nativedroid.dark.css",
+                light: "jquerymobile.nativedroid.light.css",
+                blue: "jquerymobile.nativedroid.color.blue.css",
+                green: "jquerymobile.nativedroid.color.green.css",
+                purple: "jquerymobile.nativedroid.color.purple.css",
+                red: "jquerymobile.nativedroid.color.red.css",
+                yellow: "jquerymobile.nativedroid.color.yellow.css"
+            },
+
+            getborderCSS: {
+                dark: "",
+                light: "",
+                blue: "border-bottom:2px solid #6DCAEC",
+                green: "border-bottom:2px solid #B6DB49",
+                purple: "border-bottom:2px solid #CF9FE7",
+                red: "border-bottom:2px solid #FF7979",
+                yellow: "border-bottom:2px solid #FFD060"
+            },
+            getborderCSS1: {
+                dark: "",
+                light: "",
+                blue: "border:2px solid #6DCAEC",
+                green: "border:2px solid #B6DB49",
+                purple: "border:2px solid #CF9FE7",
+                red: "border:2px solid #FF7979",
+                yellow: "border:2px solid #FFD060"
+            },
+
+
+            updateIframe: function () {
+                $("head").contents().find("#jQMnDTheme").attr("href", this.pathCSS + this.getCSS[this.theme]);
+
             }
+        }
 
 
-            $(".theme-trigger").on("click", "a", function (e) {
-                if (!$(this).hasClass("active")) {
-                    theme.switchTheme();
-                    e.preventDefault();
-                } else {
-                    e.preventDefault();
-                }
-            });
-
-
-            $(".color-trigger").on("click","a:not([href='#color-custom'])",function(e) {
-                if($(this).hasClass("active")) {
-                    // Do Nothing
-                    e.preventDefault();
-                } else {
-                    // Switch color
-                    color = $(this).attr('href');
-                    colorArr = color.split("-");
-                    newColor = colorArr[1];
-                    theme.switchColor(newColor);
-
-                    e.preventDefault();
-                }
-            });
-
+        $(".theme-trigger").on("click", "a", function (e) {
+            if (!$(this).hasClass("active")) {
+                theme.switchTheme();
+                e.preventDefault();
+            } else {
+                e.preventDefault();
+            }
         });
 
-    </script>
+        $(".color-trigger").on("click", "a:not([href='#color-custom'])", function (e) {
+            if ($(this).hasClass("active")) {
+                // Do Nothing
+                e.preventDefault();
+            } else {
+                // Switch color
+                color = $(this).attr('href');
+                colorArr = color.split("-");
+                newColor = colorArr[1];
+                theme.switchColor(newColor);
 
-
-
-    <script type="text/javascript">
-        $(document).bind("mobileinit", function () {
-            mobileInit();
+                e.preventDefault();
+            }
         });
-    </script>
 
-    <script src="https://secure.dynawebs.net/_msportal/_js/_studioLite/_lib/_jq1.3.2/jquery.mobile-1.3.2.js"
-            type="text/javascript"></script>
+    });
+
+</script>
+
+
+<script type="text/javascript">
+    $(document).bind("mobileinit", function () {
+        mobileInit();
+    });
+</script>
+
+<script src="https://secure.dynawebs.net/_msportal/_js/_studioLite/_lib/_jq1.3.2/jquery.mobile-1.3.2.js"
+        type="text/javascript"></script>
 
 
 </head>
@@ -203,6 +214,38 @@ CSS
 
 
 <STYLE type="text/css">
+
+#selectedCampaignProperties, #selectedLibResourceName, #sendEventID, #openTimeLineProperties, #qrText, #rssLink, #randomPlayback, #timeLinePropTitleID {
+    border: 2px solid #B6DB49;
+}
+
+.ui-icon-tachometer:before {
+    content: "\f0e4";
+}
+
+.ui-icon-capture-cmd:before {
+    content: "\f030";
+}
+
+.ui-icon-play-cmd:before {
+    content: "\f04b";
+}
+
+.ui-icon-stop-cmd:before {
+    content: "\f04d";
+}
+
+.ui-icon-reload-cmd:before {
+    content: "\f01e";
+}
+
+.ui-icon-long-prop:before {
+    content: "\f085";
+}
+
+.ui-icon-long-prop {
+    font-size: 1.33em;
+}
 
 @font-face {
     font-family: 'Roboto';
@@ -249,10 +292,7 @@ CSS
 
 }
 
-
-
 @import url("fonts.googleapis.com/css?family=Roboto:400,100,300,500,700");
-
 
 #playbackResourcesDiv {
     border: 1px solid #e7e7e7;
@@ -274,7 +314,6 @@ CSS
     right: 7px;
 }
 
-
 .ui-page {
     font-family: "Roboto", sans-serif;
     font-weight: 300;
@@ -294,11 +333,10 @@ CSS
     margin: -7px;
 
 }
-.ui-icon-angle-right:before, .ui-icon-arrow-r:before{display:none;}
+
 .ui-btn,
 label.ui-btn {
     font-weight: normal;
-    color: #d0d0d1;
 
 }
 
@@ -316,14 +354,16 @@ label.ui-btn {
     cursor: pointer;
 }
 
-<!---navileft--->
-    .navileft {
-        display: block;
-        position: fixed;
-        top: 5%;
-        left: 2%;
-        z-index: 10;
-    }
+<!--
+-navileft--- >
+.navileft {
+    display: block;
+    position: fixed;
+    top: 5%;
+    left: 2%;
+    z-index: 10;
+}
+
 .naviright {
     background-color: #800000;
     display: block;
@@ -336,10 +376,9 @@ label.ui-btn {
     z-index: 10;
 }
 
-
-.navileft a,.naviright a,.download a {
+.navileft a, .naviright a, .download a {
     display: block;
-    background-color: rgba(255,255,255,0.2);
+    background-color: rgba(255, 255, 255, 0.2);
     border-radius: 50%;
     width: 100px;
     height: 100px;
@@ -349,21 +388,21 @@ label.ui-btn {
     text-align: center;
 
     -webkit-transition: -webkit-transform 0.5s, box-shadow 0.5s, background 0.5s;
-    -moz-transition: -moz-transform  0.5s, box-shadow 0.5s, background 0.5s;
-    -o-transition: -o-transform  0.5s, box-shadow 0.5s, background 0.5s;
-    -ms-transition: -ms-transform  0.5s, box-shadow 0.5s, background 0.5s;
-    transition: transform  0.5s, box-shadow 0.5s, background 0.5s;
+    -moz-transition: -moz-transform 0.5s, box-shadow 0.5s, background 0.5s;
+    -o-transition: -o-transform 0.5s, box-shadow 0.5s, background 0.5s;
+    -ms-transition: -ms-transform 0.5s, box-shadow 0.5s, background 0.5s;
+    transition: transform 0.5s, box-shadow 0.5s, background 0.5s;
 
     margin-bottom: 15px;
 }
 
-.navileft a strong,.naviright a strong,.download a strong {
+.navileft a strong, .naviright a strong, .download a strong {
     display: none;
 }
 
-.navileft a:hover,.navileft a.active,.naviright a:hover,.naviright a.active,.download a:hover {
-    background-color: rgba(255,255,255,0.8);
-    box-shadow: 10px 0px 10px rgba(0,0,0,0.2);
+.navileft a:hover, .navileft a.active, .naviright a:hover, .naviright a.active, .download a:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 10px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
 .navileft .rotate a.active:hover {
@@ -375,15 +414,15 @@ label.ui-btn {
     transform: rotate(45deg);
 }
 
-.navileft a.active.landscape,.naviright a.active.landscape {
-    -webkit-transform: rotate(90deg) scale(1.1,1.1);
-    -moz-transform: rotate(90deg) scale(1.1,1.1);
-    -o-transform: rotate(90deg) scale(1.1,1.1);
-    -ms-transform: rotate(90deg) scale(1.1,1.1);
-    transform: rotate(90deg) scale(1.1,1.1);
+.navileft a.active.landscape, .naviright a.active.landscape {
+    -webkit-transform: rotate(90deg) scale(1.1, 1.1);
+    -moz-transform: rotate(90deg) scale(1.1, 1.1);
+    -o-transform: rotate(90deg) scale(1.1, 1.1);
+    -ms-transform: rotate(90deg) scale(1.1, 1.1);
+    transform: rotate(90deg) scale(1.1, 1.1);
 }
 
-.navileft .landscape,.naviright .landscape {
+.navileft .landscape, .naviright .landscape {
     -webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
     -o-transform: rotate(90deg);
@@ -391,15 +430,15 @@ label.ui-btn {
     transform: rotate(90deg);
 }
 
-.navileft a.active.portrait,.naviright a.active.portrait {
-    -webkit-transform: rotate(0deg) scale(1.1,1.1);
-    -moz-transform: rotate(0deg) scale(1.1,1.1);
-    -o-transform: rotate(0deg) scale(1.1,1.1);
-    -ms-transform: rotate(0deg) scale(1.1,1.1);
-    transform: rotate(0deg) scale(1.1,1.1);
+.navileft a.active.portrait, .naviright a.active.portrait {
+    -webkit-transform: rotate(0deg) scale(1.1, 1.1);
+    -moz-transform: rotate(0deg) scale(1.1, 1.1);
+    -o-transform: rotate(0deg) scale(1.1, 1.1);
+    -ms-transform: rotate(0deg) scale(1.1, 1.1);
+    transform: rotate(0deg) scale(1.1, 1.1);
 }
 
-.navileft .portrait,.naviright .portrait {
+.navileft .portrait, .naviright .portrait {
     -webkit-transform: rotate(0deg);
     -moz-transform: rotate(0deg);
     -o-transform: rotate(0deg);
@@ -421,38 +460,65 @@ label.ui-btn {
 }
 
 .naviright a.dark {
-    color: rgba(255,255,255,0.6);
-    background-color: rgba(0,0,0,0.3);
+    color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 .naviright a.dark:hover {
-    color: rgba(255,255,255,0.6);
-    background-color: rgba(0,0,0,1);
+    color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(0, 0, 0, 1);
 }
 
-.naviright a.blue {	background-color: rgba(109,202,236,0.3); }
-.naviright a.green { background-color: rgba(182,219,73,0.3); }
-.naviright a.purple { background-color: rgba(207,159,231,0.3); }
-.naviright a.red { background-color: rgba(255,68,68,0.3); }
-.naviright a.yellow { background-color: rgba(255,208,56,0.3); }
+.naviright a.blue {
+    background-color: rgba(109, 202, 236, 0.3);
+}
 
-.naviright a.blue:hover,.naviright a.blue.active {	background-color: rgba(109,202,236,0.8); }
-.naviright a.green:hover,.naviright a.green.active { background-color: rgba(182,219,73,0.8); }
-.naviright a.purple:hover,.naviright a.purple.active { background-color: rgba(207,159,231,0.8); }
-.naviright a.red:hover,.naviright a.red.active { background-color: rgba(255,68,68,0.8); }
-.naviright a.yellow:hover,.naviright a.yellow.active { background-color: rgba(255,208,56,0.8); }
+.naviright a.green {
+    background-color: rgba(182, 219, 73, 0.3);
+}
+
+.naviright a.purple {
+    background-color: rgba(207, 159, 231, 0.3);
+}
+
+.naviright a.red {
+    background-color: rgba(255, 68, 68, 0.3);
+}
+
+.naviright a.yellow {
+    background-color: rgba(255, 208, 56, 0.3);
+}
+
+.naviright a.blue:hover, .naviright a.blue.active {
+    background-color: rgba(109, 202, 236, 0.8);
+}
+
+.naviright a.green:hover, .naviright a.green.active {
+    background-color: rgba(182, 219, 73, 0.8);
+}
+
+.naviright a.purple:hover, .naviright a.purple.active {
+    background-color: rgba(207, 159, 231, 0.8);
+}
+
+.naviright a.red:hover, .naviright a.red.active {
+    background-color: rgba(255, 68, 68, 0.8);
+}
+
+.naviright a.yellow:hover, .naviright a.yellow.active {
+    background-color: rgba(255, 208, 56, 0.8);
+}
 
 .naviright a.active {
-    -webkit-transform: rotate(0deg) scale(1.1,1.1);
-    -moz-transform: rotate(0deg) scale(1.1,1.1);
-    -o-transform: rotate(0deg) scale(1.1,1.1);
-    -ms-transform: rotate(0deg) scale(1.1,1.1);
-    transform: rotate(0deg) scale(1.1,1.1);
+    -webkit-transform: rotate(0deg) scale(1.1, 1.1);
+    -moz-transform: rotate(0deg) scale(1.1, 1.1);
+    -o-transform: rotate(0deg) scale(1.1, 1.1);
+    -ms-transform: rotate(0deg) scale(1.1, 1.1);
+    transform: rotate(0deg) scale(1.1, 1.1);
 }
 
-
-<!---navileft--->
-
+<!--
+-navileft--- >
 
 @media (min-width: 35em) {
     .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-open.ui-panel-content-fixed-toolbar-display-push,
@@ -514,7 +580,6 @@ label.ui-btn {
     top: 6px !important;
     left: 23px !important;
 }
-
 
 #timeLinePropDiv {
     float: right;
@@ -636,24 +701,26 @@ aside > aside > div > ul > li {
 
 }
 
-
-
+.ui-icon-sitemap,
+.ui-icon-spinner,
+.ui-icon-cogs,
+.ui-icon-comments,
+.ui-icon-signout,
+.ui-icon-cloud-upload,
+.ui-icon-tachometer,
 .ui-icon-bullhorn,
-
 .ui-icon-long-prop,
 .ui-icon-group,
-
 .ui-icon-beer,
 .ui-icon-minus,
 .ui-icon-fire,
 .ui-icon-plus,
 .ui-icon-music,
 .ui-icon-trophy,
-.ui-icon-coffee{font-size:1.33em;
-    color:#404040;
-    padding-right:#10px;
+.ui-icon-coffee {
+    font-size: 1.33em;
+    padding-right: #10px;
 }
-
 
 .ui-listview .ui-bar-b {
 
@@ -662,21 +729,9 @@ aside > aside > div > ul > li {
 .ui-btn-icon-right .ui-icon {
     right: 40px;
 }
-.ui-icon-gear{font-size:1.33em;}
-.ui-icon-long-prop {
-    background: url(https://secure.dynawebs.net/_msportal/_images/icons-gray/longgears.png) 50% 50% no-repeat;
-    background-size: 39px 23px;
-    margin-right: 20px;
-    margin-bottom: 14px !important;
 
-    width: 39px !important;
-    height: 23px !important;
-    opacity: 0.5;
-    box-shadow: none !important;
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    -webkit-border-radius: none !important;
-    border-radius: none !important;
+.ui-icon-gear {
+    font-size: 1.33em;
 }
 
 .currentSelectedStation {
@@ -695,14 +750,14 @@ aside > aside > div > ul > li {
 }
 
 .naviright {
-    background-color:maroon;
-    background-repeat:initial initial;
-    display:block;
-    left:5%;
-    padding:5px;
-    position:fixed;
-    top:20%;
-    z-index:10;
+    background-color: maroon;
+    background-repeat: initial initial;
+    display: block;
+    left: 5%;
+    padding: 5px;
+    position: fixed;
+    top: 20%;
+    z-index: 10;
 }
 
 .currentSelectedResource {
@@ -823,11 +878,12 @@ Studio Lite - Application
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div data-role="page" id="studioLite" class="ui-responsive-panel ui-panel-display-reveal">
+<div data-role="page" id="studioLite" data-theme="b" class="ui-responsive-panel ui-panel-display-reveal ">
     <div data-role="header" data-theme="b" style="box-shadow:-5px 0 5px rgba(0, 0, 0, 0.15) inset;">
 
         <a href="#navPanel" data-role='button' data-display="push"
-           style="margin-right:5px ;position:relative; top: 10px;width:3%;"><i class="fa fa-arrow-circle-o-left fa-lg"></i></a>
+           style="margin-right:5px ;position:relative; top: 10px;width:3%;"><i
+                class="fa fa-arrow-circle-o-left fa-lg"></i></a>
         <!--<a id="toggleNavigation" data-transition="fade" data-iconpos="notext" style="margin-right:5px ;position:relative; width:4%;top: 10px"  data-icon="back" data-theme="b"></a>-->
         <h1>&nbsp;</h1>
 
@@ -839,11 +895,11 @@ Studio Lite - Application
     </div>
 
     <div data-role="panel" data-position="right" id="propertiesPanel" class="main_nav ui-responsive-panel"
-         data-display="push" data-swipe-close="false" data-dismissible="true" data-theme="a">
+         data-display="push" data-swipe-close="false" data-dismissible="true" data-theme="b">
         <div>
             <!-- <h2 style="float: left; position: relative; top: -25px">resource</h2> -->
             <a id="closeProperties" style="float: left; position:relative; top: -10px" data-theme="b" data-role="button"
-               data-iconpos="notext" data-icon="arrow-r"></a>
+               data-iconpos="notext"><i class="fa fa-arrow-right"></i></a>
 
             <div style="clear:both"></div>
         </div>
@@ -855,15 +911,23 @@ Studio Lite - Application
          style="box-shadow:-5px 0 5px rgba(0, 0, 0,0.15) inset;">
         <ul data-role="listview" style="margin-left:-20px; font-weight:normal;">
             <li data-role="list-divider" id="tt1" style="border-bottom:2px solid #B6DB49;">
-                <h2 style="color: #666; margin-left:20px; text-transform:none;font-size:31px;">Signage Studio</h2></li>
+                <h2 style="margin-left:20px; text-transform:none;font-size:31px;" data-theme="b">Signage Studio</h2>
+            </li>
 
-            <li data-icon="sitemap"><a id="navPlaylist"  data-role="button" data-theme="b">Campaigns  </a></li>
-            <li data-icon="spinner"><a id="navFiles"  data-role="button" data-theme="b">Resources </a></li>
-            <li data-icon="tachometer"><a id="navPlaylers" data-role="button" data-theme="b">Stations </a></li>
-            <li data-icon="cogs"><a id="navSettings" data-role="button" data-theme="b">Settings </a></li>
-            <li data-icon="comments"><a id="navHelp" data-role="button" data-theme="b">Help </a></li>
-            <li data-icon="sign-out"><a id="navLogout" data-role="button" data-theme="b">Logout </a></li>
-            <li data-icon="cloud-upload"><a id="navAdvance" data-corners="false" data-role="button" data-theme="b">Upgrade (FREE)</a></li>
+            <li class="ui-btn-text" data-icon="sitemap"><a id="navPlaylist" data-role="button"
+                                                           data-theme="b">Campaigns </a></li>
+            <li class="ui-btn-text" data-icon="spinner"><a id="navFiles" data-role="button"
+                                                           data-theme="b">Resources </a></li>
+            <li class="ui-btn-text" data-icon="tachometer"><a id="navPlaylers" data-role="button" data-theme="b">Stations</a>
+            </li>
+            <li class="ui-btn-text" data-icon="cogs"><a id="navSettings" data-role="button" data-theme="b">Settings </a>
+            </li>
+            <li class="ui-btn-text" data-icon="comments"><a id="navHelp" data-role="button" data-theme="b">Help </a>
+            </li>
+            <li class="ui-btn-text" data-icon="signout"><a id="navLogout" data-role="button" data-theme="b">Logout </a>
+            </li>
+            <li class="ui-btn-text" data-icon="cloud-upload"><a id="navAdvance" data-corners="false" data-role="button"
+                                                                data-theme="b">Upgrade (FREE)</a></li>
         </ul>
 
     </div>
@@ -895,7 +959,7 @@ Screen Layout page
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div data-role="page" id="screenLayoutList" class="ui-responsive-panel">
+<div data-role="page" id="screenLayoutList" class="ui-responsive-panel" data-theme="b">
     <div data-role="header" data-theme="b">
         <a id="goBackFromScreenList" data-role="button" data-theme="b" data-icon="arrow-l" data-iconpos="notext"
            class="ui-btn-left">Close</a>
@@ -943,7 +1007,7 @@ Campaign view stack
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div id="playlist" style="min-height:1080px;display: :SET:">
+<div id="playlist" style="min-height:1080px;display: :SET:" data-theme="b">
     <div id="playListMainNavigation">
         <table width="100%" border="0" cellspacing="" cellpadding="0">
             <tr>
@@ -968,12 +1032,12 @@ Campaign Selector view
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div id="campaignSelectorView" style="display: :SET:">
+<div id="campaignSelectorView" style="display: :SET:" data-theme="b">
     <br/>
     <a href="#" id="startNewCampaign" data-role="button" style="position: relative; left: 40px" data-theme="b"
-       data-iconpos="right" data-inline="true">New campaign wizard  <i class="fa fa-star fa-lg"></i></a>
+       data-iconpos="right" data-inline="true">New campaign wizard <i class="fa fa-star fa-lg"></i></a>
     <ul id="campaignSelectorList" style="padding-left: 40px; padding-right: 40px" data-role="listview"
-        data-inset="true">
+        data-inset="true" data-theme="b">
     </ul>
 </div>
 
@@ -984,7 +1048,7 @@ Resources
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div align="center" id="files" style="min-height:1080px; display: :SET:">
+<div align="center" id="files" style="min-height:1080px; display: :SET:" data-theme="b">
     <div align="left">
         <label data-role="button" align="left" data-icon="plus" data-inline="true" class="file-upload">Add file
             <input id="fileSelection" name="file" id="fileSelection" type="file" multiple data-role="none">
@@ -995,7 +1059,7 @@ Resources
     <br/>
     <br/>
     <ul id="resourceLibList" style="padding: 40px" data-role="listview" data-filter="true"
-        data-filter-placeholder="Search resources..." data-inset="true">
+        data-filter-placeholder="Search resources..." data-inset="true" data-theme="b">
     </ul>
 </div>
 
@@ -1025,44 +1089,75 @@ Settings
         <input id="defResourceLength" type="range" value="5" min="5" max="8640" data-theme="a" data-track-theme="b"/>
 
     </div>
-    <div class="naviright">
-        <div class="theme-trigger" style="text-align=center;">
-            <h2>Change theme background</h2>
-            <a class="light" style="float:left;" href="#theme-light">
-                <i class="fa fa-circle-blank"></i>
-                <strong>light</strong>
-            </a>
-            <a class="dark active"style="float:left; margin-left:20px;" href="#theme-dark">
-                <i class="fa fa-circle"></i>
-                <strong>dark</strong>
-            </a>
-        </div>
-        <!--color switcher-->
 
-        <div class="color-trigger two-columns">
-            <h2>Change color</h2>
-            <a class="blue active" href="#color-blue">
-                <i class="fa fa-tint"></i>
-                <strong>blue</strong>
-            </a>
-            <a class="green" href="#color-green">
-                <i class="fa fa-tint"></i>
-                <strong>green</strong>
-            </a>
-            <a class="purple" href="#color-purple">
-                <i class="fa fa-tint"></i>
-                <strong>purple</strong>
-            </a>
-            <a class="red" href="#color-red">
-                <i class="fa fa-tint"></i>
-                <strong>red</strong>
-            </a>
-            <a class="yellow" href="#color-yellow">
-                <i class="fa fa-tint"></i>
-                <strong>yellow</strong>
-            </a>
+    <div style="padding:5px;margin-left:0px;">
+        <form>
+            <ul data-role="listview" data-inset="true">
 
-        </div>
+
+                <li data-role="fieldcontain" style="border-bottom:0px solid;" class="theme-trigger">
+                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                        <legend>Select Theme</legend>
+
+                        <a class="light" style="float:left;" href="#theme-light"> <input type="radio"
+                                                                                         name="radio-choice-a"
+                                                                                         id="radio-choice-ab"
+                                                                                         value="light"
+                                                                                         checked="checked">
+                            <label for="radio-choice-ab" style="font-size:16px;font-weight:400;color:#404040;">
+                                <legend>Light</legend>
+                            </label></a>
+                        <a class="dark" style="float:left;" href="#theme-dark"> <input type="radio"
+                                                                                       name="radio-choice-a"
+                                                                                       id="radio-choice-bb"
+                                                                                       value="dark">
+                            <label for="radio-choice-bb" style="font-size:16px;font-weight:400;color:#404040;">
+                                <legend>Dark</legend>
+                            </label> </a>
+                    </fieldset>
+                </li>
+            </ul>
+
+        </form>
+        <form>
+            <ul data-role="listview" data-inset="true">
+
+                <li data-role="fieldcontain" style="border-bottom:0px solid;" class="color-trigger">
+                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                        <legend>Select color</legend>
+
+                        <a class="green active" href="#color-green"><input type="radio" name="radio-choice-a"
+                                                                           id="radio-choice-ab" value="green"
+                                                                           checked="checked">
+                            <label for="radio-choice-ab" style="font-size:16px;font-weight:400;color:#404040;">
+                                <legend>Green</legend>
+                            </label></a>
+
+                        <a class="blue" href="#color-blue"><input type="radio" name="radio-choice-a"
+                                                                  id="radio-choice-bb" value="blue">
+                            <label for="radio-choice-bb" style="font-size:16px;font-weight:400;color:#404040;">
+                                <legend>Blue</legend>
+                            </label></a>
+                        <a class="purple" href="#color-purple"><input type="radio" name="radio-choice-a"
+                                                                      id="radio-choice-cb" value="purple">
+                            <label for="radio-choice-cb" style="font-size:16px;font-weight:400;color:#404040;">
+                                <legend>Purple</legend>
+                            </label></a>
+                        <a class="red" href="#color-red"><input type="radio" name="radio-choice-a" id="radio-choice-db"
+                                                                value="red">
+                            <label for="radio-choice-db" style="font-size:16px;font-weight:400;color:#404040;">
+                                <legend>Red</legend>
+                            </label></a>
+                        <a class="yellow" href="#color-yellow"><input type="radio" name="radio-choice-a"
+                                                                      id="radio-choice-eb" value="yellow">
+                            <label for="radio-choice-eb" style="font-size:16px;font-weight:400;color:#404040;">
+                                <legend>Yellow</legend>
+                            </label></a>
+
+                    </fieldset>
+                </li>
+            </ul>
+        </form>
     </div>
 </div>
 
@@ -1105,7 +1200,7 @@ Timeline properties
 ////////////////////////////////////////////////////////////////////////// -->
 
 <div id="propEntireScreen" style="display: :SET:">
-    <div>
+    <div id="tt2" style="margin:0;">
         <input type="text" name="name" id="timeLinePropTitleID" value="" placeholder="Timeline Title"/>
     </div>
 </div>
@@ -1119,12 +1214,16 @@ Viewer properties
 
 <div id="propScreenDivision" style="display: :SET:">
     <h5>Channel properties</h5>
+
     <label for="randomPlayback">Random Playback</label>
-    <select id="randomPlayback" name="Random playback" data-role="slider">
+    <select id="randomPlayback" name="Random playback" data-role="slider" data-track-theme="b">
         <option value="off">Off</option>
         <option value="on">On</option>
     </select>
+
+
 </div>
+
 
 <!-- //////////////////////////////////////////////////////////////////////////
 
@@ -1132,7 +1231,7 @@ Properties C
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div id="propResource" style="display: :SET:">
+<div id="propResource" style="display: :SET:" data-theme="b">
     <p>CC properies info...</p>
 </div>
 
@@ -1144,7 +1243,7 @@ Block Properties
 ////////////////////////////////////////////////////////////////////////// -->
 
 
-<div id="blockProperties" style="display: :SET:">
+<div id="blockProperties" style="display: :SET:" data-theme="b">
     <div>
         <h2 id="selectedChannelResourceName"></h2>
     </div>
@@ -1170,13 +1269,20 @@ Block RSS common properties
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div id="blockRSSCommonProperties" style="display: :SET:">
+<div id="blockRSSCommonProperties" style="display: :SET:" data-theme="b">
     <div>
         <h5>RSS</h5>
 
         <div>
-            <input type="text" name="name" id="rssLink" value="" placeholder="Enter RSS Link Text"/>
+            <input type="text" name="name" id="rssLink" value="" placeholder="Enter RSS Link Text"/ data-theme="b">
         </div>
+
+        <div>
+            <label for="hue-demo">Hue (default)</label>
+            <input type="text" id="hue-demo" class="demo" data-control="hue" value="#ff6161">
+        </div>
+
+
     </div>
 </div>
 
@@ -1186,9 +1292,9 @@ Block QR common properties
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div id="blockQRCommonProperties" style="display: :SET:">
+<div id="blockQRCommonProperties" style="display: :SET:" data-theme="b">
     <div>
-        <input type="text" name="name" id="qrText" value="" placeholder="Enter QR Text"/>
+        <input type="text" name="name" id="qrText" value="" placeholder="Enter QR Text" data-theme="b"/>
     </div>
 </div>
 
@@ -1199,10 +1305,10 @@ Block Video common properties
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div id="blockVideoCommonProperties" style="display: :SET:">
+<div id="blockVideoCommonProperties" style="display: :SET:" data-theme="b">
     <h5>Video</h5>
     <label for="videoAspectRatio">Aspect ratio</label>
-    <select id="videoAspectRatio" name="Aspect ratio" data-role="slider">
+    <select id="videoAspectRatio" name="Aspect ratio" data-role="slider" data-track-theme="b">
         <option value="off">Off</option>
         <option value="on">On</option>
     </select>
@@ -1217,7 +1323,7 @@ Block Image common properties
 <div id="blockImageCommonProperties" style="display: :SET:">
     <h5>Image</h5>
     <label for="imageAspectRatio">Aspect ratio</label>
-    <select id="imageAspectRatio" name="Aspect ratio" data-role="slider">
+    <select id="imageAspectRatio" name="Aspect ratio" data-role="slider" data-track-theme="b">
         <option value="off">Off</option>
         <option value="on">On</option>
     </select>
@@ -1246,9 +1352,9 @@ Orientation view
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div id="orientationView" style="display: :SET:">
+<div id="orientationView" style="display: :SET:" data-theme="b">
 
-    <table width="100%" border="0" cellspacing="0" cellpadding="50">
+    <table width="100%" border="0" cellspacing="0" cellpadding="50" data-theme="b">
         <tr>
             <td align="right"><img id="imgVertical"
                                    src="https://secure.dynawebs.net/_msportal/_images/orientationV.png"/></td>
@@ -1285,7 +1391,7 @@ Campaign view
     <div id="campainViewMainContainer">
     </div>
 
-    <div data-role="collapsible-set" data-content-theme="b" style="padding:20px">
+    <div data-role="collapsible-set" data-content-theme="b" data-theme="b" style="padding:20px">
         <div data-role="collapsible">
             <h3><p id="timeLinePropTitle">&nbsp;</p>
 
@@ -1307,7 +1413,8 @@ Campaign view
 
             <aside style="margin: 0px; padding: 0px">
                 <aside style="margin: 0px; padding: 0px">
-                    <div style="margin: 0px; padding: 0px" vertical-align="middle" id="screenSelectorContainer">
+                    <div style="margin: 0px; padding: 0px" vertical-align="middle" id="screenSelectorContainer"
+                         data-theme="b">
                         <hr style="margin: 0px; padding: 0px" class="dottedHR">
                         <ul id="screenLayoutsUL">
                         </ul>
@@ -1351,7 +1458,7 @@ Campaign view
     </div>
 
 
-    <div align="center" id="selectedLayoutContainer" class="centerContent">
+    <div align="center" id="selectedLayoutContainer" class="centerContent" data-theme="b">
     </div>
 
     <div id="playbackResourcesDiv">
@@ -1414,7 +1521,7 @@ Station Properties
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div id="stationProperties" style="display: :SET:">
+<div id="stationProperties" style="display: :SET:" data-theme="b">
 
 
     <h4 id="stationName" style="text-align:center"></h4>
@@ -1432,7 +1539,7 @@ Station Properties
              src="https://secure.dynawebs.net/_msportal/_images/_cart/preload2_gray.gif"/>
     </div>
 
-    <div data-role="navbar" class="ui-navbar ui-mini" data-grid="c" role="navigation">
+    <div data-role="navbar" class="ui-navbar ui-mini" data-grid="c" role="navigation" data-theme="b">
         <ul class="ui-grid-c">
             <li class="ui-block-a"><a href="#" id="captureCommand" data-role="button" data-icon="capture-cmd"
                                       data-theme="b"></a></li>
@@ -1449,7 +1556,7 @@ Station Properties
     <hr width="100%"
         style="color:#333; display: block; height: 1px; border: 0; border-top: 1px solid #000; margin: 1em 0; padding: 0;"/>
 
-    <div class="ui-grid-a">
+    <div class="ui-grid-a" data-theme="b">
         <div class="ui-block-a">
             <h5>Name:</h5>
         </div>
@@ -1523,9 +1630,10 @@ Resource Properties
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div id="resourceProperties" style="display: :SET:">
-    <div>
-        <input type="text" name="name" id="selectedLibResourceName" value="" placeholder="Enter resource name"/>
+<div id="resourceProperties" style="display: :SET:" data-theme="b">
+    <div id="tt4" style="margin:0;padding:0;">
+        <input type="text" name="name" id="selectedLibResourceName" value="" placeholder="Enter resource name"
+               data-theme="b"/>
     </div>
 </div>
 
@@ -1536,8 +1644,11 @@ Campaign Properties
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div id="campaignProperties" style="display: :SET:">
-    <input type="text" name="name" id="selectedCampaignProperties" value="" placeholder="Enter campaign name"/>
+<div id="campaignProperties" style="display: :SET:" data-theme="b">
+    <div id="tt3" style="margin:0;padding:0;">
+        <input type="text" name="name" id="selectedCampaignProperties" value="" placeholder="Enter campaign name"
+               data-theme="b"/>
+    </div>
 </div>
 
 
@@ -1547,7 +1658,7 @@ Empty Properties
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div id="emptyProperties" style="display: :SET:">
+<div id="emptyProperties" style="display: :SET:" data-theme="b">
 </div>
 
 

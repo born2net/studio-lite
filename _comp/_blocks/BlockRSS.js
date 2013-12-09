@@ -21,6 +21,7 @@ function BlockRSS(i_placement, i_campaign_timeline_chanel_player_id) {
     Block.call(this, i_placement, i_campaign_timeline_chanel_player_id);
     self.m_property.initSubPanel(Elements.BLOCK_RSS_COMMON_PROPERTIES);
     self._wireUI();
+    self._listenRSSColorPicker();
 }
 
 BlockRSS.prototype = new Block(null);
@@ -132,3 +133,31 @@ BlockRSS.prototype._onChange = function (e) {
     var xmlString = (new XMLSerializer()).serializeToString(xml[0]);
     self.m_helperSDK.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', xmlString);
 }
+
+
+/**
+ Listen to when user selects to change the color of the RSS feed
+ @method _listenRSSColorPicker
+ @return none
+ **/
+BlockRSS.prototype._listenRSSColorPicker = function () {
+    $('#hue-demo').minicolors({
+        control: $(this).attr('data-control') || 'hue',
+        defaultValue: $(this).attr('data-defaultValue') || '',
+        inline: $(this).attr('data-inline') === 'true',
+        letterCase: $(this).attr('data-letterCase') || 'lowercase',
+        opacity: $(this).attr('data-opacity'),
+        position: $(this).attr('data-position') || 'bottom left',
+        change: function (hex, opacity) {
+            var log;
+            try {
+                log = hex ? hex : 'transparent';
+                if (opacity) log += ', ' + opacity;
+                console.log(log);
+            } catch (e) {
+            }
+        },
+        theme: 'default'
+    });
+}
+

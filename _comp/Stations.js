@@ -1,12 +1,24 @@
-/*/////////////////////////////////////////////
+/**
+ Station list is full with stations retrieved from remote server
+ @property CompStations.stationListFull
+ @type String
+ */
+CompStations.stationListFull = 'stationListFull';
 
- CompStations
+/**
+ Station list is empty with no stations listed
+ @property CompStations.stationListEmpty
+ @type String
+ */
+CompStations.stationListEmpty = 'stationListEmpty';
 
- /////////////////////////////////////////////*/
-
-CompStations.stationListFull = 'FULL';
-CompStations.stationListEmpty = 'EMPTY';
-
+/**
+ The component is responsible for loading station list from the remote server
+ and poll for stations status every n seconds, as well as remote manage each station individually.
+ @class CompStations
+ @constructor
+ @return {Object} instantiated AddBlockWizard
+ **/
 function CompStations(i_container) {
 
     this.self = this;
@@ -26,13 +38,18 @@ function CompStations(i_container) {
 CompStations.prototype = {
     CompStations: CompStations,
 
+    /**
+     When the stations component is loaded into view, begin polling for stations status from remote server.
+     @method _init
+     @return none
+     **/
     _init: function () {
         var self = this;
 
-        self.m_property.initPanel('#stationProperties', true);
+        self.m_property.initPanel(Elements.STATION_PROPERTIES, true);
         commBroker.listen(Viewstacks.VIEW_CHANGED, function (e) {
             if ($(e.context).data('viewstackname') == 'tab3' && commBroker.getService('mainViewStack') === e.caller) {
-                log('entering stations');
+                // log('entering stations');
                 setTimeout(function () {
                     model.requestStationsList(self);
                 }, 500);
@@ -50,8 +67,8 @@ CompStations.prototype = {
         });
 
         commBroker.listen(Viewstacks.VIEW_CHANGED, function (e) {
-            if ($(e.context).data('viewstackname') != 'tab3' && '#mainContent' === e.caller.m_contentID) {
-                log('exiting stations')
+            if ($(e.context).data('viewstackname') != 'tab3' && Elements.MAIN_CONTENT === e.caller.m_contentID) {
+                // log('exiting stations')
                 clearInterval(self.m_refreshHandle);
             }
         });
@@ -59,6 +76,12 @@ CompStations.prototype = {
         commBroker.listen(StudioLiteModel.stationList, self._onStationUpdate);
     },
 
+    /**
+     When new data is available from the remote server, update the list with current data.
+     @method _onStationUpdate
+     @param {Event} e remote server data call back from Ajax call
+     @return none
+     **/
     _onStationUpdate: function (e) {
 
         var self = e.caller;
@@ -92,13 +115,13 @@ CompStations.prototype = {
                      '</div>'+ '<a data-theme="b" data-icon="gear" class="station stationOpenProps"></a>' +
                      '</li>'; */
 
-                    $('#stationList').append(stationHTML)
+                    $(Elements.STATION_LIST).append(stationHTML)
                     var color = serverData[dbmid]['color'];
                     setTimeout(function (x, color) {
-                        $('#stationIcon' + x).append($('<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg"><g><circle stroke="black" id="svg_1" fill="' + color + '" stroke-width="2" r="16" cy="20" cx="20"/></g></svg>'));
+                        $(Elements.STATION_ICON + x).append($('<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg"><g><circle stroke="black" id="svg_1" fill="' + color + '" stroke-width="2" r="16" cy="20" cx="20"/></g></svg>'));
                         refreshSize();
-                        $('#stationPanel').trigger('updatelayout');
-                        $('#stationList').listview('refresh');
+                        $(Elements.STATION_PANEL).trigger('updatelayout');
+                        $(Elements.STATION_LIST).listview('refresh');
                     }, 300, i, color);
                     self._listenStationSelected();
                     break;
@@ -107,18 +130,14 @@ CompStations.prototype = {
 
                 case CompStations.stationListFull:
                 {
-                    $('.station').each(function () {
+                    $(Elements.CLASS_STATION).each(function () {
                         var dbmid = $(this).data('dbmid');
                         var station = model.getStation(dbmid);
                         // if station was not deleted and updated apply status
                         if (station != undefined && station['statusChanged'] == false) {
                             var elem = $(this).find('circle')
                             elem.attr('fill', station['color']);
-                            $(this).find('.lastStatus').html('<a class="lastStatus" style="float: left" data-transition="slide">Last status: ' + station['status'] + '</a>');
-                            // var elem = $(this).find('circle').attr('fill', station['color']);
-                            // $(this).find('.lastUpdate').html('<span class="lastUpdate" style="margin-left:0px; font-size: 1em">Last update: ' + station['lastUpdate'] + ' seconds ago<br/></span>');
-                            // $(this).find('.lastRunTime').html('<span class="lastRunTime" style="margin-left:0px; font-size: 1em">Running time: '+ station['runningTime'] +'</span>');
-                            // $(this).trigger('tap',{manual: true});
+                            $(this).find(Elements.CLASS_LAST_STATUS).html('<a class="lastStatus" style="float: left" data-transition="slide">Last status: ' + station['status'] + '</a>');
                         }
                     });
                     break;
@@ -126,35 +145,40 @@ CompStations.prototype = {
                     ;
             }
         }
-        $('#stationList').listview('refresh');
-        self.m_stationDataMode = $('#stationList').children().size() > 1 ? CompStations.stationListFull : CompStations.stationListEmpty;
+        $(Elements.STATION_LIST).listview('refresh');
+        self.m_stationDataMode = $(Elements.STATION_LIST).children().size() > 1 ? CompStations.stationListFull : CompStations.stationListEmpty;
 
     },
 
+    /**
+     Listen for user selection on particular station so we can populate the properties panel.
+     @method _listenStationSelected
+     @return none
+     **/
     _listenStationSelected: function () {
         var self = this;
 
-        $('.station').tap(function (e) {
+        $(Elements.CLASS_STATION).tap(function (e) {
 
             var openProps = $(e.target).closest('a').hasClass('stationOpenProps') ? true : false;
             var stationElem = $(e.target).closest('li');
-            var stationProp = $(stationElem).find('.stationOpenProps');
+            var stationProp = $(stationElem).find(Elements.CLASS_STATION_OPEN_PROPS);
             var dbmid = $(stationElem).data('dbmid');
 
             model.abortServerCalls();
 
-            $('#snapShotImage').attr('src', '');
-            $('#snapShotSpinner').hide();
-            $('#snapShotImage').hide();
+            $(Elements.SNAPSHOT_IMAGE).attr('src', '');
+            $(Elements.SNAPSHOT_SPINNER).hide();
+            $(Elements.SNAPSHOT_IMAGE).hide();
 
-            self.m_property.viewPanel('#stationProperties');
+            self.m_property.viewPanel(Elements.STATION_PROPERTIES);
             self.m_selected_resource_id = dbmid;
             self._loadProperties(dbmid);
 
-            $('.station').removeClass('currentSelectedStation');
+            $(Elements.CLASS_STATION).removeClass('currentSelectedStation');
             $(stationElem).addClass('currentSelectedStation');
             $(stationProp).addClass('currentSelectedStation');
-            $('#stationList').listview('refresh');
+            $(Elements.STATION_LIST).listview('refresh');
 
             if (openProps)
                 commBroker.getService('CompProperty').openPanel(e);
@@ -164,53 +188,62 @@ CompStations.prototype = {
         });
     },
 
+    /**
+     Populate the properties panel for a selected station.
+     @method _loadProperties
+     @return none
+     **/
     _loadProperties: function (i_dbmid) {
         var info = model.getDataByID(i_dbmid);
 
-        $('#stationName').text(info.name);
-        $('#selName').text(info.name);
-        $('#selOS').text(info.os);
-        $('#selAirVer').text(info.airVersion);
-        $('#selPlayerVer').text(info.appVersion);
-        $('#selPeakMem').text(info.peakMemory);
-        $('#selTotMem').text(info.totalMemory);
-        $('#selRunning').text(info.runningTime);
-        $('#selWD').text(info.watchDogConnection == 1 ? 'On' : 'Off');
-        $('#selLastUpd').text(info.lastUpdate);
-
+        $(Elements.STATION_NAME).text(info.name);
+        $(Elements.SEL_NAME).text(info.name);
+        $(Elements.SEL_OS).text(info.os);
+        $(Elements.SEL_AIR_VER).text(info.airVersion);
+        $(Elements.SEL_PLAYERVER).text(info.appVersion);
+        $(Elements.SEL_PEAK_MEM).text(info.peakMemory);
+        $(Elements.SEL_TOT_MEM).text(info.totalMemory);
+        $(Elements.SEL_RUNNING).text(info.runningTime);
+        $(Elements.SEL_WD).text(info.watchDogConnection == 1 ? 'On' : 'Off');
+        $(Elements.SEL_LAST_UPD).text(info.lastUpdate);
     },
 
+    /**
+     Bind all event listeners on the UI for remote stations commands including stop, play, live snapshot etc.
+     @method _wireUI
+     @return none
+     **/
     _wireUI: function () {
         var self = this;
-        $('#snapShotSpinner').fadeOut();
-        $('#snapShotImage').fadeOut();
+        $(Elements.SNAPSHOT_SPINNER).fadeOut();
+        $(Elements.SNAPSHOT_IMAGE).fadeOut();
 
         // fail load image
-        $('#snapShotImage').error(function (e) {
+        $(Elements.SNAPSHOT_IMAGE).error(function (e) {
             self.m_imageReloadCount++;
 
             if (self.m_imageReloadCount > 6) {
-                $('#snapShotSpinner').fadeOut('slow');
+                $(Elements.SNAPSHOT_SPINNER).fadeOut('slow');
                 self.m_imageReloadCount = 0;
-                self._buttonEnable('#captureCommand', true)
+                self._buttonEnable(Elements.CAPTURE_COMMAND, true)
                 return;
             }
             setTimeout(function () {
-                $('#snapShotImage').attr('src', self.m_imagePath);
+                $(Elements.SNAPSHOT_IMAGE).attr('src', self.m_imagePath);
             }, 1500)
         });
 
-        $('#reloadCommand').tap(function (e) {
+        $(Elements.RELOAD_COMMAND).tap(function (e) {
             e.stopImmediatePropagation();
             e.stopPropagation();
             e.preventDefault();
-            if (!self._buttonIsEnabled('#reloadCommand'))
+            if (!self._buttonIsEnabled(Elements.RELOAD_COMMAND))
                 return false;
-            self._buttonEnable('#reloadCommand', false);
+            self._buttonEnable(Elements.RELOAD_COMMAND, false);
             self._sendStationEvent('rebootPlayer', '');
         });
 
-        $('#playCommand,#stopCommand').tap(function (e) {
+        $(Elements.PLAY_COMMAND + ' ' + Elements.STOP_COMMAND).tap(function (e) {
             e.stopImmediatePropagation();
             e.stopPropagation();
             e.preventDefault();
@@ -220,23 +253,23 @@ CompStations.prototype = {
             switch (command) {
                 case 'start':
                 {
-                    if (!self._buttonIsEnabled('#playCommand'))
+                    if (!self._buttonIsEnabled(Elements.PLAY_COMMAND))
                         return false;
-                    self._buttonEnable('#playCommand', false);
+                    self._buttonEnable(Elements.PLAY_COMMAND, false);
                     break;
                 }
                 case 'stop':
                 {
-                    if (!self._buttonIsEnabled('#stopCommand'))
+                    if (!self._buttonIsEnabled(Elements.STOP_COMMAND))
                         return false;
-                    self._buttonEnable('#stopCommand', false);
+                    self._buttonEnable(Elements.STOP_COMMAND, false);
                     break;
                 }
             }
 
             commBroker.listen(StudioLiteModel.stationPlayedStopped, function (e) {
-                self._buttonEnable('#playCommand', true);
-                self._buttonEnable('#stopCommand', true);
+                self._buttonEnable(Elements.PLAY_COMMAND, true);
+                self._buttonEnable(Elements.STOP_COMMAND, true);
                 if (e.edata.responce['status'] == 'pass') {
                 }
             });
@@ -248,17 +281,17 @@ CompStations.prototype = {
             return false;
         });
 
-        $('#uptotop').on('click', function () {
+        $(Elements.UP_TOTOP).on('click', function () {
             $('body').animate({scrollTop: '0px'}, 500, function () {
                 $('body').clearQueue();
             });
         });
 
-        $('#eventSendButton').tap(function () {
-            self._sendStationEvent('event', $('#sendEventID').val());
+        $(Elements.EVENT_SEND_BUTTON).tap(function () {
+            self._sendStationEvent('event', $(Elements.SEND_EVENT_ID).val());
         });
 
-        $('#captureCommand').on('tap', function (e) {
+        $(Elements.CAPTURE_COMMAND).on('tap', function (e) {
 
             e.stopImmediatePropagation();
             e.stopPropagation();
@@ -266,20 +299,20 @@ CompStations.prototype = {
 
             if (!self._buttonIsEnabled(this))
                 return false;
-            self._buttonEnable('#captureCommand', false);
+            self._buttonEnable(Elements.CAPTURE_COMMAND, false);
 
             self.m_imagePath = '';
-            $('#snapShotImage').attr('src', self.m_imagePath);
-            self._buttonEnable('#captureCommand', false);
-            $('#snapShotImage').hide();
-            $('#snapShotSpinner').fadeIn('slow');
+            $(Elements.SNAPSHOT_IMAGE).attr('src', self.m_imagePath);
+            self._buttonEnable(Elements.CAPTURE_COMMAND, false);
+            $(Elements.SNAPSHOT_IMAGE).hide();
+            $(Elements.SNAPSHOT_SPINNER).fadeIn('slow');
 
             commBroker.listen(StudioLiteModel.stationCaptured, function (e) {
                 if (e.edata.responce['status'] == 'pass') {
                     self.m_imagePath = e.edata.responce['path'];
                     self._listenToImageLoad();
                     setTimeout(function () {  // IE Bug, needs timer
-                        $('#snapShotImage').attr('src', self.m_imagePath);
+                        $(Elements.SNAPSHOT_IMAGE).attr('src', self.m_imagePath);
                     }, 1000);
                     log('got path: ' + self.m_imagePath);
                 }
@@ -289,16 +322,30 @@ CompStations.prototype = {
         });
     },
 
+    /**
+     Listen when a new remote snapshot is available on the server for a selected station, so we can display it in the properties panel.
+     @method _listenToImageLoad
+     @return none
+     **/
     _listenToImageLoad: function () {
         var self = this;
-        $('#snapShotImage').one('load', function (e) {
-            $('#snapShotSpinner').hide();
-            $('#snapShotImage').attr('src', self.m_imagePath);
-            $('#snapShotImage').fadeIn('slow');
-            self._buttonEnable('#captureCommand', true);
+        $(Elements.SNAPSHOT_IMAGE).one('load', function (e) {
+            $(Elements.SNAPSHOT_SPINNER).hide();
+            $(Elements.SNAPSHOT_IMAGE).attr('src', self.m_imagePath);
+            $(Elements.SNAPSHOT_IMAGE).fadeIn('slow');
+            self._buttonEnable(Elements.CAPTURE_COMMAND, true);
         });
     },
 
+    /**
+     Send a remote value (i.e.: remote event / remote touch) to a selected station.
+     If events are enable at the campaign level, the _sendStationEvent method enables users to fire events on a selected
+     Station and thus change campaign attributes.
+     @method _sendStationEvent
+     @param {String} i_eventName
+     @param {String} i_eventValue
+     @return none
+     **/
     _sendStationEvent: function (i_eventName, i_eventValue) {
         var self = this;
         commBroker.listen(StudioLiteModel.stationEventRx, function (e) {
@@ -306,20 +353,27 @@ CompStations.prototype = {
             switch (s) {
                 case 'rebootPlayer':
                 {
-                    self._buttonEnable('#reloadCommand', true)
+                    self._buttonEnable(Elements.RELOAD_COMMAND, true)
                     break;
                 }
                 default:
                 {
-                    $('#eventSendButton').button('enable');
+                    $(Elements.EVENT_SEND_BUTTON).button('enable');
                 }
             }
         });
 
         model.sendStationEvent(model.getDataByID(self.m_selected_resource_id)['id'], i_eventName, i_eventValue);
-        $('#eventSendButton').button('disable');
+        $(Elements.EVENT_SEND_BUTTON).button('disable');
     },
 
+    /**
+     Enable or disable a UI button.
+     @method _buttonEnable
+     @param {String} i_elem
+     @param {Boolean} true / false
+     @return none
+     **/
     _buttonEnable: function (i_elem, i_state) {
         var self = this;
         switch (i_state) {
@@ -336,11 +390,15 @@ CompStations.prototype = {
         }
     },
 
+    /**
+     Get the state of a Button
+     @method _buttonIsEnabled
+     @param {String} i_elem
+     @return {Boolean}
+     **/
     _buttonIsEnabled: function (i_elem) {
         var self = this;
-        // log('bbb' + $(i_elem).css('opacity'));
         if ($(i_elem).css('opacity') == 1) {
-            // log('ccc' + $(i_elem).css('opacity'));
             return true;
         }
         return false;

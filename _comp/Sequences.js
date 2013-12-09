@@ -51,44 +51,6 @@ Sequencer.prototype = {
     },
 
     /**
-     Create the timeline template (a.k.a timeline thumbnail) via the ScreenTemplateFactory
-     and insert it into the sequencer UI. We proceed by activating the newly created timeline thumbnail
-     via the ScreenTemplateFactory public methods.
-     @method createTimelineThumbnailUI
-     @param {Object} i_screenProps
-     @return none
-     **/
-    createTimelineThumbnailUI: function (i_screenProps) {
-        var self = this;
-
-        // Get the timelineid for current the timeline creating
-        for (var screenProp in i_screenProps) {
-            var campaign_timeline_id = i_screenProps[screenProp]['campaign_timeline_id']
-            break;
-        }
-
-        var screenTemplateData = {
-            orientation: commBroker.getService('ScreenOrientation').getOrientation(),
-            resolution: commBroker.getService('ScreenResolution').getResolution(),
-            screenProps: i_screenProps,
-            scale: '14'
-        }
-
-        var screenTemplate = new ScreenTemplateFactory(screenTemplateData, ScreenTemplateFactory.ENTIRE_SELECTABLE, this);
-        var snippet = screenTemplate.create();
-        var elementID = $(snippet).attr('id');
-
-        self.m_timelines[campaign_timeline_id] = elementID;
-
-        screenTemplate.selectablelDivision();
-        screenTemplate.activate();
-        self.m_thumbsContainer.append(snippet);
-        screenTemplate.selectableFrame();
-
-
-    },
-
-    /**
      Enable drag and drop operations on the thumbnail timelines within the Sequencer UI.
      @method _initLayoutSelectorDragDrop
      @return none
@@ -137,6 +99,42 @@ Sequencer.prototype = {
             $(self.m_thumbsContainer).disableSelection();
             self.m_thumbsContainer.sortable('destroy');
         });
+    },
+
+    /**
+     Create the timeline template (a.k.a timeline thumbnail) via the ScreenTemplateFactory
+     and insert it into the sequencer UI. We proceed by activating the newly created timeline thumbnail
+     via the ScreenTemplateFactory public methods.
+     @method createTimelineThumbnailUI
+     @param {Object} i_screenProps
+     @return none
+     **/
+    createTimelineThumbnailUI: function (i_screenProps) {
+        var self = this;
+
+        // Get the timelineid for current the timeline creating
+        for (var screenProp in i_screenProps) {
+            var campaign_timeline_id = i_screenProps[screenProp]['campaign_timeline_id']
+            break;
+        }
+
+        var screenTemplateData = {
+            orientation: commBroker.getService('ScreenOrientation').getOrientation(),
+            resolution: commBroker.getService('ScreenResolution').getResolution(),
+            screenProps: i_screenProps,
+            scale: '14'
+        }
+
+        var screenTemplate = new ScreenTemplateFactory(screenTemplateData, ScreenTemplateFactory.ENTIRE_SELECTABLE, this);
+        var snippet = screenTemplate.create();
+        var elementID = $(snippet).attr('id');
+
+        self.m_timelines[campaign_timeline_id] = elementID;
+
+        screenTemplate.selectablelDivision();
+        screenTemplate.activate();
+        self.m_thumbsContainer.append(snippet);
+        screenTemplate.selectableFrame();
     },
 
     /**

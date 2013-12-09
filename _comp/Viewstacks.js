@@ -26,6 +26,11 @@ function Viewstacks(i_contentID) {
 Viewstacks.prototype = {
     constructor: Viewstacks,
 
+    /**
+     Listen to wait screen events so to present a wait screen.
+     @method init
+     @return none
+     **/
     init: function () {
         var self = this;
 
@@ -38,11 +43,17 @@ Viewstacks.prototype = {
         });
     },
 
-    addChild: function (childID) {
-        var elem = $(childID).appendTo(this.m_contentID);
-        $(childID).siblings().hide();
+    /**
+     Create a new child (view) in this viewstack instance.
+     @method addChild the element id to gran from the DOM and append into the viewstack.
+     @param {Number} i_childID
+     @return {Number} t the newly created index
+     **/
+    addChild: function (i_childID) {
+        var elem = $(i_childID).appendTo(this.m_contentID);
+        $(i_childID).siblings().hide();
         this.m_counter++;
-        $(childID).attr('data-viewstackname', 'tab' + this.m_counter);
+        $(i_childID).attr('data-viewstackname', 'tab' + this.m_counter);
 
 
         var t = -1;
@@ -55,32 +66,53 @@ Viewstacks.prototype = {
         return t;
     },
 
-    selectIndex: function (index) {
+    /**
+     Select an index from viewstacks to bring into view and hide all other views.
+     @method selectIndex
+     @param {index} i_index to load into view
+     @return none
+     **/
+    selectIndex: function (i_index) {
 
         var self = this.self;
 
         $(this.m_contentID + '> *').each(function (i) {
-            if (index == i) {
-                commBroker.fire(self.VIEW_CHANGED, this, self, index);
+            if (i_index == i) {
+                commBroker.fire(self.VIEW_CHANGED, this, self, i_index);
                 $(this).siblings().hide().end().fadeIn();
             }
         });
     },
 
+    /**
+     Set a modal wait screen.
+     @method setWaitScreenPanel
+     @return none
+     **/
     setWaitScreenPanel: function (i_panelID) {
         this.m_waitPanelID = i_panelID;
     },
 
-
+    /**
+     Get the modal wait screen.
+     @method getWaitScreenPanel
+     @return none
+     **/
     getWaitScreenPanel: function () {
         return this.m_waitPanelID;
     },
 
-    waitScreen: function (state) {
+    /**
+     Enable or disable the wait screen.
+     @method waitScreen
+     @param {Boolean} i_state set wait screen state as on or off
+     @return none
+     **/
+    waitScreen: function (i_state) {
         if (!this.m_waitPanelID)
             return;
 
-        if (state) {
+        if (i_state) {
             this.m_waiting = true;
             var w = $(this.m_contentID).width();
             var h = $(this.m_contentID).height();

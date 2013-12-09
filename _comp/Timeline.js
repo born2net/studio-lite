@@ -39,6 +39,11 @@ function Timeline(i_campaign_timeline_id) {
 Timeline.prototype = {
     constructor: Timeline,
 
+    /**
+     Init a timeline and wire the UI including creating the channels that are members of this timeline.
+     @method _init
+     @return none
+     **/
     _init: function () {
 
         var self = this;
@@ -51,6 +56,11 @@ Timeline.prototype = {
 
     },
 
+    /**
+     Listen to timeline selection events and populate the properties panel accordingly.
+     @method _onTimelineSelected
+     @return none
+     **/
     _onTimelineSelected: function () {
         var self = this;
 
@@ -63,16 +73,21 @@ Timeline.prototype = {
 
             self.m_selected = true;
             self._propLoadTimeline();
-            log('timeline selected ' + self.m_campaign_timeline_id);
+            // log('timeline selected ' + self.m_campaign_timeline_id);
 
         });
     },
 
+    /**
+     Wire the UI for timeline property edits.
+     @method _wireUI
+     @return none
+     **/
     _wireUI: function () {
         var self = this;
 
         var timelineTitle;
-        $("#timeLinePropTitleID").on("input", function (e) {
+        $(Elements.TIME_LINE_PROP_TITLE_ID).on("input", function (e) {
             if (!self.m_selected)
                 return;
             window.clearTimeout(timelineTitle);
@@ -82,17 +97,23 @@ Timeline.prototype = {
         });
     },
 
+    /**
+     Update msdb when the timeline title has changed.
+     @method _onChange
+     @param {Event} e
+     @return none
+     **/
     _onChange: function (e) {
         var self = this;
-        this.m_helperSDK.setCampaignTimelineRecord(self.m_campaign_timeline_id, 'timeline_name', $('#timeLinePropTitleID').val());
+        this.m_helperSDK.setCampaignTimelineRecord(self.m_campaign_timeline_id, 'timeline_name', $(Elements.TIME_LINE_PROP_TITLE_ID).val());
     },
 
     _propLoadTimeline: function () {
         var self = this;
 
-        self.m_property.viewPanel('#propEntireScreen');
+        self.m_property.viewPanel(Elements.PROP_ENTIRE_SCREEN);
         var recTimeline = this.m_helperSDK.getCampaignTimelineRecord(self.m_campaign_timeline_id);
-        $('#timeLinePropTitleID').val(recTimeline['timeline_name']);
+        $(Elements.TIME_LINE_PROP_TITLE_ID).val(recTimeline['timeline_name']);
     },
 
     /**

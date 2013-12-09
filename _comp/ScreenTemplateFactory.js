@@ -160,7 +160,7 @@ ScreenTemplateFactory.prototype = {
      **/
     _deselectViewers: function () {
         var self = this;
-        $(Elements.SCREEN_DIVISION_CLASS).each(function () {
+        $(Elements.CLASS_SCREEN_DIVISION).each(function () {
             if ($(this).is('rect')) {
                 $(this).css({'fill': 'rgb(230,230,230)'});
             }
@@ -272,7 +272,7 @@ ScreenTemplateFactory.prototype = {
      **/
     selectablelDivision: function () {
         var self = this;
-        $(Elements.SCREEN_DIVISION_CLASS).on('tap', function (e) {
+        $(Elements.CLASS_SCREEN_DIVISION).on('tap', function (e) {
             self._onScreenViewerSelected(e, self);
         });
     },
@@ -295,7 +295,7 @@ ScreenTemplateFactory.prototype = {
         });
 
 
-        $(Elements.SCREEN_DIVISION_CLASS).on('tap', function (e) {
+        $(Elements.CLASS_SCREEN_DIVISION).on('tap', function (e) {
             self._onScreenFrameSelected(e, self);
         });
     },

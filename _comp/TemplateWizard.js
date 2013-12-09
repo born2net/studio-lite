@@ -1,9 +1,10 @@
-/*/////////////////////////////////////////////
-
- TemplateWizard
-
- /////////////////////////////////////////////*/
-
+/**
+ Add block wizard is a UI component which allows selection and insertion of a new component (i.e. QR / RSS ...)
+ or a resource, to be added to the currently selected timeline_channel
+ @class TemplateWizard
+ @constructor
+ @return {Object} instantiated AddBlockWizard
+ **/
 function TemplateWizard(i_element) {
 
     this.self = this;
@@ -15,11 +16,16 @@ function TemplateWizard(i_element) {
 TemplateWizard.prototype = {
     constructor: TemplateWizard,
 
+    /**
+     Wire the "go back" from wizard without creating any new templates.
+     @method _init
+     @return none
+     **/
     _init: function () {
 
         var self = this;
 
-        $('#goBackFromScreenList').tap(function () {
+        $(Elements.GO_BACK_FROM_SCREEN_LIST).tap(function () {
             // $.mobile.changePage('#studioLite',{transition: "pop"});
             history.back();
             self.destroy();
@@ -28,16 +34,21 @@ TemplateWizard.prototype = {
         self.buildScreensLayoutList();
     },
 
+    /**
+     Build the list of templates a user can select from.
+     @method buildScreensLayoutList
+     @return none
+     **/
     buildScreensLayoutList: function () {
 
         var self = this;
         var resolution = commBroker.getService('ScreenResolution').getResolution();
         var orientation = commBroker.getService('ScreenOrientation').getOrientation();
 
-        commBroker.listenOnce(ScreenTemplateFactory.ON_VIEWER_SELECTED, function(){
+        commBroker.listenOnce(ScreenTemplateFactory.ON_VIEWER_SELECTED, function () {
             self.destroy();
             setTimeout(function () {
-                $.mobile.changePage('#studioLite');
+                $.mobile.changePage(Elements.STUDIO_LITE);
             }, 700)
         });
 
@@ -64,6 +75,11 @@ TemplateWizard.prototype = {
         }
     },
 
+    /**
+     Destroy the instance and release members.
+     @method destroy
+     @return none
+     **/
     destroy: function () {
         var self = this;
         $(self.m_element).empty();
@@ -75,7 +91,6 @@ TemplateWizard.prototype = {
         this.self = null;
         this.m_screens = null;
         this.m_element = null;
-
     }
 }
 

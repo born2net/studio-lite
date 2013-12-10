@@ -97,11 +97,10 @@ BlockVideo.prototype._updateTitle = function () {
     $(Elements.SELECTED_CHANNEL_RESOURCE_NAME).text(self.m_blockDescription);
 }
 
-/**
+/*
  Build a boilerplate XML that's used as the default player_data for the new video component
  @method _getDefaultPlayerVideoData
  @return {xml} xml data
- **/
 BlockVideo.prototype._getDefaultPlayerVideoData = function () {
     var self = this;
 
@@ -115,6 +114,7 @@ BlockVideo.prototype._getDefaultPlayerVideoData = function () {
         '</Player>';
     return xml;
 };
+*/
 
 /**
  When user changes aspect ratio checkbox we update msdb

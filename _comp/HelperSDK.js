@@ -206,14 +206,25 @@ HelperSDK.prototype = {
      @param {Number} i_campaign_timeline_chanel_id is the channel id assign player to
      @param {Number} i_playerCode is a unique pre-set code that exists per type of block (see component list for all available code)
      @param {Number} i_offset set in seconds of when to begin playing the content with respect to timeline_channel
+     @param {Number} i_nativeID optional param used when creating a block with embedded resource (i.e.: video / image / swf)
      @return {Object} campaign_timeline_chanel_player_id and campaign_timeline_chanel_player_data as json object
      **/
-    createNewPlayer: function (i_campaign_timeline_chanel_id, i_playerCode, i_offset) {
+    createNewPlayer: function (i_campaign_timeline_chanel_id, i_playerCode, i_offset, i_nativeID) {
         var self = this;
+
 
         var timelinePlayers = self.m_msdb.table_campaign_timeline_chanel_players();
         var recTimelinePlayer = timelinePlayers.createRecord();
-        recTimelinePlayer.player_data = '<Player player="' + i_playerCode + '"><Data><Resource Resource="' + i_playerCode + '" /></Data></Player>';
+        recTimelinePlayer.player_data = model.getComponent(i_playerCode).getDefaultPlayerData(i_nativeID);
+
+        /*
+        if (i_playerCode==3130 || i_playerCode==3100){
+            recTimelinePlayer.player_data = model.getComponent(i_playerCode).getDefaultPlayerData(i_nativeID);
+        } else {
+            recTimelinePlayer.player_data = '<Player player="' + i_playerCode + '"><Data><Resource Resource="' + i_playerCode + '" /></Data></Player>';
+        }
+        */
+
         recTimelinePlayer.campaign_timeline_chanel_id = i_campaign_timeline_chanel_id;
         recTimelinePlayer.player_duration = 10;
         recTimelinePlayer.player_offset_time = i_offset;

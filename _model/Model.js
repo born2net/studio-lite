@@ -1,14 +1,14 @@
 /**
- StudioLiteModel.servicename service name for commBroker
+ A constant service name for the JalapenoData service
  @property StudioLiteModel.servicename
  @static
  @final
  @type String
  */
-StudioLiteModel.servicename = 'StudioLiteModel';
+StudioLiteModel.servicename = 'JalapenoData';
 
 /**
- StudioLiteModel.filter_Station filter of connected stations for parsing
+ StudioLiteModel.filter_Station filters of connected stations
  @property StudioLiteModel.filter_Station
  @static
  @final
@@ -17,33 +17,30 @@ StudioLiteModel.servicename = 'StudioLiteModel';
 StudioLiteModel.filter_Station = 'STATIONS';
 
 /**
- StudioLiteModel.stationList fires with a list of all stations
+ StudioLiteModel.stationList fires with a list of all stations connected
  @event StudioLiteModel.stationList
  @param {this} this caller object
  @param {this} self caller object
- @param {object} list of all of the campaign's stations
+ @param {Object} list of all of the campaign's stations
  **/
-
 StudioLiteModel.stationList = 'STATION_LIST';
 
 /**
- StudioLiteModel.stationCaptured event for screen snapshot on station
+ StudioLiteModel.stationCaptured event for screen snapshot per selected station
  @event StudioLiteModel.stationCaptured
  @param {this} this caller object
  @param {this} self caller object
  @param {object} data all of the station's relevant data
  **/
-
 StudioLiteModel.stationCaptured = 'STATION_CAPTURED';
 
 /**
- StudioLiteModel.stationPlayedStopped event fired when station changes state
+ StudioLiteModel.stationPlayedStopped event fired when station changes state play/stop
  @event StudioLiteModel.stationPlayedStopped
  @param {this} this caller object
  @param {this} self caller object
  @param {object} data all of the station's relevant data
  **/
-
 StudioLiteModel.stationPlayedStopped = 'STATION_PLAYED_STOPPED';
 
 /**
@@ -53,13 +50,11 @@ StudioLiteModel.stationPlayedStopped = 'STATION_PLAYED_STOPPED';
  @param {this} self caller object
  @param {object} data all of the station's relevant data
  **/
-
 StudioLiteModel.stationEventRx = 'STATION_EVENT_RX';
 
-
 /**
- Internal hash for storing and managing data such as Live station status and list of
- available components that are supported.
+ The JalapenoData model is used to manage real time data that's not in the msdb such as
+ station connections as well as data constants such as component codes and component xml boilerplates.
  @class StudioLiteModel
  @constructor
  @return none
@@ -78,49 +73,12 @@ function StudioLiteModel() {
 StudioLiteModel.prototype = {
     constructor: StudioLiteModel,
 
-    setData: function (i_values, i_dataFilter) {
-        var dbmid = getUnique();
-        this.m_data[dbmid] = i_values;
-        this.m_data[dbmid]['dataFilter'] = i_dataFilter
-        return dbmid;
-    },
-
-    updData: function (i_dbmid, i_values) {
-        this.m_data[i_dbmid] = i_values;
-    },
-
-    getData: function () {
-        return this.m_data;
-    },
-
-    getDataByID: function (i_dbmid) {
-        return this.m_data[i_dbmid];
-    },
-
-    getDataByFilter: function (i_dataFilter) {
-        var data = {};
-        for (var i in this.m_data) {
-            if (this.m_data[i]['dataFilter'] == i_dataFilter) {
-                data[i] = this.m_data[i];
-            }
-        }
-        return data;
-    },
-
-    destroyByDataFilter: function (i_dataFilter) {
-        for (var i in this.m_data) {
-            if (this.m_data[i]['dataFilter'] == i_dataFilter) {
-                delete this.m_data[i];
-            }
-        }
-    },
-
-    /////////////////////////////////////////////////////////
-    //
-    // Components
-    //
-    /////////////////////////////////////////////////////////
-
+    /**
+     The _initComponents initializes data constants for components and used to relieve member data
+     such as mapping between component code and the type of resource it holds, path for default icon etc.
+     @method _initComponents
+     @return none
+     **/
     _initComponents: function () {
         var self = this;
 
@@ -147,7 +105,6 @@ StudioLiteModel.prototype = {
         // ExtApp/Capture 3410
         // XmlPlayer 4200
 
-
         self.m_icons = {
             'qr': { image: 'https://secure.dynawebs.net/_msportal/_images/qr.png' },
             'rss': { image: 'https://secure.dynawebs.net/_msportal/_images/rss.png' },
@@ -161,51 +118,210 @@ StudioLiteModel.prototype = {
         self.m_components = {
             3130: {
                 name: 'Image',
-                description: 'Bimap file'
+                description: 'Bimap file',
+                getDefaultPlayerData: function (i_nativeResourceID) {
+                    var xml = '<Player player="3130" label="" interactive="0">' +
+                        '<Data>' +
+                        '<Resource resource="' + i_nativeResourceID + '">' +
+                        '<AspectRatio maintain="1" />' +
+                        '<Image />' +
+                        '</Resource>' +
+                        '</Data>' +
+                        '</Player>';
+                    return xml;
+                },
+                ext: [
+                    0, 'png',
+                    1, 'jpg',
+                    2, 'swf'
+                ]
             },
             3100: {
                 name: 'Video',
-                description: 'Movie file'
+                description: 'Movie file',
+                getDefaultPlayerData: function (i_nativeResourceID) {
+                    var xml = '<Player player="3100" label="" interactive="0">' +
+                        '<Data>' +
+                        '<Resource resource="' + i_nativeResourceID + '">' +
+                        '<AspectRatio maintain="1" />' +
+                        '<Image autoRewind="1" volume="1" backgroundAlpha="1" />' +
+                        '</Resource>' +
+                        '</Data>' +
+                        '</Player>';
+                    return xml;
+                },
+                ext: [
+                    0, 'flv',
+                    1, 'mp4'
+                ]
             },
             3430: {
                 name: 'QR Component',
                 description: 'QR code for mobile device integration',
+                getDefaultPlayerData: function () {
+                    return '<Player player="3430"><Data><Resource Resource="3430" /></Data></Player>';
+                },
                 icon: self.getIcon('qr')
             },
             3345: {
                 name: 'Really Simple Syndication',
                 description: 'RSS for daily fresh scrolling news feed',
+                getDefaultPlayerData: function () {
+                    return '<Player player="3345"><Data><Resource Resource="3345" /></Data></Player>';
+                },
                 icon: self.getIcon('rss')
             }
         };
     },
 
+    /**
+     The setData is a generic method of storing general data as well as categorizing that data with
+     a simple hash filter into a self contained data structure.
+     The data is placed into the hash and in return we receive a handle that's used to retrieve members.
+     @method setData
+     @param {Object} i_values
+     @param {String} i_dataFilter a way to filter data members by category
+     @return {Number} unique handle
+     **/
+    setData: function (i_values, i_dataFilter) {
+        var dbmid = getUnique();
+        this.m_data[dbmid] = i_values;
+        this.m_data[dbmid]['dataFilter'] = i_dataFilter
+        return dbmid;
+    },
+
+
+    /**
+     Update a specific data member using its handle.
+     @method updData
+     @param {Number} i_dbmid handle
+     @param {Object} i_values
+     @return {Number} Unique clientId.
+     **/
+    updData: function (i_dbmid, i_values) {
+        this.m_data[i_dbmid] = i_values;
+    },
+
+    /**
+     Get the entire data structure back to the caller.
+     @method getData
+     @return {Object} entire data structure
+     **/
+    getData: function () {
+        return this.m_data;
+    },
+
+    /**
+     Returns a specific data member using its handle id.
+     @method getDataByID
+     @param {Number} i_dbmid
+     @return {Object} return data member
+     **/
+    getDataByID: function (i_dbmid) {
+        return this.m_data[i_dbmid];
+    },
+
+    /**
+     Returns an entire set of data members matching the category filter.
+     @method getDataByFilter
+     @param {String} i_dataFilter filter value
+     @return {Object} return matched data members
+     **/
+    getDataByFilter: function (i_dataFilter) {
+        var data = {};
+        for (var i in this.m_data) {
+            if (this.m_data[i]['dataFilter'] == i_dataFilter) {
+                data[i] = this.m_data[i];
+            }
+        }
+        return data;
+    },
+
+    /**
+     Delete an entire set of data members matching the category filter.
+     @method destroyByDataFilter
+     @param {String} i_dataFilter filter value
+     @return none
+     **/
+    destroyByDataFilter: function (i_dataFilter) {
+        for (var i in this.m_data) {
+            if (this.m_data[i]['dataFilter'] == i_dataFilter) {
+                delete this.m_data[i];
+            }
+        }
+    },
+
+    /**
+     Retrieve a component code from a file extension type (i.e.: flv > 3100).
+     @method getBlockCodeFromFileExt
+     @param {String} i_fileExtension
+     @return {Number} return component code
+     **/
+    getBlockCodeFromFileExt: function (i_fileExtension) {
+        var self = this;
+        for (var code in self.m_components) {
+            if (self.m_components[code]['ext'] != undefined) {
+                for (var i = 0; i < self.m_components[code]['ext'].length; i++) {
+                    if (self.m_components[code]['ext'][i] == i_fileExtension) {
+                        return code;
+                    }
+                }
+            }
+        }
+        return -1;
+    },
+
+    /**
+     Get a component data structure and properties for a particular component id.
+     @method getComponent
+     @param {Number} i_componentID
+     @return {Object} return the data structure of a specific component
+     **/
     getComponent: function (i_componentID) {
         var self = this;
         return self.m_components[i_componentID];
     },
 
+    /**
+     Get the entire set data structure for all components.
+     @method getComponents
+     @return {Object} return all data structure
+     **/
     getComponents: function () {
         var self = this;
         return self.m_components;
     },
 
+    /**
+     Get the icon / image path for a resource type.
+     @method getIcon
+     @param {String} i_resourceType
+     @return {String} url path
+     **/
     getIcon: function (i_resourceType) {
         var self = this;
         return self.m_icons[i_resourceType]['image'];
     },
 
+    /**
+     Get the  entire icon set data structure for all images.
+     @method getIcons
+     @return {Object} data set
+     **/
     getIcons: function () {
         var self = this;
         return self.m_icons;
     },
 
-    /////////////////////////////////////////////////////////
-    //
-    // Stations
-    //
-    /////////////////////////////////////////////////////////
-
+    /**
+     Send a remote command / event to a specified station id and wait for a call back.
+     This feature is based on Campaign events and remote touch.
+     @method sendStationEvent
+     @param {Number} i_stationID
+     @param {String} i_eventName
+     @param {String} i_eventValue
+     @return none
+     **/
     sendStationEvent: function (i_stationID, i_eventName, i_eventValue) {
         var data = {
             '@functionName': 'f_sendStationEvent',
@@ -220,6 +336,12 @@ StudioLiteModel.prototype = {
         }
     },
 
+    /**
+     Send a remote snapshot command to a specified station id and wait for a call back.
+     @method sendStationCapture
+     @param {Number} i_station
+     @return none
+     **/
     sendStationCapture: function (i_station) {
         var data = {
             '@functionName': 'f_captureScreen',
@@ -235,6 +357,13 @@ StudioLiteModel.prototype = {
         }
     },
 
+    /**
+     Send a remote command of play or stop to a specified station id and wait for a call back.
+     @method sendStationPlayStop
+     @param {Number} i_station
+     @param {Number} i_command
+     @return none
+     **/
     sendStationPlayStop: function (i_station, i_command) {
         var self = this;
         var data = {
@@ -249,16 +378,35 @@ StudioLiteModel.prototype = {
         }
     },
 
+    /**
+     Add a station to internal data structure.
+     @method setStation
+     @param {Number} i_station
+     @return {Number} unique handle
+     **/
     setStation: function (i_station) {
         var self = this
         return self.setData(i_station, StudioLiteModel.filter_Station)
     },
 
+    /**
+     Get a station's data from the internal data structure.
+     @method getStation
+     @param {Number} i_dbmid unique handle
+     @return {Object} station data
+     **/
     getStation: function (i_dbmid) {
         var self = this
         return self.m_data[i_dbmid];
     },
 
+    /**
+     Update an entire set of stations in the internal data structure.
+     @method updStations
+     @param {Number} i_dbmid
+     @param {Object} i_stations
+     @return none
+     **/
     updStations: function (i_dbmid, i_stations) {
         var self = this;
         var newStatus = i_stations['status'];
@@ -268,12 +416,23 @@ StudioLiteModel.prototype = {
         self.m_data[i_dbmid]['statusChanged'] = newStatus == oldStatus ? false : true;
     },
 
+    /**
+     Stop all queued server calls.
+     @method abortServerCalls
+     @return none
+     **/
     abortServerCalls: function () {
         var self = this;
         self.m_ajax.abortAll();
         self.m_ajax.resumeAll();
     },
 
+    /**
+     Request from remote server a list of all stations and their status and wait for callback.
+     @method requestStationsList
+     @param {Object} i_caller notify caller on callback
+     @return none
+     **/
     requestStationsList: function (i_caller) {
         var self = this;
         var newSrvData = {};
@@ -285,11 +444,11 @@ StudioLiteModel.prototype = {
         ajaxWrapper.getData(srvCmd, onServerReply);
 
         function onServerReply(data) {
-            if (data.responce['Stations']==undefined)
+            if (data.responce['Stations'] == undefined)
                 return;
 
             var stationsArray = data.responce['Stations']['Station'];
-            if (stationsArray==undefined)
+            if (stationsArray == undefined)
                 return;
 
             for (var i = 0; i < stationsArray.length; i++) {
@@ -362,6 +521,11 @@ StudioLiteModel.prototype = {
         }
     },
 
+    /**
+     Get dictionary of pre-set screen division configurations.
+     @method getScreenCollection
+     @return {Object} data template.
+     **/
     getScreenCollection: function () {
         return TemplateCollection;
     }

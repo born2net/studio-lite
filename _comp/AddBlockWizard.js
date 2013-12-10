@@ -107,9 +107,19 @@ AddBlockWizard.prototype = {
             var helperSDK = commBroker.getService('HelperSDK');
             var component_id = $(e.target).closest('li').data('component_id');
             var resource_id = $(e.target).closest('li').data('resource_id');
-            var player_code = component_id == undefined ? helperSDK.getNativeByResoueceID(resource_id) : component_id;
+            var blockCode = -1;
+            var nativeID = -1;
 
-            commBroker.fire(AddBlockWizard.ADD_NEW_BLOCK, this, self, player_code);
+            if (component_id) {
+                blockCode = component_id;
+            } else {
+                nativeID = helperSDK.getNativeByResoueceID(resource_id);
+                blockCode = model.getBlockCodeFromFileExt(jalapeno.getResourceType(nativeID));
+            }
+            commBroker.fire(AddBlockWizard.ADD_NEW_BLOCK, this, self, {
+                blockCode: blockCode,
+                nativeID: nativeID
+            });
         });
 
     },

@@ -6,7 +6,6 @@
  @return none
  **/
 function ChannelList() {
-
     this.m_property = commBroker.getService('CompProperty');
     this.m_msdb = undefined;
     this.selected_block_id = undefined;
@@ -112,8 +111,7 @@ ChannelList.prototype = {
         var addBlockWizard = new AddBlockWizard();
         addBlockWizard.newChannelBlockPage();
         commBroker.listenOnce(AddBlockWizard.ADD_NEW_BLOCK, function (e) {
-            var player_code = e.edata;
-            self._createNewChannelBlock(player_code);
+            self._createNewChannelBlock(e.edata.blockCode, e.edata.nativeID);
             addBlockWizard.destroy();
             addBlockWizard.close();
             e.stopImmediatePropagation();
@@ -124,15 +122,19 @@ ChannelList.prototype = {
     /**
      Create a new block (player) on the current channel and refresh UI bindings such as properties open events.
      @method _createNewChannelBlock
-     @param {Number} i_block_code
+     @param {Number} i_blockID
+     @param {Number} i_nativeID optional param used when creating a block with embedded resource (i.e.: video / image / swf)
      @return {Boolean} false
      **/
-    _createNewChannelBlock: function (i_block_code) {
+    _createNewChannelBlock: function (i_blockID, i_nativeID) {
         var self = this;
 
+        // var blockCode = i_newPlayerData.blockCode;
+        // var nativedID = i_newPlayerData.nativeID;
+        // var resourceType = i_newPlayerData.resourceType;
+
         var totalChannelLength = self._getTotalDurationChannel();
-        var helperSDK = commBroker.getService('HelperSDK');
-        var jData = helperSDK.createNewPlayer(self.selected_campaign_timeline_chanel_id, i_block_code, totalChannelLength);
+        var jData = jalapeno.createNewPlayer(self.selected_campaign_timeline_chanel_id, i_blockID, totalChannelLength, i_nativeID);
         var campaign_timeline_chanel_player_id = jData['campaign_timeline_chanel_player_id'];
         var campaign_timeline_chanel_player_data = jData['campaign_timeline_chanel_player_data'];
 

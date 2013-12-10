@@ -107,23 +107,23 @@
                 alert(this.pathCSS + this.getCSS[this.theme]);
             },
 
-            switchColor: function (newColor) {
+            switchColor : function(newColor) {
                 $(".color-trigger a.active").removeClass("active");
-                $(".color-trigger a." + newColor).addClass("active");
+                $(".color-trigger a."+newColor).addClass("active");
                 this.color = newColor;
-                $("html").contents().find("#jQMnDColor").attr("href", this.pathCSS + this.getCSS[this.color]);
+                $("html").contents().find("#jQMnDColor").attr("href",this.pathCSS+this.getCSS[this.color]);
 
-                $("#tt1").attr("style", this.getborderCSS[this.color]);
+                $("#tt1").attr("style",this.getborderCSS[this.color]);
 
-
-                $("#selectedCampaignProperties, #selectedLibResourceName, #sendEventID, #openTimeLineProperties, #qrText, #rssLink, #randomPlayback, #timeLinePropTitleID").attr("style", this.getborderCSS1[this.color]);
-
+                $("div.ui-btn-down-b span").attr("style",this.getbgCSS[this.color]);
             },
 
-            switchbColor: function (newColor) {
+
+            switchbColor : function(newColor) {
                 $(".color-trigger a.active").removeClass("active");
-                $(".color-trigger a." + newColor).addClass("active");
+                $(".color-trigger a."+newColor).addClass("active");
                 this.color = newColor;
+
 
 
             },
@@ -146,6 +146,16 @@
                 purple: "border-bottom:2px solid #CF9FE7",
                 red: "border-bottom:2px solid #FF7979",
                 yellow: "border-bottom:2px solid #FFD060"
+            },
+
+            getbgCSS: {
+                dark: "",
+                light: "",
+                blue:  "background-color: #6DCAEC;color: #fff",
+                green: "background-color: #b6db49;color: #fff",
+                purple: "background-color: #CF9FE7;color: #fff",
+                red:  "background-color: #FF7979;color: #fff",
+                yellow:  "background-color: #FFD060;color: #fff"
             },
             getborderCSS1: {
                 dark: "",
@@ -174,8 +184,8 @@
             }
         });
 
-        $(".color-trigger").on("click", "a:not([href='#color-custom'])", function (e) {
-            if ($(this).hasClass("active")) {
+        $(".color-trigger").on("click","a:not([href='#color-custom'])",function(e) {
+            if($(this).hasClass("active")) {
                 // Do Nothing
                 e.preventDefault();
             } else {
@@ -192,6 +202,7 @@
     });
 
 </script>
+
 
 
 <script type="text/javascript">
@@ -215,37 +226,22 @@ CSS
 
 <STYLE type="text/css">
 
-#selectedCampaignProperties, #selectedLibResourceName, #sendEventID, #openTimeLineProperties, #qrText, #rssLink, #randomPlayback, #timeLinePropTitleID {
-    border: 2px solid #B6DB49;
+
+.ui-icon-tachometer:before{content:"\f0e4";}
+.ui-icon-capture-cmd:before{content:"\f030";}
+.ui-icon-play-cmd:before{content:"\f04b";}
+.ui-icon-stop-cmd:before{content:"\f04d";}
+.ui-icon-reload-cmd:before{content:"\f01e";}
+.ui-icon-long-prop:before {content:"\f085";}
+
+.ui-icon-long-prop{font-size:1.33em;}
+
+.ui-header {
+    min-height: 93px;
+    padding: 0;
+    z-index: 9999;
 }
 
-.ui-icon-tachometer:before {
-    content: "\f0e4";
-}
-
-.ui-icon-capture-cmd:before {
-    content: "\f030";
-}
-
-.ui-icon-play-cmd:before {
-    content: "\f04b";
-}
-
-.ui-icon-stop-cmd:before {
-    content: "\f04d";
-}
-
-.ui-icon-reload-cmd:before {
-    content: "\f01e";
-}
-
-.ui-icon-long-prop:before {
-    content: "\f085";
-}
-
-.ui-icon-long-prop {
-    font-size: 1.33em;
-}
 
 @font-face {
     font-family: 'Roboto';
@@ -292,14 +288,16 @@ CSS
 
 }
 
+
+
 @import url("fonts.googleapis.com/css?family=Roboto:400,100,300,500,700");
+
 
 #playbackResourcesDiv {
     border: 1px solid #e7e7e7;
     border-radius: 3px;
     padding: 20px;
     margin: 20px;
-    background-color: WHITE;
 
 }
 
@@ -313,6 +311,7 @@ CSS
     top: 7px;
     right: 7px;
 }
+
 
 .ui-page {
     font-family: "Roboto", sans-serif;
@@ -333,10 +332,10 @@ CSS
     margin: -7px;
 
 }
-
 .ui-btn,
 label.ui-btn {
     font-weight: normal;
+
 
 }
 
@@ -344,26 +343,33 @@ label.ui-btn {
     text-decoration: none !important;
 }
 
-.ui-btn-down-b {
+div.ui-btn-down-b span{
+    background-color: #b6db49;color: #fff;
 
-    background-color: #b6db49;
-    color: #fff;
 }
+
+
+#campainManager .ui-btn-inner span{font-size:20px;}
+
+#campainSave .ui-btn-inner span{font-size:20px;}
+
+#slid .ui-btn-inner span{font-size:20px;}
+
+#addNewScreenButton .ui-btn-inner span{font-size:20px;}
+#delScreenButton .ui-btn-inner span{font-size:20px;}
 
 .ui-btn-active {
     cursor: pointer;
 }
 
-<!--
--navileft--- >
-.navileft {
-    display: block;
-    position: fixed;
-    top: 5%;
-    left: 2%;
-    z-index: 10;
-}
-
+<!---navileft--->
+    .navileft {
+        display: block;
+        position: fixed;
+        top: 5%;
+        left: 2%;
+        z-index: 10;
+    }
 .naviright {
     background-color: #800000;
     display: block;
@@ -376,9 +382,10 @@ label.ui-btn {
     z-index: 10;
 }
 
-.navileft a, .naviright a, .download a {
+
+.navileft a,.naviright a,.download a {
     display: block;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255,255,255,0.2);
     border-radius: 50%;
     width: 100px;
     height: 100px;
@@ -388,21 +395,21 @@ label.ui-btn {
     text-align: center;
 
     -webkit-transition: -webkit-transform 0.5s, box-shadow 0.5s, background 0.5s;
-    -moz-transition: -moz-transform 0.5s, box-shadow 0.5s, background 0.5s;
-    -o-transition: -o-transform 0.5s, box-shadow 0.5s, background 0.5s;
-    -ms-transition: -ms-transform 0.5s, box-shadow 0.5s, background 0.5s;
-    transition: transform 0.5s, box-shadow 0.5s, background 0.5s;
+    -moz-transition: -moz-transform  0.5s, box-shadow 0.5s, background 0.5s;
+    -o-transition: -o-transform  0.5s, box-shadow 0.5s, background 0.5s;
+    -ms-transition: -ms-transform  0.5s, box-shadow 0.5s, background 0.5s;
+    transition: transform  0.5s, box-shadow 0.5s, background 0.5s;
 
     margin-bottom: 15px;
 }
 
-.navileft a strong, .naviright a strong, .download a strong {
+.navileft a strong,.naviright a strong,.download a strong {
     display: none;
 }
 
-.navileft a:hover, .navileft a.active, .naviright a:hover, .naviright a.active, .download a:hover {
-    background-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 10px 0px 10px rgba(0, 0, 0, 0.2);
+.navileft a:hover,.navileft a.active,.naviright a:hover,.naviright a.active,.download a:hover {
+    background-color: rgba(255,255,255,0.8);
+    box-shadow: 10px 0px 10px rgba(0,0,0,0.2);
 }
 
 .navileft .rotate a.active:hover {
@@ -414,15 +421,15 @@ label.ui-btn {
     transform: rotate(45deg);
 }
 
-.navileft a.active.landscape, .naviright a.active.landscape {
-    -webkit-transform: rotate(90deg) scale(1.1, 1.1);
-    -moz-transform: rotate(90deg) scale(1.1, 1.1);
-    -o-transform: rotate(90deg) scale(1.1, 1.1);
-    -ms-transform: rotate(90deg) scale(1.1, 1.1);
-    transform: rotate(90deg) scale(1.1, 1.1);
+.navileft a.active.landscape,.naviright a.active.landscape {
+    -webkit-transform: rotate(90deg) scale(1.1,1.1);
+    -moz-transform: rotate(90deg) scale(1.1,1.1);
+    -o-transform: rotate(90deg) scale(1.1,1.1);
+    -ms-transform: rotate(90deg) scale(1.1,1.1);
+    transform: rotate(90deg) scale(1.1,1.1);
 }
 
-.navileft .landscape, .naviright .landscape {
+.navileft .landscape,.naviright .landscape {
     -webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
     -o-transform: rotate(90deg);
@@ -430,15 +437,15 @@ label.ui-btn {
     transform: rotate(90deg);
 }
 
-.navileft a.active.portrait, .naviright a.active.portrait {
-    -webkit-transform: rotate(0deg) scale(1.1, 1.1);
-    -moz-transform: rotate(0deg) scale(1.1, 1.1);
-    -o-transform: rotate(0deg) scale(1.1, 1.1);
-    -ms-transform: rotate(0deg) scale(1.1, 1.1);
-    transform: rotate(0deg) scale(1.1, 1.1);
+.navileft a.active.portrait,.naviright a.active.portrait {
+    -webkit-transform: rotate(0deg) scale(1.1,1.1);
+    -moz-transform: rotate(0deg) scale(1.1,1.1);
+    -o-transform: rotate(0deg) scale(1.1,1.1);
+    -ms-transform: rotate(0deg) scale(1.1,1.1);
+    transform: rotate(0deg) scale(1.1,1.1);
 }
 
-.navileft .portrait, .naviright .portrait {
+.navileft .portrait,.naviright .portrait {
     -webkit-transform: rotate(0deg);
     -moz-transform: rotate(0deg);
     -o-transform: rotate(0deg);
@@ -460,65 +467,38 @@ label.ui-btn {
 }
 
 .naviright a.dark {
-    color: rgba(255, 255, 255, 0.6);
-    background-color: rgba(0, 0, 0, 0.3);
+    color: rgba(255,255,255,0.6);
+    background-color: rgba(0,0,0,0.3);
 }
 
 .naviright a.dark:hover {
-    color: rgba(255, 255, 255, 0.6);
-    background-color: rgba(0, 0, 0, 1);
+    color: rgba(255,255,255,0.6);
+    background-color: rgba(0,0,0,1);
 }
 
-.naviright a.blue {
-    background-color: rgba(109, 202, 236, 0.3);
-}
+.naviright a.blue {	background-color: rgba(109,202,236,0.3); }
+.naviright a.green { background-color: rgba(182,219,73,0.3); }
+.naviright a.purple { background-color: rgba(207,159,231,0.3); }
+.naviright a.red { background-color: rgba(255,68,68,0.3); }
+.naviright a.yellow { background-color: rgba(255,208,56,0.3); }
 
-.naviright a.green {
-    background-color: rgba(182, 219, 73, 0.3);
-}
-
-.naviright a.purple {
-    background-color: rgba(207, 159, 231, 0.3);
-}
-
-.naviright a.red {
-    background-color: rgba(255, 68, 68, 0.3);
-}
-
-.naviright a.yellow {
-    background-color: rgba(255, 208, 56, 0.3);
-}
-
-.naviright a.blue:hover, .naviright a.blue.active {
-    background-color: rgba(109, 202, 236, 0.8);
-}
-
-.naviright a.green:hover, .naviright a.green.active {
-    background-color: rgba(182, 219, 73, 0.8);
-}
-
-.naviright a.purple:hover, .naviright a.purple.active {
-    background-color: rgba(207, 159, 231, 0.8);
-}
-
-.naviright a.red:hover, .naviright a.red.active {
-    background-color: rgba(255, 68, 68, 0.8);
-}
-
-.naviright a.yellow:hover, .naviright a.yellow.active {
-    background-color: rgba(255, 208, 56, 0.8);
-}
+.naviright a.blue:hover,.naviright a.blue.active {	background-color: rgba(109,202,236,0.8); }
+.naviright a.green:hover,.naviright a.green.active { background-color: rgba(182,219,73,0.8); }
+.naviright a.purple:hover,.naviright a.purple.active { background-color: rgba(207,159,231,0.8); }
+.naviright a.red:hover,.naviright a.red.active { background-color: rgba(255,68,68,0.8); }
+.naviright a.yellow:hover,.naviright a.yellow.active { background-color: rgba(255,208,56,0.8); }
 
 .naviright a.active {
-    -webkit-transform: rotate(0deg) scale(1.1, 1.1);
-    -moz-transform: rotate(0deg) scale(1.1, 1.1);
-    -o-transform: rotate(0deg) scale(1.1, 1.1);
-    -ms-transform: rotate(0deg) scale(1.1, 1.1);
-    transform: rotate(0deg) scale(1.1, 1.1);
+    -webkit-transform: rotate(0deg) scale(1.1,1.1);
+    -moz-transform: rotate(0deg) scale(1.1,1.1);
+    -o-transform: rotate(0deg) scale(1.1,1.1);
+    -ms-transform: rotate(0deg) scale(1.1,1.1);
+    transform: rotate(0deg) scale(1.1,1.1);
 }
 
-<!--
--navileft--- >
+
+<!---navileft--->
+
 
 @media (min-width: 35em) {
     .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-open.ui-panel-content-fixed-toolbar-display-push,
@@ -580,6 +560,7 @@ label.ui-btn {
     top: 6px !important;
     left: 23px !important;
 }
+
 
 #timeLinePropDiv {
     float: right;
@@ -709,18 +690,20 @@ aside > aside > div > ul > li {
 .ui-icon-cloud-upload,
 .ui-icon-tachometer,
 .ui-icon-bullhorn,
+
 .ui-icon-long-prop,
 .ui-icon-group,
+
 .ui-icon-beer,
 .ui-icon-minus,
 .ui-icon-fire,
 .ui-icon-plus,
 .ui-icon-music,
 .ui-icon-trophy,
-.ui-icon-coffee {
-    font-size: 1.33em;
-    padding-right: #10px;
+.ui-icon-coffee{font-size:1.33em;
+    padding-right:#10px;
 }
+
 
 .ui-listview .ui-bar-b {
 
@@ -729,10 +712,8 @@ aside > aside > div > ul > li {
 .ui-btn-icon-right .ui-icon {
     right: 40px;
 }
+.ui-icon-gear{font-size:1.33em;}
 
-.ui-icon-gear {
-    font-size: 1.33em;
-}
 
 .currentSelectedStation {
     /* border-top: 1px solid #666;
@@ -750,14 +731,14 @@ aside > aside > div > ul > li {
 }
 
 .naviright {
-    background-color: maroon;
-    background-repeat: initial initial;
-    display: block;
-    left: 5%;
-    padding: 5px;
-    position: fixed;
-    top: 20%;
-    z-index: 10;
+    background-color:maroon;
+    background-repeat:initial initial;
+    display:block;
+    left:5%;
+    padding:5px;
+    position:fixed;
+    top:20%;
+    z-index:10;
 }
 
 .currentSelectedResource {
@@ -770,6 +751,7 @@ aside > aside > div > ul > li {
     float: left;
     margin-right: 4px;
 }
+
 
 .fileinput-button input {
     position: absolute;
@@ -878,20 +860,10 @@ Studio Lite - Application
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div data-role="page" id="studioLite" data-theme="b" class="ui-responsive-panel ui-panel-display-reveal ">
-    <div data-role="header" data-theme="b" style="box-shadow:-5px 0 5px rgba(0, 0, 0, 0.15) inset;">
+<div data-role="page" id="studioLite" data-theme="b" class="ui-responsive-panel ui-panel-display-reveal">
+    <div data-role="header" data-theme="b" style="">
 
-        <a href="#navPanel" data-role='button' data-display="push"
-           style="margin-right:5px ;position:relative; top: 10px;width:3%;"><i
-                class="fa fa-arrow-circle-o-left fa-lg"></i></a>
-        <!--<a id="toggleNavigation" data-transition="fade" data-iconpos="notext" style="margin-right:5px ;position:relative; width:4%;top: 10px"  data-icon="back" data-theme="b"></a>-->
-        <h1>&nbsp;</h1>
 
-        <div data-role="controlgroup" data-type="horizontal"
-             style="position:absolute; top: 0px; right: 10px;font-weight:normal;">
-            <a id="campainManager" data-theme="b" data-role="button"> <i class="fa fa-star"></i>campaign manager</a>
-            <a id="campainSave" href="index.html" data-role="button"> <i class="fa fa-check"></i>save</a>
-        </div>
     </div>
 
     <div data-role="panel" data-position="right" id="propertiesPanel" class="main_nav ui-responsive-panel"
@@ -903,7 +875,7 @@ Studio Lite - Application
 
             <div style="clear:both"></div>
         </div>
-        <div id="propertiesPanelView">
+        <div id="propertiesPanelView" style="padding:0 7%;">
         </div>
     </div>
 
@@ -911,23 +883,15 @@ Studio Lite - Application
          style="box-shadow:-5px 0 5px rgba(0, 0, 0,0.15) inset;">
         <ul data-role="listview" style="margin-left:-20px; font-weight:normal;">
             <li data-role="list-divider" id="tt1" style="border-bottom:2px solid #B6DB49;">
-                <h2 style="margin-left:20px; text-transform:none;font-size:31px;" data-theme="b">Signage Studio</h2>
-            </li>
+                <h2 style="margin-left:20px; text-transform:none;font-size:31px;" data-theme="b">Signage Studio</h2></li>
 
-            <li class="ui-btn-text" data-icon="sitemap"><a id="navPlaylist" data-role="button"
-                                                           data-theme="b">Campaigns </a></li>
-            <li class="ui-btn-text" data-icon="spinner"><a id="navFiles" data-role="button"
-                                                           data-theme="b">Resources </a></li>
-            <li class="ui-btn-text" data-icon="tachometer"><a id="navPlaylers" data-role="button" data-theme="b">Stations</a>
-            </li>
-            <li class="ui-btn-text" data-icon="cogs"><a id="navSettings" data-role="button" data-theme="b">Settings </a>
-            </li>
-            <li class="ui-btn-text" data-icon="comments"><a id="navHelp" data-role="button" data-theme="b">Help </a>
-            </li>
-            <li class="ui-btn-text" data-icon="signout"><a id="navLogout" data-role="button" data-theme="b">Logout </a>
-            </li>
-            <li class="ui-btn-text" data-icon="cloud-upload"><a id="navAdvance" data-corners="false" data-role="button"
-                                                                data-theme="b">Upgrade (FREE)</a></li>
+            <li class="ui-btn-text" data-icon="sitemap"><a id="navPlaylist"  data-role="button" data-theme="b">Campaigns  </a></li>
+            <li class="ui-btn-text" data-icon="spinner"><a id="navFiles"  data-role="button" data-theme="b">Resources </a></li>
+            <li class="ui-btn-text" data-icon="tachometer"><a id="navPlaylers" data-role="button" data-theme="b">Stations</a></li>
+            <li class="ui-btn-text" data-icon="cogs"><a id="navSettings" data-role="button" data-theme="b">Settings </a></li>
+            <li class="ui-btn-text" data-icon="comments"><a id="navHelp" data-role="button" data-theme="b">Help </a></li>
+            <li class="ui-btn-text" data-icon="signout"><a id="navLogout" data-role="button" data-theme="b">Logout </a></li>
+            <li class="ui-btn-text" data-icon="cloud-upload"><a id="navAdvance" data-corners="false" data-role="button" data-theme="b">Upgrade (FREE)</a></li>
         </ul>
 
     </div>
@@ -947,6 +911,16 @@ Studio Lite - Application
          <button id="navAdvance" data-corners="false" data-theme="e">Standard mode (FREE)</button>
     </div>-->
     <div data-role="content" style="padding: 0px; margin: 0px ">
+
+        <a id="slid" href="#navPanel" data-role='button' data-display="push"
+           style="position:absolute; top: 10px; left: 10px;font-weight:normal;"><i class="fa fa-arrow-circle-o-left fa-lg"></i></a>
+        <!--<a id="toggleNavigation" data-transition="fade" data-iconpos="notext" style="margin-right:5px ;position:relative; width:4%;top: 10px"  data-icon="back" data-theme="b"></a>-->
+
+
+        <div data-role="controlgroup" data-type="horizontal"style="position:absolute; top: 10px; right: 10px;font-weight:normal;">
+            <a id="campainManager" data-theme="b" data-role="button" style="color:#000;"> <i class="fa fa-star"></i>campaign manager</a>
+            <a id="campainSave" href="index.html" data-role="button"> <i class="fa fa-check"></i>save</a>
+        </div>
         <div data-role="content" style="padding: 0px; margin: 0px" id="mainContent" class="ui-panel-display-reveal">
         </div>
     </div>
@@ -1035,7 +1009,7 @@ Campaign Selector view
 <div id="campaignSelectorView" style="display: :SET:" data-theme="b">
     <br/>
     <a href="#" id="startNewCampaign" data-role="button" style="position: relative; left: 40px" data-theme="b"
-       data-iconpos="right" data-inline="true">New campaign wizard <i class="fa fa-star fa-lg"></i></a>
+       data-iconpos="right" data-inline="true">New campaign wizard  <i class="fa fa-star fa-lg"></i></a>
     <ul id="campaignSelectorList" style="padding-left: 40px; padding-right: 40px" data-role="listview"
         data-inset="true" data-theme="b">
     </ul>
@@ -1058,9 +1032,10 @@ Resources
     </div>
     <br/>
     <br/>
-    <ul id="resourceLibList" style="padding: 40px" data-role="listview" data-filter="true"
-        data-filter-placeholder="Search resources..." data-inset="true" data-theme="b">
+    <ul id="resourceLibList"  style="padding: 40px; width:80%;" data-role="listview" data-filter="true"
+        data-filter-placeholder="Search resources..." data-inset="true" data-filter-theme="b" data-theme="b">
     </ul>
+
 </div>
 
 <!-- //////////////////////////////////////////////////////////////////////////
@@ -1099,21 +1074,10 @@ Settings
                     <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
                         <legend>Select Theme</legend>
 
-                        <a class="light" style="float:left;" href="#theme-light"> <input type="radio"
-                                                                                         name="radio-choice-a"
-                                                                                         id="radio-choice-ab"
-                                                                                         value="light"
-                                                                                         checked="checked">
-                            <label for="radio-choice-ab" style="font-size:16px;font-weight:400;color:#404040;">
-                                <legend>Light</legend>
-                            </label></a>
-                        <a class="dark" style="float:left;" href="#theme-dark"> <input type="radio"
-                                                                                       name="radio-choice-a"
-                                                                                       id="radio-choice-bb"
-                                                                                       value="dark">
-                            <label for="radio-choice-bb" style="font-size:16px;font-weight:400;color:#404040;">
-                                <legend>Dark</legend>
-                            </label> </a>
+                        <a class="light" style="float:left;" href="#theme-light"> <input type="radio" name="radio-choice-a" id="radio-choice-ab" value="light" checked="checked" >
+                            <label for="radio-choice-ab" style="font-size:16px;font-weight:400;color:#404040;" ><legend>Light</legend></label></a>
+                        <a class="dark" style="float:left;" href="#theme-dark"> <input type="radio" name="radio-choice-a" id="radio-choice-bb" value="dark">
+                            <label for="radio-choice-bb" style="font-size:16px;font-weight:400;color:#404040;"><legend>Dark</legend></label> </a>
                     </fieldset>
                 </li>
             </ul>
@@ -1126,33 +1090,17 @@ Settings
                     <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
                         <legend>Select color</legend>
 
-                        <a class="green active" href="#color-green"><input type="radio" name="radio-choice-a"
-                                                                           id="radio-choice-ab" value="green"
-                                                                           checked="checked">
-                            <label for="radio-choice-ab" style="font-size:16px;font-weight:400;color:#404040;">
-                                <legend>Green</legend>
-                            </label></a>
+                        <a class="green active" href="#color-green"><input type="radio" name="radio-choice-a" id="radio-choice-ab" value="green" checked="checked" >
+                            <label for="radio-choice-ab" style="font-size:16px;font-weight:400;color:#404040;"><legend>Green</legend></label></a>
 
-                        <a class="blue" href="#color-blue"><input type="radio" name="radio-choice-a"
-                                                                  id="radio-choice-bb" value="blue">
-                            <label for="radio-choice-bb" style="font-size:16px;font-weight:400;color:#404040;">
-                                <legend>Blue</legend>
-                            </label></a>
-                        <a class="purple" href="#color-purple"><input type="radio" name="radio-choice-a"
-                                                                      id="radio-choice-cb" value="purple">
-                            <label for="radio-choice-cb" style="font-size:16px;font-weight:400;color:#404040;">
-                                <legend>Purple</legend>
-                            </label></a>
-                        <a class="red" href="#color-red"><input type="radio" name="radio-choice-a" id="radio-choice-db"
-                                                                value="red">
-                            <label for="radio-choice-db" style="font-size:16px;font-weight:400;color:#404040;">
-                                <legend>Red</legend>
-                            </label></a>
-                        <a class="yellow" href="#color-yellow"><input type="radio" name="radio-choice-a"
-                                                                      id="radio-choice-eb" value="yellow">
-                            <label for="radio-choice-eb" style="font-size:16px;font-weight:400;color:#404040;">
-                                <legend>Yellow</legend>
-                            </label></a>
+                        <a class="blue" href="#color-blue"><input type="radio" name="radio-choice-a" id="radio-choice-bb" value="blue">
+                            <label for="radio-choice-bb" style="font-size:16px;font-weight:400;color:#404040;"><legend>Blue</legend></label></a>
+                        <a class="purple" href="#color-purple"><input type="radio" name="radio-choice-a" id="radio-choice-cb" value="purple" >
+                            <label for="radio-choice-cb" style="font-size:16px;font-weight:400;color:#404040;"><legend>Purple</legend></label></a>
+                        <a class="red" href="#color-red"><input type="radio" name="radio-choice-a" id="radio-choice-db" value="red">
+                            <label for="radio-choice-db" style="font-size:16px;font-weight:400;color:#404040;"><legend>Red</legend></label></a>
+                        <a class="yellow" href="#color-yellow"><input type="radio" name="radio-choice-a" id="radio-choice-eb" value="yellow">
+                            <label for="radio-choice-eb" style="font-size:16px;font-weight:400;color:#404040;"><legend>Yellow</legend></label></a>
 
                     </fieldset>
                 </li>
@@ -1200,10 +1148,11 @@ Timeline properties
 ////////////////////////////////////////////////////////////////////////// -->
 
 <div id="propEntireScreen" style="display: :SET:">
-    <div id="tt2" style="margin:0;">
-        <input type="text" name="name" id="timeLinePropTitleID" value="" placeholder="Timeline Title"/>
+    <div data-role="fieldcontain" data-inset="true" style="width:99%;">
+        <input type="text" name="name" id="timeLinePropTitleID" value="" data-clear-btn="true" placeholder="Timeline Title">
     </div>
 </div>
+
 
 
 <!-- //////////////////////////////////////////////////////////////////////////
@@ -1216,13 +1165,14 @@ Viewer properties
     <h5>Channel properties</h5>
 
     <label for="randomPlayback">Random Playback</label>
-    <select id="randomPlayback" name="Random playback" data-role="slider" data-track-theme="b">
+    <select id="randomPlayback" name="Random playback"  data-role="slider" data-track-theme="b" >
         <option value="off">Off</option>
         <option value="on">On</option>
     </select>
 
 
 </div>
+
 
 
 <!-- //////////////////////////////////////////////////////////////////////////
@@ -1273,16 +1223,9 @@ Block RSS common properties
     <div>
         <h5>RSS</h5>
 
-        <div>
-            <input type="text" name="name" id="rssLink" value="" placeholder="Enter RSS Link Text"/ data-theme="b">
+        <div data-role="fieldcontain" data-inset="true">
+            <input type="text" name="name" id="rssLink" value="" data-clear-btn="true" placeholder="Enter RSS Link Text" data-theme="b">
         </div>
-
-        <div>
-            <label for="hue-demo">Hue (default)</label>
-            <input type="text" id="hue-demo" class="demo" data-control="hue" value="#ff6161">
-        </div>
-
-
     </div>
 </div>
 
@@ -1293,8 +1236,8 @@ Block QR common properties
 ////////////////////////////////////////////////////////////////////////// -->
 
 <div id="blockQRCommonProperties" style="display: :SET:" data-theme="b">
-    <div>
-        <input type="text" name="name" id="qrText" value="" placeholder="Enter QR Text" data-theme="b"/>
+    <div data-role="fieldcontain" data-inset="true">
+        <input type="text" name="name" id="qrText" value=""data-clear-btn="true"  placeholder="Enter QR Text" data-theme="b">
     </div>
 </div>
 
@@ -1397,7 +1340,7 @@ Campaign view
 
                 <div id="timeLinePropDiv">
                     <input type='button' data-icon="long-prop" data-theme='b' value='&nbsp;' data-mini='true'
-                           data-inline='true' data-icon-pos='top' id="openTimeLineProperties"/>
+                           data-inline='true' data-icon-pos='top' id="openTimeLineProperties">
                 </div>
             </h3>
 
@@ -1413,8 +1356,7 @@ Campaign view
 
             <aside style="margin: 0px; padding: 0px">
                 <aside style="margin: 0px; padding: 0px">
-                    <div style="margin: 0px; padding: 0px" vertical-align="middle" id="screenSelectorContainer"
-                         data-theme="b">
+                    <div style="margin: 0px; padding: 0px" vertical-align="middle" id="screenSelectorContainer" data-theme="b">
                         <hr style="margin: 0px; padding: 0px" class="dottedHR">
                         <ul id="screenLayoutsUL">
                         </ul>
@@ -1461,7 +1403,7 @@ Campaign view
     <div align="center" id="selectedLayoutContainer" class="centerContent" data-theme="b">
     </div>
 
-    <div id="playbackResourcesDiv">
+    <div id="playbackResourcesDiv" data-theme="b">
         <!-- <h4 style="padding-left:20px; padding-bottom: 0px ; padding-right:20px">Playback resources</h4>-->
         <div data-role="controlgroup" data-type="horizontal">
             <a id="channelAddResource" data-role="button" data-theme="b" data-icon="plus">Add</a>
@@ -1615,8 +1557,8 @@ Station Properties
 
     <hr width="100%"
         style="color:#333; display: block; height: 1px; border: 0; border-top: 1px solid #000; margin: 1em 0; padding: 0;"/>
-    <input type="text" data-inline="true" name="eventName" data-theme="b" data-icon="search" placeholder="event name"
-           id="sendEventID" value=""/>
+    <input type="text" data-inline="true" name="eventName" data-clear-btn="true" data-theme="b" data-icon="search" placeholder="event name"
+           id="sendEventID" value="">
     <button id="eventSendButton" data-role="button" data-icon="alert" data-theme="b">Send event</button>
     <hr width="100%"
         style="color:#333; display: block; height: 1px; border: 0; border-top: 1px solid #000; margin: 1em 0; padding: 0;"/>
@@ -1631,9 +1573,8 @@ Resource Properties
 ////////////////////////////////////////////////////////////////////////// -->
 
 <div id="resourceProperties" style="display: :SET:" data-theme="b">
-    <div id="tt4" style="margin:0;padding:0;">
-        <input type="text" name="name" id="selectedLibResourceName" value="" placeholder="Enter resource name"
-               data-theme="b"/>
+    <div>
+        <input type="text" name="name" id="selectedLibResourceName" value="" data-clear-btn="true" placeholder="Enter resource name" data-theme="b">
     </div>
 </div>
 
@@ -1645,9 +1586,8 @@ Campaign Properties
 ////////////////////////////////////////////////////////////////////////// -->
 
 <div id="campaignProperties" style="display: :SET:" data-theme="b">
-    <div id="tt3" style="margin:0;padding:0;">
-        <input type="text" name="name" id="selectedCampaignProperties" value="" placeholder="Enter campaign name"
-               data-theme="b"/>
+    <div >
+        <input type="text" name="name" id="selectedCampaignProperties" value="" data-clear-btn="true" placeholder="Enter campaign name" data-theme="b">
     </div>
 </div>
 

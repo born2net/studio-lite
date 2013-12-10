@@ -106,7 +106,8 @@ BlockImage.prototype._onChange = function (e) {
 
     // this is a new component so we need to add a boilerplate XML
     if (aspectRatio.length == 0) {
-        xPlayerData = self._getDefaultPlayerImageData();
+        // xPlayerData = self._getDefaultPlayerImageData();
+        xPlayerData = model.getComponent(self.m_blockType).getDefaultPlayerData(self.m_nativeResourceID);
         xmlDoc = $.parseXML(xPlayerData);
         xml = $(xmlDoc);
         aspectRatio = xml.find('AspectRatio');
@@ -129,11 +130,10 @@ BlockImage.prototype._updateTitle = function () {
     $(Elements.SELECTED_CHANNEL_RESOURCE_NAME).text(self.m_blockDescription);
 }
 
-/**
+/*
  Get a default Image XML player_data boilerplate which we use to add a new Image component into msdb
  @method _getDefaultPlayerImageData
  @return {xml} xml data
- **/
 BlockImage.prototype._getDefaultPlayerImageData = function () {
     var self = this;
 
@@ -147,6 +147,7 @@ BlockImage.prototype._getDefaultPlayerImageData = function () {
         '</Player>';
     return xml;
 };
+ */
 
 /**
  Get block data in json object literal

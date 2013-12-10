@@ -21,6 +21,6 @@ Documentation
 
 License
 ------------------------------------------------------------------------
-- The SignageStudio Web Lite and Jalapeno SDK are available under GNU GENERAL PUBLIC LICENSE Version 3
+- The SignageStudio Web Lite and Jalapeno SDK are available under GNU GENERAL PUBLIC LICENSE Version 3 https://github.com/born2net/signagestudio_web-lite/blob/master/LICENSE
 
 

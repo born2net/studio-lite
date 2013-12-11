@@ -11,7 +11,6 @@
 function Campaign() {
 
     this.self = this;
-    this.m_msdb = undefined;
     this.m_timelines = {}; // hold references to all created timeline instances
     this.m_timelineViewStack = new Viewstacks(Elements.CAMPAIN_VIEW_MAIN_CONTAINER);
     this.m_selected_timeline_id = -1;
@@ -46,7 +45,6 @@ Campaign.prototype = {
                 } else {
 
                     // self.m_selected_campaign_id = e.edata;
-                    self.m_msdb = commBroker.getValue(CompMSDB.msdb)
                     self._loadTimelinesFromDB();
                 }
             }
@@ -152,8 +150,7 @@ Campaign.prototype = {
     _loadSequencerFirstTimeline: function () {
         var self = this;
 
-        var helperSDK = commBroker.getService('HelperSDK');
-        var firstTimelineID = helperSDK.getCampaignTimelineIdOfSequencerIndex(self.m_selected_campaign_id, 0);
+        var firstTimelineID = jalapeno.getCampaignTimelineIdOfSequencerIndex(self.m_selected_campaign_id, 0);
         var sequencesComp = commBroker.getService('Sequences');
 
         setTimeout(function () {
@@ -201,8 +198,7 @@ Campaign.prototype = {
             ////////////////////////////////////////////////
 
             if (e.context.m_owner instanceof Timeline) {
-                var helperSDK = commBroker.getService('HelperSDK');
-                var recCampaignTimelineViewerChanels = helperSDK.getChannelIdFromCampaignTimelineBoardViewer(campaign_timeline_board_viewer_id, campaign_timeline_id);
+                var recCampaignTimelineViewerChanels = jalapeno.getChannelIdFromCampaignTimelineBoardViewer(campaign_timeline_board_viewer_id, campaign_timeline_id);
                 var campaign_timeline_channel_id = recCampaignTimelineViewerChanels['campaign_timeline_chanel_id']
                 commBroker.fire(Channel.CAMPAIGN_TIMELINE_CHANNEL_SELECTED, this, null, campaign_timeline_channel_id);
                 return;
@@ -213,7 +209,6 @@ Campaign.prototype = {
             ////////////////////////////////////////////////
 
             if (e.context.m_owner instanceof TemplateWizard) {
-                var helperSDK = commBroker.getService('HelperSDK');
                 if (self.m_selected_campaign_id == -1) {
 
                     ////////////////////////////////////////////////
@@ -222,14 +217,14 @@ Campaign.prototype = {
 
                     var width = commBroker.getService('ScreenResolution').getResolution().split('x')[0];
                     var height = commBroker.getService('ScreenResolution').getResolution().split('x')[1];
-                    var campaign_board_id = helperSDK.createBoard('board', width, height);
+                    var campaign_board_id = jalapeno.createBoard('board', width, height);
 
-                    var newTemplateData = helperSDK.createNewTemplate(campaign_board_id, e.caller.screenTemplateData.screenProps);
+                    var newTemplateData = jalapeno.createNewTemplate(campaign_board_id, e.caller.screenTemplateData.screenProps);
                     var board_template_id = newTemplateData['board_template_id']
                     var viewers = newTemplateData['viewers'];
 
-                    self.m_selected_campaign_id = helperSDK.createCampaign('campaign');
-                    helperSDK.assignCampaignToBoard(self.m_selected_campaign_id, campaign_board_id);
+                    self.m_selected_campaign_id = jalapeno.createCampaign('campaign');
+                    jalapeno.assignCampaignToBoard(self.m_selected_campaign_id, campaign_board_id);
 
                 } else {
 
@@ -237,19 +232,19 @@ Campaign.prototype = {
                     // Add Timeline to an existing campign
                     ////////////////////////////////////////////////
 
-                    var campaign_board_id = helperSDK.getFirstBoardIDofCampaign(self.m_selected_campaign_id);
-                    var newTemplateData = helperSDK.createNewTemplate(campaign_board_id, e.caller.screenTemplateData.screenProps);
+                    var campaign_board_id = jalapeno.getFirstBoardIDofCampaign(self.m_selected_campaign_id);
+                    var newTemplateData = jalapeno.createNewTemplate(campaign_board_id, e.caller.screenTemplateData.screenProps);
                     var board_template_id = newTemplateData['board_template_id']
                     var viewers = newTemplateData['viewers'];
 
                 }
 
-                campaign_timeline_id = helperSDK.createNewTimeline(self.m_selected_campaign_id);
+                campaign_timeline_id = jalapeno.createNewTimeline(self.m_selected_campaign_id);
 
-                var campaign_timeline_board_template_id = helperSDK.assignTemplateToTimeline(campaign_timeline_id, board_template_id, campaign_board_id);
-                var channels = helperSDK.createTimelineChannels(campaign_timeline_id, viewers);
+                var campaign_timeline_board_template_id = jalapeno.assignTemplateToTimeline(campaign_timeline_id, board_template_id, campaign_board_id);
+                var channels = jalapeno.createTimelineChannels(campaign_timeline_id, viewers);
 
-                helperSDK.assignViewersToTimelineChannels(campaign_timeline_board_template_id, viewers, channels);
+                jalapeno.assignViewersToTimelineChannels(campaign_timeline_board_template_id, viewers, channels);
 
                 self.m_timelines[campaign_timeline_id] = new Timeline(campaign_timeline_id);
                 commBroker.fire(Timeline.CAMPAIGN_TIMELINE_SELECTED, this, null, campaign_timeline_id);

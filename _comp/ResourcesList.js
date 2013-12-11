@@ -8,12 +8,9 @@
 function CompResourcesList(i_container) {
 
     var self = this;
-    self.m_msdb = undefined;
-    self.m_helperSDK = undefined;
     self.m_container = i_container;
     self.m_property = commBroker.getService('CompProperty');
     self.m_selected_resource_id = undefined;
-    self.m_helperSDK = commBroker.getService('HelperSDK');
 
     self._wireUI();
     self._init();
@@ -75,7 +72,7 @@ CompResourcesList.prototype = {
     _onChange: function (e) {
         var self = this;
         var text = $(e.target).val();
-        self.m_helperSDK.setResourceRecord(self.m_selected_resource_id, 'resource_name', text);
+        jalapeno.setResourceRecord(self.m_selected_resource_id, 'resource_name', text);
     },
 
     /**
@@ -86,9 +83,7 @@ CompResourcesList.prototype = {
     _loadResourceList: function () {
 
         var self = this;
-        self.m_msdb = commBroker.getValue(CompMSDB.msdb)
-        self.m_helperSDK = commBroker.getService('HelperSDK');
-        var recResources = self.m_helperSDK.getResources();
+        var recResources = jalapeno.getResources();
 
         $(recResources).each(function (i) {
             // dont process deleted resources
@@ -136,7 +131,7 @@ CompResourcesList.prototype = {
             // $(resourceElem).css('background-image', 'linear-gradient(#bebebe , #bebebe)');
             // $(resourceProp).css('background-image', 'linear-gradient(#bebebe , #bebebe)');
 
-            var recResource = self.m_helperSDK.getResourceRecord(self.m_selected_resource_id);
+            var recResource = jalapeno.getResourceRecord(self.m_selected_resource_id);
 
             $(Elements.SELECTED_LIB_RESOURCE_NAME).val(recResource['resource_name']);
 
@@ -166,8 +161,8 @@ CompResourcesList.prototype = {
      **/
     _onFileSelected: function (e) {
         var self = this;
-        var resources = self.m_msdb.table_resources();
-        var resourceList = self.m_helperSDK.uploadResources('fileSelection');
+        var resources = jalapeno.m_msdb.table_resources();
+        var resourceList = jalapeno.uploadResources('fileSelection');
         //todo error on upload file upload ???
         // XMLHttpRequest cannot load http://jupiter.signage.me/WebService/JsUpload.ashx. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'https://secure.dynawebs.net' is therefore not allowed access.	https://secure.dynawebs.net/_php/studioLite-debug.php#studioLite:0
 
@@ -175,7 +170,7 @@ CompResourcesList.prototype = {
          for (var iResource = 0; iResource < resourceList.length; iResource++) {
          var hResource = resourceList[iResource];
 
-         var timelinePlayers = self.m_msdb.table_campaign_timeline_chanel_players();
+         var timelinePlayers = jalapeno.table_campaign_timeline_chanel_players();
          var timelinePlayer1 = timelinePlayers.createRecord();
          timelinePlayer1.player_data = '<Player player="3130"><Data><Resource hResource="' + hResource + '" /></Data></Player>';
          timelinePlayer1.campaign_timeline_chanel_id = this.hCampaignTimelineChanel;

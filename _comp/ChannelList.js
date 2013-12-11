@@ -7,7 +7,6 @@
  **/
 function ChannelList() {
     this.m_property = commBroker.getService('CompProperty');
-    this.m_msdb = undefined;
     this.selected_block_id = undefined;
     this.selected_campaign_timeline_chanel_id = undefined;
     this.selected_campaign_timeline_id = undefined;
@@ -169,14 +168,12 @@ ChannelList.prototype = {
 
             self._resetChannel();
 
-            self.m_msdb = commBroker.getValue(CompMSDB.msdb)
             self.selected_campaign_timeline_board_viewer_id = e.caller.campaign_timeline_board_viewer_id;
             self.selected_campaign_timeline_id = e.caller.campaign_timeline_id;
 
             if (e.context.m_owner instanceof Timeline) {
 
-                var helperSDK = commBroker.getService('HelperSDK');
-                var recCampaignTimelineViewerChanels = helperSDK.getChannelIdFromCampaignTimelineBoardViewer(self.selected_campaign_timeline_board_viewer_id, self.selected_campaign_timeline_id);
+                var recCampaignTimelineViewerChanels = jalapeno.getChannelIdFromCampaignTimelineBoardViewer(self.selected_campaign_timeline_board_viewer_id, self.selected_campaign_timeline_id);
                 self._loadChannelBlocks(self.selected_campaign_timeline_id, recCampaignTimelineViewerChanels['campaign_timeline_chanel_id']);
             }
 

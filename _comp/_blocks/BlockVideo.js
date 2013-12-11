@@ -60,7 +60,7 @@ BlockVideo.prototype._loadCommonProperties = function () {
 BlockVideo.prototype._populate = function () {
     var self = this;
 
-    var recBlock = self.m_helperSDK.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
+    var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
     var xml = recBlock['player_data'];
     var x2js = commBroker.getService('compX2JS');
     var jPlayerData = x2js.xml_str2json(xml);
@@ -97,25 +97,6 @@ BlockVideo.prototype._updateTitle = function () {
     $(Elements.SELECTED_CHANNEL_RESOURCE_NAME).text(self.m_blockDescription);
 }
 
-/*
- Build a boilerplate XML that's used as the default player_data for the new video component
- @method _getDefaultPlayerVideoData
- @return {xml} xml data
-BlockVideo.prototype._getDefaultPlayerVideoData = function () {
-    var self = this;
-
-    var xml = '<Player player="' + self.m_blockType + '" label="" interactive="0">' +
-        '<Data>' +
-        '<Resource resource="' + self.m_nativeResourceID + '">' +
-        '<AspectRatio maintain="1" />' +
-        '<Video autoRewind="1" volume="1" backgroundAlpha="1" />' +
-        '</Resource>' +
-        '</Data>' +
-        '</Player>';
-    return xml;
-};
-*/
-
 /**
  When user changes aspect ratio checkbox we update msdb
  @method _onChange
@@ -125,7 +106,7 @@ BlockVideo.prototype._getDefaultPlayerVideoData = function () {
 BlockVideo.prototype._onChange = function (e) {
     var self = this;
     var state = $(Elements.VIDEO_ASPECT_RATIO + ' option:selected').val() == "on" ? 1 : 0;
-    var recBlock = self.m_helperSDK.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
+    var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
     var xPlayerData = recBlock['player_data'];
     var xmlDoc = $.parseXML(xPlayerData);
     var xml = $(xmlDoc);
@@ -133,7 +114,8 @@ BlockVideo.prototype._onChange = function (e) {
 
     // this is a new component so we need to add a boilerplate xml
     if (aspectRatio.length == 0) {
-        xPlayerData = self._getDefaultPlayerVideoData();
+        // xPlayerData = self._getDefaultPlayerVideoData();
+        xPlayerData = model.getComponent(self.m_blockType).getDefaultPlayerData(self.m_nativeResourceID);
         xmlDoc = $.parseXML(xPlayerData);
         xml = $(xmlDoc);
         aspectRatio = xml.find('AspectRatio');
@@ -143,7 +125,7 @@ BlockVideo.prototype._onChange = function (e) {
     }
 
     var xmlString = (new XMLSerializer()).serializeToString(xml[0]);
-    self.m_helperSDK.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', xmlString);
+    jalapeno.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', xmlString);
 }
 
 
@@ -180,7 +162,7 @@ BlockVideo.prototype.setPlayerData = function (i_playerData) {
     self.m_playerData = i_playerData;
 
     self.m_nativeResourceID = parseInt(self.m_playerData["Player"]["Data"]["Resource"]["_resource"])
-    self.m_blockDescription = self.m_helperSDK.getResourceName(self.m_nativeResourceID);
-    var fileFormat = self.m_helperSDK.getResourceType(self.m_nativeResourceID);
+    self.m_blockDescription = jalapeno.getResourceName(self.m_nativeResourceID);
+    var fileFormat = jalapeno.getResourceType(self.m_nativeResourceID);
     self._setIcon(fileFormat);
 };

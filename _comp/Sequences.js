@@ -144,13 +144,12 @@ Sequencer.prototype = {
      **/
     reSequenceTimelines: function () {
         var self = this;
-        var helperSDK = commBroker.getService('HelperSDK');
 
         var timelines = $(self.m_thumbsContainer).children().each(function (sequenceIndex) {
             var element = $(this).find('[data-campaign_timeline_id]').eq(0);
             var campaign_timeline_id = $(element).data('campaign_timeline_id');
             var selectedCampaign = commBroker.getService('Campaign').getSelectedCampaign();
-            helperSDK.setCampaignTimelineSequencerIndex(selectedCampaign, campaign_timeline_id, sequenceIndex);
+            jalapeno.setCampaignTimelineSequencerIndex(selectedCampaign, campaign_timeline_id, sequenceIndex);
         });
     },
 

@@ -57,7 +57,7 @@ BlockImage.prototype._loadCommonProperties = function () {
 BlockImage.prototype._populate = function () {
     var self = this;
 
-    var recBlock = self.m_helperSDK.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
+    var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
     var xml = recBlock['player_data'];
     var x2js = commBroker.getService('compX2JS');
     var jPlayerData = x2js.xml_str2json(xml);
@@ -98,7 +98,7 @@ BlockImage.prototype._onChange = function (e) {
     var self = this;
 
     var state = $(Elements.IMAGE_ASPECT_RATIO + ' option:selected').val() == "on" ? 1 : 0;
-    var recBlock = self.m_helperSDK.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
+    var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
     var xPlayerData = recBlock['player_data'];
     var xmlDoc = $.parseXML(xPlayerData);
     var xml = $(xmlDoc);
@@ -117,7 +117,7 @@ BlockImage.prototype._onChange = function (e) {
     }
 
     var xmlString = (new XMLSerializer()).serializeToString(xml[0]);
-    self.m_helperSDK.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', xmlString);
+    jalapeno.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', xmlString);
 }
 
 /**
@@ -181,7 +181,7 @@ BlockImage.prototype.setPlayerData = function (i_playerData) {
 
     self.m_playerData = i_playerData;
     self.m_nativeResourceID = parseInt(self.m_playerData["Player"]["Data"]["Resource"]["_resource"])
-    self.m_blockDescription = self.m_helperSDK.getResourceName(self.m_nativeResourceID);
-    var fileFormat = self.m_helperSDK.getResourceType(self.m_nativeResourceID);
+    self.m_blockDescription = jalapeno.getResourceName(self.m_nativeResourceID);
+    var fileFormat = jalapeno.getResourceType(self.m_nativeResourceID);
     self._setIcon(fileFormat);
 };

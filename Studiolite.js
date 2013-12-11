@@ -70,15 +70,6 @@ $(document).ready(function () {
     var compStations = new CompStations(Elements.STATIONS);
     commBroker.setService('CompStations', compStations);
 
-    var compMSDB = new CompMSDB();
-    commBroker.setService('CompMSDB', compMSDB);
-
-    var compHelperSDK = new HelperSDK();
-    commBroker.setService('HelperSDK', compHelperSDK);
-    //todo refactor HelperSDK
-    jalapeno = compHelperSDK;
-
-
     var compX2JS = new X2JS({escapeMode: true, attributePrefix: "_", arrayAccessForm: "none", emptyNodeForm: "text", enableToStringFunc: true, arrayAccessFormPaths: [], skipEmptyTextNodesForObj: true});
     commBroker.setService('compX2JS', compX2JS);
 
@@ -90,11 +81,8 @@ $(document).ready(function () {
         // commBroker.getService('CompSettings').initAppColorPicker();
     });
 
-    var loginComponent = new LoginComponent(globs['debug'] ? 'https://secure.dynawebs.net/_php/msWS-debug.php' : 'https://secure.dynawebs.net/_php/msWS.php');
+    var loginComponent = new LoginComponent();
     loginComponent.typeAccountEnforce('USER');
-
-    var key = initAccount();
-    var data = {'@functionName': 'f_accountType'}
 
     commBroker.listen(loginComponent.ALERT_MSG, function (event) {
         $(Elements.DIALOG_TEXT_ID).text(event.edata);
@@ -111,35 +99,42 @@ $(document).ready(function () {
         $.mobile.hidePageLoadingMsg();
     });
 
-    // moved function up due to firefox bug
-    function onAccountType(data) {
-        var accountType = data == null ? null : data.responce['accountType'];
-        commBroker.getService('CompMSDB').dbConnect();
-    }
+    commBroker.listen(LoginComponent.AUTHENTICATION_STATUS, function (e) {
+        var status = e.edata.status;
+        if (status == 'pass') {
+            if ($("option:selected", Elements.REMEMBER_ME).val() == 'on') {
+                var rc4 = new RC4('226a3a42f34ddd778ed2c3ba56644315');
+                var crumb = e.edata.user + ' ' + e.edata.pass;
+                crumb = rc4.doEncrypt(crumb);
+                $.cookie('signagestudioweblite', crumb, { expires: 300 });
+                $.mobile.changePage('#studioLite');
+                commBroker.getService('CompCampaignNavigator').loadCampaigns();
+            }
+        } else {
+            // todo add fail on login
+        }
+    });
 
-    if (key === undefined) {
+    var cookie = $.cookie('signagestudioweblite') == undefined ? undefined : $.cookie('signagestudioweblite').split(' ')[0];
 
-        wireLogin(loginComponent);
+    if (cookie === undefined) {
         setTimeout(function () {
             $.mobile.changePage(Elements.LOGIN_PAGE);
         }, 3000);
-
     } else {
-
-        // already logged in
-        var ajaxWrapper = new AjaxJsonGetter(globs['debug'] ? 'https://secure.dynawebs.net/_php/msWSsec-debug.php' : 'https://secure.dynawebs.net/_php/msWSsec.php');
-        ajaxWrapper.getData(data, onAccountType);
-        return;
+        var rc4 = new RC4('226a3a42f34ddd778ed2c3ba56644315');
+        var crumb = rc4.doDecrypt(cookie);
+        loginComponent.onDBAuthenticate(crumb.split([' '])[0], crumb.split([' '])[1]);
     }
 });
 
 function initServices() {
-
     globs['WAITSCREENON'] = 'WAITSCREENON';
     globs['WAITSCREENOFF'] = 'WAITSCREENOFF';
     globs['UNIQUE_COUNTER'] = 0;
     globs['SCREEN_WIDTH'] = 0;
 
+    jalapeno = new Jalapeno();
     commBroker = new ComBroker();
     var ajax = new AjaxRPC(15000);
     commBroker.setService(AjaxRPC.serviceName, ajax);
@@ -148,7 +143,6 @@ function initServices() {
 }
 
 function loginUIState(i_state) {
-
     if (i_state) {
         $(Elements.LOGIN_BUTTON).button('enable');
     } else {
@@ -212,7 +206,6 @@ function wireNavigation() {
 function wireStudioUI() {
 
     $(Elements.TOGGLE_NAVIGATION).tap(function () {
-
         switch ($(Elements.NAV_PANEL).css('visibility')) {
             case 'visible':
             {
@@ -250,50 +243,16 @@ function wireStudioUI() {
 
 }
 
-function wireLogin(i_loginComponent) {
-
-    commBroker.listen(i_loginComponent.AUTHENTICATED, function (e) {
-        var crumb = e.edata.responce.data;
-
-        if ($("option:selected", Elements.REMEMBER_ME).val() == 'on')
-            $.cookie('digitalsignage', crumb, { expires: 300 });
-
-        var key = initAccount();
-        commBroker.getService('CompMSDB').dbConnect();
-
-    });
-
-    commBroker.fire(i_loginComponent.USERID, $(Elements.USER_NAME));
-    commBroker.fire(i_loginComponent.USERPASSID, $(Elements.USER_PASS));
-    commBroker.fire(i_loginComponent.LOGINBUTTON, $(Elements.LOGIN_BUTTON));
-
-}
-
 function wireLogout() {
     $(Elements.NAV_LOGOUT).on('tap', function (e) {
-        $.removeCookie('digitalsignage', {path: '/'});
-        $.cookie('digitalsignage', '', { expires: -300 });
+        $.removeCookie('signagestudioweblite', {path: '/'});
+        $.cookie('signagestudioweblite', '', { expires: -300 });
         $('body').empty();
         $('body').append('<div style="font-family: arial; text-align:center;"><h2>Thank you for using SignageStudio Web Lite</h2></div>');
         e.preventDefault();
         e.stopImmediatePropagation();
         return false;
     });
-}
-
-function initAccount() {
-
-    var accountKey1 = $.cookie('digitalsignage') == undefined ? undefined : $.cookie('digitalsignage').split(' ')[0];
-    var accountKey2 = getComment('ACCOUNT_KEY');
-
-    if (accountKey1 !== undefined) {
-        commBroker.setValue('key', accountKey1);
-    } else if (accountKey2 !== undefined) {
-        commBroker.setValue('key', accountKey2.split(':')[1]);
-    } else {
-        commBroker.setValue('key', undefined);
-    }
-    return commBroker.getValue('key');
 }
 
 function disableBack() {

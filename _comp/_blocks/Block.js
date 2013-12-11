@@ -53,7 +53,6 @@ function Block(i_placement, i_block_id) {
 
         case Block.PLACEMENT_CHANNEL:
         {
-            this.m_helperSDK = commBroker.getService('HelperSDK');
             this.m_property = commBroker.getService('CompProperty');
 
             self._onTimelineChannelBlockSelected();
@@ -140,7 +139,7 @@ Block.prototype._onTimelineChannelBlockDeselected = function () {
 Block.prototype._updateBlockLength = function () {
     var self = this;
 
-    var lengthData = self.m_helperSDK.getBlockTimelineChannelBlockLength(self.m_block_id);
+    var lengthData = jalapeno.getBlockTimelineChannelBlockLength(self.m_block_id);
     $(Elements.BLOCK_LENGTH_HOURS).val(lengthData.hours).trigger('change');
     $(Elements.BLOCK_LENGTH_MINUTES).val(lengthData.minutes).trigger('change');
     $(Elements.BLOCK_LENGTH_SECONDS).val(lengthData.seconds).trigger('change');
@@ -180,7 +179,7 @@ Block.prototype._onTimelineChannelBlockLengthChanged = function () {
             }
             // log('upd: ' + self.m_block_id + ' ' + hours + ' ' + minutes + ' ' + seconds);
 
-            self.m_helperSDK.setBlockTimelineChannelBlockLength(self.m_block_id, hours, minutes, seconds);
+            jalapeno.setBlockTimelineChannelBlockLength(self.m_block_id, hours, minutes, seconds);
             // log(self.m_block_id + ' ' + self.m_blockName);
         }
     });

@@ -1,5 +1,5 @@
 /**
- The Helper SDK is a wrapper for the Soap API used to communicate with MediaSignage servers.
+ Jalapeno SDK is a collection of files that provide a wrapper for the Soap API used to communicate with MediaSignage servers.
  The SDK makes programming easier by abstracting some of the tedious tasks such as enumeration.
 
  The msdb internal Database is the magic sauce as it maps against the actual mediaSERVER remote database via
@@ -9,39 +9,38 @@
 
  The internal database is referenced as msdb in both code and documentation.
 
- @class HelperSDK
+ @class Jalapeno
  @constructor
- @return {Object} HelperSDK instance
+ @return {Object} Jalapeno instance
  **/
 
-function HelperSDK() {
-
-    this.self = this;
-
-    /**
-     m_msdb hold reference to the internal db object used to serialize all app data.
-     @property m_msdb
-     @type Object
-     */
-
+function Jalapeno() {
+    this.m_user = undefined;
+    this.m_pass = undefined;
     this.m_msdb = undefined;
-    this.msdb = undefined;
+    this.m_loaderManager = undefined;
 };
 
-HelperSDK.prototype = {
-    constructor: HelperSDK,
+Jalapeno.prototype = {
+    constructor: Jalapeno,
 
-    /**
-     Init the helper sdk upon user authentication
-     @method init
-     @param {Object} i_loaderManager hold a reference to the loader manager instance that is used to communicate with MediaSignage servers.
-     @param {Object} i_msdb hold a reference to the internal json formatted db.
-     @return none
-     **/
-    init: function (i_loaderManager, i_msdb) {
+    dbConnect: function (i_user, i_pass, i_callBack) {
         var self = this;
-        self.m_loaderManager = i_loaderManager;
-        self.m_msdb = i_msdb;
+
+        self.m_user = i_user;
+        self.m_pass = i_pass;
+        self.loaderManager = new LoaderManager();
+        self.m_msdb = self.loaderManager['m_dataBaseManager'];
+
+        self.loaderManager.create(self.m_user, self.m_pass, function () {
+            //todo: alon needs to add support for auth failed
+            i_callBack('pass');
+        });
+    },
+
+    save: function () {
+        var self = this;
+        self.loaderManager.save();
     },
 
     /**
@@ -218,12 +217,12 @@ HelperSDK.prototype = {
         recTimelinePlayer.player_data = model.getComponent(i_playerCode).getDefaultPlayerData(i_nativeID);
 
         /*
-        if (i_playerCode==3130 || i_playerCode==3100){
-            recTimelinePlayer.player_data = model.getComponent(i_playerCode).getDefaultPlayerData(i_nativeID);
-        } else {
-            recTimelinePlayer.player_data = '<Player player="' + i_playerCode + '"><Data><Resource Resource="' + i_playerCode + '" /></Data></Player>';
-        }
-        */
+         if (i_playerCode==3130 || i_playerCode==3100){
+         recTimelinePlayer.player_data = model.getComponent(i_playerCode).getDefaultPlayerData(i_nativeID);
+         } else {
+         recTimelinePlayer.player_data = '<Player player="' + i_playerCode + '"><Data><Resource Resource="' + i_playerCode + '" /></Data></Player>';
+         }
+         */
 
         recTimelinePlayer.campaign_timeline_chanel_id = i_campaign_timeline_chanel_id;
         recTimelinePlayer.player_duration = 10;

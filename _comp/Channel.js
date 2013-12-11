@@ -21,11 +21,9 @@ function Channel(i_campaign_timeline_chanel_id) {
 
     this.self = this;
     this.m_campaign_timeline_chanel_id = i_campaign_timeline_chanel_id;
-    this.m_msdb = commBroker.getValue(CompMSDB.msdb);
     this.m_selected = false;
     this.m_blocks = {}; // hold references to all created player instances
     this.m_property = commBroker.getService('CompProperty');
-    this.m_helperSDK = commBroker.getService('HelperSDK');
 
     this._createBlocks();
     this._onTimelineChannelSelected();
@@ -61,7 +59,7 @@ Channel.prototype = {
         var self = this;
 
         var state = $(Elements.RANDOM_PLAYBACK + ' option:selected').val() == "on" ? 'True' : 'False';
-        self.m_helperSDK.setCampaignTimelineChannelRecord(self.m_campaign_timeline_chanel_id, 'random_order', state)
+        jalapeno.setCampaignTimelineChannelRecord(self.m_campaign_timeline_chanel_id, 'random_order', state)
     },
 
     /**
@@ -72,7 +70,7 @@ Channel.prototype = {
     _propLoadChannel: function () {
         var self = this;
 
-        var recChannel = self.m_helperSDK.getCampaignTimelineChannelRecord(self.m_campaign_timeline_chanel_id);
+        var recChannel = jalapeno.getCampaignTimelineChannelRecord(self.m_campaign_timeline_chanel_id);
         var state = recChannel['random_order'] == 'True' ? 'on' : 'off';
 
         $(Elements.RANDOM_PLAYBACK + ' option[value=' + state + ']').attr("selected", "selected");

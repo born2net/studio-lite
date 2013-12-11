@@ -33,12 +33,6 @@ CompCampaignSelector.prototype = {
         $(Elements.START_NEW_CAMPAIGN).on('tap', function () {
             self.m_screenArrowSelector.selectNext();
         });
-
-        commBroker.listen(CompMSDB.databaseReady, function (e) {
-            self._loadCampaignList();
-            $(Elements.CAMPAIGN_SELECTOR_LIST).listview('refresh');
-            self._listenOpenProps();
-        });
     },
 
     /**
@@ -51,7 +45,7 @@ CompCampaignSelector.prototype = {
 
         self.m_selected_resource_id = undefined;
         var campaignIDs = jalapeno.getCampaignIDs();
-        for (var i = 0 ; i < campaignIDs.length ; i++ ){
+        for (var i = 0; i < campaignIDs.length; i++) {
             var campaignID = campaignIDs[i];
             var recCampaign = jalapeno.getCampaignRecord(campaignID);
             var playListMode = recCampaign['campaign_playlist_mode'] == 0 ? 'sequencer' : 'scheduler';
@@ -91,8 +85,7 @@ CompCampaignSelector.prototype = {
     _onChange: function (e) {
         var self = this;
         var text = $(e.target).val();
-        var helperSDK = commBroker.getService('HelperSDK');
-        helperSDK.setCampaignRecord(self.seletedCampaignID, 'campaign_name', text);
+        jalapeno.setCampaignRecord(self.seletedCampaignID, 'campaign_name', text);
     },
 
     /**
@@ -116,8 +109,7 @@ CompCampaignSelector.prototype = {
             $(resourceElem).css('background-image', 'linear-gradient(#bebebe , #bebebe)');
             $(resourceProp).css('background-image', 'linear-gradient(#bebebe , #bebebe)');
 
-            var helperSDK = commBroker.getService('HelperSDK');
-            var recCampaign = helperSDK.getCampaignRecord(self.seletedCampaignID);
+            var recCampaign = jalapeno.getCampaignRecord(self.seletedCampaignID);
 
             $(Elements.SELECTED_CAMPAIGN_PROPERTIES).val(recCampaign['campaign_name']);
 
@@ -143,5 +135,18 @@ CompCampaignSelector.prototype = {
         var self = this;
         commBroker.getService('Campaign').setSelectedCampaign(self.seletedCampaignID);
         self.m_screenArrowSelector.selectLast();
+    },
+
+    /**
+     Load campaigns after authentication completed
+     @method loadCampaigns
+     @return none
+     **/
+    loadCampaigns: function () {
+        var self = this;
+        self._loadCampaignList();
+        $(Elements.CAMPAIGN_SELECTOR_LIST).listview('refresh');
+        self._listenOpenProps();
     }
+
 }

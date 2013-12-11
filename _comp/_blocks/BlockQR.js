@@ -65,7 +65,7 @@ BlockQR.prototype._loadCommonProperties = function () {
 BlockQR.prototype._populate = function () {
     var self = this;
 
-    var recBlock = self.m_helperSDK.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
+    var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
     var xml = recBlock['player_data'];
     var x2js = commBroker.getService('compX2JS');
     var jPlayerData = x2js.xml_str2json(xml);
@@ -89,7 +89,7 @@ BlockQR.prototype._onChange = function (e) {
     var self = this;
 
     var text = $(e.target).val();
-    var recBlock = self.m_helperSDK.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
+    var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
     var xml = recBlock['player_data'];
     var x2js = commBroker.getService('compX2JS');
     var jPlayerData = x2js.xml_str2json(xml);
@@ -111,6 +111,6 @@ BlockQR.prototype._onChange = function (e) {
     }
 
     var xData = x2js.json2xml_str(xSavePlayerData);
-    self.m_helperSDK.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', xData);
+    jalapeno.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', xData);
 }
 

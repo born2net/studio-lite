@@ -59,7 +59,6 @@ AddBlockWizard.prototype = {
         var self = this;
 
         $.mobile.changePage(Elements.ADD_RESOURCE_VIEW, {transition: "pop"});
-        var helperSDK = commBroker.getService('HelperSDK');
 
         /////////////////////////////////////////////////////////
         // show component selection list
@@ -82,7 +81,7 @@ AddBlockWizard.prototype = {
         // show resource selection list
         /////////////////////////////////////////////////////////
 
-        var recResources = helperSDK.getResources();
+        var recResources = jalapeno.getResources();
         $(recResources).each(function (i) {
 
             // dont process deleted resources
@@ -104,7 +103,6 @@ AddBlockWizard.prototype = {
         $(Elements.ADD_RESOURCE_LIST).listview('refresh');
 
         $(Elements.CLASS_ADD_RESOURE_TO_CHANNEL).on('tap', function (e) {
-            var helperSDK = commBroker.getService('HelperSDK');
             var component_id = $(e.target).closest('li').data('component_id');
             var resource_id = $(e.target).closest('li').data('resource_id');
             var blockCode = -1;
@@ -113,7 +111,7 @@ AddBlockWizard.prototype = {
             if (component_id) {
                 blockCode = component_id;
             } else {
-                nativeID = helperSDK.getNativeByResoueceID(resource_id);
+                nativeID = jalapeno.getNativeByResoueceID(resource_id);
                 blockCode = model.getBlockCodeFromFileExt(jalapeno.getResourceType(nativeID));
             }
             commBroker.fire(AddBlockWizard.ADD_NEW_BLOCK, this, self, {

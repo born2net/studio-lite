@@ -89,7 +89,7 @@ BlockRSS.prototype._loadCommonProperties = function () {
 BlockRSS.prototype._populate = function () {
     var self = this;
 
-    var recBlock = self.m_helperSDK.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
+    var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
     var xml = recBlock['player_data'];
     var x2js = commBroker.getService('compX2JS');
     var jPlayerData = x2js.xml_str2json(xml);
@@ -113,7 +113,7 @@ BlockRSS.prototype._onChange = function (e) {
     var self = this;
 
     var text = $(e.target).val();
-    var recBlock = self.m_helperSDK.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
+    var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
     var xPlayerData = recBlock['player_data'];
     var xmlDoc = $.parseXML(xPlayerData);
     var xml = $(xmlDoc);
@@ -131,7 +131,7 @@ BlockRSS.prototype._onChange = function (e) {
     }
 
     var xmlString = (new XMLSerializer()).serializeToString(xml[0]);
-    self.m_helperSDK.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', xmlString);
+    jalapeno.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', xmlString);
 }
 
 

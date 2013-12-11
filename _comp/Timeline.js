@@ -22,7 +22,6 @@ Timeline.CAMPAIGN_TIMELINE_SELECTED = 'CAMPAIGN_TIMELINE_SELECTED';
 function Timeline(i_campaign_timeline_id) {
 
     var self = this;
-    self.m_msdb = undefined;
     this.m_channels = {}; // hold references to all created channel instances
     this.m_campaign_timeline_id = i_campaign_timeline_id;
     this.m_timing = 'sequencer';
@@ -47,8 +46,6 @@ Timeline.prototype = {
     _init: function () {
 
         var self = this;
-
-        self.m_msdb = commBroker.getValue(CompMSDB.msdb);
 
         self._populateChannels();
         self._populateTimeline();
@@ -105,14 +102,14 @@ Timeline.prototype = {
      **/
     _onChange: function (e) {
         var self = this;
-        this.m_helperSDK.setCampaignTimelineRecord(self.m_campaign_timeline_id, 'timeline_name', $(Elements.TIME_LINE_PROP_TITLE_ID).val());
+        jalapeno.setCampaignTimelineRecord(self.m_campaign_timeline_id, 'timeline_name', $(Elements.TIME_LINE_PROP_TITLE_ID).val());
     },
 
     _propLoadTimeline: function () {
         var self = this;
 
         self.m_property.viewPanel(Elements.PROP_ENTIRE_SCREEN);
-        var recTimeline = this.m_helperSDK.getCampaignTimelineRecord(self.m_campaign_timeline_id);
+        var recTimeline = jalapeno.getCampaignTimelineRecord(self.m_campaign_timeline_id);
         $(Elements.TIME_LINE_PROP_TITLE_ID).val(recTimeline['timeline_name']);
     },
 

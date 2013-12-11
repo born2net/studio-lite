@@ -1,11 +1,24 @@
-/*/////////////////////////////////////////////
- LoginComponent
+/**
+ Custom event fired when a new block is selected and added to timeline_channel
+ @event AddBlockWizard
+ @param {This} caller
+ @param {Self} context caller
+ @param {Event} player_code which represents a specific code assigned for each block type
+ @static
+ @final
+ **/
+LoginComponent.AUTHENTICATION_STATUS = 'AUTHENTICATION_STATUS';
 
+/**
+ Login component...
+ @class LoginComponent
+ @constructor
+ @return {Object} instantiated LoginComponent
+ @example:
  requires: jquery.cookie
  optional: jquery.validate.password
- /////////////////////////////////////////////*/
-
-function LoginComponent(i_autherizeURL) {
+ **/
+function LoginComponent() {
 
     // events
     this.LOGINBUTTON = 'LOGINBUTTON';
@@ -27,28 +40,27 @@ function LoginComponent(i_autherizeURL) {
     this.AUTHENTICATED = 'AUTHENTICATED';
     this.ALERT_MSG = 'ALERT_MSG';
 
-    this.m_autherizeURL = i_autherizeURL;
     this.m_forceTypeAccount = '';
     this.ajax = commBroker.getService('ajax');
+
+    this.userNameID = Elements.USER_NAME
+    this.userPassID = Elements.USER_PASS;
+    this.logButton = Elements.LOGIN_BUTTON;
+
     this.registerEvents();
 
 };
-
 
 
 LoginComponent.prototype = {
     constructor: LoginComponent,
 
     registerEvents: function () {
-
         var self = this;
 
-        commBroker.listen(this.LOGINBUTTON, function (e) {
-            self.logButton = $(e.context);
-            self.logButton.bind('click tap', function (e) {
-                self.onLogon(e);
-                return false;
-            });
+        $(self.logButton).on('click tap', function (e) {
+            self.onLogon(e);
+            return false;
         });
 
         commBroker.listen(this.REMEBERME, function (e) {
@@ -241,23 +253,28 @@ LoginComponent.prototype = {
         });
     },
 
-    onLogon: function (e) {
+    onLogon: function () {
         var self = this;
 
-        if ($.trim($(self.userNameID).val()) == '' || $.trim($(self.userPassID).val()) == '')
+        var user = $.trim($(self.userNameID).val());
+        var pass = $.trim($(self.userPassID).val());
+        if (user == '' || pass == '')
             return;
-
         commBroker.fire(globs.WAITSCREENON);
+        self.onDBAuthenticate(user, pass);
+    },
 
-        var data = {
-            '@functionName': 'f_authUser',
-            '@userName': $(self.userNameID).val(),
-            '@userPass': $(self.userPassID).val(),
-            '@accountType': self.m_forceTypeAccount
-        }
-        var ajaxWrapper = new AjaxJsonGetter(self.m_autherizeURL);
-        ajaxWrapper.getData(data, self.loginAuthenticateReply, self);
-        return;
+    onDBAuthenticate: function (i_user, i_pass) {
+        var self = this;
+
+        jalapeno.dbConnect(i_user, i_pass, function (i_status) {
+            var userData = {
+                status: i_status,
+                user: i_user,
+                pass: i_pass
+            }
+            commBroker.fire(LoginComponent.AUTHENTICATION_STATUS, this, null, userData);
+        });
     },
 
     onSignupSubmit: function (e) {

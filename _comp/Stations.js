@@ -73,7 +73,7 @@ CompStations.prototype = {
             }
         });
         self._wireUI();
-        commBroker.listen(StudioLiteModel.stationList, self._onStationUpdate);
+        commBroker.listen(JalapenoModel.stationList, self._onStationUpdate);
     },
 
     /**
@@ -267,7 +267,7 @@ CompStations.prototype = {
                 }
             }
 
-            commBroker.listen(StudioLiteModel.stationPlayedStopped, function (e) {
+            commBroker.listen(JalapenoModel.stationPlayedStopped, function (e) {
                 self._buttonEnable(Elements.PLAY_COMMAND, true);
                 self._buttonEnable(Elements.STOP_COMMAND, true);
                 if (e.edata.responce['status'] == 'pass') {
@@ -307,7 +307,7 @@ CompStations.prototype = {
             $(Elements.SNAPSHOT_IMAGE).hide();
             $(Elements.SNAPSHOT_SPINNER).fadeIn('slow');
 
-            commBroker.listen(StudioLiteModel.stationCaptured, function (e) {
+            commBroker.listen(JalapenoModel.stationCaptured, function (e) {
                 if (e.edata.responce['status'] == 'pass') {
                     self.m_imagePath = e.edata.responce['path'];
                     self._listenToImageLoad();
@@ -348,7 +348,7 @@ CompStations.prototype = {
      **/
     _sendStationEvent: function (i_eventName, i_eventValue) {
         var self = this;
-        commBroker.listen(StudioLiteModel.stationEventRx, function (e) {
+        commBroker.listen(JalapenoModel.stationEventRx, function (e) {
             var s = e.edata.responce['eventName'];
             switch (s) {
                 case 'rebootPlayer':

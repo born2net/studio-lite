@@ -100,16 +100,21 @@ $(document).ready(function () {
     });
 
     commBroker.listen(LoginComponent.AUTHENTICATION_STATUS, function (e) {
+
         var status = e.edata.status;
         if (status == 'pass') {
-            if ($("option:selected", Elements.REMEMBER_ME).val() == 'on') {
-                var rc4 = new RC4('226a3a42f34ddd778ed2c3ba56644315');
-                var crumb = e.edata.user + ' ' + e.edata.pass;
-                crumb = rc4.doEncrypt(crumb);
+
+            var rc4 = new RC4(globs['RC4KEY']);
+
+            var crumb = e.edata.user + ':SignageStudioLite:' + e.edata.pass + ':' + ' USER'
+            crumb = rc4.doEncrypt(crumb);
+            $.mobile.changePage('#studioLite');
+            commBroker.getService('CompCampaignNavigator').loadCampaigns();
+            commBroker.setValue('key', crumb);
+
+            if ($("option:selected", Elements.REMEMBER_ME).val() == 'on')
                 $.cookie('signagestudioweblite', crumb, { expires: 300 });
-                $.mobile.changePage('#studioLite');
-                commBroker.getService('CompCampaignNavigator').loadCampaigns();
-            }
+
         } else {
             // todo add fail on login
         }
@@ -122,9 +127,11 @@ $(document).ready(function () {
             $.mobile.changePage(Elements.LOGIN_PAGE);
         }, 3000);
     } else {
-        var rc4 = new RC4('226a3a42f34ddd778ed2c3ba56644315');
-        var crumb = rc4.doDecrypt(cookie);
-        loginComponent.onDBAuthenticate(crumb.split([' '])[0], crumb.split([' '])[1]);
+        var rc4 = new RC4(globs['RC4KEY']);
+        var crumb = rc4.doDecrypt(cookie).split(':');
+        var user = crumb[0];
+        var pass = crumb[2];
+        loginComponent.onDBAuthenticate(user, pass);
     }
 });
 
@@ -133,13 +140,14 @@ function initServices() {
     globs['WAITSCREENOFF'] = 'WAITSCREENOFF';
     globs['UNIQUE_COUNTER'] = 0;
     globs['SCREEN_WIDTH'] = 0;
+    globs['RC4KEY'] = '226a3a42f34ddd778ed2c3ba56644315';
 
     jalapeno = new Jalapeno();
     commBroker = new ComBroker();
     var ajax = new AjaxRPC(15000);
     commBroker.setService(AjaxRPC.serviceName, ajax);
-    model = new StudioLiteModel();
-    commBroker.setService(StudioLiteModel.servicename, model);
+    model = new JalapenoModel();
+    commBroker.setService(JalapenoModel.servicename, model);
 }
 
 function loginUIState(i_state) {

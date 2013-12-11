@@ -438,7 +438,7 @@ JalapenoModel.prototype = {
         var newSrvData = {};
         var srvCmd = { '@functionName': 'f_getStationList' };
 
-        log('getting stations...');
+        // log('getting stations...');
 
         var ajaxWrapper = new AjaxJsonGetter(globs['debug'] ? 'https://secure.dynawebs.net/_php/msWSsec-debug.php' : 'https://secure.dynawebs.net/_php/msWSsec.php');
         ajaxWrapper.getData(srvCmd, onServerReply);
@@ -527,6 +527,6 @@ JalapenoModel.prototype = {
      @return {Object} data template.
      **/
     getScreenCollection: function () {
-        return TemplateCollection;
+        return JalapenoTemplate;
     }
 }

@@ -186,5 +186,17 @@ Channel.prototype = {
             }
         }
         return self.m_blocks[i_campaign_timeline_chanel_player_id];
+    },
+
+    /**
+     Delete a block from the channel
+     @method deleteBlock
+     @param {Number} i_block_id
+     @return none
+     **/
+    deleteBlock: function(i_block_id){
+        var self = this;
+        jalapeno.removeBlockFromTimelineChannel(i_block_id);
+        delete self.m_blocks[i_block_id];
     }
 }

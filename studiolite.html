@@ -228,6 +228,11 @@ CSS
 <STYLE type="text/css">
 
 
+.liSelectedItem {
+    background-image: linear-gradient(#e5e5e5, #e5e5e5);
+    border-bottom: 1px solid #cfcfcf;
+}
+
 .ui-icon-tachometer:before {
     content: "\f0e4";
 }
@@ -242,6 +247,10 @@ CSS
 
 .ui-icon-stop-cmd:before {
     content: "\f04d";
+}
+
+.ui-icon-bars:before {
+    content: "\f0c9";
 }
 
 .ui-icon-reload-cmd:before {
@@ -1424,8 +1433,8 @@ Campaign view
     <div id="campainViewMainContainer">
     </div>
 
-    <div data-role="collapsible-set" data-content-theme="b" data-theme="b" style="padding:20px">
-        <div data-role="collapsible">
+    <div id="timelinesCollapsible" data-role="collapsible-set" data-role="collapsible" data-collapsed-icon="bars" data-content-theme="b" data-theme="b" style="padding:20px">
+        <div data-role="collapsible" data-collapsed="false">
             <h2>Timelines</h2>
 
             <h3><p id="timeLinePropTitle">&nbsp;</p>
@@ -1499,8 +1508,8 @@ Campaign view
     <div id="playbackResourcesDiv" data-theme="b">
         <!-- <h4 style="padding-left:20px; padding-bottom: 0px ; padding-right:20px">Playback resources</h4>-->
         <div data-role="controlgroup" data-type="horizontal">
-            <a id="channelAddResource" data-role="button" data-theme="b" data-icon="plus">Add</a>
-            <a id="channelRemoveResource" data-role="button" data-theme="b" data-icon="minus">Remove</a>
+            <a id="channelAddResource" data-role="button" data-theme="b" data-icon="plus">Add content</a>
+            <a id="channelRemoveResource" data-role="button" data-theme="b" data-icon="minus">Remove content</a>
         </div>
 
 
@@ -1528,10 +1537,10 @@ None selected screen layout view
 
 <div id="noneSelectedScreenLayout" style="display: :SET:">
     <div align="center" id="screenMainSelector" style="width:100%">
-        <div align="center" id="addNewScreenButtonPlus" class="showPointer"
+        <div align="center"
              style="border:dashed #666666 3px; width: 240px; height: 150px">
             <h1 style="color:#999;margin-top:0px; font-weight:200 ; font-size:110px">+</h1>
-            <h4 style="position: relative; top: -90px ; color:#999;margin-top:0px; color: #999">new Screen layout</h4>
+            <h4 style="position: relative; top: -20px ; color:#999;margin-top:0px; color: #999">No timeline selected</h4>
         </div>
     </div>
 </div>

@@ -40,6 +40,13 @@ $(document).ready(function () {
         return;
     }
 
+    $('[data-role="collapsible"]','#timelinesCollapsible').on('expand collapse', function (event) {
+        $(this).find('h3').parent().slideToggle(500,'easeOutExpo');
+        return false;
+    });
+
+
+
     var viewStackMain = new Viewstacks(Elements.MAIN_CONTENT);
     commBroker.setService('mainViewStack', viewStackMain)
 

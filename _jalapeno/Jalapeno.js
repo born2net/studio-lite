@@ -549,6 +549,29 @@ Jalapeno.prototype = {
     },
 
     /**
+     Remove a block (i.e.: player) from campaign > timeline > channel
+     @method removeBlockFromTimelineChannel
+     @param {Number} i_block_id
+     @return none
+     **/
+    removeBlockFromTimelineChannel: function (i_block_id) {
+        var self = this;
+        self.m_msdb.table_campaign_timeline_chanel_players().openForDelete(i_block_id);
+    },
+
+
+    /**
+     Remove a timeline from a campaign.
+     @method removeTimelineFromCampaign
+     @param {Number} i_campaign_timeline_id
+     @return none
+     **/
+    removeTimelineFromCampaign: function (i_campaign_timeline_id) {
+        var self = this;
+        self.m_msdb.table_campaign_timelines().openForDelete(i_campaign_timeline_id);
+    },
+
+    /**
      Get a list of all campaigns per the account
      @method getCampaignIDs
      @return {Array} campaigns
@@ -911,7 +934,7 @@ Jalapeno.prototype = {
 
                     // if true, we found the channel the viewer was assined to as long as it is part of the current selected timeline
                     if (recCampaignTimelineViewerChanels['campaign_timeline_chanel_id'] == campaign_timeline_chanel_id && recCampaignTimelineChannel['campaign_timeline_id'] == i_campaign_timeline_id) {
-                        log('selected: timeline_id ' + i_campaign_timeline_id + ' view_id ' + i_campaign_timeline_board_viewer_id + ' on channel_id ' + recCampaignTimelineViewerChanels['campaign_timeline_chanel_id']);
+                        // log('selected: timeline_id ' + i_campaign_timeline_id + ' view_id ' + i_campaign_timeline_board_viewer_id + ' on channel_id ' + recCampaignTimelineViewerChanels['campaign_timeline_chanel_id']);
                         recCampaignTimelineViewerChanelsFound = recCampaignTimelineViewerChanels;
                     }
                 });

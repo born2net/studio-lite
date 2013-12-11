@@ -328,6 +328,9 @@ ChannelList.prototype = {
         var self = this;
         var selectedLI = $(Elements.SORTABLE).find('[data-block_id="' + self.selected_block_id + '"]');
         selectedLI.remove();
+        var timeline = commBroker.getService('Campaign').getTimelineInstance(self.selected_campaign_timeline_id);
+        var channel = timeline.getChannelInstance(self.selected_campaign_timeline_chanel_id);
+        channel.deleteBlock(self.selected_block_id);
         // self.m_property.noPanel();
         // $(Elements.SORTABLE).listview('refresh');
         self._deselectBlocksFromChannel();

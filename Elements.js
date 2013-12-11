@@ -151,19 +151,6 @@ Elements.UP_TOTOP = '#uptotop';
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Classes
 
 Elements.CLASS_KNOB = '.knob';

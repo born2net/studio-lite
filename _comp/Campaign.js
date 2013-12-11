@@ -272,8 +272,8 @@ Campaign.prototype = {
         var sequencesComp = commBroker.getService('Sequences');
         sequencesComp.deleteTimeline(self.m_selected_timeline_id);
         delete self.m_timelines[self.m_selected_timeline_id];
+        jalapeno.removeTimelineFromCampaign(self.m_selected_timeline_id);
         self._loadSequencerFirstTimeline();
-
     },
 
     /**

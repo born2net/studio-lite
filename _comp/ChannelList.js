@@ -128,10 +128,6 @@ ChannelList.prototype = {
     _createNewChannelBlock: function (i_blockID, i_nativeID) {
         var self = this;
 
-        // var blockCode = i_newPlayerData.blockCode;
-        // var nativedID = i_newPlayerData.nativeID;
-        // var resourceType = i_newPlayerData.resourceType;
-
         var totalChannelLength = self._getTotalDurationChannel();
         var jData = jalapeno.createNewPlayer(self.selected_campaign_timeline_chanel_id, i_blockID, totalChannelLength, i_nativeID);
         var campaign_timeline_chanel_player_id = jData['campaign_timeline_chanel_player_id'];
@@ -175,10 +171,14 @@ ChannelList.prototype = {
 
                 var recCampaignTimelineViewerChanels = jalapeno.getChannelIdFromCampaignTimelineBoardViewer(self.selected_campaign_timeline_board_viewer_id, self.selected_campaign_timeline_id);
                 self._loadChannelBlocks(self.selected_campaign_timeline_id, recCampaignTimelineViewerChanels['campaign_timeline_chanel_id']);
+                $(Elements.CHANNEL_ADD_RESOURCE).fadeIn();
+                $(Elements.CHANNEL_REMOVE_RESOURCE).fadeIn();
             }
 
             if (e.context.m_owner instanceof Sequencer) {
                 self._resetChannel();
+                $(Elements.CHANNEL_ADD_RESOURCE).fadeOut();
+                $(Elements.CHANNEL_REMOVE_RESOURCE).fadeOut();
             }
         });
     },
@@ -232,29 +232,6 @@ ChannelList.prototype = {
             $(Elements.CLASS_SELECTED_RESOURCE).removeClass('liSelectedItem');
             $(resourceElem).addClass('liSelectedItem');
 
-            /*
-             $('.selectedResource').css({
-             'background-image': 'none',
-             'border-top': 'none',
-             'border-bottom': '1px solid #e2e2e2'
-             });
-
-             $(resourceElem).css({
-             'background-image': 'linear-gradient(#ededed , #ededed)',
-             'border-bottom': '1px solid #d5d5d5'
-             // 'border-top': '1px solid #d5d5d5',
-             });
-
-             $(resourceProp).css({
-             'background-image': 'linear-gradient(#ededed , #ededed)',
-             'border-bottom': '1px solid #d5d5d5'
-             });*/
-
-
-            // $('.selectedResource').css('background-image', 'linear-gradient(#fff , #f1f1f1)');
-            // $(resourceElem).css('background-image', 'linear-gradient(#e0e0e0 , #e0e0e0)');
-            // $(resourceProp).css('background-image', 'linear-gradient(#bebebe , #bebebe)');
-
             self._blockChannelSelected();
 
             if (openProps)
@@ -298,7 +275,6 @@ ChannelList.prototype = {
     _deselectBlocksFromChannel: function () {
         var self = this;
         self.selected_block_id = undefined;
-        $(Elements.CLASS_SELECTED_RESOURCE).css('background-image', 'linear-gradient(#fff , #f1f1f1)');
         self.m_property.noPanel();
         $(Elements.SORTABLE).listview('refresh');
     },

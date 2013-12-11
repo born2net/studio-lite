@@ -53,6 +53,7 @@ Campaign.prototype = {
         self._onWireOpenTimeLineProperties();
         self._onWireNewTimelineWizard();
         self._onWireDelTimeline();
+        self._onWireTimelineExpandCollapse();
         self._listenTimelineOrViewerSelected();
 
         self.m_timelineViewStack.addChild(Elements.NONE_SELECTED_SCREEN_LAYOUT);
@@ -112,6 +113,18 @@ Campaign.prototype = {
             comProp.openPanel(e);
             e.stopPropagation();
             e.stopImmediatePropagation();
+            return false;
+        });
+    },
+
+    /**
+     Wire animation of opening and closing of timeline selection.
+     @method _onWireTimelineExpandCollapse
+     @return none
+     **/
+    _onWireTimelineExpandCollapse: function () {
+        $('[data-role="collapsible"]', Elements.TIMELINES_COLLAPSIBLE).on('expand collapse', function (event) {
+            $(this).find('h3').siblings().slideToggle(500, 'easeOutExpo');
             return false;
         });
     },

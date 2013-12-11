@@ -86,124 +86,6 @@
 <script src="https://secure.dynawebs.net/_studiolite-dev/_lib/studioLiteLib.js" type="text/javascript"></script>
 <script src="https://secure.dynawebs.net/_studiolite-dev/Studiolite.js" type="text/javascript"></script>
 
-<script type="text/javascript">
-    $(function () {
-
-        theme = {
-            theme: "light",
-            color: "green",
-            pathCSS: "https://secure.dynawebs.net/_msportal/_themes/nativedroid/css/",
-            oppositeTheme: function () {
-                return (this.theme == "light") ? "dark" : "light";
-                $("input[type='radio']").checkboxradio({ theme: "b" });
-            },
-            switchTheme: function () {
-                $(".theme-trigger a").removeClass("active");
-                $(".theme-trigger ." + this.oppositeTheme()).addClass("active");
-                this.theme = this.oppositeTheme();
-                $("html").contents().find("#jQMnDTheme").attr("href", this.pathCSS + this.getCSS[this.theme]);
-
-                $("#navPanel, #mainContent, #header1").attr("style", this.getb1[this.theme]);
-            },
-            getb1: {
-                dark: "box-shadow:-5px 0 5px rgba(0, 0, 0) inset",
-                light: "box-shadow:-5px 0 5px rgba(0, 0, 0,0.15) inset"
-            },
-
-            switchColor: function (newColor) {
-                $(".color-trigger a.active").removeClass("active");
-                $(".color-trigger a." + newColor).addClass("active");
-                this.color = newColor;
-                $("html").contents().find("#jQMnDColor").attr("href", this.pathCSS + this.getCSS[this.color]);
-
-                $("#tt1").attr("style", this.getborderCSS[this.color]);
-
-                $("div.ui-btn-down-b span").attr("style", this.getbgCSS[this.color]);
-            },
-
-
-            switchbColor: function (newColor) {
-                $(".color-trigger a.active").removeClass("active");
-                $(".color-trigger a." + newColor).addClass("active");
-                this.color = newColor;
-
-
-            },
-
-            getCSS: {
-                dark: "jquerymobile.nativedroid.dark.css",
-                light: "jquerymobile.nativedroid.light.css",
-                blue: "jquerymobile.nativedroid.color.blue.css",
-                green: "jquerymobile.nativedroid.color.green.css",
-                purple: "jquerymobile.nativedroid.color.purple.css",
-                red: "jquerymobile.nativedroid.color.red.css",
-                yellow: "jquerymobile.nativedroid.color.yellow.css"
-            },
-
-            getborderCSS: {
-                dark: "",
-                light: "",
-                blue: "border-bottom:2px solid #6DCAEC",
-                green: "border-bottom:2px solid #B6DB49",
-                purple: "border-bottom:2px solid #CF9FE7",
-                red: "border-bottom:2px solid #FF7979",
-                yellow: "border-bottom:2px solid #FFD060"
-            },
-
-            getbgCSS: {
-                dark: "",
-                light: "",
-                blue: "background-color: #6DCAEC;color: #fff",
-                green: "background-color: #b6db49;color: #fff",
-                purple: "background-color: #CF9FE7;color: #fff",
-                red: "background-color: #FF7979;color: #fff",
-                yellow: "background-color: #FFD060;color: #fff"
-            },
-            getborderCSS1: {
-                dark: "",
-                light: "",
-                blue: "border:2px solid #6DCAEC",
-                green: "border:2px solid #B6DB49",
-                purple: "border:2px solid #CF9FE7",
-                red: "border:2px solid #FF7979",
-                yellow: "border:2px solid #FFD060"
-            },
-
-
-            updateIframe: function () {
-                $("head").contents().find("#jQMnDTheme").attr("href", this.pathCSS + this.getCSS[this.theme]);
-
-            }
-        }
-
-
-        $(".theme-trigger").on("click", "a", function (e) {
-            if (!$(this).hasClass("active")) {
-                theme.switchTheme();
-                e.preventDefault();
-            } else {
-                e.preventDefault();
-            }
-        });
-
-        $(".color-trigger").on("click", "a:not([href='#color-custom'])", function (e) {
-            if ($(this).hasClass("active")) {
-                // Do Nothing
-                e.preventDefault();
-            } else {
-                // Switch color
-                color = $(this).attr('href');
-                colorArr = color.split("-");
-                newColor = colorArr[1];
-                theme.switchColor(newColor);
-
-                e.preventDefault();
-            }
-        });
-
-    });
-
-</script>
 
 
 <script type="text/javascript">
@@ -228,11 +110,6 @@ CSS
 <STYLE type="text/css">
 
 
-.liSelectedItem {
-    background-image: linear-gradient(#e5e5e5, #e5e5e5);
-    border-bottom: 1px solid #cfcfcf;
-}
-
 .ui-icon-tachometer:before {
     content: "\f0e4";
 }
@@ -249,10 +126,6 @@ CSS
     content: "\f04d";
 }
 
-.ui-icon-bars:before {
-    content: "\f0c9";
-}
-
 .ui-icon-reload-cmd:before {
     content: "\f01e";
 }
@@ -261,12 +134,16 @@ CSS
     content: "\f085";
 }
 
+.ui-icon-bars:before {
+    content: "\f0c9";
+}
+
 .ui-icon-long-prop {
     font-size: 1.33em;
 }
 
 .ui-header {
-    min-height: 93px;
+    min-height: 92px;
     padding: 0;
     z-index: 9999;
 }
@@ -318,12 +195,16 @@ CSS
 
 @import url("fonts.googleapis.com/css?family=Roboto:400,100,300,500,700");
 
+.liSelectedItem {
+    background-image: linear-gradient(#e5e5e5, #e5e5e5);
+    border-bottom: 1px solid #cfcfcf;
+}
+
 #playbackResourcesDiv {
     border: 1px solid #e7e7e7;
     border-radius: 3px;
     padding: 20px;
     margin: 20px;
-
 }
 
 .fixPropOpenLiButtonPosition {
@@ -582,45 +463,8 @@ div.ui-btn-down-b span {
     }
 }
 
-.ui-icon-capture-cmd {
-    background: url(https://secure.dynawebs.net/_msportal/_images/icons-white/86-camera.png) 50% 50% no-repeat;
-    width: 24px;
-    height: 18px;
-    border-radius: 0px !important;
-    top: 10px !important;
-    -webkit-box-shadow: none !important;
-    left: 25px !important;
-}
-
-.ui-icon-play-cmd {
-    background: url(https://secure.dynawebs.net/_msportal/_images/icons-white/play.png) 50% 50% no-repeat;
-    width: 22px;
-    height: 22px;
-    border-radius: 0px !important;
-    -webkit-box-shadow: none !important;
-    top: 10px !important;
-    left: 25px !important;
-}
-
-.ui-icon-stop-cmd {
-    background: url(https://secure.dynawebs.net/_msportal/_images/icons-white/stop.png) 50% 50% no-repeat;
-    width: 22px;
-    height: 22px;
-    border: hidden !important;
-    border-radius: 0px !important;
-    top: 10px !important;
-    -webkit-box-shadow: none !important;
-    left: 25px !important;
-}
-
-.ui-icon-reload-cmd {
-    background: url(https://secure.dynawebs.net/_msportal/_images/icons-white/02-redo.png) 50% 50% no-repeat;
-    width: 30px;
-    height: 25px;
-    border-radius: none !important;
-    -webkit-box-shadow: none !important;
-    top: 6px !important;
-    left: 23px !important;
+#closeProperties span {
+    font-size: 25px;
 }
 
 #timeLinePropDiv {
@@ -689,7 +533,6 @@ div.ui-btn-down-b span {
 
 #playListSelectArrowLeft:active, #playListSelectArrowRight:active {
     background: #E4E4E4;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 10px 0 -4px #EEE, 0 10px 2px -5px rgba(0, 0, 0, 0.15), 0 20px 0 -11px #EEE
 }
 
 .draggableScreenPlaceHolder {
@@ -699,6 +542,22 @@ div.ui-btn-down-b span {
     width: 3px;
     background-color: red;
     opacity: 0.6
+}
+
+#captureCommand span {
+    font-size: 22px;
+}
+
+#playCommand span {
+    font-size: 22px;
+}
+
+#stopCommand span {
+    font-size: 22px;
+}
+
+#reloadCommand span {
+    font-size: 22px;
 }
 
 #screenSelectorContainer ul {
@@ -864,7 +723,7 @@ Login page
 
 
 <div data-role="page" id="loginPage" data-theme="b">
-    <div style="margin:10% auto 10% auto;width:60%; border:solid 5px #99cc00;padding:3%;-webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px;">
+    <div style="margin:10% auto 10% auto;width:60%;">
         <div data-role="header">
             <div class="ui-grid-a">
                 <div class="ui-block-a" style="width:120px">
@@ -872,7 +731,7 @@ Login page
                            type="image/svg+xml"/>
                 </div>
                 <div class="ui-block-b">
-                    <h2>StudioLite - Digital Signage for everyone...</h2>
+                    <p style="font-size: 28px; position: relative; top: -15px">SignageStudio Web Lite</p>
                 </div>
             </div>
         </div>
@@ -881,29 +740,31 @@ Login page
 
                 <fieldset data-role="controlgroup">
                     <div data-role="fieldcontain">
-                        <input type="text" data-inset="true" data-clear-btn="true" name="text-7" id="userName" value=""
+                        <input type="text" data-inset="true" data-clear-btn="false" name="text-7" id="userName" value=""
                                placeholder="User name" class="ui-input-text ui-body-b">
                     </div>
                     <div data-role="fieldcontain">
-                        <input type="password" data-inset="true" data-clear-btn="true" name="text-7" id="userPass"
+                        <input type="password" data-inset="true" data-clear-btn="false" name="text-7" id="userPass"
                                value="" placeholder="Password" class="ui-input-text ui-body-b">
                     </div>
-                    <div data-role="fieldcontain">
-                        <input type="button" data-inset="true" data-corners="true" id="loginButton" value="Login"/>
-                    </div>
-                    <style type="text/css" media="screen">
-                        #rememberMeContainer.containing-element .ui-slider-switch {
-                            width: 11em;
-                        }
-                    </style>
+                    <div>
+                        <div data-role="fieldcontain" style="width:20%;">
+                            <input type="button" data-inset="true" data-corners="true" id="loginButton" value="Login"/>
+                        </div>
+                        <style type="text/css" media="screen">
+                            #rememberMeContainer.containing-element .ui-slider-switch {
+                                width: 11em;
+                            }
+                        </style>
 
 
-                    <div data-role="fieldcontain">
-                        <div id="rememberMeContainer" class="containing-element">
-                            <select name="flip-min" id="rememberMe" class="rememberMe" data-role="slider">
-                                <option value="off">Don't remember</option>
-                                <option value="on" selected>Remember me</option>
-                            </select>
+                        <div data-role="fieldcontain" style="float:right;width:20%;top:-75px;left:-195px;">
+                            <div id="rememberMeContainer" class="containing-element">
+                                <select name="flip-min" id="rememberMe" class="rememberMe" data-role="slider">
+                                    <option value="off">Don't remember</option>
+                                    <option value="on" selected>Remember me</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </fieldset>
@@ -921,7 +782,7 @@ Studio Lite - Application
 ////////////////////////////////////////////////////////////////////////// -->
 
 <div data-role="page" id="studioLite" data-theme="b" class="ui-responsive-panel ui-panel-display-reveal">
-    <div data-role="header" data-theme="b" id="header1" style="box-shadow:-5px 0 5px rgba(0, 0, 0,0.15) inset">
+    <div data-role="header" data-theme="b" id="mainHeader" style="box-shadow:-5px 0 5px rgba(0, 0, 0,0.15) inset;">
 
 
     </div>
@@ -930,19 +791,20 @@ Studio Lite - Application
          data-display="push" data-swipe-close="false" data-dismissible="true" data-theme="b">
         <div>
             <!-- <h2 style="float: left; position: relative; top: -25px">resource</h2> -->
-            <a id="closeProperties" style="float: left; position:relative; top: -10px" data-theme="b" data-role="button"
-               data-iconpos="notext"><i class="fa fa-arrow-right"></i></a>
+            <a id="closeProperties" style="left: 20px; position:relative; top: 40px" data-theme="b" data-icon="arrow-r"
+               data-role="button"
+               data-iconpos="notext"></a>
 
             <div style="clear:both"></div>
         </div>
-        <div id="propertiesPanelView" style="padding:0 7%;">
+        <div id="propertiesPanelView" style="padding:0 7%;margin-top:39%;">
         </div>
     </div>
 
     <div data-role="panel" id="navPanel" data-display="push" data-dismissible="false" data-theme="b"
          style="box-shadow:-5px 0 5px rgba(0, 0, 0,0.15) inset;">
         <ul data-role="listview" style="margin-left:-20px; font-weight:normal;">
-            <li data-role="list-divider" id="tt1" style="border-bottom:2px solid #B6DB49;">
+            <li data-role="list-divider" id="appName" style="border-bottom:2px solid #B6DB49;">
                 <h2 style="margin-left:20px; text-transform:none;font-size:31px;" data-theme="b">Signage Studio</h2>
             </li>
 
@@ -982,7 +844,7 @@ Studio Lite - Application
 
         <a id="slid" href="#navPanel" data-role='button' data-display="push"
            style="position:absolute; top: 10px; left: 10px;font-weight:normal;"><i
-                class="fa fa-arrow-circle-o-left fa-lg"></i></a>
+                class="fa fa-arrows-h fa-lg"></i></a>
         <!--<a id="toggleNavigation" data-transition="fade" data-iconpos="notext" style="margin-right:5px ;position:relative; width:4%;top: 10px"  data-icon="back" data-theme="b"></a>-->
 
 
@@ -1433,11 +1295,9 @@ Campaign view
     <div id="campainViewMainContainer">
     </div>
 
-    <div id="timelinesCollapsible" data-role="collapsible-set" data-role="collapsible" data-collapsed-icon="bars" data-content-theme="b" data-theme="b" style="padding:20px">
+    <div id="timelinesCollapsible" data-role="collapsible-set" data-collapsed-icon="bars" data-content-theme="b" data-theme="b" style="padding:20px">
         <div data-role="collapsible" data-collapsed="false">
-            <h2>Timelines</h2>
-
-            <h3><p id="timeLinePropTitle">&nbsp;</p>
+            <h3><p id="timeLinePropTitle">Timelines</p>
 
                 <div id="timeLinePropDiv">
                     <input type='button' data-icon="long-prop" data-theme='b' value='&nbsp;' data-mini='true'
@@ -1540,7 +1400,6 @@ None selected screen layout view
         <div align="center"
              style="border:dashed #666666 3px; width: 240px; height: 150px">
             <h1 style="color:#999;margin-top:0px; font-weight:200 ; font-size:110px">+</h1>
-            <h4 style="position: relative; top: -20px ; color:#999;margin-top:0px; color: #999">No timeline selected</h4>
         </div>
     </div>
 </div>

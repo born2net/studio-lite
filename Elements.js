@@ -15,6 +15,7 @@ Elements.USER_PASS = '#userPass';
 Elements.REMEMBER_ME = '#rememberMe';
 
 Elements.MAIN_CONTENT = '#mainContent';
+Elements.MAIN_HEADER = '#mainHeader';
 Elements.PLAYLIST = '#playlist'
 Elements.FILES = '#files';
 Elements.STATIONS = '#stations';
@@ -22,6 +23,13 @@ Elements.SETTINGS = '#settings';
 Elements.HELP = '#help';
 Elements.LOGOUT = '#logout';
 Elements.ADVANDED = '#advanded';
+Elements.ANDROID_THEME = '#jQMnDTheme';
+Elements.ANDROID_COLOR = '#jQMnDColor';
+Elements.APP_NAME = '#appName';
+Elements.COLOR_CUSTOM = '#color-custom';
+
+
+
 
 Elements.PROPERTIES_PANEL = '#propertiesPanel';
 Elements.PROPERTIES_PANEL_VIEW = '#propertiesPanelView';
@@ -80,6 +88,7 @@ Elements.NONE_SELECTED_SCREEN_LAYOUT = '#noneSelectedScreenLayout';
 Elements.SCREEN_LAYOUT_ITEMS_LIST = '#screenLayoutItemsList';
 Elements.DEL_SCREEN_BUTTON = '#delScreenButton';
 Elements.OPEN_TIMELINE_PROPERTIES = '#openTimeLineProperties';
+Elements.TIMELINES_COLLAPSIBLE = '#timelinesCollapsible';
 Elements.PROP_SCREEN_DIVISION = '#propScreenDivision';
 Elements.PROP_ENTIRE_SCREEN = '#propEntireScreen';
 Elements.SCREEN_LAYOUT_LIST = '#screenLayoutList';
@@ -135,21 +144,8 @@ Elements.EVENT_SEND_BUTTON = '#eventSendButton';
 Elements.CAPTURE_COMMAND = '#captureCommand';
 Elements.SEND_EVENT_ID = '#sendEventID';
 Elements.GO_BACK_FROM_SCREEN_LIST = '#goBackFromScreenList';
-
 Elements.TIME_LINE_PROP_TITLE_ID = '#timeLinePropTitleID';
 Elements.UP_TOTOP = '#uptotop';
-Elements.UP_TOTOP = '#uptotop';
-Elements.UP_TOTOP = '#uptotop';
-Elements.UP_TOTOP = '#uptotop';
-
-
-
-
-
-
-Elements.UP_TOTOP = '#uptotop';
-
-
 
 // Classes
 
@@ -166,6 +162,9 @@ Elements.CLASS_SCREEN_DIVISION = '.screenDivisionClass';
 Elements.CLASS_STATION = '.station';
 Elements.CLASS_STATION_OPEN_PROPS = '.stationOpenProps';
 Elements.CLASS_LAST_STATUS = '.lastStatus';
+Elements.CLASS_THEME_TRIGGER = '.theme-trigger';
+Elements.CLASS_COLOR_TRIGGER = '.color-trigger';
+
 
 
 

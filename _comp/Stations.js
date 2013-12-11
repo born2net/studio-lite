@@ -56,13 +56,6 @@ CompStations.prototype = {
                 self.m_refreshHandle = setInterval(function () {
                     model.requestStationsList(self);
                 }, self.m_refreshTimer);
-                /*if (self.m_stationDataMode==CompStations.stationListEmpty){
-                 model.requestStationsList(self);
-                 } else {
-                 self.m_refreshHandle = setInterval(function(){
-                 model.requestStationsList(self);
-                 }, self.m_refreshTimer)
-                 }*/
             }
         });
 
@@ -94,26 +87,13 @@ CompStations.prototype = {
                 case CompStations.stationListEmpty:
                 {
                     var station = model.getStation(dbmid);
-                    var stationHTML = '<li data-role="list-divider" data-theme="b" >' + station['name'] + '</li>' +
+                    var stationHTML = '<li data-role="list-divider" data-theme="b" ></li>' +
                         '<li data-dbmid="' + dbmid + '" data-icon="gear" data-theme="b" class="station">' +
-                        '<span style="float:left; padding-left: 7px" id="stationIcon' + i + '"></span>' +
-                        '<a class="lastStatus" style="float: left" data-transition="slide">Last status: ' + station['status'] + '</a>' +
-                        '<div style="padding-left: 4em" class="stationDetailsDiv">' +
-                        '<br/><span style="margin-left:10px;"></span>' +
-                        '</div><a data-theme="b" data-icon="gear" class="station stationOpenProps"></a>' +
+                        '<span style="display: inline" id="stationIcon' + i + '"></span>' +
+                        '<a class="lastStatus" style="display: inline; position: relative; top: -18px" ">' + station['name'] + '</a>' +
+                        '</div><a data-theme="b" data-icon="gear" class="fixPropOpenLiButtonPosition station stationOpenProps"></a>' +
                         '</li>';
 
-                    /* var stationHTML =   '<li data-role="list-divider" data-theme="b" >' + station['name'] + '</li>'+
-                     '<li data-dbmid="' + dbmid + '" data-icon="gear" data-theme="b" class="station">'+
-                     '<span style="float:left; padding-left: 7px" id="stationIcon'+i+'"></span>'+
-                     '<a class="lastStatus" style="float: left" data-transition="slide">Last status:'+ station['status'] +'</a>'+
-                     '<div style="padding-left: 4em" class="stationDetailsDiv">'+
-                     '<span class="lastUpdate" style="margin-left:10px; font-size: 0.8em">'+
-                     'Last update: '+ station['lastUpdate'] + ' seconds ago<br/>'+
-                     '</span>'+
-                     '<span class="lastRunTime" style="margin-left:10px; font-size: 0.5em">Running time: '+ station['runningTime'] +'</span>'+
-                     '</div>'+ '<a data-theme="b" data-icon="gear" class="station stationOpenProps"></a>' +
-                     '</li>'; */
 
                     $(Elements.STATION_LIST).append(stationHTML)
                     var color = serverData[dbmid]['color'];
@@ -137,12 +117,11 @@ CompStations.prototype = {
                         if (station != undefined && station['statusChanged'] == false) {
                             var elem = $(this).find('circle')
                             elem.attr('fill', station['color']);
-                            $(this).find(Elements.CLASS_LAST_STATUS).html('<a class="lastStatus" style="float: left" data-transition="slide">Last status: ' + station['status'] + '</a>');
+                            // $(this).find(Elements.CLASS_LAST_STATUS).html('<a class="lastStatus" style="display: inline" data-transition="slide">Last status: ' + station['status'] + '</a>');
                         }
                     });
                     break;
                 }
-                    ;
             }
         }
         $(Elements.STATION_LIST).listview('refresh');

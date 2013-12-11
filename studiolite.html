@@ -105,9 +105,12 @@
                 $(".theme-trigger ." + this.oppositeTheme()).addClass("active");
                 this.theme = this.oppositeTheme();
                 $("html").contents().find("#jQMnDTheme").attr("href", this.pathCSS + this.getCSS[this.theme]);
+
+                $("#navPanel, #mainContent, #header1").attr("style",this.getb1[this.theme]);
             },
-            t1: function () {
-                alert(this.pathCSS + this.getCSS[this.theme]);
+            getb1: {
+                dark: "box-shadow:-5px 0 5px rgba(0, 0, 0) inset",
+                light: "box-shadow:-5px 0 5px rgba(0, 0, 0,0.15) inset"
             },
 
             switchColor : function(newColor) {
@@ -250,34 +253,34 @@ CSS
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 100;
-    src: local('Roboto Thin'), local('Roboto-Thin'), url(https://secure.dynawebs.net/_studiolite-dev/_themes/nativedroid/fonts/vzIUHo9z-oJ4WgkpPOtg1_esZW2xOQ-xsNqO47m55DA.woff) format('woff');
+    src: local('Roboto Thin'), local('Roboto-Thin'), url(https://secure.dynawebs.net/_studiolite/_themes/nativedroid/fonts/vzIUHo9z-oJ4WgkpPOtg1_esZW2xOQ-xsNqO47m55DA.woff) format('woff');
 
-    src: local('Roboto Thin'), local('Roboto-Thin'), url(https://secure.dynawebs.net/_studiolite-dev/_themes/nativedroid/fonts/Roboto-Thin.ttf) format('truetype');
+    src: local('Roboto Thin'), local('Roboto-Thin'), url(https://secure.dynawebs.net/_studiolite/_themes/nativedroid/fonts/Roboto-Thin.ttf) format('truetype');
 }
 
 @font-face {
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 300;
-    src: local('Roboto Light'), local('Roboto-Light'), url(https://secure.dynawebs.net/_studiolite-dev/_themes/nativedroid/fonts/Hgo13k-tfSpn0qi1SFdUfT8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
-    src: local('Roboto Light'), local('Roboto-Light'), url(https://secure.dynawebs.net/_studiolite-dev/_themes/nativedroid/fonts/Roboto-Light.ttf) format('truetype');
+    src: local('Roboto Light'), local('Roboto-Light'), url(https://secure.dynawebs.net/_studiolite/_themes/nativedroid/fonts/Hgo13k-tfSpn0qi1SFdUfT8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
+    src: local('Roboto Light'), local('Roboto-Light'), url(https://secure.dynawebs.net/_studiolite/_themes/nativedroid/fonts/Roboto-Light.ttf) format('truetype');
 }
 
 @font-face {
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 400;
-    src: local('Roboto Regular'), local('Roboto-Regular'), url(https://secure.dynawebs.net/_studiolite-dev/_themes/nativedroid/fonts/2UX7WLTfW3W8TclTUvlFyQ.woff) format('woff');
+    src: local('Roboto Regular'), local('Roboto-Regular'), url(https://secure.dynawebs.net/_studiolite/_themes/nativedroid/fonts/2UX7WLTfW3W8TclTUvlFyQ.woff) format('woff');
 
-    src: local('Roboto Regular'), local('Roboto-Regular'), url(https://secure.dynawebs.net/_studiolite-dev/_themes/nativedroid/fonts/Roboto-Regular.ttf) format('truetype');
+    src: local('Roboto Regular'), local('Roboto-Regular'), url(https://secure.dynawebs.net/_studiolite/_themes/nativedroid/fonts/Roboto-Regular.ttf) format('truetype');
 }
 
 @font-face {
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 500;
-    src: local('Roboto Medium'), local('Roboto-Medium'), url(https://secure.dynawebs.net/_studiolite-dev/_themes/nativedroid/fonts/RxZJdnzeo3R5zSexge8UUT8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
-    src: local('Roboto Medium'), local('Roboto-Medium'), url(https://secure.dynawebs.net/_studiolite-dev/_themes/nativedroid/fonts/Roboto-Medium.ttf) format('truetype');
+    src: local('Roboto Medium'), local('Roboto-Medium'), url(https://secure.dynawebs.net/_studiolite/_themes/nativedroid/fonts/RxZJdnzeo3R5zSexge8UUT8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
+    src: local('Roboto Medium'), local('Roboto-Medium'), url(https://secure.dynawebs.net/_studiolite/_themes/nativedroid/fonts/Roboto-Medium.ttf) format('truetype');
 
 }
 
@@ -285,9 +288,9 @@ CSS
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 700;
-    src: local('Roboto Bold'), local('Roboto-Bold'), url(https://secure.dynawebs.net/_studiolite-dev/_themes/nativedroid/fonts/d-6IYplOFocCacKzxwXSOD8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
+    src: local('Roboto Bold'), local('Roboto-Bold'), url(https://secure.dynawebs.net/_studiolite/_themes/nativedroid/fonts/d-6IYplOFocCacKzxwXSOD8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
 
-    src: local('Roboto Bold'), local('Roboto-Bold'), url(https://secure.dynawebs.net/_studiolite-dev/_themes/nativedroid/fonts/Roboto-Bold.ttf) format('truetype');
+    src: local('Roboto Bold'), local('Roboto-Bold'), url(https://secure.dynawebs.net/_studiolite/_themes/nativedroid/fonts/Roboto-Bold.ttf) format('truetype');
 
 }
 
@@ -304,16 +307,14 @@ CSS
 
 }
 
-.liSelectedItem {
-    background-image: linear-gradient(#e5e5e5, #e5e5e5);
-    border-bottom: 1px solid #cfcfcf;
-}
+
 
 .fixPropOpenLiButtonPosition {
     position: absolute;
     top: 7px;
     right: 7px;
 }
+.ui-listview .ui-btn-hover-b {color:#404040;}
 
 
 .ui-page {
@@ -567,7 +568,7 @@ div.ui-btn-down-b span{
 
 #timeLinePropDiv {
     float: right;
-    margin-top: -78px;
+    margin-top: -45px;
 }
 
 #timeLinePropTitle {
@@ -628,7 +629,6 @@ div.ui-btn-down-b span{
     opacity: 0.6;
     cursor: pointer;
 }
-
 
 #playListSelectArrowLeft:active, #playListSelectArrowRight:active {
     background: #E4E4E4;
@@ -865,7 +865,7 @@ Studio Lite - Application
 ////////////////////////////////////////////////////////////////////////// -->
 
 <div data-role="page" id="studioLite" data-theme="b" class="ui-responsive-panel ui-panel-display-reveal">
-    <div data-role="header" data-theme="b" style="">
+    <div data-role="header" data-theme="b" id="header1" style="box-shadow:-5px 0 5px rgba(0, 0, 0,0.15) inset">
 
 
     </div>
@@ -889,13 +889,13 @@ Studio Lite - Application
             <li data-role="list-divider" id="tt1" style="border-bottom:2px solid #B6DB49;">
                 <h2 style="margin-left:20px; text-transform:none;font-size:31px;" data-theme="b">Signage Studio</h2></li>
 
-            <li class="ui-btn-text" data-icon="sitemap"><a id="navPlaylist"  data-role="button" data-theme="b">Campaigns  </a></li>
-            <li class="ui-btn-text" data-icon="spinner"><a id="navFiles"  data-role="button" data-theme="b">Resources </a></li>
-            <li class="ui-btn-text" data-icon="tachometer"><a id="navPlaylers" data-role="button" data-theme="b">Stations</a></li>
-            <li class="ui-btn-text" data-icon="cogs"><a id="navSettings" data-role="button" data-theme="b">Settings </a></li>
-            <li class="ui-btn-text" data-icon="comments"><a id="navHelp" data-role="button" data-theme="b">Help </a></li>
-            <li class="ui-btn-text" data-icon="signout"><a id="navLogout" data-role="button" data-theme="b">Logout </a></li>
-            <li class="ui-btn-text" data-icon="cloud-upload"><a id="navAdvance" data-corners="false" data-role="button" data-theme="b">Upgrade (FREE)</a></li>
+            <li class="ui-btn-text" ><a id="navPlaylist"  data-role="button" data-icon="sitemap" data-theme="b">Campaigns  </a></li>
+            <li class="ui-btn-text"><a id="navFiles"  data-role="button"  data-icon="spinner" data-theme="b">Resources </a></li>
+            <li class="ui-btn-text" ><a id="navPlaylers" data-role="button" data-icon="tachometer" data-theme="b">Stations</a></li>
+            <li class="ui-btn-text" ><a id="navSettings" data-role="button"  data-icon="cogs" data-theme="b">Settings </a></li>
+            <li class="ui-btn-text" ><a id="navHelp" data-role="button" data-icon="comments" data-theme="b">Help </a></li>
+            <li class="ui-btn-text" ><a id="navLogout" data-role="button" data-icon="signout" data-theme="b">Logout </a></li>
+            <li class="ui-btn-text"><a id="navAdvance" data-corners="false"  data-icon="cloud-upload"  data-role="button" data-theme="b">Upgrade (FREE)</a></li>
         </ul>
 
     </div>
@@ -925,7 +925,7 @@ Studio Lite - Application
             <a id="campainManager" data-theme="b" data-role="button" style="color:#000;"> <i class="fa fa-star"></i>campaign manager</a>
             <a id="campainSave" href="index.html" data-role="button"> <i class="fa fa-check"></i>save</a>
         </div>
-        <div data-role="content" style="padding: 0px; margin: 0px" id="mainContent" class="ui-panel-display-reveal">
+        <div data-role="content"  id="mainContent" style="box-shadow:-5px 0 5px rgba(0, 0, 0,0.15) inset;">
         </div>
     </div>
 </div>
@@ -1153,7 +1153,7 @@ Timeline properties
 
 <div id="propEntireScreen" style="display: :SET:">
     <div data-role="fieldcontain" data-inset="true" style="width:99%;">
-        <input type="text" name="name" id="timeLinePropTitleID" value="" data-clear-btn="true" placeholder="Timeline Title">
+        <input type="text" name="name" id="timeLinePropTitleID" value="" data-clear-btn="true" placeholder="Timeline Title" data-theme="b">
     </div>
 </div>
 
@@ -1337,6 +1337,7 @@ Campaign view
 
     <div id="campainViewMainContainer">
     </div>
+
     <div data-role="collapsible-set" data-content-theme="b" data-theme="b" style="padding:20px">
         <div data-role="collapsible">
             <h2>Timelines</h2>

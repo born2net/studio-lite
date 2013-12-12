@@ -219,20 +219,10 @@ Jalapeno.prototype = {
         var timelinePlayers = self.m_msdb.table_campaign_timeline_chanel_players();
         var recTimelinePlayer = timelinePlayers.createRecord();
         recTimelinePlayer.player_data = model.getComponent(i_playerCode).getDefaultPlayerData(i_nativeID);
-
-        /*
-         if (i_playerCode==3130 || i_playerCode==3100){
-         recTimelinePlayer.player_data = model.getComponent(i_playerCode).getDefaultPlayerData(i_nativeID);
-         } else {
-         recTimelinePlayer.player_data = '<Player player="' + i_playerCode + '"><Data><Resource Resource="' + i_playerCode + '" /></Data></Player>';
-         }
-         */
-
         recTimelinePlayer.campaign_timeline_chanel_id = i_campaign_timeline_chanel_id;
         recTimelinePlayer.player_duration = 10;
         recTimelinePlayer.player_offset_time = i_offset;
         timelinePlayers.addRecord(recTimelinePlayer);
-        // todo: ask alon why can't add resource, only component addition works???
 
         return {
             campaign_timeline_chanel_player_id: recTimelinePlayer['campaign_timeline_chanel_player_id'],
@@ -286,14 +276,7 @@ Jalapeno.prototype = {
      **/
     getBlockRecord: function (i_block_id) {
         var self = this;
-        var recBlock = undefined;
-
-        $(jalapeno.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
-            if (i_block_id == campaign_timeline_chanel_player_id) {
-                recBlock = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
-            }
-        });
-        return recBlock;
+        return self.m_msdb.table_campaign_timeline_chanel_players().getRec(i_block_id);
     },
 
     /**
@@ -463,7 +446,7 @@ Jalapeno.prototype = {
         var timeline_id = -1;
         $(self.m_msdb.table_campaign_timeline_sequences().getAllPrimaryKeys()).each(function (k, campaign_timeline_sequence_id) {
             var recCampaignTimelineSequence = self.m_msdb.table_campaign_timeline_sequences().getRec(campaign_timeline_sequence_id);
-            sequenceIndex = recCampaignTimelineSequence['sequence_index'];
+            var sequenceIndex = recCampaignTimelineSequence['sequence_index'];
             if (sequenceIndex == i_sequence_index && i_campaign_id == recCampaignTimelineSequence['campaign_id'])
                 timeline_id = recCampaignTimelineSequence['campaign_timeline_id']
         });
@@ -519,16 +502,7 @@ Jalapeno.prototype = {
      **/
     getResourceRecord: function (i_resource_id) {
         var self = this;
-        var foundResourceRecord = undefined;
-
-        $(self.m_msdb.table_resources().getAllPrimaryKeys()).each(function (k, resource_id) {
-            var recResource = self.m_msdb.table_resources().getRec(resource_id);
-            if (recResource['resource_id'] == i_resource_id) {
-                foundResourceRecord = recResource;
-                return;
-            }
-        });
-        return foundResourceRecord;
+        return self.m_msdb.table_resources().getRec(i_resource_id);
     },
 
     /**
@@ -542,14 +516,9 @@ Jalapeno.prototype = {
      **/
     setResourceRecord: function (i_resource_id, i_key, i_value) {
         var self = this;
-
-        $(self.m_msdb.table_resources().getAllPrimaryKeys()).each(function (k, resource_id) {
-            var recResource = self.m_msdb.table_resources().getRec(resource_id);
-            if (recResource['resource_id'] == i_resource_id) {
-                recResource[i_key] = i_value;
-                return;
-            }
-        });
+        self.m_msdb.table_resources().openForEdit(i_resource_id);
+        var recResource = self.m_msdb.table_resources().getRec(i_resource_id);
+        recResource[i_key] = i_value;
     },
 
     /**
@@ -594,7 +563,6 @@ Jalapeno.prototype = {
     getCampaignIDs: function () {
         var self = this;
         var campaigns = [];
-
         $(self.m_msdb.table_campaigns().getAllPrimaryKeys()).each(function (k, campaign_id) {
             campaigns.push(campaign_id);
         });
@@ -609,16 +577,7 @@ Jalapeno.prototype = {
      **/
     getCampaignRecord: function (i_campaign_id) {
         var self = this;
-        var foundCampaignRecord = undefined;
-
-        $(self.m_msdb.table_campaigns().getAllPrimaryKeys()).each(function (k, campaign_id) {
-            var recCampaign = self.m_msdb.table_campaigns().getRec(campaign_id);
-            if (recCampaign['campaign_id'] == i_campaign_id) {
-                foundCampaignRecord = recCampaign;
-                return;
-            }
-        });
-        return foundCampaignRecord;
+        return self.m_msdb.table_campaigns().getRec(i_campaign_id);
     },
 
     /**
@@ -633,11 +592,8 @@ Jalapeno.prototype = {
     setCampaignRecord: function (i_campaign_id, i_key, i_value) {
         var self = this;
         self.m_msdb.table_campaigns().openForEdit(i_campaign_id);
-        var foundCampaignRecord = self.m_msdb.table_campaigns().getRec(i_campaign_id);
-        if (foundCampaignRecord['campaign_id'] == i_campaign_id) {
-            foundCampaignRecord[i_key] = i_value;
-            return;
-        }
+        var recCampaign = self.m_msdb.table_campaigns().getRec(i_campaign_id);
+        recCampaign[i_key] = i_value;
 
     },
 
@@ -784,12 +740,7 @@ Jalapeno.prototype = {
      **/
     getCampaignTimelineChannelPlayerRecord: function (i_player_id) {
         var self = this;
-        var recPlayer = undefined;
-        $(self.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
-            if (campaign_timeline_chanel_player_id == i_player_id)
-                recPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
-        });
-        return recPlayer;
+        return self.m_msdb.table_campaign_timeline_chanel_players().getRec(i_player_id);
     },
 
     /**
@@ -816,12 +767,7 @@ Jalapeno.prototype = {
      **/
     getCampaignTimelineChannelRecord: function (i_channel_id) {
         var self = this;
-        var recChannel = undefined;
-        $(self.m_msdb.table_campaign_timeline_chanels().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_id) {
-            if (campaign_timeline_chanel_id == i_channel_id)
-                recChannel = self.m_msdb.table_campaign_timeline_chanels().getRec(campaign_timeline_chanel_id);
-        });
-        return recChannel;
+        return self.m_msdb.table_campaign_timeline_chanels().getRec(i_channel_id);
     },
 
     /**
@@ -848,12 +794,7 @@ Jalapeno.prototype = {
      **/
     getCampaignTimelineRecord: function (i_campaign_timeline_id) {
         var self = this;
-        var recTimeline = undefined;
-        $(self.m_msdb.table_campaign_timelines().getAllPrimaryKeys()).each(function (k, campaign_timeline_id) {
-            if (campaign_timeline_id == i_campaign_timeline_id)
-                recTimeline = self.m_msdb.table_campaign_timelines().getRec(campaign_timeline_id);
-        });
-        return recTimeline;
+        return self.m_msdb.table_campaign_timelines().getRec(i_campaign_timeline_id);
     },
 
     /**

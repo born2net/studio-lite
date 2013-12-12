@@ -290,7 +290,7 @@ function wireAppThemeSelector() {
             $(".theme-trigger a").removeClass("active");
             $(".theme-trigger ." + this.oppositeTheme()).addClass("active");
             this.theme = this.oppositeTheme();
-            $("html").contents().find("#jQMnDTheme").attr("href", this.pathCSS + this.getCSS[this.theme]);
+            $("html").contents().find(Elements.ANDROID_THEME).attr("href", this.pathCSS + this.getCSS[this.theme]);
 
             $(Elements.NAV_PANEL + ',' + Elements.MAIN_CONTENT + ',' + Elements.MAIN_HEADER).attr("style", this.getb1[this.theme]);
         },
@@ -385,7 +385,6 @@ function wireAppThemeSelector() {
             var colorArr = color.split("-");
             var newColor = colorArr[1];
             theme.switchColor(newColor);
-
             e.preventDefault();
         }
     });

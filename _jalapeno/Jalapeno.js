@@ -38,6 +38,11 @@ Jalapeno.prototype = {
         });
     },
 
+    /**
+     Serialize the local msdb and push to remote server
+     @method save
+     @return none
+     **/
     save: function () {
         var self = this;
         self.loaderManager.save();
@@ -210,7 +215,6 @@ Jalapeno.prototype = {
      **/
     createNewPlayer: function (i_campaign_timeline_chanel_id, i_playerCode, i_offset, i_nativeID) {
         var self = this;
-
 
         var timelinePlayers = self.m_msdb.table_campaign_timeline_chanel_players();
         var recTimelinePlayer = timelinePlayers.createRecord();
@@ -572,6 +576,17 @@ Jalapeno.prototype = {
     },
 
     /**
+     Remove a timeline from a campaign.
+     @method removeResource
+     @param {Number} i_resource_id
+     @return none
+     **/
+    removeResource: function (i_resource_id) {
+        var self = this;
+        self.m_msdb.table_resources().openForDelete(i_resource_id);
+    },
+
+    /**
      Get a list of all campaigns per the account
      @method getCampaignIDs
      @return {Array} campaigns
@@ -617,14 +632,13 @@ Jalapeno.prototype = {
      **/
     setCampaignRecord: function (i_campaign_id, i_key, i_value) {
         var self = this;
+        self.m_msdb.table_campaigns().openForEdit(i_campaign_id);
+        var foundCampaignRecord = self.m_msdb.table_campaigns().getRec(i_campaign_id);
+        if (foundCampaignRecord['campaign_id'] == i_campaign_id) {
+            foundCampaignRecord[i_key] = i_value;
+            return;
+        }
 
-        $(self.m_msdb.table_campaigns().getAllPrimaryKeys()).each(function (k, campaign_id) {
-            var foundCampaignRecord = self.m_msdb.table_campaigns().getRec(campaign_id);
-            if (foundCampaignRecord['campaign_id'] == i_campaign_id) {
-                foundCampaignRecord[i_key] = i_value;
-                return;
-            }
-        });
     },
 
     /**

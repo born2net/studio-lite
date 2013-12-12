@@ -34,6 +34,7 @@ CompResourcesList.prototype = {
             if ($(e.context).data('viewstackname') == 'tab2' && commBroker.getService('mainViewStack') === e.caller) {
                 self._loadResourceList();
                 self._listenOpenProps();
+                self._listenRemoveResource();
             }
         });
 
@@ -84,7 +85,7 @@ CompResourcesList.prototype = {
 
         var self = this;
         var recResources = jalapeno.getResources();
-
+        $(self.m_container).empty();
         $(recResources).each(function (i) {
             // dont process deleted resources
             if (recResources[i]['change_type'] == 3)
@@ -105,6 +106,23 @@ CompResourcesList.prototype = {
         });
 
         $(self.m_container).listview('refresh');
+    },
+
+    /**
+     Listen to remove resource event
+     @method _listenRemoveResource
+     @return none
+     **/
+    _listenRemoveResource: function () {
+        var self = this;
+
+        $('#fileRemove').tap(function (e) {
+            if (self.m_selected_resource_id == undefined)
+                return;
+            jalapeno.removeResource(self.m_selected_resource_id);
+            self._loadResourceList();
+            self._listenOpenProps();
+        });
     },
 
     /**

@@ -77,7 +77,7 @@ ChannelList.prototype = {
             var playerDuration = recBlock['player_duration']
 
             jalapeno.setBlockRecord(block_id, 'player_offset_time', playerOffsetTime);
-            log('player ' + block_id + ' offset ' + playerOffsetTime + ' playerDuration ' + playerDuration);
+            // log('player ' + block_id + ' offset ' + playerOffsetTime + ' playerDuration ' + playerDuration);
             playerOffsetTime = parseFloat(playerOffsetTime) + parseFloat(playerDuration);
         });
     },

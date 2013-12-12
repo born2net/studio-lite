@@ -242,7 +242,7 @@ function wireStudioUI() {
     });
 
     $(Elements.CAMPAIN_SAVE).tap(function () {
-        commBroker.getService('CompMSDB').save();
+        jalapeno.save();
         return false;
     });
 

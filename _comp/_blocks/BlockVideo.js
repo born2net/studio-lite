@@ -166,3 +166,13 @@ BlockVideo.prototype.setPlayerData = function (i_playerData) {
     var fileFormat = jalapeno.getResourceType(self.m_nativeResourceID);
     self._setIcon(fileFormat);
 };
+
+/**
+ Get the native id of the embedded resource
+ @method getNativeID
+ @return {Number} native_id;
+ **/
+BlockVideo.prototype.getNativeID = function () {
+    var self = this;
+    return self.m_nativeResourceID;
+};

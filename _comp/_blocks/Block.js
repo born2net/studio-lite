@@ -177,10 +177,9 @@ Block.prototype._onTimelineChannelBlockLengthChanged = function () {
                     break;
                 }
             }
-            // log('upd: ' + self.m_block_id + ' ' + hours + ' ' + minutes + ' ' + seconds);
-
+            log('upd: ' + self.m_block_id + ' ' + hours + ' ' + minutes + ' ' + seconds);
             jalapeno.setBlockTimelineChannelBlockLength(self.m_block_id, hours, minutes, seconds);
-            // log(self.m_block_id + ' ' + self.m_blockName);
+            log(self.m_block_id + ' ' + self.m_blockName);
         }
     });
 }

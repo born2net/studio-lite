@@ -9,6 +9,8 @@
 
  The internal database is referenced as msdb in both code and documentation.
 
+ Library requirements: x2js
+
  @class Jalapeno
  @constructor
  @return {Object} Jalapeno instance
@@ -46,6 +48,7 @@ Jalapeno.prototype = {
     save: function () {
         var self = this;
         self.loaderManager.save();
+        log('save');
     },
 
     /**
@@ -482,16 +485,9 @@ Jalapeno.prototype = {
      **/
     getNativeByResoueceID: function (i_resource_id) {
         var self = this;
-        var native_id = undefined;
-
-        $(self.m_msdb.table_resources().getAllPrimaryKeys()).each(function (k, resource_id) {
-            var recResource = self.m_msdb.table_resources().getRec(resource_id);
-            if (recResource['resource_id'] == i_resource_id) {
-                native_id = recResource['native_id'];
-                return;
-            }
-        });
-        return parseInt(native_id);
+        var recResource = self.m_msdb.table_resources().getRec(i_resource_id);
+        var nativeID = recResource['native_id'];
+        return parseInt(nativeID);
     },
 
     /**
@@ -529,9 +525,35 @@ Jalapeno.prototype = {
      **/
     removeBlockFromTimelineChannel: function (i_block_id) {
         var self = this;
-        self.m_msdb.table_campaign_timeline_chanel_players().openForDelete(i_block_id);
+        var status = self.m_msdb.table_campaign_timeline_chanel_players().openForDelete(i_block_id);
     },
 
+    /**
+     Remove blocks (a.k.a players) from all campaign that use the specified resource_id (native id)
+     @method removeBlocksWithResourceID
+     @param {Number} i_resource_id
+     @return none
+     **/
+    removeBlocksWithResourceID: function (i_resource_id) {
+        var self = this;
+        // self.m_msdb.table_resources().openForDelete(i_resource_id);
+        var nativeID_1 = self.getNativeByResoueceID(i_resource_id);
+
+        $(self.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
+            var recCampaignTimelineChannelPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
+            var playerData = recCampaignTimelineChannelPlayer['player_data'];
+            var xPlayerData = x2js.xml_str2json(playerData);
+            var nativeID_2 = undefined;
+            try {
+                nativeID_2 = xPlayerData['Player']['Data']['Resource']['_resource'];
+            } catch (e) {
+            }
+            if (nativeID_2 != undefined && nativeID_1 == nativeID_2) {
+                jalapeno.removeBlockFromTimelineChannel(campaign_timeline_chanel_player_id);
+                log(nativeID_2);
+            }
+        });
+    },
 
     /**
      Remove a timeline from a campaign.

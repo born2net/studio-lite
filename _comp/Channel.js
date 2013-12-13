@@ -29,6 +29,7 @@ function Channel(i_campaign_timeline_chanel_id) {
     this._onTimelineChannelSelected();
     this._wireUI();
     this._propLoadChannel();
+    this._listenResourceRemoving();
 };
 
 Channel.prototype = {
@@ -63,6 +64,27 @@ Channel.prototype = {
     },
 
     /**
+     Listen to when a resource removing from resources so we can remove corresponding blocks
+     @method _listenResourceRemoving
+     @return none
+     **/
+    _listenResourceRemoving: function () {
+        var self = this;
+        commBroker.listen(CompResourcesList.REMOVING_RESOURCE, function (e) {
+            var removingResoucreID = e.edata;
+            var removingNativeID = jalapeno.getNativeByResoueceID(removingResoucreID);
+            for (var blockID in self.m_blocks) {
+                if (self.m_blocks[blockID] instanceof BlockImage || self.m_blocks[blockID] instanceof BlockVideo) {
+                    var blockNativeID = self.m_blocks[blockID].getNativeID(removingResoucreID);
+                    if (blockNativeID == removingNativeID) {
+                        self.deleteBlock(blockID);
+                    }
+                }
+            }
+        });
+    },
+
+    /**
      Update the properties panel with the state of random playback.
      @method _propLoadChannel
      @return none
@@ -89,7 +111,7 @@ Channel.prototype = {
         var self = this;
 
         var blockIDs = jalapeno.getChannelBlocks(self.m_campaign_timeline_chanel_id);
-        for (var i = 0 ; i < blockIDs.length; i++){
+        for (var i = 0; i < blockIDs.length; i++) {
             var blockID = blockIDs[i];
             var recBlock = jalapeno.getBlockRecord(blockID);
             self.createBlock(blockID, recBlock['player_data'])
@@ -194,7 +216,7 @@ Channel.prototype = {
      @param {Number} i_block_id
      @return none
      **/
-    deleteBlock: function(i_block_id){
+    deleteBlock: function (i_block_id) {
         var self = this;
         jalapeno.removeBlockFromTimelineChannel(i_block_id);
         delete self.m_blocks[i_block_id];

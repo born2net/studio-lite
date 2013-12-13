@@ -26,7 +26,7 @@
  </pre>
  **/
 
-var globs = {}, commBroker, model, jalapeno, theme;
+var globs = {}, commBroker, model, jalapeno, theme, x2js;
 
 $(document).ready(function () {
 
@@ -70,7 +70,7 @@ $(document).ready(function () {
     var compStations = new CompStations(Elements.STATIONS);
     commBroker.setService('CompStations', compStations);
 
-    var compX2JS = new X2JS({escapeMode: true, attributePrefix: "_", arrayAccessForm: "none", emptyNodeForm: "text", enableToStringFunc: true, arrayAccessFormPaths: [], skipEmptyTextNodesForObj: true});
+    var compX2JS = x2js = new X2JS({escapeMode: true, attributePrefix: "_", arrayAccessForm: "none", emptyNodeForm: "text", enableToStringFunc: true, arrayAccessFormPaths: [], skipEmptyTextNodesForObj: true});
     commBroker.setService('compX2JS', compX2JS);
 
     $(Elements.STUDIO_LITE).on("pageinit", function (event) {
@@ -92,7 +92,7 @@ $(document).ready(function () {
 
     commBroker.listen(globs.WAITSCREENON, function (e) {
         loginUIState(false);
-        $.mobile.showPageLoadingMsg("a", "Authenticating");
+        $.mobile.showPageLoadingMsg("b", "Authenticating");
     });
 
     commBroker.listen(globs.WAITSCREENOFF, function (e) {

@@ -1,4 +1,26 @@
 /**
+ Custom event fired when resource is removing from resources
+ @event CompResourcesList.REMOVING_RESOURCE
+ @param {This} caller
+ @param {Self} context caller
+ @param {Event} the removed resource_id
+ @static
+ @final
+ **/
+CompResourcesList.REMOVING_RESOURCE = 'REMOVING_RESOURCE';
+
+/**
+ Custom event fired after a resource has been removed from resources
+ @event CompResourcesList.REMOVED_RESOURCE
+ @param {This} caller
+ @param {Self} context caller
+ @param {Event} the removed resource_id
+ @static
+ @final
+ **/
+CompResourcesList.REMOVED_RESOURCE = 'REMOVED_RESOURCE';
+
+/**
  Resource list component is responsible for managing the UI of selecting, adding and deleting resources (i.e.: video, images and swfs)
  as well as property management for resources, such as renaming a resource.
  @class CompResourcesList
@@ -42,9 +64,7 @@ CompResourcesList.prototype = {
             self._onFileSelected(e);
         });
 
-        $(Elements.FILE_REMOVE).tap(function (e) {
-            self._onFileRemove(e);
-        });
+
     },
 
     /**
@@ -115,13 +135,18 @@ CompResourcesList.prototype = {
      **/
     _listenRemoveResource: function () {
         var self = this;
-
-        $('#fileRemove').tap(function (e) {
+        $(Elements.FILE_REMOVE).tap(function (e) {
             if (self.m_selected_resource_id == undefined)
                 return;
+
+            // remove a resource from resources, notify before so channel instances
+            // can remove corresponding blocks and after so channelList can refresh UI
+            commBroker.fire(CompResourcesList.REMOVING_RESOURCE,this,null,self.m_selected_resource_id);
             jalapeno.removeResource(self.m_selected_resource_id);
+            jalapeno.removeBlocksWithResourceID(self.m_selected_resource_id);
             self._loadResourceList();
             self._listenOpenProps();
+            commBroker.fire(CompResourcesList.REMOVED_RESOURCE,this,null,self.m_selected_resource_id);
         });
     },
 
@@ -161,15 +186,6 @@ CompResourcesList.prototype = {
             e.stopImmediatePropagation();
             return false;
         });
-    },
-
-    /**
-     On resource deletion.
-     @method _onFileRemove
-     @return none
-     **/
-    _onFileRemove: function (e) {
-        var self = this;
     },
 
     /**

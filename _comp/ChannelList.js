@@ -34,6 +34,7 @@ ChannelList.prototype = {
 
         self._wireUI();
         self._listenTimelineSelected();
+        self._listenResourceRemoved();
     },
 
     /**
@@ -48,7 +49,7 @@ ChannelList.prototype = {
                 $(Elements.NO_RESOURCE_SELECTED_ALERT).popup("open", {transition: 'pop', 'position-to': 'window', width: '400', height: '400'});
                 return;
             }
-            self._deleteChannelBlock();
+            self._deleteChannelBlock(self.selected_block_id);
         });
 
         $(Elements.CHANNEL_ADD_RESOURCE).tap(function (e) {
@@ -148,6 +149,22 @@ ChannelList.prototype = {
         // self._deselectBlocksFromChannel();
         self._selectLastBlockOnChannel();
         return false;
+    },
+
+    /**
+     Listen to when a resource has been deleted so we can delete the associated block and re calc channel length
+     @method _listenResourceRemoved
+     @return none
+     **/
+    _listenResourceRemoved: function () {
+        var self = this;
+        commBroker.listen(CompResourcesList.REMOVED_RESOURCE, function (e) {
+            if (self.selected_campaign_timeline_id != undefined && self.selected_campaign_timeline_chanel_id != undefined) {
+                $(Elements.SORTABLE).empty();
+                self._loadChannelBlocks(self.selected_campaign_timeline_id, self.selected_campaign_timeline_chanel_id);
+                self._reOrderChannelBlocks();
+            }
+        });
     },
 
     /**
@@ -300,13 +317,13 @@ ChannelList.prototype = {
      @method _deleteChannelBlock
      @return none
      **/
-    _deleteChannelBlock: function () {
+    _deleteChannelBlock: function (i_block_id) {
         var self = this;
-        var selectedLI = $(Elements.SORTABLE).find('[data-block_id="' + self.selected_block_id + '"]');
+        var selectedLI = $(Elements.SORTABLE).find('[data-block_id="' + i_block_id + '"]');
         selectedLI.remove();
         var timeline = commBroker.getService('Campaign').getTimelineInstance(self.selected_campaign_timeline_id);
         var channel = timeline.getChannelInstance(self.selected_campaign_timeline_chanel_id);
-        channel.deleteBlock(self.selected_block_id);
+        channel.deleteBlock(i_block_id);
         // self.m_property.noPanel();
         // $(Elements.SORTABLE).listview('refresh');
         self._deselectBlocksFromChannel();

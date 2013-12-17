@@ -213,15 +213,15 @@ Jalapeno.prototype = {
      @param {Number} i_campaign_timeline_chanel_id is the channel id assign player to
      @param {Number} i_playerCode is a unique pre-set code that exists per type of block (see component list for all available code)
      @param {Number} i_offset set in seconds of when to begin playing the content with respect to timeline_channel
-     @param {Number} i_nativeID optional param used when creating a block with embedded resource (i.e.: video / image / swf)
+     @param {Number} i_resourceID optional param used when creating a block with embedded resource (i.e.: video / image / swf)
      @return {Object} campaign_timeline_chanel_player_id and campaign_timeline_chanel_player_data as json object
      **/
-    createNewPlayer: function (i_campaign_timeline_chanel_id, i_playerCode, i_offset, i_nativeID) {
+    createNewPlayer: function (i_campaign_timeline_chanel_id, i_playerCode, i_offset, i_resourceID) {
         var self = this;
 
         var timelinePlayers = self.m_msdb.table_campaign_timeline_chanel_players();
         var recTimelinePlayer = timelinePlayers.createRecord();
-        recTimelinePlayer.player_data = model.getComponent(i_playerCode).getDefaultPlayerData(i_nativeID);
+        recTimelinePlayer.player_data = model.getComponent(i_playerCode).getDefaultPlayerData(i_resourceID);
         recTimelinePlayer.campaign_timeline_chanel_id = i_campaign_timeline_chanel_id;
         recTimelinePlayer.player_duration = 10;
         recTimelinePlayer.player_offset_time = i_offset;
@@ -476,21 +476,6 @@ Jalapeno.prototype = {
     },
 
     /**
-     Get the native id mapping of a resource_id.
-     A native is is the actual primary key that is used on the remote server, compared to normal id
-     which is an internal mapping of msdb to its native id.
-     @method getNativeByResoueceID
-     @param {Number} i_resource_id
-     @return {Number} native_id
-     **/
-    getNativeByResoueceID: function (i_resource_id) {
-        var self = this;
-        var recResource = self.m_msdb.table_resources().getRec(i_resource_id);
-        var nativeID = recResource['native_id'];
-        return parseInt(nativeID);
-    },
-
-    /**
      Get a resource record via its resource_id.
      @method getResourceRecord
      @param {Number} i_resource_id
@@ -537,20 +522,19 @@ Jalapeno.prototype = {
     removeBlocksWithResourceID: function (i_resource_id) {
         var self = this;
         // self.m_msdb.table_resources().openForDelete(i_resource_id);
-        var nativeID_1 = self.getNativeByResoueceID(i_resource_id);
+        // var nativeID_1 = self.getNativeByResoueceID(i_resource_id);
 
         $(self.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
             var recCampaignTimelineChannelPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
             var playerData = recCampaignTimelineChannelPlayer['player_data'];
             var xPlayerData = x2js.xml_str2json(playerData);
-            var nativeID_2 = undefined;
+            var resourceID = undefined;
             try {
-                nativeID_2 = xPlayerData['Player']['Data']['Resource']['_resource'];
+                resourceID = xPlayerData['Player']['Data']['Resource']['_hResource'];
             } catch (e) {
             }
-            if (nativeID_2 != undefined && nativeID_1 == nativeID_2) {
+            if (resourceID != undefined && resourceID == i_resource_id) {
                 jalapeno.removeBlockFromTimelineChannel(campaign_timeline_chanel_player_id);
-                log(nativeID_2);
             }
         });
     },
@@ -622,41 +606,25 @@ Jalapeno.prototype = {
     /**
      Get the type of a resource (png/jpg...) for specified native_id
      @method getResourceType
-     @param {Number} i_native_id
+     @param {Number} i_resource_id
      @return {String} resourceType
      **/
-    getResourceType: function (i_native_id) {
+    getResourceType: function (i_resource_id) {
         var self = this;
-        var resourceType = undefined;
-
-        $(self.m_msdb.table_resources().getAllPrimaryKeys()).each(function (k, resource_id) {
-            var recResource = self.m_msdb.table_resources().getRec(resource_id);
-            if (recResource['native_id'] == i_native_id) {
-                resourceType = recResource['resource_type'];
-                return;
-            }
-        });
-        return resourceType;
+        var recResource = self.m_msdb.table_resources().getRec(i_resource_id);
+        return recResource['resource_type'];
     },
 
     /**
      Get the name of a resource from the resources table using it's native_id
      @method getResourceName
-     @param {Number} i_native_id
+     @param {Number} i_resource_id
      @return {Number} resourceName
      **/
-    getResourceName: function (i_native_id) {
+    getResourceName: function (i_resource_id) {
         var self = this;
-        var resourceName = undefined;
-
-        $(self.m_msdb.table_resources().getAllPrimaryKeys()).each(function (k, resource_id) {
-            var recResource = self.m_msdb.table_resources().getRec(resource_id);
-            if (recResource['native_id'] == i_native_id) {
-                resourceName = recResource['resource_name'];
-                return;
-            }
-        });
-        return resourceName;
+        var recResource = self.m_msdb.table_resources().getRec(i_resource_id);
+        return recResource['resource_name'];
     },
 
     /**

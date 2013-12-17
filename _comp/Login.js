@@ -1,6 +1,6 @@
 /**
- Custom event fired when a new block is selected and added to timeline_channel
- @event AddBlockWizard
+ Custom event fired when authentication received from server
+ @event LoginComponent.AUTHENTICATION_STATUS
  @param {This} caller
  @param {Self} context caller
  @param {Event} player_code which represents a specific code assigned for each block type
@@ -10,7 +10,7 @@
 LoginComponent.AUTHENTICATION_STATUS = 'AUTHENTICATION_STATUS';
 
 /**
- Login component...
+ Manage user login and account creation
  @class LoginComponent
  @constructor
  @return {Object} instantiated LoginComponent

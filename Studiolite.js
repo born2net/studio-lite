@@ -392,4 +392,8 @@ function wireAppThemeSelector() {
 
 $(document).bind('pageinit', function () {
     // wrap additional hooks
+    // setTimeout(function(){
+    //    $(Elements.NO_RESOURCE_SELECTED_ALERT).popup("open", {transition: 'pop', 'position-to': 'window', width: '400', height: '400'});
+    // },3000);
+
 });

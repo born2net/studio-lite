@@ -119,10 +119,10 @@ JalapenoModel.prototype = {
             3130: {
                 name: 'Image',
                 description: 'Bimap file',
-                getDefaultPlayerData: function (i_nativeResourceID) {
+                getDefaultPlayerData: function (i_resourceID) {
                     var xml = '<Player player="3130" label="" interactive="0">' +
                         '<Data>' +
-                        '<Resource resource="' + i_nativeResourceID + '">' +
+                        '<Resource hResource="' + i_resourceID + '">' +
                         '<AspectRatio maintain="1" />' +
                         '<Image />' +
                         '</Resource>' +
@@ -139,10 +139,10 @@ JalapenoModel.prototype = {
             3100: {
                 name: 'Video',
                 description: 'Movie file',
-                getDefaultPlayerData: function (i_nativeResourceID) {
+                getDefaultPlayerData: function (i_resourceID) {
                     var xml = '<Player player="3100" label="" interactive="0">' +
                         '<Data>' +
-                        '<Resource resource="' + i_nativeResourceID + '">' +
+                        '<Resource hResource="' + i_resourceID + '">' +
                         '<AspectRatio maintain="1" />' +
                         '<Image autoRewind="1" volume="1" backgroundAlpha="1" />' +
                         '</Resource>' +

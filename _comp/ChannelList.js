@@ -111,7 +111,7 @@ ChannelList.prototype = {
         var addBlockWizard = new AddBlockWizard();
         addBlockWizard.newChannelBlockPage();
         commBroker.listenOnce(AddBlockWizard.ADD_NEW_BLOCK, function (e) {
-            self._createNewChannelBlock(e.edata.blockCode, e.edata.nativeID);
+            self._createNewChannelBlock(e.edata.blockCode, e.edata.resourceID);
             addBlockWizard.destroy();
             addBlockWizard.close();
             e.stopImmediatePropagation();
@@ -123,14 +123,14 @@ ChannelList.prototype = {
      Create a new block (player) on the current channel and refresh UI bindings such as properties open events.
      @method _createNewChannelBlock
      @param {Number} i_blockID
-     @param {Number} i_nativeID optional param used when creating a block with embedded resource (i.e.: video / image / swf)
+     @param {Number} i_resourceID optional param used when creating a block with embedded resource (i.e.: video / image / swf)
      @return {Boolean} false
      **/
-    _createNewChannelBlock: function (i_blockID, i_nativeID) {
+    _createNewChannelBlock: function (i_blockID, i_resourceID) {
         var self = this;
 
         var totalChannelLength = self._getTotalDurationChannel();
-        var jData = jalapeno.createNewPlayer(self.selected_campaign_timeline_chanel_id, i_blockID, totalChannelLength, i_nativeID);
+        var jData = jalapeno.createNewPlayer(self.selected_campaign_timeline_chanel_id, i_blockID, totalChannelLength, i_resourceID);
         var campaign_timeline_chanel_player_id = jData['campaign_timeline_chanel_player_id'];
         var campaign_timeline_chanel_player_data = jData['campaign_timeline_chanel_player_data'];
 

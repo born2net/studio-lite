@@ -72,11 +72,9 @@ Channel.prototype = {
         var self = this;
         commBroker.listen(CompResourcesList.REMOVING_RESOURCE, function (e) {
             var removingResoucreID = e.edata;
-            var removingNativeID = jalapeno.getNativeByResoueceID(removingResoucreID);
             for (var blockID in self.m_blocks) {
                 if (self.m_blocks[blockID] instanceof BlockImage || self.m_blocks[blockID] instanceof BlockVideo) {
-                    var blockNativeID = self.m_blocks[blockID].getNativeID(removingResoucreID);
-                    if (blockNativeID == removingNativeID) {
+                    if (removingResoucreID == self.m_blocks[blockID].getResourceID()){
                         self.deleteBlock(blockID);
                     }
                 }

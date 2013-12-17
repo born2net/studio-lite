@@ -106,17 +106,15 @@ AddBlockWizard.prototype = {
             var component_id = $(e.target).closest('li').data('component_id');
             var resource_id = $(e.target).closest('li').data('resource_id');
             var blockCode = -1;
-            var nativeID = -1;
 
             if (component_id) {
                 blockCode = component_id;
             } else {
-                nativeID = jalapeno.getNativeByResoueceID(resource_id);
-                blockCode = model.getBlockCodeFromFileExt(jalapeno.getResourceType(nativeID));
+                blockCode = model.getBlockCodeFromFileExt(jalapeno.getResourceType(resource_id));
             }
             commBroker.fire(AddBlockWizard.ADD_NEW_BLOCK, this, self, {
                 blockCode: blockCode,
-                nativeID: nativeID
+                resourceID: resource_id
             });
         });
 

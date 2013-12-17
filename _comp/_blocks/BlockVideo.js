@@ -16,7 +16,7 @@ function BlockVideo(i_placement, i_campaign_timeline_chanel_player_id) {
     self.m_blockName = model.getComponent(self.m_blockType).name;
     self.m_blockDescription = model.getComponent(self.m_blockType).description;
     self.m_playerData = undefined;
-    self.m_nativeResourceID = undefined;
+    self.m_resourceID = undefined;
 
     Block.call(this, i_placement, i_campaign_timeline_chanel_player_id);
     self.m_property.initSubPanel(Elements.BLOCK_VIDEO_COMMON_PROPERTIES);
@@ -115,7 +115,7 @@ BlockVideo.prototype._onChange = function (e) {
     // this is a new component so we need to add a boilerplate xml
     if (aspectRatio.length == 0) {
         // xPlayerData = self._getDefaultPlayerVideoData();
-        xPlayerData = model.getComponent(self.m_blockType).getDefaultPlayerData(self.m_nativeResourceID);
+        xPlayerData = model.getComponent(self.m_blockType).getDefaultPlayerData(self.m_resourceID);
         xmlDoc = $.parseXML(xPlayerData);
         xml = $(xmlDoc);
         aspectRatio = xml.find('AspectRatio');
@@ -148,10 +148,10 @@ BlockVideo.prototype.getBlockData = function () {
 }
 
 /**
- Set the instance player_data from msdb which includes native_resource_id (handle of a resource)
+ Set the instance player_data from msdb which includes resource_id (handle of a resource)
  as well as the description of the resource and icon. This function is called upon instantiation
  and it is a special method which applies only to image/swf/video blocks as they hold a reference
- to an external resource (i.e.: a native_id).
+ to an external resource
  @method setPlayerData
  @param {string} i_playerData
  @return {String} Unique clientId.
@@ -161,18 +161,18 @@ BlockVideo.prototype.setPlayerData = function (i_playerData) {
 
     self.m_playerData = i_playerData;
 
-    self.m_nativeResourceID = parseInt(self.m_playerData["Player"]["Data"]["Resource"]["_resource"])
-    self.m_blockDescription = jalapeno.getResourceName(self.m_nativeResourceID);
-    var fileFormat = jalapeno.getResourceType(self.m_nativeResourceID);
+    self.m_resourceID = parseInt(self.m_playerData["Player"]["Data"]["Resource"]["_hResource"])
+    self.m_blockDescription = jalapeno.getResourceName(self.m_resourceID);
+    var fileFormat = jalapeno.getResourceType(self.m_resourceID);
     self._setIcon(fileFormat);
 };
 
 /**
- Get the native id of the embedded resource
- @method getNativeID
- @return {Number} native_id;
+ Get the resource id of the embedded resource
+ @method getResourceID
+ @return {Number} resource_id;
  **/
-BlockVideo.prototype.getNativeID = function () {
+BlockVideo.prototype.getResourceID = function () {
     var self = this;
-    return self.m_nativeResourceID;
+    return self.m_resourceID;
 };

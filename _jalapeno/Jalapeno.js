@@ -31,10 +31,10 @@ Jalapeno.prototype = {
 
         self.m_user = i_user;
         self.m_pass = i_pass;
-        self.loaderManager = new LoaderManager();
-        self.m_msdb = self.loaderManager['m_dataBaseManager'];
+        self.m_loaderManager = new LoaderManager();
+        self.m_msdb = self.m_loaderManager['m_dataBaseManager'];
 
-        self.loaderManager.create(self.m_user, self.m_pass, function () {
+        self.m_loaderManager.create(self.m_user, self.m_pass, function () {
             //todo: alon needs to add support for auth failed
             i_callBack('pass');
         });
@@ -47,7 +47,7 @@ Jalapeno.prototype = {
      **/
     save: function () {
         var self = this;
-        self.loaderManager.save();
+        self.m_loaderManager.save();
         log('save');
     },
 
@@ -90,15 +90,16 @@ Jalapeno.prototype = {
      @method assignCampaignToBoard
      @param {Number} i_campaign_id the campaign id to assign to board
      @param {Number} i_board_id the board id to assign to campaign
-     @return none
+     @return {Number} campain_board_id
      **/
     assignCampaignToBoard: function (i_campaign_id, i_board_id) {
         var self = this;
         var campaign_boards = self.m_msdb.table_campaign_boards();
-        var board = campaign_boards.createRecord();
-        board.campaign_id = i_campaign_id;
-        board.board_id = i_board_id;
-        campaign_boards.addRecord(board);
+        var campain_board = campaign_boards.createRecord();
+        campain_board.campaign_id = i_campaign_id;
+        campain_board.board_id = i_board_id;
+        campaign_boards.addRecord(campain_board);
+        return campain_board['campaign_board_id'];
     },
 
     /**
@@ -110,17 +111,29 @@ Jalapeno.prototype = {
     getFirstBoardIDofCampaign: function (i_campaign_id) {
         var self = this;
         var totalBoardsFound = 0;
-        var foundBoardID = -1;
+        var foundCampainBoardID = -1;
 
-        $(self.m_msdb.table_campaign_boards().getAllPrimaryKeys()).each(function (k, board_id) {
-            var recCampaignBoard = self.m_msdb.table_campaign_boards().getRec(board_id);
+        $(self.m_msdb.table_campaign_boards().getAllPrimaryKeys()).each(function (k, campaign_board_id) {
+            var recCampaignBoard = self.m_msdb.table_campaign_boards().getRec(campaign_board_id);
             if (i_campaign_id == recCampaignBoard.campaign_id && totalBoardsFound == 0) {
-                foundBoardID = recCampaignBoard['board_id']
+                foundCampainBoardID = recCampaignBoard['campaign_board_id']
                 totalBoardsFound++;
             }
         });
 
-        return foundBoardID;
+        return foundCampainBoardID;
+    },
+
+    /**
+     Translate a campaign_board into it's matching pair in global boards.
+     @method getBoardFromCampaignBoard
+     @param {Number} i_campaign_board_id
+     @return {Number} board_id
+     **/
+    getBoardFromCampaignBoard: function(i_campaign_board_id){
+        var self = this;
+        var recCampaignBoard = self.m_msdb.table_campaign_boards().getRec(i_campaign_board_id);
+        return recCampaignBoard.board_id;
     },
 
     /**
@@ -133,7 +146,6 @@ Jalapeno.prototype = {
     createTimelineChannels: function (i_campaign_timeline_id, i_viewers) {
         var self = this;
         var createdChanels = [];
-        var i = -1;
 
         for (var i in i_viewers) {
             i++;
@@ -157,11 +169,11 @@ Jalapeno.prototype = {
     createNewTemplate: function (i_board_id, i_screenProps) {
         var self = this;
 
+
         var returnData = {
             board_template_id: -1,
             viewers: []
         };
-
         // create screen template under board_id
         var boardTemplates = self.m_msdb.table_board_templates();
         var boardTemplate = boardTemplates.createRecord();

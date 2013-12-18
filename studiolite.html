@@ -5,30 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SignageStudio Web Lite</title>
 
-
-    <!-- Theme used http://nativedroid.godesign.ch/   -->
-
     <link rel="stylesheet"
-          href="https://secure.dynawebs.net/_studiolite-dev/_common/_themes/nativedroid/css/font-awesome.min.css"/>
+          href="https://secure.dynawebs.net/_studiolite-dev/_common/_jquery/mobile/1.3.2/jquery.mobile.structure-1.3.2.css"/>
     <link rel="stylesheet"
-          href="https://secure.dynawebs.net/_studiolite-dev/_common/_themes/fontsawesome/css/font-awesome.css"/>
-    <link rel="stylesheet"
-          href="https://secure.dynawebs.net/_studiolite-dev/_common/_themes/nativedroid/css/jquerymobile.css"/>
-    <link rel="stylesheet"
-          href="https://secure.dynawebs.net/_studiolite-dev/_common/_themes/nativedroid/css/jquerymobile.nativedroid.css"/>
-    <link rel="stylesheet"
-          href="https://secure.dynawebs.net/_studiolite-dev/_common/_themes/nativedroid/css/jquerymobile.nativedroid.light.css"
-          id='jQMnDTheme'/>
-    <link rel="stylesheet"
-          href="https://secure.dynawebs.net/_studiolite-dev/_common/_themes/nativedroid/css/jquerymobile.nativedroid.color.green.css"
-          id='jQMnDColor'/>
+          href="https://secure.dynawebs.net/_studiolite-dev/_common/_themes/jq13mobile_studiolite/SignageLiteJQ13v3.css"/>
     <script src="https://secure.dynawebs.net/_studiolite-dev/_common/_jquery/std/jq1.9.1/jquery-1.9.1.js"
             type="text/javascript"></script>
     <script src="https://secure.dynawebs.net/_studiolite-dev/_common/_jquery/std/jq1.10.1/jquery-ui-1.10.1.js"
             type="text/javascript"></script>
     <script src="https://secure.dynawebs.net/_studiolite-dev/_common/_js/touchpunch/TouchPunch.js"
             type="text/javascript"></script>
-    <link rel="stylesheet" href="https://secure.dynawebs.net/_studiolite-dev/_common/_js/minicolors/jquery.minicolors.css"/>
+    <link rel="stylesheet"
+          href="https://secure.dynawebs.net/_studiolite-dev/_common/_js/minicolors/jquery.minicolors.css"/>
     <script src="https://secure.dynawebs.net/_studiolite-dev/_common/_js/minicolors/jquery.minicolors.js"
             type="text/javascript"></script>
     <script src="https://js.signage.me/SignageSDK.js" type="text/javascript"></script>
@@ -346,13 +334,6 @@ div.ui-btn-down-b span {
     line-height: 100px;
     color: #000000;
     text-align: center;
-
-    -webkit-transition: -webkit-transform 0.5s, box-shadow 0.5s, background 0.5s;
-    -moz-transition: -moz-transform 0.5s, box-shadow 0.5s, background 0.5s;
-    -o-transition: -o-transform 0.5s, box-shadow 0.5s, background 0.5s;
-    -ms-transition: -ms-transform 0.5s, box-shadow 0.5s, background 0.5s;
-    transition: transform 0.5s, box-shadow 0.5s, background 0.5s;
-
     margin-bottom: 15px;
 }
 
@@ -360,11 +341,14 @@ div.ui-btn-down-b span {
     display: none;
 }
 
+/*
 .navileft a:hover, .navileft a.active, .naviright a:hover, .naviright a.active, .download a:hover {
     background-color: rgba(255, 255, 255, 0.8);
     box-shadow: 10px 0px 10px rgba(0, 0, 0, 0.2);
 }
+*/
 
+/*
 .navileft .rotate a.active:hover {
 
     -webkit-transform: rotate(45deg);
@@ -405,6 +389,7 @@ div.ui-btn-down-b span {
     -ms-transform: rotate(0deg);
     transform: rotate(0deg);
 }
+*/
 
 .two-columns {
     width: 650px;
@@ -759,7 +744,7 @@ Login page
 ////////////////////////////////////////////////////////////////////////// -->
 
 
-<div data-role="page" id="loginPage" data-theme="b">
+<div data-role="page" id="loginPage" data-theme="a">
     <div style="margin:10% auto 10% auto;width:60%;">
         <div data-role="header">
             <div class="ui-grid-a">
@@ -818,17 +803,17 @@ Studio Lite - Application
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div data-role="page" id="studioLite" data-theme="b" class="ui-responsive-panel ui-panel-display-reveal">
-    <div data-role="header" data-theme="b" id="mainHeader" style="box-shadow:-5px 0 5px rgba(0, 0, 0,0.15) inset;">
+<div data-role="page" id="studioLite" data-theme="a" class="ui-responsive-panel ui-panel-display-reveal">
+    <div data-role="header" data-theme="a" id="mainHeader" style="box-shadow:-5px 0 5px rgba(0, 0, 0,0.15) inset;">
 
 
     </div>
 
     <div data-role="panel" data-position="right" id="propertiesPanel" class="main_nav ui-responsive-panel"
-         data-display="push" data-swipe-close="false" data-dismissible="true" data-theme="b">
+         data-display="push" data-swipe-close="false" data-dismissible="true" data-theme="a">
         <div>
             <!-- <h2 style="float: left; position: relative; top: -25px">resource</h2> -->
-            <a id="closeProperties" style="left: 20px; position:relative; top: 40px" data-theme="b" data-icon="arrow-r"
+            <a id="closeProperties" style="left: 20px; position:relative; top: 40px" data-theme="a" data-icon="arrow-r"
                data-role="button"
                data-iconpos="notext"></a>
 
@@ -838,32 +823,32 @@ Studio Lite - Application
         </div>
     </div>
 
-    <div data-role="panel" id="navPanel" data-display="push" data-dismissible="false" data-theme="b"
+    <div data-role="panel" id="navPanel" data-display="push" data-dismissible="false" data-theme="a"
          style="box-shadow:-5px 0 5px rgba(0, 0, 0,0.15) inset;">
         <ul data-role="listview" style="margin-left:-20px; font-weight:normal;">
             <li data-role="list-divider" id="appName" style="border-bottom:2px solid #B6DB49;">
-                <h2 style="margin-left:20px; text-transform:none;font-size:31px;" data-theme="b">Signage Studio</h2>
+                <h2 style="margin-left:20px; text-transform:none;font-size:31px;" data-theme="a">Signage Studio</h2>
             </li>
 
             <li class="ui-btn-text"><a id="navPlaylist" data-role="button" data-icon="sitemap"
-                                       data-theme="b">Campaigns </a></li>
+                                       data-theme="a">Campaigns </a></li>
             <li class="ui-btn-text"><a id="navFiles" data-role="button" data-icon="spinner"
-                                       data-theme="b">Resources </a></li>
-            <li class="ui-btn-text"><a id="navPlaylers" data-role="button" data-icon="tachometer" data-theme="b">Stations</a>
+                                       data-theme="a">Resources </a></li>
+            <li class="ui-btn-text"><a id="navPlaylers" data-role="button" data-icon="tachometer" data-theme="a">Stations</a>
             </li>
-            <li class="ui-btn-text"><a id="navSettings" data-role="button" data-icon="cogs" data-theme="b">Settings </a>
+            <li class="ui-btn-text"><a id="navSettings" data-role="button" data-icon="cogs" data-theme="a">Settings </a>
             </li>
-            <li class="ui-btn-text"><a id="navHelp" data-role="button" data-icon="comments" data-theme="b">Help </a>
+            <li class="ui-btn-text"><a id="navHelp" data-role="button" data-icon="comments" data-theme="a">Help </a>
             </li>
-            <li class="ui-btn-text"><a id="navLogout" data-role="button" data-icon="signout" data-theme="b">Logout </a>
+            <li class="ui-btn-text"><a id="navLogout" data-role="button" data-icon="signout" data-theme="a">Logout </a>
             </li>
             <li class="ui-btn-text"><a id="navAdvance" data-corners="false" data-icon="cloud-upload" data-role="button"
-                                       data-theme="b">Upgrade (FREE)</a></li>
+                                       data-theme="a">Upgrade (FREE)</a></li>
         </ul>
 
     </div>
 
-    <!--<div data-role="panel" id="navPanel" class="main_nav" data-display="push"  data-dismissible="true" data-theme="b">
+    <!--<div data-role="panel" id="navPanel" class="main_nav" data-display="push"  data-dismissible="true" data-theme="a">
         <h2 style="color: #666">SignageStudio Lite</h2>
         <div class="nav_profile">
 			<div id="navButtons" data-role="controlgroup">
@@ -882,12 +867,12 @@ Studio Lite - Application
         <a id="slid" href="#navPanel" data-role='button' data-display="push"
            style="position:absolute; top: 10px; left: 10px;font-weight:normal;"><i
                 class="fa fa-arrows-h fa-lg"></i></a>
-        <!--<a id="toggleNavigation" data-transition="fade" data-iconpos="notext" style="margin-right:5px ;position:relative; width:4%;top: 10px"  data-icon="back" data-theme="b"></a>-->
+        <!--<a id="toggleNavigation" data-transition="fade" data-iconpos="notext" style="margin-right:5px ;position:relative; width:4%;top: 10px"  data-icon="back" data-theme="a"></a>-->
 
 
         <div data-role="controlgroup" data-type="horizontal"
              style="position:absolute; top: 10px; right: 10px;font-weight:normal;">
-            <a id="campainManager" data-theme="b" data-role="button" style="color:#000;"> <i class="fa fa-star"></i>campaign
+            <a id="campainManager" data-theme="a" data-role="button" style="color:#000;"> <i class="fa fa-star"></i>campaign
                 manager</a>
             <a id="campainSave" href="index.html" data-role="button"> <i class="fa fa-check"></i>save</a>
         </div>
@@ -903,9 +888,9 @@ Screen Layout page
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div data-role="page" id="screenLayoutList" class="ui-responsive-panel" data-theme="b">
-    <div data-role="header" data-theme="b">
-        <a id="goBackFromScreenList" data-role="button" data-theme="b" data-icon="arrow-l" data-iconpos="notext"
+<div data-role="page" id="screenLayoutList" class="ui-responsive-panel" data-theme="a">
+    <div data-role="header" data-theme="a">
+        <a id="goBackFromScreenList" data-role="button" data-theme="a" data-icon="arrow-l" data-iconpos="notext"
            class="ui-btn-left">Close</a>
 
         <h2>Select screen layout</h2>
@@ -922,13 +907,13 @@ Add Resource page
 ////////////////////////////////////////////////////////////////////////// -->
 
 <div data-role="page" id="addResourceView" class="ui-responsive-panel">
-    <div data-role="header" data-theme="b">
-        <a id="goBackFromAddResourceView" data-rel="back" data-role="button" data-theme="b" data-icon="arrow-l"
+    <div data-role="header" data-theme="a">
+        <a id="goBackFromAddResourceView" data-rel="back" data-role="button" data-theme="a" data-icon="arrow-l"
            data-iconpos="notext" class="ui-btn-left">Close</a>
 
         <h2>Add component / resource</h2>
     </div>
-    <div data-role="collapsible-set" data-theme="b" data-content-theme="b" style="margin: 30px">
+    <div data-role="collapsible-set" data-theme="a" data-content-theme="b" style="margin: 30px">
         <div data-role="collapsible" data-collapsed=false>
             <h2>Components</h2>
             <ul id="addComponentList" data-role="listview" data-filter="true" data-filter-theme="c"
@@ -951,7 +936,7 @@ Campaign view stack
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div id="playlist" style="min-height:1080px;display: none" data-theme="b">
+<div id="playlist" style="min-height:1080px;display: none" data-theme="a">
     <div id="playListMainNavigation">
         <table width="100%" border="0" cellspacing="" cellpadding="0">
             <tr>
@@ -976,12 +961,12 @@ Campaign Selector view
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div id="campaignSelectorView" style="display: none" data-theme="b">
+<div id="campaignSelectorView" style="display: none" data-theme="a">
     <br/>
-    <a href="#" id="startNewCampaign" data-role="button" style="position: relative; left: 40px" data-theme="b"
+    <a href="#" id="startNewCampaign" data-role="button" style="position: relative; left: 40px" data-theme="a"
        data-iconpos="right" data-inline="true">New campaign wizard <i class="fa fa-star fa-lg"></i></a>
     <ul id="campaignSelectorList" style="padding-left: 40px; padding-right: 40px" data-role="listview"
-        data-inset="true" data-theme="b">
+        data-inset="true" data-theme="a">
     </ul>
 </div>
 
@@ -992,7 +977,7 @@ Resources
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div align="center" id="files" style="min-height:1080px; display: none" data-theme="b">
+<div align="center" id="files" style="min-height:1080px; display: none" data-theme="a">
     <div align="left">
         <label data-role="button" align="left" data-icon="plus" data-inline="true" class="file-upload">Add file
             <input id="file" name="file" type="file" multiple data-role="none">
@@ -1003,7 +988,7 @@ Resources
     <br/>
     <br/>
     <ul id="resourceLibList" style="padding: 40px; width:80%;" data-role="listview" data-filter="true"
-        data-filter-placeholder="Search resources..." data-inset="true" data-filter-theme="b" data-theme="b">
+        data-filter-placeholder="Search resources..." data-inset="true" data-filter-theme="b" data-theme="a">
     </ul>
 
 </div>
@@ -1147,7 +1132,7 @@ Timeline properties
 <div id="propEntireScreen" style="display: none">
     <div data-role="fieldcontain" data-inset="true" style="width:99%;">
         <input type="text" name="name" id="timeLinePropTitleID" value="" data-clear-btn="true"
-               placeholder="Timeline Title" data-theme="b">
+               placeholder="Timeline Title" data-theme="a">
     </div>
 </div>
 
@@ -1177,7 +1162,7 @@ Properties C
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div id="propResource" style="display: none" data-theme="b">
+<div id="propResource" style="display: none" data-theme="a">
     <p>CC properies info...</p>
 </div>
 
@@ -1189,7 +1174,7 @@ Block Properties
 ////////////////////////////////////////////////////////////////////////// -->
 
 
-<div id="blockProperties" style="display: none" data-theme="b">
+<div id="blockProperties" style="display: none" data-theme="a">
     <div>
         <h2 id="selectedChannelResourceName"></h2>
     </div>
@@ -1215,13 +1200,13 @@ Block RSS common properties
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div id="blockRSSCommonProperties" style="display: none" data-theme="b">
+<div id="blockRSSCommonProperties" style="display: none" data-theme="a">
     <div>
         <h5>RSS</h5>
 
         <div data-role="fieldcontain" data-inset="true">
             <input type="text" name="name" id="rssLink" value="" data-clear-btn="true" placeholder="Enter RSS Link Text"
-                   data-theme="b">
+                   data-theme="a">
         </div>
     </div>
 </div>
@@ -1232,10 +1217,10 @@ Block QR common properties
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div id="blockQRCommonProperties" style="display: none" data-theme="b">
+<div id="blockQRCommonProperties" style="display: none" data-theme="a">
     <div data-role="fieldcontain" data-inset="true">
         <input type="text" name="name" id="qrText" value="" data-clear-btn="true" placeholder="Enter QR Text"
-               data-theme="b">
+               data-theme="a">
     </div>
 </div>
 
@@ -1246,7 +1231,7 @@ Block Video common properties
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div id="blockVideoCommonProperties" style="display: none" data-theme="b">
+<div id="blockVideoCommonProperties" style="display: none" data-theme="a">
     <h5>Video</h5>
     <label for="videoAspectRatio">Aspect ratio</label>
     <select id="videoAspectRatio" name="Aspect ratio" data-role="slider" data-track-theme="b">
@@ -1293,9 +1278,9 @@ Orientation view
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div id="orientationView" style="display: none" data-theme="b">
+<div id="orientationView" style="display: none" data-theme="a">
 
-    <table width="100%" border="0" cellspacing="0" cellpadding="50" data-theme="b">
+    <table width="100%" border="0" cellspacing="0" cellpadding="50" data-theme="a">
         <tr>
             <td align="right"><img id="imgVertical"
                                    src="https://secure.dynawebs.net/_studiolite-dev/_assets/orientationV.png"/></td>
@@ -1333,7 +1318,7 @@ Campaign view
     </div>
 
     <div id="timelinesCollapsible" data-role="collapsible-set" data-collapsed-icon="bars" data-content-theme="b"
-         data-theme="b" style="padding:20px">
+         data-theme="a" style="padding:20px">
         <div data-role="collapsible" data-collapsed="false">
             <h3><p id="timeLinePropTitle">Timelines</p>
 
@@ -1356,7 +1341,7 @@ Campaign view
             <aside style="margin: 0px; padding: 0px">
                 <aside style="margin: 0px; padding: 0px">
                     <div style="margin: 0px; padding: 0px" vertical-align="middle" id="screenSelectorContainer"
-                         data-theme="b">
+                         data-theme="a">
                         <hr style="margin: 0px; padding: 0px" class="dottedHR">
                         <ul id="screenLayoutsUL">
                         </ul>
@@ -1400,14 +1385,14 @@ Campaign view
     </div>
 
 
-    <div align="center" id="selectedLayoutContainer" class="centerContent" data-theme="b">
+    <div align="center" id="selectedLayoutContainer" class="centerContent" data-theme="a">
     </div>
 
-    <div id="playbackResourcesDiv" data-theme="b">
+    <div id="playbackResourcesDiv" data-theme="a">
         <!-- <h4 style="padding-left:20px; padding-bottom: 0px ; padding-right:20px">Playback resources</h4>-->
         <div data-role="controlgroup" data-type="horizontal">
-            <a id="channelAddResource" data-role="button" data-theme="b" data-icon="plus">Add content</a>
-            <a id="channelRemoveResource" data-role="button" data-theme="b" data-icon="minus">Remove content</a>
+            <a id="channelAddResource" data-role="button" data-theme="a" data-icon="plus">Add content</a>
+            <a id="channelRemoveResource" data-role="button" data-theme="a" data-icon="minus">Remove content</a>
         </div>
 
 
@@ -1420,7 +1405,7 @@ Campaign view
         <p>Can't delete a resource</p>
 
         <p>You must first select a resource from the list. Press ok to continue.</p>
-        <a href="index.html" data-role="button" data-rel="back" data-theme="b" data-inline="true" data-icon="check"
+        <a href="index.html" data-role="button" data-rel="back" data-theme="a" data-inline="true" data-icon="check"
            data-mini="true">OK</a>
         <!-- <a href="index.html" data-role="button" data-rel="back" data-inline="true" data-mini="true">Cancel</a> -->
     </div>
@@ -1461,7 +1446,7 @@ Station Properties
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div id="stationProperties" style="display: none" data-theme="b">
+<div id="stationProperties" style="display: none" data-theme="a">
 
 
     <h4 id="stationName" style="text-align:center"></h4>
@@ -1479,16 +1464,16 @@ Station Properties
              src="https://secure.dynawebs.net/_studiolite-dev/_assets/preload2_gray.gif"/>
     </div>
 
-    <div data-role="navbar" class="ui-navbar ui-mini" data-grid="c" role="navigation" data-theme="b">
+    <div data-role="navbar" class="ui-navbar ui-mini" data-grid="c" role="navigation" data-theme="a">
         <ul class="ui-grid-c">
             <li class="ui-block-a"><a href="#" id="captureCommand" data-role="button" data-icon="capture-cmd"
-                                      data-theme="b"></a></li>
+                                      data-theme="a"></a></li>
             <li class="ui-block-b"><a href="#" id="playCommand" data-role="button" data-icon="play-cmd"
-                                      data-theme="b"></a></li>
+                                      data-theme="a"></a></li>
             <li class="ui-block-c"><a href="#" id="stopCommand" data-role="button" data-icon="stop-cmd"
-                                      data-theme="b"></a></li>
+                                      data-theme="a"></a></li>
             <li class="ui-block-d"><a href="#" id="reloadCommand" data-role="button" data-icon="reload-cmd"
-                                      data-theme="b"></a></li>
+                                      data-theme="a"></a></li>
         </ul>
     </div>
 
@@ -1496,7 +1481,7 @@ Station Properties
     <hr width="100%"
         style="color:#333; display: block; height: 1px; border: 0; border-top: 1px solid #000; margin: 1em 0; padding: 0;"/>
 
-    <div class="ui-grid-a" data-theme="b">
+    <div class="ui-grid-a" data-theme="a">
         <div class="ui-block-a">
             <h5>Name:</h5>
         </div>
@@ -1555,13 +1540,13 @@ Station Properties
 
     <hr width="100%"
         style="color:#333; display: block; height: 1px; border: 0; border-top: 1px solid #000; margin: 1em 0; padding: 0;"/>
-    <input type="text" data-inline="true" name="eventName" data-clear-btn="true" data-theme="b" data-icon="search"
+    <input type="text" data-inline="true" name="eventName" data-clear-btn="true" data-theme="a" data-icon="search"
            placeholder="event name"
            id="sendEventID" value="">
-    <button id="eventSendButton" data-role="button" data-icon="alert" data-theme="b">Send event</button>
+    <button id="eventSendButton" data-role="button" data-icon="alert" data-theme="a">Send event</button>
     <hr width="100%"
         style="color:#333; display: block; height: 1px; border: 0; border-top: 1px solid #000; margin: 1em 0; padding: 0;"/>
-    <a id="uptotop" data-role="button" class="ui-btn-right" data-icon="arrow-u" data-theme="b">Top</a>
+    <a id="uptotop" data-role="button" class="ui-btn-right" data-icon="arrow-u" data-theme="a">Top</a>
 </div>
 
 
@@ -1571,10 +1556,10 @@ Resource Properties
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div id="resourceProperties" style="display: none" data-theme="b">
+<div id="resourceProperties" style="display: none" data-theme="a">
     <div>
         <input type="text" name="name" id="selectedLibResourceName" value="" data-clear-btn="true"
-               placeholder="Enter resource name" data-theme="b">
+               placeholder="Enter resource name" data-theme="a">
     </div>
 </div>
 
@@ -1585,10 +1570,10 @@ Campaign Properties
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div id="campaignProperties" style="display: none" data-theme="b">
+<div id="campaignProperties" style="display: none" data-theme="a">
     <div>
         <input type="text" name="name" id="selectedCampaignProperties" value="" data-clear-btn="true"
-               placeholder="Enter campaign name" data-theme="b">
+               placeholder="Enter campaign name" data-theme="a">
     </div>
 </div>
 
@@ -1599,7 +1584,7 @@ Empty Properties
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div id="emptyProperties" style="display: none" data-theme="b">
+<div id="emptyProperties" style="display: none" data-theme="a">
 </div>
 
 

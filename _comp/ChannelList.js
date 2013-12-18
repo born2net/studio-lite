@@ -218,7 +218,7 @@ ChannelList.prototype = {
 
         for (var block_id in blocks) {
             var blockData = blocks[block_id].getBlockData();
-            $(Elements.SORTABLE).append($('<li class="selectedResource" data-theme="b" data-block_id="' + blockData.blockID + '"><a href="#">' +
+            $(Elements.SORTABLE).append($('<li class="selectedResource" data-theme="a" data-block_id="' + blockData.blockID + '"><a href="#">' +
                 '<img style="width: 50px ; height: 50px; margin-left: 20px; padding-top: 14px" src="' + blockData.blockIcon + '">' +
                 '<h2>' + blockData.blockName + '</h2>' +
                 '<p>' + blockData.blockDescription + '</p>' +

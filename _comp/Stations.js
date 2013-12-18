@@ -87,11 +87,11 @@ CompStations.prototype = {
                 case CompStations.stationListEmpty:
                 {
                     var station = model.getStation(dbmid);
-                    var stationHTML = '<li data-role="list-divider" data-theme="b" ></li>' +
-                        '<li data-dbmid="' + dbmid + '" data-icon="gear" data-theme="b" class="station">' +
+                    var stationHTML = '<li data-role="list-divider" data-theme="a" ></li>' +
+                        '<li data-dbmid="' + dbmid + '" data-icon="gear" data-theme="a" class="station">' +
                         '<span style="display: inline" id="stationIcon' + i + '"></span>' +
                         '<a class="lastStatus" style="display: inline; position: relative; top: -18px" ">' + station['name'] + '</a>' +
-                        '</div><a data-theme="b" data-icon="gear" class="fixPropOpenLiButtonPosition station stationOpenProps"></a>' +
+                        '</div><a data-theme="a" data-icon="gear" class="fixPropOpenLiButtonPosition station stationOpenProps"></a>' +
                         '</li>';
 
 

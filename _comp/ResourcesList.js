@@ -114,11 +114,11 @@ CompResourcesList.prototype = {
             var size = (parseInt(recResources[i]['resource_bytes_total']) / 1000).toFixed(2);
             var resourceDescription = 'size: ' + size + 'K dimenstion: ' + recResources[i]['resource_pixel_width'] + 'x' + recResources[i]['resource_pixel_height'];
 
-            var snippet = '<li data-resource_id="' + recResources[i]['resource_id'] + '"data-icon="gear" class="selectedLibResource" data-theme="b"><a href="#">' +
+            var snippet = '<li data-resource_id="' + recResources[i]['resource_id'] + '"data-icon="gear" class="selectedLibResource" data-theme="a"><a href="#">' +
                 '<img src="' + model.getIcon(recResources[i]['resource_type']) + '">' +
                 '<h2>' + recResources[i]['resource_name'] + '</h2>' +
                 '<p>' + resourceDescription + '</p></a>' +
-                '<a data-theme="b" class="fixPropOpenLiButtonPosition selectedLibResource resourceLibOpenProps"></a>' +
+                '<a data-theme="a" class="fixPropOpenLiButtonPosition selectedLibResource resourceLibOpenProps"></a>' +
                 '</li>';
 
             $(self.m_container).append($(snippet));
@@ -196,8 +196,7 @@ CompResourcesList.prototype = {
     _onFileSelected: function (e) {
         var self = this;
         var resources = jalapeno.m_msdb.table_resources();
-        var resourceList = jalapeno.uploadResources('fileSelection');
-        //todo error on upload file upload ???
+        var resourceList = jalapeno.uploadResources('file');
         // XMLHttpRequest cannot load http://jupiter.signage.me/WebService/JsUpload.ashx. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'https://secure.dynawebs.net' is therefore not allowed access.	https://secure.dynawebs.net/_php/studioLite-debug.php#studioLite:0
 
         /*

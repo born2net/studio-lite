@@ -26,7 +26,7 @@
  </pre>
  **/
 
-var globs = {}, commBroker, model, jalapeno, theme, x2js;
+var globs = {}, commBroker, model, jalapeno, x2js;
 
 $(document).ready(function () {
 
@@ -78,8 +78,6 @@ $(document).ready(function () {
         wireStudioUI();
         wireNavigation();
         wireLogout();
-        wireAppThemeSelector();
-        // commBroker.getService('CompSettings').initAppColorPicker();
     });
 
     var loginComponent = new LoginComponent();
@@ -271,121 +269,6 @@ function disableBack() {
                 event.preventDefault();
                 return false;
             }
-        }
-    });
-}
-
-
-function wireAppThemeSelector() {
-
-    theme = {
-        theme: "light",
-        color: "green",
-        pathCSS: "https://secure.dynawebs.net/_msportal/_themes/nativedroid/css/",
-        oppositeTheme: function () {
-            return (this.theme == "light") ? "dark" : "light";
-            $("input[type='radio']").checkboxradio({ theme: "b" });
-        },
-        switchTheme: function () {
-            $(".theme-trigger a").removeClass("active");
-            $(".theme-trigger ." + this.oppositeTheme()).addClass("active");
-            this.theme = this.oppositeTheme();
-            $("html").contents().find(Elements.ANDROID_THEME).attr("href", this.pathCSS + this.getCSS[this.theme]);
-
-            $(Elements.NAV_PANEL + ',' + Elements.MAIN_CONTENT + ',' + Elements.MAIN_HEADER).attr("style", this.getb1[this.theme]);
-        },
-        getb1: {
-            dark: "box-shadow:-5px 0 5px rgba(255, 255, 255, 0.2) inset",
-            light: "box-shadow:-5px 0 5px rgba(0, 0, 0,0.15) inset"
-        },
-
-        switchColor: function (newColor) {
-            $(".color-trigger a.active").removeClass("active");
-            $(".color-trigger a." + newColor).addClass("active");
-            this.color = newColor;
-            $("html").contents().find(Elements.ANDROID_COLOR).attr("href", this.pathCSS + this.getCSS[this.color]);
-
-            $(Elements.APP_NAME).attr("style", this.getborderCSS[this.color]);
-
-            $("div.ui-btn-down-b span").attr("style", this.getbgCSS[this.color]);
-        },
-
-
-        switchbColor: function (newColor) {
-            $(".color-trigger a.active").removeClass("active");
-            $(".color-trigger a." + newColor).addClass("active");
-            this.color = newColor;
-
-
-        },
-
-        getCSS: {
-            dark: "jquerymobile.nativedroid.dark.css",
-            light: "jquerymobile.nativedroid.light.css",
-            blue: "jquerymobile.nativedroid.color.blue.css",
-            green: "jquerymobile.nativedroid.color.green.css",
-            purple: "jquerymobile.nativedroid.color.purple.css",
-            red: "jquerymobile.nativedroid.color.red.css",
-            yellow: "jquerymobile.nativedroid.color.yellow.css"
-        },
-
-        getborderCSS: {
-            dark: "",
-            light: "",
-            blue: "border-bottom:2px solid #6DCAEC",
-            green: "border-bottom:2px solid #B6DB49",
-            purple: "border-bottom:2px solid #CF9FE7",
-            red: "border-bottom:2px solid #FF7979",
-            yellow: "border-bottom:2px solid #FFD060"
-        },
-
-        getbgCSS: {
-            dark: "",
-            light: "",
-            blue: "background-color: #6DCAEC;color: #fff",
-            green: "background-color: #b6db49;color: #fff",
-            purple: "background-color: #CF9FE7;color: #fff",
-            red: "background-color: #FF7979;color: #fff",
-            yellow: "background-color: #FFD060;color: #fff"
-        },
-        getborderCSS1: {
-            dark: "",
-            light: "",
-            blue: "border:2px solid #6DCAEC",
-            green: "border:2px solid #B6DB49",
-            purple: "border:2px solid #CF9FE7",
-            red: "border:2px solid #FF7979",
-            yellow: "border:2px solid #FFD060"
-        },
-
-
-        updateIframe: function () {
-            $("head").contents().find(Elements.ANDROID_THEME).attr("href", this.pathCSS + this.getCSS[this.theme]);
-
-        }
-    }
-
-
-    $(Elements.CLASS_THEME_TRIGGER).on("click", "a", function (e) {
-        if (!$(this).hasClass("active")) {
-            theme.switchTheme();
-            e.preventDefault();
-        } else {
-            e.preventDefault();
-        }
-    });
-
-    $(Elements.CLASS_COLOR_TRIGGER).on("click", "a:not([href='#color-custom'])", function (e) {
-        if ($(this).hasClass("active")) {
-            // Do Nothing
-            e.preventDefault();
-        } else {
-            // Switch color
-            var color = $(this).attr('href');
-            var colorArr = color.split("-");
-            var newColor = colorArr[1];
-            theme.switchColor(newColor);
-            e.preventDefault();
         }
     });
 }

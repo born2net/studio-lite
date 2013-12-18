@@ -221,42 +221,44 @@ Campaign.prototype = {
             //// Timeline selected from TemplateWizard
             ////////////////////////////////////////////////
 
+            var board_id = undefined;
+            var campaign_board_id = undefined;
+
             if (e.context.m_owner instanceof TemplateWizard) {
                 if (self.m_selected_campaign_id == -1) {
 
                     ////////////////////////////////////////////////
-                    // Created a brand new campign and a new board
+                    // Created a brand new campaign and a new board
                     ////////////////////////////////////////////////
 
                     var width = commBroker.getService('ScreenResolution').getResolution().split('x')[0];
                     var height = commBroker.getService('ScreenResolution').getResolution().split('x')[1];
-                    var campaign_board_id = jalapeno.createBoard('board', width, height);
+                    board_id = jalapeno.createBoard('board', width, height);
 
-                    var newTemplateData = jalapeno.createNewTemplate(campaign_board_id, e.caller.screenTemplateData.screenProps);
+                    var newTemplateData = jalapeno.createNewTemplate(board_id, e.caller.screenTemplateData.screenProps);
                     var board_template_id = newTemplateData['board_template_id']
                     var viewers = newTemplateData['viewers'];
 
                     self.m_selected_campaign_id = jalapeno.createCampaign('campaign');
-                    jalapeno.assignCampaignToBoard(self.m_selected_campaign_id, campaign_board_id);
+                    campaign_board_id = jalapeno.assignCampaignToBoard(self.m_selected_campaign_id, board_id);
 
                 } else {
 
                     ////////////////////////////////////////////////
-                    // Add Timeline to an existing campign
+                    // Add Timeline to an existing campaign
                     ////////////////////////////////////////////////
 
-                    var campaign_board_id = jalapeno.getFirstBoardIDofCampaign(self.m_selected_campaign_id);
-                    var newTemplateData = jalapeno.createNewTemplate(campaign_board_id, e.caller.screenTemplateData.screenProps);
+                    campaign_board_id = jalapeno.getFirstBoardIDofCampaign(self.m_selected_campaign_id);
+                    board_id = jalapeno.getBoardFromCampaignBoard(campaign_board_id);
+                    var newTemplateData = jalapeno.createNewTemplate(board_id, e.caller.screenTemplateData.screenProps);
                     var board_template_id = newTemplateData['board_template_id']
                     var viewers = newTemplateData['viewers'];
-
                 }
 
                 campaign_timeline_id = jalapeno.createNewTimeline(self.m_selected_campaign_id);
 
                 var campaign_timeline_board_template_id = jalapeno.assignTemplateToTimeline(campaign_timeline_id, board_template_id, campaign_board_id);
                 var channels = jalapeno.createTimelineChannels(campaign_timeline_id, viewers);
-
                 jalapeno.assignViewersToTimelineChannels(campaign_timeline_board_template_id, viewers, channels);
 
                 self.m_timelines[campaign_timeline_id] = new Timeline(campaign_timeline_id);

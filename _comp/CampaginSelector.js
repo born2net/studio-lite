@@ -49,11 +49,11 @@ CompCampaignSelector.prototype = {
             var campaignID = campaignIDs[i];
             var recCampaign = jalapeno.getCampaignRecord(campaignID);
             var playListMode = recCampaign['campaign_playlist_mode'] == 0 ? 'sequencer' : 'scheduler';
-            var snippet = '<li data-campaignid="' + campaignID + '"data-icon="gear" class="selectedLibResource" data-theme="b"><a href="#">' +
+            var snippet = '<li data-campaignid="' + campaignID + '"data-icon="gear" class="selectedLibResource" data-theme="a"><a href="#">' +
                 '<img src="https://secure.dynawebs.net/_msportal/_images/campaign.png">' +
                 '<h2>' + recCampaign['campaign_name'] + '</h2>' +
                 '<p>play list mode: ' + playListMode + '</p></a>' +
-                '<a data-theme="b" class="fixPropOpenLiButtonPosition selectedLibResource resourceLibOpenProps"></a>' +
+                '<a data-theme="a" class="fixPropOpenLiButtonPosition selectedLibResource resourceLibOpenProps"></a>' +
                 '</li>';
             $(self.m_container).append($(snippet));
         }

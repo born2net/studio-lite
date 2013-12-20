@@ -130,12 +130,12 @@ ComBroker.prototype = {
 
             $(this).bind(events, func);
         }
-
     },
 
     /**
      Listen to events within the context of the CommBroker thus reducing DOM capture / bubble.
-     However we only listen within the namespace of a unique id so we can remove it later for a specific listener instance.
+     However we only listen within the namespace of a unique context id so we can remove it
+     later for a specific listener instance.
      @method listenWithNamespace
      @param {Event} events
      @param {Object} caller
@@ -186,7 +186,6 @@ ComBroker.prototype = {
         } else {
             $(this).unbind(events, func);
         }
-
     },
 
     /**
@@ -200,20 +199,5 @@ ComBroker.prototype = {
      **/
     event: function (i_event, i_context, i_caller, i_data) {
         return $.Event(i_event, {context: i_context, caller: i_caller, edata: i_data});
-    },
-
-    /**
-     Create an event scope so we can listen to a common event but than unbind from it without unbinding other instances
-     @method getUniqueEventNameSpace
-     @param i_event an event that we are going to register a listener to, but wish to add a unique name space for
-     @return {String} return a unique event scope that is still shared with other instances
-     **/
-    getUniqueEventNameSpace: function (i_caller, i_event) {
-        if (this.m_instanceToCounterMap[i_caller] == undefined)
-            this.m_instanceToCounterMap[i_caller] = this.m_uniqueCounter++;
-        return i_event + '.' + this.m_instanceToCounterMap[i_caller];
     }
-
-
-
 };

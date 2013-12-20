@@ -244,5 +244,17 @@ Timeline.prototype = {
     getChannelInstance: function (i_campaign_timeline_chanel_id) {
         var self = this;
         return self.m_channels[i_campaign_timeline_chanel_id];
+    },
+
+    /**
+     Delete this timeline thus also need to delete all of its related channels
+     @method deleteTimeline
+     @return none
+     **/
+    deleteTimeline: function(){
+        var self = this;
+        for (var channel in self.m_channels){
+            self.m_channels[channel].deleteChannel();
+        }
     }
 }

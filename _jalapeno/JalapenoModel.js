@@ -159,7 +159,7 @@ JalapenoModel.prototype = {
                 name: 'QR Component',
                 description: 'QR code for mobile device integration',
                 getDefaultPlayerData: function () {
-                    return '<Player player="3430"><Data><Resource Resource="3430" /></Data></Player>';
+                    return '<Player player="3430" label="QR Code"><Data/></Player>';
                 },
                 icon: self.getIcon('qr')
             },
@@ -167,7 +167,7 @@ JalapenoModel.prototype = {
                 name: 'Really Simple Syndication',
                 description: 'RSS for daily fresh scrolling news feed',
                 getDefaultPlayerData: function () {
-                    return '<Player player="3345"><Data><Resource Resource="3345" /></Data></Player>';
+                    return '<Player player="3345" label="Rss news"><Data/></Player>';
                 },
                 icon: self.getIcon('rss')
             }

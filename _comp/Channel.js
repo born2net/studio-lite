@@ -74,7 +74,7 @@ Channel.prototype = {
             var removingResoucreID = e.edata;
             for (var blockID in self.m_blocks) {
                 if (self.m_blocks[blockID] instanceof BlockImage || self.m_blocks[blockID] instanceof BlockVideo) {
-                    if (removingResoucreID == self.m_blocks[blockID].getResourceID()){
+                    if (removingResoucreID == self.m_blocks[blockID].getResourceID()) {
                         self.deleteBlock(blockID);
                     }
                 }
@@ -94,8 +94,6 @@ Channel.prototype = {
         var state = recChannel['random_order'] == 'True' ? 'on' : 'off';
 
         $(Elements.RANDOM_PLAYBACK + ' option[value=' + state + ']').attr("selected", "selected");
-
-        // todo change name of propScreenDivision to propChannel after css done
         self.m_property.viewPanel(Elements.PROP_SCREEN_DIVISION);
         $(Elements.RANDOM_PLAYBACK).slider('refresh');
     },
@@ -209,6 +207,18 @@ Channel.prototype = {
     },
 
     /**
+     Delete this channel and all of it's related blocks
+     @method deleteChannel
+     @return none
+     **/
+    deleteChannel: function () {
+        var self = this;
+        for (var blockID in self.m_blocks) {
+            self.deleteBlock(blockID);
+        }
+    },
+
+    /**
      Delete a block from the channel
      @method deleteBlock
      @param {Number} i_block_id
@@ -217,6 +227,7 @@ Channel.prototype = {
     deleteBlock: function (i_block_id) {
         var self = this;
         jalapeno.removeBlockFromTimelineChannel(i_block_id);
+        self.m_blocks[i_block_id].deleteBlock();
         delete self.m_blocks[i_block_id];
     }
 }

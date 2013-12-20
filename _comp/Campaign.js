@@ -94,7 +94,7 @@ Campaign.prototype = {
     _onWireDelTimeline: function () {
         var self = this;
         $(Elements.DEL_SCREEN_BUTTON).tap(function (e) {
-            self._onDeleteTimeline(e, self);
+            self._deleteTimeline(e, self);
         });
     },
 
@@ -273,19 +273,19 @@ Campaign.prototype = {
 
     /**
      When a timeline is deleted, remove it from the local timelines hash and notify sequencer.
-     @method _onDeleteTimeline
+     @method _deleteTimeline
      @param {Event} e
      @param {Object} i_caller
      @return none
      **/
-    _onDeleteTimeline: function (e, i_caller) {
+    _deleteTimeline: function (e, i_caller) {
         var self = this;
 
         e.preventDefault();
         e.stopImmediatePropagation();
 
-        var sequencesComp = commBroker.getService('Sequences');
-        sequencesComp.deleteTimeline(self.m_selected_timeline_id);
+        commBroker.getService('Sequences').deleteSequencedTimeline(self.m_selected_timeline_id);
+        self.m_timelines[self.m_selected_timeline_id].deleteTimeline();
         delete self.m_timelines[self.m_selected_timeline_id];
         jalapeno.removeTimelineFromCampaign(self.m_selected_timeline_id);
         self._loadSequencerFirstTimeline();

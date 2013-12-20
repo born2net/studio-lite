@@ -23,9 +23,9 @@
  </pre>
  **/
 
-
 function ComBroker() {
     this.m_services = [];
+    this.m_uniqueCounter = 0;
 };
 
 ComBroker.prototype = {
@@ -134,6 +134,34 @@ ComBroker.prototype = {
     },
 
     /**
+     Listen to events within the context of the CommBroker thus reducing DOM capture / bubble.
+     However we only listen within the namespace of a unique id so we can remove it later for a specific listener instance.
+     @method listenWithNamespace
+     @param {Event} events
+     @param {Object} caller
+     @param {Function} call back
+     @return none
+     **/
+    listenWithNamespace: function (event, caller, func) {
+        if (caller.eventNamespace == undefined)
+            caller.eventNamespace = this.m_uniqueCounter++;
+        var namespacEvent = event + '.' + caller.eventNamespace;
+        $(this).bind(namespacEvent, func);
+    },
+
+    /**
+     Stop listening to an event but only within the context of a specific listener instance.
+     @method stopListenWithNamespace
+     @param {Event} event
+     @param {Function} func
+     @return none
+     **/
+    stopListenWithNamespace: function (event, caller) {
+        var namespacEvent = event + '.' + caller.eventNamespace;
+        $(this).unbind(namespacEvent);
+    },
+
+    /**
      Listen only once to an event and unbind.
      Once the event is triggered func will get called back.
      @method listenOnce
@@ -153,7 +181,12 @@ ComBroker.prototype = {
      @return none
      **/
     stopListen: function (events, func) {
-        $(this).unbind(events, func);
+        if (func == false) {
+            $(this).unbind(events);
+        } else {
+            $(this).unbind(events, func);
+        }
+
     },
 
     /**
@@ -167,6 +200,20 @@ ComBroker.prototype = {
      **/
     event: function (i_event, i_context, i_caller, i_data) {
         return $.Event(i_event, {context: i_context, caller: i_caller, edata: i_data});
-    }
-};
+    },
 
+    /**
+     Create an event scope so we can listen to a common event but than unbind from it without unbinding other instances
+     @method getUniqueEventNameSpace
+     @param i_event an event that we are going to register a listener to, but wish to add a unique name space for
+     @return {String} return a unique event scope that is still shared with other instances
+     **/
+    getUniqueEventNameSpace: function (i_caller, i_event) {
+        if (this.m_instanceToCounterMap[i_caller] == undefined)
+            this.m_instanceToCounterMap[i_caller] = this.m_uniqueCounter++;
+        return i_event + '.' + this.m_instanceToCounterMap[i_caller];
+    }
+
+
+
+};

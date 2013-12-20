@@ -64,7 +64,6 @@ BlockRSS.prototype._getDefaultPlayerRSSData = function () {
         '</Rss>' +
         '</Data>' +
         '</Player>'
-    //todo ask alon if it's ok I am building my own XML
     return xml;
 };
 

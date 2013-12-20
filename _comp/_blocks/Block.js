@@ -25,11 +25,18 @@ Block.PLACEMENT_CHANNEL = 'PLACEMENT_CHANNEL';
 Block.BLOCK_ON_CHANNEL_SELECTED = 'BLOCK_ON_CHANNEL_SELECTED';
 
 /**
- event fires when block length has changed, normally by a knob property widget
- @event Block.BLOCK_LENGTH_CHANGED
+ event fires when block length is changing (requesting a change), normally by a knob property widget
+ @event Block.BLOCK_LENGTH_CHANGING
  @param {object} this
  @param {object} caller the firing knob element
  @param {number} value the knob's position value (hours / minutes / seconds)
+ **/
+Block.BLOCK_LENGTH_CHANGING = 'BLOCK_LENGTH_CHANGING';
+
+/**
+ event fires when block length has changed, normally by a knob property widget
+ @event Block.BLOCK_LENGTH_CHANGED
+ @param {object} this
  **/
 Block.BLOCK_LENGTH_CHANGED = 'BLOCK_LENGTH_CHANGED';
 
@@ -80,7 +87,7 @@ function Block(i_placement, i_block_id) {
 Block.prototype._onTimelineChannelBlockSelected = function () {
     var self = this;
 
-    commBroker.listen(Block.BLOCK_ON_CHANNEL_SELECTED, function (e) {
+    commBroker.listenWithNamespace(Block.BLOCK_ON_CHANNEL_SELECTED, self, function (e) {
         var blockID = e.edata;
         if (self.m_block_id != blockID) {
             self._onTimelineChannelBlockDeselected();
@@ -146,14 +153,14 @@ Block.prototype._updateBlockLength = function () {
 }
 
 /**
- Take action when block length has changed which is triggered by the BLOCK_LENGTH_CHANGED event
+ Take action when block length has changed which is triggered by the BLOCK_LENGTH_CHANGING event
  @method _onTimelineChannelBlockLengthChanged
  @return none
  **/
 Block.prototype._onTimelineChannelBlockLengthChanged = function () {
     var self = this;
 
-    commBroker.listen(Block.BLOCK_LENGTH_CHANGED, function (e) {
+    commBroker.listenWithNamespace(Block.BLOCK_LENGTH_CHANGING, this, function (e) {
 
         if (self.m_selected) {
             var hours = $(Elements.BLOCK_LENGTH_HOURS).val();
@@ -177,9 +184,9 @@ Block.prototype._onTimelineChannelBlockLengthChanged = function () {
                     break;
                 }
             }
-            log('upd: ' + self.m_block_id + ' ' + hours + ' ' + minutes + ' ' + seconds);
+            // log('upd: ' + self.m_block_id + ' ' + hours + ' ' + minutes + ' ' + seconds);
             jalapeno.setBlockTimelineChannelBlockLength(self.m_block_id, hours, minutes, seconds);
-            log(self.m_block_id + ' ' + self.m_blockName);
+            commBroker.fire(Block.BLOCK_LENGTH_CHANGED);
         }
     });
 }
@@ -208,8 +215,7 @@ Block.prototype._propLengthKnobsInit = function () {
             // console.log(this.$.attr('value'));
             // console.log("release : " + value + ' ' + this['i'][0].id);
             var caller = this['i'][0].id;
-            commBroker.fire(Block.BLOCK_LENGTH_CHANGED, this, caller, value);
-
+            commBroker.fire(Block.BLOCK_LENGTH_CHANGING, this, caller, value);
         },
         /*cancel: function () {
          console.log("cancel : ", this);
@@ -275,3 +281,28 @@ Block.prototype.getBlockData = function () {
     }
     return data;
 }
+
+/**
+ Delete block is a public method used as fall back method, if not overridden by inherited instance
+ @method deleteBlock
+ @return none
+ **/
+Block.prototype.deleteBlock = function () {
+    var self = this;
+    self._deleteBlock();
+}
+
+/**
+ Delete block is a private method that is always called regardless if instance has
+ been inherited or not. Used for releasing memory for garbage collector.
+ @method _deleteBlock
+ @return none
+ **/
+Block.prototype._deleteBlock = function () {
+    var self = this;
+    commBroker.stopListenWithNamespace(Block.BLOCK_ON_CHANNEL_SELECTED, self);
+    commBroker.stopListenWithNamespace(Block.BLOCK_LENGTH_CHANGING, self);
+}
+
+
+

@@ -101,10 +101,9 @@ $(document).ready(function () {
     commBroker.listen(LoginComponent.AUTHENTICATION_STATUS, function (e) {
 
         var status = e.edata.status;
-        if (status == 'pass') {
+        if (status) {
 
             var rc4 = new RC4(globs['RC4KEY']);
-
             var crumb = e.edata.user + ':SignageStudioLite:' + e.edata.pass + ':' + ' USER'
             crumb = rc4.doEncrypt(crumb);
             $.mobile.changePage(Elements.STUDIO_LITE);
@@ -115,7 +114,7 @@ $(document).ready(function () {
                 $.cookie('signagestudioweblite', crumb, { expires: 300 });
 
         } else {
-            // todo add fail on login
+            alert('failed login');
         }
     });
 
@@ -246,8 +245,14 @@ function wireStudioUI() {
 
     setTimeout(function () {
         $(Elements.NAV_PANEL).panel("open");
+
+        // remove inner scroller
+        $('.ui-mobile-viewport').css({overflow: 'hidden'});
     }, 300);
 
+    var h = $(window).height()-($(window).height()*20/100);
+    $('#playlist').height(h+'px');
+    $('#files').height(h+'px');
 }
 
 function wireLogout() {

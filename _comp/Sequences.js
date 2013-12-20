@@ -164,14 +164,15 @@ Sequencer.prototype = {
 
     /**
      Delete a timeline from the Sequencer UI, as well as from the local member m_timelines.
-     @method deleteTimeline
+     @method deleteSequencedTimeline
      @param {Number} i_campaign_timeline_id
      @return none
      **/
-    deleteTimeline: function (i_campaign_timeline_id) {
+    deleteSequencedTimeline: function (i_campaign_timeline_id) {
         var self = this;
         var elementID = self.m_timelines[i_campaign_timeline_id];
         $('#' + elementID).remove();
+        // var timeline = self.m_timelines[i_campaign_timeline_id];
         delete self.m_timelines[i_campaign_timeline_id];
         // todo implement delete in db, remember I need to change the order in sequencer as well after deleting timeline that's part of sequncer
         //m_db.table_campaign_timeline_chanel_players().openForDelete(h);

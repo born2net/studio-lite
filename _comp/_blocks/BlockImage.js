@@ -134,19 +134,19 @@ BlockImage.prototype._updateTitle = function () {
  Get a default Image XML player_data boilerplate which we use to add a new Image component into msdb
  @method _getDefaultPlayerImageData
  @return {xml} xml data
-BlockImage.prototype._getDefaultPlayerImageData = function () {
-    var self = this;
+ BlockImage.prototype._getDefaultPlayerImageData = function () {
+ var self = this;
 
-    var xml = '<Player player="' + self.m_blockType + '" label="" interactive="0">' +
-        '<Data>' +
-        '<Resource resource="' + self.m_resourceID + '">' +
-        '<AspectRatio maintain="1" />' +
-        '<Image autoRewind="1" volume="1" backgroundAlpha="1" />' +
-        '</Resource>' +
-        '</Data>' +
-        '</Player>';
-    return xml;
-};
+ var xml = '<Player player="' + self.m_blockType + '" label="" interactive="0">' +
+ '<Data>' +
+ '<Resource resource="' + self.m_resourceID + '">' +
+ '<AspectRatio maintain="1" />' +
+ '<Image autoRewind="1" volume="1" backgroundAlpha="1" />' +
+ '</Resource>' +
+ '</Data>' +
+ '</Player>';
+ return xml;
+ };
  */
 
 /**
@@ -195,3 +195,16 @@ BlockImage.prototype.getResourceID = function () {
     var self = this;
     return self.m_resourceID;
 };
+
+
+/**
+ Delete this block
+ @method deleteBlock
+ @return none
+ **/
+BlockImage.prototype.deleteBlock = function () {
+    var self = this;
+    self._deleteBlock();
+}
+
+

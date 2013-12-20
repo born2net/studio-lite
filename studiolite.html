@@ -139,38 +139,6 @@ CSS
     z-index: 9999999;
 }
 
-.ui-icon-tachometer:before {
-    content: "\f0e4";
-}
-
-.ui-icon-capture-cmd:before {
-    content: "\f030";
-}
-
-.ui-icon-play-cmd:before {
-    content: "\f04b";
-}
-
-.ui-icon-stop-cmd:before {
-    content: "\f04d";
-}
-
-.ui-icon-reload-cmd:before {
-    content: "\f01e";
-}
-
-.ui-icon-long-prop:before {
-    content: "\f085";
-}
-
-.ui-icon-bars:before {
-    content: "\f0c9";
-}
-
-.ui-icon-long-prop {
-    font-size: 1.33em;
-}
-
 .ui-header {
     min-height: 92px;
     padding: 0;
@@ -722,7 +690,7 @@ Logo
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div data-role="page" id="appLogoID">
+<div style="overflow: hidden;" data-role="page" id="appLogoID">
     <div data-role="content">
         <div class="ui-grid-b">
             <div style="width:10%" class="ui-block-a">
@@ -860,13 +828,12 @@ Studio Lite - Application
                 <a id="navLogout" data-role="button">Logout</a>
 	        </div>
         </div>
-         <button id="navAdvance" data-corners="false" data-theme="e">Standard mode (FREE)</button>
+         <button id="navAdvance" data-corners="false" data-theme="a">Standard mode (FREE)</button>
     </div>-->
     <div data-role="content" style="padding: 0px; margin: 0px ">
 
-        <a id="slid" href="#navPanel" data-role='button' data-display="push"
-           style="position:absolute; top: 10px; left: 10px;font-weight:normal;"><i
-                class="fa fa-arrows-h fa-lg"></i></a>
+        <a id="slid" href="#navPanel" data-role='button' data-icon="icon-arrow-left" data-display="push"
+           style="position:absolute; top: 10px; left: 10px;font-weight:normal;"></a>
         <!--<a id="toggleNavigation" data-transition="fade" data-iconpos="notext" style="margin-right:5px ;position:relative; width:4%;top: 10px"  data-icon="back" data-theme="a"></a>-->
 
 
@@ -899,7 +866,6 @@ Screen Layout page
     </div>
 </div>
 
-
 <!-- //////////////////////////////////////////////////////////////////////////
 
 Add Resource page
@@ -916,27 +882,27 @@ Add Resource page
     <div data-role="collapsible-set" data-theme="a" data-content-theme="b" style="margin: 30px">
         <div data-role="collapsible" data-collapsed=false>
             <h2>Components</h2>
-            <ul id="addComponentList" data-role="listview" data-filter="true" data-filter-theme="c"
-                data-divider-theme="b">
+            <ul id="addComponentList" data-role="listview" data-filter="true" data-filter-theme="a"
+                data-divider-theme="a">
             </ul>
         </div>
         <div data-role="collapsible">
             <h2>Resources</h2>
-            <ul id="addResourceList" data-role="listview" data-filter="true" data-filter-theme="c"
-                data-divider-theme="b">
+            <ul id="addResourceList" data-role="listview" data-filter="true" data-filter-theme="a"
+                data-divider-theme="a">
             </ul>
         </div>
     </div>
-</div>
 </div>
 
 <!-- //////////////////////////////////////////////////////////////////////////
 
 Campaign view stack
 
+SEAN ADDED
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div id="playlist" style="min-height:1080px;display: none" data-theme="a">
+<div id="playlist" style="height:1px;display: none" data-theme="a">
     <div id="playListMainNavigation">
         <table width="100%" border="0" cellspacing="" cellpadding="0">
             <tr>
@@ -975,20 +941,22 @@ Campaign Selector view
 
 Resources
 
+SEAN
+
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div align="center" id="files" style="min-height:1080px; display: none" data-theme="a">
+<div align="center" id="files" style="height:1px; display: none" data-theme="a">
     <div align="left">
         <label data-role="button" align="left" data-icon="plus" data-inline="true" class="file-upload">Add file
             <input id="file" name="file" type="file" multiple data-role="none">
         </label>
-        <a id="fileRemove" align="left" data-theme="c" data-inline="true" data-icon="delete"
+        <a id="fileRemove" align="left" data-theme="a" data-inline="true" data-icon="delete"
            data-role="button">Remove</a>
     </div>
     <br/>
     <br/>
     <ul id="resourceLibList" style="padding: 40px; width:80%;" data-role="listview" data-filter="true"
-        data-filter-placeholder="Search resources..." data-inset="true" data-filter-theme="b" data-theme="a">
+        data-filter-placeholder="Search resources..." data-inset="true" data-filter-theme="a" data-theme="a">
     </ul>
 
 </div>
@@ -1012,83 +980,14 @@ Settings
 
 <div align="center" id="settings" style="min-height:1080px; display: none">
     <div id="settingsContainer" data-role="fieldcontain" style="padding:5px;margin-left:-5px;">
-        <label for="stationsRefreshRate">Station refresh rate (in seconds):</label>
-        <input id="stationsRefreshRate" type="range" value="60" min="60" max="300" data-theme="a" data-track-theme="b"/>
+        <label for="stationsRefreshRate">Station refresh rate:</label>
+        <input id="stationsRefreshRate" type="range" value="60" min="60" max="300" data-theme="a" data-track-theme="a"/>
 
-        <label for="defResourceLength">Default resource length (in seconds):</label>
-        <input id="defResourceLength" type="range" value="5" min="5" max="8640" data-theme="a" data-track-theme="b"/>
+        <label for="defResourceLength">Default resource length:</label>
+        <input id="defResourceLength" type="range" value="5" min="5" max="8640" data-theme="a" data-track-theme="a"/>
 
     </div>
 
-    <div style="padding:5px;margin-left:0px;">
-        <form>
-            <ul data-role="listview" data-inset="true">
-
-
-                <li data-role="fieldcontain" style="border-bottom:0px solid;" class="theme-trigger">
-                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
-                        <legend>Select Theme</legend>
-
-                        <a class="light" style="float:left;" href="#theme-light"> <input type="radio"
-                                                                                         name="radio-choice-a"
-                                                                                         id="radio-choice-ab"
-                                                                                         value="light"
-                                                                                         checked="checked">
-                            <label for="radio-choice-ab" style="font-size:16px;font-weight:400;color:#404040;">
-                                <legend>Light</legend>
-                            </label></a>
-                        <a class="dark" style="float:left;" href="#theme-dark"> <input type="radio"
-                                                                                       name="radio-choice-a"
-                                                                                       id="radio-choice-bb"
-                                                                                       value="dark">
-                            <label for="radio-choice-bb" style="font-size:16px;font-weight:400;color:#404040;">
-                                <legend>Dark</legend>
-                            </label> </a>
-                    </fieldset>
-                </li>
-            </ul>
-
-        </form>
-        <form>
-            <ul data-role="listview" data-inset="true">
-
-                <li data-role="fieldcontain" style="border-bottom:0px solid;" class="color-trigger">
-                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
-                        <legend>Select color</legend>
-
-                        <a class="green active" href="#color-green"><input type="radio" name="radio-choice-a"
-                                                                           id="radio-choice-ab" value="green"
-                                                                           checked="checked">
-                            <label for="radio-choice-ab" style="font-size:16px;font-weight:400;color:#404040;">
-                                <legend>Green</legend>
-                            </label></a>
-
-                        <a class="blue" href="#color-blue"><input type="radio" name="radio-choice-a"
-                                                                  id="radio-choice-bb" value="blue">
-                            <label for="radio-choice-bb" style="font-size:16px;font-weight:400;color:#404040;">
-                                <legend>Blue</legend>
-                            </label></a>
-                        <a class="purple" href="#color-purple"><input type="radio" name="radio-choice-a"
-                                                                      id="radio-choice-cb" value="purple">
-                            <label for="radio-choice-cb" style="font-size:16px;font-weight:400;color:#404040;">
-                                <legend>Purple</legend>
-                            </label></a>
-                        <a class="red" href="#color-red"><input type="radio" name="radio-choice-a" id="radio-choice-db"
-                                                                value="red">
-                            <label for="radio-choice-db" style="font-size:16px;font-weight:400;color:#404040;">
-                                <legend>Red</legend>
-                            </label></a>
-                        <a class="yellow" href="#color-yellow"><input type="radio" name="radio-choice-a"
-                                                                      id="radio-choice-eb" value="yellow">
-                            <label for="radio-choice-eb" style="font-size:16px;font-weight:400;color:#404040;">
-                                <legend>Yellow</legend>
-                            </label></a>
-
-                    </fieldset>
-                </li>
-            </ul>
-        </form>
-    </div>
 </div>
 
 <!-- //////////////////////////////////////////////////////////////////////////
@@ -1147,7 +1046,7 @@ Viewer properties
     <h5>Channel properties</h5>
 
     <label for="randomPlayback">Random Playback</label>
-    <select id="randomPlayback" name="Random playback" data-role="slider" data-track-theme="b">
+    <select id="randomPlayback" name="Random playback" data-role="slider" data-track-theme="a">
         <option value="off">Off</option>
         <option value="on">On</option>
     </select>
@@ -1234,7 +1133,7 @@ Block Video common properties
 <div id="blockVideoCommonProperties" style="display: none" data-theme="a">
     <h5>Video</h5>
     <label for="videoAspectRatio">Aspect ratio</label>
-    <select id="videoAspectRatio" name="Aspect ratio" data-role="slider" data-track-theme="b">
+    <select id="videoAspectRatio" name="Aspect ratio" data-role="slider" data-track-theme="a">
         <option value="off">Off</option>
         <option value="on">On</option>
     </select>
@@ -1249,7 +1148,7 @@ Block Image common properties
 <div id="blockImageCommonProperties" style="display: none">
     <h5>Image</h5>
     <label for="imageAspectRatio">Aspect ratio</label>
-    <select id="imageAspectRatio" name="Aspect ratio" data-role="slider" data-track-theme="b">
+    <select id="imageAspectRatio" name="Aspect ratio" data-role="slider" data-track-theme="a">
         <option value="off">Off</option>
         <option value="on">On</option>
     </select>
@@ -1314,12 +1213,11 @@ Campaign view
 
 <div id="campaignView" style="display: none">
 
-    <div id="campainViewMainContainer">
-    </div>
 
-    <div id="timelinesCollapsible" data-role="collapsible-set" data-collapsed-icon="bars" data-content-theme="b"
+    <div id="timelinesCollapsible" data-role="collapsible-set" data-icon="th-list" data-collapsed-icon="th-list"
+         data-content-theme="a"
          data-theme="a" style="padding:20px">
-        <div data-role="collapsible" data-collapsed="false">
+        <div data-role="collapsible" data-collapsed="true">
             <h3><p id="timeLinePropTitle">Timelines</p>
 
                 <div id="timeLinePropDiv">
@@ -1355,13 +1253,14 @@ Campaign view
         <a href="index.html" style="display:none" id="dettachDragDropMainScreenSelection" data-role="button">Link
             button</a>
     </div>
-
+    <div id="campainViewMainContainer">
+    </div>
     <!--
     <div class="ui-popup-container ui-popup-active" id="popupUndismissible-popup" tabindex="0" >
         <div data-role="popup" id="popupUndismissible" class="ui-content ui-popup ui-body-e ui-overlay-shadow
-            ui-corner-all" data-theme="e" style="width:300px; height: 300px" aria-disabled="false" data-disabled="false"
+            ui-corner-all" data-theme="a" style="width:300px; height: 300px" aria-disabled="false" data-disabled="false"
             data-shadow="true" data-corners="true" data-transition="flip" data-dismissible="true">
-              <a href="#" data-rel="back" data-role="button" data-theme="e" data-icon="delete"
+              <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete"
                 data-iconpos="notext" class="ui-btn-left ui-btn ui-shadow ui-btn-corner-all
                 ui-btn-icon-notext ui-btn-up-a" data-corners="true" data-shadow="true" data-iconshadow="true"
                 data-wrapperels="span" title="Close"><span class="ui-btn-inner">
@@ -1396,12 +1295,12 @@ Campaign view
         </div>
 
 
-        <ul data-role="listview" data-split-icon="plus" id="sortable" data-split-theme="d" data-inset="true"
+        <ul data-role="listview" data-split-icon="plus" id="sortable" data-split-theme="a" data-inset="true"
             style="padding:20px">
         </ul>
     </div>
 
-    <div data-role="popup" id="noResourceSelectedAlert" data-theme="d" data-overlay-theme="b" class="ui-content">
+    <div data-role="popup" id="noResourceSelectedAlert" data-theme="a" data-overlay-theme="a" class="ui-content">
         <p>Can't delete a resource</p>
 
         <p>You must first select a resource from the list. Press ok to continue.</p>

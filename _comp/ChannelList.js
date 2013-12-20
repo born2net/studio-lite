@@ -12,6 +12,7 @@ function ChannelList() {
     this.selected_campaign_timeline_id = undefined;
     this.selected_campaign_timeline_board_viewer_id = undefined;
     this._init();
+    this.listenBlockLengthChanged();
 };
 
 ChannelList.prototype = {
@@ -78,9 +79,10 @@ ChannelList.prototype = {
             var playerDuration = recBlock['player_duration']
 
             jalapeno.setBlockRecord(block_id, 'player_offset_time', playerOffsetTime);
-            // log('player ' + block_id + ' offset ' + playerOffsetTime + ' playerDuration ' + playerDuration);
+            log('player ' + block_id + ' offset ' + playerOffsetTime + ' playerDuration ' + playerDuration);
             playerOffsetTime = parseFloat(playerOffsetTime) + parseFloat(playerDuration);
         });
+        jalapeno.updateTimelineTotalDuration(this.selected_campaign_timeline_id);
     },
 
     /**
@@ -297,6 +299,18 @@ ChannelList.prototype = {
     },
 
     /**
+     Listen to when a block length has changed so we can update all other blocks offset respectively
+     @method listenBlockLengthChanged
+     @return none
+     **/
+    listenBlockLengthChanged: function(){
+        var self = this;
+        commBroker.listen(Block.BLOCK_LENGTH_CHANGED, function (e) {
+            self._reOrderChannelBlocks();
+        });
+    },
+
+    /**
      Select the last block on the channel (last LI element) and fire a tap event on it.
      @method _selectLastBlockOnChannel
      @return none
@@ -327,5 +341,7 @@ ChannelList.prototype = {
         // self.m_property.noPanel();
         // $(Elements.SORTABLE).listview('refresh');
         self._deselectBlocksFromChannel();
+        self._reOrderChannelBlocks();
     }
 }
+

@@ -15,7 +15,6 @@
  @constructor
  @return {Object} Jalapeno instance
  **/
-
 function Jalapeno() {
     this.m_user = undefined;
     this.m_pass = undefined;
@@ -34,9 +33,9 @@ Jalapeno.prototype = {
         self.m_loaderManager = new LoaderManager();
         self.m_msdb = self.m_loaderManager['m_dataBaseManager'];
 
-        self.m_loaderManager.create(self.m_user, self.m_pass, function () {
-            //todo: alon needs to add support for auth failed
-            i_callBack('pass');
+        self.m_loaderManager.create(self.m_user, self.m_pass, function (i_result) {
+            log(i_result + self.m_loaderManager['m_domain'] + ' ' + self.m_loaderManager['m_businessId']);
+            i_callBack(i_result);
         });
     },
 
@@ -47,8 +46,17 @@ Jalapeno.prototype = {
      **/
     save: function () {
         var self = this;
+        $.mobile.loading('show', {
+            text: 'saving to server...',
+            textVisible: true,
+            theme: 'a',
+            html: ""
+        });
         self.m_loaderManager.save();
         log('save');
+        setTimeout(function () {
+            $.mobile.loading('hide');
+        }, 2000);
     },
 
     /**
@@ -130,7 +138,7 @@ Jalapeno.prototype = {
      @param {Number} i_campaign_board_id
      @return {Number} board_id
      **/
-    getBoardFromCampaignBoard: function(i_campaign_board_id){
+    getBoardFromCampaignBoard: function (i_campaign_board_id) {
         var self = this;
         var recCampaignBoard = self.m_msdb.table_campaign_boards().getRec(i_campaign_board_id);
         return recCampaignBoard.board_id;
@@ -168,7 +176,6 @@ Jalapeno.prototype = {
      **/
     createNewTemplate: function (i_board_id, i_screenProps) {
         var self = this;
-
 
         var returnData = {
             board_template_id: -1,
@@ -233,7 +240,9 @@ Jalapeno.prototype = {
 
         var timelinePlayers = self.m_msdb.table_campaign_timeline_chanel_players();
         var recTimelinePlayer = timelinePlayers.createRecord();
-        recTimelinePlayer.player_data = model.getComponent(i_playerCode).getDefaultPlayerData(i_resourceID);
+        var component = model.getComponent(i_playerCode);
+        var player_data = component.getDefaultPlayerData(i_resourceID);
+        recTimelinePlayer.player_data = player_data;
         recTimelinePlayer.campaign_timeline_chanel_id = i_campaign_timeline_chanel_id;
         recTimelinePlayer.player_duration = 10;
         recTimelinePlayer.player_offset_time = i_offset;
@@ -426,14 +435,13 @@ Jalapeno.prototype = {
     setCampaignTimelineSequencerIndex: function (i_campaign_id, i_campaign_timeline_id, i_sequenceIndex) {
         var self = this;
         var updatedSequence = false;
-        // todo does not save often when changing sequncer around ???
-
         $(self.m_msdb.table_campaign_timeline_sequences().getAllPrimaryKeys()).each(function (k, campaign_timeline_sequence_id) {
             var recCampaignTimelineSequence = self.m_msdb.table_campaign_timeline_sequences().getRec(campaign_timeline_sequence_id);
             if (recCampaignTimelineSequence.campaign_timeline_id == i_campaign_timeline_id) {
                 self.m_msdb.table_campaign_timeline_sequences().openForEdit(campaign_timeline_sequence_id);
                 var recEditCampaignTimelineSequence = self.m_msdb.table_campaign_timeline_sequences().getRec(campaign_timeline_sequence_id);
                 recEditCampaignTimelineSequence.sequence_index = i_sequenceIndex;
+                recEditCampaignTimelineSequence.sequence_count = 0;
                 updatedSequence = true;
             }
         });
@@ -441,11 +449,12 @@ Jalapeno.prototype = {
         // i_campaign_timeline_id was not found in the sequencer so create new record
         if (updatedSequence == false) {
             var table_campaign_timeline_sequences = self.m_msdb.table_campaign_timeline_sequences();
-            var table_campaign_timeline_sequence = table_campaign_timeline_sequences.createRecord();
-            table_campaign_timeline_sequence.sequence_index = i_sequenceIndex;
-            table_campaign_timeline_sequence.campaign_timeline_id = i_campaign_timeline_id;
-            table_campaign_timeline_sequence.campaign_id = i_campaign_id;
-            table_campaign_timeline_sequences.addRecord(table_campaign_timeline_sequence);
+            var recCampaignTimelineSequence = table_campaign_timeline_sequences.createRecord();
+            recCampaignTimelineSequence.sequence_index = i_sequenceIndex;
+            recCampaignTimelineSequence.sequence_count = 0;
+            recCampaignTimelineSequence.campaign_timeline_id = i_campaign_timeline_id;
+            recCampaignTimelineSequence.campaign_id = i_campaign_id;
+            table_campaign_timeline_sequences.addRecord(recCampaignTimelineSequence);
         }
     },
 
@@ -651,6 +660,42 @@ Jalapeno.prototype = {
         var resourceList = self.m_loaderManager.createResources(document.getElementById(i_elementID));
         alert('Be sure to Save your work to push the files to the servers');
         return resourceList;
+    },
+
+    /**
+     Update a timeline's duration which is set as the total sum of all blocks within the longest running channel
+     @method updateTimelineTotalDuration
+     @param {Number} i_campaign_timeline_id
+     @return none
+     **/
+    updateTimelineTotalDuration: function (i_campaign_timeline_id) {
+        var self = this;
+
+        var longestChannelDuration = 0;
+        // Get all timelines
+        $(self.m_msdb.table_campaign_timelines().getAllPrimaryKeys()).each(function (k, campaign_timeline_id) {
+            if (campaign_timeline_id == i_campaign_timeline_id) {
+                // get all channels that belong to timeline
+                $(self.m_msdb.table_campaign_timeline_chanels().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_id) {
+                    var recCampaignTimelineChannel = self.m_msdb.table_campaign_timeline_chanels().getRec(campaign_timeline_chanel_id);
+                    if (campaign_timeline_id == recCampaignTimelineChannel['campaign_timeline_id']) {
+
+                        var timelineDuration = 0;
+                        // get all players / resources that belong timeline
+                        $(self.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
+                            var recCampaignTimelineChannelPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
+                            if (campaign_timeline_chanel_id == recCampaignTimelineChannelPlayer['campaign_timeline_chanel_id']) {
+                                // log(campaign_timeline_chanel_player_id + ' ' + recCampaignTimelineChannelPlayer['player_duration']);
+                                timelineDuration += parseFloat(recCampaignTimelineChannelPlayer['player_duration']);
+                                if (timelineDuration > longestChannelDuration)
+                                    longestChannelDuration = timelineDuration;
+                            }
+                        });
+                    }
+                });
+            }
+        });
+        jalapeno.setCampaignTimelineRecord(i_campaign_timeline_id, 'timeline_duration', longestChannelDuration);
     },
 
     /**

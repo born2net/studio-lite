@@ -114,7 +114,7 @@ Elements.CHANNEL_ADD_RESOURCE = '#channelAddResource';
 
 Elements.EMPTY_PROPERTIES = '#emptyProperties';
 Elements.RESOURCE_PROPERTIES = '#resourceProperties';
-Elements.FILE_SELECTION = '#file';
+Elements.FILE_SELECTION = '#fileSelection';
 Elements.FILE_REMOVE = '#fileRemove';
 Elements.SELECTED_LIB_RESOURCE_NAME = '#selectedLibResourceName';
 

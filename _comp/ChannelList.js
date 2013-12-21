@@ -47,7 +47,7 @@ ChannelList.prototype = {
         var self = this;
         $(Elements.CHANNEL_REMOVE_RESOURCE).tap(function (e) {
             if (self.selected_block_id == undefined) {
-                $(Elements.NO_RESOURCE_SELECTED_ALERT).popup("open", {transition: 'pop', 'position-to': 'window', width: '400', height: '400'});
+                popUpDialog('No resource selected', 'Please select a resource first and try again', Elements.POPUP_OK);
                 return;
             }
             self._deleteChannelBlock(self.selected_block_id);

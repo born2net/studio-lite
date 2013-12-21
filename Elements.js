@@ -109,7 +109,6 @@ Elements.RANDOM_PLAYBACK = '#randomPlayback';
 
 Elements.SORTABLE = '#sortable';
 Elements.CHANNEL_REMOVE_RESOURCE = '#channelRemoveResource';
-Elements.NO_RESOURCE_SELECTED_ALERT = '#noResourceSelectedAlert';
 Elements.CHANNEL_ADD_RESOURCE = '#channelAddResource';
 
 Elements.EMPTY_PROPERTIES = '#emptyProperties';

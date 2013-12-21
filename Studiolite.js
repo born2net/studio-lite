@@ -247,11 +247,11 @@ function wireStudioUI() {
         });
         jalapeno.save(function (i_result) {
             $.mobile.loading('hide');
+            popUpDialog('aaaaaaaaaaa', 'bbbbb', Elements.POPUP_YES_NO, function(i_selected){
+                log(i_selected);
+            });
             if (!i_result.status) {
-                var elems= $(Elements.POPUP_OK + ' p');
-                $($(elems)[0]).text('Sorry an error occurred :(');
-                $($(elems)[1]).text(i_result.error);
-                $(Elements.POPUP_OK).popup("open", {transition: 'pop', 'position-to': 'window', width: '750', height: '600'});
+                popUpDialog('Sorry an error occurred :(', i_result.error, Elements.POPUP_OK);
             }
         });
         return false;
@@ -294,8 +294,4 @@ function disableBack() {
 
 $(document).bind('pageinit', function () {
     // wrap additional hooks
-    // setTimeout(function(){
-    //    $(Elements.NO_RESOURCE_SELECTED_ALERT).popup("open", {transition: 'pop', 'position-to': 'window', width: '400', height: '400'});
-    // },3000);
-
 });

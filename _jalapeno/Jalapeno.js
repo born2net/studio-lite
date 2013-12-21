@@ -44,19 +44,9 @@ Jalapeno.prototype = {
      @method save
      @return none
      **/
-    save: function () {
+    save: function (i_callback) {
         var self = this;
-        $.mobile.loading('show', {
-            text: 'saving to server...',
-            textVisible: true,
-            theme: 'a',
-            html: ""
-        });
-        self.m_loaderManager.save();
-        log('save');
-        setTimeout(function () {
-            $.mobile.loading('hide');
-        }, 2000);
+        self.m_loaderManager.save(i_callback);
     },
 
     /**
@@ -406,25 +396,6 @@ Jalapeno.prototype = {
     },
 
     /**
-     Get the sequence index of a timeline in the specified campaign
-     @method getCampaignTimelineSequencerIndex
-     @param {Number} i_campaign_timeline_id
-     @return {Number} sequenceIndex
-     **/
-    getCampaignTimelineSequencerIndex: function (i_campaign_timeline_id) {
-        var self = this;
-        var sequenceIndex = -1;
-
-        $(self.m_msdb.table_campaign_timeline_sequences().getAllPrimaryKeys()).each(function (k, campaign_timeline_sequence_id) {
-            var recCampaignTimelineSequence = self.m_msdb.table_campaign_timeline_sequences().getRec(campaign_timeline_sequence_id);
-            if (recCampaignTimelineSequence['campaign_timeline_id'] == i_campaign_timeline_id) {
-                sequenceIndex = recCampaignTimelineSequence['sequence_index'];
-            }
-        });
-        return sequenceIndex;
-    },
-
-    /**
      Set the sequence index of a timeline in campaign. If timeline is not found in sequencer, we insert it with the supplied i_sequenceIndex
      @method setCampaignTimelineSequencerIndex
      @param {Number} i_campaign_id
@@ -475,6 +446,25 @@ Jalapeno.prototype = {
                 timeline_id = recCampaignTimelineSequence['campaign_timeline_id']
         });
         return timeline_id;
+    },
+
+    /**
+     Get the sequence index of a timeline in the specified campaign
+     @method getCampaignTimelineSequencerIndex
+     @param {Number} i_campaign_timeline_id
+     @return {Number} sequenceIndex
+     **/
+    getCampaignTimelineSequencerIndex: function (i_campaign_timeline_id) {
+        var self = this;
+        var sequenceIndex = -1;
+
+        $(self.m_msdb.table_campaign_timeline_sequences().getAllPrimaryKeys()).each(function (k, campaign_timeline_sequence_id) {
+            var recCampaignTimelineSequence = self.m_msdb.table_campaign_timeline_sequences().getRec(campaign_timeline_sequence_id);
+            if (recCampaignTimelineSequence['campaign_timeline_id'] == i_campaign_timeline_id) {
+                sequenceIndex = recCampaignTimelineSequence['sequence_index'];
+            }
+        });
+        return sequenceIndex;
     },
 
     /**

@@ -140,7 +140,6 @@ Channel.prototype = {
      @method getBlocks
      @return {Object} blocksSorted
      **/
-
     getBlocks: function () {
         var self = this;
         var blocksSorted = [];

@@ -174,9 +174,8 @@ Sequencer.prototype = {
         $('#' + elementID).remove();
         // var timeline = self.m_timelines[i_campaign_timeline_id];
         delete self.m_timelines[i_campaign_timeline_id];
-        // todo implement delete in db, remember I need to change the order in sequencer as well after deleting timeline that's part of sequncer
-        //m_db.table_campaign_timeline_chanel_players().openForDelete(h);
-        // reorder timelines Sequencer after db delete timeline
+        jalapeno.removeTimelineFromCampaign(i_campaign_timeline_id);
+        self.reSequenceTimelines();
     },
 
     /**

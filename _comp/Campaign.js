@@ -7,7 +7,6 @@
  @constructor
  @return {Object} instantiated Campaign
  **/
-
 function Campaign() {
 
     this.self = this;
@@ -284,10 +283,10 @@ Campaign.prototype = {
         e.preventDefault();
         e.stopImmediatePropagation();
 
-        commBroker.getService('Sequences').deleteSequencedTimeline(self.m_selected_timeline_id);
         self.m_timelines[self.m_selected_timeline_id].deleteTimeline();
         delete self.m_timelines[self.m_selected_timeline_id];
         jalapeno.removeTimelineFromCampaign(self.m_selected_timeline_id);
+        commBroker.getService('Sequences').deleteSequencedTimeline(self.m_selected_timeline_id);
         self._loadSequencerFirstTimeline();
     },
 

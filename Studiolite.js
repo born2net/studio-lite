@@ -239,7 +239,21 @@ function wireStudioUI() {
     });
 
     $(Elements.CAMPAIN_SAVE).tap(function () {
-        jalapeno.save();
+        $.mobile.loading('show', {
+            text: 'saving to server...',
+            textVisible: true,
+            theme: 'a',
+            html: ""
+        });
+        jalapeno.save(function (i_result) {
+            $.mobile.loading('hide');
+            if (!i_result.status) {
+                var elems= $(Elements.POPUP_OK + ' p');
+                $($(elems)[0]).text('Sorry an error occurred :(');
+                $($(elems)[1]).text(i_result.error);
+                $(Elements.POPUP_OK).popup("open", {transition: 'pop', 'position-to': 'window', width: '750', height: '600'});
+            }
+        });
         return false;
     });
 
@@ -250,9 +264,9 @@ function wireStudioUI() {
         $('.ui-mobile-viewport').css({overflow: 'hidden'});
     }, 300);
 
-    var h = $(window).height()-($(window).height()*20/100);
-    $('#playlist').height(h+'px');
-    $('#files').height(h+'px');
+    var h = $(window).height() - ($(window).height() * 20 / 100);
+    $('#playlist').height(h + 'px');
+    $('#files').height(h + 'px');
 }
 
 function wireLogout() {

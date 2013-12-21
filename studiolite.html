@@ -99,23 +99,7 @@ CSS
 
 
 <STYLE type="text/css">
-.ui-icon-loading:before {
-    content: "\f110";
-    animation: 1s linear 0s normal none infinite spin;
-    -webkit-animation: 1s linear 0s normal none infinite spin;
-    margin-top: -2px;
-    font-size: 3.39em;
-}
 
-.ui-loader .ui-icon {
-    border: 1px solid;
-    border-radius: 50%;
-    height: 50px;
-    margin: auto;
-    width: 50px;
-}
-
-/*SEAN ADD*/
 
 #noResourceSelectedAlert > p:first-child {
     font-size: 2em;
@@ -1308,6 +1292,23 @@ Campaign view
            data-mini="true">OK</a>
         <!-- <a href="index.html" data-role="button" data-rel="back" data-inline="true" data-mini="true">Cancel</a> -->
     </div>
+
+    <!-- SEAN ADDED -->
+    <div data-role="popup" id="popupyesno" data-theme="a" data-overlay-theme="a" class="ui-content">
+        <p></p>
+        <p></p>
+        <a href="index.html" data-role="button" data-rel="back" data-theme="a" data-inline="true" data-icon="check"
+           data-mini="true">Yes</a>
+        <a href="index.html" data-role="button" data-rel="back" data-inline="true" data-mini="true">No</a>
+    </div>
+
+    <div data-role="popup" id="popupok" data-theme="a" data-overlay-theme="a" class="ui-content">
+        <p></p>
+        <p></p>
+        <a href="index.html" data-role="button" data-rel="back" data-theme="a" data-inline="true" data-icon="check"
+           data-mini="true">OK</a>
+    </div>
+    <!--  -->
 </div>
 
 <!-- //////////////////////////////////////////////////////////////////////////

@@ -27,8 +27,8 @@ Elements.ANDROID_THEME = '#jQMnDTheme';
 Elements.ANDROID_COLOR = '#jQMnDColor';
 Elements.APP_NAME = '#appName';
 Elements.COLOR_CUSTOM = '#color-custom';
-
-
+Elements.POPUP_YES_NO = '#popupyesno';
+Elements.POPUP_OK = '#popupok';
 
 
 Elements.PROPERTIES_PANEL = '#propertiesPanel';

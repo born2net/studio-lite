@@ -70,6 +70,9 @@ $(document).ready(function () {
     var compStations = new CompStations(Elements.STATIONS);
     commBroker.setService('CompStations', compStations);
 
+    var popupManager = new PopupManager(Elements.POPUP_YES_NO, Elements.POPUP_OK);
+    commBroker.setService('PopupManager', popupManager);
+
     var compX2JS = x2js = new X2JS({escapeMode: true, attributePrefix: "_", arrayAccessForm: "none", emptyNodeForm: "text", enableToStringFunc: true, arrayAccessFormPaths: [], skipEmptyTextNodesForObj: true});
     commBroker.setService('compX2JS', compX2JS);
 
@@ -232,26 +235,30 @@ function wireStudioUI() {
     });
 
     $(Elements.CAMPAIN_MANAGER).tap(function () {
-        if (confirm('Changes will be lost, would you like to save your changes first before exiting to campaign manager?')) {
-            window.location.reload();
-        }
+        var popupManager = commBroker.getService('PopupManager');
+        popupManager.popUpDialogYesNo('Reload', 'Changes will be lost if not saved, are you sure you want to restart?', function(i_selected){
+            if (i_selected=='yes'){
+                setTimeout(function(){
+                    document.location.reload(true);
+                },1000);
+                return true;
+            }
+        });
         return false;
     });
 
     $(Elements.CAMPAIN_SAVE).tap(function () {
-        $.mobile.loading('show', {
-            text: 'saving to server...',
-            textVisible: true,
-            theme: 'a',
-            html: ""
-        });
+
+        commBroker.getService('PopupManager').showLoading('Saving to server...');
+
         jalapeno.save(function (i_result) {
-            $.mobile.loading('hide');
-            popUpDialog('aaaaaaaaaaa', 'bbbbb', Elements.POPUP_YES_NO, function(i_selected){
-                log(i_selected);
-            });
+            var popupManager = commBroker.getService('PopupManager');
+            popupManager.hideLoading();
             if (!i_result.status) {
-                popUpDialog('Sorry an error occurred :(', i_result.error, Elements.POPUP_OK);
+                var popupManager = commBroker.getService('PopupManager');
+                popupManager.popUpDialogOK('Sorry an error occurred :(', i_result.error, function(){});
+            } else {
+                popupManager.popUpDialogOK('saved', 'Successfully saved your work onto the server...', function(){});
             }
         });
         return false;

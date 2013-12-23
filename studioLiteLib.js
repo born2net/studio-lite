@@ -116,24 +116,7 @@ function log(msg) {
 }
 
 
-/*/////////////////////////////////////////////
- popUpDialog
- /////////////////////////////////////////////*/
 
-function popUpDialog(i_title, i_body, i_element, i_callback) {
-    var elems = $(i_element + ' p');
-    $($(elems)[0]).text(i_title);
-    $($(elems)[1]).text(i_body);
-    $(i_element).popup("open", {transition: 'pop', 'position-to': 'window', width: '750', height: '600'});
-    $(i_element + '> a').one('tap', function (e) {
-        var selected = $(e.currentTarget).attr('name');
-        i_callback(selected);
-    });
-    // unbind if clicked away and not in button
-    $(i_element).one('popupafterclose', function (e, ui) {
-        $(i_element + '> a').unbind('tap');
-    });
-}
 
 /*/////////////////////////////////////////////
  initUserAgent

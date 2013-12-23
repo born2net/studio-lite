@@ -304,5 +304,3 @@ Block.prototype._deleteBlock = function () {
     commBroker.stopListenWithNamespace(Block.BLOCK_LENGTH_CHANGING, self);
 }
 
-
-

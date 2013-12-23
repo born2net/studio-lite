@@ -525,6 +525,97 @@ Jalapeno.prototype = {
     },
 
     /**
+     Remove a timeline from sequences
+     @method removeTimelineFromSequences
+     @param {Number} i_timeline_id
+     @return {Boolean} status
+     **/
+    removeTimelineFromSequences: function (i_timeline_id) {
+        var self = this;
+        return self.m_msdb.table_campaign_timeline_sequences().openForDelete();
+    },
+
+    /**
+     Remove board template from timeline
+     @method removeBoardTemplateFromTimeline
+     @param {Number} i_timeline_id
+     @return {Number} campaign_timeline_board_template_id
+     **/
+    removeBoardTemplateFromTimeline: function (i_timeline_id) {
+        var self = this;
+
+        var campaign_timeline_board_template_id = jalapeno.getTemplatesOfTimeline(i_timeline_id)[0];
+        var a =  self.m_msdb.table_campaign_timeline_board_templates().openForDelete(campaign_timeline_board_template_id);
+        return campaign_timeline_board_template_id;
+    },
+
+    /**
+     Remove board template
+     @method removeBoardTemplate
+     @param {Number} i_campaign_timeline_board_template_id
+     @return {Number} board_template_id
+     **/
+    removeBoardTemplate: function (i_campaign_timeline_board_template_id) {
+        var self = this;
+
+        var recCampaignTimelimeBoardTemplate = self.m_msdb.table_campaign_timeline_board_templates().getRec(i_campaign_timeline_board_template_id);
+        var board_template_id = recCampaignTimelimeBoardTemplate['board_template_id'];
+        var a = self.m_msdb.table_board_templates().openForDelete(board_template_id);
+        return board_template_id;
+    },
+
+    /**
+     Remove board template viewers
+     @method removeBoardTemplateViewers
+     @param {Number} i_board_template_id
+     @return {Array} boardTemplateViewerIDs
+     **/
+    removeBoardTemplateViewers: function (i_board_template_id) {
+        var self = this;
+        var boardTemplateViewerIDs = [];
+
+        $(jalapeno.m_msdb.table_board_template_viewers().getAllPrimaryKeys()).each(function (k, board_template_viewer_id) {
+            var recBoardTemplateViewers = self.m_msdb.table_board_template_viewers().getRec(board_template_viewer_id);
+            if (recBoardTemplateViewers['board_template_id'] == i_board_template_id) {
+                var a = self.m_msdb.table_board_template_viewers().openForDelete(board_template_viewer_id);
+                boardTemplateViewerIDs.push(board_template_viewer_id);
+            }
+        });
+        return boardTemplateViewerIDs;
+    },
+    /*
+    removeBoardTemplateFromTimeline: function (i_timeline_id) {
+        var self = this;
+
+        var campaign_timeline_board_template_id = jalapeno.getTemplatesOfTimeline(i_timeline_id)[0];
+        self.m_msdb.table_campaign_timeline_board_templates().openForDelete(campaign_timeline_board_template_id);
+
+        var recCampaignTimelimeBoardTemplate = self.m_msdb.table_campaign_timeline_board_templates().getRec(campaign_timeline_board_template_id);
+        var board_template_id = recCampaignTimelimeBoardTemplate['board_template_id'];
+
+        self.m_msdb.table_board_templates().openForDelete(board_template_id);
+
+        $(jalapeno.m_msdb.table_board_template_viewers().getAllPrimaryKeys()).each(function (k, board_template_viewer_id) {
+            var recBoardTemplateViewers = self.m_msdb.table_board_template_viewers().getRec(board_template_viewer_id);
+            if (recBoardTemplateViewers['board_template_id'] == board_template_id) {
+                self.m_msdb.table_board_template_viewers().openForDelete(board_template_viewer_id);
+            }
+        });
+    },
+    */
+
+    /**
+     Remove a channel from a timeline
+     @method removeChannelFromTimeline
+     @param {Number} i_bloi_channel_idck_id
+     @return none
+     **/
+    removeChannelFromTimeline: function (i_channel_id) {
+        var self = this;
+        var status = self.m_msdb.table_campaign_timeline_chanels().openForDelete(i_block_id);
+    },
+
+    /**
      Remove blocks (a.k.a players) from all campaign that use the specified resource_id (native id)
      @method removeBlocksWithResourceID
      @param {Number} i_resource_id

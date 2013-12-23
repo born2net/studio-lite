@@ -27,7 +27,6 @@ function Timeline(i_campaign_timeline_id) {
     this.m_timing = 'sequencer';
     this.m_viewStackIndex = -1;
     this.m_property = commBroker.getService('CompProperty');
-    this.m_helperSDK = commBroker.getService('HelperSDK');
     this.m_selected = false;
 
     this._init();
@@ -253,6 +252,10 @@ Timeline.prototype = {
      **/
     deleteTimeline: function(){
         var self = this;
+        jalapeno.removeTimelineFromCampaign(self.m_campaign_timeline_id);
+        var campaignTimelineBoardTemplateID = jalapeno.removeBoardTemplateFromTimeline(self.m_campaign_timeline_id);
+        var boardTemplateID = jalapeno.removeBoardTemplate(campaignTimelineBoardTemplateID);
+        jalapeno.removeBoardTemplateViewers(boardTemplateID);
         for (var channel in self.m_channels){
             self.m_channels[channel].deleteChannel();
         }

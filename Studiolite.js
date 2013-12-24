@@ -274,6 +274,7 @@ function wireStudioUI() {
     var h = $(window).height() - ($(window).height() * 20 / 100);
     $('#playlist').height(h + 'px');
     $('#files').height(h + 'px');
+    $('#stations').height(h + 'px');
 }
 
 function wireLogout() {

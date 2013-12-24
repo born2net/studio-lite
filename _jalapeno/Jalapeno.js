@@ -784,7 +784,6 @@ Jalapeno.prototype = {
     uploadResources: function (i_elementID) {
         var self = this;
         var resourceList = self.m_loaderManager.createResources(document.getElementById(i_elementID));
-        alert('Be sure to Save your work to push the files to the servers');
         return resourceList;
     },
 

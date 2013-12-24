@@ -195,24 +195,9 @@ CompResourcesList.prototype = {
      **/
     _onFileSelected: function (e) {
         var self = this;
-        var resources = jalapeno.m_msdb.table_resources();
-        var resourceList = jalapeno.uploadResources('file');
-        // XMLHttpRequest cannot load http://jupiter.signage.me/WebService/JsUpload.ashx. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'https://secure.dynawebs.net' is therefore not allowed access.	https://secure.dynawebs.net/_php/studioLite-debug.php#studioLite:0
-
-        /*
-         for (var iResource = 0; iResource < resourceList.length; iResource++) {
-         var hResource = resourceList[iResource];
-
-         var timelinePlayers = jalapeno.table_campaign_timeline_chanel_players();
-         var timelinePlayer1 = timelinePlayers.createRecord();
-         timelinePlayer1.player_data = '<Player player="3130"><Data><Resource hResource="' + hResource + '" /></Data></Player>';
-         timelinePlayer1.campaign_timeline_chanel_id = this.hCampaignTimelineChanel;
-         timelinePlayer1.player_duration = 10;
-         timelinePlayer1.player_offset_time = offset;
-         timelinePlayers.addRecord(timelinePlayer1);
-
-         offset += 10;
-         }
-         */
+        jalapeno.uploadResources('file');
+        self._loadResourceList();
+        self._listenOpenProps();
+        self._listenRemoveResource();
     }
 }

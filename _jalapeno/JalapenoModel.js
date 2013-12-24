@@ -440,7 +440,8 @@ JalapenoModel.prototype = {
 
         // log('getting stations...');
 
-        var ajaxWrapper = new AjaxJsonGetter(globs['debug'] ? 'https://secure.dynawebs.net/_php/msWSsec-debug.php' : 'https://secure.dynawebs.net/_php/msWSsec.php');
+        //TODO: Need to release msWSsec-debug.php with new cookie RC4 parser before release, for now I added msWSsec-debug.php on all cases
+        var ajaxWrapper = new AjaxJsonGetter(globs['debug'] ? 'https://secure.dynawebs.net/_php/msWSsec-debug.php' : 'https://secure.dynawebs.net/_php/msWSsec-debug.php');
         ajaxWrapper.getData(srvCmd, onServerReply);
 
         function onServerReply(data) {

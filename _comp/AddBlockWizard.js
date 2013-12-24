@@ -131,7 +131,7 @@ AddBlockWizard.prototype = {
         // var back = $.mobile.activePage.prev('[data-role=page]');
         // $.mobile.changePage(back, {transition: 'pop', reverse: true });
         // $.mobile.changePage(Elements.STUDIO_LITE,{transition: "pop"});
-        // todo: fix back so we dont use history to prevent false popups
+        // TODO: fix back so we dont use history to prevent false popups
         history.back();
         return false;
     },

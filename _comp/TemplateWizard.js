@@ -40,7 +40,8 @@ TemplateWizard.prototype = {
      @return none
      **/
     buildScreensLayoutList: function () {
-
+        $('.ui-mobile-viewport').css({overflow: 'visible'});
+        //todo: clean up viewpoer scroll toggle
         var self = this;
         var resolution = commBroker.getService('ScreenResolution').getResolution();
         var orientation = commBroker.getService('ScreenOrientation').getOrientation();
@@ -91,6 +92,8 @@ TemplateWizard.prototype = {
         this.self = null;
         this.m_screens = null;
         this.m_element = null;
+        $('.ui-mobile-viewport').css({overflow: 'hidden'});
+        //todo: clean up viewpoer scroll toggle
     }
 }
 

@@ -157,6 +157,7 @@ Elements.CLASS_ADD_RESOURE_TO_CHANNEL = '.addResoureToChannel';
 Elements.CLASS_SELECTED_LIB_RESOURCE = '.selectedLibResource';
 Elements.CLASS_SELECTED_LIB_RESOURCE2 = 'selectedLibResource';
 Elements.CLASS_RESOURCE_LIB_OPEN_PROPS = '.resourceLibOpenProps';
+Elements.CLASS_CURRENT_SELECTED_RESOUCRE2 = 'currentSelectedResource';
 Elements.CLASS_RESOURCE_LIB_OPEN_PROPS2 = 'resourceLibOpenProps';
 Elements.CLASS_SELECTED_RESOURCE = '.selectedResource';
 Elements.CLASS_UI_ICON = '.ui-icon';

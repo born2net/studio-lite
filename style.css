@@ -643,8 +643,9 @@ aside > aside > div > ul > li {
 }
 
 .currentSelectedResource {
-    background-image: linear-gradient(red, red) !important;
+    background: #f0f0f0;
 }
+
 
 .fileinput-button {
     position: relative;

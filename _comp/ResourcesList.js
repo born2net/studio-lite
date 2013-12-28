@@ -167,12 +167,9 @@ CompResourcesList.prototype = {
 
             self.m_property.viewPanel(Elements.RESOURCE_PROPERTIES);
 
-            $(Elements.CLASS_SELECTED_LIB_RESOURCE).removeClass('liSelectedItem');
-            $(resourceElem).addClass('liSelectedItem');
-
-            // $('.selectedLibResource').css('background-image', 'linear-gradient(#fff , #f1f1f1)');
-            // $(resourceElem).css('background-image', 'linear-gradient(#bebebe , #bebebe)');
-            // $(resourceProp).css('background-image', 'linear-gradient(#bebebe , #bebebe)');
+            $(Elements.CLASS_SELECTED_LIB_RESOURCE).removeClass(Elements.CLASS_CURRENT_SELECTED_RESOUCRE2);
+            $(resourceElem).addClass(Elements.CLASS_CURRENT_SELECTED_RESOUCRE2);
+            $(resourceProp).addClass(Elements.CLASS_CURRENT_SELECTED_RESOUCRE2);
 
             var recResource = jalapeno.getResourceRecord(self.m_selected_resource_id);
 

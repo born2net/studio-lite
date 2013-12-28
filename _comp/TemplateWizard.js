@@ -93,7 +93,8 @@ TemplateWizard.prototype = {
         this.m_screens = null;
         this.m_element = null;
         $('.ui-mobile-viewport').css({overflow: 'hidden'});
-        //todo: clean up viewpoer scroll toggle
+        //todo: clean up viewport scroll toggle
+        //
     }
 }
 

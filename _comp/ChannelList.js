@@ -245,11 +245,12 @@ ChannelList.prototype = {
         $(Elements.CLASS_SELECTED_RESOURCE).tap(function (e) {
             var openProps = $(e.target).closest('a').hasClass('resourceOpenProperties') ? true : false;
             var resourceElem = $(e.target).closest('li');
-            // var resourceProp = $(resourceElem).find('.resourceOpenProperties');
+            var resourceProp = $(resourceElem).find('.resourceOpenProperties');
             self.selected_block_id = $(resourceElem).data('block_id');
 
-            $(Elements.CLASS_SELECTED_RESOURCE).removeClass('liSelectedItem');
-            $(resourceElem).addClass('liSelectedItem');
+            $(Elements.CLASS_SELECTED_RESOURCE).removeClass(Elements.CLASS_CURRENT_SELECTED_RESOUCRE2);
+            $(resourceElem).addClass(Elements.CLASS_CURRENT_SELECTED_RESOUCRE2);
+            $(resourceProp).addClass(Elements.CLASS_CURRENT_SELECTED_RESOUCRE2);
 
             self._blockChannelSelected();
 

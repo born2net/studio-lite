@@ -32,6 +32,7 @@ AddBlockWizard.prototype = {
     _init: function () {
         var self = this;
         self._wireUI();
+        $('.ui-mobile-viewport').css({overflow: 'visible'});
     },
 
     /**
@@ -142,6 +143,7 @@ AddBlockWizard.prototype = {
      @return none
      **/
     destroy: function () {
+        $('.ui-mobile-viewport').css({overflow: 'hidden'});
         $(Elements.ADD_RESOURCE_LIST).empty();
         $(Elements.ADD_COMPONENT_LIST).empty();
     }

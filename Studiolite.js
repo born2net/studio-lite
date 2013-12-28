@@ -271,6 +271,13 @@ function wireStudioUI() {
         $('.ui-mobile-viewport').css({overflow: 'hidden'});
     }, 300);
 
+    $( window ).resize(function() {
+        updateContainersHeight();
+    });
+    updateContainersHeight();
+}
+
+function updateContainersHeight(){
     var h = $(window).height() - ($(window).height() * 20 / 100);
     $('#playlist').height(h + 'px');
     $('#files').height(h + 'px');

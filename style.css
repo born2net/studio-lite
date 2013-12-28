@@ -1,0 +1,671 @@
+#loginPage .ui-bar-a {
+    background: #ffffff;
+    background-image: #ffffff;
+}
+form.ui-bar-a {
+    background: #ffffff;
+    background-image: -webkit-gradient(linear, left top, left bottom, from( #ffffff), to( #ffffff)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient( #ffffff, #ffffff); /* Chrome 10+, Saf5.1+ */
+    background-image: -moz-linear-gradient( #ffffff, #ffffff); /* FF3.6 */
+    background-image: -ms-linear-gradient( #ffffff, #ffffff); /* IE10 */
+    background-image: -o-linear-gradient( #ffffff, #ffffff); /* Opera 11.10+ */
+    background-image: linear-gradient( #ffffff, #ffffff);
+}
+#appName .logo_holder {
+    width: 255px;
+    /*float: left;*/
+    position:relative;
+    height: auto;
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+#appName #logo {
+    position:relative;
+    width: 60px;
+    height: 50px;
+    padding-top: 3px;
+    margin-left: 6px;
+    margin-right: 2px;
+}
+#appName .logo_text {
+    position:relative;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+}
+#appName .logo_text h1 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 22px;
+    color: #ffffff;
+    margin-bottom: 0px;
+    line-height: 28px;
+}
+#appName .logo_text p {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    color: #ffffff;
+    margin-bottom: 0px;
+}
+
+#slid .ui-btn-inner {
+    border-top: none;
+}
+#slid.ui-btn-up-a {
+    border: none /*{a-bup-border}*/;
+    background: #333333 /*{a-bup-background-color}*/;
+    font-weight: bold;
+    color: #828282 /*{a-bup-color}*/;
+
+}
+#slid.ui-btn-hover-a {
+    border: none /*{a-bup-border}*/;
+    background: #333333 /*{a-bup-background-color}*/;
+    font-weight: bold;
+    color: #828282 /*{a-bup-color}*/;
+}
+#appName.ui-bar-b {
+    border: 1px solid #b3b3b3 /*{b-bar-border}*/;
+    background: #333333 /*{b-bar-background-color}*/;
+    color: #ffffff /*{b-bar-color}*/;
+    font-weight: bold;
+    text-shadow: none;
+    background-image: -webkit-gradient(linear, left top, left bottom, from( #333333 /*{b-bar-background-start}*/), to( #333333 /*{b-bar-background-end}*/)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient( #333333 /*{b-bar-background-start}*/, #333333 /*{b-bar-background-end}*/); /* Chrome 10+, Saf5.1+ */
+    background-image: -moz-linear-gradient( #333333 /*{b-bar-background-start}*/, #333333 /*{b-bar-background-end}*/); /* FF3.6 */
+    background-image: -ms-linear-gradient( #333333 /*{b-bar-background-start}*/, #333333 /*{b-bar-background-end}*/); /* IE10 */
+    background-image: -o-linear-gradient( #333333 /*{b-bar-background-start}*/, #333333 /*{b-bar-background-end}*/); /* Opera 11.10+ */
+    background-image: linear-gradient( #333333 /*{b-bar-background-start}*/, #333333 /*{b-bar-background-end}*/);
+}
+#appName .ui-li-heading {
+    font-weight: 300;
+    text-shadow: none;
+    margin: 12px 0;
+}
+.ui-bar-a {
+    background: #333333;
+    background-image: #333333;
+}
+.ui-body-a, .ui-body-a input, .ui-body-a select, .ui-body-a textarea, .ui-body-a button {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 300;
+}
+.ui-btn-up-a, .ui-btn-hover-a, .ui-btn-down-a {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 300;
+}
+
+.fixPropOpenLiButtonPosition .ui-btn-up-a {
+    border: none;
+    background: none;
+    background-color:transparent;
+    background-image: none;
+}
+.ui-bar-b, .ui-bar-b input, .ui-bar-b select, .ui-bar-b textarea, .ui-bar-b button {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 300;
+}
+.ui-body-b, .ui-body-b input, .ui-body-b select, .ui-body-b textarea, .ui-body-b button {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 300;
+}
+.ui-btn-up-b, .ui-btn-hover-b, .ui-btn-down-b {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 300;
+    text-decoration: none;
+}
+.ui-bar-c, .ui-bar-c input, .ui-bar-c select, .ui-bar-c textarea, .ui-bar-c button {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 300;
+}
+.ui-body-c, .ui-body-c input, .ui-body-c select, .ui-body-c textarea, .ui-body-c button {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 300;
+}
+.ui-btn-up-c, .ui-btn-hover-c, .ui-btn-down-c {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 300;
+    text-decoration: none;
+}
+form .ui-input-text .ui-input-clear {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -13px;
+}
+#blockRSSCommonProperties .ui-input-text .ui-input-clear {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -13px;
+}
+#propEntireScreen .ui-input-text .ui-input-clear {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -13px;
+}
+#resourceProperties .ui-input-text .ui-input-clear {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -13px;
+}
+#campaignProperties .ui-input-text .ui-input-clear {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -13px;
+}
+
+
+#timeLinePropDiv .ui-btn-up-b {
+    border: none;
+    background: #ffffff;
+    background-image: linear-gradient( #ffffff, #ffffff);
+}
+#addNewScreenButton.ui-btn-up-b {
+    border: 1px solid #cccccc;
+    background: #ffffff;
+    font-weight: normal;
+    color: #2f3e46;
+    text-shadow: 0 1px 0 #ffffff;
+    background-image: -webkit-gradient(linear, left top, left bottom, from( #ffffff), to( #ffffff)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient( #ffffff, #ffffff); /* Chrome 10+, Saf5.1+ */
+    background-image: -moz-linear-gradient( #ffffff, #ffffff); /* FF3.6 */
+    background-image: -ms-linear-gradient( #ffffff, #ffffff); /* IE10 */
+    background-image: -o-linear-gradient( #ffffff, #ffffff); /* Opera 11.10+ */
+    background-image: linear-gradient( #ffffff, #ffffff);
+}
+#addNewScreenButton.ui-btn-hover-b {
+    border: 1px solid #bbbbbb /*{b-bhover-border}*/;
+    background: #f9f9f9 /*{b-bhover-background-color}*/;
+    font-weight: normal;
+    color: #2f3e46 /*{b-bhover-color}*/;
+    text-shadow: 0 1px 0 #ffffff;
+    background-image: -webkit-gradient(linear, left top, left bottom, from( #f9f9f9), to( #f9f9f9)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient( #f9f9f9, #f9f9f9); /* Chrome 10+, Saf5.1+ */
+    background-image: -moz-linear-gradient( #f9f9f9, #f9f9f9); /* FF3.6 */
+    background-image: -ms-linear-gradient( #f9f9f9, #f9f9f9); /* IE10 */
+    background-image: -o-linear-gradient( #f9f9f9, #f9f9f9); /* Opera 11.10+ */
+    background-image: linear-gradient( #f9f9f9, #f9f9f9);
+}
+#delScreenButton.ui-btn-up-b {
+    border: 1px solid #cccccc;
+    background: #ffffff;
+    font-weight: normal;
+    color: #2f3e46;
+    text-shadow: 0 1px 0 #ffffff;
+    background-image: -webkit-gradient(linear, left top, left bottom, from( #ffffff), to( #ffffff)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient( #ffffff, #ffffff); /* Chrome 10+, Saf5.1+ */
+    background-image: -moz-linear-gradient( #ffffff, #ffffff); /* FF3.6 */
+    background-image: -ms-linear-gradient( #ffffff, #ffffff); /* IE10 */
+    background-image: -o-linear-gradient( #ffffff, #ffffff); /* Opera 11.10+ */
+    background-image: linear-gradient( #ffffff, #ffffff);
+}
+#delScreenButton.ui-btn-hover-b {
+    border: 1px solid #bbbbbb /*{b-bhover-border}*/;
+    background: #f9f9f9 /*{b-bhover-background-color}*/;
+    font-weight: normal;
+    color: #2f3e46 /*{b-bhover-color}*/;
+    text-shadow: 0 1px 0 #ffffff;
+    background-image: -webkit-gradient(linear, left top, left bottom, from( #f9f9f9), to( #f9f9f9)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient( #f9f9f9, #f9f9f9); /* Chrome 10+, Saf5.1+ */
+    background-image: -moz-linear-gradient( #f9f9f9, #f9f9f9); /* FF3.6 */
+    background-image: -ms-linear-gradient( #f9f9f9, #f9f9f9); /* IE10 */
+    background-image: -o-linear-gradient( #f9f9f9, #f9f9f9); /* Opera 11.10+ */
+    background-image: linear-gradient( #f9f9f9, #f9f9f9);
+}
+
+
+
+.ui-icon-arrws {
+    background: url(https://secure.dynawebs.net/_studiolite-dev/_assets/arrws.png) 50% 50% no-repeat;
+    width: 32px;
+    height: 15px;
+    border-radius: 0px !important;
+    top: 10px !important;
+    -webkit-box-shadow: none !important;
+    left: 25px !important;
+}
+
+.ui-icon-capture-cmd {
+    background: url(https://secure.dynawebs.net/_studiolite-dev/_assets/camera.png) 50% 50% no-repeat;
+    width: 24px;
+    height: 18px;
+    border-radius: 0px !important;
+    top: 10px !important;
+    -webkit-box-shadow: none !important;
+    left: 25px !important;
+}
+
+.ui-icon-play-cmd {
+    background: url(https://secure.dynawebs.net/_studiolite-dev/_assets/playing.png) 50% 50% no-repeat;
+    width: 22px;
+    height: 22px;
+    border-radius: 0px !important;
+    -webkit-box-shadow: none !important;
+    top: 10px !important;
+    left: 25px !important;
+}
+
+.ui-icon-stop-cmd {
+    background: url(https://secure.dynawebs.net/_studiolite-dev/_assets//stopping.png) 50% 50% no-repeat;
+    width: 22px;
+    height: 22px;
+    border: hidden !important;
+    border-radius: 0px !important;
+    top: 10px !important;
+    -webkit-box-shadow: none !important;
+    left: 25px !important;
+}
+
+.ui-icon-reload-cmd {
+    background: url(https://secure.dynawebs.net/_studiolite-dev/_assets/restarting.png) 50% 50% no-repeat;
+    width: 30px;
+    height: 25px;
+    border-radius: none !important;
+    -webkit-box-shadow: none !important;
+    top: 6px !important;
+    left: 23px !important;
+}
+
+.ui-loader .ui-icon {
+    border: 1px solid;
+    border-radius: 50%;
+    height: 50px;
+    margin: auto;
+    width: 50px;
+}
+
+.ui-panel {
+    min-height: 90%;
+}
+
+.ui-overlay-b {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.ui-loader-verbose .ui-icon {
+    margin: 0 auto 10px;
+    opacity: 0.47;
+}
+
+.ui-loader {
+    border: 0 none;
+    display: none;
+    left: 45%;
+    position: fixed;
+    top: 45%;
+    z-index: 9999999;
+}
+
+.ui-header {
+    min-height: 92px;
+    padding: 0;
+    z-index: 9999;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 100;
+    src: local('Roboto Thin'), local('Roboto-Thin'), url(https://secure.dynawebs.net/_studiolite-dev/_common/_themes/nativedroid/fonts/vzIUHo9z-oJ4WgkpPOtg1_esZW2xOQ-xsNqO47m55DA.woff) format('woff');
+    src: local('Roboto Thin'), local('Roboto-Thin'), url(https://secure.dynawebs.net/_studiolite-dev/_common/_themes/nativedroid/fonts//Roboto-Thin.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Roboto Light'), local('Roboto-Light'), url(https://secure.dynawebs.net/_studiolite-dev/_common/_themes/nativedroid/fonts/Hgo13k-tfSpn0qi1SFdUfT8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
+    src: local('Roboto Light'), local('Roboto-Light'), url(https://secure.dynawebs.net/_studiolite-dev/_common/_themes/nativedroid/fonts/Roboto-Light.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Roboto Regular'), local('Roboto-Regular'), url(https://secure.dynawebs.net/_studiolite-dev/_common/_themes/nativedroid/fonts/2UX7WLTfW3W8TclTUvlFyQ.woff) format('woff');
+    src: local('Roboto Regular'), local('Roboto-Regular'), url(https://secure.dynawebs.net/_studiolite-dev/_common/_themes/nativedroid/fonts/Roboto-Regular.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    src: local('Roboto Medium'), local('Roboto-Medium'), url(https://secure.dynawebs.net/_studiolite-dev/_common/_themes/nativedroid/fonts/RxZJdnzeo3R5zSexge8UUT8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
+    src: local('Roboto Medium'), local('Roboto-Medium'), url(https://secure.dynawebs.net/_studiolite-dev/_common/_themes/nativedroid/fonts/Roboto-Medium.ttf) format('truetype');
+
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Roboto Bold'), local('Roboto-Bold'), url(https://secure.dynawebs.net/_studiolite-dev/_common/_themes/nativedroid/fonts/d-6IYplOFocCacKzxwXSOD8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
+    src: local('Roboto Bold'), local('Roboto-Bold'), url(https://secure.dynawebs.net/_studiolite-dev/_common/_themes/nativedroid/fonts/Roboto-Bold.ttf) format('truetype');
+}
+
+@import url("fonts.googleapis.com/css?family=Roboto:400,100,300,500,700");
+
+#playbackResourcesDiv {
+    border: 1px solid #e7e7e7;
+    border-radius: 3px;
+    padding: 20px;
+    margin: 20px;
+}
+
+.fixPropOpenLiButtonPosition {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+}
+
+.ui-listview .ui-btn-hover-b {
+    color: #404040;
+}
+
+.ui-page {
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+}
+
+.ui-loader h1 {
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+}
+
+#navPanel {
+    background-color: #fff;
+    border-right: 1px solid #808080;
+    border-bottom: none;
+}
+
+.ui-btn-icon-notext {
+    float: none;
+    margin: -8px;
+
+}
+
+.ui-btn,
+label.ui-btn {
+    font-weight: normal;
+
+}
+
+.ui-btn:link {
+    text-decoration: none !important;
+}
+
+#slid .ui-btn-inner span {
+    font-size: 20px;
+}
+
+#addNewScreenButton .ui-btn-inner span {
+    font-size: 16px;
+}
+
+#closeProperties span {
+    font-size: 25px;
+}
+
+#closeProperties {
+    position: relative;
+    top: 5px;
+    left: 5px;
+    border: none;
+}
+
+#delScreenButton .ui-btn-inner span {
+    font-size: 16px;
+}
+
+.ui-btn-active {
+    cursor: pointer;
+}
+
+.navileft {
+    display: block;
+    position: fixed;
+    top: 5%;
+    left: 2%;
+    z-index: 10;
+}
+
+.naviright {
+    background-color: #800000;
+    display: block;
+    left: 65px;
+    padding: 10px;
+    position: relative;
+    text-align: center;
+    top: 35px;
+    width: 650px;
+    z-index: 10;
+}
+
+.navileft a strong, .naviright a strong, .download a strong {
+    display: none;
+}
+
+.two-columns {
+    width: 650px;
+}
+
+.two-columns:nth-child(2n) {
+    padding: 10px;
+}
+
+.two-columns a {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+@media (min-width: 35em) {
+    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-open.ui-panel-content-fixed-toolbar-display-push,
+    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-open.ui-panel-content-fixed-toolbar-display-reveal,
+    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-open.ui-panel-content-wrap-display-push,
+    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-open.ui-panel-content-wrap-display-reveal {
+        margin-right: 17em;
+    }
+
+    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-open.ui-panel-content-wrap-display-push.ui-panel-content-fixed-toolbar-position-right,
+    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-open.ui-panel-content-wrap-display-reveal.ui-panel-content-fixed-toolbar-position-right,
+    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-open.ui-panel-content-wrap-display-push.ui-panel-content-wrap-position-right,
+    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-open.ui-panel-content-wrap-display-reveal.ui-panel-content-wrap-position-right {
+        margin: 0 0 0 17em;
+    }
+
+    .ui-responsive-panel .ui-panel-dismiss-display-push {
+        display: none;
+    }
+}
+
+#timeLinePropDiv {
+    float: right;
+    margin-top: -45px;
+}
+
+#timeLinePropDiv .ui-btn-up-a, #timeLinePropDiv .ui-btn-hover-a:hover, #timeLinePropDiv .ui-btn-hover-a:active {
+    border: none;
+    background: none;
+}
+
+#timeLinePropTitle {
+    padding-top: 1px;
+}
+
+.ui-custom-icon30 .ui-icon {
+    width: 200px !important;
+    height: 200px !important;
+    box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    -webkit-border-radius: none !important;
+    border-radius: none !important;
+    margin-left: -15px !important;
+}
+
+.screenDivisionClass {
+    cursor: pointer;
+}
+
+.showPointer {
+    cursor: pointer;
+}
+
+.ButtonClass {
+    background-image: url(https://secure.dynawebs.net/_studiolite-dev/_assets/orientationV.png);
+    background-repeat: no-repeat;
+    border: none;
+    background-size: 200px 200px;
+    min-width: 200px !important;
+    min-height: 200px !important;
+    width: 200px !important;
+    height: 200px !important;
+
+}
+
+.centerContent {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.sizeByWidth {
+    width: 100%;
+}
+
+.sizeByHeight {
+    height: 100%;
+}
+
+#imgHorizontal {
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+#imgVertical {
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+#playListSelectArrowLeft:active, #playListSelectArrowRight:active {
+    background: #E4E4E4;
+}
+
+.draggableScreenPlaceHolder {
+    position: relative;
+    top: 0px;
+    height: 3px;
+    width: 3px;
+    background-color: red;
+    opacity: 0.6
+}
+
+#screenSelectorContainer ul {
+    width: 1500px;
+    padding: 5px;
+    overflow: hidden;
+}
+
+#screenLayoutsUL {
+
+}
+
+.dottedHR {
+    height: 6px;
+    width: 1500px;
+    position: relative;
+    border-top: 12px dotted #c1c1c1;
+    top: 20px;
+}
+
+aside > aside > div > ul > li {
+    display: block;
+    width: 100px;
+    list-style: none;
+    height: 60px;
+    float: left;
+    background: #E2E2E2;
+    border: 1px solid #666;
+    margin-right: 30px;
+    margin-left: 30px;
+}
+
+#screenSelectorContainer {
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+#openTimeLinePropButton {
+
+}
+
+.ui-listview .ui-bar-b {
+
+}
+
+.ui-btn-icon-right .ui-icon {
+    right: 40px;
+}
+
+.ui-icon-gear {
+    font-size: 1.33em;
+}
+
+.currentSelectedStation {
+    background: #f0f0f0;
+
+}
+
+.naviright {
+    background-color: maroon;
+    background-repeat: initial initial;
+    display: block;
+    left: 5%;
+    padding: 5px;
+    position: fixed;
+    top: 20%;
+    z-index: 10;
+}
+
+.currentSelectedResource {
+    background-image: linear-gradient(red, red) !important;
+}
+
+.fileinput-button {
+    position: relative;
+    overflow: hidden;
+    float: left;
+    margin-right: 4px;
+}
+
+.fileinput-button input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    transform: translate(-300px, 0) scale(4);
+    font-size: 23px;
+    direction: ltr;
+    cursor: pointer;
+}
+
+body {
+    color: #404040;
+}

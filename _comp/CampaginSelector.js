@@ -199,5 +199,4 @@ CompCampaignSelector.prototype = {
         $(Elements.CAMPAIGN_SELECTOR_LIST).listview('refresh');
         self._listenOpenProps();
     }
-
 }

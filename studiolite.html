@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SignageStudio Web Lite</title>
-
     <link rel="stylesheet"
           href="https://secure.dynawebs.net/_studiolite-dev/_common/_jquery/mobile/1.3.2/jquery.mobile.structure-1.3.2.css"/>
     <link rel="stylesheet"
           href="https://secure.dynawebs.net/_studiolite-dev/_common/_themes/jq13mobile_studiolite/SignageLiteJQ13v3.css"/>
+    <link rel="stylesheet" href="https://secure.dynawebs.net/_studiolite-dev/style.css">
     <script src="https://secure.dynawebs.net/_studiolite-dev/_common/_jquery/std/jq1.9.1/jquery-1.9.1.js"
             type="text/javascript"></script>
     <script src="https://secure.dynawebs.net/_studiolite-dev/_common/_jquery/std/jq1.10.1/jquery-ui-1.10.1.js"
@@ -30,12 +30,8 @@
     <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/Campaign.js" type="text/javascript"></script>
     <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/ScreenArrowSelector.js"
             type="text/javascript"></script>
-
-    <!-- TODO ADDED -->
     <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/PopupManager.js"
             type="text/javascript"></script>
-
-
     <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/TemplateWizard.js" type="text/javascript"></script>
     <script src="https://secure.dynawebs.net/_studiolite-dev/_comp/ScreenOrientation.js"
             type="text/javascript"></script>
@@ -94,587 +90,7 @@
     <script src="https://secure.dynawebs.net/_studiolite-dev/_common/_jquery/mobile/1.3.2/jquery.mobile-1.3.2.js"
             type="text/javascript"></script>
 
-
 </head>
-
-<!-- //////////////////////////////////////////////////////////////////////////
-
-CSS
-
-////////////////////////////////////////////////////////////////////////// -->
-
-
-<STYLE type="text/css">
-
-
-#noResourceSelectedAlert > p:first-child {
-    font-size: 2em;
-}
-
-.ui-overlay-b {
-    background-color: rgba(255, 255, 255, 0.9);
-}
-
-.ui-loader-verbose .ui-icon {
-    margin: 0 auto 10px;
-    opacity: 0.47;
-}
-
-.ui-loader {
-    border: 0 none;
-    display: none;
-    left: 45%;
-    position: fixed;
-    top: 45%;
-    z-index: 9999999;
-}
-
-.ui-header {
-    min-height: 92px;
-    padding: 0;
-    z-index: 9999;
-}
-/* TODO: ADDED */
-.ui-panel {
-    min-height: 90%;
-
-}
-@font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 100;
-    src: local('Roboto Thin'), local('Roboto-Thin'), url(https://secure.dynawebs.net/_studiolite-dev/_common/_themes/nativedroid/fonts/vzIUHo9z-oJ4WgkpPOtg1_esZW2xOQ-xsNqO47m55DA.woff) format('woff');
-    src: local('Roboto Thin'), local('Roboto-Thin'), url(https://secure.dynawebs.net/_studiolite-dev/_common/_themes/nativedroid/fonts//Roboto-Thin.ttf) format('truetype');
-}
-
-@font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 300;
-    src: local('Roboto Light'), local('Roboto-Light'), url(https://secure.dynawebs.net/_studiolite-dev/_common/_themes/nativedroid/fonts/Hgo13k-tfSpn0qi1SFdUfT8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
-    src: local('Roboto Light'), local('Roboto-Light'), url(https://secure.dynawebs.net/_studiolite-dev/_common/_themes/nativedroid/fonts/Roboto-Light.ttf) format('truetype');
-}
-
-@font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    src: local('Roboto Regular'), local('Roboto-Regular'), url(https://secure.dynawebs.net/_studiolite-dev/_common/_themes/nativedroid/fonts/2UX7WLTfW3W8TclTUvlFyQ.woff) format('woff');
-    src: local('Roboto Regular'), local('Roboto-Regular'), url(https://secure.dynawebs.net/_studiolite-dev/_common/_themes/nativedroid/fonts/Roboto-Regular.ttf) format('truetype');
-}
-
-@font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 500;
-    src: local('Roboto Medium'), local('Roboto-Medium'), url(https://secure.dynawebs.net/_studiolite-dev/_common/_themes/nativedroid/fonts/RxZJdnzeo3R5zSexge8UUT8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
-    src: local('Roboto Medium'), local('Roboto-Medium'), url(https://secure.dynawebs.net/_studiolite-dev/_common/_themes/nativedroid/fonts/Roboto-Medium.ttf) format('truetype');
-
-}
-
-@font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 700;
-    src: local('Roboto Bold'), local('Roboto-Bold'), url(https://secure.dynawebs.net/_studiolite-dev/_common/_themes/nativedroid/fonts/d-6IYplOFocCacKzxwXSOD8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
-    src: local('Roboto Bold'), local('Roboto-Bold'), url(https://secure.dynawebs.net/_studiolite-dev/_common/_themes/nativedroid/fonts/Roboto-Bold.ttf) format('truetype');
-}
-
-@import url("fonts.googleapis.com/css?family=Roboto:400,100,300,500,700");
-
-.liSelectedItem {
-    background-image: linear-gradient(#e5e5e5, #e5e5e5);
-    border-bottom: 1px solid #cfcfcf;
-}
-
-#playbackResourcesDiv {
-    border: 1px solid #e7e7e7;
-    border-radius: 3px;
-    padding: 20px;
-    margin: 20px;
-}
-
-.fixPropOpenLiButtonPosition {
-    position: absolute;
-    top: 7px;
-    right: 7px;
-}
-
-.ui-listview .ui-btn-hover-b {
-    color: #404040;
-}
-
-.ui-page {
-    font-family: "Roboto", sans-serif;
-    font-weight: 300;
-}
-
-.ui-loader h1 {
-    font-family: "Roboto", sans-serif;
-    font-weight: 300;
-}
-
-#navPanel {
-    background-color: #fff;
-}
-
-.ui-btn-icon-notext {
-    float: none;
-    margin: -7px;
-
-}
-
-.ui-btn,
-label.ui-btn {
-    font-weight: normal;
-
-}
-
-.ui-btn:link {
-    text-decoration: none !important;
-}
-
-div.ui-btn-down-b span {
-    background-color: #b6db49;
-    color: #fff;
-
-}
-
-#campainManager .ui-btn-inner span {
-    font-size: 20px;
-}
-
-#campainSave .ui-btn-inner span {
-    font-size: 20px;
-}
-
-#slid .ui-btn-inner span {
-    font-size: 20px;
-}
-
-#addNewScreenButton .ui-btn-inner span {
-    font-size: 20px;
-}
-
-#delScreenButton .ui-btn-inner span {
-    font-size: 20px;
-}
-
-.ui-btn-active {
-    cursor: pointer;
-}
-
-<!--
--navileft--- >
-.navileft {
-    display: block;
-    position: fixed;
-    top: 5%;
-    left: 2%;
-    z-index: 10;
-}
-
-.naviright {
-    background-color: #800000;
-    display: block;
-    left: 65px;
-    padding: 10px;
-    position: relative;
-    text-align: center;
-    top: 35px;
-    width: 650px;
-    z-index: 10;
-}
-
-.navileft a, .naviright a, .download a {
-    display: block;
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-    font-size: 50px;
-    line-height: 100px;
-    color: #000000;
-    text-align: center;
-    margin-bottom: 15px;
-}
-
-.navileft a strong, .naviright a strong, .download a strong {
-    display: none;
-}
-
-/*
-.navileft a:hover, .navileft a.active, .naviright a:hover, .naviright a.active, .download a:hover {
-    background-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 10px 0px 10px rgba(0, 0, 0, 0.2);
-}
-*/
-
-/*
-.navileft .rotate a.active:hover {
-
-    -webkit-transform: rotate(45deg);
-    -moz-transform: rotate(45deg);
-    -o-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
-}
-
-.navileft a.active.landscape, .naviright a.active.landscape {
-    -webkit-transform: rotate(90deg) scale(1.1, 1.1);
-    -moz-transform: rotate(90deg) scale(1.1, 1.1);
-    -o-transform: rotate(90deg) scale(1.1, 1.1);
-    -ms-transform: rotate(90deg) scale(1.1, 1.1);
-    transform: rotate(90deg) scale(1.1, 1.1);
-}
-
-.navileft .landscape, .naviright .landscape {
-    -webkit-transform: rotate(90deg);
-    -moz-transform: rotate(90deg);
-    -o-transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
-    transform: rotate(90deg);
-}
-
-.navileft a.active.portrait, .naviright a.active.portrait {
-    -webkit-transform: rotate(0deg) scale(1.1, 1.1);
-    -moz-transform: rotate(0deg) scale(1.1, 1.1);
-    -o-transform: rotate(0deg) scale(1.1, 1.1);
-    -ms-transform: rotate(0deg) scale(1.1, 1.1);
-    transform: rotate(0deg) scale(1.1, 1.1);
-}
-
-.navileft .portrait, .naviright .portrait {
-    -webkit-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    -ms-transform: rotate(0deg);
-    transform: rotate(0deg);
-}
-*/
-
-.two-columns {
-    width: 650px;
-}
-
-.two-columns:nth-child(2n) {
-    padding: 10px;
-}
-
-.two-columns a {
-    display: inline-block;
-    margin-right: 15px;
-}
-
-.naviright a.dark {
-    color: rgba(255, 255, 255, 0.6);
-    background-color: rgba(0, 0, 0, 0.3);
-}
-
-.naviright a.dark:hover {
-    color: rgba(255, 255, 255, 0.6);
-    background-color: rgba(0, 0, 0, 1);
-}
-
-.naviright a.blue {
-    background-color: rgba(109, 202, 236, 0.3);
-}
-
-.naviright a.green {
-    background-color: rgba(182, 219, 73, 0.3);
-}
-
-.naviright a.purple {
-    background-color: rgba(207, 159, 231, 0.3);
-}
-
-.naviright a.red {
-    background-color: rgba(255, 68, 68, 0.3);
-}
-
-.naviright a.yellow {
-    background-color: rgba(255, 208, 56, 0.3);
-}
-
-.naviright a.blue:hover, .naviright a.blue.active {
-    background-color: rgba(109, 202, 236, 0.8);
-}
-
-.naviright a.green:hover, .naviright a.green.active {
-    background-color: rgba(182, 219, 73, 0.8);
-}
-
-.naviright a.purple:hover, .naviright a.purple.active {
-    background-color: rgba(207, 159, 231, 0.8);
-}
-
-.naviright a.red:hover, .naviright a.red.active {
-    background-color: rgba(255, 68, 68, 0.8);
-}
-
-.naviright a.yellow:hover, .naviright a.yellow.active {
-    background-color: rgba(255, 208, 56, 0.8);
-}
-
-.naviright a.active {
-    -webkit-transform: rotate(0deg) scale(1.1, 1.1);
-    -moz-transform: rotate(0deg) scale(1.1, 1.1);
-    -o-transform: rotate(0deg) scale(1.1, 1.1);
-    -ms-transform: rotate(0deg) scale(1.1, 1.1);
-    transform: rotate(0deg) scale(1.1, 1.1);
-}
-
-<!--
--navileft--- >
-
-@media (min-width: 35em) {
-    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-open.ui-panel-content-fixed-toolbar-display-push,
-    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-open.ui-panel-content-fixed-toolbar-display-reveal,
-    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-open.ui-panel-content-wrap-display-push,
-    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-open.ui-panel-content-wrap-display-reveal {
-        margin-right: 17em;
-    }
-
-    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-open.ui-panel-content-wrap-display-push.ui-panel-content-fixed-toolbar-position-right,
-    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-open.ui-panel-content-wrap-display-reveal.ui-panel-content-fixed-toolbar-position-right,
-    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-open.ui-panel-content-wrap-display-push.ui-panel-content-wrap-position-right,
-    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-open.ui-panel-content-wrap-display-reveal.ui-panel-content-wrap-position-right {
-        margin: 0 0 0 17em;
-    }
-
-    .ui-responsive-panel .ui-panel-dismiss-display-push {
-        display: none;
-    }
-}
-
-#closeProperties span {
-    font-size: 25px;
-}
-
-#timeLinePropDiv {
-    float: right;
-    margin-top: -45px;
-}
-
-#timeLinePropTitle {
-    padding-top: 1px;
-}
-
-.ui-custom-icon30 .ui-icon {
-    width: 200px !important;
-    height: 200px !important;
-    box-shadow: none !important;
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    -webkit-border-radius: none !important;
-    border-radius: none !important;
-    margin-left: -15px !important;
-}
-
-.screenDivisionClass {
-    cursor: pointer;
-}
-
-.showPointer {
-    cursor: pointer;
-}
-
-.ButtonClass {
-    background-image: url(https://secure.dynawebs.net/_studiolite-dev/_assets/orientationV.png);
-    background-repeat: no-repeat;
-    border: none;
-    background-size: 200px 200px;
-    min-width: 200px !important;
-    min-height: 200px !important;
-    width: 200px !important;
-    height: 200px !important;
-
-}
-
-.centerContent {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.sizeByWidth {
-    width: 100%;
-}
-
-.sizeByHeight {
-    height: 100%;
-}
-
-#imgHorizontal {
-    opacity: 0.6;
-    cursor: pointer;
-}
-
-#imgVertical {
-    opacity: 0.6;
-    cursor: pointer;
-}
-
-#playListSelectArrowLeft:active, #playListSelectArrowRight:active {
-    background: #E4E4E4;
-}
-
-.draggableScreenPlaceHolder {
-    position: relative;
-    top: 0px;
-    height: 3px;
-    width: 3px;
-    background-color: red;
-    opacity: 0.6
-}
-
-#captureCommand span {
-    font-size: 22px;
-}
-
-#playCommand span {
-    font-size: 22px;
-}
-
-#stopCommand span {
-    font-size: 22px;
-}
-
-#reloadCommand span {
-    font-size: 22px;
-}
-
-#screenSelectorContainer ul {
-    width: 1500px;
-    padding: 5px;
-    overflow: hidden;
-}
-
-#screenLayoutsUL {
-
-}
-
-.dottedHR {
-    height: 6px;
-    width: 1500px;
-    position: relative;
-    border-top: 12px dotted #c1c1c1;
-    top: 20px;
-}
-
-aside > aside > div > ul > li {
-    display: block;
-    width: 100px;
-    list-style: none;
-    height: 60px;
-    float: left;
-    background: #E2E2E2;
-    border: 1px solid #666;
-    margin-right: 30px;
-    margin-left: 30px;
-}
-
-#screenSelectorContainer {
-    width: 100%;
-    padding: 0px;
-    margin: 0px;
-    overflow-x: scroll;
-    overflow-y: hidden;
-}
-
-#openTimeLinePropButton {
-
-}
-
-.ui-icon-sitemap,
-.ui-icon-spinner,
-.ui-icon-cogs,
-.ui-icon-comments,
-.ui-icon-signout,
-.ui-icon-cloud-upload,
-.ui-icon-tachometer,
-.ui-icon-bullhorn,
-.ui-icon-long-prop,
-.ui-icon-group,
-.ui-icon-beer,
-.ui-icon-minus,
-.ui-icon-fire,
-.ui-icon-plus,
-.ui-icon-music,
-.ui-icon-trophy,
-.ui-icon-coffee {
-    font-size: 1.33em;
-    padding-right: #10px;
-}
-
-.ui-listview .ui-bar-b {
-
-}
-
-.ui-btn-icon-right .ui-icon {
-    right: 40px;
-}
-
-.ui-icon-gear {
-    font-size: 1.33em;
-}
-
-.currentSelectedStation {
-    /* border-top: 1px solid #666;
-    border-bottom: 1px solid #666; */
-    background: #bebebe;
-    font-weight: bold;
-    color: #000000;
-    text-shadow: 0 1px 0 #eeeeee;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#fff, to(#666));
-    background-image: -webkit-linear-gradient(#fff, #666);
-    background-image: -moz-linear-gradient(#fff, #666);
-    background-image: -ms-linear-gradient(#fff, #666);
-    background-image: -o-linear-gradient(#fff, #666);
-    background-image: linear-gradient(#fff, #666);
-}
-
-.naviright {
-    background-color: maroon;
-    background-repeat: initial initial;
-    display: block;
-    left: 5%;
-    padding: 5px;
-    position: fixed;
-    top: 20%;
-    z-index: 10;
-}
-
-.currentSelectedResource {
-    background-image: linear-gradient(red, red) !important;
-}
-
-.fileinput-button {
-    position: relative;
-    overflow: hidden;
-    float: left;
-    margin-right: 4px;
-}
-
-.fileinput-button input {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 0;
-    opacity: 0;
-    filter: alpha(opacity=0);
-    transform: translate(-300px, 0) scale(4);
-    font-size: 23px;
-    direction: ltr;
-    cursor: pointer;
-}
-
-body {
-    color: #404040;
-}
-
-</STYLE>
-
 
 <body>
 
@@ -766,7 +182,7 @@ Studio Lite - Application
 ////////////////////////////////////////////////////////////////////////// -->
 
 <div data-role="page" id="studioLite" data-theme="a" class="ui-responsive-panel ui-panel-display-reveal">
-    <div data-role="header" data-theme="a" id="mainHeader" style="box-shadow:-5px 0 5px rgba(0, 0, 0,0.15) inset;">
+    <div data-role="header" data-theme="a" id="mainHeader">
 
 
     </div>
@@ -774,8 +190,7 @@ Studio Lite - Application
     <div data-role="panel" data-position="right" id="propertiesPanel" class="main_nav ui-responsive-panel"
          data-display="push" data-swipe-close="false" data-dismissible="true" data-theme="a">
         <div>
-            <!-- <h2 style="float: left; position: relative; top: -25px">resource</h2> -->
-            <a id="closeProperties" style="left: 20px; position:relative; top: 40px" data-theme="a" data-icon="arrow-r"
+            <a id="closeProperties" data-theme="a" data-icon="arrow-r"
                data-role="button"
                data-iconpos="notext"></a>
 
@@ -785,59 +200,42 @@ Studio Lite - Application
         </div>
     </div>
 
-    <div data-role="panel" id="navPanel" data-display="push" data-dismissible="false" data-theme="a"
-         style="box-shadow:-5px 0 5px rgba(0, 0, 0,0.15) inset;">
+    <div data-role="panel" id="navPanel" data-display="push" data-dismissible="false" data-theme="a">
         <ul data-role="listview" style="margin-left:-20px; font-weight:normal;">
-            <li data-role="list-divider" id="appName" style="border-bottom:2px solid #B6DB49;">
-                <h2 style="margin-left:20px; text-transform:none;font-size:31px;" data-theme="a">Signage Studio</h2>
+            <li data-role="list-divider" id="appName">
+                <div class="logo_holder">
+                    <div class="logo_text">
+                        <a href="http://www.digitalsignage.com"><img src="./_assets/logo.png" width="60" height="39"
+                                                                     alt="logo"></a>
+                        <span style="font-family: 'Roboto', sans-serif;font-weight: 300;font-size: 22px;color: #ffffff;margin-bottom: 0px;line-height: 28px;top: -20px;position: relative;">DigitalSignage.com</span>
+                        <span style="font-family: 'Roboto', sans-serif;font-weight: 300;font-size: 12px;color: #ffffff;margin-bottom: 0px;position: relative;top: -23px;left: 65px;"><span
+                                style="color: #ff0000;">FREE</span> Digital Signage for everyone</span>
+                    </div>
+                </div>
             </li>
 
-            <li class="ui-btn-text"><a id="navPlaylist" data-role="button" data-icon="sitemap"
-                                       data-theme="a">Campaigns </a></li>
-            <li class="ui-btn-text"><a id="navFiles" data-role="button" data-icon="spinner"
-                                       data-theme="a">Resources </a></li>
-            <li class="ui-btn-text"><a id="navPlaylers" data-role="button" data-icon="tachometer" data-theme="a">Stations</a>
-            </li>
-            <li class="ui-btn-text"><a id="navSettings" data-role="button" data-icon="cogs" data-theme="a">Settings </a>
-            </li>
-            <li class="ui-btn-text"><a id="navHelp" data-role="button" data-icon="comments" data-theme="a">Help </a>
-            </li>
-            <li class="ui-btn-text"><a id="navLogout" data-role="button" data-icon="signout" data-theme="a">Logout </a>
-            </li>
-            <li class="ui-btn-text"><a id="navAdvance" data-corners="false" data-icon="cloud-upload" data-role="button"
-                                       data-theme="a">Upgrade (FREE)</a></li>
+            <li><a id="navPlaylist" data-theme="a">Campaigns </a></li>
+            <li><a id="navFiles" data-theme="a">Resources </a></li>
+            <li><a id="navPlaylers" data-theme="a">Stations</a></li>
+            <li><a id="navSettings" data-theme="a">Settings </a></li>
+            <li><a id="navHelp" data-theme="a">Help </a></li>
+            <li><a id="navLogout" data-theme="a">Logout </a></li>
+            <li><a id="navAdvance">Upgrade (FREE)</a></li>
         </ul>
 
     </div>
 
-    <!--<div data-role="panel" id="navPanel" class="main_nav" data-display="push"  data-dismissible="true" data-theme="a">
-        <h2 style="color: #666">SignageStudio Lite</h2>
-        <div class="nav_profile">
-			<div id="navButtons" data-role="controlgroup">
-                <a id="navPlaylist" class="ui-btn-active" data-role="button">Campaigns</a>
-                <a id="navFiles" data-role="button">Resources</a>
-                <a id="navPlaylers" data-role="button">Stations</a>
-                <a id="navSettings" data-role="button">Settings</a>
-                <a id="navHelp" data-role="button">Help</a>
-                <a id="navLogout" data-role="button">Logout</a>
-	        </div>
-        </div>
-         <button id="navAdvance" data-corners="false" data-theme="a">Standard mode (FREE)</button>
-    </div>-->
     <div data-role="content" style="padding: 0px; margin: 0px ">
 
-        <a id="slid" href="#navPanel" data-role='button' data-icon="icon-arrow-left" data-display="push"
-           style="position:absolute; top: 10px; left: 10px;font-weight:normal;"></a>
-        <!--<a id="toggleNavigation" data-transition="fade" data-iconpos="notext" style="margin-right:5px ;position:relative; width:4%;top: 10px"  data-icon="back" data-theme="a"></a>-->
-
+        <a id="slid" href="#navPanel" data-role='button' data-icon="arrws" data-display="push"
+           style="position:absolute; top: 10px; left: -10px"></a>
 
         <div data-role="controlgroup" data-type="horizontal"
              style="position:absolute; top: 10px; right: 10px;font-weight:normal;">
-            <a id="campainManager" data-theme="a" data-role="button" style="color:#000;"> <i class="fa fa-star"></i>campaign
-                manager</a>
-            <a id="campainSave" href="index.html" data-role="button"> <i class="fa fa-check"></i>save</a>
+            <a id="campainManager" data-theme="a" data-role="button">campaign manager</a>
+            <a id="campainSave" href="index.html" data-role="button">save</a>
         </div>
-        <div data-role="content" id="mainContent" style="box-shadow:-5px 0 5px rgba(0, 0, 0,0.15) inset;">
+        <div data-role="content" id="mainContent">
         </div>
     </div>
 </div>
@@ -853,7 +251,6 @@ Screen Layout page
     <div data-role="header" data-theme="a">
         <a id="goBackFromScreenList" data-role="button" data-theme="a" data-icon="arrow-l" data-iconpos="notext"
            class="ui-btn-left">Close</a>
-
         <h2>Select screen layout</h2>
     </div>
     <div align="center" id="screenLayoutItemsList" style="padding-top:50px">
@@ -870,6 +267,7 @@ Add Resource page
     <div data-role="header" data-theme="a">
         <a id="goBackFromAddResourceView" data-rel="back" data-role="button" data-theme="a" data-icon="arrow-l"
            data-iconpos="notext" class="ui-btn-left">Close</a>
+
         <h2>Add component / resource</h2>
     </div>
     <div data-role="collapsible-set" data-theme="a" data-content-theme="b" style="margin: 30px">
@@ -892,6 +290,7 @@ Add Resource page
 
 Campaign view stack
 
+SEAN ADDED
 ////////////////////////////////////////////////////////////////////////// -->
 
 <div id="playlist" style="height:1px;display: none" data-theme="a">
@@ -919,23 +318,22 @@ Campaign Selector view
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<!-- TODO ADDED DELETE CAMPAIGN BUTTON -->
-
 <div id="campaignSelectorView" style="display: none" data-theme="a">
     <br/>
     <a href="#" id="startNewCampaign" data-role="button" style="position: relative; left: 40px" data-theme="a"
-       data-iconpos="right" data-inline="true">new campaign wizard <i class="fa fa-star fa-lg"></i></a>
+       data-iconpos="right" data-inline="true">new campaign wizard</a>
     <a href="#" id="removeCampaign" data-role="button" style="position: relative; left: 40px" data-theme="a"
-       data-iconpos="right" data-inline="true">remove campaign <i class="fa fa-star fa-lg"></i></a>
+       data-iconpos="right" data-inline="true">remove campaign</i></a>
     <ul id="campaignSelectorList" style="padding-left: 40px; padding-right: 40px" data-role="listview"
         data-inset="true" data-theme="a">
     </ul>
 </div>
 
-
 <!-- //////////////////////////////////////////////////////////////////////////
 
 Resources
+
+SEAN
 
 ////////////////////////////////////////////////////////////////////////// -->
 
@@ -960,8 +358,6 @@ Resources
 Stations
 
 ////////////////////////////////////////////////////////////////////////// -->
-
-<!-- TODO: Changed min-height of div  -->
 
 <div align="center" id="stations" style="min-height:1px; display: none">
     <ul id="stationList" data-role="listview" data-inset="true" data-dividertheme="b">
@@ -1191,7 +587,7 @@ Resolution view
 
 ////////////////////////////////////////////////////////////////////////// -->
 
-<div id="resolutionView" data-theme='b' style="display: none">
+<div id="resolutionView" data-theme='a' style="display: none">
     <form>
         <h4 align="center" style="padding-left:20px; padding-right: 20px" id="stationOrientationTitle">:station
             orientation:</h4>
@@ -1209,24 +605,22 @@ Campaign view
 
 <div id="campaignView" style="display: none">
 
-
-    <div id="timelinesCollapsible" data-role="collapsible-set" data-icon="th-list" data-collapsed-icon="th-list"
-         data-content-theme="a"
-         data-theme="a" style="padding:20px">
-        <div data-role="collapsible" data-collapsed="true">
+    <div id="timelinesCollapsible" data-expanded-icon="arrow-d" data-collapsed-icon="arrow-r"
+         data-role="collapsible-set" style="padding:20px">
+        <div data-role="collapsible">
             <h3><p id="timeLinePropTitle">Timelines</p>
 
                 <div id="timeLinePropDiv">
-                    <input type='button' data-icon="gear" data-theme='b' value='&nbsp;' data-mini='true'
+                    <input type='button' data-icon="gear" data-theme='a' value='&nbsp;' data-mini='true'
                            data-inline='true' data-icon-pos='top' id="openTimeLineProperties">
                 </div>
             </h3>
 
             <div id="selectScreenActions" class="data-tap-toggle=false" data-role="navbar">
                 <ul>
-                    <li><a id="addNewScreenButton" href="#" data-icon="plus" data-theme='b' data-role="button">add
+                    <li><a id="addNewScreenButton" href="#" data-icon="plus" data-theme='a' data-role="button">add
                         timeline</a></li>
-                    <li><a id="delScreenButton" href="#" data-icon="minus" data-theme='b' data-role="button">remove
+                    <li><a id="delScreenButton" href="#" data-icon="minus" data-theme='a' data-role="button">remove
                         timeline</a></li>
                 </ul>
             </div>
@@ -1249,28 +643,9 @@ Campaign view
         <a href="index.html" style="display:none" id="dettachDragDropMainScreenSelection" data-role="button">Link
             button</a>
     </div>
+
     <div id="campainViewMainContainer">
     </div>
-    <!--
-    <div class="ui-popup-container ui-popup-active" id="popupUndismissible-popup" tabindex="0" >
-        <div data-role="popup" id="popupUndismissible" class="ui-content ui-popup ui-body-e ui-overlay-shadow
-            ui-corner-all" data-theme="a" style="width:300px; height: 300px" aria-disabled="false" data-disabled="false"
-            data-shadow="true" data-corners="true" data-transition="flip" data-dismissible="true">
-              <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete"
-                data-iconpos="notext" class="ui-btn-left ui-btn ui-shadow ui-btn-corner-all
-                ui-btn-icon-notext ui-btn-up-a" data-corners="true" data-shadow="true" data-iconshadow="true"
-                data-wrapperels="span" title="Close"><span class="ui-btn-inner">
-                <span class="ui-btn-text">Close</span>
-                <span class="ui-icon ui-icon-delete ui-icon-shadow">
-                    &nbsp;</span>
-                </span>
-            </a>
-            <h3 style="color:#333">Select each screen division to display the list of content that you wish to play in the selected screen area.</h3>
-            <h3 style="color:#333"><br/>
-            Once selected, click the + sign to add videos, images, weather and other components.</h3>
-         </div>
-    </div>
-    -->
 
     <div id="transparent" style="position:absolute" data-role="popup" data-theme="none" data-shadow="false">
         <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext"
@@ -1296,33 +671,27 @@ Campaign view
         </ul>
     </div>
 
-    <!-- TODO REMOVED -->
-    <div data-role="popup" id="noResourceSelectedAlert" data-theme="a" data-overlay-theme="a" class="ui-content">
-        <p>Can't delete a resource</p>
-
-        <p>You must first select a resource from the list. Press ok to continue.</p>
-        <a href="index.html" data-role="button" data-rel="back" data-theme="a" data-inline="true" data-icon="check"
-           data-mini="true">OK</a>
-        <!-- <a href="index.html" data-role="button" data-rel="back" data-inline="true" data-mini="true">Cancel</a> -->
-    </div>
-
-    <!-- TODO ADDED -->
     <div data-role="popup" id="popupyesno" data-theme="a" data-overlay-theme="a" class="ui-content">
         <p style="font-size: 0.8em"></p>
+
         <p style="font-size: 1.1em"></p>
+
         <p></p>
-        <a name="yes" href="index.html" data-role="button" data-rel="back" data-theme="a" data-inline="true" data-icon="check"
+        <a name="yes" href="index.html" data-role="button" data-rel="back" data-theme="a" data-inline="true"
+           data-icon="check"
            data-mini="true">Yes</a>
         <a name="no" href="index.html" data-role="button" data-rel="back" data-inline="true" data-mini="true">No</a>
     </div>
 
     <div data-role="popup" id="popupok" data-theme="a" data-overlay-theme="a" class="ui-content">
         <p style="font-size: 0.8em"></p>
+
         <p style="font-size: 1.1em"></p>
-        <a name="ok" href="index.html" data-role="button" data-rel="back" data-theme="a" data-inline="true" data-icon="check"
+        <a name="ok" href="index.html" data-role="button" data-rel="back" data-theme="a" data-inline="true"
+           data-icon="check"
            data-mini="true">OK</a>
     </div>
-    <!--  -->
+
 </div>
 
 <!-- //////////////////////////////////////////////////////////////////////////
@@ -1364,8 +733,7 @@ Station Properties
 
 
     <h4 id="stationName" style="text-align:center"></h4>
-    <hr width="100%"
-        style="color:#333; display: block; height: 1px; border: 0; border-top: 1px solid #000; margin: 0em 1; padding: 0;"/>
+
     <div style="width:242px; height: 130px">
         <svg width="320" height="140" xmlns="http://www.w3.org/2000/svg">
             <g>
@@ -1378,7 +746,8 @@ Station Properties
              src="https://secure.dynawebs.net/_studiolite-dev/_assets/preload2_gray.gif"/>
     </div>
 
-    <div data-role="navbar" class="ui-navbar ui-mini" data-grid="c" role="navigation" data-theme="a">
+    <div style="position: relative; top: 6px; left: 15px" data-role="navbar" class="ui-navbar ui-mini" data-grid="c"
+         role="navigation" data-theme="a">
         <ul class="ui-grid-c">
             <li class="ui-block-a"><a href="#" id="captureCommand" data-role="button" data-icon="capture-cmd"
                                       data-theme="a"></a></li>
@@ -1390,11 +759,6 @@ Station Properties
                                       data-theme="a"></a></li>
         </ul>
     </div>
-
-
-    <hr width="100%"
-        style="color:#333; display: block; height: 1px; border: 0; border-top: 1px solid #000; margin: 1em 0; padding: 0;"/>
-
     <div class="ui-grid-a" data-theme="a">
         <div class="ui-block-a">
             <h5>Name:</h5>
@@ -1452,8 +816,6 @@ Station Properties
         </div>
     </div>
 
-    <hr width="100%"
-        style="color:#333; display: block; height: 1px; border: 0; border-top: 1px solid #000; margin: 1em 0; padding: 0;"/>
     <input type="text" data-inline="true" name="eventName" data-clear-btn="true" data-theme="a" data-icon="search"
            placeholder="event name"
            id="sendEventID" value="">
@@ -1504,3 +866,4 @@ Empty Properties
 
 </body>
 </html>
+

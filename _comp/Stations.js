@@ -87,8 +87,7 @@ CompStations.prototype = {
                 case CompStations.stationListEmpty:
                 {
                     var station = model.getStation(dbmid);
-                    var stationHTML = '<li data-role="list-divider" data-theme="a" ></li>' +
-                        '<li data-dbmid="' + dbmid + '" data-icon="gear" data-theme="a" class="station">' +
+                    var stationHTML = '<li data-dbmid="' + dbmid + '" data-icon="gear"  class="station">' +
                         '<span style="display: inline" id="stationIcon' + i + '"></span>' +
                         '<a class="lastStatus" style="display: inline; position: relative; top: -18px" ">' + station['name'] + '</a>' +
                         '</div><a data-theme="a" data-icon="gear" class="fixPropOpenLiButtonPosition station stationOpenProps"></a>' +
@@ -117,7 +116,6 @@ CompStations.prototype = {
                         if (station != undefined && station['statusChanged'] == false) {
                             var elem = $(this).find('circle')
                             elem.attr('fill', station['color']);
-                            // $(this).find(Elements.CLASS_LAST_STATUS).html('<a class="lastStatus" style="display: inline" data-transition="slide">Last status: ' + station['status'] + '</a>');
                         }
                     });
                     break;

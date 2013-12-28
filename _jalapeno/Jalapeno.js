@@ -32,7 +32,6 @@ Jalapeno.prototype = {
         self.m_pass = i_pass;
         self.m_loaderManager = new LoaderManager();
         self.m_msdb = self.m_loaderManager['m_dataBaseManager'];
-
         self.m_loaderManager.create(self.m_user, self.m_pass, function (i_result) {
             log(i_result + self.m_loaderManager['m_domain'] + ' ' + self.m_loaderManager['m_businessId']);
             i_callBack(i_result);

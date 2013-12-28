@@ -166,42 +166,42 @@ function wireNavigation() {
     $(Elements.NAV_PLAY_LIST).on('tap', function () {
         deselectNav();
         viewStackMain.selectIndex(0);
-        $(this).addClass('ui-btn-active');
+        // $(this).addClass('ui-btn-active');
         return false;
     });
     $(Elements.NAV_FILES).on('tap', function () {
         deselectNav();
-        $(Elements.NAV_BUTTONS).children().removeClass('ui-btn-active');
+        // $(Elements.NAV_BUTTONS).children().removeClass('ui-btn-active');
         viewStackMain.selectIndex(1);
-        $(this).addClass('ui-btn-active');
+        // $(this).addClass('ui-btn-active');
         return false;
     });
     $(Elements.NAV_PLAYLERS).on('tap', function () {
         deselectNav();
-        $(Elements.NAV_BUTTONS).children().removeClass('ui-btn-active');
+        // $(Elements.NAV_BUTTONS).children().removeClass('ui-btn-active');
         viewStackMain.selectIndex(2);
-        $(this).addClass('ui-btn-active');
+        // $(this).addClass('ui-btn-active');
         return false;
     });
     $(Elements.NAV_SETTINGS).on('tap', function () {
         deselectNav();
-        $(Elements.NAV_SETTINGS).children().removeClass('ui-btn-active');
+        // $(Elements.NAV_SETTINGS).children().removeClass('ui-btn-active');
         viewStackMain.selectIndex(3);
-        $(this).addClass('ui-btn-active');
+        // $(this).addClass('ui-btn-active');
         return false;
     });
     $(Elements.NAV_HELP).on('tap', function () {
         deselectNav();
-        $(Elements.NAV_HELP).children().removeClass('ui-btn-active');
+        // $(Elements.NAV_HELP).children().removeClass('ui-btn-active');
         viewStackMain.selectIndex(4);
-        $(this).addClass('ui-btn-active');
+        // $(this).addClass('ui-btn-active');
         return false;
     });
     $(Elements.NAV_LOGOUT).on('tap', function () {
         deselectNav();
-        $(Elements.NAV_LOGOUT).children().removeClass('ui-btn-active');
+        // $(Elements.NAV_LOGOUT).children().removeClass('ui-btn-active');
         viewStackMain.selectIndex(5);
-        $(this).addClass('ui-btn-active');
+        // $(this).addClass('ui-btn-active');
         return false;
     });
     $(Elements.NAV_ADVANCE).on('tap', function () {

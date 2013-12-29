@@ -2,36 +2,35 @@
     background: #ffffff;
     background-image: #ffffff;
 }
+
 form.ui-bar-a {
     background: #ffffff;
-    background-image: -webkit-gradient(linear, left top, left bottom, from( #ffffff), to( #ffffff)); /* Saf4+, Chrome */
-    background-image: -webkit-linear-gradient( #ffffff, #ffffff); /* Chrome 10+, Saf5.1+ */
-    background-image: -moz-linear-gradient( #ffffff, #ffffff); /* FF3.6 */
-    background-image: -ms-linear-gradient( #ffffff, #ffffff); /* IE10 */
-    background-image: -o-linear-gradient( #ffffff, #ffffff); /* Opera 11.10+ */
-    background-image: linear-gradient( #ffffff, #ffffff);
 }
+
 #appName .logo_holder {
     width: 255px;
     /*float: left;*/
-    position:relative;
+    position: relative;
     height: auto;
     margin-top: 7px;
     margin-bottom: 7px;
 }
+
 #appName #logo {
-    position:relative;
+    position: relative;
     width: 60px;
     height: 50px;
     padding-top: 3px;
     margin-left: 6px;
     margin-right: 2px;
 }
+
 #appName .logo_text {
-    position:relative;
+    position: relative;
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
 }
+
 #appName .logo_text h1 {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
@@ -40,6 +39,7 @@ form.ui-bar-a {
     margin-bottom: 0px;
     line-height: 28px;
 }
+
 #appName .logo_text p {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
@@ -51,6 +51,7 @@ form.ui-bar-a {
 #slid .ui-btn-inner {
     border-top: none;
 }
+
 #slid.ui-btn-up-a {
     border: none /*{a-bup-border}*/;
     background: #333333 /*{a-bup-background-color}*/;
@@ -58,39 +59,39 @@ form.ui-bar-a {
     color: #828282 /*{a-bup-color}*/;
 
 }
+
 #slid.ui-btn-hover-a {
     border: none /*{a-bup-border}*/;
     background: #333333 /*{a-bup-background-color}*/;
     font-weight: bold;
     color: #828282 /*{a-bup-color}*/;
 }
+
 #appName.ui-bar-b {
     border: 1px solid #b3b3b3 /*{b-bar-border}*/;
     background: #333333 /*{b-bar-background-color}*/;
     color: #ffffff /*{b-bar-color}*/;
     font-weight: bold;
     text-shadow: none;
-    background-image: -webkit-gradient(linear, left top, left bottom, from( #333333 /*{b-bar-background-start}*/), to( #333333 /*{b-bar-background-end}*/)); /* Saf4+, Chrome */
-    background-image: -webkit-linear-gradient( #333333 /*{b-bar-background-start}*/, #333333 /*{b-bar-background-end}*/); /* Chrome 10+, Saf5.1+ */
-    background-image: -moz-linear-gradient( #333333 /*{b-bar-background-start}*/, #333333 /*{b-bar-background-end}*/); /* FF3.6 */
-    background-image: -ms-linear-gradient( #333333 /*{b-bar-background-start}*/, #333333 /*{b-bar-background-end}*/); /* IE10 */
-    background-image: -o-linear-gradient( #333333 /*{b-bar-background-start}*/, #333333 /*{b-bar-background-end}*/); /* Opera 11.10+ */
-    background-image: linear-gradient( #333333 /*{b-bar-background-start}*/, #333333 /*{b-bar-background-end}*/);
 }
+
 #appName .ui-li-heading {
     font-weight: 300;
     text-shadow: none;
     margin: 12px 0;
 }
+
 .ui-bar-a {
     background: #333333;
     background-image: #333333;
 }
+
 .ui-body-a, .ui-body-a input, .ui-body-a select, .ui-body-a textarea, .ui-body-a button {
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 300;
 }
+
 .ui-btn-up-a, .ui-btn-hover-a, .ui-btn-down-a {
     font-family: 'Roboto';
     font-style: normal;
@@ -100,65 +101,76 @@ form.ui-bar-a {
 .fixPropOpenLiButtonPosition .ui-btn-up-a {
     border: none;
     background: none;
-    background-color:transparent;
+    background-color: transparent;
     background-image: none;
 }
+
 .ui-bar-b, .ui-bar-b input, .ui-bar-b select, .ui-bar-b textarea, .ui-bar-b button {
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 300;
 }
+
 .ui-body-b, .ui-body-b input, .ui-body-b select, .ui-body-b textarea, .ui-body-b button {
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 300;
 }
+
 .ui-btn-up-b, .ui-btn-hover-b, .ui-btn-down-b {
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 300;
     text-decoration: none;
 }
+
 .ui-bar-c, .ui-bar-c input, .ui-bar-c select, .ui-bar-c textarea, .ui-bar-c button {
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 300;
 }
+
 .ui-body-c, .ui-body-c input, .ui-body-c select, .ui-body-c textarea, .ui-body-c button {
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 300;
 }
+
 .ui-btn-up-c, .ui-btn-hover-c, .ui-btn-down-c {
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 300;
     text-decoration: none;
 }
+
 form .ui-input-text .ui-input-clear {
     position: absolute;
     right: 10px;
     top: 50%;
     margin-top: -13px;
 }
+
 #blockRSSCommonProperties .ui-input-text .ui-input-clear {
     position: absolute;
     right: 10px;
     top: 50%;
     margin-top: -13px;
 }
+
 #propEntireScreen .ui-input-text .ui-input-clear {
     position: absolute;
     right: 10px;
     top: 50%;
     margin-top: -13px;
 }
+
 #resourceProperties .ui-input-text .ui-input-clear {
     position: absolute;
     right: 10px;
     top: 50%;
     margin-top: -13px;
 }
+
 #campaignProperties .ui-input-text .ui-input-clear {
     position: absolute;
     right: 10px;
@@ -166,66 +178,46 @@ form .ui-input-text .ui-input-clear {
     margin-top: -13px;
 }
 
-
 #timeLinePropDiv .ui-btn-up-b {
     border: none;
     background: #ffffff;
-    background-image: linear-gradient( #ffffff, #ffffff);
 }
+
 #addNewScreenButton.ui-btn-up-b {
     border: 1px solid #cccccc;
     background: #ffffff;
     font-weight: normal;
     color: #2f3e46;
     text-shadow: 0 1px 0 #ffffff;
-    background-image: -webkit-gradient(linear, left top, left bottom, from( #ffffff), to( #ffffff)); /* Saf4+, Chrome */
-    background-image: -webkit-linear-gradient( #ffffff, #ffffff); /* Chrome 10+, Saf5.1+ */
-    background-image: -moz-linear-gradient( #ffffff, #ffffff); /* FF3.6 */
-    background-image: -ms-linear-gradient( #ffffff, #ffffff); /* IE10 */
-    background-image: -o-linear-gradient( #ffffff, #ffffff); /* Opera 11.10+ */
-    background-image: linear-gradient( #ffffff, #ffffff);
 }
+
 #addNewScreenButton.ui-btn-hover-b {
     border: 1px solid #bbbbbb /*{b-bhover-border}*/;
     background: #f9f9f9 /*{b-bhover-background-color}*/;
     font-weight: normal;
     color: #2f3e46 /*{b-bhover-color}*/;
     text-shadow: 0 1px 0 #ffffff;
-    background-image: -webkit-gradient(linear, left top, left bottom, from( #f9f9f9), to( #f9f9f9)); /* Saf4+, Chrome */
-    background-image: -webkit-linear-gradient( #f9f9f9, #f9f9f9); /* Chrome 10+, Saf5.1+ */
-    background-image: -moz-linear-gradient( #f9f9f9, #f9f9f9); /* FF3.6 */
-    background-image: -ms-linear-gradient( #f9f9f9, #f9f9f9); /* IE10 */
-    background-image: -o-linear-gradient( #f9f9f9, #f9f9f9); /* Opera 11.10+ */
-    background-image: linear-gradient( #f9f9f9, #f9f9f9);
 }
+
 #delScreenButton.ui-btn-up-b {
     border: 1px solid #cccccc;
     background: #ffffff;
     font-weight: normal;
     color: #2f3e46;
-    text-shadow: 0 1px 0 #ffffff;
-    background-image: -webkit-gradient(linear, left top, left bottom, from( #ffffff), to( #ffffff)); /* Saf4+, Chrome */
-    background-image: -webkit-linear-gradient( #ffffff, #ffffff); /* Chrome 10+, Saf5.1+ */
-    background-image: -moz-linear-gradient( #ffffff, #ffffff); /* FF3.6 */
-    background-image: -ms-linear-gradient( #ffffff, #ffffff); /* IE10 */
-    background-image: -o-linear-gradient( #ffffff, #ffffff); /* Opera 11.10+ */
-    background-image: linear-gradient( #ffffff, #ffffff);
 }
+
 #delScreenButton.ui-btn-hover-b {
     border: 1px solid #bbbbbb /*{b-bhover-border}*/;
     background: #f9f9f9 /*{b-bhover-background-color}*/;
     font-weight: normal;
     color: #2f3e46 /*{b-bhover-color}*/;
     text-shadow: 0 1px 0 #ffffff;
-    background-image: -webkit-gradient(linear, left top, left bottom, from( #f9f9f9), to( #f9f9f9)); /* Saf4+, Chrome */
-    background-image: -webkit-linear-gradient( #f9f9f9, #f9f9f9); /* Chrome 10+, Saf5.1+ */
-    background-image: -moz-linear-gradient( #f9f9f9, #f9f9f9); /* FF3.6 */
-    background-image: -ms-linear-gradient( #f9f9f9, #f9f9f9); /* IE10 */
-    background-image: -o-linear-gradient( #f9f9f9, #f9f9f9); /* Opera 11.10+ */
-    background-image: linear-gradient( #f9f9f9, #f9f9f9);
 }
 
+#timelinesCollapsible div {
+    padding: 0px;
 
+}
 
 .ui-icon-arrws {
     background: url(https://secure.dynawebs.net/_studiolite-dev/_assets/arrws.png) 50% 50% no-repeat;
@@ -385,9 +377,22 @@ form .ui-input-text .ui-input-clear {
 }
 
 #navPanel {
-    background-color: #fff;
-    border-right: 1px solid #808080;
     border-bottom: none;
+}
+
+#timelimeChannelBlockLength {
+    display: inline;
+    width: 100%;
+    height: 75px;
+}
+
+#navPanel li {
+    border-top: none;
+}
+
+#navPanel li:not(:first-child) {
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .ui-btn-icon-notext {
@@ -645,7 +650,6 @@ aside > aside > div > ul > li {
 .currentSelectedResource {
     background: #f0f0f0;
 }
-
 
 .fileinput-button {
     position: relative;

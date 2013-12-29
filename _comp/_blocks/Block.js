@@ -200,9 +200,9 @@ Block.prototype._onTimelineChannelBlockLengthChanged = function () {
 Block.prototype._propLengthKnobsInit = function () {
     var self = this;
 
-    var snippet = '<input id="blockLengthHours" data-displayPrevious="false" data-min="0" data-max="23" data-skin="tron" data-width="75" data-height="75"  data-thickness=".2" type="text" class="knob" data-fgColor="gray">' +
-        '<input id="blockLengthMinutes" data-displayPrevious="false" data-min="0" data-max="59" data-skin="tron" data-width="75" data-height="75" data-thickness=".2" type="text" class="knob" data-fgColor="gray">' +
-        '<input id="blockLengthSeconds" data-displayPrevious="false" data-min="0" data-max="59" data-skin="tron" data-width="75" data-height="75"  data-thickness=".2" type="text" class="knob" data-fgColor="gray">';
+    var snippet = '<input id="blockLengthHours" data-displayPrevious="false" data-min="0" data-max="23" data-skin="tron" data-width="60" data-height="60"  data-thickness=".2" type="text" class="knob" data-fgColor="gray">' +
+        '<input id="blockLengthMinutes" data-displayPrevious="false" data-min="0" data-max="59" data-skin="tron" data-width="60" data-height="60" data-thickness=".2" type="text" class="knob" data-fgColor="gray">' +
+        '<input id="blockLengthSeconds" data-displayPrevious="false" data-min="0" data-max="59" data-skin="tron" data-width="60" data-height="60"  data-thickness=".2" type="text" class="knob" data-fgColor="gray">';
 
     $(Elements.TIMELIME_CHANNEL_BLOCK_LENGTH).append(snippet);
 

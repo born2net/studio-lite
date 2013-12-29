@@ -249,8 +249,7 @@ Screen Layout page
 
 <div data-role="page" id="screenLayoutList" class="ui-responsive-panel" data-theme="a">
     <div data-role="header" data-theme="a">
-        <a id="goBackFromScreenList" data-role="button" data-theme="a" data-icon="arrow-l" data-iconpos="notext"
-           class="ui-btn-left">Close</a>
+        <a id="goBackFromScreenList" data-role="button" data-icon="arrow-l" data-iconpos="notext">Close</a>
 
         <h2>Select screen layout</h2>
     </div>
@@ -463,11 +462,11 @@ Block Properties
 
 <div id="blockProperties" style="display: none" data-theme="a">
     <div>
-        <h2 id="selectedChannelResourceName"></h2>
+        <h3 id="selectedChannelResourceName"></h3>
     </div>
-    <h3>hours / minutes / seconds</h3>
+    <p>hours / minutes / seconds</p>
 
-    <div id="timelimeChannelBlockLength" style="display: inline; width: 100%; height: 75px">
+    <div id="timelimeChannelBlockLength">
     </div>
     <p/>
     <hr style="opacity: 0.1"/>
@@ -605,7 +604,6 @@ Campaign view
          data-role="collapsible-set" style="padding:20px">
         <div data-role="collapsible">
             <h3><p id="timeLinePropTitle">Timelines</p>
-
                 <div id="timeLinePropDiv">
                     <input type='button' data-icon="gear" data-theme='a' value='&nbsp;' data-mini='true'
                            data-inline='true' data-icon-pos='top' id="openTimeLineProperties">

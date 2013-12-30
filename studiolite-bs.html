@@ -1,89 +1,46 @@
-<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SignageStudio Web Lite</title>
-
-    <style>
-        body{
-            background-color:#2b2b29;
-            font-family:"Helvetica", Arial, sans;
-            font-size: 18px;
-        }
-        a{
-            padding:2px 7px;
-            background-color:#7bcaf7;
-            text-decoration:none;
-            color:#323232;
-            -moz-border-radius: 5px;
-            border-radius: 5px;
-        }
-
-        .hidden{
-            color:#FFF;
-            position:absolute;
-            float:left;
-            margin-top:20px;
-            display:none;
-        }
-
-        #test1 {
-            height: 95%;
-            width: 95%;
-            background-color: red;
-        }
-
-        #test2 {
-            height: 95%;
-            width: 95%;
-            background-color: yellow;
-        }
-
-    </style>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_common/_jquery/std/jq1.9.1/jquery-1.9.1.js" type="text/javascript"></script>
-    <script src="https://secure.dynawebs.net/_studiolite-dev/_common/_js/sammyjs/sammy.js" type="text/javascript"></script>
+    <title>Off the backbone</title>
 
 
-    <script type="text/javascript">
-        $(function () {
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_common/_jquery/std/jq1.9.1/jquery-1.9.1.js"
+            type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_common/_js/underscore/underscore.js"
+            type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_common/_js/backbone/backbone.js"
+            type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_common/_js/bootstrap/js/bootstrap.js"
+            type="text/javascript"></script>
+    <link href="https://secure.dynawebs.net/_studiolite-dev/_common/_js/bootstrap/css/bootstrap.css"
+          rel="stylesheet">
+    <link href="https://secure.dynawebs.net/_studiolite-dev/_common/_js/bootstrap/css/bootstrap-theme.css"
+          rel="stylesheet">
 
-            //initialize "SAMMY"
-            var app = $.sammy(function () {
+    <!-- Dev -->
+    <script src="https://secure.dynawebs.net/_studiolite-dev/_views/menuitemdetails.js"
+            type="text/javascript"></script>
+    <script src="https://secure.dynawebs.net/_studiolite-dev/studiolite-bs.js"
+            type="text/javascript"></script>
 
-                this.get('#test1', function (context) {
-                    if ($('#test2').css('opacity') > 0) {
-                        $('#test2').fadeOut();
-                    }
-                    $('#test1').fadeIn();
-                });
-
-                this.get('#test2', function (context) {
-                    if ($('#test1').css('opacity') > 0) {
-                        $('#test1').fadeOut();
-                    }
-                    $('#test2').fadeIn();
-                });
-            }).run('#!');//run it with default html fragment
-
-        });
-
-    </script>
 
 
 </head>
-
 <body>
 
-<a href="#test1">Campaign</a>
-<a href="#test2">Scenes</a>
+<div class="container">
+    <h1>Off the backbone</h1>
 
+    <ul class="nav nav-pills">
+        <li><a href="#">Food</a></li>
+        <li><a href="#/menu-items/new">Add Item</a></li>
+        <li><a href="#/menu-items/garden-salad">Garden Salad</a></li>
+        <li><a href="#/menu-items">We pick</a></li>
+    </ul>
+</div>
 
-<div class="response">
-    <div id="test1" class="hidden">I thought you'd see it my way.</div>
-    <div id="test2" class="hidden">Ok. Maybe next time.</div>
+<div class="container" id="app">
+
 </div>
 
 </body>
 </html>
-

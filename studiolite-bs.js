@@ -8,7 +8,7 @@ $(function () {
         },
 
         initialize: function () {
-            this.menuItemView = new MenuItemDetails();
+            this.menuItemView = new MenuItemDetails({el: '#MyMenu'});
             this.menuItemView.initOpts();
         },
 

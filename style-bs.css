@@ -1,0 +1,37 @@
+html,
+body {
+    height: 100%;
+    /* The html and body elements cannot have any padding or margin. */
+}
+
+#wrapPad {
+    background-color: #428bca;
+    min-height: 55px;
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+    min-height: 100%;
+    height: auto;
+    margin: 0 auto -60px; /* respective of footer */
+    padding: 0 0 60px; /* respective of footer */
+}
+
+#app {
+    min-height: 100%;
+    min-width: 100%;
+}
+
+#footer {
+    height: 60px; /* respective of footer */
+    background-color: #222222;
+}
+
+
+#footerText {
+    color: #808080;
+    font-size: 0.8em;
+    padding: 0px;
+    margin: 0px;
+}
+

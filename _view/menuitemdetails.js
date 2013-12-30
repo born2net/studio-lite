@@ -7,8 +7,8 @@
  **/
 var MenuItemDetails = Backbone.View.extend({
 
-    initOpts: function(){
-      this.options.name = 'jambolia';
+    initialize: function  () {
+        this.listenTo(this.model, "change", this.render);
     },
 
     /**
@@ -19,8 +19,8 @@ var MenuItemDetails = Backbone.View.extend({
      **/
 	render: function () {
 		var markup = '<div>' +
-		'<h1>' + this.options.name + '</h1>' +
-		'<p><span class="label">' + this.options.category + '</span></p>' +
+		'<h1>' + this.model.attributes.name + '</h1>' +
+		'<p><span class="label">' + 'aaa' + '</span></p>' +
 		'</div>'+'<h1>assa</h1>            <h1>assa</h1>            <h1>assa</h1>            <h1>assa</h1>            <h1>assa</h1>            <h1>assa</h1>            <h1>assa</h1>        <h1>assa</h1>  <h1>assa</h1>  <h1>assa</h1>  <h1>assa</h1>  <h1>assa</h1>  <h1>assa</h1>  <h1>assa</h1>  <h1>assa</h1>      <h1>assa</h1>            <h1>assa</h1>            <h1>assa</h1>';
 
 		this.$el.html(markup);

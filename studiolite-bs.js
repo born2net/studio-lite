@@ -3,13 +3,15 @@ $(function () {
         routes: {
             "": "list",
             "menu-items/new": "itemForm",
-            "menu-items/:item": "itemDetails",
-            "menu-items": "itemDetails"
+            "menu-items/:item": "itemDetails"
         },
 
         initialize: function () {
-            this.menuItemView = new MenuItemDetails({el: '#MyMenu'});
-            this.menuItemView.initOpts();
+            this.menuItemModel = new MenuItemModel();
+            this.menuItemView = new MenuItemDetails({
+                el: '#MyMenu',
+                model: this.menuItemModel
+            });
         },
 
         list: function () {
@@ -21,10 +23,10 @@ $(function () {
 
         itemDetails: function (item) {
             var self = this;
-            if (item)
-                self.menuItemView.options.name = item;
             $('#app').fadeOut(function () {
-                $('#app').html(self.menuItemView.render().el).fadeIn();
+                self.menuItemModel.set('name',item);
+                $('#app').html(self.menuItemView.el);
+                $('#app').fadeIn();
             });
         },
 

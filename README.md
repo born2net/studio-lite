@@ -15,7 +15,7 @@ The world's only enterprise level, open source, 100% FREE, Digital Signage platf
 Documentation
 ------------------------------------------------------------------------
 - SignageStudio Web Lite on-line documentation: http://www.digitalsignage.com/msdocs/
-- Jalapeno SDK on-line documentation: http://www.digitalsignage.com/msdocs/classes/HelperSDK.html
+- Jalapeno SDK on-line documentation: http://www.digitalsignage.com/msdocs/classes/Jalapeno.html
 
 
 

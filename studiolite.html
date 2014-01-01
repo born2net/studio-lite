@@ -205,7 +205,7 @@ Studio Lite - Application
             <li data-role="list-divider" id="appName">
                 <div class="logo_holder">
                     <div class="logo_text">
-                        <a href="http://www.digitalsignage.com"><img src="./_assets/logo.png" width="60" height="39"
+                        <a href="http://www.digitalsignage.com"><img src="https://secure.dynawebs.net/_studiolite-dev/_assets/logo.png" width="60" height="39"
                                                                      alt="logo"></a>
                         <span style="font-family: 'Roboto', sans-serif;font-weight: 300;font-size: 22px;color: #ffffff;margin-bottom: 0px;line-height: 28px;top: -20px;position: relative;">DigitalSignage.com</span>
                         <span style="font-family: 'Roboto', sans-serif;font-weight: 300;font-size: 12px;color: #ffffff;margin-bottom: 0px;position: relative;top: -23px;left: 65px;"><span
@@ -333,15 +333,19 @@ Campaign Selector view
 
 Resources
 
-SEAN
-
 ////////////////////////////////////////////////////////////////////////// -->
 
 <div align="center" id="files" style="height:1px; display: none" data-theme="a">
     <div align="left">
+        <form id="uploadForm">
+            <input id="file" type="file" name="datafile" multiple/></br>
+            <div id="uploadDiv"></div>
+        </form>
+<!--
         <label data-role="button" align="left" data-icon="plus" data-inline="true" class="file-upload">Add file
             <input id="file" name="file" type="file" multiple data-role="none">
         </label>
+-->
         <a id="fileRemove" align="left" data-theme="a" data-inline="true" data-icon="delete"
            data-role="button">Remove</a>
     </div>

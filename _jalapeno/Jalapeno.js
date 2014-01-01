@@ -780,9 +780,9 @@ Jalapeno.prototype = {
      @param {String} i_elementID
      @return {Array} list of resources created from newly attached files
      **/
-    uploadResources: function (i_elementID) {
+    uploadResources: function (i_uploadFormID, i_uploadFileID, i_iploadDivID) {
         var self = this;
-        var resourceList = self.m_loaderManager.createResources(document.getElementById(i_elementID));
+        var resourceList = self.m_loaderManager.createResources(document.getElementById(i_uploadFormID), document.getElementById(i_uploadFileID), document.getElementById(i_iploadDivID));
         return resourceList;
     },
 

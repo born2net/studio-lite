@@ -104,8 +104,7 @@ CompStations.prototype = {
                     }, 300, i, color);
                     self._listenStationSelected();
                     break;
-                }
-                    ;
+                };
 
                 case CompStations.stationListFull:
                 {
@@ -123,7 +122,8 @@ CompStations.prototype = {
             }
         }
         $(Elements.STATION_LIST).listview('refresh');
-        self.m_stationDataMode = $(Elements.STATION_LIST).children().size() > 1 ? CompStations.stationListFull : CompStations.stationListEmpty;
+        self.m_stationDataMode = $(Elements.STATION_LIST).children().size() > 0 ? CompStations.stationListFull : CompStations.stationListEmpty;
+
 
     },
 

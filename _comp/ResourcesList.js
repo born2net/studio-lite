@@ -192,7 +192,7 @@ CompResourcesList.prototype = {
      **/
     _onFileSelected: function (e) {
         var self = this;
-        jalapeno.uploadResources('uploadForm', 'file', 'uploadDiv');
+        jalapeno.uploadResources('file');
         self._loadResourceList();
         self._listenOpenProps();
         self._listenRemoveResource();

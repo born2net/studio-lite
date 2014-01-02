@@ -746,7 +746,6 @@ Jalapeno.prototype = {
         self.m_msdb.table_campaigns().openForEdit(i_campaign_id);
         var recCampaign = self.m_msdb.table_campaigns().getRec(i_campaign_id);
         recCampaign[i_key] = i_value;
-
     },
 
     /**
@@ -780,9 +779,9 @@ Jalapeno.prototype = {
      @param {String} i_elementID
      @return {Array} list of resources created from newly attached files
      **/
-    uploadResources: function (i_uploadFormID, i_uploadFileID, i_iploadDivID) {
+    uploadResources: function (i_elementID) {
         var self = this;
-        var resourceList = self.m_loaderManager.createResources(document.getElementById(i_uploadFormID), document.getElementById(i_uploadFileID), document.getElementById(i_iploadDivID));
+        var resourceList = self.m_loaderManager.createResources(document.getElementById(i_elementID));
         return resourceList;
     },
 

@@ -25,6 +25,14 @@ function Jalapeno() {
 Jalapeno.prototype = {
     constructor: Jalapeno,
 
+    /**
+     Authenticate against a mediaSERVER
+     @method dbConnect
+     @param {String} i_user
+     @param {String} i_pass
+     @param {Function} i_callBack
+     @return none
+     **/
     dbConnect: function (i_user, i_pass, i_callBack) {
         var self = this;
 

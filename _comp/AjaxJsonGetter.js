@@ -41,6 +41,7 @@ AjaxJsonGetter.prototype = {
         if (!key)
             key = '';
 
+        // send version 1.1 so RC4 key can be decrypted on PHP side
         var jData = {
             'dynaWebsApplication': {
                 '@version': '1.1',

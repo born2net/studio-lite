@@ -450,7 +450,7 @@ JalapenoModel.prototype = {
 
         function onServerReply(data) {
             // no stations
-            if (data.responce['Stations'] == undefined)
+            if (data.responce['Stations']['Station'] == undefined)
                 return;
 
             // single station

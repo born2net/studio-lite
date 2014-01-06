@@ -269,7 +269,7 @@ LoginComponent.prototype = {
 
         jalapeno.dbConnect(i_user, i_pass, function (i_status) {
             var userData = {
-                status: i_status,
+                result: i_status,
                 user: i_user,
                 pass: i_pass
             }

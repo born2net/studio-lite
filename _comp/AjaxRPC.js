@@ -185,7 +185,6 @@ AjaxRPC.prototype = {
         // add the abort method
         promise.abort = function (statusText) {
             var self = this.self;
-            // console.log('aborted');
             // proxy abort to the jqXHR if it is active
             if (jqXHR) {
                 return jqXHR.abort(statusText);

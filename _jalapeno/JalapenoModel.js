@@ -1,6 +1,3 @@
-var console = {}
-console.log = function (){};
-
 /**
  A constant service name for the JalapenoModel service
  @property JalapenoModel.servicename

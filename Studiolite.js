@@ -28,6 +28,7 @@
 
 var globs = {}, commBroker, model, jalapeno, x2js;
 
+
 $(document).ready(function () {
 
     initServices();

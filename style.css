@@ -7,6 +7,11 @@ form.ui-bar-a {
     background: #ffffff;
 }
 
+.robotoFont {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+}
+
 #appName .logo_holder {
     width: 255px;
     /*float: left;*/

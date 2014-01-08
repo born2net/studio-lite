@@ -231,6 +231,14 @@ function wireStudioUI() {
         }
     });
 
+
+
+    $(Elements.LEARN_HOW_TO).tap(function () {
+        window.open('http://www.digitalsignage.com/_html/signagestudio_lite.html', '_blank')
+        return false;
+    });
+
+
     $(Elements.CLOSE_PROPERTIES).tap(function () {
         $(Elements.PROPERTIES_PANEL).panel("close");
     });

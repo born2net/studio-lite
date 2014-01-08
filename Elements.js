@@ -130,6 +130,7 @@ Elements.SNAPSHOT_SPINNER = '#snapShotSpinner';
 Elements.STATION_NAME = '#stationName';
 Elements.SEL_NAME = '#selName';
 Elements.SEL_OS = '#selOS';
+Elements.LEARN_HOW_TO = '#learnHowTo';
 Elements.SEL_AIR_VER = '#selAirVer';
 Elements.SEL_PLAYERVER = '#selPlayerVer';
 Elements.SEL_PEAK_MEM = '#selPeakMem';

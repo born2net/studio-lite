@@ -4,6 +4,21 @@ body {
     /* The html and body elements cannot have any padding or margin. */
 }
 
+/*
+.animateDivs {
+    height: 200px;
+    -webkit-transition: width 0.3s ease, margin 0.3s ease;
+    -moz-transition: width 0.3s ease, margin 0.3s ease;
+    -o-transition: width 0.3s ease, margin 0.3s ease;
+    transition: width 0.3s ease, margin 0.3s ease;
+}
+*/
+
+#propPanel {
+    padding: 0;
+    margin: 0;
+}
+
 #wrapPad {
     background-color: #428bca;
     min-height: 55px;
@@ -18,6 +33,8 @@ body {
 }
 
 #app {
+    height: 100%;
+    width: 100%;
     min-height: 100%;
     min-width: 100%;
 }
@@ -27,11 +44,30 @@ body {
     background-color: #222222;
 }
 
-
 #footerText {
     color: #808080;
-    font-size: 0.8em;
     padding: 0px;
     margin: 0px;
 }
 
+.modal-static {
+    position: fixed;
+    /*top: 50% !important;
+    left: 50% !important;
+    margin-top: -100px;
+    margin-left: -100px;  */
+    overflow: visible !important;
+}
+.modal-static,
+.modal-static .modal-dialog,
+.modal-static .modal-content {
+    width: 100%;
+    height: 100%;
+}
+.modal-static .modal-dialog,
+.modal-static .modal-content {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.modal-static .modal-content .icon {
+}

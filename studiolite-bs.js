@@ -25,6 +25,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap'], function (_, $, Backbo
 
             setTimeout(function () {
                 $(window).trigger('resize');
+                $('#wrap').animate({opacity: 1},550);
             }, 50);
 
             Backbone.history.start();

@@ -4,15 +4,15 @@ body {
     /* The html and body elements cannot have any padding or margin. */
 }
 
-/*
-.animateDivs {
+
+#propPanel, #mainPanelWrap {
     height: 200px;
-    -webkit-transition: width 0.3s ease, margin 0.3s ease;
-    -moz-transition: width 0.3s ease, margin 0.3s ease;
-    -o-transition: width 0.3s ease, margin 0.3s ease;
-    transition: width 0.3s ease, margin 0.3s ease;
+    -webkit-transition: width 0.1s ease, margin 0.1s ease;
+    -moz-transition: width 0.1s ease, margin 0.1s ease;
+    -o-transition: width 0.1s ease, margin 0.1s ease;
+    transition: width 0.1s ease, margin 0.1s ease;
 }
-*/
+
 
 #propPanel {
     padding: 0;

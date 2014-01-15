@@ -43,11 +43,9 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap'], function (_, $, Backbo
 
             setTimeout(function () {
                 $(window).trigger('resize');
-                // $('#wrap').animate({opacity: 1},550);
             }, 50);
 
             Backbone.history.start();
-
 
             $('#closePanel').click(function () {
                 $('#propPanel').fadeOut(function () {
@@ -72,24 +70,11 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap'], function (_, $, Backbo
             });
 
             $(window).resize(function () {
-
-                $('#mainPanelWrap').removeClass('animateDivs');
-                $('#propPanel').removeClass('animateDivs');
-
                 var h = $('body').css('height').replace('px', '');
-                var w = $('body').css('width').replace('px', '');
-
                 h = h - 115;
-
-                // fixed footer
-                if (w <= 768) {
-                    h = h + 65;
-                }
-
                 $('#propPanel').height(h);
                 $('#mainPanel').height(h);
                 $('#mainPanelWrap').height(h);
-
             });
         }
     })

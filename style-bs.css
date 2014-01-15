@@ -123,7 +123,7 @@ body {
 */
 
 /* Hardware accelerated */
-/*
+
 .page.left {
     -webkit-transform: translate3d(-100%, 0, 0);
     transform: translate3d(-100%, 0, 0);
@@ -143,9 +143,9 @@ body {
     -webkit-transition-duration: .25s;
     transition-duration: .25s;
 }
-*/
 
 
+/*
 .page.left {
     -webkit-transform: translate3d(0, -100%, 0);
     transform: translate3d(0, -100%, 0);
@@ -165,7 +165,7 @@ body {
     -webkit-transition-duration: 3.25s;
     transition-duration: 3.25s;
 }
-
+*/
 
 .noScroll {
     overflow: hidden;

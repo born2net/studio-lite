@@ -28,6 +28,7 @@
 
             this.homePage = document.getElementById("homePage");
             this.page1 = document.getElementById("p1");
+            this.page2 = document.getElementById("p2");
             this.currentPage = this.homePage;
 
             $('#b1').click(function(){
@@ -35,6 +36,14 @@
             });
 
             $('#b2').click(function(){
+                self.slidePageFrom(self.page2, 'right')
+            });
+
+            $('#b3').click(function(){
+                self.slidePageFrom(self.homePage, 'left')
+            });
+
+            $('#b4').click(function(){
                 self.slidePageFrom(self.homePage, 'left')
             });
 
@@ -86,14 +95,15 @@
             });
         },
 
-        slidePageFrom: function (page, from) {
+        slidePageFrom: function (toPage, direction) {
             var self = this;
             // Position the page at the starting position of the animation
-            page.className = "page " + from;
-            // Position the new page and the current page at the ending position of their animation with a transition class indicating the duration of the animation
-            page.className = "page transition center";
-            self.currentPage.className = "page transition " + (from === "left" ? "right" : "left");
-            self.currentPage = page;
+            toPage.className = "page " + direction;
+            // Position the new page and the current page at the ending position of their
+            // animation with a transition class indicating the duration of the animation
+            toPage.className = "page transition center";
+            self.currentPage.className = "page transition " + (direction === "left" ? "right" : "left");
+            self.currentPage = toPage;
         }
 
     });

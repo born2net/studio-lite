@@ -56,8 +56,13 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap'], function (_, $, Backbo
             });
 
             $('#openPanel').click(function () {
-                $('#myModal').modal('show')
-                return;
+
+                var w = $('body').css('width').replace('px', '');
+                if (w <= 768) {
+                    $('#myModal').modal('show');
+                    return;
+                }
+
                 $('#mainPanelWrap').addClass('col-sm-9 col-md-9');
                 setTimeout(function () {
                     $('#mainPanelWrap').removeClass('col-md-12');
@@ -71,7 +76,14 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap'], function (_, $, Backbo
 
             $(window).resize(function () {
                 var h = $('body').css('height').replace('px', '');
-                h = h - 115;
+                var w = $('body').css('width').replace('px', '');
+
+                if (w <= 768) {
+                    $('#searcher').hide();
+                } else {
+                    $('#searcher').show();
+                }
+
                 $('#propPanel').height(h);
                 $('#mainPanel').height(h);
                 $('#mainPanelWrap').height(h);

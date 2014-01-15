@@ -1,7 +1,5 @@
-define(['underscore', 'jquery', 'backbone', 'bootstrap'], function (_, $, Backbone, Bootstrap) {
+define(['underscore', 'jquery', 'backbone', 'bootstrap', 'viewkit'], function (_, $, Backbone, Bootstrap, viewkit) {
     var StudioLite = Backbone.Router.extend({
-
-
 
         routes: {
             "help": "help",    // #help
@@ -10,22 +8,60 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap'], function (_, $, Backbo
         },
 
         help: function () {
-            alert('aa');
+
         },
 
         search: function (query, page) {
             require(["menuitemdetails"], function (empModelFactory) {
                 var employee = new (empModelFactory['Employee']);
+                var employees = new (empModelFactory['EmployeeCollection']);
                 employee.alertMe();
+                employees.alertMe();
             });
         },
 
-
         initialize: function () {
+
+            require(['AppOuterFrameView', 'ApplicationView', 'LoginView'], function (AppOuterFrameView, ApplicationView, LoginView) {
+
+
+                var applicationView = new ApplicationView({ el: '#app' });
+                var loginView = new LoginView({el: '#appLogin'});
+
+                // applicationView.render();
+
+                var appOuterFrameView = new AppOuterFrameView({
+                    el: '#wrap'
+                });
+                appOuterFrameView.setViews([applicationView, loginView]);
+
+                setTimeout(function(){
+                    appOuterFrameView.transition = new Backbone.ViewKit.Transitions.Slide();
+                    appOuterFrameView.selectView(0);
+                },1000);
+
+                setTimeout(function(){
+                    appOuterFrameView.transition = new Backbone.ViewKit.Transitions.Slide({ reverse: true });
+                    appOuterFrameView.selectView(1);
+                },2000);
+
+                setTimeout(function(){
+                    appOuterFrameView.transition = new Backbone.ViewKit.Transitions.Slide();
+                    appOuterFrameView.selectView(0);
+                },3000);
+
+                setTimeout(function(){
+                    appOuterFrameView.selectView(1);
+                },4000);
+
+
+                // appOuterFrameView.selectView(1);
+
+            })
 
             setTimeout(function () {
                 $(window).trigger('resize');
-                $('#wrap').animate({opacity: 1},550);
+                // $('#wrap').animate({opacity: 1},550);
             }, 50);
 
             Backbone.history.start();

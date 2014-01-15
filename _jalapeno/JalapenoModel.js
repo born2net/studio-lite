@@ -1,3 +1,6 @@
+var console = {}
+console.log = function (){};
+
 /**
  A constant service name for the JalapenoModel service
  @property JalapenoModel.servicename
@@ -329,7 +332,7 @@ JalapenoModel.prototype = {
             '@eventName': i_eventName,
             '@eventValue': i_eventValue
         }
-        var ajaxWrapper = new AjaxJsonGetter(globs['debug'] ? 'https://secure.dynawebs.net/_php/msWSsec-debug.php' : 'https://secure.dynawebs.net/_php/msWSsec-debug.php');
+        var ajaxWrapper = new AjaxJsonGetter(globs['debug'] ? 'https://secure.dynawebs.net/_php/msWSsec-debug.php' : 'https://secure.dynawebs.net/_php/msWSsec.php');
         ajaxWrapper.getData(data, onServerReply);
         function onServerReply(data) {
             commBroker.fire(JalapenoModel.stationEventRx, this, self, data)
@@ -350,7 +353,7 @@ JalapenoModel.prototype = {
             '@time': getEpochTime()
         };
 
-        var ajaxWrapper = new AjaxJsonGetter(globs['debug'] ? 'https://secure.dynawebs.net/_php/msWSsec-debug.php?' + getEpochTime() : 'https://secure.dynawebs.net/_php/msWSsec-debug.php?' + getEpochTime());
+        var ajaxWrapper = new AjaxJsonGetter(globs['debug'] ? 'https://secure.dynawebs.net/_php/msWSsec-debug.php?' + getEpochTime() : 'https://secure.dynawebs.net/_php/msWSsec.php?' + getEpochTime());
         ajaxWrapper.getData(data, onSnapshotReply);
         function onSnapshotReply(data) {
             commBroker.fire(JalapenoModel.stationCaptured, this, self, data)
@@ -371,7 +374,7 @@ JalapenoModel.prototype = {
             '@stationID': i_station,
             '@command': i_command
         }
-        var ajaxWrapper = new AjaxJsonGetter(globs['debug'] ? 'https://secure.dynawebs.net/_php/msWSsec-debug.php?' + getEpochTime() : 'https://secure.dynawebs.net/_php/msWSsec-debug.php?' + getEpochTime());
+        var ajaxWrapper = new AjaxJsonGetter(globs['debug'] ? 'https://secure.dynawebs.net/_php/msWSsec-debug.php?' + getEpochTime() : 'https://secure.dynawebs.net/_php/msWSsec.php?' + getEpochTime());
         ajaxWrapper.getData(data, onSnapshotReply);
         function onSnapshotReply(data) {
             commBroker.fire(JalapenoModel.stationPlayedStopped, this, self, data)
@@ -441,8 +444,7 @@ JalapenoModel.prototype = {
 
         // log('getting stations...');
 
-        //TODO: Need to release msWSsec-debug.php with new cookie RC4 parser before release, for now I added msWSsec-debug.php on all cases
-        var ajaxWrapper = new AjaxJsonGetter(globs['debug'] ? 'https://secure.dynawebs.net/_php/msWSsec-debug.php' : 'https://secure.dynawebs.net/_php/msWSsec-debug.php');
+        var ajaxWrapper = new AjaxJsonGetter(globs['debug'] ? 'https://secure.dynawebs.net/_php/msWSsec-debug.php' : 'https://secure.dynawebs.net/_php/msWSsec.php');
         ajaxWrapper.getData(srvCmd, onServerReply);
 
         function onServerReply(data) {
@@ -453,7 +455,7 @@ JalapenoModel.prototype = {
             // single station
             if (data.responce['Stations']['Station'].length == undefined) {
                 stationsArray.push(data.responce['Stations']['Station'])
-            // multiple station
+                // multiple station
             } else {
                 stationsArray = data.responce['Stations']['Station'];
             }

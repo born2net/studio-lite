@@ -186,7 +186,7 @@ CompStations.prototype = {
     },
 
     /**
-     Bind all event listeners on the UI for remote stations commands including stop, play, live snapshot etc.
+     Bind all event listeners on the UI for remote stations commands including commands
      @method _wireUI
      @return none
      **/
@@ -217,7 +217,7 @@ CompStations.prototype = {
             if (!self._buttonIsEnabled(Elements.RELOAD_COMMAND))
                 return false;
             self._buttonEnable(Elements.RELOAD_COMMAND, false);
-            self._sendStationEvent('rebootPlayer', '');
+            self._sendStationEvent('restart', '');
         });
 
         $(Elements.PLAY_COMMAND + ' ' + Elements.STOP_COMMAND).tap(function (e) {
@@ -225,17 +225,17 @@ CompStations.prototype = {
             e.stopPropagation();
             e.preventDefault();
 
-            var command = 'playCommand' == e.currentTarget.id ? 'start' : 'stop';
+            var command = 'playCommand' == e.currentTarget.id ? 'play' : 'end';
 
             switch (command) {
-                case 'start':
+                case 'play':
                 {
                     if (!self._buttonIsEnabled(Elements.PLAY_COMMAND))
                         return false;
                     self._buttonEnable(Elements.PLAY_COMMAND, false);
                     break;
                 }
-                case 'stop':
+                case 'end':
                 {
                     if (!self._buttonIsEnabled(Elements.STOP_COMMAND))
                         return false;
@@ -328,7 +328,7 @@ CompStations.prototype = {
         commBroker.listen(JalapenoModel.stationEventRx, function (e) {
             var s = e.edata.responce['eventName'];
             switch (s) {
-                case 'rebootPlayer':
+                case 'restart':
                 {
                     self._buttonEnable(Elements.RELOAD_COMMAND, true)
                     break;

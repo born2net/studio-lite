@@ -58,6 +58,8 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap'], function (_, $, Backbo
             });
 
             $('#openPanel').click(function () {
+                $('#myModal').modal('show')
+                return;
                 $('#mainPanelWrap').addClass('col-sm-9 col-md-9');
                 setTimeout(function () {
                     $('#mainPanelWrap').removeClass('col-md-12');

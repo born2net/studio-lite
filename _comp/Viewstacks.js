@@ -55,7 +55,6 @@ Viewstacks.prototype = {
         this.m_counter++;
         $(i_childID).attr('data-viewstackname', 'tab' + this.m_counter);
 
-
         var t = -1;
         $(this.m_contentID + '> *').each(function () {
             t++;

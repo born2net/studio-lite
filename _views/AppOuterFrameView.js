@@ -1,17 +1,9 @@
-define(['jquery', 'backbone'], function ($, Backbone) {
+define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
 
-    var AppOuterFrameView = Backbone.ViewKit.ViewSelector.extend({
+    var AppOuterFrameView = Backbone.StackView.ViewPort.extend({
 
-        initialize: function () {
-        },
 
-        transitions: new Backbone.ViewKit.Transitions.Fade(),
-
-        alertMe: function () {
-            alert('Ive been alerted' + Backbone);
-        }
-
-    })
+    });
 
 
     return AppOuterFrameView;

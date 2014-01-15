@@ -1,4 +1,4 @@
-define(['underscore', 'jquery', 'backbone', 'bootstrap', 'viewkit'], function (_, $, Backbone, Bootstrap, viewkit) {
+define(['underscore', 'jquery', 'backbone', 'bootstrap'], function (_, $, Backbone, Bootstrap) {
     var StudioLite = Backbone.Router.extend({
 
         routes: {
@@ -27,35 +27,17 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'viewkit'], function (_
 
                 var applicationView = new ApplicationView({ el: '#app' });
                 var loginView = new LoginView({el: '#appLogin'});
+                var appOuterFrameView = new AppOuterFrameView({el: '#mainViewStack'});
 
-                // applicationView.render();
-
-                var appOuterFrameView = new AppOuterFrameView({
-                    el: '#wrap'
-                });
-                appOuterFrameView.setViews([applicationView, loginView]);
+                appOuterFrameView.addChild(loginView);
+                appOuterFrameView.addChild(applicationView);
+                appOuterFrameView.selectIndex(0);
 
                 setTimeout(function(){
-                    appOuterFrameView.transition = new Backbone.ViewKit.Transitions.Slide();
-                    appOuterFrameView.selectView(0);
-                },1000);
-
-                setTimeout(function(){
-                    appOuterFrameView.transition = new Backbone.ViewKit.Transitions.Slide({ reverse: true });
-                    appOuterFrameView.selectView(1);
-                },2000);
-
-                setTimeout(function(){
-                    appOuterFrameView.transition = new Backbone.ViewKit.Transitions.Slide();
-                    appOuterFrameView.selectView(0);
-                },3000);
-
-                setTimeout(function(){
-                    appOuterFrameView.selectView(1);
-                },4000);
+                    appOuterFrameView.selectIndex(1);
+                },2000)
 
 
-                // appOuterFrameView.selectView(1);
 
             })
 

@@ -5,8 +5,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         initialize: function () {
         },
 
-        transitions: new Backbone.ViewKit.Transitions.Fade(),
-
         alertMe: function () {
             alert('Ive been alerted' + Backbone);
         },

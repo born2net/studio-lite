@@ -5,7 +5,7 @@ body {
 
 
 /* Wrapper for page content to push down footer */
-#appContainer {
+#domRoot {
     min-height: 100%;
     height: auto;
     margin: 0 auto -60px; /* respective of footer */
@@ -13,7 +13,7 @@ body {
 }
 
 /* Wrapper to push down from header */
-#appContainerHeaderPad {
+#headerPad {
     background-color: #428bca;
     min-height: 55px;
 }

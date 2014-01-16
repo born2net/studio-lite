@@ -22,12 +22,12 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap'], function (_, $, Backbo
 
         initialize: function () {
 
-            require(['AppCoreStackView', 'ApplicationView', 'LoginView'], function (AppCoreStackView, ApplicationView, LoginView) {
+            require(['AppCoreStackView', 'ApplicationView', 'LoginView', 'Elements'], function (AppCoreStackView, ApplicationView, LoginView, Elements) {
 
 
                 var applicationView = new ApplicationView({ el: '#AppContent' });
                 var loginView = new LoginView({el: '#AppLogin'});
-                var appCoreStackView = new AppCoreStackView({el: '#AppCoreStackView'});
+                var appCoreStackView = new AppCoreStackView({el: Elements.APP_CORE_STACKVIEW});
 
                 appCoreStackView.addChild(loginView);
                 appCoreStackView.addChild(applicationView);

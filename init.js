@@ -9,6 +9,7 @@ require.config({
         "backbone": '_common/_js/backbone/backbone',
         "underscore": '_common/_js/underscore/underscore',
         "bootstrap": '_common/_js/bootstrap/js/bootstrap',
+        "Elements": 'Elements',
         "menuitemdetails": '_views/menuitemdetails',
         "StackView": '_views/StackView',
         "AppCoreStackView": '_views/AppCoreStackView',
@@ -26,6 +27,9 @@ require.config({
         },
         "bootstrap": {
             deps: ["jquery"]
+        },
+        "Elements": {
+            exports: 'Elements'
         }
     }
 });

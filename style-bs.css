@@ -101,6 +101,13 @@ body {
     overflow: hidden;
 }
 
+#StackViewModal {
+    display:none;
+    background: #FFF;
+    border-bottom: 3px slategray solid;
+    margin-bottom: 1px;
+}
+
 
 /* Software accelerated */
 /*

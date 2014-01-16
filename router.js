@@ -32,6 +32,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap'], function (_, $, Backbo
                 appCoreStackView.addChild(loginView);
                 appCoreStackView.addChild(applicationView);
                 appCoreStackView.selectIndex(0);
+                appCoreStackView.leanModal();
 
                 setTimeout(function(){
                     appCoreStackView.selectIndex(1);
@@ -77,7 +78,8 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap'], function (_, $, Backbo
             $(window).resize(function () {
                 var h = $('body').css('height').replace('px', '');
                 var w = $('body').css('width').replace('px', '');
-
+                // reduce footer
+                h = h - 115;
                 if (w <= 768) {
                     $('#searcher').hide();
                 } else {

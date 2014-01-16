@@ -31,19 +31,19 @@
             this.page2 = document.getElementById("p2");
             this.currentPage = this.homePage;
 
-            $('#b1').click(function(){
+            $('#b1').click(function () {
                 self.slidePageFrom(self.page1, 'right')
             });
 
-            $('#b2').click(function(){
+            $('#b2').click(function () {
                 self.slidePageFrom(self.page2, 'right')
             });
 
-            $('#b3').click(function(){
+            $('#b3').click(function () {
                 self.slidePageFrom(self.homePage, 'left')
             });
 
-            $('#b4').click(function(){
+            $('#b4').click(function () {
                 self.slidePageFrom(self.homePage, 'left')
             });
 
@@ -104,8 +104,50 @@
             toPage.className = "page transition center";
             self.currentPage.className = "page transition " + (direction === "left" ? "right" : "left");
             self.currentPage = toPage;
-        }
+        },
 
+        leanModal: function () {
+
+            $('#someAction').click(function (e) {
+
+                var modal_id = $(this).attr("href");
+
+                $('#close').click(function () {
+                    close_modal(modal_id);
+                });
+
+                $(modal_id).css({
+                    'display': 'block',
+                    'position': 'fixed',
+                    'opacity': 1,
+                    'position': 'absolute',
+                    'z-index': 11000,
+                    'height': $('body').get(0).scrollHeight + 'px',
+                    'width': $('body').get(0).scrollWidth + 'px',
+                    'left': 0,
+                    'top': 0 - $('body').get(0).scrollHeight,
+                    margin: 0
+                    // 'left': 50 + '%',
+                    // 'margin-left': -(modal_width / 2) + "px",
+                    // 'top': o.top + "px"
+                });
+                $(modal_id).animate({
+                    top: 0,
+                    opacity: 1}, 400);
+                e.preventDefault();
+            });
+
+            function close_modal(modal_id) {
+                /*$(modal_id).fadeOut(200, function () {
+                 $(this).css({ 'display': 'none' });
+                 });*/
+
+                $(modal_id).animate({
+                        top: 0 - $('body').get(0).scrollHeight,
+                        opacity: 1},
+                    400);
+            }
+        }
     });
 
     return StackView;

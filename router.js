@@ -22,19 +22,19 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap'], function (_, $, Backbo
 
         initialize: function () {
 
-            require(['AppOuterFrameView', 'ApplicationView', 'LoginView'], function (AppOuterFrameView, ApplicationView, LoginView) {
+            require(['AppCoreStackView', 'ApplicationView', 'LoginView'], function (AppCoreStackView, ApplicationView, LoginView) {
 
 
-                var applicationView = new ApplicationView({ el: '#app' });
-                var loginView = new LoginView({el: '#appLogin'});
-                var appOuterFrameView = new AppOuterFrameView({el: '#mainViewStack'});
+                var applicationView = new ApplicationView({ el: '#AppContent' });
+                var loginView = new LoginView({el: '#AppLogin'});
+                var appCoreStackView = new AppCoreStackView({el: '#AppCoreStackView'});
 
-                appOuterFrameView.addChild(loginView);
-                appOuterFrameView.addChild(applicationView);
-                appOuterFrameView.selectIndex(0);
+                appCoreStackView.addChild(loginView);
+                appCoreStackView.addChild(applicationView);
+                appCoreStackView.selectIndex(0);
 
                 setTimeout(function(){
-                    appOuterFrameView.selectIndex(1);
+                    appCoreStackView.selectIndex(1);
                 },2000)
 
 

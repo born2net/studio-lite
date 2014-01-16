@@ -11,7 +11,7 @@ require.config({
         "bootstrap": '_common/_js/bootstrap/js/bootstrap',
         "menuitemdetails": '_views/menuitemdetails',
         "StackView": '_views/StackView',
-        "AppOuterFrameView": '_views/AppOuterFrameView',
+        "AppCoreStackView": '_views/AppCoreStackView',
         "ApplicationView": '_views/ApplicationView',
         "LoginView": '_views/LoginView'
     },

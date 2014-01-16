@@ -25,8 +25,8 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap'], function (_, $, Backbo
             require(['AppCoreStackView', 'ApplicationView', 'LoginView', 'Elements'], function (AppCoreStackView, ApplicationView, LoginView, Elements) {
 
 
-                var applicationView = new ApplicationView({ el: '#AppContent' });
-                var loginView = new LoginView({el: '#AppLogin'});
+                var applicationView = new ApplicationView({ el: Elements.APP_CONTENT});
+                var loginView = new LoginView({el: Elements.APP_LOGIN});
                 var appCoreStackView = new AppCoreStackView({el: Elements.APP_CORE_STACKVIEW});
 
                 appCoreStackView.addChild(loginView);

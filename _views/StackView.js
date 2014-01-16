@@ -49,10 +49,6 @@
 
         },
 
-        getView: function () {
-            return null;
-        },
-
         render: function () {
         },
 

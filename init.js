@@ -1,4 +1,5 @@
 /**
+ init.js
  @class Require JS config file
  **/
 require.config({
@@ -8,13 +9,11 @@ require.config({
         "backbone": '_common/_js/backbone/backbone',
         "underscore": '_common/_js/underscore/underscore',
         "bootstrap": '_common/_js/bootstrap/js/bootstrap',
-        "menuitemdetails": '_view/menuitemdetails',
+        "menuitemdetails": '_views/menuitemdetails',
         "StackView": '_views/StackView',
         "AppOuterFrameView": '_views/AppOuterFrameView',
         "ApplicationView": '_views/ApplicationView',
         "LoginView": '_views/LoginView'
-
-
     },
 
     shim: {
@@ -27,14 +26,10 @@ require.config({
         },
         "bootstrap": {
             deps: ["jquery"]
-        }/*,
-        "viewkit":{
-            deps: ['underscore', 'jquery'],
-            exports: 'viewkit'
-        }*/
+        }
     }
 });
 
-require(['studiolite-bs'],function(studioLite){
-    new studioLite();
+require(['router'],function(router){
+    new router();
 });

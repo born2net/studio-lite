@@ -37,6 +37,36 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
                     appCoreStackView.selectIndex(1);
                 }, 2000)
 
+                var viewTree = [
+                    {
+                        view: new ApplicationView({id: '1'}),
+                        children: [
+                            {
+                                view: new ApplicationView({id: '2'})
+                            },
+                            {
+                                view: new ApplicationView({id: '3'})
+                            },
+                            {
+                                view: new ApplicationView({id: '4'}),
+                                children: [
+                                    {
+                                        view: new ApplicationView({id: '5'}),
+                                        children: [
+                                            {
+                                                view: new ApplicationView({id: '6'})
+                                            }, {
+                                                view: new ApplicationView({id: '7'})
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ];
+
+                console.log(viewTree);
             })
 
             setTimeout(function () {

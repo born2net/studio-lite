@@ -33,25 +33,34 @@
             this.currentPage = this.homePage;
 
             $('#b1').click(function () {
-                self.slidePageFrom(self.page1, 'right')
+                self.slideToPage(self.page1, 'right')
             });
 
             $('#b2').click(function () {
-                self.slidePageFrom(self.page2, 'right')
+                self.slideToPage(self.page2, 'right')
             });
             $('#b6').click(function () {
-                self.slidePageFrom(self.page3, 'right')
+                self.slideToPage(self.page3, 'right')
             });
+
+            /*$('#b3').click(function () {
+             self.slideToPage(self.homePage, 'left')
+             });*/
 
             $('#b3').click(function () {
-                self.slidePageFrom(self.homePage, 'left')
+                self.slideToPage(self.page2, 'right')
             });
 
+            /* $('#b4').click(function () {
+             self.slideToPage(self.homePage, 'left')
+             }); */
+
             $('#b4').click(function () {
-                self.slidePageFrom(self.homePage, 'left')
+                self.slideToPage(self.page1, 'left')
             });
+
             $('#b5').click(function () {
-                self.slidePageFrom(self.homePage, 'left')
+                self.slideToPage(self.homePage, 'left')
             });
 
 
@@ -99,9 +108,9 @@
             });
         },
 
-        slidePageFrom: function (toPage, direction) {
+        slideToPage: function (toPage, direction) {
             var self = this;
-            // Position the page at the starting position of the animation
+            // Position the new page at the starting position of the animation
             toPage.className = "page " + direction;
             // Position the new page and the current page at the ending position of their
             // animation with a transition class indicating the duration of the animation

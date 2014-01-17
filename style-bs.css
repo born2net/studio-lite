@@ -3,7 +3,6 @@ body {
     height: 100%;
 }
 
-
 /* Wrapper for page content to push down footer */
 #domRoot {
     min-height: 100%;
@@ -101,7 +100,7 @@ body {
     overflow: hidden;
 }
 
-#StackViewModal {
+#stackViewModal {
     display:none;
     background: #FFF;
     border-bottom: 3px slategray solid;

@@ -16,7 +16,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
     var AppCoreStackView = Backbone.StackView.ViewPort.extend({
         initialize: function () {
             Backbone.StackView.ViewPort.prototype.initialize.call(this);
-            // alert(Backbone.StackView.ViewPort.ADD_NEW_BLOCK);
+            alert(Elements.PROP_PANEL);
         }
     });
     return AppCoreStackView;

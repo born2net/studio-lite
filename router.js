@@ -1,4 +1,4 @@
-define(['underscore', 'jquery', 'backbone', 'bootstrap'], function (_, $, Backbone, Bootstrap) {
+define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (_, $, Backbone, Bootstrap, Elements) {
     var StudioLite = Backbone.Router.extend({
 
         routes: {
@@ -22,7 +22,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap'], function (_, $, Backbo
 
         initialize: function () {
 
-            require(['AppCoreStackView', 'ApplicationView', 'LoginView', 'Elements'], function (AppCoreStackView, ApplicationView, LoginView, Elements) {
+            require(['AppCoreStackView', 'ApplicationView', 'LoginView'], function (AppCoreStackView, ApplicationView, LoginView) {
 
 
                 var applicationView = new ApplicationView({ el: Elements.APP_CONTENT});
@@ -49,10 +49,10 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap'], function (_, $, Backbo
             Backbone.history.start();
 
             $('#closePanel').click(function () {
-                $('#propPanel').fadeOut(function () {
-                    $('#propPanel').addClass('hidden-sm hidden-md');
-                    $('#mainPanelWrap').removeClass('col-sm-9 col-md-9');
-                    $('#mainPanelWrap').addClass('col-md-12');
+                $(Elements.PROP_PANEL).fadeOut(function () {
+                    $(Elements.PROP_PANEL).addClass('hidden-sm hidden-md');
+                    $(Elements.MAIN_PANEL_WRAP).removeClass('col-sm-9 col-md-9');
+                    $(Elements.MAIN_PANEL_WRAP).addClass('col-md-12');
                 });
             });
 
@@ -60,16 +60,16 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap'], function (_, $, Backbo
 
                 var w = $('body').css('width').replace('px', '');
                 if (w <= 768) {
-                    $('#myModal').modal('show');
+                    $(Elements.BS_MODAL).modal('show');
                     return;
                 }
 
-                $('#mainPanelWrap').addClass('col-sm-9 col-md-9');
+                $(Elements.MAIN_PANEL_WRAP).addClass('col-sm-9 col-md-9');
                 setTimeout(function () {
-                    $('#mainPanelWrap').removeClass('col-md-12');
-                    $('#propPanel').children().hide();
-                    $('#propPanel').removeClass('hidden-sm hidden-md');
-                    $('#propPanel').children().fadeIn();
+                    $(Elements.MAIN_PANEL_WRAP).removeClass('col-md-12');
+                    $(Elements.PROP_PANEL).children().hide();
+                    $(Elements.PROP_PANEL).removeClass('hidden-sm hidden-md');
+                    $(Elements.PROP_PANEL).children().fadeIn();
                 }, 500)
 
                 return
@@ -86,9 +86,9 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap'], function (_, $, Backbo
                     $('#searcher').show();
                 }
 
-                $('#propPanel').height(h);
-                $('#mainPanel').height(h);
-                $('#mainPanelWrap').height(h);
+                $(Elements.PROP_PANEL).height(h);
+                $(Elements.PROP_PANEL).height(h);
+                $(Elements.MAIN_PANEL_WRAP).height(h);
             });
         }
     })

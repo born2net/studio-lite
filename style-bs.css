@@ -18,16 +18,17 @@ body {
     min-height: 55px;
 }
 
+#mainPanelWrap {
+    border-right: 2px solid #aaaaaa;
+    /* background-color: darksalmon; */
+}
+
 #mainPanel {
     overflow-y: scroll;
     height: auto;
-    border-right: 1px solid black;
     /* background-color: orange; */
 }
 
-#mainPanelWrap {
-    /* background-color: darksalmon; */
-}
 
 #propPanel {
     padding: 0;
@@ -39,7 +40,7 @@ body {
 
 #propPanel, #mainPanelWrap {
     height: 200px;
-    border-left: 1px #808080 solid;
+    /* border-left: 1px #808080 solid; */
     -webkit-transition: width 0.1s ease, margin 0.1s ease;
     -moz-transition: width 0.1s ease, margin 0.1s ease;
     -o-transition: width 0.1s ease, margin 0.1s ease;
@@ -112,6 +113,7 @@ body {
     color: white;
 }
 
+
 #p1 {
     /* background-color: #2b669a; */
 }
@@ -157,6 +159,7 @@ body {
 }
 
 /* Hardware accelerated - slide left/right */
+/*
 .page.left {
     -webkit-transform: translate3d(-100%, 0, 0);
     transform: translate3d(-100%, 0, 0);
@@ -176,9 +179,9 @@ body {
     -webkit-transition-duration: .25s;
     transition-duration: .25s;
 }
+*/
 
 /* Software accelerated */
-/*
 .page {
     position: absolute;
     top: 0;
@@ -205,7 +208,7 @@ body {
     -webkit-transition-duration: .25s;
     transition-duration: .25s;
 }
-*/
+
 
 /* Hardware accelerated - slide up/down */
 /*

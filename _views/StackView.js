@@ -29,6 +29,7 @@
             this.homePage = document.getElementById("homePage");
             this.page1 = document.getElementById("p1");
             this.page2 = document.getElementById("p2");
+            this.page3 = document.getElementById("p3");
             this.currentPage = this.homePage;
 
             $('#b1').click(function () {
@@ -38,6 +39,9 @@
             $('#b2').click(function () {
                 self.slidePageFrom(self.page2, 'right')
             });
+            $('#b6').click(function () {
+                self.slidePageFrom(self.page3, 'right')
+            });
 
             $('#b3').click(function () {
                 self.slidePageFrom(self.homePage, 'left')
@@ -46,6 +50,10 @@
             $('#b4').click(function () {
                 self.slidePageFrom(self.homePage, 'left')
             });
+            $('#b5').click(function () {
+                self.slidePageFrom(self.homePage, 'left')
+            });
+
 
         },
 

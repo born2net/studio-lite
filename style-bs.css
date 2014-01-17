@@ -39,6 +39,7 @@ body {
 
 #propPanel, #mainPanelWrap {
     height: 200px;
+    border-left: 1px #808080 solid;
     -webkit-transition: width 0.1s ease, margin 0.1s ease;
     -moz-transition: width 0.1s ease, margin 0.1s ease;
     -o-transition: width 0.1s ease, margin 0.1s ease;
@@ -65,7 +66,7 @@ body {
     margin: 0px;
 }
 
-/* small modal *.
+/* small modal */
 /*
 .modal-static {
     position: fixed;
@@ -77,6 +78,7 @@ body {
 }
 */
 
+/* large modal */
 .modal-static,
 .modal-static .modal-dialog,
 .modal-static .modal-content {
@@ -91,6 +93,31 @@ body {
 }
 
 .modal-static .modal-content .icon {
+}
+
+#appNavigator {
+    padding: 0px;
+    margin: 0px;
+}
+
+#appNavigator li {
+    cursor: pointer;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+#appNavigator li:hover {
+    /*bootstrap theme color*/;
+    background-color: #428bca;
+    color: white;
+}
+
+#p1 {
+    /* background-color: #2b669a; */
+}
+
+#p2 {
+    /* background-color: aquamarine; */
 }
 
 .pageW {
@@ -119,7 +146,7 @@ body {
     display: none;
     border-bottom: 3px slategray solid;
     margin-bottom: 1px;
-    /* ackground: red; */
+    background-color: #ffffff;
 }
 
 #togglePanel {
@@ -127,6 +154,27 @@ body {
     margin: 10px;
     right: 30px;
     z-index: 110;
+}
+
+/* Hardware accelerated - slide left/right */
+.page.left {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+}
+
+.page.center {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+
+.page.right {
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+}
+
+.page.transition {
+    -webkit-transition-duration: .25s;
+    transition-duration: .25s;
 }
 
 /* Software accelerated */
@@ -158,27 +206,6 @@ body {
     transition-duration: .25s;
 }
 */
-
-/* Hardware accelerated - slide left/right */
-.page.left {
-    -webkit-transform: translate3d(-100%, 0, 0);
-    transform: translate3d(-100%, 0, 0);
-}
-
-.page.center {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-}
-
-.page.right {
-    -webkit-transform: translate3d(100%, 0, 0);
-    transform: translate3d(100%, 0, 0);
-}
-
-.page.transition {
-    -webkit-transition-duration: .25s;
-    transition-duration: .25s;
-}
 
 /* Hardware accelerated - slide up/down */
 /*

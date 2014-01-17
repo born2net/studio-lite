@@ -33,9 +33,9 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
                 appCoreStackView.selectIndex(0);
                 appCoreStackView.leanModal();
 
-                setTimeout(function(){
+                setTimeout(function () {
                     appCoreStackView.selectIndex(1);
-                },2000)
+                }, 2000)
 
             })
 
@@ -45,8 +45,18 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
 
             Backbone.history.start();
 
-            $(Elements.TOGGLE_PANEL).on('click',function() {
-                if ( $(Elements.TOGGLE_PANEL).hasClass('buttonStateOn')){
+            // Test open bootstrap modal
+            $('#openPanel').on('click', function () {
+                var w = $('body').css('width').replace('px', '');
+                if (w <= 768) {
+                    $(Elements.BS_MODAL).modal('show');
+                    return;
+                }
+            });
+
+
+            $(Elements.TOGGLE_PANEL).on('click', function () {
+                if ($(Elements.TOGGLE_PANEL).hasClass('buttonStateOn')) {
                     $(Elements.TOGGLE_PANEL).toggleClass('buttonStateOn');
                     $(Elements.PROP_PANEL).fadeOut(function () {
                         $(Elements.TOGGLE_PANEL).html('<');
@@ -57,11 +67,6 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
                 } else {
                     $(Elements.TOGGLE_PANEL).toggleClass('buttonStateOn');
                     $(Elements.TOGGLE_PANEL).html('>');
-                    var w = $('body').css('width').replace('px', '');
-                    /*if (w <= 768) {
-                        $(Elements.BS_MODAL).modal('show');
-                        return;
-                    }*/
                     $(Elements.MAIN_PANEL_WRAP).addClass('col-sm-9 col-md-9');
                     setTimeout(function () {
                         $(Elements.MAIN_PANEL_WRAP).removeClass('col-md-12');

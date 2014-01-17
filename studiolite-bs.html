@@ -104,17 +104,16 @@
         <div id="appLogin" style="display: none">
             <h>Login</h>
         </div>
-        <div id="appContent" class="noScroll container" style="background-color: pink; display: none">
+        <div id="appContent" class="noScroll container" style="display: none">
             <div id="appRow " class="row">
                 <div id="appNavigator" class="hidden-xs hidden-sm hidden-md col-lg-1">
                     <h3>Navigation</h3>
                 </div>
-                <div id="mainPanelWrap" class="animateDivs col-xs-12 col-sm-9 col-md-9 col-lg-8" style="background-color: green;">
-                    <button id="togglePanel" class="buttonStateOn btn btn-primary hidden-xs hidden-lg" style="position: absolute; margin: 10px; right: 10px  ; z-index: 110">&gt;</button>
-                    <div id="mainPanel" style="overflow-y: scroll;height: auto;background-color: orange; border-right: 1px solid black">
+                <div id="mainPanelWrap" class="col-xs-12 col-sm-9 col-md-9 col-lg-8">
+                    <button id="togglePanel" class="buttonStateOn btn btn-primary hidden-xs hidden-lg">&gt;</button>
+                    <div id="mainPanel">
                         <div class="pageW noScroll">
-                            <div id="homePage" class="page center" style="background-color: #add55a">
-                                <h1>Home Page</h1>
+                            <div id="homePage" class="page center">
                                 <div style="overflow-y: scroll;height: 100%">
                                     <a id="b1" href="#">Page 1</a>
                                     <a id="b2" href="#">Page 2</a>
@@ -136,8 +135,7 @@
 
                     </div>
                 </div>
-                <div id="propPanel" class="animateDivs hidden-xs col-sm-3 col-lg-3"
-                     style="overflow-y: scroll;height: auto; background-color: red ;">
+                <div id="propPanel" class="hidden-xs col-sm-3 col-lg-3">
                     <span class="label label-primary">Primary</span>
                     <span class="label label-success">Success</span>
                     <span class="label label-info">Info</span>

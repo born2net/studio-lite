@@ -24,7 +24,6 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
 
             require(['AppCoreStackView', 'ApplicationView', 'LoginView'], function (AppCoreStackView, ApplicationView, LoginView) {
 
-
                 var applicationView = new ApplicationView({ el: Elements.APP_CONTENT});
                 var loginView = new LoginView({el: Elements.APP_LOGIN});
                 var appCoreStackView = new AppCoreStackView({el: Elements.APP_CORE_STACKVIEW});
@@ -38,8 +37,6 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
                     appCoreStackView.selectIndex(1);
                 },2000)
 
-
-
             })
 
             setTimeout(function () {
@@ -48,31 +45,31 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
 
             Backbone.history.start();
 
-            $('#closePanel').click(function () {
-                $(Elements.PROP_PANEL).fadeOut(function () {
-                    $(Elements.PROP_PANEL).addClass('hidden-sm hidden-md');
-                    $(Elements.MAIN_PANEL_WRAP).removeClass('col-sm-9 col-md-9');
-                    $(Elements.MAIN_PANEL_WRAP).addClass('col-md-12');
-                });
-            });
-
-            $('#openPanel').click(function () {
-
-                var w = $('body').css('width').replace('px', '');
-                if (w <= 768) {
-                    $(Elements.BS_MODAL).modal('show');
-                    return;
+            $(Elements.TOGGLE_PANEL).on('click',function() {
+                if ( $(Elements.TOGGLE_PANEL).hasClass('buttonStateOn')){
+                    $(Elements.TOGGLE_PANEL).toggleClass('buttonStateOn');
+                    $(Elements.PROP_PANEL).fadeOut(function () {
+                        $(Elements.TOGGLE_PANEL).html('<');
+                        $(Elements.PROP_PANEL).addClass('hidden-sm hidden-md');
+                        $(Elements.MAIN_PANEL_WRAP).removeClass('col-sm-9 col-md-9');
+                        $(Elements.MAIN_PANEL_WRAP).addClass('col-md-12');
+                    });
+                } else {
+                    $(Elements.TOGGLE_PANEL).toggleClass('buttonStateOn');
+                    $(Elements.TOGGLE_PANEL).html('>');
+                    var w = $('body').css('width').replace('px', '');
+                    /*if (w <= 768) {
+                        $(Elements.BS_MODAL).modal('show');
+                        return;
+                    }*/
+                    $(Elements.MAIN_PANEL_WRAP).addClass('col-sm-9 col-md-9');
+                    setTimeout(function () {
+                        $(Elements.MAIN_PANEL_WRAP).removeClass('col-md-12');
+                        $(Elements.PROP_PANEL).children().hide();
+                        $(Elements.PROP_PANEL).removeClass('hidden-sm hidden-md');
+                        $(Elements.PROP_PANEL).children().fadeIn();
+                    }, 500)
                 }
-
-                $(Elements.MAIN_PANEL_WRAP).addClass('col-sm-9 col-md-9');
-                setTimeout(function () {
-                    $(Elements.MAIN_PANEL_WRAP).removeClass('col-md-12');
-                    $(Elements.PROP_PANEL).children().hide();
-                    $(Elements.PROP_PANEL).removeClass('hidden-sm hidden-md');
-                    $(Elements.PROP_PANEL).children().fadeIn();
-                }, 500)
-
-                return
             });
 
             $(window).resize(function () {

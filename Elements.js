@@ -1,5 +1,5 @@
 ////////////////////////
-// Elements
+// Elements IDs
 ////////////////////////
 
 Elements.APP_CORE_STACKVIEW = '#appCoreStackView';
@@ -8,13 +8,7 @@ Elements.APP_CONTENT = '#appContent';
 Elements.PROP_PANEL = '#propPanel';
 Elements.MAIN_PANEL_WRAP = '#mainPanelWrap';
 Elements.BS_MODAL = '#bsModal';
-
-
-////////////////////////
-// Classes
-////////////////////////
-
-// Elements.CLASS_KNOB = '.knob';
+Elements.TOGGLE_PANEL = '#togglePanel';
 
 /**
  List of all Elements / Classes of elements used in the DOM

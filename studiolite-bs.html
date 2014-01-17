@@ -47,59 +47,59 @@
 <body>
 <div id="domRoot">
     <div id="headerPad"></div>
-        <!-- Navigation -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">StudioLite</a>
-            </div>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">StudioLite</a>
+        </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a id="openPanel" href="#">Open</a></li>
-                    <li><a id="closePanel" href="#">Close</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a id="someAction" href="#stackViewModal">Action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">One more separated link</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <form id="searcher" class="navbar-form navbar-left" role="search">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
-                    </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </form>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Link</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </nav>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a id="openPanel" href="#">Open</a></li>
+                <li><a id="closePanel" href="#">Close</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a id="someAction" href="#stackViewModal">Action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form id="searcher" class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Link</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </nav>
     <div id="appCoreStackView">
         <div id="appLogin" style="display: none">
             <h>Login</h>
@@ -121,31 +121,55 @@
                     <button id="togglePanel" class="buttonStateOn btn btn-primary hidden-xs hidden-lg">&gt;</button>
                     <div id="mainPanel">
                         <div class="pageW noScroll">
-                            <div id="homePage" class="page center">
+
+                            <div id="p1" class="page center">
                                 <div style="overflow-y: scroll;height: 100%">
-                                    <a id="b1" href="#">Page 1</a>
-                                    <a id="b2" href="#">Page 2</a>
-                                    <a id="b6" href="#">Page 3</a>
-                                    <h1>Home Page</h1><h1>Home Page</h1><h1>Home Page</h1><h1>Home Page</h1><h1>Home Page</h1><h1>Home Page</h1><h1>Home Page</h1><h1>Home Page</h1><h1>Home Page</h1><h1>Home Page</h1><h1>Home Page</h1><h1>Home Page</h1><h1>Home Page</h1><h1>Home Page</h1><h1>Home Page</h1><h1>Home Page</h1><h1>Home Page</h1><h1>Home Page</h1><h1>Home Page</h1><h1>Home Page</h1><h1>Home Page</h1><h1>Home Page</h1><h1>Home Page</h1>
+                                    <h1>p1</h1>
+                                    <a id="next" href="#">Next</a>
+                                    <a id="prev" href="#">Prev</a>
                                 </div>
                             </div>
-
-                            <div id="p1" class="page right">
-                                <h1>Page 1</h1>
-                                <a id="b3" href="#">Back</a>
-                            </div>
-
                             <div id="p2" class="page right">
-                                <h1>Page 2</h1>
-                                <a id="b4" href="#">Back</a>
+                                <h1>p2</h1>
+                                <a id="next" href="#">Next</a>
+                                <a id="prev" href="#">Prev</a>
                             </div>
                             <div id="p3" class="page right">
-                                <h1>Page 3</h1>
-                                <a id="b5" href="#">Back</a>
+                                <h1>p3</h1>
+                                <a id="next" href="#">Next</a>
+                                <a id="prev" href="#">Prev</a>
+                            </div>
+                            <div id="p4" class="page right">
+                                <h1>p4</h1>
+                                <a id="next" href="#">Next</a>
+                                <a id="prev" href="#">Prev</a>
+                            </div>
+                            <div id="p5" class="page right">
+                                <h1>p5</h1>
+                                <a id="next" href="#">Next</a>
+                                <a id="prev" href="#">Prev</a>
+                            </div>
+                            <div id="p6" class="page right">
+                                <h1>p6</h1>
+                                <a id="next" href="#">Next</a>
+                                <a id="prev" href="#">Prev</a>
+                            </div>
+                            <div id="p7" class="page right">
+                                <h1>p7</h1>
+                                <a id="next" href="#">Next</a>
+                                <a id="prev" href="#">Prev</a>
+                            </div>
+                            <div id="p8" class="page right">
+                                <h1>p8</h1>
+                                <a id="next" href="#">Next</a>
+                                <a id="prev" href="#">Prev</a>
+                            </div>
+                            <div id="p9" class="page right">
+                                <h1>p9</h1>
+                                <a id="next" href="#">Next</a>
+                                <a id="prev" href="#">Prev</a>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
                 <div id="propPanel" class="hidden-xs col-sm-3 col-lg-3">
@@ -160,7 +184,7 @@
 </div>
 
 
-<div id="footer" >
+<div id="footer">
     <br>
 
     <p id="footerText">&nbsp;MediaSignage Inc &#169;</p>
@@ -192,7 +216,15 @@
 <!-- /.modal -->
 
 <div id="stackViewModal">
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum libero purus, convallis nec vestibulum eget, luctus vitae purus. Vestibulum non mauris et sem vulputate pellentesque ac a turpis. Ut vel lacus vitae justo vestibulum lobortis. Nunc ipsum ipsum, laoreet id dictum nec, fermentum vel purus. Maecenas nisl felis, faucibus non rutrum eu, sollicitudin sed ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent dignissim lacinia tempus. Nulla facilisi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla facilisi. Nulla accumsan pellentesque velit, a malesuada diam tristique a. Fusce eleifend magna erat, et imperdiet orci. Quisque sapien mauris, malesuada eu tristique pulvinar, placerat id ligula. Vivamus vitae viverra nulla. Donec eget turpis vel erat malesuada sodales.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum libero purus, convallis nec vestibulum eget,
+        luctus vitae purus. Vestibulum non mauris et sem vulputate pellentesque ac a turpis. Ut vel lacus vitae justo
+        vestibulum lobortis. Nunc ipsum ipsum, laoreet id dictum nec, fermentum vel purus. Maecenas nisl felis, faucibus
+        non rutrum eu, sollicitudin sed ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
+        inceptos himenaeos. Praesent dignissim lacinia tempus. Nulla facilisi. Pellentesque habitant morbi tristique
+        senectus et netus et malesuada fames ac turpis egestas. Nulla facilisi. Nulla accumsan pellentesque velit, a
+        malesuada diam tristique a. Fusce eleifend magna erat, et imperdiet orci. Quisque sapien mauris, malesuada eu
+        tristique pulvinar, placerat id ligula. Vivamus vitae viverra nulla. Donec eget turpis vel erat malesuada
+        sodales.</p>
     <button id="close" type="button" class="btn btn-primary modal_close" data-dismiss="modal">Close</button>
 </div>
 

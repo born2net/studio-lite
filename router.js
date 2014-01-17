@@ -1,6 +1,7 @@
 define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (_, $, Backbone, Bootstrap, Elements) {
     var StudioLite = Backbone.Router.extend({
 
+
         routes: {
             "help": "help",    // #help
             "search/:query": "search",  // #search/kiwis
@@ -22,9 +23,18 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
 
         initialize: function () {
 
+            Backbone.View = (function(View) {
+                return View.extend({
+                    constructor: function(options) {
+                        this.options = options || {};
+                        View.apply(this, arguments);
+                    }
+                });
+            })(Backbone.View);
+
             require(['AppCoreStackView', 'ApplicationView', 'LoginView'], function (AppCoreStackView, ApplicationView, LoginView) {
 
-                var applicationView = new ApplicationView({ el: Elements.APP_CONTENT});
+                var applicationView = new Backbone.View({ el: Elements.APP_CONTENT});
                 var loginView = new LoginView({el: Elements.APP_LOGIN});
                 var appCoreStackView = new AppCoreStackView({el: Elements.APP_CORE_STACKVIEW});
 
@@ -37,36 +47,70 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
                     appCoreStackView.selectIndex(1);
                 }, 2000)
 
-                var viewTree = [
-                    {
-                        view: new ApplicationView({id: '1'}),
-                        children: [
-                            {
-                                view: new ApplicationView({id: '2'})
-                            },
-                            {
-                                view: new ApplicationView({id: '3'})
-                            },
-                            {
-                                view: new ApplicationView({id: '4'}),
-                                children: [
-                                    {
-                                        view: new ApplicationView({id: '5'}),
-                                        children: [
-                                            {
-                                                view: new ApplicationView({id: '6'})
-                                            }, {
-                                                view: new ApplicationView({id: '7'})
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ];
+                new ApplicationView({
+                    appCoreStackView: appCoreStackView,
+                    from: null,
+                    el: '#p1',
+                    to: '#p2'
+                });
 
-                console.log(viewTree);
+                new ApplicationView({
+                    appCoreStackView: appCoreStackView,
+                    from: '#p1',
+                    el: '#p2',
+                    to: '#p3'
+                });
+
+                new ApplicationView({
+                    appCoreStackView: appCoreStackView,
+                    from: '#p2',
+                    el: '#p3',
+                    to: '#p4'
+                });
+
+                new ApplicationView({
+                    appCoreStackView: appCoreStackView,
+                    from: '#p3',
+                    el: '#p4',
+                    to: '#p5'
+                });
+
+                new ApplicationView({
+                    appCoreStackView: appCoreStackView,
+                    from: '#p4',
+                    el: '#p5',
+                    to: '#p6'
+                });
+
+                new ApplicationView({
+                    appCoreStackView: appCoreStackView,
+                    from: '#p5',
+                    el: '#p6',
+                    to: '#p7'
+                });
+
+                new ApplicationView({
+                    appCoreStackView: appCoreStackView,
+                    from: '#p6',
+                    el: '#p7',
+                    to: '#p8'
+                });
+
+                new ApplicationView({
+                    appCoreStackView: appCoreStackView,
+                    from: '#p7',
+                    el: '#p8',
+                    to: '#p9'
+                });
+
+                new ApplicationView({
+                    appCoreStackView: appCoreStackView,
+                    from: '#p8',
+                    el: '#p9',
+                    to: null
+                });
+
+
             })
 
             setTimeout(function () {

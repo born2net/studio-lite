@@ -25,12 +25,13 @@
 
             var self = this;
             this.m_counter = 0;
+            this.m_slideConfig = {};
 
             this.homePage = document.getElementById("homePage");
             this.page1 = document.getElementById("p1");
             this.page2 = document.getElementById("p2");
             this.page3 = document.getElementById("p3");
-            this.currentPage = this.homePage;
+            this.currentPage = document.getElementById("p1");
 
             $('#b1').click(function () {
                 self.slideToPage(self.page1, 'right')
@@ -65,6 +66,11 @@
 
 
         },
+
+        setSlideConfig: function (i_slideConfig) {
+            this.m_slideConfig = i_slideConfig;
+        },
+
 
         render: function () {
         },
@@ -118,6 +124,7 @@
             self.currentPage.className = "page transition " + (direction === "left" ? "right" : "left");
             self.currentPage = toPage;
         },
+
 
         leanModal: function () {
 

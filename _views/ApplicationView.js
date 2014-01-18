@@ -5,6 +5,15 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         initialize: function () {
             var self = this;
             this.m_name = '';
+
+            if (this.el.id=='p3'){
+                $(this.el).find('#next2').on('click',function(e){
+                    self.options.appCoreStackView.slideToPage($('#p8')[0], 'right');
+                    return false;
+                });
+            }
+
+
             $(this.el).find('#next').on('click',function(e){
                 if (self.options.to==null)
                     return;

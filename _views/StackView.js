@@ -120,6 +120,8 @@
             toPage.className = "page " + direction;
             // Position the new page and the current page at the ending position of their
             // animation with a transition class indicating the duration of the animation
+            // and force reflow of page
+            $(toPage).parent().parent()[0].offsetWidth;
             toPage.className = "page transition center";
             self.currentPage.className = "page transition " + (direction === "left" ? "right" : "left");
             self.currentPage = toPage;

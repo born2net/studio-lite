@@ -49,7 +49,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
 
                 new ApplicationView({
                     appCoreStackView: appCoreStackView,
-                    from: null,
+                    from: '#p9',
                     el: '#p1',
                     to: '#p2'
                 });
@@ -107,7 +107,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
                     appCoreStackView: appCoreStackView,
                     from: '#p8',
                     el: '#p9',
-                    to: null
+                    to: '#p1'
                 });
 
 

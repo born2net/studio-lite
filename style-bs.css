@@ -179,26 +179,6 @@ StackView CSS
  Hardware accelerated horizontal
  =========================================
 */
-.page.left {
-    -webkit-transform: translate3d(-100%, 0, 0);
-    transform: translate3d(-100%, 0, 0);
-}
-
-.page.center {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-}
-
-.page.right {
-    -webkit-transform: translate3d(100%, 0, 0);
-    transform: translate3d(100%, 0, 0);
-}
-
-.page.transition {
-    -webkit-transition-duration: .25s;
-    transition-duration: .25s;
-}
-
 .page_hw_horizontal.left {
     -webkit-transform: translate3d(-100%, 0, 0);
     transform: translate3d(-100%, 0, 0);
@@ -223,6 +203,24 @@ StackView CSS
  Software accelerated horizontal
  =========================================
 */
+.page.left {
+    left: -100%;
+}
+
+.page.center {
+    left: 0;
+}
+
+.page.right {
+    left: 100%;
+}
+
+.page.transition {
+    -webkit-transition-duration: .25s;
+    transition-duration: .25s;
+}
+
+
 .page_sw_horizontal.left {
     left: -100%;
 }

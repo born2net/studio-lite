@@ -32,55 +32,74 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
                 });
             })(Backbone.View);
 
-            require(['AppEntryFaderView', 'LoginView', 'AppView', 'CampaignSelectorView', 'CampaignView', 'ResolutionSelectorView', 'OrientationSelectorView'],
-                function (AppEntryFaderView, LoginView, AppView, CampaignSelectorView, CampaignView, ResolutionSelectorView, OrientationSelectorView) {
+            require(['AppEntryFaderView', 'LoginView', 'AppSliderView', 'CampaignSelectorView', 'CampaignView', 'ResolutionSelectorView', 'OrientationSelectorView', 'PropertyPanelView'],
+                function (AppEntryFaderView, LoginView, AppSliderView, CampaignSelectorView, CampaignView, ResolutionSelectorView, OrientationSelectorView, PropertyPanelView) {
 
                     var appEntryFaderView = new AppEntryFaderView({el: Elements.APP_ENTRY});
-                    var appView = new AppView({ el: Elements.APP_CONTENT});
+                    var appSliderView = new AppSliderView({ el: Elements.APP_CONTENT});
                     var loginView = new LoginView({el: Elements.APP_LOGIN});
 
+                    var propertyPanelView = new PropertyPanelView({el: Elements.PROP_PANEL});
+                    var md1 = new Backbone.View({id: '#stackViewModal1'});
+                    var md2 = new Backbone.View({id: '#stackViewModal2'});
+                    var md3 = new Backbone.View({id: '#stackViewModal3'});
+                    propertyPanelView.addView(md1);
+                    propertyPanelView.addView(md2);
+                    propertyPanelView.addView(md3);
+
+                    var c = 0;
+                    $('#someAction').on('click', function (e) {
+                        if (c == 0)
+                            propertyPanelView.selectView(md1)
+                        if (c == 1)
+                            propertyPanelView.selectView(md2)
+                        if (c == 2)
+                            propertyPanelView.selectView(md3)
+                        c++;
+                    });
+
                     appEntryFaderView.addView(loginView);
-                    appEntryFaderView.addView(appView);
+                    appEntryFaderView.addView(appSliderView);
 
                     appEntryFaderView.selectView(loginView);
-                    setTimeout(function(){
-                        appEntryFaderView.selectView(appView);
-                    },2000)
+                    setTimeout(function () {
+                        appEntryFaderView.selectView(appSliderView);
+                    }, 2000)
 
 
                     var campaignSelectorView = new CampaignSelectorView({
-                        appCoreStackView: appView,
+                        appCoreStackView: appSliderView,
                         from: '#campaign',
                         el: '#campaignSelector',
                         to: '#orientationSelector'
                     });
 
                     var resolutionSelectorView = new ResolutionSelectorView({
-                        appCoreStackView: appView,
+                        appCoreStackView: appSliderView,
                         from: '#campaignSelector',
                         el: '#orientationSelector',
                         to: '#resolutionSelector'
                     });
 
                     var orientationSelectorView = new OrientationSelectorView({
-                        appCoreStackView: appView,
+                        appCoreStackView: appSliderView,
                         from: '#orientationSelector',
                         el: '#resolutionSelector',
                         to: '#campaign'
                     });
 
                     var campaignView = new CampaignView({
-                        appCoreStackView: appView,
+                        appCoreStackView: appSliderView,
                         from: '#resolutionSelector',
                         el: '#campaign',
                         to: '#campaignSelector'
                     });
 
-                    appView.addView(campaignSelectorView);
-                    appView.addView(campaignView);
-                    appView.addView(resolutionSelectorView);
-                    appView.addView(orientationSelectorView);
-                    appView.selectView(campaignSelectorView);
+                    appSliderView.addView(campaignSelectorView);
+                    appSliderView.addView(campaignView);
+                    appSliderView.addView(resolutionSelectorView);
+                    appSliderView.addView(orientationSelectorView);
+                    appSliderView.selectView(campaignSelectorView);
 
 
                     return;
@@ -176,9 +195,9 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
             $(Elements.TOGGLE_PANEL).on('click', function () {
                 if ($(Elements.TOGGLE_PANEL).hasClass('buttonStateOn')) {
                     $(Elements.TOGGLE_PANEL).toggleClass('buttonStateOn');
-                    $(Elements.PROP_PANEL).fadeOut(function () {
+                    $(Elements.PROP_PANEL_WRAP).fadeOut(function () {
                         $(Elements.TOGGLE_PANEL).html('<');
-                        $(Elements.PROP_PANEL).addClass('hidden-sm hidden-md');
+                        $(Elements.PROP_PANEL_WRAP).addClass('hidden-sm hidden-md');
                         $(Elements.MAIN_PANEL_WRAP).removeClass('col-sm-9 col-md-9');
                         $(Elements.MAIN_PANEL_WRAP).addClass('col-md-12');
                     });
@@ -188,9 +207,9 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
                     $(Elements.MAIN_PANEL_WRAP).addClass('col-sm-9 col-md-9');
                     setTimeout(function () {
                         $(Elements.MAIN_PANEL_WRAP).removeClass('col-md-12');
-                        $(Elements.PROP_PANEL).children().hide();
-                        $(Elements.PROP_PANEL).removeClass('hidden-sm hidden-md');
-                        $(Elements.PROP_PANEL).children().fadeIn();
+                        $(Elements.PROP_PANEL_WRAP).children().hide();
+                        $(Elements.PROP_PANEL_WRAP).removeClass('hidden-sm hidden-md');
+                        $(Elements.PROP_PANEL_WRAP).children().fadeIn();
                     }, 500)
                 }
             });
@@ -205,10 +224,10 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
                 } else {
                     $('#searcher').show();
                 }
-
-                $(Elements.PROP_PANEL).height(h);
-                $(Elements.PROP_PANEL).height(h);
+                $(Elements.PROP_PANEL_WRAP).height(h);
                 $(Elements.MAIN_PANEL_WRAP).height(h);
+                $(Elements.APP_NAVIGATOR).height(h);
+
             });
         }
     })

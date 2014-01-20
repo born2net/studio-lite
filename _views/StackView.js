@@ -36,7 +36,7 @@
 
         addView: function (i_view) {
             $(i_view.el).hide();
-            var oid = i_view.el.id !== undefined ? '#' + i_view.el.id : i_view.cid;
+            var oid = i_view.el.id !== '' ? '#' + i_view.el.id : i_view.cid;
             this.m_views[oid] = i_view;
             // var elem = $(i_view.el).appendTo(this.el);
         },
@@ -125,9 +125,10 @@
             StackView.ViewPort.prototype.selectView.apply(this, arguments);
             $.each(self.m_views, function (id, view) {
                 if (view !== i_view)
-                    view.$el.fadeOut();
+                    view.$el.fadeOut().promise().done(function () {
+                        i_view.$el.fadeIn();
+                    });
             });
-            i_view.$el.fadeIn();
             //i_view.$el.siblings().hide().end().fadeIn();
         }
     });
@@ -142,24 +143,73 @@
     StackView.Modal = StackView.ViewPort.extend({
 
         constructor: function (options) {
-            this._views = [];
-            this._index = null;
-
             options || (options = {});
             this.transition = options.transition;
             if (options.views) this.setViews(options.views);
 
-            ViewKit.ViewPort.prototype.constructor.apply(this, arguments);
+            StackView.ViewPort.prototype.constructor.apply(this, arguments);
+        },
+
+        selectView: function (i_view) {
+            var self = this;
+            StackView.ViewPort.prototype.selectView.apply(this, arguments);
+            $.each(self.m_views, function (id, view) {
+                // if (view !== i_view)
+                view.$el.hide()
+            });
+
+            // var modal_id = $(this).attr("href");
+            var modal_id = i_view.el.id;
+
+            $('#close').on('click',function (e) {
+                self.close_modal(modal_id);
+                e.preventDefault();
+            });
+
+            $(modal_id).css({
+                'display': 'block',
+                'position': 'fixed',
+                'opacity': 1,
+                'position': 'absolute',
+                'z-index': 11000,
+                'height': $('body').get(0).scrollHeight + 'px',
+                'width': $('body').get(0).scrollWidth + 'px',
+                'left': 0,
+                'background-color': 'white',
+                'top': 0 - $('body').get(0).scrollHeight,
+                margin: 0
+                // 'left': 50 + '%',
+                // 'margin-left': -(modal_width / 2) + "px",
+                // 'top': o.top + "px"
+            });
+            $(modal_id).animate({
+                top: 0,
+                opacity: 1}, 400);
+
+
+            // i_view.$el.fadeIn();
+            //i_view.$el.siblings().hide().end().fadeIn();
+        },
+
+        close_modal: function (modal_id) {
+            //$(modal_id).fadeOut(200, function () {
+            // $(this).css({ 'display': 'none' });
+            // });
+
+            $(modal_id).animate({
+                    top: 0 - $('body').get(0).scrollHeight,
+                    opacity: 1},
+                400);
         },
 
         leanModal: function () {
-
+            var self = this;
             $('#someAction').click(function (e) {
 
                 var modal_id = $(this).attr("href");
 
                 $('#close').click(function () {
-                    close_modal(modal_id);
+                    self.close_modal(modal_id);
                 });
 
                 $(modal_id).css({
@@ -182,17 +232,6 @@
                     opacity: 1}, 400);
                 e.preventDefault();
             });
-
-            function close_modal(modal_id) {
-                //$(modal_id).fadeOut(200, function () {
-                // $(this).css({ 'display': 'none' });
-                // });
-
-                $(modal_id).animate({
-                        top: 0 - $('body').get(0).scrollHeight,
-                        opacity: 1},
-                    400);
-            }
         }
     });
 

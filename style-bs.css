@@ -98,12 +98,14 @@ body {
 #appNavigator {
     padding: 0px;
     margin: 0px;
+    border-right: 1px solid #dddddd;
 }
 
 #appNavigator li {
     cursor: pointer;
     padding-top: 15px;
     padding-bottom: 15px;
+    border-right: 0px;
 }
 
 #appNavigator li:hover {

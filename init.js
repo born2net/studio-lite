@@ -13,11 +13,13 @@ require.config({
         "StackView": '_views/StackView',
         "AppEntryFaderView": '_views/AppEntryFaderView',
         "LoginView": '_views/LoginView',
-        "AppView": '_views/AppView',
+        "AppSliderView": '_views/AppSliderView',
         "CampaignSelectorView": '_views/CampaignSelectorView',
         "CampaignView": '_views/CampaignView',
         "ResolutionSelectorView": '_views/ResolutionSelectorView',
-        "OrientationSelectorView": '_views/OrientationSelectorView'
+        "OrientationSelectorView": '_views/OrientationSelectorView',
+        "PropertyPanelView": '_views/PropertyPanelView'
+
     },
 
     shim: {

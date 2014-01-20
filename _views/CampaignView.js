@@ -15,7 +15,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             $(this.el).find('#prev').on('click',function(e){
                 if (self.options.from==null)
                     return;
-                self.options.appCoreStackView.slideToPage($(self.options.from)[0], 'left');
+                var fromView = self.options.appCoreStackView.getViewByID(self.options.from);
+                self.options.appCoreStackView.slideToPage(fromView, 'left');
                 return false;
             });
         },

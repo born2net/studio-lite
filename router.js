@@ -39,6 +39,9 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
                     var appView = new AppView({ el: Elements.APP_CONTENT});
                     var loginView = new LoginView({el: Elements.APP_LOGIN});
 
+                    appEntryFaderView.addView(loginView);
+                    appEntryFaderView.addView(appView);
+
                     appEntryFaderView.selectView(loginView);
                     setTimeout(function(){
                         appEntryFaderView.selectView(appView);

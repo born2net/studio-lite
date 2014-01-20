@@ -36,125 +36,31 @@
 
         addView: function (i_view) {
             $(i_view.el).hide();
-            var oid = i_view.el.id !== undefined ? '#'+i_view.el.id : i_view.cid;
+            var oid = i_view.el.id !== undefined ? '#' + i_view.el.id : i_view.cid;
             this.m_views[oid] = i_view;
             // var elem = $(i_view.el).appendTo(this.el);
         },
 
-        getViews: function(){
+        getViews: function () {
             return this.m_views;
         },
 
-        getViewByID: function(i_id){
+        getViewByID: function (i_id) {
             var self = this;
             if (this.m_views[i_id])
                 return this.m_views[i_id];
-            var found = _.find(this.m_views,function(v){
-                if (v.cid==i_id)
+            var found = _.find(this.m_views, function (v) {
+                if (v.cid == i_id)
                     return v;
             });
             return found;
         },
 
+        // override
         selectView: function (i_view) {
             this.m_selectedView = i_view;
-        },
-
-        /**
-         Create a new child (view) in this viewstack instance.
-         @method addChild the element id to gran from the DOM and append into the viewstack.
-         @param {Number} i_view
-         @return {Number} t the newly created index
-         **/
-        addChild: function (i_view) {
-            var elem = $(i_view.el).appendTo(this.el);
-            $(i_view.el).siblings().hide();
-            this.m_counter++;
-            $(i_view.el).attr('data-viewstackname', 'tab' + this.m_counter);
-            var t = -1;
-            $('#' + this.el.id + '> *').each(function () {
-                t++;
-                if (this === elem[0]) {
-                    return false;
-                }
-            });
-            return t;
-        },
-
-        /**
-         Select an index from viewstacks to bring into view and hide all other views.
-         @method selectIndex
-         @param {index} i_index to load into view
-         @return none
-         **/
-        selectIndex: function (i_index) {
-
-            var self = this.self;
-
-            $('#' + this.el.id + '> *').each(function (i) {
-                if (i_index == i) {
-                    // commBroker.fire(self.VIEW_CHANGED, this, self, i_index);
-                    $(this).siblings().hide().end().fadeIn();
-                }
-            });
         }
 
-        /*slideToPage: function (toPage, direction) {
-         var self = this;
-         // Position the new page at the starting position of the animation
-         toPage.className = "page " + direction;
-         // Position the new page and the current page at the ending position of their
-         // animation with a transition class indicating the duration of the animation
-         // and force reflow of page
-         $(toPage).parent().parent()[0].offsetWidth;
-         toPage.className = "page transition center";
-         self.currentPage.className = "page transition " + (direction === "left" ? "right" : "left");
-         self.currentPage = toPage;
-         },*/
-
-
-        /*leanModal: function () {
-
-         $('#someAction').click(function (e) {
-
-         var modal_id = $(this).attr("href");
-
-         $('#close').click(function () {
-         close_modal(modal_id);
-         });
-
-         $(modal_id).css({
-         'display': 'block',
-         'position': 'fixed',
-         'opacity': 1,
-         'position': 'absolute',
-         'z-index': 11000,
-         'height': $('body').get(0).scrollHeight + 'px',
-         'width': $('body').get(0).scrollWidth + 'px',
-         'left': 0,
-         'top': 0 - $('body').get(0).scrollHeight,
-         margin: 0
-         // 'left': 50 + '%',
-         // 'margin-left': -(modal_width / 2) + "px",
-         // 'top': o.top + "px"
-         });
-         $(modal_id).animate({
-         top: 0,
-         opacity: 1}, 400);
-         e.preventDefault();
-         });
-
-         function close_modal(modal_id) {
-         //$(modal_id).fadeOut(200, function () {
-         // $(this).css({ 'display': 'none' });
-         // });
-
-         $(modal_id).animate({
-         top: 0 - $('body').get(0).scrollHeight,
-         opacity: 1},
-         400);
-         }
-         }*/
     });
 
     /**
@@ -208,6 +114,34 @@
     StackView.Fader = StackView.ViewPort.extend({
 
         constructor: function (options) {
+            options || (options = {});
+            this.transition = options.transition;
+            if (options.views) this.setViews(options.views);
+            StackView.ViewPort.prototype.constructor.apply(this, arguments);
+        },
+
+        selectView: function (i_view) {
+            var self = this;
+            StackView.ViewPort.prototype.selectView.apply(this, arguments);
+            $.each(self.m_views, function (id, view) {
+                if (view !== i_view)
+                    view.$el.fadeOut();
+            });
+            i_view.$el.fadeIn();
+            //i_view.$el.siblings().hide().end().fadeIn();
+        }
+    });
+
+    /**
+     Add block wizard is a UI component which allows selection and insertion of a new component (i.e. QR / RSS ...)
+     or a resource to be added to the currently selected timeline_channel
+     @class StackView.Modal
+     @constructor
+     @return {Object} instantiated AddBlockWizard
+     **/
+    StackView.Modal = StackView.ViewPort.extend({
+
+        constructor: function (options) {
             this._views = [];
             this._index = null;
 
@@ -215,12 +149,7 @@
             this.transition = options.transition;
             if (options.views) this.setViews(options.views);
 
-            StackView.ViewPort.prototype.constructor.apply(this, arguments);
-        },
-
-        selectView: function (i_view) {
-            StackView.ViewPort.prototype.selectView.apply(this, arguments);
-            i_view.$el.siblings().hide().end().fadeIn();
+            ViewKit.ViewPort.prototype.constructor.apply(this, arguments);
         },
 
         leanModal: function () {
@@ -264,27 +193,6 @@
                         opacity: 1},
                     400);
             }
-        }
-    });
-
-    /**
-     Add block wizard is a UI component which allows selection and insertion of a new component (i.e. QR / RSS ...)
-     or a resource to be added to the currently selected timeline_channel
-     @class StackView.Modal
-     @constructor
-     @return {Object} instantiated AddBlockWizard
-     **/
-    StackView.Modal = StackView.ViewPort.extend({
-
-        constructor: function (options) {
-            this._views = [];
-            this._index = null;
-
-            options || (options = {});
-            this.transition = options.transition;
-            if (options.views) this.setViews(options.views);
-
-            ViewKit.ViewPort.prototype.constructor.apply(this, arguments);
         }
     });
 

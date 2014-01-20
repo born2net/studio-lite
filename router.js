@@ -41,7 +41,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
                 appCoreStackView.addChild(loginView);
                 appCoreStackView.addChild(applicationView);
                 appCoreStackView.selectIndex(0);
-                appCoreStackView.leanModal();
+                // appCoreStackView.leanModal();
 
                 setTimeout(function () {
                     appCoreStackView.selectIndex(1);

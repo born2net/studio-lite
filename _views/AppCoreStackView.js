@@ -13,7 +13,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
      @param {Constructor} none
      @return {Object} require.js module
      **/
-    var AppCoreStackView = Backbone.StackView.ViewPort.extend({
+    var AppCoreStackView = Backbone.StackView.Slider.extend({
         initialize: function () {
             Backbone.StackView.ViewPort.prototype.initialize.call(this);
             // alert(Elements.PROP_PANEL);

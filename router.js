@@ -23,95 +23,136 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
 
         initialize: function () {
 
-            Backbone.View = (function(View) {
+            Backbone.View = (function (View) {
                 return View.extend({
-                    constructor: function(options) {
+                    constructor: function (options) {
                         this.options = options || {};
                         View.apply(this, arguments);
                     }
                 });
             })(Backbone.View);
 
-            require(['AppCoreStackView', 'ApplicationView', 'LoginView'], function (AppCoreStackView, ApplicationView, LoginView) {
+            require(['AppEntryFaderView', 'LoginView', 'AppView', 'CampaignSelectorView', 'CampaignView', 'ResolutionSelectorView', 'OrientationSelectorView'],
+                function (AppEntryFaderView, LoginView, AppView, CampaignSelectorView, CampaignView, ResolutionSelectorView, OrientationSelectorView) {
 
-                var applicationView = new Backbone.View({ el: Elements.APP_CONTENT});
-                var loginView = new LoginView({el: Elements.APP_LOGIN});
-                var appCoreStackView = new AppCoreStackView({el: Elements.APP_CORE_STACKVIEW});
+                    var appEntryFaderView = new AppEntryFaderView({el: Elements.APP_ENTRY});
+                    var appView = new AppView({ el: Elements.APP_CONTENT});
+                    var loginView = new LoginView({el: Elements.APP_LOGIN});
 
-                appCoreStackView.addChild(loginView);
-                appCoreStackView.addChild(applicationView);
-                appCoreStackView.selectIndex(0);
-                // appCoreStackView.leanModal();
-
-                setTimeout(function () {
-                    appCoreStackView.selectIndex(1);
-                }, 2000)
-
-                new ApplicationView({
-                    appCoreStackView: appCoreStackView,
-                    from: '#p9',
-                    el: '#p1',
-                    to: '#p2'
-                });
-
-                new ApplicationView({
-                    appCoreStackView: appCoreStackView,
-                    from: '#p1',
-                    el: '#p2',
-                    to: '#p3'
-                });
-
-                new ApplicationView({
-                    appCoreStackView: appCoreStackView,
-                    from: '#p2',
-                    el: '#p3',
-                    to: '#p4'
-                });
-
-                new ApplicationView({
-                    appCoreStackView: appCoreStackView,
-                    from: '#p3',
-                    el: '#p4',
-                    to: '#p5'
-                });
-
-                new ApplicationView({
-                    appCoreStackView: appCoreStackView,
-                    from: '#p4',
-                    el: '#p5',
-                    to: '#p6'
-                });
-
-                new ApplicationView({
-                    appCoreStackView: appCoreStackView,
-                    from: '#p5',
-                    el: '#p6',
-                    to: '#p7'
-                });
-
-                new ApplicationView({
-                    appCoreStackView: appCoreStackView,
-                    from: '#p6',
-                    el: '#p7',
-                    to: '#p8'
-                });
-
-                new ApplicationView({
-                    appCoreStackView: appCoreStackView,
-                    from: '#p7',
-                    el: '#p8',
-                    to: '#p9'
-                });
-
-                new ApplicationView({
-                    appCoreStackView: appCoreStackView,
-                    from: '#p8',
-                    el: '#p9',
-                    to: '#p1'
-                });
+                    appEntryFaderView.selectView(loginView);
+                    setTimeout(function(){
+                        appEntryFaderView.selectView(appView);
+                    },2000)
 
 
-            })
+                    var campaignSelectorView = new CampaignSelectorView({
+                        appCoreStackView: appView,
+                        from: '#campaign',
+                        el: '#campaignSelector',
+                        to: '#orientationSelector'
+                    });
+
+                    var resolutionSelectorView = new ResolutionSelectorView({
+                        appCoreStackView: appView,
+                        from: '#campaignSelector',
+                        el: '#orientationSelector',
+                        to: '#resolutionSelector'
+                    });
+
+                    var orientationSelectorView = new OrientationSelectorView({
+                        appCoreStackView: appView,
+                        from: '#orientationSelector',
+                        el: '#resolutionSelector',
+                        to: '#campaign'
+                    });
+
+                    var campaignView = new CampaignView({
+                        appCoreStackView: appView,
+                        from: '#resolutionSelector',
+                        el: '#campaign',
+                        to: '#campaignSelector'
+                    });
+
+                    appView.addView(campaignSelectorView);
+                    appView.addView(campaignView);
+                    appView.addView(resolutionSelectorView);
+                    appView.addView(orientationSelectorView);
+                    appView.selectView(campaignSelectorView);
+
+
+                    return;
+                    appCoreStackView.selectIndex(0);
+                    // appCoreStackView.leanModal();
+
+                    setTimeout(function () {
+                        appCoreStackView.selectIndex(1);
+                    }, 2000)
+
+                    new ApplicationView({
+                        appCoreStackView: appCoreStackView,
+                        from: '#p9',
+                        el: '#p1',
+                        to: '#p2'
+                    });
+
+                    new ApplicationView({
+                        appCoreStackView: appCoreStackView,
+                        from: '#p1',
+                        el: '#p2',
+                        to: '#p3'
+                    });
+
+                    new ApplicationView({
+                        appCoreStackView: appCoreStackView,
+                        from: '#p2',
+                        el: '#p3',
+                        to: '#p4'
+                    });
+
+                    new ApplicationView({
+                        appCoreStackView: appCoreStackView,
+                        from: '#p3',
+                        el: '#p4',
+                        to: '#p5'
+                    });
+
+                    new ApplicationView({
+                        appCoreStackView: appCoreStackView,
+                        from: '#p4',
+                        el: '#p5',
+                        to: '#p6'
+                    });
+
+                    new ApplicationView({
+                        appCoreStackView: appCoreStackView,
+                        from: '#p5',
+                        el: '#p6',
+                        to: '#p7'
+                    });
+
+                    new ApplicationView({
+                        appCoreStackView: appCoreStackView,
+                        from: '#p6',
+                        el: '#p7',
+                        to: '#p8'
+                    });
+
+                    new ApplicationView({
+                        appCoreStackView: appCoreStackView,
+                        from: '#p7',
+                        el: '#p8',
+                        to: '#p9'
+                    });
+
+                    new ApplicationView({
+                        appCoreStackView: appCoreStackView,
+                        from: '#p8',
+                        el: '#p9',
+                        to: '#p1'
+                    });
+
+
+                })
 
             setTimeout(function () {
                 $(window).trigger('resize');

@@ -10,11 +10,14 @@ require.config({
         "underscore": '_common/_js/underscore/underscore',
         "bootstrap": '_common/_js/bootstrap/js/bootstrap',
         "Elements": 'Elements',
-        "menuitemdetails": '_views/menuitemdetails',
         "StackView": '_views/StackView',
-        "AppCoreStackView": '_views/AppCoreStackView',
-        "ApplicationView": '_views/ApplicationView',
-        "LoginView": '_views/LoginView'
+        "AppEntryFaderView": '_views/AppEntryFaderView',
+        "LoginView": '_views/LoginView',
+        "AppView": '_views/AppView',
+        "CampaignSelectorView": '_views/CampaignSelectorView',
+        "CampaignView": '_views/CampaignView',
+        "ResolutionSelectorView": '_views/ResolutionSelectorView',
+        "OrientationSelectorView": '_views/OrientationSelectorView'
     },
 
     shim: {

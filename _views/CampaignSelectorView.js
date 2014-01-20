@@ -1,15 +1,16 @@
 define(['jquery', 'backbone'], function ($, Backbone) {
 
-    var ApplicationView = Backbone.View.extend({
+    var CampaignSelectorView = Backbone.View.extend({
 
         initialize: function () {
             var self = this;
-            this.m_name = '';
 
             $(this.el).find('#next').on('click',function(e){
                 if (self.options.to==null)
                     return;
-                self.options.appCoreStackView.slideToPage($(self.options.to)[0], 'right');
+
+                var toView = self.options.appCoreStackView.getViewByID(self.options.to);
+                self.options.appCoreStackView.slideToPage(toView, 'right');
                 return false;
             });
             $(this.el).find('#prev').on('click',function(e){
@@ -25,14 +26,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         render: function() {
-            this.$el.css({display: 'block'})
-            this.$el.text(this.m_name);
         }
 
     })
 
 
-    return ApplicationView;
+    return CampaignSelectorView;
 
 });
 

@@ -29,23 +29,35 @@
     StackView.ViewPort = Backbone.View.extend({
 
         initialize: function () {
-
             var self = this;
-            this.m_counter = 0;
-            this.currentPage = document.getElementById("p1");
-
+            this.m_views = {};
+            this.m_selectedView = {};
         },
 
         addView: function (i_view) {
+            $(i_view.el).hide();
+            var oid = i_view.el.id !== undefined ? '#'+i_view.el.id : i_view.cid;
+            this.m_views[oid] = i_view;
+            // var elem = $(i_view.el).appendTo(this.el);
+        },
 
+        getViews: function(){
+            return this.m_views;
+        },
+
+        getViewByID: function(i_id){
+            var self = this;
+            if (this.m_views[i_id])
+                return this.m_views[i_id];
+            var found = _.find(this.m_views,function(v){
+                if (v.cid==i_id)
+                    return v;
+            });
+            return found;
         },
 
         selectView: function (i_view) {
-
-        },
-
-        removeView: function (i_view) {
-
+            this.m_selectedView = i_view;
         },
 
         /**
@@ -165,17 +177,24 @@
             StackView.ViewPort.prototype.constructor.apply(this, arguments);
         },
 
-        slideToPage: function (toPage, direction) {
+        selectView: function (i_view) {
+            StackView.ViewPort.prototype.selectView.apply(this, arguments);
+            i_view.$el.fadeIn();
+        },
+
+        slideToPage: function (toView, direction) {
             var self = this;
+            toView.$el.show();
+            // toView.el.offsetWidth;
             // Position the new page at the starting position of the animation
-            toPage.className = "page " + direction;
+            toView.el.className = "page " + direction;
             // Position the new page and the current page at the ending position of their
             // animation with a transition class indicating the duration of the animation
             // and force reflow of page
-            $(toPage).parent().parent()[0].offsetWidth;
-            toPage.className = "page transition center";
-            self.currentPage.className = "page transition " + (direction === "left" ? "right" : "left");
-            self.currentPage = toPage;
+            toView.$el.parent().parent()[0].offsetWidth;
+            toView.el.className = "page transition center";
+            self.m_selectedView.el.className = "page transition " + (direction === "left" ? "right" : "left");
+            self.m_selectedView = toView;
         }
     });
 
@@ -197,6 +216,11 @@
             if (options.views) this.setViews(options.views);
 
             StackView.ViewPort.prototype.constructor.apply(this, arguments);
+        },
+
+        selectView: function (i_view) {
+            StackView.ViewPort.prototype.selectView.apply(this, arguments);
+            i_view.$el.siblings().hide().end().fadeIn();
         },
 
         leanModal: function () {

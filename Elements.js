@@ -2,7 +2,7 @@
 // Elements IDs
 ////////////////////////
 
-Elements.APP_CORE_STACKVIEW = '#appCoreStackView';
+Elements.APP_ENTRY = '#appEntry';
 Elements.APP_LOGIN = '#appLogin';
 Elements.APP_CONTENT = '#appContent';
 Elements.PROP_PANEL = '#propPanel';

@@ -114,8 +114,10 @@
 
         constructor: function (options) {
             options || (options = {});
+            this.m_duration = 1000;
             this.transition = options.transition;
             if (options.views) this.setViews(options.views);
+            if (options.duration) this.m_duration = options.duration;
             StackView.ViewPort.prototype.constructor.apply(this, arguments);
         },
 
@@ -124,11 +126,10 @@
             StackView.ViewPort.prototype.selectView.apply(this, arguments);
             $.each(self.m_views, function (id, view) {
                 if (view !== i_view)
-                    view.$el.fadeOut().promise().done(function () {
-                        i_view.$el.fadeIn();
+                    view.$el.fadeOut(self.m_duration).promise().done(function () {
+                        i_view.$el.fadeIn(self.m_duration);
                     });
             });
-            //i_view.$el.siblings().hide().end().fadeIn();
         }
     });
 
@@ -142,15 +143,17 @@
     StackView.Modal = StackView.ViewPort.extend({
 
         constructor: function (options) {
+            this.m_animation = 'slide_top';
             options || (options = {});
             this.transition = options.transition;
             if (options.views) this.setViews(options.views);
-
+            if (options.animation) this.m_animation = options.animation;
             StackView.ViewPort.prototype.constructor.apply(this, arguments);
         },
 
         selectView: function (i_view) {
             var self = this;
+            console.log(self.m_animation);
             StackView.ViewPort.prototype.selectView.apply(this, arguments);
             $.each(self.m_views, function (id, view) {
                 view.$el.hide()
@@ -166,14 +169,14 @@
             self.$el.css({
                 'display': 'block',
                 'position': 'fixed',
-                'opacity': 1,
+                'opacity': self.m_animation == 'fade' ? 0 : 1,
                 'position': 'absolute',
                 'z-index': 11000,
                 'height': $('body').get(0).scrollHeight + 'px',
                 'width': $('body').get(0).scrollWidth + 'px',
                 'left': 0,
                 'background-color': 'white',
-                'top': 0 - $('body').get(0).scrollHeight,
+                'top': self.m_animation == 'fade' ? 0 : 0 - $('body').get(0).scrollHeight,
                 margin: 0
                 // 'left': 50 + '%',
                 // 'margin-left': -(modal_width / 2) + "px",
@@ -182,53 +185,16 @@
             self.$el.animate({
                 top: 0,
                 opacity: 1}, 400);
-
-
-            // i_view.$el.fadeIn();
-            //i_view.$el.siblings().hide().end().fadeIn();
         },
 
         close_modal: function (modal_id) {
-            //$(modal_id).fadeOut(200, function () {
-            // $(this).css({ 'display': 'none' });
-            // });
-
-            $(modal_id).animate({
-                    top: 0 - $('body').get(0).scrollHeight,
-                    opacity: 0},
-                400);
-        },
-
-        leanModal: function () {
             var self = this;
-            $('#someAction').click(function (e) {
-
-                var modal_id = $(this).attr("href");
-
-                $('#close').click(function () {
-                    self.close_modal(modal_id);
+            $(modal_id).animate({
+                    top: self.m_animation == 'fade' ? 0 : 0 - $('body').get(0).scrollHeight,
+                    opacity: 0},
+                400, function(){
+                    $(this).css({display: 'none'})
                 });
-
-                $(modal_id).css({
-                    'display': 'block',
-                    'position': 'fixed',
-                    'opacity': 1,
-                    'position': 'absolute',
-                    'z-index': 11000,
-                    'height': $('body').get(0).scrollHeight + 'px',
-                    'width': $('body').get(0).scrollWidth + 'px',
-                    'left': 0,
-                    'top': 0 - $('body').get(0).scrollHeight,
-                    margin: 0
-                    // 'left': 50 + '%',
-                    // 'margin-left': -(modal_width / 2) + "px",
-                    // 'top': o.top + "px"
-                });
-                $(modal_id).animate({
-                    top: 0,
-                    opacity: 1}, 400);
-                e.preventDefault();
-            });
         }
     });
 

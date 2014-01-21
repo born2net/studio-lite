@@ -35,14 +35,30 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
             require(['AppEntryFaderView', 'LoginView', 'AppSliderView', 'CampaignSelectorView', 'CampaignView', 'ResolutionSelectorView', 'OrientationSelectorView', 'PopModal'],
                 function (AppEntryFaderView, LoginView, AppSliderView, CampaignSelectorView, CampaignView, ResolutionSelectorView, OrientationSelectorView, PopModal) {
 
-                    var appEntryFaderView = new AppEntryFaderView({el: Elements.APP_ENTRY});
-                    var appSliderView = new AppSliderView({ el: Elements.APP_CONTENT});
-                    var loginView = new LoginView({el: Elements.APP_LOGIN});
+                    var appEntryFaderView = new AppEntryFaderView({
+                        el: Elements.APP_ENTRY,
+                        duration: 500
+                    });
 
-                    var popModal = new PopModal({el: Elements.POP_MODAL});
+                    var appSliderView = new AppSliderView({
+                        el: Elements.APP_CONTENT
+                    });
+
+                    var loginView = new LoginView({
+                        el: Elements.APP_LOGIN
+                    });
+
+                    var popModal = new PopModal({
+                        el: Elements.POP_MODAL,
+                        animation: 'slide_top' //or 'fade'
+
+                    });
+
                     var md1 = new Backbone.View({el: '#stackViewModal1'});
                     var md2 = new Backbone.View({el: '#stackViewModal2'});
-                    var md3 = new Backbone.View({el: '#stackViewModal3'});
+                    var md3 = new Backbone.View();
+                    md3.$el.append('<b class="modal_close">hello world</b>');
+                    $('body').append(md3.el);
                     popModal.addView(md1);
                     popModal.addView(md2);
                     popModal.addView(md3);
@@ -55,6 +71,10 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
                             popModal.selectView(md2)
                         if (c == 2)
                             popModal.selectView(md3)
+                        if (c == 3)
+                            popModal.selectView(md1)
+                        if (c == 4)
+                            popModal.selectView(md2)
                         c++;
                     });
 
@@ -100,80 +120,6 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
                     appSliderView.addView(resolutionSelectorView);
                     appSliderView.addView(orientationSelectorView);
                     appSliderView.selectView(campaignSelectorView);
-
-
-                    return;
-                    appCoreStackView.selectIndex(0);
-                    // appCoreStackView.leanModal();
-
-                    setTimeout(function () {
-                        appCoreStackView.selectIndex(1);
-                    }, 2000)
-
-                    new ApplicationView({
-                        appCoreStackView: appCoreStackView,
-                        from: '#p9',
-                        el: '#p1',
-                        to: '#p2'
-                    });
-
-                    new ApplicationView({
-                        appCoreStackView: appCoreStackView,
-                        from: '#p1',
-                        el: '#p2',
-                        to: '#p3'
-                    });
-
-                    new ApplicationView({
-                        appCoreStackView: appCoreStackView,
-                        from: '#p2',
-                        el: '#p3',
-                        to: '#p4'
-                    });
-
-                    new ApplicationView({
-                        appCoreStackView: appCoreStackView,
-                        from: '#p3',
-                        el: '#p4',
-                        to: '#p5'
-                    });
-
-                    new ApplicationView({
-                        appCoreStackView: appCoreStackView,
-                        from: '#p4',
-                        el: '#p5',
-                        to: '#p6'
-                    });
-
-                    new ApplicationView({
-                        appCoreStackView: appCoreStackView,
-                        from: '#p5',
-                        el: '#p6',
-                        to: '#p7'
-                    });
-
-                    new ApplicationView({
-                        appCoreStackView: appCoreStackView,
-                        from: '#p6',
-                        el: '#p7',
-                        to: '#p8'
-                    });
-
-                    new ApplicationView({
-                        appCoreStackView: appCoreStackView,
-                        from: '#p7',
-                        el: '#p8',
-                        to: '#p9'
-                    });
-
-                    new ApplicationView({
-                        appCoreStackView: appCoreStackView,
-                        from: '#p8',
-                        el: '#p9',
-                        to: '#p1'
-                    });
-
-
                 })
 
             setTimeout(function () {

@@ -18,7 +18,7 @@ require.config({
         "CampaignView": '_views/CampaignView',
         "ResolutionSelectorView": '_views/ResolutionSelectorView',
         "OrientationSelectorView": '_views/OrientationSelectorView',
-        "PropertyPanelView": '_views/PropertyPanelView'
+        "PopModal": '_views/PopModal'
 
     },
 

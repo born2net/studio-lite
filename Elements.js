@@ -7,6 +7,7 @@ Elements.APP_LOGIN = '#appLogin';
 Elements.APP_CONTENT = '#appContent';
 Elements.APP_NAVIGATOR = '#appNavigator';
 Elements.PROP_PANEL = '#propPanel';
+Elements.POP_MODAL = '#popModal';
 Elements.PROP_PANEL_WRAP = '#propPanelWrap';
 Elements.MAIN_PANEL_WRAP = '#mainPanelWrap';
 Elements.BS_MODAL = '#bsModal';

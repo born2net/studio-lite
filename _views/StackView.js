@@ -35,10 +35,9 @@
         },
 
         addView: function (i_view) {
-            $(i_view.el).hide();
-            var oid = i_view.el.id !== '' ? '#' + i_view.el.id : i_view.cid;
+            i_view.$el.hide();
+            var oid = i_view.el.id === '' ? i_view.cid : i_view.el.id;
             this.m_views[oid] = i_view;
-            // var elem = $(i_view.el).appendTo(this.el);
         },
 
         getViews: function () {
@@ -46,11 +45,11 @@
         },
 
         getViewByID: function (i_id) {
-            var self = this;
-            if (this.m_views[i_id])
-                return this.m_views[i_id];
+            var oid = i_id.replace(/#/g, '')
+            if (this.m_views[oid])
+                return this.m_views[oid];
             var found = _.find(this.m_views, function (v) {
-                if (v.cid == i_id)
+                if (v.cid == oid)
                     return v;
             });
             return found;
@@ -154,19 +153,17 @@
             var self = this;
             StackView.ViewPort.prototype.selectView.apply(this, arguments);
             $.each(self.m_views, function (id, view) {
-                // if (view !== i_view)
                 view.$el.hide()
             });
-
-            // var modal_id = $(this).attr("href");
-            var modal_id = i_view.el.id;
-
-            $('#close').on('click',function (e) {
-                self.close_modal(modal_id);
+            var a = i_view.$el.show();
+            i_view.$el.show();
+            self.$el.append(i_view.el)
+            $('.modal_close').on('click',function (e) {
+                self.close_modal(self.el);
                 e.preventDefault();
             });
 
-            $(modal_id).css({
+            self.$el.css({
                 'display': 'block',
                 'position': 'fixed',
                 'opacity': 1,
@@ -182,7 +179,7 @@
                 // 'margin-left': -(modal_width / 2) + "px",
                 // 'top': o.top + "px"
             });
-            $(modal_id).animate({
+            self.$el.animate({
                 top: 0,
                 opacity: 1}, 400);
 
@@ -198,7 +195,7 @@
 
             $(modal_id).animate({
                     top: 0 - $('body').get(0).scrollHeight,
-                    opacity: 1},
+                    opacity: 0},
                 400);
         },
 

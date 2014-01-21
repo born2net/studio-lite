@@ -32,29 +32,29 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
                 });
             })(Backbone.View);
 
-            require(['AppEntryFaderView', 'LoginView', 'AppSliderView', 'CampaignSelectorView', 'CampaignView', 'ResolutionSelectorView', 'OrientationSelectorView', 'PropertyPanelView'],
-                function (AppEntryFaderView, LoginView, AppSliderView, CampaignSelectorView, CampaignView, ResolutionSelectorView, OrientationSelectorView, PropertyPanelView) {
+            require(['AppEntryFaderView', 'LoginView', 'AppSliderView', 'CampaignSelectorView', 'CampaignView', 'ResolutionSelectorView', 'OrientationSelectorView', 'PopModal'],
+                function (AppEntryFaderView, LoginView, AppSliderView, CampaignSelectorView, CampaignView, ResolutionSelectorView, OrientationSelectorView, PopModal) {
 
                     var appEntryFaderView = new AppEntryFaderView({el: Elements.APP_ENTRY});
                     var appSliderView = new AppSliderView({ el: Elements.APP_CONTENT});
                     var loginView = new LoginView({el: Elements.APP_LOGIN});
 
-                    var propertyPanelView = new PropertyPanelView({el: Elements.PROP_PANEL});
-                    var md1 = new Backbone.View({id: '#stackViewModal1'});
-                    var md2 = new Backbone.View({id: '#stackViewModal2'});
-                    var md3 = new Backbone.View({id: '#stackViewModal3'});
-                    propertyPanelView.addView(md1);
-                    propertyPanelView.addView(md2);
-                    propertyPanelView.addView(md3);
+                    var popModal = new PopModal({el: Elements.POP_MODAL});
+                    var md1 = new Backbone.View({el: '#stackViewModal1'});
+                    var md2 = new Backbone.View({el: '#stackViewModal2'});
+                    var md3 = new Backbone.View({el: '#stackViewModal3'});
+                    popModal.addView(md1);
+                    popModal.addView(md2);
+                    popModal.addView(md3);
 
                     var c = 0;
                     $('#someAction').on('click', function (e) {
                         if (c == 0)
-                            propertyPanelView.selectView(md1)
+                            popModal.selectView(md1)
                         if (c == 1)
-                            propertyPanelView.selectView(md2)
+                            popModal.selectView(md2)
                         if (c == 2)
-                            propertyPanelView.selectView(md3)
+                            popModal.selectView(md3)
                         c++;
                     });
 

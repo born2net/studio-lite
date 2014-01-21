@@ -20,98 +20,137 @@
     var StackView = Backbone.StackView = {};
 
     /**
-     Add block wizard is a UI component which allows selection and insertion of a new component (i.e. QR / RSS ...)
-     or a resource to be added to the currently selected timeline_channel
+     Base class for all StackView components. StackView allows for dynamic changes of elements (show/hide) and it works
+     with the Backbone framework, thus allowing for view control.
      @class StackView.ViewPort
      @constructor
-     @return {Object} instantiated AddBlockWizard
+     @return none instead instantiate derived classes
      **/
     StackView.ViewPort = Backbone.View.extend({
 
+        /**
+         initialize class
+         @method initialize
+         **/
         initialize: function () {
-            var self = this;
             this.m_views = {};
             this.m_selectedView = {};
         },
 
+        /**
+         Add a backbone view so we can control its display mode via one of the derived classes
+         @method addView
+         @param {View} i_view add a backbone view to control
+         **/
         addView: function (i_view) {
             i_view.$el.hide();
             var oid = i_view.el.id === '' ? i_view.cid : i_view.el.id;
             this.m_views[oid] = i_view;
         },
 
+        /**
+         Get all registered views
+         @method getViews
+         @return {Object} registered views
+         **/
         getViews: function () {
             return this.m_views;
         },
 
+        /**
+         Find a registered backbone view by its id or cid
+         @method getViewByID
+         @param {String} i_id
+         @return {Object} view object retrieved
+         **/
         getViewByID: function (i_id) {
-            var oid = i_id.replace(/#/g, '')
+            var oid = i_id.replace(/#/g, '');
             if (this.m_views[oid])
                 return this.m_views[oid];
-            var found = _.find(this.m_views, function (v) {
+            var f = _.find(this.m_views, function (v) {
                 if (v.cid == oid)
                     return v;
             });
-            return found;
+            return f;
         },
 
-        // override
+        /**
+         Select a view to present in the DOM, implementation varies per derived class
+         @method selectView
+         @param {Object} i_view
+         **/
         selectView: function (i_view) {
             this.m_selectedView = i_view;
         }
-
     });
 
     /**
-     Add block wizard is a UI component which allows selection and insertion of a new component (i.e. QR / RSS ...)
-     or a resource to be added to the currently selected timeline_channel
+     An animated backbone view slider that supports unlimited number of separated views.
+     Be sure to check CSS file for additional configuration via classes:
+     .page.left  .page.center .page.right .page.transition
+     Animation can be configured for GPU hardware acceleration as well as in vertical and horizontal modes (all via CSS).
      @class StackView.Slider
      @constructor
-     @return {Object} instantiated AddBlockWizard
+     @return {Object} instantiated StackView.Slider
      **/
     StackView.Slider = StackView.ViewPort.extend({
 
+        /**
+         Class init
+         @method constructor
+         @param {Object} options backbone (config done through CSS)
+         **/
         constructor: function (options) {
             this._views = [];
             this._index = null;
-
-            options || (options = {});
-            this.transition = options.transition;
-            if (options.views) this.setViews(options.views);
-
             StackView.ViewPort.prototype.constructor.apply(this, arguments);
         },
 
+        /**
+         Select the initial default view
+         @method selectView
+         @param {Object} i_view backbone view
+         **/
         selectView: function (i_view) {
             StackView.ViewPort.prototype.selectView.apply(this, arguments);
             i_view.$el.fadeIn();
         },
 
-        slideToPage: function (toView, direction) {
+        /**
+         The main functions which allows the animated sliding of one view to the next
+         @method slideToPage
+         @param {Object} i_toView backbone view
+         @param {Object} i_direction provide 'left' or 'right'
+         **/
+        slideToPage: function (i_toView, i_direction) {
             var self = this;
-            toView.$el.show();
+            i_toView.$el.show();
             // toView.el.offsetWidth;
             // Position the new page at the starting position of the animation
-            toView.el.className = "page " + direction;
+            i_toView.el.className = "page " + i_direction;
             // Position the new page and the current page at the ending position of their
             // animation with a transition class indicating the duration of the animation
             // and force reflow of page
-            toView.$el.parent().parent()[0].offsetWidth;
-            toView.el.className = "page transition center";
-            self.m_selectedView.el.className = "page transition " + (direction === "left" ? "right" : "left");
-            self.m_selectedView = toView;
+            i_toView.$el.parent().parent()[0].offsetWidth;
+            i_toView.el.className = "page transition center";
+            self.m_selectedView.el.className = "page transition " + (i_direction === "left" ? "right" : "left");
+            self.m_selectedView = i_toView;
         }
     });
 
     /**
-     Add block wizard is a UI component which allows selection and insertion of a new component (i.e. QR / RSS ...)
-     or a resource to be added to the currently selected timeline_channel
+     Select a view thus fading it in and hiding all other views managed by this class
      @class StackView.Fader
      @constructor
-     @return {Object} instantiated AddBlockWizard
+     @return {Object} instantiated StackView.Fader
      **/
     StackView.Fader = StackView.ViewPort.extend({
 
+        /**
+         Class init
+         @method constructor
+         @param {Object} options duration, default 1000ms
+         **/
         constructor: function (options) {
             options || (options = {});
             this.m_duration = 1000;
@@ -121,6 +160,11 @@
             StackView.ViewPort.prototype.constructor.apply(this, arguments);
         },
 
+        /**
+         Bring the selected view into display while hiding siblings
+         @method selectView
+         @param {Object} i_view backbone view
+         **/
         selectView: function (i_view) {
             var self = this;
             StackView.ViewPort.prototype.selectView.apply(this, arguments);
@@ -134,14 +178,18 @@
     });
 
     /**
-     Add block wizard is a UI component which allows selection and insertion of a new component (i.e. QR / RSS ...)
-     or a resource to be added to the currently selected timeline_channel
+     Load a backbone view inside a full page modal window while maintaining persistency between modals.
      @class StackView.Modal
      @constructor
-     @return {Object} instantiated AddBlockWizard
+     @return {Object} instantiated StackView.Modal
      **/
     StackView.Modal = StackView.ViewPort.extend({
 
+        /**
+         Class init
+         @method constructor
+         @param {Object} options include (slide_top | fade), (bgColor)
+         **/
         constructor: function (options) {
             this.m_animation = 'slide_top';
             this.m_bgColor = 'white';
@@ -153,6 +201,11 @@
             StackView.ViewPort.prototype.constructor.apply(this, arguments);
         },
 
+        /**
+         Load up selected backbone view into a full screen modal and present it (persistent)
+         @method selectView
+         @param {Object} i_view backbone
+         **/
         selectView: function (i_view) {
             var self = this;
             StackView.ViewPort.prototype.selectView.apply(this, arguments);
@@ -160,23 +213,24 @@
                 view.$el.hide()
             });
             i_view.$el.show();
-            self.$el.append(i_view.el)
+            self.$el.append(i_view.el);
             $('.modal_close').on('click',function (e) {
-                self.close_modal(self.el);
+                self.closeModal(self.el);
                 e.preventDefault();
             });
 
+            var bh = $('body').get(0).scrollHeight + 'px';
             self.$el.css({
                 'display': 'block',
                 'opacity': self.m_animation == 'fade' ? 0 : 1,
                 'position': 'absolute',
                 'z-index': 9999,
-                'height': $('body').get(0).scrollHeight + 'px',
-                'width': $('body').get(0).scrollWidth + 'px',
+                'height': bh,
+                'width': bh,
                 'left': 0,
                 'border-bottom': '3px solid gray',
                 'background-color': self.m_bgColor,
-                'top': self.m_animation == 'fade' ? 0 : 0 - $('body').get(0).scrollHeight,
+                'top': self.m_animation == 'fade' ? 0 : '-'+bh,
                 margin: 0
                 // 'left': 50 + '%',
                 // 'margin-left': -(modal_width / 2) + "px",
@@ -186,7 +240,13 @@
                 top: 0,
                 opacity: 1}, 400);
         },
-        close_modal: function (modal_id) {
+
+        /**
+         Close via animation the currently opened modal
+         @method closeModal
+         @param {String} modal_id
+         **/
+        closeModal: function (modal_id) {
             var self = this;
             $(modal_id).animate({
                     top: self.m_animation == 'fade' ? 0 : 0 - $('body').get(0).scrollHeight,

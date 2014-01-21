@@ -12,14 +12,14 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
 
         },
 
-        search: function (query, page) {
+        /*search: function (query, page) {
             require(["menuitemdetails"], function (empModelFactory) {
                 var employee = new (empModelFactory['Employee']);
                 var employees = new (empModelFactory['EmployeeCollection']);
                 employee.alertMe();
                 employees.alertMe();
             });
-        },
+        },*/
 
         initialize: function () {
 
@@ -50,7 +50,8 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
 
                     var popModal = new PopModal({
                         el: Elements.POP_MODAL,
-                        animation: 'slide_top' //or 'fade'
+                        animation: 'slide_top', //or 'fade'
+                        bgColor: 'white'
 
                     });
 
@@ -64,17 +65,17 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
                     popModal.addView(md3);
 
                     var c = 0;
-                    $('#someAction').on('click', function (e) {
+                    $('#someAction').on('click', function () {
                         if (c == 0)
-                            popModal.selectView(md1)
+                            popModal.selectView(md1);
                         if (c == 1)
-                            popModal.selectView(md2)
+                            popModal.selectView(md2);
                         if (c == 2)
-                            popModal.selectView(md3)
+                            popModal.selectView(md3);
                         if (c == 3)
-                            popModal.selectView(md1)
+                            popModal.selectView(md1);
                         if (c == 4)
-                            popModal.selectView(md2)
+                            popModal.selectView(md2);
                         c++;
                     });
 
@@ -84,7 +85,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
                     appEntryFaderView.selectView(loginView);
                     setTimeout(function () {
                         appEntryFaderView.selectView(appSliderView);
-                    }, 2000)
+                    }, 2000);
 
 
                     var campaignSelectorView = new CampaignSelectorView({
@@ -120,7 +121,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
                     appSliderView.addView(resolutionSelectorView);
                     appSliderView.addView(orientationSelectorView);
                     appSliderView.selectView(campaignSelectorView);
-                })
+                });
 
             setTimeout(function () {
                 $(window).trigger('resize');
@@ -133,7 +134,6 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
                 var w = $('body').css('width').replace('px', '');
                 if (w <= 768) {
                     $(Elements.BS_MODAL).modal('show');
-                    return;
                 }
             });
 
@@ -161,8 +161,9 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
             });
 
             $(window).resize(function () {
-                var h = $('body').css('height').replace('px', '');
-                var w = $('body').css('width').replace('px', '');
+                var b = $('body');
+                var h = b.css('height').replace('px', '');
+                var w = b.css('width').replace('px', '');
                 // reduce footer
                 h = h - 115;
                 if (w <= 768) {
@@ -176,6 +177,6 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
 
             });
         }
-    })
+    });
     return StudioLite;
-})
+});

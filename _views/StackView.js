@@ -144,21 +144,21 @@
 
         constructor: function (options) {
             this.m_animation = 'slide_top';
+            this.m_bgColor = 'white';
             options || (options = {});
             this.transition = options.transition;
             if (options.views) this.setViews(options.views);
             if (options.animation) this.m_animation = options.animation;
+            if (options.bgColor) this.m_bgColor = options.bgColor;
             StackView.ViewPort.prototype.constructor.apply(this, arguments);
         },
 
         selectView: function (i_view) {
             var self = this;
-            console.log(self.m_animation);
             StackView.ViewPort.prototype.selectView.apply(this, arguments);
             $.each(self.m_views, function (id, view) {
                 view.$el.hide()
             });
-            var a = i_view.$el.show();
             i_view.$el.show();
             self.$el.append(i_view.el)
             $('.modal_close').on('click',function (e) {
@@ -168,14 +168,14 @@
 
             self.$el.css({
                 'display': 'block',
-                'position': 'fixed',
                 'opacity': self.m_animation == 'fade' ? 0 : 1,
                 'position': 'absolute',
-                'z-index': 11000,
+                'z-index': 9999,
                 'height': $('body').get(0).scrollHeight + 'px',
                 'width': $('body').get(0).scrollWidth + 'px',
                 'left': 0,
-                'background-color': 'white',
+                'border-bottom': '3px solid gray',
+                'background-color': self.m_bgColor,
                 'top': self.m_animation == 'fade' ? 0 : 0 - $('body').get(0).scrollHeight,
                 margin: 0
                 // 'left': 50 + '%',
@@ -186,7 +186,6 @@
                 top: 0,
                 opacity: 1}, 400);
         },
-
         close_modal: function (modal_id) {
             var self = this;
             $(modal_id).animate({

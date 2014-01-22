@@ -35,6 +35,7 @@
         initialize: function () {
             this.m_views = {};
             this.m_selectedView = {};
+            alert('aaa')
         },
 
         /**

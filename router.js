@@ -135,10 +135,10 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements', 'ComBroker'
 
             // Test open bootstrap modal
             $('#openPanel').on('click', function () {
-                var w = $('body').css('width').replace('px', '');
-                if (w <= 768) {
-                    $(Elements.BS_MODAL).modal('show');
-                }
+                //var w = $('body').css('width').replace('px', '');
+                //if (w <= 768) {
+                $(Elements.BS_MODAL).modal('show');
+                //}
             });
 
 

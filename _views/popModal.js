@@ -1,20 +1,18 @@
 /**
- The Core Application StackView between Login screen and main app
- @class AppEntryFaderView
+ Backbone > View > StackView > Modal class for full page presentation of UI data
+ @class PopModal
  @constructor
  @return {object} instantiated AppCoreStackView
  **/
 define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
 
     /**
-     @method AppCoreStackView
-     @param {Constructor} none
-     @return {Object} require.js module
+     @method initialize
+     @param {Constructor}
      **/
     var PopModal = Backbone.StackView.Modal.extend({
         initialize: function () {
             Backbone.StackView.ViewPort.prototype.initialize.call(this);
-            // alert(Elements.PROP_PANEL);
         }
     });
     return PopModal;

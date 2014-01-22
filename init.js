@@ -18,7 +18,9 @@ require.config({
         "CampaignView": '_views/CampaignView',
         "ResolutionSelectorView": '_views/ResolutionSelectorView',
         "OrientationSelectorView": '_views/OrientationSelectorView',
-        "PopModal": '_views/PopModal'
+        "PopModal": '_views/PopModal',
+        "ComBroker": '_comps/ComBroker',
+        "Lib": '_comps/Lib'
 
     },
 
@@ -35,6 +37,12 @@ require.config({
         },
         "Elements": {
             exports: 'Elements'
+        },
+        "ComBroker": {
+            deps: ["backbone", "jquery"]
+        },
+        "Lib": {
+            deps: ["backbone", "jquery"]
         }
     }
 });

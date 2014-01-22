@@ -1,4 +1,4 @@
-define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (_, $, Backbone, Bootstrap, Elements) {
+define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements', 'ComBroker', 'Lib'], function (_, $, Backbone, Bootstrap, Elements, ComBroker, Lib) {
     var StudioLite = Backbone.Router.extend({
 
 
@@ -12,17 +12,22 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
 
         },
 
-        /*search: function (query, page) {
+        search: function (query, page) {
             require(["menuitemdetails"], function (empModelFactory) {
                 var employee = new (empModelFactory['Employee']);
                 var employees = new (empModelFactory['EmployeeCollection']);
                 employee.alertMe();
                 employees.alertMe();
             });
-        },*/
+        },
 
         initialize: function () {
 
+            Backbone.comBroker = new ComBroker.module();
+            Backbone.lib = new Lib.module();
+            window.log = Backbone.lib.log;
+
+            // add the now removed "options" back into backbone View
             Backbone.View = (function (View) {
                 return View.extend({
                     constructor: function (options) {
@@ -31,6 +36,8 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements'], function (
                     }
                 });
             })(Backbone.View);
+
+
 
             require(['AppEntryFaderView', 'LoginView', 'AppSliderView', 'CampaignSelectorView', 'CampaignView', 'ResolutionSelectorView', 'OrientationSelectorView', 'PopModal'],
                 function (AppEntryFaderView, LoginView, AppSliderView, CampaignSelectorView, CampaignView, ResolutionSelectorView, OrientationSelectorView, PopModal) {

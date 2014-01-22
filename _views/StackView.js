@@ -31,7 +31,6 @@
         initialize: function () {
             this.m_views = {};
             this.m_selectedView = {};
-            this.m_selectedWaitView = undefined;
         },
 
         /**
@@ -113,11 +112,9 @@
             var self = this;
             StackView.ViewPort.prototype.selectView.apply(this, arguments);
             $.each(self.m_views, function (id, view) {
-                if (view !== i_view)
-                    view.$el.fadeOut(self.m_duration).promise().done(function () {
-                        i_view.$el.fadeIn(self.m_duration);
-                    });
+                view.$el.hide();
             });
+            i_view.$el.fadeIn(this.m_duration);
         },
 
         /**
@@ -173,11 +170,9 @@
             var self = this;
             StackView.ViewPort.prototype.selectView.apply(this, arguments);
             $.each(self.m_views, function (id, view) {
-                if (view !== i_view)
-                    view.$el.fadeOut(self.m_duration).promise().done(function () {
-                        i_view.$el.fadeIn(self.m_duration);
-                    });
+                view.$el.hide();
             });
+            i_view.$el.fadeIn(this.m_duration);
         }
     });
 
@@ -218,7 +213,7 @@
             });
             i_view.$el.show();
             self.$el.append(i_view.el);
-            $('.modal_close').on('click',function (e) {
+            $('.modal_close').on('click', function (e) {
                 self.closeModal(self.el);
                 e.preventDefault();
             });
@@ -234,7 +229,7 @@
                 'left': 0,
                 'border-bottom': '3px solid gray',
                 'background-color': self.m_bgColor,
-                'top': self.m_animation == 'fade' ? 0 : '-'+bh,
+                'top': self.m_animation == 'fade' ? 0 : '-' + bh,
                 margin: 0
                 // 'left': 50 + '%',
                 // 'margin-left': -(modal_width / 2) + "px",
@@ -255,7 +250,7 @@
             $(modal_id).animate({
                     top: self.m_animation == 'fade' ? 0 : 0 - $('body').get(0).scrollHeight,
                     opacity: 0},
-                400, function(){
+                400, function () {
                     $(this).css({display: 'none'})
                 });
         }

@@ -46,6 +46,29 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'bootbox', 'Elements', 
                         duration: 500
                     });
 
+                    var test = new AppEntryFaderView({
+                        el: '#test',
+                        duration: 500
+                    });
+
+                    var v1 = new Backbone.View({el: '#first'})
+                    var v2 = new Backbone.View({el: '#second'})
+                    var v3 = new Backbone.View({el: '#third'})
+                    test.addView(v1);
+                    test.addView(v2);
+                    test.addView(v3);
+                    test.selectView(v1);
+
+                    $('#firstButton').on('click',function(){
+                        test.selectView(v1);
+                    });
+                    $('#secondButton').on('click',function(){
+                        test.selectView(v2);
+                    });
+                    $('#thirdButton').on('click',function(){
+                        test.selectView(v3);
+                    });
+
                     var appSliderView = new AppSliderView({
                         el: Elements.APP_CONTENT
                     });

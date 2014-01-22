@@ -23,11 +23,6 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements', 'ComBroker'
 
         initialize: function () {
 
-            Backbone.comBroker = new ComBroker.module();
-            Backbone.lib = new Lib.module();
-            window.log = Backbone.lib.log;
-
-            // add the now removed "options" back into backbone View
             Backbone.View = (function (View) {
                 return View.extend({
                     constructor: function (options) {
@@ -37,7 +32,9 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'Elements', 'ComBroker'
                 });
             })(Backbone.View);
 
-
+            Backbone.comBroker = new ComBroker.module();
+            Backbone.lib = new Lib.module();
+            window.log = Backbone.lib.log;
 
             require(['AppEntryFaderView', 'LoginView', 'AppSliderView', 'CampaignSelectorView', 'CampaignView', 'ResolutionSelectorView', 'OrientationSelectorView', 'PopModal'],
                 function (AppEntryFaderView, LoginView, AppSliderView, CampaignSelectorView, CampaignView, ResolutionSelectorView, OrientationSelectorView, PopModal) {

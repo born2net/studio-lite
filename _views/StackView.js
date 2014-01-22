@@ -46,10 +46,6 @@
             i_view.$el.hide();
             var oid = i_view.el.id === '' ? i_view.cid : i_view.el.id;
             this.m_views[oid] = i_view;
-            Backbone.comBroker.listen('hello',function(e){
-                log(e.edata.a)
-            });
-            Backbone.comBroker.fire('hello',this,this,{a: 1});
         },
 
         /**

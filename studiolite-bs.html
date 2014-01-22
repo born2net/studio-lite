@@ -104,6 +104,13 @@
         <div id="appLogin" style="display: none">
             <h>Login</h>
         </div>
+        <div id="waitScreenApp" style="display: none">
+            <div style="overflow-y: scroll;height: 100%">
+                <span style="position: relative; left: 45%; top: 40%">
+                    <img src="./_assets/preload5.gif">
+                </span>
+            </div>
+        </div>
         <div id="appContent" class="noScroll container" style="display: none">
             <div id="appRow " class="row">
                 <div id="appNavigator" class="hidden-xs hidden-sm hidden-md col-lg-1">
@@ -143,6 +150,15 @@
                                 <a id="prev" href="#">Prev</a>
                                 <a id="next" href="#">Next</a>
                             </div>
+                            <div id="waitScreenMainPanel" class="page center">
+                                <div style="overflow-y: scroll;height: 100%">
+                                    <h1>Please wait</h1>
+                                    <span style="position: relative; left: 45%; top: 40%">
+	                                    <img src="./_assets/preload7.gif">
+                                    </span>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -214,6 +230,14 @@
         Last name: <input type="text" name="lname"><br>
         <input type="submit" value="Submit">
     </form>
+</div>
+
+<div id="stackWaitModalView">
+    <h1>p2</h1>
+    <button type="button" class="btn btn-primary modal_close" data-dismiss="modal">Close</button>
+    <span style="position: relative; left: 45%; top: 40%">
+        <img src="./_assets/preload3.gif">
+    </span>
 </div>
 
 </body>

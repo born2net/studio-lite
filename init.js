@@ -9,8 +9,10 @@ require.config({
         "backbone": '_common/_js/backbone/backbone',
         "underscore": '_common/_js/underscore/underscore',
         "bootstrap": '_common/_js/bootstrap/js/bootstrap',
+        "bootbox": '_common/_js/bootbox/bootbox',
         "Elements": 'Elements',
         "StackView": '_views/StackView',
+        "WaitView": '_views/WaitView',
         "AppEntryFaderView": '_views/AppEntryFaderView',
         "LoginView": '_views/LoginView',
         "AppSliderView": '_views/AppSliderView',
@@ -21,6 +23,7 @@ require.config({
         "PopModal": '_views/PopModal',
         "ComBroker": '_comps/ComBroker',
         "Lib": '_comps/Lib'
+
 
     },
 
@@ -34,6 +37,10 @@ require.config({
         },
         "bootstrap": {
             deps: ["jquery"]
+        },
+        "bootbox": {
+            deps: ["jquery"],
+            exports: 'bootbox'
         },
         "Elements": {
             exports: 'Elements'

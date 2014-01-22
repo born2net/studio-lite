@@ -2,17 +2,13 @@
     'use strict';
     var Backbone = window.Backbone;
 
-    // AMD. Register as an anonymous module.  Wrap in function so we have access
-    // to root via `this`.
     if (typeof define === 'function' && define.amd) {
         return define(['backbone', 'underscore'], function () {
             return factory.apply(window, arguments);
         });
     } else if (typeof module === 'object' && module.exports) {
-        // NodeJS. Calling with required packages
         factory.call(window, require('backbone'), require('underscore'));
     } else {
-        // Browser globals.
         factory.call(window, Backbone, window._);
     }
 }(typeof global === "object" ? global : this, function (Backbone, _) {
@@ -35,7 +31,7 @@
         initialize: function () {
             this.m_views = {};
             this.m_selectedView = {};
-            alert('aaa')
+            this.m_selectedWaitView = undefined;
         },
 
         /**
@@ -83,6 +79,7 @@
         selectView: function (i_view) {
             this.m_selectedView = i_view;
         }
+
     });
 
     /**
@@ -113,8 +110,14 @@
          @param {Object} i_view backbone view
          **/
         selectView: function (i_view) {
+            var self = this;
             StackView.ViewPort.prototype.selectView.apply(this, arguments);
-            i_view.$el.fadeIn();
+            $.each(self.m_views, function (id, view) {
+                if (view !== i_view)
+                    view.$el.fadeOut(self.m_duration).promise().done(function () {
+                        i_view.$el.fadeIn(self.m_duration);
+                    });
+            });
         },
 
         /**

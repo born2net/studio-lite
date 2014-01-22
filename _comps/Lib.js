@@ -1,18 +1,13 @@
 (function (window, factory) {
     'use strict';
     var Backbone = window.Backbone;
-
-    // AMD. Register as an anonymous module.  Wrap in function so we have access
-    // to root via `this`.
     if (typeof define === 'function' && define.amd) {
         return define(['backbone', 'underscore'], function () {
             return factory.apply(window, arguments);
         });
     } else if (typeof module === 'object' && module.exports) {
-        // NodeJS. Calling with required packages
         factory.call(window, require('backbone'), require('underscore'));
     } else {
-        // Browser globals.
         factory.call(window, Backbone, window._);
     }
 }(typeof global === "object" ? global : this, function (Backbone, _) {

@@ -1,7 +1,17 @@
+/**
+ Campaign manager using Backbone > View
+ @class CampaignView
+ @constructor
+ @return {Object} instantiated CampaignView
+ **/
 define(['jquery', 'backbone'], function ($, Backbone) {
 
     var CampaignView = Backbone.View.extend({
 
+        /**
+         Constructor
+         @method initialize
+         **/
         initialize: function () {
             var self = this;
 

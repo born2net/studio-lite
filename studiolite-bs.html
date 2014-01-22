@@ -16,6 +16,7 @@
     -->
     <link href="https://secure.dynawebs.net/_studiolite-dev/_common/_js/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="https://secure.dynawebs.net/_studiolite-dev/style-bs.css" rel="stylesheet">
+    <script src="https://js.signage.me/SignageSDK.js" type="text/javascript"></script>
     <script data-main="init" src="https://secure.dynawebs.net/_studiolite-dev/_common/_js/requirejs/require.js"
             type="text/javascript"></script>
 
@@ -102,7 +103,15 @@
     </nav>
     <div id="appEntry">
         <div id="appLogin" style="display: none">
-            <h>Login</h>
+            <form class="form-signin" role="form">
+                <h2 class="form-signin-heading">Please sign in</h2>
+                <input type="text" class="form-control" placeholder="Email address" required autofocus>
+                <input type="password" class="form-control" placeholder="Password" required>
+                <label class="checkbox">
+                    <input type="checkbox" value="remember-me"> Remember me
+                </label>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            </form>
         </div>
         <div id="waitScreenApp" style="display: none">
             <div style="overflow-y: scroll;height: 100%">

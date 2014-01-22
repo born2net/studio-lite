@@ -1,3 +1,26 @@
+/**
+ The ComBroker is lite weight event bus that can be used inside MV* frameworks and offer services for the application.
+ Services provided include registration and query of data members, registration and query of
+ instances (often registered instances are service providers themselves) and a central location
+ for binding and triggering of events.
+ @class ComBroker
+ @constructor
+ @return {Object} instantiated ComBroker
+ @example
+ <pre>
+ Backbone.comBroker = new ComBroker.bus();
+ Backbone.comBroker.setService('me',function(i_var){
+                 alert('I am a service ' + i_var)});
+ var g = com.getService('me');
+ g("hello again");
+ $(com).bind('change',function(e){
+                 alert('pop ' +e);
+             });
+ $(Backbone.comBroker).triggerHandler('change');
+ example: Backbone.comBroker.fire(loginManager.LOGINBUTTON, this, '#loginButton', "hellow world" );
+ example: Backbone.comBroker.listen(loginManager.AUTHENITCATING,loginManager.LOGINBUTTON,function(e){});
+ </pre>
+ **/
 (function (window, factory) {
     'use strict';
     var Backbone = window.Backbone;
@@ -16,35 +39,15 @@
 
     ComBroker.module = Backbone.Model.extend({
 
+        /**
+         Constructor
+         @method initialize
+         @return {} Unique clientId.
+         **/
         initialize: function () {
             this.m_services = [];
             this.m_uniqueCounter = 0;
         },
-
-        /**
-         The ComBroker is lite weight MVC and designed to offer services for the application.
-         Services provided include registration and query of data members, registration and query of
-         instances (often registered instances are service providers themselves) and a central location
-         for binding and triggering of events.
-         @class ComBroker
-         @constructor
-         @return {Object} instantiated ComBroker
-         @example
-         <pre>
-             Backbone.comBroker = new ComBroker.bus();
-             Backbone.comBroker.setService('me',function(i_var){
-                 alert('I am a service ' + i_var)});
-             var g = com.getService('me');
-             g("hello again");
-             $(com).bind('change',function(e){
-                 alert('pop ' +e);
-             });
-             $(Backbone.comBroker).triggerHandler('change');
-             example: Backbone.comBroker.fire(loginManager.LOGINBUTTON, this, '#loginButton', "hellow world" );
-             example: Backbone.comBroker.listen(loginManager.AUTHENITCATING,loginManager.LOGINBUTTON,function(e){});
-         </pre>
-         **/
-
 
         /**
          Register a data member that others can query.

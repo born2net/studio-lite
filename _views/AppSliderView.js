@@ -1,22 +1,19 @@
 /**
- The Core Application StackView between Login screen and main app
- @class AppEntryFaderView
+ Main content of Application window, class extends Backbone > View > StackView > Slider for animation of selected content
+ @class AppViewSlider
  @constructor
- @return {object} instantiated AppCoreStackView
+ @return {object} instantiated AppViewSlider
  **/
 define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
 
-    Backbone.StackView.ViewPort.ADD_NEW_BLOCK = 'ADD_NEW_BLOCK';
-
-    /**
-     @method AppCoreStackView
-     @param {Constructor} none
-     @return {Object} require.js module
-     **/
     var AppViewSlider = Backbone.StackView.Slider.extend({
+
+        /**
+         @method AppViewSlider
+         @param {Constructor} none
+         **/
         initialize: function () {
             Backbone.StackView.ViewPort.prototype.initialize.call(this);
-            // alert(Elements.PROP_PANEL);
         }
     });
     return AppViewSlider;

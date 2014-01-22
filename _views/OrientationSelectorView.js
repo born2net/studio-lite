@@ -1,3 +1,9 @@
+/**
+ Orientation selector Backbone > View
+ @class OrientationSelectorView
+ @constructor
+ @return {Object} instantiated OrientationSelectorView
+ **/
 define(['jquery', 'backbone'], function ($, Backbone) {
 
     var OrientationSelectorView = Backbone.View.extend({
@@ -23,9 +29,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
         render: function() {
         }
-
-    })
-
+    });
 
     return OrientationSelectorView;
 

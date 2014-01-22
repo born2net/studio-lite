@@ -1,7 +1,17 @@
+/**
+ Backbone > View Resource selector
+ @class ResolutionSelectorView
+ @constructor
+ @return {Object} instantiated ResolutionSelectorView
+ **/
 define(['jquery', 'backbone'], function ($, Backbone) {
 
     var ResolutionSelectorView = Backbone.View.extend({
 
+        /**
+         Constructor
+         @method initialize
+         **/
         initialize: function () {
             var self = this;
 

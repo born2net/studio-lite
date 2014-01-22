@@ -1,6 +1,6 @@
 /**
- init.js
- @class Require JS config file
+ Require js initialization module definition file
+ @class Require init.js
  **/
 require.config({
     baseUrl: '/_studiolite-dev/',
@@ -11,6 +11,8 @@ require.config({
         "bootstrap": '_common/_js/bootstrap/js/bootstrap',
         "bootbox": '_common/_js/bootbox/bootbox',
         "Elements": 'Elements',
+        "AppRouter": '_comps/AppRouter',
+        "ComBroker": '_comps/ComBroker',
         "StackView": '_views/StackView',
         "WaitView": '_views/WaitView',
         "AppEntryFaderView": '_views/AppEntryFaderView',
@@ -21,16 +23,16 @@ require.config({
         "ResolutionSelectorView": '_views/ResolutionSelectorView',
         "OrientationSelectorView": '_views/OrientationSelectorView',
         "PopModal": '_views/PopModal',
-        "ComBroker": '_comps/ComBroker',
         "Lib": '_comps/Lib'
-
-
     },
 
     shim: {
         'backbone': {
             deps: ['underscore', 'jquery'],
             exports: 'Backbone'
+        },
+        'sdk': {
+            exports: 'sdk'
         },
         'underscore': {
             exports: '_'
@@ -54,6 +56,6 @@ require.config({
     }
 });
 
-require(['router'],function(router){
-    new router();
+require(['StudioLite'],function(StudioLite){
+    new StudioLite();
 });

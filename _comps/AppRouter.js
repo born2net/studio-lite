@@ -2,28 +2,9 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'bootbox', 'Elements', 
     var StudioLite = Backbone.Router.extend({
 
 
-        routes: {
-            "help": "help",    // #help
-            "search/:query": "search",  // #search/kiwis
-            "search/:query/p:page": "search"   // #search/kiwis/p7
-        },
-
-        help: function () {
-
-        },
-
-        search: function (query, page) {
-            require(["menuitemdetails"], function (empModelFactory) {
-                var employee = new (empModelFactory['Employee']);
-                var employees = new (empModelFactory['EmployeeCollection']);
-                employee.alertMe();
-                employees.alertMe();
-            });
-        },
-
         initialize: function () {
 
-            // this.testBootbox();
+            var self = this;
 
             Backbone.View = (function (View) {
                 return View.extend({
@@ -187,11 +168,10 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'bootbox', 'Elements', 
 
             Backbone.history.start();
 
-            // Test open bootstrap modal
             $('#openPanel').on('click', function () {
                 //var w = $('body').css('width').replace('px', '');
                 //if (w <= 768) {
-                $(Elements.BS_MODAL).modal('show');
+                self.testBootbox();
                 //}
             });
 
@@ -233,6 +213,25 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'bootbox', 'Elements', 
                 $(Elements.MAIN_PANEL_WRAP).height(h);
                 $(Elements.APP_NAVIGATOR).height(h);
 
+            });
+        },
+
+        routes: {
+            "help": "help",    // #help
+            "search/:query": "search",  // #search/kiwis
+            "search/:query/p:page": "search"   // #search/kiwis/p7
+        },
+
+        help: function () {
+
+        },
+
+        search: function (query, page) {
+            require(["menuitemdetails"], function (empModelFactory) {
+                var employee = new (empModelFactory['Employee']);
+                var employees = new (empModelFactory['EmployeeCollection']);
+                employee.alertMe();
+                employees.alertMe();
             });
         },
 

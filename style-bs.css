@@ -66,31 +66,6 @@ body {
     margin: 0px;
 }
 
-/* small bootstrap modal */
-.modal-static {
-    position: fixed;
-    overflow: visible !important;
-    top: 25%;
-}
-
-
-/* large bootstrap modal */
-/*
-.modal-static,
-.modal-static .modal-dialog,
-.modal-static .modal-content {
-    width: 100%;
-    height: 100%;
-}
-.modal-static .modal-dialog,
-.modal-static .modal-content {
-    padding: 0 !important;
-    margin: 0 !important;
-}
-.modal-static .modal-content .icon {
-}
-*/
-
 #appNavigator {
     padding: 0px;
     margin: 0px;
@@ -120,6 +95,43 @@ body {
     right: 30px;
     z-index: 110;
 }
+
+
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+    margin-bottom: 10px;
+}
+.form-signin .checkbox {
+    font-weight: normal;
+}
+.form-signin .form-control {
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+.form-signin input[type="text"] {
+    margin-bottom: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
 
 /* -------------------------------------------
 StackView CSS

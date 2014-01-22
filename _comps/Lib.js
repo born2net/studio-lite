@@ -1,3 +1,9 @@
+/**
+ Lib is a library of additional utilities and helper commands used in StudioLite
+ @class Lib
+ @constructor
+ @return {Object} instantiated Lib
+ **/
 (function (window, factory) {
     'use strict';
     var Backbone = window.Backbone;
@@ -16,9 +22,18 @@
 
     Lib.module = Backbone.Model.extend({
 
+        /**
+         Constructor
+         @method initialize
+         **/
         initialize: function () {
         },
 
+        /**
+         Output formatted string to console and omit error on old browsers
+         @method log
+         @param {String} msg
+         **/
         log: function (msg) {
             if (!$.browser == undefined && $.browser.msie && $.browser.version <= 8) {
                 if (globs['debug']) {
@@ -32,11 +47,31 @@
                     };
                 }
             }
-
             console.log(new Date().toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1") + ': ' + msg);
 
         },
 
+        /**
+         Add the now deprecated Backbone > View > Options
+         @method addBackboneViewOptions
+         **/
+        addBackboneViewOptions: function(){
+            Backbone.View = (function (View) {
+                return View.extend({
+                    constructor: function (options) {
+                        this.options = options || {};
+                        View.apply(this, arguments);
+                    }
+                });
+            })(Backbone.View);
+        },
+
+        /**
+         Validate email address format using regexp
+         @method validateEmail
+         @param {String} emailAddress
+         @return {Boolean}
+         **/
         validateEmail: function (emailAddress) {
             var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
             var valid = emailRegex.test(emailAddress);
@@ -47,6 +82,10 @@
             }
         },
 
+        /**
+         Set user agent / browser version
+         @method initUserAgent
+         **/
         initUserAgent: function () {
 
             var ua = navigator.userAgent.toLowerCase(),
@@ -112,6 +151,12 @@
             }
         },
 
+        /**
+         Simplify a string to basic character set
+         @method cleanChar
+         @param {String} value
+         @return {String} cleaned string
+         **/
         cleanChar: function (value) {
             if (value == null)
                 value = '';
@@ -130,6 +175,12 @@
             return value;
         },
 
+        /**
+         Get DOM comment string
+         @method getComment
+         @param {String} str
+         @return {String} string of comment if retrieved
+         **/
         getComment: function (str) {
             var content = jQuery('body').html();
             var search = '<!-- ' + str + '.*?-->';
@@ -144,6 +195,12 @@
             }
         },
 
+        /**
+         Convert an XML data format to a DOM enabled data structure
+         @method parseXml
+         @param {XML} xml data to parse
+         @return {Object} xml data structure
+         **/
         parseXml: function (xml) {
             var dom = null;
             if (window.DOMParser) {
@@ -171,6 +228,13 @@
             return dom;
         },
 
+        /**
+         Convert an XML data format to json
+         @method xml2json
+         @param {XML} xml
+         @param {Object} internal
+         @return {Object} json data structure
+         **/
         xml2json: function (xml, tab) {
             // http://goessner.net/download/prj/jsonxml/
             var X = {
@@ -321,6 +385,13 @@
             return "{\n" + tab + (tab ? json.replace(/\t/g, tab) : json.replace(/\t|\n/g, "")) + "\n}";
         },
 
+        /**
+         Convert a json data format to xml
+         @method xml2json
+         @param {JSON} o
+         @param {Object} internal
+         @return {Object} xml data structure
+         **/
         json2xml: function (o, tab) {
             var toXml = function (v, name, ind) {
                 var xml = "";
@@ -360,11 +431,12 @@
             return tab ? xml.replace(/\t/g, tab) : xml.replace(/\t|\n/g, "");
         },
 
-
-        randomFBetween: function (from, to) {
-            return Math.floor(Math.random() * (to - from + 1) + from);
-        },
-
+        /**
+         Check if a remote file exists
+         @method remoteFileExits
+         @param {String} url
+         @return {Boolean}
+         **/
         remoteFileExits: function (url) {
             if (url) {
                 var req = new XMLHttpRequest();
@@ -376,6 +448,11 @@
             }
         },
 
+        /**
+         Returns Epoch base time
+         @method getEpochTime
+         @return {Number}
+         **/
         getEpochTime: function () {
             var d = new Date();
             var n = d.getTime();

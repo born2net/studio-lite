@@ -1,3 +1,10 @@
+/**
+ Base class for all StackView components. StackView allows for dynamic changes of elements (show/hide) and it works
+ with the Backbone framework, thus allowing for view control.
+ @class StackView.ViewPort
+ @constructor
+ @return none instead instantiate derived classes
+ **/
 (function (window, factory) {
     'use strict';
     var Backbone = window.Backbone;
@@ -15,17 +22,10 @@
 
     var StackView = Backbone.StackView = {};
 
-    /**
-     Base class for all StackView components. StackView allows for dynamic changes of elements (show/hide) and it works
-     with the Backbone framework, thus allowing for view control.
-     @class StackView.ViewPort
-     @constructor
-     @return none instead instantiate derived classes
-     **/
     StackView.ViewPort = Backbone.View.extend({
 
         /**
-         initialize class
+         Constructor
          @method initialize
          **/
         initialize: function () {

@@ -1,7 +1,3 @@
-////////////////////////
-// Elements IDs
-////////////////////////
-
 Elements.APP_ENTRY = '#appEntry';
 Elements.APP_LOGIN = '#appLogin';
 Elements.APP_CONTENT = '#appContent';

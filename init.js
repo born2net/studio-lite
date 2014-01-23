@@ -10,6 +10,11 @@ require.config({
         "underscore": '_common/_js/underscore/underscore',
         "bootstrap": '_common/_js/bootstrap/js/bootstrap',
         "bootbox": '_common/_js/bootbox/bootbox',
+        "Cookie": '_common/_js/cookie/jquery.cookie',
+        "RC4": '_common/_js/rc4/RC4',
+        "Base64": '_common/_js/base64/jquery.base64',
+        "Jalapeno": '_jalapeno/Jalapeno',
+        "Services": 'Services',
         "Elements": 'Elements',
         "AppRouter": '_comps/AppRouter',
         "ComBroker": '_comps/ComBroker',
@@ -24,6 +29,7 @@ require.config({
         "OrientationSelectorView": '_views/OrientationSelectorView',
         "PopModal": '_views/PopModal',
         "Lib": '_comps/Lib'
+
     },
 
     shim: {
@@ -44,14 +50,28 @@ require.config({
             deps: ["jquery"],
             exports: 'bootbox'
         },
+        "Services": {
+            exports: 'Services'
+        },
         "Elements": {
             exports: 'Elements'
+        },
+        "RC4": {
+            exports: 'RC4'
         },
         "ComBroker": {
             deps: ["backbone", "jquery"]
         },
         "Lib": {
             deps: ["backbone", "jquery"]
+        },
+        "Jalapeno": {
+            deps: ['jquery', 'Base64'],
+            exports: 'Jalapeno'
+        },
+        "Base64": {
+            deps: ['jquery'],
+            exports: 'base64'
         }
     }
 });

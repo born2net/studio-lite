@@ -1,4 +1,5 @@
 Elements.APP_ENTRY = '#appEntry';
+Elements.WAITS_SCREEN_ENTRY_APP = '#waitScreenEntryApp';
 Elements.APP_LOGIN = '#appLogin';
 Elements.APP_CONTENT = '#appContent';
 Elements.APP_NAVIGATOR = '#appNavigator';
@@ -14,6 +15,4 @@ Elements.TOGGLE_PANEL = '#togglePanel';
  @class Elements
  @constructor
  **/
-function Elements() {
-};
-Elements.prototype = { constructor: Elements}
+function Elements() {};

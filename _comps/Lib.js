@@ -18,9 +18,7 @@
     }
 }(typeof global === "object" ? global : this, function (Backbone, _) {
 
-    var Lib = Backbone.Lib = {};
-
-    Lib.module = Backbone.Model.extend({
+    var Lib = Backbone.Controller.extend({
 
         /**
          Constructor

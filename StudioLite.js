@@ -5,24 +5,26 @@
  @constructor
  @return {Object} instantiated StudioLite
  **/
-define(['underscore', 'jquery', 'backbone', 'bootstrap', 'bootbox', 'AppRouter', 'Services', 'Elements', 'ComBroker', 'Lib', 'LoginView', 'AppEntryFaderView', 'AppSliderView', 'WaitView', 'Cookie', 'RC4', 'Jalapeno'],
-    function (_, $, Backbone, Bootstrap, Bootbox, AppRouter, Services, Elements, ComBroker, Lib, LoginView, AppEntryFaderView, AppSliderView, WaitView, Cookie, RC4, Jalapeno) {
-        var StudioLite = Backbone.View.extend({
+define(['underscore', 'jquery', 'backbone', 'bootstrap', 'AppRouter', 'Services', 'Elements', 'ComBroker', 'Lib', 'Jalapeno'],
+    function (_, $, Backbone, Bootstrap, AppRouter, Services, Elements, ComBroker, Lib, Jalapeno) {
+        var StudioLite = Backbone.Controller.extend({
 
             initialize: function () {
-
                 Backbone.globs = {};
                 Backbone.globs['UNIQUE_COUNTER'] = 0;
                 Backbone.globs['RC4KEY'] = '226a3a42f34ddd778ed2c3ba56644315';
-                Backbone.lib = new Lib.module();
+                Backbone.lib = new Lib();
                 Backbone.lib.addBackboneViewOptions();
-                Backbone.comBroker = new ComBroker.module();
+                Backbone.comBroker = new ComBroker();
                 Backbone.Jalapeno = new Jalapeno();
                 var appRouter = new AppRouter();
                 Backbone.history.start();
                 Backbone.comBroker.setService(Services.APP_ROUTER, appRouter);
                 window.log = Backbone.lib.log;
-                this.credentialsCheck();
+
+                appRouter.navigate('authenticate',{trigger: true});
+
+                return
 
                 /*
                  var appEntryFaderView = new AppEntryFaderView({
@@ -56,47 +58,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'bootbox', 'AppRouter',
                  appEntryFaderView.selectView(appSliderView);
                  }, 4000);
                  */
-            },
-
-            credentialsCheck: function () {
-                var self = this;
-                var cookie = $.cookie('signagestudioweblite') == undefined ? undefined : $.cookie('signagestudioweblite').split(' ')[0];
-                if (cookie === undefined) {
-
-                } else {
-
-                    var rc4 = new RC4(Backbone.globs['RC4KEY']);
-                    var crumb = rc4.doDecrypt(cookie).split(':');
-                    var user = crumb[0];
-                    var pass = crumb[2];
-
-                    Backbone.Jalapeno.dbConnect(user, pass, function (i_status) {
-                        var userData = {
-                            result: i_status,
-                            user: user,
-                            pass: pass
-                        }
-                        if (i_status.status) {
-                            self.credentialsPass(userData);
-                        } else {
-                            self.credentialsFail();
-                        }
-                    });
-                }
-            },
-
-            credentialsPass: function (i_userData) {
-                log('result ' + i_userData);
-                var router = Backbone.comBroker.getService(Services.APP_ROUTER);
-                router.navigate('app', {trigger: true});
-
-            },
-
-            credentialsFail: function () {
-                var router = Backbone.comBroker.getService(Services.APP_ROUTER);
-                router.navigate('login', {trigger: true});
             }
-
         });
 
         return StudioLite;

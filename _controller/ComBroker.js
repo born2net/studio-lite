@@ -35,9 +35,7 @@
     }
 }(typeof global === "object" ? global : this, function (Backbone, _) {
 
-    var ComBroker = Backbone.ComBroker = {};
-
-    ComBroker.module = Backbone.Model.extend({
+    var ComBroker = Backbone.Controller.extend({
 
         /**
          Constructor

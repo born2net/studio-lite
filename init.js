@@ -7,6 +7,7 @@ require.config({
     paths: {
         "jquery": '_common/_jquery/std/jq1.9.1/jquery-1.9.1',
         "backbone": '_common/_js/backbone/backbone',
+        "backbone.controller": '_common/_js/backbone-controller/backbone.controller',
         "underscore": '_common/_js/underscore/underscore',
         "bootstrap": '_common/_js/bootstrap/js/bootstrap',
         "bootbox": '_common/_js/bootbox/bootbox',
@@ -17,7 +18,8 @@ require.config({
         "Services": 'Services',
         "Elements": 'Elements',
         "AppRouter": '_comps/AppRouter',
-        "ComBroker": '_comps/ComBroker',
+        "ComBroker": '_controller/ComBroker',
+        "AppAuth": '_controller/AppAuth',
         "StackView": '_views/StackView',
         "WaitView": '_views/WaitView',
         "AppEntryFaderView": '_views/AppEntryFaderView',
@@ -37,6 +39,9 @@ require.config({
             deps: ['underscore', 'jquery'],
             exports: 'Backbone'
         },
+        'backbone.controller': {
+            deps: ['underscore', 'jquery']
+        },
         'sdk': {
             exports: 'sdk'
         },
@@ -50,6 +55,9 @@ require.config({
             deps: ["jquery"],
             exports: 'bootbox'
         },
+        "AppAuth": {
+            deps: ["backbone", "jquery", "backbone.controller","RC4","Cookie"]
+        },
         "Services": {
             exports: 'Services'
         },
@@ -60,10 +68,10 @@ require.config({
             exports: 'RC4'
         },
         "ComBroker": {
-            deps: ["backbone", "jquery"]
+            deps: ["backbone", "jquery", "backbone.controller"]
         },
         "Lib": {
-            deps: ["backbone", "jquery"]
+            deps: ["backbone", "jquery", "backbone.controller"]
         },
         "Jalapeno": {
             deps: ['jquery', 'Base64'],

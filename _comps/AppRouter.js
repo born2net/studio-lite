@@ -34,8 +34,8 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppEntryFaderView', 'Log
                 this.appEntryFaderView.addView(this.mainAppWaitView);
             },
 
-            authenticate: function () {
-                this.appAuth.authenticate();
+            authenticate: function (i_user, i_pass) {
+                this.appAuth.authenticate(i_user, i_pass);
             },
 
             authenticating: function () {
@@ -51,12 +51,16 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppEntryFaderView', 'Log
             },
 
             app: function () {
-                this.appEntryFaderView.selectView(this.appSliderView);
+                if (this.appAuth.authenticated) {
+                    this.appEntryFaderView.selectView(this.appSliderView);
+                } else {
+                    this.navigate('unauthenticated', {trigger: true});
+                }
             },
 
             routes: {
                 "app": "app",
-                "authenticate": "authenticate",
+                "authenticate/:user/:pass": "authenticate",
                 "authenticating": "authenticating",
                 "authenticated": "authenticated",
                 "unauthenticated": "unauthenticated"

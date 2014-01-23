@@ -22,7 +22,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'AppRouter', 'Services'
                 Backbone.comBroker.setService(Services.APP_ROUTER, appRouter);
                 window.log = Backbone.lib.log;
 
-                appRouter.navigate('authenticate',{trigger: true});
+                appRouter.navigate('authenticate/_/_',{trigger: true});
 
                 return
 

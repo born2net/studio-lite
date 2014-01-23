@@ -18,14 +18,11 @@
     }
 }(typeof global === "object" ? global : this, function (Backbone, _) {
 
-    var Lib = Backbone.Controller.extend({
+    var Lib = function(type) {
+        this.type = type;
+    };
 
-        /**
-         Constructor
-         @method initialize
-         **/
-        initialize: function () {
-        },
+    _.extend(Lib.prototype, {
 
         /**
          Output formatted string to console and omit error on old browsers
@@ -456,6 +453,7 @@
             var n = d.getTime();
             return n;
         }
+
     });
 
     return Lib;

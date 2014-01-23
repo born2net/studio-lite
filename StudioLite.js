@@ -18,8 +18,8 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'bootbox', 'AppRouter',
                 Backbone.lib.addBackboneViewOptions();
                 Backbone.comBroker = new ComBroker.module();
                 Backbone.Jalapeno = new Jalapeno();
-
                 var appRouter = new AppRouter();
+                Backbone.history.start();
                 Backbone.comBroker.setService(Services.APP_ROUTER, appRouter);
                 window.log = Backbone.lib.log;
                 this.credentialsCheck();
@@ -58,17 +58,9 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'bootbox', 'AppRouter',
                  */
             },
 
-            credentialsPass: function () {
-
-            },
-
-            credentialsFail: function () {
-
-            },
-
             credentialsCheck: function () {
+                var self = this;
                 var cookie = $.cookie('signagestudioweblite') == undefined ? undefined : $.cookie('signagestudioweblite').split(' ')[0];
-
                 if (cookie === undefined) {
 
                 } else {
@@ -85,15 +77,24 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'bootbox', 'AppRouter',
                             pass: pass
                         }
                         if (i_status.status) {
-                            this.credentialsPass();
-                            log('result ' + i_status);
+                            self.credentialsPass(userData);
                         } else {
-                            this.credentialsFail();
+                            self.credentialsFail();
                         }
-
                     });
-
                 }
+            },
+
+            credentialsPass: function (i_userData) {
+                log('result ' + i_userData);
+                var router = Backbone.comBroker.getService(Services.APP_ROUTER);
+                router.navigate('app', {trigger: true});
+
+            },
+
+            credentialsFail: function () {
+                var router = Backbone.comBroker.getService(Services.APP_ROUTER);
+                router.navigate('login', {trigger: true});
             }
 
         });

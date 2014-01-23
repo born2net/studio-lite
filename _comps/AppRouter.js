@@ -11,7 +11,18 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap'], function (_, $, Backbo
         initialize: function () {
             var self = this;
             this.ROUTE = 'SOME_EVENT';
+        },
+
+        app: function() {
+          console.log('entering app');
+        },
+
+        routes: {
+            "app": "app",    // #help
+            "search/:query": "search",  // #search/kiwis
+            "search/:query/p:page": "search"   // #search/kiwis/p7
         }
+
     });
     return AppRouter;
 });

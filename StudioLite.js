@@ -5,7 +5,7 @@
  @constructor
  @return {Object} instantiated StudioLite
  **/
-define(['underscore', 'jquery', 'backbone', 'bootstrap', 'AppRouter', 'Services', 'Elements', 'ComBroker', 'Lib', 'Jalapeno'], function (_, $, Backbone, Bootstrap, AppRouter, Services, Elements, ComBroker, Lib, Jalapeno) {
+define(['underscore', 'jquery', 'backbone', 'bootstrap', 'AppRouter', 'Services', 'ComBroker', 'Lib', 'Jalapeno'], function (_, $, Backbone, Bootstrap, AppRouter, Services, ComBroker, Lib, Jalapeno) {
     var StudioLite = Backbone.Controller.extend({
         initialize: function () {
             Backbone.globs = {};

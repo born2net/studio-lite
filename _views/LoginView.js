@@ -23,9 +23,6 @@ define(['jquery', 'backbone', 'bootbox'], function ($, Backbone, Bootbox) {
                 return false;
             })
         }
-
-
-
     })
 
     return LoginView;

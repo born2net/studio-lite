@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated AppRouter
  **/
-define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppEntryFaderView', 'LoginView', 'AppSliderView', 'WaitView', 'bootbox'], function (_, $, Backbone, AppAuth, AppEntryFaderView, LoginView, AppSliderView, WaitView, Bootbox) {
+define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'FileMenuView', 'AppEntryFaderView', 'LoginView', 'AppSliderView', 'WaitView', 'bootbox'], function (_, $, Backbone, AppAuth, AppSizer, FileMenuView, AppEntryFaderView, LoginView, AppSliderView, WaitView, Bootbox) {
 
     var AppRouter = Backbone.Router.extend({
 
@@ -14,6 +14,8 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppEntryFaderView', 'Log
          **/
         initialize: function () {
             this.appAuth = new AppAuth();
+
+            this.appSizer = new AppSizer();
 
             this.appEntryFaderView = new AppEntryFaderView({
                 el: Elements.APP_ENTRY,
@@ -97,6 +99,9 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppEntryFaderView', 'Log
          **/
         app: function () {
             if (this.appAuth.authenticated) {
+                this.fileMenuView = new FileMenuView({
+                    el: Elements.FILE_MENU
+                });
                 this.appEntryFaderView.selectView(this.appSliderView);
             } else {
                 this.navigate('unauthenticated', {trigger: true});

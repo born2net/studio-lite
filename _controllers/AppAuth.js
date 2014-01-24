@@ -87,7 +87,7 @@
                     if (i_authMode == self.AUTH_COOKIE)
                         $.removeCookie('signagestudioweblite', { path: '/' });
 
-                    if (i_status.error = "not a studioLite Account") {
+                    if (i_status.error == "not a studioLite account") {
                         bootbox.dialog({
                             message: "You must login with a StudioLite account and not a Pro account",
                             title: "keep in mind...",
@@ -100,8 +100,9 @@
                                 }
                             }
                         });
+                        Backbone.comBroker.getService(Services.APP_ROUTER).navigate('unauthenticated', {trigger: true});
+                        return;
                     }
-
                     Backbone.comBroker.getService(Services.APP_ROUTER).navigate('authenticationFailed', {trigger: true});
                 }
             });

@@ -20,7 +20,9 @@ require.config({
         "AppRouter": '_comps/AppRouter',
         "ComBroker": '_controllers/ComBroker',
         "AppAuth": '_controllers/AppAuth',
+        "AppSizer": '_controllers/AppSizer',
         "StackView": '_views/StackView',
+        "FileMenuView": '_views/FileMenuView',
         "WaitView": '_views/WaitView',
         "AppEntryFaderView": '_views/AppEntryFaderView',
         "LoginView": '_views/LoginView',
@@ -34,6 +36,7 @@ require.config({
 
     },
 
+
     shim: {
         'backbone': {
             deps: ['underscore', 'jquery'],
@@ -41,6 +44,12 @@ require.config({
         },
         'backbone.controller': {
             deps: ['underscore', 'jquery']
+        },
+        "AppRouter": {
+            deps: ["Elements", "backbone.controller"]
+        },
+        "Lib": {
+            deps: ['backbone', "jquery"]
         },
         'sdk': {
             exports: 'sdk'
@@ -56,7 +65,7 @@ require.config({
             exports: 'bootbox'
         },
         "AppAuth": {
-            deps: ["backbone", "jquery", "backbone.controller","RC4","Cookie"]
+            deps: ["RC4","Cookie"]
         },
         "Services": {
             exports: 'Services'
@@ -68,10 +77,7 @@ require.config({
             exports: 'RC4'
         },
         "ComBroker": {
-            deps: ["backbone", "jquery", "backbone.controller"]
-        },
-        "Lib": {
-            deps: ["backbone", "jquery", "backbone.controller"]
+            deps: ["backbone", "jquery"]
         },
         "Jalapeno": {
             deps: ['jquery', 'Base64'],

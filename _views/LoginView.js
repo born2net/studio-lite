@@ -13,6 +13,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @method initialize
          **/
         initialize: function () {
+            $('#loginButton').on('click',function(){
+                var user = $('#userName').val();
+                var pass = $('#userPass').val();
+                Backbone.comBroker.getService(Services.APP_ROUTER).navigate('authenticate/'+user+'/'+pass,{trigger: true});
+                return false;
+            })
         }
 
     })

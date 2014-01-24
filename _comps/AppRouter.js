@@ -4,8 +4,8 @@
  @constructor
  @return {Object} instantiated AppRouter
  **/
-define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppEntryFaderView', 'LoginView', 'AppSliderView', 'WaitView'],
-    function (_, $, Backbone, AppAuth, AppEntryFaderView, LoginView, AppSliderView, WaitView) {
+define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppEntryFaderView', 'LoginView', 'AppSliderView', 'WaitView', 'bootbox'],
+    function (_, $, Backbone, AppAuth, AppEntryFaderView, LoginView, AppSliderView, WaitView, Bootbox) {
 
         var AppRouter = Backbone.Router.extend({
 
@@ -50,6 +50,23 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppEntryFaderView', 'Log
                 this.appEntryFaderView.selectView(this.loginView);
             },
 
+            authenticationFailed: function(){
+                Bootbox.dialog({
+                    message: "Sorry but the user or password did not match",
+                    title: "Problem",
+                    buttons: {
+                        danger: {
+                            label: "OK",
+                            className: "btn-danger",
+                            callback: function () {
+                                log("uh oh, look out!");
+                            }
+                        }
+                    }
+                });
+                this.appEntryFaderView.selectView(this.loginView);
+            },
+
             app: function () {
                 if (this.appAuth.authenticated) {
                     this.appEntryFaderView.selectView(this.appSliderView);
@@ -63,8 +80,8 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppEntryFaderView', 'Log
                 "authenticate/:user/:pass": "authenticate",
                 "authenticating": "authenticating",
                 "authenticated": "authenticated",
-                "unauthenticated": "unauthenticated"
-                // "search/:query": "search",  // #search/kiwis
+                "unauthenticated": "unauthenticated",
+                "authenticationFailed": "authenticationFailed"
             }
 
         });

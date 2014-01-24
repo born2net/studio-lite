@@ -19,19 +19,6 @@ define(['jquery', 'backbone', 'bootbox'], function ($, Backbone, Bootbox) {
                     var user = $(Elements.USER_NAME).val();
                     var pass = $(Elements.USER_PASS).val();
                     Backbone.comBroker.getService(Services.APP_ROUTER).navigate('authenticate/' + user + '/' + pass, {trigger: true});
-                } else {
-                    Bootbox.dialog({
-                        message: "User or Password are incorrect",
-                        title: "Problem",
-                        buttons: {
-                            danger: {
-                                label: "OK",
-                                className: "btn-danger",
-                                callback: function () {
-                                }
-                            }
-                        }
-                    });
                 }
                 return false;
             })

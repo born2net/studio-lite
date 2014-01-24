@@ -1,6 +1,7 @@
 Elements.APP_ENTRY = '#appEntry';
 Elements.WAITS_SCREEN_ENTRY_APP = '#waitScreenEntryApp';
 Elements.APP_LOGIN = '#appLogin';
+Elements.REMEMBER_ME = '#rememberMe';
 Elements.APP_CONTENT = '#appContent';
 Elements.APP_NAVIGATOR = '#appNavigator';
 Elements.PROP_PANEL = '#propPanel';

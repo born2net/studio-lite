@@ -9,6 +9,8 @@ Elements.PROP_PANEL_WRAP = '#propPanelWrap';
 Elements.MAIN_PANEL_WRAP = '#mainPanelWrap';
 Elements.BS_MODAL = '#bsModal';
 Elements.TOGGLE_PANEL = '#togglePanel';
+Elements.USER_NAME = '#userName';
+Elements.USER_PASS = '#userPass';
 
 /**
  List of all Elements / Classes of elements used in the DOM

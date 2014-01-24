@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated LoginView
  **/
-define(['jquery', 'backbone'], function ($, Backbone) {
+define(['jquery', 'backbone', 'bootbox'], function ($, Backbone, Bootbox) {
 
     var LoginView = Backbone.View.extend({
 
@@ -13,13 +13,31 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @method initialize
          **/
         initialize: function () {
-            $('#loginButton').on('click',function(){
-                var user = $('#userName').val();
-                var pass = $('#userPass').val();
-                Backbone.comBroker.getService(Services.APP_ROUTER).navigate('authenticate/'+user+'/'+pass,{trigger: true});
+            $('#loginButton').on('click', function () {
+                if ($(Elements.USER_NAME).val().length > 3 && $(Elements.USER_PASS).val().length > 3) {
+                    // $(this).prop('disabled', true);
+                    var user = $(Elements.USER_NAME).val();
+                    var pass = $(Elements.USER_PASS).val();
+                    Backbone.comBroker.getService(Services.APP_ROUTER).navigate('authenticate/' + user + '/' + pass, {trigger: true});
+                } else {
+                    Bootbox.dialog({
+                        message: "User or Password are incorrect",
+                        title: "Problem",
+                        buttons: {
+                            danger: {
+                                label: "OK",
+                                className: "btn-danger",
+                                callback: function () {
+                                }
+                            }
+                        }
+                    });
+                }
                 return false;
             })
         }
+
+
 
     })
 

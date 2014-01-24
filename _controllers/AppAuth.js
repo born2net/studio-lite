@@ -54,7 +54,6 @@
 
             Backbone.Jalapeno.dbConnect(i_user, i_pass, function (i_status) {
 
-                // Authentication passed
                 if (i_status.status) {
                     self.authenticated = true;
                     //todo: add check on checkbox remember me

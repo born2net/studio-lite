@@ -13,13 +13,9 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @method initialize
          **/
         initialize: function () {
-            var self = this;
-            this.render()
-
         },
 
         render: function() {
-            this.$el.append('<h4>pleasw wait while loading data</h4>')
         }
 
     })

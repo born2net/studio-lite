@@ -33,10 +33,12 @@ require.config({
         "ProStudioView": '_views/ProStudioView',
         "HelpView": '_views/HelpView',
         "LogoutView": '_views/LogoutView',
-        "CampaignWizardSliderView": '_views/CampaignWizardSliderView',
+        "CampaignManagerView": '_views/CampaignManagerView',
+        "CampaignSliderView": '_views/CampaignSliderView',
         "CampaignSelectorView": '_views/CampaignSelectorView',
         "ResolutionSelectorView": '_views/ResolutionSelectorView',
         "OrientationSelectorView": '_views/OrientationSelectorView',
+        "CampaignView": '_views/CampaignView',
         "PopModal": '_views/PopModal',
         "Lib": '_comps/Lib'
 

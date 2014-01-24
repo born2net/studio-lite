@@ -62,23 +62,24 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="hidden-lg" dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">File<b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a class="campaignSelectorPanel" href="#">Campaign</a></li>
-                        <li class="divider"></li>
-                        <li><a class="resourcesPanel" href="#">Resources</a></li>
-                        <li class="divider"></li>
-                        <li><a class="stationsPanel" href="#">Stations</a></li>
-                        <li class="divider"></li>
-                        <li><a class="settingsPanel" href="#">Settings</a></li>
-                        <li class="divider"></li>
-                        <li><a class="proStudioPanel" href="#">Pro Studio</a></li>
-                        <li class="divider"></li>
-                        <li><a class="helpPanel" href="#">Help</a></li>
-                        <li class="divider"></li>
-                        <li><a class="logoutPanel" href="#">Logout</a></li>
-                    </ul>
+                <li class="hidden-lg" dropdown
+                ">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">File<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a class="campaignManagerView" href="#">Campaign</a></li>
+                    <li class="divider"></li>
+                    <li><a class="resourcesPanel" href="#">Resources</a></li>
+                    <li class="divider"></li>
+                    <li><a class="stationsPanel" href="#">Stations</a></li>
+                    <li class="divider"></li>
+                    <li><a class="settingsPanel" href="#">Settings</a></li>
+                    <li class="divider"></li>
+                    <li><a class="proStudioPanel" href="#">Pro Studio</a></li>
+                    <li class="divider"></li>
+                    <li><a class="helpPanel" href="#">Help</a></li>
+                    <li class="divider"></li>
+                    <li><a class="logoutPanel" href="#">Logout</a></li>
+                </ul>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -109,7 +110,7 @@
             <div id="appRow " class="row">
                 <div id="appNavigator" class="hidden-xs hidden-sm hidden-md col-lg-1">
                     <ul class="list-group">
-                        <li class="campaignSelectorPanel list-group-item">Campaign</li>
+                        <li class="campaignManagerView list-group-item">Campaign</li>
                         <li class="resourcesPanel list-group-item">Resources</li>
                         <li class="stationsPanel list-group-item">Stations</li>
                         <li class="settingsPanel list-group-item">Settings</li>
@@ -120,11 +121,15 @@
                 </div>
                 <div id="mainPanelWrap" class="col-xs-12 col-sm-9 col-md-9 col-lg-8">
                     <button id="togglePanel" class="buttonStateOn btn btn-primary hidden-xs hidden-lg">&gt;</button>
-                    <div id="campaignSelectorPanel" style="display: none">
-                        <div class="slidePagesWrap noScroll">
+
+
+                    <div id="campaignManagerView">
+
+                        <div class="campaignSlider noScroll">
+
                             <div id="campaignSelector" class="page center">
                                 <div style="overflow-y: scroll;height: 100%">
-                                    <h5>campaign selector</h5>
+                                    <h5>create new campaign or select existing campagin</h5>
                                     <a id="prev" href="#">Prev</a>
                                     <a id="next" href="#">Next</a>
                                 </div>
@@ -134,7 +139,7 @@
                                 <a id="prev" href="#">Prev</a>
                                 <a id="next" href="#">Next</a>
                             </div>
-                            <div id="resolutionSelector" class="page right">
+                            <div id="resolutionSelector" class="page right"">
                                 <h1>resolution selector</h1>
                                 <a id="prev" href="#">Prev</a>
                                 <a id="next" href="#">Next</a>
@@ -155,6 +160,7 @@
 
                         </div>
                     </div>
+
                     <div id="resourcesPanel" style="display: none">
                         <h5>resources</h5>
                     </div>

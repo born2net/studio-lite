@@ -22,7 +22,7 @@ require.config({
         "AppAuth": '_controllers/AppAuth',
         "AppSizer": '_controllers/AppSizer',
         "StackView": '_views/StackView',
-        "FileMenuView": '_views/FileMenuView',
+        "NavigationView": '_views/NavigationView',
         "WaitView": '_views/WaitView',
         "AppContentFaderView": '_views/AppContentFaderView',
         "AppEntryFaderView": '_views/AppEntryFaderView',

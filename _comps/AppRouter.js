@@ -4,8 +4,8 @@
  @constructor
  @return {Object} instantiated AppRouter
  **/
-define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'FileMenuView', 'AppEntryFaderView', 'LoginView', 'AppContentFaderView', 'WaitView', 'bootbox', 'CampaignManagerView', 'ResourcesView', 'ResourcesView', 'StationsView', 'SettingsView', 'ProStudioView', 'HelpView', 'LogoutView', 'CampaignSliderView'],
-    function (_, $, Backbone, AppAuth, AppSizer, FileMenuView, AppEntryFaderView, LoginView, AppContentFaderView, WaitView, Bootbox, CampaignManagerView, ResourcesView, ResourcesView, StationsView, SettingsView, ProStudioView, HelpView, LogoutView, CampaignSliderView) {
+define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationView', 'AppEntryFaderView', 'LoginView', 'AppContentFaderView', 'WaitView', 'bootbox', 'CampaignManagerView', 'ResourcesView', 'ResourcesView', 'StationsView', 'SettingsView', 'ProStudioView', 'HelpView', 'LogoutView', 'CampaignSliderView'],
+    function (_, $, Backbone, AppAuth, AppSizer, NavigationView, AppEntryFaderView, LoginView, AppContentFaderView, WaitView, Bootbox, CampaignManagerView, ResourcesView, ResourcesView, StationsView, SettingsView, ProStudioView, HelpView, LogoutView, CampaignSliderView) {
 
         var AppRouter = Backbone.Router.extend({
 
@@ -109,6 +109,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'FileMenuView
                     el: Elements.MAIN_PANEL_WRAP,
                     duration: 250
                 });
+                Backbone.comBroker.setService(Services.APP_CONTENT_FADER_VIEW, this.appContentFaderView);
 
                 this.loginView = new LoginView({
                     el: Elements.APP_LOGIN
@@ -127,12 +128,12 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'FileMenuView
                 var self = this;
 
                 this.appSizer = new AppSizer();
-                this.fileMenuView = new FileMenuView({
+                this.navigationView = new NavigationView({
                     el: Elements.FILE_MENU
                 });
 
                 this.campaignManagerView = new CampaignManagerView({
-                    el: '#campaignManagerView'
+                    el: Elements.CAMPAIGN_MANAGER_VIEW
                 });
 
                 this.campaignSliderView = new CampaignSliderView({
@@ -171,35 +172,6 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'FileMenuView
                 this.appContentFaderView.addView(this.helpView);
                 this.appContentFaderView.addView(this.logoutView);
                 this.appContentFaderView.selectView(this.campaignManagerView);
-
-                $('.campaignManagerView').on('click', function () {
-                    self.appContentFaderView.selectView(self.campaignManagerView);
-                });
-
-                $('.resourcesPanel').on('click', function () {
-                    self.appContentFaderView.selectView(self.resourcesView);
-                });
-
-                $('.stationsPanel').on('click', function () {
-                    self.appContentFaderView.selectView(self.stationsView);
-                });
-
-                $('.settingsPanel').on('click', function () {
-                    self.appContentFaderView.selectView(self.settingsView);
-                });
-
-                $('.proStudioPanel').on('click', function () {
-                    self.appContentFaderView.selectView(self.proStudioView);
-                });
-
-                $('.helpPanel').on('click', function () {
-                    self.appContentFaderView.selectView(self.helpView);
-                });
-
-                $('.logoutPanel').on('click', function () {
-                    self.appContentFaderView.selectView(self.logoutView);
-                });
-
                 this.appEntryFaderView.selectView(this.appContentFaderView);
 
                 this.loadCampaignWizardPage();
@@ -208,35 +180,35 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'FileMenuView
             loadCampaignWizardPage: function () {
                 var self = this;
 
-                require(['CampaignSelectorView', 'OrientationSelectorView','ResolutionSelectorView','CampaignView'],function(CampaignSelectorView, OrientationSelectorView, ResolutionSelectorView, CampaignView){
+                require(['CampaignSelectorView', 'OrientationSelectorView', 'ResolutionSelectorView', 'CampaignView'], function (CampaignSelectorView, OrientationSelectorView, ResolutionSelectorView, CampaignView) {
 
                     self.campaignSelectorView = new CampaignSelectorView({
                         appCoreStackView: self.campaignSliderView,
-                        from: '#campaign',
-                        el: '#campaignSelector',
-                        to: '#orientationSelector'
+                        from: Elements.CAMPAIGN,
+                        el: Elements.CAMPAIGN_SELECTOR,
+                        to: Elements.ORIENTATION_SELECTOR
                     });
 
                     self.orientationSelectorView = new OrientationSelectorView({
                         appCoreStackView: self.campaignSliderView,
-                        from: '#campaignSelector',
-                        el: '#orientationSelector',
-                        to: '#resolutionSelector'
+                        from: Elements.CAMPAIGN_SELECTOR,
+                        el: Elements.ORIENTATION_SELECTOR,
+                        to: Elements.RESOLUTION_SELECTOR
                     });
 
 
                     self.resolutionSelectorView = new ResolutionSelectorView({
                         appCoreStackView: self.campaignSliderView,
-                        from: '#orientationSelector',
-                        el: '#resolutionSelector',
-                        to: '#campaign'
+                        from: Elements.ORIENTATION_SELECTOR,
+                        el: Elements.RESOLUTION_SELECTOR,
+                        to: Elements.CAMPAIGN
                     });
 
                     self.campaignView = new CampaignView({
                         appCoreStackView: self.campaignSliderView,
-                        from: '#resolutionSelector',
-                        el: '#campaign',
-                        to: '#campaignSelector'
+                        from: Elements.RESOLUTION_SELECTOR,
+                        el: Elements.CAMPAIGN,
+                        to: Elements.CAMPAIGN_SELECTOR
                     });
 
                     self.campaignSliderView.addView(self.campaignSelectorView);
@@ -245,7 +217,6 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'FileMenuView
                     self.campaignSliderView.addView(self.campaignView);
                     self.campaignSliderView.selectView(self.campaignSelectorView);
                 });
-
 
 
             }

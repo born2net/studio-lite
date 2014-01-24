@@ -7,6 +7,7 @@
 
 // Identifiers
 
+/*
 Elements.STUDIO_LITE = '#studioLite';
 Elements.LOGIN_PAGE = '#loginPage';
 Elements.LOGIN_BUTTON = '#loginButton';
@@ -186,3 +187,4 @@ function Elements() {
 Elements.prototype = {
     constructor: Elements
 }
+    */

@@ -1,5 +1,5 @@
 /**
- Application router / navigator
+ Application router / application instantiator
  @class AppRouter
  @constructor
  @return {Object} instantiated AppRouter
@@ -18,57 +18,57 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
             },
 
             /**
-             Router routes definitions
+             Router definition to function maps
              @method routes
              **/
             routes: {
-                "app": "app",
-                "authenticate/:user/:pass": "authenticate",
-                "authenticating": "authenticating",
-                "authenticated": "authenticated",
-                "unauthenticated": "unauthenticated",
-                "authenticationFailed": "authenticationFailed"
+                "app": "routeApp",
+                "authenticate/:user/:pass": "routeAuthenticate",
+                "authenticating": "routeAuthenticating",
+                "authenticated": "routeAuthenticated",
+                "unauthenticated": "routeUnauthenticated",
+                "authenticationFailed": "routeAuthenticationFailed"
             },
 
             /**
-             Initiate user credential authentication
+             Initiate user credential route authentication
              @method authenticate
              @param {String} i_user
              @param {String} i_pass
              **/
-            authenticate: function (i_user, i_pass) {
+            routeAuthenticate: function (i_user, i_pass) {
                 this.appAuth.authenticate(i_user, i_pass);
             },
 
             /**
-             In process of authentication
+             In process of route authentication
              @method authenticating
              **/
-            authenticating: function () {
+            routeAuthenticating: function () {
                 this.appEntryFaderView.selectView(this.mainAppWaitView);
             },
 
             /**
-             Authentication passed, load App page
+             Authentication passed, load app page route
              @method authenticating
              **/
-            authenticated: function () {
+            routeAuthenticated: function () {
                 this.navigate('app', {trigger: true});
             },
 
             /**
-             No authentication passed, load Login page
+             No authentication passed, load Login page route
              @method authenticating
              **/
-            unauthenticated: function () {
+            routeUnauthenticated: function () {
                 this.appEntryFaderView.selectView(this.loginView);
             },
 
             /**
-             Failed user authentication
+             Failed user authentication route
              @method authenticationFailed
              **/
-            authenticationFailed: function () {
+            routeAuthenticationFailed: function () {
                 Bootbox.dialog({
                     message: "Sorry but the user or password did not match",
                     title: "Problem",
@@ -85,18 +85,26 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
             },
 
             /**
-             Load main application StackView
+             On successful authentication load main application StackViews per this route App
              @method app
              **/
-            app: function () {
+            routeApp: function () {
                 if (this.appAuth.authenticated) {
                     this.loadContentPage();
-                    $(Elements.APP_CONTENT).fadeIn();
+                    this.loadCampaignWizardPage();
                 } else {
                     this.navigate('unauthenticated', {trigger: true});
                 }
             },
 
+            /**
+             Create two StackView views: AppEntryFaderView and AppContentFaderView
+             AppEntryFaderView allows for page selection between login page and main app content page
+             AppContentFaderView serves as dual purpose view. On one hand it serves as simple show/hide div for  main login page / content page,
+             on the other hand it itself is a StackView.Fader that allows for show/hide between main content sections including campaigns,
+             stations, resources, settings etc
+             @method loadLoginPage
+             **/
             loadLoginPage: function () {
                 this.appAuth = new AppAuth();
 
@@ -124,6 +132,12 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
                 this.appEntryFaderView.addView(this.mainAppWaitView);
             },
 
+            /**
+             Use the previously created appContentFaderView to add list of views including campaign, stations, logout etc
+             so navigation can be switched between each content div. Also we create one special view called
+             CampaignSliderView that it itself is a StackView.Slider that will later allow for Campaign wizard slider animated selections.
+             @method loadContentPage
+             **/
             loadContentPage: function () {
                 var self = this;
 
@@ -172,11 +186,13 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
                 this.appContentFaderView.addView(this.helpView);
                 this.appContentFaderView.addView(this.logoutView);
                 this.appContentFaderView.selectView(this.campaignManagerView);
-                this.appEntryFaderView.selectView(this.appContentFaderView);
-
-                this.loadCampaignWizardPage();
             },
 
+            /**
+             Use the previously created CampaignSliderView to add new view to it for campaign wizard slider animation which include
+             CampaignSelector, Screen Orientation, Screen Resolution and Campaign
+             @method loadCampaignWizardPage
+             **/
             loadCampaignWizardPage: function () {
                 var self = this;
 
@@ -218,9 +234,9 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
                     self.campaignSliderView.selectView(self.campaignSelectorView);
                 });
 
-
+                this.appEntryFaderView.selectView(this.appContentFaderView);
+                $(Elements.APP_CONTENT).fadeIn('slow');
             }
         });
         return AppRouter;
-
     });

@@ -9,12 +9,13 @@ Elements.PROP_PANEL = '#propPanel';
 Elements.POP_MODAL = '#popModal';
 Elements.PROP_PANEL_WRAP = '#propPanelWrap';
 Elements.MAIN_PANEL_WRAP = '#mainPanelWrap';
+Elements.CAMPAIGN_CREATE_SLIDER_WRAP = '#campaignCreateSliderWrap';
 Elements.BS_MODAL = '#bsModal';
 Elements.TOGGLE_PANEL = '#togglePanel';
 Elements.USER_NAME = '#userName';
 Elements.USER_PASS = '#userPass';
 
-Elements.CAMPAIGN_PANEL = '#campaignPanel';
+Elements.CAMPAIGN_SELECTOR_PANEL = '#campaignSelectorPanel';
 Elements.RESOURCES_PANEL = '#resourcesPanel';
 Elements.STATIONS_PANEL = '#stationsPanel';
 Elements.SETTINGS_PANEL = '#settingsPanel';

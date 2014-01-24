@@ -1,12 +1,12 @@
 /**
  Main content of Application window, class extends Backbone > View > StackView > Slider for animation of selected content
- @class AppViewSlider
+ @class CampaignWizardSliderView
  @constructor
  @return {object} instantiated AppViewSlider
  **/
 define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
 
-    var AppViewSlider = Backbone.StackView.Slider.extend({
+    var CampaignWizardSliderView = Backbone.StackView.Slider.extend({
 
         /**
          @method AppViewSlider
@@ -16,5 +16,5 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             Backbone.StackView.ViewPort.prototype.initialize.call(this);
         }
     });
-    return AppViewSlider;
+    return CampaignWizardSliderView;
 });

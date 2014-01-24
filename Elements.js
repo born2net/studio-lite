@@ -14,6 +14,14 @@ Elements.TOGGLE_PANEL = '#togglePanel';
 Elements.USER_NAME = '#userName';
 Elements.USER_PASS = '#userPass';
 
+Elements.CAMPAIGN_PANEL = '#campaignPanel';
+Elements.RESOURCES_PANEL = '#resourcesPanel';
+Elements.STATIONS_PANEL = '#stationsPanel';
+Elements.SETTINGS_PANEL = '#settingsPanel';
+Elements.PRO_STUDIO_PANEL = '#proStudioPanel';
+Elements.HELP_PANEL = '#helpPanel';
+Elements.LOGOUT_PANEL = '#logoutPanel';
+
 /**
  List of all Elements / Classes of elements used in the DOM
  @class Elements

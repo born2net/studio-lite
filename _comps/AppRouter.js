@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated AppRouter
  **/
-define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'FileMenuView', 'AppEntryFaderView', 'LoginView', 'AppSliderView', 'WaitView', 'bootbox'], function (_, $, Backbone, AppAuth, AppSizer, FileMenuView, AppEntryFaderView, LoginView, AppSliderView, WaitView, Bootbox) {
+define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'FileMenuView', 'AppEntryFaderView', 'LoginView', 'AppContentFaderView', 'WaitView', 'bootbox', 'CampaignView', 'ResourcesView', 'ResourcesView', 'StationsView', 'SettingsView', 'ProStudioView', 'HelpView', 'LogoutView'], function (_, $, Backbone, AppAuth, AppSizer, FileMenuView, AppEntryFaderView, LoginView, AppContentFaderView, WaitView, Bootbox, CampaignView, ResourcesView, ResourcesView, StationsView, SettingsView, ProStudioView, HelpView, LogoutView) {
 
     var AppRouter = Backbone.Router.extend({
 
@@ -13,17 +13,24 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'FileMenuView
          @method initialize
          **/
         initialize: function () {
-            this.appAuth = new AppAuth();
+            var self = this;
 
+            this.appAuth = new AppAuth();
             this.appSizer = new AppSizer();
+
+
+            ///////////////////////////
+            // application entry views
+            ///////////////////////////
 
             this.appEntryFaderView = new AppEntryFaderView({
                 el: Elements.APP_ENTRY,
                 duration: 500
             });
 
-            this.appSliderView = new AppSliderView({
-                el: Elements.APP_CONTENT
+            this.appContentFaderView = new AppContentFaderView({
+                el: Elements.MAIN_PANEL_WRAP,
+                duration: 250
             });
 
             this.loginView = new LoginView({
@@ -35,8 +42,79 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'FileMenuView
             });
 
             this.appEntryFaderView.addView(this.loginView);
-            this.appEntryFaderView.addView(this.appSliderView);
+            this.appEntryFaderView.addView(this.appContentFaderView);
             this.appEntryFaderView.addView(this.mainAppWaitView);
+
+
+            /////////////////////////////////
+            // application main content views
+            /////////////////////////////////
+
+            this.campaignView = new CampaignView({
+                el: Elements.CAMPAIGN_PANEL
+            });
+
+            this.resourcesView = new ResourcesView({
+                el: Elements.RESOURCES_PANEL
+            });
+
+            this.stationsView = new StationsView({
+                el: Elements.STATIONS_PANEL
+            });
+
+            this.settingsView = new SettingsView({
+                el: Elements.SETTINGS_PANEL
+            });
+
+            this.proStudioView = new ProStudioView({
+                el: Elements.PRO_STUDIO_PANEL
+            });
+
+            this.helpView = new HelpView({
+                el: Elements.HELP_PANEL
+            });
+
+            this.logoutView = new LogoutView({
+                el: Elements.LOGOUT_PANEL
+            });
+
+            this.appContentFaderView.addView(this.campaignView);
+            this.appContentFaderView.addView(this.resourcesView);
+            this.appContentFaderView.addView(this.stationsView);
+            this.appContentFaderView.addView(this.settingsView);
+            this.appContentFaderView.addView(this.proStudioView);
+            this.appContentFaderView.addView(this.helpView);
+            this.appContentFaderView.addView(this.logoutView);
+            this.appContentFaderView.selectView(this.campaignView);
+
+            $('.campaignPanel').on('click',function(){
+                self.appContentFaderView.selectView(self.campaignView);
+            });
+
+            $('.resourcesPanel').on('click',function(){
+                self.appContentFaderView.selectView(self.resourcesView);
+            });
+
+            $('.stationsPanel').on('click',function(){
+                self.appContentFaderView.selectView(self.stationsView);
+            });
+
+            $('.settingsPanel').on('click',function(){
+                self.appContentFaderView.selectView(self.settingsView);
+            });
+
+            $('.proStudioPanel').on('click',function(){
+                self.appContentFaderView.selectView(self.proStudioView);
+            });
+
+            $('.helpPanel').on('click',function(){
+                self.appContentFaderView.selectView(self.helpView);
+            });
+
+            $('.logoutPanel').on('click',function(){
+                self.appContentFaderView.selectView(self.logoutView);
+            });
+
         },
 
         /**
@@ -102,7 +180,8 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'FileMenuView
                 this.fileMenuView = new FileMenuView({
                     el: Elements.FILE_MENU
                 });
-                this.appEntryFaderView.selectView(this.appSliderView);
+                this.appEntryFaderView.selectView(this.appContentFaderView);
+                $(Elements.APP_CONTENT).fadeIn();
             } else {
                 this.navigate('unauthenticated', {trigger: true});
             }

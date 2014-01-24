@@ -23,7 +23,7 @@ body {
     /* background-color: darksalmon; */
 }
 
-#mainPanel {
+#campaignPanel {
     overflow-y: scroll;
     height: auto;
     /* background-color: orange; */

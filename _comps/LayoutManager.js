@@ -1,25 +1,102 @@
 /**
  Application router / application instantiator
- @class AppRouter
+ @class LayoutManager
  @constructor
  @return {Object} instantiated AppRouter
  **/
-define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'LayoutManager', 'NavigationView', 'AppEntryFaderView', 'LoginView', 'AppContentFaderView', 'WaitView', 'bootbox', 'CampaignManagerView', 'ResourcesView', 'ResourcesView', 'StationsView', 'SettingsView', 'ProStudioView', 'HelpView', 'LogoutView', 'CampaignSliderView'],
-    function (_, $, Backbone, AppAuth, AppSizer, LayoutManager, NavigationView, AppEntryFaderView, LoginView, AppContentFaderView, WaitView, Bootbox, CampaignManagerView, ResourcesView, ResourcesView, StationsView, SettingsView, ProStudioView, HelpView, LogoutView, CampaignSliderView) {
+define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationView', 'AppEntryFaderView', 'LoginView', 'AppContentFaderView', 'WaitView', 'bootbox', 'CampaignManagerView', 'ResourcesView', 'ResourcesView', 'StationsView', 'SettingsView', 'ProStudioView', 'HelpView', 'LogoutView', 'CampaignSliderView'],
+    function (_, $, Backbone, AppAuth, AppSizer, NavigationView, AppEntryFaderView, LoginView, AppContentFaderView, WaitView, Bootbox, CampaignManagerView, ResourcesView, ResourcesView, StationsView, SettingsView, ProStudioView, HelpView, LogoutView, CampaignSliderView) {
 
-        var LayoutManager = Backbone.Controller.extend({
+        var LayoutManager = Backbone.Router.extend({
 
             /**
              Constructor
              @method initialize
              **/
             initialize: function () {
+                this.loadLoginPage();
             },
 
-            startApp: function(){
-                this.loadContentPage();
-                this.loadCampaignWizardPage();
-                this.loadModal();
+            /**
+             Router definition to function maps
+             @method routes
+             **/
+            routes: {
+                "app": "routeApp",
+                "authenticate/:user/:pass": "routeAuthenticate",
+                "authenticating": "routeAuthenticating",
+                "authenticated": "routeAuthenticated",
+                "unauthenticated": "routeUnauthenticated",
+                "authenticationFailed": "routeAuthenticationFailed"
+            },
+
+            /**
+             Initiate user credential route authentication
+             @method authenticate
+             @param {String} i_user
+             @param {String} i_pass
+             **/
+            routeAuthenticate: function (i_user, i_pass) {
+                this.appAuth.authenticate(i_user, i_pass);
+            },
+
+            /**
+             In process of route authentication
+             @method authenticating
+             **/
+            routeAuthenticating: function () {
+                this.appEntryFaderView.selectView(this.mainAppWaitView);
+            },
+
+            /**
+             Authentication passed, load app page route
+             @method authenticating
+             **/
+            routeAuthenticated: function () {
+                this.navigate('app', {trigger: true});
+            },
+
+            /**
+             No authentication passed, load Login page route
+             @method authenticating
+             **/
+            routeUnauthenticated: function () {
+                this.appEntryFaderView.selectView(this.loginView);
+            },
+
+            /**
+             Failed user authentication route
+             @method authenticationFailed
+             **/
+            routeAuthenticationFailed: function () {
+                Bootbox.dialog({
+                    message: "Sorry but the user or password did not match",
+                    title: "Problem",
+                    buttons: {
+                        danger: {
+                            label: "OK",
+                            className: "btn-danger",
+                            callback: function () {
+                            }
+                        }
+                    }
+                });
+                this.appEntryFaderView.selectView(this.loginView);
+            },
+
+            /**
+             On successful authentication load main application StackViews per this route App
+             @method app
+             **/
+            routeApp: function () {
+                if (this.appAuth.authenticated) {
+                    this.loadContentPage();
+                    this.loadCampaignWizardPage();
+                    this.loadModal();
+                    this.loadSlidingPanel();
+                } else {
+                    this.navigate('unauthenticated', {trigger: true});
+                }
             },
 
             /**
@@ -198,7 +275,32 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'LayoutManage
                         c++;
                     });
                 });
+            },
+
+            loadSlidingPanel: function(){
+                $(Elements.TOGGLE_PANEL).on('click', function () {
+                    if ($(Elements.TOGGLE_PANEL).hasClass('buttonStateOn')) {
+                        $(Elements.TOGGLE_PANEL).toggleClass('buttonStateOn');
+                        $(Elements.PROP_PANEL_WRAP).fadeOut(function () {
+                            $(Elements.TOGGLE_PANEL).html('<');
+                            $(Elements.PROP_PANEL_WRAP).addClass('hidden-sm hidden-md');
+                            $(Elements.MAIN_PANEL_WRAP).removeClass('col-sm-9 col-md-9');
+                            $(Elements.MAIN_PANEL_WRAP).addClass('col-md-12');
+                        });
+                    } else {
+                        $(Elements.TOGGLE_PANEL).toggleClass('buttonStateOn');
+                        $(Elements.TOGGLE_PANEL).html('>');
+                        $(Elements.MAIN_PANEL_WRAP).addClass('col-sm-9 col-md-9');
+                        setTimeout(function () {
+                            $(Elements.MAIN_PANEL_WRAP).removeClass('col-md-12');
+                            $(Elements.PROP_PANEL_WRAP).children().hide();
+                            $(Elements.PROP_PANEL_WRAP).removeClass('hidden-sm hidden-md');
+                            $(Elements.PROP_PANEL_WRAP).children().fadeIn();
+                        }, 500)
+                    }
+                });
             }
         });
+
         return LayoutManager;
     });

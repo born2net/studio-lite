@@ -17,11 +17,10 @@ require.config({
         "Jalapeno": '_jalapeno/Jalapeno',
         "Services": 'Services',
         "Elements": 'Elements',
-        "AppRouter": '_comps/AppRouter',
+        "LayoutManager": '_comps/LayoutManager',
         "ComBroker": '_controllers/ComBroker',
         "AppAuth": '_controllers/AppAuth',
         "AppSizer": '_controllers/AppSizer',
-        "LayoutManager": '_controllers/LayoutManager',
         "StackView": '_views/StackView',
         "NavigationView": '_views/NavigationView',
         "WaitView": '_views/WaitView',
@@ -54,7 +53,7 @@ require.config({
         'backbone.controller': {
             deps: ['underscore', 'jquery']
         },
-        "AppRouter": {
+        "LayoutManager": {
             deps: ["Elements", "backbone.controller"]
         },
         "Lib": {

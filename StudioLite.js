@@ -21,11 +21,11 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             window.log = Backbone.lib.log;
 
             // router init
-            require(['AppRouter'],function(AppRouter){
-                var appRouter = new AppRouter();
+            require(['LayoutManager'],function(LayoutManager){
+                var layoutManager = new LayoutManager();
                 Backbone.history.start();
-                Backbone.comBroker.setService(Services.APP_ROUTER, appRouter);
-                appRouter.navigate('authenticate/_/_', {trigger: true});
+                Backbone.comBroker.setService(Services.LAYOUT_MANAGER, layoutManager);
+                layoutManager.navigate('authenticate/_/_', {trigger: true});
             })
         }
     });

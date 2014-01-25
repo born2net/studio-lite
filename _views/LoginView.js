@@ -18,7 +18,7 @@ define(['jquery', 'backbone', 'bootbox'], function ($, Backbone, Bootbox) {
                     // $(this).prop('disabled', true);
                     var user = $(Elements.USER_NAME).val();
                     var pass = $(Elements.USER_PASS).val();
-                    Backbone.comBroker.getService(Services.APP_ROUTER).navigate('authenticate/' + user + '/' + pass, {trigger: true});
+                    Backbone.comBroker.getService(Services.LAYOUT_MANAGER).navigate('authenticate/' + user + '/' + pass, {trigger: true});
                 }
                 return false;
             })

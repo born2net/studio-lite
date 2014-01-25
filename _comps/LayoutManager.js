@@ -116,10 +116,9 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
                 });
 
                 this.appContentFaderView = new AppContentFaderView({
-                    el: Elements.MAIN_PANEL_WRAP,
-                    duration: 250
+                    el: Elements.APP_CONTENT,
+                    duration: 650
                 });
-                Backbone.comBroker.setService(Services.APP_CONTENT_FADER_VIEW, this.appContentFaderView);
 
                 this.loginView = new LoginView({
                     el: Elements.APP_LOGIN
@@ -129,9 +128,17 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
                     el: Elements.WAITS_SCREEN_ENTRY_APP
                 });
 
+                this.logoutView = new Backbone.View({
+                    el: Elements.APP_LOGOUT
+                });
+
                 this.appEntryFaderView.addView(this.loginView);
+                this.appEntryFaderView.addView(this.logoutView);
                 this.appEntryFaderView.addView(this.appContentFaderView);
                 this.appEntryFaderView.addView(this.mainAppWaitView);
+
+                Backbone.comBroker.setService(Services.APP_ENTRY_FADER_VIEW, this.appEntryFaderView);
+                Backbone.comBroker.setService(Services.APP_CONTENT_FADER_VIEW, this.appContentFaderView);
             },
 
             /**
@@ -237,7 +244,6 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
                 });
 
                 this.appEntryFaderView.selectView(this.appContentFaderView);
-                $(Elements.APP_CONTENT).fadeIn('slow');
             },
 
             /**

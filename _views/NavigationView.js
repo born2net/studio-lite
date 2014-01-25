@@ -16,6 +16,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             this.render();
 
             var appContentFaderView = Backbone.comBroker.getService(Services.APP_CONTENT_FADER_VIEW);
+            var appEntryFaderView = Backbone.comBroker.getService(Services.APP_ENTRY_FADER_VIEW);
+
 
             $('.campaignManagerView').on('click', function () {
                 var oid = appContentFaderView.getViewByID(Elements.CAMPAIGN_MANAGER_VIEW);
@@ -48,8 +50,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             });
 
             $('.logoutPanel').on('click', function () {
-                var oid = appContentFaderView.getViewByID(Elements.LOGOUT_PANEL);
-                appContentFaderView.selectView(oid);
+                var oid = appEntryFaderView.getViewByID(Elements.APP_LOGOUT);
+                appEntryFaderView.selectView(oid);
+                $.removeCookie('signagestudioweblite', {path: '/'});
+                $.cookie('signagestudioweblite', '', { expires: -300 });
             });
         },
 

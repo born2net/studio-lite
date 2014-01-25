@@ -21,19 +21,7 @@
  example: Backbone.comBroker.listen(loginManager.AUTHENITCATING,loginManager.LOGINBUTTON,function(e){});
  </pre>
  **/
-(function (window, factory) {
-    'use strict';
-    var Backbone = window.Backbone;
-    if (typeof define === 'function' && define.amd) {
-        return define(['backbone', 'underscore'], function () {
-            return factory.apply(window, arguments);
-        });
-    } else if (typeof module === 'object' && module.exports) {
-        factory.call(window, require('backbone'), require('underscore'));
-    } else {
-        factory.call(window, Backbone, window._);
-    }
-}(typeof global === "object" ? global : this, function (Backbone, _) {
+define(['jquery', 'backbone'], function ($, Backbone) {
 
     var ComBroker = Backbone.Controller.extend({
 
@@ -220,6 +208,6 @@
     });
 
     return ComBroker;
-}));
+});
 
 

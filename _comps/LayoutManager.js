@@ -14,7 +14,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
              @method initialize
              **/
             initialize: function () {
-                this.loadLoginPage();
+                this.initLoginPage();
             },
 
             /**
@@ -90,10 +90,10 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
              **/
             routeApp: function () {
                 if (this.appAuth.authenticated) {
-                    this.loadContentPage();
-                    this.loadCampaignWizardPage();
-                    this.loadModal();
-                    this.loadSlidingPanel();
+                    this.initContentPage();
+                    this.initCampaignWizardPage();
+                    this.initModal();
+                    this.listenOnSlidingPanel();
                 } else {
                     this.navigate('unauthenticated', {trigger: true});
                 }
@@ -105,9 +105,9 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
              AppContentFaderView serves as dual purpose view. On one hand it serves as simple show/hide div for  main login page / content page,
              on the other hand it itself is a StackView.Fader that allows for show/hide between main content sections including campaigns,
              stations, resources, settings etc
-             @method loadLoginPage
+             @method initLoginPage
              **/
-            loadLoginPage: function () {
+            initLoginPage: function () {
                 this.appAuth = new AppAuth();
 
                 this.appEntryFaderView = new AppEntryFaderView({
@@ -138,9 +138,9 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
              Use the previously created appContentFaderView to add list of views including campaign, stations, logout etc
              so navigation can be switched between each content div. Also we create one special view called
              CampaignSliderView that it itself is a StackView.Slider that will later allow for Campaign wizard slider animated selections.
-             @method loadContentPage
+             @method initContentPage
              **/
-            loadContentPage: function () {
+            initContentPage: function () {
                 var self = this;
 
                 this.appSizer = new AppSizer();
@@ -193,9 +193,9 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
             /**
              Use the previously created CampaignSliderView to add new view to it for campaign wizard slider animation which include
              CampaignSelector, Screen Orientation, Screen Resolution and Campaign
-             @method loadCampaignWizardPage
+             @method initCampaignWizardPage
              **/
-            loadCampaignWizardPage: function () {
+            initCampaignWizardPage: function () {
                 var self = this;
 
                 require(['CampaignSelectorView', 'OrientationSelectorView', 'ResolutionSelectorView', 'CampaignView'], function (CampaignSelectorView, OrientationSelectorView, ResolutionSelectorView, CampaignView) {
@@ -240,7 +240,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
                 $(Elements.APP_CONTENT).fadeIn('slow');
             },
 
-            loadModal: function () {
+            initModal: function () {
 
                 require(['PopModalView'], function (PopModalView) {
                     var popModalView = new PopModalView({
@@ -277,7 +277,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
                 });
             },
 
-            loadSlidingPanel: function(){
+            listenOnSlidingPanel: function(){
                 $(Elements.TOGGLE_PANEL).on('click', function () {
                     if ($(Elements.TOGGLE_PANEL).hasClass('buttonStateOn')) {
                         $(Elements.TOGGLE_PANEL).toggleClass('buttonStateOn');

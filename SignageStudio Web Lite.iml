@@ -5,7 +5,6 @@
     <content url="file://$MODULE_DIR$/../common" />
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Elements" level="application" />
   </component>
 </module>
 

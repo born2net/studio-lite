@@ -17,6 +17,11 @@ Elements.CAMPAIGN_SELECTOR = '#campaignSelector';
 Elements.ORIENTATION_SELECTOR = '#orientationSelector';
 Elements.RESOLUTION_SELECTOR = '#resolutionSelector';
 
+Elements.POPUP_PROPERTIES = '#popupProperties';
+Elements.ABOUT_US = '#aboutUS';
+Elements.STACK_WAIT_MODAL_VIEW = '#stackWaitModalView';
+
+
 Elements.BS_MODAL = '#bsModal';
 Elements.TOGGLE_PANEL = '#togglePanel';
 Elements.USER_NAME = '#userName';

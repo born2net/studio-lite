@@ -191,7 +191,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
             },
 
             /**
-             Use the previously created CampaignSliderView to add new view to it for campaign wizard slider animation which include
+             Use the previously created CampaignSliderView to add new views to it for campaign wizard slider animation which include
              CampaignSelector, Screen Orientation, Screen Resolution and Campaign
              @method initCampaignWizardPage
              **/
@@ -240,6 +240,10 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
                 $(Elements.APP_CONTENT).fadeIn('slow');
             },
 
+            /**
+             Create a popup modal view that's used for About Us and properties content on small screens
+             @method initModal
+             **/
             initModal: function () {
 
                 require(['PopModalView'], function (PopModalView) {
@@ -248,35 +252,29 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
                         animation: 'slide_top', //or 'fade'
                         bgColor: 'white'
                     });
-
-                    var md1 = new Backbone.View({el: '#stackViewModal1'});
-                    var md2 = new Backbone.View({el: '#stackViewModal2'});
-                    var md3 = new Backbone.View({el: '#stackWaitModalView'});
-                    var md4 = new Backbone.View();
-                    md4.$el.append('<b class="modal_close">hello world</b>');
-                    $('body').append(md3.el);
+                    var md1 = new Backbone.View({el: Elements.POPUP_PROPERTIES});
+                    var md2 = new Backbone.View({el: Elements.ABOUT_US});
+                    var md3 = new Backbone.View({el: Elements.STACK_WAIT_MODAL_VIEW});
                     popModalView.addView(md1);
                     popModalView.addView(md2);
                     popModalView.addView(md3);
-                    popModalView.addView(md4);
-
                     var c = 0;
                     $('#someAction').on('click', function () {
-                        if (c == 0)
-                            popModalView.selectView(md1);
-                        if (c == 1)
-                            popModalView.selectView(md2);
-                        if (c == 2)
-                            popModalView.selectView(md3);
-                        if (c == 3)
-                            popModalView.selectView(md4);
-                        if (c == 4)
-                            popModalView.selectView(md2);
                         c++;
+                        if (c == 1)
+                            popModalView.selectView(md1);
+                        if (c == 2)
+                            popModalView.selectView(md2);
+                        if (c == 3)
+                            popModalView.selectView(md3);
                     });
                 });
             },
 
+            /**
+             Listen for open/close actions on properties panel that can slide in and out
+             @method listenOnSlidingPanel
+             **/
             listenOnSlidingPanel: function(){
                 $(Elements.TOGGLE_PANEL).on('click', function () {
                     if ($(Elements.TOGGLE_PANEL).hasClass('buttonStateOn')) {

@@ -21,6 +21,7 @@ require.config({
         "ComBroker": '_controllers/ComBroker',
         "AppAuth": '_controllers/AppAuth',
         "AppSizer": '_controllers/AppSizer',
+        "LayoutManager": '_controllers/LayoutManager',
         "StackView": '_views/StackView',
         "NavigationView": '_views/NavigationView',
         "WaitView": '_views/WaitView',
@@ -39,7 +40,7 @@ require.config({
         "ResolutionSelectorView": '_views/ResolutionSelectorView',
         "OrientationSelectorView": '_views/OrientationSelectorView',
         "CampaignView": '_views/CampaignView',
-        "PopModal": '_views/PopModal',
+        "PopModalView": '_views/PopModalView',
         "Lib": '_comps/Lib'
 
     },

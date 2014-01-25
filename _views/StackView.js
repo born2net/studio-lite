@@ -219,13 +219,14 @@
             });
 
             var bh = $('body').get(0).scrollHeight + 'px';
+            var bw = $('body').get(0).scrollWidth + 'px';
             self.$el.css({
                 'display': 'block',
                 'opacity': self.m_animation == 'fade' ? 0 : 1,
                 'position': 'absolute',
                 'z-index': 9999,
                 'height': bh,
-                'width': bh,
+                'width': bw,
                 'left': 0,
                 'border-bottom': '3px solid gray',
                 'background-color': self.m_bgColor,

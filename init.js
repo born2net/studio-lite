@@ -39,6 +39,8 @@ require.config({
         "ResolutionSelectorView": '_views/ResolutionSelectorView',
         "OrientationSelectorView": '_views/OrientationSelectorView',
         "CampaignView": '_views/CampaignView',
+        "SequencerView": '_views/SequencerView',
+        "ChannelListView": '_views/ChannelListView',
         "PopModalView": '_views/PopModalView',
         "Lib": '_comps/Lib'
 

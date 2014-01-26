@@ -14,7 +14,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
              @method initialize
              **/
             initialize: function () {
-                this.initLoginPage();
+                this._initLoginPage();
             },
 
             /**
@@ -22,12 +22,12 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
              @method routes
              **/
             routes: {
-                "app": "routeApp",
-                "authenticate/:user/:pass": "routeAuthenticate",
-                "authenticating": "routeAuthenticating",
-                "authenticated": "routeAuthenticated",
-                "unauthenticated": "routeUnauthenticated",
-                "authenticationFailed": "routeAuthenticationFailed"
+                "app": "_routeApp",
+                "authenticate/:user/:pass": "_routeAuthenticate",
+                "authenticating": "_routeAuthenticating",
+                "authenticated": "_routeAuthenticated",
+                "unauthenticated": "_routeUnauthenticated",
+                "authenticationFailed": "_routeAuthenticationFailed"
             },
 
             /**
@@ -36,7 +36,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
              @param {String} i_user
              @param {String} i_pass
              **/
-            routeAuthenticate: function (i_user, i_pass) {
+            _routeAuthenticate: function (i_user, i_pass) {
                 this.appAuth.authenticate(i_user, i_pass);
             },
 
@@ -44,7 +44,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
              In process of route authentication
              @method authenticating
              **/
-            routeAuthenticating: function () {
+            _routeAuthenticating: function () {
                 this.appEntryFaderView.selectView(this.mainAppWaitView);
             },
 
@@ -52,7 +52,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
              Authentication passed, load app page route
              @method authenticating
              **/
-            routeAuthenticated: function () {
+            _routeAuthenticated: function () {
                 this.navigate('app', {trigger: true});
             },
 
@@ -60,7 +60,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
              No authentication passed, load Login page route
              @method authenticating
              **/
-            routeUnauthenticated: function () {
+            _routeUnauthenticated: function () {
                 this.appEntryFaderView.selectView(this.loginView);
             },
 
@@ -68,7 +68,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
              Failed user authentication route
              @method authenticationFailed
              **/
-            routeAuthenticationFailed: function () {
+            _routeAuthenticationFailed: function () {
                 Bootbox.dialog({
                     message: "Sorry but the user or password did not match",
                     title: "Problem",
@@ -88,12 +88,12 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
              On successful authentication load main application StackViews per this route App
              @method app
              **/
-            routeApp: function () {
+            _routeApp: function () {
                 if (this.appAuth.authenticated) {
-                    this.initContentPage();
-                    this.initCampaignWizardPage();
-                    this.initModal();
-                    this.listenOnSlidingPanel();
+                    this._initContentPage();
+                    this._initCampaignWizardPage();
+                    this._initModal();
+                    this._listenOnSlidingPanel();
                 } else {
                     this.navigate('unauthenticated', {trigger: true});
                 }
@@ -105,9 +105,9 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
              AppContentFaderView serves as dual purpose view. On one hand it serves as simple show/hide div for  main login page / content page,
              on the other hand it itself is a StackView.Fader that allows for show/hide between main content sections including campaigns,
              stations, resources, settings etc
-             @method initLoginPage
+             @method _initLoginPage
              **/
-            initLoginPage: function () {
+            _initLoginPage: function () {
                 this.appAuth = new AppAuth();
 
                 this.appEntryFaderView = new AppEntryFaderView({
@@ -145,9 +145,9 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
              Use the previously created appContentFaderView to add list of views including campaign, stations, logout etc
              so navigation can be switched between each content div. Also we create one special view called
              CampaignSliderView that it itself is a StackView.Slider that will later allow for Campaign wizard slider animated selections.
-             @method initContentPage
+             @method _initContentPage
              **/
-            initContentPage: function () {
+            _initContentPage: function () {
                 var self = this;
 
                 this.appSizer = new AppSizer();
@@ -200,9 +200,9 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
             /**
              Use the previously created CampaignSliderView to add new views to it for campaign wizard slider animation which include
              CampaignSelector, Screen Orientation, Screen Resolution and Campaign
-             @method initCampaignWizardPage
+             @method _initCampaignWizardPage
              **/
-            initCampaignWizardPage: function () {
+            _initCampaignWizardPage: function () {
                 var self = this;
 
                 require(['CampaignSelectorView', 'OrientationSelectorView', 'ResolutionSelectorView', 'CampaignView'], function (CampaignSelectorView, OrientationSelectorView, ResolutionSelectorView, CampaignView) {
@@ -248,9 +248,9 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
 
             /**
              Create a popup modal view that's used for About Us and properties content on small screens
-             @method initModal
+             @method _initModal
              **/
-            initModal: function () {
+            _initModal: function () {
 
                 require(['PopModalView'], function (PopModalView) {
                     var popModalView = new PopModalView({
@@ -279,9 +279,9 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
 
             /**
              Listen for open/close actions on properties panel that can slide in and out
-             @method listenOnSlidingPanel
+             @method _listenOnSlidingPanel
              **/
-            listenOnSlidingPanel: function(){
+            _listenOnSlidingPanel: function(){
                 $(Elements.TOGGLE_PANEL).on('click', function () {
                     if ($(Elements.TOGGLE_PANEL).hasClass('buttonStateOn')) {
                         $(Elements.TOGGLE_PANEL).toggleClass('buttonStateOn');

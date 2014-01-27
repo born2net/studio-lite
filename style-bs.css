@@ -96,6 +96,19 @@ body {
     z-index: 110;
 }
 
+#campaignSelectionButtons {
+    padding-bottom: 10px;
+}
+
+.appList {
+    padding-right: 10px;
+}
+
+.appList .openProps {
+    float: right;
+    position: relative;
+    top: -45px;
+}
 
 .form-signin {
     max-width: 330px;

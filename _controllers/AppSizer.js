@@ -13,15 +13,15 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @method initialize
          **/
         initialize: function () {
-            this.listenSizeChanges();
+            this._listenSizeChanges();
             $(window).trigger('resize');
         },
 
         /**
          Apply style changes to application specific elements upon size changes
-         @method listenSizeChanges
+         @method _listenSizeChanges
          **/
-        listenSizeChanges: function () {
+        _listenSizeChanges: function () {
             $(window).resize(function () {
                 var b = $('body');
                 var h = b.css('height').replace('px', '');

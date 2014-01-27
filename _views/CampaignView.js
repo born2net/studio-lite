@@ -1,10 +1,10 @@
 /**
- Campaign manager using Backbone > View
+ CampaignView manages campaign related logic and UI
  @class CampaignView
  @constructor
  @return {Object} instantiated CampaignView
  **/
-define(['jquery', 'backbone'], function ($, Backbone) {
+define(['jquery', 'backbone', 'SequencerView', 'ChannelListView'], function ($, Backbone, SequencerView, ChannelListView) {
 
     var CampaignView = Backbone.View.extend({
 
@@ -14,6 +14,15 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         initialize: function () {
             var self = this;
+
+
+            this.m_sequencerView = new SequencerView({
+                el: '#123'
+            });
+            this.m_channelListView = new ChannelListView({
+                el: '#123'
+            });
+
 
             $(this.el).find('#next').on('click',function(e){
                 if (self.options.to==null)

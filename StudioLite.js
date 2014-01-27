@@ -18,6 +18,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             Backbone.lib.addBackboneViewOptions();
             Backbone.comBroker = new ComBroker();
             Backbone.Jalapeno = new Jalapeno();
+            window.jalapeno = Backbone.Jalapeno;
             window.log = Backbone.lib.log;
 
             // router init

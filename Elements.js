@@ -10,6 +10,7 @@ Elements.PROP_PANEL = '#propPanel';
 Elements.POP_MODAL = '#popModal';
 Elements.PROP_PANEL_WRAP = '#propPanelWrap';
 Elements.MAIN_PANEL_WRAP = '#mainPanelWrap';
+Elements.PROP_PANEL = '#propPanel';
 Elements.CAMPAIGN_MANAGER_VIEW = '#campaignManagerView';
 Elements.CAMPAIGN_SLIDER = '#campaignSlider';
 

@@ -1,11 +1,11 @@
 /**
- Application router / application instantiator
+ Application router and layout manager
  @class LayoutManager
  @constructor
  @return {Object} instantiated AppRouter
  **/
-define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationView', 'AppEntryFaderView', 'LoginView', 'AppContentFaderView', 'WaitView', 'bootbox', 'CampaignManagerView', 'ResourcesView', 'ResourcesView', 'StationsView', 'SettingsView', 'ProStudioView', 'HelpView', 'LogoutView', 'CampaignSliderView'],
-    function (_, $, Backbone, AppAuth, AppSizer, NavigationView, AppEntryFaderView, LoginView, AppContentFaderView, WaitView, Bootbox, CampaignManagerView, ResourcesView, ResourcesView, StationsView, SettingsView, ProStudioView, HelpView, LogoutView, CampaignSliderView) {
+define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationView', 'AppEntryFaderView', 'LoginView', 'AppContentFaderView', 'WaitView', 'bootbox', 'CampaignManagerView', 'ResourcesView', 'ResourcesView', 'StationsView', 'SettingsView', 'ProStudioView', 'HelpView', 'LogoutView', 'CampaignSliderStackView'],
+    function (_, $, Backbone, AppAuth, AppSizer, NavigationView, AppEntryFaderView, LoginView, AppContentFaderView, WaitView, Bootbox, CampaignManagerView, ResourcesView, ResourcesView, StationsView, SettingsView, ProStudioView, HelpView, LogoutView, CampaignSliderStackView) {
 
         var LayoutManager = Backbone.Router.extend({
 
@@ -37,7 +37,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
              @param {String} i_pass
              **/
             _routeAuthenticate: function (i_user, i_pass) {
-                this.appAuth.authenticate(i_user, i_pass);
+                this.m_appAuth.authenticate(i_user, i_pass);
             },
 
             /**
@@ -45,7 +45,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
              @method authenticating
              **/
             _routeAuthenticating: function () {
-                this.appEntryFaderView.selectView(this.mainAppWaitView);
+                this.m_appEntryFaderView.selectView(this.m_mainAppWaitView);
             },
 
             /**
@@ -61,7 +61,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
              @method authenticating
              **/
             _routeUnauthenticated: function () {
-                this.appEntryFaderView.selectView(this.loginView);
+                this.m_appEntryFaderView.selectView(this.m_loginView);
             },
 
             /**
@@ -81,7 +81,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
                         }
                     }
                 });
-                this.appEntryFaderView.selectView(this.loginView);
+                this.m_appEntryFaderView.selectView(this.m_loginView);
             },
 
             /**
@@ -89,8 +89,9 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
              @method app
              **/
             _routeApp: function () {
-                if (this.appAuth.authenticated) {
+                if (this.m_appAuth.authenticated) {
                     this._initContentPage();
+                    this._initProperties();
                     this._initCampaignWizardPage();
                     this._initModal();
                     this._listenOnSlidingPanel();
@@ -108,97 +109,105 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
              @method _initLoginPage
              **/
             _initLoginPage: function () {
-                this.appAuth = new AppAuth();
+                this.m_appAuth = new AppAuth();
 
-                this.appEntryFaderView = new AppEntryFaderView({
+                this.m_appEntryFaderView = new AppEntryFaderView({
                     el: Elements.APP_ENTRY,
                     duration: 500
                 });
 
-                this.appContentFaderView = new AppContentFaderView({
+                this.m_appContentFaderView = new AppContentFaderView({
                     el: Elements.APP_CONTENT,
                     duration: 650
                 });
 
-                this.loginView = new LoginView({
+                this.m_loginView = new LoginView({
                     el: Elements.APP_LOGIN
                 });
 
-                this.mainAppWaitView = new WaitView({
+                this.m_mainAppWaitView = new WaitView({
                     el: Elements.WAITS_SCREEN_ENTRY_APP
                 });
 
-                this.logoutView = new Backbone.View({
+                this.m_logoutView = new Backbone.View({
                     el: Elements.APP_LOGOUT
                 });
 
-                this.appEntryFaderView.addView(this.loginView);
-                this.appEntryFaderView.addView(this.logoutView);
-                this.appEntryFaderView.addView(this.appContentFaderView);
-                this.appEntryFaderView.addView(this.mainAppWaitView);
+                this.m_appEntryFaderView.addView(this.m_loginView);
+                this.m_appEntryFaderView.addView(this.m_logoutView);
+                this.m_appEntryFaderView.addView(this.m_appContentFaderView);
+                this.m_appEntryFaderView.addView(this.m_mainAppWaitView);
 
-                Backbone.comBroker.setService(Services.APP_ENTRY_FADER_VIEW, this.appEntryFaderView);
-                Backbone.comBroker.setService(Services.APP_CONTENT_FADER_VIEW, this.appContentFaderView);
+                Backbone.comBroker.setService(Services.APP_ENTRY_FADER_VIEW, this.m_appEntryFaderView);
+                Backbone.comBroker.setService(Services.APP_CONTENT_FADER_VIEW, this.m_appContentFaderView);
             },
 
             /**
-             Use the previously created appContentFaderView to add list of views including campaign, stations, logout etc
+             Use the previously created m_appContentFaderView to add list of views including campaign, stations, logout etc
              so navigation can be switched between each content div. Also we create one special view called
-             CampaignSliderView that it itself is a StackView.Slider that will later allow for Campaign wizard slider animated selections.
+             CampaignSliderStackView that it itself is a StackView.Slider that will later allow for Campaign wizard slider animated selections.
              @method _initContentPage
              **/
             _initContentPage: function () {
                 var self = this;
 
-                this.appSizer = new AppSizer();
-                this.navigationView = new NavigationView({
+                this.m_appSizer = new AppSizer();
+                this.m_navigationView = new NavigationView({
                     el: Elements.FILE_MENU
                 });
 
-                this.campaignManagerView = new CampaignManagerView({
+                this.m_campaignManagerView = new CampaignManagerView({
                     el: Elements.CAMPAIGN_MANAGER_VIEW
                 });
 
-                this.campaignSliderView = new CampaignSliderView({
+                this.m_campaignSliderStackView = new CampaignSliderStackView({
                     el: Elements.CAMPAIGN_SLIDER
                 });
 
-                this.resourcesView = new ResourcesView({
+                this.m_resourcesView = new ResourcesView({
                     el: Elements.RESOURCES_PANEL
                 });
 
-                this.stationsView = new StationsView({
+                this.m_stationsView = new StationsView({
                     el: Elements.STATIONS_PANEL
                 });
 
-                this.settingsView = new SettingsView({
+                this.m_settingsView = new SettingsView({
                     el: Elements.SETTINGS_PANEL
                 });
 
-                this.proStudioView = new ProStudioView({
+                this.m_proStudioView = new ProStudioView({
                     el: Elements.PRO_STUDIO_PANEL
                 });
 
-                this.helpView = new HelpView({
+                this.m_helpView = new HelpView({
                     el: Elements.HELP_PANEL
                 });
 
-                this.logoutView = new LogoutView({
+                this.m_logoutView = new LogoutView({
                     el: Elements.LOGOUT_PANEL
                 });
 
-                this.appContentFaderView.addView(this.campaignManagerView);
-                this.appContentFaderView.addView(this.resourcesView);
-                this.appContentFaderView.addView(this.stationsView);
-                this.appContentFaderView.addView(this.settingsView);
-                this.appContentFaderView.addView(this.proStudioView);
-                this.appContentFaderView.addView(this.helpView);
-                this.appContentFaderView.addView(this.logoutView);
-                this.appContentFaderView.selectView(this.campaignManagerView);
+                this.m_appContentFaderView.addView(this.m_campaignManagerView);
+                this.m_appContentFaderView.addView(this.m_resourcesView);
+                this.m_appContentFaderView.addView(this.m_stationsView);
+                this.m_appContentFaderView.addView(this.m_settingsView);
+                this.m_appContentFaderView.addView(this.m_proStudioView);
+                this.m_appContentFaderView.addView(this.m_helpView);
+                this.m_appContentFaderView.addView(this.m_logoutView);
+                this.m_appContentFaderView.selectView(this.m_campaignManagerView);
+            },
+
+            _initProperties: function () {
+                require(['PropertiesFaderView'], function (PropertiesFaderView) {
+                    this.m_propertiesFaderView = new PropertiesFaderView({
+                        el: Elements.PROP_PANEL
+                    });
+                });
             },
 
             /**
-             Use the previously created CampaignSliderView to add new views to it for campaign wizard slider animation which include
+             Use the previously created CampaignSliderStackView to add new views to it for campaign wizard slider animation which include
              CampaignSelector, Screen Orientation, Screen Resolution and Campaign
              @method _initCampaignWizardPage
              **/
@@ -207,43 +216,43 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
 
                 require(['CampaignSelectorView', 'OrientationSelectorView', 'ResolutionSelectorView', 'CampaignView'], function (CampaignSelectorView, OrientationSelectorView, ResolutionSelectorView, CampaignView) {
 
-                    self.campaignSelectorView = new CampaignSelectorView({
-                        appCoreStackView: self.campaignSliderView,
+                    self.m_campaignSelectorView = new CampaignSelectorView({
+                        appCoreStackView: self.m_campaignSliderStackView,
                         from: Elements.CAMPAIGN,
                         el: Elements.CAMPAIGN_SELECTOR,
                         to: Elements.ORIENTATION_SELECTOR
                     });
 
-                    self.orientationSelectorView = new OrientationSelectorView({
-                        appCoreStackView: self.campaignSliderView,
+                    self.m_orientationSelectorView = new OrientationSelectorView({
+                        appCoreStackView: self.m_campaignSliderStackView,
                         from: Elements.CAMPAIGN_SELECTOR,
                         el: Elements.ORIENTATION_SELECTOR,
                         to: Elements.RESOLUTION_SELECTOR
                     });
 
 
-                    self.resolutionSelectorView = new ResolutionSelectorView({
-                        appCoreStackView: self.campaignSliderView,
+                    self.m_resolutionSelectorView = new ResolutionSelectorView({
+                        appCoreStackView: self.m_campaignSliderStackView,
                         from: Elements.ORIENTATION_SELECTOR,
                         el: Elements.RESOLUTION_SELECTOR,
                         to: Elements.CAMPAIGN
                     });
 
-                    self.campaignView = new CampaignView({
-                        appCoreStackView: self.campaignSliderView,
+                    self.m_campaignView = new CampaignView({
+                        appCoreStackView: self.m_campaignSliderStackView,
                         from: Elements.RESOLUTION_SELECTOR,
                         el: Elements.CAMPAIGN,
                         to: Elements.CAMPAIGN_SELECTOR
                     });
 
-                    self.campaignSliderView.addView(self.campaignSelectorView);
-                    self.campaignSliderView.addView(self.orientationSelectorView);
-                    self.campaignSliderView.addView(self.resolutionSelectorView);
-                    self.campaignSliderView.addView(self.campaignView);
-                    self.campaignSliderView.selectView(self.campaignSelectorView);
+                    self.m_campaignSliderStackView.addView(self.m_campaignSelectorView);
+                    self.m_campaignSliderStackView.addView(self.m_orientationSelectorView);
+                    self.m_campaignSliderStackView.addView(self.m_resolutionSelectorView);
+                    self.m_campaignSliderStackView.addView(self.m_campaignView);
+                    self.m_campaignSliderStackView.selectView(self.m_campaignSelectorView);
                 });
 
-                this.appEntryFaderView.selectView(this.appContentFaderView);
+                this.m_appEntryFaderView.selectView(this.m_appContentFaderView);
             },
 
             /**
@@ -281,7 +290,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
              Listen for open/close actions on properties panel that can slide in and out
              @method _listenOnSlidingPanel
              **/
-            _listenOnSlidingPanel: function(){
+            _listenOnSlidingPanel: function () {
                 $(Elements.TOGGLE_PANEL).on('click', function () {
                     if ($(Elements.TOGGLE_PANEL).hasClass('buttonStateOn')) {
                         $(Elements.TOGGLE_PANEL).toggleClass('buttonStateOn');

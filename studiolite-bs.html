@@ -64,7 +64,7 @@
             <ul class="nav navbar-nav">
                 <li class="hidden-lg" dropdown
                 ">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">File<b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Navigatior<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li><a class="campaignManagerView" href="#">Campaign</a></li>
                     <li class="divider"></li>
@@ -83,9 +83,8 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a id="someAction" href="#">Link 1</a></li>
-                <li><a href="#">Link 2</a></li>
-                <li><a href="#">Link 3</a></li>
+                <li><a id="someAction" href="#">Save</a></li>
+                <li><a href="#">About &nbsp</a></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -134,9 +133,12 @@
 
                             <div id="campaignSelector" class="page center">
                                 <div style="overflow-y: scroll;height: 100%">
-                                    <h5>create new campaign or select existing campagin</h5>
-                                    <a id="prev" href="#">Prev</a>
-                                    <a id="next" href="#">Next</a>
+                                    <div id="campaignSelectionButtons" class="btn-group">
+                                        <button id="newCampaign" type="button" class="btn btn-default">new campaign wizard</button>
+                                        <button id="removeCampaign" type="button" class="btn btn-default">remove campaign</button>
+                                    </div>
+                                    <div id="campaignSelectorList" class="appList list-group">
+                                    </div>
                                 </div>
                             </div>
                             <div id="orientationSelector" class="page right">
@@ -144,59 +146,60 @@
                                 <a id="prev" href="#">Prev</a>
                                 <a id="next" href="#">Next</a>
                             </div>
-                            <div id="resolutionSelector" class="page right"">
-                                <h1>resolution selector</h1>
-                                <a id="prev" href="#">Prev</a>
-                                <a id="next" href="#">Next</a>
-                            </div>
-                            <div id="campaign" class="page right">
-                                <h1>campaign</h1>
-                                <a id="prev" href="#">Prev</a>
-                                <a id="next" href="#">Next</a>
-                            </div>
-                            <div id="waitScreenMainPanel" class="page center" style="display: none">
-                                <div style="overflow-y: scroll;height: 100%">
-                                    <h1>Please wait</h1>
+                            <div id="resolutionSelector" class="page right"
+                            ">
+                            <h1>resolution selector</h1>
+                            <a id="prev" href="#">Prev</a>
+                            <a id="next" href="#">Next</a>
+                        </div>
+                        <div id="campaign" class="page right">
+                            <h1>campaign</h1>
+                            <a id="prev" href="#">Prev</a>
+                            <a id="next" href="#">Next</a>
+                        </div>
+                        <div id="waitScreenMainPanel" class="page center" style="display: none">
+                            <div style="overflow-y: scroll;height: 100%">
+                                <h1>Please wait</h1>
                                     <span style="position: relative; left: 45%; top: 40%">
 	                                    <img src="./_assets/preload7.gif">
                                     </span>
-                                </div>
                             </div>
-
                         </div>
-                    </div>
 
-                    <div id="resourcesPanel" style="display: none">
-                        <h5>resources</h5>
-                    </div>
-                    <div id="stationsPanel" style="display: none">
-                        <h5>stations</h5>
-                    </div>
-                    <div id="settingsPanel" style="display: none">
-                        <h5>settings</h5>
-                    </div>
-                    <div id="proStudioPanel" style="display: none">
-                        <h5>pro studio</h5>
-                    </div>
-                    <div id="helpPanel" style="display: none">
-                        <h5>help</h5>
-                    </div>
-                    <div id="logoutPanel" style="display: none">
-                        <h5>logout</h5>
                     </div>
                 </div>
-                <div id="propPanelWrap" class="hidden-xs col-sm-3 col-lg-3">
-                    <div id="propPanel">
-                        <span class="label label-primary">Primary</span>
-                        <span class="label label-success">Success</span>
-                        <span class="label label-info">Info</span>
-                        <span class="label label-warning">Warning</span>
-                    </div>
 
+                <div id="resourcesPanel" style="display: none">
+                    <h5>resources</h5>
                 </div>
+                <div id="stationsPanel" style="display: none">
+                    <h5>stations</h5>
+                </div>
+                <div id="settingsPanel" style="display: none">
+                    <h5>settings</h5>
+                </div>
+                <div id="proStudioPanel" style="display: none">
+                    <h5>pro studio</h5>
+                </div>
+                <div id="helpPanel" style="display: none">
+                    <h5>help</h5>
+                </div>
+                <div id="logoutPanel" style="display: none">
+                    <h5>logout</h5>
+                </div>
+            </div>
+            <div id="propPanelWrap" class="hidden-xs col-sm-3 col-lg-3">
+                <div id="propPanel">
+                    <span class="label label-primary">Primary</span>
+                    <span class="label label-success">Success</span>
+                    <span class="label label-info">Info</span>
+                    <span class="label label-warning">Warning</span>
+                </div>
+
             </div>
         </div>
     </div>
+</div>
 </div>
 
 

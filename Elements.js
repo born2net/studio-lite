@@ -21,6 +21,9 @@ Elements.FORM_CAMPAIGN_NAME = '#formCampaignName';
 
 
 Elements.CAMPAIGN = '#campaign';
+Elements.NEW_CAMPAIGN = '#newCampaign';
+Elements.REMOVE_CAMPAIGN = '#removeCampaign';
+
 Elements.CAMPAIGN_SELECTOR = '#campaignSelector';
 Elements.ORIENTATION_SELECTOR = '#orientationSelector';
 Elements.RESOLUTION_SELECTOR = '#resolutionSelector';

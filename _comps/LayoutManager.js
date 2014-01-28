@@ -252,11 +252,11 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
              @method _initProperties
              **/
             _initProperties: function () {
-                require(['PropertiesFaderView'], function (PropertiesFaderView) {
-                    this.m_propertiesFaderView = new PropertiesFaderView({
+                require(['PropertiesView'], function (PropertiesView) {
+                    this.m_propertiesView = new PropertiesView({
                         el: Elements.PROP_PANEL
                     });
-                    Backbone.comBroker.setService(Services.PROPERTIES_PANEL, this.m_propertiesFaderView);
+                    Backbone.comBroker.setService(Services.PROPERTIES_PANEL, this.m_propertiesView);
                 });
             },
 

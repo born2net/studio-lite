@@ -32,7 +32,7 @@ require.config({
         "ProStudioView": '_views/ProStudioView',
         "HelpView": '_views/HelpView',
         "LogoutView": '_views/LogoutView',
-        "PropertiesFaderView": '_views/PropertiesFaderView',
+        "PropertiesView": '_views/PropertiesView',
         "CampaignManagerView": '_views/CampaignManagerView',
         "CampaignSliderStackView": '_views/CampaignSliderStackView',
         "CampaignSelectorView": '_views/CampaignSelectorView',

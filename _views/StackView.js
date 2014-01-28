@@ -63,7 +63,19 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
          @param {Object} i_view
          **/
         selectView: function (i_view) {
-            this.m_selectedView = i_view;
+            this.m_selectedView = this._parseView(i_view);
+        },
+
+        /**
+         If view was given as an ID string, find its matching Backbone > View
+         @method _parseView
+         @param {Object} i_view
+         **/
+        _parseView: function(i_view){
+            if (_.isString(i_view)){
+                i_view = this.getViewByID(i_view);
+            }
+            return i_view;
         }
 
     });
@@ -97,6 +109,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
          **/
         selectView: function (i_view) {
             var self = this;
+            i_view = self._parseView(i_view);
             StackView.ViewPort.prototype.selectView.apply(this, arguments);
             $.each(self.m_views, function (id, view) {
                 view.$el.hide();
@@ -112,6 +125,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
          **/
         slideToPage: function (i_toView, i_direction) {
             var self = this;
+            i_toView = self._parseView(i_toView);
             i_toView.$el.show();
             // toView.el.offsetWidth;
             // Position the new page at the starting position of the animation
@@ -155,6 +169,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
          **/
         selectView: function (i_view) {
             var self = this;
+            i_view = self._parseView(i_view);
             if (self.m_selectedView==i_view)
                 return;
             StackView.ViewPort.prototype.selectView.apply(this, arguments);
@@ -196,6 +211,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
          **/
         selectView: function (i_view) {
             var self = this;
+            i_view = self._parseView(i_view);
             StackView.ViewPort.prototype.selectView.apply(this, arguments);
             $.each(self.m_views, function (id, view) {
                 view.$el.hide()

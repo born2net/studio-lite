@@ -25,13 +25,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self.m_propertiesPanel.addView(this.m_campainProperties);
             self.m_propertiesPanel.selectView(this.m_campainProperties);
 
-            $('#newCampaign').on('click', function (e) {
-                var toView = self.options.appCoreStackView.getViewByID(self.options.to);
-                self.options.appCoreStackView.slideToPage(toView, 'right');
+            $(Elements.NEW_CAMPAIGN).on('click', function (e) {
+                self.options.appCoreStackView.slideToPage(self.options.to, 'right');
                 return false;
             });
 
-            $('#removeCampaign').on('click', function (e) {
+            $(Elements.REMOVE_CAMPAIGN).on('click', function (e) {
                 if (self.m_seletedCampaignID != -1) {
                     var selectedLI = self.$el.find('[data-campaignid="' + self.m_seletedCampaignID + '"]');
                     selectedLI.remove();
@@ -103,8 +102,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 $('.selectAppListItem ', self.el).removeClass('active');
                 $(this).addClass('active');
                 self.m_seletedCampaignID = $(this).data('campaignid');
-                var toView = self.options.appCoreStackView.getViewByID(Elements.CAMPAIGN);
-                self.options.appCoreStackView.slideToPage(toView, 'right');
+                self.options.appCoreStackView.slideToPage(Elements.CAMPAIGN, 'right');
                 return false;
             });
         },
@@ -170,6 +168,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var campaignIDs = jalapeno.getCampaignIDs();
             if (campaignIDs.length == 0)
                 jalapeno.removeAllBoards();
+
+            self.m_seletedCampaignID = -1;
         },
 
         /**

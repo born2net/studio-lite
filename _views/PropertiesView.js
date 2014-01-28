@@ -6,14 +6,14 @@
  The property manager is also capable of managing common properties which are used for blocks.
  For example, all blocks (QR, RSS etc) have a border color, the property value for the border will appear
  in the sub-panel (m_subViewStack)
- @class PropertiesFaderView
+ @class PropertiesView
  @constructor
  @param {string} i_elementID is the the main property HTML ID (div element).
  @return {object} CompProperty instance.
  **/
 define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
 
-    var PropertiesFaderView = Backbone.StackView.Fader.extend({
+    var PropertiesView = Backbone.StackView.Fader.extend({
 
         /**
          Constructor
@@ -23,7 +23,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             var self = this;
 
             Backbone.StackView.ViewPort.prototype.initialize.call(this);
-            Backbone.comBroker.listen(AppEvents.APP_SIZED, self._reconfigPropPanelPosition);
+            Backbone.comBroker.listen(AppEvents.APP_SIZED, self._reconfigPropPanelLocation);
 
             this.m_subViewStack = new StackView.Fader({el: Elements.SUB_PROP_PANEL});
 
@@ -69,9 +69,9 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
 
         /**
          Move properties panel between side panel or full screen popup panel depending on screen size
-         @method _reconfigPropPanelPosition
+         @method _reconfigPropPanelLocation
          **/
-        _reconfigPropPanelPosition: function(){
+        _reconfigPropPanelLocation: function(){
             var layoutManager = Backbone.comBroker.getService(Services.LAYOUT_MANAGER);
             if (layoutManager.getAppWidth() > 768){
                 $(Elements.PROP_PANEL_WRAP).append($(Elements.PROP_PANEL));
@@ -86,7 +86,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
          **/
         openPropertiesPanel: function(){
             var self = this;
-            self._reconfigPropPanelPosition();
+            self._reconfigPropPanelLocation();
             var layoutManager = Backbone.comBroker.getService(Services.LAYOUT_MANAGER);
             if (layoutManager.getAppWidth() > 768){
                 if ($(Elements.TOGGLE_PANEL).hasClass('buttonStateOn')==false) {
@@ -94,13 +94,12 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
                 }
             } else {
                 var popModalView = Backbone.comBroker.getService(Services.POP_MODAL_VIEW);
-                var view = popModalView.getViewByID(Elements.POPUP_PROPERTIES)
-                popModalView.selectView(view);
+                popModalView.selectView(Elements.POPUP_PROPERTIES);
             }
         }
     })
 
-    return PropertiesFaderView;
+    return PropertiesView;
 
 });
 

@@ -20,38 +20,31 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
 
             $('.campaignManagerView').on('click', function () {
-                var oid = appContentFaderView.getViewByID(Elements.CAMPAIGN_MANAGER_VIEW);
-                appContentFaderView.selectView(oid);
+                appContentFaderView.selectView(Elements.CAMPAIGN_MANAGER_VIEW);
             });
 
             $('.resourcesPanel').on('click', function () {
-                var oid = appContentFaderView.getViewByID(Elements.RESOURCES_PANEL);
-                appContentFaderView.selectView(oid);
+                appContentFaderView.selectView(Elements.RESOURCES_PANEL);
             });
 
             $('.stationsPanel').on('click', function () {
-                var oid = appContentFaderView.getViewByID(Elements.STATIONS_PANEL);
-                appContentFaderView.selectView(oid);
+                appContentFaderView.selectView(Elements.STATIONS_PANEL);
             });
 
             $('.settingsPanel').on('click', function () {
-                var oid = appContentFaderView.getViewByID(Elements.SETTINGS_PANEL);
-                appContentFaderView.selectView(oid);
+                appContentFaderView.selectView(Elements.SETTINGS_PANEL);
             });
 
             $('.proStudioPanel').on('click', function () {
-                var oid = appContentFaderView.getViewByID(Elements.PRO_STUDIO_PANEL);
-                appContentFaderView.selectView(oid);
+                appContentFaderView.selectView(Elements.PRO_STUDIO_PANEL);
             });
 
             $('.helpPanel').on('click', function () {
-                var oid = appContentFaderView.getViewByID(Elements.HELP_PANEL);
-                appContentFaderView.selectView(oid);
+                appContentFaderView.selectView(Elements.HELP_PANEL);
             });
 
             $('.logoutPanel').on('click', function () {
-                var oid = appEntryFaderView.getViewByID(Elements.APP_LOGOUT);
-                appEntryFaderView.selectView(oid);
+                appEntryFaderView.selectView(Elements.APP_LOGOUT);
                 $.removeCookie('signagestudioweblite', {path: '/'});
                 $.cookie('signagestudioweblite', '', { expires: -300 });
             });

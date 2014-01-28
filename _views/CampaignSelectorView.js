@@ -16,14 +16,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             self.m_seletedCampaignID = -1;
 
-
             self.m_campainProperties = new Backbone.View({
                 el: Elements.CAMPAIGN_PROPERTIES
             })
 
             self.m_propertiesPanel = Backbone.comBroker.getService(Services.PROPERTIES_PANEL);
             self.m_propertiesPanel.addView(this.m_campainProperties);
-            self.m_propertiesPanel.selectView(this.m_campainProperties);
 
             $(Elements.NEW_CAMPAIGN).on('click', function (e) {
                 self.options.appCoreStackView.slideToPage(self.options.to, 'right');
@@ -52,17 +50,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 return false;
             });
 
-            /* $(this.el).find('#prev').on('click', function (e) {
-             if (self.options.from == null)
-             return;
-             var fromView = self.options.appCoreStackView.getViewByID(self.options.from);
-             self.options.appCoreStackView.slideToPage(fromView, 'left');
-             return false;
-             });*/
-
             this._loadCampaignList();
             this._listenOpenProps();
             this._listenSelectCampaign();
+            this._wireUI();
         },
 
         /**
@@ -121,11 +112,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 self.m_seletedCampaignID = $(elem).data('campaignid');
                 var recCampaign = jalapeno.getCampaignRecord(self.m_seletedCampaignID);
                 $(Elements.FORM_CAMPAIGN_NAME).val(recCampaign['campaign_name']);
-
-                var propertiesPanel = Backbone.comBroker.getService(Services.PROPERTIES_PANEL);
-                propertiesPanel.openPropertiesPanel();
-
-                e.stopImmediatePropagation();
+                self.m_propertiesPanel.selectView(self.m_campainProperties);
+                self.m_propertiesPanel.openPropertiesPanel();
                 return false;
             });
         },
@@ -170,6 +158,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 jalapeno.removeAllBoards();
 
             self.m_seletedCampaignID = -1;
+            self.m_propertiesPanel.selectView(Elements.EMPTY_PROPERTIES);
         },
 
         /**
@@ -179,26 +168,11 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         _wireUI: function () {
             var self = this;
-
-            var campaignSelName;
-            $(Elements.SELECTED_CAMPAIGN_PROPERTIES).on("input", function (e) {
-                window.clearTimeout(campaignSelName);
-                campaignSelName = window.setTimeout(function () {
-                    self._onChange(e);
-                }, 200);
-            });
-        },
-
-        /**
-         Update the msdb with newly updated campaign name
-         @method _onChange
-         @param {event} event on change
-         @return none
-         **/
-        _onChange: function (e) {
-            var self = this;
-            var text = $(e.target).val();
-            jalapeno.setCampaignRecord(self.m_seletedCampaignID, 'campaign_name', text);
+            var updCampaignName = _.debounce(function (e) {
+                var text = $(e.target).val();
+                jalapeno.setCampaignRecord(self.m_seletedCampaignID, 'campaign_name', text);
+            }, 333);
+            $(Elements.FORM_CAMPAIGN_NAME).on("input", updCampaignName);
         },
 
 

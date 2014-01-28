@@ -145,6 +145,11 @@ body {
     border-top-right-radius: 0;
 }
 
+#campaignProperties {
+    padding-top: 10px;
+    padding-right: 10px;
+}
+
 .navbar-nav {
     display: none;
 }

@@ -26,17 +26,9 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             Backbone.comBroker.listen(AppEvents.APP_SIZED, self._reconfigPropPanelLocation);
 
             this.m_subViewStack = new StackView.Fader({el: Elements.SUB_PROP_PANEL});
-
             this.m_mainPanels = {};
             this.m_subPanels = {};
             this._listenOnSlidingPanel();
-            return;
-
-            this.m_viewStack = new Viewstacks(this.m_myElementID);
-            this.m_subViewStack = undefined;
-            this.m_selectedPanelID = undefined;
-            this.m_selectedSubPanelID = undefined;
-
         },
 
         /**

@@ -254,8 +254,14 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
             _initProperties: function () {
                 require(['PropertiesView'], function (PropertiesView) {
                     this.m_propertiesView = new PropertiesView({
-                        el: Elements.PROP_PANEL
+                        el: Elements.PROP_PANEL,
+                        duration: 400
                     });
+                    this.m_emptyPropView = new Backbone.View({
+                        el: Elements.EMPTY_PROPERTIES
+                    });
+                    self.m_propertiesView.addView(this.m_emptyPropView);
+                    self.m_propertiesView.selectView(this.m_emptyPropView);
                     Backbone.comBroker.setService(Services.PROPERTIES_PANEL, this.m_propertiesView);
                 });
             },

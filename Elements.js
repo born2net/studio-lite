@@ -11,19 +11,14 @@ Elements.PROP_PANEL_WRAP = '#propPanelWrap';
 Elements.MAIN_PANEL_WRAP = '#mainPanelWrap';
 Elements.PROP_PANEL = '#propPanel';
 Elements.SUB_PROP_PANEL = '#subPropPanel';
-Elements.EMPTY_PROPERTIES = '#emptyProperties';
 Elements.CAMPAIGN_MANAGER_VIEW = '#campaignManagerView';
 Elements.CAMPAIGN_SLIDER = '#campaignSlider';
-
 Elements.CAMPAIGN_PROPERTIES = '#campaignProperties';
 Elements.FORM_CAMPAIGN_NAME = '#formCampaignName';
-
-
-
+Elements.EMPTY_PROPERTIES = '#emptyProperties';
 Elements.CAMPAIGN = '#campaign';
 Elements.NEW_CAMPAIGN = '#newCampaign';
 Elements.REMOVE_CAMPAIGN = '#removeCampaign';
-
 Elements.CAMPAIGN_SELECTOR = '#campaignSelector';
 Elements.ORIENTATION_SELECTOR = '#orientationSelector';
 Elements.RESOLUTION_SELECTOR = '#resolutionSelector';
@@ -31,14 +26,10 @@ Elements.PROP_PANEL = '#propPanel';
 Elements.POPUP_PROPERTIES = '#popupProperties';
 Elements.ABOUT_US = '#aboutUS';
 Elements.STACK_WAIT_MODAL_VIEW = '#stackWaitModalView';
-
-
 Elements.BS_MODAL = '#bsModal';
 Elements.TOGGLE_PANEL = '#togglePanel';
 Elements.USER_NAME = '#userName';
 Elements.USER_PASS = '#userPass';
-
-
 Elements.RESOURCES_PANEL = '#resourcesPanel';
 Elements.STATIONS_PANEL = '#stationsPanel';
 Elements.SETTINGS_PANEL = '#settingsPanel';

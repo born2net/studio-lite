@@ -24,7 +24,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             var self = this;
 
             Backbone.StackView.ViewPort.prototype.initialize.call(this);
-            Backbone.comBroker.listen(AppEvents.APP_SIZED, self._onAppSized);
+            Backbone.comBroker.listen(AppEvents.APP_SIZED, self._reconfigPropPanelPosition);
 
             this.m_subViewStack = new StackView.Fader({el: Elements.SUB_PROP_PANEL});
 
@@ -235,23 +235,21 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
 
         openPropertiesPanel: function(){
             var self = this;
+            self._reconfigPropPanelPosition();
             var layoutManager = Backbone.comBroker.getService(Services.LAYOUT_MANAGER);
             if (layoutManager.getAppWidth() > 768){
-                $(Elements.PROP_PANEL_WRAP).append($(Elements.PROP_PANEL));
                 if ($(Elements.TOGGLE_PANEL).hasClass('buttonStateOn')==false) {
                     $(Elements.TOGGLE_PANEL).trigger('click');
                 }
             } else {
-                $(Elements.POPUP_PROPERTIES).append($(Elements.PROP_PANEL));
                 var popModalView = Backbone.comBroker.getService(Services.POP_MODAL_VIEW);
                 var view = popModalView.getViewByID(Elements.POPUP_PROPERTIES)
                 popModalView.selectView(view);
             }
         },
 
-        _onAppSized: function(){
+        _reconfigPropPanelPosition: function(){
             var layoutManager = Backbone.comBroker.getService(Services.LAYOUT_MANAGER);
-            var a = layoutManager.getAppWidth();
             if (layoutManager.getAppWidth() > 768){
                 $(Elements.PROP_PANEL_WRAP).append($(Elements.PROP_PANEL));
             } else {

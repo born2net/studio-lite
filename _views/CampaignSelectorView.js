@@ -14,7 +14,16 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         initialize: function () {
             var self = this;
-            self.seletedCampaignID = -1;
+            self.m_seletedCampaignID = -1;
+
+
+            self.m_campainProperties = new Backbone.View({
+                el: Elements.CAMPAIGN_PROPERTIES
+            })
+
+            self.m_propertiesPanel = Backbone.comBroker.getService(Services.PROPERTIES_PANEL);
+            self.m_propertiesPanel.addView(this.m_campainProperties);
+            self.m_propertiesPanel.selectView(this.m_campainProperties);
 
             $('#newCampaign').on('click', function (e) {
                 var toView = self.options.appCoreStackView.getViewByID(self.options.to);
@@ -23,21 +32,34 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             });
 
             $('#removeCampaign').on('click', function (e) {
-                if (self.seletedCampaignID != -1){
-                    var selectedLI = self.$el.find('[data-campaignid="' + self.seletedCampaignID + '"]');
+                if (self.m_seletedCampaignID != -1) {
+                    var selectedLI = self.$el.find('[data-campaignid="' + self.m_seletedCampaignID + '"]');
                     selectedLI.remove();
-                    self.removeCampaignFromMSDB(self.seletedCampaignID);
+                    self._removeCampaignFromMSDB(self.m_seletedCampaignID);
+                } else {
+                    bootbox.dialog({
+                        message: "You must first select a campaign by clicking on the properties icon",
+                        title: "Oops, problem...",
+                        buttons: {
+                            danger: {
+                                label: "OK",
+                                className: "btn-danger",
+                                callback: function () {
+                                }
+                            }
+                        }
+                    });
                 }
                 return false;
             });
 
-           /* $(this.el).find('#prev').on('click', function (e) {
-                if (self.options.from == null)
-                    return;
-                var fromView = self.options.appCoreStackView.getViewByID(self.options.from);
-                self.options.appCoreStackView.slideToPage(fromView, 'left');
-                return false;
-            });*/
+            /* $(this.el).find('#prev').on('click', function (e) {
+             if (self.options.from == null)
+             return;
+             var fromView = self.options.appCoreStackView.getViewByID(self.options.from);
+             self.options.appCoreStackView.slideToPage(fromView, 'left');
+             return false;
+             });*/
 
             this._loadCampaignList();
             this._listenOpenProps();
@@ -77,10 +99,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         _listenSelectCampaign: function () {
             var self = this;
-            $('.selectAppListItem').on('click',function (e) {
-                $('.selectAppListItem ',self.el).removeClass('active');
+            $('.selectAppListItem', self.el).on('click', function (e) {
+                $('.selectAppListItem ', self.el).removeClass('active');
                 $(this).addClass('active');
-                self.seletedCampaignID = $(this).data('campaignid');
+                self.m_seletedCampaignID = $(this).data('campaignid');
                 var toView = self.options.appCoreStackView.getViewByID(Elements.CAMPAIGN);
                 self.options.appCoreStackView.slideToPage(toView, 'right');
                 return false;
@@ -95,11 +117,11 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _listenOpenProps: function () {
             var self = this;
 
-            $('.openPropsButton').on('click', function (e) {
-                $('.selectAppListItem ',self.el).removeClass('active');
+            $('.openPropsButton', self.el).on('click', function (e) {
+                $('.selectAppListItem ', self.el).removeClass('active');
                 var elem = $(e.target).closest('a').addClass('active');
-                self.seletedCampaignID = $(elem).data('campaignid');
-                var recCampaign = jalapeno.getCampaignRecord(self.seletedCampaignID);
+                self.m_seletedCampaignID = $(elem).data('campaignid');
+                var recCampaign = jalapeno.getCampaignRecord(self.m_seletedCampaignID);
                 $(Elements.FORM_CAMPAIGN_NAME).val(recCampaign['campaign_name']);
 
                 var propertiesPanel = Backbone.comBroker.getService(Services.PROPERTIES_PANEL);
@@ -110,39 +132,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             });
         },
 
-
-        /**
-         Init the properties panel, and allow creation of new campaign
-         @method _init
-         @return none
-         **/
-        _init: function () {
-            var self = this;
-            self.m_property.initPanel(Elements.CAMPAIGN_PROPERTIES, true);
-            self.m_screenArrowSelector = commBroker.getService('ScreenArrowSelector');
-
-            $(Elements.START_NEW_CAMPAIGN).on('tap', function () {
-                self.m_screenArrowSelector.selectNext();
-            });
-
-            $(Elements.REMOVE_CAMPAIGN).on('tap', function () {
-                if (self.seletedCampaignID == -1) {
-                    commBroker.getService('PopupManager').popUpDialogOK('selection', 'First select a campaign using the gear icon', function () {
-                    });
-                } else {
-                    var selectedLI = $(Elements.CAMPAIGN_SELECTOR_LIST).find('[data-campaignid="' + self.seletedCampaignID + '"]');
-                    selectedLI.remove();
-                    self.removeCampaignFromMSDB(self.seletedCampaignID);
-                }
-            });
-        },
-
         /**
          Remove an entire campaign including its timelines, channels, blocks, template, board etc
          @method removeCampaign
          @return none
          **/
-        removeCampaignFromMSDB: function (i_campaign_id) {
+        _removeCampaignFromMSDB: function (i_campaign_id) {
             var self = this;
 
             var timelineIDs = jalapeno.getCampaignTimelines(i_campaign_id);
@@ -203,7 +198,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _onChange: function (e) {
             var self = this;
             var text = $(e.target).val();
-            jalapeno.setCampaignRecord(self.seletedCampaignID, 'campaign_name', text);
+            jalapeno.setCampaignRecord(self.m_seletedCampaignID, 'campaign_name', text);
         },
 
 
@@ -214,11 +209,9 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         _campaignSelected: function () {
             var self = this;
-            commBroker.getService('Campaign').setSelectedCampaign(self.seletedCampaignID);
+            commBroker.getService('Campaign').setSelectedCampaign(self.m_seletedCampaignID);
             self.m_screenArrowSelector.selectLast();
-        },
-
-
+        }
     })
 
     return CampaignSelectorView;

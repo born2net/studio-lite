@@ -1,5 +1,6 @@
 /**
- Application router and layout manager
+ Application router and layout manager responsible for kick starting the application as
+ well as management for sizing events
  @class LayoutManager
  @constructor
  @return {Object} instantiated AppRouter
@@ -150,10 +151,6 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
              @method _initContentPage
              **/
             _initContentPage: function () {
-                var self = this;
-
-                // this.m_appSizer = new AppSizer();
-                // Backbone.comBroker.setService(Services.APP_SIZER, this.m_appSizer);
 
                 this.m_navigationView = new NavigationView({
                     el: Elements.FILE_MENU
@@ -199,19 +196,6 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 this.m_appContentFaderView.addView(this.m_helpView);
                 this.m_appContentFaderView.addView(this.m_logoutView);
                 this.m_appContentFaderView.selectView(this.m_campaignManagerView);
-            },
-
-            /**
-             Global properties panel view
-             @method _initProperties
-             **/
-            _initProperties: function () {
-                require(['PropertiesFaderView'], function (PropertiesFaderView) {
-                    this.m_propertiesFaderView = new PropertiesFaderView({
-                        el: Elements.PROP_PANEL
-                    });
-                    Backbone.comBroker.setService(Services.PROPERTIES_PANEL, this.m_propertiesFaderView);
-                });
             },
 
             /**
@@ -264,6 +248,19 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
             },
 
             /**
+             Create properties panel view
+             @method _initProperties
+             **/
+            _initProperties: function () {
+                require(['PropertiesFaderView'], function (PropertiesFaderView) {
+                    this.m_propertiesFaderView = new PropertiesFaderView({
+                        el: Elements.PROP_PANEL
+                    });
+                    Backbone.comBroker.setService(Services.PROPERTIES_PANEL, this.m_propertiesFaderView);
+                });
+            },
+
+            /**
              Create a popup modal view that's used for About Us and properties content on small screens
              @method _initModal
              **/
@@ -288,12 +285,20 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 });
             },
 
+            /**
+             Listen to application size changes and lazy update when so
+             @method _listenSizeChanges
+             **/
             _listenSizeChanges: function () {
                 var self = this;
                 var lazyLayout = _.debounce(self._updateLayout, 150);
                 $(window).resize(lazyLayout);
             },
 
+            /**
+             Update key element height changes on size change and notify event subscribers
+             @method _updateLayout
+             **/
             _updateLayout: function () {
                 var self = Backbone.comBroker.getService(Services.LAYOUT_MANAGER);
                 var b = $('body');
@@ -306,10 +311,18 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 Backbone.comBroker.fire(AppEvents.APP_SIZED);
             },
 
+            /**
+             Get latest registered app width
+             @return {Number} width
+             **/
             getAppWidth: function () {
                 return this._appWidth;
             },
 
+            /**
+             Get latest registered app height
+             @return {Number} height
+             **/
             getAppHeight: function () {
                 return this._appHeight;
             }

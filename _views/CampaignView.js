@@ -23,15 +23,6 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView'], function ($, 
                 el: '#123'
             });
 
-            this.m_campainProperties = new Backbone.View({
-                el: Elements.CAMPAIGN_PROPERTIES
-            })
-
-            this.m_propertiesPanel = Backbone.comBroker.getService(Services.PROPERTIES_PANEL);
-            this.m_propertiesPanel.addView(this.m_campainProperties);
-            this.m_propertiesPanel.selectView(this.m_campainProperties);
-
-
             $(this.el).find('#next').on('click',function(e){
                 if (self.options.to==null)
                     return;

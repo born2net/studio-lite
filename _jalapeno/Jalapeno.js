@@ -531,7 +531,7 @@ Jalapeno.prototype = {
         var self = this;
 
         var status = self.m_msdb.table_campaigns().openForDelete(i_campaign_id);
-        log(status);
+        // log(status);
     },
 
     /**
@@ -1126,7 +1126,7 @@ Jalapeno.prototype = {
                 $(self.m_msdb.table_campaign_timeline_board_templates().getAllPrimaryKeys()).each(function (k, table_campaign_timeline_board_template_id) {
                     var recCampaignTimelineBoardTemplate = self.m_msdb.table_campaign_timeline_board_templates().getRec(table_campaign_timeline_board_template_id);
                     if (recCampaignTimelineBoardTemplate['campaign_timeline_id'] == campaign_timeline_id) {
-                        log(recCampaignTimelineBoardTemplate['campaign_timeline_id']);
+                        // log(recCampaignTimelineBoardTemplate['campaign_timeline_id']);
                         self._populateBoardTemplate(table_campaign_timeline_board_template_id);
                     }
                 });

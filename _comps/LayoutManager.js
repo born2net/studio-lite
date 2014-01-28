@@ -222,7 +222,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                         to: Elements.RESOLUTION_SELECTOR,
                         model: new Backbone.Model({screenOrientation: null})
                     });
-
+                    Backbone.comBroker.setService(Services.ORIENTATION_SELECTOR, self.m_orientationSelectorView);
 
                     self.m_resolutionSelectorView = new ResolutionSelectorView({
                         appCoreStackView: self.m_campaignSliderStackView,
@@ -231,6 +231,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                         to: Elements.CAMPAIGN,
                         model: new Backbone.Model({screenResolution: null})
                     });
+                    Backbone.comBroker.setService(Services.RESOLUTION_SELECTOR, self.m_resolutionSelectorView);
 
                     self.m_campaignView = new CampaignView({
                         appCoreStackView: self.m_campaignSliderStackView,

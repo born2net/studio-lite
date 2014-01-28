@@ -42,7 +42,8 @@ require.config({
         "SequencerView": '_views/SequencerView',
         "ChannelListView": '_views/ChannelListView',
         "PopModalView": '_views/PopModalView',
-        "Lib": '_comps/Lib'
+        "Lib": '_comps/Lib',
+        "ScreenTemplate": "_jalapeno/JalapenoTemplates"
 
     },
 
@@ -96,6 +97,9 @@ require.config({
         "Base64": {
             deps: ['jquery'],
             exports: 'base64'
+        },
+        "ScreenTemplate": {
+            exports: 'ScreenTemplate'
         }
     }
 });

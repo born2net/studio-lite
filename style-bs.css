@@ -29,6 +29,10 @@ body {
     /* background-color: orange; */
 }
 
+#resolutionSelector {
+    overflow-y: scroll;
+}
+
 #propPanel {
     padding: 0;
     margin: 0;
@@ -161,6 +165,11 @@ body {
     cursor: pointer;
 }
 
+.screenResolutionLabel {
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1.2em;
+}
 .navbar-nav {
     display: none;
 }

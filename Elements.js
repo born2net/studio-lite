@@ -20,8 +20,6 @@ Elements.CAMPAIGN = '#campaign';
 Elements.NEW_CAMPAIGN = '#newCampaign';
 Elements.REMOVE_CAMPAIGN = '#removeCampaign';
 Elements.CAMPAIGN_SELECTOR = '#campaignSelector';
-Elements.ORIENTATION_SELECTOR = '#orientationSelector';
-Elements.RESOLUTION_SELECTOR = '#resolutionSelector';
 Elements.PROP_PANEL = '#propPanel';
 Elements.POPUP_PROPERTIES = '#popupProperties';
 Elements.ABOUT_US = '#aboutUS';
@@ -38,6 +36,9 @@ Elements.HELP_PANEL = '#helpPanel';
 Elements.LOGOUT_PANEL = '#logoutPanel';
 Elements.IMG_HORIZONTAL = '#imgHorizontal';
 Elements.IMG_VERTICAL = '#imgVertical';
+Elements.ORIENTATION_SELECTOR = '#orientationSelector';
+Elements.RESOLUTION_SELECTOR = '#resolutionSelector';
+Elements.RESOLUTION_LIST = '#resolutionList';
 
 /**
  List of all Elements / Classes of elements used in the DOM

@@ -14,26 +14,53 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         initialize: function () {
             var self = this;
+            self.RESOLUTION = 'RESOLUTION';
 
-            $(this.el).find('#next').on('click',function(e){
-                if (self.options.to==null)
+            $(this.el).find('#next').on('click', function (e) {
+                if (self.options.to == null)
                     return;
                 self.options.appCoreStackView.slideToPage(self.options.to, 'right');
                 return false;
             });
-            $(this.el).find('#prev').on('click',function(e){
-                if (self.options.from==null)
+            $(this.el).find('#prev').on('click', function (e) {
+                if (self.options.from == null)
                     return;
                 self.options.appCoreStackView.slideToPage(self.options.from, 'left');
                 return false;
             });
+
+
         },
 
-        render: function() {
+        render: function () {
+            var self = this;
+            var screens = '';
+            var i = 0;
+
+            $('.selectedResolution', self.el).off('click');
+            require(['ScreenTemplate'], function () {
+                self.orientationSelector = Backbone.comBroker.getService(Services.ORIENTATION_SELECTOR);
+                var orientation = self.orientationSelector.model.get(self.orientationSelector.ORIENTATION);
+                $(Elements.RESOLUTION_LIST).empty();
+                for (var screenResolution in JalapenoTemplate[orientation]) {
+                    screens += '<a href="#" data-resolution="' + screenResolution + '" class="selectedResolution list-group-item">' +
+                        '<input name="resolutionOption" id="resSelector' + i + '" type="radio"/>' +
+                        '<label class="screenResolutionLabel"> ' + screenResolution + ' </label></a>'
+                    i++;
+                }
+                $(Elements.RESOLUTION_LIST).append(screens);
+                $('.selectedResolution', self.el).on('click', function (e) {
+                    var a = ($(e.target).is('a')) ? $(e.target) : $(e.target).closest('a');
+                    $(a).find(':input').prop('checked', true);
+                    // log($(a).data('resolution'))
+                    self.model.set(self.RESOLUTION, $(a).data('resolution'))
+                    setTimeout(function(){
+                        self.options.appCoreStackView.slideToPage(self.options.to, 'right');
+                    },500);
+                });
+            });
         }
-
-    })
-
+    });
 
     return ResolutionSelectorView;
 

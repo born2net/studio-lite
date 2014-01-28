@@ -10,8 +10,9 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
         initialize: function () {
             var self = this;
-            self.HORIZONTAL = 0;
-            self.VERTICAL = 1;
+            self.HORIZONTAL = 'HORIZONTAL';
+            self.VERTICAL = 'VERTICAL';
+            self.ORIENTATION = 'ORIENTATION';
 
             $(this.el).find('#prev').on('click',function(e){
                 self.options.appCoreStackView.slideToPage(self.options.from, 'left');
@@ -31,16 +32,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          Select a particular orientation and optionally move to the next selection views through
          the ScreenArrowSelector instance.
          @method _selectOrientation
-         @param {Number} i_orientation
+         @param {String} i_orientation
          **/
         _selectOrientation: function (i_orientation) {
             var self = this;
-
-            setTimeout(function () {
-                self.options.appCoreStackView.slideToPage(self.options.to, 'right');
-            }, 600);
-
-            self.model.set('screenOrientation', i_orientation);
 
             switch (i_orientation) {
                 case self.HORIZONTAL:
@@ -57,6 +52,16 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     break;
                 }
             }
+
+            self.model.set(self.ORIENTATION, i_orientation);
+            self.resolutionSelector = Backbone.comBroker.getService(Services.RESOLUTION_SELECTOR);
+            self.resolutionSelector.render();
+            setTimeout(function () {
+                self.options.appCoreStackView.slideToPage(self.options.to, 'right');
+            }, 500);
+
+
+
         }
     });
 

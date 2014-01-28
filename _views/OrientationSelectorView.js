@@ -10,22 +10,53 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
         initialize: function () {
             var self = this;
+            self.HORIZONTAL = 0;
+            self.VERTICAL = 1;
 
-            $(this.el).find('#next').on('click',function(e){
-                if (self.options.to==null)
-                    return;
-                self.options.appCoreStackView.slideToPage(self.options.to, 'right');
-                return false;
-            });
             $(this.el).find('#prev').on('click',function(e){
-                if (self.options.from==null)
-                    return;
                 self.options.appCoreStackView.slideToPage(self.options.from, 'left');
                 return false;
             });
+
+            $(Elements.IMG_HORIZONTAL).on('click', function () {
+                self._selectOrientation(self.HORIZONTAL);
+            });
+
+            $(Elements.IMG_VERTICAL).on('click', function () {
+                self._selectOrientation(self.VERTICAL);
+            });
         },
 
-        render: function() {
+        /**
+         Select a particular orientation and optionally move to the next selection views through
+         the ScreenArrowSelector instance.
+         @method _selectOrientation
+         @param {Number} i_orientation
+         **/
+        _selectOrientation: function (i_orientation) {
+            var self = this;
+
+            setTimeout(function () {
+                self.options.appCoreStackView.slideToPage(self.options.to, 'right');
+            }, 600);
+
+            self.model.set('screenOrientation', i_orientation);
+
+            switch (i_orientation) {
+                case self.HORIZONTAL:
+                {
+                    $(Elements.IMG_HORIZONTAL).css('opacity', '1');
+                    $(Elements.IMG_VERTICAL).css('opacity', '0.6');
+                    break;
+                }
+
+                case self.VERTICAL:
+                {
+                    $(Elements.IMG_HORIZONTAL).css('opacity', '0.6');
+                    $(Elements.IMG_VERTICAL).css('opacity', '1');
+                    break;
+                }
+            }
         }
     });
 

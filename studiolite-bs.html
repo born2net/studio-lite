@@ -134,11 +134,13 @@
                             <div id="campaignSelector" class="page center">
                                 <div style="overflow-y: scroll;height: 100%">
                                     <div id="campaignSelectionButtons" class="btn-group">
-                                        <button id="newCampaign" type="button" class="btn btn-default">new campaign
-                                            wizard
+                                        <button id="newCampaign" type="button" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-play-circle"></span>
+                                            new campaign wizard
                                         </button>
-                                        <button id="removeCampaign" type="button" class="btn btn-default">remove
-                                            campaign
+                                        <button id="removeCampaign" type="button" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-remove-circle"></span>
+                                            remove campaign
                                         </button>
                                     </div>
                                     <div id="campaignSelectorList" class="appList list-group">
@@ -146,79 +148,94 @@
                                 </div>
                             </div>
                             <div id="orientationSelector" class="page right">
-                                <h1>orientation selector</h1>
+                                <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm">
+                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                </button>
+                                <h3>Select your screen orientation</h3>
+
+                                <div id="orientationView">
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="50" data-theme="a">
+                                        <tr>
+                                            <td align="center"><img class="img-responsive" id="imgHorizontal"
+                                                                    src="https://secure.dynawebs.net/_studiolite-dev/_assets/orientationH.png"/>
+                                            </td>
+                                            <td align="center"><img class="img-responsive" id="imgVertical"
+                                                                    src="https://secure.dynawebs.net/_studiolite-dev/_assets/orientationV.png"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div id="resolutionSelector" class="page right">
+                                <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm">
+                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                </button>
+                                <h3>Select your screen resolution</h3>
+                            </div>
+                            <div id="campaign" class="page right">
+                                <h1>campaign</h1>
                                 <a id="prev" href="#">Prev</a>
                                 <a id="next" href="#">Next</a>
                             </div>
-                            <div id="resolutionSelector" class="page right"
-                            ">
-                            <h1>resolution selector</h1>
-                            <a id="prev" href="#">Prev</a>
-                            <a id="next" href="#">Next</a>
-                        </div>
-                        <div id="campaign" class="page right">
-                            <h1>campaign</h1>
-                            <a id="prev" href="#">Prev</a>
-                            <a id="next" href="#">Next</a>
-                        </div>
-                        <div id="waitScreenMainPanel" class="page center" style="display: none">
-                            <div style="overflow-y: scroll;height: 100%">
-                                <h1>Please wait</h1>
+                            <div id="waitScreenMainPanel" class="page center" style="display: none">
+                                <div style="overflow-y: scroll;height: 100%">
+                                    <h1>Please wait</h1>
                                     <span style="position: relative; left: 45%; top: 40%">
 	                                    <img src="./_assets/preload7.gif">
                                     </span>
+                                </div>
                             </div>
+
                         </div>
+                    </div>
 
+                    <div id="resourcesPanel" style="display: none">
+                        <h5>resources</h5>
+                    </div>
+                    <div id="stationsPanel" style="display: none">
+                        <h5>stations</h5>
+                    </div>
+                    <div id="settingsPanel" style="display: none">
+                        <h5>settings</h5>
+                    </div>
+                    <div id="proStudioPanel" style="display: none">
+                        <h5>pro studio</h5>
+                    </div>
+                    <div id="helpPanel" style="display: none">
+                        <h5>help</h5>
+                    </div>
+                    <div id="logoutPanel" style="display: none">
+                        <h5>logout</h5>
                     </div>
                 </div>
-
-                <div id="resourcesPanel" style="display: none">
-                    <h5>resources</h5>
-                </div>
-                <div id="stationsPanel" style="display: none">
-                    <h5>stations</h5>
-                </div>
-                <div id="settingsPanel" style="display: none">
-                    <h5>settings</h5>
-                </div>
-                <div id="proStudioPanel" style="display: none">
-                    <h5>pro studio</h5>
-                </div>
-                <div id="helpPanel" style="display: none">
-                    <h5>help</h5>
-                </div>
-                <div id="logoutPanel" style="display: none">
-                    <h5>logout</h5>
-                </div>
-            </div>
-            <div id="propPanelWrap" class="hidden-xs col-sm-3 col-lg-3">
-                <div id="propPanel">
-                    <div id="emptyProperties">
-                        <h6>MediaSignage Inc (c)</h6>
-                    </div>
-                    <div id="campaignProperties" style="display: none">
-                        <form class="form-horizontal" role="form">
-                            <input id="formCampaignName" type="text" class="form-control" placeholder="Campaign name">
-                        </form>
-                    </div>
-                    <div id="channelProperties" style="display: none">
-                    </div>
-                    <div id="timelineProperties" style="display: none">
-                    </div>
-                    <div id="commonBlockProperties" style="display: none">
-                    </div>
-                    <div id="rssProperties" style="display: none">
-                    </div>
-                    <div id="qrProperties" style="display: none">
-                    </div>
-                    <div id="subPropPanel" style="display: none">
+                <div id="propPanelWrap" class="hidden-xs col-sm-3 col-lg-3">
+                    <div id="propPanel">
+                        <div id="emptyProperties">
+                            <h6>MediaSignage Inc (c)</h6>
+                        </div>
+                        <div id="campaignProperties" style="display: none">
+                            <form class="form-horizontal" role="form">
+                                <input id="formCampaignName" type="text" class="form-control"
+                                       placeholder="Campaign name">
+                            </form>
+                        </div>
+                        <div id="channelProperties" style="display: none">
+                        </div>
+                        <div id="timelineProperties" style="display: none">
+                        </div>
+                        <div id="commonBlockProperties" style="display: none">
+                        </div>
+                        <div id="rssProperties" style="display: none">
+                        </div>
+                        <div id="qrProperties" style="display: none">
+                        </div>
+                        <div id="subPropPanel" style="display: none">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 
 

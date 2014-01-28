@@ -219,7 +219,8 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                         appCoreStackView: self.m_campaignSliderStackView,
                         from: Elements.CAMPAIGN_SELECTOR,
                         el: Elements.ORIENTATION_SELECTOR,
-                        to: Elements.RESOLUTION_SELECTOR
+                        to: Elements.RESOLUTION_SELECTOR,
+                        model: new Backbone.Model({screenOrientation: null})
                     });
 
 
@@ -227,7 +228,8 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                         appCoreStackView: self.m_campaignSliderStackView,
                         from: Elements.ORIENTATION_SELECTOR,
                         el: Elements.RESOLUTION_SELECTOR,
-                        to: Elements.CAMPAIGN
+                        to: Elements.CAMPAIGN,
+                        model: new Backbone.Model({screenResolution: null})
                     });
 
                     self.m_campaignView = new CampaignView({

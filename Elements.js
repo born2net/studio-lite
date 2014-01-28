@@ -36,6 +36,8 @@ Elements.SETTINGS_PANEL = '#settingsPanel';
 Elements.PRO_STUDIO_PANEL = '#proStudioPanel';
 Elements.HELP_PANEL = '#helpPanel';
 Elements.LOGOUT_PANEL = '#logoutPanel';
+Elements.IMG_HORIZONTAL = '#imgHorizontal';
+Elements.IMG_VERTICAL = '#imgVertical';
 
 /**
  List of all Elements / Classes of elements used in the DOM

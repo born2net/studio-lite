@@ -93,6 +93,7 @@ body {
     position: absolute;
     margin: 10px;
     right: 30px;
+    top: 2px;
     z-index: 110;
 }
 
@@ -148,6 +149,16 @@ body {
 #campaignProperties {
     padding-top: 10px;
     padding-right: 10px;
+}
+
+#imgHorizontal {
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+#imgVertical {
+    opacity: 0.6;
+    cursor: pointer;
 }
 
 .navbar-nav {

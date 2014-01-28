@@ -6,19 +6,25 @@ Elements.FILE_MENU = '#fileMenu';
 Elements.REMEMBER_ME = '#rememberMe';
 Elements.APP_CONTENT = '#appContent';
 Elements.APP_NAVIGATOR = '#appNavigator';
-Elements.PROP_PANEL = '#propPanel';
 Elements.POP_MODAL = '#popModal';
 Elements.PROP_PANEL_WRAP = '#propPanelWrap';
 Elements.MAIN_PANEL_WRAP = '#mainPanelWrap';
 Elements.PROP_PANEL = '#propPanel';
+Elements.SUB_PROP_PANEL = '#subPropPanel';
+Elements.EMPTY_PROPERTIES = '#emptyProperties';
 Elements.CAMPAIGN_MANAGER_VIEW = '#campaignManagerView';
 Elements.CAMPAIGN_SLIDER = '#campaignSlider';
+
+Elements.CAMPAIGN_PROPERTIES = '#campaignProperties';
+Elements.FORM_CAMPAIGN_NAME = '#formCampaignName';
+
+
 
 Elements.CAMPAIGN = '#campaign';
 Elements.CAMPAIGN_SELECTOR = '#campaignSelector';
 Elements.ORIENTATION_SELECTOR = '#orientationSelector';
 Elements.RESOLUTION_SELECTOR = '#resolutionSelector';
-
+Elements.PROP_PANEL = '#propPanel';
 Elements.POPUP_PROPERTIES = '#popupProperties';
 Elements.ABOUT_US = '#aboutUS';
 Elements.STACK_WAIT_MODAL_VIEW = '#stackWaitModalView';

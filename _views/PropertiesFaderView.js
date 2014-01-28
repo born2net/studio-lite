@@ -12,7 +12,7 @@
  @return {object} CompProperty instance.
  **/
 
-define(['jquery', 'backbone'], function ($, Backbone) {
+define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
 
     var PropertiesFaderView = Backbone.StackView.Fader.extend({
 
@@ -22,13 +22,22 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         initialize: function () {
             var self = this;
+
+            Backbone.StackView.ViewPort.prototype.initialize.call(this);
+            Backbone.comBroker.listen(AppEvents.APP_SIZED, self._onAppSized);
+
+            this.m_subViewStack = new StackView.Fader({el: Elements.SUB_PROP_PANEL});
+
+            this.m_mainPanels = {};
+            this.m_subPanels = {};
+            this._listenOnSlidingPanel();
             return;
+
             this.m_viewStack = new Viewstacks(this.m_myElementID);
             this.m_subViewStack = undefined;
             this.m_selectedPanelID = undefined;
             this.m_selectedSubPanelID = undefined;
-            this.m_mainPanels = {};
-            this.m_subPanels = {};
+
             this._init();
         },
 
@@ -194,6 +203,60 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         closePanel: function () {
             var self = this;
+        },
+
+        /**
+         Listen for open/close actions on properties panel that can slide in and out
+         @method _listenOnSlidingPanel
+         **/
+        _listenOnSlidingPanel: function () {
+            $(Elements.TOGGLE_PANEL).on('click', function () {
+                if ($(Elements.TOGGLE_PANEL).hasClass('buttonStateOn')) {
+                    $(Elements.TOGGLE_PANEL).toggleClass('buttonStateOn');
+                    $(Elements.PROP_PANEL_WRAP).fadeOut(function () {
+                        $(Elements.TOGGLE_PANEL).html('<');
+                        $(Elements.PROP_PANEL_WRAP).addClass('hidden-sm hidden-md');
+                        $(Elements.MAIN_PANEL_WRAP).removeClass('col-sm-9 col-md-9');
+                        $(Elements.MAIN_PANEL_WRAP).addClass('col-md-12');
+                    });
+                } else {
+                    $(Elements.TOGGLE_PANEL).toggleClass('buttonStateOn');
+                    $(Elements.TOGGLE_PANEL).html('>');
+                    $(Elements.MAIN_PANEL_WRAP).addClass('col-sm-9 col-md-9');
+                    setTimeout(function () {
+                        $(Elements.MAIN_PANEL_WRAP).removeClass('col-md-12');
+                        $(Elements.PROP_PANEL_WRAP).children().hide();
+                        $(Elements.PROP_PANEL_WRAP).removeClass('hidden-sm hidden-md');
+                        $(Elements.PROP_PANEL_WRAP).children().fadeIn();
+                    }, 500)
+                }
+            });
+        },
+
+        openPropertiesPanel: function(){
+            var self = this;
+            var layoutManager = Backbone.comBroker.getService(Services.LAYOUT_MANAGER);
+            if (layoutManager.getAppWidth() > 768){
+                $(Elements.PROP_PANEL_WRAP).append($(Elements.PROP_PANEL));
+                if ($(Elements.TOGGLE_PANEL).hasClass('buttonStateOn')==false) {
+                    $(Elements.TOGGLE_PANEL).trigger('click');
+                }
+            } else {
+                $(Elements.POPUP_PROPERTIES).append($(Elements.PROP_PANEL));
+                var popModalView = Backbone.comBroker.getService(Services.POP_MODAL_VIEW);
+                var view = popModalView.getViewByID(Elements.POPUP_PROPERTIES)
+                popModalView.selectView(view);
+            }
+        },
+
+        _onAppSized: function(){
+            var layoutManager = Backbone.comBroker.getService(Services.LAYOUT_MANAGER);
+            var a = layoutManager.getAppWidth();
+            if (layoutManager.getAppWidth() > 768){
+                $(Elements.PROP_PANEL_WRAP).append($(Elements.PROP_PANEL));
+            } else {
+                $(Elements.POPUP_PROPERTIES).append($(Elements.PROP_PANEL));
+            }
         }
     })
 

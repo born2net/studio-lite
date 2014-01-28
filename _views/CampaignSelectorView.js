@@ -16,16 +16,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             self.seletedCampaignID = -1;
 
-            /*
-             var self = this;
-             self.m_container = i_container;
-             self.m_property = commBroker.getService('CompProperty');
-             self.m_screenArrowSelector = undefined;
-
-             self._wireUI();
-             self._init();
-             */
-
             $('#newCampaign').on('click', function (e) {
                 var toView = self.options.appCoreStackView.getViewByID(self.options.to);
                 self.options.appCoreStackView.slideToPage(toView, 'right');
@@ -109,31 +99,11 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 $('.selectAppListItem ',self.el).removeClass('active');
                 var elem = $(e.target).closest('a').addClass('active');
                 self.seletedCampaignID = $(elem).data('campaignid');
-                e.stopImmediatePropagation();
-
-                return false;
-                var openProps = $(e.target).closest('a').hasClass('resourceLibOpenProps') ? true : false;
-                var resourceElem = $(e.target).closest('li');
-                var resourceProp = $(resourceElem).find(Elements.CLASS_RESOURCE_LIB_OPEN_PROPS);
-                self.seletedCampaignID = $(resourceElem).data('campaignid');
-
-                self.m_property.viewPanel(Elements.CAMPAIGN_PROPERTIES);
-
-                $(Elements.CLASS_SELECTED_LIB_RESOURCE).css('background-image', 'linear-gradient(#fff , #f1f1f1)');
-                $(resourceElem).css('background-image', 'linear-gradient(#bebebe , #bebebe)');
-                $(resourceProp).css('background-image', 'linear-gradient(#bebebe , #bebebe)');
-
                 var recCampaign = jalapeno.getCampaignRecord(self.seletedCampaignID);
+                $(Elements.FORM_CAMPAIGN_NAME).val(recCampaign['campaign_name']);
 
-                $(Elements.SELECTED_CAMPAIGN_PROPERTIES).val(recCampaign['campaign_name']);
-
-                $(self.m_container).listview('refresh');
-
-                if (openProps) {
-                    commBroker.getService('CompProperty').openPanel(e);
-                } else {
-                    self._campaignSelected();
-                }
+                var propertiesPanel = Backbone.comBroker.getService(Services.PROPERTIES_PANEL);
+                propertiesPanel.openPropertiesPanel();
 
                 e.stopImmediatePropagation();
                 return false;

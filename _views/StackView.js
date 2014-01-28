@@ -202,7 +202,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             });
             i_view.$el.show();
             self.$el.append(i_view.el);
-            $('.modal_close').on('click', function (e) {
+            $('.modal_close').one('click', function (e) {
                 self.closeModal(self.el);
                 e.preventDefault();
             });

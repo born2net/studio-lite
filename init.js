@@ -20,7 +20,6 @@ require.config({
         "LayoutManager": '_comps/LayoutManager',
         "ComBroker": '_controllers/ComBroker',
         "AppAuth": '_controllers/AppAuth',
-        "AppSizer": '_controllers/AppSizer',
         "StackView": '_views/StackView',
         "NavigationView": '_views/NavigationView',
         "WaitView": '_views/WaitView',

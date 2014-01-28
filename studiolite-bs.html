@@ -134,8 +134,12 @@
                             <div id="campaignSelector" class="page center">
                                 <div style="overflow-y: scroll;height: 100%">
                                     <div id="campaignSelectionButtons" class="btn-group">
-                                        <button id="newCampaign" type="button" class="btn btn-default">new campaign wizard</button>
-                                        <button id="removeCampaign" type="button" class="btn btn-default">remove campaign</button>
+                                        <button id="newCampaign" type="button" class="btn btn-default">new campaign
+                                            wizard
+                                        </button>
+                                        <button id="removeCampaign" type="button" class="btn btn-default">remove
+                                            campaign
+                                        </button>
                                     </div>
                                     <div id="campaignSelectorList" class="appList list-group">
                                     </div>
@@ -190,12 +194,26 @@
             </div>
             <div id="propPanelWrap" class="hidden-xs col-sm-3 col-lg-3">
                 <div id="propPanel">
-                    <span class="label label-primary">Primary</span>
-                    <span class="label label-success">Success</span>
-                    <span class="label label-info">Info</span>
-                    <span class="label label-warning">Warning</span>
+                    <div id="emptyProperties">
+                    </div>
+                    <div id="campaignProperties" style="display: none">
+                        <form class="form-horizontal" role="form">
+                            <input id="formCampaignName" type="text" class="form-control" placeholder="Campaign name">
+                        </form>
+                    </div>
+                    <div id="channelProperties" style="display: none">
+                    </div>
+                    <div id="timelineProperties" style="display: none">
+                    </div>
+                    <div id="commonBlockProperties" style="display: none">
+                    </div>
+                    <div id="rssProperties" style="display: none">
+                    </div>
+                    <div id="qrProperties" style="display: none">
+                    </div>
+                    <div id="subPropPanel" style="display: none">
+                    </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -241,14 +259,6 @@
 <div id="popupProperties" style="display: none">
     <h1>Properties</h1>
     <button type="button" class="btn btn-primary modal_close" data-dismiss="modal">Close</button>
-    <button id="firstButton" type="button" class="btn btn-primary" data-dismiss="modal">first b</button>
-    <button id="secondButton" type="button" class="btn btn-primary" data-dismiss="modal">second b</button>
-    <button id="thirdButton" type="button" class="btn btn-primary" data-dismiss="modal">third c</button>
-    <form action="demo_form.asp">
-        First name: <input type="text" name="fname"><br>
-        Last name: <input type="text" name="lname"><br>
-        <input type="submit" value="Submit">
-    </form>
 </div>
 
 <div id="aboutUS" style="display: none">

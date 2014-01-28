@@ -4,8 +4,8 @@
  @constructor
  @return {Object} instantiated AppRouter
  **/
-define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationView', 'AppEntryFaderView', 'LoginView', 'AppContentFaderView', 'WaitView', 'bootbox', 'CampaignManagerView', 'ResourcesView', 'ResourcesView', 'StationsView', 'SettingsView', 'ProStudioView', 'HelpView', 'LogoutView', 'CampaignSliderStackView'],
-    function (_, $, Backbone, AppAuth, AppSizer, NavigationView, AppEntryFaderView, LoginView, AppContentFaderView, WaitView, Bootbox, CampaignManagerView, ResourcesView, ResourcesView, StationsView, SettingsView, ProStudioView, HelpView, LogoutView, CampaignSliderStackView) {
+define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEntryFaderView', 'LoginView', 'AppContentFaderView', 'WaitView', 'bootbox', 'CampaignManagerView', 'ResourcesView', 'ResourcesView', 'StationsView', 'SettingsView', 'ProStudioView', 'HelpView', 'LogoutView', 'CampaignSliderStackView'],
+    function (_, $, Backbone, AppAuth, NavigationView, AppEntryFaderView, LoginView, AppContentFaderView, WaitView, Bootbox, CampaignManagerView, ResourcesView, ResourcesView, StationsView, SettingsView, ProStudioView, HelpView, LogoutView, CampaignSliderStackView) {
 
         var LayoutManager = Backbone.Router.extend({
 
@@ -15,6 +15,8 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
              **/
             initialize: function () {
                 this._initLoginPage();
+                this._listenSizeChanges();
+                $(window).trigger('resize');
             },
 
             /**
@@ -94,7 +96,6 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
                     this._initProperties();
                     this._initCampaignWizardPage();
                     this._initModal();
-                    this._listenOnSlidingPanel();
                 } else {
                     this.navigate('unauthenticated', {trigger: true});
                 }
@@ -151,7 +152,9 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
             _initContentPage: function () {
                 var self = this;
 
-                this.m_appSizer = new AppSizer();
+                // this.m_appSizer = new AppSizer();
+                // Backbone.comBroker.setService(Services.APP_SIZER, this.m_appSizer);
+
                 this.m_navigationView = new NavigationView({
                     el: Elements.FILE_MENU
                 });
@@ -198,11 +201,16 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
                 this.m_appContentFaderView.selectView(this.m_campaignManagerView);
             },
 
+            /**
+             Global properties panel view
+             @method _initProperties
+             **/
             _initProperties: function () {
                 require(['PropertiesFaderView'], function (PropertiesFaderView) {
                     this.m_propertiesFaderView = new PropertiesFaderView({
                         el: Elements.PROP_PANEL
                     });
+                    Backbone.comBroker.setService(Services.PROPERTIES_PANEL, this.m_propertiesFaderView);
                 });
             },
 
@@ -260,58 +268,50 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'AppSizer', 'NavigationVi
              @method _initModal
              **/
             _initModal: function () {
-
+                var self = this;
                 require(['PopModalView'], function (PopModalView) {
                     var popModalView = new PopModalView({
                         el: Elements.POP_MODAL,
                         animation: 'slide_top', //or 'fade'
                         bgColor: 'white'
                     });
-                    var md1 = new Backbone.View({el: Elements.POPUP_PROPERTIES});
-                    var md2 = new Backbone.View({el: Elements.ABOUT_US});
-                    var md3 = new Backbone.View({el: Elements.STACK_WAIT_MODAL_VIEW});
-                    popModalView.addView(md1);
-                    popModalView.addView(md2);
-                    popModalView.addView(md3);
-                    var c = 0;
-                    $('#someAction').on('click', function () {
-                        c++;
-                        if (c == 1)
-                            popModalView.selectView(md1);
-                        if (c == 2)
-                            popModalView.selectView(md2);
-                        if (c == 3)
-                            popModalView.selectView(md3);
-                    });
+                    self.m_popUpProperties = new Backbone.View({el: Elements.POPUP_PROPERTIES});
+                    popModalView.addView(self.m_popUpProperties);
+
+                    self.m_popUpAboutUs = new Backbone.View({el: Elements.ABOUT_US});
+                    popModalView.addView(self.m_popUpAboutUs);
+
+                    self.m_popUpWait = new Backbone.View({el: Elements.STACK_WAIT_MODAL_VIEW});
+                    popModalView.addView(self.m_popUpWait);
+
+                    Backbone.comBroker.setService(Services.POP_MODAL_VIEW, popModalView);
                 });
             },
 
-            /**
-             Listen for open/close actions on properties panel that can slide in and out
-             @method _listenOnSlidingPanel
-             **/
-            _listenOnSlidingPanel: function () {
-                $(Elements.TOGGLE_PANEL).on('click', function () {
-                    if ($(Elements.TOGGLE_PANEL).hasClass('buttonStateOn')) {
-                        $(Elements.TOGGLE_PANEL).toggleClass('buttonStateOn');
-                        $(Elements.PROP_PANEL_WRAP).fadeOut(function () {
-                            $(Elements.TOGGLE_PANEL).html('<');
-                            $(Elements.PROP_PANEL_WRAP).addClass('hidden-sm hidden-md');
-                            $(Elements.MAIN_PANEL_WRAP).removeClass('col-sm-9 col-md-9');
-                            $(Elements.MAIN_PANEL_WRAP).addClass('col-md-12');
-                        });
-                    } else {
-                        $(Elements.TOGGLE_PANEL).toggleClass('buttonStateOn');
-                        $(Elements.TOGGLE_PANEL).html('>');
-                        $(Elements.MAIN_PANEL_WRAP).addClass('col-sm-9 col-md-9');
-                        setTimeout(function () {
-                            $(Elements.MAIN_PANEL_WRAP).removeClass('col-md-12');
-                            $(Elements.PROP_PANEL_WRAP).children().hide();
-                            $(Elements.PROP_PANEL_WRAP).removeClass('hidden-sm hidden-md');
-                            $(Elements.PROP_PANEL_WRAP).children().fadeIn();
-                        }, 500)
-                    }
-                });
+            _listenSizeChanges: function () {
+                var self = this;
+                var lazyLayout = _.debounce(self._updateLayout, 150);
+                $(window).resize(lazyLayout);
+            },
+
+            _updateLayout: function () {
+                var self = Backbone.comBroker.getService(Services.LAYOUT_MANAGER);
+                var b = $('body');
+                self._appHeight = b.css('height').replace('px', '');
+                self._appWidth = b.css('width').replace('px', '');
+                var h = self._appHeight - 115; // reduce footer
+                $(Elements.PROP_PANEL_WRAP).height(h);
+                $(Elements.MAIN_PANEL_WRAP).height(h);
+                $(Elements.APP_NAVIGATOR).height(h);
+                Backbone.comBroker.fire(AppEvents.APP_SIZED);
+            },
+
+            getAppWidth: function () {
+                return this._appWidth;
+            },
+
+            getAppHeight: function () {
+                return this._appHeight;
             }
         });
 

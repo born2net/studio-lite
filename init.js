@@ -38,6 +38,7 @@ require.config({
         "CampaignSelectorView": '_views/CampaignSelectorView',
         "ResolutionSelectorView": '_views/ResolutionSelectorView',
         "OrientationSelectorView": '_views/OrientationSelectorView',
+        "ScreenLayoutSelectorView": '_views/ScreenLayoutSelectorView',
         "CampaignView": '_views/CampaignView',
         "SequencerView": '_views/SequencerView',
         "ChannelListView": '_views/ChannelListView',

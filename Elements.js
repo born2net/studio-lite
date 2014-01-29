@@ -39,6 +39,8 @@ Elements.IMG_VERTICAL = '#imgVertical';
 Elements.ORIENTATION_SELECTOR = '#orientationSelector';
 Elements.RESOLUTION_SELECTOR = '#resolutionSelector';
 Elements.RESOLUTION_LIST = '#resolutionList';
+Elements.SCREEN_LAYOUT_SELECTOR = '#screenLayoutSelector';
+
 
 /**
  List of all Elements / Classes of elements used in the DOM

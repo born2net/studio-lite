@@ -5,8 +5,8 @@
  @constructor
  @return {Object} instantiated AppRouter
  **/
-define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEntryFaderView', 'LoginView', 'AppContentFaderView', 'WaitView', 'bootbox', 'CampaignManagerView', 'ResourcesView', 'ResourcesView', 'StationsView', 'SettingsView', 'ProStudioView', 'HelpView', 'LogoutView', 'CampaignSliderStackView'],
-    function (_, $, Backbone, AppAuth, NavigationView, AppEntryFaderView, LoginView, AppContentFaderView, WaitView, Bootbox, CampaignManagerView, ResourcesView, ResourcesView, StationsView, SettingsView, ProStudioView, HelpView, LogoutView, CampaignSliderStackView) {
+define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEntryFaderView', 'LoginView', 'AppContentFaderView', 'WaitView', 'bootbox', 'CampaignManagerView', 'ResourcesView', 'ResourcesView', 'StationsView', 'SettingsView', 'ProStudioView', 'HelpView', 'LogoutView', 'CampaignSliderStackView', 'ScreenLayoutSelectorView'],
+    function (_, $, Backbone, AppAuth, NavigationView, AppEntryFaderView, LoginView, AppContentFaderView, WaitView, Bootbox, CampaignManagerView, ResourcesView, ResourcesView, StationsView, SettingsView, ProStudioView, HelpView, LogoutView, CampaignSliderStackView, ScreenLayoutSelectorView) {
 
         var LayoutManager = Backbone.Router.extend({
 
@@ -228,14 +228,22 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                         appCoreStackView: self.m_campaignSliderStackView,
                         from: Elements.ORIENTATION_SELECTOR,
                         el: Elements.RESOLUTION_SELECTOR,
-                        to: Elements.CAMPAIGN,
+                        to: Elements.SCREEN_LAYOUT_SELECTOR,
                         model: new Backbone.Model({screenResolution: null})
                     });
                     Backbone.comBroker.setService(Services.RESOLUTION_SELECTOR, self.m_resolutionSelectorView);
 
-                    self.m_campaignView = new CampaignView({
+                    self.m_screenLayoutSelectorView = new ScreenLayoutSelectorView({
                         appCoreStackView: self.m_campaignSliderStackView,
                         from: Elements.RESOLUTION_SELECTOR,
+                        el: Elements.SCREEN_LAYOUT_SELECTOR,
+                        to: Elements.CAMPAIGN,
+                        model: new Backbone.Model({screenLayout: null})
+                    });
+
+                    self.m_campaignView = new CampaignView({
+                        appCoreStackView: self.m_campaignSliderStackView,
+                        from: Elements.SCREEN_LAYOUT_SELECTOR,
                         el: Elements.CAMPAIGN,
                         to: Elements.CAMPAIGN_SELECTOR
                     });
@@ -243,6 +251,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                     self.m_campaignSliderStackView.addView(self.m_campaignSelectorView);
                     self.m_campaignSliderStackView.addView(self.m_orientationSelectorView);
                     self.m_campaignSliderStackView.addView(self.m_resolutionSelectorView);
+                    self.m_campaignSliderStackView.addView(self.m_screenLayoutSelectorView);
                     self.m_campaignSliderStackView.addView(self.m_campaignView);
                     self.m_campaignSliderStackView.selectView(self.m_campaignSelectorView);
                 });

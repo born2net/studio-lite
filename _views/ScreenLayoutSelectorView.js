@@ -41,8 +41,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             return;
             // $('.ui-mobile-viewport').css({overflow: 'visible'});
             var self = this;
-            var resolution = Backbone.commBroker.getService(Services.RESOLUTION_SELECTOR).model.get('RESOLUTION');
-            var orientation = Backbone.commBroker.getService(Services.ORIENTATION_SELECTOR).model.get('ORIENTATION');
+            var resolution = Backbone.commBroker.getService(Services.RESOLUTION_SELECTOR).model.get(Consts.RESOLUTION);
+            var orientation = Backbone.commBroker.getService(Services.ORIENTATION_SELECTOR).model.get(Consts.ORIENTATION);
 
             commBroker.listenOnce(ScreenTemplateFactory.ON_VIEWER_SELECTED, function () {
                 self.destroy();

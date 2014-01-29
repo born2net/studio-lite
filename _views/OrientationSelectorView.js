@@ -10,9 +10,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
         initialize: function () {
             var self = this;
-            self.HORIZONTAL = 'HORIZONTAL';
-            self.VERTICAL = 'VERTICAL';
-            self.ORIENTATION = 'ORIENTATION';
 
             $(this.el).find('#prev').on('click',function(e){
                 self.options.appCoreStackView.slideToPage(self.options.from, 'left');
@@ -20,11 +17,11 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             });
 
             $(Elements.IMG_HORIZONTAL).on('click', function () {
-                self._selectOrientation(self.HORIZONTAL);
+                self._selectOrientation(Consts.HORIZONTAL);
             });
 
             $(Elements.IMG_VERTICAL).on('click', function () {
-                self._selectOrientation(self.VERTICAL);
+                self._selectOrientation(Consts.VERTICAL);
             });
         },
 
@@ -38,14 +35,14 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
 
             switch (i_orientation) {
-                case self.HORIZONTAL:
+                case Consts.HORIZONTAL:
                 {
                     $(Elements.IMG_HORIZONTAL).css('opacity', '1');
                     $(Elements.IMG_VERTICAL).css('opacity', '0.6');
                     break;
                 }
 
-                case self.VERTICAL:
+                case Consts.VERTICAL:
                 {
                     $(Elements.IMG_HORIZONTAL).css('opacity', '0.6');
                     $(Elements.IMG_VERTICAL).css('opacity', '1');
@@ -53,15 +50,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 }
             }
 
-            self.model.set(self.ORIENTATION, i_orientation);
+            self.model.set(Consts.ORIENTATION, i_orientation);
             self.resolutionSelector = Backbone.comBroker.getService(Services.RESOLUTION_SELECTOR);
             self.resolutionSelector.render();
             setTimeout(function () {
                 self.options.appCoreStackView.slideToPage(self.options.to, 'right');
             }, 500);
-
-
-
         }
     });
 

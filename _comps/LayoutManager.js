@@ -336,6 +336,8 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 $(Elements.PROP_PANEL_WRAP).height(h);
                 $(Elements.MAIN_PANEL_WRAP).height(h);
                 $(Elements.APP_NAVIGATOR).height(h);
+                // $('#screenLayoutList').height(h)+200;
+
                 Backbone.comBroker.fire(Backbone.EVENTS.APP_SIZED);
             },
 

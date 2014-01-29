@@ -83,14 +83,30 @@ body {
     border-right: 0px;
 }
 
+#waitScreenMainPanel span {
+    position: relative;
+    left: 45%;
+    top: 40%;
+}
+
 #appNavigator li:hover {
     /*bootstrap theme color*/;
     background-color: #428bca;
     color: white;
 }
 
+#screenLayoutList {
+    overflow-y: scroll;
+    height: 80%;
+}
+
 .noScroll {
     overflow: hidden;
+}
+
+.yScroll {
+    overflow-y: scroll;
+    height: 100%;
 }
 
 #togglePanel {

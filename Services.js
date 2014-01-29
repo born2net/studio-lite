@@ -8,7 +8,7 @@ Services.RESOLUTION_SELECTOR = 'RESOLUTION_SELECTOR';
 Services.ORIENTATION_SELECTOR = 'ORIENTATION_SELECTOR';
 
 // Subscribables
-AppEvents.APP_SIZED = 'APP_SIZED';
+Events.APP_SIZED = 'APP_SIZED';
 
 // Constants
 Consts.HORIZONTAL = 'HORIZONTAL';
@@ -17,7 +17,7 @@ Consts.ORIENTATION = 'ORIENTATION';
 Consts.RESOLUTION = 'RESOLUTION';
 
 
-function AppEvents() {
+function Events() {
 };
 function Services() {
 };

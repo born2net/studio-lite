@@ -64,6 +64,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
          **/
         selectView: function (i_view) {
             this.m_selectedView = this._parseView(i_view);
+            this.trigger(StackView.SELECTED_STACK_VIEW, i_view);
         },
 
         /**
@@ -126,6 +127,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
         slideToPage: function (i_toView, i_direction) {
             var self = this;
             i_toView = self._parseView(i_toView);
+            this.trigger(StackView.SELECTED_STACK_VIEW, i_toView);
             i_toView.$el.show();
             // toView.el.offsetWidth;
             // Position the new page at the starting position of the animation
@@ -262,6 +264,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
         }
     });
 
+    StackView.SELECTED_STACK_VIEW = 'SELECTED_STACK_VIEW';
     return StackView;
 
 });

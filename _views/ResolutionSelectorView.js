@@ -15,12 +15,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         initialize: function () {
             var self = this;
 
-            $(this.el).find('#next').on('click', function (e) {
-                if (self.options.to == null)
-                    return;
-                self.options.appCoreStackView.slideToPage(self.options.to, 'right');
-                return false;
-            });
             $(this.el).find('#prev').on('click', function (e) {
                 if (self.options.from == null)
                     return;
@@ -29,6 +23,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             });
         },
 
+        /**
+         Draw the UI for resolution selection
+         @method render
+         **/
         render: function () {
             var self = this;
             var screens = '';

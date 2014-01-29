@@ -23,7 +23,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             var self = this;
 
             Backbone.StackView.ViewPort.prototype.initialize.call(this);
-            Backbone.comBroker.listen(AppEvents.APP_SIZED, self._reconfigPropPanelLocation);
+            Backbone.comBroker.listen(Events.APP_SIZED, self._reconfigPropPanelLocation);
 
             this.m_subViewStack = new StackView.Fader({el: Elements.SUB_PROP_PANEL});
             this.m_mainPanels = {};

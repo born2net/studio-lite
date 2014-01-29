@@ -40,6 +40,8 @@ Elements.ORIENTATION_SELECTOR = '#orientationSelector';
 Elements.RESOLUTION_SELECTOR = '#resolutionSelector';
 Elements.RESOLUTION_LIST = '#resolutionList';
 Elements.SCREEN_LAYOUT_SELECTOR = '#screenLayoutSelector';
+Elements.SCREEN_LAYOUT_LIST = '#screenLayoutList';
+
 
 
 /**

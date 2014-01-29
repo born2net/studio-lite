@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated ScreenLayoutSelectorView
  **/
-define(['jquery', 'backbone'], function ($, Backbone) {
+define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($, Backbone, StackView, ScreenTemplateFactory) {
 
     var ScreenLayoutSelectorView = Backbone.View.extend({
 
@@ -14,37 +14,37 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         initialize: function () {
             var self = this;
+            self.m_screens = [];
 
-            $(this.el).find('#next').on('click', function (e) {
-                if (self.options.to == null)
-                    return;
-                self.options.appCoreStackView.slideToPage(self.options.to, 'right');
-                return false;
+            self.listenTo(self.options.appCoreStackView, StackView.SELECTED_STACK_VIEW,function(e){
+                if (e == self){
+                    self.render();
+                }
             });
+
             $(this.el).find('#prev').on('click', function (e) {
                 if (self.options.from == null)
                     return;
                 self.options.appCoreStackView.slideToPage(self.options.from, 'left');
                 return false;
             });
-
-            self.buildScreensLayoutList();
         },
 
 
         /**
          Build the list of templates a user can select from.
-         @method buildScreensLayoutList
+         @method render
          @return none
          **/
-        buildScreensLayoutList: function () {
-            return;
+        render: function () {
             // $('.ui-mobile-viewport').css({overflow: 'visible'});
             var self = this;
-            var resolution = Backbone.commBroker.getService(Services.RESOLUTION_SELECTOR).model.get(Consts.RESOLUTION);
-            var orientation = Backbone.commBroker.getService(Services.ORIENTATION_SELECTOR).model.get(Consts.ORIENTATION);
 
-            commBroker.listenOnce(ScreenTemplateFactory.ON_VIEWER_SELECTED, function () {
+            $(Elements.SCREEN_LAYOUT_LIST).empty();
+            var resolution = Backbone.comBroker.getService(Services.RESOLUTION_SELECTOR).model.get(Consts.RESOLUTION);
+            var orientation = Backbone.comBroker.getService(Services.ORIENTATION_SELECTOR).model.get(Consts.ORIENTATION);
+
+            Backbone.comBroker.listenOnce(ScreenTemplateFactory.ON_VIEWER_SELECTED, function () {
                 self.destroy();
                 setTimeout(function () {
                     $.mobile.changePage(Elements.STUDIO_LITE);
@@ -53,7 +53,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
             $(Elements.SCREEN_LAYOUT_LIST).empty();
 
-            var collection = model.getScreenCollection();
+            // var collection = model.getScreenCollection();
+            var collection = JalapenoTemplate;
             for (var screenType in JalapenoTemplate[orientation][resolution]) {
 
                 var screenTemplateData = {
@@ -64,11 +65,14 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     scale: 14
                 }
 
-                var screenProps = collection[orientation][resolution][screenType];
-                var screenTemplate = new ScreenTemplateFactory(screenTemplateData, ScreenTemplateFactory.ENTIRE_SELECTABLE, this);
+                // var screenProps = collection[orientation][resolution][screenType];
+                var screenTemplate = new ScreenTemplateFactory({
+                    i_screenTemplateData: screenTemplateData,
+                    i_type: ScreenTemplateFactory.ENTIRE_SELECTABLE,
+                    i_owner: this
+                });
                 var snippet = screenTemplate.create();
-
-                $(self.m_element).append($(snippet));
+                $(Elements.SCREEN_LAYOUT_LIST).append($(snippet));
                 screenTemplate.activate();
                 self.m_screens.push(screenTemplate);
             }

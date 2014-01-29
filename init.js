@@ -15,7 +15,6 @@ require.config({
         "RC4": '_common/_js/rc4/RC4',
         "Base64": '_common/_js/base64/jquery.base64',
         "Jalapeno": '_jalapeno/Jalapeno',
-        "Services": 'Services',
         "Elements": 'Elements',
         "LayoutManager": '_comps/LayoutManager',
         "ComBroker": '_controllers/ComBroker',
@@ -79,9 +78,6 @@ require.config({
         },
         "AppAuth": {
             deps: ["RC4","Cookie"]
-        },
-        "Services": {
-            exports: 'Services'
         },
         "Elements": {
             exports: 'Elements'

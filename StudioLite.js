@@ -5,13 +5,16 @@
  @constructor
  @return {Object} instantiated StudioLite
  **/
-define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 'Services', 'ComBroker', 'Lib', 'Jalapeno'], function (_, $, Backbone, Bootstrap, backbonecontroller, Services, ComBroker, Lib, Jalapeno) {
+define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 'ComBroker', 'Lib', 'Jalapeno'], function (_, $, Backbone, Bootstrap, backbonecontroller, ComBroker, Lib, Jalapeno) {
     var StudioLite = Backbone.Controller.extend({
 
         // application init
         initialize: function () {
 
             Backbone.globs = {};
+            Backbone.SERVICES = {};
+            Backbone.EVENTS = {};
+            Backbone.CONSTS = {};
             Backbone.globs['UNIQUE_COUNTER'] = 0;
             Backbone.globs['RC4KEY'] = '226a3a42f34ddd778ed2c3ba56644315';
             Backbone.lib = new Lib();
@@ -22,10 +25,10 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             window.log = Backbone.lib.log;
 
             // router init
-            require(['LayoutManager'],function(LayoutManager){
+            require(['LayoutManager'], function (LayoutManager) {
                 var layoutManager = new LayoutManager();
                 Backbone.history.start();
-                Backbone.comBroker.setService(Services.LAYOUT_MANAGER, layoutManager);
+                Backbone.comBroker.setService(Backbone.SERVICES.LAYOUT_MANAGER, layoutManager);
                 layoutManager.navigate('authenticate/_/_', {trigger: true});
             })
         }

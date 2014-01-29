@@ -6,6 +6,11 @@
  **/
 define(['jquery', 'backbone'], function ($, Backbone) {
 
+    Backbone.SERVICES.ORIENTATION_SELECTOR_VIEW = 'OrientationSelectorView';
+    Backbone.CONSTS.VERTICAL = 'VERTICAL';
+    Backbone.CONSTS.HORIZONTAL = 'HORIZONTAL';
+    Backbone.CONSTS.ORIENTATION = 'ORIENTATION';
+
     var OrientationSelectorView = Backbone.View.extend({
 
         initialize: function () {
@@ -17,11 +22,11 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             });
 
             $(Elements.IMG_HORIZONTAL).on('click', function () {
-                self._selectOrientation(Consts.HORIZONTAL);
+                self._selectOrientation(Backbone.CONSTS.HORIZONTAL);
             });
 
             $(Elements.IMG_VERTICAL).on('click', function () {
-                self._selectOrientation(Consts.VERTICAL);
+                self._selectOrientation(Backbone.CONSTS.VERTICAL);
             });
         },
 
@@ -35,14 +40,14 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
 
             switch (i_orientation) {
-                case Consts.HORIZONTAL:
+                case Backbone.CONSTS.HORIZONTAL:
                 {
                     $(Elements.IMG_HORIZONTAL).css('opacity', '1');
                     $(Elements.IMG_VERTICAL).css('opacity', '0.6');
                     break;
                 }
 
-                case Consts.VERTICAL:
+                case Backbone.CONSTS.VERTICAL:
                 {
                     $(Elements.IMG_HORIZONTAL).css('opacity', '0.6');
                     $(Elements.IMG_VERTICAL).css('opacity', '1');
@@ -50,8 +55,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 }
             }
 
-            self.model.set(Consts.ORIENTATION, i_orientation);
-            self.resolutionSelector = Backbone.comBroker.getService(Services.RESOLUTION_SELECTOR);
+            self.model.set(Backbone.CONSTS.ORIENTATION, i_orientation);
+            self.resolutionSelector = Backbone.comBroker.getService(Backbone.SERVICES.RESOLUTION_SELECTOR_VIEW);
             self.resolutionSelector.render();
             setTimeout(function () {
                 self.options.appCoreStackView.slideToPage(self.options.to, 'right');

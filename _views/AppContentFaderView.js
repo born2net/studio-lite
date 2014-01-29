@@ -1,10 +1,12 @@
 /**
- The Core Application StackView between Login screen and Main app
- @class AppEntryFaderView
+ The Core Application StackView between main modules (campaign / resources / settings etc)
+ @class AppContentFaderView
  @constructor
- @return {object} instantiated AppCoreStackView
+ @return {object} instantiated AppContentFaderView
  **/
 define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
+
+    Backbone.SERVICES.APP_CONTENT_FADER_VIEW = 'AppContentFaderView';
 
     var AppContentFaderView = Backbone.StackView.Fader.extend({
 

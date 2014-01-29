@@ -41,8 +41,8 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             var self = this;
 
             $(Elements.SCREEN_LAYOUT_LIST).empty();
-            var resolution = Backbone.comBroker.getService(Services.RESOLUTION_SELECTOR).model.get(Consts.RESOLUTION);
-            var orientation = Backbone.comBroker.getService(Services.ORIENTATION_SELECTOR).model.get(Consts.ORIENTATION);
+            var resolution = Backbone.comBroker.getService(Backbone.SERVICES.RESOLUTION_SELECTOR_VIEW).model.get(Backbone.CONSTS.RESOLUTION);
+            var orientation = Backbone.comBroker.getService(Backbone.SERVICES.ORIENTATION_SELECTOR_VIEW).model.get(Backbone.CONSTS.ORIENTATION);
 
             Backbone.comBroker.listenOnce(ScreenTemplateFactory.ON_VIEWER_SELECTED, function () {
                 self.destroy();

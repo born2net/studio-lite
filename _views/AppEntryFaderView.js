@@ -2,9 +2,11 @@
  The Core Application StackView between Login screen and Main app
  @class AppEntryFaderView
  @constructor
- @return {object} instantiated AppCoreStackView
+ @return {object} instantiated AppEntryFaderView
  **/
 define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
+
+    Backbone.SERVICES.APP_ENTRY_FADER_VIEW = 'AppEntryFaderView';
 
     var AppEntryFaderView = Backbone.StackView.Fader.extend({
 
@@ -13,6 +15,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
          @method initialize
          **/
         initialize: function () {
+            log(Backbone.SERVICES.APP_CONTENT_FADER_VIEW);
             Backbone.StackView.ViewPort.prototype.initialize.call(this);
         }
     });

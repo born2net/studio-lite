@@ -27,7 +27,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         authenticate: function (i_user, i_pass) {
             var self = this;
-            var appRouter = Backbone.comBroker.getService(Services.LAYOUT_MANAGER);
+            var appRouter = Backbone.comBroker.getService(Backbone.SERVICES.LAYOUT_MANAGER);
             appRouter.navigate('authenticating', {trigger: true});
             self._loadCredentials(i_user, i_pass);
         },
@@ -48,7 +48,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             } else if (i_user.length > 2 && i_pass.length > 2) {
                 self._serverAuthenticate(i_user, i_pass, this.AUTH_USER_PASS);
             } else {
-                Backbone.comBroker.getService(Services.LAYOUT_MANAGER).navigate('unauthenticated', {trigger: true});
+                Backbone.comBroker.getService(Backbone.SERVICES.LAYOUT_MANAGER).navigate('unauthenticated', {trigger: true});
             }
         },
 
@@ -68,7 +68,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     self.authenticated = true;
                     if (i_authMode == self.AUTH_USER_PASS && $(Elements.REMEMBER_ME).prop('checked'))
                         self._bakeCookie(i_user, i_pass);
-                    Backbone.comBroker.getService(Services.LAYOUT_MANAGER).navigate('authenticated', {trigger: true});
+                    Backbone.comBroker.getService(Backbone.SERVICES.LAYOUT_MANAGER).navigate('authenticated', {trigger: true});
 
                 } else {
 
@@ -88,10 +88,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                                 }
                             }
                         });
-                        Backbone.comBroker.getService(Services.LAYOUT_MANAGER).navigate('unauthenticated', {trigger: true});
+                        Backbone.comBroker.getService(Backbone.SERVICES.LAYOUT_MANAGER).navigate('unauthenticated', {trigger: true});
                         return;
                     }
-                    Backbone.comBroker.getService(Services.LAYOUT_MANAGER).navigate('authenticationFailed', {trigger: true});
+                    Backbone.comBroker.getService(Backbone.SERVICES.LAYOUT_MANAGER).navigate('authenticationFailed', {trigger: true});
                 }
             });
         },

@@ -6,6 +6,9 @@
  **/
 define(['jquery', 'backbone'], function ($, Backbone) {
 
+    Backbone.SERVICES.RESOLUTION_SELECTOR_VIEW = 'ResolutionSelectorView';
+    Backbone.CONSTS.RESOLUTION = 'RESOLUTION';
+
     var ResolutionSelectorView = Backbone.View.extend({
 
         /**
@@ -34,8 +37,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
             $('.selectedResolution', self.el).off('click');
             require(['ScreenTemplate'], function () {
-                self.orientationSelector = Backbone.comBroker.getService(Services.ORIENTATION_SELECTOR);
-                var orientation = self.orientationSelector.model.get(Consts.ORIENTATION);
+                self.orientationSelector = Backbone.comBroker.getService(Backbone.SERVICES.ORIENTATION_SELECTOR_VIEW);
+                var orientation = self.orientationSelector.model.get(Backbone.CONSTS.ORIENTATION);
                 $(Elements.RESOLUTION_LIST).empty();
                 for (var screenResolution in JalapenoTemplate[orientation]) {
                     screens += '<a href="#" data-resolution="' + screenResolution + '" class="selectedResolution list-group-item">' +
@@ -48,7 +51,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     var a = ($(e.target).is('a')) ? $(e.target) : $(e.target).closest('a');
                     $(a).find(':input').prop('checked', true);
                     // log($(a).data('resolution'))
-                    self.model.set(Consts.RESOLUTION, $(a).data('resolution'))
+                    self.model.set(Backbone.CONSTS.RESOLUTION, $(a).data('resolution'))
                     setTimeout(function(){
                         self.options.appCoreStackView.slideToPage(self.options.to, 'right');
                     },500);

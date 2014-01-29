@@ -20,7 +20,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 el: Elements.CAMPAIGN_PROPERTIES
             })
 
-            self.m_propertiesPanel = Backbone.comBroker.getService(Services.PROPERTIES_PANEL);
+            self.m_propertiesPanel = Backbone.comBroker.getService(Backbone.SERVICES.PROPERTIES_VIEW);
             self.m_propertiesPanel.addView(this.m_campainProperties);
 
             $(Elements.NEW_CAMPAIGN).on('click', function (e) {

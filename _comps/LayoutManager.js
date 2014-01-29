@@ -8,6 +8,9 @@
 define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEntryFaderView', 'LoginView', 'AppContentFaderView', 'WaitView', 'bootbox', 'CampaignManagerView', 'ResourcesView', 'ResourcesView', 'StationsView', 'SettingsView', 'ProStudioView', 'HelpView', 'LogoutView', 'CampaignSliderStackView', 'ScreenLayoutSelectorView'],
     function (_, $, Backbone, AppAuth, NavigationView, AppEntryFaderView, LoginView, AppContentFaderView, WaitView, Bootbox, CampaignManagerView, ResourcesView, ResourcesView, StationsView, SettingsView, ProStudioView, HelpView, LogoutView, CampaignSliderStackView, ScreenLayoutSelectorView) {
 
+        Backbone.SERVICES.LAYOUT_MANAGER = 'LayoutManager';
+        Backbone.EVENTS.APP_SIZED = 'APP_SIZED';
+
         var LayoutManager = Backbone.Router.extend({
 
             /**
@@ -140,8 +143,8 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 this.m_appEntryFaderView.addView(this.m_appContentFaderView);
                 this.m_appEntryFaderView.addView(this.m_mainAppWaitView);
 
-                Backbone.comBroker.setService(Services.APP_ENTRY_FADER_VIEW, this.m_appEntryFaderView);
-                Backbone.comBroker.setService(Services.APP_CONTENT_FADER_VIEW, this.m_appContentFaderView);
+                Backbone.comBroker.setService(Backbone.SERVICES.APP_ENTRY_FADER_VIEW, this.m_appEntryFaderView);
+                Backbone.comBroker.setService(Backbone.SERVICES.APP_CONTENT_FADER_VIEW, this.m_appContentFaderView);
             },
 
             /**
@@ -222,7 +225,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                         to: Elements.RESOLUTION_SELECTOR,
                         model: new Backbone.Model({screenOrientation: null})
                     });
-                    Backbone.comBroker.setService(Services.ORIENTATION_SELECTOR, self.m_orientationSelectorView);
+                    Backbone.comBroker.setService(Backbone.SERVICES.ORIENTATION_SELECTOR_VIEW, self.m_orientationSelectorView);
 
                     self.m_resolutionSelectorView = new ResolutionSelectorView({
                         appCoreStackView: self.m_campaignSliderStackView,
@@ -231,7 +234,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                         to: Elements.SCREEN_LAYOUT_SELECTOR,
                         model: new Backbone.Model({screenResolution: null})
                     });
-                    Backbone.comBroker.setService(Services.RESOLUTION_SELECTOR, self.m_resolutionSelectorView);
+                    Backbone.comBroker.setService(Backbone.SERVICES.RESOLUTION_SELECTOR_VIEW, self.m_resolutionSelectorView);
 
                     self.m_screenLayoutSelectorView = new ScreenLayoutSelectorView({
                         appCoreStackView: self.m_campaignSliderStackView,
@@ -274,7 +277,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                     });
                     self.m_propertiesView.addView(this.m_emptyPropView);
                     self.m_propertiesView.selectView(this.m_emptyPropView);
-                    Backbone.comBroker.setService(Services.PROPERTIES_PANEL, this.m_propertiesView);
+                    Backbone.comBroker.setService(Backbone.SERVICES.PROPERTIES_VIEW, this.m_propertiesView);
                 });
             },
 
@@ -299,7 +302,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                     self.m_popUpWait = new Backbone.View({el: Elements.STACK_WAIT_MODAL_VIEW});
                     popModalView.addView(self.m_popUpWait);
 
-                    Backbone.comBroker.setService(Services.POP_MODAL_VIEW, popModalView);
+                    Backbone.comBroker.setService(Backbone.SERVICES.POP_MODAL_VIEW, popModalView);
                 });
             },
 
@@ -318,7 +321,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
              @method _updateLayout
              **/
             _updateLayout: function () {
-                var self = Backbone.comBroker.getService(Services.LAYOUT_MANAGER);
+                var self = Backbone.comBroker.getService(Backbone.SERVICES.LAYOUT_MANAGER);
                 var b = $('body');
                 self._appHeight = b.css('height').replace('px', '');
                 self._appWidth = b.css('width').replace('px', '');
@@ -326,7 +329,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 $(Elements.PROP_PANEL_WRAP).height(h);
                 $(Elements.MAIN_PANEL_WRAP).height(h);
                 $(Elements.APP_NAVIGATOR).height(h);
-                Backbone.comBroker.fire(Events.APP_SIZED);
+                Backbone.comBroker.fire(Backbone.EVENTS.APP_SIZED);
             },
 
             /**

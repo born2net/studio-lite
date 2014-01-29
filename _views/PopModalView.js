@@ -6,6 +6,8 @@
  **/
 define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
 
+    Backbone.SERVICES.POP_MODAL_VIEW = 'PopModalView';
+
     var PopModalView = Backbone.StackView.Modal.extend({
 
         /**

@@ -13,7 +13,7 @@
  **/
 define(['jquery', 'backbone'], function ($, Backbone) {
 
-    var ScreenTemplateFactory = Backbone.View.extend({
+    var ScreenTemplateFactory = Backbone.Controller.extend({
 
         /**
          Constructor

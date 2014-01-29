@@ -16,8 +16,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             this.render();
 
-            var appContentFaderView = Backbone.comBroker.getService(Services.APP_CONTENT_FADER_VIEW);
-            var appEntryFaderView = Backbone.comBroker.getService(Services.APP_ENTRY_FADER_VIEW);
+            var appContentFaderView = Backbone.comBroker.getService(Backbone.SERVICES.APP_CONTENT_FADER_VIEW);
+            var appEntryFaderView = Backbone.comBroker.getService(Backbone.SERVICES.APP_ENTRY_FADER_VIEW);
 
             $('.campaignManagerView').on('click', function () {
                 appContentFaderView.selectView(Elements.CAMPAIGN_MANAGER_VIEW);
@@ -58,7 +58,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         _resetPropertiesView: function(){
-            Backbone.comBroker.getService(Services.PROPERTIES_PANEL).selectView(Elements.EMPTY_PROPERTIES);
+            Backbone.comBroker.getService(Backbone.SERVICES.PROPERTIES_VIEW).selectView(Elements.EMPTY_PROPERTIES);
 
         },
 

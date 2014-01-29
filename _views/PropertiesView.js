@@ -13,6 +13,8 @@
  **/
 define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
 
+    Backbone.SERVICES.PROPERTIES_VIEW = 'PropertiesView';
+
     var PropertiesView = Backbone.StackView.Fader.extend({
 
         /**
@@ -23,7 +25,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             var self = this;
 
             Backbone.StackView.ViewPort.prototype.initialize.call(this);
-            Backbone.comBroker.listen(Events.APP_SIZED, self._reconfigPropPanelLocation);
+            Backbone.comBroker.listen(Backbone.EVENTS.APP_SIZED, self._reconfigPropPanelLocation);
 
             this.m_subViewStack = new StackView.Fader({el: Elements.SUB_PROP_PANEL});
             this.m_mainPanels = {};
@@ -64,7 +66,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
          @method _reconfigPropPanelLocation
          **/
         _reconfigPropPanelLocation: function(){
-            var layoutManager = Backbone.comBroker.getService(Services.LAYOUT_MANAGER);
+            var layoutManager = Backbone.comBroker.getService(Backbone.SERVICES.LAYOUT_MANAGER);
             if (layoutManager.getAppWidth() > 768){
                 $(Elements.PROP_PANEL_WRAP).append($(Elements.PROP_PANEL));
             } else {
@@ -79,13 +81,13 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
         openPropertiesPanel: function(){
             var self = this;
             self._reconfigPropPanelLocation();
-            var layoutManager = Backbone.comBroker.getService(Services.LAYOUT_MANAGER);
+            var layoutManager = Backbone.comBroker.getService(Backbone.SERVICES.LAYOUT_MANAGER);
             if (layoutManager.getAppWidth() > 768){
                 if ($(Elements.TOGGLE_PANEL).hasClass('buttonStateOn')==false) {
                     $(Elements.TOGGLE_PANEL).trigger('click');
                 }
             } else {
-                var popModalView = Backbone.comBroker.getService(Services.POP_MODAL_VIEW);
+                var popModalView = Backbone.comBroker.getService(Backbone.SERVICES.POP_MODAL_VIEW);
                 popModalView.selectView(Elements.POPUP_PROPERTIES);
             }
         }

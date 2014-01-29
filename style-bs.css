@@ -190,6 +190,27 @@ body {
     display: none;
 }
 
+
+aside > aside > div > ul > li {
+    display: block;
+    width: 100px;
+    list-style: none;
+    height: 60px;
+    float: left;
+    background: #E2E2E2;
+    border: 1px solid #666;
+    margin-right: 30px;
+    margin-left: 30px;
+}
+
+.dottedHR {
+    height: 6px;
+    width: 1500px;
+    position: relative;
+    border-top: 12px dotted #c1c1c1;
+    top: 20px;
+}
+
 /* -------------------------------------------
 StackView CSS
 ---------------------------------------------- */

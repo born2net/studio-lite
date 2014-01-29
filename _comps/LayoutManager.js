@@ -224,6 +224,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                         el: Elements.CAMPAIGN_SELECTOR,
                         to: Elements.ORIENTATION_SELECTOR
                     });
+                    Backbone.comBroker.setService(Backbone.SERVICES.CAMPAIGN_SELECTOR, self.m_campaignSelectorView);
 
                     self.m_orientationSelectorView = new OrientationSelectorView({
                         stackView: self.m_campaignSliderStackView,

@@ -6,6 +6,8 @@
  **/
 define(['jquery', 'backbone'], function ($, Backbone) {
 
+    Backbone.SERVICES.CAMPAIGN_SELECTOR = 'CampaignSelector';
+
     var CampaignSelectorView = Backbone.View.extend({
 
         /**
@@ -175,18 +177,15 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             $(Elements.FORM_CAMPAIGN_NAME).on("input", updCampaignName);
         },
 
-
         /**
-         When a campaign is selected disable the arrow navigation component
-         @method _campaignSelected
-         @return none
+         Get selected campaign id
+         @method getSelectedCampaign
+         @return {Number} campaign_id
          **/
-        _campaignSelected: function () {
-            var self = this;
-            commBroker.getService('Campaign').setSelectedCampaign(self.m_seletedCampaignID);
-            self.m_screenArrowSelector.selectLast();
+        getSelectedCampaign: function () {
+            return this.m_seletedCampaignID;
         }
-    })
+    });
 
     return CampaignSelectorView;
 

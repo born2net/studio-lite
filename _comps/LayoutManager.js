@@ -9,6 +9,13 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
     function (_, $, Backbone, AppAuth, NavigationView, AppEntryFaderView, LoginView, AppContentFaderView, WaitView, Bootbox, CampaignManagerView, ResourcesView, ResourcesView, StationsView, SettingsView, ProStudioView, HelpView, LogoutView, CampaignSliderStackView, ScreenLayoutSelectorView) {
 
         Backbone.SERVICES.LAYOUT_MANAGER = 'LayoutManager';
+
+        /**
+         Event fired when app resized
+         @event APP_SIZED
+         @static
+         @final
+         **/
         Backbone.EVENTS.APP_SIZED = 'APP_SIZED';
 
         var LayoutManager = Backbone.Router.extend({
@@ -212,14 +219,14 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 require(['CampaignSelectorView', 'OrientationSelectorView', 'ResolutionSelectorView', 'CampaignView'], function (CampaignSelectorView, OrientationSelectorView, ResolutionSelectorView, CampaignView) {
 
                     self.m_campaignSelectorView = new CampaignSelectorView({
-                        appCoreStackView: self.m_campaignSliderStackView,
+                        stackView: self.m_campaignSliderStackView,
                         from: Elements.CAMPAIGN,
                         el: Elements.CAMPAIGN_SELECTOR,
                         to: Elements.ORIENTATION_SELECTOR
                     });
 
                     self.m_orientationSelectorView = new OrientationSelectorView({
-                        appCoreStackView: self.m_campaignSliderStackView,
+                        stackView: self.m_campaignSliderStackView,
                         from: Elements.CAMPAIGN_SELECTOR,
                         el: Elements.ORIENTATION_SELECTOR,
                         to: Elements.RESOLUTION_SELECTOR,
@@ -228,7 +235,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                     Backbone.comBroker.setService(Backbone.SERVICES.ORIENTATION_SELECTOR_VIEW, self.m_orientationSelectorView);
 
                     self.m_resolutionSelectorView = new ResolutionSelectorView({
-                        appCoreStackView: self.m_campaignSliderStackView,
+                        stackView: self.m_campaignSliderStackView,
                         from: Elements.ORIENTATION_SELECTOR,
                         el: Elements.RESOLUTION_SELECTOR,
                         to: Elements.SCREEN_LAYOUT_SELECTOR,
@@ -237,7 +244,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                     Backbone.comBroker.setService(Backbone.SERVICES.RESOLUTION_SELECTOR_VIEW, self.m_resolutionSelectorView);
 
                     self.m_screenLayoutSelectorView = new ScreenLayoutSelectorView({
-                        appCoreStackView: self.m_campaignSliderStackView,
+                        stackView: self.m_campaignSliderStackView,
                         from: Elements.RESOLUTION_SELECTOR,
                         el: Elements.SCREEN_LAYOUT_SELECTOR,
                         to: Elements.CAMPAIGN,
@@ -245,7 +252,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                     });
 
                     self.m_campaignView = new CampaignView({
-                        appCoreStackView: self.m_campaignSliderStackView,
+                        stackView: self.m_campaignSliderStackView,
                         from: Elements.SCREEN_LAYOUT_SELECTOR,
                         el: Elements.CAMPAIGN,
                         to: Elements.CAMPAIGN_SELECTOR

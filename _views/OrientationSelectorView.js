@@ -1,5 +1,5 @@
 /**
- Orientation selector Backbone > View
+ Orientation selector used to select new campaign orientation
  @class OrientationSelectorView
  @constructor
  @return {Object} instantiated OrientationSelectorView
@@ -13,11 +13,15 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
     var OrientationSelectorView = Backbone.View.extend({
 
+        /**
+         Constructor
+         @method initialize
+         **/
         initialize: function () {
             var self = this;
 
             $(this.el).find('#prev').on('click',function(e){
-                self.options.appCoreStackView.slideToPage(self.options.from, 'left');
+                self.options.stackView.slideToPage(self.options.from, 'left');
                 return false;
             });
 
@@ -59,7 +63,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self.resolutionSelector = Backbone.comBroker.getService(Backbone.SERVICES.RESOLUTION_SELECTOR_VIEW);
             self.resolutionSelector.render();
             setTimeout(function () {
-                self.options.appCoreStackView.slideToPage(self.options.to, 'right');
+                self.options.stackView.slideToPage(self.options.to, 'right');
             }, 500);
         }
     });

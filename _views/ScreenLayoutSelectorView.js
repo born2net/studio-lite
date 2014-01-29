@@ -1,5 +1,5 @@
 /**
- Backbone > View Resource selector
+ Select new screen layout (template) for a campaign > timeline
  @class ScreenLayoutSelectorView
  @constructor
  @return {Object} instantiated ScreenLayoutSelectorView
@@ -16,8 +16,8 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             var self = this;
             self.m_screens = [];
 
-            self.listenTo(self.options.appCoreStackView, StackView.SELECTED_STACK_VIEW,function(e){
-                if (e == self){
+            self.listenTo(self.options.stackView, Backbone.EVENTS.SELECTED_STACK_VIEW, function (e) {
+                if (e == self) {
                     self.render();
                 }
             });
@@ -25,7 +25,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             $(this.el).find('#prev').on('click', function (e) {
                 if (self.options.from == null)
                     return;
-                self.options.appCoreStackView.slideToPage(self.options.from, 'left');
+                self.options.stackView.slideToPage(self.options.from, 'left');
                 return false;
             });
         },
@@ -44,10 +44,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             var resolution = Backbone.comBroker.getService(Backbone.SERVICES.RESOLUTION_SELECTOR_VIEW).model.get(Backbone.CONSTS.RESOLUTION);
             var orientation = Backbone.comBroker.getService(Backbone.SERVICES.ORIENTATION_SELECTOR_VIEW).model.get(Backbone.CONSTS.ORIENTATION);
 
-            Backbone.comBroker.listenOnce(ScreenTemplateFactory.ON_VIEWER_SELECTED, function () {
-                self.destroy();
+            Backbone.comBroker.listenOnce(Backbone.EVENTS.ON_VIEWER_SELECTED, function () {
+                // self.destroy();
                 setTimeout(function () {
-                    $.mobile.changePage(Elements.STUDIO_LITE);
+                    self.options.stackView.slideToPage(self.options.to, 'right');
                 }, 700)
             });
 
@@ -68,7 +68,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 // var screenProps = collection[orientation][resolution][screenType];
                 var screenTemplate = new ScreenTemplateFactory({
                     i_screenTemplateData: screenTemplateData,
-                    i_type: ScreenTemplateFactory.ENTIRE_SELECTABLE,
+                    i_type: Backbone.CONSTS.ENTIRE_SELECTABLE,
                     i_owner: this
                 });
                 var snippet = screenTemplate.create();
@@ -80,7 +80,6 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
 
     });
 
-    ScreenLayoutSelectorView.SERVICE = 'ScreenLayoutSelectorView';
     return ScreenLayoutSelectorView;
 
 });

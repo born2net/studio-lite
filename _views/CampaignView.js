@@ -26,13 +26,13 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView'], function ($, 
             $(this.el).find('#next').on('click',function(e){
                 if (self.options.to==null)
                     return;
-                self.options.appCoreStackView.slideToPage(self.options.to, 'right');
+                self.options.stackView.slideToPage(self.options.to, 'right');
                 return false;
             });
             $(this.el).find('#prev').on('click',function(e){
                 if (self.options.from==null)
                     return;
-                self.options.appCoreStackView.slideToPage(self.options.from, 'left');
+                self.options.stackView.slideToPage(self.options.from, 'left');
                 return false;
             });
         },

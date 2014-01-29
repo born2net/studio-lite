@@ -24,7 +24,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self.m_propertiesPanel.addView(this.m_campainProperties);
 
             $(Elements.NEW_CAMPAIGN).on('click', function (e) {
-                self.options.appCoreStackView.slideToPage(self.options.to, 'right');
+                self.options.stackView.slideToPage(self.options.to, 'right');
                 return false;
             });
 
@@ -93,7 +93,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 $('.selectAppListItem ', self.el).removeClass('active');
                 $(this).addClass('active');
                 self.m_seletedCampaignID = $(this).data('campaignid');
-                self.options.appCoreStackView.slideToPage(Elements.CAMPAIGN, 'right');
+                self.options.stackView.slideToPage(Elements.CAMPAIGN, 'right');
                 return false;
             });
         },

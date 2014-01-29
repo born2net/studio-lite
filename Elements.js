@@ -42,6 +42,8 @@ Elements.RESOLUTION_LIST = '#resolutionList';
 Elements.SCREEN_LAYOUT_SELECTOR = '#screenLayoutSelector';
 Elements.SCREEN_LAYOUT_LIST = '#screenLayoutList';
 
+Elements.CLASS_SCREEN_DIVISION = '.screenDivisionClass';
+
 
 
 /**

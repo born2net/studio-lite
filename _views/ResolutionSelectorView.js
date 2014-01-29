@@ -1,5 +1,5 @@
 /**
- Backbone > View Resource selector
+ Resolution selector used to select new campaign width x height
  @class ResolutionSelectorView
  @constructor
  @return {Object} instantiated ResolutionSelectorView
@@ -21,7 +21,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             $(this.el).find('#prev').on('click', function (e) {
                 if (self.options.from == null)
                     return;
-                self.options.appCoreStackView.slideToPage(self.options.from, 'left');
+                self.options.stackView.slideToPage(self.options.from, 'left');
                 return false;
             });
         },
@@ -53,7 +53,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     // log($(a).data('resolution'))
                     self.model.set(Backbone.CONSTS.RESOLUTION, $(a).data('resolution'))
                     setTimeout(function(){
-                        self.options.appCoreStackView.slideToPage(self.options.to, 'right');
+                        self.options.stackView.slideToPage(self.options.to, 'right');
                     },500);
                 });
             });

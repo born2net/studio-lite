@@ -1,7 +1,7 @@
 /**
  The class generates the UI for a template (a.k.a Screen Division) that is
  a selectable widget including the drawing of each viewer (division) within
- the screen, as well as firing related tap events on action.
+ the screen, as well as firing related click events on action.
  @class ScreenTemplateFactory
  @constructor
  @param {object} i_screenTemplateData hold data as instructions for factory creation component
@@ -12,6 +12,41 @@
  of any interest to the listener.
  **/
 define(['jquery', 'backbone'], function ($, Backbone) {
+
+
+    /**
+     This is a key event in the framework as many different instances subscribe to ON_VIEWER_SELECTED to reconfigure
+     themselves. The event is fired when a viewer (i.e.: a screen division) is selected inside a Template (i.e. Screen).
+     The key to remember is that the Factory instance (this) is always created with respect to it's owner (i_owner),
+     so when ON_VIEWER_SELECTED is fired, the owner is carried with the event so listeners can act accordingly, and only if the owner
+     is of interest to a subscribed listener.
+     @event ON_VIEWER_SELECTED
+     @param {this} caller
+     @param {object} screenData event params
+     @static
+     @final
+     @param {screenData} json encapsulated data of entire configuration of instance
+     **/
+    Backbone.EVENTS.ON_VIEWER_SELECTED = 'ON_VIEWER_SELECTED';
+
+    /**
+     Instruct the factory to produce a Template (screen) that each viewer (screen division) can be selected individually
+     as well as the creation of corresponding viewer numbered labels inside each viewer.
+     @property VIEWER_SELECTABLE
+     @static
+     @final
+     @type String
+     */
+    Backbone.CONSTS.VIEWER_SELECTABLE = 'VIEWER_SELECTABLE';
+
+    /**
+     Instruct the factory to produce a Template (screen) that can only be selected as a whole (no viewers selectable) and no numbered labels.
+     @property ENTIRE_SELECTABLE
+     @static
+     @final
+     @type String
+     */
+    Backbone.CONSTS.ENTIRE_SELECTABLE = 'ENTIRE_SELECTABLE';
 
     var ScreenTemplateFactory = Backbone.Controller.extend({
 
@@ -58,7 +93,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         /**
-         Method is called when an entire screen frame of the UI is tapped, in contrast to when a single viewer is selected.
+         Method is called when an entire screen frame of the UI is clicked, in contrast to when a single viewer is selected.
          The difference in dispatch of the event depends on how the factory created this instance.
          @method _onScreenFrameSelected
          @param {Event} e
@@ -72,7 +107,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var campaign_timeline_board_viewer_id = $(element).data('campaign_timeline_board_viewer_id');
             var campaign_timeline_id = $(element).data('campaign_timeline_id');
 
-
             var screenData = {
                 sd: $(element).data('sd'),
                 elementID: i_caller.m_myElementID,
@@ -84,13 +118,13 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
             self._deselectViewers();
 
-            commBroker.fire(ScreenTemplateFactory.ON_VIEWER_SELECTED, this, screenData);
+            Backbone.comBroker.fire(Backbone.EVENTS.ON_VIEWER_SELECTED, this, screenData);
             e.stopImmediatePropagation();
             return false;
         },
 
         /**
-         Method is called when a single viewer (screen division) of the UI is tapped, in contrast to when the entire frame of the screen is selected.
+         Method is called when a single viewer (screen division) of the UI is clicked, in contrast to when the entire frame of the screen is selected.
          The difference in dispatch of the event depends on how the factory created this instance.
          @method _onScreenViewerSelected
          @param {Event} e
@@ -122,7 +156,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 screenTemplateData: self.m_screenTemplateData
             }
 
-            commBroker.fire(ScreenTemplateFactory.ON_VIEWER_SELECTED, this, screenData);
+            Backbone.comBroker.fire(Backbone.EVENTS.ON_VIEWER_SELECTED, this, screenData);
             e.stopImmediatePropagation();
             return false;
         },
@@ -240,19 +274,19 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         /**
-         When enabled, selectablelDivision will allow for UI mouse / tap of individual viewers (screen divisions) and not entire frame.
+         When enabled, selectablelDivision will allow for UI mouse / click of individual viewers (screen divisions) and not entire frame.
          @method selectablelDivision
          @return none
          **/
         selectablelDivision: function () {
             var self = this;
-            $(Elements.CLASS_SCREEN_DIVISION).on('tap', function (e) {
+            $(Elements.CLASS_SCREEN_DIVISION).on('click', function (e) {
                 self._onScreenViewerSelected(e, self);
             });
         },
 
         /**
-         When enabled, selectableFrame will allow for UI mouse / tap of the outer frame of the template (screen) and not
+         When enabled, selectableFrame will allow for UI mouse / click of the outer frame of the template (screen) and not
          individual viewers.
          @method selectableFrame
          @return none
@@ -260,7 +294,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         selectableFrame: function () {
             var self = this;
 
-            Backbone.comBroker.listen(ScreenTemplateFactory.ON_VIEWER_SELECTED, function (e) {
+            Backbone.comBroker.listen(Backbone.EVENTS.ON_VIEWER_SELECTED, function (e) {
                 if (e.caller.elementID === self.m_myElementID) {
                     $('#' + self.m_myElementID).find('rect').css({'stroke-width': '4', 'stroke': 'rgb(73,123,174)'});
                 } else {
@@ -269,7 +303,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             });
 
 
-            $(Elements.CLASS_SCREEN_DIVISION).on('tap', function (e) {
+            $(Elements.CLASS_SCREEN_DIVISION).on('click', function (e) {
                 self._onScreenFrameSelected(e, self);
             });
         },
@@ -297,42 +331,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self.m_screenTemplateData = null;
         }
 
-    })
-
-
-    /**
-     This is a key event in the framework as many different instances subscribe to ON_VIEWER_SELECTED to reconfigure
-     themselves. The event is fired when a viewer (i.e.: a screen division) is selected inside a Template (i.e. Screen).
-     The key to remember is that the Factory instance (this) is always created with respect to it's owner (i_owner),
-     so when ON_VIEWER_SELECTED is fired, the owner is carried with the event so listeners can act accordingly, and only if the owner
-     is of interest to a subscribed listener.
-     @event ScreenTemplateFactory.ON_VIEWER_SELECTED
-     @param {this} caller
-     @param {object} screenData event params
-     @static
-     @final
-     @param {screenData} json encapsulated data of entire configuration of instance
-     **/
-    ScreenTemplateFactory.ON_VIEWER_SELECTED = 'ON_VIEWER_SELECTED';
-
-    /**
-     Instruct the factory to produce a Template (screen) that each viewer (screen division) can be selected individually
-     as well as the creation of corresponding viewer numbered labels inside each viewer.
-     @property ScreenTemplateFactory.VIEWER_SELECTABLE
-     @static
-     @final
-     @type String
-     */
-    ScreenTemplateFactory.VIEWER_SELECTABLE = 'VIEWER_SELECTABLE';
-
-    /**
-     Instruct the factory to produce a Template (screen) that can only be selected as a whole (no viewers selectable) and no numbered labels.
-     @property ScreenTemplateFactory.ENTIRE_SELECTABLE
-     @static
-     @final
-     @type String
-     */
-    ScreenTemplateFactory.ENTIRE_SELECTABLE = 'ENTIRE_SELECTABLE';
+    });
 
     return ScreenTemplateFactory;
 

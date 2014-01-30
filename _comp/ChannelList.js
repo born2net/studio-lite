@@ -45,7 +45,7 @@ ChannelList.prototype = {
      **/
     _wireUI: function () {
         var self = this;
-        $(Elements.CHANNEL_REMOVE_RESOURCE).tap(function (e) {
+        $(Elements.CHANNEL_REMOVE_RESOURCE).on('click',function (e) {
             if (self.selected_block_id == undefined) {
                 popUpDialog('No resource selected', 'Please select a resource first and try again', Elements.POPUP_OK);
                 return;
@@ -53,7 +53,7 @@ ChannelList.prototype = {
             self._deleteChannelBlock(self.selected_block_id);
         });
 
-        $(Elements.CHANNEL_ADD_RESOURCE).tap(function (e) {
+        $(Elements.CHANNEL_ADD_RESOURCE).on('click',function (e) {
             if (self.selected_campaign_timeline_id == undefined) {
                 alert('Please first select a channel to associate asset with');
                 return;
@@ -242,7 +242,7 @@ ChannelList.prototype = {
     _listenBlockSelected: function () {
         var self = this;
 
-        $(Elements.CLASS_SELECTED_RESOURCE).tap(function (e) {
+        $(Elements.CLASS_SELECTED_RESOURCE).on('click',function (e) {
             var openProps = $(e.target).closest('a').hasClass('resourceOpenProperties') ? true : false;
             var resourceElem = $(e.target).closest('li');
             var resourceProp = $(resourceElem).find('.resourceOpenProperties');
@@ -312,7 +312,7 @@ ChannelList.prototype = {
     },
 
     /**
-     Select the last block on the channel (last LI element) and fire a tap event on it.
+     Select the last block on the channel (last LI element) and fire a click event on it.
      @method _selectLastBlockOnChannel
      @return none
      **/
@@ -324,7 +324,7 @@ ChannelList.prototype = {
             block = this;
         });
         if (block)
-            $(block).tap();
+            $(block).click();
     },
 
     /**

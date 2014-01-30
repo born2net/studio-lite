@@ -23,11 +23,12 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
             self._initLayoutSelectorDragDrop();
 
             setTimeout(function () {
-                $(Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).trigger('tap');
+                $(Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).trigger('click');
             }, 3000);
 
-            $('.openPropertiesClass').on('tap', function (e) {
-                commBroker.getService('CompProperty').openPanel(e);
+            //todo fix properties loolup
+            $('.openPropertiesClass').on('click', function (e) {
+                Backbone.comBroker.getService('CompProperty').openPanel(e);
                 e.preventDefault();
                 e.stopImmediatePropagation();
                 return false;
@@ -54,11 +55,12 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
                     self._initLayoutSelectorDragDrop();
 
                     setTimeout(function () {
-                        $(Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).trigger('tap');
+                        $(Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).trigger('click');
                     }, 3000);
 
-                    $('.openPropertiesClass').on('tap', function (e) {
-                        commBroker.getService('CompProperty').openPanel(e);
+                    $('.openPropertiesClass').on('click', function (e) {
+                        //todo: fix prop
+                        Backbone.comBroker.getService('CompProperty').openPanel(e);
                         e.preventDefault();
                         e.stopImmediatePropagation();
                         return false;
@@ -78,7 +80,7 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
             // Regular popup
             // $("#popupUndismissible").popup( "open", {x: 90, y: 90, width: '400', height: '400'});
 
-            $(Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).on('tap', function () {
+            $(Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).on('click', function () {
 
                 var h = $(Elements.SCREEN_LAYOUTS_UL).height();
                 var t = h * 10 / 100;
@@ -95,8 +97,8 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
                     },
 
                     stop: function () {
-                        $(Elements.DETTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).trigger('tap');
-                        $(Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).trigger('tap');
+                        $(Elements.DETTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).trigger('click');
+                        $(Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).trigger('click');
                         self.reSequenceTimelines();
                     },
 
@@ -112,7 +114,7 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
 
             });
 
-            $(Elements.DETTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).on('tap', function () {
+            $(Elements.DETTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).on('click', function () {
                 $(self.m_thumbsContainer).disableSelection();
                 self.m_thumbsContainer.sortable('destroy');
             });
@@ -201,7 +203,7 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
         },
 
         /**
-         Find the campaign_timeline_id within the Sequencer and trigger a tap event on it so it gets selected.
+         Find the campaign_timeline_id within the Sequencer and trigger a click event on it so it gets selected.
          @method selectTimeline
          @param {Number} i_campaign_timeline_id
          @return {Number} i_campaign_timeline_id or -1

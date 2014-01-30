@@ -7,7 +7,7 @@
  @param {string} i_campaign_timeline_chanel_id
  @return {object} Channel instantiated
  **/
-define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
+define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVideo', 'BlockImage'], function ($, Backbone, X2JS, Block, BlockRSS, BlockQR, BlockVideo, BlockImage) {
 
 
     /**
@@ -191,8 +191,6 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
             var playerData = this.x2js.xml_str2json(i_player_data);
             var blockCode = playerData['Player']['_player'];
 
-            return;
-            //TODO: need to AMD blocks
             switch (parseInt(blockCode)) {
                 case 3345:
                 {

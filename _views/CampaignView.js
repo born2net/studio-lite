@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated CampaignView
  **/
-define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', 'Timeline','ScreenTemplateFactory'], function ($, Backbone, SequencerView, ChannelListView, StackView, Timeline, ScreenTemplateFactory) {
+define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListView', 'StackView', 'Timeline','ScreenTemplateFactory'], function ($, Backbone, SequencerView, ChannelListView, ResourceListView, StackView, Timeline, ScreenTemplateFactory) {
 
     Backbone.SERVICES.CAMPAIGN_VIEW = 'CampaignView';
 
@@ -29,6 +29,10 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             Backbone.comBroker.setService(Backbone.SERVICES.SEQUENCER_VIEW, this.m_sequencerView);
 
             this.m_channelListView = new ChannelListView({
+                el: '#123'
+            });
+
+            this.m_resourcesView = new ResourceListView({
                 el: '#123'
             });
 
@@ -101,7 +105,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             self._listenTimelineOrViewerSelected();
 
             self.m_timelineViewStack.addChild(Elements.NONE_SELECTED_SCREEN_LAYOUT);
-
+            //todo: fix prop
             self.m_property.initPanel(Elements.PROP_SCREEN_DIVISION, false);
             self.m_property.initPanel(Elements.PROP_ENTIRE_SCREEN, false);
 

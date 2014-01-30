@@ -67,8 +67,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             }, 500);
         },
 
-        setOrientation: function(i_resolution){
-            //todo: missing implementation
+        setOrientation: function(i_orientation){
+            this.model.set(Backbone.CONSTS.ORIENTATION, i_orientation);
         },
 
         getOrientation: function(){

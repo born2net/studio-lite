@@ -6,6 +6,8 @@
  **/
 define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', 'Timeline'], function ($, Backbone, SequencerView, ChannelListView, StackView, Timeline) {
 
+    Backbone.SERVICES.CAMPAIGN_VIEW = 'CampaignView';
+
     var CampaignView = Backbone.View.extend({
 
         /**

@@ -104,6 +104,15 @@ body {
     overflow: hidden;
 }
 
+.draggableScreenPlaceHolder {
+    position: relative;
+    top: 0px;
+    height: 3px;
+    width: 3px;
+    background-color: red;
+    opacity: 0.6
+}
+
 .yScroll {
     overflow-y: scroll;
     height: 100%;

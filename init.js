@@ -6,6 +6,7 @@ require.config({
     baseUrl: '/_studiolite-dev/',
     paths: {
         "jquery": '_common/_jquery/std/jq1.9.1/jquery-1.9.1',
+        "jqueryui": '_common/_jquery/std/jq1.10.1/jquery-ui-1.10.1',
         "backbone": '_common/_js/backbone/backbone',
         "backbone.controller": '_common/_js/backbone-controller/backbone.controller',
         "underscore": '_common/_js/underscore/underscore',

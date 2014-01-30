@@ -258,6 +258,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                         el: Elements.CAMPAIGN,
                         to: Elements.CAMPAIGN_SELECTOR
                     });
+                    Backbone.comBroker.setService(Backbone.SERVICES.CAMPAIGN_VIEW, self.m_campaignView);
 
                     self.m_campaignSliderStackView.addView(self.m_campaignSelectorView);
                     self.m_campaignSliderStackView.addView(self.m_orientationSelectorView);

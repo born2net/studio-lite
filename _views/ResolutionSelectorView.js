@@ -60,11 +60,11 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         setResolution: function(i_resolution){
-            //todo fix this missing implementation
+            return this.model.set(Backbone.CONSTS.RESOLUTION, i_resolution)
         },
 
         getResolution: function(){
-            return this.model.get(Backbone.CONSTS.ORIENTATION)
+            return this.model.get(Backbone.CONSTS.RESOLUTION)
         }
     });
 

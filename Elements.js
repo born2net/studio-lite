@@ -43,7 +43,8 @@ Elements.SCREEN_LAYOUT_SELECTOR = '#screenLayoutSelector';
 Elements.SCREEN_LAYOUT_LIST = '#screenLayoutList';
 Elements.CAMPAIGN_VIEW = '#campaignView';
 Elements.SCREEN_LAYOUTS_UL = '#screenLayoutsUL';
-
+Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION = '#attachDragDropMainScreenSelection';
+Elements.DETTACH_DRAG_DROP_MAIN_SCREEN_SELECTION = '#dettachDragDropMainScreenSelection';
 
 Elements.CLASS_SCREEN_DIVISION = '.screenDivisionClass';
 

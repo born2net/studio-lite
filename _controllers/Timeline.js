@@ -65,7 +65,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
         _onTimelineSelected: function () {
             var self = this;
 
-            commBroker.listen(Timeline.CAMPAIGN_TIMELINE_SELECTED, function (e) {
+            Backbone.comBroker.listen(Timeline.CAMPAIGN_TIMELINE_SELECTED, function (e) {
                 var timelineID = e.edata;
                 if (self.m_campaign_timeline_id != timelineID) {
                     self.m_selected = false;
@@ -163,10 +163,9 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
 
             Backbone.comBroker.getService(Backbone.SERVICES.RESOLUTION_SELECTOR_VIEW).setResolution(width + 'x' + height);
             if (width > height) {
-                // todo: fix constants
-                Backbone.comBroker.getService(Backbone.SERVICES.ORIENTATION_SELECTOR_VIEW).setOrientation('HORIZONTAL');
+                Backbone.comBroker.getService(Backbone.SERVICES.ORIENTATION_SELECTOR_VIEW).setOrientation(Backbone.CONSTS.HORIZONTAL);
             } else {
-                Backbone.comBroker.getService(Backbone.SERVICES.ORIENTATION_SELECTOR_VIEW).setOrientation('VERTICAL');
+                Backbone.comBroker.getService(Backbone.SERVICES.ORIENTATION_SELECTOR_VIEW).setOrientation(Backbone.CONSTS.VERTICAL);
             }
 
             var screenProps = jalapeno.getTemplateViewersScreenProps(self.m_campaign_timeline_id, i_campaign_timeline_board_template_id)
@@ -176,7 +175,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             switch (self.m_timing) {
                 case 'sequencer':
                 {
-                    var sequences = commBroker.getService('Sequences');
+                    var sequences = Backbone.comBroker.getService(Backbone.SERVICES.SEQUENCER_VIEW);
                     sequences.createTimelineThumbnailUI(screenProps);
                     break;
                 }
@@ -212,8 +211,8 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
 
             var snippet = screenTemplate.create();
             var elemID = $(snippet).attr('id');
-            var divID1 = 'selectableScreenCollections' + getUnique();
-            var divID2 = 'selectableScreenCollections' + getUnique();
+            var divID1 = 'selectableScreenCollections' + _.uniqueId();
+            var divID2 = 'selectableScreenCollections' + _.uniqueId();
 
             var snippetWrapper = '<div id="' + divID1 + '" style="display: none">' +
                 '<div align="center" >' +
@@ -224,11 +223,12 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
 
             $('body').append(snippetWrapper);
 
-            var timelineViewStack = commBroker.getService('Campaign').getTimelineViewStack();
-            self.m_viewStackIndex = timelineViewStack.addChild('#' + divID1);
-
+            var timelineViewStack = Backbone.comBroker.getService(Backbone.SERVICES.CAMPAIGN_VIEW).getTimelineViewStack();
+            // self.m_viewStackIndex = timelineViewStack.addChild('#' + divID1);
             $('#' + divID2).append($(snippet));
             screenTemplate.selectablelDivision();
+            var view = new Backbone.View({el: '#' + divID1});
+            self.m_viewStackIndex = timelineViewStack.addView(view);
             screenTemplate.activate();
 
         },

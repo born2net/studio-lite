@@ -20,7 +20,7 @@ define(['jquery', 'backbone', 'jqueryui', 'Timeline', 'SequencerView'], function
             $(Elements.SORTABLE).sortable();
             $(Elements.SORTABLE).disableSelection();
             $(Elements.SORTABLE).bind("sortstop", function (event, ui) {
-                $(Elements.SORTABLE).listview('refresh');
+                // $(Elements.SORTABLE).listview('refresh');
                 self._reOrderChannelBlocks();
             });
 

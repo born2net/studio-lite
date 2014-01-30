@@ -18,7 +18,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          Constructor
          @method initialize
          **/
-        initialize: function () {
+        constructor: function (options) {
+            Block.prototype.constructor.call(this, options);
             var self = this;
 
             self.m_blockType = 3345;
@@ -27,10 +28,11 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_blockIcon = model.getComponent(self.m_blockType).icon;
             self.m_rssUrl = 'http://rss.news.yahoo.com/rss/world';
 
-            Block.call(this, i_placement, i_campaign_timeline_chanel_player_id);
-            self.m_property.initSubPanel(Elements.BLOCK_RSS_COMMON_PROPERTIES);
+            //todo: fix prop panel
+            // self.m_property.initSubPanel(Elements.BLOCK_RSS_COMMON_PROPERTIES);
             self._wireUI();
-            self._listenRSSColorPicker();
+            // todo: disabled mini colors
+            //self._listenRSSColorPicker();
         },
 
         /**

@@ -18,7 +18,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          Constructor
          @method initialize
          **/
-        initialize: function () {
+        constructor: function (options) {
+            Block.prototype.constructor.call(this, options);
             var self = this;
 
             self.m_blockType = 3430;
@@ -27,8 +28,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_blockIcon = model.getComponent(self.m_blockType).icon;
             self.m_qrText = 'Hello World';
 
-            Block.call(this, i_placement, i_campaign_timeline_chanel_player_id);
-            self.m_property.initSubPanel(Elements.BLOCK_QR_COMMON_PROPERTIES);
+            //todo: fix prop panel
+            // self.m_property.initSubPanel(Elements.BLOCK_QR_COMMON_PROPERTIES);
             self._wireUI();
         },
 

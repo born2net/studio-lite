@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated CampaignView
  **/
-define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView'], function ($, Backbone, SequencerView, ChannelListView, StackView) {
+define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', 'Timeline'], function ($, Backbone, SequencerView, ChannelListView, StackView, Timeline) {
 
     var CampaignView = Backbone.View.extend({
 
@@ -24,6 +24,8 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView'], 
             this.m_sequencerView = new SequencerView({
                 el: Elements.SCREEN_LAYOUTS_UL
             });
+            Backbone.comBroker.setService(Backbone.SERVICES.SEQUENCER_VIEW, this.m_sequencerView);
+
             this.m_channelListView = new ChannelListView({
                 el: '#123'
             });
@@ -36,31 +38,16 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView'], 
 
         },
 
-        render: function() {
+        render: function () {
             var self = this;
 
-            var campaignID = Backbone.comBroker.getService(Backbone.SERVICES.CAMPAIGN_SELECTOR).getSelectedCampaign();
-            if (campaignID==-1){
+            self.m_selected_campaign_id = Backbone.comBroker.getService(Backbone.SERVICES.CAMPAIGN_SELECTOR).getSelectedCampaign();
+            if (self.m_selected_campaign_id == -1) {
 
             } else {
                 self._loadTimelinesFromDB();
             }
         },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         /**
@@ -190,7 +177,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView'], 
 
             $(sequenceOrder).each(function (sequenceIndex, campaign_timeline_id) {
                 // create the timelines
-                self.m_timelines[campaign_timeline_id] = new Timeline(campaign_timeline_id);
+                self.m_timelines[campaign_timeline_id] = new Timeline({campaignTimelineID: campaign_timeline_id});
             });
 
             self._loadSequencerFirstTimeline();
@@ -205,10 +192,8 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView'], 
             var self = this;
 
             var firstTimelineID = jalapeno.getCampaignTimelineIdOfSequencerIndex(self.m_selected_campaign_id, 0);
-            var sequencesComp = Backbone.comBroker.getService('Sequences');
-
             setTimeout(function () {
-                if (sequencesComp.selectTimeline(firstTimelineID) == -1) {
+                if (self.m_sequencerView.selectTimeline(firstTimelineID) == -1) {
                     self.m_timelineViewStack.selectIndex(0);
                 }
             }, 250);

@@ -57,6 +57,14 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     },500);
                 });
             });
+        },
+
+        setResolution: function(i_resolution){
+            //todo fix this missing implementation
+        },
+
+        getResolution: function(){
+            return this.model.get(Backbone.CONSTS.ORIENTATION)
         }
     });
 

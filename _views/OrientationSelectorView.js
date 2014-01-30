@@ -65,6 +65,14 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             setTimeout(function () {
                 self.options.stackView.slideToPage(self.options.to, 'right');
             }, 500);
+        },
+
+        setOrientation: function(i_resolution){
+            //todo: missing implementation
+        },
+
+        getOrientation: function(){
+            return this.model.get(Backbone.CONSTS.ORIENTATION);
         }
     });
 

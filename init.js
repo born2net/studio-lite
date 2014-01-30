@@ -14,11 +14,14 @@ require.config({
         "Cookie": '_common/_js/cookie/jquery.cookie',
         "RC4": '_common/_js/rc4/RC4',
         "Base64": '_common/_js/base64/jquery.base64',
+        "X2JS": '_common/_js/x2js/xml2json',
         "Jalapeno": '_jalapeno/Jalapeno',
         "Elements": 'Elements',
         "LayoutManager": '_comps/LayoutManager',
         "ComBroker": '_controllers/ComBroker',
         "AppAuth": '_controllers/AppAuth',
+        "Timeline": '_controllers/Timeline',
+        "Channel": '_controllers/Channel',
         "StackView": '_views/StackView',
         "NavigationView": '_views/NavigationView',
         "WaitView": '_views/WaitView',
@@ -45,7 +48,6 @@ require.config({
         "Lib": '_comps/Lib',
         "ScreenTemplateFactory": '_comps/ScreenTemplateFactory',
         "ScreenTemplate": "_jalapeno/JalapenoTemplates"
-
     },
 
 
@@ -81,6 +83,9 @@ require.config({
         },
         "Elements": {
             exports: 'Elements'
+        },
+        "X2JS":{
+            exports: 'X2JS'
         },
         "RC4": {
             exports: 'RC4'

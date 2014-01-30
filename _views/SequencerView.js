@@ -7,6 +7,8 @@
  **/
 define(['jquery', 'backbone'], function ($, Backbone) {
 
+    Backbone.SERVICES.SEQUENCER_VIEW = 'SequencerView';
+
     var SequencerView = Backbone.View.extend({
 
         /**

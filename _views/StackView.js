@@ -31,11 +31,13 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
          Add a backbone view so we can control its display mode via one of the derived classes
          @method addView
          @param {View} i_view add a backbone view to control
+         @return {String} stack view id added
          **/
         addView: function (i_view) {
             i_view.$el.hide();
             var oid = i_view.el.id === '' ? i_view.cid : i_view.el.id;
             this.m_views[oid] = i_view;
+            return oid;
         },
 
         /**
@@ -180,14 +182,31 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
          **/
         selectView: function (i_view) {
             var self = this;
-            i_view = self._parseView(i_view);
-            if (self.m_selectedView==i_view)
+            var bb_view = self._parseView(i_view);
+            if (self.m_selectedView==bb_view)
                 return;
             StackView.ViewPort.prototype.selectView.apply(this, arguments);
             $.each(self.m_views, function (id, view) {
                 view.$el.hide();
             });
-            i_view.$el.fadeIn(this.m_duration);
+            bb_view.$el.fadeIn(this.m_duration);
+        },
+
+        /**
+         Select a stack view using an offset index
+         @method selectIndex
+         @param {Number} i_index offset
+         **/
+        selectIndex: function (i_index) {
+            var self = this;
+            var foundView = undefined;
+            var i = -1;
+            $.each(this.m_views, function (view_id) {
+                i++;
+                if (i == i_index)
+                    foundView = self.m_views[view_id];
+            });
+            return foundView;
         }
     });
 

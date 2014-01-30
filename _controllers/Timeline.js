@@ -32,7 +32,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             this.m_channels = {}; // hold references to all created channel instances
             this.m_campaign_timeline_id = self.options.campaignTimelineID;
             this.m_timing = 'sequencer';
-            this.m_viewStackIndex = -1;
+            this.m_stackViewID = undefined;
             this.m_property = Backbone.comBroker.getService(Backbone.SERVICES.PROPERTIES_VIEW);
             this.m_selected = false;
 
@@ -221,26 +221,26 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
                 '</div>' +
                 '</div>';
 
-            $('body').append(snippetWrapper);
+            $(Elements.SELECTED_TIMELINE).append(snippetWrapper);
 
             var timelineViewStack = Backbone.comBroker.getService(Backbone.SERVICES.CAMPAIGN_VIEW).getTimelineViewStack();
-            // self.m_viewStackIndex = timelineViewStack.addChild('#' + divID1);
+            // self.m_stackViewID = timelineViewStack.addChild('#' + divID1);
             $('#' + divID2).append($(snippet));
             screenTemplate.selectablelDivision();
             var view = new Backbone.View({el: '#' + divID1});
-            self.m_viewStackIndex = timelineViewStack.addView(view);
+            self.m_stackViewID = timelineViewStack.addView(view);
             screenTemplate.activate();
 
         },
 
         /**
          Return the view stack index this timeline occupies in the timelineViewStack manager.
-         @method getViewStackIndex
-         @return {Number} m_viewStackIndex
+         @method getStackViewID
+         @return {Number} m_stackViewID
          **/
-        getViewStackIndex: function () {
+        getStackViewID: function () {
             var self = this;
-            return self.m_viewStackIndex;
+            return self.m_stackViewID;
         },
 
         /**

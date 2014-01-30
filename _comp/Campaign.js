@@ -11,7 +11,7 @@ function Campaign() {
 
     this.self = this;
     this.m_timelines = {}; // hold references to all created timeline instances
-    this.m_timelineViewStack = new Viewstacks(Elements.CAMPAIN_VIEW_MAIN_CONTAINER);
+    this.m_timelineViewStack = new Viewstacks(Elements.SELECTED_TIMELINE);
     this.m_selected_timeline_id = -1;
     this.m_selected_campaign_id = -1;
     this.m_property = commBroker.getService('CompProperty');

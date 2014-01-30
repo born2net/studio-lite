@@ -208,7 +208,7 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
          **/
         selectTimeline: function (i_campaign_timeline_id) {
             var self = this;
-            var total = $(self.m_thumbsContainer).find('[data-campaign_timeline_id="' + i_campaign_timeline_id + '"]').eq(0).trigger('tap');
+            var total = $(self.m_thumbsContainer).find('[data-campaign_timeline_id="' + i_campaign_timeline_id + '"]').eq(0).trigger('click');
             if (total.length == 0)
                 return -1;
             return i_campaign_timeline_id;

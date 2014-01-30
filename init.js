@@ -20,6 +20,7 @@ require.config({
         "Elements": 'Elements',
         "LayoutManager": '_comps/LayoutManager',
         "ComBroker": '_controllers/ComBroker',
+        "ScreenTemplateFactory": '_controllers/ScreenTemplateFactory',
         "AppAuth": '_controllers/AppAuth',
         "Timeline": '_controllers/Timeline',
         "Channel": '_controllers/Channel',
@@ -47,7 +48,6 @@ require.config({
         "ChannelListView": '_views/ChannelListView',
         "PopModalView": '_views/PopModalView',
         "Lib": '_comps/Lib',
-        "ScreenTemplateFactory": '_comps/ScreenTemplateFactory',
         "ScreenTemplate": "_jalapeno/JalapenoTemplates"
     },
 

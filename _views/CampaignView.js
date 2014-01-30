@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated CampaignView
  **/
-define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', 'Timeline'], function ($, Backbone, SequencerView, ChannelListView, StackView, Timeline) {
+define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', 'Timeline','ScreenTemplateFactory'], function ($, Backbone, SequencerView, ChannelListView, StackView, Timeline, ScreenTemplateFactory) {
 
     Backbone.SERVICES.CAMPAIGN_VIEW = 'CampaignView';
 
@@ -18,7 +18,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             var self = this;
 
             this.m_timelines = {}; // hold references to all created timeline instances
-            this.m_timelineViewStack = new StackView.Fader({el: Elements.CAMPAIGN_VIEW});
+            this.m_timelineViewStack = new StackView.Fader({el: Elements.SELECTED_TIMELINE});
             this.m_selected_timeline_id = -1;
             this.m_selected_campaign_id = -1;
             this.m_property = Backbone.comBroker.getService(Backbone.SERVICES.PROPERTIES_VIEW);
@@ -49,6 +49,19 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             } else {
                 self._loadTimelinesFromDB();
             }
+
+            self._onWireOpenTimeLineProperties();
+            self._onWireNewTimelineWizard();
+            self._onWireDelTimeline();
+            self._onWireTimelineExpandCollapse();
+            self._listenTimelineOrViewerSelected();
+
+            var view = new Backbone.View({el: Elements.NONE_SELECTED_SCREEN_LAYOUT})
+            self.m_timelineViewStack.addView(view);
+
+            //todo fix properties panel
+            // self.m_property.initPanel(Elements.PROP_SCREEN_DIVISION, false);
+            // self.m_property.initPanel(Elements.PROP_ENTIRE_SCREEN, false);
         },
 
 
@@ -111,7 +124,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
          @return none
          **/
         _onWireNewTimelineWizard: function () {
-            $(Elements.ADD_NEW_SCREEN_BUTTON).tap(function (e) {
+            $(Elements.ADD_NEW_SCREEN_BUTTON).on('click',function (e) {
                 $.mobile.changePage(Elements.SCREEN_LAYOUT_LIST, {transition: "pop"});
                 var compTemplateWizard = new TemplateWizard(Elements.SCREEN_LAYOUT_ITEMS_LIST);
             });
@@ -124,7 +137,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
          **/
         _onWireDelTimeline: function () {
             var self = this;
-            $(Elements.DEL_SCREEN_BUTTON).tap(function (e) {
+            $(Elements.DEL_SCREEN_BUTTON).on('click',function (e) {
                 self._deleteTimeline(e, self);
             });
         },
@@ -210,7 +223,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
          **/
         _listenTimelineOrViewerSelected: function () {
             var self = this;
-            Backbone.comBroker.listen(ScreenTemplateFactory.ON_VIEWER_SELECTED, function (e) {
+            Backbone.comBroker.listen(Backbone.EVENTS.ON_VIEWER_SELECTED, function (e) {
 
                 var campaign_timeline_board_viewer_id = e.caller.campaign_timeline_board_viewer_id;
                 var campaign_timeline_id = e.caller.campaign_timeline_id;
@@ -220,9 +233,9 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
                 //// Timeline selected from Sequencer class
                 ////////////////////////////////////////////////
 
-                if (e.context.m_owner instanceof Sequencer) {
-                    self.m_timelineViewStack.selectIndex(self.m_timelines[campaign_timeline_id].getViewStackIndex());
-                    Backbone.comBroker.fire(Timeline.CAMPAIGN_TIMELINE_SELECTED, this, null, campaign_timeline_id);
+                if (e.context.m_owner instanceof SequencerView) {
+                    self.m_timelineViewStack.selectView(self.m_timelines[campaign_timeline_id].getStackViewID());
+                    Backbone.comBroker.fire(Backbone.EVENTS.CAMPAIGN_TIMELINE_SELECTED, this, null, campaign_timeline_id);
                     return;
                 }
 
@@ -230,9 +243,9 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
                 //// Timeline selected from Scheduler class  (future support)
                 ////////////////////////////////////////////////
 
-                if (e.context.m_owner instanceof Scheduler) {
+                /*if (e.context.m_owner instanceof Scheduler) {
                     return;
-                }
+                }*/
 
                 ////////////////////////////////////////////////
                 //// Timeline selected from Timeline class
@@ -241,7 +254,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
                 if (e.context.m_owner instanceof Timeline) {
                     var recCampaignTimelineViewerChanels = jalapeno.getChannelIdFromCampaignTimelineBoardViewer(campaign_timeline_board_viewer_id, campaign_timeline_id);
                     var campaign_timeline_channel_id = recCampaignTimelineViewerChanels['campaign_timeline_chanel_id']
-                    Backbone.comBroker.fire(Channel.CAMPAIGN_TIMELINE_CHANNEL_SELECTED, this, null, campaign_timeline_channel_id);
+                    Backbone.comBroker.fire(Backbone.EVENTS.CAMPAIGN_TIMELINE_CHANNEL_SELECTED, this, null, campaign_timeline_channel_id);
                     return;
                 }
 
@@ -290,7 +303,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
                     jalapeno.assignViewersToTimelineChannels(campaign_timeline_board_template_id, viewers, channels);
 
                     self.m_timelines[campaign_timeline_id] = new Timeline(campaign_timeline_id);
-                    Backbone.comBroker.fire(Timeline.CAMPAIGN_TIMELINE_SELECTED, this, null, campaign_timeline_id);
+                    Backbone.comBroker.fire(Backbone.EVENTS.CAMPAIGN_TIMELINE_SELECTED, this, null, campaign_timeline_id);
 
                     Backbone.comBroker.getService('Sequences').reSequenceTimelines();
                     self._loadSequencerFirstTimeline();
@@ -362,8 +375,6 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
 
     })
 
-
     return CampaignView;
-
 });
 

@@ -11,15 +11,11 @@ Elements.PROP_PANEL_WRAP = '#propPanelWrap';
 Elements.MAIN_PANEL_WRAP = '#mainPanelWrap';
 Elements.PROP_PANEL = '#propPanel';
 Elements.SUB_PROP_PANEL = '#subPropPanel';
-Elements.CAMPAIGN_MANAGER_VIEW = '#campaignManagerView';
-Elements.CAMPAIGN_SLIDER = '#campaignSlider';
-Elements.CAMPAIGN_PROPERTIES = '#campaignProperties';
 Elements.FORM_CAMPAIGN_NAME = '#formCampaignName';
 Elements.EMPTY_PROPERTIES = '#emptyProperties';
-Elements.CAMPAIGN = '#campaign';
-Elements.NEW_CAMPAIGN = '#newCampaign';
-Elements.REMOVE_CAMPAIGN = '#removeCampaign';
-Elements.CAMPAIGN_SELECTOR = '#campaignSelector';
+
+
+
 Elements.PROP_PANEL = '#propPanel';
 Elements.POPUP_PROPERTIES = '#popupProperties';
 Elements.ABOUT_US = '#aboutUS';
@@ -41,8 +37,20 @@ Elements.RESOLUTION_SELECTOR = '#resolutionSelector';
 Elements.RESOLUTION_LIST = '#resolutionList';
 Elements.SCREEN_LAYOUT_SELECTOR = '#screenLayoutSelector';
 Elements.SCREEN_LAYOUT_LIST = '#screenLayoutList';
-Elements.CAMPAIGN_VIEW = '#campaignView';
+
+Elements.NEW_CAMPAIGN = '#newCampaign';
+Elements.REMOVE_CAMPAIGN = '#removeCampaign';
+Elements.CAMPAIGN = '#campaign'; // main campaign div entire container
+Elements.CAMPAIGN_SELECTOR = '#campaignSelector'; // initial selection tool
+// Elements.CAMPAIGN_VIEW = '#campaignView'; // not used
+Elements.CAMPAIGN_MANAGER_VIEW = '#campaignManagerView'; // File menu
+Elements.CAMPAIGN_SLIDER = '#campaignSlider'; // container of StackView.Slider
+Elements.CAMPAIGN_PROPERTIES = '#campaignProperties'; // properties
+
+Elements.SELECTED_TIMELINE = '#selectedTimeline';
+
 Elements.SCREEN_LAYOUTS_UL = '#screenLayoutsUL';
+Elements.NONE_SELECTED_SCREEN_LAYOUT = '#noneSelectedScreenLayout';
 Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION = '#attachDragDropMainScreenSelection';
 Elements.DETTACH_DRAG_DROP_MAIN_SCREEN_SELECTION = '#dettachDragDropMainScreenSelection';
 

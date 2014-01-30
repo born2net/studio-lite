@@ -17,6 +17,7 @@ require.config({
         "Base64": '_common/_js/base64/jquery.base64',
         "X2JS": '_common/_js/x2js/xml2json',
         "Jalapeno": '_jalapeno/Jalapeno',
+        "JalapenoModel": '_jalapeno/JalapenoModel',
         "Elements": 'Elements',
         "LayoutManager": '_comps/LayoutManager',
         "ComBroker": '_controllers/ComBroker',
@@ -103,6 +104,9 @@ require.config({
         "Jalapeno": {
             deps: ['jquery', 'Base64'],
             exports: 'Jalapeno'
+        },
+        "JalapenoModel": {
+            exports: 'JalapenoModel'
         },
         "Base64": {
             deps: ['jquery'],

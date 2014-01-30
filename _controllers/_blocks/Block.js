@@ -58,21 +58,23 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          Constructor
          @method initialize
          **/
-        initialize: function () {
+        initialize: function (options) {
 
             var self = this;
-            this.m_placement = i_placement;
-            this.m_block_id = i_block_id;
+            this.m_placement = options.i_placement;
+            this.m_block_id = options.i_block_id;
             this.m_selected = false;
 
-            switch (i_placement) {
+            switch (this.m_placement) {
 
-                case Block.PLACEMENT_CHANNEL:
+                case Backbone.CONSTS.PLACEMENT_CHANNEL:
                 {
                     this.m_property = Backbone.comBroker.getService(Backbone.SERVICES.PROPERTIES_VIEW);
 
                     self._onTimelineChannelBlockSelected();
                     self._onTimelineChannelBlockLengthChanged();
+                    return
+                    //todo: fix prop panel
                     var initiated = self.m_property.initPanel(Elements.BLOCK_PROPERTIES, true);
                     if (initiated) {
                         self._propLengthKnobsInit();
@@ -80,7 +82,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     }
                     break;
                 }
-                case Block.PLACEMENT_SCENE:
+                case Backbone.CONSTS.PLACEMENT_SCENE:
                 {
                     break;
                 }
@@ -96,7 +98,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _onTimelineChannelBlockSelected: function () {
             var self = this;
 
-            commBroker.listenWithNamespace(Block.BLOCK_ON_CHANNEL_SELECTED, self, function (e) {
+            Backbone.comBroker.listenWithNamespace(Backbone.EVENTS.BLOCK_ON_CHANNEL_SELECTED, self, function (e) {
                 var blockID = e.edata;
                 if (self.m_block_id != blockID) {
                     self._onTimelineChannelBlockDeselected();
@@ -169,7 +171,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _onTimelineChannelBlockLengthChanged: function () {
             var self = this;
 
-            commBroker.listenWithNamespace(Block.BLOCK_LENGTH_CHANGING, this, function (e) {
+            Backbone.comBroker.listenWithNamespace(Backbone.EVENTS.BLOCK_LENGTH_CHANGING, this, function (e) {
 
                 if (self.m_selected) {
                     var hours = $(Elements.BLOCK_LENGTH_HOURS).val();

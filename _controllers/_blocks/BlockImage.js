@@ -14,11 +14,15 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
     var BlockImage = Block.extend({
 
+        constructor: function (options) {
+            var self = this;
+            Block.prototype.constructor.call(this, options);
+        },
         /**
          Constructor
          @method initialize
          **/
-        initialize: function () {
+        inistialize: function () {
             var self = this;
 
             self.m_blockType = 3130;
@@ -28,7 +32,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_blockIcon = undefined;
             self.m_resourceID = undefined;
 
-            Block.call(this, i_placement, i_campaign_timeline_chanel_player_id);
+            // Block.call(this, i_placement, i_campaign_timeline_chanel_player_id);
+            Block.prototype.constructor.call(this, self.options.i_placement, self.options.i_campaign_timeline_chanel_player_id);
             self.m_property.initSubPanel(Elements.BLOCK_IMAGE_COMMON_PROPERTIES);
             self._wireUI();
         },

@@ -65,7 +65,8 @@ JalapenoModel.stationEventRx = 'STATION_EVENT_RX';
 function JalapenoModel() {
 
     this.self = this;
-    this.m_ajax = commBroker.getService(AjaxRPC.serviceName);
+    //todo: fix ajax lib
+    // this.m_ajax = Backbone.commBroker.getService(AjaxRPC.serviceName);
     this.m_data = {};
     this.m_components = {};
     this.m_icons = {};
@@ -335,7 +336,7 @@ JalapenoModel.prototype = {
         var ajaxWrapper = new AjaxJsonGetter(globs['debug'] ? 'https://secure.dynawebs.net/_php/msWSsec-debug.php' : 'https://secure.dynawebs.net/_php/msWSsec.php');
         ajaxWrapper.getData(data, onServerReply);
         function onServerReply(data) {
-            commBroker.fire(JalapenoModel.stationEventRx, this, self, data)
+            Backbone.comBroker.fire(JalapenoModel.stationEventRx, this, self, data)
         }
     },
 
@@ -356,7 +357,7 @@ JalapenoModel.prototype = {
         var ajaxWrapper = new AjaxJsonGetter(globs['debug'] ? 'https://secure.dynawebs.net/_php/msWSsec-debug.php?' + getEpochTime() : 'https://secure.dynawebs.net/_php/msWSsec.php?' + getEpochTime());
         ajaxWrapper.getData(data, onSnapshotReply);
         function onSnapshotReply(data) {
-            commBroker.fire(JalapenoModel.stationCaptured, this, self, data)
+            Backbone.comBroker.fire(JalapenoModel.stationCaptured, this, self, data)
         }
     },
 
@@ -377,7 +378,7 @@ JalapenoModel.prototype = {
         var ajaxWrapper = new AjaxJsonGetter(globs['debug'] ? 'https://secure.dynawebs.net/_php/msWSsec-debug.php?' + getEpochTime() : 'https://secure.dynawebs.net/_php/msWSsec.php?' + getEpochTime());
         ajaxWrapper.getData(data, onSnapshotReply);
         function onSnapshotReply(data) {
-            commBroker.fire(JalapenoModel.stationPlayedStopped, this, self, data)
+            Backbone.comBroker.fire(JalapenoModel.stationPlayedStopped, this, self, data)
         }
     },
 
@@ -526,7 +527,7 @@ JalapenoModel.prototype = {
                     stations[i] = self.m_data[i];
                 }
             }
-            commBroker.fire(JalapenoModel.stationList, this, i_caller, stations);
+            Backbone.comBroker.fire(JalapenoModel.stationList, this, i_caller, stations);
         }
     },
 

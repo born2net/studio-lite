@@ -194,23 +194,35 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
             switch (parseInt(blockCode)) {
                 case 3345:
                 {
-                    self.m_blocks[i_campaign_timeline_chanel_player_id] = new BlockRSS(Block.PLACEMENT_CHANNEL, i_campaign_timeline_chanel_player_id);
+                    self.m_blocks[i_campaign_timeline_chanel_player_id] = new BlockRSS({
+                        _placement: Backbone.CONSTS.PLACEMENT_CHANNEL,
+                        i_block_id: i_campaign_timeline_chanel_player_id
+                    });
                     break;
                 }
                 case 3430:
                 {
-                    self.m_blocks[i_campaign_timeline_chanel_player_id] = new BlockQR(Block.PLACEMENT_CHANNEL, i_campaign_timeline_chanel_player_id);
+                    self.m_blocks[i_campaign_timeline_chanel_player_id] = new BlockQR({
+                        i_placement: Backbone.CONSTS.PLACEMENT_CHANNEL,
+                        i_block_id: i_campaign_timeline_chanel_player_id
+                    });
                     break;
                 }
                 case 3100:
                 {
-                    self.m_blocks[i_campaign_timeline_chanel_player_id] = new BlockVideo(Block.PLACEMENT_CHANNEL, i_campaign_timeline_chanel_player_id);
+                    self.m_blocks[i_campaign_timeline_chanel_player_id] = new BlockVideo({
+                        i_placement: Backbone.CONSTS.PLACEMENT_CHANNEL,
+                        i_block_id: i_campaign_timeline_chanel_player_id
+                    });
                     self.m_blocks[i_campaign_timeline_chanel_player_id].setPlayerData(playerData);
                     break;
                 }
                 case 3130:
                 {
-                    self.m_blocks[i_campaign_timeline_chanel_player_id] = new BlockImage(Block.PLACEMENT_CHANNEL, i_campaign_timeline_chanel_player_id);
+                    self.m_blocks[i_campaign_timeline_chanel_player_id] = new BlockImage({
+                        i_placement: Backbone.CONSTS.PLACEMENT_CHANNEL,
+                        i_block_id: i_campaign_timeline_chanel_player_id
+                    });
                     self.m_blocks[i_campaign_timeline_chanel_player_id].setPlayerData(playerData);
                     break;
                 }

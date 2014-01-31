@@ -25,6 +25,11 @@ Elements.IMAGE_ASPECT_RATIO = '#imageAspectRatio';
 Elements.BLOCK_QR_COMMON_PROPERTIES = '#blockQRCommonProperties';
 Elements.QR_TEXT = '#qrText';
 
+Elements.TIMELIME_CHANNEL_BLOCK_LENGTH = '#timelimeChannelBlockLength';
+Elements.BLOCK_LENGTH_HOURS = '#blockLengthHours';
+Elements.BLOCK_LENGTH_MINUTES = '#blockLengthMinutes';
+Elements.BLOCK_LENGTH_SECONDS = '#blockLengthSeconds';
+
 Elements.RANDOM_PLAYBACK = '#randomPlayback';
 Elements.CHANNEL_PROPERTIES = '#channelProperties';
 Elements.TIMELINE_PROPERTIES = '#timelineProperties';
@@ -68,7 +73,7 @@ Elements.DETTACH_DRAG_DROP_MAIN_SCREEN_SELECTION = '#dettachDragDropMainScreenSe
 
 Elements.CLASS_SCREEN_DIVISION = '.screenDivisionClass';
 Elements.CLASS_CHANNEL_LIST_ITEMS = '.channelListItems';
-
+Elements.CLASS_KNOB = '.knob';
 
 
 /**

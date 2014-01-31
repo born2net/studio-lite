@@ -7,7 +7,7 @@
  @param {string} i_block_id block / player id, only required if block inserted onto channel_timeline
  @return none
  **/
-define(['jquery', 'backbone'], function ($, Backbone) {
+define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
 
     /**
      block.PLACEMENT_SCENE indicates the insertion is inside a Scene
@@ -51,7 +51,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
      **/
     BB.EVENTS.BLOCK_LENGTH_CHANGED = 'BLOCK_LENGTH_CHANGED';
 
-
     var Block = BB.Controller.extend({
 
         /**
@@ -74,11 +73,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     self._onTimelineChannelBlockSelected();
                     self._onTimelineChannelBlockLengthChanged();
                     var initiated = self.m_property.initPanel(Elements.BLOCK_PROPERTIES, true);
-                    if (initiated) {
-                        //todo: fix knob
-                        //self._propLengthKnobsInit();
-                        // self.m_property.createSubPanel(Elements.BLOCK_SUBPROPERTIES);
-                    }
+                    if (initiated)
+                        self._propLengthKnobsInit();
                     break;
                 }
                 case BB.CONSTS.PLACEMENT_SCENE:
@@ -196,7 +192,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     }
                     // log('upd: ' + self.m_block_id + ' ' + hours + ' ' + minutes + ' ' + seconds);
                     jalapeno.setBlockTimelineChannelBlockLength(self.m_block_id, hours, minutes, seconds);
-                    commBroker.fire(Block.BLOCK_LENGTH_CHANGED);
+                    BB.comBroker.fire(BB.EVENTS.BLOCK_LENGTH_CHANGED );
                 }
             });
         },
@@ -225,7 +221,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     // console.log(this.$.attr('value'));
                     // console.log("release : " + value + ' ' + this['i'][0].id);
                     var caller = this['i'][0].id;
-                    commBroker.fire(Block.BLOCK_LENGTH_CHANGING, this, caller, value);
+                    BB.comBroker.fire(BB.EVENTS.BLOCK_LENGTH_CHANGING, this, caller, value);
                 },
                 /*cancel: function () {
                  console.log("cancel : ", this);
@@ -312,8 +308,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _deleteBlock: function () {
             var self = this;
             jalapeno.removeBlockFromTimelineChannel(self.m_block_id);
-            commBroker.stopListenWithNamespace(Block.BLOCK_ON_CHANNEL_SELECTED, self);
-            commBroker.stopListenWithNamespace(Block.BLOCK_LENGTH_CHANGING, self);
+            commBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_ON_CHANNEL_SELECTED, self);
+            commBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_LENGTH_CHANGING, self);
         }
 
 

@@ -28,8 +28,6 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             BB.comBroker.listen(BB.EVENTS.APP_SIZED, self._reconfigPropPanelLocation);
 
             this.m_subViewStack = new StackView.Fader({el: Elements.BLOCK_SUBPROPERTIES});
-            // this.m_mainPanels = {};
-            // this.m_subPanels = {};
             this.m_selectedPanelID = undefined;
             this.m_selectedSubPanelID = undefined;
 

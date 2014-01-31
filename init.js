@@ -15,6 +15,7 @@ require.config({
         "Cookie": '_common/_js/cookie/jquery.cookie',
         "RC4": '_common/_js/rc4/RC4',
         "Base64": '_common/_js/base64/jquery.base64',
+        "Knob": '_common/_js/knob/jquery.knob',
         "X2JS": '_common/_js/x2js/xml2json',
         "Jalapeno": '_jalapeno/Jalapeno',
         "JalapenoModel": '_jalapeno/JalapenoModel',
@@ -97,6 +98,9 @@ require.config({
         },
         "RC4": {
             exports: 'RC4'
+        },
+        "Knob": {
+           exports: 'knob'
         },
         "ComBroker": {
             deps: ["backbone", "jquery"]

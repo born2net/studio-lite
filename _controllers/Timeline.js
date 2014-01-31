@@ -19,9 +19,9 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
      @static
      @final
      **/
-    Backbone.EVENTS.CAMPAIGN_TIMELINE_SELECTED = 'CAMPAIGN_TIMELINE_SELECTED';
+    BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED = 'CAMPAIGN_TIMELINE_SELECTED';
 
-    var Timeline = Backbone.Controller.extend({
+    var Timeline = BB.Controller.extend({
 
         /**
          Constructor
@@ -33,27 +33,13 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             this.m_campaign_timeline_id = self.options.campaignTimelineID;
             this.m_timing = 'sequencer';
             this.m_stackViewID = undefined;
-            this.m_property = Backbone.comBroker.getService(Backbone.SERVICES.PROPERTIES_VIEW);
+            this.m_property = BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW);
             this.m_selected = false;
-
-            this._init();
-            this._onTimelineSelected();
-
-        },
-
-
-        /**
-         Init a timeline and wire the UI including creating the channels that are members of this timeline.
-         @method _init
-         @return none
-         **/
-        _init: function () {
-
-            var self = this;
 
             self._populateChannels();
             self._populateTimeline();
             self._wireUI();
+            this._onTimelineSelected();
 
         },
 
@@ -65,7 +51,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
         _onTimelineSelected: function () {
             var self = this;
 
-            Backbone.comBroker.listen(Timeline.CAMPAIGN_TIMELINE_SELECTED, function (e) {
+            BB.comBroker.listen(BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED, function (e) {
                 var timelineID = e.edata;
                 if (self.m_campaign_timeline_id != timelineID) {
                     self.m_selected = false;
@@ -111,8 +97,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
 
         _propLoadTimeline: function () {
             var self = this;
-
-            self.m_property.viewPanel(Elements.PROP_ENTIRE_SCREEN);
+            self.m_property.viewPanel(Elements.TIMELINE_PROPERTIES);
             var recTimeline = jalapeno.getCampaignTimelineRecord(self.m_campaign_timeline_id);
             $(Elements.TIME_LINE_PROP_TITLE_ID).val(recTimeline['timeline_name']);
         },
@@ -161,11 +146,11 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             var width = parseInt(recBoard['board_pixel_width']);
             var height = parseInt(recBoard['board_pixel_height']);
 
-            Backbone.comBroker.getService(Backbone.SERVICES.RESOLUTION_SELECTOR_VIEW).setResolution(width + 'x' + height);
+            BB.comBroker.getService(BB.SERVICES.RESOLUTION_SELECTOR_VIEW).setResolution(width + 'x' + height);
             if (width > height) {
-                Backbone.comBroker.getService(Backbone.SERVICES.ORIENTATION_SELECTOR_VIEW).setOrientation(Backbone.CONSTS.HORIZONTAL);
+                BB.comBroker.getService(BB.SERVICES.ORIENTATION_SELECTOR_VIEW).setOrientation(BB.CONSTS.HORIZONTAL);
             } else {
-                Backbone.comBroker.getService(Backbone.SERVICES.ORIENTATION_SELECTOR_VIEW).setOrientation(Backbone.CONSTS.VERTICAL);
+                BB.comBroker.getService(BB.SERVICES.ORIENTATION_SELECTOR_VIEW).setOrientation(BB.CONSTS.VERTICAL);
             }
 
             var screenProps = jalapeno.getTemplateViewersScreenProps(self.m_campaign_timeline_id, i_campaign_timeline_board_template_id)
@@ -175,7 +160,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             switch (self.m_timing) {
                 case 'sequencer':
                 {
-                    var sequences = Backbone.comBroker.getService(Backbone.SERVICES.SEQUENCER_VIEW);
+                    var sequences = BB.comBroker.getService(BB.SERVICES.SEQUENCER_VIEW);
                     sequences.createTimelineThumbnailUI(screenProps);
                     break;
                 }
@@ -198,8 +183,8 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
 
             var self = this;
             var screenTemplateData = {
-                orientation: Backbone.comBroker.getService(Backbone.SERVICES.ORIENTATION_SELECTOR_VIEW).getOrientation(),
-                resolution: Backbone.comBroker.getService(Backbone.SERVICES.RESOLUTION_SELECTOR_VIEW).getResolution(),
+                orientation: BB.comBroker.getService(BB.SERVICES.ORIENTATION_SELECTOR_VIEW).getOrientation(),
+                resolution: BB.comBroker.getService(BB.SERVICES.RESOLUTION_SELECTOR_VIEW).getResolution(),
                 screenProps: i_screenProps,
                 scale: '7'
             }
@@ -223,11 +208,11 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
 
             $(Elements.SELECTED_TIMELINE).append(snippetWrapper);
 
-            var timelineViewStack = Backbone.comBroker.getService(Backbone.SERVICES.CAMPAIGN_VIEW).getTimelineViewStack();
+            var timelineViewStack = BB.comBroker.getService(BB.SERVICES.CAMPAIGN_VIEW).getTimelineViewStack();
             // self.m_stackViewID = timelineViewStack.addChild('#' + divID1);
             $('#' + divID2).append($(snippet));
             screenTemplate.selectablelDivision();
-            var view = new Backbone.View({el: '#' + divID1});
+            var view = new BB.View({el: '#' + divID1});
             self.m_stackViewID = timelineViewStack.addView(view);
             screenTemplate.activate();
 

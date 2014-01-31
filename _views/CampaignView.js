@@ -4,15 +4,18 @@
  @constructor
  @return {Object} instantiated CampaignView
  **/
-define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListView', 'StackView', 'Timeline','ScreenTemplateFactory'], function ($, Backbone, SequencerView, ChannelListView, ResourceListView, StackView, Timeline, ScreenTemplateFactory) {
+define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListView', 'StackView', 'Timeline', 'ScreenTemplateFactory'], function ($, Backbone, SequencerView, ChannelListView, ResourceListView, StackView, Timeline, ScreenTemplateFactory) {
 
     Backbone.SERVICES.CAMPAIGN_VIEW = 'CampaignView';
 
     var CampaignView = Backbone.View.extend({
 
         /**
-         Constructor
+         Init the instance and listen to VIEW_CHANGED event so we know when it's time to act.
+         If no campaign was selected, we launch the campaign wizard creator, otherwise we populate the campaign / timelines.
+         We also use this method to wire the rest of the campaigns elements.
          @method initialize
+         @return none
          **/
         initialize: function () {
             var self = this;
@@ -31,7 +34,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListV
             this.m_channelListView = new ChannelListView({
                 el: Elements.CHANNEL_LIST_VIEW
             });
-            Backbone.comBroker.setService(BB.SERVICES.CHANNEL_LIST_VIEW , this.m_channelListView);
+            Backbone.comBroker.setService(BB.SERVICES.CHANNEL_LIST_VIEW, this.m_channelListView);
 
             this.m_resourcesView = new ResourceListView({
                 el: '#123'
@@ -42,16 +45,21 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListV
                     self.render();
                 }
             });
-
         },
 
         render: function () {
             var self = this;
 
             self.m_selected_campaign_id = Backbone.comBroker.getService(Backbone.SERVICES.CAMPAIGN_SELECTOR).getSelectedCampaign();
-            if (self.m_selected_campaign_id == -1) {
+            self.m_property.initPanel(Elements.CHANNEL_PROPERTIES);
+            self.m_property.initPanel(Elements.TIMELINE_PROPERTIES);
 
+            // Create new campaign
+            if (self.m_selected_campaign_id == -1) {
+                //todo: add new campaign
+                self._onLaunchTimelineWizard();
             } else {
+                /// Load existing campaign
                 self._loadTimelinesFromDB();
             }
 
@@ -60,56 +68,21 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListV
             self._onWireDelTimeline();
             self._onWireTimelineExpandCollapse();
             self._listenTimelineOrViewerSelected();
+            self._listenGlobalOpenProps();
 
             var view = new Backbone.View({el: Elements.NONE_SELECTED_SCREEN_LAYOUT})
             self.m_timelineViewStack.addView(view);
-
-            //todo fix properties panel
-            // self.m_property.initPanel(Elements.PROP_SCREEN_DIVISION, false);
-            // self.m_property.initPanel(Elements.PROP_ENTIRE_SCREEN, false);
         },
 
-
         /**
-         Init the instance and listen to VIEW_CHANGED event so we know when it's time to act.
-         If no campaign was selected, we launch the campaign wizard creator, otherwise we populate the campaign / timelines.
-         We also use this method to wire the rest of the campaigns elements.
-         @method init
-         @return none
+         Open global properties button hook via popup
+         @method _listenGlobalOpenProps
          **/
-        init: function () {
+        _listenGlobalOpenProps: function () {
             var self = this;
-
-            // When UI for Campaign is loaded
-            Backbone.comBroker.listen(Viewstacks.VIEW_CHANGED, function (e) {
-                if ($(e.context).data('viewstackname') == 'tab4' && Backbone.comBroker.getService('PlayListViewStack') === e.caller) {
-
-                    Backbone.comBroker.getService('ScreenArrowSelector').disable();
-
-                    /// Create new campaign
-                    if (self.m_selected_campaign_id == -1) {
-                        self._onLaunchTimelineWizard();
-
-                        /// Load existing campaign
-                    } else {
-
-                        // self.m_selected_campaign_id = e.edata;
-                        self._loadTimelinesFromDB();
-                    }
-                }
+            $(Elements.OPEN_POPUP_PROPERTIES).on('click', function () {
+                self.m_property.openPropertiesPanel();
             });
-
-            self._onWireOpenTimeLineProperties();
-            self._onWireNewTimelineWizard();
-            self._onWireDelTimeline();
-            self._onWireTimelineExpandCollapse();
-            self._listenTimelineOrViewerSelected();
-
-            self.m_timelineViewStack.addChild(Elements.NONE_SELECTED_SCREEN_LAYOUT);
-            //todo: fix prop
-            self.m_property.initPanel(Elements.PROP_SCREEN_DIVISION, false);
-            self.m_property.initPanel(Elements.PROP_ENTIRE_SCREEN, false);
-
         },
 
         /**
@@ -129,7 +102,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListV
          @return none
          **/
         _onWireNewTimelineWizard: function () {
-            $(Elements.ADD_NEW_SCREEN_BUTTON).on('click',function (e) {
+            $(Elements.ADD_NEW_SCREEN_BUTTON).on('click', function (e) {
                 $.mobile.changePage(Elements.SCREEN_LAYOUT_LIST, {transition: "pop"});
                 var compTemplateWizard = new TemplateWizard(Elements.SCREEN_LAYOUT_ITEMS_LIST);
             });
@@ -142,7 +115,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListV
          **/
         _onWireDelTimeline: function () {
             var self = this;
-            $(Elements.DEL_SCREEN_BUTTON).on('click',function (e) {
+            $(Elements.DEL_SCREEN_BUTTON).on('click', function (e) {
                 self._deleteTimeline(e, self);
             });
         },
@@ -249,8 +222,8 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListV
                 ////////////////////////////////////////////////
 
                 /*if (e.context.m_owner instanceof Scheduler) {
-                    return;
-                }*/
+                 return;
+                 }*/
 
                 ////////////////////////////////////////////////
                 //// Timeline selected from Timeline class

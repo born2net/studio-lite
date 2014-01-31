@@ -200,7 +200,7 @@
                                     <button id="delScreenButton" type="button" class="btn btn-default btn-sm">
                                         <span class="glyphicon glyphicon-minus"></span>
                                     </button>
-                                    <button id="openTimeLineProperties" type="button"
+                                    <button id="openPopupProperties" type="button"
                                             class="btn btn-default btn-sm">
                                         <span class="glyphicon glyphicon-cog"></span>
                                     </button>
@@ -300,10 +300,21 @@
                        placeholder="Campaign name">
             </form>
         </div>
-        <div id="channelProperties" style="display: none">
-        </div>
         <div id="timelineProperties" style="display: none">
+            <div data-role="fieldcontain" data-inset="true" style="width:99%;">
+                <input type="text" name="name" id="timeLinePropTitleID" value="" placeholder="Timeline Title">
+            </div>
         </div>
+        <div id="channelProperties" style="display: none">
+            <h5>Channel properties</h5>
+            <label for="randomPlayback">Random Playback</label>
+            <select id="randomPlayback" name="Random playback" data-role="slider" data-track-theme="a">
+                <option value="off">Off</option>
+                <option value="on">On</option>
+            </select>
+        </div>
+
+
 
         <div id="blockProperties" style="display: none">
             <div>

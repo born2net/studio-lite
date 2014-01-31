@@ -106,9 +106,7 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
             var state = recChannel['random_order'] == 'True' ? 'on' : 'off';
 
             $(Elements.RANDOM_PLAYBACK + ' option[value=' + state + ']').attr("selected", "selected");
-            //todo implement loading of property view for screen division
-            // self.m_property.selectView(Elements.PROP_SCREEN_DIVISION);
-            // $(Elements.RANDOM_PLAYBACK).slider('refresh');
+            self.m_property.selectView(Elements.CHANNEL_PROPERTIES);
         },
 
         /**

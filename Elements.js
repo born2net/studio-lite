@@ -22,8 +22,10 @@ Elements.IMAGE_ASPECT_RATIO = '#imageAspectRatio';
 Elements.BLOCK_QR_COMMON_PROPERTIES = '#blockQRCommonProperties';
 Elements.QR_TEXT = '#qrText';
 
-
-
+Elements.RANDOM_PLAYBACK = '#randomPlayback';
+Elements.CHANNEL_PROPERTIES = '#channelProperties';
+Elements.TIMELINE_PROPERTIES = '#timelineProperties';
+Elements.TIME_LINE_PROP_TITLE_ID = '#timeLinePropTitleID';
 Elements.ABOUT_US = '#aboutUS';
 Elements.STACK_WAIT_MODAL_VIEW = '#stackWaitModalView';
 Elements.BS_MODAL = '#bsModal';
@@ -44,7 +46,7 @@ Elements.RESOLUTION_LIST = '#resolutionList';
 Elements.SCREEN_LAYOUT_SELECTOR = '#screenLayoutSelector';
 Elements.SCREEN_LAYOUT_LIST = '#screenLayoutList';
 Elements.SORTABLE = '#sortable';
-
+Elements.OPEN_POPUP_PROPERTIES = '#openPopupProperties';
 
 Elements.NEW_CAMPAIGN = '#newCampaign';
 Elements.REMOVE_CAMPAIGN = '#removeCampaign';

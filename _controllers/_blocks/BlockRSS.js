@@ -10,8 +10,6 @@
  */
 define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
-    Backbone.EVENTS.CAMPAIGN_TIMELINE_SELECTED = 'CAMPAIGN_TIMELINE_SELECTED';
-
     var BlockRSS = Block.extend({
 
         /**
@@ -28,8 +26,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_blockIcon = model.getComponent(self.m_blockType).icon;
             self.m_rssUrl = 'http://rss.news.yahoo.com/rss/world';
 
-            //todo: fix prop panel
-            // self.m_property.initSubPanel(Elements.BLOCK_RSS_COMMON_PROPERTIES);
+            self.m_property.initSubPanel(Elements.BLOCK_RSS_COMMON_PROPERTIES);
+
             self._wireUI();
             // todo: disabled mini colors
             //self._listenRSSColorPicker();
@@ -99,7 +97,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
             var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
             var xml = recBlock['player_data'];
-            var x2js = commBroker.getService('compX2JS');
+            var x2js = BB.comBroker.getService('compX2JS');
             var jPlayerData = x2js.xml_str2json(xml);
 
             if ((jPlayerData)["Player"]["Data"]["Rss"]) {

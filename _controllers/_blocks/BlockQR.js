@@ -10,8 +10,6 @@
  */
 define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
-    Backbone.EVENTS.CAMPAIGN_TIMELINE_SELECTED = 'CAMPAIGN_TIMELINE_SELECTED';
-
     var BlockQR = Block.extend({
 
         /**

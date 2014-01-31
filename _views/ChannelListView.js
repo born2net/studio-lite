@@ -7,7 +7,7 @@
  **/
 define(['jquery', 'backbone', 'jqueryui', 'Timeline', 'SequencerView'], function ($, Backbone, jqueryui, Timeline, SequencerView) {
 
-    BB.SERVICES.CHANNEL_LIST_VIEW ='ChannelListView';
+    BB.SERVICES.CHANNEL_LIST_VIEW = 'ChannelListView';
 
     var ChannelListView = BB.View.extend({
 
@@ -219,7 +219,7 @@ define(['jquery', 'backbone', 'jqueryui', 'Timeline', 'SequencerView'], function
 
             for (var block_id in blocks) {
                 var blockData = blocks[block_id].getBlockData();
-                $(Elements.SORTABLE).append($('<li class="channelListItems list-group-item" data-block_id="' + blockData.blockID + '">' +
+                $(Elements.SORTABLE).append($('<li class="' + BB.lib.unclass(Elements.CLASS_CHANNEL_LIST_ITEMS) + '  list-group-item" data-block_id="' + blockData.blockID + '">' +
                     '<a href="#">' +
                     '<img  class="img-responsive" src="' + blockData.blockIcon + '"/>' +
                     '<span>' + blockData.blockName + '</span>' +
@@ -246,28 +246,19 @@ define(['jquery', 'backbone', 'jqueryui', 'Timeline', 'SequencerView'], function
                 self.selected_block_id = $(resourceElem).data('block_id');
                 self._blockChannelSelected();
 
-
-
-
-
-                return;
-                var openProps = $(e.target).closest('a').hasClass('resourceOpenProperties') ? true : false;
-                var resourceElem = $(e.target).closest('li');
-                var resourceProp = $(resourceElem).find('.resourceOpenProperties');
-                self.selected_block_id = $(resourceElem).data('block_id');
-
-                $(Elements.CLASS_CHANNEL_LIST_ITEMS).removeClass(Elements.CLASS_CURRENT_SELECTED_RESOUCRE2);
-                $(resourceElem).addClass(Elements.CLASS_CURRENT_SELECTED_RESOUCRE2);
-                $(resourceProp).addClass(Elements.CLASS_CURRENT_SELECTED_RESOUCRE2);
-
-
-
-                if (openProps)
-                    BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW).openPanel(e);
-
-                e.stopImmediatePropagation();
-                $(Elements.SORTABLE).listview('refresh');
+                $(Elements.CLASS_CHANNEL_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
+                $(resourceElem).addClass('activated').find('a').addClass('whiteFont');
                 return false;
+                /*
+                 var openProps = $(e.target).closest('a').hasClass('resourceOpenProperties') ? true : false;
+                 var resourceElem = $(e.target).closest('li');
+                 var resourceProp = $(resourceElem).find('.resourceOpenProperties');
+                 self.selected_block_id = $(resourceElem).data('block_id');
+                 if (openProps)
+                 BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW).openPanel(e);
+                 e.stopImmediatePropagation();
+                 $(Elements.SORTABLE).listview('refresh');
+                 */
             });
         },
 

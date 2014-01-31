@@ -10,8 +10,6 @@
  */
 define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
-    Backbone.EVENTS.CAMPAIGN_TIMELINE_SELECTED = 'CAMPAIGN_TIMELINE_SELECTED';
-
     var BlockVideo = Block.extend({
 
         /**
@@ -28,8 +26,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_playerData = undefined;
             self.m_resourceID = undefined;
 
-            //todo: fix prop panel
-            // self.m_property.initSubPanel(Elements.BLOCK_VIDEO_COMMON_PROPERTIES);
+            self.m_property.initSubPanel(Elements.BLOCK_VIDEO_COMMON_PROPERTIES);
             self._wireUI();
         },
 

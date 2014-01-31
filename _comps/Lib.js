@@ -157,6 +157,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             return value;
         },
 
+        unclass: function(value){
+            return value.replace(/\./g, '');
+        },
+
         /**
          Get DOM comment string
          @method getComment

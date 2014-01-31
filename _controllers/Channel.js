@@ -193,7 +193,7 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
                 case 3345:
                 {
                     self.m_blocks[i_campaign_timeline_chanel_player_id] = new BlockRSS({
-                        _placement: Backbone.CONSTS.PLACEMENT_CHANNEL,
+                        i_placement: Backbone.CONSTS.PLACEMENT_CHANNEL,
                         i_block_id: i_campaign_timeline_chanel_player_id
                     });
                     break;

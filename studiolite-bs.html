@@ -195,21 +195,21 @@
                                             class="btn btn-default btn-sm">
                                         <span class="glyphicon glyphicon-plus"></span>
                                     </button>
-                                    <button id="delScreenButton" style="display: inline"  type="button" class="btn btn-default btn-sm">
+                                    <button id="delScreenButton" type="button" class="btn btn-default btn-sm">
                                         <span class="glyphicon glyphicon-minus"></span>
                                     </button>
-                                    <button id="openPopupProperties" type="button" class="btn btn-default btn-sm hidden-sm hidden-md hidden-lg">
+                                    <button id="openPopupProperties" type="button"
+                                            class="btn btn-default btn-sm hidden-sm hidden-md hidden-lg">
                                         <span class="glyphicon glyphicon-cog"></span>
                                     </button>
                                 </h4>
                             </div>
-                            <div id="collapseOne" class="panel-collapse collapse in">
+                            <div id="screenSelectorContainerCollapse" class="panel-collapse collapse in">
                                 <div class="panel-body">
-                                    <aside style="margin: 0px; padding: 0px">
-                                        <aside style="margin: 0px; padding: 0px">
-                                            <div style="margin: 0px; padding: 0px" vertical-align="middle"
-                                                 id="screenSelectorContainer">
-                                                <hr style="margin: 0px; padding: 0px" class="dottedHR">
+                                    <aside>
+                                        <aside>
+                                            <div id="screenSelectorContainer" vertical-align="middle">
+                                                <hr class="dottedHR">
                                                 <ul id="screenLayoutsUL">
                                                 </ul>
                                             </div>
@@ -312,7 +312,6 @@
         </div>
 
 
-
         <div id="blockProperties" style="display: none">
             <div>
                 <h3 id="selectedChannelResourceName"></h3>
@@ -332,7 +331,22 @@
                         <option value="on">On</option>
                     </select>
                 </div>
-
+                <div id="blockVideoCommonProperties" style="display: none">
+                    <h5>Video</h5>
+                    <label for="videoAspectRatio">Aspect ratio</label>
+                    <select id="videoAspectRatio" name="Aspect ratio" data-role="slider" data-track-theme="a">
+                        <option value="off">Off</option>
+                        <option value="on">On</option>
+                    </select>
+                </div>
+                <div id="blockRSSCommonProperties" style="display: none" data-theme="a">
+                    <div>
+                        <h5>RSS</h5>
+                        <div data-role="fieldcontain" data-inset="true">
+                            <input type="text" name="name" id="rssLink" value="" placeholder="Enter RSS Link Text">
+                        </div>
+                    </div>
+                </div>
                 <div id="blockQRCommonProperties" style="display: none" data-theme="a">
                     <div data-role="fieldcontain" data-inset="true">
                         <input type="text" name="name" id="qrText" value=""

@@ -122,6 +122,11 @@ body {
     float: right;
 }
 
+#screenSelectorContainer {
+    overflow-x: scroll;
+    width: 800px;
+}
+
 #togglePanel {
     position: absolute;
     margin: 10px;
@@ -189,6 +194,10 @@ body {
     cursor: pointer;
 }
 
+#delScreenButton{
+    display: inline;
+}
+
 #imgVertical {
     opacity: 0.6;
     cursor: pointer;
@@ -217,10 +226,11 @@ body {
     display: inline;
     font-size: 1.5em;
 }
-
+/*
 .channelListItems:hover {
     background-color: #f5f5f5;
 }
+*/
 
 aside > aside > div > ul > li {
     display: block;
@@ -239,7 +249,18 @@ aside > aside > div > ul > li {
     width: 1500px;
     position: relative;
     border-top: 12px dotted #c1c1c1;
+    padding-bottom: 7px;
     top: 20px;
+}
+
+.activated {
+    background-color: #428bca;
+    color: white;
+}
+
+.whiteFont {
+    color: white;
+
 }
 
 /* -------------------------------------------

@@ -57,6 +57,7 @@ Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION = '#attachDragDropMainScreenSele
 Elements.DETTACH_DRAG_DROP_MAIN_SCREEN_SELECTION = '#dettachDragDropMainScreenSelection';
 
 Elements.CLASS_SCREEN_DIVISION = '.screenDivisionClass';
+Elements.CLASS_CHANNEL_LIST_ITEMS = '.channelListItems';
 
 
 

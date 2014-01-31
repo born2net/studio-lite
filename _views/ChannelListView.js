@@ -211,15 +211,14 @@ define(['jquery', 'backbone', 'jqueryui', 'Timeline', 'SequencerView'], function
 
             for (var block_id in blocks) {
                 var blockData = blocks[block_id].getBlockData();
-                $(Elements.SORTABLE).append($('<li class="selectedResource" data-theme="a" data-block_id="' + blockData.blockID + '"><a href="#">' +
-                    '<img style="width: 50px ; height: 50px; margin-left: 20px; padding-top: 14px" src="' + blockData.blockIcon + '">' +
-                    '<h2>' + blockData.blockName + '</h2>' +
-                    '<p>' + blockData.blockDescription + '</p>' +
+                $(Elements.SORTABLE).append($('<li class="channelListItems list-group-item" data-block_id="' + blockData.blockID + '">' +
+                    '<a href="#">' +
+                    '<img  class="img-responsive" src="' + blockData.blockIcon + '"/>' +
+                    '<span>' + blockData.blockName + '</span>' +
                     '</a>' +
-                    '<a data-icon="gear" class="fixPropOpenLiButtonPosition selectedResource resourceOpenProperties"> </a>' +
                     '</li>'));
             }
-
+            // '<a data-icon="gear" class="fixPropOpenLiButtonPosition selectedResource resourceOpenProperties"> </a>' +
             // $(Elements.SORTABLE).listview('refresh');
             self._listenBlockSelected();
         },
@@ -233,13 +232,15 @@ define(['jquery', 'backbone', 'jqueryui', 'Timeline', 'SequencerView'], function
         _listenBlockSelected: function () {
             var self = this;
 
-            $(Elements.CLASS_SELECTED_RESOURCE).on('click', function (e) {
+            $(Elements.CLASS_CHANNEL_LIST_ITEMS).on('click', function (e) {
+                return;
+                //todo: fix prop
                 var openProps = $(e.target).closest('a').hasClass('resourceOpenProperties') ? true : false;
                 var resourceElem = $(e.target).closest('li');
                 var resourceProp = $(resourceElem).find('.resourceOpenProperties');
                 self.selected_block_id = $(resourceElem).data('block_id');
 
-                $(Elements.CLASS_SELECTED_RESOURCE).removeClass(Elements.CLASS_CURRENT_SELECTED_RESOUCRE2);
+                $(Elements.CLASS_CHANNEL_LIST_ITEMS).removeClass(Elements.CLASS_CURRENT_SELECTED_RESOUCRE2);
                 $(resourceElem).addClass(Elements.CLASS_CURRENT_SELECTED_RESOUCRE2);
                 $(resourceProp).addClass(Elements.CLASS_CURRENT_SELECTED_RESOUCRE2);
 

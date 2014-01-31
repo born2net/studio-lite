@@ -100,10 +100,6 @@ body {
     height: 80%;
 }
 
-.noScroll {
-    overflow: hidden;
-}
-
 .draggableScreenPlaceHolder {
     position: relative;
     top: 0px;
@@ -111,6 +107,10 @@ body {
     width: 3px;
     background-color: red;
     opacity: 0.6
+}
+
+.noScroll {
+    overflow: hidden;
 }
 
 .yScroll {
@@ -199,6 +199,24 @@ body {
     display: none;
 }
 
+.channelListItems {
+    cursor: pointer;
+}
+
+.channelListItems a img {
+    height: 50px;
+    display: inline;
+    padding-right: 20px;
+}
+
+.channelListItems a span {
+    display: inline;
+    font-size: 1.5em;
+}
+
+.channelListItems:hover {
+    background-color: #f5f5f5;
+}
 
 aside > aside > div > ul > li {
     display: block;

@@ -13,9 +13,9 @@
  **/
 define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
 
-    Backbone.SERVICES.PROPERTIES_VIEW = 'PropertiesView';
+    BB.SERVICES.PROPERTIES_VIEW = 'PropertiesView';
 
-    var PropertiesView = Backbone.StackView.Fader.extend({
+    var PropertiesView = BB.StackView.Fader.extend({
 
         /**
          Constructor
@@ -24,13 +24,70 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
         initialize: function () {
             var self = this;
 
-            Backbone.StackView.ViewPort.prototype.initialize.call(this);
-            Backbone.comBroker.listen(Backbone.EVENTS.APP_SIZED, self._reconfigPropPanelLocation);
+            BB.StackView.ViewPort.prototype.initialize.call(this);
+            BB.comBroker.listen(BB.EVENTS.APP_SIZED, self._reconfigPropPanelLocation);
 
-            this.m_subViewStack = new StackView.Fader({el: Elements.SUB_PROP_PANEL});
-            this.m_mainPanels = {};
-            this.m_subPanels = {};
+            this.m_subViewStack = new StackView.Fader({el: Elements.BLOCK_SUBPROPERTIES});
+            // this.m_mainPanels = {};
+            // this.m_subPanels = {};
+            this.m_selectedPanelID = undefined;
+            this.m_selectedSubPanelID = undefined;
+
             this._listenOnSlidingPanel();
+        },
+
+        /**
+         Init the properties panel and add it to the viewstack.
+         @method initPanel
+         @param {String} i_panelID the html element id to be inserted into properties panel
+         @return {Boolean} returns true if panel created, or false if it already existed so nothing was done.
+         **/
+        initPanel: function (i_panelID) {
+            var self = this;
+            if (self.getViewByID(i_panelID) != undefined)
+                return false;
+            var view = new BB.View({el: i_panelID});
+            self.addView(view);
+            return true;
+        },
+
+        /**
+         Init the properties sub-panel and add it to the view stack.
+         @method initSubPanel
+         @param {String} i_panelID  the html element id to be inserted into sub properties panel
+         @return {Boolean} returns true if panel created, or false if it already existed so nothing was done
+         **/
+        initSubPanel: function (i_panelID) {
+            var self = this;
+            if (self.m_subViewStack.getViewByID(i_panelID) != undefined)
+                return false;
+            var view = new BB.View({el: i_panelID});
+            self.m_subViewStack.addView(view);
+            return true;
+        },
+
+        /**
+         Load the requested panel into the current viewstack (i.e.: hide all other panels).
+         @method viewPanel
+         @param {String} i_panelID html element id of panel to load into current viewstack.
+         **/
+        viewPanel: function (i_panelID) {
+            var self = this;
+            self.m_selectedPanelID = i_panelID;
+            // var index = self.m_mainPanels[i_panelID];
+            self.selectView(i_panelID);
+        },
+
+        /**
+         Load the requested sub panel into the current viewstack (i.e.: hide all other panels).
+         @method viewSubPanel
+         @param {String} i_panelID html element id of sub panel to load into current view stack.
+         **/
+        viewSubPanel: function (i_panelID) {
+            var self = this;
+            // var index = self.m_subPanels[i_panelID];
+            self.m_subViewStack.selectView(i_panelID);
+            self.m_selectedSubPanelID = i_panelID;
         },
 
         /**
@@ -65,9 +122,9 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
          Move properties panel between side panel or full screen popup panel depending on screen size
          @method _reconfigPropPanelLocation
          **/
-        _reconfigPropPanelLocation: function(){
-            var layoutManager = Backbone.comBroker.getService(Backbone.SERVICES.LAYOUT_MANAGER);
-            if (layoutManager.getAppWidth() > 768){
+        _reconfigPropPanelLocation: function () {
+            var layoutManager = BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER);
+            if (layoutManager.getAppWidth() > 768) {
                 $(Elements.PROP_PANEL_WRAP).append($(Elements.PROP_PANEL));
             } else {
                 $(Elements.POPUP_PROPERTIES).append($(Elements.PROP_PANEL));
@@ -78,16 +135,16 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
          Open the properties panel (side or popup per screen size)
          @method openPropertiesPanel
          **/
-        openPropertiesPanel: function(){
+        openPropertiesPanel: function () {
             var self = this;
             self._reconfigPropPanelLocation();
-            var layoutManager = Backbone.comBroker.getService(Backbone.SERVICES.LAYOUT_MANAGER);
-            if (layoutManager.getAppWidth() > 768){
-                if ($(Elements.TOGGLE_PANEL).hasClass('buttonStateOn')==false) {
+            var layoutManager = BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER);
+            if (layoutManager.getAppWidth() > 768) {
+                if ($(Elements.TOGGLE_PANEL).hasClass('buttonStateOn') == false) {
                     $(Elements.TOGGLE_PANEL).trigger('click');
                 }
             } else {
-                var popModalView = Backbone.comBroker.getService(Backbone.SERVICES.POP_MODAL_VIEW);
+                var popModalView = BB.comBroker.getService(BB.SERVICES.POP_MODAL_VIEW);
                 popModalView.selectView(Elements.POPUP_PROPERTIES);
             }
         }

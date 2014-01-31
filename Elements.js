@@ -7,17 +7,23 @@ Elements.REMEMBER_ME = '#rememberMe';
 Elements.APP_CONTENT = '#appContent';
 Elements.APP_NAVIGATOR = '#appNavigator';
 Elements.POP_MODAL = '#popModal';
-Elements.PROP_PANEL_WRAP = '#propPanelWrap';
 Elements.MAIN_PANEL_WRAP = '#mainPanelWrap';
-Elements.PROP_PANEL = '#propPanel';
-Elements.SUB_PROP_PANEL = '#subPropPanel';
 Elements.FORM_CAMPAIGN_NAME = '#formCampaignName';
 Elements.EMPTY_PROPERTIES = '#emptyProperties';
+Elements.CHANNEL_LIST_VIEW = '#channelListView';
 
-
-
+Elements.PROP_PANEL_WRAP = '#propPanelWrap';
 Elements.PROP_PANEL = '#propPanel';
+Elements.BLOCK_PROPERTIES = '#blockProperties';
+Elements.BLOCK_SUBPROPERTIES = '#blockSubProperties';
+Elements.BLOCK_IMAGE_COMMON_PROPERTIES = '#blockImageCommonProperties';
 Elements.POPUP_PROPERTIES = '#popupProperties';
+Elements.IMAGE_ASPECT_RATIO = '#imageAspectRatio';
+Elements.BLOCK_QR_COMMON_PROPERTIES = '#blockQRCommonProperties';
+Elements.QR_TEXT = '#qrText';
+
+
+
 Elements.ABOUT_US = '#aboutUS';
 Elements.STACK_WAIT_MODAL_VIEW = '#stackWaitModalView';
 Elements.BS_MODAL = '#bsModal';

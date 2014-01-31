@@ -26,6 +26,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             var compX2JS = x2js = new X2JS({escapeMode: true, attributePrefix: "_", arrayAccessForm: "none", emptyNodeForm: "text", enableToStringFunc: true, arrayAccessFormPaths: [], skipEmptyTextNodesForObj: true});
             Backbone.comBroker.setService('compX2JS', compX2JS);
 
+            window.BB = Backbone;
             window.jalapeno = Backbone.Jalapeno;
             window.model = Backbone.JalapenoModel;
             window.log = Backbone.lib.log;

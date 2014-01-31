@@ -7,7 +7,9 @@
  **/
 define(['jquery', 'backbone', 'jqueryui', 'Timeline', 'SequencerView'], function ($, Backbone, jqueryui, Timeline, SequencerView) {
 
-    var ChannelListView = Backbone.View.extend({
+    BB.SERVICES.CHANNEL_LIST_VIEW ='ChannelListView';
+
+    var ChannelListView = BB.View.extend({
 
         /**
          Init the ChannelList component and enable sortable channels UI via drag and drop operations.
@@ -16,6 +18,12 @@ define(['jquery', 'backbone', 'jqueryui', 'Timeline', 'SequencerView'], function
          **/
         initialize: function () {
             var self = this;
+
+            this.m_property = BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW);
+            this.selected_block_id = undefined;
+            this.selected_campaign_timeline_chanel_id = undefined;
+            this.selected_campaign_timeline_id = undefined;
+            this.selected_campaign_timeline_board_viewer_id = undefined;
 
             $(Elements.SORTABLE).sortable();
             $(Elements.SORTABLE).disableSelection();
@@ -103,7 +111,7 @@ define(['jquery', 'backbone', 'jqueryui', 'Timeline', 'SequencerView'], function
             var self = this;
             var addBlockWizard = new AddBlockWizard();
             addBlockWizard.newChannelBlockPage();
-            Backbone.comBroker.listenOnce(AddBlockWizard.ADD_NEW_BLOCK, function (e) {
+            BB.comBroker.listenOnce(AddBlockWizard.ADD_NEW_BLOCK, function (e) {
                 self._createNewChannelBlock(e.edata.blockCode, e.edata.resourceID);
                 addBlockWizard.destroy();
                 addBlockWizard.close();
@@ -151,7 +159,7 @@ define(['jquery', 'backbone', 'jqueryui', 'Timeline', 'SequencerView'], function
          **/
         _listenResourceRemoved: function () {
             var self = this;
-            Backbone.comBroker.listen(Backbone.EVENTS.REMOVED_RESOURCE, function (e) {
+            BB.comBroker.listen(BB.EVENTS.REMOVED_RESOURCE, function (e) {
                 if (self.selected_campaign_timeline_id != undefined && self.selected_campaign_timeline_chanel_id != undefined) {
                     $(Elements.SORTABLE).empty();
                     self._loadChannelBlocks(self.selected_campaign_timeline_id, self.selected_campaign_timeline_chanel_id);
@@ -161,7 +169,7 @@ define(['jquery', 'backbone', 'jqueryui', 'Timeline', 'SequencerView'], function
         },
 
         /**
-         Listen to the Backbone.EVENTS.ON_VIEWER_SELECTED so we know when a timeline has been selected.
+         Listen to the BB.EVENTS.ON_VIEWER_SELECTED so we know when a timeline has been selected.
          Once a timeline selection was done we check if the event if one of a timeline owner or other; if of timeline
          we populate channel list, if latter reset list.
          @method _listenTimelineSelected
@@ -170,7 +178,7 @@ define(['jquery', 'backbone', 'jqueryui', 'Timeline', 'SequencerView'], function
         _listenTimelineSelected: function () {
             var self = this;
 
-            Backbone.comBroker.listen(Backbone.EVENTS.ON_VIEWER_SELECTED, function (e) {
+            BB.comBroker.listen(BB.EVENTS.ON_VIEWER_SELECTED, function (e) {
 
                 self._resetChannel();
 
@@ -205,7 +213,7 @@ define(['jquery', 'backbone', 'jqueryui', 'Timeline', 'SequencerView'], function
 
             self.selected_campaign_timeline_chanel_id = i_campaign_timeline_chanel_id;
 
-            var timeline = Backbone.comBroker.getService(Backbone.SERVICES.CAMPAIGN_VIEW).getTimelineInstance(i_campaign_timeline_id);
+            var timeline = BB.comBroker.getService(BB.SERVICES.CAMPAIGN_VIEW).getTimelineInstance(i_campaign_timeline_id);
             var channel = timeline.getChannelInstance(i_campaign_timeline_chanel_id);
             var blocks = channel.getBlocks();
 
@@ -233,8 +241,16 @@ define(['jquery', 'backbone', 'jqueryui', 'Timeline', 'SequencerView'], function
             var self = this;
 
             $(Elements.CLASS_CHANNEL_LIST_ITEMS).on('click', function (e) {
+
+                var resourceElem = $(e.target).closest('li');
+                self.selected_block_id = $(resourceElem).data('block_id');
+                self._blockChannelSelected();
+
+
+
+
+
                 return;
-                //todo: fix prop
                 var openProps = $(e.target).closest('a').hasClass('resourceOpenProperties') ? true : false;
                 var resourceElem = $(e.target).closest('li');
                 var resourceProp = $(resourceElem).find('.resourceOpenProperties');
@@ -244,10 +260,10 @@ define(['jquery', 'backbone', 'jqueryui', 'Timeline', 'SequencerView'], function
                 $(resourceElem).addClass(Elements.CLASS_CURRENT_SELECTED_RESOUCRE2);
                 $(resourceProp).addClass(Elements.CLASS_CURRENT_SELECTED_RESOUCRE2);
 
-                self._blockChannelSelected();
+
 
                 if (openProps)
-                    commBroker.getService('CompProperty').openPanel(e);
+                    BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW).openPanel(e);
 
                 e.stopImmediatePropagation();
                 $(Elements.SORTABLE).listview('refresh');
@@ -262,7 +278,7 @@ define(['jquery', 'backbone', 'jqueryui', 'Timeline', 'SequencerView'], function
          **/
         _blockChannelSelected: function () {
             var self = this;
-            commBroker.fire(Block.BLOCK_ON_CHANNEL_SELECTED, this, null, self.selected_block_id);
+            BB.comBroker.fire(BB.EVENTS.BLOCK_ON_CHANNEL_SELECTED, this, null, self.selected_block_id);
         },
 
         /**

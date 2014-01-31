@@ -29,7 +29,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_qrText = 'Hello World';
 
             //todo: fix prop panel
-            // self.m_property.initSubPanel(Elements.BLOCK_QR_COMMON_PROPERTIES);
+            self.m_property.initSubPanel(Elements.BLOCK_QR_COMMON_PROPERTIES);
             self._wireUI();
         },
 
@@ -75,7 +75,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
             var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
             var xml = recBlock['player_data'];
-            var x2js = commBroker.getService('compX2JS');
+            var x2js = BB.comBroker.getService('compX2JS');
             var jPlayerData = x2js.xml_str2json(xml);
 
             if (jPlayerData["Player"]["Data"]["Text"]) {
@@ -99,7 +99,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var text = $(e.target).val();
             var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
             var xml = recBlock['player_data'];
-            var x2js = commBroker.getService('compX2JS');
+            var x2js = BB.comBroker.getService('compX2JS');
             var jPlayerData = x2js.xml_str2json(xml);
 
             // Example of how to build player_data as json object and serialize back to XML for save

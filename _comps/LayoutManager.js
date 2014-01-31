@@ -8,7 +8,7 @@
 define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEntryFaderView', 'LoginView', 'AppContentFaderView', 'WaitView', 'bootbox', 'CampaignManagerView', 'ResourcesView', 'ResourcesView', 'StationsView', 'SettingsView', 'ProStudioView', 'HelpView', 'LogoutView', 'CampaignSliderStackView', 'ScreenLayoutSelectorView'],
     function (_, $, Backbone, AppAuth, NavigationView, AppEntryFaderView, LoginView, AppContentFaderView, WaitView, Bootbox, CampaignManagerView, ResourcesView, ResourcesView, StationsView, SettingsView, ProStudioView, HelpView, LogoutView, CampaignSliderStackView, ScreenLayoutSelectorView) {
 
-        Backbone.SERVICES.LAYOUT_MANAGER = 'LayoutManager';
+        BB.SERVICES.LAYOUT_MANAGER = 'LayoutManager';
 
         /**
          Event fired when app resized
@@ -16,9 +16,9 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
          @static
          @final
          **/
-        Backbone.EVENTS.APP_SIZED = 'APP_SIZED';
+        BB.EVENTS.APP_SIZED = 'APP_SIZED';
 
-        var LayoutManager = Backbone.Router.extend({
+        var LayoutManager = BB.Router.extend({
 
             /**
              Constructor
@@ -141,7 +141,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                     el: Elements.WAITS_SCREEN_ENTRY_APP
                 });
 
-                this.m_logoutView = new Backbone.View({
+                this.m_logoutView = new BB.View({
                     el: Elements.APP_LOGOUT
                 });
 
@@ -150,8 +150,8 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 this.m_appEntryFaderView.addView(this.m_appContentFaderView);
                 this.m_appEntryFaderView.addView(this.m_mainAppWaitView);
 
-                Backbone.comBroker.setService(Backbone.SERVICES.APP_ENTRY_FADER_VIEW, this.m_appEntryFaderView);
-                Backbone.comBroker.setService(Backbone.SERVICES.APP_CONTENT_FADER_VIEW, this.m_appContentFaderView);
+                BB.comBroker.setService(BB.SERVICES.APP_ENTRY_FADER_VIEW, this.m_appEntryFaderView);
+                BB.comBroker.setService(BB.SERVICES.APP_CONTENT_FADER_VIEW, this.m_appContentFaderView);
             },
 
             /**
@@ -224,32 +224,32 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                         el: Elements.CAMPAIGN_SELECTOR,
                         to: Elements.ORIENTATION_SELECTOR
                     });
-                    Backbone.comBroker.setService(Backbone.SERVICES.CAMPAIGN_SELECTOR, self.m_campaignSelectorView);
+                    BB.comBroker.setService(BB.SERVICES.CAMPAIGN_SELECTOR, self.m_campaignSelectorView);
 
                     self.m_orientationSelectorView = new OrientationSelectorView({
                         stackView: self.m_campaignSliderStackView,
                         from: Elements.CAMPAIGN_SELECTOR,
                         el: Elements.ORIENTATION_SELECTOR,
                         to: Elements.RESOLUTION_SELECTOR,
-                        model: new Backbone.Model({screenOrientation: null})
+                        model: new BB.Model({screenOrientation: null})
                     });
-                    Backbone.comBroker.setService(Backbone.SERVICES.ORIENTATION_SELECTOR_VIEW, self.m_orientationSelectorView);
+                    BB.comBroker.setService(BB.SERVICES.ORIENTATION_SELECTOR_VIEW, self.m_orientationSelectorView);
 
                     self.m_resolutionSelectorView = new ResolutionSelectorView({
                         stackView: self.m_campaignSliderStackView,
                         from: Elements.ORIENTATION_SELECTOR,
                         el: Elements.RESOLUTION_SELECTOR,
                         to: Elements.SCREEN_LAYOUT_SELECTOR,
-                        model: new Backbone.Model({screenResolution: null})
+                        model: new BB.Model({screenResolution: null})
                     });
-                    Backbone.comBroker.setService(Backbone.SERVICES.RESOLUTION_SELECTOR_VIEW, self.m_resolutionSelectorView);
+                    BB.comBroker.setService(BB.SERVICES.RESOLUTION_SELECTOR_VIEW, self.m_resolutionSelectorView);
 
                     self.m_screenLayoutSelectorView = new ScreenLayoutSelectorView({
                         stackView: self.m_campaignSliderStackView,
                         from: Elements.RESOLUTION_SELECTOR,
                         el: Elements.SCREEN_LAYOUT_SELECTOR,
                         to: Elements.CAMPAIGN,
-                        model: new Backbone.Model({screenLayout: null})
+                        model: new BB.Model({screenLayout: null})
                     });
 
                     self.m_campaignView = new CampaignView({
@@ -258,7 +258,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                         el: Elements.CAMPAIGN,
                         to: Elements.CAMPAIGN_SELECTOR
                     });
-                    Backbone.comBroker.setService(Backbone.SERVICES.CAMPAIGN_VIEW, self.m_campaignView);
+                    BB.comBroker.setService(BB.SERVICES.CAMPAIGN_VIEW, self.m_campaignView);
 
                     self.m_campaignSliderStackView.addView(self.m_campaignSelectorView);
                     self.m_campaignSliderStackView.addView(self.m_orientationSelectorView);
@@ -281,12 +281,12 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                         el: Elements.PROP_PANEL,
                         duration: 400
                     });
-                    this.m_emptyPropView = new Backbone.View({
+                    this.m_emptyPropView = new BB.View({
                         el: Elements.EMPTY_PROPERTIES
                     });
                     self.m_propertiesView.addView(this.m_emptyPropView);
                     self.m_propertiesView.selectView(this.m_emptyPropView);
-                    Backbone.comBroker.setService(Backbone.SERVICES.PROPERTIES_VIEW, this.m_propertiesView);
+                    BB.comBroker.setService(BB.SERVICES.PROPERTIES_VIEW, this.m_propertiesView);
                 });
             },
 
@@ -302,16 +302,16 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                         animation: 'slide_top', //or 'fade'
                         bgColor: 'white'
                     });
-                    self.m_popUpProperties = new Backbone.View({el: Elements.POPUP_PROPERTIES});
+                    self.m_popUpProperties = new BB.View({el: Elements.POPUP_PROPERTIES});
                     popModalView.addView(self.m_popUpProperties);
 
-                    self.m_popUpAboutUs = new Backbone.View({el: Elements.ABOUT_US});
+                    self.m_popUpAboutUs = new BB.View({el: Elements.ABOUT_US});
                     popModalView.addView(self.m_popUpAboutUs);
 
-                    self.m_popUpWait = new Backbone.View({el: Elements.STACK_WAIT_MODAL_VIEW});
+                    self.m_popUpWait = new BB.View({el: Elements.STACK_WAIT_MODAL_VIEW});
                     popModalView.addView(self.m_popUpWait);
 
-                    Backbone.comBroker.setService(Backbone.SERVICES.POP_MODAL_VIEW, popModalView);
+                    BB.comBroker.setService(BB.SERVICES.POP_MODAL_VIEW, popModalView);
                 });
             },
 
@@ -330,7 +330,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
              @method _updateLayout
              **/
             _updateLayout: function () {
-                var self = Backbone.comBroker.getService(Backbone.SERVICES.LAYOUT_MANAGER);
+                var self = BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER);
                 var b = $('body');
                 self._appHeight = b.css('height').replace('px', '');
                 self._appWidth = b.css('width').replace('px', '');
@@ -340,7 +340,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 $(Elements.APP_NAVIGATOR).height(h);
                 // $('#screenLayoutList').height(h)+200;
 
-                Backbone.comBroker.fire(Backbone.EVENTS.APP_SIZED);
+                BB.comBroker.fire(BB.EVENTS.APP_SIZED);
             },
 
             /**

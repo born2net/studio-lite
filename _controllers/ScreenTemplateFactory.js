@@ -27,7 +27,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
      @final
      @param {screenData} json encapsulated data of entire configuration of instance
      **/
-    Backbone.EVENTS.ON_VIEWER_SELECTED = 'ON_VIEWER_SELECTED';
+    BB.EVENTS.ON_VIEWER_SELECTED = 'ON_VIEWER_SELECTED';
 
     /**
      Instruct the factory to produce a Template (screen) that each viewer (screen division) can be selected individually
@@ -37,7 +37,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
      @final
      @type String
      */
-    Backbone.CONSTS.VIEWER_SELECTABLE = 'VIEWER_SELECTABLE';
+    BB.CONSTS.VIEWER_SELECTABLE = 'VIEWER_SELECTABLE';
 
     /**
      Instruct the factory to produce a Template (screen) that can only be selected as a whole (no viewers selectable) and no numbered labels.
@@ -46,9 +46,9 @@ define(['jquery', 'backbone'], function ($, Backbone) {
      @final
      @type String
      */
-    Backbone.CONSTS.ENTIRE_SELECTABLE = 'ENTIRE_SELECTABLE';
+    BB.CONSTS.ENTIRE_SELECTABLE = 'ENTIRE_SELECTABLE';
 
-    var ScreenTemplateFactory = Backbone.Controller.extend({
+    var ScreenTemplateFactory = BB.Controller.extend({
 
         /**
          Constructor
@@ -118,7 +118,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
             self._deselectViewers();
 
-            Backbone.comBroker.fire(Backbone.EVENTS.ON_VIEWER_SELECTED, this, screenData);
+            BB.comBroker.fire(BB.EVENTS.ON_VIEWER_SELECTED, this, screenData);
             e.stopImmediatePropagation();
             return false;
         },
@@ -156,7 +156,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 screenTemplateData: self.m_screenTemplateData
             }
 
-            Backbone.comBroker.fire(Backbone.EVENTS.ON_VIEWER_SELECTED, this, screenData);
+            BB.comBroker.fire(BB.EVENTS.ON_VIEWER_SELECTED, this, screenData);
             e.stopImmediatePropagation();
             return false;
         },
@@ -294,7 +294,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         selectableFrame: function () {
             var self = this;
 
-            Backbone.comBroker.listen(Backbone.EVENTS.ON_VIEWER_SELECTED, function (e) {
+            BB.comBroker.listen(BB.EVENTS.ON_VIEWER_SELECTED, function (e) {
                 if (e.caller.elementID === self.m_myElementID) {
                     $('#' + self.m_myElementID).find('rect').css({'stroke-width': '4', 'stroke': 'rgb(73,123,174)'});
                 } else {

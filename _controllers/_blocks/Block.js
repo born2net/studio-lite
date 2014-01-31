@@ -16,7 +16,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
      @final
      @type String
      */
-    Backbone.CONSTS.PLACEMENT_SCENE = 'PLACEMENT_SCENE';
+    BB.CONSTS.PLACEMENT_SCENE = 'PLACEMENT_SCENE';
 
     /**
      block.PLACEMENT_CHANNEL indicates the insertion is on the timeline_channel
@@ -25,7 +25,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
      @final
      @type String
      */
-    Backbone.CONSTS.PLACEMENT_CHANNEL = 'PLACEMENT_CHANNEL';
+    BB.CONSTS.PLACEMENT_CHANNEL = 'PLACEMENT_CHANNEL';
 
     /**
      event fires when block on timeline_channel is selected
@@ -33,7 +33,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
      @param {this} caller
      @param {String} selected block_id
      **/
-    Backbone.EVENTS.BLOCK_ON_CHANNEL_SELECTED = 'BLOCK_ON_CHANNEL_SELECTED';
+    BB.EVENTS.BLOCK_ON_CHANNEL_SELECTED = 'BLOCK_ON_CHANNEL_SELECTED';
 
     /**
      event fires when block length is changing (requesting a change), normally by a knob property widget
@@ -42,17 +42,17 @@ define(['jquery', 'backbone'], function ($, Backbone) {
      @param {object} caller the firing knob element
      @param {number} value the knob's position value (hours / minutes / seconds)
      **/
-    Backbone.EVENTS.BLOCK_LENGTH_CHANGING = 'BLOCK_LENGTH_CHANGING';
+    BB.EVENTS.BLOCK_LENGTH_CHANGING = 'BLOCK_LENGTH_CHANGING';
 
     /**
      event fires when block length has changed, normally by a knob property widget
      @event Block.BLOCK_LENGTH_CHANGED
      @param {object} this
      **/
-    Backbone.EVENTS.BLOCK_LENGTH_CHANGED = 'BLOCK_LENGTH_CHANGED';
+    BB.EVENTS.BLOCK_LENGTH_CHANGED = 'BLOCK_LENGTH_CHANGED';
 
 
-    var Block = Backbone.Controller.extend({
+    var Block = BB.Controller.extend({
 
         /**
          Constructor
@@ -67,22 +67,21 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
             switch (this.m_placement) {
 
-                case Backbone.CONSTS.PLACEMENT_CHANNEL:
+                case BB.CONSTS.PLACEMENT_CHANNEL:
                 {
-                    this.m_property = Backbone.comBroker.getService(Backbone.SERVICES.PROPERTIES_VIEW);
+                    this.m_property = BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW);
 
                     self._onTimelineChannelBlockSelected();
                     self._onTimelineChannelBlockLengthChanged();
-                    return
-                    //todo: fix prop panel
                     var initiated = self.m_property.initPanel(Elements.BLOCK_PROPERTIES, true);
                     if (initiated) {
-                        self._propLengthKnobsInit();
-                        self.m_property.createSubPanel(Elements.BLOCK_SUBPROPERTIES);
+                        //todo: fix knob
+                        //self._propLengthKnobsInit();
+                        // self.m_property.createSubPanel(Elements.BLOCK_SUBPROPERTIES);
                     }
                     break;
                 }
-                case Backbone.CONSTS.PLACEMENT_SCENE:
+                case BB.CONSTS.PLACEMENT_SCENE:
                 {
                     break;
                 }
@@ -98,7 +97,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _onTimelineChannelBlockSelected: function () {
             var self = this;
 
-            Backbone.comBroker.listenWithNamespace(Backbone.EVENTS.BLOCK_ON_CHANNEL_SELECTED, self, function (e) {
+            BB.comBroker.listenWithNamespace(BB.EVENTS.BLOCK_ON_CHANNEL_SELECTED, self, function (e) {
                 var blockID = e.edata;
                 if (self.m_block_id != blockID) {
                     self._onTimelineChannelBlockDeselected();
@@ -106,10 +105,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 }
 
                 self.m_selected = true;
-                // log('block selected ' + self.m_block_id);
+                log('block selected ' + self.m_block_id);
 
                 switch (self.m_placement) {
-                    case Block.PLACEMENT_CHANNEL:
+                    case BB.CONSTS.PLACEMENT_CHANNEL:
                     {
                         self.m_property.viewPanel(Elements.BLOCK_PROPERTIES);
                         self._updateTitle();
@@ -117,7 +116,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                         break;
                     }
                     // Future support
-                    case Block.PLACEMENT_SCENE:
+                    case BB.CONSTS.PLACEMENT_SCENE:
                     {
                         break;
                     }
@@ -171,7 +170,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _onTimelineChannelBlockLengthChanged: function () {
             var self = this;
 
-            Backbone.comBroker.listenWithNamespace(Backbone.EVENTS.BLOCK_LENGTH_CHANGING, this, function (e) {
+            BB.comBroker.listenWithNamespace(BB.EVENTS.BLOCK_LENGTH_CHANGING, this, function (e) {
 
                 if (self.m_selected) {
                     var hours = $(Elements.BLOCK_LENGTH_HOURS).val();

@@ -6,12 +6,12 @@
  **/
 define(['jquery', 'backbone'], function ($, Backbone) {
 
-    Backbone.SERVICES.ORIENTATION_SELECTOR_VIEW = 'OrientationSelectorView';
-    Backbone.CONSTS.VERTICAL = 'VERTICAL';
-    Backbone.CONSTS.HORIZONTAL = 'HORIZONTAL';
-    Backbone.CONSTS.ORIENTATION = 'ORIENTATION';
+    BB.SERVICES.ORIENTATION_SELECTOR_VIEW = 'OrientationSelectorView';
+    BB.CONSTS.VERTICAL = 'VERTICAL';
+    BB.CONSTS.HORIZONTAL = 'HORIZONTAL';
+    BB.CONSTS.ORIENTATION = 'ORIENTATION';
 
-    var OrientationSelectorView = Backbone.View.extend({
+    var OrientationSelectorView = BB.View.extend({
 
         /**
          Constructor
@@ -26,11 +26,11 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             });
 
             $(Elements.IMG_HORIZONTAL).on('click', function () {
-                self._selectOrientation(Backbone.CONSTS.HORIZONTAL);
+                self._selectOrientation(BB.CONSTS.HORIZONTAL);
             });
 
             $(Elements.IMG_VERTICAL).on('click', function () {
-                self._selectOrientation(Backbone.CONSTS.VERTICAL);
+                self._selectOrientation(BB.CONSTS.VERTICAL);
             });
         },
 
@@ -44,14 +44,14 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
 
             switch (i_orientation) {
-                case Backbone.CONSTS.HORIZONTAL:
+                case BB.CONSTS.HORIZONTAL:
                 {
                     $(Elements.IMG_HORIZONTAL).css('opacity', '1');
                     $(Elements.IMG_VERTICAL).css('opacity', '0.6');
                     break;
                 }
 
-                case Backbone.CONSTS.VERTICAL:
+                case BB.CONSTS.VERTICAL:
                 {
                     $(Elements.IMG_HORIZONTAL).css('opacity', '0.6');
                     $(Elements.IMG_VERTICAL).css('opacity', '1');
@@ -59,8 +59,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 }
             }
 
-            self.model.set(Backbone.CONSTS.ORIENTATION, i_orientation);
-            self.resolutionSelector = Backbone.comBroker.getService(Backbone.SERVICES.RESOLUTION_SELECTOR_VIEW);
+            self.model.set(BB.CONSTS.ORIENTATION, i_orientation);
+            self.resolutionSelector = BB.comBroker.getService(BB.SERVICES.RESOLUTION_SELECTOR_VIEW);
             self.resolutionSelector.render();
             setTimeout(function () {
                 self.options.stackView.slideToPage(self.options.to, 'right');
@@ -68,11 +68,11 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         setOrientation: function(i_orientation){
-            this.model.set(Backbone.CONSTS.ORIENTATION, i_orientation);
+            this.model.set(BB.CONSTS.ORIENTATION, i_orientation);
         },
 
         getOrientation: function(){
-            return this.model.get(Backbone.CONSTS.ORIENTATION);
+            return this.model.get(BB.CONSTS.ORIENTATION);
         }
     });
 

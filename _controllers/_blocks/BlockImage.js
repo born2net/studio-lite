@@ -29,8 +29,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_blockIcon = undefined;
             self.m_resourceID = undefined;
 
-            //todo: fix prop panel
-            // self.m_property.initSubPanel(Elements.BLOCK_IMAGE_COMMON_PROPERTIES);
+            self.m_property.initSubPanel(Elements.BLOCK_IMAGE_COMMON_PROPERTIES);
             self._wireUI();
         },
 
@@ -68,7 +67,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
             var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
             var xml = recBlock['player_data'];
-            var x2js = commBroker.getService('compX2JS');
+            var x2js = BB.comBroker.getService('compX2JS');
             var jPlayerData = x2js.xml_str2json(xml);
 
 
@@ -79,7 +78,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             } else {
                 $(Elements.IMAGE_ASPECT_RATIO + ' option[value="off"]').attr("selected", "selected");
             }
-            $(Elements.IMAGE_ASPECT_RATIO).slider('refresh');
         },
 
         /**

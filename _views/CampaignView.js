@@ -29,8 +29,9 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListV
             Backbone.comBroker.setService(Backbone.SERVICES.SEQUENCER_VIEW, this.m_sequencerView);
 
             this.m_channelListView = new ChannelListView({
-                el: '#123'
+                el: Elements.CHANNEL_LIST_VIEW
             });
+            Backbone.comBroker.setService(BB.SERVICES.CHANNEL_LIST_VIEW , this.m_channelListView);
 
             this.m_resourcesView = new ResourceListView({
                 el: '#123'

@@ -5,7 +5,7 @@
  @param {String} i_container element that CompCampaignNavigator inserts itself into
  @return {Object} instantiated CompCampaignNavigator
  **/
-define(['jquery', 'backbone', 'jqueryui', 'Timeline', 'SequencerView'], function ($, Backbone, jqueryui, Timeline, SequencerView) {
+define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerView'], function ($, Backbone, jqueryui, TouchPunch, Timeline, SequencerView) {
 
     BB.SERVICES.CHANNEL_LIST_VIEW = 'ChannelListView';
 

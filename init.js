@@ -16,6 +16,7 @@ require.config({
         "RC4": '_common/_js/rc4/RC4',
         "Base64": '_common/_js/base64/jquery.base64',
         "Knob": '_common/_js/knob/jquery.knob',
+        "TouchPunch": '_common/_js/touchpunch/TouchPunch',
         "X2JS": '_common/_js/x2js/xml2json',
         "Jalapeno": '_jalapeno/Jalapeno',
         "JalapenoModel": '_jalapeno/JalapenoModel',
@@ -101,6 +102,10 @@ require.config({
         },
         "Knob": {
            exports: 'knob'
+        },
+        "TouchPunch": {
+            exports: 'TouchPunch',
+            deps: ["jqueryui"]
         },
         "ComBroker": {
             deps: ["backbone", "jquery"]

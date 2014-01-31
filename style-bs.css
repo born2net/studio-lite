@@ -34,10 +34,12 @@ body {
 }
 
 #propPanel {
-    padding: 0;
     margin: 0;
     overflow-y: scroll;
     height: auto;
+    padding-top: 15px;
+    width: 100%;
+    text-align: center;
     /* background-color: #fff5ba; */
 }
 

@@ -118,11 +118,15 @@ body {
     height: 100%;
 }
 
+#openPopupProperties {
+    float: right;
+}
+
 #togglePanel {
     position: absolute;
     margin: 10px;
     right: 30px;
-    top: 2px;
+    top: 10px;
     z-index: 110;
 }
 

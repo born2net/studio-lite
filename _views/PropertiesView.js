@@ -99,14 +99,16 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
                 if ($(Elements.TOGGLE_PANEL).hasClass('buttonStateOn')) {
                     $(Elements.TOGGLE_PANEL).toggleClass('buttonStateOn');
                     $(Elements.PROP_PANEL_WRAP).fadeOut(function () {
-                        $(Elements.TOGGLE_PANEL).html('<');
+                        $(Elements.TOGGLE_PANEL + ' > span').removeClass('glyphicon-chevron-right');
+                        $(Elements.TOGGLE_PANEL + ' > span').addClass('glyphicon-chevron-left');
                         $(Elements.PROP_PANEL_WRAP).addClass('hidden-sm hidden-md');
                         $(Elements.MAIN_PANEL_WRAP).removeClass('col-sm-9 col-md-9');
                         $(Elements.MAIN_PANEL_WRAP).addClass('col-md-12');
                     });
                 } else {
                     $(Elements.TOGGLE_PANEL).toggleClass('buttonStateOn');
-                    $(Elements.TOGGLE_PANEL).html('>');
+                    $(Elements.TOGGLE_PANEL + ' > span').removeClass('glyphicon-chevron-left');
+                    $(Elements.TOGGLE_PANEL + ' > span').addClass('glyphicon-chevron-right');
                     $(Elements.MAIN_PANEL_WRAP).addClass('col-sm-9 col-md-9');
                     setTimeout(function () {
                         $(Elements.MAIN_PANEL_WRAP).removeClass('col-md-12');

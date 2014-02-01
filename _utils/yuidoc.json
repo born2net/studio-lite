@@ -10,6 +10,6 @@
     "paths": [
       "./lib"
     ],
-    "outdir": "./_msdocs"
+    "outdir": "../_msdocs"
   }
 }

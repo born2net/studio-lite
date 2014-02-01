@@ -6,7 +6,7 @@
  **/
 define(['jquery', 'backbone'], function ($, Backbone) {
 
-    var AppAuth = Backbone.Controller.extend({
+    var AppAuth = BB.Controller.extend({
 
         /**
          Constructor
@@ -27,7 +27,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         authenticate: function (i_user, i_pass) {
             var self = this;
-            var appRouter = Backbone.comBroker.getService(Backbone.SERVICES.LAYOUT_MANAGER);
+            var appRouter = BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER);
             appRouter.navigate('authenticating', {trigger: true});
             self._loadCredentials(i_user, i_pass);
         },
@@ -48,7 +48,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             } else if (i_user.length > 2 && i_pass.length > 2) {
                 self._serverAuthenticate(i_user, i_pass, this.AUTH_USER_PASS);
             } else {
-                Backbone.comBroker.getService(Backbone.SERVICES.LAYOUT_MANAGER).navigate('unauthenticated', {trigger: true});
+                BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER).navigate('unauthenticated', {trigger: true});
             }
         },
 
@@ -62,13 +62,13 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _serverAuthenticate: function (i_user, i_pass, i_authMode) {
             var self = this;
 
-            Backbone.Jalapeno.dbConnect(i_user, i_pass, function (i_status) {
+            BB.Jalapeno.dbConnect(i_user, i_pass, function (i_status) {
 
                 if (i_status.status) {
                     self.authenticated = true;
                     if (i_authMode == self.AUTH_USER_PASS && $(Elements.REMEMBER_ME).prop('checked'))
                         self._bakeCookie(i_user, i_pass);
-                    Backbone.comBroker.getService(Backbone.SERVICES.LAYOUT_MANAGER).navigate('authenticated', {trigger: true});
+                    BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER).navigate('authenticated', {trigger: true});
 
                 } else {
 
@@ -88,10 +88,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                                 }
                             }
                         });
-                        Backbone.comBroker.getService(Backbone.SERVICES.LAYOUT_MANAGER).navigate('unauthenticated', {trigger: true});
+                        BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER).navigate('unauthenticated', {trigger: true});
                         return;
                     }
-                    Backbone.comBroker.getService(Backbone.SERVICES.LAYOUT_MANAGER).navigate('authenticationFailed', {trigger: true});
+                    BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER).navigate('authenticationFailed', {trigger: true});
                 }
             });
         },
@@ -103,7 +103,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @param {String} i_pass
          **/
         _bakeCookie: function (i_user, i_pass) {
-            var rc4 = new RC4(Backbone.globs['RC4KEY']);
+            var rc4 = new RC4(BB.globs['RC4KEY']);
             var crumb = i_user + ':SignageStudioLite:' + i_pass + ':' + ' USER'
             crumb = rc4.doEncrypt(crumb);
             $.cookie('signagestudioweblite', crumb, { expires: 300 });
@@ -117,7 +117,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @return {Object} credentials
          **/
         _breakCookie: function (i_cookie) {
-            var rc4 = new RC4(Backbone.globs['RC4KEY']);
+            var rc4 = new RC4(BB.globs['RC4KEY']);
             var crumb = rc4.doDecrypt(i_cookie).split(':');
             return {
                 user: crumb[0],

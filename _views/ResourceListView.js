@@ -128,12 +128,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
                 // remove a resource from resources, notify before so channel instances
                 // can remove corresponding blocks and after so channelList can refresh UI
-                commBroker.fire(CompResourcesList.REMOVING_RESOURCE,this,null,self.m_selected_resource_id);
+                BB.comBroker.fire(CompResourcesList.REMOVING_RESOURCE,this,null,self.m_selected_resource_id);
                 jalapeno.removeResource(self.m_selected_resource_id);
                 jalapeno.removeBlocksWithResourceID(self.m_selected_resource_id);
                 self._loadResourceList();
                 self._listenOpenProps();
-                commBroker.fire(CompResourcesList.REMOVED_RESOURCE,this,null,self.m_selected_resource_id);
+                BB.comBroker.fire(CompResourcesList.REMOVED_RESOURCE,this,null,self.m_selected_resource_id);
             });
         },
 

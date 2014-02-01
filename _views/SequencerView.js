@@ -45,7 +45,7 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
         _init: function () {
 
             var self = this;
-
+            // todo: remove this init
             commBroker.listen(Viewstacks.VIEW_CHANGED, function (e) {
                 if ($(e.context).data('viewstackname') == 'tab4' && e.caller === commBroker.getService('PlayListViewStack')) {
 

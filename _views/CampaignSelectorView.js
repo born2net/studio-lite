@@ -6,9 +6,9 @@
  **/
 define(['jquery', 'backbone'], function ($, Backbone) {
 
-    Backbone.SERVICES.CAMPAIGN_SELECTOR = 'CampaignSelector';
+    BB.SERVICES.CAMPAIGN_SELECTOR = 'CampaignSelector';
 
-    var CampaignSelectorView = Backbone.View.extend({
+    var CampaignSelectorView = BB.View.extend({
 
         /**
          Constructor
@@ -18,11 +18,11 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             self.m_seletedCampaignID = -1;
 
-            self.m_campainProperties = new Backbone.View({
+            self.m_campainProperties = new BB.View({
                 el: Elements.CAMPAIGN_PROPERTIES
             })
 
-            self.m_propertiesPanel = Backbone.comBroker.getService(Backbone.SERVICES.PROPERTIES_VIEW);
+            self.m_propertiesPanel = BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW);
             self.m_propertiesPanel.addView(this.m_campainProperties);
 
             $(Elements.NEW_CAMPAIGN).on('click', function (e) {

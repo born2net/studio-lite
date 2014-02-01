@@ -6,7 +6,7 @@
  **/
 define(['jquery', 'backbone'], function ($, Backbone) {
 
-    var FileMenuView = Backbone.View.extend({
+    var FileMenuView = BB.View.extend({
 
         /**
          Constructor
@@ -16,8 +16,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             this.render();
 
-            var appContentFaderView = Backbone.comBroker.getService(Backbone.SERVICES.APP_CONTENT_FADER_VIEW);
-            var appEntryFaderView = Backbone.comBroker.getService(Backbone.SERVICES.APP_ENTRY_FADER_VIEW);
+            var appContentFaderView = BB.comBroker.getService(BB.SERVICES.APP_CONTENT_FADER_VIEW);
+            var appEntryFaderView = BB.comBroker.getService(BB.SERVICES.APP_ENTRY_FADER_VIEW);
 
             $('.campaignManagerView').on('click', function () {
                 appContentFaderView.selectView(Elements.CAMPAIGN_MANAGER_VIEW);
@@ -58,7 +58,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         _resetPropertiesView: function(){
-            Backbone.comBroker.getService(Backbone.SERVICES.PROPERTIES_VIEW).selectView(Elements.EMPTY_PROPERTIES);
+            BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW).selectView(Elements.EMPTY_PROPERTIES);
 
         },
 

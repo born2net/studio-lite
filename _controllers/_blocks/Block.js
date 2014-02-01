@@ -308,8 +308,8 @@ define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
         _deleteBlock: function () {
             var self = this;
             jalapeno.removeBlockFromTimelineChannel(self.m_block_id);
-            commBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_ON_CHANNEL_SELECTED, self);
-            commBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_LENGTH_CHANGING, self);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_ON_CHANNEL_SELECTED, self);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_LENGTH_CHANGING, self);
         }
 
 

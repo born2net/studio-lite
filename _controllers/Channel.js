@@ -18,9 +18,9 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
      @static
      @final
      **/
-    Backbone.EVENTS.CAMPAIGN_TIMELINE_CHANNEL_SELECTED = 'CAMPAIGN_TIMELINE_CHANNEL_SELECTED';
+    BB.EVENTS.CAMPAIGN_TIMELINE_CHANNEL_SELECTED = 'CAMPAIGN_TIMELINE_CHANNEL_SELECTED';
 
-    var Channel = Backbone.Controller.extend({
+    var Channel = BB.Controller.extend({
 
         /**
          Constructor
@@ -30,12 +30,12 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
             var self = this;
 
             this.x2js = new X2JS({escapeMode: true, attributePrefix: "_", arrayAccessForm: "none", emptyNodeForm: "text", enableToStringFunc: true, arrayAccessFormPaths: [], skipEmptyTextNodesForObj: true});
-            Backbone.comBroker.setService('compX2JS', this.x2js);
+            BB.comBroker.setService('compX2JS', this.x2js);
 
             this.m_campaign_timeline_chanel_id = this.options.campaignTimelineChanelID;
             this.m_selected = false;
             this.m_blocks = {}; // hold references to all created player instances
-            this.m_property = Backbone.comBroker.getService(Backbone.SERVICES.PROPERTIES_VIEW);
+            this.m_property = BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW);
 
             this._createBlocks();
             this._onTimelineChannelSelected();
@@ -82,7 +82,7 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
             var self = this;
             return;
             //todo: need to fix REMOVING_RESOURCE
-            Backbone.comBroker.listen(CompResourcesList.REMOVING_RESOURCE, function (e) {
+            BB.comBroker.listen(CompResourcesList.REMOVING_RESOURCE, function (e) {
                 var removingResoucreID = e.edata;
                 for (var blockID in self.m_blocks) {
                     if (self.m_blocks[blockID] instanceof BlockImage || self.m_blocks[blockID] instanceof BlockVideo) {
@@ -133,7 +133,7 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
         _onTimelineChannelSelected: function () {
             var self = this;
 
-            Backbone.comBroker.listen(Backbone.EVENTS.CAMPAIGN_TIMELINE_CHANNEL_SELECTED, function (e) {
+            BB.comBroker.listen(BB.EVENTS.CAMPAIGN_TIMELINE_CHANNEL_SELECTED, function (e) {
                 var channelID = e.edata;
                 if (self.m_campaign_timeline_chanel_id != channelID) {
                     self.m_selected = false;
@@ -185,7 +185,7 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
         createBlock: function (i_campaign_timeline_chanel_player_id, i_player_data) {
             var self = this;
 
-            // var x2js = Backbone.comBroker.getService('compX2JS');
+            // var x2js = BB.comBroker.getService('compX2JS');
             var playerData = this.x2js.xml_str2json(i_player_data);
             var blockCode = playerData['Player']['_player'];
 
@@ -193,7 +193,7 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
                 case 3345:
                 {
                     self.m_blocks[i_campaign_timeline_chanel_player_id] = new BlockRSS({
-                        i_placement: Backbone.CONSTS.PLACEMENT_CHANNEL,
+                        i_placement: BB.CONSTS.PLACEMENT_CHANNEL,
                         i_block_id: i_campaign_timeline_chanel_player_id
                     });
                     break;
@@ -201,7 +201,7 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
                 case 3430:
                 {
                     self.m_blocks[i_campaign_timeline_chanel_player_id] = new BlockQR({
-                        i_placement: Backbone.CONSTS.PLACEMENT_CHANNEL,
+                        i_placement: BB.CONSTS.PLACEMENT_CHANNEL,
                         i_block_id: i_campaign_timeline_chanel_player_id
                     });
                     break;
@@ -209,7 +209,7 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
                 case 3100:
                 {
                     self.m_blocks[i_campaign_timeline_chanel_player_id] = new BlockVideo({
-                        i_placement: Backbone.CONSTS.PLACEMENT_CHANNEL,
+                        i_placement: BB.CONSTS.PLACEMENT_CHANNEL,
                         i_block_id: i_campaign_timeline_chanel_player_id
                     });
                     self.m_blocks[i_campaign_timeline_chanel_player_id].setPlayerData(playerData);
@@ -218,7 +218,7 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
                 case 3130:
                 {
                     self.m_blocks[i_campaign_timeline_chanel_player_id] = new BlockImage({
-                        i_placement: Backbone.CONSTS.PLACEMENT_CHANNEL,
+                        i_placement: BB.CONSTS.PLACEMENT_CHANNEL,
                         i_block_id: i_campaign_timeline_chanel_player_id
                     });
                     self.m_blocks[i_campaign_timeline_chanel_player_id].setPlayerData(playerData);

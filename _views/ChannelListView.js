@@ -135,7 +135,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             var campaign_timeline_chanel_player_id = jData['campaign_timeline_chanel_player_id'];
             var campaign_timeline_chanel_player_data = jData['campaign_timeline_chanel_player_data'];
 
-            var timeline = commBroker.getService('Campaign').getTimelineInstance(self.selected_campaign_timeline_id);
+            var timeline = BB.comBroker.getService('Campaign').getTimelineInstance(self.selected_campaign_timeline_id);
             var channel = timeline.getChannelInstance(self.selected_campaign_timeline_chanel_id);
             channel.createBlock(campaign_timeline_chanel_player_id, campaign_timeline_chanel_player_data)
 
@@ -305,7 +305,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
          **/
         listenBlockLengthChanged: function () {
             var self = this;
-            commBroker.listen(Block.BLOCK_LENGTH_CHANGED, function (e) {
+            BB.comBroker.listen(Block.BLOCK_LENGTH_CHANGED, function (e) {
                 self._reOrderChannelBlocks();
             });
         },
@@ -335,7 +335,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             var self = this;
             var selectedLI = $(Elements.SORTABLE).find('[data-block_id="' + i_block_id + '"]');
             selectedLI.remove();
-            var timeline = commBroker.getService('Campaign').getTimelineInstance(self.selected_campaign_timeline_id);
+            var timeline = BB.comBroker.getService('Campaign').getTimelineInstance(self.selected_campaign_timeline_id);
             var channel = timeline.getChannelInstance(self.selected_campaign_timeline_chanel_id);
             channel.deleteBlock(i_block_id);
             // self.m_property.noPanel();

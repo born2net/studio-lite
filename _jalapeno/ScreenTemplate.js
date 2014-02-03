@@ -1,4 +1,4 @@
-var JalapenoTemplate = {
+var ScreenTemplate = {
 
     HORIZONTAL: {
 

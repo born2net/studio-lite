@@ -19,7 +19,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListV
          **/
         initialize: function () {
             var self = this;
-
+            self.once = 0;
             this.m_timelines = {}; // hold references to all created timeline instances
             this.m_timelineViewStack = new StackView.Fader({el: Elements.SELECTED_TIMELINE});
             this.m_selected_timeline_id = -1;
@@ -46,6 +46,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListV
             self._onWireOpenTimeLineProperties();
             self._onWireDelTimeline();
             self._onWireTimeLimeOrViewerSelected();
+            self._onWireAddNewTimeline();
 
             var view = new Backbone.View({el: Elements.NONE_SELECTED_SCREEN_LAYOUT})
             self.m_timelineViewStack.addView(view);
@@ -59,22 +60,12 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListV
 
         render: function () {
             var self = this;
-            self.m_selected_campaign_id = Backbone.comBroker.getService(Backbone.SERVICES.CAMPAIGN_SELECTOR).getSelectedCampaign();
-            self._loadTimelinesFromDB();
+            if (self.once == 0) {
+                self.m_selected_campaign_id = Backbone.comBroker.getService(Backbone.SERVICES.CAMPAIGN_SELECTOR).getSelectedCampaign();
+                self._loadTimelinesFromDB();
+                self.once = 111;
+            }
         },
-
-        /**
-         Wire the UI for new campaign wizard launch.
-         @method _onWireNewTimelineWizard
-         @return none
-
-        _onWireNewTimelineWizard: function () {
-            $(Elements.ADD_NEW_SCREEN_BUTTON).on('click', function (e) {
-                $.mobile.changePage(Elements.SCREEN_LAYOUT_LIST, {transition: "pop"});
-                var compTemplateWizard = new TemplateWizard(Elements.SCREEN_LAYOUT_ITEMS_LIST);
-            });
-        },
-         **/
 
         /**
          Wire the UI for timeline deletion.
@@ -247,6 +238,13 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListV
                     self._loadSequencerFirstTimeline();
                     return;
                 }
+            });
+        },
+
+        _onWireAddNewTimeline: function () {
+            var self = this;
+            $(Elements.ADD_NEW_TIMELINE_BUTTON).on('click', function () {
+                self.options.stackView.slideToPage(Elements.SCREEN_LAYOUT_SELECTOR, 'left');
             });
         },
 

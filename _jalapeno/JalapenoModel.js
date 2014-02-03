@@ -534,6 +534,6 @@ JalapenoModel.prototype = {
      @return {Object} data template.
      **/
     getScreenCollection: function () {
-        return JalapenoTemplate;
+        return ScreenTemplate;
     }
 }

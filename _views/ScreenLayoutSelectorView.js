@@ -53,31 +53,29 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
 
             $(Elements.SCREEN_LAYOUT_LIST).empty();
 
-            // var collection = model.getScreenCollection();
-            var collection = JalapenoTemplate;
-            for (var screenType in JalapenoTemplate[orientation][resolution]) {
+            require(['ScreenTemplate'], function (ScreenTemplate) {
+                for (var screenType in ScreenTemplate[orientation][resolution]) {
 
-                var screenTemplateData = {
-                    orientation: orientation,
-                    resolution: resolution,
-                    screenType: screenType,
-                    screenProps: collection[orientation][resolution][screenType],
-                    scale: 14
+                    var screenTemplateData = {
+                        orientation: orientation,
+                        resolution: resolution,
+                        screenType: screenType,
+                        screenProps: ScreenTemplate[orientation][resolution][screenType],
+                        scale: 14
+                    };
+
+                    var screenTemplate = new ScreenTemplateFactory({
+                        i_screenTemplateData: screenTemplateData,
+                        i_type: Backbone.CONSTS.ENTIRE_SELECTABLE,
+                        i_owner: self
+                    });
+                    var snippet = screenTemplate.create();
+                    $(Elements.SCREEN_LAYOUT_LIST).append($(snippet));
+                    screenTemplate.activate();
+                    self.m_screens.push(screenTemplate);
                 }
-
-                // var screenProps = collection[orientation][resolution][screenType];
-                var screenTemplate = new ScreenTemplateFactory({
-                    i_screenTemplateData: screenTemplateData,
-                    i_type: Backbone.CONSTS.ENTIRE_SELECTABLE,
-                    i_owner: this
-                });
-                var snippet = screenTemplate.create();
-                $(Elements.SCREEN_LAYOUT_LIST).append($(snippet));
-                screenTemplate.activate();
-                self.m_screens.push(screenTemplate);
-            }
+            });
         }
-
     });
 
     return ScreenLayoutSelectorView;

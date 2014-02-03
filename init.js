@@ -57,7 +57,7 @@ require.config({
         "ChannelListView": '_views/ChannelListView',
         "PopModalView": '_views/PopModalView',
         "Lib": '_libs/Lib',
-        "ScreenTemplate": "_jalapeno/JalapenoTemplates"
+        "ScreenTemplate": "_jalapeno/ScreenTemplate"
     },
 
 

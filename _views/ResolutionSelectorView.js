@@ -40,7 +40,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 self.orientationSelector = Backbone.comBroker.getService(Backbone.SERVICES.ORIENTATION_SELECTOR_VIEW);
                 var orientation = self.orientationSelector.model.get(Backbone.CONSTS.ORIENTATION);
                 $(Elements.RESOLUTION_LIST).empty();
-                for (var screenResolution in JalapenoTemplate[orientation]) {
+                for (var screenResolution in ScreenTemplate[orientation]) {
                     screens += '<a href="#" data-resolution="' + screenResolution + '" class="selectedResolution list-group-item">' +
                         '<input name="resolutionOption" id="resSelector' + i + '" type="radio"/>' +
                         '<label class="screenResolutionLabel"> ' + screenResolution + ' </label></a>'

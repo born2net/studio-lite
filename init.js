@@ -21,7 +21,7 @@ require.config({
         "Jalapeno": '_jalapeno/Jalapeno',
         "JalapenoModel": '_jalapeno/JalapenoModel',
         "Elements": 'Elements',
-        "LayoutManager": '_comps/LayoutManager',
+        "LayoutManager": '_controllers/LayoutManager',
         "ComBroker": '_controllers/ComBroker',
         "ScreenTemplateFactory": '_controllers/ScreenTemplateFactory',
         "AppAuth": '_controllers/AppAuth',
@@ -56,7 +56,7 @@ require.config({
         "SequencerView": '_views/SequencerView',
         "ChannelListView": '_views/ChannelListView',
         "PopModalView": '_views/PopModalView',
-        "Lib": '_comps/Lib',
+        "Lib": '_libs/Lib',
         "ScreenTemplate": "_jalapeno/JalapenoTemplates"
     },
 

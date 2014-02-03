@@ -184,6 +184,15 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         getSelectedCampaign: function () {
             return this.m_seletedCampaignID;
+        },
+
+        /**
+         Set selected campaign id
+         @method setSelectedCampaign
+         **/
+        setSelectedCampaign: function (i_campaign_id) {
+            var self = this;
+            self.m_seletedCampaignID = i_campaign_id;
         }
     });
 

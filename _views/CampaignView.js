@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated CampaignView
  **/
-define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListView', 'StackView', 'Timeline', 'ScreenTemplateFactory'], function ($, Backbone, SequencerView, ChannelListView, ResourceListView, StackView, Timeline, ScreenTemplateFactory) {
+define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListView', 'StackView', 'Timeline', 'ScreenLayoutSelectorView'], function ($, Backbone, SequencerView, ChannelListView, ResourceListView, StackView, Timeline, ScreenLayoutSelectorView) {
 
     Backbone.SERVICES.CAMPAIGN_VIEW = 'CampaignView';
 
@@ -24,12 +24,12 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListV
             this.m_timelineViewStack = new StackView.Fader({el: Elements.SELECTED_TIMELINE});
             this.m_selected_timeline_id = -1;
             this.m_selected_campaign_id = -1;
-            this.m_property = Backbone.comBroker.getService(Backbone.SERVICES.PROPERTIES_VIEW);
+            this.m_property = Backbone.comBroker.getService(Backbone.SERVICES['PROPERTIES_VIEW']);
 
             this.m_sequencerView = new SequencerView({
                 el: Elements.SCREEN_LAYOUTS_UL
             });
-            Backbone.comBroker.setService(Backbone.SERVICES.SEQUENCER_VIEW, this.m_sequencerView);
+            Backbone.comBroker.setService(Backbone.SERVICES['SEQUENCER_VIEW'], this.m_sequencerView);
 
             this.m_channelListView = new ChannelListView({
                 el: Elements.CHANNEL_LIST_VIEW
@@ -40,6 +40,16 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListV
                 el: '#123'
             });
 
+            self.m_property.initPanel(Elements.CHANNEL_PROPERTIES);
+            self.m_property.initPanel(Elements.TIMELINE_PROPERTIES);
+
+            self._onWireOpenTimeLineProperties();
+            self._onWireDelTimeline();
+            self._onWireTimeLimeOrViewerSelected();
+
+            var view = new Backbone.View({el: Elements.NONE_SELECTED_SCREEN_LAYOUT})
+            self.m_timelineViewStack.addView(view);
+
             self.listenTo(self.options.stackView, Backbone.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self) {
                     self.render();
@@ -49,53 +59,22 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListV
 
         render: function () {
             var self = this;
-
             self.m_selected_campaign_id = Backbone.comBroker.getService(Backbone.SERVICES.CAMPAIGN_SELECTOR).getSelectedCampaign();
-            self.m_property.initPanel(Elements.CHANNEL_PROPERTIES);
-            self.m_property.initPanel(Elements.TIMELINE_PROPERTIES);
-
-            // Create new campaign
-            if (self.m_selected_campaign_id == -1) {
-                //todo: add new campaign
-                self._onLaunchTimelineWizard();
-            } else {
-                /// Load existing campaign
-                self._loadTimelinesFromDB();
-            }
-
-            self._onWireOpenTimeLineProperties();
-            self._onWireNewTimelineWizard();
-            self._onWireDelTimeline();
-            self._onWireTimelineExpandCollapse();
-            self._listenTimelineOrViewerSelected();
-            // self._listenGlobalOpenProps();
-
-            var view = new Backbone.View({el: Elements.NONE_SELECTED_SCREEN_LAYOUT})
-            self.m_timelineViewStack.addView(view);
-        },
-
-        /**
-         Launch the new campaign wizard UI.
-         @method _onLaunchTimelineWizard
-         @return none
-         **/
-        _onLaunchTimelineWizard: function () {
-            var self = this;
-            $.mobile.changePage(Elements.SCREEN_LAYOUT_LIST, {transition: "pop"});
-            var compTemplateWizard = new TemplateWizard(Elements.SCREEN_LAYOUT_ITEMS_LIST);
+            self._loadTimelinesFromDB();
         },
 
         /**
          Wire the UI for new campaign wizard launch.
          @method _onWireNewTimelineWizard
          @return none
-         **/
+
         _onWireNewTimelineWizard: function () {
             $(Elements.ADD_NEW_SCREEN_BUTTON).on('click', function (e) {
                 $.mobile.changePage(Elements.SCREEN_LAYOUT_LIST, {transition: "pop"});
                 var compTemplateWizard = new TemplateWizard(Elements.SCREEN_LAYOUT_ITEMS_LIST);
             });
         },
+         **/
 
         /**
          Wire the UI for timeline deletion.
@@ -125,17 +104,6 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListV
                 e.stopPropagation();
                 e.stopImmediatePropagation();
                 return false;
-            });
-        },
-
-        /**
-         Wire animation of opening and closing of timeline selection.
-         @method _onWireTimelineExpandCollapse
-         @return none
-         **/
-        _onWireTimelineExpandCollapse: function () {
-            $('[data-role="collapsible"]', Elements.TIMELINES_COLLAPSIBLE).on('expand collapse', function (event) {
-                $(this).find('h3').siblings().slideToggle(500, 'easeOutExpo');
             });
         },
 
@@ -182,14 +150,15 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListV
         },
 
         /**
-         This is a key method that we use to listen to fire event of ScreenTemplateFactory.ON_VIEWER_SELECTED.
+         This is a key method that we use to listen to fire event of ScreenLayoutSelectorView.ON_VIEWER_SELECTED.
          Upon the event we examine e.context.m_owner to find out who was the owner if the fired event (i.e.: instanceof)
          so we can select tha appropriate campaign or timeline in the UI. See further notes in code.
-         @method _listenTimelineOrViewerSelected
+         @method _onWireTimeLimeOrViewerSelected
          @return none
          **/
-        _listenTimelineOrViewerSelected: function () {
+        _onWireTimeLimeOrViewerSelected: function () {
             var self = this;
+
             Backbone.comBroker.listen(Backbone.EVENTS.ON_VIEWER_SELECTED, function (e) {
 
                 var campaign_timeline_board_viewer_id = e.caller.campaign_timeline_board_viewer_id;
@@ -232,15 +201,15 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListV
                 var board_id = undefined;
                 var campaign_board_id = undefined;
 
-                if (e.context.m_owner instanceof TemplateWizard) {
+                if (e.context.m_owner instanceof ScreenLayoutSelectorView) {
                     if (self.m_selected_campaign_id == -1) {
 
                         ////////////////////////////////////////////////
                         // Created a brand new campaign and a new board
                         ////////////////////////////////////////////////
 
-                        var width = Backbone.comBroker.getService('ScreenResolution').getResolution().split('x')[0];
-                        var height = Backbone.comBroker.getService('ScreenResolution').getResolution().split('x')[1];
+                        var width = Backbone.comBroker.getService(Backbone.SERVICES['RESOLUTION_SELECTOR_VIEW']).getResolution().split('x')[0];
+                        var height = Backbone.comBroker.getService(Backbone.SERVICES['RESOLUTION_SELECTOR_VIEW']).getResolution().split('x')[1];
                         board_id = jalapeno.createBoard('board', width, height);
 
                         var newTemplateData = jalapeno.createNewTemplate(board_id, e.caller.screenTemplateData.screenProps);
@@ -248,6 +217,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListV
                         var viewers = newTemplateData['viewers'];
 
                         self.m_selected_campaign_id = jalapeno.createCampaign('campaign');
+                        Backbone.comBroker.getService(Backbone.SERVICES.CAMPAIGN_SELECTOR).setSelectedCampaign(self.m_selected_campaign_id);
                         campaign_board_id = jalapeno.assignCampaignToBoard(self.m_selected_campaign_id, board_id);
 
                     } else {
@@ -264,6 +234,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListV
                     }
 
                     campaign_timeline_id = jalapeno.createNewTimeline(self.m_selected_campaign_id);
+                    jalapeno.setCampaignTimelineSequencerIndex(self.m_selected_campaign_id, campaign_timeline_id, 0);
 
                     var campaign_timeline_board_template_id = jalapeno.assignTemplateToTimeline(campaign_timeline_id, board_template_id, campaign_board_id);
                     var channels = jalapeno.createTimelineChannels(campaign_timeline_id, viewers);
@@ -272,7 +243,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListV
                     self.m_timelines[campaign_timeline_id] = new Timeline(campaign_timeline_id);
                     Backbone.comBroker.fire(Backbone.EVENTS.CAMPAIGN_TIMELINE_SELECTED, this, null, campaign_timeline_id);
 
-                    Backbone.comBroker.getService('Sequences').reSequenceTimelines();
+                    Backbone.comBroker.getService(Backbone.SERVICES['SEQUENCER_VIEW']).reSequenceTimelines();
                     self._loadSequencerFirstTimeline();
                     return;
                 }

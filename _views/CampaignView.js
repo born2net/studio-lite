@@ -68,21 +68,10 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListV
             self._onWireDelTimeline();
             self._onWireTimelineExpandCollapse();
             self._listenTimelineOrViewerSelected();
-            self._listenGlobalOpenProps();
+            // self._listenGlobalOpenProps();
 
             var view = new Backbone.View({el: Elements.NONE_SELECTED_SCREEN_LAYOUT})
             self.m_timelineViewStack.addView(view);
-        },
-
-        /**
-         Open global properties button hook via popup
-         @method _listenGlobalOpenProps
-         **/
-        _listenGlobalOpenProps: function () {
-            var self = this;
-            $(Elements.OPEN_POPUP_PROPERTIES).on('click', function () {
-                self.m_property.openPropertiesPanel();
-            });
         },
 
         /**

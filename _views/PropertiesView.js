@@ -26,12 +26,16 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
 
             BB.StackView.ViewPort.prototype.initialize.call(this);
             BB.comBroker.listen(BB.EVENTS.APP_SIZED, self._reconfigPropPanelLocation);
+            BB.comBroker.listen(BB.EVENTS.APP_SIZED, self._reConfigPropPanelIcon);
 
             this.m_subViewStack = new StackView.Fader({el: Elements.BLOCK_SUBPROPERTIES});
             this.m_selectedPanelID = undefined;
             this.m_selectedSubPanelID = undefined;
 
-            this._listenOnSlidingPanel();
+            this._listenClickSlidingPanel();
+            this._listenGlobalOpenProps();
+
+
         },
 
         /**
@@ -47,6 +51,21 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             var view = new BB.View({el: i_panelID});
             self.addView(view);
             return true;
+        },
+
+
+        /**
+         Open global properties button hook via popup
+         @method _listenGlobalOpenProps
+         **/
+        _listenGlobalOpenProps: function () {
+            var self = this;
+            $(Elements.TOGGLE_PANEL).on('click', function () {
+                var layoutManager = BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER);
+                if (layoutManager.getAppWidth() < 768) {
+                    self.openPropertiesPanel();
+                }
+            });
         },
 
         /**
@@ -88,25 +107,37 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             self.m_selectedSubPanelID = i_panelID;
         },
 
+        _reConfigPropPanelIcon: function () {
+            var self = this;
+            var layoutManager = BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER);
+            log('fix icon')
+
+            if (layoutManager.getAppWidth() < 768) {
+                $(Elements.TOGGLE_PANEL + ' > span').removeClass('glyphicon-resize-horizontal');
+                $(Elements.TOGGLE_PANEL + ' > span').addClass('glyphicon-cog');
+            } else {
+                $(Elements.TOGGLE_PANEL + ' > span').removeClass('glyphicon-cog');
+                $(Elements.TOGGLE_PANEL + ' > span').addClass('glyphicon-resize-horizontal');
+            }
+        },
+
         /**
          Listen for open/close actions on properties panel that can slide in and out
-         @method _listenOnSlidingPanel
+         @method _listenClickSlidingPanel
          **/
-        _listenOnSlidingPanel: function () {
+        _listenClickSlidingPanel: function () {
+            var self = this;
             $(Elements.TOGGLE_PANEL).on('click', function () {
-                if ($(Elements.TOGGLE_PANEL).hasClass('buttonStateOn')) {
-                    $(Elements.TOGGLE_PANEL).toggleClass('buttonStateOn');
+                self._reConfigPropPanelIcon();
+                if ($(Elements.TOGGLE_PANEL).hasClass('propPanelIsOpen')) {
+                    $(Elements.TOGGLE_PANEL).toggleClass('propPanelIsOpen');
                     $(Elements.PROP_PANEL_WRAP).fadeOut(function () {
-                        $(Elements.TOGGLE_PANEL + ' > span').removeClass('glyphicon-chevron-right');
-                        $(Elements.TOGGLE_PANEL + ' > span').addClass('glyphicon-chevron-left');
                         $(Elements.PROP_PANEL_WRAP).addClass('hidden-sm hidden-md');
                         $(Elements.MAIN_PANEL_WRAP).removeClass('col-sm-9 col-md-9');
                         $(Elements.MAIN_PANEL_WRAP).addClass('col-md-12');
                     });
                 } else {
-                    $(Elements.TOGGLE_PANEL).toggleClass('buttonStateOn');
-                    $(Elements.TOGGLE_PANEL + ' > span').removeClass('glyphicon-chevron-left');
-                    $(Elements.TOGGLE_PANEL + ' > span').addClass('glyphicon-chevron-right');
+                    $(Elements.TOGGLE_PANEL).toggleClass('propPanelIsOpen');
                     $(Elements.MAIN_PANEL_WRAP).addClass('col-sm-9 col-md-9');
                     setTimeout(function () {
                         $(Elements.MAIN_PANEL_WRAP).removeClass('col-md-12');
@@ -123,6 +154,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
          @method _reconfigPropPanelLocation
          **/
         _reconfigPropPanelLocation: function () {
+            var self = this;
             var layoutManager = BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER);
             if (layoutManager.getAppWidth() > 768) {
                 $(Elements.PROP_PANEL_WRAP).append($(Elements.PROP_PANEL));
@@ -138,9 +170,10 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
         openPropertiesPanel: function () {
             var self = this;
             self._reconfigPropPanelLocation();
+            self._reConfigPropPanelIcon();
             var layoutManager = BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER);
             if (layoutManager.getAppWidth() > 768) {
-                if ($(Elements.TOGGLE_PANEL).hasClass('buttonStateOn') == false) {
+                if ($(Elements.TOGGLE_PANEL).hasClass('propPanelIsOpen') == false) {
                     $(Elements.TOGGLE_PANEL).trigger('click');
                 }
             } else {

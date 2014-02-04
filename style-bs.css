@@ -236,11 +236,26 @@ body {
     display: inline;
     font-size: 1.5em;
 }
-/*
-.channelListItems:hover {
+
+
+.addBlockListItems {
+    cursor: pointer;
+}
+
+.addBlockListItems img {
+    height: 50px;
+    display: inline;
+    padding-right: 20px;
+}
+
+.addBlockListItems span {
+    display: inline;
+    font-size: 1.5em;
+}
+
+.addBlockListItems:hover {
     background-color: #f5f5f5;
 }
-*/
 
 aside > aside > div > ul > li {
     display: block;

@@ -5,7 +5,7 @@
  @return {Object} instantiated Lib
  **/
 define(['jquery', 'backbone'], function ($, Backbone) {
-    var Lib = function(type) {
+    var Lib = function (type) {
         this.type = type;
     };
 
@@ -37,7 +37,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          Add the now deprecated Backbone > View > Options
          @method addBackboneViewOptions
          **/
-        addBackboneViewOptions: function(){
+        addBackboneViewOptions: function () {
             Backbone.View = (function (View) {
                 return View.extend({
                     constructor: function (options) {
@@ -157,7 +157,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             return value;
         },
 
-        unclass: function(value){
+        unclass: function (value) {
             return value.replace(/\./g, '');
         },
 

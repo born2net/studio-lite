@@ -103,6 +103,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
              **/
             _routeApp: function () {
                 if (this.m_appAuth.authenticated) {
+                    this._disableBack();
                     this._initContentPage();
                     this._initProperties();
                     this._initCampaignWizardPage();
@@ -362,6 +363,17 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 // $('#screenLayoutList').height(h)+200;
 
                 BB.comBroker.fire(BB.EVENTS.APP_SIZED);
+            },
+
+            /**
+             Disable browser back button
+             @method disableBack
+             **/
+            _disableBack: function () {
+                var self = this;
+                window.location.hash="start_";
+                window.location.hash="Again-start_";//for google chrome
+                window.onhashchange=function(){window.location.hash="start_";}
             },
 
             /**

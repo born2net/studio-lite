@@ -27,6 +27,9 @@ Elements.QR_TEXT = '#qrText';
 
 Elements.ADD_BLOCK_VIEW = '#addBlockView';
 Elements.ADD_BLOCK_BUTTON = '#addBlockButton';
+Elements.REMOVE_BLOCK_BUTTON = '#removeBlockButton';
+
+
 
 Elements.TIMELIME_CHANNEL_BLOCK_LENGTH = '#timelimeChannelBlockLength';
 Elements.BLOCK_LENGTH_HOURS = '#blockLengthHours';
@@ -81,6 +84,8 @@ Elements.DETTACH_DRAG_DROP_MAIN_SCREEN_SELECTION = '#dettachDragDropMainScreenSe
 
 Elements.CLASS_SCREEN_DIVISION = '.screenDivisionClass';
 Elements.CLASS_CHANNEL_LIST_ITEMS = '.channelListItems';
+Elements.CLASS_ADD_BLOCK_LIST_ITEMS = '.addBlockListItems';
+
 Elements.CLASS_KNOB = '.knob';
 
 

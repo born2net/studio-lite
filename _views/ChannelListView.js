@@ -28,7 +28,6 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             $(Elements.SORTABLE).sortable();
             $(Elements.SORTABLE).disableSelection();
             $(Elements.SORTABLE).bind("sortstop", function (event, ui) {
-                // $(Elements.SORTABLE).listview('refresh');
                 self._reOrderChannelBlocks();
             });
 
@@ -110,12 +109,8 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             var self = this;
             var addBlockView =  BB.comBroker.getService(BB.SERVICES.ADD_BLOCK_VIEW);
             addBlockView.selectView();;
-            return;
-            addBlockView.newChannelBlockPage();
             BB.comBroker.listenOnce(BB.EVENTS.ADD_NEW_BLOCK, function (e) {
                 self._createNewChannelBlock(e.edata.blockCode, e.edata.resourceID);
-                addBlockView.destroy();
-                addBlockView.close();
                 e.stopImmediatePropagation();
                 e.preventDefault();
             });
@@ -136,7 +131,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             var campaign_timeline_chanel_player_id = jData['campaign_timeline_chanel_player_id'];
             var campaign_timeline_chanel_player_data = jData['campaign_timeline_chanel_player_data'];
 
-            var timeline = BB.comBroker.getService('Campaign').getTimelineInstance(self.selected_campaign_timeline_id);
+            var timeline = BB.comBroker.getService(BB.SERVICES.CAMPAIGN_VIEW).getTimelineInstance(self.selected_campaign_timeline_id);
             var channel = timeline.getChannelInstance(self.selected_campaign_timeline_chanel_id);
             channel.createBlock(campaign_timeline_chanel_player_id, campaign_timeline_chanel_player_data)
 
@@ -190,14 +185,14 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
 
                     var recCampaignTimelineViewerChanels = jalapeno.getChannelIdFromCampaignTimelineBoardViewer(self.selected_campaign_timeline_board_viewer_id, self.selected_campaign_timeline_id);
                     self._loadChannelBlocks(self.selected_campaign_timeline_id, recCampaignTimelineViewerChanels['campaign_timeline_chanel_id']);
-                    $(Elements.CHANNEL_ADD_RESOURCE).fadeIn();
-                    $(Elements.CHANNEL_REMOVE_RESOURCE).fadeIn();
+                    $(Elements.ADD_BLOCK_BUTTON).fadeIn();
+                    $(Elements.REMOVE_BLOCK_BUTTON).fadeIn();
                 }
 
                 if (e.context.m_owner instanceof SequencerView) {
                     self._resetChannel();
-                    $(Elements.CHANNEL_ADD_RESOURCE).fadeOut();
-                    $(Elements.CHANNEL_REMOVE_RESOURCE).fadeOut();
+                    $(Elements.ADD_BLOCK_BUTTON).fadeOut();
+                    $(Elements.REMOVE_BLOCK_BUTTON).fadeOut();
                 }
             });
         },
@@ -336,7 +331,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             var self = this;
             var selectedLI = $(Elements.SORTABLE).find('[data-block_id="' + i_block_id + '"]');
             selectedLI.remove();
-            var timeline = BB.comBroker.getService('Campaign').getTimelineInstance(self.selected_campaign_timeline_id);
+            var timeline = BB.comBroker.getService(BB.SERVICES.CAMPAIGN_VIEW).getTimelineInstance(self.selected_campaign_timeline_id);
             var channel = timeline.getChannelInstance(self.selected_campaign_timeline_chanel_id);
             channel.deleteBlock(i_block_id);
             // self.m_property.noPanel();

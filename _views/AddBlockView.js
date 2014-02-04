@@ -41,21 +41,6 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         },
 
         /**
-         Wire going back from AddBlockWizard via element back button
-         @method _wireUI
-         @return none
-         **/
-        _wireUI: function () {
-            var self = this;
-            $(Elements.GO_BACK_FROM_ADD_RESOURCE_VIEW).click(function (e) {
-                self.close();
-                self.destroy();
-                e.stopImmediatePropagation();
-                e.preventDefault();
-            });
-        },
-
-        /**
          Build two lists, components and resources allowing for item selection.
          Once an LI is selected AddBlockWizard.ADD_NEW_BLOCK is fired to announce block is added.
          @method _render
@@ -72,10 +57,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 // don't show image or video component in component list
                 if (componentID == 3130 || componentID == 3100)
                     continue;
-                var snippet = '<li data-component_id="' + componentID + '" data-component_name="' + components[componentID].name + '" data-icon="plus"><a class="addResoureToChannel">' +
-                    '<img src="' + components[componentID].icon + '">' +
-                    '<h1>' + components[componentID].name + '</h1>' +
-                    '<p>' + components[componentID].description + '</p></a>' +
+                var snippet = '<li class="list-group-item ' + BB.lib.unclass(Elements.CLASS_ADD_BLOCK_LIST_ITEMS) + '" data-component_id="' + componentID + '" data-component_name="' + components[componentID].name + '">' +
+                    '<img class="img-responsive" src="' + components[componentID].icon + '">' +
+                    '<span>' + components[componentID].name + '</span>' +
+                    '<h6>' + components[componentID].description + '</h6>' +
                     '</li>';
                 $(Elements.ADD_COMPONENT_BLOCK_LIST).append(snippet);
             }
@@ -94,18 +79,15 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 var size = (parseInt(recResources[i]['resource_bytes_total']) / 1000).toFixed(2);
                 var resourceDescription = 'size: ' + size + 'K dimenstion: ' + recResources[i]['resource_pixel_width'] + 'x' + recResources[i]['resource_pixel_height'];
 
-                var snippet = '<li data-resource_id="' + recResources[i]['resource_id'] + '" data-resource_name="' + recResources[i]['resource_name'] + '" data-icon="plus"><a class="addResoureToChannel">' +
+                var snippet = '<li class="list-group-item ' + BB.lib.unclass(Elements.CLASS_ADD_BLOCK_LIST_ITEMS) + '" data-resource_id="' + recResources[i]['resource_id'] + '" data-resource_name="' + recResources[i]['resource_name'] + '">'+
                     '<img src="' + model.getIcon(recResources[i]['resource_type']) + '">' +
-                    '<h1>' + recResources[i]['resource_name'] + '</h1>' +
-                    '<p>' + resourceDescription + '</p></a>' +
+                    '<span>' + recResources[i]['resource_name'] + '</span>' +
+                    '<br/><small>' + resourceDescription + '</small>' +
                     '</li>';
                 $(Elements.ADD_RESOURCE_BLOCK_LIST).append(snippet);
             });
 
-            // $(Elements.ADD_COMPONENT_LIST).listview('refresh');
-            // $(Elements.ADD_RESOURCE_LIST).listview('refresh');
-
-            $(Elements.CLASS_ADD_RESOURE_TO_CHANNEL).on('click', function (e) {
+            $(Elements.CLASS_ADD_BLOCK_LIST_ITEMS).on('click', function (e) {
                 var component_id = $(e.target).closest('li').data('component_id');
                 var resource_id = $(e.target).closest('li').data('resource_id');
                 var blockCode = -1;
@@ -115,10 +97,11 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 } else {
                     blockCode = model.getBlockCodeFromFileExt(jalapeno.getResourceType(resource_id));
                 }
-                BB.comBroker.fire(AddBlockWizard.ADD_NEW_BLOCK, this, self, {
+                BB.comBroker.fire(BB.EVENTS.ADD_NEW_BLOCK, this, self, {
                     blockCode: blockCode,
                     resourceID: resource_id
                 });
+                self.deSelectView();
             });
 
         },
@@ -129,13 +112,6 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
          @return {boolean} false;
          **/
         close: function () {
-            var self = this;
-            // self._emptyNewChannelPage();
-            // var back = $.mobile.activePage.prev('[data-role=page]');
-            // $.mobile.changePage(back, {transition: 'pop', reverse: true });
-            // $.mobile.changePage(Elements.STUDIO_LITE,{transition: "pop"});
-            // TODO: fix back so we dont use history to prevent false popups
-            history.back();
             return false;
         },
 
@@ -153,6 +129,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         selectView: function(){
             var self = this;
             self.options.stackView.slideToPage(self, 'right');
+        },
+        deSelectView: function(){
+            var self = this;
+            self.options.stackView.slideToPage(self.options.from, 'left');
         }
     });
 

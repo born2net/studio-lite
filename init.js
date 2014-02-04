@@ -18,8 +18,6 @@ require.config({
         "Knob": '_common/_js/knob/jquery.knob',
         "TouchPunch": '_common/_js/touchpunch/TouchPunch',
         "X2JS": '_common/_js/x2js/xml2json',
-        "Jalapeno": '_jalapeno/Jalapeno',
-        "JalapenoModel": '_jalapeno/JalapenoModel',
         "Elements": 'Elements',
         "LayoutManager": '_controllers/LayoutManager',
         "ComBroker": '_controllers/ComBroker',
@@ -37,6 +35,7 @@ require.config({
         "WaitView": '_views/WaitView',
         "ResourcesView": '_views/ResourcesView',
         "ResourceListView": '_views/ResourceListView',
+        "AddBlockWizardView": '_views/AddBlockWizardView',
         "AppContentFaderView": '_views/AppContentFaderView',
         "AppEntryFaderView": '_views/AppEntryFaderView',
         "LoginView": '_views/LoginView',
@@ -57,7 +56,9 @@ require.config({
         "ChannelListView": '_views/ChannelListView',
         "PopModalView": '_views/PopModalView',
         "Lib": '_libs/Lib',
-        "ScreenTemplate": "_jalapeno/ScreenTemplate"
+        "ScreenTemplate": "_libs/ScreenTemplate",
+        "Jalapeno": '_libs/Jalapeno',
+        "JalapenoModel": '_libs/JalapenoModel'
     },
 
 

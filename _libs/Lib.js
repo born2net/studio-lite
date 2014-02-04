@@ -1,5 +1,5 @@
 /**
- Lib is a library of additional utilities and helper commands used in StudioLite
+ Lib is a general library of additional utilities and helper commands used in StudioLite
  @class Lib
  @constructor
  @return {Object} instantiated Lib

@@ -59,7 +59,8 @@ Elements.SORTABLE = '#sortable';
 Elements.ADD_NEW_TIMELINE_BUTTON = '#addNewTimelineButton';
 Elements.REMOVE_TIMELINE_BUTTON = '#removeTimelineButton';
 Elements.PREVIOUS = '#prev';
-
+Elements.SERVER_NAME = '#serverName';
+Elements.BUISINESS_ID = '#buisinessID';
 Elements.ADD_COMPONENT_BLOCK_LIST = '#addComponentBlockList';
 Elements.ADD_RESOURCE_BLOCK_LIST ='#addResourceBlockList';
 

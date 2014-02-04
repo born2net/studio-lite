@@ -107,6 +107,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                     this._initProperties();
                     this._initCampaignWizardPage();
                     this._initModal();
+                    this._initDashBoard();
                 } else {
                     this.navigate('unauthenticated', {trigger: true});
                 }
@@ -152,6 +153,16 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
 
                 BB.comBroker.setService(BB.SERVICES.APP_ENTRY_FADER_VIEW, this.m_appEntryFaderView);
                 BB.comBroker.setService(BB.SERVICES.APP_CONTENT_FADER_VIEW, this.m_appContentFaderView);
+            },
+
+            /**
+             Update the general dashboard with stats
+             @method Update
+             **/
+            _initDashBoard: function(){
+                //  Dash
+                $(Elements.SERVER_NAME).text(jalapeno.getLoader()['m_domain']);
+                $(Elements.BUISINESS_ID).text(jalapeno.getLoader()['m_businessId']);
             },
 
             /**

@@ -41,9 +41,19 @@ Jalapeno.prototype = {
         self.m_loaderManager = new LoaderManager();
         self.m_msdb = self.m_loaderManager['m_dataBaseManager'];
         self.m_loaderManager.create(self.m_user, self.m_pass, function (i_result) {
-            log(i_result + self.m_loaderManager['m_domain'] + ' ' + self.m_loaderManager['m_businessId']);
+            // log(i_result + self.m_loaderManager['m_domain'] + ' ' + self.m_loaderManager['m_businessId']);
             i_callBack(i_result);
         });
+    },
+
+    /**
+     Returns a reference to the Jalapeno Loader
+     @method getLoader
+     @return {Object} reference to loader
+     **/
+    getLoader: function(){
+        var self = this;
+        return self.m_loaderManager;
     },
 
     /**

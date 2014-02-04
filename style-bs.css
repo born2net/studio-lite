@@ -35,8 +35,7 @@ body {
 
 #propPanel {
     margin: 0;
-    overflow-y: scroll;
-    height: auto;
+    height: 100%;
     padding-top: 15px;
     width: 100%;
     text-align: center;

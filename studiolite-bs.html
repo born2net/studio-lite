@@ -124,170 +124,225 @@
     </ul>
 </div>
 <div id="mainPanelWrap" class="col-xs-12 col-sm-9 col-md-9 col-lg-8">
-    <button id="togglePanel" class="propPanelIsOpen btn btn-default btn-sm hidden-lg">
-        <span class="glyphicon glyphicon-resize-horizontal"></span>
-    </button>
-    <div id="campaignManagerView">
-        <div class="campaignSlider noScroll">
-            <div id="campaignSelector" class="page center">
-                <div style="overflow-y: scroll;height: 100%">
-                    <div id="campaignSelectionButtons" class="btn-group">
-                        <button id="newCampaign" type="button" class="btn btn-default">
-                            <span class="glyphicon glyphicon-play-circle"></span>
-                            new campaign wizard
-                        </button>
-                        <button id="removeCampaign" type="button" class="btn btn-default">
-                            <span class="glyphicon glyphicon-remove-circle"></span>
-                            remove campaign
-                        </button>
-                    </div>
-                    <div id="campaignSelectorList" class="appList list-group">
-                    </div>
-                </div>
-            </div>
-            <div id="orientationSelector" class="page right">
-                <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
+<button id="togglePanel" class="propPanelIsOpen btn btn-default btn-sm hidden-lg">
+    <span class="glyphicon glyphicon-resize-horizontal"></span>
+</button>
+<div id="campaignManagerView">
+<div class="campaignSlider noScroll">
+    <div id="campaignSelector" class="page center">
+        <div style="overflow-y: scroll;height: 100%">
+            <div id="campaignSelectionButtons" class="btn-group">
+                <button id="newCampaign" type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-play-circle"></span>
+                    new campaign wizard
                 </button>
-                <h3>Select your screen orientation</h3>
-
-                <div id="orientationView">
-                    <table width="100%" border="0" cellspacing="0" cellpadding="50" data-theme="a">
-                        <tr>
-                            <td align="center"><img class="img-responsive" id="imgHorizontal"
-                                                    src="https://secure.dynawebs.net/_studiolite-dev/_assets/orientationH.png"/>
-                            </td>
-                            <td align="center"><img class="img-responsive" id="imgVertical"
-                                                    src="https://secure.dynawebs.net/_studiolite-dev/_assets/orientationV.png"/>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div id="resolutionSelector" class="page right">
-                <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
+                <button id="removeCampaign" type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-remove-circle"></span>
+                    remove campaign
                 </button>
-                <h3>Select your screen resolution</h3>
-
-                <div id="resolutionList" class="list-group">
-                </div>
             </div>
-            <div id="screenLayoutSelector" class="page right">
-                <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                </button>
-                <h3>Select your screen layout</h3>
-
-                <div id="screenLayoutList">
-                </div>
+            <div id="campaignSelectorList" class="appList list-group">
             </div>
-            <div id="campaign" class="page right">
-                <div id="campaignView" class="yScroll">
-                    <div class="panel-group" id="timelinesCollapsible">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#timelinesCollapsible" href="#screenSelectorContainerCollapse">
-                                        <span class="glyphicon glyphicon-chevron-right"></span>
-                                        Timelines
-                                    </a>
-                                    <button style="margin-left: 30px" id="addNewTimelineButton" type="button"
-                                            class="btn btn-default btn-sm">
-                                        <span class="glyphicon glyphicon-plus"></span>
-                                    </button>
-                                    <button id="removeTimelineButton" type="button" class="btn btn-default btn-sm">
-                                        <span class="glyphicon glyphicon-minus"></span>
-                                    </button>
-                                    <!--
-                                    <button id="openPopupProperties" type="button"
-                                            class="btn btn-default btn-sm hidden-sm hidden-md hidden-lg">
-                                        <span class="glyphicon glyphicon-cog"></span>
-                                    </button>
-                                    -->
-                                </h4>
-                            </div>
-                            <div id="screenSelectorContainerCollapse" class="panel-collapse collapse in">
-                                <div class="panel-body">
-                                    <aside>
-                                        <aside>
-                                            <div id="screenSelectorContainer" vertical-align="middle">
-                                                <hr class="dottedHR">
-                                                <ul id="screenLayoutsUL">
-                                                </ul>
-                                            </div>
-                                        </aside>
-                                    </aside>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="index.html" style="display:none" id="attachDragDropMainScreenSelection"
-                       data-role="button">Link button</a>
-                    <a href="index.html" style="display:none" id="dettachDragDropMainScreenSelection"
-                       data-role="button">Link button</a>
+        </div>
+    </div>
+    <div id="orientationSelector" class="page right">
+        <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </button>
+        <h3>Select your screen orientation</h3>
 
-                    <div id="selectedTimeline">
-                        <div id="noneSelectedScreenLayout">
-                            <div align="center" id="screenMainSelector" style="width:100%">
-                                <div align="center"
-                                     style="border:dashed #666666 3px; width: 240px; height: 150px">
-                                    <h1 style="color:#999;margin-top:0px; font-weight:200 ; font-size:110px">+</h1>
-                                </div>
-                            </div>
-                        </div>
-                        <div align="center" id="selectedLayoutContainer" class="centerContent">
-                        </div>
-                    </div>
+        <div id="orientationView">
+            <table width="100%" border="0" cellspacing="0" cellpadding="50" data-theme="a">
+                <tr>
+                    <td align="center"><img class="img-responsive" id="imgHorizontal"
+                                            src="https://secure.dynawebs.net/_studiolite-dev/_assets/orientationH.png"/>
+                    </td>
+                    <td align="center"><img class="img-responsive" id="imgVertical"
+                                            src="https://secure.dynawebs.net/_studiolite-dev/_assets/orientationV.png"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div id="resolutionSelector" class="page right">
+        <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </button>
+        <h3>Select your screen resolution</h3>
 
+        <div id="resolutionList" class="list-group">
+        </div>
+    </div>
+    <div id="screenLayoutSelector" class="page right">
+        <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </button>
+        <h3>Select your screen layout</h3>
 
-                    <div id="channelListView">
-                        <div>
-                            <button id="channelAddResource" type="button" class="btn btn-default">
+        <div id="screenLayoutList">
+        </div>
+    </div>
+    <div id="campaign" class="page right">
+        <div id="campaignView" class="yScroll">
+            <div class="panel-group" id="timelinesCollapsible">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#timelinesCollapsible"
+                               href="#screenSelectorContainerCollapse">
+                                <span class="glyphicon glyphicon-chevron-right"></span>
+                                Timelines
+                            </a>
+                            <button style="margin-left: 30px" id="addNewTimelineButton" type="button"
+                                    class="btn btn-default btn-sm">
                                 <span class="glyphicon glyphicon-plus"></span>
-                                Add content
                             </button>
-                            <button id="channelRemoveResource" type="button" class="btn btn-default">
+                            <button id="removeTimelineButton" type="button" class="btn btn-default btn-sm">
                                 <span class="glyphicon glyphicon-minus"></span>
-                                Remove content
                             </button>
-                        </div>
-                        <div>
-                            <ul class="list-group" id="sortable" style="padding:20px">
-                            </ul>
+                            <!--
+                            <button id="openPopupProperties" type="button"
+                                    class="btn btn-default btn-sm hidden-sm hidden-md hidden-lg">
+                                <span class="glyphicon glyphicon-cog"></span>
+                            </button>
+                            -->
+                        </h4>
+                    </div>
+                    <div id="screenSelectorContainerCollapse" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <aside>
+                                <aside>
+                                    <div id="screenSelectorContainer" vertical-align="middle">
+                                        <hr class="dottedHR">
+                                        <ul id="screenLayoutsUL">
+                                        </ul>
+                                    </div>
+                                </aside>
+                            </aside>
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="waitScreenMainPanel" class="page center" style="display: none">
-                <div class="yScroll">
-                    <h1>Please wait</h1>
-                    <span>
-                        <img src="./_assets/preload7.gif">
-                    </span>
+            <a href="index.html" style="display:none" id="attachDragDropMainScreenSelection"
+               data-role="button">Link button</a>
+            <a href="index.html" style="display:none" id="dettachDragDropMainScreenSelection"
+               data-role="button">Link button</a>
+
+            <div id="selectedTimeline">
+                <div id="noneSelectedScreenLayout">
+                    <div align="center" id="screenMainSelector" style="width:100%">
+                        <div align="center"
+                             style="border:dashed #666666 3px; width: 240px; height: 150px">
+                            <h1 style="color:#999;margin-top:0px; font-weight:200 ; font-size:110px">+</h1>
+                        </div>
+                    </div>
+                </div>
+                <div align="center" id="selectedLayoutContainer" class="centerContent">
+                </div>
+            </div>
+
+
+            <div id="channelListView">
+                <div>
+                    <button id="addBlockButton" type="button" class="btn btn-default">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        Add content
+                    </button>
+                    <button id="removeBlockButton" type="button" class="btn btn-default">
+                        <span class="glyphicon glyphicon-minus"></span>
+                        Remove content
+                    </button>
+                </div>
+                <div>
+                    <ul class="list-group" id="sortable" style="padding:20px">
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
+    <div id="addBlockView" class="page right">
+        <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </button>
+        <h3>Select new content to add</h3>
+        <div>
+            <div class="panel-group" id="addNewBlockList">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#addNewBlockList" href="#collapseOne">
+                                components
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <ul class="list-group" id="addComponentBlockList" style="padding:20px">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#addNewBlockList" href="#collapseTwo">
+                                resources
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <ul class="list-group" id="addResourceBlockList" style="padding:20px">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#addNewBlockList" href="#collapseThree">
+                                scenes
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            ...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="waitScreenMainPanel" class="page center" style="display: none">
+        <div class="yScroll">
+            <h1>Please wait</h1>
+                    <span>
+                        <img src="./_assets/preload7.gif">
+                    </span>
+        </div>
+    </div>
+</div>
+</div>
 
-    <div id="resourcesPanel" style="display: none">
-        <h5>resources</h5>
-    </div>
-    <div id="stationsPanel" style="display: none">
-        <h5>stations</h5>
-    </div>
-    <div id="settingsPanel" style="display: none">
-        <h5>settings</h5>
-    </div>
-    <div id="proStudioPanel" style="display: none">
-        <h5>pro studio</h5>
-    </div>
-    <div id="helpPanel" style="display: none">
-        <h5>help</h5>
-    </div>
-    <div id="logoutPanel" style="display: none">
-        <h5>logout</h5>
-    </div>
+<div id="resourcesPanel" style="display: none">
+    <h5>resources</h5>
+</div>
+<div id="stationsPanel" style="display: none">
+    <h5>stations</h5>
+</div>
+<div id="settingsPanel" style="display: none">
+    <h5>settings</h5>
+</div>
+<div id="proStudioPanel" style="display: none">
+    <h5>pro studio</h5>
+</div>
+<div id="helpPanel" style="display: none">
+    <h5>help</h5>
+</div>
+<div id="logoutPanel" style="display: none">
+    <h5>logout</h5>
+</div>
 </div>
 <div id="propPanelWrap" class="hidden-xs col-sm-3 col-lg-3">
     <div id="propPanel">

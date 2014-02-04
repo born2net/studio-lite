@@ -25,11 +25,13 @@ Elements.IMAGE_ASPECT_RATIO = '#imageAspectRatio';
 Elements.BLOCK_QR_COMMON_PROPERTIES = '#blockQRCommonProperties';
 Elements.QR_TEXT = '#qrText';
 
+Elements.ADD_BLOCK_VIEW = '#addBlockView';
+Elements.ADD_BLOCK_BUTTON = '#addBlockButton';
+
 Elements.TIMELIME_CHANNEL_BLOCK_LENGTH = '#timelimeChannelBlockLength';
 Elements.BLOCK_LENGTH_HOURS = '#blockLengthHours';
 Elements.BLOCK_LENGTH_MINUTES = '#blockLengthMinutes';
 Elements.BLOCK_LENGTH_SECONDS = '#blockLengthSeconds';
-
 Elements.RANDOM_PLAYBACK = '#randomPlayback';
 Elements.CHANNEL_PROPERTIES = '#channelProperties';
 Elements.TIMELINE_PROPERTIES = '#timelineProperties';
@@ -57,6 +59,9 @@ Elements.SORTABLE = '#sortable';
 Elements.ADD_NEW_TIMELINE_BUTTON = '#addNewTimelineButton';
 Elements.REMOVE_TIMELINE_BUTTON = '#removeTimelineButton';
 Elements.PREVIOUS = '#prev';
+
+Elements.ADD_COMPONENT_BLOCK_LIST = '#addComponentBlockList';
+Elements.ADD_RESOURCE_BLOCK_LIST ='#addResourceBlockList';
 
 Elements.NEW_CAMPAIGN = '#newCampaign';
 Elements.REMOVE_CAMPAIGN = '#removeCampaign';

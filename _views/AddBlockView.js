@@ -1,9 +1,9 @@
 /**
- Add block wizard is a UI component which allows selection and insertion of a new component (i.e. QR / RSS ...)
+ Add block view is a UI component which allows selection and insertion of a new component (i.e. QR / RSS ...)
  or a resource to be added to the currently selected timeline_channel
- @class AddBlockWizardView
+ @class AddBlockView
  @constructor
- @return {object} instantiated AddBlockWizardView
+ @return {object} instantiated AddBlockView
  **/
 define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($, Backbone, StackView, ScreenTemplateFactory) {
 
@@ -18,9 +18,9 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
      **/
     BB.EVENTS.ADD_NEW_BLOCK = 'ADD_NEW_BLOCK';
 
-    BB.SERVICES.ADD_BLOCK_WIZARD_VIEW = 'AddBlockWizardView';
+    BB.SERVICES.ADD_BLOCK_VIEW = 'AddBlockView';
 
-    var AddBlockWizardView = BB.View.extend({
+    var AddBlockView = BB.View.extend({
 
         /**
          Constructor
@@ -28,7 +28,16 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
          **/
         initialize: function () {
             var self = this;
-            self._wireUI()
+
+            $(this.el).find('#prev').on('click',function(e){
+                self.options.stackView.slideToPage(self.options.from, 'left');
+                return false;
+            });
+
+            self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
+                if (e == self)
+                    self._render();
+            });
         },
 
         /**
@@ -38,7 +47,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
          **/
         _wireUI: function () {
             var self = this;
-            $(Elements.GO_BACK_FROM_ADD_RESOURCE_VIEW).tap(function (e) {
+            $(Elements.GO_BACK_FROM_ADD_RESOURCE_VIEW).click(function (e) {
                 self.close();
                 self.destroy();
                 e.stopImmediatePropagation();
@@ -49,18 +58,15 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         /**
          Build two lists, components and resources allowing for item selection.
          Once an LI is selected AddBlockWizard.ADD_NEW_BLOCK is fired to announce block is added.
-         @method newChannelBlockPage
+         @method _render
          @return none
          **/
-        newChannelBlockPage: function () {
+        _render: function () {
             var self = this;
-
-            $.mobile.changePage(Elements.ADD_RESOURCE_VIEW, {transition: "pop"});
 
             /////////////////////////////////////////////////////////
             // show component selection list
             /////////////////////////////////////////////////////////
-
             var components = model.getComponents();
             for (var componentID in components) {
                 // don't show image or video component in component list
@@ -71,7 +77,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                     '<h1>' + components[componentID].name + '</h1>' +
                     '<p>' + components[componentID].description + '</p></a>' +
                     '</li>';
-                $(Elements.ADD_COMPONENT_LIST).append(snippet);
+                $(Elements.ADD_COMPONENT_BLOCK_LIST).append(snippet);
             }
 
             /////////////////////////////////////////////////////////
@@ -93,13 +99,13 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                     '<h1>' + recResources[i]['resource_name'] + '</h1>' +
                     '<p>' + resourceDescription + '</p></a>' +
                     '</li>';
-                $(Elements.ADD_RESOURCE_LIST).append(snippet);
+                $(Elements.ADD_RESOURCE_BLOCK_LIST).append(snippet);
             });
 
-            $(Elements.ADD_COMPONENT_LIST).listview('refresh');
-            $(Elements.ADD_RESOURCE_LIST).listview('refresh');
+            // $(Elements.ADD_COMPONENT_LIST).listview('refresh');
+            // $(Elements.ADD_RESOURCE_LIST).listview('refresh');
 
-            $(Elements.CLASS_ADD_RESOURE_TO_CHANNEL).on('tap', function (e) {
+            $(Elements.CLASS_ADD_RESOURE_TO_CHANNEL).on('click', function (e) {
                 var component_id = $(e.target).closest('li').data('component_id');
                 var resource_id = $(e.target).closest('li').data('resource_id');
                 var blockCode = -1;
@@ -109,7 +115,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 } else {
                     blockCode = model.getBlockCodeFromFileExt(jalapeno.getResourceType(resource_id));
                 }
-                commBroker.fire(AddBlockWizard.ADD_NEW_BLOCK, this, self, {
+                BB.comBroker.fire(AddBlockWizard.ADD_NEW_BLOCK, this, self, {
                     blockCode: blockCode,
                     resourceID: resource_id
                 });
@@ -142,10 +148,15 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             $('.ui-mobile-viewport').css({overflow: 'hidden'});
             $(Elements.ADD_RESOURCE_LIST).empty();
             $(Elements.ADD_COMPONENT_LIST).empty();
+        },
+
+        selectView: function(){
+            var self = this;
+            self.options.stackView.slideToPage(self, 'right');
         }
     });
 
-    return AddBlockWizardView;
+    return AddBlockView;
 
 });
 

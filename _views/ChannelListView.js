@@ -51,8 +51,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
                 }
                 self._deleteChannelBlock(self.selected_block_id);
             });
-
-            $(Elements.CHANNEL_ADD_RESOURCE).on('click', function (e) {
+            $(Elements.ADD_BLOCK_BUTTON).on('click', function (e) {
                 if (self.selected_campaign_timeline_id == undefined) {
                     alert('Please first select a channel to associate asset with');
                     return;
@@ -109,12 +108,14 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
          **/
         _openAddBlockWizard: function (e) {
             var self = this;
-            var addBlockWizard = new AddBlockWizard();
-            addBlockWizard.newChannelBlockPage();
-            BB.comBroker.listenOnce(AddBlockWizard.ADD_NEW_BLOCK, function (e) {
+            var addBlockView =  BB.comBroker.getService(BB.SERVICES.ADD_BLOCK_VIEW);
+            addBlockView.selectView();;
+            return;
+            addBlockView.newChannelBlockPage();
+            BB.comBroker.listenOnce(BB.EVENTS.ADD_NEW_BLOCK, function (e) {
                 self._createNewChannelBlock(e.edata.blockCode, e.edata.resourceID);
-                addBlockWizard.destroy();
-                addBlockWizard.close();
+                addBlockView.destroy();
+                addBlockView.close();
                 e.stopImmediatePropagation();
                 e.preventDefault();
             });

@@ -35,7 +35,7 @@ require.config({
         "WaitView": '_views/WaitView',
         "ResourcesView": '_views/ResourcesView',
         "ResourceListView": '_views/ResourceListView',
-        "AddBlockWizardView": '_views/AddBlockWizardView',
+        "AddBlockView": '_views/AddBlockView',
         "AppContentFaderView": '_views/AppContentFaderView',
         "AppEntryFaderView": '_views/AppEntryFaderView',
         "LoginView": '_views/LoginView',

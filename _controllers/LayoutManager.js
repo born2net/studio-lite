@@ -216,7 +216,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
             _initCampaignWizardPage: function () {
                 var self = this;
 
-                require(['CampaignSelectorView', 'OrientationSelectorView', 'ResolutionSelectorView', 'CampaignView'], function (CampaignSelectorView, OrientationSelectorView, ResolutionSelectorView, CampaignView) {
+                require(['CampaignSelectorView', 'OrientationSelectorView', 'ResolutionSelectorView', 'CampaignView', 'AddBlockView'], function (CampaignSelectorView, OrientationSelectorView, ResolutionSelectorView, CampaignView, AddBlockView) {
 
                     self.m_campaignSelectorView = new CampaignSelectorView({
                         stackView: self.m_campaignSliderStackView,
@@ -257,15 +257,24 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                         stackView: self.m_campaignSliderStackView,
                         from: Elements.SCREEN_LAYOUT_SELECTOR,
                         el: Elements.CAMPAIGN,
-                        to: Elements.CAMPAIGN_SELECTOR
+                        to: Elements.ADD_BLOCK_VIEW
                     });
                     BB.comBroker.setService(BB.SERVICES.CAMPAIGN_VIEW, self.m_campaignView);
+
+                    self.m_addBlockView = new AddBlockView({
+                        stackView: self.m_campaignSliderStackView,
+                        from: Elements.CAMPAIGN,
+                        el: Elements.ADD_BLOCK_VIEW,
+                        to: Elements.CAMPAIGN_SELECTOR
+                    });
+                    BB.comBroker.setService(BB.SERVICES.ADD_BLOCK_VIEW, self.m_addBlockView);
 
                     self.m_campaignSliderStackView.addView(self.m_campaignSelectorView);
                     self.m_campaignSliderStackView.addView(self.m_orientationSelectorView);
                     self.m_campaignSliderStackView.addView(self.m_resolutionSelectorView);
                     self.m_campaignSliderStackView.addView(self.m_screenLayoutSelectorView);
                     self.m_campaignSliderStackView.addView(self.m_campaignView);
+                    self.m_campaignSliderStackView.addView(self.m_addBlockView);
                     self.m_campaignSliderStackView.selectView(self.m_campaignSelectorView);
                 });
 

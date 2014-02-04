@@ -44,7 +44,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListV
 
             self._onWireOpenTimeLineProperties();
             self._onWireDelTimeline();
-            self._onWireTimeLimeOrViewerSelected();
+            self._onWireTimeLineOrViewerSelected();
             self._onWireAddNewTimeline();
 
             var view = new BB.View({el: Elements.NONE_SELECTED_SCREEN_LAYOUT})
@@ -52,11 +52,16 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListV
 
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self)
-                    self.render();
+                    self._render();
             });
         },
 
-        render: function () {
+        /**
+         If loading an existing campaign (i.e.: we are not creating a brand new one) we load
+         all campaign data from msdb and populate UI
+         @method _render
+         **/
+        _render: function () {
             var self = this;
             self.stopListening(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW);
             self.m_selected_campaign_id = BB.comBroker.getService(BB.SERVICES.CAMPAIGN_SELECTOR).getSelectedCampaign();
@@ -74,7 +79,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListV
          **/
         _onWireDelTimeline: function () {
             var self = this;
-            $(Elements.DEL_SCREEN_BUTTON).on('click', function (e) {
+            $(Elements.REMOVE_TIMELINE_BUTTON).on('click', function (e) {
                 self._deleteTimeline(e, self);
             });
         },
@@ -142,10 +147,10 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListV
          This is a key method that we use to listen to fire event of ScreenLayoutSelectorView.ON_VIEWER_SELECTED.
          Upon the event we examine e.context.m_owner to find out who was the owner if the fired event (i.e.: instanceof)
          so we can select tha appropriate campaign or timeline in the UI. See further notes in code.
-         @method _onWireTimeLimeOrViewerSelected
+         @method _onWireTimeLineOrViewerSelected
          @return none
          **/
-        _onWireTimeLimeOrViewerSelected: function () {
+        _onWireTimeLineOrViewerSelected: function () {
             var self = this;
 
             BB.comBroker.listen(BB.EVENTS.ON_VIEWER_SELECTED, function (e) {
@@ -163,14 +168,6 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListV
                     BB.comBroker.fire(BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED, this, null, campaign_timeline_id);
                     return;
                 }
-
-                ////////////////////////////////////////////////
-                //// Timeline selected from Scheduler class  (future support)
-                ////////////////////////////////////////////////
-
-                /*if (e.context.m_owner instanceof Scheduler) {
-                 return;
-                 }*/
 
                 ////////////////////////////////////////////////
                 //// Timeline selected from Timeline class
@@ -261,7 +258,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListV
 
             self.m_timelines[self.m_selected_timeline_id].deleteTimeline();
             delete self.m_timelines[self.m_selected_timeline_id];
-            BB.comBroker.getService('Sequences').deleteSequencedTimeline(self.m_selected_timeline_id);
+            BB.comBroker.getService(BB.SERVICES['SEQUENCER_VIEW']).deleteSequencedTimeline(self.m_selected_timeline_id);
             self._loadSequencerFirstTimeline();
         },
 

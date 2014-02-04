@@ -107,10 +107,14 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             self.m_selectedSubPanelID = i_panelID;
         },
 
+        /**
+         Change the icon of the open properties panel button so it reflects full screen vs
+         right side panel properties inspection
+         @method _reConfigPropPanelIcon
+         **/
         _reConfigPropPanelIcon: function () {
             var self = this;
             var layoutManager = BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER);
-            log('fix icon')
 
             if (layoutManager.getAppWidth() < 768) {
                 $(Elements.TOGGLE_PANEL + ' > span').removeClass('glyphicon-resize-horizontal');

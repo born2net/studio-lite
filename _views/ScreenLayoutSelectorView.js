@@ -6,7 +6,9 @@
  **/
 define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($, Backbone, StackView, ScreenTemplateFactory) {
 
-    var ScreenLayoutSelectorView = Backbone.View.extend({
+    BB.SERVICES.SCREEN_LAYOUT_SELECTOR_VIEW = 'ScreenLayoutSelectorView';
+
+    var ScreenLayoutSelectorView = BB.View.extend({
 
         /**
          Constructor
@@ -16,13 +18,13 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             var self = this;
             self.m_screens = [];
 
-            self.listenTo(self.options.stackView, Backbone.EVENTS.SELECTED_STACK_VIEW, function (e) {
+            self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self) {
                     self.render();
                 }
             });
 
-            $(this.el).find('#prev').on('click', function (e) {
+            $(this.el).find(Elements.PREVIOUS).on('click', function (e) {
                 if (self.options.from == null)
                     return;
                 self.options.stackView.slideToPage(self.options.from, 'left');
@@ -37,15 +39,13 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
          @return none
          **/
         render: function () {
-            // $('.ui-mobile-viewport').css({overflow: 'visible'});
             var self = this;
 
             $(Elements.SCREEN_LAYOUT_LIST).empty();
-            var resolution = Backbone.comBroker.getService(Backbone.SERVICES.RESOLUTION_SELECTOR_VIEW).model.get(Backbone.CONSTS.RESOLUTION);
-            var orientation = Backbone.comBroker.getService(Backbone.SERVICES.ORIENTATION_SELECTOR_VIEW).model.get(Backbone.CONSTS.ORIENTATION);
+            var resolution = BB.comBroker.getService(BB.SERVICES.RESOLUTION_SELECTOR_VIEW).model.get(BB.CONSTS.RESOLUTION);
+            var orientation = BB.comBroker.getService(BB.SERVICES.ORIENTATION_SELECTOR_VIEW).model.get(BB.CONSTS.ORIENTATION);
 
-            Backbone.comBroker.listenOnce(Backbone.EVENTS.ON_VIEWER_SELECTED, function () {
-                // self.destroy();
+            BB.comBroker.listenOnce(BB.EVENTS.ON_VIEWER_SELECTED, function () {
                 setTimeout(function () {
                     self.options.stackView.slideToPage(self.options.to, 'right');
                 }, 700)
@@ -66,7 +66,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
 
                     var screenTemplate = new ScreenTemplateFactory({
                         i_screenTemplateData: screenTemplateData,
-                        i_type: Backbone.CONSTS.ENTIRE_SELECTABLE,
+                        i_type: BB.CONSTS.ENTIRE_SELECTABLE,
                         i_owner: self
                     });
                     var snippet = screenTemplate.create();
@@ -75,6 +75,11 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                     self.m_screens.push(screenTemplate);
                 }
             });
+        },
+
+        hidePreviousButton: function(){
+            var self = this;
+            self.$el.find(Elements.PREVIOUS).hide();
         }
     });
 

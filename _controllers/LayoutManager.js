@@ -251,6 +251,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                         to: Elements.CAMPAIGN,
                         model: new BB.Model({screenLayout: null})
                     });
+                    BB.comBroker.setService(BB.SERVICES.SCREEN_LAYOUT_SELECTOR_VIEW, self.m_screenLayoutSelectorView);
 
                     self.m_campaignView = new CampaignView({
                         stackView: self.m_campaignSliderStackView,

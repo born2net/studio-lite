@@ -55,6 +55,7 @@ Elements.SCREEN_LAYOUT_SELECTOR = '#screenLayoutSelector';
 Elements.SCREEN_LAYOUT_LIST = '#screenLayoutList';
 Elements.SORTABLE = '#sortable';
 Elements.ADD_NEW_TIMELINE_BUTTON = '#addNewTimelineButton';
+Elements.PREVIOUS = '#prev';
 
 Elements.NEW_CAMPAIGN = '#newCampaign';
 Elements.REMOVE_CAMPAIGN = '#removeCampaign';

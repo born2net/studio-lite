@@ -125,8 +125,17 @@ body {
 }
 
 #screenSelectorContainer {
+    width: 100%;
+    height: 190px;
+    padding: 0px;
+    margin: 0px;
     overflow-x: scroll;
-    width: 800px;
+    overflow-y: hidden;
+}
+
+#screenLayoutsUL {
+    height: 100px;
+    width: 1500px;
 }
 
 #togglePanel {

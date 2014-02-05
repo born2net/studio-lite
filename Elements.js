@@ -1,3 +1,4 @@
+// elemenets
 Elements.APP_ENTRY = '#appEntry';
 Elements.WAITS_SCREEN_ENTRY_APP = '#waitScreenEntryApp';
 Elements.APP_LOGIN = '#appLogin';
@@ -11,7 +12,6 @@ Elements.MAIN_PANEL_WRAP = '#mainPanelWrap';
 Elements.FORM_CAMPAIGN_NAME = '#formCampaignName';
 Elements.EMPTY_PROPERTIES = '#emptyProperties';
 Elements.CHANNEL_LIST_VIEW = '#channelListView';
-
 Elements.PROP_PANEL_WRAP = '#propPanelWrap';
 Elements.PROP_PANEL = '#propPanel';
 Elements.BLOCK_PROPERTIES = '#blockProperties';
@@ -24,13 +24,13 @@ Elements.POPUP_PROPERTIES = '#popupProperties';
 Elements.IMAGE_ASPECT_RATIO = '#imageAspectRatio';
 Elements.BLOCK_QR_COMMON_PROPERTIES = '#blockQRCommonProperties';
 Elements.QR_TEXT = '#qrText';
+Elements.RESOURCES_PANEL = '#resourcesPanel';
 Elements.RESOURCES_LIST_VIEW = '#resourcesListView';
 Elements.ADD_BLOCK_VIEW = '#addBlockView';
 Elements.ADD_BLOCK_BUTTON = '#addBlockButton';
 Elements.REMOVE_BLOCK_BUTTON = '#removeBlockButton';
 Elements.FILE_SELECTION = '#file';
 Elements.FILE_REMOVE = '#fileRemove';
-
 Elements.TIMELIME_CHANNEL_BLOCK_LENGTH = '#timelimeChannelBlockLength';
 Elements.BLOCK_LENGTH_HOURS = '#blockLengthHours';
 Elements.BLOCK_LENGTH_MINUTES = '#blockLengthMinutes';
@@ -47,7 +47,6 @@ Elements.BS_MODAL = '#bsModal';
 Elements.TOGGLE_PANEL = '#togglePanel';
 Elements.USER_NAME = '#userName';
 Elements.USER_PASS = '#userPass';
-Elements.RESOURCES_PANEL = '#resourcesPanel';
 Elements.STATIONS_PANEL = '#stationsPanel';
 Elements.SETTINGS_PANEL = '#settingsPanel';
 Elements.PRO_STUDIO_PANEL = '#proStudioPanel';
@@ -70,7 +69,6 @@ Elements.ADD_COMPONENT_BLOCK_LIST = '#addComponentBlockList';
 Elements.ADD_RESOURCE_BLOCK_LIST ='#addResourceBlockList';
 Elements.RESOURCE_LIB_LIST_WRAP = '#resourceLibListWrap';
 Elements.SELECTED_LIB_RESOURCE_NAME = '#selectedLibResourceName';
-
 Elements.NEW_CAMPAIGN = '#newCampaign';
 Elements.REMOVE_CAMPAIGN = '#removeCampaign';
 Elements.CAMPAIGN = '#campaign'; // main campaign div entire container
@@ -78,20 +76,18 @@ Elements.CAMPAIGN_SELECTOR = '#campaignSelector'; // initial selection tool
 Elements.CAMPAIGN_MANAGER_VIEW = '#campaignManagerView'; // File menu
 Elements.CAMPAIGN_SLIDER = '#campaignSlider'; // container of StackView.Slider
 Elements.CAMPAIGN_PROPERTIES = '#campaignProperties'; // properties
-
 Elements.SELECTED_TIMELINE = '#selectedTimeline';
-
 Elements.SCREEN_LAYOUTS_UL = '#screenLayoutsUL';
 Elements.NONE_SELECTED_SCREEN_LAYOUT = '#noneSelectedScreenLayout';
 Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION = '#attachDragDropMainScreenSelection';
 Elements.DETTACH_DRAG_DROP_MAIN_SCREEN_SELECTION = '#dettachDragDropMainScreenSelection';
 
+// classes
 Elements.CLASS_SCREEN_DIVISION = '.screenDivisionClass';
 Elements.CLASS_CHANNEL_LIST_ITEMS = '.channelListItems';
 Elements.CLASS_ADD_BLOCK_LIST_ITEMS = '.addBlockListItems';
 Elements.CLASS_RESOURCES_LIST_ITEMS = '.resourcesListItems';
 Elements.CLASS_KNOB = '.knob';
-
 
 /**
  List of all Elements / Classes of elements used in the DOM

@@ -235,11 +235,9 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             var self = this;
 
             $(Elements.CLASS_CHANNEL_LIST_ITEMS).on('click', function (e) {
-
                 var resourceElem = $(e.target).closest('li');
                 self.selected_block_id = $(resourceElem).data('block_id');
                 self._blockChannelSelected();
-
                 $(Elements.CLASS_CHANNEL_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
                 $(resourceElem).addClass('activated').find('a').addClass('whiteFont');
                 return false;

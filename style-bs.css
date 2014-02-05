@@ -209,6 +209,10 @@ body {
     display: inline;
 }
 
+#resourcesListView {
+    padding: 10px;
+}
+
 #imgVertical {
     opacity: 0.6;
     cursor: pointer;
@@ -276,7 +280,6 @@ body {
     font-size: 1.5em;
 }
 
-
 aside > aside > div > ul > li {
     display: block;
     width: 100px;
@@ -306,6 +309,10 @@ aside > aside > div > ul > li {
 .whiteFont {
     color: white;
 
+}
+
+a {
+    text-decoration: none !important;
 }
 
 /* -------------------------------------------

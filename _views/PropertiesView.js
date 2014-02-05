@@ -136,7 +136,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
                 if ($(Elements.TOGGLE_PANEL).hasClass('propPanelIsOpen')) {
                     $(Elements.TOGGLE_PANEL).toggleClass('propPanelIsOpen');
                     $(Elements.PROP_PANEL_WRAP).fadeOut(function () {
-                       // $(Elements.PROP_PANEL_WRAP).addClass('hidden-sm hidden-md');
+                        $(Elements.PROP_PANEL_WRAP).addClass('hidden-sm hidden-md');
                         $(Elements.MAIN_PANEL_WRAP).removeClass('col-sm-9 col-md-9');
                         $(Elements.MAIN_PANEL_WRAP).addClass('col-md-12');
                     });
@@ -147,7 +147,8 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
                         $(Elements.MAIN_PANEL_WRAP).removeClass('col-md-12');
                         // $(Elements.PROP_PANEL_WRAP).children().hide();
                         $(Elements.PROP_PANEL_WRAP).removeClass('hidden-sm hidden-md');
-                        $(Elements.PROP_PANEL_WRAP).children().fadeIn();
+                        $(Elements.PROP_PANEL_WRAP).fadeIn();
+                        // $(Elements.PROP_PANEL_WRAP).children().fadeIn();
                     }, 500)
                 }
             });

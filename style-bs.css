@@ -1,3 +1,4 @@
+@import url("https://secure.dynawebs.net/_studiolite-dev/_common/_js/bootstrap/css/bootstrap-glyphicons.css");
 html,
 body {
     height: 100%;
@@ -237,6 +238,9 @@ body {
     font-size: 1.5em;
 }
 
+.screenDivisionClass {
+    cursor: pointer;
+}
 
 .addBlockListItems {
     cursor: pointer;

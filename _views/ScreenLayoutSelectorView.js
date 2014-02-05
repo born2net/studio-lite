@@ -20,7 +20,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
 
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self) {
-                    self.render();
+                    self._render();
                 }
             });
 
@@ -32,14 +32,15 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             });
         },
 
-
         /**
          Build the list of templates a user can select from.
          @method render
          @return none
          **/
-        render: function () {
+        _render: function () {
             var self = this;
+
+            self._resetPropertiesView();
 
             $(Elements.SCREEN_LAYOUT_LIST).empty();
             var resolution = BB.comBroker.getService(BB.SERVICES.RESOLUTION_SELECTOR_VIEW).model.get(BB.CONSTS.RESOLUTION);
@@ -76,6 +77,16 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 }
             });
         },
+
+        /**
+         Reset properties view
+         @method _resetPropertiesView
+         **/
+        _resetPropertiesView: function(){
+            BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW).selectView(Elements.EMPTY_PROPERTIES);
+
+        },
+
 
         hidePreviousButton: function(){
             var self = this;

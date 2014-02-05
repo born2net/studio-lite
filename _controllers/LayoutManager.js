@@ -192,23 +192,28 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 });
 
                 this.m_stationsView = new StationsView({
-                    el: Elements.STATIONS_PANEL
+                    el: Elements.STATIONS_PANEL,
+                    stackView:  this.m_appContentFaderView
                 });
 
                 this.m_settingsView = new SettingsView({
-                    el: Elements.SETTINGS_PANEL
+                    el: Elements.SETTINGS_PANEL,
+                    stackView:  this.m_appContentFaderView
                 });
 
                 this.m_proStudioView = new ProStudioView({
-                    el: Elements.PRO_STUDIO_PANEL
+                    el: Elements.PRO_STUDIO_PANEL,
+                    stackView:  this.m_appContentFaderView
                 });
 
                 this.m_helpView = new HelpView({
-                    el: Elements.HELP_PANEL
+                    el: Elements.HELP_PANEL,
+                    stackView:  this.m_appContentFaderView
                 });
 
                 this.m_logoutView = new LogoutView({
-                    el: Elements.LOGOUT_PANEL
+                    el: Elements.LOGOUT_PANEL,
+                    stackView:  this.m_appContentFaderView
                 });
 
                 this.m_appContentFaderView.addView(this.m_campaignManagerView);

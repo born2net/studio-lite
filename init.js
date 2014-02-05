@@ -40,6 +40,7 @@ require.config({
         "AppEntryFaderView": '_views/AppEntryFaderView',
         "LoginView": '_views/LoginView',
         "StationsView": '_views/StationsView',
+        "StationsListView": '_views/StationsListView',
         "SettingsView": '_views/SettingsView',
         "ProStudioView": '_views/ProStudioView',
         "HelpView": '_views/HelpView',

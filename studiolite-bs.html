@@ -331,7 +331,7 @@
 
 <div id="resourcesPanel" style="display: none">
     <div id="resourcesListView">
-        <div id="files" >
+        <div id="files">
             <div align="left">
                 <label data-role="button" align="left" class="file-upload">
                     <input id="file" name="file" type="file" multiple data-role="none">
@@ -342,6 +342,7 @@
                 </button>
             </div>
             <br/>
+
             <div id="resourceLibListWrap" class="yScroll">
                 <ul id="resourceLibList" class="list-group">
                 </ul>
@@ -351,6 +352,8 @@
 </div>
 <div id="stationsPanel" style="display: none">
     <h5>stations</h5>
+    <ul id="stationListView">
+    </ul>
 </div>
 <div id="settingsPanel" style="display: none">
     <h5>settings</h5>
@@ -402,6 +405,98 @@
         <div id="resourceListProperties" style="display: none">
             <h5>resource properties</h5>
             <input id="selectedLibResourceName" type="text" name="name" value="" placeholder="Enter resource name">
+        </div>
+        <div id="stationProperties" style="display: none" data-theme="a">
+            <h4 id="stationName" style="text-align:center"></h4>
+            <div style="width:242px; height: 130px">
+                <svg width="320" height="140" xmlns="http://www.w3.org/2000/svg">
+                    <g>
+                        <rect stroke-width="7" stroke="#191919" height="120" width="220" y="9.5" x="10" fill="#cccccc"/>
+                    </g>
+                </svg>
+                <img id="snapShotImage" height="113" width="214"
+                     style="position: relative; top: -131px; left: 13px; padding: 0; margin:0"/>
+                <img id="snapShotSpinner" style="position: relative; top: -95px; left: 100px; padding: 0; margin:0"
+                     src="https://secure.dynawebs.net/_studiolite-dev/_assets/preload2_gray.gif"/>
+            </div>
+            <div style="position: relative; top: 6px; left: 15px" data-role="navbar" class="ui-navbar ui-mini"
+                 data-grid="c"
+                 role="navigation" data-theme="a">
+                <ul class="ui-grid-c">
+                    <li class="ui-block-a"><a href="#" id="captureCommand" data-role="button" data-icon="capture-cmd"
+                                              data-theme="a"></a></li>
+                    <li class="ui-block-b"><a href="#" id="playCommand" data-role="button" data-icon="play-cmd"
+                                              data-theme="a"></a></li>
+                    <li class="ui-block-c"><a href="#" id="stopCommand" data-role="button" data-icon="stop-cmd"
+                                              data-theme="a"></a></li>
+                    <li class="ui-block-d"><a href="#" id="reloadCommand" data-role="button" data-icon="reload-cmd"
+                                              data-theme="a"></a></li>
+                </ul>
+            </div>
+            <div class="ui-grid-a" data-theme="a">
+                <div class="ui-block-a">
+                    <h5>Name:</h5>
+                </div>
+                <div class="ui-block-b">
+                    <h5 id="selName"></h5>
+                </div>
+                <div class="ui-block-a">
+                    <h5>OS:</h5>
+                </div>
+                <div class="ui-block-b">
+                    <h5 id="selOS"></h5>
+                </div>
+                <div class="ui-block-a">
+                    <h5>AIR Ver:</h5>
+                </div>
+                <div class="ui-block-b">
+                    <h5 id="selAirVer"></h5>
+                </div>
+                <div class="ui-block-a">
+                    <h5>Player Ver:</h5>
+                </div>
+                <div class="ui-block-b">
+                    <h5 id="selPlayerVer"></h5>
+                </div>
+                <div class="ui-block-a">
+                    <h5>Peak mem:</h5>
+                </div>
+                <div class="ui-block-b">
+                    <h5 id="selPeakMem"></h5>
+                </div>
+                <div class="ui-block-a">
+                    <h5>Total mem:</h5>
+                </div>
+                <div class="ui-block-b">
+                    <h5 id="selTotMem"></h5>
+                </div>
+                <div class="ui-block-a">
+                    <h5>Running:</h5>
+                </div>
+                <div class="ui-block-b">
+                    <h5 id="selRunning"></h5>
+                </div>
+                <div class="ui-block-a">
+                    <h5>Watchdog:</h5>
+                </div>
+                <div class="ui-block-b">
+                    <h5 id="selWD"></h5>
+                </div>
+                <div class="ui-block-a">
+                    <h5>Last upd:</h5>
+                </div>
+                <div class="ui-block-b">
+                    <h5 id="selLastUpd"></h5>
+                </div>
+            </div>
+            <input type="text" data-inline="true" name="eventName" data-clear-btn="true" data-theme="a"
+                   data-icon="search"
+                   placeholder="event name"
+                   id="sendEventID" value="">
+            <button id="eventSendButton" data-role="button" data-icon="alert">Send event</button>
+            <hr width="100%"
+                style="color:#333; display: block; height: 1px; border: 0; border-top: 1px solid #000; margin: 1em 0; padding: 0;"/>
+            <a id="uptotop" data-role="button">Top</a>
         </div>
         <div id="blockProperties" style="display: none">
             <div>

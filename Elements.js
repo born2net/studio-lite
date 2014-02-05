@@ -22,6 +22,7 @@ Elements.BLOCK_QR_COMMON_PROPERTIES = '#blockQRCommonProperties';
 Elements.BLOCK_RSS_COMMON_PROPERTIES = '#blockRSSCommonProperties';
 Elements.POPUP_PROPERTIES = '#popupProperties';
 Elements.IMAGE_ASPECT_RATIO = '#imageAspectRatio';
+Elements.RSS_LINK = '#rssLink';
 Elements.BLOCK_QR_COMMON_PROPERTIES = '#blockQRCommonProperties';
 Elements.QR_TEXT = '#qrText';
 Elements.RESOURCES_PANEL = '#resourcesPanel';
@@ -29,6 +30,7 @@ Elements.RESOURCES_LIST_VIEW = '#resourcesListView';
 Elements.ADD_BLOCK_VIEW = '#addBlockView';
 Elements.ADD_BLOCK_BUTTON = '#addBlockButton';
 Elements.REMOVE_BLOCK_BUTTON = '#removeBlockButton';
+Elements.VIDEO_ASPECT_RATIO = '#videoAspectRatio';
 Elements.FILE_SELECTION = '#file';
 Elements.FILE_REMOVE = '#fileRemove';
 Elements.TIMELIME_CHANNEL_BLOCK_LENGTH = '#timelimeChannelBlockLength';
@@ -71,6 +73,7 @@ Elements.ADD_COMPONENT_BLOCK_LIST = '#addComponentBlockList';
 Elements.ADD_RESOURCE_BLOCK_LIST ='#addResourceBlockList';
 Elements.RESOURCE_LIB_LIST_WRAP = '#resourceLibListWrap';
 Elements.SELECTED_LIB_RESOURCE_NAME = '#selectedLibResourceName';
+Elements.SELECTED_CHANNEL_RESOURCE_NAME = '#selectedChannelResourceName';
 Elements.NEW_CAMPAIGN = '#newCampaign';
 Elements.REMOVE_CAMPAIGN = '#removeCampaign';
 Elements.CAMPAIGN = '#campaign'; // main campaign div entire container
@@ -83,6 +86,7 @@ Elements.SCREEN_LAYOUTS_UL = '#screenLayoutsUL';
 Elements.NONE_SELECTED_SCREEN_LAYOUT = '#noneSelectedScreenLayout';
 Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION = '#attachDragDropMainScreenSelection';
 Elements.DETTACH_DRAG_DROP_MAIN_SCREEN_SELECTION = '#dettachDragDropMainScreenSelection';
+
 
 // classes
 Elements.CLASS_SCREEN_DIVISION = '.screenDivisionClass';

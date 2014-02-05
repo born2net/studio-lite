@@ -328,7 +328,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self.m_selectablDivision = null;
             self.m_screenTemplateData = null;
         }
-
     });
 
     return ScreenTemplateFactory;

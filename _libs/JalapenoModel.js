@@ -498,7 +498,6 @@ JalapenoModel.prototype = {
             }
 
             // Update server data, if id already exists in model
-
             for (var dbmid in self.m_data) {
                 if (self.m_data[dbmid]['dataFilter'] == JalapenoModel.filter_Station) {
                     var id = self.m_data[dbmid]['id'];

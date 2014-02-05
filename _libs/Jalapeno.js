@@ -47,7 +47,7 @@ Jalapeno.prototype = {
     },
 
     /**
-     Returns a reference to the Jalapeno Loader
+     Returns a reference to the Jalapeno loader
      @method getLoader
      @return {Object} reference to loader
      **/

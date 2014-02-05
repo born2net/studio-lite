@@ -152,8 +152,8 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 this.m_appEntryFaderView.addView(this.m_appContentFaderView);
                 this.m_appEntryFaderView.addView(this.m_mainAppWaitView);
 
-                BB.comBroker.setService(BB.SERVICES.APP_ENTRY_FADER_VIEW, this.m_appEntryFaderView);
-                BB.comBroker.setService(BB.SERVICES.APP_CONTENT_FADER_VIEW, this.m_appContentFaderView);
+                BB.comBroker.setService(BB.SERVICES['APP_ENTRY_FADER_VIEW'], this.m_appEntryFaderView);
+                BB.comBroker.setService(BB.SERVICES['APP_CONTENT_FADER_VIEW'], this.m_appContentFaderView);
             },
 
             /**
@@ -161,7 +161,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
              @method Update
              **/
             _initDashBoard: function(){
-                //  Dash
+                //todo create a separate backbone view for dashboard
                 $(Elements.SERVER_NAME).text(jalapeno.getLoader()['m_domain']);
                 $(Elements.BUISINESS_ID).text(jalapeno.getLoader()['m_businessId']);
             },
@@ -368,7 +368,6 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 $(Elements.APP_NAVIGATOR).height(h);
                 $(Elements.RESOURCE_LIB_LIST_WRAP).height(h);
                 // $('#screenLayoutList').height(h)+200;
-
                 BB.comBroker.fire(BB.EVENTS.APP_SIZED);
             },
 

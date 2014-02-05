@@ -68,7 +68,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var x2js = BB.comBroker.getService('compX2JS');
             var jPlayerData = x2js.xml_str2json(xml);
 
-
             // update checkbox for respect content length
             if ((jPlayerData)["Player"]["Data"]["Resource"]["AspectRatio"]) {
                 var state = jPlayerData["Player"]["Data"]["Resource"]["AspectRatio"]["_maintain"] == '1' ? 'on' : 'off';
@@ -85,7 +84,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _wireUI: function () {
             var self = this;
-
             $(Elements.IMAGE_ASPECT_RATIO).change(function (e) {
                 if (!self.m_selected)
                     return;

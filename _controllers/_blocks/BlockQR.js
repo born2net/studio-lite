@@ -1,6 +1,5 @@
 /**
  * BlockQR block resided inside a Scenes or timeline
- *
  * @class BlockQR
  * @extends Block
  * @constructor
@@ -25,20 +24,48 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_blockDescription = model.getComponent(self.m_blockType).description;
             self.m_blockIcon = model.getComponent(self.m_blockType).icon;
             self.m_qrText = 'Hello World';
-
-            //todo: fix prop panel
             self.m_property.initSubPanel(Elements.BLOCK_QR_COMMON_PROPERTIES);
-            self._wireUI();
+            self._listenInputChange();
         },
 
         /**
-         Wire's elements to event handlers
-         @method _wireUI
+         When user changes QR text update msdb, we use xSavePlayerData
+         as a json boilerplate that we append values to and save it in msdb as player_data
+         @method _listenInputChange
          @return none
          **/
-        _wireUI: function () {
+        _listenInputChange: function () {
             var self = this;
+            var onChange = _.debounce( function (e) {
+                if (!self.m_selected)
+                    return;
+                var text = $(e.target).val();
+                var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
+                var xml = recBlock['player_data'];
+                var x2js = BB.comBroker.getService('compX2JS');
+                var jPlayerData = x2js.xml_str2json(xml);
 
+                // Example of how to build player_data as json object and serialize back to XML for save
+                var xSavePlayerData = {
+                    Player: {
+                        _player: 3430,
+                        Data: {
+                            Text: {
+                                _textSource: 'static',
+                                __text: text
+                            }
+                        },
+                        _label: 'QR Code',
+                        _interactive: '0'
+                    }
+                }
+                var xData = x2js.json2xml_str(xSavePlayerData);
+                jalapeno.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', xData);
+            }, 150);
+
+            $(Elements.QR_TEXT).on("input", onChange);
+
+            /*
             var qrText;
             $(Elements.QR_TEXT).on("input", function (e) {
                 if (!self.m_selected)
@@ -48,7 +75,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                     self._onChange(e);
                 }, 200);
 
-            });
+            });*/
         },
 
         /**
@@ -81,43 +108,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             } else {
                 $(Elements.QR_TEXT).val(self.m_qrText);
             }
-        },
-
-        /**
-         When user changes QR text update msdb.
-         We use xSavePlayerData as a json boilerplate that we append values to
-         and save it in msdb as player_data
-         @method _onChange
-         @param {event} e event from target input element
-         @return none
-         **/
-        _onChange: function (e) {
-            var self = this;
-
-            var text = $(e.target).val();
-            var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
-            var xml = recBlock['player_data'];
-            var x2js = BB.comBroker.getService('compX2JS');
-            var jPlayerData = x2js.xml_str2json(xml);
-
-            // Example of how to build player_data as json object and serialize back to XML for save
-
-            var xSavePlayerData = {
-                Player: {
-                    _player: 3430,
-                    Data: {
-                        Text: {
-                            _textSource: 'static',
-                            __text: text
-                        }
-                    },
-                    _label: 'QR Code',
-                    _interactive: '0'
-                }
-            }
-
-            var xData = x2js.json2xml_str(xSavePlayerData);
-            jalapeno.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', xData);
         }
     });
 

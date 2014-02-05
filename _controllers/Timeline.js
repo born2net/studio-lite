@@ -38,7 +38,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
 
             self._populateChannels();
             self._populateTimeline();
-            self._wireUI();
+            self._listenInputChange();
             this._onTimelineSelected();
 
         },
@@ -66,35 +66,25 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
         },
 
         /**
-         Wire the UI for timeline property edits.
-         @method _wireUI
-         @return none
-         **/
-        _wireUI: function () {
-            var self = this;
-
-            var timelineTitle;
-            $(Elements.TIME_LINE_PROP_TITLE_ID).on("input", function (e) {
-                if (!self.m_selected)
-                    return;
-                window.clearTimeout(timelineTitle);
-                timelineTitle = window.setTimeout(function () {
-                    self._onChange(e);
-                }, 200);
-            });
-        },
-
-        /**
          Update msdb when the timeline title has changed.
-         @method _onChange
+         @method _listenInputChange
          @param {Event} e
          @return none
          **/
-        _onChange: function (e) {
+        _listenInputChange: function () {
             var self = this;
-            jalapeno.setCampaignTimelineRecord(self.m_campaign_timeline_id, 'timeline_name', $(Elements.TIME_LINE_PROP_TITLE_ID).val());
+            var onChange = _.debounce(function (e) {
+                if (!self.m_selected)
+                    return;
+                jalapeno.setCampaignTimelineRecord(self.m_campaign_timeline_id, 'timeline_name', $(Elements.TIME_LINE_PROP_TITLE_ID).val());
+            }, 150, false);
+            $(Elements.TIME_LINE_PROP_TITLE_ID).on("input", onChange);
         },
 
+        /**
+         Populate the timeline property
+         @method _listenInputChange
+         **/
         _propLoadTimeline: function () {
             var self = this;
             self.m_property.viewPanel(Elements.TIMELINE_PROPERTIES);

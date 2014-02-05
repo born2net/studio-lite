@@ -1,5 +1,5 @@
 /**
- Manage user authentication and cookie creation
+ Manage user authentication and cookie creation and pass results back to app router
  @class AppAuth
  @constructor
  @return {Object} instantiated AppAuth
@@ -48,7 +48,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             } else if (i_user.length > 2 && i_pass.length > 2) {
                 self._serverAuthenticate(i_user, i_pass, this.AUTH_USER_PASS);
             } else {
-                BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER).navigate('unauthenticated', {trigger: true});
+                BB.comBroker.getService(BB.SERVICES['LAYOUT_MANAGER']).navigate('unauthenticated', {trigger: true});
             }
         },
 
@@ -68,7 +68,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     self.authenticated = true;
                     if (i_authMode == self.AUTH_USER_PASS && $(Elements.REMEMBER_ME).prop('checked'))
                         self._bakeCookie(i_user, i_pass);
-                    BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER).navigate('authenticated', {trigger: true});
+                    BB.comBroker.getService(BB.SERVICES['LAYOUT_MANAGER']).navigate('authenticated', {trigger: true});
 
                 } else {
 
@@ -88,10 +88,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                                 }
                             }
                         });
-                        BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER).navigate('unauthenticated', {trigger: true});
+                        BB.comBroker.getService(BB.SERVICES['LAYOUT_MANAGER']).navigate('unauthenticated', {trigger: true});
                         return;
                     }
-                    BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER).navigate('authenticationFailed', {trigger: true});
+                    BB.comBroker.getService(BB.SERVICES['LAYOUT_MANAGER']).navigate('authenticationFailed', {trigger: true});
                 }
             });
         },

@@ -1,6 +1,5 @@
 /**
  * BlockRSS block resided inside a Scenes or timeline
- *
  * @class BlockRSS
  * @extends Block
  * @constructor
@@ -28,19 +27,44 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
             self.m_property.initSubPanel(Elements.BLOCK_RSS_COMMON_PROPERTIES);
 
-            self._wireUI();
+            self._listenInputChange();
             // todo: disabled mini colors
             //self._listenRSSColorPicker();
         },
 
         /**
-         Bind listener events to related UI elements
-         @method _wireUI
+         When user changes a URL link for the RSS feed, update the msdb
+         @method _listenInputChange
          @return none
+         @example see code _getDefaultPlayerRSSData for sample XML structure
          **/
-        _wireUI: function () {
+        _listenInputChange: function () {
             var self = this;
+            var onChange = _.debounce(function (e) {
+                if (!self.m_selected)
+                    return;
+                var text = $(e.target).val();
+                var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
+                var xPlayerData = recBlock['player_data'];
+                var xmlDoc = $.parseXML(xPlayerData);
+                var xml = $(xmlDoc);
+                var rss = xml.find('Rss');
+                // this is a new component so we need to add a boilerplate XML
+                if (rss.length == 0) {
+                    xPlayerData = self._getDefaultPlayerRSSData();
+                    xmlDoc = $.parseXML(xPlayerData);
+                    xml = $(xmlDoc);
+                    rss = xml.find('Rss');
+                    rss.attr('url', text);
+                } else {
+                    rss.attr('url', text);
+                }
+                var xmlString = (new XMLSerializer()).serializeToString(xml[0]);
+                jalapeno.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', xmlString);
+            }, 150);
+            $(Elements.RSS_LINK).on("input", onChange);
 
+            /*
             var rssLink;
             $(Elements.RSS_LINK).on("input", function (e) {
                 if (!self.m_selected)
@@ -49,7 +73,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 rssLink = window.setTimeout(function () {
                     self._onChange(e);
                 }, 200);
-            });
+            });*/
         },
 
         /**
@@ -73,7 +97,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 '</Player>'
             return xml;
         },
-
 
         /**
          Populate the RSS block common properties panel
@@ -107,39 +130,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             }
 
         },
-
-        /**
-         When user changes a URL link for the RSS feed, update the msdb
-         @method _onChange
-         @param e {event} event from target input
-         @return none
-         @example see code _getDefaultPlayerRSSData for sample XML structure
-         **/
-        _onChange: function (e) {
-            var self = this;
-
-            var text = $(e.target).val();
-            var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
-            var xPlayerData = recBlock['player_data'];
-            var xmlDoc = $.parseXML(xPlayerData);
-            var xml = $(xmlDoc);
-            var rss = xml.find('Rss');
-
-            // this is a new component so we need to add a boilerplate XML
-            if (rss.length == 0) {
-                xPlayerData = self._getDefaultPlayerRSSData();
-                xmlDoc = $.parseXML(xPlayerData);
-                xml = $(xmlDoc);
-                rss = xml.find('Rss');
-                rss.attr('url', text);
-            } else {
-                rss.attr('url', text);
-            }
-
-            var xmlString = (new XMLSerializer()).serializeToString(xml[0]);
-            jalapeno.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', xmlString);
-        },
-
 
         /**
          Listen to when user selects to change the color of the RSS feed

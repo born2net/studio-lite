@@ -1,6 +1,5 @@
 /**
  * BlockVideo block resided inside a Scenes or timeline
- *
  * @class BlockVideo
  * @extends Block
  * @constructor
@@ -30,7 +29,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self._wireUI();
         },
 
-
         /**
          Bind listener events to related UI elements
          @method _wireUI
@@ -53,7 +51,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _loadCommonProperties: function () {
             var self = this;
-
             self._populate();
             this.m_property.viewSubPanel(Elements.BLOCK_VIDEO_COMMON_PROPERTIES);
         },
@@ -68,9 +65,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
             var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
             var xml = recBlock['player_data'];
-            var x2js = commBroker.getService('compX2JS');
+            var x2js = BB.comBroker.getService('compX2JS');
             var jPlayerData = x2js.xml_str2json(xml);
-
 
             // update checkbox for respect content length
             if ((jPlayerData)["Player"]["Data"]["Resource"]["AspectRatio"]) {
@@ -79,7 +75,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             } else {
                 $(Elements.VIDEO_ASPECT_RATIO + ' option[value="off"]').attr("selected", "selected");
             }
-            $(Elements.VIDEO_ASPECT_RATIO).slider('refresh');
         },
 
         /**

@@ -204,7 +204,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         event: function (i_event, i_context, i_caller, i_data) {
             return $.Event(i_event, {context: i_context, caller: i_caller, edata: i_data});
         }
-
     });
 
     return ComBroker;

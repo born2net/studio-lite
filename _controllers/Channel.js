@@ -9,7 +9,6 @@
  **/
 define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVideo', 'BlockImage'], function ($, Backbone, X2JS, Block, BlockRSS, BlockQR, BlockVideo, BlockImage) {
 
-
     /**
      Event fires when a channel is selected on a timeline. The event includes the channel id that was selected.
      @event CAMPAIGN_TIMELINE_CHANNEL_SELECTED
@@ -35,7 +34,7 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
             this.m_campaign_timeline_chanel_id = this.options.campaignTimelineChanelID;
             this.m_selected = false;
             this.m_blocks = {}; // hold references to all created player instances
-            this.m_property = BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW);
+            this.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
 
             this._createBlocks();
             this._onTimelineChannelSelected();
@@ -44,7 +43,6 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
             this._listenResourceRemoving();
         },
 
-
         /**
          Wire UI and listen to change in random playback on channel.
          @method _wireUI
@@ -52,7 +50,6 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
          **/
         _wireUI: function () {
             var self = this;
-
             $(Elements.RANDOM_PLAYBACK).change(function (e) {
                 if (!self.m_selected)
                     return;
@@ -136,7 +133,6 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
                     self.m_selected = false;
                     return;
                 }
-
                 self.m_selected = true;
                 // log('channel selected ' + self.m_campaign_timeline_chanel_id);
                 self._propLoadChannel();

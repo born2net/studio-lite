@@ -34,7 +34,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         /**
-         Add the now deprecated Backbone > View > Options
+         Add the now deprecated Backbone > View > Options so we can pass as args to new views
          @method addBackboneViewOptions
          **/
         addBackboneViewOptions: function () {

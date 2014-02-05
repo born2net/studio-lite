@@ -37,5 +37,6 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             })
         }
     });
+
     return StudioLite;
 });

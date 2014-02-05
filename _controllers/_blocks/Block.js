@@ -101,7 +101,7 @@ define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
                 }
 
                 self.m_selected = true;
-                log('block selected ' + self.m_block_id);
+                // log('block selected ' + self.m_block_id);
 
                 switch (self.m_placement) {
                     case BB.CONSTS.PLACEMENT_CHANNEL:

@@ -68,7 +68,6 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
          **/
         _onChange: function (e) {
             var self = this;
-
             var state = $(Elements.RANDOM_PLAYBACK + ' option:selected').val() == "on" ? 'True' : 'False';
             jalapeno.setCampaignTimelineChannelRecord(self.m_campaign_timeline_chanel_id, 'random_order', state)
         },
@@ -80,9 +79,7 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
          **/
         _listenResourceRemoving: function () {
             var self = this;
-            return;
-            //todo: need to fix REMOVING_RESOURCE
-            BB.comBroker.listen(CompResourcesList.REMOVING_RESOURCE, function (e) {
+            BB.comBroker.listen(BB.EVENTS.REMOVING_RESOURCE, function (e) {
                 var removingResoucreID = e.edata;
                 for (var blockID in self.m_blocks) {
                     if (self.m_blocks[blockID] instanceof BlockImage || self.m_blocks[blockID] instanceof BlockVideo) {

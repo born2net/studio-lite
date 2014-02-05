@@ -5,7 +5,7 @@
  @param {String} i_container element that CompCampaignNavigator inserts itself into
  @return {Object} instantiated CompCampaignNavigator
  **/
-define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerView'], function ($, Backbone, jqueryui, TouchPunch, Timeline, SequencerView) {
+define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerView', 'ResourceListView'], function ($, Backbone, jqueryui, TouchPunch, Timeline, SequencerView, ResourceListView) {
 
     BB.SERVICES.CHANNEL_LIST_VIEW = 'ChannelListView';
 
@@ -243,16 +243,6 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
                 $(Elements.CLASS_CHANNEL_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
                 $(resourceElem).addClass('activated').find('a').addClass('whiteFont');
                 return false;
-                /*
-                 var openProps = $(e.target).closest('a').hasClass('resourceOpenProperties') ? true : false;
-                 var resourceElem = $(e.target).closest('li');
-                 var resourceProp = $(resourceElem).find('.resourceOpenProperties');
-                 self.selected_block_id = $(resourceElem).data('block_id');
-                 if (openProps)
-                 BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW).openPanel(e);
-                 e.stopImmediatePropagation();
-                 $(Elements.SORTABLE).listview('refresh');
-                 */
             });
         },
 

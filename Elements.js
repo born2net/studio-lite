@@ -29,7 +29,7 @@ Elements.ADD_BLOCK_VIEW = '#addBlockView';
 Elements.ADD_BLOCK_BUTTON = '#addBlockButton';
 Elements.REMOVE_BLOCK_BUTTON = '#removeBlockButton';
 Elements.FILE_SELECTION = '#file';
-
+Elements.FILE_REMOVE = '#fileRemove';
 
 Elements.TIMELIME_CHANNEL_BLOCK_LENGTH = '#timelimeChannelBlockLength';
 Elements.BLOCK_LENGTH_HOURS = '#blockLengthHours';
@@ -69,6 +69,7 @@ Elements.BUISINESS_ID = '#buisinessID';
 Elements.ADD_COMPONENT_BLOCK_LIST = '#addComponentBlockList';
 Elements.ADD_RESOURCE_BLOCK_LIST ='#addResourceBlockList';
 Elements.RESOURCE_LIB_LIST_WRAP = '#resourceLibListWrap';
+Elements.SELECTED_LIB_RESOURCE_NAME = '#selectedLibResourceName';
 
 Elements.NEW_CAMPAIGN = '#newCampaign';
 Elements.REMOVE_CAMPAIGN = '#removeCampaign';

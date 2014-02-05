@@ -9,7 +9,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
     /**
      Custom event fired when resource is removing from resources
-     @event CompResourcesList.REMOVING_RESOURCE
+     @event REMOVING_RESOURCE
      @param {This} caller
      @param {Self} context caller
      @param {Event} the removed resource_id
@@ -20,7 +20,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
     /**
      Custom event fired after a resource has been removed from resources
-     @event CompResourcesList.REMOVED_RESOURCE
+     @event REMOVED_RESOURCE
      @param {This} caller
      @param {Self} context caller
      @param {Event} the removed resource_id
@@ -39,11 +39,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         initialize: function () {
             var self = this;
-            this.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
+            self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
             self.m_property.initPanel(Elements.RESOURCE_LIST_PROPERTIES);
+            self._wireUI();
             self._loadResourceList();
-            // self._listenOpenProps();
-            // self._listenRemoveResource();
+            self._listenResourceSelected();
+            self._listenRemoveResource();
 
             $(Elements.FILE_SELECTION).change(function (e) {
                 self._onFileSelected(e);
@@ -96,7 +97,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 var size = (parseInt(recResources[i]['resource_bytes_total']) / 1000).toFixed(2);
                 var resourceDescription = 'size: ' + size + 'K dimenstion: ' + recResources[i]['resource_pixel_width'] + 'x' + recResources[i]['resource_pixel_height'];
 
-                var snippet = '<li class="' + BB.lib.unclass(Elements.CLASS_RESOURCES_LIST_ITEMS) + ' list-group-item" data-resource_id="' + recResources[i]['resource_id'] + '>' +
+                var snippet = '<li class="' + BB.lib.unclass(Elements.CLASS_RESOURCES_LIST_ITEMS) + ' list-group-item" data-resource_id="' + recResources[i]['resource_id'] + '">' +
                     '<a href="#">' +
                     '<img src="' + model.getIcon(recResources[i]['resource_type']) + '">' +
                     '<span>' + recResources[i]['resource_name'] + '</span>' +
@@ -121,46 +122,30 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
                 // remove a resource from resources, notify before so channel instances
                 // can remove corresponding blocks and after so channelList can refresh UI
-                BB.comBroker.fire(CompResourcesList.REMOVING_RESOURCE,this,null,self.m_selected_resource_id);
+                BB.comBroker.fire(BB.EVENTS.REMOVING_RESOURCE,this,null,self.m_selected_resource_id);
                 jalapeno.removeResource(self.m_selected_resource_id);
                 jalapeno.removeBlocksWithResourceID(self.m_selected_resource_id);
                 self._loadResourceList();
-                self._listenOpenProps();
-                BB.comBroker.fire(CompResourcesList.REMOVED_RESOURCE,this,null,self.m_selected_resource_id);
+                self._listenResourceSelected();
+                BB.comBroker.fire(BB.EVENTS.REMOVED_RESOURCE,this,null,self.m_selected_resource_id);
             });
         },
 
         /**
          Listen to resource selection, populate the properties panel and open it if needed.
-         @method _listenOpenProps
-         @return none
+         @method _listenResourceSelected
          **/
-        _listenOpenProps: function () {
+        _listenResourceSelected: function () {
             var self = this;
 
-            $(Elements.CLASS_SELECTED_LIB_RESOURCE).on('click',function (e) {
-
-                var openProps = $(e.target).closest('a').hasClass(Elements.CLASS_RESOURCE_LIB_OPEN_PROPS2) ? true : false;
+            $(Elements.CLASS_RESOURCES_LIST_ITEMS).on('click',function (e) {
                 var resourceElem = $(e.target).closest('li');
-                var resourceProp = $(resourceElem).find(Elements.CLASS_RESOURCE_LIB_OPEN_PROPS);
                 self.m_selected_resource_id = $(resourceElem).data('resource_id');
-
-                self.m_property.viewPanel(Elements.RESOURCE_PROPERTIES);
-
-                $(Elements.CLASS_SELECTED_LIB_RESOURCE).removeClass(Elements.CLASS_CURRENT_SELECTED_RESOUCRE2);
-                $(resourceElem).addClass(Elements.CLASS_CURRENT_SELECTED_RESOUCRE2);
-                $(resourceProp).addClass(Elements.CLASS_CURRENT_SELECTED_RESOUCRE2);
-
+                $(Elements.CLASS_RESOURCES_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
+                $(resourceElem).addClass('activated').find('a').addClass('whiteFont');
                 var recResource = jalapeno.getResourceRecord(self.m_selected_resource_id);
-
                 $(Elements.SELECTED_LIB_RESOURCE_NAME).val(recResource['resource_name']);
-
-                $(self.m_container).listview('refresh');
-
-                if (openProps)
-                    commBroker.getService('CompProperty').openPanel(e);
-
-                e.stopImmediatePropagation();
+                self.m_property.viewPanel(Elements.RESOURCE_LIST_PROPERTIES);
                 return false;
             });
         },
@@ -174,7 +159,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             jalapeno.uploadResources('file');
             self._loadResourceList();
-            self._listenOpenProps();
+            self._listenResourceSelected();
             self._listenRemoveResource();
         }
 

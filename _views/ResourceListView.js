@@ -1,4 +1,3 @@
-
 /**
  ResourceListView is responsible for managing the UI of selecting, adding and deleting resources (i.e.: video, images and swfs)
  as well as property management for resources, such as renaming a resource.
@@ -17,7 +16,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
      @static
      @final
      **/
-    Backbone.EVENTS.REMOVING_RESOURCE = 'REMOVING_RESOURCE';
+    BB.EVENTS.REMOVING_RESOURCE = 'REMOVING_RESOURCE';
 
     /**
      Custom event fired after a resource has been removed from resources
@@ -28,10 +27,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
      @static
      @final
      **/
-    Backbone.EVENTS.REMOVED_RESOURCE = 'REMOVED_RESOURCE';
+    BB.EVENTS.REMOVED_RESOURCE = 'REMOVED_RESOURCE';
 
 
-    var ResourceListView = Backbone.View.extend({
+    var ResourceListView = BB.View.extend({
 
         /**
          Init the ChannelList component and enable sortable channels UI via drag and drop operations.
@@ -40,19 +39,16 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         initialize: function () {
             var self = this;
-            //todo: fix prop
-            // self.m_property.initPanel(Elements.RESOURCE_PROPERTIES, true);
-            //todo: fix load resources
-            // self._loadResourceList();
-            //todo: fix prop
+            this.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
+            self.m_property.initPanel(Elements.RESOURCE_LIST_PROPERTIES);
+            self._loadResourceList();
             // self._listenOpenProps();
-            self._listenRemoveResource();
+            // self._listenRemoveResource();
 
             $(Elements.FILE_SELECTION).change(function (e) {
                 self._onFileSelected(e);
             });
         },
-
 
         /**
          Listen for resource name change
@@ -61,7 +57,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         _wireUI: function () {
             var self = this;
-
             var resourceSelName;
             $(Elements.SELECTED_LIB_RESOURCE_NAME).on("input", function (e) {
                 window.clearTimeout(resourceSelName);
@@ -89,10 +84,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @return none
          **/
         _loadResourceList: function () {
-
             var self = this;
+            $(Elements.RESOURCE_LIB_LIST).empty();
+
             var recResources = jalapeno.getResources();
-            $(self.m_container).empty();
             $(recResources).each(function (i) {
                 // dont process deleted resources
                 if (recResources[i]['change_type'] == 3)
@@ -101,18 +96,16 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 var size = (parseInt(recResources[i]['resource_bytes_total']) / 1000).toFixed(2);
                 var resourceDescription = 'size: ' + size + 'K dimenstion: ' + recResources[i]['resource_pixel_width'] + 'x' + recResources[i]['resource_pixel_height'];
 
-                var snippet = '<li data-resource_id="' + recResources[i]['resource_id'] + '"data-icon="gear" class="selectedLibResource" data-theme="a"><a href="#">' +
+                var snippet = '<li class="' + BB.lib.unclass(Elements.CLASS_RESOURCES_LIST_ITEMS) + ' list-group-item" data-resource_id="' + recResources[i]['resource_id'] + '>' +
+                    '<a href="#">' +
                     '<img src="' + model.getIcon(recResources[i]['resource_type']) + '">' +
-                    '<h2>' + recResources[i]['resource_name'] + '</h2>' +
+                    '<span>' + recResources[i]['resource_name'] + '</span>' +
                     '<p>' + resourceDescription + '</p></a>' +
-                    '<a data-theme="a" class="' + Elements.CLASS_FIX_PROP_OPEN_LI_BUTTON_POSITION + ' ' + Elements.CLASS_SELECTED_LIB_RESOURCE2 + ' ' + Elements.CLASS_RESOURCE_LIB_OPEN_PROPS2 + '"></a>' +
+                    '</a>' +
                     '</li>';
 
-                $(self.m_container).append($(snippet));
-
+                $(Elements.RESOURCE_LIB_LIST).append($(snippet));
             });
-
-            $(self.m_container).listview('refresh');
         },
 
         /**

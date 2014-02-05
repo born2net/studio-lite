@@ -261,6 +261,22 @@ body {
     background-color: #f5f5f5;
 }
 
+.resourcesListItems {
+    cursor: pointer;
+}
+
+.resourcesListItems img {
+    height: 50px;
+    display: inline;
+    padding-right: 20px;
+}
+
+.resourcesListItems span {
+    display: inline;
+    font-size: 1.5em;
+}
+
+
 aside > aside > div > ul > li {
     display: block;
     width: 100px;

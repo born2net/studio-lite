@@ -187,7 +187,8 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 });
 
                 this.m_resourcesView = new ResourcesView({
-                    el: Elements.RESOURCES_PANEL
+                    el: Elements.RESOURCES_PANEL,
+                    stackView:  this.m_appContentFaderView
                 });
 
                 this.m_stationsView = new StationsView({
@@ -360,6 +361,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 $(Elements.PROP_PANEL_WRAP).height(h);
                 $(Elements.MAIN_PANEL_WRAP).height(h);
                 $(Elements.APP_NAVIGATOR).height(h);
+                $(Elements.RESOURCE_LIB_LIST_WRAP).height(h);
                 // $('#screenLayoutList').height(h)+200;
 
                 BB.comBroker.fire(BB.EVENTS.APP_SIZED);

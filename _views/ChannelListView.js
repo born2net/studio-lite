@@ -222,8 +222,6 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
                     '</a>' +
                     '</li>'));
             }
-            // '<a data-icon="gear" class="fixPropOpenLiButtonPosition selectedResource resourceOpenProperties"> </a>' +
-            // $(Elements.SORTABLE).listview('refresh');
             self._listenBlockSelected();
         },
 

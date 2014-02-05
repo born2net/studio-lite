@@ -24,11 +24,11 @@ Elements.POPUP_PROPERTIES = '#popupProperties';
 Elements.IMAGE_ASPECT_RATIO = '#imageAspectRatio';
 Elements.BLOCK_QR_COMMON_PROPERTIES = '#blockQRCommonProperties';
 Elements.QR_TEXT = '#qrText';
-
+Elements.RESOURCES_LIST_VIEW = '#resourcesListView';
 Elements.ADD_BLOCK_VIEW = '#addBlockView';
 Elements.ADD_BLOCK_BUTTON = '#addBlockButton';
 Elements.REMOVE_BLOCK_BUTTON = '#removeBlockButton';
-
+Elements.FILE_SELECTION = '#file';
 
 
 Elements.TIMELIME_CHANNEL_BLOCK_LENGTH = '#timelimeChannelBlockLength';
@@ -38,6 +38,8 @@ Elements.BLOCK_LENGTH_SECONDS = '#blockLengthSeconds';
 Elements.RANDOM_PLAYBACK = '#randomPlayback';
 Elements.CHANNEL_PROPERTIES = '#channelProperties';
 Elements.TIMELINE_PROPERTIES = '#timelineProperties';
+Elements.RESOURCE_LIST_PROPERTIES = '#resourceListProperties';
+Elements.RESOURCE_LIB_LIST = '#resourceLibList';
 Elements.TIME_LINE_PROP_TITLE_ID = '#timeLinePropTitleID';
 Elements.ABOUT_US = '#aboutUS';
 Elements.STACK_WAIT_MODAL_VIEW = '#stackWaitModalView';
@@ -66,6 +68,7 @@ Elements.SERVER_NAME = '#serverName';
 Elements.BUISINESS_ID = '#buisinessID';
 Elements.ADD_COMPONENT_BLOCK_LIST = '#addComponentBlockList';
 Elements.ADD_RESOURCE_BLOCK_LIST ='#addResourceBlockList';
+Elements.RESOURCE_LIB_LIST_WRAP = '#resourceLibListWrap';
 
 Elements.NEW_CAMPAIGN = '#newCampaign';
 Elements.REMOVE_CAMPAIGN = '#removeCampaign';
@@ -85,7 +88,7 @@ Elements.DETTACH_DRAG_DROP_MAIN_SCREEN_SELECTION = '#dettachDragDropMainScreenSe
 Elements.CLASS_SCREEN_DIVISION = '.screenDivisionClass';
 Elements.CLASS_CHANNEL_LIST_ITEMS = '.channelListItems';
 Elements.CLASS_ADD_BLOCK_LIST_ITEMS = '.addBlockListItems';
-
+Elements.CLASS_RESOURCES_LIST_ITEMS = '.resourcesListItems';
 Elements.CLASS_KNOB = '.knob';
 
 

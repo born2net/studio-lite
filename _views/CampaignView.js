@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated CampaignView
  **/
-define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListView', 'StackView', 'Timeline', 'ScreenLayoutSelectorView'], function ($, Backbone, SequencerView, ChannelListView, ResourceListView, StackView, Timeline, ScreenLayoutSelectorView) {
+define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', 'Timeline', 'ScreenLayoutSelectorView'], function ($, Backbone, SequencerView, ChannelListView, StackView, Timeline, ScreenLayoutSelectorView) {
 
     BB.SERVICES.CAMPAIGN_VIEW = 'CampaignView';
 
@@ -34,10 +34,6 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'ResourceListV
                 el: Elements.CHANNEL_LIST_VIEW
             });
             BB.comBroker.setService(BB.SERVICES.CHANNEL_LIST_VIEW, this.m_channelListView);
-
-            this.m_resourcesView = new ResourceListView({
-                el: '#123'
-            });
 
             self.m_property.initPanel(Elements.CHANNEL_PROPERTIES);
             self.m_property.initPanel(Elements.TIMELINE_PROPERTIES);

@@ -192,7 +192,7 @@ define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
                     }
                     // log('upd: ' + self.m_block_id + ' ' + hours + ' ' + minutes + ' ' + seconds);
                     jalapeno.setBlockTimelineChannelBlockLength(self.m_block_id, hours, minutes, seconds);
-                    BB.comBroker.fire(BB.EVENTS.BLOCK_LENGTH_CHANGED );
+                    BB.comBroker.fire(BB.EVENTS.BLOCK_LENGTH_CHANGED);
                 }
             });
         },

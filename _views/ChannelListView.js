@@ -43,7 +43,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
          **/
         _wireUI: function () {
             var self = this;
-            $(Elements.CHANNEL_REMOVE_RESOURCE).on('click', function (e) {
+            $(Elements.REMOVE_BLOCK_BUTTON).on('click', function (e) {
                 if (self.selected_block_id == undefined) {
                     alert('Please select a resource first and try again');
                     return;
@@ -290,8 +290,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
         _deselectBlocksFromChannel: function () {
             var self = this;
             self.selected_block_id = undefined;
-            self.m_property.noPanel();
-            $(Elements.SORTABLE).listview('refresh');
+            self.m_property.resetPropertiesView();
         },
 
         /**

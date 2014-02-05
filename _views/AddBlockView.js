@@ -49,7 +49,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         _render: function () {
             var self = this;
 
-            self._resetPropertiesView();
+            BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW).resetPropertiesView();
 
             $(Elements.ADD_COMPONENT_BLOCK_LIST).empty();
             $(Elements.ADD_RESOURCE_BLOCK_LIST).empty();
@@ -108,15 +108,6 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 });
                 self.deSelectView();
             });
-
-        },
-
-        /**
-         Reset properties view
-         @method _resetPropertiesView
-         **/
-        _resetPropertiesView: function(){
-            BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW).selectView(Elements.EMPTY_PROPERTIES);
 
         },
 

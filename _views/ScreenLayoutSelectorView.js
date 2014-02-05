@@ -40,7 +40,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         _render: function () {
             var self = this;
 
-            self._resetPropertiesView();
+            BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW).resetPropertiesView();
 
             $(Elements.SCREEN_LAYOUT_LIST).empty();
             var resolution = BB.comBroker.getService(BB.SERVICES.RESOLUTION_SELECTOR_VIEW).model.get(BB.CONSTS.RESOLUTION);
@@ -79,15 +79,9 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         },
 
         /**
-         Reset properties view
-         @method _resetPropertiesView
+         Hide previous UI button
+         @method hidePreviousButton
          **/
-        _resetPropertiesView: function(){
-            BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW).selectView(Elements.EMPTY_PROPERTIES);
-
-        },
-
-
         hidePreviousButton: function(){
             var self = this;
             self.$el.find(Elements.PREVIOUS).hide();

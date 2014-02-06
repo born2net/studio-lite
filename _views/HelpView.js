@@ -15,6 +15,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         initialize: function () {
         }
     });
+
     return HelpView;
 });
 

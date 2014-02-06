@@ -111,26 +111,6 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
 
         },
 
-        /**
-         Return back to calling page.
-         @method close
-         @return {boolean} false;
-         **/
-        close: function () {
-            return false;
-        },
-
-        /**
-         Empty selection lists
-         @method destroy
-         @return none
-         **/
-        destroy: function () {
-            $('.ui-mobile-viewport').css({overflow: 'hidden'});
-            $(Elements.ADD_RESOURCE_LIST).empty();
-            $(Elements.ADD_COMPONENT_LIST).empty();
-        },
-
         selectView: function(){
             var self = this;
             self.options.stackView.slideToPage(self, 'right');
@@ -142,6 +122,5 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
     });
 
     return AddBlockView;
-
 });
 

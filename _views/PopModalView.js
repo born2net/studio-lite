@@ -18,5 +18,6 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             Backbone.StackView.ViewPort.prototype.initialize.call(this);
         }
     });
+
     return PopModalView;
 });

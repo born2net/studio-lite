@@ -1,5 +1,5 @@
 /**
- This class...
+ The sequencer module is responsible for management and order of playback of each timeline within the campaign
  @class SequencerView
  @constructor
  @param {String} i_container element that CompCampaignNavigator inserts itself into
@@ -7,12 +7,14 @@
  **/
 define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($, Backbone, jqueryui, ScreenTemplateFactory) {
 
-    Backbone.SERVICES.SEQUENCER_VIEW = 'SequencerView';
+    BB.SERVICES.SEQUENCER_VIEW = 'SequencerView';
 
-    var SequencerView = Backbone.View.extend({
+    var SequencerView = BB.View.extend({
 
         /**
          Constructor
+         Init the instance and enable drag and drop operation.
+         We also wire the open properties UI so we can populate a selected timeline through the properties panel.
          @method initialize
          **/
         initialize: function () {
@@ -21,52 +23,9 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
             this.m_timelines = {};
 
             self._initLayoutSelectorDragDrop();
-
             setTimeout(function () {
                 $(Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).trigger('click');
             }, 3000);
-
-            //todo fix properties loolup
-            $('.openPropertiesClass').on('click', function (e) {
-                Backbone.comBroker.getService('CompProperty').openPanel(e);
-                e.preventDefault();
-                e.stopImmediatePropagation();
-                return false;
-            });
-        },
-
-
-        /**
-         Init the instance and enable drag and drop operation.
-         We also wire the open properties UI so we can populate a selected timeline through the properties panel.
-         @method _init
-         @return none
-         **/
-        _init: function () {
-
-            var self = this;
-            // todo: remove this init
-            commBroker.listen(Viewstacks.VIEW_CHANGED, function (e) {
-                if ($(e.context).data('viewstackname') == 'tab4' && e.caller === commBroker.getService('PlayListViewStack')) {
-
-                    // var orientation = commBroker.getService('ScreenOrientation').getOrientation();
-                    // var resolution = commBroker.getService('ScreenResolution').getResolution();
-
-                    self._initLayoutSelectorDragDrop();
-
-                    setTimeout(function () {
-                        $(Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).trigger('click');
-                    }, 3000);
-
-                    $('.openPropertiesClass').on('click', function (e) {
-                        //todo: fix prop
-                        Backbone.comBroker.getService('CompProperty').openPanel(e);
-                        e.preventDefault();
-                        e.stopImmediatePropagation();
-                        return false;
-                    });
-                }
-            });
         },
 
         /**
@@ -138,15 +97,15 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
             }
 
             var screenTemplateData = {
-                orientation: Backbone.comBroker.getService(Backbone.SERVICES.ORIENTATION_SELECTOR_VIEW).getOrientation(),
-                resolution: Backbone.comBroker.getService(Backbone.SERVICES.RESOLUTION_SELECTOR_VIEW).getResolution(),
+                orientation: BB.comBroker.getService(BB.SERVICES.ORIENTATION_SELECTOR_VIEW).getOrientation(),
+                resolution: BB.comBroker.getService(BB.SERVICES.RESOLUTION_SELECTOR_VIEW).getResolution(),
                 screenProps: i_screenProps,
                 scale: '14'
             };
 
             var screenTemplate = new ScreenTemplateFactory({
                 i_screenTemplateData: screenTemplateData,
-                i_type: Backbone.CONSTS.ENTIRE_SELECTABLE,
+                i_type: BB.CONSTS.ENTIRE_SELECTABLE,
                 i_owner: this
             });
 
@@ -172,7 +131,7 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
             var timelines = $(self.m_thumbsContainer).children().each(function (sequenceIndex) {
                 var element = $(this).find('[data-campaign_timeline_id]').eq(0);
                 var campaign_timeline_id = $(element).data('campaign_timeline_id');
-                var selectedCampaign = Backbone.comBroker.getService(Backbone.SERVICES.CAMPAIGN_VIEW).getSelectedCampaign();
+                var selectedCampaign = BB.comBroker.getService(BB.SERVICES.CAMPAIGN_VIEW).getSelectedCampaign();
                 jalapeno.setCampaignTimelineSequencerIndex(selectedCampaign, campaign_timeline_id, sequenceIndex);
             });
         },
@@ -215,7 +174,7 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
                 return -1;
             return i_campaign_timeline_id;
         }
-    })
+    });
 
     return SequencerView;
 

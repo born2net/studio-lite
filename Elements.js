@@ -76,6 +76,7 @@ Elements.SELECTED_LIB_RESOURCE_NAME = '#selectedLibResourceName';
 Elements.SELECTED_CHANNEL_RESOURCE_NAME = '#selectedChannelResourceName';
 Elements.NEW_CAMPAIGN = '#newCampaign';
 Elements.REMOVE_CAMPAIGN = '#removeCampaign';
+Elements.CAMPAIGN_SELECTOR_LIST = '#campaignSelectorList';
 Elements.CAMPAIGN = '#campaign'; // main campaign div entire container
 Elements.CAMPAIGN_SELECTOR = '#campaignSelector'; // initial selection tool
 Elements.CAMPAIGN_MANAGER_VIEW = '#campaignManagerView'; // File menu
@@ -93,6 +94,10 @@ Elements.CLASS_SCREEN_DIVISION = '.screenDivisionClass';
 Elements.CLASS_CHANNEL_LIST_ITEMS = '.channelListItems';
 Elements.CLASS_ADD_BLOCK_LIST_ITEMS = '.addBlockListItems';
 Elements.CLASS_RESOURCES_LIST_ITEMS = '.resourcesListItems';
+Elements.CLASS_CAMPIGN_LIST_ITEM = '.selectCampaignListItem';
+Elements.CLASS_OPEN_PROPS_BUTTON = '.openPropsButton';
+Elements.CLASS_SELECTED_RESOLUTION = '.selectedResolution';
+
 Elements.CLASS_KNOB = '.knob';
 
 /**

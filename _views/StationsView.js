@@ -1,5 +1,5 @@
 /**
- StationsView Backbone > View
+ StationsView  StackView navigation
  @class StationsView
  @constructor
  @return {Object} instantiated StationsView

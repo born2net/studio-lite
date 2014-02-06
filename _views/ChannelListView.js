@@ -1,8 +1,7 @@
 /**
- This class...
+ This class manages the UI of all blocks within a channel as well as the ability to sort and reorder the content of a channel
  @class ChannelListView
  @constructor
- @param {String} i_container element that CompCampaignNavigator inserts itself into
  @return {Object} instantiated CompCampaignNavigator
  **/
 define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerView', 'ResourceListView'], function ($, Backbone, jqueryui, TouchPunch, Timeline, SequencerView, ResourceListView) {
@@ -13,8 +12,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
 
         /**
          Init the ChannelList component and enable sortable channels UI via drag and drop operations.
-         @method _init
-         @return none
+         @method initialize
          **/
         initialize: function () {
             var self = this;
@@ -34,6 +32,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             self._wireUI();
             self._listenTimelineSelected();
             self._listenResourceRemoved();
+            self._listenBlockLengthChanged();
         },
 
         /**
@@ -177,7 +176,6 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             BB.comBroker.listen(BB.EVENTS.ON_VIEWER_SELECTED, function (e) {
 
                 self._resetChannel();
-
                 self.selected_campaign_timeline_board_viewer_id = e.caller.campaign_timeline_board_viewer_id;
                 self.selected_campaign_timeline_id = e.caller.campaign_timeline_id;
 
@@ -247,7 +245,6 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
         /**
          Fire event when block has been selected.
          @method _blockChannelSelected
-         @return none
          **/
         _blockChannelSelected: function () {
             var self = this;
@@ -255,9 +252,8 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
         },
 
         /**
-         Forget the selected channel and reset channel member references.@method _resetChannel
-         @param {Number} i_playerData
-         @return {Number} Unique clientId.
+         Forget the selected channel and reset channel member references
+         @method _resetChannel
          **/
         _resetChannel: function () {
             var self = this;
@@ -271,7 +267,6 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
         /**
          Reset the UI when no block on channel is selected.
          @method _deselectBlocksFromChannel
-         @return none
          **/
         _deselectBlocksFromChannel: function () {
             var self = this;
@@ -281,12 +276,12 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
 
         /**
          Listen to when a block length has changed so we can update all other blocks offset respectively
-         @method listenBlockLengthChanged
+         @method _listenBlockLengthChanged
          @return none
          **/
-        listenBlockLengthChanged: function () {
+        _listenBlockLengthChanged: function () {
             var self = this;
-            BB.comBroker.listen(Block.BLOCK_LENGTH_CHANGED, function (e) {
+            BB.comBroker.listen(BB.EVENTS.BLOCK_LENGTH_CHANGED, function (e) {
                 self._reOrderChannelBlocks();
             });
         },
@@ -324,7 +319,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             self._deselectBlocksFromChannel();
             self._reOrderChannelBlocks();
         }
-    })
+    });
 
     return ChannelListView;
 

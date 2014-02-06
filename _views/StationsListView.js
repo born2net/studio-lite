@@ -1,5 +1,5 @@
 /**
- This class manages active list of remote stations retrieved from the server
+ This class manages active list of remote stations (screens) retrieved from the server
  Poll for stations status every n seconds, as well as remote manage each station individually.
  @class StationsListView
  @constructor

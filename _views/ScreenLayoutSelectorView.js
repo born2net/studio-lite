@@ -79,7 +79,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         },
 
         /**
-         Hide previous UI button
+         Hide previous UI button so we can't go back
          @method hidePreviousButton
          **/
         hidePreviousButton: function(){

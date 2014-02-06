@@ -15,7 +15,6 @@ define(['jquery', 'backbone', 'bootbox'], function ($, Backbone, Bootbox) {
         initialize: function () {
             $('#loginButton').on('click', function () {
                 if ($(Elements.USER_NAME).val().length > 3 && $(Elements.USER_PASS).val().length > 3) {
-                    // $(this).prop('disabled', true);
                     var user = $(Elements.USER_NAME).val();
                     var pass = $(Elements.USER_PASS).val();
                     Backbone.comBroker.getService(Backbone.SERVICES.LAYOUT_MANAGER).navigate('authenticate/' + user + '/' + pass, {trigger: true});

@@ -41,7 +41,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
             self.m_property.initPanel(Elements.RESOURCE_LIST_PROPERTIES);
-            self._wireUI();
+            self._listenInputChange();
             self._loadResourceList();
             self._listenResourceSelected();
             self._listenRemoveResource();
@@ -52,31 +52,18 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         /**
-         Listen for resource name change
-         @method _wireUI
+         When user changes QR text update msdb, we use xSavePlayerData
+         as a json boilerplate that we append values to and save it in msdb as player_data
+         @method _listenInputChange
          @return none
          **/
-        _wireUI: function () {
+        _listenInputChange: function () {
             var self = this;
-            var resourceSelName;
-            $(Elements.SELECTED_LIB_RESOURCE_NAME).on("input", function (e) {
-                window.clearTimeout(resourceSelName);
-                resourceSelName = window.setTimeout(function () {
-                    self._onChange(e);
-                }, 200);
-            });
-        },
-
-        /**
-         On name change update msdb
-         @method _onChange
-         @param {Event} e
-         @return none
-         **/
-        _onChange: function (e) {
-            var self = this;
-            var text = $(e.target).val();
-            jalapeno.setResourceRecord(self.m_selected_resource_id, 'resource_name', text);
+            var onChange = _.debounce( function (e) {
+                var text = $(e.target).val();
+                jalapeno.setResourceRecord(self.m_selected_resource_id, 'resource_name', text);
+            }, 150);
+            $(Elements.SELECTED_LIB_RESOURCE_NAME).on("input", onChange);
         },
 
         /**
@@ -119,7 +106,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             $(Elements.FILE_REMOVE).on('click',function (e) {
                 if (self.m_selected_resource_id == undefined)
                     return;
-
                 // remove a resource from resources, notify before so channel instances
                 // can remove corresponding blocks and after so channelList can refresh UI
                 BB.comBroker.fire(BB.EVENTS.REMOVING_RESOURCE,this,null,self.m_selected_resource_id);
@@ -162,7 +148,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self._listenResourceSelected();
             self._listenRemoveResource();
         }
-
     });
 
     return ResourceListView;

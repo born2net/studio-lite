@@ -282,7 +282,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
         },
 
         /**
-         Close via animation the currently opened modal
+         Close via animation the currently opened modal window
          @method closelModal
          @param {String} modal_id
          **/

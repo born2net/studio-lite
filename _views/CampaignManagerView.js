@@ -7,5 +7,6 @@
 define(['backbone'], function (Backbone) {
     var CampaignManagerView = Backbone.View.extend({
     })
+
     return CampaignManagerView;
 });

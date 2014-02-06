@@ -62,10 +62,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 display: 'block'
             })
         }
-
-    })
+    });
 
     return FileMenuView;
-
 });
 

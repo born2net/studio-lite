@@ -6,10 +6,10 @@
  **/
 define(['jquery', 'backbone'], function ($, Backbone) {
 
-    Backbone.SERVICES.RESOLUTION_SELECTOR_VIEW = 'ResolutionSelectorView';
-    Backbone.CONSTS.RESOLUTION = 'RESOLUTION';
+    BB.SERVICES.RESOLUTION_SELECTOR_VIEW = 'ResolutionSelectorView';
+    BB.CONSTS.RESOLUTION = 'RESOLUTION';
 
-    var ResolutionSelectorView = Backbone.View.extend({
+    var ResolutionSelectorView = BB.View.extend({
 
         /**
          Constructor
@@ -18,7 +18,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         initialize: function () {
             var self = this;
 
-            $(this.el).find('#prev').on('click', function (e) {
+            $(this.el).find(Elements.PREVIOUS).on('click', function (e) {
                 if (self.options.from == null)
                     return;
                 self.options.stackView.slideToPage(self.options.from, 'left');
@@ -35,13 +35,13 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var screens = '';
             var i = 0;
 
-            $('.selectedResolution', self.el).off('click');
+            $(Elements.CLASS_SELECTED_RESOLUTION, self.el).off('click');
             require(['ScreenTemplate'], function () {
-                self.orientationSelector = Backbone.comBroker.getService(Backbone.SERVICES.ORIENTATION_SELECTOR_VIEW);
-                var orientation = self.orientationSelector.model.get(Backbone.CONSTS.ORIENTATION);
+                self.orientationSelector = BB.comBroker.getService(BB.SERVICES.ORIENTATION_SELECTOR_VIEW);
+                var orientation = self.orientationSelector.model.get(BB.CONSTS.ORIENTATION);
                 $(Elements.RESOLUTION_LIST).empty();
                 for (var screenResolution in ScreenTemplate[orientation]) {
-                    screens += '<a href="#" data-resolution="' + screenResolution + '" class="selectedResolution list-group-item">' +
+                    screens += '<a href="#" data-resolution="' + screenResolution + '" class="' + BB.lib.unclass(Elements.CLASS_SELECTED_RESOLUTION)+ ' list-group-item">' +
                         '<input name="resolutionOption" id="resSelector' + i + '" type="radio"/>' +
                         '<label class="screenResolutionLabel"> ' + screenResolution + ' </label></a>'
                     i++;
@@ -50,8 +50,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 $('.selectedResolution', self.el).on('click', function (e) {
                     var a = ($(e.target).is('a')) ? $(e.target) : $(e.target).closest('a');
                     $(a).find(':input').prop('checked', true);
-                    // log($(a).data('resolution'))
-                    self.model.set(Backbone.CONSTS.RESOLUTION, $(a).data('resolution'))
+                    self.model.set(BB.CONSTS.RESOLUTION, $(a).data('resolution'))
                     setTimeout(function(){
                         self.options.stackView.slideToPage(self.options.to, 'right');
                     },500);
@@ -60,11 +59,11 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         setResolution: function(i_resolution){
-            return this.model.set(Backbone.CONSTS.RESOLUTION, i_resolution)
+            return this.model.set(BB.CONSTS.RESOLUTION, i_resolution)
         },
 
         getResolution: function(){
-            return this.model.get(Backbone.CONSTS.RESOLUTION)
+            return this.model.get(BB.CONSTS.RESOLUTION)
         }
     });
 

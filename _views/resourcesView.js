@@ -1,5 +1,5 @@
 /**
- Resources Backbone > View
+ Resources view StackView for navigation selection
  @class ResourcesView
  @constructor
  @return {Object} instantiated ResourcesView
@@ -21,7 +21,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         /**
-         Init the ResourceList View
+         Render the ResourceList View
          @method _render
          **/
         _render: function () {

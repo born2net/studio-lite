@@ -1,5 +1,5 @@
 /**
- Backbone > View > Wait dialog used in StackView views
+ Wait dialog used in StackView views
  @class WaitView
  @constructor
  @return {Object} instantiated WaitView

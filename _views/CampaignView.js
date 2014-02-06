@@ -38,7 +38,6 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             self.m_property.initPanel(Elements.CHANNEL_PROPERTIES);
             self.m_property.initPanel(Elements.TIMELINE_PROPERTIES);
 
-            self._onWireOpenTimeLineProperties();
             self._onWireDelTimeline();
             self._onWireTimeLineOrViewerSelected();
             self._onWireAddNewTimeline();
@@ -77,25 +76,6 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             var self = this;
             $(Elements.REMOVE_TIMELINE_BUTTON).on('click', function (e) {
                 self._deleteTimeline(e, self);
-            });
-        },
-
-        /**
-         Wire the UI to open a timeline property panel upon selection.
-         @method _onWireOpenTimeLineProperties
-         @return none
-         **/
-        _onWireOpenTimeLineProperties: function () {
-            $(Elements.OPEN_TIMELINE_PROPERTIES).on('click', function (e) {
-                var comProp = BB.comBroker.getService('CompProperty');
-
-                if (comProp.getSelectedPanelID() != Elements.PROP_SCREEN_DIVISION && comProp.getSelectedPanelID() != Elements.PROP_ENTIRE_SCREEN)
-                    comProp.viewPanel(Elements.PROP_SCREEN_DIVISION);
-
-                comProp.openPanel(e);
-                e.stopPropagation();
-                e.stopImmediatePropagation();
-                return false;
             });
         },
 
@@ -299,8 +279,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             var self = this;
             return self.m_timelineViewStack;
         }
-
-    })
+    });
 
     return CampaignView;
 });

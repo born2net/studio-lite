@@ -34,25 +34,68 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
 
             this._listenClickSlidingPanel();
             this._listenGlobalOpenProps();
-
-
         },
 
         /**
-         Init the properties panel and add it to the viewstack.
-         @method initPanel
-         @param {String} i_panelID the html element id to be inserted into properties panel
-         @return {Boolean} returns true if panel created, or false if it already existed so nothing was done.
+         Change the icon of the open properties panel button so it reflects full screen vs
+         right side panel properties inspection
+         @method _reConfigPropPanelIcon
          **/
-        initPanel: function (i_panelID) {
+        _reConfigPropPanelIcon: function () {
             var self = this;
-            if (self.getViewByID(i_panelID) != undefined)
-                return false;
-            var view = new BB.View({el: i_panelID});
-            self.addView(view);
-            return true;
+            var layoutManager = BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER);
+
+            if (layoutManager.getAppWidth() < 768) {
+                $(Elements.TOGGLE_PANEL + ' > span').removeClass('glyphicon-resize-horizontal');
+                $(Elements.TOGGLE_PANEL + ' > span').addClass('glyphicon-cog');
+            } else {
+                $(Elements.TOGGLE_PANEL + ' > span').removeClass('glyphicon-cog');
+                $(Elements.TOGGLE_PANEL + ' > span').addClass('glyphicon-resize-horizontal');
+            }
         },
 
+        /**
+         Listen for open/close actions on properties panel that can slide in and out
+         @method _listenClickSlidingPanel
+         **/
+        _listenClickSlidingPanel: function () {
+            var self = this;
+            $(Elements.TOGGLE_PANEL).on('click', function () {
+                self._reConfigPropPanelIcon();
+                if ($(Elements.TOGGLE_PANEL).hasClass('propPanelIsOpen')) {
+                    $(Elements.TOGGLE_PANEL).toggleClass('propPanelIsOpen');
+                    // $(Elements.PROP_PANEL_WRAP).fadeOut(function () {
+                    $(Elements.PROP_PANEL_WRAP).addClass('hidden-sm hidden-md');
+                    $(Elements.MAIN_PANEL_WRAP).removeClass('col-sm-9 col-md-9');
+                    $(Elements.MAIN_PANEL_WRAP).addClass('col-md-12');
+                    // });
+                } else {
+                    $(Elements.TOGGLE_PANEL).toggleClass('propPanelIsOpen');
+                    $(Elements.MAIN_PANEL_WRAP).addClass('col-sm-9 col-md-9');
+                    setTimeout(function () {
+                        $(Elements.PROP_PANEL_WRAP).hide();
+                        $(Elements.MAIN_PANEL_WRAP).removeClass('col-md-12');
+                        $(Elements.PROP_PANEL_WRAP).removeClass('hidden-sm hidden-md');
+                        $(Elements.PROP_PANEL_WRAP).fadeIn('fast');
+                        // $(Elements.PROP_PANEL_WRAP).children().fadeIn();
+                    }, 500)
+                }
+            });
+        },
+
+        /**
+         Move properties panel between side panel or full screen popup panel depending on screen size
+         @method _reconfigPropPanelLocation
+         **/
+        _reconfigPropPanelLocation: function () {
+            var self = this;
+            var layoutManager = BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER);
+            if (layoutManager.getAppWidth() > 768) {
+                $(Elements.PROP_PANEL_WRAP).append($(Elements.PROP_PANEL));
+            } else {
+                $(Elements.POPUP_PROPERTIES).append($(Elements.PROP_PANEL));
+            }
+        },
 
         /**
          Open global properties button hook via popup
@@ -91,7 +134,6 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
         viewPanel: function (i_panelID) {
             var self = this;
             self.m_selectedPanelID = i_panelID;
-            // var index = self.m_mainPanels[i_panelID];
             self.selectView(i_panelID);
         },
 
@@ -108,64 +150,18 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
         },
 
         /**
-         Change the icon of the open properties panel button so it reflects full screen vs
-         right side panel properties inspection
-         @method _reConfigPropPanelIcon
+         Init the properties panel and add it to the viewstack.
+         @method initPanel
+         @param {String} i_panelID the html element id to be inserted into properties panel
+         @return {Boolean} returns true if panel created, or false if it already existed so nothing was done.
          **/
-        _reConfigPropPanelIcon: function () {
+        initPanel: function (i_panelID) {
             var self = this;
-            var layoutManager = BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER);
-
-            if (layoutManager.getAppWidth() < 768) {
-                $(Elements.TOGGLE_PANEL + ' > span').removeClass('glyphicon-resize-horizontal');
-                $(Elements.TOGGLE_PANEL + ' > span').addClass('glyphicon-cog');
-            } else {
-                $(Elements.TOGGLE_PANEL + ' > span').removeClass('glyphicon-cog');
-                $(Elements.TOGGLE_PANEL + ' > span').addClass('glyphicon-resize-horizontal');
-            }
-        },
-
-        /**
-         Listen for open/close actions on properties panel that can slide in and out
-         @method _listenClickSlidingPanel
-         **/
-        _listenClickSlidingPanel: function () {
-            var self = this;
-            $(Elements.TOGGLE_PANEL).on('click', function () {
-                self._reConfigPropPanelIcon();
-                if ($(Elements.TOGGLE_PANEL).hasClass('propPanelIsOpen')) {
-                    $(Elements.TOGGLE_PANEL).toggleClass('propPanelIsOpen');
-                   // $(Elements.PROP_PANEL_WRAP).fadeOut(function () {
-                        $(Elements.PROP_PANEL_WRAP).addClass('hidden-sm hidden-md');
-                        $(Elements.MAIN_PANEL_WRAP).removeClass('col-sm-9 col-md-9');
-                        $(Elements.MAIN_PANEL_WRAP).addClass('col-md-12');
-                   // });
-                } else {
-                    $(Elements.TOGGLE_PANEL).toggleClass('propPanelIsOpen');
-                    $(Elements.MAIN_PANEL_WRAP).addClass('col-sm-9 col-md-9');
-                    setTimeout(function () {
-                        $(Elements.PROP_PANEL_WRAP).hide();
-                        $(Elements.MAIN_PANEL_WRAP).removeClass('col-md-12');
-                        $(Elements.PROP_PANEL_WRAP).removeClass('hidden-sm hidden-md');
-                        $(Elements.PROP_PANEL_WRAP).fadeIn('fast');
-                        // $(Elements.PROP_PANEL_WRAP).children().fadeIn();
-                    }, 500)
-                }
-            });
-        },
-
-        /**
-         Move properties panel between side panel or full screen popup panel depending on screen size
-         @method _reconfigPropPanelLocation
-         **/
-        _reconfigPropPanelLocation: function () {
-            var self = this;
-            var layoutManager = BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER);
-            if (layoutManager.getAppWidth() > 768) {
-                $(Elements.PROP_PANEL_WRAP).append($(Elements.PROP_PANEL));
-            } else {
-                $(Elements.POPUP_PROPERTIES).append($(Elements.PROP_PANEL));
-            }
+            if (self.getViewByID(i_panelID) != undefined)
+                return false;
+            var view = new BB.View({el: i_panelID});
+            self.addView(view);
+            return true;
         },
 
         /**

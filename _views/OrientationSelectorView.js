@@ -20,7 +20,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         initialize: function () {
             var self = this;
 
-            $(this.el).find('#prev').on('click',function(e){
+            $(this.el).find(Elements.PREVIOUS).on('click',function(e){
                 self.options.stackView.slideToPage(self.options.from, 'left');
                 return false;
             });

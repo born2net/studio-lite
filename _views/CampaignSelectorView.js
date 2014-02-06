@@ -55,7 +55,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             this._loadCampaignList();
             this._listenOpenProps();
             this._listenSelectCampaign();
-            this._wireUI();
+            this._listenInputChange();
         },
 
         /**
@@ -73,14 +73,14 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 var recCampaign = jalapeno.getCampaignRecord(campaignID);
                 var playListMode = recCampaign['campaign_playlist_mode'] == 0 ? 'sequencer' : 'scheduler';
 
-                var snippet = '<a href="#" class="selectAppListItem  list-group-item" data-campaignid="' + campaignID + '">' +
+                var snippet = '<a href="#" class="' + BB.lib.unclass(Elements.CLASS_CAMPIGN_LIST_ITEM) + ' list-group-item" data-campaignid="' + campaignID + '">' +
                     '<h4>' + recCampaign['campaign_name'] + '</h4>' +
                     '<p class="list-group-item-text">play list mode:' + playListMode + '</p>' +
                     '<div class="openProps">' +
-                    '<button type="button" class="openPropsButton btn btn-default btn-sm"><span class="glyphicon glyphicon-th"></span></button>' +
+                    '<button type="button" class="' + BB.lib.unclass(Elements.CLASS_OPEN_PROPS_BUTTON) + ' btn btn-default btn-sm"><span class="glyphicon glyphicon-th"></span></button>' +
                     '</div>' +
                     '</a>';
-                $('#campaignSelectorList').append($(snippet));
+                $(Elements.CAMPAIGN_SELECTOR_LIST).append($(snippet));
             }
         },
 
@@ -91,8 +91,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         _listenSelectCampaign: function () {
             var self = this;
-            $('.selectAppListItem', self.el).on('click', function (e) {
-                $('.selectAppListItem ', self.el).removeClass('active');
+            $(Elements.CLASS_CAMPIGN_LIST_ITEM, self.el).on('click', function (e) {
+                $(Elements.CLASS_CAMPIGN_LIST_ITEM, self.el).removeClass('active');
                 $(this).addClass('active');
                 self.m_seletedCampaignID = $(this).data('campaignid');
                 self.options.stackView.slideToPage(Elements.CAMPAIGN, 'right');
@@ -108,8 +108,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _listenOpenProps: function () {
             var self = this;
 
-            $('.openPropsButton', self.el).on('click', function (e) {
-                $('.selectAppListItem ', self.el).removeClass('active');
+            $(Elements.CLASS_OPEN_PROPS_BUTTON, self.el).on('click', function (e) {
+                $(Elements.CLASS_CAMPIGN_LIST_ITEM, self.el).removeClass('active');
                 var elem = $(e.target).closest('a').addClass('active');
                 self.m_seletedCampaignID = $(elem).data('campaignid');
                 var recCampaign = jalapeno.getCampaignRecord(self.m_seletedCampaignID);
@@ -165,16 +165,16 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
         /**
          Wire changing of campaign name through campaign properties
-         @method _wireUI
+         @method _listenInputChange
          @return none
          **/
-        _wireUI: function () {
+        _listenInputChange: function () {
             var self = this;
-            var updCampaignName = _.debounce(function (e) {
+            var onChange = _.debounce(function (e) {
                 var text = $(e.target).val();
                 jalapeno.setCampaignRecord(self.m_seletedCampaignID, 'campaign_name', text);
-            }, 333);
-            $(Elements.FORM_CAMPAIGN_NAME).on("input", updCampaignName);
+            }, 333, false);
+            $(Elements.FORM_CAMPAIGN_NAME).on("input", onChange);
         },
 
         /**

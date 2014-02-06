@@ -4,6 +4,7 @@ Elements.WAITS_SCREEN_ENTRY_APP = '#waitScreenEntryApp';
 Elements.APP_LOGIN = '#appLogin';
 Elements.APP_LOGOUT = '#appLogout';
 Elements.FILE_MENU = '#fileMenu';
+Elements.SAVE_CONFIG = '#saveConfig';
 Elements.REMEMBER_ME = '#rememberMe';
 Elements.APP_CONTENT = '#appContent';
 Elements.APP_NAVIGATOR = '#appNavigator';

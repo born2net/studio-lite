@@ -55,6 +55,27 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 $.removeCookie('signagestudioweblite', {path: '/'});
                 $.cookie('signagestudioweblite', '', { expires: -300 });
             });
+
+            $(Elements.SAVE_CONFIG).on('click', function () {
+                appEntryFaderView.selectView(Elements.WAITS_SCREEN_ENTRY_APP);
+                jalapeno.save(function(i_status){
+                    appEntryFaderView.selectView(Elements.APP_CONTENT);
+                    if (!i_status.status){
+                        bootbox.dialog({
+                            message: i_status.error,
+                            title: "Problem saving",
+                            buttons: {
+                                danger: {
+                                    label: "OK",
+                                    className: "btn-danger",
+                                    callback: function () {
+                                    }
+                                }
+                            }
+                        });
+                    }
+                });
+            });
         },
 
         render: function() {

@@ -89,6 +89,7 @@ Elements.NONE_SELECTED_SCREEN_LAYOUT = '#noneSelectedScreenLayout';
 Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION = '#attachDragDropMainScreenSelection';
 Elements.DETTACH_DRAG_DROP_MAIN_SCREEN_SELECTION = '#dettachDragDropMainScreenSelection';
 Elements.TOGGLE_TIMELINES_COLLAPSIBLE = '#toggleTimelinesCollapsible';
+Elements.DASHBOARD = '#dashboard';
 
 
 // classes
@@ -100,6 +101,13 @@ Elements.CLASS_CAMPIGN_LIST_ITEM = '.selectCampaignListItem';
 Elements.CLASS_OPEN_PROPS_BUTTON = '.openPropsButton';
 Elements.CLASS_SELECTED_RESOLUTION = '.selectedResolution';
 
+Elements.CLASS_CAMPAIG_NMANAGER_VIEW = '.campaignManagerView';
+Elements.CLASS_SETTINGS_PANEL = '.settingsPanel';
+Elements.CLASS_RESOURCES_PANEL = '.resourcesPanel';
+Elements.CLASSS_PRO_STUDIO_PANEL = '.proStudioPanel';
+Elements.CLASS_STATIONS_PANEL = '.stationsPanel';
+Elements.CLASS_HELP_PANEL = '.helpPanel';
+Elements.CLASS_LOGOUT_PANEL = '.logoutPanel';
 Elements.CLASS_KNOB = '.knob';
 
 /**

@@ -16,44 +16,48 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             this.render();
 
-            var appContentFaderView = BB.comBroker.getService(BB.SERVICES.APP_CONTENT_FADER_VIEW);
-            var appEntryFaderView = BB.comBroker.getService(BB.SERVICES.APP_ENTRY_FADER_VIEW);
+            var appContentFaderView = BB.comBroker.getService(BB.SERVICES['APP_CONTENT_FADER_VIEW']);
+            var appEntryFaderView = BB.comBroker.getService(BB.SERVICES['APP_ENTRY_FADER_VIEW']);
 
-            $('.campaignManagerView').on('click', function () {
+            $(Elements.CLASS_CAMPAIG_NMANAGER_VIEW).on('click', function () {
                 appContentFaderView.selectView(Elements.CAMPAIGN_MANAGER_VIEW);
-                BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW).resetPropertiesView();
+                self.resetPropertiesView();
             });
 
-            $('.resourcesPanel').on('click', function () {
+            $(Elements.CLASS_RESOURCES_PANEL).on('click', function () {
                 appContentFaderView.selectView(Elements.RESOURCES_PANEL);
-                BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW).resetPropertiesView();
+                self.resetPropertiesView();
             });
 
-            $('.stationsPanel').on('click', function () {
+            $(Elements.CLASS_STATIONS_PANEL).on('click', function () {
                 appContentFaderView.selectView(Elements.STATIONS_PANEL);
-                BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW).resetPropertiesView();
+                self.resetPropertiesView();
             });
 
-            $('.settingsPanel').on('click', function () {
+            $(Elements.CLASS_SETTINGS_PANEL).on('click', function () {
                 appContentFaderView.selectView(Elements.SETTINGS_PANEL);
-                BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW).resetPropertiesView();
+                self.resetPropertiesView();
             });
 
-            $('.proStudioPanel').on('click', function () {
+            $(Elements.CLASSS_PRO_STUDIO_PANEL).on('click', function () {
                 appContentFaderView.selectView(Elements.PRO_STUDIO_PANEL);
-                BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW).resetPropertiesView();
+                self.resetPropertiesView();
             });
 
-            $('.helpPanel').on('click', function () {
+            $(Elements.CLASS_HELP_PANEL).on('click', function () {
                 appContentFaderView.selectView(Elements.HELP_PANEL);
-                BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW).resetPropertiesView();
+                self.resetPropertiesView();
             });
 
-            $('.logoutPanel').on('click', function () {
-                BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW).resetPropertiesView();
+            $(Elements.CLASS_LOGOUT_PANEL).on('click', function () {
+                self.resetPropertiesView();
                 appEntryFaderView.selectView(Elements.APP_LOGOUT);
                 $.removeCookie('signagestudioweblite', {path: '/'});
                 $.cookie('signagestudioweblite', '', { expires: -300 });
+            });
+
+            $(Elements.DASHBOARD).on('click', function () {
+                self.resetPropertiesView();
             });
 
             $(Elements.SAVE_CONFIG).on('click', function () {
@@ -76,6 +80,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     }
                 });
             });
+        },
+
+        resetPropertiesView: function(){
+            BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
         },
 
         render: function() {

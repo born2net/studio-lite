@@ -22,6 +22,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
      */
     BB.CONSTS.STATION_LIST_EMPTY = 'STATION_LIST_EMPTY';
 
+     // https://moon.signage.me/WebService/getStatus.ashx?user=moon1@ms.com&password=xxx
 
     var StationsListView = Backbone.View.extend({
 

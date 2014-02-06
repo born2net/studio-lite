@@ -88,6 +88,7 @@ Elements.SCREEN_LAYOUTS_UL = '#screenLayoutsUL';
 Elements.NONE_SELECTED_SCREEN_LAYOUT = '#noneSelectedScreenLayout';
 Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION = '#attachDragDropMainScreenSelection';
 Elements.DETTACH_DRAG_DROP_MAIN_SCREEN_SELECTION = '#dettachDragDropMainScreenSelection';
+Elements.TOGGLE_TIMELINES_COLLAPSIBLE = '#toggleTimelinesCollapsible';
 
 
 // classes

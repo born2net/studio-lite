@@ -126,7 +126,6 @@ body {
 
 #screenSelectorContainer {
     width: 100%;
-    height: 190px;
     padding: 0px;
     margin: 0px;
     overflow-x: scroll;
@@ -134,7 +133,6 @@ body {
 }
 
 #screenLayoutsUL {
-    height: 100px;
     width: 1500px;
 }
 

@@ -100,7 +100,7 @@ Elements.CLASS_RESOURCES_LIST_ITEMS = '.resourcesListItems';
 Elements.CLASS_CAMPIGN_LIST_ITEM = '.selectCampaignListItem';
 Elements.CLASS_OPEN_PROPS_BUTTON = '.openPropsButton';
 Elements.CLASS_SELECTED_RESOLUTION = '.selectedResolution';
-
+Elements.CLASS_STATION_LIST_ITEMS = '.stationListItems';
 Elements.CLASS_CAMPAIG_NMANAGER_VIEW = '.campaignManagerView';
 Elements.CLASS_SETTINGS_PANEL = '.settingsPanel';
 Elements.CLASS_RESOURCES_PANEL = '.resourcesPanel';

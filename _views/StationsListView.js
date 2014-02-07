@@ -6,22 +6,22 @@
  @param {String} i_container element that CompCampaignNavigator inserts itself into
  @return {Object} instantiated StationsListView
  **/
-define(['jquery', 'backbone'], function ($, Backbone) {
+define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, StationsCollection) {
 
     /**
      Station list is full with stations retrieved from remote server
      @property STATION_LIST_FULL
      @type String
-     */
-    BB.CONSTS.STATION_LIST_FULL = 'STATION_LIST_FULL';
 
+     BB.CONSTS.STATION_LIST_FULL = 'STATION_LIST_FULL';
+     */
     /**
      Station list is empty with no stations listed
      @property STATION_LIST_EMPTY
      @type String
-     */
-    BB.CONSTS.STATION_LIST_EMPTY = 'STATION_LIST_EMPTY';
 
+     BB.CONSTS.STATION_LIST_EMPTY = 'STATION_LIST_EMPTY';
+     */
 
     var StationsListView = Backbone.View.extend({
 
@@ -32,8 +32,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         initialize: function () {
 
             var self = this;
-            self.m_imagePath = '';
-            self.m_selected_resource_id = undefined;
             self.m_refreshTimer = 60000;
             self.m_refreshHandle = undefined;
             self.m_imageReloadCount = 0;
@@ -41,17 +39,16 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
             self.m_property.initPanel(Elements.STATION_PROPERTIES);
             self.m_property.selectView(Elements.STATION_PROPERTIES);
-            var userData = jalapeno.getUserData();
-            var url= 'https://' + userData.domain + '/WebService/getStatus.ashx?user=' + userData.userName + '&password=' + userData.userPass + '&callback=?';
-            // url='https://moon.signage.me/WebService/getStatus.ashx?user=moon1@ms.com&password=xxx&callback=?';
-            $.getJSON(url,
-                function(data)
-                {
-                    var s64=data['ret'];
-                    var str = $.base64.decode(s64);
-                    var xml = $.parseXML(str);
-                }
-            );
+
+            self.m_stationCollection = new StationsCollection();
+            self.listenTo(self.m_stationCollection, 'add', function (i_model) {
+                self._onStationUpdate(i_model);
+            });
+
+            self.listenTo(self.m_stationCollection, BB.EVENTS.STATIONS_UPDATED, function () {
+                self._listenStationSelected();
+            });
+
 
             return;
 
@@ -74,7 +71,27 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 }
             });
             self._wireUI();
-            BB.comBroker.listen(JalapenoModel.stationList, self._onStationUpdate);
+            BB.comBroker.listen(JalapenoHelper.stationList, self._onStationUpdate);
+        },
+
+        /**
+         Listen to station selection, populate the properties panel
+         @method _listenStationSelected
+         **/
+        _listenStationSelected: function () {
+            var self = this;
+
+            $(Elements.CLASS_STATION_LIST_ITEMS).off('click');
+            $(Elements.CLASS_STATION_LIST_ITEMS).on('click', function (e) {
+                var elem = $(e.target).closest('li');
+                self.m_selected_station_id = $(elem).data('station_id');
+                $(Elements.CLASS_STATION_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
+                $(elem).addClass('activated').find('a').addClass('whiteFont');
+                // var recResource = jalapeno.getResourceRecord(self.m_selected_resource_id);
+                // $(Elements.SELECTED_LIB_RESOURCE_NAME).val(recResource['resource_name']);
+                self.m_property.viewPanel(Elements.STATION_PROPERTIES);
+                return false;
+            });
         },
 
         /**
@@ -83,7 +100,29 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @param {Event} e remote server data call back from Ajax call
          @return none
          **/
-        _onStationUpdate: function (e) {
+        _onStationUpdate: function (i_model) {
+            var self = this;
+            var snippet = '<li class="' + BB.lib.unclass(Elements.CLASS_STATION_LIST_ITEMS) + ' list-group-item" data-station_id="' + i_model.id + '">' +
+                '<a href="#">' +
+                '<span id="stationIcon' + i_model.get('id') + '">' +
+                '<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg"><g><circle stroke="black" id="svg_1" fill="' + i_model.get('stationColor') + '" stroke-width="2" r="16" cy="20" cx="20"/></g></svg>' +
+                '</span>' +
+                '<span style="font-size: 1.5em; position: relative; top: -23px">' + i_model.get('stationName') + '</span>' +
+                '</a>' +
+                '</li>';
+            $(Elements.STATION_LIST_VIEW).append(snippet)
+
+            /*
+             setTimeout(function (i_model_id, color) {
+             $('#stationIcon' + i_model_id).append($('<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg"><g><circle stroke="black" id="svg_1" fill="' + color + '" stroke-width="2" r="16" cy="20" cx="20"/></g></svg>'));
+             // refreshSize();
+             // $(Elements.STATION_PANEL).trigger('updatelayout');
+             // $(Elements.STATION_LIST).listview('refresh');
+             }, 300, i_model.id, color);
+             self._listenStatsssionSelected();
+             */
+
+            return;
 
             var self = e.caller;
             var serverData = e.edata;
@@ -110,7 +149,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                             $(Elements.STATION_PANEL).trigger('updatelayout');
                             $(Elements.STATION_LIST).listview('refresh');
                         }, 300, i, color);
-                        self._listenStationSelected();
+                        self._listenStationSsselected();
                         break;
                     }
                         ;
@@ -138,10 +177,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
         /**
          Listen for user selection on particular station so we can populate the properties panel.
-         @method _listenStationSelected
+         @method _zzzlistenssStationSelected
          @return none
          **/
-        _listenStationSelected: function () {
+        _zzzlistenssStationSelected: function () {
             var self = this;
 
             $(Elements.CLASS_STATION).tap(function (e) {
@@ -253,7 +292,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     }
                 }
 
-                BB.comBroker.listen(JalapenoModel.stationPlayedStopped, function (e) {
+                BB.comBroker.listen(JalapenoHelper.stationPlayedStopped, function (e) {
                     self._buttonEnable(Elements.PLAY_COMMAND, true);
                     self._buttonEnable(Elements.STOP_COMMAND, true);
                     if (e.edata.responce['status'] == 'pass') {
@@ -293,7 +332,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 $(Elements.SNAPSHOT_IMAGE).hide();
                 $(Elements.SNAPSHOT_SPINNER).fadeIn('slow');
 
-                BB.comBroker.listen(JalapenoModel.stationCaptured, function (e) {
+                BB.comBroker.listen(JalapenoHelper.stationCaptured, function (e) {
                     if (e.edata.responce['status'] == 'pass') {
                         self.m_imagePath = e.edata.responce['path'];
                         self._listenToImageLoad();
@@ -334,7 +373,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         _sendStationEvent: function (i_eventName, i_eventValue) {
             var self = this;
-            BB.comBroker.listen(JalapenoModel.stationEventRx, function (e) {
+            BB.comBroker.listen(JalapenoHelper.stationEventRx, function (e) {
                 var s = e.edata.responce['eventName'];
                 switch (s) {
                     case 'restart':

@@ -1,65 +1,65 @@
 /**
- A constant service name for the JalapenoModel service
- @property JalapenoModel.servicename
+ A constant service name for the JalapenoHelper service
+ @property JalapenoHelper.servicename
  @static
  @final
  @type String
  */
-JalapenoModel.servicename = 'JalapenoData';
+JalapenoHelper.servicename = 'JalapenoData';
 
 /**
- JalapenoModel.filter_Station filters of connected stations
- @property JalapenoModel.filter_Station
+ JalapenoHelper.filter_Station filters of connected stations
+ @property JalapenoHelper.filter_Station
  @static
  @final
  @type String
  */
-JalapenoModel.filter_Station = 'STATIONS';
+JalapenoHelper.filter_Station = 'STATIONS';
 
 /**
- JalapenoModel.stationList fires with a list of all stations connected
- @event JalapenoModel.stationList
+ JalapenoHelper.stationList fires with a list of all stations connected
+ @event JalapenoHelper.stationList
  @param {this} this caller object
  @param {this} self caller object
  @param {Object} list of all of the campaign's stations
  **/
-JalapenoModel.stationList = 'STATION_LIST';
+JalapenoHelper.stationList = 'STATION_LIST';
 
 /**
- JalapenoModel.stationCaptured event for screen snapshot per selected station
- @event JalapenoModel.stationCaptured
+ JalapenoHelper.stationCaptured event for screen snapshot per selected station
+ @event JalapenoHelper.stationCaptured
  @param {this} this caller object
  @param {this} self caller object
  @param {object} data all of the station's relevant data
  **/
-JalapenoModel.stationCaptured = 'STATION_CAPTURED';
+JalapenoHelper.stationCaptured = 'STATION_CAPTURED';
 
 /**
- JalapenoModel.stationPlayedStopped event fired when station changes state play/stop
- @event JalapenoModel.stationPlayedStopped
+ JalapenoHelper.stationPlayedStopped event fired when station changes state play/stop
+ @event JalapenoHelper.stationPlayedStopped
  @param {this} this caller object
  @param {this} self caller object
  @param {object} data all of the station's relevant data
  **/
-JalapenoModel.stationPlayedStopped = 'STATION_PLAYED_STOPPED';
+JalapenoHelper.stationPlayedStopped = 'STATION_PLAYED_STOPPED';
 
 /**
- JalapenoModel.stationEventRx fires when station data received
- @event JalapenoModel.stationEventRx
+ JalapenoHelper.stationEventRx fires when station data received
+ @event JalapenoHelper.stationEventRx
  @param {this} this caller object
  @param {this} self caller object
  @param {object} data all of the station's relevant data
  **/
-JalapenoModel.stationEventRx = 'STATION_EVENT_RX';
+JalapenoHelper.stationEventRx = 'STATION_EVENT_RX';
 
 /**
- The JalapenoModel is used to manage real time data that's not in the msdb such as
+ The JalapenoHelper is used to manage real time data that's not in the msdb such as
  station connections as well as data constants such as component codes and component xml boilerplates.
- @class JalapenoModel
+ @class JalapenoHelper
  @constructor
  @return none
  **/
-function JalapenoModel() {
+function JalapenoHelper() {
 
     this.self = this;
     //todo: fix ajax lib
@@ -71,8 +71,8 @@ function JalapenoModel() {
     this._initComponents();
 };
 
-JalapenoModel.prototype = {
-    constructor: JalapenoModel,
+JalapenoHelper.prototype = {
+    constructor: JalapenoHelper,
 
     /**
      The _initComponents initializes data constants for components and used to relieve member data
@@ -333,7 +333,7 @@ JalapenoModel.prototype = {
         var ajaxWrapper = new AjaxJsonGetter(globs['debug'] ? 'https://secure.dynawebs.net/_php/msWSsec-debug.php' : 'https://secure.dynawebs.net/_php/msWSsec.php');
         ajaxWrapper.getData(data, onServerReply);
         function onServerReply(data) {
-            Backbone.comBroker.fire(JalapenoModel.stationEventRx, this, self, data)
+            Backbone.comBroker.fire(JalapenoHelper.stationEventRx, this, self, data)
         }
     },
 
@@ -354,7 +354,7 @@ JalapenoModel.prototype = {
         var ajaxWrapper = new AjaxJsonGetter(globs['debug'] ? 'https://secure.dynawebs.net/_php/msWSsec-debug.php?' + getEpochTime() : 'https://secure.dynawebs.net/_php/msWSsec.php?' + getEpochTime());
         ajaxWrapper.getData(data, onSnapshotReply);
         function onSnapshotReply(data) {
-            Backbone.comBroker.fire(JalapenoModel.stationCaptured, this, self, data)
+            Backbone.comBroker.fire(JalapenoHelper.stationCaptured, this, self, data)
         }
     },
 
@@ -375,7 +375,7 @@ JalapenoModel.prototype = {
         var ajaxWrapper = new AjaxJsonGetter(globs['debug'] ? 'https://secure.dynawebs.net/_php/msWSsec-debug.php?' + getEpochTime() : 'https://secure.dynawebs.net/_php/msWSsec.php?' + getEpochTime());
         ajaxWrapper.getData(data, onSnapshotReply);
         function onSnapshotReply(data) {
-            Backbone.comBroker.fire(JalapenoModel.stationPlayedStopped, this, self, data)
+            Backbone.comBroker.fire(JalapenoHelper.stationPlayedStopped, this, self, data)
         }
     },
 
@@ -387,7 +387,7 @@ JalapenoModel.prototype = {
      **/
     setStation: function (i_station) {
         var self = this
-        return self.setData(i_station, JalapenoModel.filter_Station)
+        return self.setData(i_station, JalapenoHelper.filter_Station)
     },
 
     /**
@@ -413,7 +413,7 @@ JalapenoModel.prototype = {
         var newStatus = i_stations['status'];
         var oldStatus = self.m_data[i_dbmid]['status'];
         self.m_data[i_dbmid] = i_stations;
-        self.m_data[i_dbmid]['dataFilter'] = JalapenoModel.filter_Station;
+        self.m_data[i_dbmid]['dataFilter'] = JalapenoHelper.filter_Station;
         self.m_data[i_dbmid]['statusChanged'] = newStatus == oldStatus ? false : true;
     },
 
@@ -499,7 +499,7 @@ JalapenoModel.prototype = {
 
             // Update server data, if id already exists in model
             for (var dbmid in self.m_data) {
-                if (self.m_data[dbmid]['dataFilter'] == JalapenoModel.filter_Station) {
+                if (self.m_data[dbmid]['dataFilter'] == JalapenoHelper.filter_Station) {
                     var id = self.m_data[dbmid]['id'];
                     if (newSrvData[id] != undefined) {
                         self.updStations(dbmid, newSrvData[id]);
@@ -519,11 +519,11 @@ JalapenoModel.prototype = {
 
             var stations = {};
             for (var i in self.m_data) {
-                if (self.m_data[i]['dataFilter'] == JalapenoModel.filter_Station) {
+                if (self.m_data[i]['dataFilter'] == JalapenoHelper.filter_Station) {
                     stations[i] = self.m_data[i];
                 }
             }
-            Backbone.comBroker.fire(JalapenoModel.stationList, this, i_caller, stations);
+            Backbone.comBroker.fire(JalapenoHelper.stationList, this, i_caller, stations);
         }
     },
 

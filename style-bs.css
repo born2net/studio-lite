@@ -216,6 +216,11 @@ body {
     cursor: pointer;
 }
 
+#stationListView {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
 .screenResolutionLabel {
     padding: 10px;
     cursor: pointer;
@@ -238,6 +243,16 @@ body {
 .channelListItems a span {
     display: inline;
     font-size: 1.5em;
+}
+
+.stationListItems {
+    cursor: pointer;
+    padding-top: 10px;
+    padding-bottom: 0px;
+}
+
+.stationListItems span {
+    display: inline;
 }
 
 .screenDivisionClass {

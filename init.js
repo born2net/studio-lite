@@ -56,10 +56,12 @@ require.config({
         "SequencerView": '_views/SequencerView',
         "ChannelListView": '_views/ChannelListView',
         "PopModalView": '_views/PopModalView',
+        "StationsCollection": '_collections/StationsCollection',
+        "StationModel": '_models/StationModel',
         "Lib": '_libs/Lib',
         "ScreenTemplate": "_libs/ScreenTemplate",
         "Jalapeno": '_libs/Jalapeno',
-        "JalapenoModel": '_libs/JalapenoModel'
+        "JalapenoHelper": '_libs/JalapenoHelper'
     },
 
 
@@ -116,8 +118,8 @@ require.config({
             deps: ['jquery', 'Base64'],
             exports: 'Jalapeno'
         },
-        "JalapenoModel": {
-            exports: 'JalapenoModel'
+        "JalapenoHelper": {
+            exports: 'JalapenoHelper'
         },
         "Base64": {
             deps: ['jquery'],

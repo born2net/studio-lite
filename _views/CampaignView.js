@@ -59,12 +59,14 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
         _render: function () {
             var self = this;
             self.stopListening(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW);
-            self.m_selected_campaign_id = BB.comBroker.getService(BB.SERVICES.CAMPAIGN_SELECTOR).getSelectedCampaign();
 
-            // a new campaign was not created, thus load existing campaign from local DB
-            if (BB.comBroker.getService(BB.SERVICES.CAMPAIGN_SELECTOR).getSelectedCampaign() != -1) {
-                self._loadTimelinesFromDB();
-            }
+            // a new campaign was just created
+            if (self.m_selected_campaign_id != -1)
+                return;
+
+            // a previous campaign was loaded from CampaignSelectorView
+            self.m_selected_campaign_id = BB.comBroker.getService(BB.SERVICES.CAMPAIGN_SELECTOR).getSelectedCampaign();
+            self._loadTimelinesFromDB();
         },
 
         /**

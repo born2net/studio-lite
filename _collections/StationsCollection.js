@@ -7,7 +7,7 @@
 define(['jquery', 'backbone', 'StationModel'], function ($, Backbone, StationModel) {
 
     /**
-     Custom event fired when a all stations received from mediaSERVER processed
+     Custom event fired when a all stations received data from mediaSERVER processed
      @event STATIONS_UPDATED
      @static
      @final
@@ -87,7 +87,6 @@ define(['jquery', 'backbone', 'StationModel'], function ($, Backbone, StationMod
                     break;
                 }
             }
-
         },
 
         zzz_populateCollection: function (i_xmlStations) {

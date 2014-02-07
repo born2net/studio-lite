@@ -10,10 +10,6 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
 
         // application init
         initialize: function () {
-
-            window.console = {}
-            window.console.log = {}
-
             window.BB = Backbone;
             BB.globs = {};
             BB.SERVICES = {};

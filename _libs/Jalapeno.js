@@ -35,15 +35,35 @@ Jalapeno.prototype = {
      **/
     dbConnect: function (i_user, i_pass, i_callBack) {
         var self = this;
-
         self.m_user = i_user;
         self.m_pass = i_pass;
         self.m_loaderManager = new LoaderManager();
         self.m_msdb = self.m_loaderManager['m_dataBaseManager'];
         self.m_loaderManager.create(self.m_user, self.m_pass, function (i_result) {
-            // log(i_result + self.m_loaderManager['m_domain'] + ' ' + self.m_loaderManager['m_businessId']);
+            if (i_result.status) {
+                self.m_authenticated = true;
+                self.m_domain = self.m_loaderManager['m_domain'];
+                self.m_businessID = self.m_loaderManager['m_businessId'];
+                self.m_authTime = Date.now();
+            }
             i_callBack(i_result);
         });
+    },
+
+    /**
+     Return all authenticated user data
+     @method getUserData
+     @return {Object} reference to all user data
+     **/
+    getUserData: function () {
+        var self = this;
+        return {
+            userName: self.m_user,
+            userPass: self.m_pass,
+            domain: self.m_domain,
+            businessID: self.m_businessID,
+            authTime: self.m_authTime
+        };
     },
 
     /**
@@ -51,7 +71,7 @@ Jalapeno.prototype = {
      @method getLoader
      @return {Object} reference to loader
      **/
-    getLoader: function(){
+    getLoader: function () {
         var self = this;
         return self.m_loaderManager;
     },

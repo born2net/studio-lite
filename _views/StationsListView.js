@@ -22,7 +22,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
      */
     BB.CONSTS.STATION_LIST_EMPTY = 'STATION_LIST_EMPTY';
 
-     // https://moon.signage.me/WebService/getStatus.ashx?user=moon1@ms.com&password=xxx
 
     var StationsListView = Backbone.View.extend({
 
@@ -42,7 +41,17 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
             self.m_property.initPanel(Elements.STATION_PROPERTIES);
             self.m_property.selectView(Elements.STATION_PROPERTIES);
-
+            var userData = jalapeno.getUserData();
+            var url= 'https://' + userData.domain + '/WebService/getStatus.ashx?user=' + userData.userName + '&password=' + userData.userPass + '&callback=?';
+            // url='https://moon.signage.me/WebService/getStatus.ashx?user=moon1@ms.com&password=xxx&callback=?';
+            $.getJSON(url,
+                function(data)
+                {
+                    var s64=data['ret'];
+                    var str = $.base64.decode(s64);
+                    var xml = $.parseXML(str);
+                }
+            );
 
             return;
 
@@ -103,7 +112,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                         }, 300, i, color);
                         self._listenStationSelected();
                         break;
-                    };
+                    }
+                        ;
 
                     case CompStations.stationListFull:
                     {

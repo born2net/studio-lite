@@ -102,13 +102,13 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             if (offset < 240)
                 offset = 240;
             var box = (offset/2) - 120;
-            $('#snapShotSVG').css({
+            $(Elements.SNAP_SHOT_SVG ).css({
                 left: box + 'px'
             });
-            $('#snapShotImage').css({
+            $(Elements.SNAP_SHOT_IMAGE).css({
                 left: box + 15 + 'px'
             });
-            $('#snapShotSpinner').css({
+            $(Elements.SNAP_SHOT_SPINNER).css({
                 left: (offset/2) - 20 + 'px'
             });
         },

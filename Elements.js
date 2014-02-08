@@ -71,7 +71,7 @@ Elements.PREVIOUS = '#prev';
 Elements.SERVER_NAME = '#serverName';
 Elements.BUISINESS_ID = '#buisinessID';
 Elements.ADD_COMPONENT_BLOCK_LIST = '#addComponentBlockList';
-Elements.ADD_RESOURCE_BLOCK_LIST ='#addResourceBlockList';
+Elements.ADD_RESOURCE_BLOCK_LIST = '#addResourceBlockList';
 Elements.RESOURCE_LIB_LIST_WRAP = '#resourceLibListWrap';
 Elements.SELECTED_LIB_RESOURCE_NAME = '#selectedLibResourceName';
 Elements.SELECTED_CHANNEL_RESOURCE_NAME = '#selectedChannelResourceName';
@@ -90,6 +90,10 @@ Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION = '#attachDragDropMainScreenSele
 Elements.DETTACH_DRAG_DROP_MAIN_SCREEN_SELECTION = '#dettachDragDropMainScreenSelection';
 Elements.TOGGLE_TIMELINES_COLLAPSIBLE = '#toggleTimelinesCollapsible';
 Elements.DASHBOARD = '#dashboard';
+Elements.SNAP_SHOT_IMAGE = '#snapShotImage';
+Elements.SNAP_SHOT_SPINNER = '#snapShotSpinner';
+Elements.SNAP_SHOT_SVG = '#snapShotSVG';
+Elements.SNAP_SHOT_WRAP = '#snapShotWrap';
 
 
 // classes
@@ -115,5 +119,6 @@ Elements.CLASS_KNOB = '.knob';
  @class Elements
  @constructor
  **/
-function Elements() {};
+function Elements() {
+};
 

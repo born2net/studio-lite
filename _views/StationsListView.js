@@ -95,10 +95,12 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             });
         },
 
+        /**
+         Reconfigure the location (offset) of the screen capture UI depending on current property with
+         @method _reconfigScreeCaptureLocation
+         **/
         _reconfigScreeCaptureLocation: function () {
-            // var offset = $('#stationProperties').outerWidth();
             var offset = BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW).getPropWidth();
-
             if (offset < 240)
                 offset = 240;
             var box = (offset/2) - 120;

@@ -189,7 +189,6 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
          **/
         resetPropertiesView: function(){
             this.selectView(Elements.EMPTY_PROPERTIES);
-
         },
 
         /**
@@ -206,7 +205,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             }
 
         }
-    })
+    });
 
     return PropertiesView;
 

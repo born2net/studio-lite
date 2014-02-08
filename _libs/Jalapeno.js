@@ -87,6 +87,18 @@ Jalapeno.prototype = {
     },
 
     /**
+     Sync internal msdb to remote mediaSERVER account
+     @method requestData
+     @param {Function} i_callback
+     **/
+    sync: function(i_callback){
+      var self = this;
+        self.m_loaderManager.requestData(function(){
+           i_callback();
+        });
+    },
+
+    /**
      Create a new campaign in the local database
      @method createCampaign
      @param {Number} i_campgianName

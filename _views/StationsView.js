@@ -27,7 +27,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _render: function () {
             if (!self.m_stationsListView) {
                 require(['StationsListView'], function (StationsListView) {
-                    self.m_stationsListView = new StationsListView({el: Elements.STATION_LIST_VIEW});
+                    var s = self.m_stationsListView = new StationsListView({el: Elements.STATION_LIST_VIEW});
                 });
             }
         }

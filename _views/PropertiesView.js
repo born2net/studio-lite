@@ -183,8 +183,27 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             }
         },
 
+        /**
+         Select the default properties view which is the Dashboard
+         @method resetPropertiesView
+         **/
         resetPropertiesView: function(){
             this.selectView(Elements.EMPTY_PROPERTIES);
+
+        },
+
+        /**
+         Get the property div total width which may vary, especially when in full popup mode vs left slide mode
+         @method getPropWidth
+         @return {Number} current width
+         **/
+        getPropWidth: function(){
+            var layoutManager = BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER);
+            if (layoutManager.getAppWidth() > 768) {
+                return $(Elements.PROP_PANEL_WRAP).outerWidth();
+            } else {
+                return layoutManager.getAppWidth();
+            }
 
         }
     })

@@ -49,7 +49,8 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
                 self._listenStationSelected();
             });
 
-
+            BB.comBroker.listen(BB.EVENTS.APP_SIZED, self._reconfigScreeCaptureLocation);
+            self._reconfigScreeCaptureLocation();
             return;
 
             BB.comBroker.listen(Viewstacks.VIEW_CHANGED, function (e) {
@@ -91,6 +92,24 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
                 // $(Elements.SELECTED_LIB_RESOURCE_NAME).val(recResource['resource_name']);
                 self.m_property.viewPanel(Elements.STATION_PROPERTIES);
                 return false;
+            });
+        },
+
+        _reconfigScreeCaptureLocation: function () {
+            // var offset = $('#stationProperties').outerWidth();
+            var offset = BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW).getPropWidth();
+
+            if (offset < 240)
+                offset = 240;
+            var box = (offset/2) - 120;
+            $('#snapShotSVG').css({
+                left: box + 'px'
+            });
+            $('#snapShotImage').css({
+                left: box + 15 + 'px'
+            });
+            $('#snapShotSpinner').css({
+                left: (offset/2) - 20 + 'px'
             });
         },
 

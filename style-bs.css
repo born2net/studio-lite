@@ -1,4 +1,5 @@
 @import url("https://secure.dynawebs.net/_studiolite-dev/_common/_js/bootstrap/css/bootstrap-glyphicons.css");
+
 html,
 body {
     height: 100%;
@@ -163,13 +164,16 @@ body {
     padding: 15px;
     margin: 0 auto;
 }
+
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
     margin-bottom: 10px;
 }
+
 .form-signin .checkbox {
     font-weight: normal;
 }
+
 .form-signin .form-control {
     position: relative;
     font-size: 16px;
@@ -179,14 +183,17 @@ body {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
+
 .form-signin .form-control:focus {
     z-index: 2;
 }
+
 .form-signin input[type="text"] {
     margin-bottom: -1px;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
+
 .form-signin input[type="password"] {
     margin-bottom: 10px;
     border-top-left-radius: 0;
@@ -203,13 +210,57 @@ body {
     cursor: pointer;
 }
 
-#delScreenButton{
+#delScreenButton {
     display: inline;
 }
 
 #resourcesListView {
     padding: 10px;
 }
+
+#stationcontrol {
+    padding-top: 30px;
+}
+
+#stationInfo {
+    padding-top: 25px;
+}
+
+#stationInfo ul {
+    text-align: left;
+    padding-left: 34%;
+}
+
+#snapShotWrap {
+    position: relative;
+    width: 240px;
+    height: 120px;
+}
+
+#snapShotSVG {
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    width: 240px;
+    height: 140px;
+}
+
+#snapShotImage {
+    top: 15px;
+    left: 0px;
+    position: absolute;
+    width: 210px;
+    height: 110px;
+}
+
+#snapShotSpinner {
+    top: 45px;
+    left: 20px;
+    position: absolute;
+    padding: 0;
+    margin: 0;
+}
+
 
 #imgVertical {
     opacity: 0.6;
@@ -226,6 +277,7 @@ body {
     cursor: pointer;
     font-size: 1.2em;
 }
+
 .navbar-nav {
     display: none;
 }
@@ -291,6 +343,14 @@ body {
 .resourcesListItems span {
     display: inline;
     font-size: 1.5em;
+}
+
+.alignTextLeft {
+    text-align: left;
+}
+
+.alignTextCenter {
+    text-align: center;
 }
 
 aside > aside > div > ul > li {
@@ -387,12 +447,15 @@ StackView CSS
 .page.left {
     left: -100%;
 }
+
 .page.center {
     left: 0;
 }
+
 .page.right {
     left: 100%;
 }
+
 .page.transition {
     -webkit-transition-duration: .25s;
     transition-duration: .25s;

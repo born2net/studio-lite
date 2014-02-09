@@ -51,28 +51,6 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
 
             BB.comBroker.listen(BB.EVENTS.APP_SIZED, self._reconfigScreeCaptureLocation);
             self._reconfigScreeCaptureLocation();
-            return;
-
-            BB.comBroker.listen(Viewstacks.VIEW_CHANGED, function (e) {
-                if ($(e.context).data('viewstackname') == 'tab3' && BB.comBroker.getService('mainViewStack') === e.caller) {
-                    // log('entering stations');
-                    setTimeout(function () {
-                        model.requestStationsList(self);
-                    }, 500);
-                    self.m_refreshHandle = setInterval(function () {
-                        model.requestStationsList(self);
-                    }, self.m_refreshTimer);
-                }
-            });
-
-            BB.comBroker.listen(Viewstacks.VIEW_CHANGED, function (e) {
-                if ($(e.context).data('viewstackname') != 'tab3' && Elements.MAIN_CONTENT === e.caller.m_contentID) {
-                    // log('exiting stations')
-                    clearInterval(self.m_refreshHandle);
-                }
-            });
-            self._wireUI();
-            BB.comBroker.listen(JalapenoHelper.stationList, self._onStationUpdate);
         },
 
         /**
@@ -86,13 +64,44 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             $(Elements.CLASS_STATION_LIST_ITEMS).on('click', function (e) {
                 var elem = $(e.target).closest('li');
                 self.m_selected_station_id = $(elem).data('station_id');
+                var model = self.m_stationCollection.findWhere({'stationID': self.m_selected_station_id});
                 $(Elements.CLASS_STATION_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
                 $(elem).addClass('activated').find('a').addClass('whiteFont');
-                // var recResource = jalapeno.getResourceRecord(self.m_selected_resource_id);
-                // $(Elements.SELECTED_LIB_RESOURCE_NAME).val(recResource['resource_name']);
                 self.m_property.viewPanel(Elements.STATION_PROPERTIES);
+                self._updatePropStats(model);
+                self._updatePropButtonState(model);
                 return false;
             });
+        },
+
+        /**
+         Update properties > button state on station selection
+         @method _updatePropButtonState
+         @param {Object} i_model
+         **/
+        _updatePropButtonState: function(i_model){
+            var disabled = ''
+            if ( i_model.get('connection') == '0') {
+                disabled = 'disabled';
+            }
+            $('#stationcontrol button').prop('disabled',disabled)
+        },
+
+        /**
+         Update the propertis UI station stats from Backbone collection > model
+         @method _updateProperties
+         @param {Object} i_model
+         **/
+        _updatePropStats: function(i_model){
+            $(Elements.STATION_NAME).text(i_model.get('stationName'));
+            $(Elements.STATION_WATCHDOG).text(i_model.get('watchDogConnection'));
+            $(Elements.STATION_TOTAL_MEMORY).text(i_model.get('totalMemory'));
+            $(Elements.STATION_PEAK_MEMORY).text(i_model.get('peakMemory'));
+            $(Elements.STATION_LAST_UPDATE).text(i_model.get('lastUpdate'));
+            $(Elements.STATION_RUNNING_TIME).text(i_model.get('runningTime'));
+            $(Elements.STATION_AIR_VERSION).text(i_model.get('airVersion'));
+            $(Elements.STATION_APP_VERSION).text(i_model.get('appVersion'));
+            $(Elements.STATION_OS).text(i_model.get('stationOS'));
         },
 
         /**
@@ -123,7 +132,7 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
          **/
         _onStationUpdate: function (i_model) {
             var self = this;
-            var snippet = '<li class="' + BB.lib.unclass(Elements.CLASS_STATION_LIST_ITEMS) + ' list-group-item" data-station_id="' + i_model.id + '">' +
+            var snippet = '<li class="' + BB.lib.unclass(Elements.CLASS_STATION_LIST_ITEMS) + ' list-group-item" data-station_id="' + i_model.get('stationID') + '">' +
                 '<a href="#">' +
                 '<span id="stationIcon' + i_model.get('id') + '">' +
                 '<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg"><g><circle stroke="black" id="svg_1" fill="' + i_model.get('stationColor') + '" stroke-width="2" r="16" cy="20" cx="20"/></g></svg>' +
@@ -454,3 +463,25 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
     return StationsListView;
 
 });
+
+/*BB.comBroker.listen(Viewstacks.VIEW_CHANGED, function (e) {
+ if ($(e.context).data('viewstackname') == 'tab3' && BB.comBroker.getService('mainViewStack') === e.caller) {
+ // log('entering stations');
+ setTimeout(function () {
+ model.requestStationsList(self);
+ }, 500);
+ self.m_refreshHandle = setInterval(function () {
+ model.requestStationsList(self);
+ }, self.m_refreshTimer);
+ }
+ });
+
+ BB.comBroker.listen(Viewstacks.VIEW_CHANGED, function (e) {
+ if ($(e.context).data('viewstackname') != 'tab3' && Elements.MAIN_CONTENT === e.caller.m_contentID) {
+ // log('exiting stations')
+ clearInterval(self.m_refreshHandle);
+ }
+ });
+ self._wireUI();
+ BB.comBroker.listen(JalapenoHelper.stationList, self._onStationUpdate);
+ */

@@ -220,6 +220,13 @@ body {
 
 #stationcontrol {
     padding-top: 30px;
+    position: relative;
+    left: 12px;
+}
+
+#stationcontrol button{
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 #stationInfo {
@@ -338,6 +345,7 @@ body {
     display: inline;
     padding-right: 20px;
 }
+
 
 .resourcesListItems span {
     display: inline;

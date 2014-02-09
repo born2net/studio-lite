@@ -372,26 +372,25 @@
                 <img id="snapShotSpinner" style="display: none" src="https://secure.dynawebs.net/_studiolite-dev/_assets/preload2_gray.gif"/>
             </div>
             <div id="stationcontrol" class="alignTextCenter btn-group">
-                <button id="captureCommand" type="button" class="btn btn-default"><span
-                        class="glyphicon glyphicon glyphicon-picture"></span></button>
-                <button id="playCommand" type="button" class="btn btn-default"><span
+                <button id="captureCommand" disabled="disabled" type="button" class="btn btn-default"><span
+                        class="glyphicon  glyphicon glyphicon-picture"></span></button>
+                <button id="playCommand" disabled="disabled" type="button" class="btn btn-default"><span
                         class="glyphicon glyphicon glyphicon-play"></span></button>
-                <button id="stopCommand" type="button" class="btn btn-default"><span
+                <button id="stopCommand" disabled="disabled" type="button" class="btn btn-default"><span
                         class="glyphicon glyphicon glyphicon-stop"></span></button>
-                <button id="reloadCommand" type="button" class="btn btn-default"><span
+                <button id="reloadCommand" disabled="disabled" type="button" class="btn btn-default"><span
                         class="glyphicon glyphicon glyphicon-refresh"></span></button>
             </div>
             <div id="stationInfo">
                 <ul>
-                    <li>name: </li>
-                    <li>OS: </li>
-                    <li>AIR version: </li>
-                    <li>Player version: </li>
-                    <li>Peak memory: </li>
-                    <li>Total memory: </li>
-                    <li>Running: </li>
-                    <li>Watchdog: </li>
-                    <li>Last upd: </li>
+                    <li>OS: <span id="stationOS"></span></li>
+                    <li>AIR version: <span id="stationAirVersion"></span></li>
+                    <li>Player version: <span id="stationAppVersion"></span></li>
+                    <li>Peak memory: <span id="stationPeakMemory"></span></li>
+                    <li>Total memory: <span id="stationTotalMemory"></span></li>
+                    <li>Running: <span id="stationRunningTime"></span></li>
+                    <li>Watchdog: <span id="stationWatchdog"></span></li>
+                    <li>Last upd: <span id="stationLastUpdate"></span></li>
                 </ul>
             </div>
             <input type="text" name="eventName" placeholder="event name" id="sendEventID" value="">

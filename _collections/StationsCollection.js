@@ -48,9 +48,9 @@ define(['jquery', 'backbone', 'StationModel'], function ($, Backbone, StationMod
 
             $(i_xmlStations).find('Station').each(function (key, value) {
                 var stationModel = new StationModel({
-                    stationID: value.id,
+                    stationID: parseInt(value.id),
                     stationName: $(value).attr('name'),
-                    watchDogConnection: $(value).attr('watchDogConnection'),
+                    watchDogConnection: $(value).attr('watchDogConnection') == 1 ? 'on' : 'off',
                     status: $(value).attr('status'),
                     startTime: $(value).attr('startTime'),
                     runningTime: $(value).attr('runningTime'),
@@ -58,6 +58,8 @@ define(['jquery', 'backbone', 'StationModel'], function ($, Backbone, StationMod
                     totalMemory: $(value).attr('totalMemory'),
                     peakMemory: $(value).attr('peakMemory'),
                     appVersion: $(value).attr('appVersion'),
+                    airVersion: $(value).attr('airVersion'),
+                    stationOS: $(value).attr('os'),
                     socket: $(value).attr('socket'),
                     connection: $(value).attr('connection'),
                     lastUpdate: $(value).attr('lastUpdate'),

@@ -94,7 +94,16 @@ Elements.SNAP_SHOT_IMAGE = '#snapShotImage';
 Elements.SNAP_SHOT_SPINNER = '#snapShotSpinner';
 Elements.SNAP_SHOT_SVG = '#snapShotSVG';
 Elements.SNAP_SHOT_WRAP = '#snapShotWrap';
-
+Elements.STATION_NAME = '#stationName';
+Elements.STATION_WATCHDOG = '#stationWatchdog';
+Elements.STATION_TOTAL_MEMORY = '#stationTotalMemory';
+Elements.STATION_PEAK_MEMORY = '#stationPeakMemory';
+Elements.STATION_LAST_UPDATE = '#stationLastUpdate';
+Elements.STATION_APP_VERSION = '#stationAppVersion';
+Elements.STATION_AIR_VERSION = '#stationAirVersion';
+Elements.STATION_PLAYER_VERSION = '#stationPlayerVersion';
+Elements.STATION_RUNNING_TIME = '#stationRunningTime';
+Elements.STATION_OS = '#stationOS';
 
 // classes
 Elements.CLASS_SCREEN_DIVISION = '.screenDivisionClass';

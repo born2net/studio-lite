@@ -25,7 +25,7 @@ define(['jquery', 'backbone', 'StationModel'], function ($, Backbone, StationMod
         initialize: function () {
             var self = this;
             self._getRemoteStations();
-            setTimeout(function () {
+            setInterval(function () {
                 self._getRemoteStations();
             }, 10000);
 
@@ -55,14 +55,8 @@ define(['jquery', 'backbone', 'StationModel'], function ($, Backbone, StationMod
             var self = this;
 
             $(i_xmlStations).find('Station').each(function (key, value) {
-                var model;
-                if (_.isUndefined(self.get('stationID', parseInt(value.id)))) {
-                    model = new StationModel({stationID: parseInt(value.id)});
-                    self.add(model);
-                } else {
-                    model = self.get('stationID', parseInt(value.id));
-                }
-                model.set({
+
+                var stationData = {
                     stationID: parseInt(value.id),
                     stationName: $(value).attr('name'),
                     watchDogConnection: $(value).attr('watchDogConnection') == 1 ? 'on' : 'off',
@@ -79,7 +73,15 @@ define(['jquery', 'backbone', 'StationModel'], function ($, Backbone, StationMod
                     connection: $(value).attr('connection'),
                     lastUpdate: $(value).attr('lastUpdate'),
                     stationColor: self._getStationIconColor($(value).attr('connection'))
-                });
+                };
+
+                var stationModel = self.findWhere({'stationID': parseInt(value.id)});
+                if (_.isUndefined(stationModel)) {
+                    stationModel = new StationModel(stationData);
+                    self.add(stationModel);
+                } else {
+                    stationModel.set(stationData);
+                }
             });
 
             self.trigger(BB.EVENTS.STATIONS_UPDATED);

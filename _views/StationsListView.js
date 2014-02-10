@@ -40,8 +40,8 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             // self.m_property.selectView(Elements.STATION_PROPERTIES);
 
             self.m_stationCollection = new StationsCollection();
-            self.listenTo(self.m_stationCollection, 'change', function (i_model) {
-                self._onStationUpdate(i_model);
+            self.listenTo(self.m_stationCollection, 'add', function (i_model) {
+                self._onAddStation(i_model);
             });
 
             self.listenTo(self.m_stationCollection, BB.EVENTS.STATIONS_UPDATED, function () {
@@ -63,12 +63,12 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             $(Elements.CLASS_STATION_LIST_ITEMS).on('click', function (e) {
                 var elem = $(e.target).closest('li');
                 self.m_selected_station_id = $(elem).data('station_id');
-                var model = self.m_stationCollection.findWhere({'stationID': self.m_selected_station_id});
+                var stationModel = self.m_stationCollection.findWhere({'stationID': self.m_selected_station_id});
                 $(Elements.CLASS_STATION_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
                 $(elem).addClass('activated').find('a').addClass('whiteFont');
                 self.m_property.viewPanel(Elements.STATION_PROPERTIES);
-                self._updatePropStats(model);
-                self._updatePropButtonState(model);
+                self._updatePropStats(stationModel);
+                self._updatePropButtonState(stationModel);
                 return false;
             });
         },
@@ -125,11 +125,11 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
 
         /**
          When new data is available from the remote server, update the list with current data.
-         @method _onStationUpdate
+         @method _onAddStation
          @param {Event} e remote server data call back from Ajax call
          @return none
          **/
-        _onStationUpdate: function (i_model) {
+        _onAddStation: function (i_model) {
             var self = this;
             var stationLI = $(Elements.STATION_LIST_VIEW).find('[data-station_id="' + i_model.get('stationID') + '"]');
 
@@ -480,5 +480,5 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
  }
  });
  self._wireUI();
- BB.comBroker.listen(JalapenoHelper.stationList, self._onStationUpdate);
+ BB.comBroker.listen(JalapenoHelper.stationList, self._onAddStation);
  */

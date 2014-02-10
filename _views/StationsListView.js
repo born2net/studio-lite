@@ -17,7 +17,7 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
         initialize: function () {
             var self = this;
             self.m_refreshTimer = 60000;
-            self.m_refreshHandle = undefined;
+            self.m_selected_station_id = undefined;
             self.m_imageReloadCount = 0;
             self.m_stationDataMode = BB.CONSTS.STATION_LIST_EMPTY;
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
@@ -30,7 +30,7 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
                 self._listenStationSelected();
             });
             self.listenTo(self.m_stationCollection, 'change', function (i_model) {
-                self._onChangeStation(i_model);
+                self._onUpdateStation(i_model);
             });
 
             BB.comBroker.listen(BB.EVENTS.APP_SIZED, self._reconfigScreeCaptureLocation);
@@ -42,7 +42,7 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
          so we can update the station list status when this View is visible
          @method render
          **/
-        render: function(){
+        render: function () {
             var self = this;
             self.m_stationCollection.resumeGetRemoteStations();
             log('in view');
@@ -54,7 +54,7 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
          updating remote station status to increase app perfromance
          @method unrender
          **/
-        unrender: function(){
+        unrender: function () {
             var self = this;
             self.m_stationCollection.pauseGetRemoteStations();
             log('not in view');
@@ -86,20 +86,20 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
          @method _updatePropButtonState
          @param {Object} i_model
          **/
-        _updatePropButtonState: function(i_model){
+        _updatePropButtonState: function (i_model) {
             var disabled = ''
-            if ( i_model.get('connection') == '0') {
+            if (i_model.get('connection') == '0') {
                 disabled = 'disabled';
             }
-            $('#stationcontrol button').prop('disabled',disabled)
+            $('#stationcontrol button').prop('disabled', disabled)
         },
 
         /**
-         Update the propertis UI station stats from Backbone collection > model
+         Update the properties UI station stats from Backbone collection > model
          @method _updateProperties
          @param {Object} i_model
          **/
-        _updatePropStats: function(i_model){
+        _updatePropStats: function (i_model) {
             $(Elements.STATION_NAME).text(i_model.get('stationName'));
             $(Elements.STATION_WATCHDOG).text(i_model.get('watchDogConnection'));
             $(Elements.STATION_TOTAL_MEMORY).text(i_model.get('totalMemory'));
@@ -119,27 +119,35 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             var offset = BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW).getPropWidth();
             if (offset < 240)
                 offset = 240;
-            var box = (offset/2) - 120;
-            $(Elements.SNAP_SHOT_SVG ).css({
+            var box = (offset / 2) - 120;
+            $(Elements.SNAP_SHOT_SVG).css({
                 left: box + 'px'
             });
             $(Elements.SNAP_SHOT_IMAGE).css({
                 left: box + 15 + 'px'
             });
             $(Elements.SNAP_SHOT_SPINNER).css({
-                left: (offset/2) - 20 + 'px'
+                left: (offset / 2) - 20 + 'px'
             });
         },
 
         /**
          Update existing station in list with data from remote mediaSERVER
-         @method _onChangeStation
+         If a station is selected in the list, make sure we also update its open property values
+         @method _onUpdateStation
          @param {Object} i_stationModel
          **/
-        _onChangeStation: function(i_stationModel){
-            if (i_stationModel.get('connectionStatusChanged')){
+        _onUpdateStation: function (i_stationModel) {
+            var self = this;
+            if (i_stationModel.get('connectionStatusChanged')) {
                 var stationLI = $(Elements.STATION_LIST_VIEW).find('[data-station_id="' + i_stationModel.get('stationID') + '"]');
                 $(stationLI).find('circle').attr('fill', i_stationModel.get('stationColor'));
+            }
+            if (i_stationModel.get('stationID') == self.m_selected_station_id) {
+                if(!stationLI)
+                    var stationLI = $(Elements.STATION_LIST_VIEW).find('[data-station_id="' + i_stationModel.get('stationID') + '"]');
+                stationLI.trigger('click');
+                log('update data on ' + self.m_selected_station_id);
             }
         },
 

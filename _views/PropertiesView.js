@@ -203,7 +203,6 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             } else {
                 return layoutManager.getAppWidth();
             }
-
         }
     });
 

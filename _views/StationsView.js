@@ -24,7 +24,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         /**
-         Init the ResourceList View
+         Create the StationListView singleton instance if it does not exist, if it does
+         we notify it that it is in view now
          @method _render
          **/
         _render: function () {
@@ -40,6 +41,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             }
         },
 
+        /**
+         If the StationListView was already instantiated, let it know it is now out of view
+         @method _unrender
+         **/
         _unrender: function () {
             var self = this;
             if (self.m_stationsListView)

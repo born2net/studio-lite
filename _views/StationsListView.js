@@ -37,6 +37,11 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             self._reconfigScreeCaptureLocation();
         },
 
+        /**
+         Render is called when the StackView is in view which tightly coupled with StationView instance
+         so we can update the station list status when this View is visible
+         @method render
+         **/
         render: function(){
             var self = this;
             self.m_stationCollection.resumeGetRemoteStations();
@@ -44,6 +49,11 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
 
         },
 
+        /**
+         Unrender method used to notify this View that is it no longer visible so we can stop
+         updating remote station status to increase app perfromance
+         @method unrender
+         **/
         unrender: function(){
             var self = this;
             self.m_stationCollection.pauseGetRemoteStations();
@@ -150,135 +160,6 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
                 '</a>' +
                 '</li>';
             $(Elements.STATION_LIST_VIEW).append(snippet)
-
-
-            /*var stationLI = $(Elements.STATION_LIST_VIEW).find('[data-station_id="' + i_model.get('stationID') + '"]');
-
-            if (stationLI.length==0){
-                var snippet = '<li class="' + BB.lib.unclass(Elements.CLASS_STATION_LIST_ITEMS) + ' list-group-item" data-station_id="' + i_model.get('stationID') + '">' +
-                    '<a href="#">' +
-                    '<span id="stationIcon' + i_model.get('id') + '">' +
-                    '<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg"><g><circle stroke="black" id="svg_1" fill="' + i_model.get('stationColor') + '" stroke-width="2" r="16" cy="20" cx="20"/></g></svg>' +
-                    '</span>' +
-                    '<span style="font-size: 1.5em; position: relative; top: -23px">' + i_model.get('stationName') + '</span>' +
-                    '</a>' +
-                    '</li>';
-                $(Elements.STATION_LIST_VIEW).append(snippet)
-
-            } else {
-
-            }*/
-
-
-            return;
-
-            var self = e.caller;
-            var serverData = e.edata;
-            var i = 0;
-
-            for (var dbmid in serverData) {
-                i++;
-                switch (self.m_stationDataMode) {
-                    case CompStations.stationListEmpty:
-                    {
-                        var station = model.getStation(dbmid);
-                        var stationHTML = '<li data-dbmid="' + dbmid + '" data-icon="gear"  class="station">' +
-                            '<span style="display: inline" id="stationIcon' + i + '"></span>' +
-                            '<a class="lastStatus" style="display: inline; position: relative; top: -18px" ">' + station['name'] + '</a>' +
-                            '</div><a data-theme="a" data-icon="gear" class="fixPropOpenLiButtonPosition station stationOpenProps"></a>' +
-                            '</li>';
-
-
-                        $(Elements.STATION_LIST).append(stationHTML)
-                        var color = serverData[dbmid]['color'];
-                        setTimeout(function (x, color) {
-                            $(Elements.STATION_ICON + x).append($('<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg"><g><circle stroke="black" id="svg_1" fill="' + color + '" stroke-width="2" r="16" cy="20" cx="20"/></g></svg>'));
-                            refreshSize();
-                            $(Elements.STATION_PANEL).trigger('updatelayout');
-                            $(Elements.STATION_LIST).listview('refresh');
-                        }, 300, i, color);
-                        self._listenStationSsselected();
-                        break;
-                    }
-                        ;
-
-                    case CompStations.stationListFull:
-                    {
-                        $(Elements.CLASS_STATION).each(function () {
-                            var dbmid = $(this).data('dbmid');
-                            var station = model.getStation(dbmid);
-                            // if station was not deleted and updated apply status
-                            if (station != undefined && station['statusChanged'] == false) {
-                                var elem = $(this).find('circle')
-                                elem.attr('fill', station['color']);
-                            }
-                        });
-                        break;
-                    }
-                }
-            }
-            $(Elements.STATION_LIST).listview('refresh');
-            self.m_stationDataMode = $(Elements.STATION_LIST).children().size() > 0 ? CompStations.stationListFull : CompStations.stationListEmpty;
-
-
-        },
-
-        /**
-         Listen for user selection on particular station so we can populate the properties panel.
-         @method _zzzlistenssStationSelected
-         @return none
-         **/
-        _zzzlistenssStationSelected: function () {
-            var self = this;
-
-            $(Elements.CLASS_STATION).tap(function (e) {
-
-                var openProps = $(e.target).closest('a').hasClass('stationOpenProps') ? true : false;
-                var stationElem = $(e.target).closest('li');
-                var stationProp = $(stationElem).find(Elements.CLASS_STATION_OPEN_PROPS);
-                var dbmid = $(stationElem).data('dbmid');
-
-                model.abortServerCalls();
-
-                $(Elements.SNAPSHOT_IMAGE).attr('src', '');
-                $(Elements.SNAPSHOT_SPINNER).hide();
-                $(Elements.SNAPSHOT_IMAGE).hide();
-
-                self.m_property.viewPanel(Elements.STATION_PROPERTIES);
-                self.m_selected_resource_id = dbmid;
-                self._loadProperties(dbmid);
-
-                $(Elements.CLASS_STATION).removeClass('currentSelectedStation');
-                $(stationElem).addClass('currentSelectedStation');
-                $(stationProp).addClass('currentSelectedStation');
-                $(Elements.STATION_LIST).listview('refresh');
-
-                if (openProps)
-                    BB.comBroker.getService('CompProperty').openPanel(e);
-
-                e.stopImmediatePropagation();
-                return false;
-            });
-        },
-
-        /**
-         Populate the properties panel for a selected station.
-         @method _loadProperties
-         @return none
-         **/
-        _loadProperties: function (i_dbmid) {
-            var info = model.getDataByID(i_dbmid);
-
-            $(Elements.STATION_NAME).text(info.name);
-            $(Elements.SEL_NAME).text(info.name);
-            $(Elements.SEL_OS).text(info.os);
-            $(Elements.SEL_AIR_VER).text(info.airVersion);
-            $(Elements.SEL_PLAYERVER).text(info.appVersion);
-            $(Elements.SEL_PEAK_MEM).text(info.peakMemory);
-            $(Elements.SEL_TOT_MEM).text(info.totalMemory);
-            $(Elements.SEL_RUNNING).text(info.runningTime);
-            $(Elements.SEL_WD).text(info.watchDogConnection == 1 ? 'On' : 'Off');
-            $(Elements.SEL_LAST_UPD).text(info.lastUpdate);
         },
 
         /**
@@ -438,43 +319,6 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
 
             model.sendStationEvent(model.getDataByID(self.m_selected_resource_id)['id'], i_eventName, i_eventValue);
             $(Elements.EVENT_SEND_BUTTON).button('disable');
-        },
-
-        /**
-         Enable or disable a UI button.
-         @method _buttonEnable
-         @param {String} i_elem
-         @param {Boolean} true / false
-         @return none
-         **/
-        _buttonEnable: function (i_elem, i_state) {
-            var self = this;
-            switch (i_state) {
-                case true:
-                {
-                    $(i_elem).css({opacity: 1})
-                    break;
-                }
-                case false:
-                {
-                    $(i_elem).css({opacity: 0.5})
-                    break;
-                }
-            }
-        },
-
-        /**
-         Get the state of a Button
-         @method _buttonIsEnabled
-         @param {String} i_elem
-         @return {Boolean}
-         **/
-        _buttonIsEnabled: function (i_elem) {
-            var self = this;
-            if ($(i_elem).css('opacity') == 1) {
-                return true;
-            }
-            return false;
         }
     });
 

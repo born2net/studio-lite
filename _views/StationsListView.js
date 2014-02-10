@@ -8,21 +8,6 @@
  **/
 define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, StationsCollection) {
 
-    /**
-     Station list is full with stations retrieved from remote server
-     @property STATION_LIST_FULL
-     @type String
-
-     BB.CONSTS.STATION_LIST_FULL = 'STATION_LIST_FULL';
-     */
-    /**
-     Station list is empty with no stations listed
-     @property STATION_LIST_EMPTY
-     @type String
-
-     BB.CONSTS.STATION_LIST_EMPTY = 'STATION_LIST_EMPTY';
-     */
-
     var StationsListView = Backbone.View.extend({
 
         /**
@@ -42,14 +27,27 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             self.m_stationCollection = new StationsCollection();
             self.listenTo(self.m_stationCollection, 'add', function (i_model) {
                 self._onAddStation(i_model);
-            });
-
-            self.listenTo(self.m_stationCollection, BB.EVENTS.STATIONS_UPDATED, function () {
                 self._listenStationSelected();
+            });
+            self.listenTo(self.m_stationCollection, 'change', function (i_model) {
+                self._onChangeStation(i_model);
             });
 
             BB.comBroker.listen(BB.EVENTS.APP_SIZED, self._reconfigScreeCaptureLocation);
             self._reconfigScreeCaptureLocation();
+        },
+
+        render: function(){
+            var self = this;
+            self.m_stationCollection.resumeGetRemoteStations();
+            log('in view');
+
+        },
+
+        unrender: function(){
+            var self = this;
+            self.m_stationCollection.pauseGetRemoteStations();
+            log('not in view');
         },
 
         /**
@@ -124,14 +122,37 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
         },
 
         /**
+         Update existing station in list with data from remote mediaSERVER
+         @method _onChangeStation
+         @param {Object} i_stationModel
+         **/
+        _onChangeStation: function(i_stationModel){
+            if (i_stationModel.get('connectionStatusChanged')){
+                var stationLI = $(Elements.STATION_LIST_VIEW).find('[data-station_id="' + i_stationModel.get('stationID') + '"]');
+                $(stationLI).find('circle').attr('fill', i_stationModel.get('stationColor'));
+            }
+        },
+
+        /**
          When new data is available from the remote server, update the list with current data.
          @method _onAddStation
          @param {Event} e remote server data call back from Ajax call
          @return none
          **/
-        _onAddStation: function (i_model) {
+        _onAddStation: function (i_stationModel) {
             var self = this;
-            var stationLI = $(Elements.STATION_LIST_VIEW).find('[data-station_id="' + i_model.get('stationID') + '"]');
+            var snippet = '<li class="' + BB.lib.unclass(Elements.CLASS_STATION_LIST_ITEMS) + ' list-group-item" data-station_id="' + i_stationModel.get('stationID') + '">' +
+                '<a href="#">' +
+                '<span id="stationIcon' + i_stationModel.get('id') + '">' +
+                '<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg"><g><circle stroke="black" id="svg_1" fill="' + i_stationModel.get('stationColor') + '" stroke-width="2" r="16" cy="20" cx="20"/></g></svg>' +
+                '</span>' +
+                '<span style="font-size: 1.5em; position: relative; top: -23px">' + i_stationModel.get('stationName') + '</span>' +
+                '</a>' +
+                '</li>';
+            $(Elements.STATION_LIST_VIEW).append(snippet)
+
+
+            /*var stationLI = $(Elements.STATION_LIST_VIEW).find('[data-station_id="' + i_model.get('stationID') + '"]');
 
             if (stationLI.length==0){
                 var snippet = '<li class="' + BB.lib.unclass(Elements.CLASS_STATION_LIST_ITEMS) + ' list-group-item" data-station_id="' + i_model.get('stationID') + '">' +
@@ -146,7 +167,7 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
 
             } else {
 
-            }
+            }*/
 
 
             return;

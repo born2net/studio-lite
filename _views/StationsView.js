@@ -15,8 +15,11 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         initialize: function () {
             var self = this;
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
-                if (e == self)
+                if (e == self) {
                     self._render();
+                } else {
+                    self._unrender();
+                }
             });
         },
 
@@ -25,11 +28,22 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @method _render
          **/
         _render: function () {
+            var self = this;
             if (!self.m_stationsListView) {
                 require(['StationsListView'], function (StationsListView) {
-                    var s = self.m_stationsListView = new StationsListView({el: Elements.STATION_LIST_VIEW});
+                    self.m_stationsListView = new StationsListView({
+                        el: Elements.STATION_LIST_VIEW
+                    });
                 });
+            } else {
+                self.m_stationsListView.render();
             }
+        },
+
+        _unrender: function () {
+            var self = this;
+            if (self.m_stationsListView)
+                self.m_stationsListView.unrender();
         }
     });
 

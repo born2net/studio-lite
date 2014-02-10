@@ -30,7 +30,6 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
          @method initialize
          **/
         initialize: function () {
-
             var self = this;
             self.m_refreshTimer = 60000;
             self.m_refreshHandle = undefined;
@@ -38,10 +37,10 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             self.m_stationDataMode = BB.CONSTS.STATION_LIST_EMPTY;
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
             self.m_property.initPanel(Elements.STATION_PROPERTIES);
-            self.m_property.selectView(Elements.STATION_PROPERTIES);
+            // self.m_property.selectView(Elements.STATION_PROPERTIES);
 
             self.m_stationCollection = new StationsCollection();
-            self.listenTo(self.m_stationCollection, 'add', function (i_model) {
+            self.listenTo(self.m_stationCollection, 'change', function (i_model) {
                 self._onStationUpdate(i_model);
             });
 
@@ -132,25 +131,23 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
          **/
         _onStationUpdate: function (i_model) {
             var self = this;
-            var snippet = '<li class="' + BB.lib.unclass(Elements.CLASS_STATION_LIST_ITEMS) + ' list-group-item" data-station_id="' + i_model.get('stationID') + '">' +
-                '<a href="#">' +
-                '<span id="stationIcon' + i_model.get('id') + '">' +
-                '<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg"><g><circle stroke="black" id="svg_1" fill="' + i_model.get('stationColor') + '" stroke-width="2" r="16" cy="20" cx="20"/></g></svg>' +
-                '</span>' +
-                '<span style="font-size: 1.5em; position: relative; top: -23px">' + i_model.get('stationName') + '</span>' +
-                '</a>' +
-                '</li>';
-            $(Elements.STATION_LIST_VIEW).append(snippet)
+            var stationLI = $(Elements.STATION_LIST_VIEW).find('[data-station_id="' + i_model.get('stationID') + '"]');
 
-            /*
-             setTimeout(function (i_model_id, color) {
-             $('#stationIcon' + i_model_id).append($('<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg"><g><circle stroke="black" id="svg_1" fill="' + color + '" stroke-width="2" r="16" cy="20" cx="20"/></g></svg>'));
-             // refreshSize();
-             // $(Elements.STATION_PANEL).trigger('updatelayout');
-             // $(Elements.STATION_LIST).listview('refresh');
-             }, 300, i_model.id, color);
-             self._listenStatsssionSelected();
-             */
+            if (stationLI.length==0){
+                var snippet = '<li class="' + BB.lib.unclass(Elements.CLASS_STATION_LIST_ITEMS) + ' list-group-item" data-station_id="' + i_model.get('stationID') + '">' +
+                    '<a href="#">' +
+                    '<span id="stationIcon' + i_model.get('id') + '">' +
+                    '<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg"><g><circle stroke="black" id="svg_1" fill="' + i_model.get('stationColor') + '" stroke-width="2" r="16" cy="20" cx="20"/></g></svg>' +
+                    '</span>' +
+                    '<span style="font-size: 1.5em; position: relative; top: -23px">' + i_model.get('stationName') + '</span>' +
+                    '</a>' +
+                    '</li>';
+                $(Elements.STATION_LIST_VIEW).append(snippet)
+
+            } else {
+
+            }
+
 
             return;
 

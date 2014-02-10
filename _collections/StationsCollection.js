@@ -24,7 +24,15 @@ define(['jquery', 'backbone', 'StationModel'], function ($, Backbone, StationMod
          **/
         initialize: function () {
             var self = this;
+            self._getRemoteStations();
+            setTimeout(function () {
+                self._getRemoteStations();
+            }, 10000);
 
+        },
+
+        _getRemoteStations: function () {
+            var self = this;
             var userData = jalapeno.getUserData();
             var url = 'https://' + userData.domain + '/WebService/getStatus.ashx?user=' + userData.userName + '&password=' + userData.userPass + '&callback=?';
             url = 'https://moon.signage.me/WebService/getStatus.ashx?user=moon1@ms.com&password=123&callback=?';
@@ -47,7 +55,14 @@ define(['jquery', 'backbone', 'StationModel'], function ($, Backbone, StationMod
             var self = this;
 
             $(i_xmlStations).find('Station').each(function (key, value) {
-                var stationModel = new StationModel({
+                var model;
+                if (_.isUndefined(self.get('stationID', parseInt(value.id)))) {
+                    model = new StationModel({stationID: parseInt(value.id)});
+                    self.add(model);
+                } else {
+                    model = self.get('stationID', parseInt(value.id));
+                }
+                model.set({
                     stationID: parseInt(value.id),
                     stationName: $(value).attr('name'),
                     watchDogConnection: $(value).attr('watchDogConnection') == 1 ? 'on' : 'off',
@@ -65,7 +80,6 @@ define(['jquery', 'backbone', 'StationModel'], function ($, Backbone, StationMod
                     lastUpdate: $(value).attr('lastUpdate'),
                     stationColor: self._getStationIconColor($(value).attr('connection'))
                 });
-                self.add(stationModel);
             });
 
             self.trigger(BB.EVENTS.STATIONS_UPDATED);

@@ -6,7 +6,7 @@
  @param {String} i_container element that CompCampaignNavigator inserts itself into
  @return {Object} instantiated StationsListView
  **/
-define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, StationsCollection) {
+define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function ($, Backbone, StationsCollection, AjaxJsonGetter) {
 
     var StationsListView = Backbone.View.extend({
 
@@ -22,7 +22,13 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             self.m_selected_station_id = undefined;
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
             self.m_property.initPanel(Elements.STATION_PROPERTIES);
+
             self.m_stationCollection = new StationsCollection();
+
+            self.ajaxJsonGetter = new AjaxJsonGetter({
+                key: BB.globs['RC4KEY'],
+                url: 'https://secure.dynawebs.net/_php/msWSsec-debug.php?' + Date.now()
+            });
 
             self.listenTo(self.m_stationCollection, 'add', function (i_model) {
                 self._onAddStation(i_model);
@@ -39,7 +45,6 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             BB.comBroker.listen(BB.EVENTS.APP_SIZED, self._reconfigSnapLocation);
             self._reconfigSnapLocation();
 
-            self._listenCap();
         },
 
         /**
@@ -72,11 +77,11 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             var self = this;
             $(Elements.CLASS_STATION_LIST_ITEMS).off('click');
             $(Elements.CLASS_STATION_LIST_ITEMS).on('click', function (e) {
-                self._stopSnapshot();
                 var elem = $(e.target).closest('li');
-                // self.m_selected_station_id = $(elem).data('station_id');
-                self.m_selected_station_id = $(elem).attr('data-station_id');
-
+                var stationID  = $(elem).attr('data-station_id');
+                if (stationID !== self.m_selected_station_id)
+                    self._stopSnapshot();
+                self.m_selected_station_id = stationID;
                 var stationModel = self._getStationModel(self.m_selected_station_id);
                 $(Elements.CLASS_STATION_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
                 $(elem).addClass('activated').find('a').addClass('whiteFont');
@@ -202,6 +207,11 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             });
         },
 
+        _getStationModel: function (i_station_id) {
+            var self = this;
+            return self.m_stationCollection.findWhere({'stationID': i_station_id});
+        },
+
         /**
          Send a remote value (i.e.: remote event / remote touch) to a selected station.
          If events are enable at the campaign level, the _sendStationEvent method enables users to fire events on a selected
@@ -213,21 +223,6 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
          **/
         _sendStationEvent: function (i_eventName, i_eventValue) {
             var self = this;
-            BB.comBroker.listen(JalapenoHelper.stationEventRx, function (e) {
-                var s = e.edata.responce['eventName'];
-                switch (s) {
-                    case 'restart':
-                    {
-                        self._buttonEnable(Elements.RELOAD_COMMAND, true)
-                        break;
-                    }
-                    default:
-                    {
-                        $(Elements.EVENT_SEND_BUTTON).button('enable');
-                    }
-                }
-            });
-
             model.sendStationEvent(model.getDataByID(self.m_selected_resource_id)['id'], i_eventName, i_eventValue);
             $(Elements.EVENT_SEND_BUTTON).button('disable');
         },
@@ -238,10 +233,13 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
                 self.m_imagePath = '';
                 self.m_imageReloadCount = 0;
                 self._listenSnapshotComplete();
-                self.m_imagePath = jalapeno.sendSnapshot(Date.now(), '0.2', self.m_selected_station_id, function (e) {
-                });
+
+                // Can't use short path due to IE error
+                /*self.m_imagePath = jalapeno.sendSnapshot(Date.now(), '0.2', self.m_selected_station_id, function (e) {});
                 log(self.m_imagePath);
-                $(Elements.SNAP_SHOT_IMAGE).attr('src', self.m_imagePath);
+                */
+
+                self._sendSnapshotCommand(self.m_selected_station_id);
                 $(Elements.SNAP_SHOT_IMAGE).attr('src', self.m_imagePath);
                 $(Elements.SNAP_SHOT_IMAGE).hide();
                 $(Elements.SNAP_SHOT_SPINNER).fadeIn('slow');
@@ -253,14 +251,39 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
                     $(Elements.SNAP_SHOT_IMAGE).attr('src', self.m_imagePath);
 
                     // snapshot timeout so reset
-                    if (self.m_imageReloadCount > 6){
+                    if (self.m_imageReloadCount > 6) {
                         self._stopSnapshot();
+                        $(Elements.SNAP_SHOT_IMAGE).attr('src', self.m_imagePath);
                         var stationModel = self._getStationModel(self.m_selected_station_id);
                         self._updatePropButtonState(stationModel);
                     }
                 }, 1000);
                 return false;
             });
+        },
+
+        /**
+         Send a remote snapshot command to a specified station id and wait for a call back.
+         @method _sendSnapshotCommand
+         @param {Number} i_station
+         @return none
+         **/
+        _sendSnapshotCommand: function (i_station) {
+            var self = this;
+            var data = {
+                '@functionName': 'f_captureScreen',
+                '@stationID': i_station,
+                '@quality': 1,
+                '@time': Date.now()
+            };
+
+            // var ajaxWrapper = new AjaxJsonGetter('https://secure.dynawebs.net/_php/msWSsec-debug.php?' + Date.now());
+            self.ajaxJsonGetter.getData(data, onSnapshotReply);
+            function onSnapshotReply(e) {
+                if (e.responce['status'] == 'pass') {
+                    self.m_imagePath = e.responce['path'];
+                }
+            }
         },
 
         _stopSnapshot: function () {
@@ -291,68 +314,8 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
                 var stationModel = self._getStationModel(self.m_selected_station_id);
                 self._updatePropButtonState(stationModel);
             });
-        },
-
-        _getStationModel: function (i_station_id) {
-            var self = this;
-            return self.m_stationCollection.findWhere({'stationID': i_station_id});
-        },
-
-
-
-
-
-
-        _listenCap: function(){
-            var self = this;
-            $(Elements.STATION_SNAPSHOT_COMMAND).on('click', function (e) {
-
-                self.m_imagePath = '';
-                console.log('loading '+self.m_imagePath);
-                $(Elements.SNAP_SHOT_IMAGE).attr('src', self.m_imagePath);
-
-                BB.comBroker.listenOnce('STATION_CAPTURED', function (e) {
-                    if (e.edata.responce['status'] == 'pass') {
-                        self.m_imagePath = e.edata.responce['path'];
-                        log('snapshot PHP... ' + e.edata.responce['path']);
-                        self._listenToImageLoad();
-                        setTimeout(function () {  // IE Bug, needs timer
-                            // $(Elements.SNAP_SHOT_IMAGE).attr('src', self.m_imagePath);
-                        }, 1000);
-                        console.log('got path: ' + self.m_imagePath);
-                    }
-                });
-                BB.JalapenoHelper.sendStationCapture(self.m_selected_station_id);
-                return false;
-            });
-        },
-
-        _listenToImageLoad: function () {
-            var self = this;
-            $(Elements.SNAP_SHOT_IMAGE).one('load', function (e) {
-               // $(Elements.SNAP_SHOT_IMAGE).attr('src', self.m_imagePath);
-                $(Elements.SNAP_SHOT_IMAGE).fadeIn('slow');
-            });
-        },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        }
     });
+
     return StationsListView;
 });

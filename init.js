@@ -23,6 +23,8 @@ require.config({
         "ComBroker": '_controllers/ComBroker',
         "ScreenTemplateFactory": '_controllers/ScreenTemplateFactory',
         "AppAuth": '_controllers/AppAuth',
+        "AjaxRPC": '_controllers/AjaxRPC',
+        "AjaxJsonGetter": '_controllers/AjaxJsonGetter',
         "Timeline": '_controllers/Timeline',
         "Channel": '_controllers/Channel',
         "Block": '_controllers/_blocks/Block',

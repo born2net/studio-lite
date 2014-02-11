@@ -29,9 +29,9 @@ define(['jquery', 'backbone', 'StationModel'], function ($, Backbone, StationMod
             var self = this;
             // log('got stations...');
             $(i_xmlStations).find('Station').each(function (key, value) {
-
+                var stationID = $(value).attr('id');
                 var stationData = {
-                    stationID: $(value).attr('id'),
+                    stationID: stationID,
                     stationName: $(value).attr('name'),
                     watchDogConnection: $(value).attr('watchDogConnection') == 1 ? 'on' : 'off',
                     status: $(value).attr('status'),
@@ -50,7 +50,7 @@ define(['jquery', 'backbone', 'StationModel'], function ($, Backbone, StationMod
                     stationColor: self._getStationIconColor($(value).attr('connection'))
                 };
 
-                var stationModel = self.findWhere({'stationID': value.id});
+                var stationModel = self.findWhere({'stationID':stationID});
                 if (_.isUndefined(stationModel)) {
                     // new station added
                     stationModel = new StationModel(stationData);
@@ -109,7 +109,7 @@ define(['jquery', 'backbone', 'StationModel'], function ($, Backbone, StationMod
             self._getRemoteStations();
             self.m_refreshHandle = setInterval(function () {
                 self._getRemoteStations();
-            }, 100000);
+            }, 10000);
         }
     });
 

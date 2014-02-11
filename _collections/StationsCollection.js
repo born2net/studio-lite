@@ -27,7 +27,7 @@ define(['jquery', 'backbone', 'StationModel'], function ($, Backbone, StationMod
          **/
         _populateCollection: function (i_xmlStations) {
             var self = this;
-            log('got stations...');
+            // log('got stations...');
             $(i_xmlStations).find('Station').each(function (key, value) {
 
                 var stationData = {

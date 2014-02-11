@@ -16,19 +16,19 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
          **/
         initialize: function () {
             var self = this;
-            self.m_refreshTimer = 60000;
-            self.m_selected_station_id = undefined;
+            self.m_snapshotInProgress = undefined;
             self.m_imageReloadCount = 0;
             self.m_imagePath = '';
+            self.m_selected_station_id = undefined;
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
             self.m_property.initPanel(Elements.STATION_PROPERTIES);
-            // self.m_property.selectView(Elements.STATION_PROPERTIES);
-
             self.m_stationCollection = new StationsCollection();
+
             self.listenTo(self.m_stationCollection, 'add', function (i_model) {
                 self._onAddStation(i_model);
                 self._listenStationSelected();
             });
+
             self.listenTo(self.m_stationCollection, 'change', function (i_model) {
                 self._onUpdateStation(i_model);
             });
@@ -36,8 +36,8 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             self._wireUI();
             self._wireSnapshot();
 
-            BB.comBroker.listen(BB.EVENTS.APP_SIZED, self._reconfigScreeCaptureLocation);
-            self._reconfigScreeCaptureLocation();
+            BB.comBroker.listen(BB.EVENTS.APP_SIZED, self._reconfigSnapLocation);
+            self._reconfigSnapLocation();
         },
 
         /**
@@ -70,9 +70,10 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             var self = this;
             $(Elements.CLASS_STATION_LIST_ITEMS).off('click');
             $(Elements.CLASS_STATION_LIST_ITEMS).on('click', function (e) {
+                self._stopSnapshot();
                 var elem = $(e.target).closest('li');
                 self.m_selected_station_id = $(elem).data('station_id');
-                var stationModel = self.m_stationCollection.findWhere({'stationID': self.m_selected_station_id});
+                var stationModel = self._getStationModel(self.m_selected_station_id);
                 $(Elements.CLASS_STATION_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
                 $(elem).addClass('activated').find('a').addClass('whiteFont');
                 self.m_property.viewPanel(Elements.STATION_PROPERTIES);
@@ -88,11 +89,14 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
          @param {Object} i_model
          **/
         _updatePropButtonState: function (i_model) {
+            var self = this;
+            if (!_.isUndefined(self.m_snapshotInProgress))
+                return;
             var disabled = ''
             if (i_model.get('connection') == '0') {
                 disabled = 'disabled';
             }
-            $('#stationcontrol button').prop('disabled', disabled);
+            $(Elements.STATION_CONTROL + ' button').prop('disabled', disabled);
         },
 
         /**
@@ -113,10 +117,10 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
         },
 
         /**
-         Reconfigure the location (offset) of the screen capture UI depending on current property with
-         @method _reconfigScreeCaptureLocation
+         Reconfigure the location (offset) of the screen snapshot UI depending on current property with
+         @method _reconfigSnapLocation
          **/
-        _reconfigScreeCaptureLocation: function () {
+        _reconfigSnapLocation: function () {
             var offset = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).getPropWidth();
             if (offset < 240)
                 offset = 240;
@@ -148,20 +152,8 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
                 if (!stationLI)
                     var stationLI = $(Elements.STATION_LIST_VIEW).find('[data-station_id="' + i_stationModel.get('stationID') + '"]');
                 stationLI.trigger('click');
-                log('update data on ' + self.m_selected_station_id);
+                // log('update data on ' + self.m_selected_station_id);
             }
-        },
-
-        _captureInProgress: function(){
-            var self = this;
-            self.m_imagePath = '';
-            self.m_imageReloadCount = 0;
-            $('#stationcontrol button').prop('disabled', 'disabled');
-        },
-
-        _captureCompleted: function(){
-            var self = this;
-            // $('#stationcontrol button').prop('disabled', '');
         },
 
         /**
@@ -181,60 +173,6 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
                 '</a>' +
                 '</li>';
             $(Elements.STATION_LIST_VIEW).append(snippet)
-        },
-
-        /**
-         Listen when a new remote snapshot is available on the server for a selected station, so we can display it in the properties panel.
-         @method _listenToImageLoad
-         @return none
-         **/
-        _listenToImageLoad: function () {
-            var self = this;
-            $(Elements.SNAP_SHOT_IMAGE).one('load', function (e) {
-                $(Elements.SNAP_SHOT_SPINNER).hide();
-                $(Elements.SNAP_SHOT_IMAGE).attr('src', self.m_imagePath);
-                $(Elements.SNAP_SHOT_IMAGE).fadeIn('slow');
-                self._captureCompleted();
-            });
-        },
-
-        /**
-         Listen when a new remote snapshot is available on the server for a selected station, so we can display it in the properties panel.
-         @method _listenToImageLoad
-         @return none
-         **/
-        _listenToImageError: function () {
-            var self = this;
-            $(Elements.SNAP_SHOT_IMAGE).one('error',function (e) {
-                self.m_imageReloadCount++;
-                if (self.m_imageReloadCount > 6) {
-                    self._captureCompleted();
-                    $(Elements.SNAP_SHOT_SPINNER).fadeOut('slow');
-                    self.m_imageReloadCount = 0;
-                    return;
-                }
-                setTimeout(function () {
-                    $(Elements.SNAP_SHOT_IMAGE).attr('src', self.m_imagePath);
-                }, 1500)
-            });
-        },
-
-        _wireSnapshot: function () {
-            var self = this;
-            // $(Elements.SNAPSHOT_SPINNER).fadeOut();
-            // $(Elements.SNAPSHOT_IMAGE).fadeOut();
-            // fail load image
-            $(Elements.STATION_CAPTURE_COMMAND).on('click', function (e) {
-                self._captureInProgress();
-                self._listenToImageLoad();
-                self._listenToImageError();
-                self.m_imagePath = jalapeno.sendSnapshot(Date.now(), '0.2', self.m_selected_station_id, function (e) {
-                });
-                $(Elements.SNAP_SHOT_IMAGE).attr('src', self.m_imagePath);
-                $(Elements.SNAP_SHOT_IMAGE).hide();
-                $(Elements.SNAP_SHOT_SPINNER).fadeIn('slow');
-                return false;
-            });
         },
 
         /**
@@ -288,6 +226,70 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
 
             model.sendStationEvent(model.getDataByID(self.m_selected_resource_id)['id'], i_eventName, i_eventValue);
             $(Elements.EVENT_SEND_BUTTON).button('disable');
+        },
+
+        _wireSnapshot: function () {
+            var self = this;
+            $(Elements.STATION_SNAPSHOT_COMMAND).on('click', function (e) {
+                self.m_imagePath = '';
+                self.m_imageReloadCount = 0;
+                self._listenSnapshotComplete();
+                self.m_imagePath = jalapeno.sendSnapshot(Date.now(), '0.2', self.m_selected_station_id, function (e) {
+                });
+                $(Elements.SNAP_SHOT_IMAGE).attr('src', self.m_imagePath);
+                $(Elements.SNAP_SHOT_IMAGE).hide();
+                $(Elements.SNAP_SHOT_SPINNER).fadeIn('slow');
+                $(Elements.STATION_CONTROL + ' button').prop('disabled', 'disabled');
+
+                self.m_snapshotInProgress = setInterval(function () {
+                    self.m_imageReloadCount++;
+                    log('snapshot... ' + self.m_imageReloadCount);
+                    $(Elements.SNAP_SHOT_IMAGE).attr('src', self.m_imagePath);
+
+                    // snapshot timeout so reset
+                    if (self.m_imageReloadCount > 6){
+                        self._stopSnapshot();
+                        var stationModel = self._getStationModel(self.m_selected_station_id);
+                        self._updatePropButtonState(stationModel);
+                    }
+                }, 1000);
+                return false;
+            });
+        },
+
+        _stopSnapshot: function () {
+            var self = this;
+            if (self.m_snapshotInProgress)
+                clearTimeout(self.m_snapshotInProgress);
+            self.m_snapshotInProgress = undefined;
+            $(Elements.SNAP_SHOT_SPINNER).hide();
+            $(Elements.SNAP_SHOT_IMAGE).attr('src', '');
+            $(Elements.SNAP_SHOT_IMAGE).hide();
+            $(Elements.SNAP_SHOT_IMAGE).unbind('load');
+        },
+
+        /**
+         Listen when a new remote snapshot is available on the server for a selected station, so we can display it in the properties panel.
+         @method _listenSnapshotComplete
+         @return none
+         **/
+        _listenSnapshotComplete: function () {
+            var self = this;
+            // snapshot success
+            $(Elements.SNAP_SHOT_IMAGE).one('load', function (e) {
+                $(Elements.SNAP_SHOT_SPINNER).hide();
+                $(Elements.SNAP_SHOT_IMAGE).attr('src', self.m_imagePath);
+                $(Elements.SNAP_SHOT_IMAGE).fadeIn('slow');
+                clearTimeout(self.m_snapshotInProgress);
+                self.m_snapshotInProgress = undefined;
+                var stationModel = self._getStationModel(self.m_selected_station_id);
+                self._updatePropButtonState(stationModel);
+            });
+        },
+
+        _getStationModel: function (i_station_id) {
+            var self = this;
+            return self.m_stationCollection.findWhere({'stationID': i_station_id});
         }
     });
     return StationsListView;

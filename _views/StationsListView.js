@@ -19,7 +19,7 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             self.m_refreshTimer = 60000;
             self.m_selected_station_id = undefined;
             self.m_imageReloadCount = 0;
-            self.m_stationDataMode = BB.CONSTS.STATION_LIST_EMPTY;
+            self.m_imagePath = '';
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
             self.m_property.initPanel(Elements.STATION_PROPERTIES);
             // self.m_property.selectView(Elements.STATION_PROPERTIES);
@@ -32,6 +32,9 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             self.listenTo(self.m_stationCollection, 'change', function (i_model) {
                 self._onUpdateStation(i_model);
             });
+
+            self._wireUI();
+            self._wireSnapshot();
 
             BB.comBroker.listen(BB.EVENTS.APP_SIZED, self._reconfigScreeCaptureLocation);
             self._reconfigScreeCaptureLocation();
@@ -46,7 +49,6 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             var self = this;
             self.m_stationCollection.resumeGetRemoteStations();
             log('in view');
-
         },
 
         /**
@@ -66,7 +68,6 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
          **/
         _listenStationSelected: function () {
             var self = this;
-
             $(Elements.CLASS_STATION_LIST_ITEMS).off('click');
             $(Elements.CLASS_STATION_LIST_ITEMS).on('click', function (e) {
                 var elem = $(e.target).closest('li');
@@ -116,7 +117,7 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
          @method _reconfigScreeCaptureLocation
          **/
         _reconfigScreeCaptureLocation: function () {
-            var offset = BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW).getPropWidth();
+            var offset = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).getPropWidth();
             if (offset < 240)
                 offset = 240;
             var box = (offset / 2) - 120;
@@ -144,7 +145,7 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
                 $(stationLI).find('circle').attr('fill', i_stationModel.get('stationColor'));
             }
             if (i_stationModel.get('stationID') == self.m_selected_station_id) {
-                if(!stationLI)
+                if (!stationLI)
                     var stationLI = $(Elements.STATION_LIST_VIEW).find('[data-station_id="' + i_stationModel.get('stationID') + '"]');
                 stationLI.trigger('click');
                 log('update data on ' + self.m_selected_station_id);
@@ -171,116 +172,16 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
         },
 
         /**
-         Bind all event listeners on the UI for remote stations commands including commands
-         @method _wireUI
+         Listen when a new remote snapshot is available on the server for a selected station, so we can display it in the properties panel.
+         @method _listenToImageLoad
          @return none
          **/
-        _wireUI: function () {
+        _listenToImageLoad: function () {
             var self = this;
-            $(Elements.SNAPSHOT_SPINNER).fadeOut();
-            $(Elements.SNAPSHOT_IMAGE).fadeOut();
-
-            // fail load image
-            $(Elements.SNAPSHOT_IMAGE).error(function (e) {
-                self.m_imageReloadCount++;
-
-                if (self.m_imageReloadCount > 6) {
-                    $(Elements.SNAPSHOT_SPINNER).fadeOut('slow');
-                    self.m_imageReloadCount = 0;
-                    self._buttonEnable(Elements.CAPTURE_COMMAND, true)
-                    return;
-                }
-                setTimeout(function () {
-                    $(Elements.SNAPSHOT_IMAGE).attr('src', self.m_imagePath);
-                }, 1500)
-            });
-
-            $(Elements.RELOAD_COMMAND).tap(function (e) {
-                e.stopImmediatePropagation();
-                e.stopPropagation();
-                e.preventDefault();
-                if (!self._buttonIsEnabled(Elements.RELOAD_COMMAND))
-                    return false;
-                self._buttonEnable(Elements.RELOAD_COMMAND, false);
-                self._sendStationEvent('restart', '');
-            });
-
-            $(Elements.PLAY_COMMAND + ' ' + Elements.STOP_COMMAND).tap(function (e) {
-                e.stopImmediatePropagation();
-                e.stopPropagation();
-                e.preventDefault();
-
-                var command = 'playCommand' == e.currentTarget.id ? 'play' : 'end';
-
-                switch (command) {
-                    case 'play':
-                    {
-                        if (!self._buttonIsEnabled(Elements.PLAY_COMMAND))
-                            return false;
-                        self._buttonEnable(Elements.PLAY_COMMAND, false);
-                        break;
-                    }
-                    case 'end':
-                    {
-                        if (!self._buttonIsEnabled(Elements.STOP_COMMAND))
-                            return false;
-                        self._buttonEnable(Elements.STOP_COMMAND, false);
-                        break;
-                    }
-                }
-
-                BB.comBroker.listen(JalapenoHelper.stationPlayedStopped, function (e) {
-                    self._buttonEnable(Elements.PLAY_COMMAND, true);
-                    self._buttonEnable(Elements.STOP_COMMAND, true);
-                    if (e.edata.responce['status'] == 'pass') {
-                    }
-                });
-
-                model.sendStationPlayStop(model.getDataByID(self.m_selected_resource_id)['id'], command);
-
-                e.preventDefault();
-                e.stopPropagation();
-                return false;
-            });
-
-            $(Elements.UP_TOTOP).on('click', function () {
-                $('body').animate({scrollTop: '0px'}, 500, function () {
-                    $('body').clearQueue();
-                });
-            });
-
-            $(Elements.EVENT_SEND_BUTTON).tap(function () {
-                self._sendStationEvent('event', $(Elements.SEND_EVENT_ID).val());
-            });
-
-            $(Elements.CAPTURE_COMMAND).on('tap', function (e) {
-
-                e.stopImmediatePropagation();
-                e.stopPropagation();
-                e.preventDefault();
-
-                if (!self._buttonIsEnabled(this))
-                    return false;
-                self._buttonEnable(Elements.CAPTURE_COMMAND, false);
-
-                self.m_imagePath = '';
-                $(Elements.SNAPSHOT_IMAGE).attr('src', self.m_imagePath);
-                self._buttonEnable(Elements.CAPTURE_COMMAND, false);
-                $(Elements.SNAPSHOT_IMAGE).hide();
-                $(Elements.SNAPSHOT_SPINNER).fadeIn('slow');
-
-                BB.comBroker.listen(JalapenoHelper.stationCaptured, function (e) {
-                    if (e.edata.responce['status'] == 'pass') {
-                        self.m_imagePath = e.edata.responce['path'];
-                        self._listenToImageLoad();
-                        setTimeout(function () {  // IE Bug, needs timer
-                            $(Elements.SNAPSHOT_IMAGE).attr('src', self.m_imagePath);
-                        }, 1000);
-                        log('got path: ' + self.m_imagePath);
-                    }
-                });
-                model.sendStationCapture(model.getDataByID(self.m_selected_resource_id)['id']);
-                return false;
+            $(Elements.SNAP_SHOT_IMAGE).one('load', function (e) {
+                $(Elements.SNAP_SHOT_SPINNER).hide();
+                $(Elements.SNAP_SHOT_IMAGE).attr('src', self.m_imagePath);
+                $(Elements.SNAP_SHOT_IMAGE).fadeIn('slow');
             });
         },
 
@@ -289,13 +190,63 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
          @method _listenToImageLoad
          @return none
          **/
-        _listenToImageLoad: function () {
+        _listenToImageError: function () {
             var self = this;
-            $(Elements.SNAPSHOT_IMAGE).one('load', function (e) {
-                $(Elements.SNAPSHOT_SPINNER).hide();
-                $(Elements.SNAPSHOT_IMAGE).attr('src', self.m_imagePath);
-                $(Elements.SNAPSHOT_IMAGE).fadeIn('slow');
-                self._buttonEnable(Elements.CAPTURE_COMMAND, true);
+            $(Elements.SNAP_SHOT_IMAGE).error(function (e) {
+                self.m_imageReloadCount++;
+                if (self.m_imageReloadCount > 6) {
+                    $(Elements.SNAP_SHOT_SPINNER).fadeOut('slow');
+                    self.m_imageReloadCount = 0;
+                    return;
+                }
+                setTimeout(function () {
+                    $(Elements.SNAP_SHOT_IMAGE).attr('src', self.m_imagePath);
+                }, 1500)
+            });
+        },
+
+        _wireSnapshot: function () {
+            var self = this;
+            // $(Elements.SNAPSHOT_SPINNER).fadeOut();
+            // $(Elements.SNAPSHOT_IMAGE).fadeOut();
+            // fail load image
+            $(Elements.STATION_CAPTURE_COMMAND).on('click', function (e) {
+                self.m_imagePath = '';
+
+                self._listenToImageLoad();
+                self._listenToImageError();
+
+                self.m_imagePath = jalapeno.sendSnapshot(Date.now(), '0.2', self.m_selected_station_id, function (e) {
+                    log(e);
+                });
+                log(self.m_imagePath);
+                $(Elements.SNAP_SHOT_IMAGE).attr('src', self.m_imagePath);
+                $(Elements.SNAP_SHOT_IMAGE).hide();
+                $(Elements.SNAP_SHOT_SPINNER).fadeIn('slow');
+                return false;
+            });
+        },
+
+        /**
+         Bind all event listeners on the UI for remote stations commands including commands
+         @method _wireUI
+         @return none
+         **/
+        _wireUI: function () {
+            var self = this;
+            $(Elements.STATION_PLAY_COMMAND + ' , ' + Elements.STATION_STOP_COMMAND).on('click', function (e) {
+                var command = BB.lib.unhash(Elements.STATION_PLAY_COMMAND) == e.currentTarget.id ? 'start' : 'stop';
+                jalapeno.sendCommand(command, self.m_selected_station_id, function () {
+                    // log('cmd done'+command);
+                });
+                return false;
+            });
+
+            $(Elements.STATION_RELOAD_COMMAND).click(function (e) {
+                jalapeno.sendCommand('rebootPlayer', self.m_selected_station_id, function () {
+                    log('cmd done restart');
+                });
+                return false;
             });
         },
 
@@ -329,29 +280,5 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             $(Elements.EVENT_SEND_BUTTON).button('disable');
         }
     });
-
     return StationsListView;
-
 });
-
-/*BB.comBroker.listen(Viewstacks.VIEW_CHANGED, function (e) {
- if ($(e.context).data('viewstackname') == 'tab3' && BB.comBroker.getService('mainViewStack') === e.caller) {
- // log('entering stations');
- setTimeout(function () {
- model.requestStationsList(self);
- }, 500);
- self.m_refreshHandle = setInterval(function () {
- model.requestStationsList(self);
- }, self.m_refreshTimer);
- }
- });
-
- BB.comBroker.listen(Viewstacks.VIEW_CHANGED, function (e) {
- if ($(e.context).data('viewstackname') != 'tab3' && Elements.MAIN_CONTENT === e.caller.m_contentID) {
- // log('exiting stations')
- clearInterval(self.m_refreshHandle);
- }
- });
- self._wireUI();
- BB.comBroker.listen(JalapenoHelper.stationList, self._onAddStation);
- */

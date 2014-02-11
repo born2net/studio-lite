@@ -229,6 +229,11 @@ body {
     padding-right: 20px;
 }
 
+#eventSendButton {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
 #stationInfo {
     padding-top: 25px;
 }

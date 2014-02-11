@@ -104,6 +104,11 @@ Elements.STATION_AIR_VERSION = '#stationAirVersion';
 Elements.STATION_PLAYER_VERSION = '#stationPlayerVersion';
 Elements.STATION_RUNNING_TIME = '#stationRunningTime';
 Elements.STATION_OS = '#stationOS';
+Elements.STATION_PLAY_COMMAND = '#stationPlayCommand';
+Elements.STATION_STOP_COMMAND = '#stationStopCommand';
+Elements.STATION_RELOAD_COMMAND = '#stationReloadCommand';
+Elements.STATION_CAPTURE_COMMAND = '#stationCaptureCommand';
+
 
 // classes
 Elements.CLASS_SCREEN_DIVISION = '.screenDivisionClass';

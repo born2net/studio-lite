@@ -99,6 +99,34 @@ Jalapeno.prototype = {
     },
 
     /**
+     Push a command to remote station
+     @method sendCommand
+     @param {String} i_command
+     @param {Number} i_stationId
+     @param {Function} i_callBack
+     **/
+    sendCommand: function(i_command, i_stationId, i_callBack){
+        var url= 'https://' +  jalapeno.getUserData().domain  + '/WebService/sendCommand.ashx?i_user=' + jalapeno.getUserData().userName + '&i_password=' + jalapeno.getUserData().userPass + '&i_stationId=' + i_stationId + '&i_command=' + i_command + '&i_param1=' + 'SignageStudioLite' + '&i_param2='+ '&callback=?';
+        $.getJSON(url, i_callBack);
+    },
+
+    /**
+     Push a command to remote station
+     @method sendCommand
+     @param {String} i_command
+     @param {Number} i_stationId
+     @param {Function} i_callBack
+     @return {String} image path url
+     **/
+    sendSnapshot: function(i_fileName, i_quality, i_stationId, i_callBack){
+        var url= 'https://' +  jalapeno.getUserData().domain  + '/WebService/sendCommand.ashx?i_user=' + jalapeno.getUserData().userName + '&i_password=' + jalapeno.getUserData().userPass + '&i_stationId=' + i_stationId + '&i_command=' + 'captureScreen2' + '&i_param1=' + i_fileName + '&i_param2='+ i_quality + '&callback=?';
+        $.getJSON(url, i_callBack);
+        log(url);
+        var path = 'https://' + jalapeno.getUserData().domain + '/Snapshots/business' + jalapeno.getUserData().businessID + "/station" + i_stationId +  '/' + i_fileName + '.jpg';
+        return path;
+    },
+
+    /**
      Create a new campaign in the local database
      @method createCampaign
      @param {Number} i_campgianName

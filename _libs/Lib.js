@@ -161,6 +161,11 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             return value.replace(/\./g, '');
         },
 
+        unhash: function (value) {
+            return value.replace(/\#/g, '');
+        },
+
+
         /**
          Get DOM comment string
          @method getComment

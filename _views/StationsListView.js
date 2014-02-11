@@ -212,14 +212,11 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             // fail load image
             $(Elements.STATION_CAPTURE_COMMAND).on('click', function (e) {
                 self.m_imagePath = '';
-
                 self._listenToImageLoad();
                 self._listenToImageError();
 
                 self.m_imagePath = jalapeno.sendSnapshot(Date.now(), '0.2', self.m_selected_station_id, function (e) {
-                    log(e);
                 });
-                log(self.m_imagePath);
                 $(Elements.SNAP_SHOT_IMAGE).attr('src', self.m_imagePath);
                 $(Elements.SNAP_SHOT_IMAGE).hide();
                 $(Elements.SNAP_SHOT_SPINNER).fadeIn('slow');

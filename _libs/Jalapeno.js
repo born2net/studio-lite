@@ -111,9 +111,10 @@ Jalapeno.prototype = {
     },
 
     /**
-     Push a command to remote station
-     @method sendCommand
-     @param {String} i_command
+     Send remote command to retrieve snapshot of a running station
+     @method sendSnapshot
+     @param {String} i_fileName
+     @param {Number} i_quality
      @param {Number} i_stationId
      @param {Function} i_callBack
      @return {String} image path url
@@ -121,7 +122,6 @@ Jalapeno.prototype = {
     sendSnapshot: function(i_fileName, i_quality, i_stationId, i_callBack){
         var url= 'https://' +  jalapeno.getUserData().domain  + '/WebService/sendCommand.ashx?i_user=' + jalapeno.getUserData().userName + '&i_password=' + jalapeno.getUserData().userPass + '&i_stationId=' + i_stationId + '&i_command=' + 'captureScreen2' + '&i_param1=' + i_fileName + '&i_param2='+ i_quality + '&callback=?';
         $.getJSON(url, i_callBack);
-        log(url);
         var path = 'https://' + jalapeno.getUserData().domain + '/Snapshots/business' + jalapeno.getUserData().businessID + "/station" + i_stationId +  '/' + i_fileName + '.jpg';
         return path;
     },

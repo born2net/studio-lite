@@ -92,7 +92,7 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             if (i_model.get('connection') == '0') {
                 disabled = 'disabled';
             }
-            $('#stationcontrol button').prop('disabled', disabled)
+            $('#stationcontrol button').prop('disabled', disabled);
         },
 
         /**
@@ -152,6 +152,18 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             }
         },
 
+        _captureInProgress: function(){
+            var self = this;
+            self.m_imagePath = '';
+            self.m_imageReloadCount = 0;
+            $('#stationcontrol button').prop('disabled', 'disabled');
+        },
+
+        _captureCompleted: function(){
+            var self = this;
+            // $('#stationcontrol button').prop('disabled', '');
+        },
+
         /**
          When new data is available from the remote server, update the list with current data.
          @method _onAddStation
@@ -182,6 +194,7 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
                 $(Elements.SNAP_SHOT_SPINNER).hide();
                 $(Elements.SNAP_SHOT_IMAGE).attr('src', self.m_imagePath);
                 $(Elements.SNAP_SHOT_IMAGE).fadeIn('slow');
+                self._captureCompleted();
             });
         },
 
@@ -192,9 +205,10 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
          **/
         _listenToImageError: function () {
             var self = this;
-            $(Elements.SNAP_SHOT_IMAGE).error(function (e) {
+            $(Elements.SNAP_SHOT_IMAGE).one('error',function (e) {
                 self.m_imageReloadCount++;
                 if (self.m_imageReloadCount > 6) {
+                    self._captureCompleted();
                     $(Elements.SNAP_SHOT_SPINNER).fadeOut('slow');
                     self.m_imageReloadCount = 0;
                     return;
@@ -211,10 +225,9 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             // $(Elements.SNAPSHOT_IMAGE).fadeOut();
             // fail load image
             $(Elements.STATION_CAPTURE_COMMAND).on('click', function (e) {
-                self.m_imagePath = '';
+                self._captureInProgress();
                 self._listenToImageLoad();
                 self._listenToImageError();
-
                 self.m_imagePath = jalapeno.sendSnapshot(Date.now(), '0.2', self.m_selected_station_id, function (e) {
                 });
                 $(Elements.SNAP_SHOT_IMAGE).attr('src', self.m_imagePath);

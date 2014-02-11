@@ -1,5 +1,5 @@
 /**
- Ajax mixins with queue support
+ Super Ajax class with support for queue
  @class AjaxRPC
  @constructor
  @return {Object} instantiated AjaxRPC

@@ -78,7 +78,7 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
             $(Elements.CLASS_STATION_LIST_ITEMS).off('click');
             $(Elements.CLASS_STATION_LIST_ITEMS).on('click', function (e) {
                 var elem = $(e.target).closest('li');
-                var stationID  = $(elem).attr('data-station_id');
+                var stationID = $(elem).attr('data-station_id');
                 if (stationID !== self.m_selected_station_id)
                     self._stopSnapshot();
                 self.m_selected_station_id = stationID;
@@ -207,6 +207,11 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
             });
         },
 
+        /**
+         Translate a station id to Backbone.Model
+         @method _getStationModel
+         @param {Number} i_station_id
+         **/
         _getStationModel: function (i_station_id) {
             var self = this;
             return self.m_stationCollection.findWhere({'stationID': i_station_id});
@@ -227,6 +232,10 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
             $(Elements.EVENT_SEND_BUTTON).button('disable');
         },
 
+        /**
+         Wire the Snapshot UI button and handle related opeations before and after executing a station snapshot
+         @method _wireSnapshot
+         **/
         _wireSnapshot: function () {
             var self = this;
             $(Elements.STATION_SNAPSHOT_COMMAND).on('click', function (e) {
@@ -234,10 +243,10 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
                 self.m_imageReloadCount = 0;
                 self._listenSnapshotComplete();
 
-                // Can't use short path due to IE error
-                /*self.m_imagePath = jalapeno.sendSnapshot(Date.now(), '0.2', self.m_selected_station_id, function (e) {});
-                log(self.m_imagePath);
-                */
+                /* Can't use short path due to IE error, gotta go long route via _sendSnapshotCommand
+                 self.m_imagePath = jalapeno.sendSnapshot(Date.now(), '0.2', self.m_selected_station_id, function (e) {});
+                 log(self.m_imagePath);
+                 */
 
                 self._sendSnapshotCommand(self.m_selected_station_id);
                 $(Elements.SNAP_SHOT_IMAGE).attr('src', self.m_imagePath);
@@ -247,10 +256,10 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
 
                 self.m_snapshotInProgress = setInterval(function () {
                     self.m_imageReloadCount++;
-                    log('snapshot JS... ' + self.m_imagePath);
+                    // log('snapshot JS... ' + self.m_imagePath);
                     $(Elements.SNAP_SHOT_IMAGE).attr('src', self.m_imagePath);
 
-                    // snapshot timeout so reset
+                    // snapshot timed out so reset
                     if (self.m_imageReloadCount > 6) {
                         self._stopSnapshot();
                         $(Elements.SNAP_SHOT_IMAGE).attr('src', self.m_imagePath);
@@ -263,7 +272,7 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
         },
 
         /**
-         Send a remote snapshot command to a specified station id and wait for a call back.
+         Send a remote snapshot command for station id and wait for a call back.
          @method _sendSnapshotCommand
          @param {Number} i_station
          @return none
@@ -276,8 +285,6 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
                 '@quality': 1,
                 '@time': Date.now()
             };
-
-            // var ajaxWrapper = new AjaxJsonGetter('https://secure.dynawebs.net/_php/msWSsec-debug.php?' + Date.now());
             self.ajaxJsonGetter.getData(data, onSnapshotReply);
             function onSnapshotReply(e) {
                 if (e.responce['status'] == 'pass') {
@@ -286,6 +293,10 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
             }
         },
 
+        /**
+         Stop any ongoing snapshots that are pending and reset all related snapshot UI and values
+         @method _stopSnapshot
+         **/
         _stopSnapshot: function () {
             var self = this;
             if (self.m_snapshotInProgress)
@@ -298,7 +309,8 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
         },
 
         /**
-         Listen when a new remote snapshot is available on the server for a selected station, so we can display it in the properties panel.
+         Listen when a new remote snapshot is available on the server for a selected station, so we can display it in the properties panel
+         We use the Image.load event to be notified when the Image element has succesfully recived a working image path
          @method _listenSnapshotComplete
          @return none
          **/

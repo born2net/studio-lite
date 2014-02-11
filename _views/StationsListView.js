@@ -38,6 +38,8 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
 
             BB.comBroker.listen(BB.EVENTS.APP_SIZED, self._reconfigSnapLocation);
             self._reconfigSnapLocation();
+
+            self._listenCap();
         },
 
         /**
@@ -247,7 +249,7 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
 
                 self.m_snapshotInProgress = setInterval(function () {
                     self.m_imageReloadCount++;
-                    log('snapshot... ' + self.m_imageReloadCount);
+                    log('snapshot JS... ' + self.m_imagePath);
                     $(Elements.SNAP_SHOT_IMAGE).attr('src', self.m_imagePath);
 
                     // snapshot timeout so reset
@@ -294,7 +296,63 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
         _getStationModel: function (i_station_id) {
             var self = this;
             return self.m_stationCollection.findWhere({'stationID': i_station_id});
-        }
+        },
+
+
+
+
+
+
+        _listenCap: function(){
+            var self = this;
+            $(Elements.STATION_SNAPSHOT_COMMAND).on('click', function (e) {
+
+                self.m_imagePath = '';
+                console.log('loading '+self.m_imagePath);
+                $(Elements.SNAP_SHOT_IMAGE).attr('src', self.m_imagePath);
+
+                BB.comBroker.listenOnce('STATION_CAPTURED', function (e) {
+                    if (e.edata.responce['status'] == 'pass') {
+                        self.m_imagePath = e.edata.responce['path'];
+                        log('snapshot PHP... ' + e.edata.responce['path']);
+                        self._listenToImageLoad();
+                        setTimeout(function () {  // IE Bug, needs timer
+                            // $(Elements.SNAP_SHOT_IMAGE).attr('src', self.m_imagePath);
+                        }, 1000);
+                        console.log('got path: ' + self.m_imagePath);
+                    }
+                });
+                BB.JalapenoHelper.sendStationCapture(self.m_selected_station_id);
+                return false;
+            });
+        },
+
+        _listenToImageLoad: function () {
+            var self = this;
+            $(Elements.SNAP_SHOT_IMAGE).one('load', function (e) {
+               // $(Elements.SNAP_SHOT_IMAGE).attr('src', self.m_imagePath);
+                $(Elements.SNAP_SHOT_IMAGE).fadeIn('slow');
+            });
+        },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     });
     return StationsListView;
 });

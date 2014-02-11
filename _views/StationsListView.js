@@ -72,7 +72,9 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             $(Elements.CLASS_STATION_LIST_ITEMS).on('click', function (e) {
                 self._stopSnapshot();
                 var elem = $(e.target).closest('li');
-                self.m_selected_station_id = $(elem).data('station_id');
+                // self.m_selected_station_id = $(elem).data('station_id');
+                self.m_selected_station_id = $(elem).attr('data-station_id');
+
                 var stationModel = self._getStationModel(self.m_selected_station_id);
                 $(Elements.CLASS_STATION_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
                 $(elem).addClass('activated').find('a').addClass('whiteFont');
@@ -236,6 +238,8 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
                 self._listenSnapshotComplete();
                 self.m_imagePath = jalapeno.sendSnapshot(Date.now(), '0.2', self.m_selected_station_id, function (e) {
                 });
+                log(self.m_imagePath);
+                $(Elements.SNAP_SHOT_IMAGE).attr('src', self.m_imagePath);
                 $(Elements.SNAP_SHOT_IMAGE).attr('src', self.m_imagePath);
                 $(Elements.SNAP_SHOT_IMAGE).hide();
                 $(Elements.SNAP_SHOT_SPINNER).fadeIn('slow');

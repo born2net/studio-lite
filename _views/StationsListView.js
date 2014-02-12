@@ -41,13 +41,10 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
 
             self._wireUI();
             self._wireSnapshot();
-            self._populateStationCampaignDropDown();
+            self._populateStationCampaignDropDown(-1);
 
             BB.comBroker.listen(BB.EVENTS.APP_SIZED, self._reconfigSnapLocation);
             self._reconfigSnapLocation();
-
-
-
         },
 
         /**
@@ -203,14 +200,15 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
                 return false;
             });
 
-            $(Elements.STATION_RELOAD_COMMAND).on('click',function (e) {
+            $(Elements.STATION_RELOAD_COMMAND).on('click', function (e) {
                 jalapeno.sendCommand('rebootPlayer', self.m_selected_station_id, function () {
                     log('cmd done restart');
                 });
                 return false;
             });
 
-            $(Elements.STATION_SELECTION_CAMPAIGN).on('change',function (e) {
+            $(Elements.STATION_SELECTION_CAMPAIGN).on('change', function (e) {
+                self._onChangedCampaign(e);
                 return false;
             });
 
@@ -342,22 +340,44 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
          @method _selectCampaignDropDownForStation
          @param {Number} i_stationID
          **/
-        _selectCampaignDropDownForStation: function(i_stationID){
+        _selectCampaignDropDownForStation: function (i_stationID) {
+            var self = this;
             var campaignID = jalapeno.getStationCampaignID(i_stationID);
+            self._populateStationCampaignDropDown(campaignID);
         },
 
         /**
-         Populate the selection dropdown UI with all available campaigns for station selection
+         Populate the selection drop down UI with all available campaigns for station selection
          @method _populateStationCampaignDropDown
+         @param  {Number} i_campaignID
          **/
-        _populateStationCampaignDropDown: function(){
+        _populateStationCampaignDropDown: function (i_campaignID) {
+            var self = this;
+            $(Elements.STATION_SELECTION_CAMPAIGN).empty();
+            if (i_campaignID == undefined || i_campaignID == -1)
+                $(Elements.STATION_SELECTION_CAMPAIGN).append('<option selected data-campaign_id="-1">Select campaign</option>');
             var campaignIDs = jalapeno.getCampaignIDs();
             for (var i = 0; i < campaignIDs.length; i++) {
                 var campaignID = campaignIDs[i];
                 var recCampaign = jalapeno.getCampaignRecord(campaignID);
-                var snippet = '<option data-campaign_id="' + campaignID + '">'+recCampaign['campaign_name']+'</option>';
+                var selected = campaignID == i_campaignID ? 'selected' : '';
+                var snippet = '<option ' + selected + ' data-campaign_id="' + campaignID + '">' + recCampaign['campaign_name'] + '</option>';
                 $(Elements.STATION_SELECTION_CAMPAIGN).append(snippet);
             }
+        },
+
+        /**
+         Returns this model's attributes as...
+         @method setPlayerData
+         @param {Number} i_playerData
+         @return {Number} Unique clientId.
+         **/
+        _onChangedCampaign: function (e) {
+            var self = this;
+            var campaign_id = $(Elements.STATION_SELECTION_CAMPAIGN + ' option:selected').attr('data-campaign_id');
+            if (campaign_id == -1)
+                return;
+            jalapeno.setStationCampaignID(self.m_selected_station_id, campaign_id);
         }
     });
 

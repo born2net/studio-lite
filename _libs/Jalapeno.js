@@ -112,6 +112,7 @@ Jalapeno.prototype = {
 
     /**
      Send remote command to retrieve snapshot of a running station
+     Due to IE security limitation use _sendSnapshotCommand which is documented in SignageStudio Lite
      @method sendSnapshot
      @param {String} i_fileName
      @param {Number} i_quality
@@ -209,6 +210,35 @@ Jalapeno.prototype = {
         var self = this;
         var recCampaignBoard = self.m_msdb.table_campaign_boards().getRec(i_campaign_board_id);
         return recCampaignBoard.board_id;
+    },
+
+    /**
+     Translate i_campaign_board_id into campaign_id using local table_campaign_boards (not global boards)
+     @method getCampaignIdFromCampaignBoardId
+     @param {Number} i_campaign_board_id
+     @return {Number} campaign_id
+     **/
+    getCampaignIdFromCampaignBoardId: function (i_campaign_board_id) {
+        var self = this;
+        var recCampaignBoard = self.m_msdb.table_campaign_boards().getRec(i_campaign_board_id);
+        return recCampaignBoard.campaign_id;
+    },
+
+    /**
+     Translate i_campaign_id into campaign_board_id using local table_campaign_boards (not global boards)
+     @method getCampaignIdFromCampaignBoardId
+     @param {Number} i_campaign_board_id
+     @return {Number} campaign_id
+     **/
+    getCampaignBoardIdFromCampaignId: function (i_campaign_id) {
+        var self = this;
+        var found_campaign_board_id = -1;
+        $(self.m_msdb.table_campaign_boards().getAllPrimaryKeys()).each(function (k, campaign_board_id) {
+            var recCampaignBoard = self.m_msdb.table_campaign_boards().getRec(campaign_board_id);
+            if (recCampaignBoard['campaign_id'] == i_campaign_id)
+                found_campaign_board_id = recCampaignBoard['campaign_board_id'];
+        });
+        return found_campaign_board_id;
     },
 
     /**
@@ -612,7 +642,6 @@ Jalapeno.prototype = {
      **/
     removeCampaignBoard: function (i_campaign_id) {
         var self = this;
-
         $(self.m_msdb.table_campaign_boards().getAllPrimaryKeys()).each(function (k, campaign_board_id) {
             var recCampaignBoard = self.m_msdb.table_campaign_boards().getRec(campaign_board_id);
             if (recCampaignBoard['campaign_id'] == i_campaign_id) {
@@ -829,18 +858,41 @@ Jalapeno.prototype = {
     /**
      Returns the campaign id that a station is bound to
      @method getStationCampaignID
-     @param {Number} i_station_id
+     @param {Number} i_native_station_id
      @return {Number} campaign_id
      **/
-    getStationCampaignID: function(i_station_id){
+    getStationCampaignID: function(i_native_station_id){
+        var self = this;
+        var campaignID = -1;
+        $(self.m_msdb.table_branch_stations().getAllPrimaryKeys()).each(function (k, branch_station_id) {
+            var recBranchStation = self.m_msdb.table_branch_stations().getRec(branch_station_id);
+            if (recBranchStation['native_id'] == i_native_station_id){
+                var campaign_board_id = recBranchStation['campaign_board_id'];
+                campaignID = self.getCampaignIdFromCampaignBoardId(campaign_board_id);
+            }
+        });
+        return campaignID;
+    },
+
+    /**
+     Set a station so its bound to campaign_id
+     @method SetStationCampaignID
+     @param {Number} i_native_station_id
+     @param {Number} i_campaign_id
+     **/
+    setStationCampaignID: function(i_native_station_id, i_campaign_id){
         var self = this;
         $(self.m_msdb.table_branch_stations().getAllPrimaryKeys()).each(function (k, branch_station_id) {
             var recBranchStation = self.m_msdb.table_branch_stations().getRec(branch_station_id);
-            if (recBranchStation['branch_station_id'] == i_station_id){
-                log('found ' + recBranchStation);
+            if (recBranchStation['native_id'] == i_native_station_id){
+                self.m_msdb.table_branch_stations().openForEdit(branch_station_id);
+                var recBranchStationEdit = self.m_msdb.table_branch_stations().getRec(branch_station_id);
+                var campaign_board_id = self.getCampaignBoardIdFromCampaignId(i_campaign_id);
+                recBranchStationEdit.campaign_board_id = campaign_board_id;
             }
         });
     },
+
 
     /**
      Get the type of a resource (png/jpg...) for specified native_id

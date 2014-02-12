@@ -16,6 +16,7 @@ define(['jquery', 'backbone', 'StationModel'], function ($, Backbone, StationMod
          **/
         initialize: function () {
             var self = this;
+            self.pollTimer = 100000;
             self.m_refreshHandle = undefined;
             self.resumeGetRemoteStations();
         },
@@ -109,7 +110,7 @@ define(['jquery', 'backbone', 'StationModel'], function ($, Backbone, StationMod
             self._getRemoteStations();
             self.m_refreshHandle = setInterval(function () {
                 self._getRemoteStations();
-            }, 10000);
+            }, self.pollTimer);
         }
     });
 

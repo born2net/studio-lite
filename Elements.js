@@ -109,6 +109,8 @@ Elements.STATION_PLAY_COMMAND = '#stationPlayCommand';
 Elements.STATION_STOP_COMMAND = '#stationStopCommand';
 Elements.STATION_RELOAD_COMMAND = '#stationReloadCommand';
 Elements.STATION_SNAPSHOT_COMMAND = '#stationSnapshotCommand';
+Elements.STATION_SELECTION_CAMPAIGN = '#stationSelectionCampaign';
+
 
 
 // classes

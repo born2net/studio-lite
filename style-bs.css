@@ -283,10 +283,14 @@ body {
     padding-bottom: 10px;
 }
 
-#selectCampaignWrap {
+#stationSelectionCampaignWrap {
     width: 183px;
     position: relative;
     left: 10px;
+}
+
+#stationSelectionCampaign {
+
 }
 
 .screenResolutionLabel {

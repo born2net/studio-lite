@@ -827,6 +827,22 @@ Jalapeno.prototype = {
     },
 
     /**
+     Returns the campaign id that a station is bound to
+     @method getStationCampaignID
+     @param {Number} i_station_id
+     @return {Number} campaign_id
+     **/
+    getStationCampaignID: function(i_station_id){
+        var self = this;
+        $(self.m_msdb.table_branch_stations().getAllPrimaryKeys()).each(function (k, branch_station_id) {
+            var recBranchStation = self.m_msdb.table_branch_stations().getRec(branch_station_id);
+            if (recBranchStation['branch_station_id'] == i_station_id){
+                log('found ' + recBranchStation);
+            }
+        });
+    },
+
+    /**
      Get the type of a resource (png/jpg...) for specified native_id
      @method getResourceType
      @param {Number} i_resource_id

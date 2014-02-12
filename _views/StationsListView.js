@@ -41,9 +41,12 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
 
             self._wireUI();
             self._wireSnapshot();
+            self._populateStationCampaignDropDown();
 
             BB.comBroker.listen(BB.EVENTS.APP_SIZED, self._reconfigSnapLocation);
             self._reconfigSnapLocation();
+
+
 
         },
 
@@ -88,6 +91,7 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
                 self.m_property.viewPanel(Elements.STATION_PROPERTIES);
                 self._updatePropStats(stationModel);
                 self._updatePropButtonState(stationModel);
+                self._selectCampaignDropDownForStation(self.m_selected_station_id);
                 return false;
             });
         },
@@ -199,12 +203,17 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
                 return false;
             });
 
-            $(Elements.STATION_RELOAD_COMMAND).click(function (e) {
+            $(Elements.STATION_RELOAD_COMMAND).on('click',function (e) {
                 jalapeno.sendCommand('rebootPlayer', self.m_selected_station_id, function () {
                     log('cmd done restart');
                 });
                 return false;
             });
+
+            $(Elements.STATION_SELECTION_CAMPAIGN).on('change',function (e) {
+                return false;
+            });
+
         },
 
         /**
@@ -326,6 +335,29 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
                 var stationModel = self._getStationModel(self.m_selected_station_id);
                 self._updatePropButtonState(stationModel);
             });
+        },
+
+        /**
+         Select the campaign that is bound to i_stationID and select it in the dropdown UI
+         @method _selectCampaignDropDownForStation
+         @param {Number} i_stationID
+         **/
+        _selectCampaignDropDownForStation: function(i_stationID){
+            var campaignID = jalapeno.getStationCampaignID(i_stationID);
+        },
+
+        /**
+         Populate the selection dropdown UI with all available campaigns for station selection
+         @method _populateStationCampaignDropDown
+         **/
+        _populateStationCampaignDropDown: function(){
+            var campaignIDs = jalapeno.getCampaignIDs();
+            for (var i = 0; i < campaignIDs.length; i++) {
+                var campaignID = campaignIDs[i];
+                var recCampaign = jalapeno.getCampaignRecord(campaignID);
+                var snippet = '<option data-campaign_id="' + campaignID + '">'+recCampaign['campaign_name']+'</option>';
+                $(Elements.STATION_SELECTION_CAMPAIGN).append(snippet);
+            }
         }
     });
 

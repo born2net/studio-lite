@@ -88,7 +88,7 @@ define(['jquery', 'backbone', 'StationModel'], function ($, Backbone, StationMod
             var self = this;
             var userData = jalapeno.getUserData();
             var url = 'https://' + userData.domain + '/WebService/getStatus.ashx?user=' + userData.userName + '&password=' + userData.userPass + '&callback=?';
-            // url = 'https://moon.signage.me/WebService/getStatus.ashx?user=moon1@ms.com&password=123&callback=?';
+            // url = 'https://moon.signage.me/WebService/getStatus.ashx?user=moon1@ms.com&password=xxx&callback=?';
             $.getJSON(url,
                 function (data) {
                     var s64 = data['ret'];

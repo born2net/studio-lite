@@ -225,8 +225,8 @@ body {
 }
 
 #stationcontrol button{
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 #eventSendButton {
@@ -283,10 +283,20 @@ body {
     padding-bottom: 10px;
 }
 
+#selectCampaignWrap {
+    width: 183px;
+    position: relative;
+    left: 10px;
+}
+
 .screenResolutionLabel {
     padding: 10px;
     cursor: pointer;
     font-size: 1.2em;
+}
+
+.centerElement {
+    margin: 0 auto;
 }
 
 .navbar-nav {

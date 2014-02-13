@@ -284,6 +284,10 @@ body {
     padding-bottom: 10px;
 }
 
+#stationRemove {
+    margin-top: 10px;
+}
+
 #stationSelectionCampaignWrap {
     width: 183px;
     position: relative;

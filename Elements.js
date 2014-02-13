@@ -50,6 +50,7 @@ Elements.BS_MODAL = '#bsModal';
 Elements.TOGGLE_PANEL = '#togglePanel';
 Elements.USER_NAME = '#userName';
 Elements.USER_PASS = '#userPass';
+Elements.LOGGED_USER_NAME = '#loggedUserName';
 Elements.STATIONS_PANEL = '#stationsPanel';
 Elements.STATION_LIST_VIEW = '#stationListView';
 Elements.STATION_PROPERTIES = '#stationProperties';
@@ -109,7 +110,8 @@ Elements.STATION_PLAY_COMMAND = '#stationPlayCommand';
 Elements.STATION_STOP_COMMAND = '#stationStopCommand';
 Elements.STATION_RELOAD_COMMAND = '#stationReloadCommand';
 Elements.STATION_SNAPSHOT_COMMAND = '#stationSnapshotCommand';
-Elements.STATION_SELECTION_CAMPAIGN = '#stationSelectionCampaign';
+Elements.STATION_SELECTION_CAMPAIGN = '#stationSelectionCampaign'
+Elements.STATION_REMOVE = '#stationRemove';
 
 
 

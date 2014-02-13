@@ -288,6 +288,9 @@
     </div>
 </div>
 <div id="stationsPanel" class="yScroll" style="display: none">
+    <button id="stationRemove" type="button" class="btn btn-default"><span
+            class="glyphicon glyphicon-remove-circle"></span> remove station
+    </button>
     <ul class="list-group" id="stationListView">
     </ul>
 </div>
@@ -312,18 +315,14 @@
             <ul class="alignTextLeft">
                 <li>Server: <span id="serverName"></span></li>
                 <li>Business id: <span id="buisinessID"></span></li>
-                <li>User status: <span>logged in</span></li>
-                <li>Last save: <span>none</span></li>
+                <li>User name: <span id="loggedUserName"></span></li>
             </ul>
             <hr/>
             <small>MediaSignage Inc &#169;</small>
             <hr/>
         </div>
         <div id="campaignProperties" style="display: none">
-            <form class="form-horizontal" role="form">
-                <input id="formCampaignName" type="text" class="form-control"
-                       placeholder="Campaign name">
-            </form>
+            <input id="formCampaignName" type="text" class="form-control" placeholder="Campaign name">
         </div>
         <div id="timelineProperties" style="display: none">
             <div data-role="fieldcontain" data-inset="true" style="width:99%;">

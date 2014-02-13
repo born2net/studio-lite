@@ -212,6 +212,10 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
                 return false;
             });
 
+            $(Elements.STATION_REMOVE).on('click',function(){
+               log('aaa');
+            });
+
         },
 
         /**

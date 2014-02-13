@@ -1,0 +1,536 @@
+@import url("https://secure.dynawebs.net/_studiolite-dev/_common/_js/bootstrap/css/bootstrap-glyphicons.css");
+
+html,
+body {
+    height: 100%;
+    background-color: #ffffff;
+}
+
+/* Wrapper for page content to push down footer */
+#domRoot {
+    min-height: 100%;
+    height: auto;
+    margin: 0 auto -60px; /* respective of footer */
+    padding: 0 0 60px; /* respective of footer */
+}
+
+/* Wrapper to push down from header */
+#headerPad {
+    background-color: #428bca;
+    min-height: 55px;
+}
+
+#mainPanelWrap {
+    border-right: 2px solid #aaaaaa;
+    /* background-color: darksalmon; */
+}
+
+#campaignPanel {
+    overflow-y: scroll;
+    height: auto;
+    /* background-color: orange; */
+}
+
+#resolutionSelector {
+    overflow-y: scroll;
+}
+
+#propPanel {
+    margin: 0;
+    height: 100%;
+    padding-top: 15px;
+    width: 100%;
+    text-align: center;
+    /* background-color: #fff5ba; */
+}
+
+#propPanel, #mainPanelWrap {
+    height: 200px;
+    /* border-left: 1px #808080 solid; */
+    -webkit-transition: width 0.1s ease, margin 0.1s ease;
+    -moz-transition: width 0.1s ease, margin 0.1s ease;
+    -o-transition: width 0.1s ease, margin 0.1s ease;
+    transition: width 0.1s ease, margin 0.1s ease;
+
+}
+
+#appContent {
+    height: 100%;
+    width: 100%;
+    min-height: 100%;
+    min-width: 100%;
+    /* background-color: pink; */
+}
+
+#footer {
+    height: 60px; /* respective of footer */
+    background-color: #222222;
+}
+
+#footerText {
+    color: #808080;
+    padding: 0px;
+    margin: 0px;
+}
+
+#appNavigator {
+    padding: 0px;
+    margin: 0px;
+    border-right: 1px solid #dddddd;
+}
+
+#appNavigator li {
+    cursor: pointer;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-right: 0px;
+}
+
+#waitScreenMainPanel span {
+    position: relative;
+    left: 45%;
+    top: 40%;
+}
+
+#appNavigator li:hover {
+    /*bootstrap theme color*/;
+    background-color: #428bca;
+    color: white;
+}
+
+#screenLayoutList {
+    overflow-y: scroll;
+    height: 80%;
+}
+
+.draggableScreenPlaceHolder {
+    position: relative;
+    top: 0px;
+    height: 3px;
+    width: 3px;
+    background-color: red;
+    opacity: 0.6
+}
+
+.noScroll {
+    overflow: hidden;
+}
+
+.yScroll {
+    overflow-y: scroll;
+    height: 100%;
+}
+
+#openPopupProperties {
+    float: right;
+}
+
+#screenSelectorContainer {
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+#screenLayoutsUL {
+    width: 1500px;
+}
+
+#togglePanel {
+    position: absolute;
+    margin: 10px;
+    right: 30px;
+    top: 10px;
+    z-index: 110;
+}
+
+#campaignSelectionButtons {
+    margin-bottom: 5px;
+}
+
+.appList {
+    padding-right: 10px;
+}
+
+.appList .openProps {
+    float: right;
+    position: relative;
+    top: -45px;
+}
+
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+    margin-bottom: 10px;
+}
+
+.form-signin .checkbox {
+    font-weight: normal;
+}
+
+.form-signin .form-control {
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+
+.form-signin input[type="text"] {
+    margin-bottom: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+#campaignProperties {
+    padding-top: 10px;
+    padding-right: 10px;
+}
+
+#imgHorizontal {
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+#delScreenButton {
+    display: inline;
+}
+
+#resourcesListView {
+    padding: 10px;
+}
+
+#stationcontrol {
+    padding-top: 30px;
+    position: relative;
+    left: 12px;
+}
+
+#stationcontrol button{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#eventSendButton {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+#stationInfo {
+    padding-top: 25px;
+}
+
+#stationInfo ul {
+    text-align: left;
+    padding-left: 34%;
+}
+
+#snapShotWrap {
+    position: relative;
+    width: 240px;
+    height: 120px;
+}
+
+#snapShotSVG {
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    width: 240px;
+    height: 140px;
+}
+
+#snapShotImage {
+    top: 15px;
+    left: 0px;
+    position: absolute;
+    width: 210px;
+    height: 110px;
+}
+
+#snapShotSpinner {
+    top: 45px;
+    left: 20px;
+    position: absolute;
+    padding: 0;
+    margin: 0;
+}
+
+#imgVertical {
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+#stationListView {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#stationSelectionCampaignWrap {
+    width: 183px;
+    position: relative;
+    left: 10px;
+}
+
+#stationSelectionCampaign {
+
+}
+
+.screenResolutionLabel {
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1.2em;
+}
+
+.centerElement {
+    margin: 0 auto;
+}
+
+.navbar-nav {
+    display: none;
+}
+
+.channelListItems {
+    cursor: pointer;
+}
+
+.channelListItems a img {
+    height: 50px;
+    display: inline;
+    padding-right: 20px;
+}
+
+.channelListItems a span {
+    display: inline;
+    font-size: 1.5em;
+}
+
+.stationListItems {
+    cursor: pointer;
+    padding-top: 10px;
+    padding-bottom: 0px;
+}
+
+.stationListItems span {
+    display: inline;
+}
+
+.screenDivisionClass {
+    cursor: pointer;
+}
+
+.addBlockListItems {
+    cursor: pointer;
+}
+
+.addBlockListItems img {
+    height: 50px;
+    display: inline;
+    padding-right: 20px;
+}
+
+.addBlockListItems span {
+    display: inline;
+    font-size: 1.5em;
+}
+
+.addBlockListItems:hover {
+    background-color: #f5f5f5;
+}
+
+.resourcesListItems {
+    cursor: pointer;
+}
+
+.resourcesListItems img {
+    height: 50px;
+    display: inline;
+    padding-right: 20px;
+}
+
+
+.resourcesListItems span {
+    display: inline;
+    font-size: 1.5em;
+}
+
+.alignTextLeft {
+    text-align: left;
+}
+
+.alignTextCenter {
+    text-align: center;
+}
+
+aside > aside > div > ul > li {
+    display: block;
+    width: 100px;
+    list-style: none;
+    height: 60px;
+    float: left;
+    background: #E2E2E2;
+    border: 1px solid #666;
+    margin-right: 30px;
+    margin-left: 30px;
+}
+
+.dottedHR {
+    height: 6px;
+    width: 1500px;
+    position: relative;
+    border-top: 12px dotted #c1c1c1;
+    padding-bottom: 7px;
+    top: 20px;
+}
+
+.activated {
+    background-color: #428bca;
+    color: white;
+}
+
+.whiteFont {
+    color: white;
+
+}
+
+a {
+    text-decoration: none !important;
+}
+
+/* -------------------------------------------
+StackView CSS
+---------------------------------------------- */
+
+.campaignSlider {
+    position: absolute;
+    padding: 0px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.page {
+    position: absolute;
+    padding: 12px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* =========================================
+   StackView sliders
+   =========================================
+*/
+
+/* =======================================
+ Hardware accelerated horizontal
+ =========================================
+*/
+
+/*
+.page.left {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+}
+.page.center {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+.page.right {
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+}
+.page.transition {
+    -webkit-transition-duration: .25s;
+    transition-duration: .25s;
+}
+*/
+
+/* =======================================
+ Software accelerated horizontal
+ =========================================
+*/
+
+.page.left {
+    left: -100%;
+}
+
+.page.center {
+    left: 0;
+}
+
+.page.right {
+    left: 100%;
+}
+
+.page.transition {
+    -webkit-transition-duration: .25s;
+    transition-duration: .25s;
+}
+
+/*
+=========================================
+Software accelerated vertical
+=========================================
+*/
+
+/*
+.page.left {
+    top: -100%;
+}
+.page.center {
+    top: 0;
+}
+.page.right {
+    top: 100%;
+}
+.page.transition {
+    -webkit-transition-duration: 3.25s;
+    transition-duration: 0.65s;
+}
+*/
+
+/*
+=========================================
+ Hardware accelerated vertical
+=========================================
+*/
+
+/*
+.page.left {
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+}
+.page.center {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+.page.right {
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+}
+.page.transition {
+    -webkit-transition-duration: 3.25s;
+    transition-duration: 3.25s;
+}
+*/
+

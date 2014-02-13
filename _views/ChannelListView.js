@@ -51,6 +51,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             });
             $(Elements.ADD_BLOCK_BUTTON).on('click', function (e) {
                 if (self.selected_campaign_timeline_id == undefined) {
+                    //todo: change to bs dialog
                     alert('Please first select a channel to associate asset with');
                     return;
                 }
@@ -144,6 +145,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             self._listenBlockSelected();
             // self._deselectBlocksFromChannel();
             self._selectLastBlockOnChannel();
+            self._reOrderChannelBlocks();
             return false;
         },
 

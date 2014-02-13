@@ -8,7 +8,7 @@
 define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 'ComBroker', 'Lib', 'Jalapeno', 'JalapenoHelper', 'X2JS'], function (_, $, Backbone, Bootstrap, backbonecontroller, ComBroker, Lib, Jalapeno, JalapenoHelper, X2JS) {
     var StudioLite = Backbone.Controller.extend({
 
-        // application init
+        // app init
         initialize: function () {
             window.BB = Backbone;
             BB.globs = {};

@@ -72,8 +72,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
                 } else {
 
-                    if (i_authMode == self.AUTH_COOKIE)
+                    if (i_authMode == self.AUTH_COOKIE) {
                         $.removeCookie('signagestudioweblite', { path: '/' });
+                        $.removeCookie('signagestudioweblite', { path: '/_studiolite' });
+                        $.removeCookie('signagestudioweblite', { path: '/_studiolite-dev' });
+                        $.removeCookie('signagestudioweblite', { path: '/_studiolite-dist' });
+                    }
 
                     if (i_status.error == "not a studioLite account") {
                         bootbox.dialog({

@@ -1,8 +1,6 @@
 dos2unix *
-
-# echo "generating css files"
-# r.js -o cssIn=../style-bs.css optimizeCss="standard" out=../../_studiolite-dist/style-bs-min.css
-
-echo "generating modules"
+rm -r -f ../../_studiolite-bk/
+rm -r -f ../../_studiolite-dist/
+cp -r -f ../../_studiolite-dev/ ../../_studiolite-bk/
 r.js -o app.build.js
-./presetDist.tcl
+php -q ./presetDist.php

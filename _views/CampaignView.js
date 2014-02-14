@@ -183,6 +183,10 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
                         self.m_selected_campaign_id = jalapeno.createCampaign('campaign');
                         campaign_board_id = jalapeno.assignCampaignToBoard(self.m_selected_campaign_id, board_id);
 
+                        // set campaign name
+                        var campaignName = BB.comBroker.getService(BB.SERVICES['CAMPAIGN_NAME_SELECTOR_VIEW']).getCampaignName();
+                        jalapeno.setCampaignRecord(self.m_selected_campaign_id,'campaign_name',campaignName);
+
                     } else {
 
                         ////////////////////////////////////////////////

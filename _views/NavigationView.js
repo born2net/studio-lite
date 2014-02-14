@@ -58,8 +58,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             $(Elements.CLASS_LOGOUT_PANEL).on('click', function () {
                 self.resetPropertiesView();
                 appEntryFaderView.selectView(Elements.APP_LOGOUT);
-                $.removeCookie('signagestudioweblite', {path: '/'});
-                $.cookie('signagestudioweblite', '', { expires: -300 });
+                BB.comBroker.getService(BB.SERVICES['APP_AUTH']).logout();
             });
 
             $(Elements.DASHBOARD).on('click', function () {

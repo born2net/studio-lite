@@ -152,6 +152,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 this.m_appEntryFaderView.addView(this.m_appContentFaderView);
                 this.m_appEntryFaderView.addView(this.m_mainAppWaitView);
 
+                BB.comBroker.setService(BB.SERVICES['APP_AUTH'], this.m_appAuth);
                 BB.comBroker.setService(BB.SERVICES['APP_ENTRY_FADER_VIEW'], this.m_appEntryFaderView);
                 BB.comBroker.setService(BB.SERVICES['APP_CONTENT_FADER_VIEW'], this.m_appContentFaderView);
             },
@@ -237,19 +238,27 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
             _initCampaignWizardPage: function () {
                 var self = this;
 
-                require(['CampaignSelectorView', 'OrientationSelectorView', 'ResolutionSelectorView', 'CampaignView', 'AddBlockView'], function (CampaignSelectorView, OrientationSelectorView, ResolutionSelectorView, CampaignView, AddBlockView) {
+                require(['CampaignSelectorView', 'OrientationSelectorView', 'ResolutionSelectorView', 'CampaignView', 'CampaignNameSelectorView', 'AddBlockView'], function (CampaignSelectorView, OrientationSelectorView, ResolutionSelectorView, CampaignView, CampaignNameSelectorView, AddBlockView) {
 
                     self.m_campaignSelectorView = new CampaignSelectorView({
                         stackView: self.m_campaignSliderStackView,
                         from: Elements.CAMPAIGN,
                         el: Elements.CAMPAIGN_SELECTOR,
-                        to: Elements.ORIENTATION_SELECTOR
+                        to: Elements.CAMPAIGN_NAME_SELECTOR_VIEW
                     });
                     BB.comBroker.setService(BB.SERVICES.CAMPAIGN_SELECTOR, self.m_campaignSelectorView);
 
-                    self.m_orientationSelectorView = new OrientationSelectorView({
+                    self.m_campaignNameSelectorView = new CampaignNameSelectorView({
                         stackView: self.m_campaignSliderStackView,
                         from: Elements.CAMPAIGN_SELECTOR,
+                        el: Elements.CAMPAIGN_NAME_SELECTOR_VIEW,
+                        to: Elements.ORIENTATION_SELECTOR
+                    });
+                    BB.comBroker.setService(BB.SERVICES.CAMPAIGN_NAME_SELECTOR_VIEW, self.m_campaignNameSelectorView);
+
+                    self.m_orientationSelectorView = new OrientationSelectorView({
+                        stackView: self.m_campaignSliderStackView,
+                        from: Elements.CAMPAIGN_NAME_SELECTOR_VIEW,
                         el: Elements.ORIENTATION_SELECTOR,
                         to: Elements.RESOLUTION_SELECTOR,
                         model: new BB.Model({screenOrientation: null})
@@ -291,6 +300,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                     BB.comBroker.setService(BB.SERVICES.ADD_BLOCK_VIEW, self.m_addBlockView);
 
                     self.m_campaignSliderStackView.addView(self.m_campaignSelectorView);
+                    self.m_campaignSliderStackView.addView(self.m_campaignNameSelectorView);
                     self.m_campaignSliderStackView.addView(self.m_orientationSelectorView);
                     self.m_campaignSliderStackView.addView(self.m_resolutionSelectorView);
                     self.m_campaignSliderStackView.addView(self.m_screenLayoutSelectorView);

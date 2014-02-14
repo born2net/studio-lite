@@ -844,7 +844,7 @@ Jalapeno.prototype = {
      The method uses generic key / value fields so it can set any part of the record.
      @method setCampaignRecord
      @param {Number} i_campaign_id
-     @param {Number} i_key
+     @param {Object} i_key
      @param {String} i_value
      @return {Object} foundCampaignRecord
      **/

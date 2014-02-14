@@ -6,6 +6,8 @@
  **/
 define(['jquery', 'backbone'], function ($, Backbone) {
 
+    BB.SERVICES.APP_AUTH = 'AppAuth';
+
     var AppAuth = BB.Controller.extend({
 
         /**
@@ -40,92 +42,115 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         _loadCredentials: function (i_user, i_pass) {
             var self = this;
-
             var cookie = $.cookie('signagestudioweblite') == undefined ? undefined : $.cookie('signagestudioweblite').split(' ')[0];
             if (cookie) {
                 var credentials = self._breakCookie(cookie);
-                self._serverAuthenticate(credentials.user, credentials.pass, this.AUTH_COOKIE);
+                self._authServer(credentials.user, credentials.pass, this.AUTH_COOKIE);
             } else if (i_user.length > 2 && i_pass.length > 2) {
-                self._serverAuthenticate(i_user, i_pass, this.AUTH_USER_PASS);
+                self._authServer(i_user, i_pass, this.AUTH_USER_PASS);
             } else {
                 BB.comBroker.getService(BB.SERVICES['LAYOUT_MANAGER']).navigate('unauthenticated', {trigger: true});
             }
         },
 
         /**
-         Process actual authentication against mediaSERVER and create cookie if checkbox selected in login form
-         @method _serverAuthenticate
+         Process actual authentication against mediaSERVER
+         @method _authServer
          @param {String} i_user
          @param {String} i_pass
          @param {Number} i_authMode
          **/
-        _serverAuthenticate: function (i_user, i_pass, i_authMode) {
+        _authServer: function (i_user, i_pass, i_authMode) {
             var self = this;
-
             BB.Jalapeno.dbConnect(i_user, i_pass, function (i_status) {
-
                 if (i_status.status) {
-                    // Auth pass
-                    self.authenticated = true;
-
-                    // create cookie
-                    if (i_authMode == self.AUTH_USER_PASS && $(Elements.REMEMBER_ME).prop('checked'))
-                        self._bakeCookie(i_user, i_pass);
-
-                    if (i_status['warning'].length > 0) {
-                        // Pro Account (not a Lite account) so limited access
-
-                        var applyLimitedAccess = function(i_navigationView){
-                            i_navigationView.applyLimitedAccess();
-                            i_navigationView.forceStationOnlyViewAndDialog();
-                        };
-
-                        // if module was not loaded yet wait to be notified from when it does
-                        var navigationView = BB.comBroker.listen(BB.SERVICES['NAVIGATION_VIEW']);
-                        if (_.isUndefined(navigationView)) {
-                            BB.comBroker.listen(BB.EVENTS.SERVICE_REGISTERED, function (e) {
-                                if (e.edata.name == BB.SERVICES['NAVIGATION_VIEW']) {
-                                    var navigationView = e.edata.service;
-                                    applyLimitedAccess(navigationView);
-                                }
-                            });
-                        } else {
-                            // just in case we change the order of loadable modules in the future
-                            // and navigation module is ready before this module
-                            applyLimitedAccess(navigationView);
-                        }
-                    }
-                    BB.comBroker.getService(BB.SERVICES['LAYOUT_MANAGER']).navigate('authenticated', {trigger: true});
-
+                    self._authPassed(i_user, i_pass, i_status, i_authMode);
                 } else {
-                    // Auth Fail
-
-                    // if cookie exists, delete it because obviously it didn't do the job
-                    if (i_authMode == self.AUTH_COOKIE) {
-                        $.removeCookie('signagestudioweblite', { path: '/' });
-                        $.removeCookie('signagestudioweblite', { path: '/_studiolite' });
-                        $.removeCookie('signagestudioweblite', { path: '/_studiolite-dev' });
-                        $.removeCookie('signagestudioweblite', { path: '/_studiolite-dist' });
-                    }
-
-                    // let user know authentication failed
-                    if (i_status.error == "not a studioLite account") {
-                        bootbox.dialog({
-                            message: "You must login with a StudioLite account and not a Pro account",
-                            title: "keep in mind...",
-                            buttons: {
-                                info: {
-                                    label: "OK",
-                                    className: "btn-primary",
-                                    callback: function () {
-                                    }
-                                }
-                            }
-                        });
-                    }
-                    BB.comBroker.getService(BB.SERVICES['LAYOUT_MANAGER']).navigate('authenticationFailed', {trigger: true});
+                    self._authFailed(i_authMode, i_status);
                 }
             });
+        },
+
+        /**
+         User authentication completed successfully
+         @method _authPassed
+         @param {String} i_user user name
+         @param {String} i_pass user password
+         @param {String} i_status status message from remote mediaSERVER (could include warnings)
+         @param {String} i_authMode indicates if authentication was done via cookie or user input
+         **/
+        _authPassed: function (i_user, i_pass, i_status, i_authMode) {
+            var self = this;
+
+            self.authenticated = true;
+            // create cookie
+            if (i_authMode == self.AUTH_USER_PASS && $(Elements.REMEMBER_ME).prop('checked'))
+                self._bakeCookie(i_user, i_pass);
+
+            if (i_status['warning'].length > 0) {
+                // Pro Account (not a Lite account) so limited access
+
+                // if module was not loaded yet wait to be notified from when it does
+                var navigationView = BB.comBroker.listen(BB.SERVICES['NAVIGATION_VIEW']);
+                if (_.isUndefined(navigationView)) {
+                    BB.comBroker.listen(BB.EVENTS.SERVICE_REGISTERED, function (e) {
+                        if (e.edata.name == BB.SERVICES['NAVIGATION_VIEW']) {
+                            var navigationView = e.edata.service;
+                            self._applyLimitedAccess(navigationView);
+                        }
+                    });
+                } else {
+                    // just in case we change the order of loadable modules in the future
+                    // and navigation module is ready before this module
+                    self._applyLimitedAccess(navigationView);
+                }
+            }
+            BB.comBroker.getService(BB.SERVICES['LAYOUT_MANAGER']).navigate('authenticated', {trigger: true});
+        },
+
+        /**
+         User authentication completed unsuccessfully
+         @method _authFailed
+         @param {String} i_status status message from remote mediaSERVER (could include warnings)
+         @param {String} i_authMode indicates if authentication was done via cookie or user input
+         **/
+        _authFailed: function (i_authMode, i_status) {
+            var self = this;
+
+            // if cookie exists, delete it because obviously it didn't do the job
+            if (i_authMode == self.AUTH_COOKIE) {
+                $.removeCookie('signagestudioweblite', { path: '/' });
+                $.removeCookie('signagestudioweblite', { path: '/_studiolite' });
+                $.removeCookie('signagestudioweblite', { path: '/_studiolite-dev' });
+                $.removeCookie('signagestudioweblite', { path: '/_studiolite-dist' });
+            }
+
+            // let user know authentication failed
+            if (i_status.error == "not a studioLite account") {
+                bootbox.dialog({
+                    message: "You must login with a StudioLite account and not a Pro account",
+                    title: "keep in mind...",
+                    buttons: {
+                        info: {
+                            label: "OK",
+                            className: "btn-primary",
+                            callback: function () {
+                            }
+                        }
+                    }
+                });
+            }
+            BB.comBroker.getService(BB.SERVICES['LAYOUT_MANAGER']).navigate('authenticationFailed', {trigger: true});
+        },
+
+        /**
+         Apply limited access to application since user logged in with Pro account intp Lite Studio
+         @method _applyLimitedAccess
+         @param {Object} i_navigationView
+         **/
+        _applyLimitedAccess: function (i_navigationView) {
+            i_navigationView.applyLimitedAccess();
+            i_navigationView.forceStationOnlyViewAndDialog();
         },
 
         /**
@@ -155,6 +180,15 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 user: crumb[0],
                 pass: crumb[2]
             }
+        },
+
+        /**
+         Logout of application and delete saved local cookie
+         @method logout
+         **/
+        logout: function () {
+            $.removeCookie('signagestudioweblite', {path: '/'});
+            $.cookie('signagestudioweblite', '', { expires: -300 });
         }
     });
 

@@ -51,6 +51,7 @@ require.config({
         "CampaignManagerView": '_views/CampaignManagerView',
         "CampaignSliderStackView": '_views/CampaignSliderStackView',
         "CampaignSelectorView": '_views/CampaignSelectorView',
+        "CampaignNameSelectorView": '_views/CampaignNameSelectorView',
         "ResolutionSelectorView": '_views/ResolutionSelectorView',
         "OrientationSelectorView": '_views/OrientationSelectorView',
         "ScreenLayoutSelectorView": '_views/ScreenLayoutSelectorView',

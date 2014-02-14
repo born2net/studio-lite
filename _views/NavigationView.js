@@ -18,7 +18,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             self.m_limitedAccess = false;
 
-            this.render();
+            this._render();
 
             var appContentFaderView = BB.comBroker.getService(BB.SERVICES['APP_CONTENT_FADER_VIEW']);
             var appEntryFaderView = BB.comBroker.getService(BB.SERVICES['APP_ENTRY_FADER_VIEW']);
@@ -99,15 +99,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             }
         },
 
-        /**
-         Reset back to default properties view which is the dashboard
-         @method resetPropertiesView
-         **/
-        resetPropertiesView: function () {
-            BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
-        },
-
-        render: function () {
+        _render: function () {
             $('.navbar-nav').css({
                 display: 'block'
             })
@@ -151,6 +143,14 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     }
                 }
             });
+        },
+
+        /**
+         Reset back to default properties view which is the dashboard
+         @method resetPropertiesView
+         **/
+        resetPropertiesView: function () {
+            BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
         }
     });
 

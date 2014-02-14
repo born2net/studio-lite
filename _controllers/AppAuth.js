@@ -74,13 +74,27 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     if (i_status['warning'].length > 0) {
 
                         // Pro Account (not a Lite account) so limited access
-                        BB.comBroker.listen(BB.EVENTS.SERVICE_REGISTERED, function (e) {
-                            if (e.edata.name == BB.SERVICES['NAVIGATION_VIEW']) {
-                                var navigationView = e.edata.service;
-                                navigationView.applyLimitedAccess();
-                                navigationView.forceStationOnlyViewAndDialog();
-                            }
-                        });
+
+                        var applyLimitedAccess = function(i_navigationView){
+                            i_navigationView.applyLimitedAccess();
+                            i_navigationView.forceStationOnlyViewAndDialog();
+                        };
+
+                        // if module was not loaded yet (which is always the case) wait to be notified from
+                        // comBroker for when it is ready so we can work with the module
+                        var navigationView = BB.comBroker.listen(BB.SERVICES['NAVIGATION_VIEW']);
+                        if (_.isUndefined(navigationView)) {
+                            BB.comBroker.listen(BB.EVENTS.SERVICE_REGISTERED, function (e) {
+                                if (e.edata.name == BB.SERVICES['NAVIGATION_VIEW']) {
+                                    var navigationView = e.edata.service;
+                                    applyLimitedAccess(navigationView);
+                                }
+                            });
+                        } else {
+                            // just in case we change the order of loadable modules in the future and navigation
+                            // menu is ready before this module
+                            applyLimitedAccess(navigationView);
+                        }
                     }
                     BB.comBroker.getService(BB.SERVICES['LAYOUT_MANAGER']).navigate('authenticated', {trigger: true});
                 } else {

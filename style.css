@@ -141,8 +141,9 @@ body {
 #togglePanel {
     position: absolute;
     margin: 10px;
+    width: 35px;
     right: 30px;
-    top: 10px;
+    top: 5px;
     z-index: 110;
 }
 

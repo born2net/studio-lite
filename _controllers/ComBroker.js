@@ -23,6 +23,9 @@
  **/
 define(['jquery', 'backbone'], function ($, Backbone) {
 
+    Backbone.EVENTS = Backbone.EVENTS ? Backbone.EVENTS : {};
+    Backbone.EVENTS.SERVICE_REGISTERED = 'SERVICE_REGISTERED';
+
     var ComBroker = Backbone.Controller.extend({
 
         /**
@@ -33,6 +36,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         initialize: function () {
             this.m_services = [];
             this.m_uniqueCounter = 0;
+            Backbone.EVENTS.SERVICE_REGISTERED = 'SERVICE_REGISTERED'
         },
 
         /**
@@ -72,6 +76,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         setService: function (i_name, i_service) {
             this.m_services[i_name] = i_service;
+            this.fire(Backbone.EVENTS['SERVICE_REGISTERED'], this, null, {name: i_name, service: i_service})
         },
 
         /**

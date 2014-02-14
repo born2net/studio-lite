@@ -160,7 +160,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
              Update the general dashboard with stats
              @method Update
              **/
-            _initDashBoard: function(){
+            _initDashBoard: function () {
                 //todo create a separate backbone view for dashboard
                 $(Elements.SERVER_NAME).text(jalapeno.getUserData().domain);
                 $(Elements.BUISINESS_ID).text(jalapeno.getUserData().businessID);
@@ -189,32 +189,32 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
 
                 this.m_resourcesView = new ResourcesView({
                     el: Elements.RESOURCES_PANEL,
-                    stackView:  this.m_appContentFaderView
+                    stackView: this.m_appContentFaderView
                 });
 
                 this.m_stationsView = new StationsView({
                     el: Elements.STATIONS_PANEL,
-                    stackView:  this.m_appContentFaderView
+                    stackView: this.m_appContentFaderView
                 });
 
                 this.m_settingsView = new SettingsView({
                     el: Elements.SETTINGS_PANEL,
-                    stackView:  this.m_appContentFaderView
+                    stackView: this.m_appContentFaderView
                 });
 
                 this.m_proStudioView = new ProStudioView({
                     el: Elements.PRO_STUDIO_PANEL,
-                    stackView:  this.m_appContentFaderView
+                    stackView: this.m_appContentFaderView
                 });
 
                 this.m_helpView = new HelpView({
                     el: Elements.HELP_PANEL,
-                    stackView:  this.m_appContentFaderView
+                    stackView: this.m_appContentFaderView
                 });
 
                 this.m_logoutView = new LogoutView({
                     el: Elements.LOGOUT_PANEL,
-                    stackView:  this.m_appContentFaderView
+                    stackView: this.m_appContentFaderView
                 });
 
                 this.m_appContentFaderView.addView(this.m_campaignManagerView);
@@ -225,6 +225,8 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 this.m_appContentFaderView.addView(this.m_helpView);
                 this.m_appContentFaderView.addView(this.m_logoutView);
                 this.m_appContentFaderView.selectView(this.m_campaignManagerView);
+
+                BB.comBroker.setService(BB.SERVICES['NAVIGATION_VIEW'], this.m_navigationView);
             },
 
             /**
@@ -378,9 +380,11 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
              **/
             _disableBack: function () {
                 var self = this;
-                window.location.hash="start_";
-                window.location.hash="Again-start_";//for google chrome
-                window.onhashchange=function(){window.location.hash="start_";}
+                window.location.hash = "start_";
+                window.location.hash = "Again-start_";//for google chrome
+                window.onhashchange = function () {
+                    window.location.hash = "start_";
+                }
             },
 
             /**

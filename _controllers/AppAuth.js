@@ -65,13 +65,27 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             BB.Jalapeno.dbConnect(i_user, i_pass, function (i_status) {
 
                 if (i_status.status) {
+
+                    // Auth pass
                     self.authenticated = true;
                     if (i_authMode == self.AUTH_USER_PASS && $(Elements.REMEMBER_ME).prop('checked'))
                         self._bakeCookie(i_user, i_pass);
-                    BB.comBroker.getService(BB.SERVICES['LAYOUT_MANAGER']).navigate('authenticated', {trigger: true});
 
+                    if (i_status['warning'].length > 0) {
+
+                        // Pro Account (not a Lite account) so limited access
+                        BB.comBroker.listen(BB.EVENTS.SERVICE_REGISTERED, function (e) {
+                            if (e.edata.name == BB.SERVICES['NAVIGATION_VIEW']) {
+                                var navigationView = e.edata.service;
+                                navigationView.applyLimitedAccess();
+                                navigationView.forceStationOnlyViewAndDialog();
+                            }
+                        });
+                    }
+                    BB.comBroker.getService(BB.SERVICES['LAYOUT_MANAGER']).navigate('authenticated', {trigger: true});
                 } else {
 
+                    // Auth Fail
                     if (i_authMode == self.AUTH_COOKIE) {
                         $.removeCookie('signagestudioweblite', { path: '/' });
                         $.removeCookie('signagestudioweblite', { path: '/_studiolite' });

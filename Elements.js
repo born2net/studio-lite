@@ -115,6 +115,8 @@ Elements.STATION_RELOAD_COMMAND = '#stationReloadCommand';
 Elements.STATION_SNAPSHOT_COMMAND = '#stationSnapshotCommand';
 Elements.STATION_SELECTION_CAMPAIGN = '#stationSelectionCampaign'
 Elements.STATION_REMOVE = '#stationRemove';
+Elements.STATION_EVENT_SEND_COMMAND = '#stationEventSendCommand';
+Elements.STATION_SEND_EVENT_VALUE = '#stationSendEventValue';
 
 
 

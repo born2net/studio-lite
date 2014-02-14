@@ -23,7 +23,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_blockName = model.getComponent(self.m_blockType).name;
             self.m_blockDescription = model.getComponent(self.m_blockType).description;
             self.m_blockIcon = model.getComponent(self.m_blockType).icon;
-            self.m_qrText = 'Hello World';
+            self.m_qrText = '';
             self.m_property.initSubPanel(Elements.BLOCK_QR_COMMON_PROPERTIES);
             self._listenInputChange();
         },

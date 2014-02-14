@@ -91,10 +91,9 @@ Jalapeno.prototype = {
      @method requestData
      @param {Function} i_callback
      **/
-    sync: function(i_callback){
-      var self = this;
-        self.m_loaderManager.requestData(function(){
-           i_callback();
+    sync: function (i_callBack) {
+        var self = this;
+        self.m_loaderManager.requestData(function (i_callBack) {
         });
     },
 
@@ -105,8 +104,20 @@ Jalapeno.prototype = {
      @param {Number} i_stationId
      @param {Function} i_callBack
      **/
-    sendCommand: function(i_command, i_stationId, i_callBack){
-        var url= 'https://' +  jalapeno.getUserData().domain  + '/WebService/sendCommand.ashx?i_user=' + jalapeno.getUserData().userName + '&i_password=' + jalapeno.getUserData().userPass + '&i_stationId=' + i_stationId + '&i_command=' + i_command + '&i_param1=' + 'SignageStudioLite' + '&i_param2='+ '&callback=?';
+    sendCommand: function (i_command, i_stationId, i_callBack) {
+        var url = 'https://' + jalapeno.getUserData().domain + '/WebService/sendCommand.ashx?i_user=' + jalapeno.getUserData().userName + '&i_password=' + jalapeno.getUserData().userPass + '&i_stationId=' + i_stationId + '&i_command=' + i_command + '&i_param1=' + 'SignageStudioLite' + '&i_param2=' + '&callback=?';
+        $.getJSON(url, i_callBack);
+    },
+
+    /**
+     Push an event to remote station
+     @method sendEvent
+     @param {String} i_eventName
+     @param {Number} i_stationId
+     @param {Function} i_callBack
+     **/
+    sendEvent: function (i_eventName, i_stationId, i_callBack) {
+        var url = 'https://' + jalapeno.getUserData().domain + '/WebService/sendCommand.ashx?i_user=' + jalapeno.getUserData().userName + '&i_password=' + jalapeno.getUserData().userPass + '&i_stationId=' + i_stationId + '&i_command=event&i_param1=' + i_eventName + '&i_param2=' + '&callback=?';
         $.getJSON(url, i_callBack);
     },
 
@@ -120,10 +131,10 @@ Jalapeno.prototype = {
      @param {Function} i_callBack
      @return {String} image path url
      **/
-    sendSnapshot: function(i_fileName, i_quality, i_stationId, i_callBack){
-        var url= 'https://' +  jalapeno.getUserData().domain  + '/WebService/sendCommand.ashx?i_user=' + jalapeno.getUserData().userName + '&i_password=' + jalapeno.getUserData().userPass + '&i_stationId=' + i_stationId + '&i_command=' + 'captureScreen2' + '&i_param1=' + i_fileName + '&i_param2='+ i_quality + '&callback=?';
+    sendSnapshot: function (i_fileName, i_quality, i_stationId, i_callBack) {
+        var url = 'https://' + jalapeno.getUserData().domain + '/WebService/sendCommand.ashx?i_user=' + jalapeno.getUserData().userName + '&i_password=' + jalapeno.getUserData().userPass + '&i_stationId=' + i_stationId + '&i_command=' + 'captureScreen2' + '&i_param1=' + i_fileName + '&i_param2=' + i_quality + '&callback=?';
         $.getJSON(url, i_callBack);
-        var path = 'https://' + jalapeno.getUserData().domain + '/Snapshots/business' + jalapeno.getUserData().businessID + "/station" + i_stationId +  '/' + i_fileName + '.jpg';
+        var path = 'https://' + jalapeno.getUserData().domain + '/Snapshots/business' + jalapeno.getUserData().businessID + "/station" + i_stationId + '/' + i_fileName + '.jpg';
         return path;
     },
 
@@ -861,12 +872,12 @@ Jalapeno.prototype = {
      @param {Number} i_native_station_id
      @return {Number} campaign_id
      **/
-    getStationCampaignID: function(i_native_station_id){
+    getStationCampaignID: function (i_native_station_id) {
         var self = this;
         var campaignID = -1;
         $(self.m_msdb.table_branch_stations().getAllPrimaryKeys()).each(function (k, branch_station_id) {
             var recBranchStation = self.m_msdb.table_branch_stations().getRec(branch_station_id);
-            if (recBranchStation['native_id'] == i_native_station_id){
+            if (recBranchStation['native_id'] == i_native_station_id) {
                 var campaign_board_id = recBranchStation['campaign_board_id'];
                 campaignID = self.getCampaignIdFromCampaignBoardId(campaign_board_id);
             }
@@ -880,11 +891,11 @@ Jalapeno.prototype = {
      @param {Number} i_native_station_id
      @param {Number} i_campaign_id
      **/
-    setStationCampaignID: function(i_native_station_id, i_campaign_id){
+    setStationCampaignID: function (i_native_station_id, i_campaign_id) {
         var self = this;
         $(self.m_msdb.table_branch_stations().getAllPrimaryKeys()).each(function (k, branch_station_id) {
             var recBranchStation = self.m_msdb.table_branch_stations().getRec(branch_station_id);
-            if (recBranchStation['native_id'] == i_native_station_id){
+            if (recBranchStation['native_id'] == i_native_station_id) {
                 self.m_msdb.table_branch_stations().openForEdit(branch_station_id);
                 var recBranchStationEdit = self.m_msdb.table_branch_stations().getRec(branch_station_id);
                 var campaign_board_id = self.getCampaignBoardIdFromCampaignId(i_campaign_id);
@@ -893,6 +904,21 @@ Jalapeno.prototype = {
         });
     },
 
+    /**
+     Remove station, delete it from internal msdb and push to server on save
+     @method removeStation
+     @param {Number} i_station
+     **/
+    removeStation: function (i_native_station_id) {
+        var self = this;
+        $(self.m_msdb.table_branch_stations().getAllPrimaryKeys()).each(function (k, branch_station_id) {
+            var recBranchStation = self.m_msdb.table_branch_stations().getRec(branch_station_id);
+            if (recBranchStation['native_id'] == i_native_station_id) {
+                self.m_msdb.table_branch_stations().openForDelete(branch_station_id);
+                self.m_msdb.table_station_ads().openForDelete(branch_station_id);
+            }
+        });
+    },
 
     /**
      Get the type of a resource (png/jpg...) for specified native_id

@@ -202,7 +202,6 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
 
             $(Elements.STATION_RELOAD_COMMAND).on('click', function (e) {
                 jalapeno.sendCommand('rebootPlayer', self.m_selected_station_id, function () {
-                    log('cmd done restart');
                 });
                 return false;
             });
@@ -212,10 +211,15 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
                 return false;
             });
 
-            $(Elements.STATION_REMOVE).on('click',function(){
-               log('aaa');
+            $(Elements.STATION_REMOVE).on('click', function () {
+                self._removeStation(self);
             });
 
+            $(Elements.STATION_EVENT_SEND_COMMAND).on('click', function () {
+                var eventValue = $(Elements.STATION_SEND_EVENT_VALUE).val();
+                jalapeno.sendEvent(eventValue, self.m_selected_station_id, function () {
+                });
+            });
         },
 
         /**
@@ -230,7 +234,7 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
 
         /**
          Send a remote value (i.e.: remote event / remote touch) to a selected station.
-         If events are enable at the campaign level, the _sendStationEvent method enables users to fire events on a selected
+         If events are enabled at the campaign level, the _sendStationEvent method enables users to fire events on a selected
          Station and thus change campaign attributes.
          @method _sendStationEvent
          @param {String} i_eventName
@@ -241,6 +245,50 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
             var self = this;
             model.sendStationEvent(model.getDataByID(self.m_selected_resource_id)['id'], i_eventName, i_eventValue);
             $(Elements.EVENT_SEND_BUTTON).button('disable');
+        },
+
+        _removeStation: function (i_context) {
+            var self = i_context;
+            if (_.isUndefined(self.m_selected_station_id)) {
+                bootbox.dialog({
+                    message: "No station selected",
+                    buttons: {
+                        danger: {
+                            label: "OK",
+                            className: "btn-danger",
+                            callback: function () {
+                            }
+                        }
+                    }
+                });
+                return false;
+            }
+            bootbox.confirm("<p>The following steps will take place, please confirm?</p>" +
+                "<ol>" +
+                "<li>station will be deleted</li>" +
+                "<li>your work will be saved to the server</li>" +
+                "<li>station will be de-registered</li>" +
+                "<ol/>", function (result) {
+                if (result == true) {
+                    var navigationView = BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW);
+                    jalapeno.sendCommand('rebootPlayer', self.m_selected_station_id,function(){});
+                    jalapeno.removeStation(self.m_selected_station_id);
+                    navigationView.save(function(){});
+                    jalapeno.sync();
+                    self._removeStationFromLI(self.m_selected_station_id);
+                    navigationView.resetPropertiesView();
+                }
+            });
+        },
+
+        /**
+         Remove a selected station from UI LI
+         @method _removeStationFromLI
+         @param {Number} i_stationID
+         **/
+        _removeStationFromLI: function(i_stationID){
+            var self = this;
+            $(Elements.STATION_LIST_VIEW).find('[data-station_id="' + i_stationID + '"]').remove();
         },
 
         /**
@@ -371,10 +419,8 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
         },
 
         /**
-         Returns this model's attributes as...
-         @method setPlayerData
-         @param {Number} i_playerData
-         @return {Number} Unique clientId.
+         On change campaign action apply changes to local msdb
+         @method _onChangedCampaign
          **/
         _onChangedCampaign: function (e) {
             var self = this;

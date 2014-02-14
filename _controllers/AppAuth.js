@@ -65,14 +65,14 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             BB.Jalapeno.dbConnect(i_user, i_pass, function (i_status) {
 
                 if (i_status.status) {
-
                     // Auth pass
                     self.authenticated = true;
+
+                    // create cookie
                     if (i_authMode == self.AUTH_USER_PASS && $(Elements.REMEMBER_ME).prop('checked'))
                         self._bakeCookie(i_user, i_pass);
 
                     if (i_status['warning'].length > 0) {
-
                         // Pro Account (not a Lite account) so limited access
 
                         var applyLimitedAccess = function(i_navigationView){
@@ -80,8 +80,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                             i_navigationView.forceStationOnlyViewAndDialog();
                         };
 
-                        // if module was not loaded yet (which is always the case) wait to be notified from
-                        // comBroker for when it is ready so we can work with the module
+                        // if module was not loaded yet wait to be notified from when it does
                         var navigationView = BB.comBroker.listen(BB.SERVICES['NAVIGATION_VIEW']);
                         if (_.isUndefined(navigationView)) {
                             BB.comBroker.listen(BB.EVENTS.SERVICE_REGISTERED, function (e) {
@@ -91,15 +90,17 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                                 }
                             });
                         } else {
-                            // just in case we change the order of loadable modules in the future and navigation
-                            // menu is ready before this module
+                            // just in case we change the order of loadable modules in the future
+                            // and navigation module is ready before this module
                             applyLimitedAccess(navigationView);
                         }
                     }
                     BB.comBroker.getService(BB.SERVICES['LAYOUT_MANAGER']).navigate('authenticated', {trigger: true});
-                } else {
 
+                } else {
                     // Auth Fail
+
+                    // if cookie exists, delete it because obviously it didn't do the job
                     if (i_authMode == self.AUTH_COOKIE) {
                         $.removeCookie('signagestudioweblite', { path: '/' });
                         $.removeCookie('signagestudioweblite', { path: '/_studiolite' });
@@ -107,6 +108,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                         $.removeCookie('signagestudioweblite', { path: '/_studiolite-dist' });
                     }
 
+                    // let user know authentication failed
                     if (i_status.error == "not a studioLite account") {
                         bootbox.dialog({
                             message: "You must login with a StudioLite account and not a Pro account",
@@ -120,8 +122,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                                 }
                             }
                         });
-                        BB.comBroker.getService(BB.SERVICES['LAYOUT_MANAGER']).navigate('unauthenticated', {trigger: true});
-                        return;
                     }
                     BB.comBroker.getService(BB.SERVICES['LAYOUT_MANAGER']).navigate('authenticationFailed', {trigger: true});
                 }

@@ -16,7 +16,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         initialize: function () {
             var self = this;
-            self.m_seletedCampaignID = -1;
+            self.m_selectedCampaignID = -1;
 
             self.m_campainProperties = new BB.View({
                 el: Elements.CAMPAIGN_PROPERTIES
@@ -31,25 +31,20 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             });
 
             $(Elements.REMOVE_CAMPAIGN).on('click', function (e) {
-                if (self.m_seletedCampaignID != -1) {
-                    var selectedLI = self.$el.find('[data-campaignid="' + self.m_seletedCampaignID + '"]');
-                    selectedLI.remove();
-                    self._removeCampaignFromMSDB(self.m_seletedCampaignID);
+                if (self.m_selectedCampaignID != -1) {
+                    var selectedLI = self.$el.find('[data-campaignid="' + self.m_selectedCampaignID + '"]');
+                    var allCampaignIDs = jalapeno.getStationCampaignIDs();
+                    if (_.indexOf(allCampaignIDs, self.m_selectedCampaignID) == -1) {
+                        selectedLI.remove();
+                        self._removeCampaignFromMSDB(self.m_selectedCampaignID);
+                    } else {
+                        bootbox.alert("You can't delete a campaign that is assigned to a remote station, please fist un-assign it from Stations before you remove the campaign.");
+                        return false;
+                    }
                 } else {
-                    bootbox.dialog({
-                        message: "You must first select a campaign by clicking on the properties icon",
-                        title: "Oops, problem...",
-                        buttons: {
-                            danger: {
-                                label: "OK",
-                                className: "btn-danger",
-                                callback: function () {
-                                }
-                            }
-                        }
-                    });
+                    bootbox.alert("You must first select a campaign by clicking on the properties icon.");
+                    return false;
                 }
-                return false;
             });
 
             this._loadCampaignList();
@@ -94,7 +89,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             $(Elements.CLASS_CAMPIGN_LIST_ITEM, self.el).on('click', function (e) {
                 $(Elements.CLASS_CAMPIGN_LIST_ITEM, self.el).removeClass('active');
                 $(this).addClass('active');
-                self.m_seletedCampaignID = $(this).data('campaignid');
+                self.m_selectedCampaignID = $(this).data('campaignid');
                 self.options.stackView.slideToPage(Elements.CAMPAIGN, 'right');
                 return false;
             });
@@ -111,8 +106,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             $(Elements.CLASS_OPEN_PROPS_BUTTON, self.el).on('click', function (e) {
                 $(Elements.CLASS_CAMPIGN_LIST_ITEM, self.el).removeClass('active');
                 var elem = $(e.target).closest('a').addClass('active');
-                self.m_seletedCampaignID = $(elem).data('campaignid');
-                var recCampaign = jalapeno.getCampaignRecord(self.m_seletedCampaignID);
+                self.m_selectedCampaignID = $(elem).data('campaignid');
+                var recCampaign = jalapeno.getCampaignRecord(self.m_selectedCampaignID);
                 $(Elements.FORM_CAMPAIGN_NAME).val(recCampaign['campaign_name']);
                 self.m_propertiesPanel.selectView(self.m_campainProperties);
                 self.m_propertiesPanel.openPropertiesPanel();
@@ -159,7 +154,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             if (campaignIDs.length == 0)
                 jalapeno.removeAllBoards();
 
-            self.m_seletedCampaignID = -1;
+            self.m_selectedCampaignID = -1;
             self.m_propertiesPanel.selectView(Elements.EMPTY_PROPERTIES);
         },
 
@@ -172,7 +167,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             var onChange = _.debounce(function (e) {
                 var text = $(e.target).val();
-                jalapeno.setCampaignRecord(self.m_seletedCampaignID, 'campaign_name', text);
+                jalapeno.setCampaignRecord(self.m_selectedCampaignID, 'campaign_name', text);
             }, 333, false);
             $(Elements.FORM_CAMPAIGN_NAME).on("input", onChange);
         },
@@ -183,7 +178,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @return {Number} campaign_id
          **/
         getSelectedCampaign: function () {
-            return this.m_seletedCampaignID;
+            return this.m_selectedCampaignID;
         },
 
         /**
@@ -192,7 +187,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         setSelectedCampaign: function (i_campaign_id) {
             var self = this;
-            self.m_seletedCampaignID = i_campaign_id;
+            self.m_selectedCampaignID = i_campaign_id;
         }
     });
 

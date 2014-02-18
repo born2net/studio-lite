@@ -867,6 +867,22 @@ Jalapeno.prototype = {
     },
 
     /**
+     Returns all of the campaign IDs that all stations belonging to account are associated with
+     @method getStationCampaignIDs
+     @return {Array} array of campaign IDs
+     **/
+    getStationCampaignIDs: function () {
+        var self = this;
+        var campaignIDs = [];
+        $(self.m_msdb.table_branch_stations().getAllPrimaryKeys()).each(function (k, branch_station_id) {
+            var recBranchStation = self.m_msdb.table_branch_stations().getRec(branch_station_id);
+            var campaign_board_id = recBranchStation['campaign_board_id'];
+            campaignIDs.push(self.getCampaignIdFromCampaignBoardId(campaign_board_id));
+        });
+        return campaignIDs;
+    },
+
+    /**
      Returns the campaign id that a station is bound to
      @method getStationCampaignID
      @param {Number} i_native_station_id

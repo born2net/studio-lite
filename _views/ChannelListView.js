@@ -76,9 +76,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
                 log('player ' + block_id + ' offset ' + playerOffsetTime + ' playerDuration ' + playerDuration);
                 playerOffsetTime = parseFloat(playerOffsetTime) + parseFloat(playerDuration);
             });
-
             jalapeno.setTimelineTotalDuration(this.selected_campaign_timeline_id);
-            $(jalapeno).trigger(Jalapeno.TIMELINE_LENGTH_CHANGED,this);
         },
 
         /**

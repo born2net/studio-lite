@@ -1017,6 +1017,7 @@ Jalapeno.prototype = {
             }
         });
         jalapeno.setCampaignTimelineRecord(i_campaign_timeline_id, 'timeline_duration', longestChannelDuration);
+        $(jalapeno).trigger(Jalapeno.TIMELINE_LENGTH_CHANGED,this);
     },
 
     /**

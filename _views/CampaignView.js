@@ -42,8 +42,8 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             self._onWireTimeLineOrViewerSelected();
             self._onWireAddNewTimeline();
 
-            var view = new BB.View({el: Elements.NONE_SELECTED_SCREEN_LAYOUT})
-            self.m_timelineViewStack.addView(view);
+            self.m_noneSelectedTimelines = new BB.View({el: Elements.NONE_SELECTED_SCREEN_LAYOUT})
+            self.m_timelineViewStack.addView(self.m_noneSelectedTimelines);
 
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self)
@@ -116,7 +116,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             var firstTimelineID = jalapeno.getCampaignTimelineIdOfSequencerIndex(self.m_selected_campaign_id, 0);
             setTimeout(function () {
                 if (self.m_sequencerView.selectTimeline(firstTimelineID) == -1) {
-                    self.m_timelineViewStack.selectIndex(0);
+                    self.m_timelineViewStack.selectView(self.m_noneSelectedTimelines);
                 }
             }, 250);
         },

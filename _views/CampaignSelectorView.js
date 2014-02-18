@@ -17,13 +17,25 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         initialize: function () {
             var self = this;
             self.m_selectedCampaignID = -1;
-
             self.m_campainProperties = new BB.View({
                 el: Elements.CAMPAIGN_PROPERTIES
-            })
-
+            });
             self.m_propertiesPanel = BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW);
             self.m_propertiesPanel.addView(this.m_campainProperties);
+
+            this._loadCampaignList();
+            this._listenOpenProps();
+            this._listenSelectCampaign();
+            this._listenInputChange();
+            this._wireUI();
+        },
+
+        /**
+         Wire the UI including new campaing creation and delete existing campaign
+         @method _wireUI
+         **/
+        _wireUI: function(){
+            var self = this;
 
             $(Elements.NEW_CAMPAIGN).on('click', function (e) {
                 self.options.stackView.slideToPage(self.options.to, 'right');
@@ -35,8 +47,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     var selectedLI = self.$el.find('[data-campaignid="' + self.m_selectedCampaignID + '"]');
                     var allCampaignIDs = jalapeno.getStationCampaignIDs();
                     if (_.indexOf(allCampaignIDs, self.m_selectedCampaignID) == -1) {
-                        selectedLI.remove();
-                        self._removeCampaignFromMSDB(self.m_selectedCampaignID);
+                        bootbox.confirm("Are you sure you want to delete the campaign?", function(result) {
+                            if (result==true){
+                                selectedLI.remove();
+                                self._removeCampaignFromMSDB(self.m_selectedCampaignID);
+                            }
+                        });
                     } else {
                         bootbox.alert("You can't delete a campaign that is assigned to a remote station, please fist un-assign it from Stations before you remove the campaign.");
                         return false;
@@ -46,11 +62,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     return false;
                 }
             });
-
-            this._loadCampaignList();
-            this._listenOpenProps();
-            this._listenSelectCampaign();
-            this._listenInputChange();
         },
 
         /**

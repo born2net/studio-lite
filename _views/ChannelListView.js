@@ -44,15 +44,14 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             var self = this;
             $(Elements.REMOVE_BLOCK_BUTTON).on('click', function (e) {
                 if (self.selected_block_id == undefined) {
-                    alert('Please select a resource first and try again');
+                    bootbox.alert('Please select a resource first and try again');
                     return;
                 }
                 self._deleteChannelBlock(self.selected_block_id);
             });
             $(Elements.ADD_BLOCK_BUTTON).on('click', function (e) {
                 if (self.selected_campaign_timeline_id == undefined) {
-                    //todo: change to bs dialog
-                    alert('Please first select a channel to associate asset with');
+                    bootbox.alert('Please first select a channel to associate asset with');
                     return;
                 }
                 self._openAddBlockWizard(e);

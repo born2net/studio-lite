@@ -138,6 +138,23 @@ body {
     width: 1500px;
 }
 
+#screenMainSelector {
+    width: 100%;
+}
+
+#screenMainSelector > div {
+    border:dashed #666666 3px;
+    width: 240px;
+    height: 150px
+}
+
+#screenMainSelector h1 {
+    color:#999;
+    margin-top:d0px;
+    padding-top: 50px;
+    font-size:1em;
+}
+
 #togglePanel {
     position: absolute;
     margin: 10px;

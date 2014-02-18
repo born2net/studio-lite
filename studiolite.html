@@ -122,12 +122,14 @@
             <button id="next" type="button" class="openPropsButton btn btn-default btn-sm"><span
                     class="glyphicon glyphicon-chevron-right"></span></button>
             <h3>Select your campaign name</h3>
-                <input id="newCampaignName" type="text" class="form-control" value="My campaign" placeholder="Enter new campaign name">
+            <input id="newCampaignName" type="text" class="form-control" value="My campaign"
+                   placeholder="Enter new campaign name">
         </div>
         <div id="orientationSelector" class="page right">
             <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
                     class="glyphicon glyphicon-chevron-left"></span></button>
             <h3>Select your screen orientation</h3>
+
             <div id="orientationView">
                 <table width="100%" border="0" cellspacing="0" cellpadding="50">
                     <tr>
@@ -199,10 +201,9 @@
 
                 <div id="selectedTimeline">
                     <div id="noneSelectedScreenLayout">
-                        <div align="center" id="screenMainSelector" style="width:100%">
-                            <div align="center"
-                                 style="border:dashed #666666 3px; width: 240px; height: 150px">
-                                <h1 style="color:#999;margin-top:0px; font-weight:200 ; font-size:110px">+</h1>
+                        <div align="center" id="screenMainSelector">
+                            <div align="center">
+                                <h1>no timeline selected</h1>
                             </div>
                         </div>
                     </div>
@@ -350,14 +351,17 @@
         </div>
         <div id="stationProperties" style="display: none">
             <h4 id="stationName"></h4>
+
             <div id="snapShotWrap">
                 <svg id="snapShotSVG" xmlns="http://www.w3.org/2000/svg">
                     <g>
-                        <rect stroke-width="10" stroke="#191919" height="120" width="220" y="9.5" x="10" fill="#cccccc"/>
+                        <rect stroke-width="10" stroke="#191919" height="120" width="220" y="9.5" x="10"
+                              fill="#cccccc"/>
                     </g>
                 </svg>
                 <img id="snapShotImage"/>
-                <img id="snapShotSpinner" style="display: none" src="https://secure.dynawebs.net/_studiolite-dev/_assets/preload2_gray.gif"/>
+                <img id="snapShotSpinner" style="display: none"
+                     src="https://secure.dynawebs.net/_studiolite-dev/_assets/preload2_gray.gif"/>
             </div>
             <div id="stationcontrol" class="centerElement btn-group">
                 <button id="stationSnapshotCommand" type="button" class="btn btn-default"><span
@@ -388,6 +392,7 @@
                 </ul>
             </div>
             <input type="text" name="eventName" placeholder="event name" id="stationSendEventValue" value="">
+
             <p></p>
             <button id="stationEventSendCommand" class="btn btn-primary">Send event</button>
         </div>

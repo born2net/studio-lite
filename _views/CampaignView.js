@@ -69,7 +69,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             self.m_selected_campaign_id = BB.comBroker.getService(BB.SERVICES.CAMPAIGN_SELECTOR).getSelectedCampaign();
             self._loadTimelinesFromDB();
             self._loadSequencerFirstTimeline();
-            self._updatedTimelineLength();
+            self._updatedTimelineLengthUI();
             self._listenTimelineLengthChanged();
 
         },
@@ -136,7 +136,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
                 if (e.context.m_owner instanceof SequencerView) {
                     self.m_timelineViewStack.selectView(self.m_timelines[campaign_timeline_id].getStackViewID());
                     BB.comBroker.fire(BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED, this, null, campaign_timeline_id);
-                    self._updatedTimelineLength();
+                    self._updatedTimelineLengthUI();
                     return;
                 }
 
@@ -314,14 +314,14 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
          **/
         _listenTimelineLengthChanged: function(){
             var self = this;
-            $(jalapeno).on(Jalapeno.TIMELINE_LENGTH_CHANGED, $.proxy(self._updatedTimelineLength,this));
+            $(jalapeno).on(Jalapeno.TIMELINE_LENGTH_CHANGED, $.proxy(self._updatedTimelineLengthUI,this));
         },
 
         /**
          Update UI when timeline length changed
-         @method _updatedTimelineLength
+         @method _updatedTimelineLengthUI
          **/
-        _updatedTimelineLength: function(){
+        _updatedTimelineLengthUI: function(){
             var self = this;
             self.m_xdate = new xdate();
             var a1 = jalapeno.getTimelineTotalDuration(this.m_selected_timeline_id);

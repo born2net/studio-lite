@@ -69,16 +69,16 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             var playerOffsetTime = 0;
 
             $(blocks).each(function (i) {
-
                 var block_id = $(this).data('block_id');
                 var recBlock = jalapeno.getBlockRecord(block_id);
                 var playerDuration = recBlock['player_duration']
-
                 jalapeno.setBlockRecord(block_id, 'player_offset_time', playerOffsetTime);
                 log('player ' + block_id + ' offset ' + playerOffsetTime + ' playerDuration ' + playerDuration);
                 playerOffsetTime = parseFloat(playerOffsetTime) + parseFloat(playerDuration);
             });
-            jalapeno.updateTimelineTotalDuration(this.selected_campaign_timeline_id);
+
+            jalapeno.setTimelineTotalDuration(this.selected_campaign_timeline_id);
+            $(jalapeno).trigger(Jalapeno.TIMELINE_LENGTH_CHANGED,this);
         },
 
         /**
@@ -90,7 +90,6 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             var self = this
             var blocks = $(Elements.SORTABLE).children();
             var blocksIDs = [];
-
             $(blocks).each(function (i) {
                 var block_id = $(this).data('block_id');
                 blocksIDs.push(block_id);
@@ -315,8 +314,6 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             var timeline = BB.comBroker.getService(BB.SERVICES.CAMPAIGN_VIEW).getTimelineInstance(self.selected_campaign_timeline_id);
             var channel = timeline.getChannelInstance(self.selected_campaign_timeline_chanel_id);
             channel.deleteBlock(i_block_id);
-            // self.m_property.noPanel();
-            // $(Elements.SORTABLE).listview('refresh');
             self._deselectBlocksFromChannel();
             self._reOrderChannelBlocks();
         }

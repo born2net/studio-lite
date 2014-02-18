@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated CampaignView
  **/
-define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', 'Timeline', 'ScreenLayoutSelectorView'], function ($, Backbone, SequencerView, ChannelListView, StackView, Timeline, ScreenLayoutSelectorView) {
+define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', 'Timeline', 'ScreenLayoutSelectorView', 'xdate'], function ($, Backbone, SequencerView, ChannelListView, StackView, Timeline, ScreenLayoutSelectorView, xdate) {
 
     BB.SERVICES.CAMPAIGN_VIEW = 'CampaignView';
 
@@ -38,9 +38,10 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             self.m_property.initPanel(Elements.CHANNEL_PROPERTIES);
             self.m_property.initPanel(Elements.TIMELINE_PROPERTIES);
 
-            self._onWireDelTimeline();
+            self._listenDelTimeline();
             self._onWireTimeLineOrViewerSelected();
-            self._onWireAddNewTimeline();
+            self._listenAddNewTimeline();
+            self._listenToggleTimelinesCollapsible();
 
             self.m_noneSelectedTimelines = new BB.View({el: Elements.NONE_SELECTED_SCREEN_LAYOUT})
             self.m_timelineViewStack.addView(self.m_noneSelectedTimelines);
@@ -67,18 +68,10 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             // a previous campaign was loaded from CampaignSelectorView
             self.m_selected_campaign_id = BB.comBroker.getService(BB.SERVICES.CAMPAIGN_SELECTOR).getSelectedCampaign();
             self._loadTimelinesFromDB();
-        },
+            self._loadSequencerFirstTimeline();
+            self._updatedTimelineLength();
+            self._listenTimelineLengthChanged();
 
-        /**
-         Wire the UI for timeline deletion.
-         @method _onWireDelTimeline
-         @return none
-         **/
-        _onWireDelTimeline: function () {
-            var self = this;
-            $(Elements.REMOVE_TIMELINE_BUTTON).on('click', function (e) {
-                self._deleteTimeline(e, self);
-            });
         },
 
         /**
@@ -87,7 +80,6 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
          @return none
          **/
         _loadTimelinesFromDB: function () {
-
             var self = this;
             var sequenceOrder = [];
 
@@ -103,7 +95,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
                 self.m_timelines[campaign_timeline_id] = new Timeline({campaignTimelineID: campaign_timeline_id});
             });
 
-            self._loadSequencerFirstTimeline();
+
         },
 
         /**
@@ -114,11 +106,11 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
         _loadSequencerFirstTimeline: function () {
             var self = this;
             var firstTimelineID = jalapeno.getCampaignTimelineIdOfSequencerIndex(self.m_selected_campaign_id, 0);
-            setTimeout(function () {
+            //setTimeout(function () {
                 if (self.m_sequencerView.selectTimeline(firstTimelineID) == -1) {
                     self.m_timelineViewStack.selectView(self.m_noneSelectedTimelines);
                 }
-            }, 250);
+            //}, 250);
         },
 
         /**
@@ -144,6 +136,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
                 if (e.context.m_owner instanceof SequencerView) {
                     self.m_timelineViewStack.selectView(self.m_timelines[campaign_timeline_id].getStackViewID());
                     BB.comBroker.fire(BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED, this, null, campaign_timeline_id);
+                    self._updatedTimelineLength();
                     return;
                 }
 
@@ -217,11 +210,42 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             });
         },
 
-        _onWireAddNewTimeline: function () {
+        /**
+         Wire the UI for adding a new timeline
+         @method _listenAddNewTimeline
+         **/
+        _listenAddNewTimeline: function () {
             var self = this;
             $(Elements.ADD_NEW_TIMELINE_BUTTON).on('click', function () {
                 BB.comBroker.getService(BB.SERVICES['SCREEN_LAYOUT_SELECTOR_VIEW']).hidePreviousButton();
                 self.options.stackView.slideToPage(Elements.SCREEN_LAYOUT_SELECTOR, 'left');
+            });
+        },
+
+        /**
+         Wire the UI for timeline deletion.
+         @method _listenDelTimeline
+         @return none
+         **/
+        _listenDelTimeline: function () {
+            var self = this;
+            $(Elements.REMOVE_TIMELINE_BUTTON).on('click', function (e) {
+                self._deleteTimeline(e, self);
+            });
+        },
+
+        /**
+         Toggle the arrow of the collapsible timelines / sequencer UI widget
+         @method _listenToggleTimelinesCollapsible
+         **/
+        _listenToggleTimelinesCollapsible: function(){
+            $(Elements.TOGGLE_TIMELINES_COLLAPSIBLE).on('click',function(){
+                var  toggle = $(this).find('span')[0];
+                if ($(toggle).hasClass('glyphicon-chevron-down')){
+                    $(toggle).removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-right')
+                } else {
+                    $(toggle).removeClass('glyphicon-chevron-right').addClass('glyphicon-chevron-down')
+                }
             });
         },
 
@@ -234,10 +258,8 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
          **/
         _deleteTimeline: function (e, i_caller) {
             var self = this;
-
             e.preventDefault();
             e.stopImmediatePropagation();
-
             self.m_timelines[self.m_selected_timeline_id].deleteTimeline();
             delete self.m_timelines[self.m_selected_timeline_id];
             BB.comBroker.getService(BB.SERVICES['SEQUENCER_VIEW']).deleteSequencedTimeline(self.m_selected_timeline_id);
@@ -284,6 +306,27 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
         getTimelineViewStack: function () {
             var self = this;
             return self.m_timelineViewStack;
+        },
+
+        /**
+         Listen for updates on changes in length of currently selected timeline through the jalapeno framework
+         @method _listenTimelineLengthChanged
+         **/
+        _listenTimelineLengthChanged: function(){
+            var self = this;
+            $(jalapeno).on(Jalapeno.TIMELINE_LENGTH_CHANGED, $.proxy(self._updatedTimelineLength,this));
+        },
+
+        /**
+         Update UI when timeline length changed
+         @method _updatedTimelineLength
+         **/
+        _updatedTimelineLength: function(){
+            var self = this;
+            self.m_xdate = new xdate();
+            var a1 = jalapeno.getTimelineTotalDuration(this.m_selected_timeline_id);
+            var a2 = self.m_xdate.clearTime().addSeconds(a1).toString('HH:mm:ss');
+            $(Elements.TIMELINE_TOTAL_LENGTH).text(a2);
         }
     });
 

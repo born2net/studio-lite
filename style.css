@@ -150,7 +150,7 @@ body {
 
 #screenMainSelector h1 {
     color:#999;
-    margin-top:d0px;
+    margin-top: 0px;
     padding-top: 50px;
     font-size:1em;
 }
@@ -160,11 +160,12 @@ body {
     margin: 10px;
     width: 35px;
     right: 30px;
-    top: 5px;
+    top: 15px;
     z-index: 110;
 }
 
 #campaignSelectionButtons {
+    margin-top: 10px;
     margin-bottom: 5px;
 }
 

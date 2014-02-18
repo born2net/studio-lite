@@ -23,25 +23,9 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
             this.m_timelines = {};
 
             self._initLayoutSelectorDragDrop();
-            self._listenToggleTimelinesCollapsible();
             setTimeout(function () {
                 $(Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).trigger('click');
             }, 3000);
-        },
-
-        /**
-         Toggle the arrow of the collapsible timelines / sequencer UI widget
-         @method _listenToggleTimelinesCollapsible
-         **/
-        _listenToggleTimelinesCollapsible: function(){
-            $(Elements.TOGGLE_TIMELINES_COLLAPSIBLE).on('click',function(){
-                var  toggle = $(this).find('span')[0];
-                if ($(toggle).hasClass('glyphicon-chevron-down')){
-                    $(toggle).removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-right')
-                } else {
-                    $(toggle).removeClass('glyphicon-chevron-right').addClass('glyphicon-chevron-down')
-                }
-            });
         },
 
         /**

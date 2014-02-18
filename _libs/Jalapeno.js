@@ -22,6 +22,16 @@ function Jalapeno() {
     this.m_loaderManager = undefined;
 };
 
+/**
+ Custom event fired when a total timeline length (i.e.: channel content within specified timeline) has changed
+ @event Jalapeno.TIMELINE_LENGTH_CHANGED
+ @param {This} caller
+ @param {Event}
+ @static
+ @final
+ **/
+Jalapeno.TIMELINE_LENGTH_CHANGED = 'TIMELINE_LENGTH_CHANGED';
+
 Jalapeno.prototype = {
     constructor: Jalapeno,
 
@@ -975,11 +985,11 @@ Jalapeno.prototype = {
 
     /**
      Update a timeline's duration which is set as the total sum of all blocks within the longest running channel
-     @method updateTimelineTotalDuration
+     @method setTimelineTotalDuration
      @param {Number} i_campaign_timeline_id
      @return none
      **/
-    updateTimelineTotalDuration: function (i_campaign_timeline_id) {
+    setTimelineTotalDuration: function (i_campaign_timeline_id) {
         var self = this;
 
         var longestChannelDuration = 0;
@@ -1007,6 +1017,18 @@ Jalapeno.prototype = {
             }
         });
         jalapeno.setCampaignTimelineRecord(i_campaign_timeline_id, 'timeline_duration', longestChannelDuration);
+    },
+
+    /**
+     Get a timeline's duration which is set as the total sum of all blocks within the longest running channel
+     @method getTimelineTotalDuration
+     @param {Number} i_campaign_timeline_id
+     @return {Number} length in seconds
+     **/
+    getTimelineTotalDuration: function (i_campaign_timeline_id) {
+        var self = this;
+        var recCampaignTimeline = self.m_msdb.table_campaign_timelines().getRec(i_campaign_timeline_id);
+        return recCampaignTimeline['timeline_duration'];
     },
 
     /**

@@ -93,8 +93,6 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
                 // create the timelines
                 self.m_timelines[campaign_timeline_id] = new Timeline({campaignTimelineID: campaign_timeline_id});
             });
-
-
         },
 
         /**
@@ -105,11 +103,8 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
         _loadSequencerFirstTimeline: function () {
             var self = this;
             var firstTimelineID = jalapeno.getCampaignTimelineIdOfSequencerIndex(self.m_selected_campaign_id, 0);
-            //setTimeout(function () {
-                if (self.m_sequencerView.selectTimeline(firstTimelineID) == -1) {
-                    self.m_timelineViewStack.selectView(self.m_noneSelectedTimelines);
-                }
-            //}, 250);
+            if (self.m_sequencerView.selectTimeline(firstTimelineID) == -1)
+                self.m_timelineViewStack.selectView(self.m_noneSelectedTimelines);
         },
 
         /**
@@ -177,7 +172,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
 
                         // set campaign name
                         var campaignName = BB.comBroker.getService(BB.SERVICES['CAMPAIGN_NAME_SELECTOR_VIEW']).getCampaignName();
-                        jalapeno.setCampaignRecord(self.m_selected_campaign_id,'campaign_name',campaignName);
+                        jalapeno.setCampaignRecord(self.m_selected_campaign_id, 'campaign_name', campaignName);
 
                     } else {
 
@@ -237,10 +232,10 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
          Toggle the arrow of the collapsible timelines / sequencer UI widget
          @method _listenToggleTimelinesCollapsible
          **/
-        _listenToggleTimelinesCollapsible: function(){
-            $(Elements.TOGGLE_TIMELINES_COLLAPSIBLE).on('click',function(){
-                var  toggle = $(this).find('span')[0];
-                if ($(toggle).hasClass('glyphicon-chevron-down')){
+        _listenToggleTimelinesCollapsible: function () {
+            $(Elements.TOGGLE_TIMELINES_COLLAPSIBLE).on('click', function () {
+                var toggle = $(this).find('span')[0];
+                if ($(toggle).hasClass('glyphicon-chevron-down')) {
                     $(toggle).removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-right')
                 } else {
                     $(toggle).removeClass('glyphicon-chevron-right').addClass('glyphicon-chevron-down')
@@ -261,7 +256,6 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             e.stopImmediatePropagation();
             self.m_timelines[self.m_selected_timeline_id].deleteTimeline();
             delete self.m_timelines[self.m_selected_timeline_id];
-            BB.comBroker.getService(BB.SERVICES['SEQUENCER_VIEW']).deleteSequencedTimeline(self.m_selected_timeline_id);
             self._loadSequencerFirstTimeline();
         },
 
@@ -311,7 +305,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
          Listen for updates on changes in length of currently selected timeline through the jalapeno framework
          @method _listenTimelineLengthChanged
          **/
-        _listenTimelineLengthChanged: function(){
+        _listenTimelineLengthChanged: function () {
             var self = this;
             $(jalapeno).on(Jalapeno.TIMELINE_LENGTH_CHANGED, $.proxy(self._updatedTimelineLengthUI, self));
         },
@@ -321,7 +315,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
          frm jalapeno via selected_timeline_id
          @method _updatedTimelineLengthUI
          **/
-        _updatedTimelineLengthUI: function(e){
+        _updatedTimelineLengthUI: function (e) {
             var self = this;
             self.m_xdate = new xdate();
             var duration = e ? e.edata : jalapeno.getTimelineTotalDuration(this.m_selected_timeline_id);

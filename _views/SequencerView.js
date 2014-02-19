@@ -26,6 +26,9 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
             setTimeout(function () {
                 $(Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).trigger('click');
             }, 3000);
+
+            $(jalapeno).on(Jalapeno.TIMELINE_DELETED, $.proxy(self._deleteSequencedTimeline, self));
+
         },
 
         /**
@@ -77,6 +80,23 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
                 $(self.m_thumbsContainer).disableSelection();
                 self.m_thumbsContainer.sortable('destroy');
             });
+        },
+
+        /**
+         Delete a timeline from the Sequencer UI, as well as from the local member m_timelines.
+         @method _deleteSequencedTimeline
+         @param {Number} i_campaign_timeline_id
+         @return none
+         **/
+        _deleteSequencedTimeline: function (e) {
+            var self = this;
+            var campaign_timeline_id = e.edata;
+            var elementID = self.m_timelines[campaign_timeline_id];
+            $('#' + elementID).remove();
+            // var timeline = self.m_timelines[i_campaign_timeline_id];
+            delete self.m_timelines[campaign_timeline_id];
+            jalapeno.removeTimelineFromSequences(campaign_timeline_id);
+            self.reSequenceTimelines();
         },
 
         /**
@@ -143,22 +163,6 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
          **/
         getOwner: function () {
             return this;
-        },
-
-        /**
-         Delete a timeline from the Sequencer UI, as well as from the local member m_timelines.
-         @method deleteSequencedTimeline
-         @param {Number} i_campaign_timeline_id
-         @return none
-         **/
-        deleteSequencedTimeline: function (i_campaign_timeline_id) {
-            var self = this;
-            var elementID = self.m_timelines[i_campaign_timeline_id];
-            $('#' + elementID).remove();
-            // var timeline = self.m_timelines[i_campaign_timeline_id];
-            delete self.m_timelines[i_campaign_timeline_id];
-            jalapeno.removeTimelineFromSequences(i_campaign_timeline_id);
-            self.reSequenceTimelines();
         },
 
         /**

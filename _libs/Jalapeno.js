@@ -33,6 +33,16 @@ function Jalapeno() {
 Jalapeno.TIMELINE_LENGTH_CHANGED = 'TIMELINE_LENGTH_CHANGED';
 
 /**
+ Custom event fired when a timeline is removed from campaign
+ @event Jalapeno.TIMELINE_DELETED
+ @param {This} caller
+ @param {Event}
+ @static
+ @final
+ **/
+Jalapeno.TIMELINE_DELETED = 'TIMELINE_DELETED';
+
+/**
  Custom event fired when a new player (aka block) was created
  @event Jalapeno.NEW_PLAYER_CREATED
  @param {This} caller
@@ -876,6 +886,7 @@ Jalapeno.prototype = {
     removeTimelineFromCampaign: function (i_campaign_timeline_id) {
         var self = this;
         self.m_msdb.table_campaign_timelines().openForDelete(i_campaign_timeline_id);
+        $(jalapeno).trigger(self.event(Jalapeno['TIMELINE_DELETED'], self, null, i_campaign_timeline_id));
     },
 
     /**

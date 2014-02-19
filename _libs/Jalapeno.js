@@ -211,7 +211,7 @@ Jalapeno.prototype = {
         var campaign = campaigns.createRecord();
         campaign.campaign_name = i_campgianName;
         campaigns.addRecord(campaign);
-        $(jalapeno).trigger(Jalapeno.NEW_CAMPAIGN_CREATED,this);
+        $(jalapeno).trigger(self.event(Jalapeno['NEW_CAMPAIGN_CREATED'], self, null, campaign['campaign_id']));
         return campaign['campaign_id'];
     },
 
@@ -334,7 +334,7 @@ Jalapeno.prototype = {
             chanels.addRecord(chanel);
             createdChanels.push(chanel['campaign_timeline_chanel_id']);
         }
-        $(jalapeno).trigger(Jalapeno.NEW_CHANNEL_CREATED,this);
+        $(jalapeno).trigger(self.event(Jalapeno['NEW_CHANNEL_CREATED'], self, null, createdChanels));
         return createdChanels;
     },
 
@@ -376,8 +376,8 @@ Jalapeno.prototype = {
             viewers.addRecord(viewer);
             returnData['viewers'].push(viewer['board_template_viewer_id']);
         }
-        $(jalapeno).trigger(Jalapeno.NEW_TEMPLATE_CREATED,this);
         returnData['board_template_id'] = board_template_id
+        $(jalapeno).trigger(self.event(Jalapeno['NEW_TEMPLATE_CREATED'], self, null, returnData));
         return returnData;
     },
 
@@ -394,7 +394,7 @@ Jalapeno.prototype = {
         timeline.campaign_id = i_campaign_id;
         timeline.timeline_name = "Timeline";
         timelines.addRecord(timeline);
-        $(jalapeno).trigger(Jalapeno.NEW_TIMELINE_CREATED,this);
+        $(jalapeno).trigger(self.event(Jalapeno['NEW_TIMELINE_CREATED'], self, null, timeline['campaign_timeline_id']));
         return timeline['campaign_timeline_id'];
     },
 
@@ -419,11 +419,13 @@ Jalapeno.prototype = {
         recTimelinePlayer.player_duration = 10;
         recTimelinePlayer.player_offset_time = i_offset;
         timelinePlayers.addRecord(recTimelinePlayer);
-        $(jalapeno).trigger(Jalapeno.NEW_PLAYER_CREATED,this);
-        return {
+
+        var returnData = {
             campaign_timeline_chanel_player_id: recTimelinePlayer['campaign_timeline_chanel_player_id'],
             campaign_timeline_chanel_player_data: recTimelinePlayer['player_data']
         };
+        $(jalapeno).trigger(self.event(Jalapeno['NEW_PLAYER_CREATED'], self, null, returnData));
+        return returnData;
     },
 
     /**
@@ -1071,7 +1073,7 @@ Jalapeno.prototype = {
             }
         });
         jalapeno.setCampaignTimelineRecord(i_campaign_timeline_id, 'timeline_duration', longestChannelDuration);
-        $(jalapeno).trigger(Jalapeno.TIMELINE_LENGTH_CHANGED,this);
+        $(jalapeno).trigger(self.event(Jalapeno['TIMELINE_LENGTH_CHANGED'], self, null, longestChannelDuration));
     },
 
     /**
@@ -1289,7 +1291,7 @@ Jalapeno.prototype = {
      @method setCampaignTimelineRecord
      @param {number} i_player_id
      @param {string} i_key the key to set
-     @param {string} i_value the value to set
+     @param {Object} i_value the value to set
      @return none
      **/
     setCampaignTimelineRecord: function (i_campaign_timeline_id, i_key, i_value) {
@@ -1357,6 +1359,19 @@ Jalapeno.prototype = {
                 // log(i_campaign_timeline_board_template_id);
             }
         });
+    },
+
+    /**
+     The jQuery.Event constructor is exposed and can be used when calling trigger. The new operator is optional.
+     @method event
+     @param {Event} i_event
+     @param {Object} i_context
+     @param {Object} i_caller
+     @param {Object} i_data
+     @return none.
+     **/
+    event: function (i_event, i_context, i_caller, i_data) {
+        return $.Event(i_event, {context: i_context, caller: i_caller, edata: i_data});
     },
 
     /**

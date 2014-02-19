@@ -201,9 +201,9 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          The jQuery.Event constructor is exposed and can be used when calling trigger. The new operator is optional.
          @method event
          @param {Event} i_event
-         @param {Event} i_context
-         @param {Event} i_caller
-         @param {Event} i_data
+         @param {Object} i_context
+         @param {Object} i_caller
+         @param {Object} i_data
          @return none.
          **/
         event: function (i_event, i_context, i_caller, i_data) {

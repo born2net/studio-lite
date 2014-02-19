@@ -69,9 +69,8 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             self.m_selected_campaign_id = BB.comBroker.getService(BB.SERVICES.CAMPAIGN_SELECTOR).getSelectedCampaign();
             self._loadTimelinesFromDB();
             self._loadSequencerFirstTimeline();
-            self._updatedTimelineLengthUI();
+            self._updatedTimelineLengthUI(null);
             self._listenTimelineLengthChanged();
-
         },
 
         /**
@@ -136,7 +135,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
                 if (e.context.m_owner instanceof SequencerView) {
                     self.m_timelineViewStack.selectView(self.m_timelines[campaign_timeline_id].getStackViewID());
                     BB.comBroker.fire(BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED, this, null, campaign_timeline_id);
-                    self._updatedTimelineLengthUI();
+                    self._updatedTimelineLengthUI(null);
                     return;
                 }
 
@@ -314,19 +313,20 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
          **/
         _listenTimelineLengthChanged: function(){
             var self = this;
-            $(jalapeno).on(Jalapeno.TIMELINE_LENGTH_CHANGED, $.proxy(self._updatedTimelineLengthUI,this));
+            $(jalapeno).on(Jalapeno.TIMELINE_LENGTH_CHANGED, $.proxy(self._updatedTimelineLengthUI, self));
         },
 
         /**
-         Update UI when timeline length changed
+         Update UI when timeline length changed, if event exists we pull duration from it, otherwise get it
+         frm jalapeno via selected_timeline_id
          @method _updatedTimelineLengthUI
          **/
-        _updatedTimelineLengthUI: function(){
+        _updatedTimelineLengthUI: function(e){
             var self = this;
             self.m_xdate = new xdate();
-            var a1 = jalapeno.getTimelineTotalDuration(this.m_selected_timeline_id);
-            var a2 = self.m_xdate.clearTime().addSeconds(a1).toString('HH:mm:ss');
-            $(Elements.TIMELINE_TOTAL_LENGTH).text(a2);
+            var duration = e ? e.edata : jalapeno.getTimelineTotalDuration(this.m_selected_timeline_id);
+            var durationFormated = self.m_xdate.clearTime().addSeconds(duration).toString('HH:mm:ss');
+            $(Elements.TIMELINE_TOTAL_LENGTH).text(durationFormated);
         }
     });
 

@@ -20,7 +20,7 @@ require.config({
         "TouchPunch": '_common/_js/touchpunch/TouchPunch',
         "X2JS": '_common/_js/x2js/xml2json',
         "Elements": 'Elements',
-        "LayoutManager": '_controllers/LayoutManager',
+        "LayoutRouter": '_controllers/LayoutRouter',
         "ComBroker": '_controllers/ComBroker',
         "ScreenTemplateFactory": '_controllers/ScreenTemplateFactory',
         "AppAuth": '_controllers/AppAuth',
@@ -77,7 +77,7 @@ require.config({
         'backbone.controller': {
             deps: ['underscore', 'jquery']
         },
-        "LayoutManager": {
+        "LayoutRouter": {
             deps: ["Elements", "backbone.controller"]
         },
         "Lib": {

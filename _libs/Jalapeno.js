@@ -706,9 +706,7 @@ Jalapeno.prototype = {
      **/
     removeCampaign: function (i_campaign_id) {
         var self = this;
-
-        var status = self.m_msdb.table_campaigns().openForDelete(i_campaign_id);
-        // log(status);
+        self.m_msdb.table_campaigns().openForDelete(i_campaign_id);
     },
 
     /**

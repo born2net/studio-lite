@@ -29,11 +29,11 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             window.log = BB.lib.log;
 
             // router init
-            require(['LayoutManager'], function (LayoutManager) {
-                var layoutManager = new LayoutManager();
+            require(['LayoutRouter'], function (LayoutRouter) {
+                var LayoutRouter = new LayoutRouter();
                 BB.history.start();
-                BB.comBroker.setService(BB.SERVICES['LAYOUT_MANAGER'], layoutManager);
-                layoutManager.navigate('authenticate/_/_', {trigger: true});
+                BB.comBroker.setService(BB.SERVICES['LAYOUT_ROUTER'], LayoutRouter);
+                LayoutRouter.navigate('authenticate/_/_', {trigger: true});
             })
         }
     });

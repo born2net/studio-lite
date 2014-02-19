@@ -17,7 +17,7 @@ define(['jquery', 'backbone', 'bootbox'], function ($, Backbone, Bootbox) {
                 if ($(Elements.USER_NAME).val().length > 1 && $(Elements.USER_PASS).val().length > 1) {
                     var user = $(Elements.USER_NAME).val();
                     var pass = $(Elements.USER_PASS).val();
-                    Backbone.comBroker.getService(Backbone.SERVICES.LAYOUT_MANAGER).navigate('authenticate/' + user + '/' + pass, {trigger: true});
+                    Backbone.comBroker.getService(Backbone.SERVICES.LAYOUT_ROUTER).navigate('authenticate/' + user + '/' + pass, {trigger: true});
                 }
                 return false;
             })

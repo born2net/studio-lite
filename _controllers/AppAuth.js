@@ -29,7 +29,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         authenticate: function (i_user, i_pass) {
             var self = this;
-            var appRouter = BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER);
+            var appRouter = BB.comBroker.getService(BB.SERVICES.LAYOUT_ROUTER);
             appRouter.navigate('authenticating', {trigger: true});
             self._loadCredentials(i_user, i_pass);
         },
@@ -49,7 +49,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             } else if (i_user.length > 2 && i_pass.length > 2) {
                 self._authServer(i_user, i_pass, this.AUTH_USER_PASS);
             } else {
-                BB.comBroker.getService(BB.SERVICES['LAYOUT_MANAGER']).navigate('unauthenticated', {trigger: true});
+                BB.comBroker.getService(BB.SERVICES['LAYOUT_ROUTER']).navigate('unauthenticated', {trigger: true});
             }
         },
 
@@ -105,7 +105,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     self._applyLimitedAccess(navigationView);
                 }
             }
-            BB.comBroker.getService(BB.SERVICES['LAYOUT_MANAGER']).navigate('authenticated', {trigger: true});
+            BB.comBroker.getService(BB.SERVICES['LAYOUT_ROUTER']).navigate('authenticated', {trigger: true});
         },
 
         /**
@@ -140,7 +140,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     }
                 });
             }
-            BB.comBroker.getService(BB.SERVICES['LAYOUT_MANAGER']).navigate('authenticationFailed', {trigger: true});
+            BB.comBroker.getService(BB.SERVICES['LAYOUT_ROUTER']).navigate('authenticationFailed', {trigger: true});
         },
 
         /**

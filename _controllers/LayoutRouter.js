@@ -1,5 +1,5 @@
 /**
- Application router and layout manager responsible for kick starting the application as
+ Application router and layout router responsible for kick starting the application as
  well as management for sizing events
  @class LayoutRouter
  @constructor
@@ -8,7 +8,7 @@
 define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEntryFaderView', 'LoginView', 'AppContentFaderView', 'WaitView', 'bootbox', 'CampaignManagerView', 'ResourcesView', 'ResourcesView', 'StationsView', 'SettingsView', 'ProStudioView', 'HelpView', 'LogoutView', 'CampaignSliderStackView', 'ScreenLayoutSelectorView'],
     function (_, $, Backbone, AppAuth, NavigationView, AppEntryFaderView, LoginView, AppContentFaderView, WaitView, Bootbox, CampaignManagerView, ResourcesView, ResourcesView, StationsView, SettingsView, ProStudioView, HelpView, LogoutView, CampaignSliderStackView, ScreenLayoutSelectorView) {
 
-        BB.SERVICES.LAYOUT_MANAGER = 'LayoutRouter';
+        BB.SERVICES.LAYOUT_ROUTER = 'LayoutRouter';
 
         /**
          Event fired when app resized
@@ -371,7 +371,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
              @method _updateLayout
              **/
             _updateLayout: function () {
-                var self = BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER);
+                var self = BB.comBroker.getService(BB.SERVICES['LAYOUT_ROUTER']);
                 var b = $('body');
                 self._appHeight = b.css('height').replace('px', '');
                 self._appWidth = b.css('width').replace('px', '');

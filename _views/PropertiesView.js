@@ -43,9 +43,9 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
          **/
         _reConfigPropPanelIcon: function () {
             var self = this;
-            var layoutManager = BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER);
+            var layoutRouter = BB.comBroker.getService(BB.SERVICES.LAYOUT_ROUTER);
 
-            if (layoutManager.getAppWidth() < 768) {
+            if (layoutRouter.getAppWidth() < 768) {
                 $(Elements.TOGGLE_PANEL + ' > span').removeClass('glyphicon-resize-horizontal');
                 $(Elements.TOGGLE_PANEL + ' > span').addClass('glyphicon-cog');
             } else {
@@ -89,8 +89,8 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
          **/
         _reconfigPropPanelLocation: function () {
             var self = this;
-            var layoutManager = BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER);
-            if (layoutManager.getAppWidth() > 768) {
+            var layoutRouter = BB.comBroker.getService(BB.SERVICES.LAYOUT_ROUTER);
+            if (layoutRouter.getAppWidth() > 768) {
                 $(Elements.PROP_PANEL_WRAP).append($(Elements.PROP_PANEL));
             } else {
                 $(Elements.POPUP_PROPERTIES).append($(Elements.PROP_PANEL));
@@ -104,8 +104,8 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
         _listenGlobalOpenProps: function () {
             var self = this;
             $(Elements.TOGGLE_PANEL).on('click', function () {
-                var layoutManager = BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER);
-                if (layoutManager.getAppWidth() < 768) {
+                var layoutRouter = BB.comBroker.getService(BB.SERVICES.LAYOUT_ROUTER);
+                if (layoutRouter.getAppWidth() < 768) {
                     self.openPropertiesPanel();
                 }
             });
@@ -172,8 +172,8 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             var self = this;
             self._reconfigPropPanelLocation();
             self._reConfigPropPanelIcon();
-            var layoutManager = BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER);
-            if (layoutManager.getAppWidth() > 768) {
+            var layoutRouter = BB.comBroker.getService(BB.SERVICES.LAYOUT_ROUTER);
+            if (layoutRouter.getAppWidth() > 768) {
                 if ($(Elements.TOGGLE_PANEL).hasClass('propPanelIsOpen') == false) {
                     $(Elements.TOGGLE_PANEL).trigger('click');
                 }
@@ -197,11 +197,11 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
          @return {Number} current width
          **/
         getPropWidth: function(){
-            var layoutManager = BB.comBroker.getService(BB.SERVICES.LAYOUT_MANAGER);
-            if (layoutManager.getAppWidth() > 768) {
+            var layoutRouter = BB.comBroker.getService(BB.SERVICES.LAYOUT_ROUTER);
+            if (layoutRouter.getAppWidth() > 768) {
                 return $(Elements.PROP_PANEL_WRAP).outerWidth();
             } else {
-                return layoutManager.getAppWidth();
+                return layoutRouter.getAppWidth();
             }
         }
     });

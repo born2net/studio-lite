@@ -63,11 +63,10 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
          @method _reOrderChannelBlocks
          @return none
          **/
-        _reOrderChannelBlocks: function () {
+        _reOrderChannelBlocks: function (e) {
             var self = this
             var blocks = $(Elements.SORTABLE).children();
             var playerOffsetTime = 0;
-
             $(blocks).each(function (i) {
                 var block_id = $(this).data('block_id');
                 var recBlock = jalapeno.getBlockRecord(block_id);
@@ -103,8 +102,9 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
          **/
         _openAddBlockWizard: function (e) {
             var self = this;
-            var addBlockView =  BB.comBroker.getService(BB.SERVICES.ADD_BLOCK_VIEW);
-            addBlockView.selectView();;
+            var addBlockView = BB.comBroker.getService(BB.SERVICES.ADD_BLOCK_VIEW);
+            addBlockView.selectView();
+            ;
             BB.comBroker.listenOnce(BB.EVENTS.ADD_NEW_BLOCK, function (e) {
                 self._createNewChannelBlock(e.edata.blockCode, e.edata.resourceID);
                 e.stopImmediatePropagation();
@@ -205,7 +205,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
 
             self.selected_campaign_timeline_chanel_id = i_campaign_timeline_chanel_id;
 
-            var timeline = BB.comBroker.getService(BB.SERVICES.CAMPAIGN_VIEW).getTimelineInstance(i_campaign_timeline_id);
+            var timeline = BB.comBroker.getService(BB.SERVICES['CAMPAIGN_VIEW']).getTimelineInstance(i_campaign_timeline_id);
             var channel = timeline.getChannelInstance(i_campaign_timeline_chanel_id);
             var blocks = channel.getBlocks();
 
@@ -280,9 +280,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
          **/
         _listenBlockLengthChanged: function () {
             var self = this;
-            BB.comBroker.listen(BB.EVENTS.BLOCK_LENGTH_CHANGED, function (e) {
-                self._reOrderChannelBlocks();
-            });
+            $(jalapeno).on(Jalapeno.BLOCK_LENGTH_CHANGED, $.proxy(self._reOrderChannelBlocks, self));
         },
 
         /**

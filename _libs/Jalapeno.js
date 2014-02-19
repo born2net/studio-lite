@@ -93,6 +93,16 @@ Jalapeno.NEW_TIMELINE_CREATED = 'NEW_TIMELINE_CREATED';
  **/
 Jalapeno.NEW_CHANNEL_CREATED = 'NEW_CHANNEL_CREATED';
 
+/**
+ Custom event fired when a block (ie Player on channel) changes it's total playback length
+ @event Jalapeno.BLOCK_LENGTH_CHANGED
+ @param {This} caller
+ @param {Event}
+ @static
+ @final
+ **/
+Jalapeno.BLOCK_LENGTH_CHANGED = 'BLOCK_LENGTH_CHANGED';
+
 Jalapeno.prototype = {
     constructor: Jalapeno,
 
@@ -1121,6 +1131,11 @@ Jalapeno.prototype = {
                 recPlayer.player_duration = totalSeconds;
             }
         });
+        var returnData = {
+            campaignTimelineChanelPlayerID: i_campaign_timeline_chanel_player_id,
+            totalSeconds: totalSeconds
+        }
+        $(jalapeno).trigger(self.event(Jalapeno['BLOCK_LENGTH_CHANGED'], self, null, returnData));
     },
 
     /**

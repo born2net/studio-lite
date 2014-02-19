@@ -63,7 +63,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
          @method _reOrderChannelBlocks
          @return none
          **/
-        _reOrderChannelBlocks: function (e) {
+        _reOrderChannelBlocks: function () {
             var self = this
             var blocks = $(Elements.SORTABLE).children();
             var playerOffsetTime = 0;
@@ -208,14 +208,17 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             var timeline = BB.comBroker.getService(BB.SERVICES['CAMPAIGN_VIEW']).getTimelineInstance(i_campaign_timeline_id);
             var channel = timeline.getChannelInstance(i_campaign_timeline_chanel_id);
             var blocks = channel.getBlocks();
+            var xdate = BB.comBroker.getService('XDATE');
 
-            for (var block_id in blocks) {
-                var blockData = blocks[block_id].getBlockData();
+            for (var block in blocks) {
+                var blockData = blocks[block].getBlockData();
+                var duration = jalapeno.getBlockTimelineChannelBlockLength(blockData.blockID).totalInSeconds;
+                var durationFormatted = xdate.clearTime().addSeconds(duration).toString('HH:mm:ss');
                 $(Elements.SORTABLE).append($('<li class="' + BB.lib.unclass(Elements.CLASS_CHANNEL_LIST_ITEMS) + '  list-group-item" data-block_id="' + blockData.blockID + '">' +
                     '<a href="#">' +
                     '<img  class="img-responsive" src="' + blockData.blockIcon + '"/>' +
                     '<span>' + blockData.blockName + '</span>' +
-                    '<span class="blockLengthClass" style="float: right">' + '00:00:00' + '</span>' +
+                    '<span class="' + BB.lib.unclass(Elements.CLASS_BLOCK_LENGTH_TIMER) + '">' + durationFormatted + '</span>' +
                     '</a>' +
                     '</li>'));
             }
@@ -280,7 +283,23 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
          **/
         _listenBlockLengthChanged: function () {
             var self = this;
-            $(jalapeno).on(Jalapeno.BLOCK_LENGTH_CHANGED, $.proxy(self._reOrderChannelBlocks, self));
+            $(jalapeno).on(Jalapeno.BLOCK_LENGTH_CHANGED, $.proxy(self._onBlockLengthChanged, self));
+        },
+
+        /**
+         Listen to when a block on channel is modified with respect to its length
+         @method _onBlockLengthChanged
+         @param {Event} e block changed data
+         **/
+        _onBlockLengthChanged: function (e) {
+            var self = this;
+            var block_id = e.edata.campaignTimelineChanelPlayerID;
+            var duration = e.edata.totalSeconds;
+            var selectedLI = $(Elements.SORTABLE).find('[data-block_id="' + block_id + '"]');
+            self.m_xdate = BB.comBroker.getService('XDATE');
+            var durationFormated = self.m_xdate.clearTime().addSeconds(duration).toString('HH:mm:ss');
+            $(Elements.CLASS_BLOCK_LENGTH_TIMER, selectedLI).text(durationFormated);
+            self._reOrderChannelBlocks();
         },
 
         /**

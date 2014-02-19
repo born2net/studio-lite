@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated CampaignView
  **/
-define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', 'Timeline', 'ScreenLayoutSelectorView', 'xdate'], function ($, Backbone, SequencerView, ChannelListView, StackView, Timeline, ScreenLayoutSelectorView, xdate) {
+define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', 'Timeline', 'ScreenLayoutSelectorView'], function ($, Backbone, SequencerView, ChannelListView, StackView, Timeline, ScreenLayoutSelectorView) {
 
     BB.SERVICES.CAMPAIGN_VIEW = 'CampaignView';
 
@@ -317,7 +317,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
          **/
         _updatedTimelineLengthUI: function (e) {
             var self = this;
-            self.m_xdate = new xdate();
+            self.m_xdate = BB.comBroker.getService('XDATE');
             var duration = e ? e.edata : jalapeno.getTimelineTotalDuration(this.m_selected_timeline_id);
             var durationFormated = self.m_xdate.clearTime().addSeconds(duration).toString('HH:mm:ss');
             $(Elements.TIMELINE_TOTAL_LENGTH).text(durationFormated);

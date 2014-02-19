@@ -147,7 +147,6 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
         getBlocks: function () {
             var self = this;
             var blocksSorted = [];
-
             for (var block_id in self.m_blocks) {
                 var recBlock = jalapeno.getBlockRecord(block_id);
                 var offsetTime = parseInt(recBlock['player_offset_time']);

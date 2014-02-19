@@ -1168,11 +1168,13 @@ Jalapeno.prototype = {
         var seconds = 0;
         var minutes = 0;
         var hours = 0;
+        var totalInSeconds = 0;
 
         $(self.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
             var recCampaignTimelineChannelPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
             if (campaign_timeline_chanel_player_id == i_campaign_timeline_chanel_player_id) {
                 var totalSeconds = recCampaignTimelineChannelPlayer['player_duration'];
+                totalInSeconds = totalSeconds;
                 if (totalSeconds >= 3600) {
                     hours = Math.floor(totalSeconds / 3600);
                     totalSeconds = totalSeconds - (hours * 3600);
@@ -1188,7 +1190,8 @@ Jalapeno.prototype = {
         var playbackLength = {
             hours: hours,
             minutes: minutes,
-            seconds: seconds
+            seconds: seconds,
+            totalInSeconds: totalInSeconds
         }
         return playbackLength;
     },

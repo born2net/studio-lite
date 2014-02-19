@@ -389,6 +389,10 @@ body {
     padding-right: 20px;
 }
 
+.blockLengthTimer {
+    float: right;
+    padding-top: 10px;
+}
 
 .resourcesListItems span {
     display: inline;

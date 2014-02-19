@@ -5,7 +5,7 @@
  @constructor
  @return {Object} instantiated StudioLite
  **/
-define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 'ComBroker', 'Lib', 'Jalapeno', 'JalapenoHelper', 'X2JS'], function (_, $, Backbone, Bootstrap, backbonecontroller, ComBroker, Lib, Jalapeno, JalapenoHelper, X2JS) {
+define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 'ComBroker', 'Lib', 'Jalapeno', 'JalapenoHelper'], function (_, $, Backbone, Bootstrap, backbonecontroller, ComBroker, Lib, Jalapeno, JalapenoHelper) {
     var StudioLite = Backbone.Controller.extend({
 
         // app init
@@ -22,8 +22,6 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             BB.comBroker = new ComBroker();
             BB.Jalapeno = new Jalapeno();
             BB.JalapenoHelper = new JalapenoHelper();
-            var compX2JS = x2js = new X2JS({escapeMode: true, attributePrefix: "_", arrayAccessForm: "none", emptyNodeForm: "text", enableToStringFunc: true, arrayAccessFormPaths: [], skipEmptyTextNodesForObj: true});
-            BB.comBroker.setService('compX2JS', compX2JS);
             window.jalapeno = BB.Jalapeno;
             window.model = BB.JalapenoHelper;
             window.log = BB.lib.log;

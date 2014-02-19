@@ -44,13 +44,6 @@ define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
      **/
     BB.EVENTS.BLOCK_LENGTH_CHANGING = 'BLOCK_LENGTH_CHANGING';
 
-    /**
-     event fires when block length has changed, normally by a knob property widget
-     @event Block.BLOCK_LENGTH_CHANGED
-     @param {object} this
-
-    BB.EVENTS.BLOCK_LENGTH_CHANGED = 'BLOCK_LENGTH_CHANGED';
-     **/
     var Block = BB.Controller.extend({
 
         /**
@@ -151,7 +144,6 @@ define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
          **/
         _updateBlockLength: function () {
             var self = this;
-
             var lengthData = jalapeno.getBlockTimelineChannelBlockLength(self.m_block_id);
             $(Elements.BLOCK_LENGTH_HOURS).val(lengthData.hours).trigger('change');
             $(Elements.BLOCK_LENGTH_MINUTES).val(lengthData.minutes).trigger('change');
@@ -192,7 +184,6 @@ define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
                     }
                     // log('upd: ' + self.m_block_id + ' ' + hours + ' ' + minutes + ' ' + seconds);
                     jalapeno.setBlockTimelineChannelBlockLength(self.m_block_id, hours, minutes, seconds);
-                    // BB.comBroker.fire(BB.EVENTS.BLOCK_LENGTH_CHANGED);
                 }
             });
         },

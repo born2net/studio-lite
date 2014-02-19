@@ -86,13 +86,13 @@
 <div id="appRow " class="row">
 <div id="appNavigator" class="hidden-xs hidden-sm hidden-md col-lg-1">
     <ul class="list-group">
-        <li class="campaignManagerView list-group-item">Campaign</li>
-        <li class="resourcesPanel list-group-item">Resources</li>
-        <li class="stationsPanel list-group-item">Stations</li>
-        <li class="settingsPanel list-group-item">Settings</li>
-        <li class="proStudioPanel list-group-item">Pro Studio</li>
-        <li class="helpPanel list-group-item">Help</li>
-        <li class="logoutPanel list-group-item">Logout</li>
+        <li class="campaignManagerView list-group-item"><i class="navicons fa fa-tasks"></i>Campaigns</li>
+        <li class="resourcesPanel list-group-item"><i class="navicons fa fa-certificate"></i>Resources</li>
+        <li class="stationsPanel list-group-item"><i class="navicons fa fa-desktop"></i>Stations</li>
+        <li class="settingsPanel list-group-item"><i class="navicons fa fa-gears"></i>Settings</li>
+        <li class="proStudioPanel list-group-item"><i class="navicons fa fa-cloud-upload"></i>Pro Studio</li>
+        <li class="helpPanel list-group-item"><i class="navicons fa fa-comments"></i>Help</li>
+        <li class="logoutPanel list-group-item"><i class="navicons fa fa-power-off"></i>Logout</li>
     </ul>
 </div>
 <div id="mainPanelWrap" class="col-xs-12 col-sm-9 col-md-9 col-lg-8">
@@ -165,7 +165,8 @@
                             <h4 class="panel-title"><a id="toggleTimelinesCollapsible" data-toggle="collapse"
                                                        data-parent="#timelinesCollapsible"
                                                        href="#screenSelectorContainerCollapse"> <span
-                                    class="glyphicon glyphicon-chevron-down"></span> Timeline <span id="timelineTotalLength"> 00:00:00</span></a>
+                                    class="glyphicon glyphicon-chevron-down"></span> Timeline <span
+                                    id="timelineTotalLength"> 00:00:00</span></a>
                                 <button style="margin-left: 30px" id="addNewTimelineButton" type="button"
                                         class="btn btn-default btn-sm"><span
                                         class="glyphicon glyphicon-plus"></span></button>
@@ -451,8 +452,9 @@
 </div>
 </div>
 <div id="footer"><br>
-
-    <p id="footerText">&nbsp;MediaSignage Inc &#169;</p>
+    <span id="footerText">&nbsp;MediaSignage Inc &#169;</span>
+    <a id="github" href="http://git.digitalsignage.com"><span>source code on GitHub
+        <i class="navicons fa fa-github-alt"></i></span></a>
 </div>
 
 <!-- Modal -->

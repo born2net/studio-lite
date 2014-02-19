@@ -74,6 +74,17 @@ body {
     margin: 0px;
 }
 
+#github {
+    position: relative;
+    top: -8px;
+    float: right;
+}
+#github i {
+    padding-left: 6px;
+    font-size: 2em;
+}
+
+
 #appNavigator {
     padding: 0px;
     margin: 0px;
@@ -405,6 +416,13 @@ body {
 
 .alignTextCenter {
     text-align: center;
+}
+
+.navicons {
+    font-size: 1.2em;
+    position: relative;
+    top: 2px;
+    padding-right: 5px;
 }
 
 aside > aside > div > ul > li {

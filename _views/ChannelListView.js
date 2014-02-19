@@ -215,6 +215,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
                     '<a href="#">' +
                     '<img  class="img-responsive" src="' + blockData.blockIcon + '"/>' +
                     '<span>' + blockData.blockName + '</span>' +
+                    '<span class="blockLengthClass" style="float: right">' + '00:00:00' + '</span>' +
                     '</a>' +
                     '</li>'));
             }

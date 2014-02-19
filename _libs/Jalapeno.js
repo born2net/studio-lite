@@ -32,6 +32,57 @@ function Jalapeno() {
  **/
 Jalapeno.TIMELINE_LENGTH_CHANGED = 'TIMELINE_LENGTH_CHANGED';
 
+/**
+ Custom event fired when a new player (aka block) was created
+ @event Jalapeno.NEW_PLAYER_CREATED
+ @param {This} caller
+ @param {Event}
+ @static
+ @final
+ **/
+Jalapeno.NEW_PLAYER_CREATED = 'NEW_PLAYER_CREATED';
+
+/**
+ Custom event fired when a new campaign was created
+ @event Jalapeno.NEW_CAMPAIGN_CREATED
+ @param {This} caller
+ @param {Event}
+ @static
+ @final
+ **/
+Jalapeno.NEW_CAMPAIGN_CREATED = 'NEW_CAMPAIGN_CREATED';
+
+/**
+ Custom event fired when a new template (aka screen division layout in global) was created
+ @event Jalapeno.NEW_TEMPLATE_CREATED
+ @param {This} caller
+ @param {Event}
+ @static
+ @final
+ **/
+Jalapeno.NEW_TEMPLATE_CREATED = 'NEW_TEMPLATE_CREATED';
+
+
+/**
+ Custom event fired when a new timeline was created
+ @event Jalapeno.NEW_TIMELINE_CREATED
+ @param {This} caller
+ @param {Event}
+ @static
+ @final
+ **/
+Jalapeno.NEW_TIMELINE_CREATED = 'NEW_TIMELINE_CREATED';
+
+/**
+ Custom event fired when a new channel was created
+ @event Jalapeno.NEW_CHANNEL_CREATED
+ @param {This} caller
+ @param {Event}
+ @static
+ @final
+ **/
+Jalapeno.NEW_CHANNEL_CREATED = 'NEW_CHANNEL_CREATED';
+
 Jalapeno.prototype = {
     constructor: Jalapeno,
 
@@ -160,6 +211,7 @@ Jalapeno.prototype = {
         var campaign = campaigns.createRecord();
         campaign.campaign_name = i_campgianName;
         campaigns.addRecord(campaign);
+        $(jalapeno).trigger(Jalapeno.NEW_CAMPAIGN_CREATED,this);
         return campaign['campaign_id'];
     },
 
@@ -282,6 +334,7 @@ Jalapeno.prototype = {
             chanels.addRecord(chanel);
             createdChanels.push(chanel['campaign_timeline_chanel_id']);
         }
+        $(jalapeno).trigger(Jalapeno.NEW_CHANNEL_CREATED,this);
         return createdChanels;
     },
 
@@ -323,7 +376,7 @@ Jalapeno.prototype = {
             viewers.addRecord(viewer);
             returnData['viewers'].push(viewer['board_template_viewer_id']);
         }
-
+        $(jalapeno).trigger(Jalapeno.NEW_TEMPLATE_CREATED,this);
         returnData['board_template_id'] = board_template_id
         return returnData;
     },
@@ -341,6 +394,7 @@ Jalapeno.prototype = {
         timeline.campaign_id = i_campaign_id;
         timeline.timeline_name = "Timeline";
         timelines.addRecord(timeline);
+        $(jalapeno).trigger(Jalapeno.NEW_TIMELINE_CREATED,this);
         return timeline['campaign_timeline_id'];
     },
 
@@ -365,7 +419,7 @@ Jalapeno.prototype = {
         recTimelinePlayer.player_duration = 10;
         recTimelinePlayer.player_offset_time = i_offset;
         timelinePlayers.addRecord(recTimelinePlayer);
-
+        $(jalapeno).trigger(Jalapeno.NEW_PLAYER_CREATED,this);
         return {
             campaign_timeline_chanel_player_id: recTimelinePlayer['campaign_timeline_chanel_player_id'],
             campaign_timeline_chanel_player_data: recTimelinePlayer['player_data']

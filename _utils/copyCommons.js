@@ -1,4 +1,4 @@
-var NODE_PATH = "C:\Users\Sean\AppData\Roaming\npm\node_modules";
+var NODE_PATH = "%appdata%/npm/node_modules";
 
 var async = require('/Users/Sean/AppData/Roaming/npm/node_modules/async');
 var fs = require('fs');
@@ -94,7 +94,7 @@ async.waterfall([
         }
 
         var copyDirAsync = function (dir, done) {
-            console.log('zzzz' + dir[0] + '/*.* ' + dir[1]);
+            console.log('f: ' + dir[0] + '/*.* ' + dir[1]);
 
         }
 

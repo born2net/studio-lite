@@ -1,4 +1,6 @@
 var NODE_PATH = "%appdata%/npm/node_modules";
+console.log('not used');
+process.exit();
 
 var async = require('/Users/Sean/AppData/Roaming/npm/node_modules/async');
 var fs = require('fs');
@@ -66,8 +68,8 @@ async.waterfall([
                 });
             }
         }
-
     },
+
 
     /**
      copy directories

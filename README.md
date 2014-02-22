@@ -1,7 +1,4 @@
-
-
-
-nageStudio Web Lite
+SignageStudio Web Lite
 ======================
 
 The world's only enterprise level, open source, 100% FREE, Digital Signage platform
@@ -24,6 +21,6 @@ Documentation
 
 License
 ------------------------------------------------------------------------
-- The SignageStudio Web Lite and Jalapeno SDK are available under GPL V3 3 https://github.com/born2net/signagestudio_web-lite/blob/master/LICENSE
+- The SignageStudio Web Lite and Jalapeno SDK are available under GPL V3 3 https://github.com/born2net/signagestudio_web-lite/blob/master
 
 

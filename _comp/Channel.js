@@ -212,6 +212,7 @@ Channel.prototype = {
      **/
     deleteChannel: function () {
         var self = this;
+        jalapeno.removeChannelFromTimeline(self.m_campaign_timeline_chanel_id);
         for (var blockID in self.m_blocks) {
             self.deleteBlock(blockID);
         }
@@ -225,7 +226,7 @@ Channel.prototype = {
      **/
     deleteBlock: function (i_block_id) {
         var self = this;
-        jalapeno.removeBlockFromTimelineChannel(i_block_id);
+
         self.m_blocks[i_block_id].deleteBlock();
         delete self.m_blocks[i_block_id];
     }

@@ -548,7 +548,6 @@ Jalapeno.prototype = {
      **/
     getGlobalBoardRecFromTemplate: function (i_campaign_timeline_board_template_id) {
         var self = this;
-
         var recCampaignTimelineBoardTemplate = jalapeno.m_msdb.table_campaign_timeline_board_templates().getRec(i_campaign_timeline_board_template_id);
         var board_template_id = recCampaignTimelineBoardTemplate['board_template_id'];
         var recBoardTemplate = jalapeno.m_msdb.table_board_templates().getRec(board_template_id);
@@ -1112,6 +1111,8 @@ Jalapeno.prototype = {
     getTimelineTotalDuration: function (i_campaign_timeline_id) {
         var self = this;
         var recCampaignTimeline = self.m_msdb.table_campaign_timelines().getRec(i_campaign_timeline_id);
+        if (!recCampaignTimeline)
+            return 0;
         return recCampaignTimeline['timeline_duration'];
     },
 

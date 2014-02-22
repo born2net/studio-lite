@@ -174,7 +174,7 @@ Sequencer.prototype = {
         $('#' + elementID).remove();
         // var timeline = self.m_timelines[i_campaign_timeline_id];
         delete self.m_timelines[i_campaign_timeline_id];
-        jalapeno.removeTimelineFromCampaign(i_campaign_timeline_id);
+        jalapeno.removeTimelineFromSequences(i_campaign_timeline_id);
         self.reSequenceTimelines();
     },
 

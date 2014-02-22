@@ -82,6 +82,7 @@ Elements.ADD_RESOURCE_VIEW = '#addResourceView';
 Elements.CAMPAIGN_PROPERTIES = '#campaignProperties';
 Elements.SELECTED_CAMPAIGN_PROPERTIES = '#selectedCampaignProperties';
 Elements.START_NEW_CAMPAIGN = '#startNewCampaign';
+Elements.REMOVE_CAMPAIGN = '#removeCampaign';
 
 Elements.CAMPAIN_VIEW_MAIN_CONTAINER = '#campainViewMainContainer';
 Elements.NONE_SELECTED_SCREEN_LAYOUT = '#noneSelectedScreenLayout';
@@ -96,6 +97,7 @@ Elements.ADD_NEW_SCREEN_BUTTON = '#addNewScreenButton';
 
 Elements.IMG_VERTICAL = '#imgVertical';
 Elements.IMG_HORIZONTAL = '#imgHorizontal';
+Elements.IMG_HORIZONTAL1912 = '#imgHorizontal1912'; /** Where does #imgHorizontal1912 pull my image from**/  
 Elements.CAMPAIGN_SELECTOR_VIEW = '#campaignSelectorView';
 Elements.ORIENTATION_VIEW = '#orientationView';
 Elements.RESOLUTION_VIEW = '#resolutionView';
@@ -150,8 +152,12 @@ Elements.UP_TOTOP = '#uptotop';
 // Classes
 
 Elements.CLASS_KNOB = '.knob';
+
+
+Elements.CLASS_FIX_PROP_OPEN_LI_BUTTON_POSITION = 'fixPropOpenLiButtonPosition';
 Elements.CLASS_ADD_RESOURE_TO_CHANNEL = '.addResoureToChannel';
 Elements.CLASS_SELECTED_LIB_RESOURCE = '.selectedLibResource';
+Elements.CLASS_SELECTED_LIB_RESOURCE2 = 'selectedLibResource';
 Elements.CLASS_RESOURCE_LIB_OPEN_PROPS = '.resourceLibOpenProps';
 Elements.CLASS_CURRENT_SELECTED_RESOUCRE2 = 'currentSelectedResource';
 Elements.CLASS_RESOURCE_LIB_OPEN_PROPS2 = 'resourceLibOpenProps';

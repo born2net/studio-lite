@@ -83,12 +83,14 @@ CompCampaignNavigator.prototype = {
                 self.m_deviceOriention = 'h';
                 $(Elements.IMG_VERTICAL).removeClass('sizeByWidth').addClass('sizeByHeight');
                 $(Elements.IMG_HORIZONTAL).removeClass('sizeByWidth').addClass('sizeByHeight');
+                $(Elements.IMG_HORIZONTAL1912).removeClass('sizeByWidth').addClass('sizeByHeight');
             } else {
                 if (self.m_deviceOriention == 'v')
                     return;
                 self.m_deviceOriention = 'v';
                 $(Elements.IMG_VERTICAL).removeClass('sizeByHeight').addClass('sizeByWidth');
                 $(Elements.IMG_HORIZONTAL).removeClass('sizeByHeight').addClass('sizeByWidth');
+                $(Elements.IMG_HORIZONTAL1912).removeClass('sizeByHeight').addClass('sizeByWidth');
             }
             //  if ($.event.special.orientationchange.orientation() == "portrait") {
         });
@@ -98,11 +100,13 @@ CompCampaignNavigator.prototype = {
                 case 'landscape': {
                     $(Elements.IMG_VERTICAL).removeClass('sizeByWidth').addClass('sizeByHeight');
                     $(Elements.IMG_HORIZONTAL).removeClass('sizeByWidth').addClass('sizeByHeight');
+                    $(Elements.IMG_HORIZONTAL1912).removeClass('sizeByWidth').addClass('sizeByHeight');
                     break;
                 }
                 case 'portrait': {
                     $(Elements.IMG_VERTICAL).removeClass('sizeByHeight').addClass('sizeByWidth');
                     $(Elements.IMG_HORIZONTAL).removeClass('sizeByHeight').addClass('sizeByWidth');
+                    $(Elements.IMG_HORIZONTAL1912).removeClass('sizeByHeight').addClass('sizeByWidth');
                     break;
                 }
             }

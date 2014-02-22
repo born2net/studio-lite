@@ -1,9 +1,9 @@
 {
-  "name": "SignageLite",
-  "description": "MediaSignage open source SignageStudio project",
-  "version": "0.1.11",
-  "url": "http://digitalsignage.com",
-  "logo": "http://www.digitalsignage.com/_images/logo.png",
+  "name": "NV3 Cloud Signage",
+  "description": "User Interface for NV3 Cloud Signage",
+  "version": "0.1.0",
+  "url": "http://www.nv3technologies.com",
+  "logo": "http://wordpress.nv3tech.com/wp-content/uploads/2012/11/nv3logo.png",
   "options": {    
     "linkNatives": "true",
     "attributesEmit": "true",

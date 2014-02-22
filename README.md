@@ -1,4 +1,7 @@
-SignageStudio Web Lite
+
+
+
+nageStudio Web Lite
 ======================
 
 The world's only enterprise level, open source, 100% FREE, Digital Signage platform

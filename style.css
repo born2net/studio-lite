@@ -1,6 +1,6 @@
 #loginPage .ui-bar-a {
-    background: #ffffff;
-    background-image: #ffffff;
+    background: #000000;
+    background-image: #000000;
 }
 
 form.ui-bar-a {
@@ -565,6 +565,11 @@ label.ui-btn {
 }
 
 #imgVertical {
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+#imgHorizontal1912 {
     opacity: 0.6;
     cursor: pointer;
 }

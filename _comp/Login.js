@@ -77,7 +77,7 @@ LoginComponent.prototype = {
             self.forgotPassword.bind('click', function (e) {
                 if (self.userNameID.val().length < 4) {
                     $().toastmessage('showToast', {
-                        text: 'please fill your user name or email address first<br/> and click again',
+                        text: 'Wrong Password<br/> do it again',
                         sticky: false,
                         position: 'middle-center',
                         stayTime: 7000,

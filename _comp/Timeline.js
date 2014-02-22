@@ -161,7 +161,11 @@ Timeline.prototype = {
             commBroker.getService('ScreenOrientation').setOrientation(ScreenOrientation.HORIZONTAL);
         } else {
             commBroker.getService('ScreenOrientation').setOrientation(ScreenOrientation.VERTICAL);
+        } else {
+            commBroker.getService('ScreenOrientation').setOrientation(ScreenOrientation.HORIZONTAL1912);
         }
+/** ^ not sure if that is pulling a new screen orientation. I might have to actually add another set of acceptable screen resolutions for the 1912 unit **/
+
 
         var screenProps = jalapeno.getTemplateViewersScreenProps(self.m_campaign_timeline_id, i_campaign_timeline_board_template_id)
         self._createTimelineUI(screenProps);
@@ -254,10 +258,12 @@ Timeline.prototype = {
         var self = this;
         jalapeno.removeTimelineFromCampaign(self.m_campaign_timeline_id);
         var campaignTimelineBoardTemplateID = jalapeno.removeBoardTemplateFromTimeline(self.m_campaign_timeline_id);
+        jalapeno.removeTimelineBoardViewerChannels(campaignTimelineBoardTemplateID);
         var boardTemplateID = jalapeno.removeBoardTemplate(campaignTimelineBoardTemplateID);
         jalapeno.removeBoardTemplateViewers(boardTemplateID);
         for (var channel in self.m_channels){
             self.m_channels[channel].deleteChannel();
+            delete self.m_channels[channel];
         }
     }
 }

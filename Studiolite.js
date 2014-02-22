@@ -1,9 +1,8 @@
 /**
  SignageStudio Web Lite (a.k.a SignageLite) is a free, open source Web application and
- framework for Digital Signage that's available under GNU GENERAL PUBLIC LICENSE Version 3 (see LICENSE).
+ framework for Digital Signage that's available under GNU GENERAL PUBLIC LICENSE Version 3 (see LICENSE). 
 
- The App and SDK connect to the free Digital Signage web service available from http://www.DigitalSignage.com
- To fork and to view the online docs visit: http://git.DigitalSignage.com
+Nv3 version based from SignageStudio Web Lite
 
  MediaSignage Inc (c)
 
@@ -114,7 +113,7 @@ $(document).ready(function () {
             commBroker.setValue('key', crumb);
 
             if ($("option:selected", Elements.REMEMBER_ME).val() == 'on')
-                $.cookie('signagestudioweblite', crumb, { expires: 300 });
+                $.cookie('nv3cloudstudio', crumb, { expires: 300 });
 
         } else {
             // todo: fix dialog with proper messages
@@ -122,7 +121,7 @@ $(document).ready(function () {
         }
     });
 
-    var cookie = $.cookie('signagestudioweblite') == undefined ? undefined : $.cookie('signagestudioweblite').split(' ')[0];
+    var cookie = $.cookie('nv3cloudstudio') == undefined ? undefined : $.cookie('nv3cloudstudio').split(' ')[0];
 
     if (cookie === undefined) {
         setTimeout(function () {
@@ -234,7 +233,7 @@ function wireStudioUI() {
 
 
     $(Elements.LEARN_HOW_TO).tap(function () {
-        window.open('http://www.digitalsignage.com/_html/signagestudio_lite.html', '_blank')
+        window.open('http://www.chargingkiosk.com', '_blank')
         return false;
     });
 
@@ -295,10 +294,10 @@ function updateContainersHeight(){
 
 function wireLogout() {
     $(Elements.NAV_LOGOUT).on('tap', function (e) {
-        $.removeCookie('signagestudioweblite', {path: '/'});
-        $.cookie('signagestudioweblite', '', { expires: -300 });
+        $.removeCookie('nv3cloudstudio', {path: '/'});
+        $.cookie('nv3cloudstudio', '', { expires: -300 });
         $('body').empty();
-        $('body').append('<div style="font-family: arial; text-align:center;"><h2>Thank you for using SignageStudio Web Lite</h2></div>');
+        $('body').append('<div style="font-family: arial; text-align:center;"><h2>Thank you for using NV3 CloudSignage</h2></div>');
         e.preventDefault();
         e.stopImmediatePropagation();
         return false;
@@ -309,6 +308,17 @@ function disableBack() {
     $(document).bind('pagebeforechange', function (event, data) {
         if (typeof data.toPage === "string") {
             if (data.options.reverse == true) {
+                event.preventDefault();
+                return false;
+            }
+        }
+    });
+}
+
+$(document).bind('pageinit', function () {
+    // wrap additional hooks
+});
+ons.reverse == true) {
                 event.preventDefault();
                 return false;
             }

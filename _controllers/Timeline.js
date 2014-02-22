@@ -237,19 +237,11 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
          **/
         deleteTimeline: function () {
             var self = this;
-
-            var campaign_timeline_board_template_id = jalapeno.getTemplatesOfTimeline(self.m_campaign_timeline_id)[0];
-            // var recBoard = jalapeno.getGlobalBoardRecFromTemplate(campaign_timeline_board_template_id);
-
             var boardTemplateID = jalapeno.getGlobalBoardIDFromTimeline(self.m_campaign_timeline_id);
-
-
             jalapeno.removeTimelineFromCampaign(self.m_campaign_timeline_id);
             var campaignTimelineBoardTemplateID = jalapeno.removeBoardTemplateFromTimeline(self.m_campaign_timeline_id);
             jalapeno.removeBoardTemplate(boardTemplateID);
-
             jalapeno.removeTimelineBoardViewerChannels(campaignTimelineBoardTemplateID);
-
             jalapeno.removeBoardTemplateViewers(boardTemplateID);
             for (var channel in self.m_channels) {
                 self.m_channels[channel].deleteChannel();

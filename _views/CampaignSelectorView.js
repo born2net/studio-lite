@@ -141,7 +141,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 jalapeno.removeTimelineFromCampaign(timelineID);
                 var campaignTimelineBoardTemplateID = jalapeno.removeBoardTemplateFromTimeline(timelineID);
                 jalapeno.removeTimelineBoardViewerChannels(campaignTimelineBoardTemplateID);
-                var boardTemplateID = jalapeno.removeBoardTemplate(campaignTimelineBoardTemplateID);
+                var boardTemplateID = jalapeno.getGlobalBoardIDFromTimeline(timelineID);
+                jalapeno.removeBoardTemplate(boardTemplateID);
                 jalapeno.removeBoardTemplateViewers(boardTemplateID);
                 jalapeno.removeTimelineFromSequences(timelineID);
 

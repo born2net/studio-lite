@@ -239,10 +239,14 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             var self = this;
 
             var campaign_timeline_board_template_id = jalapeno.getTemplatesOfTimeline(self.m_campaign_timeline_id)[0];
-            var recBoard = jalapeno.getGlobalBoardRecFromTemplate(campaign_timeline_board_template_id);
+            // var recBoard = jalapeno.getGlobalBoardRecFromTemplate(campaign_timeline_board_template_id);
+
+            var boardTemplateID = jalapeno.getGlobalBoardIDFromTimeline(self.m_campaign_timeline_id);
+
+
             jalapeno.removeTimelineFromCampaign(self.m_campaign_timeline_id);
             var campaignTimelineBoardTemplateID = jalapeno.removeBoardTemplateFromTimeline(self.m_campaign_timeline_id);
-            var boardTemplateID = jalapeno.removeBoardTemplate(recBoard['board_id']);
+            jalapeno.removeBoardTemplate(boardTemplateID);
 
             jalapeno.removeTimelineBoardViewerChannels(campaignTimelineBoardTemplateID);
 

@@ -558,6 +558,19 @@ Jalapeno.prototype = {
     },
 
     /**
+     Get a timeline's global board_id that is mapped to its local table_campaign_timeline_board_template id
+     @method getGlobalBoardIDFromTimeline
+     @param {Number} i_playerData
+     @return {Number} board_id
+     **/
+    getGlobalBoardIDFromTimeline: function(i_campaign_timeline_board_template_id){
+        var recCampaignTimelineBoardTemplate = jalapeno.m_msdb.table_campaign_timeline_board_templates().getRec(i_campaign_timeline_board_template_id);
+        var board_template_id = recCampaignTimelineBoardTemplate['board_template_id'];
+        var recBoardTemplate = jalapeno.m_msdb.table_board_templates().getRec(board_template_id);
+        return recBoardTemplate['board_id'];
+    },
+
+    /**
      Bind the template (screen division template)to the specified timeline (i_campaign_timeline_id).
      We need to also provide the board_template_id (screen template of the global board) as well as
      the campaign's board_id to complete the binding

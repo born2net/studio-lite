@@ -793,7 +793,6 @@ Jalapeno.prototype = {
      **/
     removeBoardTemplateFromTimeline: function (i_timeline_id) {
         var self = this;
-
         var campaign_timeline_board_template_id = jalapeno.getTemplatesOfTimeline(i_timeline_id)[0];
         self.m_msdb.table_campaign_timeline_board_templates().openForDelete(campaign_timeline_board_template_id);
         return campaign_timeline_board_template_id;
@@ -803,15 +802,11 @@ Jalapeno.prototype = {
      Remove board template
      @method removeBoardTemplate
      @param {Number} i_campaign_timeline_board_template_id
-     @return {Number} board_template_id
      **/
-    removeBoardTemplate: function (i_campaign_timeline_board_template_id) {
+    removeBoardTemplate: function (i_board_template_id) {
         var self = this;
-
-        var recCampaignTimelimeBoardTemplate = self.m_msdb.table_campaign_timeline_board_templates().getRec(i_campaign_timeline_board_template_id);
-        var board_template_id = recCampaignTimelimeBoardTemplate['board_template_id'];
-        self.m_msdb.table_board_templates().openForDelete(board_template_id);
-        return board_template_id;
+        self.m_msdb.table_board_templates().openForDelete(i_board_template_id);
+        return i_board_template_id;
     },
 
     /**

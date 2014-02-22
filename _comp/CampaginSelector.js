@@ -33,57 +33,6 @@ CompCampaignSelector.prototype = {
         $(Elements.START_NEW_CAMPAIGN).on('tap', function () {
             self.m_screenArrowSelector.selectNext();
         });
-
-        $(Elements.REMOVE_CAMPAIGN).on('tap', function () {
-            if (self.seletedCampaignID == -1) {
-                commBroker.getService('PopupManager').popUpDialogOK('selection', 'First select a campaign using the gear icon', function () {
-                });
-            } else {
-                var selectedLI = $(Elements.CAMPAIGN_SELECTOR_LIST).find('[data-campaignid="' + self.seletedCampaignID + '"]');
-                selectedLI.remove();
-                self.removeCampaignFromMSDB(self.seletedCampaignID);
-            }
-        });
-    },
-
-    /**
-     Remove an entire campaign including its timelines, channels, blocks, template, board etc
-     @method removeCampaign
-     @return none
-     **/
-    removeCampaignFromMSDB: function (i_campaign_id) {
-        var self = this;
-
-        var timelineIDs = jalapeno.getCampaignTimelines(i_campaign_id);
-
-        for (var i = 0; i < timelineIDs.length; i++) {
-            var timelineID = timelineIDs[i];
-            jalapeno.removeTimelineFromCampaign(timelineID);
-            var campaignTimelineBoardTemplateID = jalapeno.removeBoardTemplateFromTimeline(timelineID);
-            jalapeno.removeTimelineBoardViewerChannels(campaignTimelineBoardTemplateID);
-            var boardTemplateID = jalapeno.removeBoardTemplate(campaignTimelineBoardTemplateID);
-            jalapeno.removeBoardTemplateViewers(boardTemplateID);
-            jalapeno.removeTimelineFromSequences(timelineID);
-
-            var channelsIDs = jalapeno.getChannelsOfTimeline(timelineID);
-            for (var n = 0; n < channelsIDs.length; n++) {
-                var channelID = channelsIDs[n];
-                jalapeno.removeChannelFromTimeline(channelID);
-
-                var blockIDs = jalapeno.getChannelBlocks(channelID);
-                for (var x = 0; x < blockIDs.length; x++) {
-                    var blockID = blockIDs[x];
-                    jalapeno.removeBlockFromTimelineChannel(blockID);
-                }
-            }
-        }
-        jalapeno.removeCampaign(i_campaign_id);
-        jalapeno.removeCampaignBoard(i_campaign_id);
-
-        // check to see if any other campaigns are left, do some clean house and remove all campaign > boards
-        var campaignIDs = jalapeno.getCampaignIDs();
-        if (campaignIDs.length == 0)
-            jalapeno.removeAllBoards();
     },
 
     /**
@@ -100,11 +49,11 @@ CompCampaignSelector.prototype = {
             var campaignID = campaignIDs[i];
             var recCampaign = jalapeno.getCampaignRecord(campaignID);
             var playListMode = recCampaign['campaign_playlist_mode'] == 0 ? 'sequencer' : 'scheduler';
-            var snippet = '<li data-campaignid="' + campaignID + '"data-icon="gear" class="' + Elements.CLASS_SELECTED_LIB_RESOURCE2 + '" data-theme="a"><a href="#">' +
+            var snippet = '<li data-campaignid="' + campaignID + '"data-icon="gear" class="selectedLibResource" data-theme="a"><a href="#">' +
                 '<img src="https://secure.dynawebs.net/_msportal/_images/campaign.png">' +
                 '<h2>' + recCampaign['campaign_name'] + '</h2>' +
                 '<p>play list mode: ' + playListMode + '</p></a>' +
-                '<a data-theme="a" class="' + Elements.CLASS_FIX_PROP_OPEN_LI_BUTTON_POSITION + ' ' + Elements.CLASS_SELECTED_LIB_RESOURCE2 + ' ' + Elements.CLASS_RESOURCE_LIB_OPEN_PROPS2 + '"></a>' +
+                '<a data-theme="a" class="fixPropOpenLiButtonPosition selectedLibResource resourceLibOpenProps"></a>' +
                 '</li>';
             $(self.m_container).append($(snippet));
         }

@@ -82,7 +82,6 @@ Elements.ADD_RESOURCE_VIEW = '#addResourceView';
 Elements.CAMPAIGN_PROPERTIES = '#campaignProperties';
 Elements.SELECTED_CAMPAIGN_PROPERTIES = '#selectedCampaignProperties';
 Elements.START_NEW_CAMPAIGN = '#startNewCampaign';
-Elements.REMOVE_CAMPAIGN = '#removeCampaign';
 
 Elements.CAMPAIN_VIEW_MAIN_CONTAINER = '#campainViewMainContainer';
 Elements.NONE_SELECTED_SCREEN_LAYOUT = '#noneSelectedScreenLayout';
@@ -151,12 +150,8 @@ Elements.UP_TOTOP = '#uptotop';
 // Classes
 
 Elements.CLASS_KNOB = '.knob';
-
-
-Elements.CLASS_FIX_PROP_OPEN_LI_BUTTON_POSITION = 'fixPropOpenLiButtonPosition';
 Elements.CLASS_ADD_RESOURE_TO_CHANNEL = '.addResoureToChannel';
 Elements.CLASS_SELECTED_LIB_RESOURCE = '.selectedLibResource';
-Elements.CLASS_SELECTED_LIB_RESOURCE2 = 'selectedLibResource';
 Elements.CLASS_RESOURCE_LIB_OPEN_PROPS = '.resourceLibOpenProps';
 Elements.CLASS_CURRENT_SELECTED_RESOUCRE2 = 'currentSelectedResource';
 Elements.CLASS_RESOURCE_LIB_OPEN_PROPS2 = 'resourceLibOpenProps';

@@ -283,8 +283,7 @@ Block.prototype.getBlockData = function () {
 }
 
 /**
- Delete block is a public method used as fall back method, if not overridden by inherited instance.
- It is also a semi abstract method, all implementations should go into _deleteBlock();
+ Delete block is a public method used as fall back method, if not overridden by inherited instance
  @method deleteBlock
  @return none
  **/
@@ -301,7 +300,6 @@ Block.prototype.deleteBlock = function () {
  **/
 Block.prototype._deleteBlock = function () {
     var self = this;
-    jalapeno.removeBlockFromTimelineChannel(self.m_block_id);
     commBroker.stopListenWithNamespace(Block.BLOCK_ON_CHANNEL_SELECTED, self);
     commBroker.stopListenWithNamespace(Block.BLOCK_LENGTH_CHANGING, self);
 }

@@ -254,12 +254,10 @@ Timeline.prototype = {
         var self = this;
         jalapeno.removeTimelineFromCampaign(self.m_campaign_timeline_id);
         var campaignTimelineBoardTemplateID = jalapeno.removeBoardTemplateFromTimeline(self.m_campaign_timeline_id);
-        jalapeno.removeTimelineBoardViewerChannels(campaignTimelineBoardTemplateID);
         var boardTemplateID = jalapeno.removeBoardTemplate(campaignTimelineBoardTemplateID);
         jalapeno.removeBoardTemplateViewers(boardTemplateID);
         for (var channel in self.m_channels){
             self.m_channels[channel].deleteChannel();
-            delete self.m_channels[channel];
         }
     }
 }

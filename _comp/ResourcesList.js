@@ -118,7 +118,7 @@ CompResourcesList.prototype = {
                 '<img src="' + model.getIcon(recResources[i]['resource_type']) + '">' +
                 '<h2>' + recResources[i]['resource_name'] + '</h2>' +
                 '<p>' + resourceDescription + '</p></a>' +
-                '<a data-theme="a" class="' + Elements.CLASS_FIX_PROP_OPEN_LI_BUTTON_POSITION + ' ' + Elements.CLASS_SELECTED_LIB_RESOURCE2 + ' ' + Elements.CLASS_RESOURCE_LIB_OPEN_PROPS2 + '"></a>' +
+                '<a data-theme="a" class="fixPropOpenLiButtonPosition selectedLibResource resourceLibOpenProps"></a>' +
                 '</li>';
 
             $(self.m_container).append($(snippet));

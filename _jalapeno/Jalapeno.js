@@ -520,50 +520,6 @@ Jalapeno.prototype = {
         recResource[i_key] = i_value;
     },
 
-
-    /**
-     Remove a campaign record
-     @method removeCampaign
-     @param {Number} i_campaign_id
-     @return none
-     **/
-    removeCampaign: function (i_campaign_id) {
-        var self = this;
-
-        var status = self.m_msdb.table_campaigns().openForDelete(i_campaign_id);
-        log(status);
-    },
-
-    /**
-     Remove campaign board_id
-     @method removeCampaignBoard
-     @param {Number} i_campaign_id
-     @return none
-     **/
-    removeCampaignBoard: function (i_campaign_id) {
-        var self = this;
-
-        $(self.m_msdb.table_campaign_boards().getAllPrimaryKeys()).each(function (k, campaign_board_id) {
-            var recCampaignBoard = self.m_msdb.table_campaign_boards().getRec(campaign_board_id);
-            if (recCampaignBoard['campaign_id'] == i_campaign_id) {
-                self.m_msdb.table_campaign_boards().openForDelete(campaign_board_id);
-            }
-        });
-    },
-
-    /**
-     Remove all boards in msdb
-     @method removeAllBoards
-     @return none
-     **/
-    removeAllBoards: function () {
-        var self = this;
-
-        $(self.m_msdb.table_boards().getAllPrimaryKeys()).each(function (k, board_id) {
-            self.m_msdb.table_boards().openForDelete(board_id);
-        });
-    },
-
     /**
      Remove a block (i.e.: player) from campaign > timeline > channel
      @method removeBlockFromTimelineChannel
@@ -579,16 +535,11 @@ Jalapeno.prototype = {
      Remove a timeline from sequences
      @method removeTimelineFromSequences
      @param {Number} i_timeline_id
-     @return none
+     @return {Boolean} status
      **/
-    removeTimelineFromSequences: function (i_campaign_timeline_id) {
+    removeTimelineFromSequences: function (i_timeline_id) {
         var self = this;
-        $(self.m_msdb.table_campaign_timeline_sequences().getAllPrimaryKeys()).each(function (k, campaign_timeline_sequence_id) {
-            var recCampaignTimelineSequence = self.m_msdb.table_campaign_timeline_sequences().getRec(campaign_timeline_sequence_id);
-            if (recCampaignTimelineSequence['campaign_timeline_id'] == i_campaign_timeline_id) {
-                self.m_msdb.table_campaign_timeline_sequences().openForDelete(campaign_timeline_sequence_id);
-            }
-        });
+        return self.m_msdb.table_campaign_timeline_sequences().openForDelete();
     },
 
     /**
@@ -601,7 +552,7 @@ Jalapeno.prototype = {
         var self = this;
 
         var campaign_timeline_board_template_id = jalapeno.getTemplatesOfTimeline(i_timeline_id)[0];
-        self.m_msdb.table_campaign_timeline_board_templates().openForDelete(campaign_timeline_board_template_id);
+        var a =  self.m_msdb.table_campaign_timeline_board_templates().openForDelete(campaign_timeline_board_template_id);
         return campaign_timeline_board_template_id;
     },
 
@@ -616,7 +567,7 @@ Jalapeno.prototype = {
 
         var recCampaignTimelimeBoardTemplate = self.m_msdb.table_campaign_timeline_board_templates().getRec(i_campaign_timeline_board_template_id);
         var board_template_id = recCampaignTimelimeBoardTemplate['board_template_id'];
-        self.m_msdb.table_board_templates().openForDelete(board_template_id);
+        var a = self.m_msdb.table_board_templates().openForDelete(board_template_id);
         return board_template_id;
     },
 
@@ -639,33 +590,36 @@ Jalapeno.prototype = {
         });
         return boardTemplateViewerIDs;
     },
-
-    /**
-     Remove board template viewers
-     @method removeTimelineBoardViewerChannels
-     @param {Number} i_campaign_timeline_board_template_id
-     @return none
-     **/
-    removeTimelineBoardViewerChannels: function (i_campaign_timeline_board_template_id) {
+    /*
+    removeBoardTemplateFromTimeline: function (i_timeline_id) {
         var self = this;
 
-        $(self.m_msdb.table_campaign_timeline_board_viewer_chanels().getAllPrimaryKeys()).each(function (k, campaign_timeline_board_viewer_chanel_id) {
-            var recCampaignTimelineViewerChanels = self.m_msdb.table_campaign_timeline_board_viewer_chanels().getRec(campaign_timeline_board_viewer_chanel_id);
-            if (recCampaignTimelineViewerChanels['campaign_timeline_board_template_id'] == i_campaign_timeline_board_template_id) {
-                self.m_msdb.table_campaign_timeline_board_viewer_chanels().openForDelete(campaign_timeline_board_viewer_chanel_id);
+        var campaign_timeline_board_template_id = jalapeno.getTemplatesOfTimeline(i_timeline_id)[0];
+        self.m_msdb.table_campaign_timeline_board_templates().openForDelete(campaign_timeline_board_template_id);
+
+        var recCampaignTimelimeBoardTemplate = self.m_msdb.table_campaign_timeline_board_templates().getRec(campaign_timeline_board_template_id);
+        var board_template_id = recCampaignTimelimeBoardTemplate['board_template_id'];
+
+        self.m_msdb.table_board_templates().openForDelete(board_template_id);
+
+        $(jalapeno.m_msdb.table_board_template_viewers().getAllPrimaryKeys()).each(function (k, board_template_viewer_id) {
+            var recBoardTemplateViewers = self.m_msdb.table_board_template_viewers().getRec(board_template_viewer_id);
+            if (recBoardTemplateViewers['board_template_id'] == board_template_id) {
+                self.m_msdb.table_board_template_viewers().openForDelete(board_template_viewer_id);
             }
         });
     },
+    */
 
     /**
      Remove a channel from a timeline
      @method removeChannelFromTimeline
-     @param {Number} i_channel_id
-     @return {Boolean} status
+     @param {Number} i_bloi_channel_idck_id
+     @return none
      **/
     removeChannelFromTimeline: function (i_channel_id) {
         var self = this;
-        return self.m_msdb.table_campaign_timeline_chanels().openForDelete(i_channel_id);
+        var status = self.m_msdb.table_campaign_timeline_chanels().openForDelete(i_block_id);
     },
 
     /**
@@ -677,6 +631,7 @@ Jalapeno.prototype = {
     removeBlocksWithResourceID: function (i_resource_id) {
         var self = this;
         // self.m_msdb.table_resources().openForDelete(i_resource_id);
+        // var nativeID_1 = self.getNativeByResoueceID(i_resource_id);
 
         $(self.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
             var recCampaignTimelineChannelPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);

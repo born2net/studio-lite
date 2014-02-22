@@ -33,6 +33,9 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             self._listenTimelineSelected();
             self._listenResourceRemoved();
             self._listenBlockLengthChanged();
+
+            $(jalapeno).on(Jalapeno.TIMELINE_DELETED, $.proxy(self._onTimelineDeleted, self));
+
         },
 
         /**
@@ -56,6 +59,18 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
                 }
                 self._openAddBlockWizard(e);
             });
+        },
+
+        /**
+         Wire the UI for timeline deletion.
+         @method _onTimelineDeleted
+         @return none
+         **/
+        _onTimelineDeleted: function () {
+            var self = this;
+            $(Elements.ADD_BLOCK_BUTTON).fadeOut();
+            $(Elements.REMOVE_BLOCK_BUTTON).fadeOut();
+            self._resetChannel();
         },
 
         /**

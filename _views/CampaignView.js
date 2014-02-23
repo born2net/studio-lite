@@ -46,6 +46,9 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             self.m_noneSelectedTimelines = new BB.View({el: Elements.NONE_SELECTED_SCREEN_LAYOUT})
             self.m_timelineViewStack.addView(self.m_noneSelectedTimelines);
 
+            $(jalapeno).on(Jalapeno.NEW_TIMELINE_CREATED, $.proxy(self._updDelTimelimeButtonStatus, self));
+            $(jalapeno).on(Jalapeno.TIMELINE_DELETED, $.proxy(self._updDelTimelimeButtonStatus, self));
+
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self)
                     self._render();
@@ -71,6 +74,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             self._loadSequencerFirstTimeline();
             self._updatedTimelineLengthUI(null);
             self._listenTimelineLengthChanged();
+            self._updDelTimelimeButtonStatus();
         },
 
         /**
@@ -224,8 +228,26 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
         _listenDelTimeline: function () {
             var self = this;
             $(Elements.REMOVE_TIMELINE_BUTTON).on('click', function (e) {
-                self._deleteTimeline(e, self);
+                bootbox.confirm("Are you sure you want to remove the timeline?", function(i_result) {
+                    if (i_result==true){
+                        $.proxy(self._deleteTimeline(), self);
+                    }
+                });
             });
+        },
+
+        /**
+         Update delete timeline button thus not allowing for less one timeline in campaign
+         @method _updDelTimelimeButtonStatus
+         **/
+        _updDelTimelimeButtonStatus: function(){
+            var self = this;
+            var totalTimelines = jalapeno.getCampaignTimelines(self.m_selected_campaign_id).length;
+            if (totalTimelines>1){
+                $(Elements.REMOVE_TIMELINE_BUTTON).prop('disabled', false);
+            } else {
+                $(Elements.REMOVE_TIMELINE_BUTTON).prop('disabled', true);
+            }
         },
 
         /**
@@ -250,10 +272,8 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
          @param {Object} i_caller
          @return none
          **/
-        _deleteTimeline: function (e, i_caller) {
+        _deleteTimeline: function () {
             var self = this;
-            e.preventDefault();
-            e.stopImmediatePropagation();
             self.m_timelines[self.m_selected_timeline_id].deleteTimeline();
             delete self.m_timelines[self.m_selected_timeline_id];
             self._loadSequencerFirstTimeline();
@@ -267,17 +287,6 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
         getSelectedCampaign: function () {
             var self = this;
             return self.m_selected_campaign_id;
-        },
-
-        /**
-         Set selected campaign, which we hold a reference to.
-         @method setSelectedCampaign
-         @param {Number} i_selected_campaign_id
-         @return none
-         **/
-        setSelectedCampaign: function (i_selected_campaign_id) {
-            var self = this;
-            self.m_selected_campaign_id = i_selected_campaign_id;
         },
 
         /**

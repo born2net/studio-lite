@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated SettingsView
  **/
-define(['jquery', 'backbone'], function ($, Backbone) {
+define(['jquery', 'backbone', 'nouislider'], function ($, Backbone, nouislider) {
 
     var SettingsView = Backbone.View.extend({
 
@@ -13,6 +13,17 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @method initialize
          **/
         initialize: function () {
+            $("#sample-minimal").noUiSlider({
+                handles: 1,
+                start: [120],
+                step: 1,
+                range: [60, 360],
+                serialization: {
+                    to: [ $("#stationPollLabel"), 'text' ]
+                }
+            }).change(function (e) {
+                    log(e);
+                });
         }
     });
 

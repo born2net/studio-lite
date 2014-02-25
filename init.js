@@ -14,6 +14,7 @@ require.config({
         "bootbox": '_common/_js/bootbox/bootbox',
         "Cookie": '_common/_js/cookie/jquery.cookie',
         "RC4": '_common/_js/rc4/RC4',
+        "nouislider": '_common/_js/nouislider/jquery.nouislider',
         "XDate": '_common/_js/xdate/xdate',
         "Base64": '_common/_js/base64/jquery.base64',
         "Knob": '_common/_js/knob/jquery.knob',
@@ -107,6 +108,9 @@ require.config({
         },
         "RC4": {
             exports: 'RC4'
+        },
+        "nouislider": {
+            exports: 'nouislider'
         },
         "Knob": {
            exports: 'knob'

@@ -380,10 +380,13 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 self._appHeight = b.css('height').replace('px', '');
                 self._appWidth = b.css('width').replace('px', '');
                 var h = self._appHeight - 115; // reduce footer
+
                 $(Elements.PROP_PANEL_WRAP).height(h);
                 $(Elements.MAIN_PANEL_WRAP).height(h);
                 $(Elements.APP_NAVIGATOR).height(h);
                 $(Elements.RESOURCE_LIB_LIST_WRAP).height(h);
+                $(Elements.PRICING_TABLE_WRAP).height(h-200);
+
                 BB.comBroker.fire(BB.EVENTS.APP_SIZED);
             },
 

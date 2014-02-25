@@ -328,6 +328,25 @@ body {
 
 }
 
+#stationPollSliderContainer {
+    padding-top: 30px;
+}
+
+#stationPollSliderText {
+    float: left;
+}
+
+#stationPollSliderWrap {
+    padding-left: 180px;
+    padding-right: 70px;
+}
+
+#stationPollLabel {
+    float: right;
+    position: relative;
+    top: -20px;
+}
+
 .screenResolutionLabel {
     padding: 10px;
     cursor: pointer;

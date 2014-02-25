@@ -1,5 +1,5 @@
 /**
- This class...
+ The model holds a reference to a single station within the stations collection that was retrieved from a remote mediaSERVER
  @class StationModel
  @constructor
  @return {Object} instantiated StationModel

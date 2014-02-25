@@ -449,6 +449,13 @@ body {
     padding-right: 5px;
 }
 
+.gencons {
+    font-size: 1.2em;
+    position: relative;
+    top: 2px;
+    padding-right: 5px;
+}
+
 aside > aside > div > ul > li {
     display: block;
     width: 100px;

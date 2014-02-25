@@ -308,12 +308,18 @@ body {
     cursor: pointer;
 }
 
+#fileRemove {
+    float: left;
+    margin-right: 30px;
+}
+
 #stationListView {
     padding-top: 10px;
     padding-bottom: 10px;
 }
 
 #stationRemove {
+    float: left;
     margin-top: 10px;
 }
 

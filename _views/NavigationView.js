@@ -23,6 +23,11 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var appContentFaderView = BB.comBroker.getService(BB.SERVICES['APP_CONTENT_FADER_VIEW']);
             var appEntryFaderView = BB.comBroker.getService(BB.SERVICES['APP_ENTRY_FADER_VIEW']);
 
+            var appWidth= BB.comBroker.getService(BB.SERVICES.LAYOUT_ROUTER).getAppWidth();
+            self._toggleIcons(appWidth);
+
+            BB.comBroker.listen(BB.EVENTS.APP_SIZED, $.proxy(self._onAppResized,self));
+
             $(Elements.CLASS_CAMPAIG_NMANAGER_VIEW).on('click', function () {
                 self._checkLimitedAccess();
                 appContentFaderView.selectView(Elements.CAMPAIGN_MANAGER_VIEW);
@@ -68,6 +73,29 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             $(Elements.SAVE_CONFIG).on('click', function () {
                 self.save(function(){});
             });
+        },
+
+        /**
+         Action on application resize
+         @method _onAppResized
+         @param {Event} e
+         **/
+        _onAppResized: function(e){
+            var self = this;
+            self._toggleIcons(e.edata.width)
+        },
+
+        /**
+         Toggle visibility of navigation icons depending on app total width
+         @method _toggleIcons
+         @param {Number} i_size
+         **/
+        _toggleIcons: function(i_size){
+            if (i_size > 1500) {
+                $(Elements.CLASS_NAV_ICONS).show();
+            } else {
+                $(Elements.CLASS_NAV_ICONS).hide();
+            }
         },
 
         /**

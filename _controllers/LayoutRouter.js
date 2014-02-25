@@ -377,17 +377,17 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
             _updateLayout: function () {
                 var self = BB.comBroker.getService(BB.SERVICES['LAYOUT_ROUTER']);
                 var b = $('body');
-                self._appHeight = b.css('height').replace('px', '');
-                self._appWidth = b.css('width').replace('px', '');
+                self._appHeight = parseInt(b.css('height').replace('px', ''));
+                self._appWidth = parseInt(b.css('width').replace('px', ''));
                 var h = self._appHeight - 115; // reduce footer
 
                 $(Elements.PROP_PANEL_WRAP).height(h);
                 $(Elements.MAIN_PANEL_WRAP).height(h);
                 $(Elements.APP_NAVIGATOR).height(h);
                 $(Elements.RESOURCE_LIB_LIST_WRAP).height(h);
-                $(Elements.PRICING_TABLE_WRAP).height(h-200);
+                $(Elements.PRICING_TABLE_WRAP).height(h - 200);
 
-                BB.comBroker.fire(BB.EVENTS.APP_SIZED);
+                BB.comBroker.fire(BB.EVENTS.APP_SIZED, this, null, {width: self._appWidth, height: self._appHeight});
             },
 
             /**

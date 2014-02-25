@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated StationsCollection
  **/
-define(['jquery', 'backbone', 'StationModel'], function ($, Backbone, StationModel) {
+define(['jquery', 'backbone', 'StationModel', 'simplestorage'], function ($, Backbone, StationModel, simpleStorage) {
 
     var StationsCollection = Backbone.Collection.extend({
 
@@ -16,9 +16,27 @@ define(['jquery', 'backbone', 'StationModel'], function ($, Backbone, StationMod
          **/
         initialize: function () {
             var self = this;
-            self.pollTimer = 100000;
+
+            self.m_simpleStorage = simpleStorage;
+            self.m_pollTimer = self.m_simpleStorage.get('pollStationsTime');
+            if (_.isUndefined(self.m_pollTimer)) {
+                self.m_pollTimer = 120;
+                self.m_simpleStorage.set('pollStationsTime', self.m_pollTimer);
+            }
+
             self.m_refreshHandle = undefined;
             self.resumeGetRemoteStations();
+            BB.comBroker.listen(BB.EVENTS['STATIONS_POLL_TIME_CHANGED'], $.proxy(self._onStationPollTimeChanged,self));
+        },
+
+        /**
+         Set how often to poll remote mediaSERVER for station updates, set by global settings component
+         @method _onStationPollTimeChanged
+         @param {Event} e
+         **/
+        _onStationPollTimeChanged: function(e){
+            var self = this;
+            self.m_pollTimer = e.edata;
         },
 
         /**
@@ -51,7 +69,7 @@ define(['jquery', 'backbone', 'StationModel'], function ($, Backbone, StationMod
                     stationColor: self._getStationIconColor($(value).attr('connection'))
                 };
 
-                var stationModel = self.findWhere({'stationID':stationID});
+                var stationModel = self.findWhere({'stationID': stationID});
                 if (_.isUndefined(stationModel)) {
                     // new station added
                     stationModel = new StationModel(stationData);
@@ -65,6 +83,11 @@ define(['jquery', 'backbone', 'StationModel'], function ($, Backbone, StationMod
             });
         },
 
+        /**
+         Return a color string corresponding to the color code received from remote mediaSERVER
+         @method _getStationIconColor
+         @param {Number} i_connection
+         **/
         _getStationIconColor: function (i_connection) {
             switch (i_connection) {
                 case '2':
@@ -85,6 +108,10 @@ define(['jquery', 'backbone', 'StationModel'], function ($, Backbone, StationMod
             }
         },
 
+        /**
+         Retrieve remote station list and status from remote mediaSERVER
+         @method _getRemoteStations
+         **/
         _getRemoteStations: function () {
             var self = this;
             var userData = jalapeno.getUserData();
@@ -100,17 +127,28 @@ define(['jquery', 'backbone', 'StationModel'], function ($, Backbone, StationMod
             );
         },
 
-        pauseGetRemoteStations: function(){
+        /**
+         Pause retrieval of remote mediaSERVER station list and stats
+         @method pauseGetRemoteStations
+         **/
+        pauseGetRemoteStations: function () {
             var self = this;
             clearInterval(self.m_refreshHandle);
         },
 
-        resumeGetRemoteStations: function(){
+        /**
+         Resume retrieval of remote mediaSERVER station list and stats
+         @method resumeGetRemoteStations
+         **/
+        resumeGetRemoteStations: function () {
             var self = this;
             self._getRemoteStations();
+            self.m_pollTimer = parseInt(self.m_pollTimer);
+            log('polling on ' + self.m_pollTimer);
             self.m_refreshHandle = setInterval(function () {
                 self._getRemoteStations();
-            }, self.pollTimer);
+                log('getting station ' + Date.now())
+            }, self.m_pollTimer * 1000);
         }
     });
 

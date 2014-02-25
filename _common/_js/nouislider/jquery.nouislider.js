@@ -2,7 +2,7 @@
  @version 5.0.0
  @author Leon Gersen https://twitter.com/LeonGersen
  @license WTFPL http://www.wtfpl.net/about/
- @documentation http://refreshless.com/nouislider/
+ @documentation http://refreshless.com/nouislider/ or https://github.com/leongersen/noUiSlider
 */
 
 // ==ClosureCompiler==

@@ -118,7 +118,8 @@ Elements.STATION_SELECTION_CAMPAIGN = '#stationSelectionCampaign'
 Elements.STATION_REMOVE = '#stationRemove';
 Elements.STATION_EVENT_SEND_COMMAND = '#stationEventSendCommand';
 Elements.STATION_SEND_EVENT_VALUE = '#stationSendEventValue';
-
+Elements.STATION_POLL_SLIDER = '#stationPollSlider';
+Elements.STATION_POLL_LABEL = '#stationPollLabel';
 
 
 // classes

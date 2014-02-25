@@ -14,7 +14,7 @@ require.config({
         "bootbox": '_common/_js/bootbox/bootbox',
         "Cookie": '_common/_js/cookie/jquery.cookie',
         "RC4": '_common/_js/rc4/RC4',
-        "simplestorage": '_common/_js/simplestorage/simplestorage',
+        "simplestorage": '_common/_js/simplestorage/simpleStorage',
         "nouislider": '_common/_js/nouislider/jquery.nouislider',
         "XDate": '_common/_js/xdate/xdate',
         "Base64": '_common/_js/base64/jquery.base64',

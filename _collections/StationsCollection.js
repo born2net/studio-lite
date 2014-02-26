@@ -46,7 +46,6 @@ define(['jquery', 'backbone', 'StationModel', 'simplestorage'], function ($, Bac
          **/
         _populateCollection: function (i_xmlStations) {
             var self = this;
-            // log('got stations...');
             $(i_xmlStations).find('Station').each(function (key, value) {
                 var stationID = $(value).attr('id');
                 var stationData = {

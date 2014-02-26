@@ -123,7 +123,7 @@ Elements.STATION_POLL_LABEL = '#stationPollLabel';
 Elements.PRICING_TABLE_WRAP = '#pricingTableWrap';
 Elements.CONVERT_ACCOUNT = '#convertAccount'
 Elements.SUBSCRIBE_ACCOUNT = '#subscribeAccount';
-
+Elements.STATION_ALERT = '#stationAlert';
 
 // classes
 Elements.CLASS_SCREEN_DIVISION = '.screenDivisionClass';

@@ -31,6 +31,7 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
             });
 
             self.listenTo(self.m_stationCollection, 'add', function (i_model) {
+               $(Elements.STATION_ALERT).hide();
                 self._onAddStation(i_model);
                 self._listenStationSelected();
             });

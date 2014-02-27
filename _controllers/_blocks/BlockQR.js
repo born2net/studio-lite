@@ -40,6 +40,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 if (!self.m_selected)
                     return;
                 var text = $(e.target).val();
+                log(self.m_block_id);
                 var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
                 var xml = recBlock['player_data'];
                 var x2js = BB.comBroker.getService('compX2JS');

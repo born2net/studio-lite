@@ -3,6 +3,7 @@
  @class Require init.js
  **/
 require.config({
+    waitSeconds: 20,
     baseUrl: '/_studiolite-dev/',
     paths: {
         "jquery": '_common/_jquery/std/jq1.9.1/jquery-1.9.1',

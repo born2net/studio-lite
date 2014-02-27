@@ -89,7 +89,7 @@ define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
             BB.comBroker.listenWithNamespace(BB.EVENTS.BLOCK_ON_CHANNEL_SELECTED, self, function (e) {
                 var blockID = e.edata;
                 if (self.m_block_id != blockID) {
-                    self._onTimelineChannelBlockDeselected();
+                    self.m_selected = false;
                     return;
                 }
 
@@ -125,16 +125,6 @@ define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
         _updateTitle: function () {
             var self = this;
             $(Elements.SELECTED_CHANNEL_RESOURCE_NAME).text(self.m_blockName);
-        },
-
-        /**
-         Reset a timeline_channel block if it is no longer the chosen one
-         @method _onTimelineChannelBlockDeselected
-         @return none
-         **/
-        _onTimelineChannelBlockDeselected: function () {
-            var self = this;
-            self.m_selected = false;
         },
 
         /**
@@ -288,6 +278,9 @@ define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
         deleteBlock: function () {
             var self = this;
             self._deleteBlock();
+            $.each(self,function(k){
+                self[k] = undefined;
+            })
         },
 
         /**

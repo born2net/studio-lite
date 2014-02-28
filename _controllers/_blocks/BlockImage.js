@@ -150,7 +150,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          '</Player>';
          return xml;
          };
-         */
+
 
         /**
          Get block data in json object literal

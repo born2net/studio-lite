@@ -28,8 +28,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_property.initSubPanel(Elements.BLOCK_RSS_COMMON_PROPERTIES);
 
             self._listenInputChange();
-            // todo: disabled mini colors
-            //self._listenRSSColorPicker();
         },
 
         /**
@@ -62,7 +60,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var xmlString = (new XMLSerializer()).serializeToString(xml[0]);
                 jalapeno.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', xmlString);
             }, 150);
-            $(Elements.RSS_LINK).on("input", onChange);
+            self.m_inputChangeHandler = $(Elements.RSS_LINK).on("input", onChange);
 
             /*
             var rssLink;
@@ -132,30 +130,16 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         },
 
         /**
-         Listen to when user selects to change the color of the RSS feed
-         @method _listenRSSColorPicker
+         Delete this block
+         @method deleteBlock
          @return none
          **/
-        _listenRSSColorPicker: function () {
-            $('#hue-demo').minicolors({
-                control: $(this).attr('data-control') || 'hue',
-                defaultValue: $(this).attr('data-defaultValue') || '',
-                inline: $(this).attr('data-inline') === 'true',
-                letterCase: $(this).attr('data-letterCase') || 'lowercase',
-                opacity: $(this).attr('data-opacity'),
-                position: $(this).attr('data-position') || 'bottom left',
-                change: function (hex, opacity) {
-                    var log;
-                    try {
-                        log = hex ? hex : 'transparent';
-                        if (opacity) log += ', ' + opacity;
-                        console.log(log);
-                    } catch (e) {
-                    }
-                },
-                theme: 'default'
-            });
+        deleteBlock: function () {
+            var self = this;
+            $(Elements.RSS_LINK).off('change',self.m_inputChangeHandler);
+            self._deleteBlock();
         }
+
     });
 
     return BlockRSS;

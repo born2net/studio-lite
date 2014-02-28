@@ -36,8 +36,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _wireUI: function () {
             var self = this;
-
-            $(Elements.VIDEO_ASPECT_RATIO).change(function (e) {
+            self.m_aspectRatioHandler = $(Elements.VIDEO_ASPECT_RATIO).on('change',function (e) {
                 if (!self.m_selected)
                     return;
                 self._onChange(e);
@@ -176,6 +175,17 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         getResourceID: function () {
             var self = this;
             return self.m_resourceID;
+        },
+
+        /**
+         Delete this block
+         @method deleteBlock
+         @return none
+         **/
+        deleteBlock: function () {
+            var self = this;
+            $(Elements.VIDEO_ASPECT_RATIO).off('change',self.m_aspectRatioHandler);
+            self._deleteBlock();
         }
     });
 

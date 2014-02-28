@@ -296,8 +296,6 @@ define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
                 self[k] = undefined;
             });
         }
-
-
     });
 
     return Block;

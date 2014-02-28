@@ -64,7 +64,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 jalapeno.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', xData);
             }, 150);
 
-            $(Elements.QR_TEXT).on("input", onChange);
+            self.m_inputChangeHandler = $(Elements.QR_TEXT).on("input", onChange);
 
             /*
             var qrText;
@@ -86,7 +86,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _loadCommonProperties: function () {
             var self = this;
-
             self._populate();
             this.m_property.viewSubPanel(Elements.BLOCK_QR_COMMON_PROPERTIES);
         },
@@ -109,7 +108,19 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             } else {
                 $(Elements.QR_TEXT).val(self.m_qrText);
             }
+        },
+
+        /**
+         Delete this block
+         @method deleteBlock
+         @return none
+         **/
+        deleteBlock: function () {
+            var self = this;
+            $(Elements.QR_TEXT).off('change',self.m_inputChangeHandler);
+            self._deleteBlock();
         }
+
     });
 
     return BlockQR;

@@ -78,7 +78,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
                     return;
                 jalapeno.setCampaignTimelineRecord(self.m_campaign_timeline_id, 'timeline_name', $(Elements.TIME_LINE_PROP_TITLE_ID).val());
             }, 150, false);
-            $(Elements.TIME_LINE_PROP_TITLE_ID).on("input", onChange);
+            self.m_inputChangeHandler = $(Elements.TIME_LINE_PROP_TITLE_ID).on("input", onChange);
         },
 
         /**
@@ -237,6 +237,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
          **/
         deleteTimeline: function () {
             var self = this;
+            $(Elements.TIME_LINE_PROP_TITLE_ID).off("input", self.m_inputChangeHandler);
             var boardTemplateID = jalapeno.getGlobalBoardIDFromTimeline(self.m_campaign_timeline_id);
             jalapeno.removeTimelineFromCampaign(self.m_campaign_timeline_id);
             var campaignTimelineBoardTemplateID = jalapeno.removeBoardTemplateFromTimeline(self.m_campaign_timeline_id);
@@ -247,6 +248,9 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
                 self.m_channels[channel].deleteChannel();
                 delete self.m_channels[channel];
             }
+            $.each(self, function (k) {
+                self[k] = undefined;
+            });
         }
     });
 

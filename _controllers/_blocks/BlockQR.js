@@ -36,11 +36,10 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _listenInputChange: function () {
             var self = this;
-            var onChange = _.debounce( function (e) {
+            var onChange = _.debounce(function (e) {
                 if (!self.m_selected)
                     return;
                 var text = $(e.target).val();
-                log(self.m_block_id);
                 var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
                 var xml = recBlock['player_data'];
                 var x2js = BB.comBroker.getService('compX2JS');
@@ -67,16 +66,16 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_inputChangeHandler = $(Elements.QR_TEXT).on("input", onChange);
 
             /*
-            var qrText;
-            $(Elements.QR_TEXT).on("input", function (e) {
-                if (!self.m_selected)
-                    return;
-                window.clearTimeout(qrText);
-                qrText = window.setTimeout(function () {
-                    self._onChange(e);
-                }, 200);
+             var qrText;
+             $(Elements.QR_TEXT).on("input", function (e) {
+             if (!self.m_selected)
+             return;
+             window.clearTimeout(qrText);
+             qrText = window.setTimeout(function () {
+             self._onChange(e);
+             }, 200);
 
-            });*/
+             });*/
         },
 
         /**
@@ -117,7 +116,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         deleteBlock: function () {
             var self = this;
-            $(Elements.QR_TEXT).off('change',self.m_inputChangeHandler);
+            $(Elements.QR_TEXT).off('change', self.m_inputChangeHandler);
             self._deleteBlock();
         }
 

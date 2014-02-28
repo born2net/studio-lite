@@ -50,7 +50,7 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
          **/
         _wireUI: function () {
             var self = this;
-            $(Elements.RANDOM_PLAYBACK).change(function (e) {
+            self.m_randomPlaybackHandler = $(Elements.RANDOM_PLAYBACK).on('change',function (e) {
                 if (!self.m_selected)
                     return;
                 self._onChange(e);
@@ -227,10 +227,14 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
          **/
         deleteChannel: function () {
             var self = this;
+            $(Elements.RANDOM_PLAYBACK).off('change',self.m_randomPlaybackHandler);
             jalapeno.removeChannelFromTimeline(self.m_campaign_timeline_chanel_id);
             for (var blockID in self.m_blocks) {
                 self.deleteBlock(blockID);
             }
+            $.each(self,function(k){
+                self[k] = undefined;
+            });
         },
 
         /**
@@ -241,7 +245,6 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
          **/
         deleteBlock: function (i_block_id) {
             var self = this;
-
             self.m_blocks[i_block_id].deleteBlock();
             delete self.m_blocks[i_block_id];
         }

@@ -84,7 +84,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _wireUI: function () {
             var self = this;
-            $(Elements.IMAGE_ASPECT_RATIO).on('change',function (e) {
+            self.m_aspectRatioHandler = $(Elements.IMAGE_ASPECT_RATIO).on('change',function (e) {
                 if (!self.m_selected)
                     return;
                 self._onChange(e);
@@ -206,7 +206,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         deleteBlock: function () {
             var self = this;
-            $(Elements.IMAGE_ASPECT_RATIO).off('change');
+            $(Elements.IMAGE_ASPECT_RATIO).off('change',self.m_aspectRatioHandler);
             self._deleteBlock();
         }
     });

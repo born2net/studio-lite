@@ -276,6 +276,7 @@ define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
          @return none
          **/
         deleteBlock: function () {
+            /* semi-abstract, overridden, do not modify */
             var self = this;
             self._deleteBlock();
         },

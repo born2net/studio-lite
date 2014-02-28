@@ -278,9 +278,6 @@ define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
         deleteBlock: function () {
             var self = this;
             self._deleteBlock();
-            $.each(self,function(k){
-                self[k] = undefined;
-            })
         },
 
         /**
@@ -294,6 +291,9 @@ define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
             jalapeno.removeBlockFromTimelineChannel(self.m_block_id);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_ON_CHANNEL_SELECTED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_LENGTH_CHANGING, self);
+            $.each(self,function(k){
+                self[k] = undefined;
+            });
         }
 
 

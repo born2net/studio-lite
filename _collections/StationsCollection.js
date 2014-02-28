@@ -26,7 +26,10 @@ define(['jquery', 'backbone', 'StationModel', 'simplestorage'], function ($, Bac
 
             self.m_refreshHandle = undefined;
             self.resumeGetRemoteStations();
-            BB.comBroker.listen(BB.EVENTS['STATIONS_POLL_TIME_CHANGED'], $.proxy(self._onStationPollTimeChanged,self));
+            // _.bind(self._onStationPollTimeChanged,self);
+            // _.bindAll(self,'_onStationPollTimeChanged','_populateCollection');
+            BB.comBroker.listen(BB.EVENTS['STATIONS_POLL_TIME_CHANGED'], $.proxy(self._onStationPollTimeChanged, self));
+            BB.comBroker.listen(BB.EVENTS['STATIONS_POLL_TIME_CHANGED'], self._onStationPollTimeChanged);
         },
 
         /**
@@ -34,7 +37,7 @@ define(['jquery', 'backbone', 'StationModel', 'simplestorage'], function ($, Bac
          @method _onStationPollTimeChanged
          @param {Event} e
          **/
-        _onStationPollTimeChanged: function(e){
+        _onStationPollTimeChanged: function (e) {
             var self = this;
             self.m_pollTimer = e.edata;
         },

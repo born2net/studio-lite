@@ -21,7 +21,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 if (globs['debug']) {
                     console = {};
                     console.log = function (m) {
-                        alert(m)
+                        alert('msg:'+m)
                     };
                 } else {
                     console = {};
@@ -208,7 +208,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     dom.async = false;
                     if (!dom.loadXML(xml)) // parse error ..
 
-                        window.alert(dom.parseError.reason + dom.parseError.srcText);
+                        window.alert('alt ' +dom.parseError.reason + dom.parseError.srcText);
                 }
                 catch (e) {
                     dom = null;

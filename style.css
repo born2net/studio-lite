@@ -132,6 +132,9 @@ body {
     height: 100%;
 }
 
+#popModal {
+    padding: 20px;
+}
 #openPopupProperties {
     float: right;
 }
@@ -233,6 +236,10 @@ body {
 #campaignProperties {
     padding-top: 10px;
     padding-right: 10px;
+}
+
+#timelineLength {
+    margin-top: 20px;
 }
 
 #imgHorizontal {

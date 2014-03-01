@@ -19,6 +19,10 @@ Links:
 - SignageStudio Web Lite on-line documentation: http://www.digitalsignage.com/msdocs/
 - Jalapeno SDK on-line documentation: http://www.digitalsignage.com/msdocs/classes/Jalapeno.html
 - Support: http://script.digitalsignage.com/forum/index.php/board,9.0.html
+- Open source video tutorial: http://www.digitalsignage.com/_html/signage_video.html?videoNumber=opensource
+- StudioLite Video tutorial http://www.digitalsignage.com/_html/signage_video.html?videoNumber=StudioLite]StudioLite video tutorial
+- Development page: http://www.digitalsignage.com/_html/open_source_digital_signage.html
+
 
 Technical data:
 ------------------------------------------------------------------------

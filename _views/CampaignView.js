@@ -72,7 +72,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             self.m_selected_campaign_id = BB.comBroker.getService(BB.SERVICES.CAMPAIGN_SELECTOR).getSelectedCampaign();
             self._loadTimelinesFromDB();
             self._loadSequencerFirstTimeline();
-            self._updatedTimelineLengthUI(null);
+            self._updatedTimelinesLengthUI();
             self._listenTimelineLengthChanged();
             self._updDelTimelimeButtonStatus();
         },
@@ -134,7 +134,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
                 if (e.context.m_owner instanceof SequencerView) {
                     self.m_timelineViewStack.selectView(self.m_timelines[campaign_timeline_id].getStackViewID());
                     BB.comBroker.fire(BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED, this, null, campaign_timeline_id);
-                    self._updatedTimelineLengthUI(null);
+                    self._updatedTimelinesLengthUI();
                     return;
                 }
 
@@ -193,6 +193,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
 
                     campaign_timeline_id = jalapeno.createNewTimeline(self.m_selected_campaign_id);
                     jalapeno.setCampaignTimelineSequencerIndex(self.m_selected_campaign_id, campaign_timeline_id, 0);
+                    jalapeno.setTimelineTotalDuration(campaign_timeline_id, '0');
 
                     var campaign_timeline_board_template_id = jalapeno.assignTemplateToTimeline(campaign_timeline_id, board_template_id, campaign_board_id);
                     var channels = jalapeno.createTimelineChannels(campaign_timeline_id, viewers);
@@ -228,8 +229,8 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
         _listenDelTimeline: function () {
             var self = this;
             $(Elements.REMOVE_TIMELINE_BUTTON).on('click', function (e) {
-                bootbox.confirm("Are you sure you want to remove the timeline?", function(i_result) {
-                    if (i_result==true){
+                bootbox.confirm("Are you sure you want to remove the timeline?", function (i_result) {
+                    if (i_result == true) {
                         $.proxy(self._deleteTimeline(), self);
                     }
                 });
@@ -240,10 +241,10 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
          Update delete timeline button thus not allowing for less one timeline in campaign
          @method _updDelTimelimeButtonStatus
          **/
-        _updDelTimelimeButtonStatus: function(){
+        _updDelTimelimeButtonStatus: function () {
             var self = this;
             var totalTimelines = jalapeno.getCampaignTimelines(self.m_selected_campaign_id).length;
-            if (totalTimelines>1){
+            if (totalTimelines > 1) {
                 $(Elements.REMOVE_TIMELINE_BUTTON).prop('disabled', false);
             } else {
                 $(Elements.REMOVE_TIMELINE_BUTTON).prop('disabled', true);
@@ -316,20 +317,22 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
          **/
         _listenTimelineLengthChanged: function () {
             var self = this;
-            $(jalapeno).on(Jalapeno.TIMELINE_LENGTH_CHANGED, $.proxy(self._updatedTimelineLengthUI, self));
+            $(jalapeno).on(Jalapeno.TIMELINE_LENGTH_CHANGED, $.proxy(self._updatedTimelinesLengthUI, self));
         },
 
         /**
-         Update UI when timeline length changed, if event exists we pull duration from it, otherwise get it
-         frm jalapeno via selected_timeline_id
-         @method _updatedTimelineLengthUI
+         Update UI of total timelines length on length changed
+         @method _updatedTimelinesLengthUI
          **/
-        _updatedTimelineLengthUI: function (e) {
+        _updatedTimelinesLengthUI: function () {
             var self = this;
+            var totalDuration = 0;
             self.m_xdate = BB.comBroker.getService('XDATE');
-            var duration = e ? e.edata : jalapeno.getTimelineTotalDuration(this.m_selected_timeline_id);
-            var durationFormated = self.m_xdate.clearTime().addSeconds(duration).toString('HH:mm:ss');
-            $(Elements.TIMELINE_TOTAL_LENGTH).text(durationFormated);
+            $.each(self.m_timelines, function (timelineID) {
+                totalDuration = parseInt(jalapeno.getTimelineTotalDuration(timelineID)) + totalDuration;
+            });
+            var durationFormatted = self.m_xdate.clearTime().addSeconds(totalDuration).toString('HH:mm:ss');
+            $(Elements.TIMELINES_TOTAL_LENGTH).text(durationFormatted);
         }
     });
 

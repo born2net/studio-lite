@@ -1067,11 +1067,11 @@ Jalapeno.prototype = {
 
     /**
      Update a timeline's duration which is set as the total sum of all blocks within the longest running channel
-     @method setTimelineTotalDuration
+     @method calcTimelineTotalDuration
      @param {Number} i_campaign_timeline_id
      @return none
      **/
-    setTimelineTotalDuration: function (i_campaign_timeline_id) {
+    calcTimelineTotalDuration: function (i_campaign_timeline_id) {
         var self = this;
 
         var longestChannelDuration = 0;
@@ -1100,6 +1100,19 @@ Jalapeno.prototype = {
         });
         jalapeno.setCampaignTimelineRecord(i_campaign_timeline_id, 'timeline_duration', longestChannelDuration);
         $(jalapeno).trigger(self.event(Jalapeno['TIMELINE_LENGTH_CHANGED'], self, null, longestChannelDuration));
+    },
+
+    /**
+     Set a timeline's total duration
+     @method setTimelineTotalDuration
+     @param {Number} i_campaign_timeline_id
+     @param {Number} i_totalDuration
+     **/
+    setTimelineTotalDuration: function (i_campaign_timeline_id, i_totalDuration) {
+        var self = this;
+        self.m_msdb.table_campaign_timelines().openForEdit(i_campaign_timeline_id);
+        var recCampaignTimeline = self.m_msdb.table_campaign_timelines().getRec(i_campaign_timeline_id);
+        recCampaignTimeline['timeline_duration']= i_totalDuration;
     },
 
     /**

@@ -90,7 +90,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
                 log('player ' + block_id + ' offset ' + playerOffsetTime + ' playerDuration ' + playerDuration);
                 playerOffsetTime = parseFloat(playerOffsetTime) + parseFloat(playerDuration);
             });
-            jalapeno.setTimelineTotalDuration(this.selected_campaign_timeline_id);
+            jalapeno.calcTimelineTotalDuration(this.selected_campaign_timeline_id);
         },
 
         /**
@@ -119,7 +119,6 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             var self = this;
             var addBlockView = BB.comBroker.getService(BB.SERVICES.ADD_BLOCK_VIEW);
             addBlockView.selectView();
-            ;
             BB.comBroker.listenOnce(BB.EVENTS.ADD_NEW_BLOCK, function (e) {
                 self._createNewChannelBlock(e.edata.blockCode, e.edata.resourceID);
                 e.stopImmediatePropagation();

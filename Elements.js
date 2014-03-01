@@ -69,6 +69,7 @@ Elements.SORTABLE = '#sortable';
 Elements.ADD_NEW_TIMELINE_BUTTON = '#addNewTimelineButton';
 Elements.REMOVE_TIMELINE_BUTTON = '#removeTimelineButton';
 Elements.TIMELINES_TOTAL_LENGTH = '#timelinesTotalLength';
+Elements.TIMELINE_LENGTH = '#timelineLength';
 Elements.NEXT = '#next';
 Elements.PREVIOUS = '#prev';
 Elements.SERVER_NAME = '#serverName';

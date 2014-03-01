@@ -90,6 +90,19 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             self.m_property.viewPanel(Elements.TIMELINE_PROPERTIES);
             var recTimeline = jalapeno.getCampaignTimelineRecord(self.m_campaign_timeline_id);
             $(Elements.TIME_LINE_PROP_TITLE_ID).val(recTimeline['timeline_name']);
+            self._populateTimelineLength();
+        },
+
+        /**
+         Populate the timeline length in its properties box
+         @method _populateTimelineLength
+         **/
+        _populateTimelineLength: function () {
+            var self = this;
+            self.m_xdate = BB.comBroker.getService('XDATE');
+            var totalDuration = parseInt(jalapeno.getTimelineTotalDuration(self.m_campaign_timeline_id));
+            totalDuration = self.m_xdate.clearTime().addSeconds(totalDuration).toString('HH:mm:ss');
+            $(Elements.TIMELINE_LENGTH).text(totalDuration);
         },
 
         /**

@@ -173,10 +173,10 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
          **/
         constructor: function (options) {
             options || (options = {});
-            this.m_duration = 1000;
+            this.m_duration = options.duration || 1000;
             this.transition = options.transition;
             if (options.views) this.setViews(options.views);
-            if (options.duration) this.m_duration = options.duration;
+            // if (options.duration) this.m_duration = options.duration;
             StackView.ViewPort.prototype.constructor.apply(this, arguments);
         },
 
@@ -190,6 +190,11 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             var bb_view = self._parseView(i_view);
             if (self.m_selectedView==bb_view)
                 return;
+
+            // stop previous animation on previosuly selected view
+            if (self.m_selectedView.el)
+                self.m_selectedView.$el.stop();
+
             StackView.ViewPort.prototype.selectView.apply(this, arguments);
             $.each(self.m_views, function (id, view) {
                 view.$el.hide();

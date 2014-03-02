@@ -20,7 +20,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
         initialize: function () {
             var self = this;
             this.m_timelines = {}; // hold references to all created timeline instances
-            this.m_timelineViewStack = new StackView.Fader({el: Elements.SELECTED_TIMELINE});
+            this.m_timelineViewStack = new StackView.Fader({el: Elements.SELECTED_TIMELINE, duration: 333});
             this.m_selected_timeline_id = -1;
             this.m_selected_campaign_id = -1;
             this.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);

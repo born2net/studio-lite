@@ -44,12 +44,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
             $(Elements.REMOVE_CAMPAIGN).on('click', function (e) {
                 if (self.m_selectedCampaignID != -1) {
-                    var selectedLI = self.$el.find('[data-campaignid="' + self.m_selectedCampaignID + '"]');
+                    var selectedElement = self.$el.find('[data-campaignid="' + self.m_selectedCampaignID + '"]');
                     var allCampaignIDs = jalapeno.getStationCampaignIDs();
                     if (_.indexOf(allCampaignIDs, self.m_selectedCampaignID) == -1) {
                         bootbox.confirm("Are you sure you want to delete the campaign?", function(result) {
                             if (result==true){
-                                selectedLI.remove();
+                                selectedElement.remove();
                                 self._removeCampaignFromMSDB(self.m_selectedCampaignID);
                             }
                         });
@@ -180,6 +180,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var onChange = _.debounce(function (e) {
                 var text = $(e.target).val();
                 jalapeno.setCampaignRecord(self.m_selectedCampaignID, 'campaign_name', text);
+                self.$el.find('[data-campaignid="' + self.m_selectedCampaignID + '"]').find('h4').text(text);
             }, 333, false);
             $(Elements.FORM_CAMPAIGN_NAME).on("input", onChange);
         },

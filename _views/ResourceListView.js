@@ -62,9 +62,9 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var onChange = _.debounce( function (e) {
                 var text = $(e.target).val();
                 jalapeno.setResourceRecord(self.m_selected_resource_id, 'resource_name', text);
-                self._loadResourceList();
-                self._listenResourceSelected();
-            }, 500);
+                var elem = self.$el.find('[data-resource_id="' + self.m_selected_resource_id + '"]');
+                elem.find('span').text(text);
+            }, 333);
             $(Elements.SELECTED_LIB_RESOURCE_NAME).on("input", onChange);
         },
 

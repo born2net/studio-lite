@@ -98,10 +98,10 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
         /**
          Populate the RSS block common properties panel
-         @method _loadCommonProperties
+         @method _loadBlockSpecificProps
          @return none
          **/
-        _loadCommonProperties: function () {
+        _loadBlockSpecificProps: function () {
             var self = this;
 
             self._populate();

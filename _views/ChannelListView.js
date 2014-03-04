@@ -264,7 +264,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
          **/
         _blockChannelSelected: function () {
             var self = this;
-            BB.comBroker.fire(BB.EVENTS.BLOCK_ON_CHANNEL_SELECTED, this, null, self.selected_block_id);
+            BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.selected_block_id);
         },
 
         /**

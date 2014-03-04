@@ -28,12 +28,12 @@ define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
     BB.CONSTS.PLACEMENT_CHANNEL = 'PLACEMENT_CHANNEL';
 
     /**
-     event fires when block on timeline_channel is selected
-     @event Block.BLOCK_ON_CHANNEL_SELECTED
+     event fires when block is selected
+     @event Block.BLOCK_SELECTED
      @param {this} caller
      @param {String} selected block_id
      **/
-    BB.EVENTS.BLOCK_ON_CHANNEL_SELECTED = 'BLOCK_ON_CHANNEL_SELECTED';
+    BB.EVENTS.BLOCK_SELECTED = 'BLOCK_SELECTED';
 
     /**
      event fires when block length is changing (requesting a change), normally by a knob property widget
@@ -78,14 +78,14 @@ define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
 
         /**
          Notify this object that it has been selected so it can populate it's own the properties box etc
-         The function triggers from the BLOCK_ON_CHANNEL_SELECTED event.
+         The function triggers from the BLOCK_SELECTED event.
          @method _onTimelineChannelBlockSelected
          @return none
          **/
         _onTimelineChannelBlockSelected: function () {
             var self = this;
 
-            BB.comBroker.listenWithNamespace(BB.EVENTS.BLOCK_ON_CHANNEL_SELECTED, self, function (e) {
+            BB.comBroker.listenWithNamespace(BB.EVENTS.BLOCK_SELECTED, self, function (e) {
                 var blockID = e.edata;
                 if (self.m_block_id != blockID) {
                     self.m_selected = false;
@@ -93,25 +93,30 @@ define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
                 }
 
                 self.m_selected = true;
+                self.m_property.viewPanel(Elements.BLOCK_PROPERTIES);
+                self._updateTitle();
                 // log('block selected ' + self.m_block_id);
 
                 switch (self.m_placement) {
                     case BB.CONSTS.PLACEMENT_CHANNEL:
                     {
-                        self.m_property.viewPanel(Elements.BLOCK_PROPERTIES);
-                        self._updateTitle();
+                        $(Elements.CHANNEL_BLOCK_PROPS).show();
+                        $(Elements.SCENE_BLOCK_PROPS).hide();
                         self._updateBlockLength();
                         break;
                     }
                     // Future support
                     case BB.CONSTS.PLACEMENT_SCENE:
                     {
+                        $(Elements.CHANNEL_BLOCK_PROPS).hide();
+                        $(Elements.SCENE_BLOCK_PROPS).show();
+                        self._updateBlockDimensions();
                         break;
                     }
                 }
 
-                if (self._loadCommonProperties)
-                    self._loadCommonProperties();
+                if (self._loadBlockSpecificProps)
+                    self._loadBlockSpecificProps();
 
             });
         },
@@ -139,6 +144,14 @@ define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
             $(Elements.BLOCK_LENGTH_SECONDS).val(lengthData.seconds).trigger('change');
         },
 
+
+        /**
+         Update the position of the block when placed inside a scene
+         @method _updateBlockDimensions
+         **/
+        _updateBlockDimensions: function(){
+        },
+        
         /**
          Take action when block length has changed which is triggered by the BLOCK_LENGTH_CHANGING event
          @method _onTimelineChannelBlockLengthChanged
@@ -190,7 +203,7 @@ define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
                 '<input id="blockLengthMinutes" data-displayPrevious="false" data-min="0" data-max="59" data-skin="tron" data-width="60" data-height="60" data-thickness=".2" type="text" class="knob" data-fgColor="gray">' +
                 '<input id="blockLengthSeconds" data-displayPrevious="false" data-min="0" data-max="59" data-skin="tron" data-width="60" data-height="60"  data-thickness=".2" type="text" class="knob" data-fgColor="gray">';
 
-            $(Elements.TIMELIME_CHANNEL_BLOCK_LENGTH).append(snippet);
+            $(Elements.CHANNEL_BLOCK_PROPS).append(snippet);
 
             $(Elements.CLASS_KNOB).knob({
                 /*change: function (value) {
@@ -259,7 +272,7 @@ define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
         _deleteBlock: function () {
             var self = this;
             jalapeno.removeBlockFromTimelineChannel(self.m_block_id);
-            BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_ON_CHANNEL_SELECTED, self);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_SELECTED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_LENGTH_CHANGING, self);
             $.each(self,function(k){
                 self[k] = undefined;

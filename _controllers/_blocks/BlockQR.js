@@ -68,10 +68,10 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
         /**
          Populate the QR block common properties panel
-         @method _loadCommonProperties
+         @method _loadBlockSpecificProps
          @return none
          **/
-        _loadCommonProperties: function () {
+        _loadBlockSpecificProps: function () {
             var self = this;
             self._populate();
             this.m_property.viewSubPanel(Elements.BLOCK_QR_COMMON_PROPERTIES);

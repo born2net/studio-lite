@@ -56,7 +56,9 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
         render: function () {
             var self = this;
             self.m_stationCollection.resumeGetRemoteStations();
-            log('in view');
+            self.getTotalActiveStation();
+            // log('in view');
+
         },
 
         /**
@@ -67,7 +69,7 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
         unrender: function () {
             var self = this;
             self.m_stationCollection.pauseGetRemoteStations();
-            log('not in view');
+            // log('out of view');
         },
 
         /**
@@ -429,6 +431,20 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
             if (campaign_id == -1)
                 return;
             jalapeno.setStationCampaignID(self.m_selected_station_id, campaign_id);
+        },
+
+        /**
+         Get current total active, non red stations
+         @method getTotalActiveStation
+         @param {Number} i_playerData
+         @return {Number} total active / non red stations
+         **/
+        getTotalActiveStation: function(){
+            var self = this;
+            var connected = self.m_stationCollection.filter(function(stationsModel){
+                return stationsModel.get('connection') != '0'
+            });
+            return connected;
         }
     });
 

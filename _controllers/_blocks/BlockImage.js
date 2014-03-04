@@ -84,7 +84,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _wireUI: function () {
             var self = this;
-            self.m_aspectRatioHandler = $(Elements.IMAGE_ASPECT_RATIO).on('change',function (e) {
+            self.m_aspectRatioHandler = $(Elements.IMAGE_ASPECT_RATIO).on('change', function (e) {
                 if (!self.m_selected)
                     return;
                 self._onChange(e);
@@ -133,24 +133,22 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             $(Elements.SELECTED_CHANNEL_RESOURCE_NAME).text(self.m_blockDescription);
         },
 
-        /*
-         Get a default Image XML player_data boilerplate which we use to add a new Image component into msdb
-         @method _getDefaultPlayerImageData
-         @return {xml} xml data
-         BlockImage.prototype._getDefaultPlayerImageData = function () {
-         var self = this;
-
-         var xml = '<Player player="' + self.m_blockType + '" label="" interactive="0">' +
-         '<Data>' +
-         '<Resource resource="' + self.m_resourceID + '">' +
-         '<AspectRatio maintain="1" />' +
-         '<Image autoRewind="1" volume="1" backgroundAlpha="1" />' +
-         '</Resource>' +
-         '</Data>' +
-         '</Player>';
-         return xml;
-         };
-
+        // Get a default Image XML player_data boilerplate which we use to add a new Image component into msdb
+        // @method _getDefaultPlayerImageData
+        // @return {xml} xml data
+        // BlockImage.prototype._getDefaultPlayerImageData = function () {
+        // var self = this;
+        //
+        //var xml = '<Player player="' + self.m_blockType + '" label="" interactive="0">' +
+        //              '<Data>' +
+        //                  '<Resource resource="' + self.m_resourceID + '">' +
+        //                      '<AspectRatio maintain="1" />' +
+        //                      '<Image autoRewind="1" volume="1" backgroundAlpha="1" />' +
+        //                  '</Resource>' +
+        //              '</Data>' +
+        //          '</Player>';
+        //return xml;
+        //};
 
         /**
          Get block data in json object literal
@@ -206,7 +204,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         deleteBlock: function () {
             var self = this;
-            $(Elements.IMAGE_ASPECT_RATIO).off('change',self.m_aspectRatioHandler);
+            $(Elements.IMAGE_ASPECT_RATIO).off('change', self.m_aspectRatioHandler);
             self._deleteBlock();
         }
     });

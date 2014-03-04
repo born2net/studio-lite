@@ -56,16 +56,15 @@ define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
             this.m_placement = options.i_placement;
             this.m_block_id = options.i_block_id;
             this.m_selected = false;
+            this.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
 
             switch (this.m_placement) {
 
                 case BB.CONSTS.PLACEMENT_CHANNEL:
                 {
-                    this.m_property = BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW);
-
                     self._onTimelineChannelBlockSelected();
                     self._onTimelineChannelBlockLengthChanged();
-                    var initiated = self.m_property.initPanel(Elements.BLOCK_PROPERTIES, true);
+                    var initiated = self.m_property.initPanel(Elements.BLOCK_PROPERTIES);
                     if (initiated)
                         self._propLengthKnobsInit();
                     break;
@@ -252,6 +251,22 @@ define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
         },
 
         /**
+         Delete block is a private method that is always called regardless if instance has
+         been inherited or not. Used for releasing memory for garbage collector.
+         @method _deleteBlock
+         @return none
+         **/
+        _deleteBlock: function () {
+            var self = this;
+            jalapeno.removeBlockFromTimelineChannel(self.m_block_id);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_ON_CHANNEL_SELECTED, self);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_LENGTH_CHANGING, self);
+            $.each(self,function(k){
+                self[k] = undefined;
+            });
+        },
+
+        /**
          Get block data as a json formatted object literal and return to caller
          @method getBlockData
          @return {object} data
@@ -279,23 +294,9 @@ define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
             /* semi-abstract, overridden, do not modify */
             var self = this;
             self._deleteBlock();
-        },
-
-        /**
-         Delete block is a private method that is always called regardless if instance has
-         been inherited or not. Used for releasing memory for garbage collector.
-         @method _deleteBlock
-         @return none
-         **/
-        _deleteBlock: function () {
-            var self = this;
-            jalapeno.removeBlockFromTimelineChannel(self.m_block_id);
-            BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_ON_CHANNEL_SELECTED, self);
-            BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_LENGTH_CHANGING, self);
-            $.each(self,function(k){
-                self[k] = undefined;
-            });
         }
+
+
     });
 
     return Block;

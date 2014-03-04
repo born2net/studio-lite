@@ -58,24 +58,12 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                         _label: 'QR Code',
                         _interactive: '0'
                     }
-                }
+                };
                 var xData = x2js.json2xml_str(xSavePlayerData);
                 jalapeno.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', xData);
             }, 150);
 
             self.m_inputChangeHandler = $(Elements.QR_TEXT).on("input", onChange);
-
-            /*
-             var qrText;
-             $(Elements.QR_TEXT).on("input", function (e) {
-             if (!self.m_selected)
-             return;
-             window.clearTimeout(qrText);
-             qrText = window.setTimeout(function () {
-             self._onChange(e);
-             }, 200);
-
-             });*/
         },
 
         /**

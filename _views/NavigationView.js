@@ -23,10 +23,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var appContentFaderView = BB.comBroker.getService(BB.SERVICES['APP_CONTENT_FADER_VIEW']);
             var appEntryFaderView = BB.comBroker.getService(BB.SERVICES['APP_ENTRY_FADER_VIEW']);
 
-            var appWidth= BB.comBroker.getService(BB.SERVICES.LAYOUT_ROUTER).getAppWidth();
+            var appWidth = BB.comBroker.getService(BB.SERVICES.LAYOUT_ROUTER).getAppWidth();
             self._toggleIcons(appWidth);
 
-            BB.comBroker.listen(BB.EVENTS.APP_SIZED, $.proxy(self._onAppResized,self));
+            BB.comBroker.listen(BB.EVENTS.APP_SIZED, $.proxy(self._onAppResized, self));
 
             $(Elements.CLASS_CAMPAIG_NMANAGER_VIEW).on('click', function () {
                 self._checkLimitedAccess();
@@ -71,7 +71,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             });
 
             $(Elements.SAVE_CONFIG).on('click', function () {
-                self.save(function(){});
+                self.saveAndRestartPrompt(function () {
+                });
             });
         },
 
@@ -80,7 +81,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @method _onAppResized
          @param {Event} e
          **/
-        _onAppResized: function(e){
+        _onAppResized: function (e) {
             var self = this;
             self._toggleIcons(e.edata.width)
         },
@@ -90,7 +91,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @method _toggleIcons
          @param {Number} i_size
          **/
-        _toggleIcons: function(i_size){
+        _toggleIcons: function (i_size) {
             if (i_size > 1500) {
                 $(Elements.CLASS_NAV_ICONS).show();
             } else {
@@ -161,6 +162,57 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         resetPropertiesView: function () {
             BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
+        },
+
+        /**
+         Save and serialize configuration to remote mediaSERVER> Save and restart will check if
+         the Stations module has been loaded and if no connected stations are present, it will NOT
+         prompt for option to restart station on save, otherwise it will.
+         @method saveAndRestartPrompt
+         @param {Function} call back after save
+         **/
+        saveAndRestartPrompt: function (i_callBack) {
+            var self = this;
+            self.m_stationsListView = BB.comBroker.getService(BB.SERVICES['STATIONS_LIST_VIEW'])
+            if (self.m_stationsListView != undefined) {
+                var totalStations = self.m_stationsListView.getTotalActiveStation();
+                if (totalStations == 0) {
+                    self.save(function () {
+                    });
+                    return;
+                }
+            }
+
+            bootbox.dialog({
+                message: "Restart connected stations to apply your latest saved work?",
+                title: "Save work to remote server",
+                buttons: {
+                    success: {
+                        label: "Save",
+                        className: "btn-success",
+                        callback: function () {
+                            self.save(function () {
+                            });
+                        }
+                    },
+                    danger: {
+                        label: "Save & restart stations",
+                        className: "btn-success",
+                        callback: function () {
+                            self.save(function () {
+                                self.m_stationsListView.restartStation();
+
+                            });
+                        }
+                    },
+                    main: {
+                        label: "Cancel",
+                        callback: function () {
+                            return;
+                        }
+                    }
+                }
+            });
         },
 
         /**

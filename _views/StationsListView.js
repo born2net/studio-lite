@@ -8,6 +8,8 @@
  **/
 define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function ($, Backbone, StationsCollection, AjaxJsonGetter) {
 
+    BB.SERVICES.STATIONS_LIST_VIEW = 'StationsListView';
+
     var StationsListView = Backbone.View.extend({
 
         /**
@@ -16,6 +18,9 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
          **/
         initialize: function () {
             var self = this;
+
+            BB.comBroker.setService(BB.SERVICES['STATIONS_LIST_VIEW'], self);
+
             self.m_snapshotInProgress = undefined;
             self.m_imageReloadCount = 0;
             self.m_imagePath = '';
@@ -31,7 +36,7 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
             });
 
             self.listenTo(self.m_stationCollection, 'add', function (i_model) {
-               $(Elements.STATION_ALERT).hide();
+                $(Elements.STATION_ALERT).hide();
                 self._onAddStation(i_model);
                 self._listenStationSelected();
             });
@@ -274,9 +279,11 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
                 "<ol/>", function (result) {
                 if (result == true) {
                     var navigationView = BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW);
-                    jalapeno.sendCommand('rebootPlayer', self.m_selected_station_id,function(){});
+                    jalapeno.sendCommand('rebootPlayer', self.m_selected_station_id, function () {
+                    });
                     jalapeno.removeStation(self.m_selected_station_id);
-                    navigationView.save(function(){});
+                    navigationView.save(function () {
+                    });
                     jalapeno.sync();
                     self._removeStationFromLI(self.m_selected_station_id);
                     navigationView.resetPropertiesView();
@@ -289,7 +296,7 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
          @method _removeStationFromLI
          @param {Number} i_stationID
          **/
-        _removeStationFromLI: function(i_stationID){
+        _removeStationFromLI: function (i_stationID) {
             var self = this;
             $(Elements.STATION_LIST_VIEW).find('[data-station_id="' + i_stationID + '"]').remove();
         },
@@ -439,12 +446,22 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
          @param {Number} i_playerData
          @return {Number} total active / non red stations
          **/
-        getTotalActiveStation: function(){
+        getTotalActiveStation: function () {
             var self = this;
-            var connected = self.m_stationCollection.filter(function(stationsModel){
+            var connected = self.m_stationCollection.filter(function (stationsModel) {
                 return stationsModel.get('connection') != '0'
             });
-            return connected;
+            return connected.length;
+        },
+
+        /**
+         Restart station
+         @method restartStation
+         **/
+        restartStation: function () {
+            jalapeno.sendCommand('rebootPlayer', -1, function () {
+            });
+            return false;
         }
     });
 

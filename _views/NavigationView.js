@@ -200,7 +200,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                         className: "btn-success",
                         callback: function () {
                             self.save(function () {
-                                self.m_stationsListView.restartStation();
+                                jalapeno.sendCommand('rebootPlayer', -1, function () {
+                                });
 
                             });
                         }

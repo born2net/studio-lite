@@ -36,11 +36,10 @@ body {
 }
 
 #propPanel {
-    margin: 0;
+    margin: 0 auto;
     height: 100%;
     padding-top: 15px;
-    width: 100%;
-    /* text-align: center; */
+    width: 300px; /* properties panel width we have to work with to display all app props */
     /* background-color: #fff5ba; */
 }
 
@@ -135,6 +134,7 @@ body {
 #popModal {
     padding: 20px;
 }
+
 #openPopupProperties {
     float: right;
 }
@@ -258,12 +258,11 @@ body {
 #stationcontrol {
     padding-top: 30px;
     position: relative;
-    left: 12px;
 }
 
 #stationcontrol button {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 22px;
+    padding-right: 22px;
 }
 
 #eventSendButton {
@@ -277,11 +276,11 @@ body {
 
 #stationInfo ul {
     text-align: left;
-    padding-left: 34%;
 }
 
 #snapShotWrap {
     position: relative;
+    /* left: -40px; */
     width: 240px;
     height: 120px;
 }
@@ -289,22 +288,22 @@ body {
 #snapShotSVG {
     top: 0px;
     left: 0px;
-    position: absolute;
+    /* position: absolute; */
     width: 240px;
     height: 140px;
 }
 
 #snapShotImage {
     top: 15px;
-    left: 0px;
+    left: 15px;
     position: absolute;
     width: 210px;
     height: 110px;
 }
 
 #snapShotSpinner {
-    top: 45px;
-    left: 20px;
+    top: 50px;
+    left: 100px;
     position: absolute;
     padding: 0;
     margin: 0;
@@ -318,6 +317,11 @@ body {
 #fileRemove {
     float: left;
     margin-right: 30px;
+}
+
+#stationProperties {
+    margin: 0 auto;
+    width: 100%;
 }
 
 #stationListView {
@@ -335,13 +339,17 @@ body {
 }
 
 #stationSelectionCampaignWrap {
-    width: 183px;
-    position: relative;
-    left: 10px;
+    width: 238px;
+    margin-top: 10px;
+
 }
 
-#stationSelectionCampaign {
+#stationSendEventValue {
+    width: 238px;
+}
 
+#stationEventSendCommand {
+    width: 238px;
 }
 
 #stationPollSliderContainer {
@@ -850,8 +858,6 @@ Software accelerated vertical
     font-weight: 400;
     color: white;
 }
-
-
 
 .list-group-item:first-child {
     border-top-right-radius: 0px;

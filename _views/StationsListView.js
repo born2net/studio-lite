@@ -49,8 +49,8 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
             self._wireSnapshot();
             self._populateStationCampaignDropDown(-1);
 
-            BB.comBroker.listen(BB.EVENTS.APP_SIZED, self._reconfigSnapLocation);
-            self._reconfigSnapLocation();
+            // BB.comBroker.listen(BB.EVENTS.APP_SIZED, self._reconfigSnapLocation);
+            // self._reconfigSnapLocation();
         },
 
         /**
@@ -137,7 +137,7 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
         /**
          Reconfigure the location (offset) of the screen snapshot UI depending on current property with
          @method _reconfigSnapLocation
-         **/
+
         _reconfigSnapLocation: function () {
             var offset = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).getPropWidth();
             if (offset < 240)
@@ -153,6 +153,7 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
                 left: (offset / 2) - 20 + 'px'
             });
         },
+         **/
 
         /**
          Update existing station in list with data from remote mediaSERVER

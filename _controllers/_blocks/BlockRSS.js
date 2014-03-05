@@ -47,6 +47,10 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var xmlDoc = $.parseXML(xPlayerData);
                 var xml = $(xmlDoc);
                 var rss = xml.find('Rss');
+                $(rss).prepend('<Sean levy="123"/>');
+                // console.log(rss[0].innerHTML);
+                console.log(rss[0].outerHTML);
+
                 // this is a new component so we need to add a boilerplate XML
                 if (rss.length == 0) {
                     xPlayerData = self._getDefaultPlayerRSSData();

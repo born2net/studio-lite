@@ -562,7 +562,7 @@ Jalapeno.prototype = {
      @param {Number} i_playerData
      @return {Number} board_id
      **/
-    getGlobalBoardIDFromTimeline: function(i_campaign_timeline_board_template_id){
+    getGlobalBoardIDFromTimeline: function (i_campaign_timeline_board_template_id) {
         var recCampaignTimelineBoardTemplate = jalapeno.m_msdb.table_campaign_timeline_board_templates().getRec(i_campaign_timeline_board_template_id);
         var board_template_id = recCampaignTimelineBoardTemplate['board_template_id'];
         var recBoardTemplate = jalapeno.m_msdb.table_board_templates().getRec(board_template_id);
@@ -1112,7 +1112,7 @@ Jalapeno.prototype = {
         var self = this;
         self.m_msdb.table_campaign_timelines().openForEdit(i_campaign_timeline_id);
         var recCampaignTimeline = self.m_msdb.table_campaign_timelines().getRec(i_campaign_timeline_id);
-        recCampaignTimeline['timeline_duration']= i_totalDuration;
+        recCampaignTimeline['timeline_duration'] = i_totalDuration;
     },
 
     /**
@@ -1192,23 +1192,19 @@ Jalapeno.prototype = {
         var hours = 0;
         var totalInSeconds = 0;
 
-        $(self.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
-            var recCampaignTimelineChannelPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
-            if (campaign_timeline_chanel_player_id == i_campaign_timeline_chanel_player_id) {
-                var totalSeconds = recCampaignTimelineChannelPlayer['player_duration'];
-                totalInSeconds = totalSeconds;
-                if (totalSeconds >= 3600) {
-                    hours = Math.floor(totalSeconds / 3600);
-                    totalSeconds = totalSeconds - (hours * 3600);
-                }
-                if (totalSeconds >= 60) {
-                    minutes = Math.floor(totalSeconds / 60);
-                    seconds = totalSeconds - (minutes * 60);
-                }
-                if (hours == 0 && minutes == 0)
-                    seconds = totalSeconds;
-            }
-        });
+        var recCampaignTimelineChannelPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(i_campaign_timeline_chanel_player_id);
+        var totalSeconds = recCampaignTimelineChannelPlayer['player_duration'];
+        totalInSeconds = totalSeconds;
+        if (totalSeconds >= 3600) {
+            hours = Math.floor(totalSeconds / 3600);
+            totalSeconds = totalSeconds - (hours * 3600);
+        }
+        if (totalSeconds >= 60) {
+            minutes = Math.floor(totalSeconds / 60);
+            seconds = totalSeconds - (minutes * 60);
+        }
+        if (hours == 0 && minutes == 0)
+            seconds = totalSeconds;
         var playbackLength = {
             hours: hours,
             minutes: minutes,

@@ -58,6 +58,16 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
             this.m_selected = false;
             this.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
 
+            // first initiated properties view
+            var initiated = self.m_property.initPanel(Elements.BLOCK_PROPERTIES);
+            if (initiated)
+                self._opacitySliderInit();
+
+
+            // commons properties
+            self._opacityListenChange();
+
+            // block specific: channel / scene
             switch (this.m_placement) {
 
                 case BB.CONSTS.PLACEMENT_CHANNEL:
@@ -65,13 +75,12 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
                     self._onTimelineChannelBlockSelected();
                     self._onTimelineChannelBlockLengthChanged();
 
-                    var initiated = self.m_property.initPanel(Elements.BLOCK_PROPERTIES);
-                    if (initiated) {
+                    if (initiated)
                         self._propLengthKnobsInit();
-                        self._propOpacitySliderInit();
-                    }
+
                     break;
                 }
+
                 case BB.CONSTS.PLACEMENT_SCENE:
                 {
                     break;
@@ -79,7 +88,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
             }
         },
 
-        _propOpacitySliderInit: function () {
+        _opacitySliderInit: function () {
             $(Elements.BLOCK_OPACITY_SLIDER).noUiSlider({
                 handles: 1,
                 start: 100,
@@ -89,6 +98,83 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
                     to: [ $(Elements.BLOCK_OPACITY_LABEL), 'text' ]
                 }
             });
+        },
+
+        _opacityListenChange: function () {
+            var self = this;
+            self.m_blockOpacityHandler = $(Elements.BLOCK_OPACITY_SLIDER).on('change', function (e) {
+                if (!self.m_selected)
+                    return;
+                log(parseFloat($(Elements.BLOCK_OPACITY_SLIDER).val()) / 100);
+                // jalapeno.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', 'aa');
+            });
+        },
+
+        _opacityPopulate: function () {
+            var self = this;
+            var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
+            var xml = recBlock['player_data'];
+            var x2js = BB.comBroker.getService('compX2JS');
+            var jPlayerData = x2js.xml_str2json(xml);
+            log(JSON.stringify(jPlayerData));
+            if (jPlayerData.Player.Data.Appearance == undefined) {
+                $(Elements.BLOCK_OPACITY_SLIDER).val(100);
+            } else {
+                var opacity = parseFloat(jPlayerData.Player.Data.Appearance._alpha) * 100;
+                $(Elements.BLOCK_OPACITY_SLIDER).val(opacity);
+            }
+
+            var j ={
+                "Player":{
+                    "Data":{
+                        "Appearance":{
+                            "_alpha":"0.6",
+                            "_blendMode":"normal"
+                        },
+                        "Resource":{
+                            "AspectRatio":{
+                                "_maintain":"0"
+                            },
+                            "Video":{
+                                "_autoRewind":"1",
+                                "_volume":"1",
+                                "_backgroundAlpha":"1"
+                            },
+                            "_resource":"6",
+                            "_hResource":"1"
+                        }
+                    },
+                    "_player":"3100",
+                    "_label":"",
+                    "_interactive":"0"
+                }
+            };
+            var x = x2js.json2xml_str(j);
+            self.getObject(j,'_alpha',0);
+
+        },
+
+        getObject: function (theObject, key, value) {
+            var self = this;
+            var result = null;
+            if (theObject instanceof Array) {
+                for (var i = 0; i < theObject.length; i++) {
+                    result = self.getObject(theObject[i]);
+                }
+            }
+            else {
+                for (var prop in theObject) {
+                    console.log(prop + ': ' + theObject[prop]);
+                    if (prop == 'id') {
+                        if (theObject[prop] == 1) {
+                            return theObject;
+                        }
+                    }
+                    if (theObject[prop] instanceof Object || theObject[prop] instanceof Array)
+                        result = self.getObject(theObject[prop]);
+                }
+            }
+            return result;
         },
 
         /**
@@ -118,6 +204,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
                         $(Elements.CHANNEL_BLOCK_PROPS).show();
                         $(Elements.SCENE_BLOCK_PROPS).hide();
                         self._updateBlockLength();
+                        self._opacityPopulate();
                         break;
                     }
                     // Future support
@@ -157,8 +244,6 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
             $(Elements.BLOCK_LENGTH_HOURS).val(lengthData.hours).trigger('change');
             $(Elements.BLOCK_LENGTH_MINUTES).val(lengthData.minutes).trigger('change');
             $(Elements.BLOCK_LENGTH_SECONDS).val(lengthData.seconds).trigger('change');
-
-            var a = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
         },
 
 
@@ -291,6 +376,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
             jalapeno.removeBlockFromTimelineChannel(self.m_block_id);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_SELECTED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_LENGTH_CHANGING, self);
+            $(Elements.BLOCK_OPACITY_SLIDER).off('change', self.m_blockOpacityHandler);
             $.each(self, function (k) {
                 self[k] = undefined;
             });

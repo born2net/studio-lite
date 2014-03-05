@@ -151,7 +151,6 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
             };
             var x = x2js.json2xml_str(j);
             self.getObject(j,'_alpha',0);
-
         },
 
         getObject: function (theObject, key, value) {

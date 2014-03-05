@@ -105,6 +105,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
 
         _opacityListenChange: function () {
             var self = this;
+            //todo: fix opacity
             self.m_blockOpacityHandler = $(Elements.BLOCK_OPACITY_SLIDER).on('change', function (e) {
                 if (!self.m_selected)
                     return;
@@ -115,6 +116,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
 
         _opacityPopulate: function () {
             return;
+            //todo: fix opacity
             var self = this;
             var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
             var xml = recBlock['player_data'];

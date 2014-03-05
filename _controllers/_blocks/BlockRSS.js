@@ -29,7 +29,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         },
 
         /**
-         When user changes a URL link for the RSS feed, update the msdb
+         When user changes a URL link for the feed, update the msdb
          @method _listenInputChange
          @return none
          @example see code getPlayerDataBoilerplate for sample XML structure

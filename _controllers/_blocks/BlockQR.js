@@ -29,60 +29,49 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         },
 
         /**
-         When user changes QR text update msdb, we use xSavePlayerData
-         as a json boilerplate that we append values to and save it in msdb as player_data
+         When user changes a URL link for the feed, update the msdb
          @method _listenInputChange
          @return none
+         @example see code getPlayerDataBoilerplate for sample XML structure
          **/
         _listenInputChange: function () {
             var self = this;
+            var xmlString = undefined;
+
             var onChange = _.debounce(function (e) {
                 if (!self.m_selected)
                     return;
                 var text = $(e.target).val();
-
-
-                if ( BB.JalapenoHelper.isBlockPlayerDataEmpty(self.m_block_id) ) {
-                    var xml = BB.JalapenoHelper.getPlayerDataBoilerplate(self.m_blockType);
+                var recBlock = BB.JalapenoHelper.getBlockPlayerData(self.m_block_id, 'QR', self.m_blockPlacement);
+                if (recBlock == undefined) {
+                    xmlString = BB.JalapenoHelper.getPlayerDataBoilerplate(self.m_blockType);
+                } else {
+                    xmlString = recBlock['player_data'];
                 }
-
-
-
-
-                var xsnipp = $(xml).find('Text').text(text);
-                log(xsnipp[0].outerHTML);
-
-                var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
-                var xml = recBlock['player_data'];
-                jalapeno.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', xData);
-
-                return;
-
-                var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
-                var xml = recBlock['player_data'];
-                var x2js = BB.comBroker.getService('compX2JS');
-                var jPlayerData = x2js.xml_str2json(xml);
-
-
-                // Example of how to build player_data as json object and serialize back to XML for save
-                var xSavePlayerData = {
-                    Player: {
-                        _player: 3430,
-                        Data: {
-                            Text: {
-                                _textSource: 'static',
-                                __text: text
-                            }
-                        },
-                        _label: 'QR Code',
-                        _interactive: '0'
-                    }
-                };
-                var xData = x2js.json2xml_str(xSavePlayerData);
-                jalapeno.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', xData);
+                var xmlDom = BB.JalapenoHelper.playerDataStringToXmlDom(xmlString);
+                var xSnippet = $(xmlDom).find('Text');
+                $(xSnippet).text(text);
+                BB.JalapenoHelper.updatePlayerData(self.m_block_id, xmlDom, self.m_blockPlacement);
+                log(xSnippet[0].outerHTML);
             }, 150);
-
             self.m_inputChangeHandler = $(Elements.QR_TEXT).on("input", onChange);
+        },
+
+        /**
+         Load up property values in the common panel
+         @method _populate
+         @return none
+         **/
+        _populate: function () {
+            var self = this;
+            var recBlock = BB.JalapenoHelper.getBlockPlayerData(self.m_block_id, 'Text', self.m_blockPlacement);
+            if (recBlock == undefined) {
+                $(Elements.QR_TEXT).val('');
+            } else {
+                var xmlDom = BB.JalapenoHelper.playerDataStringToXmlDom(recBlock['player_data']);
+                var xSnippet = $(xmlDom).find('Text');
+                $(Elements.QR_TEXT).val(xSnippet.text());
+            }
         },
 
         /**
@@ -94,26 +83,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var self = this;
             self._populate();
             this.m_property.viewSubPanel(Elements.BLOCK_QR_COMMON_PROPERTIES);
-        },
-
-        /**
-         Load up property values in the common panel
-         @method _populate
-         @return none
-         **/
-        _populate: function () {
-            var self = this;
-
-            var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
-            var xml = recBlock['player_data'];
-            var x2js = BB.comBroker.getService('compX2JS');
-            var jPlayerData = x2js.xml_str2json(xml);
-
-            if (jPlayerData["Player"]["Data"]["Text"]) {
-                $(Elements.QR_TEXT).val(jPlayerData["Player"]["Data"]["Text"]["__text"]);
-            } else {
-                $(Elements.QR_TEXT).val(self.m_qrText);
-            }
         },
 
         /**

@@ -229,17 +229,17 @@ JalapenoHelper.prototype = {
         return xml;
     },
 
-    isBlockPlayerDataExist: function(i_playerID, i_tag, i_blockPlacement){
+    getBlockPlayerData: function(i_playerID, i_tag, i_blockPlacement){
+        var recBlock = undefined;
 
         switch (i_blockPlacement){
 
             case BB.CONSTS.PLACEMENT_CHANNEL: {
-                var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(i_playerID);
+                recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(i_playerID);
                 break;
             }
 
             case BB.CONSTS.PLACEMENT_SCENE: {
-                var recBlock = undefined;
                 // todo: add scene support
                 break;
             }
@@ -250,9 +250,9 @@ JalapenoHelper.prototype = {
         var xml = $(xmlDoc);
         var tag = xml.find(i_tag);
         if (tag.length == 0){
-            return false;
+            return undefined;
         } else {
-            return true;
+            return recBlock;
         }
     },
 
@@ -271,6 +271,10 @@ JalapenoHelper.prototype = {
                 break;
             }
         }
+    },
+
+    playerDataStringToXmlDom: function(i_xmlString){
+        return $.parseXML(i_xmlString);
     }
 }
 

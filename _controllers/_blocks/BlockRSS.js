@@ -42,40 +42,35 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 if (!self.m_selected)
                     return;
                 var text = $(e.target).val();
-                var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
-                var xPlayerData = recBlock['player_data'];
-                var xmlDoc = $.parseXML(xPlayerData);
-                var xml = $(xmlDoc);
-                var rss = xml.find('Rss');
-                $(rss).prepend('<Sean levy="123"/>');
-                // console.log(rss[0].innerHTML);
-                console.log(rss[0].outerHTML);
 
-                // this is a new component so we need to add a boilerplate XML
-                if (rss.length == 0) {
-                    xPlayerData = self._getDefaultPlayerRSSData();
-                    xmlDoc = $.parseXML(xPlayerData);
-                    xml = $(xmlDoc);
-                    rss = xml.find('Rss');
-                    rss.attr('url', text);
+                if (BB.JalapenoHelper.isBlockPlayerDataExist(self.m_block_id, 'Rss', self.m_blockPlacement)) {
+                    var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
+                    var xPlayerData = recBlock['player_data'];
                 } else {
-                    rss.attr('url', text);
+                    var xPlayerData = BB.JalapenoHelper.getPlayerDataBoilerplate(self.m_blockType);
                 }
-                var xmlString = (new XMLSerializer()).serializeToString(xml[0]);
-                jalapeno.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', xmlString);
+
+                var xmlDoc = $.parseXML(xPlayerData);
+                var xSnippet = $(xmlDoc).find('Rss');
+                xSnippet.attr('url', text);
+                log(xSnippet[0].outerHTML);
+
+                BB.JalapenoHelper.updatePlayerData(self.m_block_id, xmlDoc, self.m_blockPlacement);
+
             }, 150);
+
             self.m_inputChangeHandler = $(Elements.RSS_LINK).on("input", onChange);
 
             /*
-            var rssLink;
-            $(Elements.RSS_LINK).on("input", function (e) {
-                if (!self.m_selected)
-                    return;
-                window.clearTimeout(rssLink);
-                rssLink = window.setTimeout(function () {
-                    self._onChange(e);
-                }, 200);
-            });*/
+             var rssLink;
+             $(Elements.RSS_LINK).on("input", function (e) {
+             if (!self.m_selected)
+             return;
+             window.clearTimeout(rssLink);
+             rssLink = window.setTimeout(function () {
+             self._onChange(e);
+             }, 200);
+             });*/
         },
 
         /**
@@ -120,17 +115,15 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _populate: function () {
             var self = this;
 
-            var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
-            var xml = recBlock['player_data'];
-            var x2js = BB.comBroker.getService('compX2JS');
-            var jPlayerData = x2js.xml_str2json(xml);
-
-            if ((jPlayerData)["Player"]["Data"]["Rss"]) {
-                $(Elements.RSS_LINK).val((jPlayerData)["Player"]["Data"]["Rss"]["_url"]);
+            if (BB.JalapenoHelper.isBlockPlayerDataExist(self.m_block_id, 'Rss', self.m_blockPlacement)) {
+                var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
+                var xmlDoc = $.parseXML(recBlock['player_data']);
+                var xSnippet = $(xmlDoc).find('Rss');
+                var url = xSnippet.attr('url');
+                $(Elements.RSS_LINK).val(url);
             } else {
                 $(Elements.RSS_LINK).val(self.m_rssUrl);
             }
-
         },
 
         /**
@@ -140,7 +133,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         deleteBlock: function () {
             var self = this;
-            $(Elements.RSS_LINK).off('change',self.m_inputChangeHandler);
+            $(Elements.RSS_LINK).off('change', self.m_inputChangeHandler);
             self._deleteBlock();
         }
 

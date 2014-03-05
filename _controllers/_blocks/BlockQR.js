@@ -40,10 +40,29 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 if (!self.m_selected)
                     return;
                 var text = $(e.target).val();
+
+
+                if ( BB.JalapenoHelper.isBlockPlayerDataEmpty(self.m_block_id) ) {
+                    var xml = BB.JalapenoHelper.getPlayerDataBoilerplate(self.m_blockType);
+                }
+
+
+
+
+                var xsnipp = $(xml).find('Text').text(text);
+                log(xsnipp[0].outerHTML);
+
+                var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
+                var xml = recBlock['player_data'];
+                jalapeno.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', xData);
+
+                return;
+
                 var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
                 var xml = recBlock['player_data'];
                 var x2js = BB.comBroker.getService('compX2JS');
                 var jPlayerData = x2js.xml_str2json(xml);
+
 
                 // Example of how to build player_data as json object and serialize back to XML for save
                 var xSavePlayerData = {

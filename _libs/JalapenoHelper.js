@@ -1,6 +1,7 @@
 /**
  The JalapenoHelper is used to manage real time data that's not in the msdb such as
- station connections as well as data constants such as component codes and component xml boilerplates.
+ blocks and related methods that have to do with player_data which is a vital part of each
+ channel or scene block (i.e.: player)
  @class JalapenoHelper
  @constructor
  @return none
@@ -8,9 +9,6 @@
 function JalapenoHelper() {
 
     this.self = this;
-    //todo: fix ajax lib
-    // this.m_ajax = Backbone.commBroker.getService(AjaxRPC.serviceName);
-    this.m_data = {};
     this.m_components = {};
     this.m_icons = {};
 
@@ -181,7 +179,98 @@ JalapenoHelper.prototype = {
     getIcons: function () {
         var self = this;
         return self.m_icons;
-    }
+    },
 
+    playerDataTojson: function (i_playerData) {
+        var x2js = BB.comBroker.getService('compX2JS');
+        var jPlayerData = x2js.xml_str2json(i_playerData);
+        return jPlayerData;
+    },
+
+    playerDataToxml: function (i_playerData) {
+        var x2js = BB.comBroker.getService('compX2JS');
+        var xPlayerData = x2js.json2xml_str(i_playerData);
+        return xPlayerData;
+    },
+
+    getPlayerDataBoilerplate: function (i_playerCode) {
+        var xml = undefined;
+        switch (i_playerCode) {
+
+            // QR
+            case 3430:
+            {
+                xml = '<Player player="3430" label="QR Code" interactive="0">' +
+                                '<Data>' +
+                                    '<Text textSource="static"></Text>' +
+                                '</Data>' +
+                            '</Player>'
+                break;
+            }
+
+            // RSS
+            case 3345: {
+                xml = '<Player player="3345" label="Rss news" interactive="0">' +
+                        '<Data>' +
+                            '<Rss url="http://rss.news.yahoo.com/rss/politics" minRefreshTime="30" speed="10" vertical="1" rtl="0">' +
+                                '<Title>' +
+                                    '<Font fontSize="16" fontColor="65280" fontFamily="Arial" fontWeight="normal" fontStyle="normal" textDecoration="none" textAlign="left" />' +
+                                '</Title>' +
+                                '<Description>' +
+                                    '<Font fontSize="16" fontColor="65280" fontFamily="Arial" fontWeight="normal" fontStyle="normal" textDecoration="none" textAlign="left" />' +
+                                '</Description>' +
+                            '</Rss>' +
+                        '</Data>' +
+                    '</Player>'
+                break;
+            }
+        }
+
+        return xml;
+    },
+
+    isBlockPlayerDataExist: function(i_playerID, i_tag, i_blockPlacement){
+
+        switch (i_blockPlacement){
+
+            case BB.CONSTS.PLACEMENT_CHANNEL: {
+                var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(i_playerID);
+                break;
+            }
+
+            case BB.CONSTS.PLACEMENT_SCENE: {
+                var recBlock = undefined;
+                // todo: add scene support
+                break;
+            }
+        }
+
+        var xPlayerData = recBlock['player_data'];
+        var xmlDoc = $.parseXML(xPlayerData);
+        var xml = $(xmlDoc);
+        var tag = xml.find(i_tag);
+        if (tag.length == 0){
+            return false;
+        } else {
+            return true;
+        }
+    },
+
+    updatePlayerData: function(i_block_id, i_xmlDoc, i_blockPlacement){
+        var xmlString = (new XMLSerializer()).serializeToString(i_xmlDoc);
+
+        switch (i_blockPlacement){
+
+            case BB.CONSTS.PLACEMENT_CHANNEL: {
+                jalapeno.setCampaignTimelineChannelPlayerRecord(i_block_id, 'player_data', xmlString);
+                break;
+            }
+
+            case BB.CONSTS.PLACEMENT_SCENE: {
+                // todo: add scene support
+                break;
+            }
+        }
+    }
 }
 

@@ -56,6 +56,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
             this.m_placement = options.i_placement;
             this.m_block_id = options.i_block_id;
             this.m_selected = false;
+            this.m_blockPlacement = undefined; // does this block live inside a channel or inside a scene
             this.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
 
             // first initiated properties view
@@ -72,6 +73,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
 
                 case BB.CONSTS.PLACEMENT_CHANNEL:
                 {
+                    self.m_blockPlacement = BB.CONSTS.PLACEMENT_CHANNEL;
                     self._onTimelineChannelBlockSelected();
                     self._onTimelineChannelBlockLengthChanged();
 
@@ -83,6 +85,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
 
                 case BB.CONSTS.PLACEMENT_SCENE:
                 {
+                    self.m_blockPlacement = BB.CONSTS.PLACEMENT_SCENE;
                     break;
                 }
             }
@@ -111,69 +114,19 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
         },
 
         _opacityPopulate: function () {
+            return;
             var self = this;
             var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
             var xml = recBlock['player_data'];
             var x2js = BB.comBroker.getService('compX2JS');
             var jPlayerData = x2js.xml_str2json(xml);
-            log(JSON.stringify(jPlayerData));
+            // log(JSON.stringify(jPlayerData));
             if (jPlayerData.Player.Data.Appearance == undefined) {
                 $(Elements.BLOCK_OPACITY_SLIDER).val(100);
             } else {
                 var opacity = parseFloat(jPlayerData.Player.Data.Appearance._alpha) * 100;
                 $(Elements.BLOCK_OPACITY_SLIDER).val(opacity);
             }
-
-            var j ={
-                "Player":{
-                    "Data":{
-                        "Appearance":{
-                            "_alpha":"0.6",
-                            "_blendMode":"normal"
-                        },
-                        "Resource":{
-                            "AspectRatio":{
-                                "_maintain":"0"
-                            },
-                            "Video":{
-                                "_autoRewind":"1",
-                                "_volume":"1",
-                                "_backgroundAlpha":"1"
-                            },
-                            "_resource":"6",
-                            "_hResource":"1"
-                        }
-                    },
-                    "_player":"3100",
-                    "_label":"",
-                    "_interactive":"0"
-                }
-            };
-            var x = x2js.json2xml_str(j);
-            self.getObject(j,'_alpha',0);
-        },
-
-        getObject: function (theObject, key, value) {
-            var self = this;
-            var result = null;
-            if (theObject instanceof Array) {
-                for (var i = 0; i < theObject.length; i++) {
-                    result = self.getObject(theObject[i]);
-                }
-            }
-            else {
-                for (var prop in theObject) {
-                    console.log(prop + ': ' + theObject[prop]);
-                    if (prop == 'id') {
-                        if (theObject[prop] == 1) {
-                            return theObject;
-                        }
-                    }
-                    if (theObject[prop] instanceof Object || theObject[prop] instanceof Array)
-                        result = self.getObject(theObject[prop]);
-                }
-            }
-            return result;
         },
 
         /**

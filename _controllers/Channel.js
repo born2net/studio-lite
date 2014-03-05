@@ -180,6 +180,7 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
             // var x2js = BB.comBroker.getService('compX2JS');
             var playerData = this.x2js.xml_str2json(i_player_data);
             var blockCode = playerData['Player']['_player'];
+            //todo: change to xml parsing
 
             switch (parseInt(blockCode)) {
                 case 3345:

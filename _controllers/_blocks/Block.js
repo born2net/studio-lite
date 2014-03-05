@@ -7,7 +7,7 @@
  @param {string} i_block_id block / player id, only required if block inserted onto channel_timeline
  @return none
  **/
-define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
+define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob, nouislider) {
 
     /**
      block.PLACEMENT_SCENE indicates the insertion is inside a Scene
@@ -64,9 +64,12 @@ define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
                 {
                     self._onTimelineChannelBlockSelected();
                     self._onTimelineChannelBlockLengthChanged();
+
                     var initiated = self.m_property.initPanel(Elements.BLOCK_PROPERTIES);
-                    if (initiated)
+                    if (initiated) {
                         self._propLengthKnobsInit();
+                        self._propOpacitySliderInit();
+                    }
                     break;
                 }
                 case BB.CONSTS.PLACEMENT_SCENE:
@@ -74,6 +77,18 @@ define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
                     break;
                 }
             }
+        },
+
+        _propOpacitySliderInit: function () {
+            $(Elements.BLOCK_OPACITY_SLIDER).noUiSlider({
+                handles: 1,
+                start: 100,
+                step: 1,
+                range: [0, 100],
+                serialization: {
+                    to: [ $(Elements.BLOCK_OPACITY_LABEL), 'text' ]
+                }
+            });
         },
 
         /**
@@ -142,6 +157,8 @@ define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
             $(Elements.BLOCK_LENGTH_HOURS).val(lengthData.hours).trigger('change');
             $(Elements.BLOCK_LENGTH_MINUTES).val(lengthData.minutes).trigger('change');
             $(Elements.BLOCK_LENGTH_SECONDS).val(lengthData.seconds).trigger('change');
+
+            var a = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
         },
 
 
@@ -149,9 +166,9 @@ define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
          Update the position of the block when placed inside a scene
          @method _updateBlockDimensions
          **/
-        _updateBlockDimensions: function(){
+        _updateBlockDimensions: function () {
         },
-        
+
         /**
          Take action when block length has changed which is triggered by the BLOCK_LENGTH_CHANGING event
          @method _onTimelineChannelBlockLengthChanged
@@ -274,7 +291,7 @@ define(['jquery', 'backbone', 'Knob'], function ($, Backbone, Knob) {
             jalapeno.removeBlockFromTimelineChannel(self.m_block_id);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_SELECTED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_LENGTH_CHANGING, self);
-            $.each(self,function(k){
+            $.each(self, function (k) {
                 self[k] = undefined;
             });
         },

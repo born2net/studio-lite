@@ -505,11 +505,16 @@
                 <p>hours / minutes / seconds</p>
             </div>
             <div id="sceneBlockProps" style="display: none">
-                <p>X / Y</p>
+                <p>X=0 / Y=0</p>
             </div>
             <hr/>
             <div id="blockCommonProperties">
-                <p>Opacity: 100%</p>
+                <div id="blockOpacityWrap">
+                    <div id="blockOpacitySlider" class="noUi-target noUi-ltr noUi-horizontal noUi-background">
+                    </div>
+                </div>
+                <span>Opacity </span>
+                <span id="blockOpacityLabel">100</span>
             </div>
             <hr/>
             <div id="blockSubProperties">

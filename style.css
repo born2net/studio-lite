@@ -341,7 +341,6 @@ body {
 #stationSelectionCampaignWrap {
     width: 238px;
     margin-top: 10px;
-
 }
 
 #stationSendEventValue {
@@ -369,6 +368,10 @@ body {
     float: right;
     position: relative;
     top: -20px;
+}
+
+#blockOpacityWrap {
+    width: 200px;
 }
 
 .screenResolutionLabel {

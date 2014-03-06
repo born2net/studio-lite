@@ -21,6 +21,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_blockType = 3100;
             self.m_blockName = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).name;
             self.m_blockDescription = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).description;
+            self.m_blockIcon = undefined;
             self.m_resourceID = undefined;
             self.m_property.initSubPanel(Elements.BLOCK_VIDEO_COMMON_PROPERTIES);
             self._listenInputChange();

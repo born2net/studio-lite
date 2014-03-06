@@ -18,12 +18,10 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         constructor: function (options) {
             Block.prototype.constructor.call(this, options);
             var self = this;
-
             self.m_blockType = 3345;
             self.m_blockName = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).name;
             self.m_blockDescription = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).description;
             self.m_blockIcon = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).icon;
-            self.m_rssUrl = 'http://rss.news.yahoo.com/rss/world';
             self.m_property.initSubPanel(Elements.BLOCK_RSS_COMMON_PROPERTIES);
             self._listenInputChange();
         },

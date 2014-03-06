@@ -321,7 +321,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
         /**
          Update the msdb for the block with new values inside its player_data
          @method _updatePlayerData
-         @param {XML} i_xmlDoc
+         @param {Object} i_xmlDoc
          **/
         _updatePlayerData: function(i_xmlDoc){
             var self = this;

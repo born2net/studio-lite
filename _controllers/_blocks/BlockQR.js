@@ -18,12 +18,10 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         constructor: function (options) {
             Block.prototype.constructor.call(this, options);
             var self = this;
-
             self.m_blockType = 3430;
             self.m_blockName = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).name;
             self.m_blockDescription = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).description;
             self.m_blockIcon = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).icon;
-            self.m_qrText = '';
             self.m_property.initSubPanel(Elements.BLOCK_QR_COMMON_PROPERTIES);
             self._listenInputChange();
         },
@@ -35,24 +33,17 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _listenInputChange: function () {
             var self = this;
-            var xmlString = undefined;
-
             var onChange = _.debounce(function (e) {
                 if (!self.m_selected)
                     return;
                 var text = $(e.target).val();
-                var recBlock = self._getBlockPlayerData();
-                if (recBlock == undefined) {
-                    // xmlString = BB.JalapenoHelper.getPlayerDataBoilerplate(self.m_blockType);
-                    xmlString = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).getDefaultPlayerData();
-                } else {
-                    xmlString = recBlock['player_data'];
-                }
-                var xmlDom = self._playerDataStringToXmlDom(xmlString);
-                var xSnippet = $(xmlDom).find('Text');
+                var xmlPlayerData = self._getBlockPlayerData();
+                var domPlayerData = self._playerDataStringToXmlDom(xmlPlayerData);
+                var xSnippet = $(domPlayerData).find('Text');
                 $(xSnippet).text(text);
-                self._updatePlayerData(xmlDom);
-                log(xSnippet[0].outerHTML);
+                self._updatePlayerData(domPlayerData);
+                // log(xSnippet[0].outerHTML);
+
             }, 150);
             self.m_inputChangeHandler = $(Elements.QR_TEXT).on("input", onChange);
         },
@@ -64,14 +55,11 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _populate: function () {
             var self = this;
-            var recBlock = self._getBlockPlayerData();
-            if (recBlock == undefined) {
-                $(Elements.QR_TEXT).val('');
-            } else {
-                var xmlDom = self._playerDataStringToXmlDom(recBlock['player_data']);
-                var xSnippet = $(xmlDom).find('Text');
-                $(Elements.QR_TEXT).val(xSnippet.text());
-            }
+            var xmlPlayerData = self._getBlockPlayerData();
+            var domPlayerData = self._playerDataStringToXmlDom(xmlPlayerData);
+            var xSnippet = $(domPlayerData).find('Text');
+            var url = xSnippet.attr('url');
+            $(Elements.QR_TEXT).val(xSnippet.text());
         },
 
         /**

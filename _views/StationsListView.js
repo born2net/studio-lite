@@ -249,12 +249,12 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
          @param {String} i_eventName
          @param {String} i_eventValue
          @return none
-         **/
         _sendStationEvent: function (i_eventName, i_eventValue) {
             var self = this;
             model.sendStationEvent(model.getDataByID(self.m_selected_resource_id)['id'], i_eventName, i_eventValue);
             $(Elements.EVENT_SEND_BUTTON).button('disable');
         },
+         **/
 
         _removeStation: function (i_context) {
             var self = i_context;

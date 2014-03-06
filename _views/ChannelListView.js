@@ -247,7 +247,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
          **/
         _listenBlockSelected: function () {
             var self = this;
-
+            $(Elements.CLASS_CHANNEL_LIST_ITEMS).off('click');
             $(Elements.CLASS_CHANNEL_LIST_ITEMS).on('click', function (e) {
                 var resourceElem = $(e.target).closest('li');
                 self.selected_block_id = $(resourceElem).data('block_id');

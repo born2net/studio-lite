@@ -23,7 +23,6 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             BB.Jalapeno = new Jalapeno();
             BB.JalapenoHelper = new JalapenoHelper();
             window.jalapeno = BB.Jalapeno;
-            window.model = BB.JalapenoHelper;
             window.log = BB.lib.log;
 
             // router init

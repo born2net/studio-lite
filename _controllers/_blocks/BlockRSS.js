@@ -20,9 +20,9 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var self = this;
 
             self.m_blockType = 3345;
-            self.m_blockName = model.getComponent(self.m_blockType).name;
-            self.m_blockDescription = model.getComponent(self.m_blockType).description;
-            self.m_blockIcon = model.getComponent(self.m_blockType).icon;
+            self.m_blockName = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).name;
+            self.m_blockDescription = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).description;
+            self.m_blockIcon = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).icon;
             self.m_rssUrl = 'http://rss.news.yahoo.com/rss/world';
             self.m_property.initSubPanel(Elements.BLOCK_RSS_COMMON_PROPERTIES);
             self._listenInputChange();
@@ -32,26 +32,18 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          When user changes a URL link for the feed, update the msdb
          @method _listenInputChange
          @return none
-         @example see code getPlayerDataBoilerplate for sample XML structure
          **/
         _listenInputChange: function () {
             var self = this;
-            var xmlString = undefined;
-
             var onChange = _.debounce(function (e) {
                 if (!self.m_selected)
                     return;
                 var text = $(e.target).val();
-                var recBlock = BB.JalapenoHelper.getBlockPlayerData(self.m_block_id, 'Rss', self.m_blockPlacement);
-                if (recBlock == undefined) {
-                    xmlString = BB.JalapenoHelper.getPlayerDataBoilerplate(self.m_blockType);
-                } else {
-                    xmlString = recBlock['player_data'];
-                }
-                var xmlDom = BB.JalapenoHelper.playerDataStringToXmlDom(xmlString);
-                var xSnippet = $(xmlDom).find('Rss');
+                var xmlPlayerData = self._getBlockPlayerData();
+                var domPlayerData = self._playerDataStringToXmlDom(xmlPlayerData);
+                var xSnippet = $(domPlayerData).find('Rss');
                 $(xSnippet).attr('url', text);
-                BB.JalapenoHelper.updatePlayerData(self.m_block_id, xmlDom, self.m_blockPlacement);
+                self._updatePlayerData(domPlayerData);
                 // log(xSnippet[0].outerHTML);
             }, 150);
             self.m_inputChangeHandler = $(Elements.RSS_LINK).on("input", onChange);
@@ -64,15 +56,11 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _populate: function () {
             var self = this;
-            var recBlock = BB.JalapenoHelper.getBlockPlayerData(self.m_block_id, 'Rss', self.m_blockPlacement);
-            if (recBlock == undefined) {
-                $(Elements.RSS_LINK).val(self.m_rssUrl);
-            } else {
-                var xmlDom = BB.JalapenoHelper.playerDataStringToXmlDom(recBlock['player_data']);
-                var xSnippet = $(xmlDom).find('Rss');
-                var url = xSnippet.attr('url');
-                $(Elements.RSS_LINK).val(url);
-            }
+            var xmlPlayerData = self._getBlockPlayerData();
+            var domPlayerData = self._playerDataStringToXmlDom(xmlPlayerData);
+            var xSnippet = $(domPlayerData).find('Rss');
+            var url = xSnippet.attr('url');
+            $(Elements.RSS_LINK).val(url);
         },
 
         /**

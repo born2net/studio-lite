@@ -65,15 +65,14 @@ JalapenoHelper.prototype = {
                 name: 'Image',
                 description: 'Bimap file',
                 getDefaultPlayerData: function (i_resourceID) {
-                    var xml = '<Player player="3130" label="" interactive="0">' +
-                        '<Data>' +
-                        '<Resource hResource="' + i_resourceID + '">' +
-                        '<AspectRatio maintain="1" />' +
-                        '<Image />' +
-                        '</Resource>' +
-                        '</Data>' +
-                        '</Player>';
-                    return xml;
+                    return  '<Player player="3130" label="" interactive="0">' +
+                                '<Data>' +
+                                    '<Resource hResource="' + i_resourceID + '">' +
+                                    '<AspectRatio maintain="1" />' +
+                                    '<Image />' +
+                                    '</Resource>' +
+                                '</Data>' +
+                            '</Player>';
                 },
                 ext: [
                     0, 'png',
@@ -85,15 +84,14 @@ JalapenoHelper.prototype = {
                 name: 'Video',
                 description: 'Movie file',
                 getDefaultPlayerData: function (i_resourceID) {
-                    var xml = '<Player player="3100" label="" interactive="0">' +
-                        '<Data>' +
-                        '<Resource hResource="' + i_resourceID + '">' +
-                        '<AspectRatio maintain="1" />' +
-                        '<Image autoRewind="1" volume="1" backgroundAlpha="1" />' +
-                        '</Resource>' +
-                        '</Data>' +
-                        '</Player>';
-                    return xml;
+                    return '<Player player="3100" label="" interactive="0">' +
+                                    '<Data>' +
+                                        '<Resource hResource="' + i_resourceID + '">' +
+                                        '<AspectRatio maintain="1" />' +
+                                        '<Image autoRewind="1" volume="1" backgroundAlpha="1" />' +
+                                        '</Resource>' +
+                                    '</Data>' +
+                                '</Player>';
                 },
                 ext: [
                     0, 'flv',
@@ -104,7 +102,11 @@ JalapenoHelper.prototype = {
                 name: 'QR Component',
                 description: 'QR code for mobile device integration',
                 getDefaultPlayerData: function () {
-                    return '<Player player="3430" label="QR Code"><Data/></Player>';
+                    return  '<Player player="3430" label="QR Code" interactive="0">' +
+                                '<Data>' +
+                                    '<Text textSource="static"></Text>' +
+                                '</Data>' +
+                            '</Player>'
                 },
                 icon: self.getIcon('qr')
             },
@@ -112,11 +114,43 @@ JalapenoHelper.prototype = {
                 name: 'Really Simple Syndication',
                 description: 'RSS for daily fresh scrolling news feed',
                 getDefaultPlayerData: function () {
-                    return '<Player player="3345" label="Rss news"><Data/></Player>';
+                    return  '<Player player="3345" label="Rss news" interactive="0">' +
+                                '<Data>' +
+                                    '<Rss url="http://rss.news.yahoo.com/rss/politics" minRefreshTime="30" speed="10" vertical="1" rtl="0">' +
+                                        '<Title>' +
+                                            '<Font fontSize="16" fontColor="65280" fontFamily="Arial" fontWeight="normal" fontStyle="normal" textDecoration="none" textAlign="left" />' +
+                                        '</Title>' +
+                                        '<Description>' +
+                                            '<Font fontSize="16" fontColor="65280" fontFamily="Arial" fontWeight="normal" fontStyle="normal" textDecoration="none" textAlign="left" />' +
+                                        '</Description>' +
+                                    '</Rss>' +
+                                '</Data>' +
+                            '</Player>'
                 },
                 icon: self.getIcon('rss')
             }
         };
+    },
+
+    /**
+     Get a component data structure and properties for a particular component id.
+     @method getBlockBoilerplate
+     @param {Number} i_blockID
+     @return {Object} return the data structure of a specific component
+     **/
+    getBlockBoilerplate: function (i_blockID) {
+        var self = this;
+        return self.m_components[i_blockID];
+    },
+
+    /**
+     Get the entire set data structure for all components.
+     @method getBlocks
+     @return {Object} return all data structure
+     **/
+    getBlocks: function () {
+        var self = this;
+        return self.m_components;
     },
 
     /**
@@ -140,27 +174,6 @@ JalapenoHelper.prototype = {
     },
 
     /**
-     Get a component data structure and properties for a particular component id.
-     @method getComponent
-     @param {Number} i_componentID
-     @return {Object} return the data structure of a specific component
-     **/
-    getComponent: function (i_componentID) {
-        var self = this;
-        return self.m_components[i_componentID];
-    },
-
-    /**
-     Get the entire set data structure for all components.
-     @method getComponents
-     @return {Object} return all data structure
-     **/
-    getComponents: function () {
-        var self = this;
-        return self.m_components;
-    },
-
-    /**
      Get the icon / image path for a resource type.
      @method getIcon
      @param {String} i_resourceType
@@ -181,100 +194,28 @@ JalapenoHelper.prototype = {
         return self.m_icons;
     },
 
+    /**
+    Convert player data to json format
+    @method playerDataTojson
+    @param {String} i_playerData
+    @return {Json} jPlayerData
+    **/
     playerDataTojson: function (i_playerData) {
         var x2js = BB.comBroker.getService('compX2JS');
         var jPlayerData = x2js.xml_str2json(i_playerData);
         return jPlayerData;
     },
 
+    /**
+     Convert player data to xml format
+     @method playerDataToxml
+     @param {String} i_playerData
+     @return {XML} xml data
+     **/
     playerDataToxml: function (i_playerData) {
         var x2js = BB.comBroker.getService('compX2JS');
         var xPlayerData = x2js.json2xml_str(i_playerData);
         return xPlayerData;
-    },
-
-    getPlayerDataBoilerplate: function (i_playerCode) {
-        var xml = undefined;
-        switch (i_playerCode) {
-
-            // QR
-            case 3430:
-            {
-                xml = '<Player player="3430" label="QR Code" interactive="0">' +
-                                '<Data>' +
-                                    '<Text textSource="static"></Text>' +
-                                '</Data>' +
-                            '</Player>'
-                break;
-            }
-
-            // RSS
-            case 3345: {
-                xml = '<Player player="3345" label="Rss news" interactive="0">' +
-                        '<Data>' +
-                            '<Rss url="http://rss.news.yahoo.com/rss/politics" minRefreshTime="30" speed="10" vertical="1" rtl="0">' +
-                                '<Title>' +
-                                    '<Font fontSize="16" fontColor="65280" fontFamily="Arial" fontWeight="normal" fontStyle="normal" textDecoration="none" textAlign="left" />' +
-                                '</Title>' +
-                                '<Description>' +
-                                    '<Font fontSize="16" fontColor="65280" fontFamily="Arial" fontWeight="normal" fontStyle="normal" textDecoration="none" textAlign="left" />' +
-                                '</Description>' +
-                            '</Rss>' +
-                        '</Data>' +
-                    '</Player>'
-                break;
-            }
-        }
-
-        return xml;
-    },
-
-    getBlockPlayerData: function(i_playerID, i_tag, i_blockPlacement){
-        var recBlock = undefined;
-
-        switch (i_blockPlacement){
-
-            case BB.CONSTS.PLACEMENT_CHANNEL: {
-                recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(i_playerID);
-                break;
-            }
-
-            case BB.CONSTS.PLACEMENT_SCENE: {
-                // todo: add scene support
-                break;
-            }
-        }
-
-        var xPlayerData = recBlock['player_data'];
-        var xmlDoc = $.parseXML(xPlayerData);
-        var xml = $(xmlDoc);
-        var tag = xml.find(i_tag);
-        if (tag.length == 0){
-            return undefined;
-        } else {
-            return recBlock;
-        }
-    },
-
-    updatePlayerData: function(i_block_id, i_xmlDoc, i_blockPlacement){
-        var xmlString = (new XMLSerializer()).serializeToString(i_xmlDoc);
-
-        switch (i_blockPlacement){
-
-            case BB.CONSTS.PLACEMENT_CHANNEL: {
-                jalapeno.setCampaignTimelineChannelPlayerRecord(i_block_id, 'player_data', xmlString);
-                break;
-            }
-
-            case BB.CONSTS.PLACEMENT_SCENE: {
-                // todo: add scene support
-                break;
-            }
-        }
-    },
-
-    playerDataStringToXmlDom: function(i_xmlString){
-        return $.parseXML(i_xmlString);
     }
 }
 

@@ -88,7 +88,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
                 var snippet = '<li class="' + BB.lib.unclass(Elements.CLASS_RESOURCES_LIST_ITEMS) + ' list-group-item" data-resource_id="' + recResources[i]['resource_id'] + '">' +
                     '<a href="#">' +
-                    '<img src="' + model.getIcon(recResources[i]['resource_type']) + '">' +
+                    '<img src="' + BB.JalapenoHelper.getIcon(recResources[i]['resource_type']) + '">' +
                     '<span>' + recResources[i]['resource_name'] + '</span>' +
                     '<p>' + resourceDescription + '</p></a>' +
                     '</a>' +

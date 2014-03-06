@@ -20,9 +20,9 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var self = this;
 
             self.m_blockType = 3430;
-            self.m_blockName = model.getComponent(self.m_blockType).name;
-            self.m_blockDescription = model.getComponent(self.m_blockType).description;
-            self.m_blockIcon = model.getComponent(self.m_blockType).icon;
+            self.m_blockName = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).name;
+            self.m_blockDescription = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).description;
+            self.m_blockIcon = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).icon;
             self.m_qrText = '';
             self.m_property.initSubPanel(Elements.BLOCK_QR_COMMON_PROPERTIES);
             self._listenInputChange();
@@ -32,7 +32,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          When user changes a URL link for the feed, update the msdb
          @method _listenInputChange
          @return none
-         @example see code getPlayerDataBoilerplate for sample XML structure
          **/
         _listenInputChange: function () {
             var self = this;
@@ -42,16 +41,17 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 if (!self.m_selected)
                     return;
                 var text = $(e.target).val();
-                var recBlock = BB.JalapenoHelper.getBlockPlayerData(self.m_block_id, 'QR', self.m_blockPlacement);
+                var recBlock = self._getBlockPlayerData();
                 if (recBlock == undefined) {
-                    xmlString = BB.JalapenoHelper.getPlayerDataBoilerplate(self.m_blockType);
+                    // xmlString = BB.JalapenoHelper.getPlayerDataBoilerplate(self.m_blockType);
+                    xmlString = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).getDefaultPlayerData();
                 } else {
                     xmlString = recBlock['player_data'];
                 }
-                var xmlDom = BB.JalapenoHelper.playerDataStringToXmlDom(xmlString);
+                var xmlDom = self._playerDataStringToXmlDom(xmlString);
                 var xSnippet = $(xmlDom).find('Text');
                 $(xSnippet).text(text);
-                BB.JalapenoHelper.updatePlayerData(self.m_block_id, xmlDom, self.m_blockPlacement);
+                self._updatePlayerData(xmlDom);
                 log(xSnippet[0].outerHTML);
             }, 150);
             self.m_inputChangeHandler = $(Elements.QR_TEXT).on("input", onChange);
@@ -64,11 +64,11 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _populate: function () {
             var self = this;
-            var recBlock = BB.JalapenoHelper.getBlockPlayerData(self.m_block_id, 'Text', self.m_blockPlacement);
+            var recBlock = self._getBlockPlayerData();
             if (recBlock == undefined) {
                 $(Elements.QR_TEXT).val('');
             } else {
-                var xmlDom = BB.JalapenoHelper.playerDataStringToXmlDom(recBlock['player_data']);
+                var xmlDom = self._playerDataStringToXmlDom(recBlock['player_data']);
                 var xSnippet = $(xmlDom).find('Text');
                 $(Elements.QR_TEXT).val(xSnippet.text());
             }

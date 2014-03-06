@@ -20,8 +20,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var self = this;
 
             self.m_blockType = 3100;
-            self.m_blockName = model.getComponent(self.m_blockType).name;
-            self.m_blockDescription = model.getComponent(self.m_blockType).description;
+            self.m_blockName = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).name;
+            self.m_blockDescription = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).description;
             self.m_playerData = undefined;
             self.m_resourceID = undefined;
 
@@ -84,7 +84,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _setIcon: function (i_fileFormat) {
             var self = this;
-            self.m_blockIcon = model.getIcon(i_fileFormat);
+            self.m_blockIcon = BB.JalapenoHelper.getIcon(i_fileFormat);
         },
 
         /**
@@ -115,7 +115,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             // this is a new component so we need to add a boilerplate xml
             if (aspectRatio.length == 0) {
                 // xPlayerData = self._getDefaultPlayerVideoData();
-                xPlayerData = model.getComponent(self.m_blockType).getDefaultPlayerData(self.m_resourceID);
+                xPlayerData = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).getDefaultPlayerData(self.m_resourceID);
                 xmlDoc = $.parseXML(xPlayerData);
                 xml = $(xmlDoc);
                 aspectRatio = xml.find('AspectRatio');

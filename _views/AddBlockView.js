@@ -57,7 +57,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             /////////////////////////////////////////////////////////
             // show component selection list
             /////////////////////////////////////////////////////////
-            var components = model.getComponents();
+            var components = BB.JalapenoHelper.getBlocks();
             for (var componentID in components) {
                 // don't show image or video component in component list
                 if (componentID == 3130 || componentID == 3100)
@@ -85,7 +85,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 var resourceDescription = 'size: ' + size + 'K dimenstion: ' + recResources[i]['resource_pixel_width'] + 'x' + recResources[i]['resource_pixel_height'];
 
                 var snippet = '<li class="list-group-item ' + BB.lib.unclass(Elements.CLASS_ADD_BLOCK_LIST_ITEMS) + '" data-resource_id="' + recResources[i]['resource_id'] + '" data-resource_name="' + recResources[i]['resource_name'] + '">'+
-                    '<img src="' + model.getIcon(recResources[i]['resource_type']) + '">' +
+                    '<img src="' + BB.JalapenoHelper.getIcon(recResources[i]['resource_type']) + '">' +
                     '<span>' + recResources[i]['resource_name'] + '</span>' +
                     '<br/><small>' + resourceDescription + '</small>' +
                     '</li>';
@@ -100,7 +100,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 if (component_id) {
                     blockCode = component_id;
                 } else {
-                    blockCode = model.getBlockCodeFromFileExt(jalapeno.getResourceType(resource_id));
+                    blockCode = BB.JalapenoHelper.getBlockCodeFromFileExt(jalapeno.getResourceType(resource_id));
                 }
                 BB.comBroker.fire(BB.EVENTS.ADD_NEW_BLOCK, this, self, {
                     blockCode: blockCode,

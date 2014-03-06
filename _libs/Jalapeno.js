@@ -432,7 +432,7 @@ Jalapeno.prototype = {
 
         var timelinePlayers = self.m_msdb.table_campaign_timeline_chanel_players();
         var recTimelinePlayer = timelinePlayers.createRecord();
-        var component = model.getComponent(i_playerCode);
+        var component = BB.JalapenoHelper.getBlockBoilerplate(i_playerCode);
         var player_data = component.getDefaultPlayerData(i_resourceID);
         recTimelinePlayer.player_data = player_data;
         recTimelinePlayer.campaign_timeline_chanel_id = i_campaign_timeline_chanel_id;

@@ -56,7 +56,6 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
             this.m_placement = options.i_placement;
             this.m_block_id = options.i_block_id;
             this.m_selected = false;
-            this.m_blockPlacement = undefined; // does this block live inside a channel or inside a scene
             this.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
 
             // first initiated properties view
@@ -317,6 +316,61 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
                     }
                 }
             });
+        },
+
+        /**
+         Update the msdb for the block with new values inside its player_data
+         @method _updatePlayerData
+         @param {XML} i_xmlDoc
+         **/
+        _updatePlayerData: function(i_xmlDoc){
+            var self = this;
+            var xmlString = (new XMLSerializer()).serializeToString(i_xmlDoc);
+            switch (self.m_placement){
+                case BB.CONSTS.PLACEMENT_CHANNEL: {
+                    jalapeno.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', xmlString);
+                    break;
+                }
+                case BB.CONSTS.PLACEMENT_SCENE: {
+                    // todo: add scene support
+                    break;
+                }
+            }
+        },
+
+        /**
+         Convert player data in string xml to DOM element
+         @method _playerDataStringToXmlDom
+         @param {String} i_xmlString
+         @return {Object} dom element
+         **/
+        _playerDataStringToXmlDom: function(i_xmlString){
+            return $.parseXML(i_xmlString);
+        },
+
+        /**
+         Get the XML player data of a block, depending where its placed
+         @method _getBlockPlayerData
+         @return {XML} player data of block (aka player)
+         **/
+        _getBlockPlayerData: function(){
+            var self = this;
+            var recBlock = undefined;
+
+            switch (self.m_placement){
+
+                case BB.CONSTS.PLACEMENT_CHANNEL: {
+                    recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
+                    break;
+                }
+
+                case BB.CONSTS.PLACEMENT_SCENE: {
+                    // todo: add scene support
+                    // recBlock = jalapeno.get...(self.m_block_id);
+                    break;
+                }
+            }
+            return recBlock['player_data'];
         },
 
         /**

@@ -205,7 +205,6 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
                         i_placement: BB.CONSTS.PLACEMENT_CHANNEL,
                         i_block_id: i_campaign_timeline_chanel_player_id
                     });
-                    self.m_blocks[i_campaign_timeline_chanel_player_id].setPlayerData(playerData);
                     break;
                 }
                 case 3130:
@@ -214,7 +213,6 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
                         i_placement: BB.CONSTS.PLACEMENT_CHANNEL,
                         i_block_id: i_campaign_timeline_chanel_player_id
                     });
-                    self.m_blocks[i_campaign_timeline_chanel_player_id].setPlayerData(playerData);
                     break;
                 }
             }

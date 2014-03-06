@@ -26,26 +26,26 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self._listenInputChange();
         },
 
-        /**
-         When user changes a URL link for the feed, update the msdb
-         @method _listenInputChange
-         @return none
-         **/
-        _listenInputChange: function () {
-            var self = this;
-            var onChange = _.debounce(function (e) {
-                if (!self.m_selected)
-                    return;
-                var text = $(e.target).val();
-                var xmlPlayerData = self._getBlockPlayerData();
-                var domPlayerData = self._playerDataStringToXmlDom(xmlPlayerData);
-                var xSnippet = $(domPlayerData).find('Rss');
-                $(xSnippet).attr('url', text);
-                self._updatePlayerData(domPlayerData);
-                // log(xSnippet[0].outerHTML);
-            }, 150);
-            self.m_inputChangeHandler = $(Elements.RSS_LINK).on("input", onChange);
-        },
+            /**
+             When user changes a URL link for the feed, update the msdb
+             @method _listenInputChange
+             @return none
+             **/
+            _listenInputChange: function () {
+                var self = this;
+                var onChange = _.debounce(function (e) {
+                    if (!self.m_selected)
+                        return;
+                    var text = $(e.target).val();
+                    var xmlPlayerData = self._getBlockPlayerData();
+                    var domPlayerData = self._playerDataStringToXmlDom(xmlPlayerData);
+                    var xSnippet = $(domPlayerData).find('Rss');
+                    $(xSnippet).attr('url', text);
+                    self._updatePlayerData(domPlayerData);
+                    // log(xSnippet[0].outerHTML);
+                }, 150);
+                self.m_inputChangeHandler = $(Elements.RSS_LINK).on("input", onChange);
+            },
 
         /**
          Load up property values in the common panel

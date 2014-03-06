@@ -39,6 +39,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var domPlayerData = self._playerDataStringToXmlDom(xmlPlayerData);
             var xSnippet = $(domPlayerData).find('Resource');
             self.m_resourceID = $(xSnippet).attr('hResource');
+            self.m_blockName = jalapeno.getResourceRecord(self.m_resourceID).resource_name;
             self.m_blockDescription = jalapeno.getResourceName(self.m_resourceID);
             var fileFormat = jalapeno.getResourceType(self.m_resourceID);
             self.m_blockIcon = BB.JalapenoHelper.getIcon(fileFormat);

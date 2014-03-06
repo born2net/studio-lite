@@ -104,19 +104,29 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
 
         _opacityListenChange: function () {
             var self = this;
-            //todo: fix opacity
             self.m_blockOpacityHandler = $(Elements.BLOCK_OPACITY_SLIDER).on('change', function (e) {
                 if (!self.m_selected)
                     return;
-                log(parseFloat($(Elements.BLOCK_OPACITY_SLIDER).val()) / 100);
-                // jalapeno.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', 'aa');
+                var opacity = parseFloat($(Elements.BLOCK_OPACITY_SLIDER).val()) / 100;
+                var xmlPlayerData = self._getBlockPlayerData();
+                var domPlayerData = self._playerDataStringToXmlDom(xmlPlayerData);
+                var xSnippet = $(domPlayerData).find('Appearance');
+                $(xSnippet).attr('alpha',opacity);
+                self._updatePlayerData(domPlayerData);
             });
         },
 
         _opacityPopulate: function () {
-            return;
-            //todo: fix opacity
             var self = this;
+            var xmlPlayerData = self._getBlockPlayerData();
+            var domPlayerData = self._playerDataStringToXmlDom(xmlPlayerData);
+            var xSnippet = $(domPlayerData).find('Appearance');
+            var opacity = $(xSnippet).attr('alpha');
+            opacity = parseFloat(opacity) * 100;
+            $(Elements.BLOCK_OPACITY_SLIDER).val(opacity);
+
+            return;
+
             var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
             var xml = recBlock['player_data'];
             var x2js = BB.comBroker.getService('compX2JS');

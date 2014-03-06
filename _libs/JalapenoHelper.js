@@ -67,6 +67,7 @@ JalapenoHelper.prototype = {
                 getDefaultPlayerData: function (i_resourceID) {
                     return  '<Player player="3130" label="" interactive="0">' +
                                 '<Data>' +
+                                    '<Appearance alpha="0.7" blendMode="normal" />'+
                                     '<Resource hResource="' + i_resourceID + '">' +
                                     '<AspectRatio maintain="1" />' +
                                     '<Image />' +
@@ -86,6 +87,7 @@ JalapenoHelper.prototype = {
                 getDefaultPlayerData: function (i_resourceID) {
                     return '<Player player="3100" label="" interactive="0">' +
                                     '<Data>' +
+                                        '<Appearance alpha="0.7" blendMode="normal" />'+
                                         '<Resource hResource="' + i_resourceID + '">' +
                                         '<AspectRatio maintain="1" />' +
                                         '<Image autoRewind="1" volume="1" backgroundAlpha="1" />' +
@@ -104,6 +106,7 @@ JalapenoHelper.prototype = {
                 getDefaultPlayerData: function () {
                     return  '<Player player="3430" label="QR Code" interactive="0">' +
                                 '<Data>' +
+                                    '<Appearance alpha="0.7" blendMode="normal" />'+
                                     '<Text textSource="static"></Text>' +
                                 '</Data>' +
                             '</Player>'
@@ -116,6 +119,7 @@ JalapenoHelper.prototype = {
                 getDefaultPlayerData: function () {
                     return  '<Player player="3345" label="Rss news" interactive="0">' +
                                 '<Data>' +
+                                    '<Appearance alpha="0.7" blendMode="normal" />'+
                                     '<Rss url="http://rss.news.yahoo.com/rss/politics" minRefreshTime="30" speed="10" vertical="1" rtl="0">' +
                                         '<Title>' +
                                             '<Font fontSize="16" fontColor="65280" fontFamily="Arial" fontWeight="normal" fontStyle="normal" textDecoration="none" textAlign="left" />' +

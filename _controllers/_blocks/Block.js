@@ -61,11 +61,11 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
             // first initiated properties view
             var initiated = self.m_property.initPanel(Elements.BLOCK_PROPERTIES);
             if (initiated)
-                self._opacitySliderInit();
+                self._alphaSliderInit();
 
 
             // commons properties
-            self._opacityListenChange();
+            self._alphaListenChange();
 
             // block specific: channel / scene
             switch (this.m_placement) {
@@ -90,54 +90,38 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
             }
         },
 
-        _opacitySliderInit: function () {
-            $(Elements.BLOCK_OPACITY_SLIDER).noUiSlider({
+        _alphaSliderInit: function () {
+            $(Elements.BLOCK_ALPHA_SLIDER).noUiSlider({
                 handles: 1,
                 start: 100,
                 step: 1,
                 range: [0, 100],
                 serialization: {
-                    to: [ $(Elements.BLOCK_OPACITY_LABEL), 'text' ]
+                    to: [ $(Elements.BLOCK_ALPHA_LABEL), 'text' ]
                 }
             });
         },
 
-        _opacityListenChange: function () {
+        _alphaListenChange: function () {
             var self = this;
-            self.m_blockOpacityHandler = $(Elements.BLOCK_OPACITY_SLIDER).on('change', function (e) {
+            self.m_blockAlphaHandler = $(Elements.BLOCK_ALPHA_SLIDER).on('change', function (e) {
                 if (!self.m_selected)
                     return;
-                var opacity = parseFloat($(Elements.BLOCK_OPACITY_SLIDER).val()) / 100;
-                var xmlPlayerData = self._getBlockPlayerData();
-                var domPlayerData = self._playerDataStringToXmlDom(xmlPlayerData);
+                var alpha = parseFloat($(Elements.BLOCK_ALPHA_SLIDER).val()) / 100;
+                var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Appearance');
-                $(xSnippet).attr('alpha',opacity);
+                $(xSnippet).attr('alpha',alpha);
                 self._updatePlayerData(domPlayerData);
             });
         },
 
-        _opacityPopulate: function () {
+        _alphaPopulate: function () {
             var self = this;
-            var xmlPlayerData = self._getBlockPlayerData();
-            var domPlayerData = self._playerDataStringToXmlDom(xmlPlayerData);
+            var domPlayerData = self._getBlockPlayerData();
             var xSnippet = $(domPlayerData).find('Appearance');
-            var opacity = $(xSnippet).attr('alpha');
-            opacity = parseFloat(opacity) * 100;
-            $(Elements.BLOCK_OPACITY_SLIDER).val(opacity);
-
-            return;
-
-            var recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
-            var xml = recBlock['player_data'];
-            var x2js = BB.comBroker.getService('compX2JS');
-            var jPlayerData = x2js.xml_str2json(xml);
-            // log(JSON.stringify(jPlayerData));
-            if (jPlayerData.Player.Data.Appearance == undefined) {
-                $(Elements.BLOCK_OPACITY_SLIDER).val(100);
-            } else {
-                var opacity = parseFloat(jPlayerData.Player.Data.Appearance._alpha) * 100;
-                $(Elements.BLOCK_OPACITY_SLIDER).val(opacity);
-            }
+            var alpha = $(xSnippet).attr('alpha');
+            alpha = parseFloat(alpha) * 100;
+            $(Elements.BLOCK_ALPHA_SLIDER).val(alpha);
         },
 
         /**
@@ -167,7 +151,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
                         $(Elements.CHANNEL_BLOCK_PROPS).show();
                         $(Elements.SCENE_BLOCK_PROPS).hide();
                         self._updateBlockLength();
-                        self._opacityPopulate();
+                        self._alphaPopulate();
                         break;
                     }
                     // Future support
@@ -349,19 +333,9 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
         },
 
         /**
-         Convert player data in string xml to DOM element
-         @method _playerDataStringToXmlDom
-         @param {String} i_xmlString
-         @return {Object} dom element
-         **/
-        _playerDataStringToXmlDom: function(i_xmlString){
-            return $.parseXML(i_xmlString);
-        },
-
-        /**
          Get the XML player data of a block, depending where its placed
          @method _getBlockPlayerData
-         @return {XML} player data of block (aka player)
+         @return {Object} player data of block (aka player) parsed as DOM
          **/
         _getBlockPlayerData: function(){
             var self = this;
@@ -380,7 +354,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
                     break;
                 }
             }
-            return recBlock['player_data'];
+            return $.parseXML(recBlock['player_data']);
         },
 
         /**
@@ -394,7 +368,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
             jalapeno.removeBlockFromTimelineChannel(self.m_block_id);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_SELECTED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_LENGTH_CHANGING, self);
-            $(Elements.BLOCK_OPACITY_SLIDER).off('change', self.m_blockOpacityHandler);
+            $(Elements.BLOCK_ALPHA_SLIDER).off('change', self.m_blockAlphaHandler);
             $.each(self, function (k) {
                 self[k] = undefined;
             });

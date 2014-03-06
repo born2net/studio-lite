@@ -37,8 +37,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                     if (!self.m_selected)
                         return;
                     var text = $(e.target).val();
-                    var xmlPlayerData = self._getBlockPlayerData();
-                    var domPlayerData = self._playerDataStringToXmlDom(xmlPlayerData);
+                    var domPlayerData = self._getBlockPlayerData();
                     var xSnippet = $(domPlayerData).find('Rss');
                     $(xSnippet).attr('url', text);
                     self._updatePlayerData(domPlayerData);
@@ -54,8 +53,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _populate: function () {
             var self = this;
-            var xmlPlayerData = self._getBlockPlayerData();
-            var domPlayerData = self._playerDataStringToXmlDom(xmlPlayerData);
+            var domPlayerData = self._getBlockPlayerData();
             var xSnippet = $(domPlayerData).find('Rss');
             var url = xSnippet.attr('url');
             $(Elements.RSS_LINK).val(url);

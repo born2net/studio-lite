@@ -35,8 +35,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _initResourcesData: function () {
             var self = this;
-            var xmlPlayerData = self._getBlockPlayerData();
-            var domPlayerData = self._playerDataStringToXmlDom(xmlPlayerData);
+            var domPlayerData = self._getBlockPlayerData();
             var xSnippet = $(domPlayerData).find('Resource');
             self.m_resourceID = $(xSnippet).attr('hResource');
             self.m_blockName = jalapeno.getResourceRecord(self.m_resourceID).resource_name;
@@ -77,8 +76,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 if (!self.m_selected)
                     return;
                 var aspectRatio = $(Elements.IMAGE_ASPECT_RATIO + ' option:selected').val() == "on" ? 1 : 0;
-                var xmlPlayerData = self._getBlockPlayerData();
-                var domPlayerData = self._playerDataStringToXmlDom(xmlPlayerData);
+                var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('AspectRatio');
                 $(xSnippet).attr('maintain', aspectRatio);
                 self._updatePlayerData(domPlayerData);
@@ -93,8 +91,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _populate: function () {
             var self = this;
-            var xmlPlayerData = self._getBlockPlayerData();
-            var domPlayerData = self._playerDataStringToXmlDom(xmlPlayerData);
+            var domPlayerData = self._getBlockPlayerData();
             var xSnippet = $(domPlayerData).find('AspectRatio');
             var aspectRatio = xSnippet.attr('maintain') == '1' ? 'on' : 'off';
             $(Elements.IMAGE_ASPECT_RATIO + ' option[value="' + aspectRatio + '"]').attr("selected", "selected");

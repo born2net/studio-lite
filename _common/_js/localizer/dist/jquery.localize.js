@@ -6,6 +6,7 @@ Written by Jim Garvin (@coderifous) for use on LMGTFY.com.
 http://github.com/coderifous/jquery-localize
 Based off of Keith Wood's Localisation jQuery plugin.
 http://keith-wood.name/localisation.html
+https://github.com/coderifous/jquery-localize
  */
 
 define(['jquery'], function ($) {

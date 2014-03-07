@@ -21,7 +21,9 @@ ms.fs.writeFileSync('../../_studiolite-dist/init.js', initPage, 'utf8');
 /**
  Update studiolite with dist
  **/
+var footer = '<span id="footerText">&nbsp;MediaSignage Inc &#169; | version 0.6.:BUILD:</span>';
 var studiolite = ms.fs.readFileSync('../../_studiolite-dist/studiolite.html','utf8');
 studiolite = studiolite.replace(/-dev/gi, '-dist');
-studiolite = studiolite.replace(/:BUILD:/gi, build);
+footer = footer.replace(/:BUILD:/gi, build);
+studiolite = studiolite.replace(/<!-- MSVER_FOOTER -->/gi, footer);
 ms.fs.writeFileSync('../../_studiolite-dist/studiolite.html', studiolite, 'utf8');

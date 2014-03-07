@@ -25,6 +25,14 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             window.jalapeno = BB.Jalapeno;
             window.log = BB.lib.log;
 
+            require(['localizer'], function (localizer) {
+                log(localizer);
+                var lang = "en";
+                var opts = { language: lang, pathPrefix: "./_lang" };
+                $("[data-localize]")
+                    .localize("local", opts);
+            });
+
             // router init
             require(['LayoutRouter'], function (LayoutRouter) {
                 var LayoutRouter = new LayoutRouter();

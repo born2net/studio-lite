@@ -78,7 +78,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             $(Elements.RSS_LINK).off('change', self.m_inputChangeHandler);
             self._deleteBlock();
         }
-
     });
 
     return BlockRSS;

@@ -16,13 +16,10 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          @method initialize
          **/
         constructor: function (options) {
-            Block.prototype.constructor.call(this, options);
             var self = this;
             self.m_blockType = 3100;
-            self.m_blockName = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).name;
-            self.m_blockDescription = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).description;
-            self.m_blockIcon = undefined;
-            self.m_resourceID = undefined;
+            _.extend(options, {blockType: self.m_blockType})
+            Block.prototype.constructor.call(this, options);
             self.m_property.initSubPanel(Elements.BLOCK_VIDEO_COMMON_PROPERTIES);
             self._listenInputChange();
             self._initResourcesData();
@@ -45,7 +42,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         },
 
         /**
-         Populate the image's common properties panel
+         Populate the common block properties panel, called from base class if exists
          @method _loadBlockSpecificProps
          @return none
          **/

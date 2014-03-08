@@ -16,35 +16,33 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          @method initialize
          **/
         constructor: function (options) {
-            Block.prototype.constructor.call(this, options);
             var self = this;
             self.m_blockType = 3345;
-            self.m_blockName = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).name;
-            self.m_blockDescription = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).description;
-            self.m_blockIcon = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).icon;
+            _.extend(options, {blockType: self.m_blockType})
+            Block.prototype.constructor.call(this, options);
             self.m_property.initSubPanel(Elements.BLOCK_RSS_COMMON_PROPERTIES);
             self._listenInputChange();
         },
 
-            /**
-             When user changes a URL link for the feed, update the msdb
-             @method _listenInputChange
-             @return none
-             **/
-            _listenInputChange: function () {
-                var self = this;
-                var onChange = _.debounce(function (e) {
-                    if (!self.m_selected)
-                        return;
-                    var text = $(e.target).val();
-                    var domPlayerData = self._getBlockPlayerData();
-                    var xSnippet = $(domPlayerData).find('Rss');
-                    $(xSnippet).attr('url', text);
-                    self._updatePlayerData(domPlayerData);
-                    // log(xSnippet[0].outerHTML);
-                }, 150);
-                self.m_inputChangeHandler = $(Elements.RSS_LINK).on("input", onChange);
-            },
+        /**
+         When user changes a URL link for the feed, update the msdb
+         @method _listenInputChange
+         @return none
+         **/
+        _listenInputChange: function () {
+            var self = this;
+            var onChange = _.debounce(function (e) {
+                if (!self.m_selected)
+                    return;
+                var text = $(e.target).val();
+                var domPlayerData = self._getBlockPlayerData();
+                var xSnippet = $(domPlayerData).find('Rss');
+                $(xSnippet).attr('url', text);
+                self._updatePlayerData(domPlayerData);
+                // log(xSnippet[0].outerHTML);
+            }, 150);
+            self.m_inputChangeHandler = $(Elements.RSS_LINK).on("input", onChange);
+        },
 
         /**
          Load up property values in the common panel
@@ -60,7 +58,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         },
 
         /**
-         Populate the RSS block common properties panel
+         Populate the common block properties panel, called from base class if exists
          @method _loadBlockSpecificProps
          @return none
          **/

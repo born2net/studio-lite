@@ -55,7 +55,12 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
             var self = this;
             this.m_placement = options.i_placement;
             this.m_block_id = options.i_block_id;
+            self.m_blockType = options.blockType;
             this.m_selected = false;
+            self.m_blockName = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).name;
+            self.m_blockDescription = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).description;
+            self.m_blockIcon = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).icon;
+            self.m_resourceID = undefined;
             this.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
 
             // first initiated properties view

@@ -16,12 +16,10 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          @method initialize
          **/
         constructor: function (options) {
-            Block.prototype.constructor.call(this, options);
             var self = this;
             self.m_blockType = 3430;
-            self.m_blockName = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).name;
-            self.m_blockDescription = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).description;
-            self.m_blockIcon = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).icon;
+            _.extend(options, {blockType: self.m_blockType})
+            Block.prototype.constructor.call(this, options);
             self.m_property.initSubPanel(Elements.BLOCK_QR_COMMON_PROPERTIES);
             self._listenInputChange();
         },
@@ -61,7 +59,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         },
 
         /**
-         Populate the QR block common properties panel
+         Populate the common block properties panel, called from base class if exists
          @method _loadBlockSpecificProps
          @return none
          **/

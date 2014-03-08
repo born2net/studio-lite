@@ -38,6 +38,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
                 $("#bgColorGradientSelector").gradientPicker({
                     change: function(points, styles) {
                         for (var i = 0; i < styles.length; ++i) {
+                           // log(styles[i]);
                         }
                     },
                     fillDirection: "45deg",

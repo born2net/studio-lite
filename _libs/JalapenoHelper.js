@@ -51,7 +51,7 @@ JalapenoHelper.prototype = {
         // XmlPlayer 4200
 
         self.m_icons = {
-            'qr': { image: 'https://secure.dynawebs.net/_msportal/_images/qr.png' },
+            'qr':  { image: 'https://secure.dynawebs.net/_msportal/_images/qr.png' },
             'rss': { image: 'https://secure.dynawebs.net/_msportal/_images/rss.png' },
             'flv': { image: 'https://secure.dynawebs.net/_msportal/_images/flv.png' },
             'mp4': { image: 'https://secure.dynawebs.net/_msportal/_images/mp4.png' },
@@ -63,6 +63,7 @@ JalapenoHelper.prototype = {
         self.m_components = {
             3130: {
                 name: 'Image',
+                acronym: 'Image',
                 description: 'Bimap file',
                 getDefaultPlayerData: function (i_resourceID) {
                     return  '<Player player="3130" label="" interactive="0">' +
@@ -83,6 +84,7 @@ JalapenoHelper.prototype = {
             },
             3100: {
                 name: 'Video',
+                acronym: 'Video',
                 description: 'Movie file',
                 getDefaultPlayerData: function (i_resourceID) {
                     return '<Player player="3100" label="" interactive="0">' +
@@ -102,6 +104,7 @@ JalapenoHelper.prototype = {
             },
             3430: {
                 name: 'QR Component',
+                acronym: 'QR',
                 description: 'QR code for mobile device integration',
                 getDefaultPlayerData: function () {
                     return  '<Player player="3430" label="QR Code" interactive="0">' +
@@ -115,6 +118,7 @@ JalapenoHelper.prototype = {
             },
             3345: {
                 name: 'Really Simple Syndication',
+                acronym: 'RSS',
                 description: 'RSS for daily fresh scrolling news feed',
                 getDefaultPlayerData: function () {
                     return  '<Player player="3345" label="Rss news" interactive="0">' +

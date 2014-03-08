@@ -143,6 +143,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
                 self.m_selected = true;
                 self.m_property.viewPanel(Elements.BLOCK_PROPERTIES);
                 self._updateTitle();
+                self._updateTitleTab();
                 // log('block selected ' + self.m_block_id);
 
                 switch (self.m_placement) {
@@ -178,6 +179,16 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
         _updateTitle: function () {
             var self = this;
             $(Elements.SELECTED_CHANNEL_RESOURCE_NAME).text(self.m_blockName);
+        },
+
+        /**
+         Update the title of the selected tab properties element
+         @method m_blockAcronym
+         **/
+        _updateTitleTab: function(){
+            var self = this;
+            self.m_blockAcronym = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).acronym;
+            $(Elements.BLOCK_SUBPROPERTIES_TITLE).text(self.m_blockAcronym);
         },
 
         /**

@@ -14,6 +14,8 @@ require.config({
         'bootstrap': '_common/_js/bootstrap/js/bootstrap',
         'bootbox': '_common/_js/bootbox/bootbox',
         'Cookie': '_common/_js/cookie/jquery.cookie',
+        'gradient': '_common/_js/gradient/jquery.gradientPicker',
+        'colorpicker': '_common/_js/gradient/colorpicker',
         'RC4': '_common/_js/rc4/RC4',
         'localizer': '_common/_js/localizer/dist/jquery.localize',
         'simplestorage': '_common/_js/simplestorage/simpleStorage',
@@ -138,6 +140,14 @@ require.config({
         },
         'ScreenTemplate': {
             exports: 'ScreenTemplate'
+        },
+        'colorpicker': {
+            deps: ['jquery','jqueryui'],
+            exports: 'colorpicker'
+        },
+        'gradient': {
+            deps: ['jquery', 'colorpicker','jqueryui']
+
         }
     }
 });

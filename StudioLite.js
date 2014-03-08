@@ -32,7 +32,18 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             });
 
             // router init
-            require(['LayoutRouter'], function (LayoutRouter) {
+            require(['LayoutRouter', 'gradient'], function (LayoutRouter) {
+
+               //todo: fix color selector
+                $("#bgColorGradientSelector").gradientPicker({
+                    change: function(points, styles) {
+                        for (var i = 0; i < styles.length; ++i) {
+                        }
+                    },
+                    fillDirection: "45deg",
+                    controlPoints: ["#428bca 0%", "white 100%"]
+                });
+
                 var LayoutRouter = new LayoutRouter();
                 BB.history.start();
                 BB.comBroker.setService(BB.SERVICES['LAYOUT_ROUTER'], LayoutRouter);

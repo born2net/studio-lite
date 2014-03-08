@@ -387,6 +387,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 $(Elements.APP_NAVIGATOR).height(h);
                 $(Elements.RESOURCE_LIB_LIST_WRAP).height(h);
                 $(Elements.PRICING_TABLE_WRAP).height(h - 200);
+                // $('#propPanel').height(h);
 
                 BB.comBroker.fire(BB.EVENTS.APP_SIZED, this, null, {width: self._appWidth, height: self._appHeight});
             },

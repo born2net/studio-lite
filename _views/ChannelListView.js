@@ -242,29 +242,36 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
         /**
          Listen when a block is selected, if its properties need to be open than open panel.
          Also, reference the selected block internally and fire event announcing it was selected.
+         We also load required AMD moduels if this is the first time a block was selected (i.e.: modules
+         were never loaded yet) and when they finish loaded we continue with thread execution.
          @method _listenBlockSelected
          @return none
          **/
         _listenBlockSelected: function () {
             var self = this;
+            // clear previous listeners
             $(Elements.CLASS_CHANNEL_LIST_ITEMS).off('click');
             $(Elements.CLASS_CHANNEL_LIST_ITEMS).on('click', function (e) {
-                var resourceElem = $(e.target).closest('li');
-                self.selected_block_id = $(resourceElem).data('block_id');
-                self._blockChannelSelected();
-                $(Elements.CLASS_CHANNEL_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
-                $(resourceElem).addClass('activated').find('a').addClass('whiteFont');
-                return false;
+                $.proxy(self._blockSelected(e), self);
             });
         },
 
         /**
-         Fire event when block has been selected.
-         @method _blockChannelSelected
+         When a block is selected within a channel, get the resurce element so we can select it and fire
+         the BLOCK_SELECTED event
+         @method _blockSelected
+         @param {Event} e
          **/
-        _blockChannelSelected: function () {
+        _blockSelected: function (e) {
             var self = this;
+            var resourceElem = $(e.target).closest('li');
+            self.selected_block_id = $(resourceElem).data('block_id');
+
             BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.selected_block_id);
+
+            $(Elements.CLASS_CHANNEL_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
+            $(resourceElem).addClass('activated').find('a').addClass('whiteFont');
+            return false;
         },
 
         /**

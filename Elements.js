@@ -53,6 +53,7 @@ Elements.ABOUT_US = '#aboutUS';
 Elements.STACK_WAIT_MODAL_VIEW = '#stackWaitModalView';
 Elements.BS_MODAL = '#bsModal';
 Elements.TOGGLE_PANEL = '#togglePanel';
+Elements.BG_COLOR_GRADIENT_SELECTOR = '#bgColorGradientSelector';
 Elements.USER_NAME = '#userName';
 Elements.USER_PASS = '#userPass';
 Elements.LOGGED_USER_NAME = '#loggedUserName';

@@ -68,6 +68,8 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
             if (initiated)
                 self._alphaSliderInit();
 
+            // gradient jquery component
+            self._initBackgroundGradientModule();
 
             // commons properties
             self._alphaListenChange();
@@ -93,6 +95,32 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
                     break;
                 }
             }
+
+
+        },
+
+        /**
+         Load jquery gradient component once
+         @method _initBackgroundGradientModule
+         **/
+        _initBackgroundGradientModule: function(){
+            BB.LOADING.GRADIENT = BB.LOADING.GRADIENT ? BB.LOADING.GRADIENT + 1 : 1;
+            if (!require.defined('gradient')) {
+                require(['gradient'], function () {
+                    BB.LOADING.GRADIENT--;
+                    if (BB.LOADING.GRADIENT==0){
+                        $(Elements.BG_COLOR_GRADIENT_SELECTOR).gradientPicker({
+                            //change: function (points, styles) {
+                            //    for (var i = 0; i < styles.length; ++i) {
+                            //      log(styles[i]);
+                            //    }
+                            //},
+                            fillDirection: "45deg",
+                            controlPoints: ["#428bca 0%", "white 100%"]
+                        });
+                    }
+                });
+            }
         },
 
         _alphaSliderInit: function () {
@@ -115,7 +143,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
                 var alpha = parseFloat($(Elements.BLOCK_ALPHA_SLIDER).val()) / 100;
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Appearance');
-                $(xSnippet).attr('alpha',alpha);
+                $(xSnippet).attr('alpha', alpha);
                 self._updatePlayerData(domPlayerData);
             });
         },
@@ -190,7 +218,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
          Update the title of the selected tab properties element
          @method m_blockAcronym
          **/
-        _updateTitleTab: function(){
+        _updateTitleTab: function () {
             var self = this;
             self.m_blockAcronym = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).acronym;
             $(Elements.BLOCK_SUBPROPERTIES_TITLE).text(self.m_blockAcronym);
@@ -333,15 +361,17 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
          @method _updatePlayerData
          @param {Object} i_xmlDoc
          **/
-        _updatePlayerData: function(i_xmlDoc){
+        _updatePlayerData: function (i_xmlDoc) {
             var self = this;
             var xmlString = (new XMLSerializer()).serializeToString(i_xmlDoc);
-            switch (self.m_placement){
-                case BB.CONSTS.PLACEMENT_CHANNEL: {
+            switch (self.m_placement) {
+                case BB.CONSTS.PLACEMENT_CHANNEL:
+                {
                     jalapeno.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', xmlString);
                     break;
                 }
-                case BB.CONSTS.PLACEMENT_SCENE: {
+                case BB.CONSTS.PLACEMENT_SCENE:
+                {
                     // todo: add scene support
                     break;
                 }
@@ -353,18 +383,20 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
          @method _getBlockPlayerData
          @return {Object} player data of block (aka player) parsed as DOM
          **/
-        _getBlockPlayerData: function(){
+        _getBlockPlayerData: function () {
             var self = this;
             var recBlock = undefined;
 
-            switch (self.m_placement){
+            switch (self.m_placement) {
 
-                case BB.CONSTS.PLACEMENT_CHANNEL: {
+                case BB.CONSTS.PLACEMENT_CHANNEL:
+                {
                     recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
                     break;
                 }
 
-                case BB.CONSTS.PLACEMENT_SCENE: {
+                case BB.CONSTS.PLACEMENT_SCENE:
+                {
                     // todo: add scene support
                     // recBlock = jalapeno.get...(self.m_block_id);
                     break;

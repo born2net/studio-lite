@@ -3,7 +3,7 @@
  @class Require init.js
  **/
 require.config({
-    waitSeconds: 20,
+    waitSeconds: 25,
     baseUrl: '/_studiolite-dev/',
     paths: {
         'jquery': '_common/_jquery/std/jq1.9.1/jquery-1.9.1',
@@ -151,6 +151,10 @@ require.config({
         }
     }
 });
+
+requirejs.onError = function (err) {
+    alert('Timeout error, network seems to be too slow to run the StudioLite app :( \n\n\n\n ' + err);
+}
 
 require(['StudioLite'], function (StudioLite) {
     new StudioLite();

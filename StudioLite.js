@@ -14,6 +14,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             BB.globs = {};
             BB.SERVICES = {};
             BB.EVENTS = {};
+            BB.LOADING = {};
             BB.CONSTS = {};
             BB.globs['UNIQUE_COUNTER'] = 0;
             BB.globs['RC4KEY'] = '226a3a42f34ddd778ed2c3ba56644315';
@@ -25,6 +26,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             window.jalapeno = BB.Jalapeno;
             window.log = BB.lib.log;
 
+            // internationalization
             require(['localizer'], function () {
                 var lang = "en";
                 var opts = { language: lang, pathPrefix: "./_lang" };
@@ -32,19 +34,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             });
 
             // router init
-            require(['LayoutRouter', 'gradient'], function (LayoutRouter) {
-
-               //todo: fix color selector
-                $("#bgColorGradientSelector").gradientPicker({
-                    change: function(points, styles) {
-                        for (var i = 0; i < styles.length; ++i) {
-                           // log(styles[i]);
-                        }
-                    },
-                    fillDirection: "45deg",
-                    controlPoints: ["#428bca 0%", "white 100%"]
-                });
-
+            require(['LayoutRouter'], function (LayoutRouter) {
                 var LayoutRouter = new LayoutRouter();
                 BB.history.start();
                 BB.comBroker.setService(BB.SERVICES['LAYOUT_ROUTER'], LayoutRouter);

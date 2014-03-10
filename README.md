@@ -35,6 +35,13 @@ Technical data:
 - Available as obfuscated and raw source
 - Support available through the MediaSignage support forum
 
+Installation:
+------------------------------------------------------------------------
+- Download the zip from GitHub
+- On your web server create a root directory and name it: _studiolite-dev
+- Unzip all files into _studiolite-dev directory
+- Point browser to: <YOUR_SERVER>/_studiolite-dev/studiolite.html
+
 License:
 ------------------------------------------------------------------------
 - The SignageStudio Web Lite and Jalapeno SDK are available under GPL V3 3 https://github.com/born2net/signagestudio_web-lite/blob/master/LICENSE

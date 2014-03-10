@@ -167,7 +167,6 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
              @method Update
              **/
             _initDashBoard: function () {
-                //todo create a separate backbone view for dashboard
                 $(Elements.SERVER_NAME).text(jalapeno.getUserData().domain);
                 $(Elements.BUISINESS_ID).text(jalapeno.getUserData().businessID);
                 $(Elements.LOGGED_USER_NAME).text(jalapeno.getUserData().userName);

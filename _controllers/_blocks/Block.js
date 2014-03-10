@@ -107,6 +107,10 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient'], function ($) {
             });
         },
 
+        /**
+         Init the alpha slider UI in common properties
+         @method _alphaSliderInit
+         **/
         _alphaSliderInit: function () {
             $(Elements.BLOCK_ALPHA_SLIDER).noUiSlider({
                 handles: 1,
@@ -119,6 +123,10 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient'], function ($) {
             });
         },
 
+        /**
+         Listen to changes in Alpha UI properties selection and update msdb
+         @method _alphaListenChange
+         **/
         _alphaListenChange: function () {
             var self = this;
             self.m_blockAlphaHandler = $(Elements.BLOCK_ALPHA_SLIDER).on('change', function (e) {
@@ -132,6 +140,12 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient'], function ($) {
             });
         },
 
+        /**
+         On changes in msdb model updated UI properties
+         @method _alphaPopulate
+         @param {Number} i_playerData
+         @return {Number} Unique clientId.
+         **/
         _alphaPopulate: function () {
             var self = this;
             var domPlayerData = self._getBlockPlayerData();
@@ -266,7 +280,6 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient'], function ($) {
                 }
             });
         },
-
 
         /**
          Create the block length knobs so a user can set the length of the block with respect to timeline_channel
@@ -433,8 +446,6 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient'], function ($) {
             var self = this;
             self._deleteBlock();
         }
-
-
     });
 
     return Block;

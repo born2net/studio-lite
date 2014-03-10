@@ -46,6 +46,11 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
             self._loadBlocks();
         },
 
+        /**
+         Use require js to load all Block modules (and in turn modules load related properties modules) and save
+         reference in channel so we can later instantiate blocks within the channel
+         @method _loadBlocks
+         **/
         _loadBlocks: function () {
             var self = this;
             require(['Block', 'BlockRSS', 'BlockQR', 'BlockVideo', 'BlockImage'], function (Block, BlockRSS, BlockQR, BlockVideo, BlockImage) {
@@ -60,6 +65,10 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
             });
         },
 
+        /**
+         After blocks loaded, continue initiliazation
+         @method initUI
+         **/
         initUI: function(){
             var self = this;
             self._onTimelineChannelSelected();
@@ -69,7 +78,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
         },
 
         /**
-         Wire UI and listen to change in random playback on channel.
+         Wire UI and listen to change in related UI (random playback on channel)
          @method _wireUI
          @return none
          **/
@@ -78,17 +87,17 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
             self.m_randomPlaybackHandler = $(Elements.RANDOM_PLAYBACK).on('change', function (e) {
                 if (!self.m_selected)
                     return;
-                self._onChange(e);
+                self._onChangeRandomPlayback(e);
             });
         },
 
         /**
          On change in random playback value update msdb with new value.
-         @method _onChange
+         @method _onChangeRandomPlayback
          @param {Event} e
          @return none
          **/
-        _onChange: function (e) {
+        _onChangeRandomPlayback: function (e) {
             var self = this;
             var state = $(Elements.RANDOM_PLAYBACK + ' option:selected').val() == "on" ? 'True' : 'False';
             jalapeno.setCampaignTimelineChannelRecord(self.m_campaign_timeline_chanel_id, 'random_order', state)

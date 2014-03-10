@@ -7,7 +7,7 @@
  @param {string} i_block_id block / player id, only required if block inserted onto channel_timeline
  @return none
  **/
-define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob, nouislider) {
+define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient'], function ($) {
 
     /**
      block.PLACEMENT_SCENE indicates the insertion is inside a Scene
@@ -51,7 +51,6 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
          @method initialize
          **/
         initialize: function (options) {
-
             var self = this;
             this.m_placement = options.i_placement;
             this.m_block_id = options.i_block_id;
@@ -65,27 +64,20 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
 
             // first initiated properties view
             var initiated = self.m_property.initPanel(Elements.BLOCK_PROPERTIES);
-            if (initiated)
+            if (initiated){
                 self._alphaSliderInit();
-
-            // gradient jquery component
-            self._initBackgroundGradientModule();
-
-            // commons properties
+                self._bgGradientInit();
+                self._propLengthKnobsInit();
+            }
             self._alphaListenChange();
 
             // block specific: channel / scene
             switch (this.m_placement) {
-
                 case BB.CONSTS.PLACEMENT_CHANNEL:
                 {
                     self.m_blockPlacement = BB.CONSTS.PLACEMENT_CHANNEL;
                     self._onTimelineChannelBlockSelected();
                     self._onTimelineChannelBlockLengthChanged();
-
-                    if (initiated)
-                        self._propLengthKnobsInit();
-
                     break;
                 }
 
@@ -95,32 +87,22 @@ define(['jquery', 'backbone', 'Knob', 'nouislider'], function ($, Backbone, Knob
                     break;
                 }
             }
-
-
         },
 
         /**
          Load jquery gradient component once
-         @method _initBackgroundGradientModule
+         @method _bgGradientInit
          **/
-        _initBackgroundGradientModule: function(){
-            BB.LOADING.GRADIENT = BB.LOADING.GRADIENT ? BB.LOADING.GRADIENT + 1 : 1;
-            if (!require.defined('gradient')) {
-                require(['gradient'], function () {
-                    BB.LOADING.GRADIENT--;
-                    if (BB.LOADING.GRADIENT==0){
-                        $(Elements.BG_COLOR_GRADIENT_SELECTOR).gradientPicker({
-                            //change: function (points, styles) {
-                            //    for (var i = 0; i < styles.length; ++i) {
-                            //      log(styles[i]);
-                            //    }
-                            //},
-                            fillDirection: "45deg",
-                            controlPoints: ["#428bca 0%", "white 100%"]
-                        });
-                    }
-                });
-            }
+        _bgGradientInit: function(){
+            $(Elements.BG_COLOR_GRADIENT_SELECTOR).gradientPicker({
+                //change: function (points, styles) {
+                //    for (var i = 0; i < styles.length; ++i) {
+                //      log(styles[i]);
+                //    }
+                //},
+                fillDirection: "45deg",
+                controlPoints: ["#428bca 0%", "white 100%"]
+            });
         },
 
         _alphaSliderInit: function () {

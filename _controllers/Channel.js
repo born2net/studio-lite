@@ -7,7 +7,7 @@
  @param {string} i_campaign_timeline_chanel_id
  @return {object} Channel instantiated
  **/
-define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVideo', 'BlockImage'], function ($, Backbone, X2JS, Block, BlockRSS, BlockQR, BlockVideo, BlockImage) {
+define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
 
     /**
      Event fires when a channel is selected on a timeline. The event includes the channel id that was selected.
@@ -19,6 +19,15 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
      **/
     BB.EVENTS.CAMPAIGN_TIMELINE_CHANNEL_SELECTED = 'CAMPAIGN_TIMELINE_CHANNEL_SELECTED';
 
+    /**
+     All blocks and related property modules loaded by require.js
+     @event BLOCKS_LOADED
+     @param {This} caller
+     @static
+     @final
+     **/
+    BB.EVENTS.BLOCKS_LOADED = 'BLOCKS_LOADED';
+
     var Channel = BB.Controller.extend({
 
         /**
@@ -27,20 +36,36 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
          **/
         initialize: function () {
             var self = this;
-
-            this.x2js = new X2JS({escapeMode: true, attributePrefix: "_", arrayAccessForm: "none", emptyNodeForm: "text", enableToStringFunc: true, arrayAccessFormPaths: [], skipEmptyTextNodesForObj: true});
+            self.x2js = new X2JS({escapeMode: true, attributePrefix: "_", arrayAccessForm: "none", emptyNodeForm: "text", enableToStringFunc: true, arrayAccessFormPaths: [], skipEmptyTextNodesForObj: true});
             BB.comBroker.setService('compX2JS', this.x2js);
 
-            this.m_campaign_timeline_chanel_id = this.options.campaignTimelineChanelID;
-            this.m_selected = false;
-            this.m_blocks = {}; // hold references to all created player instances
-            this.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
+            self.m_campaign_timeline_chanel_id = this.options.campaignTimelineChanelID;
+            self.m_selected = false;
+            self.m_blocks = {}; // hold references to all created player instances
+            self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
+            self._loadBlocks();
+        },
 
-            this._createBlocks();
-            this._onTimelineChannelSelected();
-            this._wireUI();
-            this._propLoadChannel();
-            this._listenResourceRemoving();
+        _loadBlocks: function () {
+            var self = this;
+            require(['Block', 'BlockRSS', 'BlockQR', 'BlockVideo', 'BlockImage'], function (Block, BlockRSS, BlockQR, BlockVideo, BlockImage) {
+                self.m_block = Block;
+                self.m_blockRSS = BlockRSS;
+                self.m_blockQR = BlockQR;
+                self.m_blockVideo = BlockVideo;
+                self.m_blockImage = BlockImage;
+
+                self._createBlocks();
+                self.initUI();
+            });
+        },
+
+        initUI: function(){
+            var self = this;
+            self._onTimelineChannelSelected();
+            self._wireUI();
+            self._propLoadChannel();
+            self._listenResourceRemoving();
         },
 
         /**
@@ -50,7 +75,7 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
          **/
         _wireUI: function () {
             var self = this;
-            self.m_randomPlaybackHandler = $(Elements.RANDOM_PLAYBACK).on('change',function (e) {
+            self.m_randomPlaybackHandler = $(Elements.RANDOM_PLAYBACK).on('change', function (e) {
                 if (!self.m_selected)
                     return;
                 self._onChange(e);
@@ -104,22 +129,6 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
         },
 
         /**
-         Create blocks instances for all the channel's blocs (i.e.: players / resources).
-         @method _createBlocks
-         @return none
-         **/
-        _createBlocks: function () {
-            var self = this;
-
-            var blockIDs = jalapeno.getChannelBlocks(self.m_campaign_timeline_chanel_id);
-            for (var i = 0; i < blockIDs.length; i++) {
-                var blockID = blockIDs[i];
-                var recBlock = jalapeno.getBlockRecord(blockID);
-                self.createBlock(blockID, recBlock['player_data'])
-            }
-        },
-
-        /**
          Listen to even when timeline is selected and it it's this instance's channel_id, populate properties panel.
          @method _onTimelineChannelSelected
          @return none
@@ -137,6 +146,72 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
                 // log('channel selected ' + self.m_campaign_timeline_chanel_id);
                 self._propLoadChannel();
             });
+        },
+
+        /**
+         Create blocks instances for all the channel's blocs (i.e.: players / resources).
+         @method _createBlocks
+         @return none
+         **/
+        _createBlocks: function () {
+            var self = this;
+            var blockIDs = jalapeno.getChannelBlocks(self.m_campaign_timeline_chanel_id);
+            for (var i = 0; i < blockIDs.length; i++) {
+                var blockID = blockIDs[i];
+                var recBlock = jalapeno.getBlockRecord(blockID);
+                self.createBlock(blockID, recBlock['player_data'])
+            }
+        },
+
+        /**
+         This is factory method produces block instances which will reside on the timeline and referenced within this
+         channel instance. The factory will parse the blockCode and create the appropriate block type.
+         @method createBlock
+         @param {Number} i_campaign_timeline_chanel_player_id
+         @param {XML} i_playerData
+         @return {Object} reference to the block instance
+         **/
+        createBlock: function (i_campaign_timeline_chanel_player_id, i_player_data) {
+            var self = this;
+            // var x2js = BB.comBroker.getService('compX2JS');
+            var playerData = this.x2js.xml_str2json(i_player_data);
+            var blockCode = playerData['Player']['_player'];
+
+            switch (parseInt(blockCode)) {
+                case 3345:
+                {
+                    self.m_blocks[i_campaign_timeline_chanel_player_id] = new self.m_blockRSS({
+                        i_placement: BB.CONSTS.PLACEMENT_CHANNEL,
+                        i_block_id: i_campaign_timeline_chanel_player_id
+                    });
+                    break;
+                }
+                case 3430:
+                {
+                    self.m_blocks[i_campaign_timeline_chanel_player_id] = new self.m_blockQR({
+                        i_placement: BB.CONSTS.PLACEMENT_CHANNEL,
+                        i_block_id: i_campaign_timeline_chanel_player_id
+                    });
+                    break;
+                }
+                case 3100:
+                {
+                    self.m_blocks[i_campaign_timeline_chanel_player_id] = new self.m_blockVideo({
+                        i_placement: BB.CONSTS.PLACEMENT_CHANNEL,
+                        i_block_id: i_campaign_timeline_chanel_player_id
+                    });
+                    break;
+                }
+                case 3130:
+                {
+                    self.m_blocks[i_campaign_timeline_chanel_player_id] = new self.m_blockImage({
+                        i_placement: BB.CONSTS.PLACEMENT_CHANNEL,
+                        i_block_id: i_campaign_timeline_chanel_player_id
+                    });
+                    break;
+                }
+            }
+            return self.m_blocks[i_campaign_timeline_chanel_player_id];
         },
 
         /**
@@ -167,72 +242,18 @@ define(['jquery', 'backbone', 'X2JS', 'Block', 'BlockRSS', 'BlockQR', 'BlockVide
         },
 
         /**
-         This is factory method produces block instances which will reside on the timeline and referenced within this
-         channel instance. The factory will parse the blockCode and create the appropriate block type.
-         @method createBlock
-         @param {Number} i_campaign_timeline_chanel_player_id
-         @param {XML} i_playerData
-         @return {Object} reference to the block instance
-         **/
-        createBlock: function (i_campaign_timeline_chanel_player_id, i_player_data) {
-            var self = this;
-
-            // var x2js = BB.comBroker.getService('compX2JS');
-            var playerData = this.x2js.xml_str2json(i_player_data);
-            var blockCode = playerData['Player']['_player'];
-            //todo: change to xml parsing
-            //todo: add require amd
-
-            switch (parseInt(blockCode)) {
-                case 3345:
-                {
-                    self.m_blocks[i_campaign_timeline_chanel_player_id] = new BlockRSS({
-                        i_placement: BB.CONSTS.PLACEMENT_CHANNEL,
-                        i_block_id: i_campaign_timeline_chanel_player_id
-                    });
-                    break;
-                }
-                case 3430:
-                {
-                    self.m_blocks[i_campaign_timeline_chanel_player_id] = new BlockQR({
-                        i_placement: BB.CONSTS.PLACEMENT_CHANNEL,
-                        i_block_id: i_campaign_timeline_chanel_player_id
-                    });
-                    break;
-                }
-                case 3100:
-                {
-                    self.m_blocks[i_campaign_timeline_chanel_player_id] = new BlockVideo({
-                        i_placement: BB.CONSTS.PLACEMENT_CHANNEL,
-                        i_block_id: i_campaign_timeline_chanel_player_id
-                    });
-                    break;
-                }
-                case 3130:
-                {
-                    self.m_blocks[i_campaign_timeline_chanel_player_id] = new BlockImage({
-                        i_placement: BB.CONSTS.PLACEMENT_CHANNEL,
-                        i_block_id: i_campaign_timeline_chanel_player_id
-                    });
-                    break;
-                }
-            }
-            return self.m_blocks[i_campaign_timeline_chanel_player_id];
-        },
-
-        /**
          Delete this channel and all of it's related blocks
          @method deleteChannel
          @return none
          **/
         deleteChannel: function () {
             var self = this;
-            $(Elements.RANDOM_PLAYBACK).off('change',self.m_randomPlaybackHandler);
+            $(Elements.RANDOM_PLAYBACK).off('change', self.m_randomPlaybackHandler);
             jalapeno.removeChannelFromTimeline(self.m_campaign_timeline_chanel_id);
             for (var blockID in self.m_blocks) {
                 self.deleteBlock(blockID);
             }
-            $.each(self,function(k){
+            $.each(self, function (k) {
                 self[k] = undefined;
             });
         },

@@ -62,13 +62,15 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient'], function ($) {
             self.m_resourceID = undefined;
             this.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
 
-            // first initiated properties view
+            // first initiated properties view / modules
             var initiated = self.m_property.initPanel(Elements.BLOCK_PROPERTIES);
             if (initiated){
                 self._alphaSliderInit();
                 self._bgGradientInit();
                 self._propLengthKnobsInit();
             }
+
+            // common channel
             self._alphaListenChange();
 
             // block specific: channel / scene
@@ -354,7 +356,6 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient'], function ($) {
                 }
                 case BB.CONSTS.PLACEMENT_SCENE:
                 {
-                    // todo: add scene support
                     break;
                 }
             }
@@ -379,7 +380,6 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient'], function ($) {
 
                 case BB.CONSTS.PLACEMENT_SCENE:
                 {
-                    // todo: add scene support
                     // recBlock = jalapeno.get...(self.m_block_id);
                     break;
                 }

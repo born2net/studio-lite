@@ -18,6 +18,7 @@ require.config({
         'colorpicker': '_common/_js/gradient/colorpicker',
         'RC4': '_common/_js/rc4/RC4',
         'localizer': '_common/_js/localizer/dist/jquery.localize',
+        'spinner': '_common/_js/fuelux/src/spinner',
         'simplestorage': '_common/_js/simplestorage/simpleStorage',
         'nouislider': '_common/_js/nouislider/jquery.nouislider',
         'XDate': '_common/_js/xdate/xdate',
@@ -45,6 +46,7 @@ require.config({
         'ResourcesView': '_views/ResourcesView',
         'ResourceListView': '_views/ResourceListView',
         'AddBlockView': '_views/AddBlockView',
+        'BlockProperties': '_views/BlockProperties',
         'AppContentFaderView': '_views/AppContentFaderView',
         'AppEntryFaderView': '_views/AppEntryFaderView',
         'LoginView': '_views/LoginView',
@@ -152,9 +154,11 @@ require.config({
     }
 });
 
-// requirejs.onError = function (err) {
-//    alert('Timeout error, network seems to be too slow to run the StudioLite app :( \n\n\n\n ' + err);
-//}
+if ( window.location.href.indexOf('dist')>-1 ) {
+    requirejs.onError = function (err) {
+        alert('Timeout error, network seems to be too slow to run the StudioLite app :( \n\n\n\n ' + err);
+    }
+}
 
 require(['StudioLite'], function (StudioLite) {
     new StudioLite();

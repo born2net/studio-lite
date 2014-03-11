@@ -21,7 +21,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 if (globs['debug']) {
                     console = {};
                     console.log = function (m) {
-                        alert('msg:'+m)
+                        alert('msg:' + m)
                     };
                 } else {
                     console = {};
@@ -208,7 +208,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     dom.async = false;
                     if (!dom.loadXML(xml)) // parse error ..
 
-                        window.alert('alt ' +dom.parseError.reason + dom.parseError.srcText);
+                        window.alert('alt ' + dom.parseError.reason + dom.parseError.srcText);
                 }
                 catch (e) {
                     dom = null;
@@ -448,6 +448,52 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var d = new Date();
             var n = d.getTime();
             return n;
+        },
+
+        decimalToHex: function (d) {
+            var hex = Number(d).toString(16);
+            hex = "000000".substr(0, 6 - hex.length) + hex;
+            return hex;
+        },
+
+        hexToDecimal: function (h) {
+            var h = h.replace(/#/gi, '');
+            return parseInt(h, 16);
+        },
+
+        rgbToHex: function (rgb) {
+            function componentFromStr(numStr, percent) {
+                var num = Math.max(0, parseInt(numStr, 10));
+                return percent ?
+                    Math.floor(255 * Math.min(100, num) / 100) : Math.min(255, num);
+            }
+            var rgbRegex = /^rgb\(\s*(-?\d+)(%?)\s*,\s*(-?\d+)(%?)\s*,\s*(-?\d+)(%?)\s*\)$/;
+            var result, r, g, b, hex = "";
+            if ((result = rgbRegex.exec(rgb))) {
+                r = componentFromStr(result[1], result[2]);
+                g = componentFromStr(result[3], result[4]);
+                b = componentFromStr(result[5], result[6]);
+                hex = (0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1);
+            }
+            return hex;
+        },
+
+        colorToDecimal: function(color){
+            if (color.match('rgb')){
+                color = this.rgbToHex(color);
+                return this.hexToDecimal(color)
+            }
+            return this.hexToDecimal(color);
+        },
+
+        colorToHex: function(color){
+            if (color.match('#')){
+                return color;
+            }
+            if (color.match('rgb')){
+                return '#' + this.rgbToHex(color);
+            }
+            return '#'+color;
         }
 
     });

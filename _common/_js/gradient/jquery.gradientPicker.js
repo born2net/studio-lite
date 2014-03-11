@@ -1,335 +1,390 @@
 /**
-@author Matt Crinklaw-Vogt (tantaman)
-*/
+ @author Matt Crinklaw-Vogt (tantaman)
+ */
+
 (function( $ ) {
-	if (!$.event.special.destroyed) {
-		$.event.special.destroyed = {
-		    remove: function(o) {
-		    	if (o.handler) {
-		    		o.handler();
-		    	}
-		    }
-		}
-	}
+    if (!$.event.special.destroyed) {
+        $.event.special.destroyed = {
+            remove: function(o) {
+                if (o.handler) {
+                    o.handler();
+                }
+            }
+        }
+    }
 
-	function ctrlPtComparator(l,r) {
-		return l.position - r.position;
-	}
+    function ctrlPtComparator(l,r) {
+        return l.position - r.position;
+    }
 
-	function bind(fn, ctx) {
-		if (typeof fn.bind === "function") {
-			return fn.bind(ctx);
-		} else {
-			return function() {
-				fn.apply(ctx, arguments);
-			}
-		}
-	}
+    function bind(fn, ctx) {
+        if (typeof fn.bind === "function") {
+            return fn.bind(ctx);
+        } else {
+            return function() {
+                fn.apply(ctx, arguments);
+            }
+        }
+    }
 
-	var browserPrefix = "";
-	var agent = window.navigator.userAgent;
-	if (agent.indexOf('WebKit') >= 0)
-		browserPrefix = "-webkit-"
-	else if (agent.indexOf('Mozilla') >= 0)
-		browserPrefix = "-moz-"
-	else if (agent.indexOf('Microsoft') >= 0)
-		browserPrefix = "-ms-"
-	else
-		browserPrefix = ""
+    var browserPrefix = "";
+    var agent = window.navigator.userAgent;
+    if (agent.indexOf('WebKit') >= 0)
+        browserPrefix = "-webkit-"
+    else if (agent.indexOf('Mozilla') >= 0)
+        browserPrefix = "-moz-"
+    else if (agent.indexOf('Microsoft') >= 0)
+        browserPrefix = "-ms-"
+    else
+        browserPrefix = ""
 
-	function GradientSelection($el, opts) {
-		this.$el = $el;
-		this.$el.css("position", "relative");
-		this.opts = opts;
+    function GradientSelection($el, opts) {
+        this.$el = $el;
+        this.$el.css("position", "relative");
+        this.opts = opts;
 
-		var $preview = $("<canvas class='gradientPicker-preview'></canvas>");
-		this.$el.append($preview);
-		var canvas = $preview[0];
+        var $preview = $("<canvas class='gradientPicker-preview'></canvas>");
+        this.$el.append($preview);
+        var canvas = $preview[0];
         $preview.css({
             width: $preview.parent().width(),
             height: $preview.parent().height()
-         });
-        // $preview.height(canvas.clientHeight);
-        // $preview.width(canvas.clientWidth);
-		this.g2d = canvas.getContext("2d");
+        });
+        // canvas.width = canvas.clientWidth;
+        // canvas.height = canvas.clientHeight;
+        this.g2d = canvas.getContext("2d");
 
-		var $ctrlPtContainer = $("<div class='gradientPicker-ctrlPts'></div>");
-		this.$el.append($ctrlPtContainer)
-		this.$ctrlPtContainer = $ctrlPtContainer;
+        var $ctrlPtContainer = $("<div class='gradientPicker-ctrlPts'></div>");
+        this.$el.append($ctrlPtContainer)
+        this.$ctrlPtContainer = $ctrlPtContainer;
 
-		this.updatePreview = bind(this.updatePreview, this);
-		this.controlPoints = [];
-		this.ctrlPtConfig = new ControlPtConfig(this.$el, opts);
-		for (var i = 0; i < opts.controlPoints.length; ++i) {
-			var ctrlPt = this.createCtrlPt(opts.controlPoints[i]);
-			this.controlPoints.push(ctrlPt);
-		}
+        this.updatePreview = bind(this.updatePreview, this);
+        this.controlPoints = [];
+        this.ctrlPtConfig = new ControlPtConfig(this.$el, opts);
+        for (var i = 0; i < opts.controlPoints.length; ++i) {
+            var ctrlPt = this.createCtrlPt(opts.controlPoints[i]);
+            this.controlPoints.push(ctrlPt);
+        }
 
-		this.docClicked = bind(this.docClicked, this);
-		this.destroyed = bind(this.destroyed, this);
-		$(document).bind("click", this.docClicked);
-		this.$el.bind("destroyed", this.destroyed);
-		this.previewClicked = bind(this.previewClicked, this);
-		$preview.click(this.previewClicked);
+        this.docClicked = bind(this.docClicked, this);
+        this.destroyed = bind(this.destroyed, this);
+        $(document).bind("click", this.docClicked);
+        this.$el.bind("destroyed", this.destroyed);
+        this.previewClicked = bind(this.previewClicked, this);
+        $preview.click(this.previewClicked);
 
-		this.updatePreview();
-	}
+        this.updatePreview();
+    }
 
-	GradientSelection.prototype = {
-		docClicked: function() {
-			this.ctrlPtConfig.hide();
-		},
+    GradientSelection.prototype = {
+        docClicked: function() {
+            this.ctrlPtConfig.hide();
+        },
 
-		createCtrlPt: function(ctrlPtSetup) {
-			return new ControlPoint(this.$ctrlPtContainer, ctrlPtSetup, this.opts.orientation, this, this.ctrlPtConfig)
-		},
+        createCtrlPt: function(ctrlPtSetup) {
+            return new ControlPoint(this.$ctrlPtContainer, ctrlPtSetup, this.opts.orientation, this, this.ctrlPtConfig)
+        },
 
-		destroyed: function() {
-			$(document).unbind("click", this.docClicked);
-		},
+        destroyed: function() {
+            $(document).unbind("click", this.docClicked);
+        },
 
-		updateOptions: function(opts) {
-			$.extend(this.opts, opts);
-			this.updatePreview();
-		},
+        updateOptions: function(opts) {
+            $.extend(this.opts, opts);
+            this.updatePreview();
+        },
 
-		updatePreview: function() {
-			var result = [];
-			this.controlPoints.sort(ctrlPtComparator);
-			if (this.opts.orientation == "horizontal") {
-				var grad = this.g2d.createLinearGradient(0, 0, this.g2d.canvas.width, 0);
-				for (var i = 0; i < this.controlPoints.length; ++i) {
-					var pt = this.controlPoints[i];
-					grad.addColorStop(pt.position, pt.color);
-					result.push({
-						position: pt.position,
-						color: pt.color
-					});
-				}
-			} else {
+        updatePreview: function(quiet) {
+            var result = [];
+            this.controlPoints.sort(ctrlPtComparator);
+            if (this.opts.orientation == "horizontal") {
+                var grad = this.g2d.createLinearGradient(0, 0, this.g2d.canvas.width, 0);
+                for (var i = 0; i < this.controlPoints.length; ++i) {
+                    var pt = this.controlPoints[i];
+                    grad.addColorStop(pt.position, pt.color);
+                    result.push({
+                        position: pt.position,
+                        color: pt.color
+                    });
+                }
+            }
 
-			}
+            this.g2d.fillStyle = grad;
+            this.g2d.fillRect(0, 0, this.g2d.canvas.width, this.g2d.canvas.height);
 
-			this.g2d.fillStyle = grad;
-			this.g2d.fillRect(0, 0, this.g2d.canvas.width, this.g2d.canvas.height);
+            if (this.opts.generateStyles)
+                var styles = this._generatePreviewStyles();
 
-			if (this.opts.generateStyles)
-				var styles = this._generatePreviewStyles();
+            if (quiet)
+                return;
+            this.opts.change(result, styles);
+        },
 
-			this.opts.change(result, styles);
-		},
+        removeControlPoint: function(ctrlPt) {
+            var cpidx = this.controlPoints.indexOf(ctrlPt);
 
-		removeControlPoint: function(ctrlPt) {
-			var cpidx = this.controlPoints.indexOf(ctrlPt);
+            if (cpidx != -1) {
+                this.controlPoints.splice(cpidx, 1);
+                ctrlPt.$el.remove();
+            }
+        },
 
-			if (cpidx != -1) {
-				this.controlPoints.splice(cpidx, 1);
-				ctrlPt.$el.remove();
-			}
-		},
+        /** webNeat modifications starts here */
+        addPoint: function(percent, colorStr, quiet){
+            var cp = this.createCtrlPt({
+                position: percent,
+                color: colorStr
+            });
 
-		previewClicked: function(e) {
-			var offset = $(e.target).offset();
-			var x = e.pageX - offset.left;
-			var y = e.pageY - offset.top;
+            this.controlPoints.push(cp);
+            this.controlPoints.sort(ctrlPtComparator);
+            this.updatePreview(quiet);
+        },
 
-			var imgData = this.g2d.getImageData(x,y,1,1);
-			var colorStr = "rgb(" + imgData.data[0] + "," + imgData.data[1] + "," + imgData.data[2] + ")";
+        removeAllPoints: function(){
+            this.controlPoints.forEach(function(point){
+                point.$el.remove();;
+            });
+            this.controlPoints = [];
+            // this.addPoint(0,'#fff');
+            // this.addPoint(1,'#fff');
 
-			var cp = this.createCtrlPt({
-				position: x / this.g2d.canvas.width,
-				color: colorStr
-			});
+            this.updatePreview();
+        },
 
-			this.controlPoints.push(cp);
-			this.controlPoints.sort(ctrlPtComparator);
-		},
+        changeFillDirection: function(fd){
+            this.opts.fillDirection = fd;
+            this.updatePreview();
+        },
+        /** webNeat modifications ends here */
 
-		_generatePreviewStyles: function() {
-			//linear-gradient(top, rgb(217,230,163) 86%, rgb(227,249,159) 9%)
-			var str = this.opts.type + "-gradient(" + ((this.opts.type == "linear") ? (this.opts.fillDirection + ", ") : "");
-			var first = true;
-			for (var i = 0; i < this.controlPoints.length; ++i) {
-				var pt = this.controlPoints[i];
-				if (!first) {
-					str += ", ";
-				} else {
-					first = false;
-				}
-				str += pt.color + " " + ((pt.position*100)|0) + "%";
-			}
+        previewClicked: function(e) {
+            var offset = $(e.target).offset();
+            var x = e.pageX - offset.left;
+            var y = e.pageY - offset.top;
 
-			str = str + ")"
-			var styles = [str, browserPrefix + str];
-			return styles;
-		}
-	};
+            var imgData = this.g2d.getImageData(x,y,1,1);
+            var colorStr = "rgb(" + imgData.data[0] + "," + imgData.data[1] + "," + imgData.data[2] + ")";
 
-	function ControlPoint($parentEl, initialState, orientation, listener, ctrlPtConfig) {
-		this.$el = $("<div class='gradientPicker-ctrlPt'></div>");
-		$parentEl.append(this.$el);
-		this.$parentEl = $parentEl;
-		this.configView = ctrlPtConfig;
+            var cp = this.createCtrlPt({
+                position: x / this.g2d.canvas.width,
+                color: colorStr
+            });
 
-		if (typeof initialState === "string") {
-			initialState = initialState.split(" ");
-			this.position = parseFloat(initialState[1])/100;
-			this.color = initialState[0];
-		} else {
-			this.position = initialState.position;
-			this.color = initialState.color;
-		}
+            this.controlPoints.push(cp);
+            this.controlPoints.sort(ctrlPtComparator);
+        },
 
-		this.listener = listener;
-		this.outerWidth = this.$el.outerWidth();
+        getChanges: function(){
+            this.updatePreview();
+        },
 
-		this.$el.css("background-color", this.color);
-		if (orientation == "horizontal") {
-			var pxLeft = ($parentEl.width() - this.$el.outerWidth()) * (this.position);
-			this.$el.css("left", pxLeft);
-		} else {
-			var pxTop = ($parentEl.height() - this.$el.outerHeight()) * (this.position);
-			this.$el.css("top", pxTop);
-		}
-		
-		this.drag = bind(this.drag, this);
-		this.stop = bind(this.stop, this);
-		this.clicked = bind(this.clicked, this);
-		this.colorChanged = bind(this.colorChanged, this);
-		this.$el.draggable({
-			axis: (orientation == "horizontal") ? "x" : "y",
-			drag: this.drag,
-			stop: this.stop,
-			containment: $parentEl
-		});
-		this.$el.css("position", 'absolute');
-		this.$el.click(this.clicked);
-	}
+        _generatePreviewStyles: function() {
+            //linear-gradient(top, rgb(217,230,163) 86%, rgb(227,249,159) 9%)
+            var str = this.opts.type + "-gradient(" + ((this.opts.type == "linear") ? (this.opts.fillDirection + ", ") : "");
+            var first = true;
+            for (var i = 0; i < this.controlPoints.length; ++i) {
+                var pt = this.controlPoints[i];
+                if (!first) {
+                    str += ", ";
+                } else {
+                    first = false;
+                }
+                str += pt.color + " " + ((pt.position*100)|0) + "%";
+            }
 
-	ControlPoint.prototype = {
-		drag: function(e, ui) {
-			// convert position to a %
-			var left = ui.position.left;
-			this.position = (left / (this.$parentEl.width() - this.outerWidth));
-			this.listener.updatePreview();
-		},
+            str = str + ")"
+            var styles = [str, browserPrefix + str];
+            return styles;
+        }
+    };
 
-		stop: function(e, ui) {
-			this.listener.updatePreview();
-			this.configView.show(this.$el.position(), this.color, this);
-		},
+    function hexToRgb(hex) {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : null;
+    }
 
-		clicked: function(e) {
-			this.configView.show(this.$el.position(), this.color, this);
-			e.stopPropagation();
-			return false;
-		},
+    function ControlPoint($parentEl, initialState, orientation, listener, ctrlPtConfig) {
+        this.$el = $("<div class='gradientPicker-ctrlPt'></div>");
+        $parentEl.append(this.$el);
+        this.$parentEl = $parentEl;
+        this.configView = ctrlPtConfig;
 
-		colorChanged: function(c) {
-			this.color = c;
-			this.$el.css("background-color", this.color);
-			this.listener.updatePreview();
-		},
+        if (typeof initialState === "string") {
+            initialState = initialState.split(" ");
+            this.position = parseFloat(initialState[1])/100;
+            this.color = initialState[0];
+        } else {
+            this.position = initialState.position;
+            this.color = initialState.color;
+        }
 
-		removeClicked: function() {
-			this.listener.removeControlPoint(this);
-			this.listener.updatePreview();
-		}
-	};
+        this.listener = listener;
+        this.outerWidth = this.$el.outerWidth();
 
-	function ControlPtConfig($parent, opts) {
-		//color-chooser
-		this.$el = $('<div class="gradientPicker-ptConfig" style="visibility: hidden"></div>');
-		$parent.append(this.$el);
-		var $cpicker = $('<div class="color-chooser"></div>');
-		this.$el.append($cpicker);
-		var $rmEl = $("<div class='gradientPicker-close'></div>");
-		this.$el.append($rmEl);
+        this.$el.css("background-color", '#'+this.color);
 
-		this.colorChanged = bind(this.colorChanged, this);
-		this.removeClicked = bind(this.removeClicked, this);
-		$cpicker.ColorPicker({
-			onChange: this.colorChanged
-		});
-		this.$cpicker = $cpicker;
-		this.opts = opts;
-		this.visible = false;
+        /* if (this.color.match('rgb')){
+            console.log('rgb color ' + this.color);
+            this.$el.css("background-color", this.color);
+        } else {
+            var rgbc = hexToRgb(this.color);
+            var rgbv = 'rgb(' + rgbc.r + ',' + rgbc.g + ',' + rgbc.b + ')';
+            this.$el.css("background-color", rgbv);
+        }  */
 
-		$rmEl.click(this.removeClicked);
-	}
 
-	ControlPtConfig.prototype = {
-		show: function(position, color, listener) {
-			this.visible = true;
-			this.listener = listener;
-			this.$el.css("visibility", "visible");
-			this.$cpicker.ColorPickerSetColor(color);
-			this.$cpicker.css("background-color", color);
-			if (this.opts.orientation === "horizontal") {
-				this.$el.css("left", position.left);
-			} else {
-				this.$el.css("top", position.top);
-			}
-			//else {
-			//	this.visible = false;
-				//this.$el.css("visibility", "hidden");
-			//}
-		},
+        if (orientation == "horizontal") {
+            var pxLeft = ($parentEl.width() - this.$el.outerWidth()) * (this.position);
+            this.$el.css("left", pxLeft);
+        } else {
+            var pxTop = ($parentEl.height() - this.$el.outerHeight()) * (this.position);
+            this.$el.css("top", pxTop);
+        }
 
-		hide: function() {
-			if (this.visible) {
-				this.$el.css("visibility", "hidden");
-				this.visible = false;
-			}
-		},
+        this.drag = bind(this.drag, this);
+        this.stop = bind(this.stop, this);
+        this.clicked = bind(this.clicked, this);
+        this.colorChanged = bind(this.colorChanged, this);
+        this.$el.draggable({
+            axis: (orientation == "horizontal") ? "x" : "y",
+            drag: this.drag,
+            stop: this.stop,
+            containment: $parentEl
+        });
+        this.$el.css("position", 'absolute');
+        this.$el.click(this.clicked);
+    }
 
-		colorChanged: function(hsb, hex, rgb) {
-			hex = "#" + hex;
-			this.listener.colorChanged(hex);
-			this.$cpicker.css("background-color", hex)
-		},
+    ControlPoint.prototype = {
+        drag: function(e, ui) {
+            // convert position to a %
+            var left = ui.position.left;
+            this.position = (left / (this.$parentEl.width() - this.outerWidth));
+            this.listener.updatePreview();
+        },
 
-		removeClicked: function() {
-			this.listener.removeClicked();
-			this.hide();
-		}
-	};
+        stop: function(e, ui) {
+            this.listener.updatePreview();
+            this.configView.show(this.$el.position(), this.color, this);
+        },
 
-	var methods = {
-		init: function(opts) {
-			opts = $.extend({
-				controlPoints: ["#FFF 0%", "#000 100%"],
-				orientation: "horizontal",
-				type: "linear",
-				fillDirection: "left",
-				generateStyles: true,
-				change: function() {}
-			}, opts);
+        clicked: function(e) {
+            this.configView.show(this.$el.position(), this.color, this);
+            e.stopPropagation();
+            return false;
+        },
 
-			this.each(function() {
-				var $this = $(this);
-				var gradSel = new GradientSelection($this, opts);
-				$this.data("gradientPicker-sel", gradSel);
-			});
-		},
+        colorChanged: function(c) {
+            this.color = c;
+            this.$el.css("background-color", this.color);
+            this.listener.updatePreview();
+        },
 
-		update: function(opts) {
-			this.each(function() {
-				var $this = $(this);
-				var gradSel = $this.data("gradientPicker-sel");
-				if (gradSel != null) {
-					gradSel.updateOptions(opts);
-				}
-			});
-		}
-	};
+        removeClicked: function() {
+            this.listener.removeControlPoint(this);
+            this.listener.updatePreview();
+        }
+    };
 
-	$.fn.gradientPicker = function(method, opts) {
-		if (typeof method === "string" && method !== "init") {
-			methods[method].call(this, opts);
-		} else {
-			opts = method;
-			methods.init.call(this, opts);
-		}
-	};
+    function ControlPtConfig($parent, opts) {
+        //color-chooser
+        this.$el = $('<div class="gradientPicker-ptConfig" style="visibility: hidden"></div>');
+        $parent.append(this.$el);
+        var $cpicker = $('<div class="color-chooser"></div>');
+        this.$el.append($cpicker);
+        var $rmEl = $("<div class='gradientPicker-close'></div>");
+        this.$el.append($rmEl);
+
+        this.colorChanged = bind(this.colorChanged, this);
+        this.removeClicked = bind(this.removeClicked, this);
+        $cpicker.ColorPicker({
+            onChange: this.colorChanged
+        });
+        this.$cpicker = $cpicker;
+        this.opts = opts;
+        this.visible = false;
+
+        $rmEl.click(this.removeClicked);
+    }
+
+    ControlPtConfig.prototype = {
+        show: function(position, color, listener) {
+            this.visible = true;
+            this.listener = listener;
+            this.$el.css("visibility", "visible");
+            this.$cpicker.ColorPickerSetColor(color);
+            this.$cpicker.css("background-color", '#'+color);
+            if (this.opts.orientation === "horizontal") {
+                this.$el.css("left", position.left);
+            } else {
+                this.$el.css("top", position.top);
+            }
+            //else {
+            //	this.visible = false;
+            //this.$el.css("visibility", "hidden");
+            //}
+        },
+
+        hide: function() {
+            if (this.visible) {
+                this.$el.css("visibility", "hidden");
+                this.visible = false;
+            }
+        },
+
+        colorChanged: function(hsb, hex, rgb) {
+            hex = "#" + hex;
+            this.listener.colorChanged(hex);
+            this.$cpicker.css("background-color", hex)
+        },
+
+        removeClicked: function() {
+            this.listener.removeClicked();
+            this.hide();
+        }
+    };
+
+    var methods = {
+        init: function(opts) {
+            opts = $.extend({
+                //controlPoints: ["#FFF 0%", "#000 100%"],
+                controlPoints: [],
+                orientation: "horizontal",
+                type: "linear",
+                fillDirection: "left",
+                generateStyles: true,
+                change: function() {}
+            }, opts);
+
+            this.each(function() {
+                var $this = $(this);
+                var gradSel = new GradientSelection($this, opts);
+                $this.data("gradientPicker-sel", gradSel);
+            });
+        },
+
+        update: function(opts) {
+            this.each(function() {
+                var $this = $(this);
+                var gradSel = $this.data("gradientPicker-sel");
+                if (gradSel != null) {
+                    gradSel.updateOptions(opts);
+                }
+            });
+        }
+    };
+
+    $.fn.gradientPicker = function(method, opts) {
+        if (typeof method === "string" && method !== "init") {
+            methods[method].call(this, opts);
+        } else {
+            opts = method;
+            methods.init.call(this, opts);
+        }
+    };
 })( jQuery );

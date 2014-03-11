@@ -7,7 +7,7 @@
  @param {string} i_block_id block / player id, only required if block inserted onto channel_timeline
  @return none
  **/
-define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient'], function ($) {
+define(['jquery', 'backbone'], function ($) {
 
     /**
      block.PLACEMENT_SCENE indicates the insertion is inside a Scene
@@ -62,16 +62,13 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient'], function ($) {
             self.m_resourceID = undefined;
             this.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
 
-            // first initiated properties view / modules
-            var initiated = self.m_property.initPanel(Elements.BLOCK_PROPERTIES);
-            if (initiated){
-                self._alphaSliderInit();
-                self._bgGradientInit();
-                self._propLengthKnobsInit();
-            }
+
+            $('#MySpinner').spinner()
 
             // common channel
             self._alphaListenChange();
+            self._gradientListenChange();
+
 
             // block specific: channel / scene
             switch (this.m_placement) {
@@ -92,38 +89,6 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient'], function ($) {
         },
 
         /**
-         Load jquery gradient component once
-         @method _bgGradientInit
-         **/
-        _bgGradientInit: function(){
-            $(Elements.BG_COLOR_GRADIENT_SELECTOR).gradientPicker({
-                //change: function (points, styles) {
-                //    for (var i = 0; i < styles.length; ++i) {
-                //      log(styles[i]);
-                //    }
-                //},
-                fillDirection: "45deg",
-                controlPoints: ["#428bca 0%", "white 100%"]
-            });
-        },
-
-        /**
-         Init the alpha slider UI in common properties
-         @method _alphaSliderInit
-         **/
-        _alphaSliderInit: function () {
-            $(Elements.BLOCK_ALPHA_SLIDER).noUiSlider({
-                handles: 1,
-                start: 100,
-                step: 1,
-                range: [0, 100],
-                serialization: {
-                    to: [ $(Elements.BLOCK_ALPHA_LABEL), 'text' ]
-                }
-            });
-        },
-
-        /**
          Listen to changes in Alpha UI properties selection and update msdb
          @method _alphaListenChange
          **/
@@ -141,7 +106,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient'], function ($) {
         },
 
         /**
-         On changes in msdb model updated UI properties
+         On changes in msdb model updated UI common alpha properties
          @method _alphaPopulate
          @param {Number} i_playerData
          @return {Number} Unique clientId.
@@ -153,6 +118,60 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient'], function ($) {
             var alpha = $(xSnippet).attr('alpha');
             alpha = parseFloat(alpha) * 100;
             $(Elements.BLOCK_ALPHA_SLIDER).val(alpha);
+        },
+
+        /**
+         Update a block's player_data with new gradient background
+         @method _gradientListenChange
+         **/
+        _gradientListenChange: function(){
+            var self = this;
+
+            BB.comBroker.listen(BB.EVENTS.GRADIENT_COLOR_CHANGED,function(e){
+                if (!self.m_selected)
+                    return;
+
+                var points = e.edata.points;
+                var styles = e.edata.styles;
+                if (points.length == 0)
+                    return;
+
+                var domPlayerData = self._getBlockPlayerData();
+                var gradientPoints = $(domPlayerData).find('GradientPoints');
+                $(gradientPoints).empty();
+
+                for (var i = 0; i < points.length; ++i) {
+                    var pointMidpoint = (parseInt(points[i].position * 250));
+                    var color = BB.lib.colorToDecimal(points[i].color)
+                    var xPoint = '<Point color="' + color + '" opacity="1" midpoint="' + pointMidpoint + '" />'
+                    // log(xPoint);
+                    $(gradientPoints).append(xPoint);
+                }
+                self._updatePlayerData(domPlayerData);
+            })
+        },
+
+        /**
+         On changes in msdb model updated UI common gradient background properties
+         @method _gradientPopulate
+         @param {Number} i_playerData
+         @return {Number} Unique clientId.
+         **/
+        _gradientPopulate: function () {
+            var self = this;
+
+            var gradient = $(Elements.BG_COLOR_GRADIENT_SELECTOR).data("gradientPicker-sel");
+            // gradient.changeFillDirection("top"); /* change diretion future support */
+            gradient.removeAllPoints();
+            var domPlayerData = self._getBlockPlayerData();
+            var xSnippet = $(domPlayerData).find('GradientPoints');
+            var points = $(xSnippet).find('Point');
+
+            $.each(points, function (i, point) {
+                var pointColor = BB.lib.decimalToHex($(point).attr('color'));
+                var pointMidpoint = (parseInt($(point).attr('midpoint')) / 250);
+                gradient.addPoint(pointMidpoint, pointColor, true);
+            });
         },
 
         /**
@@ -175,6 +194,9 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient'], function ($) {
                 self.m_property.viewPanel(Elements.BLOCK_PROPERTIES);
                 self._updateTitle();
                 self._updateTitleTab();
+                self._alphaPopulate();
+                self._gradientPopulate();
+
                 // log('block selected ' + self.m_block_id);
 
                 switch (self.m_placement) {
@@ -183,7 +205,6 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient'], function ($) {
                         $(Elements.CHANNEL_BLOCK_PROPS).show();
                         $(Elements.SCENE_BLOCK_PROPS).hide();
                         self._updateBlockLength();
-                        self._alphaPopulate();
                         break;
                     }
                     // Future support
@@ -198,7 +219,6 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient'], function ($) {
 
                 if (self._loadBlockSpecificProps)
                     self._loadBlockSpecificProps();
-
             });
         },
 
@@ -234,7 +254,6 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient'], function ($) {
             $(Elements.BLOCK_LENGTH_MINUTES).val(lengthData.minutes).trigger('change');
             $(Elements.BLOCK_LENGTH_SECONDS).val(lengthData.seconds).trigger('change');
         },
-
 
         /**
          Update the position of the block when placed inside a scene
@@ -277,78 +296,6 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient'], function ($) {
                     }
                     // log('upd: ' + self.m_block_id + ' ' + hours + ' ' + minutes + ' ' + seconds);
                     jalapeno.setBlockTimelineChannelBlockLength(self.m_block_id, hours, minutes, seconds);
-                }
-            });
-        },
-
-        /**
-         Create the block length knobs so a user can set the length of the block with respect to timeline_channel
-         @method _propLengthKnobsInit
-         @return none
-         **/
-        _propLengthKnobsInit: function () {
-            var self = this;
-
-            var snippet = '<input id="blockLengthHours" data-displayPrevious="false" data-min="0" data-max="23" data-skin="tron" data-width="60" data-height="60"  data-thickness=".2" type="text" class="knob" data-fgColor="gray">' +
-                '<input id="blockLengthMinutes" data-displayPrevious="false" data-min="0" data-max="59" data-skin="tron" data-width="60" data-height="60" data-thickness=".2" type="text" class="knob" data-fgColor="gray">' +
-                '<input id="blockLengthSeconds" data-displayPrevious="false" data-min="0" data-max="59" data-skin="tron" data-width="60" data-height="60"  data-thickness=".2" type="text" class="knob" data-fgColor="gray">';
-
-            $(Elements.CHANNEL_BLOCK_PROPS).append(snippet);
-
-            $(Elements.CLASS_KNOB).knob({
-                /*change: function (value) {
-                 console.log("change : " + value);
-                 var caller = this['i'][0].id;
-                 },*/
-                release: function (value) {
-                    // console.log(this.$.attr('value'));
-                    // console.log("release : " + value + ' ' + this['i'][0].id);
-                    var caller = this['i'][0].id;
-                    BB.comBroker.fire(BB.EVENTS.BLOCK_LENGTH_CHANGING, this, caller, value);
-                },
-                /*cancel: function () {
-                 console.log("cancel : ", this);
-                 },*/
-                draw: function () {
-                    if (this.$.data('skin') == 'tron') {
-
-                        var a = this.angle(this.cv)  // Angle
-                            , sa = this.startAngle          // Previous start angle
-                            , sat = this.startAngle         // Start angle
-                            , ea                            // Previous end angle
-                            , eat = sat + a                 // End angle
-                            , r = 1;
-
-                        this.g.lineWidth = this.lineWidth;
-
-                        this.o.cursor
-                            && (sat = eat - 0.3)
-                        && (eat = eat + 0.3);
-
-                        if (this.o.displayPrevious) {
-                            ea = this.startAngle + this.angle(this.v);
-                            this.o.cursor
-                                && (sa = ea - 0.3)
-                            && (ea = ea + 0.3);
-                            this.g.beginPath();
-                            this.g.strokeStyle = this.pColor;
-                            this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, sa, ea, false);
-                            this.g.stroke();
-                        }
-
-                        this.g.beginPath();
-                        this.g.strokeStyle = r ? this.o.fgColor : this.fgColor;
-                        this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, sat, eat, false);
-                        this.g.stroke();
-
-                        this.g.lineWidth = 2;
-                        this.g.beginPath();
-                        this.g.strokeStyle = this.o.fgColor;
-                        this.g.arc(this.xy, this.xy, this.radius - this.lineWidth + 1 + this.lineWidth * 2 / 3, 0, 2 * Math.PI, false);
-                        this.g.stroke();
-
-                        return false;
-                    }
                 }
             });
         },

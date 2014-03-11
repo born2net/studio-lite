@@ -140,8 +140,19 @@ JalapenoHelper.prototype = {
         };
     },
 
+    /**
+     Get the common properties XML with all default values
+     @method _getCommonDefaultXML
+     @return {String} common xml
+     **/
     _getCommonDefaultXML: function(){
-        return '<Appearance alpha="1.0" blendMode="normal" />';
+        var common =    '<Appearance alpha="1.0" blendMode="normal" />'+
+                        '<Background style="Gradient" gradientType="linear" angle="90" offsetX="0" offsetY="0">'+
+                            '<GradientPoints>'+
+                                '<Point color="4361162" opacity="1" midpoint="125" />'+
+                            '</GradientPoints>'+
+                        '</Background>'
+        return common;
     },
 
     /**

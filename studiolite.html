@@ -36,25 +36,25 @@
         <li class="hidden-lg" dropdown><a href="#" class="dropdown-toggle" data-toggle="dropdown">Navigatior<b
                     class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li><a class="campaignManagerView" href="#">Campaign</a></li>
+            <li><a data-localize="navCampaign" class="campaignManagerView" href="#">Campaign</a></li>
             <li class="divider"></li>
-            <li><a class="resourcesPanel" href="#">Resources</a></li>
+            <li><a data-localize="navResources" class="resourcesPanel" href="#">Resources</a></li>
             <li class="divider"></li>
-            <li><a class="stationsPanel" href="#">Stations</a></li>
+            <li><a data-localize="navStation" class="stationsPanel" href="#">Stations</a></li>
             <li class="divider"></li>
-            <li><a class="settingsPanel" href="#">Settings</a></li>
+            <li><a data-localize="navSettings" class="settingsPanel" href="#">Settings</a></li>
             <li class="divider"></li>
-            <li><a class="proStudioPanel" href="#">Pro Studio</a></li>
+            <li><a data-localize="navStudioPanel" class="proStudioPanel" href="#">Pro Studio</a></li>
             <li class="divider"></li>
-            <li><a class="helpPanel" href="#">Help</a></li>
+            <li><a data-localize="navHelpPanel" class="helpPanel" href="#">Help</a></li>
             <li class="divider"></li>
-            <li><a class="logoutPanel" href="#">Logout</a></li>
+            <li><a data-localize="navLogout" class="logoutPanel" href="#">Logout</a></li>
           </ul>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a id="saveConfig" href="#">Save</a></li>
-        <li><a id="dashboard" href="#">Dashboard &nbsp;</a></li>
+        <li><a data-localize="saveConfig" id="saveConfig" href="#">Save</a></li>
+        <li><a data-localize="dashboard" id="dashboard" href="#">Dashboard &nbsp;</a></li>
       </ul>
     </div>
     <!-- /.navbar-collapse --> 
@@ -62,33 +62,32 @@
   <div id="appEntry">
     <div id="appLogin" style="display: none">
       <form class="form-signin" role="form">
-        <span style="font-size: 2em; color: #428bca" class="glyphicon glyphicon-cloud"></span> <span
-            style="font-size: 2em; position: relative; top: -5px; padding-left: 5px">StudioLite Login</span>
+        <span style="font-size: 2em; color: #428bca" class="glyphicon glyphicon-cloud"></span>
+          <span style="font-size: 2em; position: relative; top: -5px; padding-left: 5px" data-localize="studioLite">StudioLite Login</span>
         <h2 class="form-signin-heading"></h2>
         <input id="userName" type="text" class="form-control" placeholder="User name" required autofocus>
         <input id="userPass" type="password" class="form-control" placeholder="Password" required>
         <label class="checkbox">
-          <input id="rememberMe" type="checkbox" checked value="remember-me">
-          Remember me </label>
-        <button id="loginButton" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+          <input id="rememberMe" type="checkbox" checked value="remember-me"><span data-localize="rememberMe"> Remember me </span></label>
+        <button id="loginButton" class="btn btn-lg btn-primary btn-block" type="submit" data-localize="signin">Sign in</button>
       </form>
     </div>
     <div id="waitScreenEntryApp" style="display: none"><span style="position: absolute; left: 45%; top: 20%"> <img
         src="./_assets/preload5.gif"> </span></div>
     <div id="appLogout" style="display: none"> <span style="position: absolute; left: 40%; top: 20%">
-      <h3>Have a nice day :)</h3>
+      <h3 data-localize="haveNiceDay">Have a nice day :)</h3>
       </span></div>
     <div id="appContent" class="noScroll container" style="display: none">
       <div id="appRow " class="row">
         <div id="appNavigator" class="hidden-xs hidden-sm hidden-md col-lg-1">
           <ul class="list-group">
-            <li class="campaignManagerView list-group-item"><i class="navicons fa fa-tasks"></i>Campaigns</li>
-            <li class="resourcesPanel list-group-item"><i class="navicons fa fa-certificate"></i>Resources</li>
-            <li class="stationsPanel list-group-item"><i class="navicons fa fa-desktop"></i>Stations</li>
-            <li class="settingsPanel list-group-item"><i class="navicons fa fa-gears"></i>Settings</li>
-            <li class="proStudioPanel list-group-item"><i class="navicons fa fa-cloud-upload"></i>Pro Studio</li>
-            <li class="helpPanel list-group-item"><i class="navicons fa fa-comments"></i>Help</li>
-            <li class="logoutPanel list-group-item"><i class="navicons fa fa-power-off"></i>Logout</li>
+            <li class="campaignManagerView list-group-item"><i class="navicons fa fa-tasks"></i><span data-localize="navCampaign">Campaigns</span>
+            <li class="resourcesPanel list-group-item"><i class="navicons fa fa-certificate"></i><span data-localize="navResources">Resources</span>
+            <li class="stationsPanel list-group-item"><i class="navicons fa fa-desktop"></i><span data-localize="navStation">Stations</span>
+            <li class="settingsPanel list-group-item"><i class="navicons fa fa-gears"></i><span data-localize="navSettings">Settings</span>
+            <li class="proStudioPanel list-group-item"><i class="navicons fa fa-cloud-upload"></i><span data-localize="navStudioPanel">Pro Studio</span>
+            <li class="helpPanel list-group-item"><i class="navicons fa fa-comments"></i><span data-localize="navHelpPanel">Help</span>
+            <li class="logoutPanel list-group-item"><i class="navicons fa fa-power-off"></i><span data-localize="navLogout">Logout</span>
           </ul>
         </div>
         <div id="mainPanelWrap" class="col-xs-12 col-sm-9 col-md-9 col-lg-8">
@@ -111,14 +110,14 @@
                     class="glyphicon glyphicon-chevron-left"></span></button>
                 <button id="next" type="button" class="openPropsButton btn btn-default btn-sm"><span
                     class="glyphicon glyphicon-chevron-right"></span></button>
-                <h3>Select your campaign name</h3>
+                <h3 data-localize="selectCampaignName">Select your campaign name</h3>
                 <input id="newCampaignName" type="text" class="form-control" value="My campaign"
                    placeholder="Enter new campaign name">
               </div>
               <div id="orientationSelector" class="page right">
                 <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
                     class="glyphicon glyphicon-chevron-left"></span></button>
-                <h3>Select your screen orientation</h3>
+                <h3 data-localize="screenOrientation">Select your screen orientation</h3>
                 <div id="orientationView">
                   <table width="100%" border="0" cellspacing="0" cellpadding="50">
                     <tr>
@@ -133,13 +132,13 @@
               <div id="resolutionSelector" class="page right">
                 <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
                     class="glyphicon glyphicon-chevron-left"></span></button>
-                <h3>Select your screen resolution</h3>
+                <h3 data-localize="screenResolution">Select your screen resolution</h3>
                 <div id="resolutionList" class="list-group"></div>
               </div>
               <div id="screenLayoutSelector" class="page right">
                 <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
                     class="glyphicon glyphicon-chevron-left"></span></button>
-                <h3>Select your screen layout</h3>
+                <h3 data-localize="screenLayout">Select your screen layout</h3>
                 <div id="screenLayoutList"></div>
               </div>
               <div id="campaign" class="page right">
@@ -150,8 +149,7 @@
                         <h4 class="panel-title"><a id="toggleTimelinesCollapsible" data-toggle="collapse"
                                                        data-parent="#timelinesCollapsible"
                                                        href="#screenSelectorContainerCollapse"> <span
-                                    class="glyphicon glyphicon-chevron-down"></span> Timelines length <span
-                                    id="timelinesTotalLength"> 00:00:00</span></a>
+                                    class="glyphicon glyphicon-chevron-down"></span><span data-localize="timelineLength"> Timelines length </span> <span id="timelinesTotalLength"> 00:00:00</span></a>
                           <button style="margin-left: 30px" id="addNewTimelineButton" type="button"
                                         class="btn btn-default btn-sm"><span
                                         class="glyphicon glyphicon-plus"></span></button>
@@ -182,7 +180,7 @@
                     <div id="noneSelectedScreenLayout">
                       <div align="center" id="screenMainSelector">
                         <div align="center">
-                          <h1>no timeline selected</h1>
+                          <h1 data-localize="noTimelineSelected">no timeline selected</h1>
                         </div>
                       </div>
                     </div>
@@ -191,9 +189,9 @@
                   <div id="channelListView">
                     <div>
                       <button id="addBlockButton" type="button" class="btn btn-default"><span
-                                class="glyphicon glyphicon-plus"></span> Add content </button>
+                                class="glyphicon glyphicon-plus"></span><span data-localize="addContent"> Add content </span></button>
                       <button id="removeBlockButton" type="button" class="btn btn-default"><span
-                                class="glyphicon glyphicon-minus"></span> Remove content </button>
+                                class="glyphicon glyphicon-minus"></span><span data-localize="removeContent"> Remove content </span></button>
                     </div>
                     <div>
                       <ul class="list-group" id="sortable" style="padding:20px">
@@ -205,13 +203,13 @@
               <div id="addBlockView" class="page right">
                 <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
                     class="glyphicon glyphicon-chevron-left"></span></button>
-                <h3>Select new content to add</h3>
+                <h3 data-localize="contentToAdd">Select new content to add</h3>
                 <div class="yScroll">
                   <div class="panel-group" id="addNewBlockList">
                     <div class="panel panel-default">
                       <div class="panel-heading">
                         <h4 class="panel-title"><a data-toggle="collapse" data-parent="#addNewBlockList"
-                                                       href="#collapseOne"> components </a></h4>
+                                                       href="#collapseOne" data-localize="components"> components </a></h4>
                       </div>
                       <div id="collapseOne" class="panel-collapse collapse in">
                         <div class="panel-body">
@@ -223,7 +221,7 @@
                     <div class="panel panel-default">
                       <div class="panel-heading">
                         <h4 class="panel-title"><a data-toggle="collapse" data-parent="#addNewBlockList"
-                                                       href="#collapseTwo"> resources </a></h4>
+                                                       href="#collapseTwo" data-localize="resources"> resources </a></h4>
                       </div>
                       <div id="collapseTwo" class="panel-collapse collapse">
                         <div class="panel-body">
@@ -235,10 +233,10 @@
                     <div class="panel panel-default">
                       <div class="panel-heading">
                         <h4 class="panel-title"><a data-toggle="collapse" data-parent="#addNewBlockList"
-                                                       href="#collapseThree"> scenes </a></h4>
+                                                       href="#collapseThree" data-localize="scenes"> scenes </a></h4>
                       </div>
                       <div id="collapseThree" class="panel-collapse collapse">
-                        <div class="panel-body"> coming soon...</div>
+                        <div class="panel-body" data-localize="comingSoon"> coming soon...</div>
                       </div>
                     </div>
                   </div>
@@ -246,7 +244,7 @@
               </div>
               <div id="waitScreenMainPanel" class="page center" style="display: none">
                 <div class="yScroll">
-                  <h1>Please wait</h1>
+                  <h1 data-localize="pleaseWait">Please wait</h1>
                   <span> <img src="./_assets/preload7.gif"> </span></div>
               </div>
             </div>
@@ -259,7 +257,7 @@
                     <input id="file" name="file" type="file" multiple data-role="none">
                   </label>
                   <button id="fileRemove" type="button" class="btn btn-default"><span
-                        class="glyphicon glyphicon-remove"></span> remove </button>
+                        class="glyphicon glyphicon-remove"></span><span data-localize="remove"> remove </span></button>
                 </div>
                 <br/>
                 <div id="resourceLibListWrap" class="yScroll">
@@ -271,21 +269,21 @@
           </div>
           <div id="stationsPanel" class="yScroll" style="display: none">
             <button id="stationRemove" type="button" class="btn btn-default"><span
-            class="glyphicon glyphicon-remove-circle"></span> remove station </button>
-            <div id="stationAlert" class="alert alert-danger"><strong>No SignagePlayer loaded...</strong></div>
+            class="glyphicon glyphicon-remove-circle"></span><span data-localize="removeStation"> remove station </span></button>
+            <div id="stationAlert" class="alert alert-danger"><strong><span data-localize="noStation">No SignagePlayer loaded...</span></strong></div>
             <ul class="list-group" id="stationListView">
             </ul>
           </div>
           <div id="settingsPanel" style="display: none">
-            <h3>Station settings</h3>
-            <div id="stationPollSliderContainer"> <span id="stationPollSliderText">poll interval (in seconds):</span>
+            <h3 data-localize="stationSettings">Station settings</h3>
+            <div id="stationPollSliderContainer"> <span id="stationPollSliderText" data-localize="pollInterval">poll interval (in seconds):</span>
               <div id="stationPollSliderWrap">
                 <div id="stationPollSlider" class="noUi-target noUi-ltr noUi-horizontal noUi-background"> </div>
               </div>
               <span id="stationPollLabel">120</span> </div>
           </div>
           <div id="proStudioPanel" style="display: none">
-            <h3>Choose the package that's right for you</h3>
+            <h3 data-localize="rightPackage">Choose the package that's right for you</h3>
             <!-- price & service -->
             <div class="pricingContainer">
               <div class="row"> </div>
@@ -488,6 +486,21 @@
                       </select>
                     </div>
                     <div id="blockRSSCommonProperties" style="display: none">
+
+
+                        <div id="MySpinner" class="spinner">
+                            <input type="text" class="input-mini spinner-input">
+                            <div class="spinner-buttons	btn-group btn-group-vertical">
+                                <button type="button" class="btn spinner-up">
+                                    <i style="font-size: 0.6em" class="fa fa-chevron-up"></i>
+                                </button>
+                                <button type="button" class="btn spinner-down">
+                                    <i style="font-size: 0.6em" class="fa fa-chevron-down"></i>
+                                </button>
+                            </div>
+                        </div>
+
+
                       <div> <span>RSS URL</span>
                         <div data-role="fieldcontain" data-inset="true">
                           <input id="rssLink" type="text" name="name" class="propControlWidth" value=""

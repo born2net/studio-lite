@@ -53,7 +53,10 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
          **/
         _loadBlocks: function () {
             var self = this;
-            require(['Block', 'BlockRSS', 'BlockQR', 'BlockVideo', 'BlockImage'], function (Block, BlockRSS, BlockQR, BlockVideo, BlockImage) {
+            $(Elements.SELECTED_TIMELINE).hide();
+            require(['BlockProperties', 'Block', 'BlockRSS', 'BlockQR', 'BlockVideo', 'BlockImage'], function (BlockProperties, Block, BlockRSS, BlockQR, BlockVideo, BlockImage) {
+
+                self.m_blockProperties = BB.comBroker.getService(BB.SERVICES.BLOCK_PROPERTIES) == undefined ?  self.m_blockProperties = new BlockProperties({el: Elements.BLOCK_PROPERTIES}) : BB.comBroker.getService(BB.SERVICES.BLOCK_PROPERTIES);
                 self.m_block = Block;
                 self.m_blockRSS = BlockRSS;
                 self.m_blockQR = BlockQR;
@@ -62,6 +65,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
 
                 self._createBlocks();
                 self.initUI();
+                $(Elements.SELECTED_TIMELINE).fadeIn();
             });
         },
 

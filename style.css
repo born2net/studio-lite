@@ -331,13 +331,7 @@ aside > aside > div > ul > li {
 }
 
 #blockAlphaWrap {
-    width: 200px;
-}
-
-#bgColorGradientSelector {
-    width: 210px;
-    height: 20px;
-    margin-bottom: 32px;
+    width: 180px;
 }
 
 #blockPropertiesTabber {
@@ -438,7 +432,7 @@ aside > aside > div > ul > li {
 }
 
 .propControlWidth {
-    width: 210px;
+    width: 180px;
 }
 
 .channelListItems {
@@ -1126,8 +1120,14 @@ Software accelerated vertical
  Gradient picker
  ************************************/
 
+#bgColorGradientSelector {
+    width: 180px;
+    height: 20px;
+    margin-bottom: 32px;
+}
+
 .gradientPicker-preview {
-    width: 250px;
+    width: 200px;
     height: 30px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     /*box-sizing: border-box;
@@ -1145,7 +1145,7 @@ Software accelerated vertical
 .gradientPicker-ctrlPts {
     position: relative;
     height: 10px;
-    width: 100%;
+    width: 190px;
 }
 
 .gradientPicker-ptConfig {
@@ -1183,5 +1183,71 @@ Software accelerated vertical
 .gradientPicker-ptConfig .color-chooser {
     float: left;
 }
+
+
+
+/************************************
+ fuelux
+ ************************************/
+
+
+.spinner .btn {
+    position: relative;
+    width: 20px;
+    height: 14px;
+    padding-top: 0;
+    padding-right: 9px;
+    padding-left: 9px;
+    -webkit-appearance: none;
+    -webkit-border-radius: 0px; !important;
+    border-bottom-left-radius: 0; !important;
+}
+
+
+.spinner .btn.disabled {
+    cursor: not-allowed;
+}
+
+.spinner .spinner-buttons {
+    position: relative;
+    left: -22px;
+    float: left;
+    width: 20px;
+    height: 28px;
+}
+
+.spinner .spinner-up {
+    top: 1px;
+    left: 1px;
+    padding: 0 0 4px 1px;
+}
+
+.spinner .spinner-up i {
+    position: relative;
+    top: -6px;
+}
+
+.spinner .spinner-down {
+    top: -1px;
+    height: 13px;
+    left: 1px;
+    padding: 0 0 4px 1px;
+}
+
+.spinner .spinner-down i {
+    position: relative;
+    top: -6px;
+}
+
+.input-mini {
+    width: 60px;
+}
+
+.spinner input {
+    float: left;
+    width: 43px;
+}
+
+
 
 

@@ -35,14 +35,7 @@ define(['jquery', 'backbone'], function ($) {
      **/
     BB.EVENTS.BLOCK_SELECTED = 'BLOCK_SELECTED';
 
-    /**
-     event fires when block length is changing (requesting a change), normally by a knob property widget
-     @event Block.BLOCK_LENGTH_CHANGING
-     @param {object} this
-     @param {object} caller the firing knob element
-     @param {number} value the knob's position value (hours / minutes / seconds)
-     **/
-    BB.EVENTS.BLOCK_LENGTH_CHANGING = 'BLOCK_LENGTH_CHANGING';
+
 
     var Block = BB.Controller.extend({
 
@@ -52,20 +45,19 @@ define(['jquery', 'backbone'], function ($) {
          **/
         initialize: function (options) {
             var self = this;
-            this.m_placement = options.i_placement;
-            this.m_block_id = options.i_block_id;
+            self.m_placement = options.i_placement;
+            self.m_block_id = options.i_block_id;
             self.m_blockType = options.blockType;
-            this.m_selected = false;
+            self.m_selected = false;
             self.m_blockName = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).name;
             self.m_blockDescription = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).description;
             self.m_blockIcon = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).icon;
             self.m_resourceID = undefined;
-            this.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
+            self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
 
             // common channel
             self._alphaListenChange();
             self._gradientListenChange();
-
 
             // block specific: channel / scene
             switch (this.m_placement) {
@@ -91,14 +83,14 @@ define(['jquery', 'backbone'], function ($) {
          **/
         _alphaListenChange: function () {
             var self = this;
-            self.m_blockAlphaHandler = $(Elements.BLOCK_ALPHA_SLIDER).on('change', function (e) {
-                if (!self.m_selected)
-                    return;
-                var alpha = parseFloat($(Elements.BLOCK_ALPHA_SLIDER).val()) / 100;
+            BB.comBroker.listenWithNamespace(BB.EVENTS.ALPHA_CHANGED, self, function (e) {
+                    if (!self.m_selected)
+                        return;
+                var alpha = e.edata;
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Appearance');
                 $(xSnippet).attr('alpha', alpha);
-                self._updatePlayerData(domPlayerData);
+                self._setBlockPlayerData(domPlayerData);
             });
         },
 
@@ -124,7 +116,7 @@ define(['jquery', 'backbone'], function ($) {
         _gradientListenChange: function(){
             var self = this;
 
-            BB.comBroker.listen(BB.EVENTS.GRADIENT_COLOR_CHANGED,function(e){
+            BB.comBroker.listenWithNamespace(BB.EVENTS.GRADIENT_COLOR_CHANGED, self, function (e) {
                 if (!self.m_selected)
                     return;
 
@@ -144,7 +136,7 @@ define(['jquery', 'backbone'], function ($) {
                     // log(xPoint);
                     $(gradientPoints).append(xPoint);
                 }
-                self._updatePlayerData(domPlayerData);
+                self._setBlockPlayerData(domPlayerData);
             })
         },
 
@@ -299,10 +291,10 @@ define(['jquery', 'backbone'], function ($) {
 
         /**
          Update the msdb for the block with new values inside its player_data
-         @method _updatePlayerData
+         @method _setBlockPlayerData
          @param {Object} i_xmlDoc
          **/
-        _updatePlayerData: function (i_xmlDoc) {
+        _setBlockPlayerData: function (i_xmlDoc) {
             var self = this;
             var xmlString = (new XMLSerializer()).serializeToString(i_xmlDoc);
             switch (self.m_placement) {
@@ -355,7 +347,12 @@ define(['jquery', 'backbone'], function ($) {
             jalapeno.removeBlockFromTimelineChannel(self.m_block_id);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_SELECTED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_LENGTH_CHANGING, self);
-            $(Elements.BLOCK_ALPHA_SLIDER).off('change', self.m_blockAlphaHandler);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.GRADIENT_COLOR_CHANGED, self);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.ALPHA_CHANGED, self);
+
+
+            // $(Elements.BLOCK_ALPHA_SLIDER).off('change', self.m_blockAlphaHandler);
+
             $.each(self, function (k) {
                 self[k] = undefined;
             });

@@ -161,7 +161,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         /**
          Stop listening to an event but only within the context of a specific listener instance.
          @method stopListenWithNamespace
-         @param {Event} event
+         @param {String} event
          @param {Function} func
          @return none
          **/

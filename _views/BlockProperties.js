@@ -12,11 +12,29 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'minicolors', 's
      @event COLOR_SELECTED
      @param {this} caller
      @param {self} context caller
-     @param {event} player_code which represents a specific code assigned for each block type
+     @param {Event} player_code which represents a specific code assigned for each block type
      @static
      @final
      **/
     BB.EVENTS.GRADIENT_COLOR_CHANGED = 'GRADIENT_COLOR_CHANGED';
+
+    /**
+     event fires when block length is changing (requesting a change), normally by a knob property widget
+     @event Block.BLOCK_LENGTH_CHANGING
+     @param {Object} this
+     @param {Object} caller the firing knob element
+     @param {Number} value the knob's position value (hours / minutes / seconds)
+     **/
+    BB.EVENTS.BLOCK_LENGTH_CHANGING = 'BLOCK_LENGTH_CHANGING';
+
+    /**
+     event fires when background alpha changed
+     @event Block.ALPHA_CHANGED
+     @param {Object} this
+     @param {Object} caller the firing element
+     @param {Number} alpha value
+     **/
+    BB.EVENTS.ALPHA_CHANGED = 'ALPHA_CHANGED';
 
     BB.SERVICES.BLOCK_PROPERTIES = 'BlockProperties';
 
@@ -41,10 +59,12 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'minicolors', 's
         },
 
         /**
-         Init the alpha slider UI in common properties
+         Init the alpha slider UI in the common properties
          @method _alphaSliderInit
          **/
         _alphaSliderInit: function () {
+            var self = this;
+
             $(Elements.BLOCK_ALPHA_SLIDER).noUiSlider({
                 handles: 1,
                 start: 100,
@@ -53,6 +73,12 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'minicolors', 's
                 serialization: {
                     to: [ $(Elements.BLOCK_ALPHA_LABEL), 'text' ]
                 }
+            });
+
+            self.m_blockAlphaHandler = $(Elements.BLOCK_ALPHA_SLIDER).on('change', function (e) {
+                var alpha = parseFloat($(Elements.BLOCK_ALPHA_SLIDER).val()) / 100;
+                BB.comBroker.fire(BB.EVENTS.ALPHA_CHANGED, this, self, alpha)
+                return false;
             });
         },
 

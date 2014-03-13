@@ -47,6 +47,21 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
         },
 
         /**
+         Create the Block property view if non existent or return it if exists
+         @method _factoryBlockProperties
+         @param {Object} i_BlockProperties instance of BlockProperties
+         @return {Object} instantiated of BlockProperties
+         **/
+        _factoryBlockProperties: function(i_BlockProperties){
+            var self = this;
+            if ( BB.comBroker.getService(BB.SERVICES.BLOCK_PROPERTIES) ){
+                return BB.comBroker.getService(BB.SERVICES.BLOCK_PROPERTIES);
+            } else {
+                return new i_BlockProperties({el: Elements.BLOCK_PROPERTIES});
+            }
+        },
+
+        /**
          Use require js to load all Block modules (and in turn modules load related properties modules) and save
          reference in channel so we can later instantiate blocks within the channel
          @method _loadBlocks
@@ -56,7 +71,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
             $(Elements.SELECTED_TIMELINE).hide();
             require(['BlockProperties', 'Block', 'BlockRSS', 'BlockQR', 'BlockVideo', 'BlockImage'], function (BlockProperties, Block, BlockRSS, BlockQR, BlockVideo, BlockImage) {
 
-                self.m_blockProperties = BB.comBroker.getService(BB.SERVICES.BLOCK_PROPERTIES) == undefined ?  self.m_blockProperties = new BlockProperties({el: Elements.BLOCK_PROPERTIES}) : BB.comBroker.getService(BB.SERVICES.BLOCK_PROPERTIES);
+                self.m_blockProperties = self._factoryBlockProperties(BlockProperties);
                 self.m_block = Block;
                 self.m_blockRSS = BlockRSS;
                 self.m_blockQR = BlockQR;

@@ -4,7 +4,7 @@
  @constructor
  @return {object} instantiated BlockProperties
  **/
-define(['jquery', 'backbone','Knob', 'nouislider', 'gradient', 'spinner'], function ($, Backbone) {
+define(['jquery', 'backbone','Knob', 'nouislider', 'gradient', 'spinner'], function ($) {
 
     /**
      Custom event fired when a new block is added to timeline_channel
@@ -36,6 +36,7 @@ define(['jquery', 'backbone','Knob', 'nouislider', 'gradient', 'spinner'], funct
             self._alphaSliderInit();
             self._bgGradientInit();
             self._propLengthKnobsInit();
+            self._rssPollSpinnerInit();
         },
 
         /**
@@ -143,6 +144,14 @@ define(['jquery', 'backbone','Knob', 'nouislider', 'gradient', 'spinner'], funct
                     }
                 }
             });
+        },
+
+        /**
+         RSS poll spinner of how often to grab rss feeds from server
+         @method _rssPollSpinnerInit
+         **/
+        _rssPollSpinnerInit: function(){
+            $(Elements.RSS_POLL_SPINNER).spinner({value: 30, min: 1, max: 30, step: 1});
         }
     });
 

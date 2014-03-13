@@ -1184,7 +1184,10 @@ Software accelerated vertical
     float: left;
 }
 
-
+.hrThin {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
 
 /************************************
  fuelux
@@ -1245,7 +1248,16 @@ Software accelerated vertical
 
 .spinner input {
     float: left;
-    width: 43px;
+    width: 180px;
+}
+
+#rssPollSpinner .squareButton {
+    -webkit-appearance: none;
+    -webkit-border-radius: 0px; !important;
+    border-bottom-right-radius: 0; !important;
+    border-bottom-left-radius: 0; !important;
+    border-top-left-radius: 0; !important;
+    border-top-right-radius: 0; !important;
 }
 
 

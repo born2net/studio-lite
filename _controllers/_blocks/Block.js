@@ -62,9 +62,6 @@ define(['jquery', 'backbone'], function ($) {
             self.m_resourceID = undefined;
             this.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
 
-
-            $('#MySpinner').spinner()
-
             // common channel
             self._alphaListenChange();
             self._gradientListenChange();

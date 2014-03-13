@@ -23,6 +23,7 @@ Elements.BLOCK_IMAGE_COMMON_PROPERTIES = '#blockImageCommonProperties';
 Elements.BLOCK_VIDEO_COMMON_PROPERTIES = '#blockVideoCommonProperties';
 Elements.BLOCK_QR_COMMON_PROPERTIES = '#blockQRCommonProperties';
 Elements.BLOCK_RSS_COMMON_PROPERTIES = '#blockRSSCommonProperties';
+Elements.RSS_POLL_SPINNER = '#rssPollSpinner';
 Elements.POPUP_PROPERTIES = '#popupProperties';
 Elements.IMAGE_ASPECT_RATIO = '#imageAspectRatio';
 Elements.RSS_LINK = '#rssLink';

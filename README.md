@@ -44,7 +44,8 @@ Installation:
 
 Customization:
 ------------------------------------------------------------------------
-Keep in mind the SignageStudio lite as well as its related SDK Jalapeno are undergoing daily development and so you will lose any changes you make to your code if you overwrite it with our release build cycle.
+Keep in mind the SignageStudio lite as well as its related SDK Jalapeno are undergoing daily development and so you will lose any changes you make to your code if you overwrite it with our release builds.
+
 To overcome this you can follow these guidelines:
 
 1.	Always be sure to override files and not modify the original source file. This is true for both CSS and JavaScript code. Simply load your version of the CSS after ours to apply your latest changes. HTML files can be diffed (see below).

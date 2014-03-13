@@ -1,10 +1,11 @@
 /**
- Block property is a singleton Backbone view that represents a shared UI view for all Blocks (Channels and Scenes blocks)
+ Block property is a singleton Backbone view that represents a shared UI view for all Blocks (Channels and Scenes blocks).
+ It lives inside PropertiesViews
  @class BlockProperties
  @constructor
  @return {object} instantiated BlockProperties
  **/
-define(['jquery', 'backbone','Knob', 'nouislider', 'gradient', 'spinner'], function ($) {
+define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'minicolors', 'spinner'], function ($) {
 
     /**
      Custom event fired when a new block is added to timeline_channel
@@ -28,7 +29,7 @@ define(['jquery', 'backbone','Knob', 'nouislider', 'gradient', 'spinner'], funct
         initialize: function () {
             var self = this;
 
-            BB.comBroker.setService(BB.SERVICES.BLOCK_PROPERTIES,self);
+            BB.comBroker.setService(BB.SERVICES.BLOCK_PROPERTIES, self);
 
             this.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
             self.m_property.initPanel(Elements.BLOCK_PROPERTIES);
@@ -62,8 +63,8 @@ define(['jquery', 'backbone','Knob', 'nouislider', 'gradient', 'spinner'], funct
         _bgGradientInit: function () {
             var self = this;
 
-            var lazyUpdateBgColor = _.debounce(function(points, styles){
-                BB.comBroker.fire(BB.EVENTS.GRADIENT_COLOR_CHANGED,self,null,{points: points, styles: styles})
+            var lazyUpdateBgColor = _.debounce(function (points, styles) {
+                BB.comBroker.fire(BB.EVENTS.GRADIENT_COLOR_CHANGED, self, null, {points: points, styles: styles})
             }, 800);
 
             $(Elements.BG_COLOR_GRADIENT_SELECTOR).gradientPicker({
@@ -150,8 +151,28 @@ define(['jquery', 'backbone','Knob', 'nouislider', 'gradient', 'spinner'], funct
          RSS poll spinner of how often to grab rss feeds from server
          @method _rssPollSpinnerInit
          **/
-        _rssPollSpinnerInit: function(){
+        _rssPollSpinnerInit: function () {
             $(Elements.RSS_POLL_SPINNER).spinner({value: 30, min: 1, max: 30, step: 1});
+
+            var settings = {
+                animationSpeed: 50,
+                animationEasing: 'swing',
+                change: null,
+                changeDelay: 0,
+                control: 'hue',
+                defaultValue: '',
+                hide: null,
+                hideSpeed: 100,
+                inline: false,
+                letterCase: 'lowercase',
+                opacity: false,
+                position: 'bottom left',
+                show: null,
+                showSpeed: 100,
+                theme: 'bootstrap'
+            }
+
+            $('#hue-demo').minicolors(settings);
         }
     });
 

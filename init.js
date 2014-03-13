@@ -15,6 +15,7 @@ require.config({
         'bootbox': '_common/_js/bootbox/bootbox',
         'Cookie': '_common/_js/cookie/jquery.cookie',
         'gradient': '_common/_js/gradient/jquery.gradientPicker',
+        'minicolors': '_common/_js/minicolors/jquery.minicolors',
         'colorpicker': '_common/_js/gradient/colorpicker',
         'RC4': '_common/_js/rc4/RC4',
         'localizer': '_common/_js/localizer/dist/jquery.localize',
@@ -147,9 +148,12 @@ require.config({
             deps: ['jquery','jqueryui'],
             exports: 'colorpicker'
         },
+        'minicolors': {
+            deps: ['jquery'],
+            exports: 'minicolors'
+        },
         'gradient': {
             deps: ['jquery', 'colorpicker','jqueryui']
-
         }
     }
 });

@@ -539,7 +539,15 @@
                             </select>
                         </div>
                         <div id="blockRSSCommonProperties" style="display: none">
-                            <div><span>RSS URL</span>
+                            <hr class="hrThin"/>
+                            <span>RSS news source</span>
+                            <select id="rssSource" class="propControlWidth form-control">
+                                <option>CNN</option>
+                                <option>Yahoo</option>
+                                <option>Custom</option>
+                            </select>
+
+                            <div>
                                 <div data-role="fieldcontain" data-inset="true">
                                     <input id="rssLink" type="text" name="name" class="propControlWidth" value=""
                                            placeholder="Enter RSS Link Text">
@@ -547,6 +555,7 @@
                             </div>
                             <hr class="hrThin"/>
                             <span>RSS poll timer (minutes)</span>
+
                             <div id="rssPollSpinner" class="spinner">
                                 <input type="text" class="input-mini spinner-input">
 
@@ -573,6 +582,17 @@
                                 <option>Medium</option>
                                 <option>Fast</option>
                             </select>
+                            <hr class="hrThin"/>
+                            <span>Font</span>
+                            <select id="rssFont" class="propControlWidth form-control">
+                                <option>Arial</option>
+                                <option>Times</option>
+                            </select>
+                            <hr class="hrThin"/>
+                            <div class="form-group">
+                                <span>Pick color</span>
+                                <input type="text" id="hue-demo" class="propControlWidth form-control demo" data-control="hue" value="#ff6161">
+                            </div>
                         </div>
                         <div id="blockQRCommonProperties" style="display: none"><span>QR</span>
 

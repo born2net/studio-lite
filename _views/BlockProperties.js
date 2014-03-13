@@ -199,6 +199,33 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'minicolors', 's
             }
 
             $('#hue-demo').minicolors(settings);
+        },
+
+        /**
+         Bring into view the Block property StackView panel
+         @method viewbPanel
+         **/
+        viewPanel: function(i_panel){
+            var self = this;
+            self.m_property.viewPanel(i_panel);
+        },
+
+        /**
+         Bring into view the Block property StackView SubPanel
+         @method showBlockProperty
+         **/
+        initSubPanel: function(i_panel){
+            var self = this;
+            self.m_property.initSubPanel(i_panel);
+        },
+
+        /**
+         Bring into view the Block property StackView SubPanel
+         @method showBlockProperty
+         **/
+        viewSubPanel: function(i_panel){
+            var self = this;
+            self.m_property.viewSubPanel(i_panel);
         }
     });
 

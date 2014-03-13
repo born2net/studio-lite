@@ -53,7 +53,7 @@ define(['jquery', 'backbone'], function ($) {
             self.m_blockDescription = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).description;
             self.m_blockIcon = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).icon;
             self.m_resourceID = undefined;
-            self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
+            self.m_blockProperty = BB.comBroker.getService(BB.SERVICES['BLOCK_PROPERTIES']);
 
             // common channel
             self._alphaListenChange();
@@ -75,6 +75,26 @@ define(['jquery', 'backbone'], function ($) {
                     break;
                 }
             }
+        },
+
+        /**
+         Init the sub properties panel for a block
+         @method _initSubPanel
+         @param {String} i_panel
+         **/
+        _initSubPanel: function(i_panel){
+           var self = this;
+           self.m_blockProperty.initSubPanel(i_panel);
+        },
+
+        /**
+         Bring into view a sub properties panel of this block
+         @method _viewSubPanel
+         @param {String} i_panel
+         **/
+        _viewSubPanel: function(i_panel){
+            var self = this;
+            self.m_blockProperty.viewSubPanel(i_panel);
         },
 
         /**
@@ -180,7 +200,7 @@ define(['jquery', 'backbone'], function ($) {
                 }
 
                 self.m_selected = true;
-                self.m_property.viewPanel(Elements.BLOCK_PROPERTIES);
+                self.m_blockProperty.viewPanel(Elements.BLOCK_PROPERTIES);
                 self._updateTitle();
                 self._updateTitleTab();
                 self._alphaPopulate();

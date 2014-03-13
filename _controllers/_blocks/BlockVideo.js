@@ -20,7 +20,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_blockType = 3100;
             _.extend(options, {blockType: self.m_blockType})
             Block.prototype.constructor.call(this, options);
-            self.m_property.initSubPanel(Elements.BLOCK_VIDEO_COMMON_PROPERTIES);
+            self._initSubPanel(Elements.BLOCK_VIDEO_COMMON_PROPERTIES);
             self._listenInputChange();
             self._initResourcesData();
         },
@@ -49,7 +49,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _loadBlockSpecificProps: function () {
             var self = this;
             self._populate();
-            this.m_property.viewSubPanel(Elements.BLOCK_VIDEO_COMMON_PROPERTIES);
+            this._viewSubPanel(Elements.BLOCK_VIDEO_COMMON_PROPERTIES);
         },
 
         /**
@@ -76,7 +76,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('AspectRatio');
                 $(xSnippet).attr('maintain', aspectRatio);
-                self._updatePlayerData(domPlayerData);
+                self._setBlockPlayerData(domPlayerData);
                 // log(xSnippet[0].parentElement.parentElement.parentElement.outerHTML);
             });
         },

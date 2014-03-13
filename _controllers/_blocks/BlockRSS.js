@@ -20,7 +20,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_blockType = 3345;
             _.extend(options, {blockType: self.m_blockType})
             Block.prototype.constructor.call(this, options);
-            self.m_property.initSubPanel(Elements.BLOCK_RSS_COMMON_PROPERTIES);
+            self._initSubPanel(Elements.BLOCK_RSS_COMMON_PROPERTIES);
             self._listenInputChange();
         },
 
@@ -38,7 +38,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Rss');
                 $(xSnippet).attr('url', text);
-                self._updatePlayerData(domPlayerData);
+                self._setBlockPlayerData(domPlayerData);
                 // log(xSnippet[0].outerHTML);
             }, 150);
             self.m_inputChangeHandler = $(Elements.RSS_LINK).on("input", onChange);
@@ -65,7 +65,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _loadBlockSpecificProps: function () {
             var self = this;
             self._populate();
-            this.m_property.viewSubPanel(Elements.BLOCK_RSS_COMMON_PROPERTIES);
+            this._viewSubPanel(Elements.BLOCK_RSS_COMMON_PROPERTIES);
         },
 
         /**

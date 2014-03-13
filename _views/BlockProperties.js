@@ -91,7 +91,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'minicolors', 's
 
             var lazyUpdateBgColor = _.debounce(function (points, styles) {
                 BB.comBroker.fire(BB.EVENTS.GRADIENT_COLOR_CHANGED, self, null, {points: points, styles: styles})
-            }, 800);
+            }, 333);
 
             $(Elements.BG_COLOR_GRADIENT_SELECTOR).gradientPicker({
                 change: lazyUpdateBgColor,
@@ -203,7 +203,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'minicolors', 's
 
         /**
          Bring into view the Block property StackView panel
-         @method viewbPanel
+         @method viewPanel
          **/
         viewPanel: function(i_panel){
             var self = this;

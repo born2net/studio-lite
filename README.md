@@ -42,6 +42,22 @@ Installation:
 - Unzip all files into _studiolite-dev directory
 - Point browser to: [YOUR_SERVER]/_studiolite-dev/studiolite.html
 
+Customization:
+------------------------------------------------------------------------
+Keep in mind the SignageStudio lite as well as its related SDK Jalapeno are undergoing daily development and so you will lose any changes you make to your code if you overwrite it with our release build cycle.
+To overcome this you can follow these guidelines:
+
+1.	Always be sure to override files and not modify the original source file. This is true for both CSS and JavaScript code. Simply load your version of the CSS after ours to apply your latest changes. HTML files can be diffed (see below).
+2.	Our code base is modulated and uses 100% object oriented design pattern. This allows you to sub class (aka inherit) from our classes and make your applied changes (use _.extend to mixin).
+3.	You can also use pre-processor scripts which replace code segments automatically using directives.
+4.	And finally, even while following steps 1-3 you may find that your code is broken due to design changes in the original repository. That’s when GitHub comes to the rescue. When your fork the source repository, you can always merge the tree onto your forked project. Use source control diff tool to merge the changes into your code and resolve any conflicts.
+
+With the above steps you can ensure that your source code is fully customizable while still keeping it synchronized with our ongoing development efforts.
+
+If you are not a developer you can hire professional, inexpensive help from sites like oDesk and Freelancer. Just post you are looking for a JavaScript, jQuery, Backbone experienced developer.
+
+
+
 License:
 ------------------------------------------------------------------------
 - The SignageStudio Web Lite and Jalapeno SDK are available under GPL V3 3 https://github.com/born2net/signagestudio_web-lite/blob/master/LICENSE

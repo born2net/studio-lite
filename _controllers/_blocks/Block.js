@@ -35,8 +35,6 @@ define(['jquery', 'backbone'], function ($) {
      **/
     BB.EVENTS.BLOCK_SELECTED = 'BLOCK_SELECTED';
 
-
-
     var Block = BB.Controller.extend({
 
         /**
@@ -139,7 +137,6 @@ define(['jquery', 'backbone'], function ($) {
             BB.comBroker.listenWithNamespace(BB.EVENTS.GRADIENT_COLOR_CHANGED, self, function (e) {
                 if (!self.m_selected)
                     return;
-
                 var points = e.edata.points;
                 var styles = e.edata.styles;
                 if (points.length == 0)
@@ -170,7 +167,7 @@ define(['jquery', 'backbone'], function ($) {
             var self = this;
 
             var gradient = $(Elements.BG_COLOR_GRADIENT_SELECTOR).data("gradientPicker-sel");
-            // gradient.changeFillDirection("top"); /* change diretion future support */
+            // gradient.changeFillDirection("top"); /* change direction future support */
             gradient.removeAllPoints();
             var domPlayerData = self._getBlockPlayerData();
             var xSnippet = $(domPlayerData).find('GradientPoints');

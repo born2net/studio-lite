@@ -599,6 +599,7 @@ aside > aside > div > ul > li {
     background-color: #75b1ae;
 }
 
+
 /************************************
  StackView styling
  ************************************/
@@ -1190,6 +1191,28 @@ Software accelerated vertical
 }
 
 /************************************
+ Font Selector / Formatter
+ ************************************/
+
+.fontFormatter {
+    float: left;
+    margin-left: 5px;
+}
+
+.fontAlignment {
+    float: left;
+    margin-left: 4px;
+    width: 35px;
+    position: relative;
+    top: -2px;
+    left: -15px;
+}
+
+.divPadding {
+    padding: 5px;
+}
+
+/************************************
  fuelux
  ************************************/
 
@@ -1211,6 +1234,10 @@ Software accelerated vertical
     cursor: not-allowed;
 }
 
+i .spinner-buttons {
+    font-size: 0.9em;
+}
+
 .spinner .spinner-buttons {
     position: relative;
     left: -22px;
@@ -1227,7 +1254,7 @@ Software accelerated vertical
 
 .spinner .spinner-up i {
     position: relative;
-    top: -6px;
+    top: -4px;
 }
 
 .spinner .spinner-down {
@@ -1239,7 +1266,7 @@ Software accelerated vertical
 
 .spinner .spinner-down i {
     position: relative;
-    top: -6px;
+    top: -5px;
 }
 
 .input-mini {
@@ -1302,7 +1329,8 @@ minicolors
     height: 152px;
     background: white;
     border: solid 1px #CCC;
-    box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+    /* box-shadow: 0 0 20px rgba(0, 0, 0, .2); */
+    box-shadow: none;
     z-index: 99999;
     -moz-box-sizing: content-box;
     -webkit-box-sizing: content-box;
@@ -1510,4 +1538,10 @@ minicolors
 .minicolors-theme-bootstrap.minicolors-position-right .minicolors-input {
     padding-right: 44px;
     padding-left: 12px;
+}
+
+.minicolor-mini {
+    color: #ffffff;
+    width: 30px;
+    border: 0px;
 }

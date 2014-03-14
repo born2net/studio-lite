@@ -5,7 +5,7 @@
  @constructor
  @return {object} instantiated BlockProperties
  **/
-define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'minicolors', 'spinner'], function ($) {
+define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'minicolors', 'spinner', 'FontSelector'], function ($, Backbone, Knob, nouislider, gradient, minicolors, spinner, FontSelector) {
 
     /**
      Custom event fired when a new block is added to timeline_channel
@@ -55,6 +55,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'minicolors', 's
             self._alphaSliderInit();
             self._bgGradientInit();
             self._propLengthKnobsInit();
+            self._rssFontSelectionInit();
             self._rssPollSpinnerInit();
         },
 
@@ -171,6 +172,13 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'minicolors', 's
                     }
                 }
             });
+        },
+
+        _rssFontSelectionInit: function(){
+
+            var fontSelector = new FontSelector({appendTo: Elements.RSS_FONT_SETTINGS});
+
+
         },
 
         /**

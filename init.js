@@ -48,6 +48,7 @@ require.config({
         'ResourceListView': '_views/ResourceListView',
         'AddBlockView': '_views/AddBlockView',
         'BlockProperties': '_views/BlockProperties',
+        'FontSelector': '_views/FontSelector',
         'AppContentFaderView': '_views/AppContentFaderView',
         'AppEntryFaderView': '_views/AppEntryFaderView',
         'LoginView': '_views/LoginView',

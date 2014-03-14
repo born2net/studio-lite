@@ -561,10 +561,10 @@
 
                                 <div class="spinner-buttons	btn-group btn-group-vertical">
                                     <button type="button" class="squareButton btn spinner-up">
-                                        <i style="font-size: 0.6em" class="fa fa-chevron-up"></i>
+                                        <i class="fa fa-chevron-up"></i>
                                     </button>
                                     <button type="button" class="squareButton btn spinner-down">
-                                        <i style="font-size: 0.6em" class="fa fa-chevron-down"></i>
+                                        <i class="fa fa-chevron-down"></i>
                                     </button>
                                 </div>
                             </div>
@@ -582,17 +582,16 @@
                                 <option>Medium</option>
                                 <option>Fast</option>
                             </select>
+
+
                             <hr class="hrThin"/>
                             <span>Font</span>
-                            <select id="rssFont" class="propControlWidth form-control">
-                                <option>Arial</option>
-                                <option>Times</option>
-                            </select>
-                            <hr class="hrThin"/>
-                            <div class="form-group">
-                                <span>Pick color</span>
-                                <input type="text" id="hue-demo" class="propControlWidth form-control demo" data-control="hue" value="#ff6161">
+
+                            <div id="rssFontSettings">
                             </div>
+                            <hr class="hrThin"/>
+
+
                         </div>
                         <div id="blockQRCommonProperties" style="display: none"><span>QR</span>
 
@@ -669,6 +668,51 @@
         <input type="submit" value="Submit">
     </form>
 </div>
+
+<div id="fontSelectorTemplate" style="display: none">
+    <div class="form-group">
+        <select class="propControlWidth form-control">
+            <option>Arial</option>
+            <option>Times</option>
+        </select>
+
+        <div class="divPadding"></div>
+        <div>
+            <input type="text" id="hue-demo" class="fontFormatter form-control minicolor-mini"
+                   data-control="hue" value="#428bca">
+            <button type="button" class="fontFormatter btn btn-default btn-sm"><i
+                    class="gencons fa fa-bold"></i></button>
+            <button type="button" class="fontFormatter btn btn-default btn-sm"><i
+                    class="gencons fa fa-underline"></i></button>
+            <button type="button" class="fontFormatter btn btn-default btn-sm"><i
+                    class="gencons fa fa-italic"></i></button>
+        </div>
+        <div style="clear: both; padding: 3px"></div>
+        <div>
+            <div style="float: left" class="spinner">
+                <input type="text" style="width: 60px"
+                       class="fontFormatter input-mini spinner-input">
+
+                <div class="spinner-buttons	btn-group btn-group-vertical">
+                    <button type="button" class="squareButton btn spinner-up">
+                        <i class="fa fa-chevron-up"></i>
+                    </button>
+                    <button type="button" class="squareButton btn spinner-down">
+                        <i class="fa fa-chevron-down"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button type="button" class="fontAlignment btn btn-default btn-sm"><i
+                    class="gencons fa fa-align-left"></i></button>
+            <button type="button" class="fontAlignment btn btn-default btn-sm"><i
+                    class="gencons fa fa-align-center"></i></button>
+            <button type="button" class="fontAlignment btn btn-default btn-sm"><i
+                    class="gencons fa fa-align-right"></i></button>
+        </div>
+    </div>
+</div>
+
 
 <div id="stackWaitModalView" style="display: none">
     <h1>please wait</h1>

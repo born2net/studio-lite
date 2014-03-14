@@ -181,7 +181,10 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'minicolors', 's
          **/
         _rssFontSelectorInit: function(){
             var self = this;
-            self.m_rssFontSelector = new FontSelector({appendTo: Elements.RSS_FONT_SETTINGS});
+            self.m_rssFontSelector = new FontSelector({
+                appendTo: Elements.RSS_FONT_SETTINGS,
+                colorSettings: {animationSpeed: 100}
+            });
         },
 
         /**

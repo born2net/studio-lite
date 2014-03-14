@@ -1,5 +1,5 @@
 /**
- This class manages a set of elements all designed to provide user with UI for font settings
+ This independent class manages a set of elements all designed to provide user with UI for font settings
  @class FontSelector
  @constructor
  @return {Object} instantiated FontSelector
@@ -17,7 +17,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         initialize: function () {
             var self = this;
 
-            self.m_colorSettings = self.options['colorSettings'] || {
+            self.m_colorSettings = {
                 animationSpeed: 50,
                 animationEasing: 'swing',
                 change: null,
@@ -35,6 +35,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 theme: 'bootstrap'
             };
 
+            _.extend(self.m_colorSettings, self.options['colorSettings']);
+
             self.$el = $(Elements.FONT_SELECTOR_TEMPLATE).clone()
             self.el = self.$el[0];
             $(self.options.appendTo).append(self.el).fadeIn('fast');
@@ -43,15 +45,20 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         events: {
-            'click': 'onClick'
+            'click': '_onClick'
         },
 
+        /**
+         Init the minicolors widget under this created instance
+         @method _initColorSelector
+         **/
         _initColorSelector: function () {
             var self = this;
             self.$el.find(Elements.CLASS_FONT_SELECTOR_MINICOLOR).minicolors(self.m_colorSettings);
         },
 
-        onClick: function (e) {
+        _onClick: function (e) {
+            var self = this;
             $(e.target).closest('button').toggleClass('active');
         }
 

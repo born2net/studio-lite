@@ -21,10 +21,26 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             _.extend(options, {blockType: self.m_blockType})
             Block.prototype.constructor.call(this, options);
 
-            //todo: listen to FONT_SELECTION_CHANGED
             self.m_rssFontSelector = self.m_blockProperty.getRssFontSelector();
             self._initSubPanel(Elements.BLOCK_RSS_COMMON_PROPERTIES);
             self._listenInputChange();
+            self._listenFontSelectionChange();
+        },
+
+        /**
+         Listen to changes in font selection from Block property and take action on changes
+         @method _listenFontSelectionChange
+         **/
+        _listenFontSelectionChange: function () {
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS.FONT_SELECTION_CHANGED, function (e) {
+                if (!self.m_selected)
+                    return;
+
+
+
+            });
+
         },
 
         /**

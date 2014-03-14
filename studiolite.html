@@ -671,43 +671,42 @@
 
 <div id="fontSelectorTemplate" style="display: none">
     <div class="form-group">
-        <select class="propControlWidth form-control">
+        <select name="fontSelection" class="propControlWidth form-control">
             <option>Arial</option>
             <option>Times</option>
         </select>
 
         <div class="divPadding"></div>
         <div>
-            <input type="text" class="fontSelectorMiniColor fontFormatter form-control minicolor-mini"
+            <input type="text" name="colorSelect" class="fontSelectorMiniColor fontFormatter form-control minicolor-mini"
                    data-control="hue" value="#428bca">
-            <button type="button" class="fontFormatter btn btn-default btn-sm"><i
+            <button type="button" name="bold" class="fontFormatter btn btn-default btn-sm"><i
                     class="gencons fa fa-bold"></i></button>
-            <button type="button" class="fontFormatter btn btn-default btn-sm"><i
+            <button type="button" name="underline" class="fontFormatter btn btn-default btn-sm"><i
                     class="gencons fa fa-underline"></i></button>
-            <button type="button" class="fontFormatter btn btn-default btn-sm"><i
+            <button type="button" name="italic" class="fontFormatter btn btn-default btn-sm"><i
                     class="gencons fa fa-italic"></i></button>
         </div>
         <div style="clear: both; padding: 3px"></div>
         <div>
             <div style="float: left" class="spinner">
-                <input type="text" style="width: 60px"
-                       class="fontFormatter input-mini spinner-input">
+                <input type="text" style="width: 60px" class="fontFormatter input-mini spinner-input">
 
                 <div class="spinner-buttons	btn-group btn-group-vertical">
-                    <button type="button" class="squareButton btn spinner-up">
+                    <button type="button" name="fontSizeUp" class="squareButton btn spinner-up">
                         <i class="fa fa-chevron-up"></i>
                     </button>
-                    <button type="button" class="squareButton btn spinner-down">
+                    <button type="button" name="fontSizeDown" class="squareButton btn spinner-down">
                         <i class="fa fa-chevron-down"></i>
                     </button>
                 </div>
             </div>
 
-            <button type="button" class="fontAlignment btn btn-default btn-sm"><i
+            <button type="button" name="alignLeft" class="fontAlignment active btn btn-default btn-sm"><i
                     class="gencons fa fa-align-left"></i></button>
-            <button type="button" class="fontAlignment btn btn-default btn-sm"><i
+            <button type="button" name="alignCenter" class="fontAlignment btn btn-default btn-sm"><i
                     class="gencons fa fa-align-center"></i></button>
-            <button type="button" class="fontAlignment btn btn-default btn-sm"><i
+            <button type="button" name="alignRight" class="fontAlignment btn btn-default btn-sm"><i
                     class="gencons fa fa-align-right"></i></button>
         </div>
     </div>

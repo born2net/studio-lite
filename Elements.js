@@ -156,6 +156,9 @@ Elements.CLASS_BLOCK_LENGTH_TIMER = '.blockLengthTimer';
 Elements.CLASS_NAV_ICONS = '.navicons';
 Elements.CLASS_HELP_LINKS = '.helpLinks';
 Elements.CLASS_FONT_SELECTOR_MINICOLOR = '.fontSelectorMiniColor';
+Elements.CLASS_FONT_ALIGNMENT = '.fontAlignment';
+Elements.CLASS_SPINNER_INPUT = '.spinner-input';
+
 
 /**
  List of all Elements / Classes of elements used in the DOM

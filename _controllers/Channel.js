@@ -71,7 +71,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
             $(Elements.SELECTED_TIMELINE).hide();
             require(['BlockProperties', 'Block', 'BlockRSS', 'BlockQR', 'BlockVideo', 'BlockImage'], function (BlockProperties, Block, BlockRSS, BlockQR, BlockVideo, BlockImage) {
 
-                self.m_blockProperties = self._factoryBlockProperties(BlockProperties);
+                self._factoryBlockProperties(BlockProperties);
                 self.m_block = Block;
                 self.m_blockRSS = BlockRSS;
                 self.m_blockQR = BlockQR;

@@ -28,6 +28,7 @@ define(['jquery', 'backbone', 'minicolors', 'spinner'], function ($, Backbone, m
         initialize: function () {
             var self = this;
 
+
             self.m_config = {
                 bold: false,
                 italic: false,
@@ -38,13 +39,15 @@ define(['jquery', 'backbone', 'minicolors', 'spinner'], function ($, Backbone, m
                 size: 12
             }
 
+            self.m_colorSelector = undefined;
             self.m_colorSettings = {
                 animationSpeed: 50,
                 animationEasing: 'swing',
                 change: $.proxy(self._onColorSelected, self),
                 changeDelay: 100,
                 control: 'hue',
-                defaultValue: '',
+                value: '#428bca',
+                defaultValue: '#428bca',
                 hide: null,
                 hideSpeed: 100,
                 inline: false,
@@ -65,10 +68,22 @@ define(['jquery', 'backbone', 'minicolors', 'spinner'], function ($, Backbone, m
             var currID = self.$el.attr('id');
             self.$el.attr('id', _.uniqueId(currID));
             self.$el.find(Elements.CLASS_SPINNER_INPUT).closest('div').spinner({value: self.m_config.size, min: 1, max: 30, step: 1});
+
+            setTimeout(function () {
+                self.m_config.color = '#ff0000';
+                self.render(self.m_config);
+            }, 5000);
         },
 
         events: {
             'click': '_onClick'
+        },
+
+        render: function (i_config) {
+            var self = this;
+            self.m_config = i_config;
+            $(self.m_colorSelector).minicolors('value', self.m_config.color);
+
         },
 
         /**
@@ -77,7 +92,9 @@ define(['jquery', 'backbone', 'minicolors', 'spinner'], function ($, Backbone, m
          **/
         _initColorSelector: function () {
             var self = this;
-            self.$el.find(Elements.CLASS_FONT_SELECTOR_MINICOLOR).minicolors(self.m_colorSettings);
+            self.m_colorSelector = self.$el.find(Elements.CLASS_FONT_SELECTOR_MINICOLOR);
+            self.m_colorSelector.minicolors(self.m_colorSettings);
+            // var b = self.$el.find(Elements.CLASS_FONT_SELECTOR_MINICOLOR).minicolors(self.m_colorSettings);
         },
 
         _onColorSelected: function (i_color) {
@@ -86,6 +103,7 @@ define(['jquery', 'backbone', 'minicolors', 'spinner'], function ($, Backbone, m
         },
 
         _onFontSelected: function (i_target) {
+            var self = this;
             self.m_config.font = $(i_target).val();
         },
 

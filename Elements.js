@@ -135,6 +135,7 @@ Elements.CONVERT_ACCOUNT = '#convertAccount'
 Elements.SUBSCRIBE_ACCOUNT = '#subscribeAccount';
 Elements.STATION_ALERT = '#stationAlert';
 
+
 // classes
 Elements.CLASS_SCREEN_DIVISION = '.screenDivisionClass';
 Elements.CLASS_CHANNEL_LIST_ITEMS = '.channelListItems';

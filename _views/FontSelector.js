@@ -6,6 +6,17 @@
  **/
 define(['jquery', 'backbone'], function ($, Backbone) {
 
+    /**
+     Custom event fired when a font settings changed
+     @event FONT_SELECTION_CHANGED
+     @param {This} caller
+     @param {Self} context caller
+     @param {Event} edata
+     @static
+     @final
+     **/
+    BB.EVENTS.FONT_SELECTION_CHANGED = 'FONT_SELECTION_CHANGED';
+
     BB.SERVICES.FONT_SELECTOR = 'FontSelector';
 
     var FontSelector = BB.View.extend({
@@ -42,6 +53,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             $(self.options.appendTo).append(self.el).fadeIn('fast');
             self.$el.show();
             self._initColorSelector();
+            var currID = self.$el.attr('id');
+            self.$el.attr('id', _.uniqueId(currID));
         },
 
         events: {
@@ -60,6 +73,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _onClick: function (e) {
             var self = this;
             $(e.target).closest('button').toggleClass('active');
+            BB.comBroker.fire(BB.EVENTS.FONT_SELECTION_CHANGED,self,self);
+
+            //todo: have rss component grab instance of this FontSelection from blockProp
+            // and listen to FONT_SELECTION_CHANGED and if self.selected in rss component do something with this instance
         }
 
     });

@@ -28,7 +28,6 @@ define(['jquery', 'backbone', 'minicolors', 'spinner'], function ($, Backbone, m
         initialize: function () {
             var self = this;
 
-
             self.m_config = {
                 bold: false,
                 italic: false,
@@ -74,7 +73,7 @@ define(['jquery', 'backbone', 'minicolors', 'spinner'], function ($, Backbone, m
             var currID = self.$el.attr('id');
             self.$el.attr('id', _.uniqueId(currID));
 
-            setTimeout(function () {
+            /*setTimeout(function () {
                 self.m_config = {
                     bold: true,
                     italic: true,
@@ -85,7 +84,7 @@ define(['jquery', 'backbone', 'minicolors', 'spinner'], function ($, Backbone, m
                     size: 32
                 };
                 self.render(self.m_config);
-            }, 4000);
+            }, 4000);*/
         },
 
         events: {
@@ -115,6 +114,7 @@ define(['jquery', 'backbone', 'minicolors', 'spinner'], function ($, Backbone, m
             $(buttonAlignment).addClass('active');
 
             $('option:contains("' + self.m_config.font + '")',self.$el).prop('selected','selected');
+            // $('#selDiv option:contains("Selection 1")')
         },
 
         _initFontSizeSelector: function(){
@@ -218,7 +218,6 @@ define(['jquery', 'backbone', 'minicolors', 'spinner'], function ($, Backbone, m
             BB.comBroker.fire(BB.EVENTS.FONT_SELECTION_CHANGED, self, self, self.m_config);
             return false;
         }
-
     });
 
     return FontSelector;

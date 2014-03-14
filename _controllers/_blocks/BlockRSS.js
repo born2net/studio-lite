@@ -36,11 +36,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             BB.comBroker.listen(BB.EVENTS.FONT_SELECTION_CHANGED, function (e) {
                 if (!self.m_selected)
                     return;
-
-
-
             });
-
         },
 
         /**

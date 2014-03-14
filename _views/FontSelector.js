@@ -33,13 +33,16 @@ define(['jquery', 'backbone', 'minicolors', 'spinner'], function ($, Backbone, m
                 bold: false,
                 italic: false,
                 underline: false,
-                alignment: 'left',
+                alignment: 'alignLeft',
                 font: 'Arial',
                 color: '#428bca',
                 size: 12
-            }
+            };
 
             self.m_colorSelector = undefined;
+            self.m_fontSizeSelector = undefined;
+            self.m_fontSizeInput = undefined;
+
             self.m_colorSettings = {
                 animationSpeed: 50,
                 animationEasing: 'swing',
@@ -64,15 +67,25 @@ define(['jquery', 'backbone', 'minicolors', 'spinner'], function ($, Backbone, m
             self.el = self.$el[0];
             $(self.options.appendTo).append(self.el).fadeIn('fast');
             self.$el.show();
+
             self._initColorSelector();
+            self._initFontSizeSelector();
+
             var currID = self.$el.attr('id');
             self.$el.attr('id', _.uniqueId(currID));
-            self.$el.find(Elements.CLASS_SPINNER_INPUT).closest('div').spinner({value: self.m_config.size, min: 1, max: 30, step: 1});
 
             setTimeout(function () {
-                self.m_config.color = '#ff0000';
+                self.m_config = {
+                    bold: true,
+                    italic: true,
+                    underline: true,
+                    alignment: 'alignRight',
+                    font: 'Times',
+                    color: '#ff0000',
+                    size: 32
+                };
                 self.render(self.m_config);
-            }, 5000);
+            }, 4000);
         },
 
         events: {
@@ -81,9 +94,34 @@ define(['jquery', 'backbone', 'minicolors', 'spinner'], function ($, Backbone, m
 
         render: function (i_config) {
             var self = this;
+
+            self._deSelectFontAlignments();
+
             self.m_config = i_config;
             $(self.m_colorSelector).minicolors('value', self.m_config.color);
 
+            var buttonBold = self.m_colorSelector = self.$el.find('[name="bold"]');
+            self.m_config.bold == true ? buttonBold.addClass('active') : buttonBold.removeClass('active');
+
+            var buttonUnderline = self.m_colorSelector = self.$el.find('[name="underline"]');
+            self.m_config.underline == true ? buttonUnderline.addClass('active') : buttonUnderline.removeClass('active');
+
+            var buttonItalic = self.m_colorSelector = self.$el.find('[name="italic"]');
+            self.m_config.italic == true ? buttonItalic.addClass('active') : buttonItalic.removeClass('active');
+
+            $(self.m_fontSizeInput).val(self.m_config.size);
+
+            var buttonAlignment = self.m_colorSelector = self.$el.find('[name="' + self.m_config.alignment + '"]');
+            $(buttonAlignment).addClass('active');
+
+            $('option:contains("' + self.m_config.font + '")',self.$el).prop('selected','selected');
+        },
+
+        _initFontSizeSelector: function(){
+            var self = this;
+            self.m_fontSizeInput = self.$el.find(Elements.CLASS_SPINNER_INPUT);
+            self.m_fontSizeSelector = self.m_fontSizeInput.closest('div');
+            self.m_fontSizeSelector.spinner({value: self.m_config.size, min: 1, max: 30, step: 1});
         },
 
         /**
@@ -94,7 +132,6 @@ define(['jquery', 'backbone', 'minicolors', 'spinner'], function ($, Backbone, m
             var self = this;
             self.m_colorSelector = self.$el.find(Elements.CLASS_FONT_SELECTOR_MINICOLOR);
             self.m_colorSelector.minicolors(self.m_colorSettings);
-            // var b = self.$el.find(Elements.CLASS_FONT_SELECTOR_MINICOLOR).minicolors(self.m_colorSettings);
         },
 
         _onColorSelected: function (i_color) {
@@ -109,7 +146,6 @@ define(['jquery', 'backbone', 'minicolors', 'spinner'], function ($, Backbone, m
 
         _deSelectFontAlignments: function () {
             var self = this;
-            self.m_config.alignment = 'left';
             self.$el.find(Elements.CLASS_FONT_ALIGNMENT).removeClass('active');
         },
 
@@ -126,8 +162,6 @@ define(['jquery', 'backbone', 'minicolors', 'spinner'], function ($, Backbone, m
 
             if (_.isUndefined(buttonName))
                 return;
-
-            log(buttonName);
 
             switch (buttonName) {
                 case 'bold':
@@ -151,32 +185,32 @@ define(['jquery', 'backbone', 'minicolors', 'spinner'], function ($, Backbone, m
                 case 'alignLeft':
                 {
                     self._deSelectFontAlignments();
-                    self.m_config.alignment = 'left';
+                    self.m_config.alignment = 'alignLeft';
                     $button.toggleClass('active');
                     break;
                 }
                 case 'alignRight':
                 {
                     self._deSelectFontAlignments();
-                    self.m_config.alignment = 'right';
+                    self.m_config.alignment = 'alignRight';
                     $button.toggleClass('active');
                     break;
                 }
                 case 'alignCenter':
                 {
                     self._deSelectFontAlignments();
-                    self.m_config.alignment = 'center';
+                    self.m_config.alignment = 'alignCenter';
                     $button.toggleClass('active');
                     break;
                 }
                 case 'fontSizeUp':
                 {
-                    self.m_config.size = self.$el.find(Elements.CLASS_SPINNER_INPUT).val();
+                    self.m_config.size = self.m_fontSizeInput.val();
                     break;
                 }
                 case 'fontSizeDown':
                 {
-                    self.m_config.size = self.$el.find(Elements.CLASS_SPINNER_INPUT).val();
+                    self.m_config.size = self.m_fontSizeInput.val();
                     break;
                 }
             }

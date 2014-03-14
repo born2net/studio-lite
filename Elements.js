@@ -155,6 +155,7 @@ Elements.CLASS_KNOB = '.knob';
 Elements.CLASS_BLOCK_LENGTH_TIMER = '.blockLengthTimer';
 Elements.CLASS_NAV_ICONS = '.navicons';
 Elements.CLASS_HELP_LINKS = '.helpLinks';
+Elements.CLASS_FONT_SELECTOR_MINICOLOR = '.fontSelectorMiniColor';
 
 /**
  List of all Elements / Classes of elements used in the DOM

@@ -51,11 +51,12 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'minicolors', 's
 
             this.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
             self.m_property.initPanel(Elements.BLOCK_PROPERTIES);
+            self.m_rssFontSelector = undefined;
 
             self._alphaSliderInit();
             self._bgGradientInit();
             self._propLengthKnobsInit();
-            self._rssFontSelectionInit();
+            self._rssFontSelectorInit();
             self._rssPollSpinnerInit();
         },
 
@@ -174,11 +175,13 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'minicolors', 's
             });
         },
 
-        _rssFontSelectionInit: function(){
-
-            var fontSelector = new FontSelector({appendTo: Elements.RSS_FONT_SETTINGS});
-
-
+        /**
+         Create instance of FontSelector used in RSS font property settings
+         @method _rssFontSelectorInit
+         **/
+        _rssFontSelectorInit: function(){
+            var self = this;
+            self.m_rssFontSelector = new FontSelector({appendTo: Elements.RSS_FONT_SETTINGS});
         },
 
         /**
@@ -187,26 +190,6 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'minicolors', 's
          **/
         _rssPollSpinnerInit: function () {
             $(Elements.RSS_POLL_SPINNER).spinner({value: 30, min: 1, max: 30, step: 1});
-
-            var settings = {
-                animationSpeed: 50,
-                animationEasing: 'swing',
-                change: null,
-                changeDelay: 0,
-                control: 'hue',
-                defaultValue: '',
-                hide: null,
-                hideSpeed: 100,
-                inline: false,
-                letterCase: 'lowercase',
-                opacity: false,
-                position: 'bottom left',
-                show: null,
-                showSpeed: 100,
-                theme: 'bootstrap'
-            }
-
-            $('#hue-demo').minicolors(settings);
         },
 
         /**
@@ -234,6 +217,16 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'minicolors', 's
         viewSubPanel: function(i_panel){
             var self = this;
             self.m_property.viewSubPanel(i_panel);
+        },
+
+        /**
+         Returns the instance pf rss font selector
+         @method getRssFontSelector
+         @return {Object} m_rssFontSelector instance
+         **/
+        getRssFontSelector: function(){
+            var self = this;
+           return self.m_rssFontSelector;
         }
     });
 

@@ -324,7 +324,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 require(['PropertiesView'], function (PropertiesView) {
                     this.m_propertiesView = new PropertiesView({
                         el: Elements.PROP_PANEL,
-                        duration: 400
+                        duration: 300
                     });
                     this.m_emptyPropView = new BB.View({
                         el: Elements.EMPTY_PROPERTIES

@@ -169,11 +169,11 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
         /**
          Class init
          @method constructor
-         @param {Object} options duration, default 1000ms
+         @param {Object} options duration, default 300ms
          **/
         constructor: function (options) {
             options || (options = {});
-            this.m_duration = options.duration || 1000;
+            this.m_duration = options.duration || 300;
             this.transition = options.transition;
             if (options.views) this.setViews(options.views);
             // if (options.duration) this.m_duration = options.duration;

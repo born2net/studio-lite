@@ -20,6 +20,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_blockType = 3345;
             _.extend(options, {blockType: self.m_blockType})
             Block.prototype.constructor.call(this, options);
+
+            self.m_rssFontSelector = self.m_blockProperty.getRssFontSelector();
             self._initSubPanel(Elements.BLOCK_RSS_COMMON_PROPERTIES);
             self._listenInputChange();
         },

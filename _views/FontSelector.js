@@ -87,10 +87,19 @@ define(['jquery', 'backbone', 'minicolors', 'spinner'], function ($, Backbone, m
             }, 4000);*/
         },
 
+        /**
+         Global event catcher for UI buttons / selection
+         @method events
+         **/
         events: {
             'click': '_onClick'
         },
 
+        /**
+         Redraw UI with updated config data provided in json format
+         @method render
+         @param {Object} i_config
+         **/
         render: function (i_config) {
             var self = this;
 

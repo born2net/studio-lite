@@ -126,6 +126,10 @@ define(['jquery', 'backbone', 'minicolors', 'spinner'], function ($, Backbone, m
             // $('#selDiv option:contains("Selection 1")')
         },
 
+        /**
+         Initialize the font size spinner UI selector
+         @method i_config
+         **/
         _initFontSizeSelector: function(){
             var self = this;
             self.m_fontSizeInput = self.$el.find(Elements.CLASS_SPINNER_INPUT);
@@ -134,7 +138,7 @@ define(['jquery', 'backbone', 'minicolors', 'spinner'], function ($, Backbone, m
         },
 
         /**
-         Init the minicolors widget under this created instance
+         Initialize the minicolors UI widget under this created instance
          @method _initColorSelector
          **/
         _initColorSelector: function () {
@@ -143,21 +147,40 @@ define(['jquery', 'backbone', 'minicolors', 'spinner'], function ($, Backbone, m
             self.m_colorSelector.minicolors(self.m_colorSettings);
         },
 
+        /**
+         On new color selected by minicolors
+         @method _onColorSelected
+         @param {String} i_color
+         **/
         _onColorSelected: function (i_color) {
             var self = this;
             self.m_config.color = i_color;
         },
 
+        /**
+         On new font selected by dropdown
+         @method _onFontSelected
+         @param {Element} i_target
+         **/
         _onFontSelected: function (i_target) {
             var self = this;
             self.m_config.font = $(i_target).val();
         },
 
+        /**
+         Deselect all font alignments buttons so all are unpressed
+         @method i_target
+         **/
         _deSelectFontAlignments: function () {
             var self = this;
             self.$el.find(Elements.CLASS_FONT_ALIGNMENT).removeClass('active');
         },
 
+        /**
+         Catch all event for any UI that is clicked within this view so we can deal with each action as per the target firing the event
+         @method _onClick
+         @param {Event} e
+         **/
         _onClick: function (e) {
             var self = this;
 

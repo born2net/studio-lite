@@ -43,6 +43,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
 
 
+
             self._populateRssLinks();
             self._listenInputChange();
         },

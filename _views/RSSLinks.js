@@ -6,6 +6,17 @@
  **/
 define(['jquery', 'backbone'], function ($, Backbone) {
 
+    /**
+     Custom event fired when a new RSS link selected
+     @event RSSLINK_CHANGED
+     @param {This} caller
+     @param {Self} context caller
+     @param {Event} rss link
+     @static
+     @final
+     **/
+    BB.EVENTS.RSSLINK_CHANGED = 'RSSLINK_CHANGED';
+
     Backbone.SERVICES.RSS_LINKS = 'RSSLinks';
 
     var RSSLinks = Backbone.StackView.Fader.extend({
@@ -38,10 +49,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 '<Rss label="Most Emailed" url="http://rss.news.yahoo.com/rss/mostemailed"/>' +
                 '<Rss label="Most Viewed" url="http://rss.news.yahoo.com/rss/mostviewed"/>' +
                 '<Rss label="Most Recommended" url="http://rss.news.yahoo.com/rss/highestrated"/>' +
-                '<Rss label="Custom" url="custom"/>' +
+                '<Rss label="Custom" url=""/>' +
                 '</TextRss>';
-
-
 
             self._populateRssLinks();
             self._listenInputChange();
@@ -57,13 +66,14 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
             var onChange = _.debounce(function (e) {
                 var text = $(e.target).val();
+                BB.comBroker.fire(BB.EVENTS.RSSLINK_CHANGED,self,self,text);
                 log(text);
             }, 150);
             self.m_inputChangeHandler = $(Elements.RSS_LINK).on("input", onChange);
 
             $(Elements.RSS_SOURCE).on('change', function (e) {
                 var url = $("option:selected", e.target).val();
-                if (url=='custom'){
+                if (url==''){
                     $(Elements.RSS_LINK).val('');
                     $(Elements.RSS_LINK).fadeIn('fast');
                 } else {
@@ -87,8 +97,29 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self.$el.append(snippet);
         },
 
-        _setRssLink: function(){
-
+        /**
+         Insert selected RSS URL and load appropriate select UI selection
+         @method i_url
+         @param {String} i_url
+         **/
+        setRssLink: function(i_url){
+            var self = this;
+            $(Elements.RSS_LINK).val(i_url);
+            var found = 0;
+            self.$el.children().each(function(k,v){
+                if ( $(v).val() == i_url){
+                    log ( $(v).val() );
+                    $(v).prop('selected','selected');
+                    found = 1;
+                    return false;
+                }
+            });
+            if (found){
+                $(Elements.RSS_LINK).fadeOut('fast');
+            } else {
+                $("option:last",self.$el).prop("selected","selected");
+                $(Elements.RSS_LINK).fadeIn('fast');
+            }
         }
     });
 

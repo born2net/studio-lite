@@ -61,7 +61,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         },
 
         /**
-         Init the alpha slider UI in the common properties
+         Init alpha slider UI in the common properties
          @method _alphaSliderInit
          **/
         _alphaSliderInit: function () {

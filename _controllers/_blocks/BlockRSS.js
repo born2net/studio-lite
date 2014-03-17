@@ -24,8 +24,22 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_rssFontSelector = self.m_blockProperty.getRssFontSelector();
             self.m_rssLinkSelector = self.m_blockProperty.getRssLinkSelector();
             self._initSubPanel(Elements.BLOCK_RSS_COMMON_PROPERTIES);
-            // self._listenInputChange();
+            self._listenRSSLinkChange();
             self._listenFontSelectionChange();
+        },
+
+        _listenRSSLinkChange: function(e){
+            var self = this
+            BB.comBroker.listen(BB.EVENTS.RSSLINK_CHANGED, function(e){
+                if (!self.m_selected || e.caller !== self.m_rssLinkSelector)
+                    return;
+
+                var domPlayerData = self._getBlockPlayerData();
+                var xSnippet = $(domPlayerData).find('Rss');
+                $(xSnippet).attr('url', e.edata);
+                self._setBlockPlayerData(domPlayerData);
+                // log(xSnippet[0].outerHTML);
+            });
         },
 
         /**
@@ -42,11 +56,46 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         },
 
         /**
+         Load up property values in the common panel
+         @method _populate
+         @return none
+         **/
+        _populate: function () {
+            var self = this;
+            var domPlayerData = self._getBlockPlayerData();
+            var xSnippet = $(domPlayerData).find('Rss');
+            var url = xSnippet.attr('url');
+            self.m_rssLinkSelector.setRssLink(url);
+        },
+
+        /**
+         Populate the common block properties panel, called from base class if exists
+         @method _loadBlockSpecificProps
+         @return none
+         **/
+        _loadBlockSpecificProps: function () {
+            var self = this;
+            self._populate();
+            this._viewSubPanel(Elements.BLOCK_RSS_COMMON_PROPERTIES);
+        },
+
+        /**
+         Delete this block
+         @method deleteBlock
+         @return none
+         **/
+        deleteBlock: function () {
+            var self = this;
+            $(Elements.RSS_LINK).off('change', self.m_inputChangeHandler);
+            self._deleteBlock();
+        }
+
+        /**
          When user changes a URL link for the feed, update the msdb
          @method _listenInputChange
          @return none
-         **/
-        _listenInputChange: function () {
+
+         _listenInputChange: function () {
             var self = this;
 
             var onChange = _.debounce(function (e) {
@@ -74,41 +123,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 onChange(e);
             });
         },
-
-        /**
-         Load up property values in the common panel
-         @method _populate
-         @return none
          **/
-        _populate: function () {
-            var self = this;
-            var domPlayerData = self._getBlockPlayerData();
-            var xSnippet = $(domPlayerData).find('Rss');
-            var url = xSnippet.attr('url');
-            $(Elements.RSS_LINK).val(url);
-        },
-
-        /**
-         Populate the common block properties panel, called from base class if exists
-         @method _loadBlockSpecificProps
-         @return none
-         **/
-        _loadBlockSpecificProps: function () {
-            var self = this;
-            self._populate();
-            this._viewSubPanel(Elements.BLOCK_RSS_COMMON_PROPERTIES);
-        },
-
-        /**
-         Delete this block
-         @method deleteBlock
-         @return none
-         **/
-        deleteBlock: function () {
-            var self = this;
-            $(Elements.RSS_LINK).off('change', self.m_inputChangeHandler);
-            self._deleteBlock();
-        }
     });
 
     return BlockRSS;

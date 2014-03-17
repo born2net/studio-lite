@@ -22,6 +22,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             Block.prototype.constructor.call(this, options);
 
             self.m_rssFontSelector = self.m_blockProperty.getRssFontSelector();
+            self.m_rssLinkSelector = self.m_blockProperty.getRssLinkSelector();
             self._initSubPanel(Elements.BLOCK_RSS_COMMON_PROPERTIES);
             self._listenInputChange();
             self._listenFontSelectionChange();

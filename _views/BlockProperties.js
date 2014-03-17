@@ -195,7 +195,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
          **/
         _rssSourceSelectorInit: function(){
             var self = this;
-            new RSSLinks({
+            self.m_rssLinkSelector = new RSSLinks({
                 el: Elements.RSS_SOURCE
             });
         },
@@ -235,6 +235,16 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         getRssFontSelector: function(){
             var self = this;
            return self.m_rssFontSelector;
+        },
+
+        /**
+         Returns the instance pf rss link selector
+         @method getRssLinkSelector
+         @return {Object} m_rssLinks instance
+         **/
+        getRssLinkSelector: function(){
+            var self = this;
+            return self.m_rssLinkSelector;
         }
     });
 

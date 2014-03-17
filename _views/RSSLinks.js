@@ -42,8 +42,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 '</TextRss>';
 
 
-
-
             self._populateRssLinks();
             self._listenInputChange();
         },

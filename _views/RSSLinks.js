@@ -41,6 +41,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 '<Rss label="Custom" url="custom"/>' +
                 '</TextRss>';
 
+
+
             self._populateRssLinks();
             self._listenInputChange();
         },

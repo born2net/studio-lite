@@ -5,7 +5,7 @@
  @constructor
  @return {object} instantiated BlockProperties
  **/
-define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'FontSelector'], function ($, Backbone, Knob, nouislider, gradient, spinner, FontSelector) {
+define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'FontSelector', 'RSSLinks'], function ($, Backbone, Knob, nouislider, gradient, spinner, FontSelector, RSSLinks) {
 
     /**
      Custom event fired when a new block is added to timeline_channel
@@ -57,6 +57,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
             self._bgGradientInit();
             self._propLengthKnobsInit();
             self._rssFontSelectorInit();
+            self._rssSourceSelectorInit();
         },
 
         /**
@@ -184,9 +185,19 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                 appendTo: Elements.RSS_FONT_SETTINGS,
                 colorSettings: {animationSpeed: 100}
             });
-
             $(Elements.RSS_POLL_SPINNER).spinner({value: 30, min: 1, max: 30, step: 1});
 
+        },
+
+        /**
+         Create instance of RSSLink used in RSS select property settings
+         @method _rssSourceSelectorInit
+         **/
+        _rssSourceSelectorInit: function(){
+            var self = this;
+            new RSSLinks({
+                el: Elements.RSS_SOURCE
+            });
         },
 
         /**

@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated FontSelector
  **/
-define(['jquery', 'backbone', 'minicolors', 'spinner'], function ($, Backbone, minicolors, spinner) {
+define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Backbone, minicolors, spinner, Fonts) {
 
     /**
      Custom event fired when a font settings changed
@@ -27,6 +27,8 @@ define(['jquery', 'backbone', 'minicolors', 'spinner'], function ($, Backbone, m
          **/
         initialize: function () {
             var self = this;
+
+            self.fontList = new Fonts().getFonts();
 
             self.m_config = {
                 bold: false,
@@ -69,6 +71,7 @@ define(['jquery', 'backbone', 'minicolors', 'spinner'], function ($, Backbone, m
 
             self._initColorSelector();
             self._initFontSizeSelector();
+            self._initFontList();
 
             var currID = self.$el.attr('id');
             self.$el.attr('id', _.uniqueId(currID));
@@ -145,6 +148,19 @@ define(['jquery', 'backbone', 'minicolors', 'spinner'], function ($, Backbone, m
             var self = this;
             self.m_colorSelector = self.$el.find(Elements.CLASS_FONT_SELECTOR_MINICOLOR);
             self.m_colorSelector.minicolors(self.m_colorSettings);
+        },
+
+        /**
+         Build list of available fonts to chose from
+         @method fontList
+         **/
+        _initFontList: function(){
+            var self = this;
+            var snippet = '';
+            $.each(self.fontList,function(k,v){
+               snippet = snippet + '\n<option>' + v + '</option>';
+            });
+            $(Elements.FONT_SELECTION).append(snippet);
         },
 
         /**

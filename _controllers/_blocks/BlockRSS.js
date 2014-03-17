@@ -28,7 +28,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         },
 
         /**
-         Listen to changes in font selection from Block property and take action on changes
+         Listen to changes in font UI selection from Block property and take action on changes
          @method _listenFontSelectionChange
          **/
         _listenFontSelectionChange: function () {

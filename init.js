@@ -1,6 +1,6 @@
 /**
  Require js initialization module definition file
- @class Require init.js
+ @class Require init js
  **/
 require.config({
     waitSeconds: 25,
@@ -70,12 +70,15 @@ require.config({
         'SequencerView': '_views/SequencerView',
         'ChannelListView': '_views/ChannelListView',
         'PopModalView': '_views/PopModalView',
+        'RSSLinks': '_views/RSSLinks',
+        'MRSSLinks': '_views/MRSSLinks',
         'StationsCollection': '_collections/StationsCollection',
         'StationModel': '_models/StationModel',
         'Lib': '_libs/Lib',
         'ScreenTemplate': '_libs/ScreenTemplate',
         'Jalapeno': '_libs/Jalapeno',
-        'JalapenoHelper': '_libs/JalapenoHelper'
+        'JalapenoHelper': '_libs/JalapenoHelper',
+        'Fonts': '_libs/Fonts'
     },
 
 

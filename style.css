@@ -137,6 +137,12 @@ aside > aside > div > ul > li {
     color: white;
 }
 
+#rssLink {
+    position: relative;
+    top: -3px;
+    border: 1px #cccccc solid;
+}
+
 #screenLayoutList {
     overflow-y: scroll;
     height: 80%;

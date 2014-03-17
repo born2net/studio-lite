@@ -56,7 +56,6 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
         loadBlockModules: function () {
             var self = this;
             require(['BlockProperties', 'Block', 'BlockRSS', 'BlockQR', 'BlockVideo', 'BlockImage'], function (BlockProperties, Block, BlockRSS, BlockQR, BlockVideo, BlockImage) {
-
                 if (!self.m_blockProperties)
                     self.m_blockProperties = new BlockProperties({el: Elements.BLOCK_PROPERTIES});
 
@@ -69,7 +68,6 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
                 BB.comBroker.fire(BB.EVENTS.BLOCKS_LOADED);
             });
         },
-
 
         /**
          This is factory method produces block instances which will reside on the timeline and referenced within this

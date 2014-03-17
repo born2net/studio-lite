@@ -42,7 +42,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
          **/
         _onBlocksLoaded: function(){
             var self = this;
-            self._createBlocks();
+            self._createChannelBlocks();
             self.initUI();
             $(Elements.SELECTED_TIMELINE).fadeIn();
         },
@@ -141,10 +141,10 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
 
         /**
          Create blocks instances for all the channel's blocs (i.e.: players / resources).
-         @method _createBlocks
+         @method _createChannelBlocks
          @return none
          **/
-        _createBlocks: function () {
+        _createChannelBlocks: function () {
             var self = this;
             var blockIDs = jalapeno.getChannelBlocks(self.m_campaign_timeline_chanel_id);
             for (var i = 0; i < blockIDs.length; i++) {

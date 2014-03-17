@@ -24,7 +24,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_rssFontSelector = self.m_blockProperty.getRssFontSelector();
             self.m_rssLinkSelector = self.m_blockProperty.getRssLinkSelector();
             self._initSubPanel(Elements.BLOCK_RSS_COMMON_PROPERTIES);
-            self._listenInputChange();
+            // self._listenInputChange();
             self._listenFontSelectionChange();
         },
 
@@ -35,8 +35,9 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _listenFontSelectionChange: function () {
             var self = this;
             BB.comBroker.listen(BB.EVENTS.FONT_SELECTION_CHANGED, function (e) {
-                if (!self.m_selected)
+                if (!self.m_selected || e.caller !== self.m_rssFontSelector)
                     return;
+                log('do something');
             });
         },
 
@@ -47,6 +48,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _listenInputChange: function () {
             var self = this;
+
             var onChange = _.debounce(function (e) {
                 if (!self.m_selected)
                     return;
@@ -58,6 +60,19 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 // log(xSnippet[0].outerHTML);
             }, 150);
             self.m_inputChangeHandler = $(Elements.RSS_LINK).on("input", onChange);
+
+            $(Elements.RSS_SOURCE).on('change', function (e) {
+                if (!self.m_selected)
+                    return;
+                var url = $("option:selected", e.target).val();
+                if (url=='custom'){
+                    $(Elements.RSS_LINK).fadeIn('fast');
+                } else {
+                    $(Elements.RSS_LINK).fadeOut('fast');
+                }
+
+                onChange(e);
+            });
         },
 
         /**

@@ -176,31 +176,6 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         },
 
         /**
-         Create instance of FontSelector used in RSS font property settings
-         @method _rssFontSelectorInit
-         **/
-        _rssFontSelectorInit: function(){
-            var self = this;
-            self.m_rssFontSelector = new FontSelector({
-                appendTo: Elements.RSS_FONT_SETTINGS,
-                colorSettings: {animationSpeed: 100}
-            });
-            $(Elements.RSS_POLL_SPINNER).spinner({value: 30, min: 1, max: 30, step: 1});
-
-        },
-
-        /**
-         Create instance of RSSLink used in RSS select property settings
-         @method _rssSourceSelectorInit
-         **/
-        _rssSourceSelectorInit: function(){
-            var self = this;
-            self.m_rssLinkSelector = new RSSLinks({
-                el: Elements.RSS_SOURCE
-            });
-        },
-
-        /**
          Bring into view the Block property StackView panel
          @method viewPanel
          **/
@@ -245,9 +220,36 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         getRssLinkSelector: function(){
             var self = this;
             return self.m_rssLinkSelector;
+        },
+
+        /**
+         Create instance of RSSLink used in RSS select property settings
+         @method _rssSourceSelectorInit
+         **/
+        _rssSourceSelectorInit: function(){
+            var self = this;
+            self.m_rssLinkSelector = new RSSLinks({
+                el: Elements.RSS_SOURCE
+            });
+        },
+
+        /**
+         Create instance of FontSelector used in RSS font property settings
+         @method _rssFontSelectorInit
+         **/
+        _rssFontSelectorInit: function(){
+            var self = this;
+            self.m_rssFontSelector = new FontSelector({
+                appendTo: Elements.RSS_FONT_SETTINGS,
+                colorSettings: {animationSpeed: 100}
+            });
+            $(Elements.RSS_POLL_SPINNER).spinner({value: 30, min: 1, max: 30, step: 1});
+
         }
+
     });
 
     return BlockProperties;
 });
+
 

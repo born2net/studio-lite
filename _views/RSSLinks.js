@@ -38,9 +38,37 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 '<Rss label="Most Emailed" url="http://rss.news.yahoo.com/rss/mostemailed"/>' +
                 '<Rss label="Most Viewed" url="http://rss.news.yahoo.com/rss/mostviewed"/>' +
                 '<Rss label="Most Recommended" url="http://rss.news.yahoo.com/rss/highestrated"/>' +
+                '<Rss label="Custom" url="custom"/>' +
                 '</TextRss>';
 
             self._populateRssLinks();
+            self._listenInputChange();
+        },
+
+        /**
+         When user changes a URL link for the feed, update the msdb
+         @method _listenInputChange
+         @return none
+         **/
+        _listenInputChange: function () {
+            var self = this;
+
+            var onChange = _.debounce(function (e) {
+                var text = $(e.target).val();
+                log(text);
+            }, 150);
+            self.m_inputChangeHandler = $(Elements.RSS_LINK).on("input", onChange);
+
+            $(Elements.RSS_SOURCE).on('change', function (e) {
+                var url = $("option:selected", e.target).val();
+                if (url=='custom'){
+                    $(Elements.RSS_LINK).val('');
+                    $(Elements.RSS_LINK).fadeIn('fast');
+                } else {
+                    $(Elements.RSS_LINK).fadeOut('fast');
+                }
+                onChange(e);
+            });
         },
 
         /**
@@ -56,6 +84,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             });
             self.$el.append(snippet);
         },
+
+        _setRssLink: function(){
+
+        }
     });
 
     return RSSLinks;

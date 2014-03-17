@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated CampaignView
  **/
-define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', 'Timeline', 'ScreenLayoutSelectorView'], function ($, Backbone, SequencerView, ChannelListView, StackView, Timeline, ScreenLayoutSelectorView) {
+define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', 'Timeline', 'ScreenLayoutSelectorView', 'BlockFactory'], function ($, Backbone, SequencerView, ChannelListView, StackView, Timeline, ScreenLayoutSelectorView, BlockFactory) {
 
     BB.SERVICES.CAMPAIGN_VIEW = 'CampaignView';
 
@@ -24,6 +24,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             this.m_selected_timeline_id = -1;
             this.m_selected_campaign_id = -1;
             this.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
+            this.m_blockFactory = new BlockFactory();
 
             this.m_sequencerView = new SequencerView({
                 el: Elements.SCREEN_LAYOUTS_UL

@@ -10,24 +10,6 @@
 define(['jquery', 'backbone'], function ($) {
 
     /**
-     block.PLACEMENT_SCENE indicates the insertion is inside a Scene
-     @property Block.PLACEMENT_SCENE
-     @static
-     @final
-     @type String
-     */
-    BB.CONSTS.PLACEMENT_SCENE = 'PLACEMENT_SCENE';
-
-    /**
-     block.PLACEMENT_CHANNEL indicates the insertion is on the timeline_channel
-     @property Block.PLACEMENT_CHANNEL
-     @static
-     @final
-     @type String
-     */
-    BB.CONSTS.PLACEMENT_CHANNEL = 'PLACEMENT_CHANNEL';
-
-    /**
      event fires when block is selected
      @event Block.BLOCK_SELECTED
      @param {this} caller

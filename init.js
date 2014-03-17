@@ -31,6 +31,7 @@ require.config({
         'LayoutRouter': '_controllers/LayoutRouter',
         'ComBroker': '_controllers/ComBroker',
         'ScreenTemplateFactory': '_controllers/ScreenTemplateFactory',
+        'BlockFactory': '_controllers/BlockFactory',
         'AppAuth': '_controllers/AppAuth',
         'AjaxRPC': '_controllers/AjaxRPC',
         'AjaxJsonGetter': '_controllers/AjaxJsonGetter',

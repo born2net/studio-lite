@@ -143,7 +143,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
 
             var timeline = BB.comBroker.getService(BB.SERVICES.CAMPAIGN_VIEW).getTimelineInstance(self.selected_campaign_timeline_id);
             var channel = timeline.getChannelInstance(self.selected_campaign_timeline_chanel_id);
-            channel.createBlock(campaign_timeline_chanel_player_id, campaign_timeline_chanel_player_data)
+            channel.createChannelBlock(campaign_timeline_chanel_player_id, campaign_timeline_chanel_player_data);
 
             var campaign_timeline_board_viewer_id = self.selected_campaign_timeline_board_viewer_id;
             var campaign_timeline_id = self.selected_campaign_timeline_id;

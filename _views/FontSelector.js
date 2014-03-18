@@ -1,5 +1,5 @@
 /**
- This independent class manages a set of elements all designed to provide user with UI for font settings
+ This generic class manages a set of elements all designed to provide user with UI for font selection
  @class FontSelector
  @constructor
  @return {Object} instantiated FontSelector

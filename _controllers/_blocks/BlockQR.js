@@ -75,7 +75,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         deleteBlock: function () {
             var self = this;
-            // $(Elements.QR_TEXT).off('change', self.m_inputChangeHandler);
             $(Elements.QR_TEXT).off("input", self.m_inputChangeHandler);
             self._deleteBlock();
         }

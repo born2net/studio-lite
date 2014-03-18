@@ -31,7 +31,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _listenInputChange: function () {
             var self = this;
-            var onChange = _.debounce(function (e) {
+            self.m_inputChangeHandler = _.debounce(function (e) {
                 if (!self.m_selected)
                     return;
                 var text = $(e.target).val();
@@ -40,9 +40,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 $(xSnippet).text(text);
                 self._setBlockPlayerData(domPlayerData);
                 // log(xSnippet[0].outerHTML);
-
             }, 150);
-            self.m_inputChangeHandler = $(Elements.QR_TEXT).on("input", onChange);
+            $(Elements.QR_TEXT).on("input", self.m_inputChangeHandler);
         },
 
         /**
@@ -76,10 +75,10 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         deleteBlock: function () {
             var self = this;
-            $(Elements.QR_TEXT).off('change', self.m_inputChangeHandler);
+            // $(Elements.QR_TEXT).off('change', self.m_inputChangeHandler);
+            $(Elements.QR_TEXT).off("input", self.m_inputChangeHandler);
             self._deleteBlock();
         }
-
     });
 
     return BlockQR;

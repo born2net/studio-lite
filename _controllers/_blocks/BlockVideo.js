@@ -69,7 +69,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _listenInputChange: function () {
             var self = this;
-            self.m_inputChangeHandler = $(Elements.VIDEO_ASPECT_RATIO).on('change', function () {
+            self.m_inputChangeHandler = function () {
                 if (!self.m_selected)
                     return;
                 var aspectRatio = $(Elements.VIDEO_ASPECT_RATIO + ' option:selected').val() == "on" ? 1 : 0;
@@ -78,7 +78,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 $(xSnippet).attr('maintain', aspectRatio);
                 self._setBlockPlayerData(domPlayerData);
                 // log(xSnippet[0].parentElement.parentElement.parentElement.outerHTML);
-            });
+            };
+            $(Elements.VIDEO_ASPECT_RATIO).on('change', self.m_inputChangeHandler);
         },
 
         /**

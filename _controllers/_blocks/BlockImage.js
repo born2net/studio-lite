@@ -69,7 +69,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _listenInputChange: function () {
             var self = this;
-            self.m_inputChangeHandler = $(Elements.IMAGE_ASPECT_RATIO).on('change', function () {
+            self.m_inputChangeHandler = function () {
                 if (!self.m_selected)
                     return;
                 var aspectRatio = $(Elements.IMAGE_ASPECT_RATIO + ' option:selected').val() == "on" ? 1 : 0;
@@ -78,7 +78,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 $(xSnippet).attr('maintain', aspectRatio);
                 self._setBlockPlayerData(domPlayerData);
                 // log(xSnippet[0].parentElement.parentElement.parentElement.outerHTML);
-            });
+            };
+            $(Elements.IMAGE_ASPECT_RATIO).on('change', self.m_inputChangeHandler);
         },
 
         /**
@@ -111,7 +112,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         deleteBlock: function () {
             var self = this;
-            $(Elements.IMAGE_ASPECT_RATIO).off('change', self.m_aspectRatioHandler);
+            $(Elements.IMAGE_ASPECT_RATIO).off('change', self.m_inputChangeHandler);
             self._deleteBlock();
         }
     });

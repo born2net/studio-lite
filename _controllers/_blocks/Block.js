@@ -344,10 +344,12 @@ define(['jquery', 'backbone'], function ($) {
         _deleteBlock: function () {
             var self = this;
             jalapeno.removeBlockFromTimelineChannel(self.m_block_id);
+
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_SELECTED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_LENGTH_CHANGING, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.GRADIENT_COLOR_CHANGED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.ALPHA_CHANGED, self);
+
             $.each(self, function (k) {
                 self[k] = undefined;
             });

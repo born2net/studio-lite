@@ -33,12 +33,25 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         },
 
         /**
+         Listen to changes in font UI selection from Block property and take action on changes
+         @method _listenFontSelectionChange
+         **/
+        _listenFontSelectionChange: function () {
+            var self = this;
+            BB.comBroker.listenWithNamespace(BB.EVENTS.FONT_SELECTION_CHANGED, self, function (e) {
+                if (!self.m_selected || e.caller !== self.m_rssFontSelector)
+                    return;
+                log('do something');
+            });
+        },
+
+        /**
          Listen to RSS link changes
          @method _listenRSSLinkChange
          **/
         _listenRSSLinkChange: function () {
             var self = this
-            self.rssLinkChanged = function (e) {
+            BB.comBroker.listenWithNamespace(BB.EVENTS.RSSLINK_CHANGED, self, function (e) {
                 if (!self.m_selected || e.caller !== self.m_rssLinkSelector)
                     return;
                 var domPlayerData = self._getBlockPlayerData();
@@ -46,8 +59,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 $(xSnippet).attr('url', e.edata);
                 self._setBlockPlayerData(domPlayerData);
                 // log(xSnippet[0].outerHTML);
-            };
-            BB.comBroker.listen(BB.EVENTS.RSSLINK_CHANGED, self.rssLinkChanged);
+            });
         },
 
         /**
@@ -116,21 +128,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         },
 
         /**
-         Listen to changes in font UI selection from Block property and take action on changes
-         @method _listenFontSelectionChange
-         **/
-        _listenFontSelectionChange: function () {
-            var self = this;
-            self.fontSelectionChanged = function (e) {
-                if (!self.m_selected || e.caller !== self.m_rssFontSelector)
-                    return;
-                log('do something');
-            };
-            BB.comBroker.listen(BB.EVENTS.FONT_SELECTION_CHANGED, self.fontSelectionChanged);
-
-        },
-
-        /**
          Load up property values in the RSS panel
          @method _populate
          @return none
@@ -177,8 +174,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         deleteBlock: function () {
             var self = this;
-            BB.comBroker.stopListen(BB.EVENTS.RSSLINK_CHANGED, self.rssLinkChanged);
-            BB.comBroker.stopListen(BB.EVENTS.FONT_SELECTION_CHANGED, self.fontSelectionChanged);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.RSSLINK_CHANGED, self);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.FONT_SELECTION_CHANGED, self);
             $(Elements.RSS_POLL_SPINNER).off('change', self.m_rssPollSpinner);
             $(Elements.RSS_MODE_SELECT).off('change', self.m_rssModeSelect);
             $(Elements.RSS_SCROLL_SPEED).off('change', self.m_rssScrollSpeed);

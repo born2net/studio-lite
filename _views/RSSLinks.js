@@ -64,13 +64,14 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _listenInputChange: function () {
             var self = this;
 
+            // Text input change
             var onChange = _.debounce(function (e) {
                 var text = $(e.target).val();
                 BB.comBroker.fire(BB.EVENTS.RSSLINK_CHANGED,self,self,text);
-                log(text);
             }, 150);
             self.m_inputChangeHandler = $(Elements.RSS_LINK).on("input", onChange);
 
+            // drop selection box
             $(Elements.RSS_SOURCE).on('change', function (e) {
                 var url = $("option:selected", e.target).val();
                 if (url==''){
@@ -108,7 +109,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var found = 0;
             self.$el.children().each(function(k,v){
                 if ( $(v).val() == i_url){
-                    log ( $(v).val() );
                     $(v).prop('selected','selected');
                     found = 1;
                     return false;

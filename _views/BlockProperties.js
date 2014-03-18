@@ -58,6 +58,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
             self._propLengthKnobsInit();
             self._rssFontSelectorInit();
             self._rssSourceSelectorInit();
+            self._rssPollTimeInit();
         },
 
         /**
@@ -243,10 +244,22 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                 appendTo: Elements.RSS_FONT_SETTINGS,
                 colorSettings: {animationSpeed: 100}
             });
-            $(Elements.RSS_POLL_SPINNER).spinner({value: 30, min: 1, max: 30, step: 1});
+        },
 
+        /**
+         Init the poll timer spinner widget
+         @method _rssPollTimeInit
+         @param {Number} _rssPollTimeInit
+         **/
+        _rssPollTimeInit: function(){
+            var self = this;
+            $(Elements.RSS_POLL_SPINNER).spinner({
+                value: 30,
+                min: 1,
+                max: 30,
+                step: 1
+            });
         }
-
     });
 
     return BlockProperties;

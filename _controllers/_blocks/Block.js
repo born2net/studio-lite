@@ -348,10 +348,6 @@ define(['jquery', 'backbone'], function ($) {
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_LENGTH_CHANGING, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.GRADIENT_COLOR_CHANGED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.ALPHA_CHANGED, self);
-
-
-            // $(Elements.BLOCK_ALPHA_SLIDER).off('change', self.m_blockAlphaHandler);
-
             $.each(self, function (k) {
                 self[k] = undefined;
             });

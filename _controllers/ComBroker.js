@@ -133,11 +133,9 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     events[i] = "'" + events[i] + "'";
                 }
                 events = events.join(',');
-                $(this).bind(eval(events), func);
-
+                return $(this).bind(eval(events), func);
             } else {
-
-                $(this).bind(events, func);
+                return $(this).bind(events, func);
             }
         },
 

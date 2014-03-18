@@ -124,7 +124,7 @@ JalapenoHelper.prototype = {
                     return  '<Player player="3345" label="Rss news" interactive="0">' +
                                 '<Data>' +
                                     self._getCommonDefaultXML() +
-                                    '<Rss url="http://rss.news.yahoo.com/rss/politics" minRefreshTime="30" speed="10" vertical="1" rtl="0">' +
+                                    '<Rss url="http://rss.news.yahoo.com/rss/politics" minRefreshTime="30" speed="10" vertical="0" rtl="0">' +
                                         '<Title>' +
                                             '<Font fontSize="16" fontColor="65280" fontFamily="Arial" fontWeight="normal" fontStyle="normal" textDecoration="none" textAlign="left" />' +
                                         '</Title>' +

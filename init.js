@@ -82,7 +82,6 @@ require.config({
         'Fonts': '_libs/Fonts'
     },
 
-
     shim: {
         'backbone': {
             deps: ['underscore', 'jquery'],

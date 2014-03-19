@@ -51,13 +51,19 @@ JalapenoHelper.prototype = {
         // XmlPlayer 4200
 
         self.m_icons = {
-            'qr':  { image: 'https://secure.dynawebs.net/_msportal/_images/qr.png' },
-            'rss': { image: 'https://secure.dynawebs.net/_msportal/_images/rss.png' },
-            'flv': { image: 'https://secure.dynawebs.net/_msportal/_images/flv.png' },
-            'mp4': { image: 'https://secure.dynawebs.net/_msportal/_images/mp4.png' },
-            'png': { image: 'https://secure.dynawebs.net/_msportal/_images/png.png' },
-            'jpg': { image: 'https://secure.dynawebs.net/_msportal/_images/jpg.png' },
-            'swf': { image: 'https://secure.dynawebs.net/_msportal/_images/swf.png' }
+            'qr':  { image: './_assets/qr.png' },
+            'rss': { image: './_assets/rss.png' },
+            'mrss': { image: './_assets/mrss.png' },
+            'flv': { image: './_assets/flv.png' },
+            'mp4': { image: './_assets/mp4.png' },
+            'png': { image: './_assets/png.png' },
+            'jpg': { image: './_assets/jpg.png' },
+            'html5': { image: './_assets/html.png' },
+            'clock': { image: './_assets/clock.png' },
+            'label': { image: './_assets/label.png' },
+            'swf': { image: './_assets/swf.png' },
+            'extvideo': { image: './_assets/extvideo.png' },
+            'extimage': { image: './_assets/extimage.png' }
         }
 
         self.m_components = {
@@ -82,6 +88,34 @@ JalapenoHelper.prototype = {
                     2, 'swf'
                 ]
             },
+            3160: {
+                name: 'External image',
+                acronym: 'External image',
+                description: 'Download images and Flash swf from external web links',
+                getDefaultPlayerData: function () {
+                    return  '<Player player="3160" label="QR Code" interactive="0">' +
+                        '<Data>' +
+                        self._getCommonDefaultXML() +
+                        '<Text textSource="static"></Text>' +
+                        '</Data>' +
+                        '</Player>'
+                },
+                icon: self.getIcon('extimage')
+            },
+            3150: {
+                name: 'External video',
+                acronym: 'External video',
+                description: 'Download video from external web links',
+                getDefaultPlayerData: function () {
+                    return  '<Player player="3150" label="QR Code" interactive="0">' +
+                        '<Data>' +
+                        self._getCommonDefaultXML() +
+                        '<Text textSource="static"></Text>' +
+                        '</Data>' +
+                        '</Player>'
+                },
+                icon: self.getIcon('extvideo')
+            },
             3100: {
                 name: 'Video',
                 acronym: 'Video',
@@ -103,7 +137,7 @@ JalapenoHelper.prototype = {
                 ]
             },
             3430: {
-                name: 'QR Component',
+                name: 'QR',
                 acronym: 'QR',
                 description: 'QR code for mobile device integration',
                 getDefaultPlayerData: function () {
@@ -115,6 +149,62 @@ JalapenoHelper.prototype = {
                             '</Player>'
                 },
                 icon: self.getIcon('qr')
+            },
+            3340: {
+                name: 'Multimedia Really Simple Syndication videos',
+                acronym: 'MRSS',
+                description: 'multimedia video stream',
+                getDefaultPlayerData: function () {
+                    return  '<Player player="3340" label="QR Code" interactive="0">' +
+                        '<Data>' +
+                        self._getCommonDefaultXML() +
+                        '<Text textSource="static"></Text>' +
+                        '</Data>' +
+                        '</Player>'
+                },
+                icon: self.getIcon('mrss')
+            },
+            3235: {
+                name: 'HTML Website content',
+                acronym: 'HTML5',
+                description: 'HTML5 web integration',
+                getDefaultPlayerData: function () {
+                    return  '<Player player="3235" label="QR Code" interactive="0">' +
+                        '<Data>' +
+                        self._getCommonDefaultXML() +
+                        '<Text textSource="static"></Text>' +
+                        '</Data>' +
+                        '</Player>'
+                },
+                icon: self.getIcon('html5')
+            },
+            3320: {
+                name: 'Clock Date/Time',
+                acronym: 'Clock',
+                description: 'Set live local date and time',
+                getDefaultPlayerData: function () {
+                    return  '<Player player="3320" label="QR Code" interactive="0">' +
+                        '<Data>' +
+                        self._getCommonDefaultXML() +
+                        '<Text textSource="static"></Text>' +
+                        '</Data>' +
+                        '</Player>'
+                },
+                icon: self.getIcon('clock')
+            },
+            3241: {
+                name: 'Label text',
+                acronym: 'Label',
+                description: 'Label editor with custom text properties',
+                getDefaultPlayerData: function () {
+                    return  '<Player player="3241" label="QR Code" interactive="0">' +
+                        '<Data>' +
+                        self._getCommonDefaultXML() +
+                        '<Text textSource="static"></Text>' +
+                        '</Data>' +
+                        '</Player>'
+                },
+                icon: self.getIcon('label')
             },
             3345: {
                 name: 'Really Simple Syndication',

@@ -8,6 +8,7 @@ Elements.SAVE_CONFIG = '#saveConfig';
 Elements.REMEMBER_ME = '#rememberMe';
 Elements.APP_CONTENT = '#appContent';
 Elements.APP_NAVIGATOR = '#appNavigator';
+Elements.ADD_NEW_BLOCK_LIST_WRAP = '#addNewBlockListWrap';
 Elements.POP_MODAL = '#popModal';
 Elements.MAIN_PANEL_WRAP = '#mainPanelWrap';
 Elements.FORM_CAMPAIGN_NAME = '#formCampaignName';

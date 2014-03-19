@@ -390,7 +390,6 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 $(Elements.BLOCK_COMMON_PROPERTIES).height(h - 200);
                 $(Elements.ADD_NEW_BLOCK_LIST_WRAP).height(h - 100);
 
-
                 BB.comBroker.fire(BB.EVENTS.APP_SIZED, this, null, {width: self._appWidth, height: self._appHeight});
             },
 

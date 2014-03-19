@@ -55,7 +55,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
          **/
         loadBlockModules: function () {
             var self = this;
-            require(['BlockProperties', 'Block', 'BlockRSS', 'BlockQR', 'BlockVideo', 'BlockImage'], function (BlockProperties, Block, BlockRSS, BlockQR, BlockVideo, BlockImage) {
+            require(['BlockProperties', 'Block', 'BlockRSS', 'BlockQR', 'BlockVideo', 'BlockImage', 'BlockExtImage', 'BlockExtVideo', 'BlockMRSS', 'BlockHTML', 'BlockLabel', 'BlockClock'  ], function (BlockProperties, Block, BlockRSS, BlockQR, BlockVideo, BlockImage, BlockExtImage, BlockExtVideo, BlockMRSS, BlockHTML, BlockLabel, BlockClock) {
                 if (!self.m_blockProperties)
                     self.m_blockProperties = new BlockProperties({el: Elements.BLOCK_PROPERTIES});
 
@@ -64,6 +64,12 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
                 self.m_blockQR = BlockQR;
                 self.m_blockVideo = BlockVideo;
                 self.m_blockImage = BlockImage;
+                self.m_blockExtImage = BlockExtImage;
+                self.m_blockExtVideo = BlockExtVideo;
+                self.m_blockMRSS = BlockMRSS;
+                self.m_blockHTML = BlockHTML;
+                self.m_blockLabel = BlockLabel;
+                self.m_blockClock = BlockClock;
 
                 BB.comBroker.fire(BB.EVENTS.BLOCKS_LOADED);
             });
@@ -111,6 +117,54 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
                 case 3130:
                 {
                     block = new self.m_blockImage({
+                        i_placement: i_placement,
+                        i_block_id: i_campaign_timeline_chanel_player_id
+                    });
+                    break;
+                }
+                case 3160:
+                {
+                    block = new self.m_blockExtImage({
+                        i_placement: i_placement,
+                        i_block_id: i_campaign_timeline_chanel_player_id
+                    });
+                    break;
+                }
+                case 3150:
+                {
+                    block = new self.m_blockExtVideo({
+                        i_placement: i_placement,
+                        i_block_id: i_campaign_timeline_chanel_player_id
+                    });
+                    break;
+                }
+                case 3320:
+                {
+                    block = new self.m_blockClock({
+                        i_placement: i_placement,
+                        i_block_id: i_campaign_timeline_chanel_player_id
+                    });
+                    break;
+                }
+                case 3235:
+                {
+                    block = new self.m_blockHTML({
+                        i_placement: i_placement,
+                        i_block_id: i_campaign_timeline_chanel_player_id
+                    });
+                    break;
+                }
+                case 3241:
+                {
+                    block = new self.m_blockLabel({
+                        i_placement: i_placement,
+                        i_block_id: i_campaign_timeline_chanel_player_id
+                    });
+                    break;
+                }
+                case 3340:
+                {
+                    block = new self.m_blockMRSS({
                         i_placement: i_placement,
                         i_block_id: i_campaign_timeline_chanel_player_id
                     });

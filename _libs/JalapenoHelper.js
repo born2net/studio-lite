@@ -1,5 +1,5 @@
 /**
- The JalapenoHelper class is used to manage real time data that's not in the msdb such as
+ The JalapenoHelper class is used to manage real time data that is not in the msdb such as
  blocks and related methods that have to do with player_data which is a vital part of each
  channel or scene block (i.e.: player)
  @class JalapenoHelper

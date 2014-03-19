@@ -158,7 +158,6 @@
             }
         },
 
-
         /** webNeat modifications starts here */
         addPoint: function(percent, colorStr, quiet){
             colorStr = this.colorToHex(colorStr);

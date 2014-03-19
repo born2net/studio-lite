@@ -94,6 +94,34 @@
             this.updatePreview();
         },
 
+        colorToHex: function (color) {
+            if (color.match('#')) {
+                return color;
+            }
+            if (color.match('rgb')) {
+                return '#' + this.rgbToHex(color);
+            }
+            return '#' + color;
+        },
+
+        rgbToHex: function (rgb) {
+            function componentFromStr(numStr, percent) {
+                var num = Math.max(0, parseInt(numStr, 10));
+                return percent ?
+                    Math.floor(255 * Math.min(100, num) / 100) : Math.min(255, num);
+            }
+
+            var rgbRegex = /^rgb\(\s*(-?\d+)(%?)\s*,\s*(-?\d+)(%?)\s*,\s*(-?\d+)(%?)\s*\)$/;
+            var result, r, g, b, hex = "";
+            if ((result = rgbRegex.exec(rgb))) {
+                r = componentFromStr(result[1], result[2]);
+                g = componentFromStr(result[3], result[4]);
+                b = componentFromStr(result[5], result[6]);
+                hex = (0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1);
+            }
+            return hex;
+        },
+
         updatePreview: function(quiet) {
             var result = [];
             this.controlPoints.sort(ctrlPtComparator);
@@ -101,16 +129,12 @@
                 var grad = this.g2d.createLinearGradient(0, 0, this.g2d.canvas.width, 0);
                 for (var i = 0; i < this.controlPoints.length; ++i) {
                     var pt = this.controlPoints[i];
-                    //todo: take try out and fix in IE
-                    try {
+                    pt.color = this.colorToHex(pt.color);
                     grad.addColorStop(pt.position, pt.color);
                     result.push({
                         position: pt.position,
                         color: pt.color
                     });
-                    } catch (e) {
-
-                    }
                 }
             }
 
@@ -136,6 +160,7 @@
 
         /** webNeat modifications starts here */
         addPoint: function(percent, colorStr, quiet){
+            colorStr = this.colorToHex(colorStr);
             var cp = this.createCtrlPt({
                 position: percent,
                 color: colorStr
@@ -280,12 +305,14 @@
 
         clicked: function(e) {
             this.configView.show(this.$el.position(), this.color, this);
+            log(this.color);
             e.stopPropagation();
             return false;
         },
 
         colorChanged: function(c) {
             this.color = c;
+            log(c);
             this.$el.css("background-color", this.color);
             this.listener.updatePreview();
         },

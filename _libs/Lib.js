@@ -467,6 +467,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 return percent ?
                     Math.floor(255 * Math.min(100, num) / 100) : Math.min(255, num);
             }
+
             var rgbRegex = /^rgb\(\s*(-?\d+)(%?)\s*,\s*(-?\d+)(%?)\s*,\s*(-?\d+)(%?)\s*\)$/;
             var result, r, g, b, hex = "";
             if ((result = rgbRegex.exec(rgb))) {
@@ -478,22 +479,26 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             return hex;
         },
 
-        colorToDecimal: function(color){
-            if (color.match('rgb')){
+        colorToDecimal: function (color) {
+            if (color.match('rgb')) {
                 color = this.rgbToHex(color);
                 return this.hexToDecimal(color)
             }
             return this.hexToDecimal(color);
         },
 
-        colorToHex: function(color){
-            if (color.match('#')){
+        colorToHex: function (color) {
+            if (color.match('#')) {
                 return color;
             }
-            if (color.match('rgb')){
+            if (color.match('rgb')) {
                 return '#' + this.rgbToHex(color);
             }
-            return '#'+color;
+            return '#' + color;
+        },
+
+        capitaliseFirst: function (string) {
+            return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
         }
 
     });

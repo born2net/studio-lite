@@ -34,7 +34,7 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
                 bold: false,
                 italic: false,
                 underline: false,
-                alignment: 'alignLeft',
+                alignment: 'left',
                 font: 'Arial',
                 color: '#428bca',
                 size: 12
@@ -76,18 +76,33 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
             var currID = self.$el.attr('id');
             self.$el.attr('id', _.uniqueId(currID));
 
-            /*setTimeout(function () {
+            /*
+            setTimeout(function () {
                 self.m_config = {
                     bold: true,
                     italic: true,
                     underline: true,
-                    alignment: 'alignRight',
+                    alignment: 'right',
                     font: 'Times',
                     color: '#ff0000',
                     size: 32
                 };
-                self.render(self.m_config);
-            }, 4000);*/
+                self._render();
+            }, 4000);
+
+            setTimeout(function () {
+                self.m_config = {
+                    bold: true,
+                    italic: true,
+                    underline: true,
+                    alignment: 'right',
+                    font: 'Arial',
+                    color: '#00ff00',
+                    size: 11
+                };
+                self._render();
+            }, 6000);
+            */
         },
 
         /**
@@ -103,13 +118,12 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
          @method render
          @param {Object} i_config
          **/
-        render: function (i_config) {
+        _render: function () {
             var self = this;
 
             self._deSelectFontAlignments();
-
-            self.m_config = i_config;
-            $(self.m_colorSelector).minicolors('value', self.m_config.color);
+            // self.m_colorSelector.minicolors('value', self.m_config.color);
+            $('.minicolors-swatch-color',self.$el).css({'backgroundColor': self.m_config.color});
 
             var buttonBold = self.m_colorSelector = self.$el.find('[name="bold"]');
             self.m_config.bold == true ? buttonBold.addClass('active') : buttonBold.removeClass('active');
@@ -120,9 +134,10 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
             var buttonItalic = self.m_colorSelector = self.$el.find('[name="italic"]');
             self.m_config.italic == true ? buttonItalic.addClass('active') : buttonItalic.removeClass('active');
 
-            $(self.m_fontSizeInput).val(self.m_config.size);
+            self.m_fontSizeSelector.spinner('value', parseInt(self.m_config.size));
 
-            var buttonAlignment = self.m_colorSelector = self.$el.find('[name="' + self.m_config.alignment + '"]');
+            var buttonName = 'align' + BB.lib.capitaliseFirst(self.m_config.alignment);
+            var buttonAlignment = self.m_colorSelector = self.$el.find('[name="' + buttonName + '"]');
             $(buttonAlignment).addClass('active');
 
             $('option:contains("' + self.m_config.font + '")',self.$el).prop('selected','selected');
@@ -137,7 +152,7 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
             var self = this;
             self.m_fontSizeInput = self.$el.find(Elements.CLASS_SPINNER_INPUT);
             self.m_fontSizeSelector = self.m_fontSizeInput.closest('div');
-            self.m_fontSizeSelector.spinner({value: self.m_config.size, min: 1, max: 30, step: 1});
+            self.m_fontSizeSelector.spinner({value: self.m_config.size, min: 1, max: 127, step: 1});
         },
 
         /**
@@ -158,7 +173,7 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
             var self = this;
             var snippet = '';
             $.each(self.fontList,function(k,v){
-               snippet = snippet + '\n<option>' + v + '</option>';
+                snippet = snippet + '\n<option>' + v + '</option>';
             });
             $(Elements.FONT_SELECTION).append(snippet);
         },
@@ -171,16 +186,18 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
         _onColorSelected: function (i_color) {
             var self = this;
             self.m_config.color = i_color;
+            BB.comBroker.fire(BB.EVENTS.FONT_SELECTION_CHANGED, self, self, self.m_config);
         },
 
         /**
-         On new font selected by dropdown
+         On new font selected by drop down
          @method _onFontSelected
          @param {Element} i_target
          **/
         _onFontSelected: function (i_target) {
             var self = this;
             self.m_config.font = $(i_target).val();
+            BB.comBroker.fire(BB.EVENTS.FONT_SELECTION_CHANGED, self, self, self.m_config);
         },
 
         /**
@@ -233,21 +250,21 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
                 case 'alignLeft':
                 {
                     self._deSelectFontAlignments();
-                    self.m_config.alignment = 'alignLeft';
+                    self.m_config.alignment = 'left';
                     $button.toggleClass('active');
                     break;
                 }
                 case 'alignRight':
                 {
                     self._deSelectFontAlignments();
-                    self.m_config.alignment = 'alignRight';
+                    self.m_config.alignment = 'right';
                     $button.toggleClass('active');
                     break;
                 }
                 case 'alignCenter':
                 {
                     self._deSelectFontAlignments();
-                    self.m_config.alignment = 'alignCenter';
+                    self.m_config.alignment = 'center';
                     $button.toggleClass('active');
                     break;
                 }
@@ -265,6 +282,12 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
 
             BB.comBroker.fire(BB.EVENTS.FONT_SELECTION_CHANGED, self, self, self.m_config);
             return false;
+        },
+
+        setConfig: function(i_config){
+            var self = this;
+            self.m_config = i_config;
+            self._render()
         }
     });
 

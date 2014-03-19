@@ -41,7 +41,23 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             BB.comBroker.listenWithNamespace(BB.EVENTS.FONT_SELECTION_CHANGED, self, function (e) {
                 if (!self.m_selected || e.caller !== self.m_rssFontSelector)
                     return;
-                log('do something');
+                var config = e.edata;
+                var domPlayerData = self._getBlockPlayerData();
+                var xSnippet = $(domPlayerData).find('Rss');
+                var xSnippetTitle = $(xSnippet).find('Font').eq(0);
+                var xSnippetDescription = $(xSnippet).find('Font').eq(1);
+
+                $.each([xSnippetTitle, xSnippetDescription],function(k,xmlData){
+                    config.bold == true ? xmlData.attr('fontWeight', 'bold') : xmlData.attr('fontWeight', 'normal');
+                    config.italic == true ? xmlData.attr('fontStyle', 'italic') : xmlData.attr('fontStyle', 'normal');
+                    config.underline == true ? xmlData.attr('textDecoration', 'underline') : xmlData.attr('textDecoration', 'normal');
+                    xmlData.attr('fontColor', BB.lib.colorToDecimal(config.color));
+                    xmlData.attr('fontSize', config.size);
+                    xmlData.attr('fontFamily', config.font);
+                    xmlData.attr('textAlign', config.alignment);
+
+                });
+                self._setBlockPlayerData(domPlayerData);
             });
         },
 
@@ -82,7 +98,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             $(Elements.RSS_POLL_SPINNER).on('change', self.m_rssPollSpinner);
         },
 
-
         /**
          Listen to RSS scroll direction changes
          @method _listenMinRefreshTime
@@ -112,19 +127,18 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 if (!self.m_selected)
                     return;
                 var scrollSpeed = $(e.target).val();
-                if (scrollSpeed=='Slow')
-                    scrollSpeed = 10;
-                if (scrollSpeed=='Medium')
+                if (scrollSpeed == 'Slow')
                     scrollSpeed = 20;
-                if (scrollSpeed=='Fast')
-                    scrollSpeed = 30;
+                if (scrollSpeed == 'Medium')
+                    scrollSpeed = 50;
+                if (scrollSpeed == 'Fast')
+                    scrollSpeed = 100;
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Rss');
                 $(xSnippet).attr('speed', scrollSpeed);
                 self._setBlockPlayerData(domPlayerData);
             };
             $(Elements.RSS_SCROLL_SPEED).on('change', self.m_rssScrollSpeed);
-
         },
 
         /**
@@ -137,23 +151,34 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
             var domPlayerData = self._getBlockPlayerData();
             var xSnippet = $(domPlayerData).find('Rss');
+            var xSnippetTitle = $(xSnippet).find('Font').eq(0);
             var url = xSnippet.attr('url');
             self.m_rssLinkSelector.setRssLink(url);
 
             var minRefreshTime = xSnippet.attr('minRefreshTime');
-            $(Elements.RSS_MIN_REFRESH_TIME).val(minRefreshTime);
+            $(Elements.RSS_MIN_REFRESH_TIME).closest('div').spinner('value', parseInt(minRefreshTime));
 
             var scrollDirection = parseInt(xSnippet.attr('vertical'));
             $(Elements.RSS_MODE_SELECT + ' option').eq(scrollDirection).attr('selected', 'selected');
 
             var scrollSpeed = parseInt(xSnippet.attr('speed'));
-            if (scrollSpeed=='10')
+            if (scrollSpeed == '10')
                 scrollSpeed = 0;
-            if (scrollSpeed=='20')
+            if (scrollSpeed == '20')
                 scrollSpeed = 1;
-            if (scrollSpeed=='30')
+            if (scrollSpeed == '30')
                 scrollSpeed = 2;
             $(Elements.RSS_SCROLL_SPEED + ' option').eq(scrollSpeed).attr('selected', 'selected');
+
+            self.m_rssFontSelector.setConfig({
+                bold: xSnippetTitle.attr('fontWeight') == 'bold' ? true : false,
+                italic: xSnippetTitle.attr('fontStyle') == 'italic' ? true : false,
+                underline: xSnippetTitle.attr('textDecoration') == 'underline' ? true : false,
+                alignment: xSnippetTitle.attr('textAlign'),
+                font: xSnippetTitle.attr('fontFamily'),
+                color: BB.lib.colorToHex(BB.lib.decimalToHex(xSnippetTitle.attr('fontColor'))),
+                size: xSnippetTitle.attr('fontSize')
+            });
         },
 
         /**
@@ -176,6 +201,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var self = this;
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.RSSLINK_CHANGED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.FONT_SELECTION_CHANGED, self);
+
             $(Elements.RSS_POLL_SPINNER).off('change', self.m_rssPollSpinner);
             $(Elements.RSS_MODE_SELECT).off('change', self.m_rssModeSelect);
             $(Elements.RSS_SCROLL_SPEED).off('change', self.m_rssScrollSpeed);

@@ -143,6 +143,7 @@ aside > aside > div > ul > li {
     border: 1px #cccccc solid;
 }
 
+
 #screenLayoutList {
     overflow-y: scroll;
     height: 80%;
@@ -1208,7 +1209,7 @@ Software accelerated vertical
 .fontAlignment {
     float: left;
     margin-left: 4px;
-    width: 35px;
+    width: 33px;
     position: relative;
     top: -2px;
     left: -15px;
@@ -1277,6 +1278,9 @@ i .spinner-buttons {
 
 .input-mini {
     width: 60px;
+    height: 26px;
+    border: 1px solid #d7d7d7;
+    border-radius: 5px
 }
 
 .spinner input {

@@ -169,12 +169,12 @@ JalapenoHelper.prototype = {
                 acronym: 'HTML5',
                 description: 'HTML5 web integration',
                 getDefaultPlayerData: function () {
-                    return  '<Player player="3235" label="QR Code" interactive="0">' +
-                        '<Data>' +
-                        self._getCommonDefaultXML() +
-                        '<Text textSource="static"></Text>' +
-                        '</Data>' +
-                        '</Player>'
+                    return  '<Player player="3235" label="Html" interactive="0">' +
+                                '<Data>' +
+                                    self._getCommonDefaultXML() +
+                                    '<HTML src="http://m.cnn.com" config=""/>' +
+                                '</Data>' +
+                            '</Player>'
                 },
                 icon: self.getIcon('html5')
             },

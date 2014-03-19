@@ -162,11 +162,11 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             $(Elements.RSS_MODE_SELECT + ' option').eq(scrollDirection).attr('selected', 'selected');
 
             var scrollSpeed = parseInt(xSnippet.attr('speed'));
-            if (scrollSpeed == '10')
-                scrollSpeed = 0;
             if (scrollSpeed == '20')
+                scrollSpeed = 0;
+            if (scrollSpeed == '50')
                 scrollSpeed = 1;
-            if (scrollSpeed == '30')
+            if (scrollSpeed == '100')
                 scrollSpeed = 2;
             $(Elements.RSS_SCROLL_SPEED + ' option').eq(scrollSpeed).attr('selected', 'selected');
 

@@ -94,11 +94,11 @@ JalapenoHelper.prototype = {
                 description: 'Download images and Flash swf from external web links',
                 getDefaultPlayerData: function () {
                     return  '<Player player="3160" label="QR Code" interactive="0">' +
-                        '<Data>' +
-                        self._getCommonDefaultXML() +
-                        '<Text textSource="static"></Text>' +
-                        '</Data>' +
-                        '</Player>'
+                                '<Data>' +
+                                    self._getCommonDefaultXML() +
+                                    '<LINK src=""/>'+
+                                '</Data>' +
+                            '</Player>'
                 },
                 icon: self.getIcon('extimage')
             },
@@ -108,11 +108,11 @@ JalapenoHelper.prototype = {
                 description: 'Download video from external web links',
                 getDefaultPlayerData: function () {
                     return  '<Player player="3150" label="QR Code" interactive="0">' +
-                        '<Data>' +
-                        self._getCommonDefaultXML() +
-                        '<Text textSource="static"></Text>' +
-                        '</Data>' +
-                        '</Player>'
+                                '<Data>' +
+                                    self._getCommonDefaultXML() +
+                                    '<LINK src=""/>'+
+                                '</Data>' +
+                            '</Player>'
                 },
                 icon: self.getIcon('extvideo')
             },

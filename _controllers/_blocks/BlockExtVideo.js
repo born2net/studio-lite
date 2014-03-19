@@ -20,7 +20,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_blockType = 3150;
             _.extend(options, {blockType: self.m_blockType})
             Block.prototype.constructor.call(this, options);
-            self._initSubPanel(Elements.BLOCK_QR_COMMON_PROPERTIES);
+            self._initSubPanel(Elements.BLOCK_EXT_VIDEO_COMMON_PROPERTIES);
             self._listenInputChange();
         },
 
@@ -35,13 +35,14 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 if (!self.m_selected)
                     return;
                 var text = $(e.target).val();
+                if (!text.match('http://'))
+                    text = 'http://' + text;
                 var domPlayerData = self._getBlockPlayerData();
-                var xSnippet = $(domPlayerData).find('Text');
-                $(xSnippet).text(text);
+                var xSnippet = $(domPlayerData).find('LINK');
+                xSnippet.attr('src', text);
                 self._setBlockPlayerData(domPlayerData);
-                // log(xSnippet[0].outerHTML);
             }, 150);
-            $(Elements.QR_TEXT).on("input", self.m_inputChangeHandler);
+            $(Elements.EXT_VIDEO_TEXT).on("input", self.m_inputChangeHandler);
         },
 
         /**
@@ -52,9 +53,9 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _populate: function () {
             var self = this;
             var domPlayerData = self._getBlockPlayerData();
-            var xSnippet = $(domPlayerData).find('Text');
-            var url = xSnippet.attr('url');
-            $(Elements.QR_TEXT).val(xSnippet.text());
+            var xSnippet = $(domPlayerData).find('LINK');
+            var src = xSnippet.attr('src');
+            $(Elements.EXT_VIDEO_TEXT).val(src);
         },
 
         /**
@@ -65,7 +66,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _loadBlockSpecificProps: function () {
             var self = this;
             self._populate();
-            this._viewSubPanel(Elements.BLOCK_QR_COMMON_PROPERTIES);
+            this._viewSubPanel(Elements.BLOCK_EXT_VIDEO_COMMON_PROPERTIES);
         },
 
         /**
@@ -75,7 +76,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         deleteBlock: function () {
             var self = this;
-            $(Elements.QR_TEXT).off("input", self.m_inputChangeHandler);
+            $(Elements.EXT_VIDEO_TEXT).off("input", self.m_inputChangeHandler);
             self._deleteBlock();
         }
     });

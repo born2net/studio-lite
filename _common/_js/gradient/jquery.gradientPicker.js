@@ -101,11 +101,16 @@
                 var grad = this.g2d.createLinearGradient(0, 0, this.g2d.canvas.width, 0);
                 for (var i = 0; i < this.controlPoints.length; ++i) {
                     var pt = this.controlPoints[i];
+                    //todo: take try out and fix in IE
+                    try {
                     grad.addColorStop(pt.position, pt.color);
                     result.push({
                         position: pt.position,
                         color: pt.color
                     });
+                    } catch (e) {
+
+                    }
                 }
             }
 

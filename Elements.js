@@ -29,8 +29,11 @@ Elements.QR_TEXT = '#qrText';
 Elements.HTML_TEXT = '#htmlText';
 Elements.EXT_VIDEO_TEXT = '#extVideoText';
 Elements.EXT_IMAGE_TEXT = '#extImageText';
+Elements.LABEL_TEXT = '#labelText';
 Elements.BLOCK_HTML_COMMON_PROPERTIES = '#blockHTMLCommonProperties';
 Elements.BLOCK_RSS_COMMON_PROPERTIES = '#blockRSSCommonProperties';
+Elements.BLOCK_LABEL_COMMON_PROPERTIES = '#blockLabelCommonProperties';
+Elements.LABEL_FONT_SETTINGS = '#labelFontSettings';
 Elements.POPUP_PROPERTIES = '#popupProperties';
 Elements.IMAGE_ASPECT_RATIO = '#imageAspectRatio';
 Elements.RSS_LINK = '#rssLink';
@@ -57,7 +60,6 @@ Elements.BLOCK_ALPHA_SLIDER = '#blockAlphaSlider';
 Elements.BLOCK_ALPHA_LABEL = '#blockAlphaLabel';
 Elements.FONT_SELECTOR_TEMPLATE = '#fontSelectorTemplate';
 Elements.RSS_FONT_SETTINGS = '#rssFontSettings';
-Elements.FONT_SELECTION = '#fontSelection';
 Elements.RANDOM_PLAYBACK = '#randomPlayback';
 Elements.CHANNEL_PROPERTIES = '#channelProperties';
 Elements.TIMELINE_PROPERTIES = '#timelineProperties';
@@ -170,7 +172,7 @@ Elements.CLASS_HELP_LINKS = '.helpLinks';
 Elements.CLASS_FONT_SELECTOR_MINICOLOR = '.fontSelectorMiniColor';
 Elements.CLASS_FONT_ALIGNMENT = '.fontAlignment';
 Elements.CLASS_SPINNER_INPUT = '.spinner-input';
-
+Elements.CLASS_FONT_SELECTION = '.fontSelection';
 
 /**
  List of all Elements / Classes of elements used in the DOM

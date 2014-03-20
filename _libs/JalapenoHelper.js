@@ -156,11 +156,11 @@ JalapenoHelper.prototype = {
                 description: 'multimedia video stream',
                 getDefaultPlayerData: function () {
                     return  '<Player player="3340" label="QR Code" interactive="0">' +
-                        '<Data>' +
-                        self._getCommonDefaultXML() +
-                        '<Text textSource="static"></Text>' +
-                        '</Data>' +
-                        '</Player>'
+                                '<Data>' +
+                                    self._getCommonDefaultXML() +
+                                    '<Text textSource="static"></Text>' +
+                                '</Data>' +
+                            '</Player>'
                 },
                 icon: self.getIcon('mrss')
             },
@@ -184,11 +184,11 @@ JalapenoHelper.prototype = {
                 description: 'Set live local date and time',
                 getDefaultPlayerData: function () {
                     return  '<Player player="3320" label="QR Code" interactive="0">' +
-                        '<Data>' +
-                        self._getCommonDefaultXML() +
-                        '<Text textSource="static"></Text>' +
-                        '</Data>' +
-                        '</Player>'
+                                '<Data>' +
+                                    self._getCommonDefaultXML() +
+                                    '<Text textSource="static"></Text>' +
+                                '</Data>' +
+                            '</Player>'
                 },
                 icon: self.getIcon('clock')
             },
@@ -198,11 +198,14 @@ JalapenoHelper.prototype = {
                 description: 'Label editor with custom text properties',
                 getDefaultPlayerData: function () {
                     return  '<Player player="3241" label="QR Code" interactive="0">' +
-                        '<Data>' +
-                        self._getCommonDefaultXML() +
-                        '<Text textSource="static"></Text>' +
-                        '</Data>' +
-                        '</Player>'
+                                '<Data>' +
+                                    self._getCommonDefaultXML() +
+                                    '<Label>'+
+                                        '<Text>some text here!</Text>'+
+                                        '<Font fontSize="16" fontColor="65280" fontFamily="Arial" fontWeight="normal" fontStyle="normal" textDecoration="none" textAlign="left" />' +
+                                    '</Label>'+
+                                '</Data>' +
+                            '</Player>'
                 },
                 icon: self.getIcon('label')
             },

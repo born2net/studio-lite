@@ -607,6 +607,15 @@
                                 <input type="text" name="name" id="extVideoText" value="" placeholder="http://...">
                             </div>
                         </div>
+                        <div id="blockLabelCommonProperties" style="display: none">
+                            <span>Label text</span>
+                            <div data-role="fieldcontain" data-inset="true">
+                                <input id="labelText" type="text" name="name" class="propControlWidth" value="" placeholder="enter text here">
+                            </div>
+                            <hr class="propControlWidth"/>
+                            <div id="labelFontSettings">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div id="blockCommonProperties" class="noTopBorder tab-pane panel panel-default yScroll"
@@ -678,7 +687,7 @@
 
 <div id="fontSelectorTemplate" style="display: none">
     <div class="form-group">
-        <select id="fontSelection" name="fontSelection" class="propControlWidth form-control">
+        <select name="fontSelection" class="fontSelection propControlWidth form-control">
         </select>
 
         <div class="divPadding"></div>

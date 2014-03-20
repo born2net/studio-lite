@@ -20,8 +20,10 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_blockType = 3241;
             _.extend(options, {blockType: self.m_blockType})
             Block.prototype.constructor.call(this, options);
-            self._initSubPanel(Elements.BLOCK_QR_COMMON_PROPERTIES);
+            self._initSubPanel(Elements.BLOCK_LABEL_COMMON_PROPERTIES);
+            self.m_labelFontSelector = self.m_blockProperty.getLabelFontSelector();
             self._listenInputChange();
+            self._listenFontSelectionChange();
         },
 
         /**
@@ -36,12 +38,12 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                     return;
                 var text = $(e.target).val();
                 var domPlayerData = self._getBlockPlayerData();
-                var xSnippet = $(domPlayerData).find('Text');
-                $(xSnippet).text(text);
+                var xSnippet = $(domPlayerData).find('Label');
+                var xSnippetText = $(xSnippet).find('Text');
+                $(xSnippetText).text(text);
                 self._setBlockPlayerData(domPlayerData);
-                // log(xSnippet[0].outerHTML);
             }, 150);
-            $(Elements.QR_TEXT).on("input", self.m_inputChangeHandler);
+            $(Elements.LABEL_TEXT).on("input", self.m_inputChangeHandler);
         },
 
         /**
@@ -52,9 +54,47 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _populate: function () {
             var self = this;
             var domPlayerData = self._getBlockPlayerData();
-            var xSnippet = $(domPlayerData).find('Text');
-            var url = xSnippet.attr('url');
-            $(Elements.QR_TEXT).val(xSnippet.text());
+            var xSnippet = $(domPlayerData).find('Label');
+            var xSnippetText = $(xSnippet).find('Text');
+            var xSnippetFont = $(xSnippet).find('Font');
+            $(Elements.LABEL_TEXT).val(xSnippetText.text());
+
+            self.m_labelFontSelector.setConfig({
+                bold: xSnippetFont.attr('fontWeight') == 'bold' ? true : false,
+                italic: xSnippetFont.attr('fontStyle') == 'italic' ? true : false,
+                underline: xSnippetFont.attr('textDecoration') == 'underline' ? true : false,
+                alignment: xSnippetFont.attr('textAlign'),
+                font: xSnippetFont.attr('fontFamily'),
+                color: BB.lib.colorToHex(BB.lib.decimalToHex(xSnippetFont.attr('fontColor'))),
+                size: xSnippetFont.attr('fontSize')
+            });
+
+        },
+
+        /**
+         Listen to changes in font UI selection from Block property and take action on changes
+         @method _listenFontSelectionChange
+         **/
+        _listenFontSelectionChange: function () {
+            var self = this;
+            BB.comBroker.listenWithNamespace(BB.EVENTS.FONT_SELECTION_CHANGED, self, function (e) {
+                if (!self.m_selected || e.caller !== self.m_labelFontSelector)
+                    return;
+                var config = e.edata;
+                var domPlayerData = self._getBlockPlayerData();
+                var xSnippet = $(domPlayerData).find('Label');
+                var xSnippetFont = $(xSnippet).find('Font');
+
+                config.bold == true ? xSnippetFont.attr('fontWeight', 'bold') : xSnippetFont.attr('fontWeight', 'normal');
+                config.italic == true ? xSnippetFont.attr('fontStyle', 'italic') : xSnippetFont.attr('fontStyle', 'normal');
+                config.underline == true ? xSnippetFont.attr('textDecoration', 'underline') : xSnippetFont.attr('textDecoration', 'normal');
+                xSnippetFont.attr('fontColor', BB.lib.colorToDecimal(config.color));
+                xSnippetFont.attr('fontSize', config.size);
+                xSnippetFont.attr('fontFamily', config.font);
+                xSnippetFont.attr('textAlign', config.alignment);
+
+                self._setBlockPlayerData(domPlayerData);
+            });
         },
 
         /**
@@ -65,7 +105,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _loadBlockSpecificProps: function () {
             var self = this;
             self._populate();
-            this._viewSubPanel(Elements.BLOCK_QR_COMMON_PROPERTIES);
+            this._viewSubPanel(Elements.BLOCK_LABEL_COMMON_PROPERTIES);
         },
 
         /**
@@ -75,7 +115,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         deleteBlock: function () {
             var self = this;
-            $(Elements.QR_TEXT).off("input", self.m_inputChangeHandler);
+            $(Elements.LABEL_TEXT).off("input", self.m_inputChangeHandler);
             self._deleteBlock();
         }
     });

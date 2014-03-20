@@ -59,6 +59,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
             self._rssFontSelectorInit();
             self._rssSourceSelectorInit();
             self._rssPollTimeInit();
+            self._labelFontSelectorInit();
         },
 
         /**
@@ -177,7 +178,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         },
 
         /**
-         Create instance of RSSLink used in RSS select property settings
+         Create instance of RSSLink used in select property settings
          @method _rssSourceSelectorInit
          **/
         _rssSourceSelectorInit: function(){
@@ -188,7 +189,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         },
 
         /**
-         Create instance of FontSelector used in RSS font property settings
+         Create instance of FontSelector used in font property settings
          @method _rssFontSelectorInit
          **/
         _rssFontSelectorInit: function(){
@@ -211,6 +212,18 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                 min: 1,
                 max: 30,
                 step: 1
+            });
+        },
+
+        /**
+         Create instance of FontSelector used in font property settings
+         @method _labelFontSelectorInit
+         **/
+        _labelFontSelectorInit: function(){
+            var self = this;
+            self.m_labelFontSelector = new FontSelector({
+                appendTo: Elements.LABEL_FONT_SETTINGS,
+                colorSettings: {animationSpeed: 100}
             });
         },
 
@@ -242,13 +255,23 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         },
 
         /**
-         Returns the instance pf rss font selector
+         Returns the instance of rss font selector
          @method getRssFontSelector
          @return {Object} m_rssFontSelector instance
          **/
         getRssFontSelector: function(){
             var self = this;
            return self.m_rssFontSelector;
+        },
+
+        /**
+         Returns the instance of label font selector
+         @method getLabelFontSelector
+         @return {Object} m_rssFontSelector instance
+         **/
+        getLabelFontSelector: function(){
+            var self = this;
+            return self.m_labelFontSelector;
         },
 
         /**

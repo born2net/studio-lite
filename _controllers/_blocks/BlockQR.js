@@ -53,7 +53,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var self = this;
             var domPlayerData = self._getBlockPlayerData();
             var xSnippet = $(domPlayerData).find('Text');
-            var url = xSnippet.attr('url');
             $(Elements.QR_TEXT).val(xSnippet.text());
         },
 

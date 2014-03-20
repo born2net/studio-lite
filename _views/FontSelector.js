@@ -175,7 +175,7 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
             $.each(self.fontList,function(k,v){
                 snippet = snippet + '\n<option>' + v + '</option>';
             });
-            $(Elements.FONT_SELECTION).append(snippet);
+            $(Elements.CLASS_FONT_SELECTION, self.$el).append(snippet);
         },
 
         /**

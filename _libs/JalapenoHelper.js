@@ -93,7 +93,7 @@ JalapenoHelper.prototype = {
                 acronym: 'External image',
                 description: 'Download images and Flash swf from external web links',
                 getDefaultPlayerData: function () {
-                    return  '<Player player="3160" label="QR Code" interactive="0">' +
+                    return  '<Player player="3160" label="External image Code" interactive="0">' +
                                 '<Data>' +
                                     self._getCommonDefaultXML() +
                                     '<LINK src=""/>'+
@@ -107,7 +107,7 @@ JalapenoHelper.prototype = {
                 acronym: 'External video',
                 description: 'Download video from external web links',
                 getDefaultPlayerData: function () {
-                    return  '<Player player="3150" label="QR Code" interactive="0">' +
+                    return  '<Player player="3150" label="External video" interactive="0">' +
                                 '<Data>' +
                                     self._getCommonDefaultXML() +
                                     '<LINK src=""/>'+
@@ -121,7 +121,7 @@ JalapenoHelper.prototype = {
                 acronym: 'Video',
                 description: 'Movie file',
                 getDefaultPlayerData: function (i_resourceID) {
-                    return '<Player player="3100" label="" interactive="0">' +
+                    return '<Player player="3100" label="Video" interactive="0">' +
                                     '<Data>' +
                                         self._getCommonDefaultXML() +
                                         '<Resource hResource="' + i_resourceID + '">' +
@@ -155,7 +155,7 @@ JalapenoHelper.prototype = {
                 acronym: 'MRSS',
                 description: 'multimedia video stream',
                 getDefaultPlayerData: function () {
-                    return  '<Player player="3340" label="QR Code" interactive="0">' +
+                    return  '<Player player="3340" label="MRSS" interactive="0">' +
                                 '<Data>' +
                                     self._getCommonDefaultXML() +
                                     '<Text textSource="static"></Text>' +
@@ -169,7 +169,7 @@ JalapenoHelper.prototype = {
                 acronym: 'HTML5',
                 description: 'HTML5 web integration',
                 getDefaultPlayerData: function () {
-                    return  '<Player player="3235" label="Html" interactive="0">' +
+                    return  '<Player player="3235" label="HTML5" interactive="0">' +
                                 '<Data>' +
                                     self._getCommonDefaultXML() +
                                     '<HTML src="http://m.cnn.com" config=""/>' +
@@ -183,7 +183,7 @@ JalapenoHelper.prototype = {
                 acronym: 'Clock',
                 description: 'Set live local date and time',
                 getDefaultPlayerData: function () {
-                    return  '<Player player="3320" label="QR Code" interactive="0">' +
+                    return  '<Player player="3320" label="Clock Date" interactive="0">' +
                                 '<Data>' +
                                     self._getCommonDefaultXML() +
                                     '<Text textSource="static"></Text>' +
@@ -197,7 +197,7 @@ JalapenoHelper.prototype = {
                 acronym: 'Label',
                 description: 'Label editor with custom text properties',
                 getDefaultPlayerData: function () {
-                    return  '<Player player="3241" label="QR Code" interactive="0">' +
+                    return  '<Player player="3241" label="Label" interactive="0">' +
                                 '<Data>' +
                                     self._getCommonDefaultXML() +
                                     '<Label>'+
@@ -214,7 +214,7 @@ JalapenoHelper.prototype = {
                 acronym: 'RSS',
                 description: 'RSS for daily fresh scrolling news feed',
                 getDefaultPlayerData: function () {
-                    return  '<Player player="3345" label="Rss news" interactive="0">' +
+                    return  '<Player player="3345" label="RSS news" interactive="0">' +
                                 '<Data>' +
                                     self._getCommonDefaultXML() +
                                     '<Rss url="http://rss.news.yahoo.com/rss/politics" minRefreshTime="30" speed="10" vertical="0" rtl="0">' +

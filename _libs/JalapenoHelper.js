@@ -186,11 +186,38 @@ JalapenoHelper.prototype = {
                     return  '<Player player="3320" label="Clock Date" interactive="0">' +
                                 '<Data>' +
                                     self._getCommonDefaultXML() +
-                                    '<Text textSource="static"></Text>' +
+                                    '<Clock clockFormat="custom" clockMask="EEEE, MMM. D, YYYY at L:NN A">'+
+                                        '<Font fontSize="11" fontColor="13158" fontFamily="Arial" fontWeight="bold" fontStyle="italic" textDecoration="underline" textAlign="center" />'+
+                                     '</Clock>'+
                                 '</Data>' +
                             '</Player>'
                 },
-                icon: self.getIcon('clock')
+                icon: self.getIcon('clock'),
+                getDateTimeMask: function(i_mask){
+                    switch (i_mask){
+                        case 'longDateAndTime': {
+                            return 'EEEE, MMM. D, YYYY at L:NN A';
+                            break;
+                        }
+                        case 'longDate': {
+                            return 'EEEE, MMM. D, YYYY';
+                            break;
+                        }
+                        case 'shortDayTime': {
+                            return 'EEEE L:NN A';
+                            break;
+                        }
+                        case 'date': {
+                            return 'MM/DD/YY';
+                            break;
+                        }
+                        case 'time': {
+                            return 'J:NN:SS A';
+                            break;
+                        }
+
+                    }
+                }
             },
             3241: {
                 name: 'Label text',

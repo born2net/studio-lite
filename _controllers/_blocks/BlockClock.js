@@ -20,28 +20,10 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_blockType = 3320;
             _.extend(options, {blockType: self.m_blockType})
             Block.prototype.constructor.call(this, options);
-            self._initSubPanel(Elements.BLOCK_QR_COMMON_PROPERTIES);
-            self._listenInputChange();
-        },
-
-        /**
-         When user changes a URL link for the feed, update the msdb
-         @method _listenInputChange
-         @return none
-         **/
-        _listenInputChange: function () {
-            var self = this;
-            self.m_inputChangeHandler = _.debounce(function (e) {
-                if (!self.m_selected)
-                    return;
-                var text = $(e.target).val();
-                var domPlayerData = self._getBlockPlayerData();
-                var xSnippet = $(domPlayerData).find('Text');
-                $(xSnippet).text(text);
-                self._setBlockPlayerData(domPlayerData);
-                // log(xSnippet[0].outerHTML);
-            }, 150);
-            $(Elements.QR_TEXT).on("input", self.m_inputChangeHandler);
+            self._initSubPanel(Elements.BLOCK_CLOCK_COMMON_PROPERTIES);
+            self.m_clockFontSelector = self.m_blockProperty.getClockFontSelector();
+            self._listenFontSelectionChange();
+            self._listenClockMaskChange();
         },
 
         /**
@@ -52,9 +34,73 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _populate: function () {
             var self = this;
             var domPlayerData = self._getBlockPlayerData();
-            var xSnippet = $(domPlayerData).find('Text');
-            var url = xSnippet.attr('url');
-            $(Elements.QR_TEXT).val(xSnippet.text());
+            var xSnippet = $(domPlayerData).find('Clock');
+            var mask = $(xSnippet).attr('clockMask');
+            var xSnippetFont = $(xSnippet).find('Font');
+
+            $('input[type="radio"]',self.$el).filter(function(i){
+                var radioValue = $(this).attr('value');
+                var currMask = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).getDateTimeMask(radioValue);
+                if (mask == currMask){
+                    $(this).prop('checked',true);
+                    return false;
+                }
+            });
+
+            self.m_clockFontSelector.setConfig({
+                bold: xSnippetFont.attr('fontWeight') == 'bold' ? true : false,
+                italic: xSnippetFont.attr('fontStyle') == 'italic' ? true : false,
+                underline: xSnippetFont.attr('textDecoration') == 'underline' ? true : false,
+                alignment: xSnippetFont.attr('textAlign'),
+                font: xSnippetFont.attr('fontFamily'),
+                color: BB.lib.colorToHex(BB.lib.decimalToHex(xSnippetFont.attr('fontColor'))),
+                size: xSnippetFont.attr('fontSize')
+            });
+        },
+
+        /**
+         Listen to new selection in clock mask radio button change
+         @method _listenClockMaskChange
+         **/
+        _listenClockMaskChange: function(){
+            var self = this;
+            self.m_clockMaskHandler = function(e){
+                if (!self.m_selected)
+                    return;
+                var radioValue = $(e.target).attr('value');
+                var mask = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).getDateTimeMask(radioValue);
+                var domPlayerData = self._getBlockPlayerData();
+                var xSnippet = $(domPlayerData).find('Clock');
+                xSnippet.attr('clockMask',mask);
+                self._setBlockPlayerData(domPlayerData);
+            }
+            $('input[type="radio"]',self.$el).on('change',self.m_clockMaskHandler);
+        },
+
+        /**
+         Listen to changes in font UI selection from Block property and take action on changes
+         @method _listenFontSelectionChange
+         **/
+        _listenFontSelectionChange: function () {
+            var self = this;
+            BB.comBroker.listenWithNamespace(BB.EVENTS.FONT_SELECTION_CHANGED, self, function (e) {
+                if (!self.m_selected || e.caller !== self.m_clockFontSelector)
+                    return;
+                var config = e.edata;
+                var domPlayerData = self._getBlockPlayerData();
+                var xSnippet = $(domPlayerData).find('Clock');
+                var xSnippetFont = $(xSnippet).find('Font');
+
+                config.bold == true ? xSnippetFont.attr('fontWeight', 'bold') : xSnippetFont.attr('fontWeight', 'normal');
+                config.italic == true ? xSnippetFont.attr('fontStyle', 'italic') : xSnippetFont.attr('fontStyle', 'normal');
+                config.underline == true ? xSnippetFont.attr('textDecoration', 'underline') : xSnippetFont.attr('textDecoration', 'normal');
+                xSnippetFont.attr('fontColor', BB.lib.colorToDecimal(config.color));
+                xSnippetFont.attr('fontSize', config.size);
+                xSnippetFont.attr('fontFamily', config.font);
+                xSnippetFont.attr('textAlign', config.alignment);
+
+                self._setBlockPlayerData(domPlayerData);
+            });
         },
 
         /**
@@ -65,7 +111,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _loadBlockSpecificProps: function () {
             var self = this;
             self._populate();
-            this._viewSubPanel(Elements.BLOCK_QR_COMMON_PROPERTIES);
+            this._viewSubPanel(Elements.BLOCK_CLOCK_COMMON_PROPERTIES);
         },
 
         /**
@@ -75,7 +121,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         deleteBlock: function () {
             var self = this;
-            $(Elements.QR_TEXT).off("input", self.m_inputChangeHandler);
+            $('input[type="radio"]',self.$el).off('change',self.m_clockMaskHandler);
             self._deleteBlock();
         }
     });

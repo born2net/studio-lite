@@ -71,6 +71,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
             self._mrssSourceSelectorInit();
             self._rssPollTimeInit();
             self._labelFontSelectorInit();
+            self._labelClockFontSelectorInit();
         },
 
         /**
@@ -272,6 +273,18 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         },
 
         /**
+         Create instance of FontSelector used in font property settings
+         @method _labelFontSelectorInit
+         **/
+        _labelClockFontSelectorInit: function(){
+            var self = this;
+            self.m_clockFontSelector = new FontSelector({
+                appendTo: Elements.CLOCK_FONT_SETTINGS,
+                colorSettings: {animationSpeed: 100}
+            });
+        },
+
+        /**
          Bring into view the Block property StackView panel
          @method viewPanel
          **/
@@ -306,6 +319,16 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         getRssFontSelector: function(){
             var self = this;
            return self.m_rssFontSelector;
+        },
+
+        /**
+         Returns the instance of clock font selector
+         @method getClockFontSelector
+         @return {Object} m_clockFontSelector instance
+         **/
+        getClockFontSelector: function(){
+            var self = this;
+            return self.m_clockFontSelector;
         },
 
         /**

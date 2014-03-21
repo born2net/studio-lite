@@ -98,7 +98,8 @@
     </ul>
 </div>
 <div id="mainPanelWrap" class="col-xs-12 col-sm-9 col-md-9 col-lg-8">
-<button id="togglePanel" class="propPanelIsOpen btn btn-default btn-sm hidden-lg"><span class="glyphicon glyphicon-resize-horizontal"></span></button>
+<button id="togglePanel" class="propPanelIsOpen btn btn-default btn-sm hidden-lg"><span
+        class="glyphicon glyphicon-resize-horizontal"></span></button>
 <div id="campaignManagerView">
     <div class="campaignSlider noScroll">
         <div id="campaignSelector" class="page center">
@@ -267,6 +268,11 @@
                 </div>
             </div>
         </div>
+        <div id="screenLayoutEditorView" class="page right">
+            <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
+                    class="glyphicon glyphicon-chevron-left"></span></button>
+            <h3 data-localize="editScreenLayoutTitle">Edit screen layout</h3>
+        </div>
         <div id="waitScreenMainPanel" class="page center" style="display: none">
             <div class="yScroll">
                 <h1 data-localize="pleaseWait">Please wait</h1>
@@ -294,7 +300,8 @@
     </div>
 </div>
 <div id="stationsPanel" class="yScroll" style="display: none">
-    <button id="stationRemove"  title="unregisters a remote station" data-toggle="tooltip" type="button" class="btn btn-default"><span
+    <button id="stationRemove" title="unregisters a remote station" data-toggle="tooltip" type="button"
+            class="btn btn-default"><span
             class="glyphicon glyphicon-remove-circle"></span><span data-localize="removeStation"> remove station </span>
     </button>
 
@@ -431,276 +438,295 @@
 </div>
 </div>
 <div id="propPanelWrap" class="hidden-xs col-sm-3 col-lg-3">
-    <div id="propPanel">
-        <div id="emptyProperties">
-            <h2>Dashboard</h2>
-            <hr/>
-            <ul class="alignTextLeft">
-                <li>Server: <span id="serverName"></span></li>
-                <li>Business id: <span id="buisinessID"></span></li>
-                <li>User name: <span id="loggedUserName"></span></li>
-            </ul>
-            <hr/>
-        </div>
-        <div id="campaignProperties" style="display: none">
-            <input id="formCampaignName" type="text" class="form-control" placeholder="Campaign name">
-        </div>
-        <div id="timelineProperties" style="display: none">
-            <div data-role="fieldcontain" data-inset="true" style="width:99%;">
-                <input type="text" name="name" id="timeLinePropTitleID" value="" placeholder="Timeline Title">
-            </div>
-            <label>Length: </label>
-            <label id="timelineLength" style="text-align: right">Length: 00:00:00</label>
-        </div>
-        <div id="channelProperties" style="display: none">
-            <h5>Channel properties</h5>
-            <label for="randomPlayback">Random Playback</label>
-            <select id="randomPlayback" name="Random playback" data-role="slider">
-                <option value="off">Off</option>
-                <option value="on">On</option>
-            </select>
-        </div>
-        <div id="resourceListProperties" style="display: none">
-            <h5>resource properties</h5>
-            <input id="selectedLibResourceName" type="text" name="name" value="" placeholder="Enter resource name">
-        </div>
-        <div id="stationProperties" style="display: none">
-            <h4 id="stationName"></h4>
+<div id="propPanel">
+<div id="emptyProperties">
+    <h2>Dashboard</h2>
+    <hr/>
+    <ul class="alignTextLeft">
+        <li>Server: <span id="serverName"></span></li>
+        <li>Business id: <span id="buisinessID"></span></li>
+        <li>User name: <span id="loggedUserName"></span></li>
+    </ul>
+    <hr/>
+</div>
+<div id="campaignProperties" style="display: none">
+    <input id="formCampaignName" type="text" class="form-control" placeholder="Campaign name">
+</div>
+<div id="timelineProperties" style="display: none">
+    <label>Length: </label>
+    <label id="timelineLength" style="text-align: right">Length: 00:00:00</label>
+    <hr/>
+    <div data-role="fieldcontain" data-inset="true" style="width:99%;">
+        <input type="text" name="name" id="timeLinePropTitleID" value="" placeholder="Timeline Title">
+    </div>
+    <hr/>
+    <button id="editScreenLayout" type="button" class="btn btn-default">
+        <i style="font-size: 1em" class="fa fa-gears">
+        </i>
+        <span data-localize="editScreenLayout">edit screen layout</span>
+    </button>
+</div>
+<div id="channelProperties" style="display: none">
+    <h5>Channel properties</h5>
+    <label for="randomPlayback">Random Playback</label>
+    <select id="randomPlayback" name="Random playback" data-role="slider">
+        <option value="off">Off</option>
+        <option value="on">On</option>
+    </select>
+</div>
+<div id="resourceListProperties" style="display: none">
+    <h5>resource properties</h5>
+    <input id="selectedLibResourceName" type="text" name="name" value="" placeholder="Enter resource name">
+</div>
+<div id="stationProperties" style="display: none">
+    <h4 id="stationName"></h4>
 
-            <div id="snapShotWrap">
-                <svg id="snapShotSVG" xmlns="http://www.w3.org/2000/svg">
-                    <g>
-                        <rect stroke-width="10" stroke="#191919" height="120" width="220" y="9.5" x="10" fill="#cccccc"></rect>
-                    </g>
-                </svg>
-                <img id="snapShotImage"/> <img id="snapShotSpinner" style="display: none"
-                                               src="https://secure.dynawebs.net/_studiolite-dev/_assets/preload2_gray.gif"/>
-            </div>
-            <div id="stationcontrol" class="btn-group">
-                <button id="stationSnapshotCommand" type="button" class="btn btn-default" ><span
-                        class="glyphicon  glyphicon glyphicon-picture"></span></button>
-                <button id="stationPlayCommand" disabled="" type="button" class="btn btn-default"><span
-                        class="glyphicon glyphicon glyphicon-play"></span></button>
-                <button id="stationStopCommand" disabled="" type="button" class="btn btn-default"><span
-                        class="glyphicon glyphicon glyphicon-stop"></span></button>
-                <button id="stationReloadCommand" disabled="" type="button" class="btn btn-default"><span
-                        class="glyphicon glyphicon glyphicon-refresh"></span></button>
-            </div>
-            <div id="stationSelectionCampaignWrap">
-                <select id="stationSelectionCampaign" class="form-control">
+    <div id="snapShotWrap">
+        <svg id="snapShotSVG" xmlns="http://www.w3.org/2000/svg">
+            <g>
+                <rect stroke-width="10" stroke="#191919" height="120" width="220" y="9.5" x="10" fill="#cccccc"></rect>
+            </g>
+        </svg>
+        <img id="snapShotImage"/> <img id="snapShotSpinner" style="display: none"
+                                       src="https://secure.dynawebs.net/_studiolite-dev/_assets/preload2_gray.gif"/>
+    </div>
+    <div id="stationcontrol" class="btn-group">
+        <button id="stationSnapshotCommand" type="button" class="btn btn-default"><span
+                class="glyphicon  glyphicon glyphicon-picture"></span></button>
+        <button id="stationPlayCommand" disabled="" type="button" class="btn btn-default"><span
+                class="glyphicon glyphicon glyphicon-play"></span></button>
+        <button id="stationStopCommand" disabled="" type="button" class="btn btn-default"><span
+                class="glyphicon glyphicon glyphicon-stop"></span></button>
+        <button id="stationReloadCommand" disabled="" type="button" class="btn btn-default"><span
+                class="glyphicon glyphicon glyphicon-refresh"></span></button>
+    </div>
+    <div id="stationSelectionCampaignWrap">
+        <select id="stationSelectionCampaign" class="form-control">
+        </select>
+    </div>
+    <div id="stationInfo">
+        <ul>
+            <li>OS: <span id="stationOS"></span></li>
+            <li>AIR version: <span id="stationAirVersion"></span></li>
+            <li>Player version: <span id="stationAppVersion"></span></li>
+            <li>Peak memory: <span id="stationPeakMemory"></span></li>
+            <li>Total memory: <span id="stationTotalMemory"></span></li>
+            <li>Running: <span id="stationRunningTime"></span></li>
+            <li>Watchdog: <span id="stationWatchdog"></span></li>
+            <li>Last upd: <span id="stationLastUpdate"></span></li>
+        </ul>
+    </div>
+    <input type="text" name="eventName" placeholder="event name" id="stationSendEventValue" value="">
+
+    <p></p>
+    <button id="stationEventSendCommand" class="btn btn-primary">Send station event</button>
+</div>
+<div id="blockProperties" class="" style="display: none">
+<div id="channelBlockProps" style="display: none">
+    <p>hours / minutes / seconds</p>
+</div>
+<h4 id="selectedChannelResourceName"></h4>
+
+<div id="sceneBlockProps" style="display: none">
+    <p>X=0 / Y=0</p>
+</div>
+<ul id="blockPropertiesTabber" class="nav nav-tabs">
+    <li class="active"><a id="blockSubpropertiesTitle" href="#blockSubProperties" data-toggle="tab">Comp</a>
+    </li>
+    <li><a href="#blockCommonProperties" data-toggle="tab">Style</a></li>
+</ul>
+<div class="tab-content">
+    <div id="blockSubProperties" class="noTopBorder tab-pane active panel panel-default yScroll"
+         style="height: 100px;">
+        <div class="panel-body">
+            <div id="blockImageCommonProperties" style="display: none">
+                <label for="imageAspectRatio">Aspect ratio</label>
+                <select id="imageAspectRatio" name="Aspect ratio" data-role="slider">
+                    <option value="off">Off</option>
+                    <option value="on">On</option>
                 </select>
             </div>
-            <div id="stationInfo">
-                <ul>
-                    <li>OS: <span id="stationOS"></span></li>
-                    <li>AIR version: <span id="stationAirVersion"></span></li>
-                    <li>Player version: <span id="stationAppVersion"></span></li>
-                    <li>Peak memory: <span id="stationPeakMemory"></span></li>
-                    <li>Total memory: <span id="stationTotalMemory"></span></li>
-                    <li>Running: <span id="stationRunningTime"></span></li>
-                    <li>Watchdog: <span id="stationWatchdog"></span></li>
-                    <li>Last upd: <span id="stationLastUpdate"></span></li>
-                </ul>
+            <div id="blockVideoCommonProperties" style="display: none">
+                <span>Volume level</span>
+                <span id="videoVolumeLabel">100</span>
+
+                <div id="videoVolumeWrap" class="propControlWidth">
+                    <div id="videoVolumeWrapSlider"
+                         class="noUi-target noUi-ltr noUi-horizontal noUi-background"></div>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input id="videoAutoRewind" type="checkbox"><span> Auto rewind</span>
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input id="videoAspectRatio" type="checkbox"><span> Aspect ratio</span>
+                    </label>
+                </div>
             </div>
-            <input type="text" name="eventName" placeholder="event name" id="stationSendEventValue" value="">
+            <div id="blockRSSCommonProperties" style="display: none">
+                <hr class="hrThin"/>
+                <span>RSS news source</span>
+                <select id="rssSource" class="propControlWidth form-control">
+                </select>
 
-            <p></p>
-            <button id="stationEventSendCommand" class="btn btn-primary">Send station event</button>
-        </div>
-        <div id="blockProperties" class="" style="display: none">
-            <div id="channelBlockProps" style="display: none">
-                <p>hours / minutes / seconds</p>
-            </div>
-            <h4 id="selectedChannelResourceName"></h4>
-
-            <div id="sceneBlockProps" style="display: none">
-                <p>X=0 / Y=0</p>
-            </div>
-            <ul id="blockPropertiesTabber" class="nav nav-tabs">
-                <li class="active"><a id="blockSubpropertiesTitle" href="#blockSubProperties" data-toggle="tab">Comp</a>
-                </li>
-                <li><a href="#blockCommonProperties" data-toggle="tab">Style</a></li>
-            </ul>
-            <div class="tab-content">
-                <div id="blockSubProperties" class="noTopBorder tab-pane active panel panel-default yScroll"
-                     style="height: 100px;">
-                    <div class="panel-body">
-                        <div id="blockImageCommonProperties" style="display: none">
-                            <label for="imageAspectRatio">Aspect ratio</label>
-                            <select id="imageAspectRatio" name="Aspect ratio" data-role="slider">
-                                <option value="off">Off</option>
-                                <option value="on">On</option>
-                            </select>
-                        </div>
-                        <div id="blockVideoCommonProperties" style="display: none">
-                            <span>Volume level</span>
-                            <span id="videoVolumeLabel">100</span>
-                            <div id="videoVolumeWrap" class="propControlWidth">
-                                <div id="videoVolumeWrapSlider" class="noUi-target noUi-ltr noUi-horizontal noUi-background"></div>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input id="videoAutoRewind" type="checkbox"><span> Auto rewind</span>
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input id="videoAspectRatio" type="checkbox"><span> Aspect ratio</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div id="blockRSSCommonProperties" style="display: none">
-                            <hr class="hrThin"/>
-                            <span>RSS news source</span>
-                            <select id="rssSource" class="propControlWidth form-control">
-                            </select>
-
-                            <div>
-                                <div data-role="fieldcontain" data-inset="true">
-                                    <input id="rssLink" type="text" name="name" class="propControlWidth" value=""
-                                           placeholder="Enter RSS Link Text" style="display: none">
-                                </div>
-                            </div>
-                            <hr class="hrThin"/>
-                            <span>RSS refresh timer (minutes)</span>
-
-                            <div id="rssPollSpinner" class="spinner">
-                                <input id="rssMinRefreshTime" type="text" class="input-mini spinner-input">
-
-                                <div class="spinner-buttons	btn-group btn-group-vertical">
-                                    <button type="button" class="squareButton btn spinner-up">
-                                        <i class="fa fa-chevron-up"></i>
-                                    </button>
-                                    <button type="button" class="squareButton btn spinner-down">
-                                        <i class="fa fa-chevron-down"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div style="clear: both"></div>
-                            <hr class="hrThin"/>
-                            <span>RSS scroll direction</span>
-                            <select id="rssModeSelect" class="propControlWidth form-control">
-                                <option>Horizontal mode</option>
-                                <option>Vertical mode</option>
-                            </select>
-                            <hr class="hrThin"/>
-                            <span>Scroll speed</span>
-                            <select id="rssScrollSpeed" class="propControlWidth form-control">
-                                <option>Slow</option>
-                                <option>Medium</option>
-                                <option>Fast</option>
-                            </select>
-                            <hr class="hrThin"/>
-                            <span>Font</span>
-
-                            <div id="rssFontSettings">
-                            </div>
-                            <hr class="hrThin"/>
-
-                        </div>
-                        <div id="blockMRSSCommonProperties" style="display: none">
-                            <hr class="hrThin"/>
-                            <span>RSS news source</span>
-                            <select id="mrssSource" class="propControlWidth form-control">
-                            </select>
-                            <div>
-                                <div data-role="fieldcontain" data-inset="true">
-                                    <input id="mrssLink" type="text" name="name" class="propControlWidth" value="" placeholder="Enter RSS Link Text" style="display: none">
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input id="mrssAspectRatio" type="checkbox"><span> Maintain aspect ratio</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="blockQRCommonProperties" style="display: none"><span>QR</span>
-                            <div data-role="fieldcontain" data-inset="true">
-                                <input type="text" name="name" id="qrText" value=""
-                                       placeholder="Enter QR Text">
-                            </div>
-                        </div>
-                        <div id="blockHTMLCommonProperties" style="display: none">
-                            <span>Web address</span>
-                            <div data-role="fieldcontain" data-inset="true">
-                                <input type="text" name="name" id="htmlText" value="" placeholder="http://...">
-                            </div>
-                        </div>
-                        <div id="blockExtImageCommonProperties" style="display: none">
-                            <span>URL address</span>
-                            <div data-role="fieldcontain" data-inset="true">
-                                <input type="text" name="name" id="extImageText" value="" placeholder="http://...">
-                            </div>
-                        </div>
-                        <div id="blockExtVideoCommonProperties" style="display: none">
-                            <span>URL address</span>
-                            <div data-role="fieldcontain" data-inset="true">
-                                <input type="text" name="name" id="extVideoText" value="" placeholder="http://...">
-                            </div>
-                        </div>
-                        <div id="blockLabelCommonProperties" style="display: none">
-                            <span>Label text</span>
-                            <div data-role="fieldcontain" data-inset="true">
-                                <input id="labelText" type="text" name="name" class="propControlWidth" value="" placeholder="enter text here">
-                            </div>
-                            <hr class="propControlWidth"/>
-                            <div id="labelFontSettings">
-                            </div>
-                        </div>
-                        <div id="blockClockCommonProperties" style="display: none">
-                            <span>Choose format</span>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="clockRadioOpts" value="longDateAndTime" checked>
-                                    <span><small>Friday, Mar 21 2014 at 8:59AM</small></span>
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="clockRadioOpts" value="longDate" checked>
-                                    <span><small>Friday, Mar 21 2014</small></span>
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="clockRadioOpts" value="shortDayTime" checked>
-                                    <span><small>Friday 9:10 AM</small></span>
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="clockRadioOpts" value="date" checked>
-                                    <span><small>3/21/14</small></span>
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="clockRadioOpts" value="time" checked>
-                                    <span><small>9:00:39 AM</small></span>
-                                </label>
-                            </div>
-                            <hr class="propControlWidth"/>
-                            <div id="clockFontSettings">
-                            </div>
-                        </div>
+                <div>
+                    <div data-role="fieldcontain" data-inset="true">
+                        <input id="rssLink" type="text" name="name" class="propControlWidth" value=""
+                               placeholder="Enter RSS Link Text" style="display: none">
                     </div>
                 </div>
-                <div id="blockCommonProperties" class="noTopBorder tab-pane panel panel-default yScroll"
-                     style="height: 100px;">
-                    <div class="panel-body"><span>Alpha </span> <span id="blockAlphaLabel">100</span>
-                        <div id="blockAlphaWrap" class="propControlWidth">
-                            <div id="blockAlphaSlider"
-                                 class="noUi-target noUi-ltr noUi-horizontal noUi-background"></div>
-                        </div>
-                        <hr/>
-                        <span>Background color</span>
+                <hr class="hrThin"/>
+                <span>RSS refresh timer (minutes)</span>
 
-                        <div id="bgColorGradientSelector"></div>
+                <div id="rssPollSpinner" class="spinner">
+                    <input id="rssMinRefreshTime" type="text" class="input-mini spinner-input">
+
+                    <div class="spinner-buttons	btn-group btn-group-vertical">
+                        <button type="button" class="squareButton btn spinner-up">
+                            <i class="fa fa-chevron-up"></i>
+                        </button>
+                        <button type="button" class="squareButton btn spinner-down">
+                            <i class="fa fa-chevron-down"></i>
+                        </button>
                     </div>
+                </div>
+                <div style="clear: both"></div>
+                <hr class="hrThin"/>
+                <span>RSS scroll direction</span>
+                <select id="rssModeSelect" class="propControlWidth form-control">
+                    <option>Horizontal mode</option>
+                    <option>Vertical mode</option>
+                </select>
+                <hr class="hrThin"/>
+                <span>Scroll speed</span>
+                <select id="rssScrollSpeed" class="propControlWidth form-control">
+                    <option>Slow</option>
+                    <option>Medium</option>
+                    <option>Fast</option>
+                </select>
+                <hr class="hrThin"/>
+                <span>Font</span>
+
+                <div id="rssFontSettings">
+                </div>
+                <hr class="hrThin"/>
+
+            </div>
+            <div id="blockMRSSCommonProperties" style="display: none">
+                <hr class="hrThin"/>
+                <span>RSS news source</span>
+                <select id="mrssSource" class="propControlWidth form-control">
+                </select>
+
+                <div>
+                    <div data-role="fieldcontain" data-inset="true">
+                        <input id="mrssLink" type="text" name="name" class="propControlWidth" value=""
+                               placeholder="Enter RSS Link Text" style="display: none">
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input id="mrssAspectRatio" type="checkbox"><span> Maintain aspect ratio</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div id="blockQRCommonProperties" style="display: none"><span>QR</span>
+
+                <div data-role="fieldcontain" data-inset="true">
+                    <input type="text" name="name" id="qrText" value=""
+                           placeholder="Enter QR Text">
+                </div>
+            </div>
+            <div id="blockHTMLCommonProperties" style="display: none">
+                <span>Web address</span>
+
+                <div data-role="fieldcontain" data-inset="true">
+                    <input type="text" name="name" id="htmlText" value="" placeholder="http://...">
+                </div>
+            </div>
+            <div id="blockExtImageCommonProperties" style="display: none">
+                <span>URL address</span>
+
+                <div data-role="fieldcontain" data-inset="true">
+                    <input type="text" name="name" id="extImageText" value="" placeholder="http://...">
+                </div>
+            </div>
+            <div id="blockExtVideoCommonProperties" style="display: none">
+                <span>URL address</span>
+
+                <div data-role="fieldcontain" data-inset="true">
+                    <input type="text" name="name" id="extVideoText" value="" placeholder="http://...">
+                </div>
+            </div>
+            <div id="blockLabelCommonProperties" style="display: none">
+                <span>Label text</span>
+
+                <div data-role="fieldcontain" data-inset="true">
+                    <input id="labelText" type="text" name="name" class="propControlWidth" value=""
+                           placeholder="enter text here">
+                </div>
+                <hr class="propControlWidth"/>
+                <div id="labelFontSettings">
+                </div>
+            </div>
+            <div id="blockClockCommonProperties" style="display: none">
+                <span>Choose format</span>
+
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="clockRadioOpts" value="longDateAndTime" checked>
+                        <span><small>Friday, Mar 21 2014 at 8:59AM</small></span>
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="clockRadioOpts" value="longDate" checked>
+                        <span><small>Friday, Mar 21 2014</small></span>
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="clockRadioOpts" value="shortDayTime" checked>
+                        <span><small>Friday 9:10 AM</small></span>
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="clockRadioOpts" value="date" checked>
+                        <span><small>3/21/14</small></span>
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="clockRadioOpts" value="time" checked>
+                        <span><small>9:00:39 AM</small></span>
+                    </label>
+                </div>
+                <hr class="propControlWidth"/>
+                <div id="clockFontSettings">
                 </div>
             </div>
         </div>
     </div>
+    <div id="blockCommonProperties" class="noTopBorder tab-pane panel panel-default yScroll"
+         style="height: 100px;">
+        <div class="panel-body"><span>Alpha </span> <span id="blockAlphaLabel">100</span>
+
+            <div id="blockAlphaWrap" class="propControlWidth">
+                <div id="blockAlphaSlider"
+                     class="noUi-target noUi-ltr noUi-horizontal noUi-background"></div>
+            </div>
+            <hr/>
+            <span>Background color</span>
+
+            <div id="bgColorGradientSelector"></div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -758,8 +784,9 @@
 
         <div class="divPadding"></div>
         <div>
-            <input type="text" name="colorSelect" class="fontSelectorMiniColor fontFormatter form-control minicolor-mini"
-                   data-control="hue" >
+            <input type="text" name="colorSelect"
+                   class="fontSelectorMiniColor fontFormatter form-control minicolor-mini"
+                   data-control="hue">
             <button type="button" name="bold" class="fontFormatter btn btn-default btn-sm"><i
                     class="gencons fa fa-bold"></i></button>
             <button type="button" name="underline" class="fontFormatter btn btn-default btn-sm"><i
@@ -770,7 +797,8 @@
         <div style="clear: both; padding: 3px"></div>
         <div>
             <div style="float: left" class="spinner">
-                <input name="fontSizeInput" type="text" style="width: 60px" class="fontFormatter input-mini spinner-input">
+                <input name="fontSizeInput" type="text" style="width: 60px"
+                       class="fontFormatter input-mini spinner-input">
 
                 <div class="spinner-buttons	btn-group btn-group-vertical">
                     <button type="button" name="fontSizeUp" class="squareButton btn spinner-up">

@@ -243,7 +243,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
             _initCampaignWizardPage: function () {
                 var self = this;
 
-                require(['CampaignSelectorView', 'OrientationSelectorView', 'ResolutionSelectorView', 'CampaignView', 'CampaignNameSelectorView', 'AddBlockView'], function (CampaignSelectorView, OrientationSelectorView, ResolutionSelectorView, CampaignView, CampaignNameSelectorView, AddBlockView) {
+                require(['CampaignSelectorView', 'OrientationSelectorView', 'ResolutionSelectorView', 'CampaignView', 'CampaignNameSelectorView', 'AddBlockView', 'ScreenLayoutEditorView'], function (CampaignSelectorView, OrientationSelectorView, ResolutionSelectorView, CampaignView, CampaignNameSelectorView, AddBlockView, ScreenLayoutEditorView) {
 
                     self.m_campaignSelectorView = new CampaignSelectorView({
                         stackView: self.m_campaignSliderStackView,
@@ -303,6 +303,14 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                         to: Elements.CAMPAIGN_SELECTOR
                     });
                     BB.comBroker.setService(BB.SERVICES.ADD_BLOCK_VIEW, self.m_addBlockView);
+
+                    self.m_screenLayoutEditorView = new ScreenLayoutEditorView({
+                        stackView: self.m_campaignSliderStackView,
+                        from: Elements.CAMPAIGN,
+                        el: Elements.SCREEN_LAYOUT_EDITOR_VIEW,
+                        to: Elements.CAMPAIGN_SELECTOR
+                    });
+
 
                     self.m_campaignSliderStackView.addView(self.m_campaignSelectorView);
                     self.m_campaignSliderStackView.addView(self.m_campaignNameSelectorView);

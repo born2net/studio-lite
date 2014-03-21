@@ -39,6 +39,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             self._populateChannels();
             self._populateTimeline();
             self._listenInputChange();
+            self._listenScreenLayoutEdit();
             this._onTimelineSelected();
 
         },
@@ -68,7 +69,6 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
         /**
          Update msdb when the timeline title has changed.
          @method _listenInputChange
-         @param {Event} e
          @return none
          **/
         _listenInputChange: function () {
@@ -79,6 +79,21 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
                 jalapeno.setCampaignTimelineRecord(self.m_campaign_timeline_id, 'timeline_name', $(Elements.TIME_LINE_PROP_TITLE_ID).val());
             }, 150, false);
             self.m_inputChangeHandler = $(Elements.TIME_LINE_PROP_TITLE_ID).on("input", onChange);
+        },
+
+        /**
+         Pull up the screen layout editor
+         @method _listenScreenLayoutEdit
+         @return none
+         **/
+        _listenScreenLayoutEdit: function () {
+            var self = this;
+            self.m_openScreenLayoutEditorHandler = function(e){
+                var screenLayoutEditor = BB.comBroker.getService(BB.SERVICES.SCREEN_LAYOUT_EDITOR_VIEW);
+                screenLayoutEditor.selectView();
+            };
+            $(Elements.EDIT_SCREEN_LAYOUT).on('click',self.m_openScreenLayoutEditorHandler);
+
         },
 
         /**
@@ -264,6 +279,8 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             $.each(self, function (k) {
                 self[k] = undefined;
             });
+
+            $(Elements.EDIT_SCREEN_LAYOUT).off('click',self.m_openScreenLayoutEditorHandler);
         }
     });
 

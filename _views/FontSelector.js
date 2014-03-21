@@ -75,34 +75,6 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
 
             var currID = self.$el.attr('id');
             self.$el.attr('id', _.uniqueId(currID));
-
-            /*
-            setTimeout(function () {
-                self.m_config = {
-                    bold: true,
-                    italic: true,
-                    underline: true,
-                    alignment: 'right',
-                    font: 'Times',
-                    color: '#ff0000',
-                    size: 32
-                };
-                self._render();
-            }, 4000);
-
-            setTimeout(function () {
-                self.m_config = {
-                    bold: true,
-                    italic: true,
-                    underline: true,
-                    alignment: 'right',
-                    font: 'Arial',
-                    color: '#00ff00',
-                    size: 11
-                };
-                self._render();
-            }, 6000);
-            */
         },
 
         /**
@@ -110,7 +82,15 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
          @method events
          **/
         events: {
-            'click': '_onClick'
+            'click': '_onClick',
+            'focusout': function(e) {
+                var self = this;
+                if ($(e.target).is("input")) {
+                    self.m_config.size = self.m_fontSizeInput.val();
+                    BB.comBroker.fire(BB.EVENTS.FONT_SELECTION_CHANGED, self, self, self.m_config);
+                    return;
+                }
+            }
         },
 
         /**

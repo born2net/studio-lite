@@ -151,7 +151,7 @@ JalapenoHelper.prototype = {
                 icon: self.getIcon('qr')
             },
             3340: {
-                name: 'Multimedia Really Simple Syndication videos',
+                name: 'Multimedia RSS',
                 acronym: 'MRSS',
                 description: 'multimedia video stream',
                 getDefaultPlayerData: function () {

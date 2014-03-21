@@ -116,6 +116,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         deleteBlock: function () {
             var self = this;
             $(Elements.LABEL_TEXT).off("input", self.m_inputChangeHandler);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.FONT_SELECTION_CHANGED, self);
             self._deleteBlock();
         }
     });

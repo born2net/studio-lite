@@ -21,8 +21,29 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             _.extend(options, {blockType: self.m_blockType})
             Block.prototype.constructor.call(this, options);
             self._initSubPanel(Elements.BLOCK_VIDEO_COMMON_PROPERTIES);
-            self._listenInputChange();
+            self._listenAspectChange();
+            self._listenRewind();
+            self._listenVolumeChange();
             self._initResourcesData();
+        },
+
+
+        /**
+         Listen to changes in volume control
+         @method _listenVolumeChange
+         **/
+        _listenVolumeChange: function(){
+            var self = this;
+            self.m_inputVolumeHandler = function (e) {
+                if (!self.m_selected)
+                    return;
+                var volume = e.edata;
+                var domPlayerData = self._getBlockPlayerData();
+                var xSnippet = $(domPlayerData).find('Video');
+                $(xSnippet).attr('volume', volume);
+                self._setBlockPlayerData(domPlayerData);
+            };
+            BB.comBroker.listen(BB.EVENTS.VIDEO_VOLUME_CHANGED, self.m_inputVolumeHandler);
         },
 
         /**
@@ -63,23 +84,41 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         },
 
         /**
-         When user changes a URL link for the feed, update the msdb
-         @method _listenInputChange
+         When user changes aspect ratio checkbox
+         @method _listenAspectChange
          @return none
          **/
-        _listenInputChange: function () {
+        _listenAspectChange: function () {
             var self = this;
-            self.m_inputChangeHandler = function () {
+            self.m_inputAspectHandler = function (e) {
                 if (!self.m_selected)
                     return;
-                var aspectRatio = $(Elements.VIDEO_ASPECT_RATIO + ' option:selected').val() == "on" ? 1 : 0;
+                var v = $(e.target).prop('checked') == true ? 1 : 0;
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('AspectRatio');
-                $(xSnippet).attr('maintain', aspectRatio);
+                $(xSnippet).attr('maintain', v);
                 self._setBlockPlayerData(domPlayerData);
-                // log(xSnippet[0].parentElement.parentElement.parentElement.outerHTML);
             };
-            $(Elements.VIDEO_ASPECT_RATIO).on('change', self.m_inputChangeHandler);
+            $(Elements.VIDEO_ASPECT_RATIO).on('change', self.m_inputAspectHandler);
+        },
+
+        /**
+         When user changes rewind checkbox
+         @method _listenRewind
+         @return none
+         **/
+        _listenRewind: function () {
+            var self = this;
+            self.m_inputRewind = function (e) {
+                if (!self.m_selected)
+                    return;
+                var v = $(e.target).prop('checked') == true ? 1 : 0;
+                var domPlayerData = self._getBlockPlayerData();
+                var xSnippet = $(domPlayerData).find('Video');
+                $(xSnippet).attr('autoRewind', v);
+                self._setBlockPlayerData(domPlayerData);
+            };
+            $(Elements.VIDEO_AUTO_REWIND).on('change', self.m_inputRewind);
         },
 
         /**
@@ -91,8 +130,13 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var self = this;
             var domPlayerData = self._getBlockPlayerData();
             var xSnippet = $(domPlayerData).find('AspectRatio');
-            var aspectRatio = xSnippet.attr('maintain') == '1' ? 'on' : 'off';
-            $(Elements.VIDEO_ASPECT_RATIO + ' option[value="' + aspectRatio + '"]').attr("selected", "selected");
+            var xSnippetVideo = $(domPlayerData).find('Video');
+            var aspectRatio = xSnippet.attr('maintain') == '1' ? true : false;
+            var autoRewind = xSnippetVideo.attr('autoRewind') == '1' ? true : false;
+            var volume = parseFloat(xSnippetVideo.attr('volume')) * 100;
+            $(Elements.VIDEO_AUTO_REWIND).prop('checked', autoRewind);
+            $(Elements.VIDEO_ASPECT_RATIO).prop('checked', aspectRatio);
+            $(Elements.VIDEO_VOLUME_WRAP_SLIDER).val(volume);
         },
 
         /**
@@ -112,7 +156,9 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         deleteBlock: function () {
             var self = this;
-            $(Elements.VIDEO_ASPECT_RATIO).off('change', self.m_inputChangeHandler);
+            $(Elements.VIDEO_AUTO_REWIND).off('change', self.m_inputRewind);
+            $(Elements.VIDEO_ASPECT_RATIO).off('change', self.m_inputAspectHandler);
+            BB.comBroker.stopListen(BB.EVENTS.VIDEO_VOLUME_CHANGED, self.m_inputVolumeHandler);
             self._deleteBlock();
         }
     });

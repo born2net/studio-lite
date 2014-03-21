@@ -62,9 +62,9 @@ define(['jquery', 'backbone'], function ($) {
          @method _initSubPanel
          @param {String} i_panel
          **/
-        _initSubPanel: function(i_panel){
-           var self = this;
-           self.m_blockProperty.initSubPanel(i_panel);
+        _initSubPanel: function (i_panel) {
+            var self = this;
+            self.m_blockProperty.initSubPanel(i_panel);
         },
 
         /**
@@ -72,7 +72,7 @@ define(['jquery', 'backbone'], function ($) {
          @method _viewSubPanel
          @param {String} i_panel
          **/
-        _viewSubPanel: function(i_panel){
+        _viewSubPanel: function (i_panel) {
             var self = this;
             self.m_blockProperty.viewSubPanel(i_panel);
         },
@@ -84,8 +84,8 @@ define(['jquery', 'backbone'], function ($) {
         _alphaListenChange: function () {
             var self = this;
             BB.comBroker.listenWithNamespace(BB.EVENTS.ALPHA_CHANGED, self, function (e) {
-                    if (!self.m_selected)
-                        return;
+                if (!self.m_selected)
+                    return;
                 var alpha = e.edata;
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Appearance');
@@ -113,7 +113,7 @@ define(['jquery', 'backbone'], function ($) {
          Update a block's player_data with new gradient background
          @method _gradientListenChange
          **/
-        _gradientListenChange: function(){
+        _gradientListenChange: function () {
             var self = this;
 
             BB.comBroker.listenWithNamespace(BB.EVENTS.GRADIENT_COLOR_CHANGED, self, function (e) {

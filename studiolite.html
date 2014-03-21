@@ -527,12 +527,22 @@
                                 <option value="on">On</option>
                             </select>
                         </div>
-                        <div id="blockVideoCommonProperties" style="display: none"><span>Video</span>
-                            <label for="videoAspectRatio">Aspect ratio</label>
-                            <select id="videoAspectRatio" name="Aspect ratio" data-role="slider">
-                                <option value="off">Off</option>
-                                <option value="on">On</option>
-                            </select>
+                        <div id="blockVideoCommonProperties" style="display: none">
+                            <span>Volume level</span>
+                            <span id="videoVolumeLabel">100</span>
+                            <div id="videoVolumeWrap" class="propControlWidth">
+                                <div id="videoVolumeWrapSlider" class="noUi-target noUi-ltr noUi-horizontal noUi-background"></div>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input id="videoAutoRewind" type="checkbox"><span> Auto rewind</span>
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input id="videoAspectRatio" type="checkbox"><span> Aspect ratio</span>
+                                </label>
+                            </div>
                         </div>
                         <div id="blockRSSCommonProperties" style="display: none">
                             <hr class="hrThin"/>
@@ -637,8 +647,7 @@
                 <div id="blockCommonProperties" class="noTopBorder tab-pane panel panel-default yScroll"
                      style="height: 100px;">
                     <div class="panel-body"><span>Alpha </span> <span id="blockAlphaLabel">100</span>
-
-                        <div id="blockAlphaWrap">
+                        <div id="blockAlphaWrap" class="propControlWidth">
                             <div id="blockAlphaSlider"
                                  class="noUi-target noUi-ltr noUi-horizontal noUi-background"></div>
                         </div>

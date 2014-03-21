@@ -20,7 +20,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
 
     /**
      event fires when block length is changing (requesting a change), normally by a knob property widget
-     @event Block.BLOCK_LENGTH_CHANGING
+     @event BLOCK_LENGTH_CHANGING
      @param {Object} this
      @param {Object} caller the firing knob element
      @param {Number} value the knob's position value (hours / minutes / seconds)
@@ -29,12 +29,21 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
 
     /**
      event fires when background alpha changed
-     @event Block.ALPHA_CHANGED
+     @event ALPHA_CHANGED
      @param {Object} this
      @param {Object} caller the firing element
      @param {Number} alpha value
      **/
     BB.EVENTS.ALPHA_CHANGED = 'ALPHA_CHANGED';
+
+    /**
+     event fires when video volume changed
+     @event VIDEO_VOLUME_CHANGED
+     @param {Object} this
+     @param {Object} caller the firing element
+     @param {Number} alpha value
+     **/
+    BB.EVENTS.VIDEO_VOLUME_CHANGED = 'VIDEO_VOLUME_CHANGED';
 
     BB.SERVICES.BLOCK_PROPERTIES = 'BlockProperties';
 
@@ -56,6 +65,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
             self._alphaSliderInit();
             self._bgGradientInit();
             self._propLengthKnobsInit();
+            self._videoVolumeSliderInit()
             self._rssFontSelectorInit();
             self._rssSourceSelectorInit();
             self._mrssSourceSelectorInit();
@@ -175,6 +185,28 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                         return false;
                     }
                 }
+            });
+        },
+
+        /**
+         Init video volume slider in properties
+         @method _videoVolumeSliderInit
+         **/
+        _videoVolumeSliderInit: function () {
+            var self = this;
+            $(Elements.VIDEO_VOLUME_WRAP_SLIDER).noUiSlider({
+                handles: 1,
+                start: 100,
+                step: 1,
+                range: [0, 100],
+                serialization: {
+                    to: [ $(Elements.VIDEO_VOLUME_LABEL), 'text' ]
+                }
+            });
+            self.m_videoVolumeHandler = $(Elements.VIDEO_VOLUME_WRAP_SLIDER).on('change', function (e) {
+                var volume = parseFloat($(Elements.VIDEO_VOLUME_WRAP_SLIDER).val()) / 100;
+                BB.comBroker.fire(BB.EVENTS.VIDEO_VOLUME_CHANGED, this, self, volume);
+                return false;
             });
         },
 

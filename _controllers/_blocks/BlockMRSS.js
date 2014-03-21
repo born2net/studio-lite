@@ -37,7 +37,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_aspectChange = function (e) {
                 if (!self.m_selected)
                     return;
-                log($(e.target).prop('checked'));
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Rss');
                 var v = $(e.target).prop('checked') == true ? 1 : 0;

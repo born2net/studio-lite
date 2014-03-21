@@ -125,8 +125,8 @@ JalapenoHelper.prototype = {
                                     '<Data>' +
                                         self._getCommonDefaultXML() +
                                         '<Resource hResource="' + i_resourceID + '">' +
-                                        '<AspectRatio maintain="1" />' +
-                                        '<Image autoRewind="1" volume="1" backgroundAlpha="1" />' +
+                                            '<AspectRatio maintain="1" />' +
+                                            '<Video autoRewind="1" volume="1" backgroundAlpha="1" />' +
                                         '</Resource>' +
                                     '</Data>' +
                                 '</Player>';

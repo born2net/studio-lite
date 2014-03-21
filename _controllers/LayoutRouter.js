@@ -33,6 +33,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 this._initLoginPage();
                 this._listenSizeChanges();
                 $(window).trigger('resize');
+                $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom', 'delay': 1000});
             },
 
             /**

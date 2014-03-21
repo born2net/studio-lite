@@ -54,6 +54,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li><a data-localize="saveConfig" id="saveConfig" href="#">Save</a></li>
+            <li><a data-localize="liveChat" id="liveChat" href="#">Live chat</a></li>
             <li><a data-localize="dashboard" id="dashboard" href="#">Dashboard &nbsp;</a></li>
         </ul>
     </div>
@@ -166,9 +167,12 @@
                                     data-localize="timelineLength"> Timelines length </span> <span
                                     id="timelinesTotalLength"> 00:00:00</span></a>
                                 <button style="margin-left: 30px" id="addNewTimelineButton" type="button"
+                                        title="add a new timeline" data-toggle="tooltip"
                                         class="btn btn-default btn-sm"><span
                                         class="glyphicon glyphicon-plus"></span></button>
-                                <button id="removeTimelineButton" type="button" class="btn btn-default btn-sm"><span
+                                <button id="removeTimelineButton" type="button"
+                                        title="remove the selected timeline (one must exist)" data-toggle="tooltip"
+                                        class="btn btn-default btn-sm"><span
                                         class="glyphicon glyphicon-minus"></span></button>
                             </h4>
                         </div>
@@ -290,9 +294,10 @@
     </div>
 </div>
 <div id="stationsPanel" class="yScroll" style="display: none">
-    <button id="stationRemove" type="button" class="btn btn-default"><span
+    <button id="stationRemove"  title="unregisters a remote station" data-toggle="tooltip" type="button" class="btn btn-default"><span
             class="glyphicon glyphicon-remove-circle"></span><span data-localize="removeStation"> remove station </span>
     </button>
+
     <div id="stationAlert" class="alert alert-danger"><strong><span
             data-localize="noStation">No SignagePlayer loaded...</span></strong></div>
     <ul class="list-group" id="stationListView">
@@ -472,7 +477,7 @@
                                                src="https://secure.dynawebs.net/_studiolite-dev/_assets/preload2_gray.gif"/>
             </div>
             <div id="stationcontrol" class="btn-group">
-                <button id="stationSnapshotCommand" type="button" class="btn btn-default"><span
+                <button id="stationSnapshotCommand" type="button" class="btn btn-default" ><span
                         class="glyphicon  glyphicon glyphicon-picture"></span></button>
                 <button id="stationPlayCommand" disabled="" type="button" class="btn btn-default"><span
                         class="glyphicon glyphicon glyphicon-play"></span></button>

@@ -20,41 +20,62 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_blockType = 3340;
             _.extend(options, {blockType: self.m_blockType})
             Block.prototype.constructor.call(this, options);
-            self._initSubPanel(Elements.BLOCK_QR_COMMON_PROPERTIES);
-            self._listenInputChange();
+
+            self.m_mrssLinkSelector = self.m_blockProperty.getMRssLinkSelector();
+            self._initSubPanel(Elements.BLOCK_MRSS_COMMON_PROPERTIES);
+            self._listenMRSSLinkChange();
+            self._listenAspectRatioChange();
+
         },
 
         /**
-         When user changes a URL link for the feed, update the msdb
-         @method _listenInputChange
-         @return none
+         Listen to RSS aspect ratio change
+         @method _listenAspectRatioChange
          **/
-        _listenInputChange: function () {
+        _listenAspectRatioChange: function () {
             var self = this;
-            self.m_inputChangeHandler = _.debounce(function (e) {
+            self.m_aspectChange = function (e) {
                 if (!self.m_selected)
                     return;
-                var text = $(e.target).val();
+                log($(e.target).prop('checked'));
                 var domPlayerData = self._getBlockPlayerData();
-                var xSnippet = $(domPlayerData).find('Text');
-                $(xSnippet).text(text);
+                var xSnippet = $(domPlayerData).find('Rss');
+                var v = $(e.target).prop('checked') == true ? 1 : 0;
+                $(xSnippet).attr('maintainAspectRatio', v);
                 self._setBlockPlayerData(domPlayerData);
-                // log(xSnippet[0].outerHTML);
-            }, 150);
-            $(Elements.QR_TEXT).on("input", self.m_inputChangeHandler);
+            };
+            $(Elements.MRSS_ASPECT_RATIO).on('change', self.m_aspectChange);
         },
 
         /**
-         Load up property values in the common panel
+         Listen to RSS link changes
+         @method _listenRSSLinkChange
+         **/
+        _listenMRSSLinkChange: function () {
+            var self = this
+            BB.comBroker.listenWithNamespace(BB.EVENTS.RSSLINK_CHANGED, self, function (e) {
+                if (!self.m_selected || e.caller !== self.m_mrssLinkSelector)
+                    return;
+                var domPlayerData = self._getBlockPlayerData();
+                var xSnippet = $(domPlayerData).find('Rss');
+                $(xSnippet).attr('url', e.edata);
+                self._setBlockPlayerData(domPlayerData);
+            });
+        },
+
+        /**
+         Load up property values in the RSS panel
          @method _populate
          @return none
          **/
         _populate: function () {
             var self = this;
             var domPlayerData = self._getBlockPlayerData();
-            var xSnippet = $(domPlayerData).find('Text');
+            var xSnippet = $(domPlayerData).find('Rss');
             var url = xSnippet.attr('url');
-            $(Elements.QR_TEXT).val(xSnippet.text());
+            var maintainAspectRatio = xSnippet.attr('maintainAspectRatio');
+            self.m_mrssLinkSelector.setMRssLink(url);
+            $(Elements.MRSS_ASPECT_RATIO).prop('checked', maintainAspectRatio == "1" ? true : false);
         },
 
         /**
@@ -65,7 +86,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _loadBlockSpecificProps: function () {
             var self = this;
             self._populate();
-            this._viewSubPanel(Elements.BLOCK_QR_COMMON_PROPERTIES);
+            this._viewSubPanel(Elements.BLOCK_MRSS_COMMON_PROPERTIES);
         },
 
         /**
@@ -75,7 +96,9 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         deleteBlock: function () {
             var self = this;
-            $(Elements.QR_TEXT).off("input", self.m_inputChangeHandler);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.RSSLINK_CHANGED, self);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.FONT_SELECTION_CHANGED, self);
+            $(Elements.MRSS_ASPECT_RATIO).off('change', self.m_aspectChange);
             self._deleteBlock();
         }
     });

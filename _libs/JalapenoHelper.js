@@ -64,7 +64,7 @@ JalapenoHelper.prototype = {
             'swf': { image: './_assets/swf.png' },
             'extvideo': { image: './_assets/extvideo.png' },
             'extimage': { image: './_assets/extimage.png' }
-        }
+        };
 
         self.m_components = {
             3130: {
@@ -155,10 +155,10 @@ JalapenoHelper.prototype = {
                 acronym: 'MRSS',
                 description: 'multimedia video stream',
                 getDefaultPlayerData: function () {
-                    return  '<Player player="3340" label="MRSS" interactive="0">' +
+                    return  '<Player player="3340" label="MRSS / Podcast" interactive="0">' +
                                 '<Data>' +
                                     self._getCommonDefaultXML() +
-                                    '<Text textSource="static"></Text>' +
+                                    '<Rss url="http://podcast.msnbc.com/audio/podcast/MSNBC-YB-NETCAST-M4V.xml" maintainAspectRatio="1" />'+
                                 '</Data>' +
                             '</Player>'
                 },

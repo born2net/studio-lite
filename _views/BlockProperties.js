@@ -5,7 +5,7 @@
  @constructor
  @return {object} instantiated BlockProperties
  **/
-define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'FontSelector', 'RSSLinks'], function ($, Backbone, Knob, nouislider, gradient, spinner, FontSelector, RSSLinks) {
+define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'FontSelector', 'RSSLinks', 'MRSSLinks'], function ($, Backbone, Knob, nouislider, gradient, spinner, FontSelector, RSSLinks, MRSSLinks) {
 
     /**
      Custom event fired when a new block is added to timeline_channel
@@ -58,6 +58,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
             self._propLengthKnobsInit();
             self._rssFontSelectorInit();
             self._rssSourceSelectorInit();
+            self._mrssSourceSelectorInit();
             self._rssPollTimeInit();
             self._labelFontSelectorInit();
         },
@@ -189,6 +190,17 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         },
 
         /**
+         Create instance of RSSLink used in select property settings
+         @method _rssSourceSelectorInit
+         **/
+        _mrssSourceSelectorInit: function(){
+            var self = this;
+            self.m_mrssLinkSelector = new MRSSLinks({
+                el: Elements.MRSS_SOURCE
+            });
+        },
+
+        /**
          Create instance of FontSelector used in font property settings
          @method _rssFontSelectorInit
          **/
@@ -282,6 +294,16 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         getRssLinkSelector: function(){
             var self = this;
             return self.m_rssLinkSelector;
+        },
+
+        /**
+         Returns the instance pf mrss link selector
+         @method getMRssLinkSelector
+         @return {Object} m_mrssLinkSelector instance
+         **/
+        getMRssLinkSelector: function(){
+            var self = this;
+            return self.m_mrssLinkSelector;
         }
     });
 

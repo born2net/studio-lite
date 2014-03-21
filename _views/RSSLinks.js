@@ -100,7 +100,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
         /**
          Insert selected RSS URL and load appropriate select UI selection
-         @method i_url
+         @method setRssLink
          @param {String} i_url
          **/
         setRssLink: function(i_url){

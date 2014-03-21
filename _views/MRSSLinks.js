@@ -6,6 +6,17 @@
  **/
 define(['jquery', 'backbone'], function ($, Backbone) {
 
+    /**
+     Custom event fired when a new RSS link selected
+     @event RSSLINK_CHANGED
+     @param {This} caller
+     @param {Self} context caller
+     @param {Event} mrss link
+     @static
+     @final
+     **/
+    BB.EVENTS.RSSLINK_CHANGED = 'RSSLINK_CHANGED';
+
     Backbone.SERVICES.RSS_LINKS = 'MRSSLinks';
 
     var MRSSLinks = Backbone.StackView.Fader.extend({
@@ -15,7 +26,9 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @method initialize
          **/
         initialize: function () {
-            this.m_mrss = '<TextRss>' +
+            var self = this;
+
+            this.m_mrssLinks = '<TextRss>' +
                 '<Rss label="CNN Showbiz" url="http://rss.cnn.com/services/podcasting/ShowbizTonight/rss.xml"/>' +
                 '<Rss label="CNN News " url="http://rss.cnn.com/services/podcasting/cnnnewsroom/rss.xml"/>' +
                 '<Rss label="CNN missed it " url="http://rss.cnn.com/services/podcasting/incaseyoumissed/rss.xml"/>' +
@@ -202,11 +215,80 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 '<Rss label="TWIT TV" url="http://feeds.twit.tv/twit_video_large"/>' +
                 '<Rss label="NBC MONTANA" url="http://www.nbcmontana.com/-/14594424/15193836/-/format/rss_2.0/view/asFeed/-/7ht7wl/-/index.xml"/>' +
                 '<Rss label="ItunesPoadcast Tutorial" url="http://www.feedforall.com/rss-video-tutorials.xml"/>' +
-                '<Rss label="PATRIOTS.COM Public News" url="http://www.patriots.com/rss/public/index.cfm?ac=rss&pcid=MTEx&cat=VmlkZW8gLSBQYXRyaW90cyBUb2RheQ=="/>' +
                 '<Rss label="BEST OF YOUTUBE" url="http://mevio.com/feeds/bestofyoutube.xml"/>' +
+                '<Rss label="Custom" url=""/>' +
                 '</TextRss>'
-        }
 
+            self._populateMRSSLinks();
+            self._listenInputChange();
+        },
+
+
+        /**
+         When user changes a URL link for the feed, update the msdb
+         @method _listenInputChange
+         @return none
+         **/
+        _listenInputChange: function () {
+            var self = this;
+
+            // Text input change
+            var onChange = _.debounce(function (e) {
+                var text = $(e.target).val();
+                BB.comBroker.fire(BB.EVENTS.RSSLINK_CHANGED,self,self,text);
+            }, 150);
+            self.m_inputChangeHandler = $(Elements.MRSS_LINK).on("input", onChange);
+
+            // drop selection box
+            $(Elements.MRSS_SOURCE).on('change', function (e) {
+                var url = $("option:selected", e.target).val();
+                if (url==''){
+                    $(Elements.MRSS_LINK).val('');
+                    $(Elements.MRSS_LINK).fadeIn('fast');
+                } else {
+                    $(Elements.MRSS_LINK).fadeOut('fast');
+                }
+                onChange(e);
+            });
+        },
+
+        /**
+         Build list of available RSS links from embedded XML
+         @method _populateMRSSLinks
+         **/
+        _populateMRSSLinks: function(){
+            var self = this;
+            var snippet = '';
+            self.m_MRSSLinks = $($.parseXML(self.m_mrssLinks)).find('Rss');
+            $.each(self.m_MRSSLinks,function(k,v){
+                snippet = snippet + '\n<option value="' + $(v).attr('url') + '">' + $(v).attr('label') + '</option>';
+            });
+            self.$el.append(snippet);
+        },
+
+        /**
+         Insert selected RSS URL and load appropriate select UI selection
+         @method i_url
+         @param {String} i_url
+         **/
+        setMRssLink: function(i_url){
+            var self = this;
+            $(Elements.MRSS_LINK).val(i_url);
+            var found = 0;
+            self.$el.children().each(function(k,v){
+                if ( $(v).val() == i_url){
+                    $(v).prop('selected','selected');
+                    found = 1;
+                    return false;
+                }
+            });
+            if (found){
+                $(Elements.MRSS_LINK).fadeOut('fast');
+            } else {
+                $("option:last",self.$el).prop("selected","selected");
+                $(Elements.MRSS_LINK).fadeIn('fast');
+            }
+        }
     });
 
     return MRSSLinks;

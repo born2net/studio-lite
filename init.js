@@ -60,7 +60,7 @@ require.config({
         'AppContentFaderView': '_views/AppContentFaderView',
         'AppEntryFaderView': '_views/AppEntryFaderView',
         'LoginView': '_views/LoginView',
-        'StationsView': '_views/StationsView',
+        'StationsViewLoader': '_views/StationsViewLoader',
         'StationsListView': '_views/StationsListView',
         'SettingsView': '_views/SettingsView',
         'ProStudioView': '_views/ProStudioView',

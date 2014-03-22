@@ -89,6 +89,8 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
         _listenScreenLayoutEdit: function () {
             var self = this;
             self.m_openScreenLayoutEditorHandler = function(e){
+                if (!self.m_selected)
+                    return;
                 var screenLayoutEditor = BB.comBroker.getService(BB.SERVICES.SCREEN_LAYOUT_EDITOR_VIEW);
                 screenLayoutEditor.selectView();
             };

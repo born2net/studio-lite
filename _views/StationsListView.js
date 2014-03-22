@@ -255,7 +255,6 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
             $(Elements.EVENT_SEND_BUTTON).button('disable');
         },
          **/
-
         _removeStation: function (i_context) {
             var self = i_context;
             if (_.isUndefined(self.m_selected_station_id)) {

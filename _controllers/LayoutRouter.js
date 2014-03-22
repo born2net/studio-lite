@@ -5,8 +5,8 @@
  @constructor
  @return {Object} instantiated AppRouter
  **/
-define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEntryFaderView', 'LoginView', 'AppContentFaderView', 'WaitView', 'bootbox', 'CampaignManagerView', 'ResourcesView', 'ResourcesView', 'StationsView', 'SettingsView', 'ProStudioView', 'HelpView', 'LogoutView', 'CampaignSliderStackView', 'ScreenLayoutSelectorView', 'X2JS', 'XDate'],
-    function (_, $, Backbone, AppAuth, NavigationView, AppEntryFaderView, LoginView, AppContentFaderView, WaitView, Bootbox, CampaignManagerView, ResourcesView, ResourcesView, StationsView, SettingsView, ProStudioView, HelpView, LogoutView, CampaignSliderStackView, ScreenLayoutSelectorView, X2JS, XDate) {
+define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEntryFaderView', 'LoginView', 'AppContentFaderView', 'WaitView', 'bootbox', 'CampaignManagerView', 'ResourcesView', 'ResourcesView', 'StationsViewLoader', 'SettingsView', 'ProStudioView', 'HelpView', 'LogoutView', 'CampaignSliderStackView', 'ScreenLayoutSelectorView', 'X2JS', 'XDate'],
+    function (_, $, Backbone, AppAuth, NavigationView, AppEntryFaderView, LoginView, AppContentFaderView, WaitView, Bootbox, CampaignManagerView, ResourcesView, ResourcesView, StationsViewLoader, SettingsView, ProStudioView, HelpView, LogoutView, CampaignSliderStackView, ScreenLayoutSelectorView, X2JS, XDate) {
 
         BB.SERVICES.LAYOUT_ROUTER = 'LayoutRouter';
 
@@ -198,7 +198,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                     stackView: this.m_appContentFaderView
                 });
 
-                this.m_stationsView = new StationsView({
+                this.m_stationsViewLoader = new StationsViewLoader({
                     el: Elements.STATIONS_PANEL,
                     stackView: this.m_appContentFaderView
                 });
@@ -225,7 +225,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
 
                 this.m_appContentFaderView.addView(this.m_campaignManagerView);
                 this.m_appContentFaderView.addView(this.m_resourcesView);
-                this.m_appContentFaderView.addView(this.m_stationsView);
+                this.m_appContentFaderView.addView(this.m_stationsViewLoader);
                 this.m_appContentFaderView.addView(this.m_settingsView);
                 this.m_appContentFaderView.addView(this.m_proStudioView);
                 this.m_appContentFaderView.addView(this.m_helpView);

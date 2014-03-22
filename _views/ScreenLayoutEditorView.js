@@ -16,11 +16,12 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
          **/
         initialize: function () {
             var self = this;
-
             BB.comBroker.setService(BB.SERVICES['SCREEN_LAYOUT_EDITOR_VIEW'], self);
-            
-            $(this.el).find('#prev').on('click',function(e){
-                self.options.stackView.slideToPage(self.options.from, 'left');
+            self.m_canvas = undefined;
+            self.m_canvasID = undefined;
+
+            $(this.el).find('#prev').on('click', function (e) {
+                self._deSelectView();
                 return false;
             });
 
@@ -30,84 +31,91 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             });
         },
 
-        /**
-         Build two lists, components and resources allowing for item selection.
-         Once an LI is selected AddBlockWizard.ADD_NEW_BLOCK is fired to announce block is added.
-         @method _render
-         @return none
-         **/
         _render: function () {
             var self = this;
-
-            BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW).resetPropertiesView();
-
-            $(Elements.ADD_COMPONENT_BLOCK_LIST).empty();
-            $(Elements.ADD_RESOURCE_BLOCK_LIST).empty();
-
-            /////////////////////////////////////////////////////////
-            // show component selection list
-            /////////////////////////////////////////////////////////
-            var components = BB.JalapenoHelper.getBlocks();
-            for (var componentID in components) {
-                // don't show image or video component in component list
-                if (componentID == 3130 || componentID == 3100)
-                    continue;
-                var snippet = '<li class="list-group-item ' + BB.lib.unclass(Elements.CLASS_ADD_BLOCK_LIST_ITEMS) + '" data-component_id="' + componentID + '" data-component_name="' + components[componentID].name + '">' +
-                    '<img class="img-responsive" src="' + components[componentID].icon + '">' +
-                    '<span>' + components[componentID].name + '</span>' +
-                    '<h6>' + components[componentID].description + '</h6>' +
-                    '</li>';
-                $(Elements.ADD_COMPONENT_BLOCK_LIST).append(snippet);
-            }
-
-            /////////////////////////////////////////////////////////
-            // show resource selection list
-            /////////////////////////////////////////////////////////
-
-            var recResources = jalapeno.getResources();
-            $(recResources).each(function (i) {
-
-                // dont process deleted resources
-                if (recResources[i]['change_type'] == 3)
-                    return;
-
-                var size = (parseInt(recResources[i]['resource_bytes_total']) / 1000).toFixed(2);
-                var resourceDescription = 'size: ' + size + 'K dimenstion: ' + recResources[i]['resource_pixel_width'] + 'x' + recResources[i]['resource_pixel_height'];
-
-                var snippet = '<li class="list-group-item ' + BB.lib.unclass(Elements.CLASS_ADD_BLOCK_LIST_ITEMS) + '" data-resource_id="' + recResources[i]['resource_id'] + '" data-resource_name="' + recResources[i]['resource_name'] + '">'+
-                    '<img src="' + BB.JalapenoHelper.getIcon(recResources[i]['resource_type']) + '">' +
-                    '<span>' + recResources[i]['resource_name'] + '</span>' +
-                    '<br/><small>' + resourceDescription + '</small>' +
-                    '</li>';
-                $(Elements.ADD_RESOURCE_BLOCK_LIST).append(snippet);
-            });
-
-            $(Elements.CLASS_ADD_BLOCK_LIST_ITEMS).on('click', function (e) {
-                var component_id = $(e.target).closest('li').data('component_id');
-                var resource_id = $(e.target).closest('li').data('resource_id');
-                var blockCode = -1;
-
-                if (component_id) {
-                    blockCode = component_id;
-                } else {
-                    blockCode = BB.JalapenoHelper.getBlockCodeFromFileExt(jalapeno.getResourceType(resource_id));
-                }
-                BB.comBroker.fire(BB.EVENTS.ADD_NEW_BLOCK, this, self, {
-                    blockCode: blockCode,
-                    resourceID: resource_id
-                });
-                self.deSelectView();
-            });
-
+            BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
         },
 
-        selectView: function(){
+        /**
+         Unload the editor from DOM using the StackView animated slider
+         @method  selectView
+         **/
+        _deSelectView: function () {
+            var self = this;
+            self.m_canvas.clear().renderAll();
+            $('#screenLayoutEditorCanvasWrap').empty()
+            self.m_canvasID = undefined;
+            self.m_canvas = undefined;
+            self.options.stackView.slideToPage(self.options.from, 'left');
+        },
+
+        _canvasFactory: function (i_width, i_height) {
+            var self = this;
+            self.m_canvasID = _.uniqueId('screenLayoutEditorCanvas');
+            if (self.m_canvas==undefined){
+                $('#screenLayoutEditorCanvasWrap').append('<canvas id="' + self.m_canvasID + '" width="' + i_width + 'px" height="' + i_height + 'px" style="border: 1px solid rgb(170, 170, 170);"></canvas>')
+                self.m_canvas = new fabric.Canvas(self.m_canvasID);
+            }
+            var rect;
+
+            rect = new fabric.Rect({
+                left: 100,
+                top: 100,
+                fill: 'red',
+                width: 20,
+                height: 20,
+                cornerColor: 'gray',
+                cornerSize: 10,
+                transparentCorners: false
+            });
+            self.m_canvas.add(rect);
+
+            rect = new fabric.Rect({
+                left: 60,
+                top: 10,
+                fill: 'green',
+                width: 20,
+                height: 20,
+                cornerColor: 'gray',
+                cornerSize: 10,
+                transparentCorners: false
+            });
+            self.m_canvas.add(rect);
+
+            rect = new fabric.Rect({
+                left: 70,
+                top: 40,
+                fill: 'red',
+                width: 30,
+                height: 40,
+                cornerColor: 'gray',
+                cornerSize: 10,
+                transparentCorners: false
+            });
+            self.m_canvas.add(rect);
+
+
+
+
+            setTimeout(function () {
+                if (!self.m_canvas)
+                    return;
+                self.m_canvas.setHeight(i_height);
+                self.m_canvas.setWidth(i_width);
+                self.m_canvas.renderAll();
+            }, 500);
+        },
+
+        /**
+         Load the editor into DOM using the StackView using animation slider
+         @method  selectView
+         **/
+        selectView: function () {
             var self = this;
             self.options.stackView.slideToPage(self, 'right');
-        },
-        deSelectView: function(){
-            var self = this;
-            self.options.stackView.slideToPage(self.options.from, 'left');
+            require(['fabric'], function () {
+                self._canvasFactory(_.random(200, 500), _.random(200, 500))
+            })
         }
     });
 

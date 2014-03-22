@@ -61,11 +61,15 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             rect = new fabric.Rect({
                 left: 100,
                 top: 100,
-                fill: 'red',
+                fill: '#ececec',
                 width: 20,
                 height: 20,
-                cornerColor: 'gray',
-                cornerSize: 10,
+                borderColor: '#5d5d5d',
+                stroke : 'black',
+                strokeWidth : 1,
+                lineWidth: 1,
+                cornerColor: 'black',
+                cornerSize: 5,
                 transparentCorners: false
             });
             self.m_canvas.add(rect);
@@ -73,11 +77,15 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             rect = new fabric.Rect({
                 left: 60,
                 top: 10,
-                fill: 'green',
+                fill: '#ececec',
                 width: 20,
+                borderColor: '#5d5d5d',
+                stroke : 'black',
+                strokeWidth : 1,
+                lineWidth: 1,
                 height: 20,
-                cornerColor: 'gray',
-                cornerSize: 10,
+                cornerColor: 'black',
+                cornerSize: 5,
                 transparentCorners: false
             });
             self.m_canvas.add(rect);
@@ -85,11 +93,15 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             rect = new fabric.Rect({
                 left: 70,
                 top: 40,
-                fill: 'red',
+                fill: '#ececec',
                 width: 30,
                 height: 40,
-                cornerColor: 'gray',
-                cornerSize: 10,
+                borderColor: '#5d5d5d',
+                stroke : 'black',
+                strokeWidth : 1,
+                lineWidth: 1,
+                cornerColor: 'black',
+                cornerSize: 5,
                 transparentCorners: false
             });
             self.m_canvas.add(rect);

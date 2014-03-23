@@ -79,7 +79,7 @@ define(['jquery', 'backbone', 'StackView','BlockRSS'], function ($, Backbone, St
             var blockRSS;
             blockRSS = new BlockRSS({
                 i_placement: 'PLACEMENT_SCENE',
-                i_block_id: 0
+                i_block_id: 10000
             });
 
             rect.on('selected', function() {
@@ -119,7 +119,7 @@ define(['jquery', 'backbone', 'StackView','BlockRSS'], function ($, Backbone, St
 
             blockRSS = new BlockRSS({
                 i_placement: 'PLACEMENT_SCENE',
-                i_block_id: 1
+                i_block_id: 20000
             });
 
             rect.on('selected', function() {

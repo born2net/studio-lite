@@ -350,6 +350,9 @@ define(['jquery', 'backbone'], function ($) {
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.GRADIENT_COLOR_CHANGED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.ALPHA_CHANGED, self);
 
+            if (self.onSceneSelectedHandler)
+                self.m_canvas.off('object:selected', self.onSceneSelectedHandler);
+
             $.each(self, function (k) {
                 self[k] = undefined;
             });
@@ -379,12 +382,13 @@ define(['jquery', 'backbone'], function ($) {
          **/
         listenSceneSelection: function(i_canvas){
             var self = this;
-            var onSceneSelected = function(e) {
+            self.m_canvas = i_canvas;
+            self.onSceneSelectedHandler = function(e) {
                 if (e.target!==self)
                     return;
                 log('Scene block selected id: ' + self.m_block_id);
-            }
-            i_canvas.on('object:selected', onSceneSelected);
+            };
+            self.m_canvas.on('object:selected', self.onSceneSelectedHandler);
         },
 
         /**

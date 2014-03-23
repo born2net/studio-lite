@@ -30,11 +30,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self._listenMinRefreshTime();
             self._listenScrollDirection();
             self._listenScrollSpeed();
-
-            self.on('selected', function() {
-                console.log('A object selected internally is a rectangle');
-            });
-
         },
 
         /**

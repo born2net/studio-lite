@@ -58,35 +58,6 @@ define(['jquery', 'backbone', 'StackView','BlockRSS'], function ($, Backbone, St
             }
 
             var rect;
-            /*
-            rect = new fabric.Rect({
-                left: 100,
-                top: 100,
-                fill: '#ececec',
-                width: 200,
-                height: 200,
-                borderColor: '#5d5d5d',
-                hasRotatingPoint: false,
-                stroke : 'black',
-                strokeWidth : 1,
-                lineWidth: 1,
-                lockRotation: true,
-                cornerColor: 'black',
-                cornerSize: 5,
-                transparentCorners: false
-            });
-
-            var block = new BlockRSS({
-                i_placement: 'PLACEMENT_SCENE',
-                i_block_id: 0
-            });
-
-            var BlockRect = $.extend({}, fabric.Rect, block);
-            rect.on('selected', function() {
-                console.log('selected a rectangle');
-            });
-            self.m_canvas.add(object);
-            */
 
             rect = new fabric.Rect({
                 left: 60,
@@ -105,34 +76,59 @@ define(['jquery', 'backbone', 'StackView','BlockRSS'], function ($, Backbone, St
                 transparentCorners: false
             });
 
-
-
-            self.m_canvas.add(rect);
-
-            rect = new fabric.Rect({
-                left: 70,
-                top: 40,
-                fill: '#ececec',
-                width: 30,
-                height: 40,
-                hasRotatingPoint: false,
-                borderColor: '#5d5d5d',
-                stroke : 'black',
-                strokeWidth : 1,
-                lineWidth: 1,
-                cornerColor: 'black',
-                lockRotation: true,
-                cornerSize: 5,
-                transparentCorners: false
+            var blockRSS;
+            blockRSS = new BlockRSS({
+                i_placement: 'PLACEMENT_SCENE',
+                i_block_id: 0
             });
-            self.m_canvas.add(rect);
 
+            rect.on('selected', function() {
+                console.log('object selected a rectangle');
+            });
+
+            self.m_canvas.on('object:selected', function() {
+                console.log('object on canvas selected a rectangle');
+            });
+
+            _.extend(rect, blockRSS);
+            rect.listenSceneSelection(self.m_canvas);
+            self.m_canvas.add(rect);
 
             self.m_canvas.on({
                 'object:moving': onChange,
                 'object:scaling': onChange,
-                'object:rotating': onChange,
+                'object:rotating': onChange
             });
+
+            rect = new fabric.Rect({
+                left: 160,
+                top: 60,
+                fill: '#ececec',
+                hasRotatingPoint: false,
+                width: 20,
+                borderColor: '#5d5d5d',
+                stroke : 'green',
+                strokeWidth : 1,
+                lineWidth: 1,
+                height: 20,
+                cornerColor: 'black',
+                cornerSize: 5,
+                lockRotation: true,
+                transparentCorners: false
+            });
+
+            blockRSS = new BlockRSS({
+                i_placement: 'PLACEMENT_SCENE',
+                i_block_id: 1
+            });
+
+            rect.on('selected', function() {
+                console.log('object selected a rectangle');
+            });
+
+            _.extend(rect, blockRSS);
+            rect.listenSceneSelection(self.m_canvas);
+            self.m_canvas.add(rect);
 
             function onChange(options) {
                 options.target.setCoords();

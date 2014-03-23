@@ -384,7 +384,7 @@ define(['jquery', 'backbone'], function ($) {
             var self = this;
             self.m_canvas = i_canvas;
             self.onSceneSelectedHandler = function(e) {
-                if (e.target!==self)
+                if (e.target!==self) //todo: add || !self.m_selected
                     return;
                 log('Scene block selected id: ' + self.m_block_id);
             };

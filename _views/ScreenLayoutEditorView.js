@@ -4,7 +4,7 @@
  @constructor
  @return {object} instantiated ScreenLayoutEditorView
  **/
-define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
+define(['jquery', 'backbone', 'StackView','BlockRSS'], function ($, Backbone, StackView, BlockRSS) {
 
     BB.SERVICES.SCREEN_LAYOUT_EDITOR_VIEW = 'ScreenLayoutEditorView';
 
@@ -56,28 +56,43 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
                 $('#screenLayoutEditorCanvasWrap').append('<canvas id="' + self.m_canvasID + '" width="' + i_width + 'px" height="' + i_height + 'px" style="border: 1px solid rgb(170, 170, 170);"></canvas>')
                 self.m_canvas = new fabric.Canvas(self.m_canvasID);
             }
-            var rect;
 
+            var rect;
+            /*
             rect = new fabric.Rect({
                 left: 100,
                 top: 100,
                 fill: '#ececec',
-                width: 20,
-                height: 20,
+                width: 200,
+                height: 200,
                 borderColor: '#5d5d5d',
+                hasRotatingPoint: false,
                 stroke : 'black',
                 strokeWidth : 1,
                 lineWidth: 1,
+                lockRotation: true,
                 cornerColor: 'black',
                 cornerSize: 5,
                 transparentCorners: false
             });
-            self.m_canvas.add(rect);
+
+            var block = new BlockRSS({
+                i_placement: 'PLACEMENT_SCENE',
+                i_block_id: 0
+            });
+
+            var BlockRect = $.extend({}, fabric.Rect, block);
+            rect.on('selected', function() {
+                console.log('selected a rectangle');
+            });
+            self.m_canvas.add(object);
+            */
 
             rect = new fabric.Rect({
                 left: 60,
                 top: 10,
                 fill: '#ececec',
+                hasRotatingPoint: false,
                 width: 20,
                 borderColor: '#5d5d5d',
                 stroke : 'black',
@@ -86,8 +101,12 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
                 height: 20,
                 cornerColor: 'black',
                 cornerSize: 5,
+                lockRotation: true,
                 transparentCorners: false
             });
+
+
+
             self.m_canvas.add(rect);
 
             rect = new fabric.Rect({
@@ -96,18 +115,32 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
                 fill: '#ececec',
                 width: 30,
                 height: 40,
+                hasRotatingPoint: false,
                 borderColor: '#5d5d5d',
                 stroke : 'black',
                 strokeWidth : 1,
                 lineWidth: 1,
                 cornerColor: 'black',
+                lockRotation: true,
                 cornerSize: 5,
                 transparentCorners: false
             });
             self.m_canvas.add(rect);
 
 
+            self.m_canvas.on({
+                'object:moving': onChange,
+                'object:scaling': onChange,
+                'object:rotating': onChange,
+            });
 
+            function onChange(options) {
+                options.target.setCoords();
+                self.m_canvas.forEachObject(function(obj) {
+                    if (obj === options.target) return;
+                    obj.setOpacity(options.target.intersectsWithObject(obj) ? 0.5 : 1);
+                });
+            }
 
             setTimeout(function () {
                 if (!self.m_canvas)

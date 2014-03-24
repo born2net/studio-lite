@@ -1,14 +1,14 @@
 /**
  Screen Layout editor
- @class ScreenLayoutEditorView
+ @class SceneEditorView
  @constructor
- @return {object} instantiated ScreenLayoutEditorView
+ @return {object} instantiated SceneEditorView
  **/
-define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
+define(['jquery', 'backbone', 'StackView','BlockRSS'], function ($, Backbone, StackView, BlockRSS) {
 
-    BB.SERVICES.SCREEN_LAYOUT_EDITOR_VIEW = 'ScreenLayoutEditorView';
+    BB.SERVICES.SCREEN_LAYOUT_EDITOR_VIEW = 'SceneEditorView';
 
-    var ScreenLayoutEditorView = BB.View.extend({
+    var SceneEditorView = BB.View.extend({
 
         /**
          Constructor
@@ -58,6 +58,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             }
 
             var rect;
+
             rect = new fabric.Rect({
                 left: 60,
                 top: 10,
@@ -75,6 +76,12 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
                 transparentCorners: false
             });
 
+            var blockRSS;
+            blockRSS = new BlockRSS({
+                i_placement: 'PLACEMENT_SCENE',
+                i_block_id: 10000
+            });
+
             rect.on('selected', function() {
                 console.log('object selected a rectangle');
             });
@@ -83,13 +90,46 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
                 console.log('object on canvas selected a rectangle');
             });
 
-            self.m_canvas.add(rect);
+            _.extend(blockRSS, rect);
+            blockRSS.listenSceneSelection(self.m_canvas);
+            self.m_canvas.add(blockRSS);
 
             self.m_canvas.on({
                 'object:moving': onChange,
                 'object:scaling': onChange,
                 'object:rotating': onChange
             });
+
+
+            rect = new fabric.Rect({
+                left: 160,
+                top: 60,
+                fill: '#ececec',
+                hasRotatingPoint: false,
+                width: 20,
+                borderColor: '#5d5d5d',
+                stroke : 'green',
+                strokeWidth : 1,
+                lineWidth: 1,
+                height: 20,
+                cornerColor: 'black',
+                cornerSize: 5,
+                lockRotation: true,
+                transparentCorners: false
+            });
+
+            blockRSS = new BlockRSS({
+                i_placement: 'PLACEMENT_SCENE',
+                i_block_id: 20000
+            });
+
+            rect.on('selected', function() {
+                console.log('object selected a rectangle');
+            });
+
+            _.extend(blockRSS, rect);
+            blockRSS.listenSceneSelection(self.m_canvas);
+            self.m_canvas.add(blockRSS);
 
             function onChange(options) {
                 options.target.setCoords();
@@ -121,6 +161,6 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
         }
     });
 
-    return ScreenLayoutEditorView;
+    return SceneEditorView;
 });
 

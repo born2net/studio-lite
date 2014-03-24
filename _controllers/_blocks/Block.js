@@ -43,7 +43,6 @@ define(['jquery', 'backbone'], function ($) {
             switch (this.m_placement) {
                 case BB.CONSTS.PLACEMENT_CHANNEL:
                 {
-                    self.m_blockPlacement = BB.CONSTS.PLACEMENT_CHANNEL;
                     self._onTimelineChannelBlockSelected();
                     self._onTimelineChannelBlockLengthChanged();
                     break;
@@ -51,7 +50,8 @@ define(['jquery', 'backbone'], function ($) {
 
                 case BB.CONSTS.PLACEMENT_SCENE:
                 {
-                    self.m_blockPlacement = BB.CONSTS.PLACEMENT_SCENE;
+                    self._onTimelineChannelBlockSelected();
+                    self._onTimelineChannelBlockLengthChanged();
                     break;
                 }
             }

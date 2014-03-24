@@ -63,12 +63,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 $('#screenLayoutEditorCanvasWrap').append('<canvas id="' + self.m_canvasID + '" width="' + i_width + 'px" height="' + i_height + 'px" style="border: 1px solid rgb(170, 170, 170);"></canvas>')
                 self.m_canvas = new fabric.Canvas(self.m_canvasID);
             }
-            ;
 
-            /*
-            var i_screenProps = {"sd0":{"campaign_timeline_board_viewer_id":25,"campaign_timeline_id":5,"x":0,"y":0,"w":640,"h":1080},"sd1":{"campaign_timeline_board_viewer_id":26,"campaign_timeline_id":5,"x":640,"y":0,"w":640,"h":1080},"sd2":{"campaign_timeline_board_viewer_id":27,"campaign_timeline_id":5,"x":1280,"y":540,"w":640,"h":540},"sd3":{"campaign_timeline_board_viewer_id":28,"campaign_timeline_id":5,"x":1280,"y":0,"w":640,"h":540}};
-
-             */
             var screenTemplateData = {
                 orientation: self.m_orientation,
                 resolution: self.m_resolution,
@@ -103,48 +98,15 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                     transparentCorners: false
                 });
                 self.m_canvas.add(rect);
+
+                rect.on('selected', function () {
+                    console.log('object selected a rectangle');
+                });
             }
-
-
-            /*var svgs = screenTemplate.createDivisions();
-             for (var i = 0; i < svgs.length; i++){
-             var s = svgs[i];
-             fabric.loadSVGFromString(s, function(objects, options) {
-             log(s);
-             var div = new fabric.PathGroup(objects, options);
-             self.m_canvas.add(div);
-             });
-             };*/
-
-
-            var rect;
-            rect = new fabric.Rect({
-                left: 60,
-                top: 10,
-                fill: '#ececec',
-                hasRotatingPoint: false,
-                width: 20,
-                borderColor: '#5d5d5d',
-                stroke: 'black',
-                strokeWidth: 1,
-                lineWidth: 1,
-                height: 20,
-                cornerColor: 'black',
-                cornerSize: 5,
-                lockRotation: true,
-                transparentCorners: false
-            });
-
-
-            rect.on('selected', function () {
-                console.log('object selected a rectangle');
-            });
 
             self.m_canvas.on('object:selected', function () {
                 console.log('object on canvas selected a rectangle');
             });
-
-            self.m_canvas.add(rect);
 
             self.m_canvas.on({
                 'object:moving': onChange,
@@ -175,6 +137,11 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             $('#screenLayoutEditorCanvasWrap').empty()
             self.m_canvasID = undefined;
             self.m_canvas = undefined;
+            self.m_campaign_timeline_id = undefined;
+            self.m_board_template_id = undefined;
+            self.m_screenProps = undefined;
+            self.m_orientation = undefined;
+            self.m_resolution = undefined;
         },
 
         /**

@@ -1,5 +1,5 @@
 /**
- Require js initialization module definition file
+ Require js initialization module definition file for StudioLite
  @class Require init js
  **/
 require.config({
@@ -53,6 +53,7 @@ require.config({
         'NavigationView': '_views/NavigationView',
         'WaitView': '_views/WaitView',
         'ResourcesView': '_views/ResourcesView',
+        'SceneEditorView': 'SceneEditorView',
         'ResourceListView': '_views/ResourceListView',
         'AddBlockView': '_views/AddBlockView',
         'BlockProperties': '_views/BlockProperties',
@@ -157,7 +158,7 @@ require.config({
             exports: 'ScreenTemplate'
         },
         'colorpicker': {
-            deps: ['jquery','jqueryui'],
+            deps: ['jquery', 'jqueryui'],
             exports: 'colorpicker'
         },
         'minicolors': {
@@ -165,12 +166,12 @@ require.config({
             exports: 'minicolors'
         },
         'gradient': {
-            deps: ['jquery', 'colorpicker','jqueryui']
+            deps: ['jquery', 'colorpicker', 'jqueryui']
         }
     }
 });
 
-if ( window.location.href.indexOf('dist')>-1 ) {
+if (window.location.href.indexOf('dist') > -1) {
     requirejs.onError = function (err) {
         alert('Timeout error, network seems to be too slow to run the StudioLite app :( \n\n\n\n ' + err);
     }

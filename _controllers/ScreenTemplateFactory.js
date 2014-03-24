@@ -188,8 +188,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 $(this).on('mouseover',function () {
                     $(this).css({'fill': 'rgb(190,190,190)'});
                 }).mouseout(function () {
-                        $(this).css({'fill': 'rgb(230,230,230)'});
-                    });
+                    $(this).css({'fill': 'rgb(230,230,230)'});
+                });
             });
         },
 
@@ -202,6 +202,22 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         getOwner: function () {
             var self = this;
             return self.m_owner;
+        },
+
+        createDivisions: function () {
+            var self = this;
+            var svg = self.create();
+            return $(svg).find('rect');
+
+            var f = $(svg).find('rect').map(function (k, v) {
+                return '<svg style="padding: 0px; margin: 15px" width="20px" height="20px" xmlns="http://www.w3.org/2000/svg">  ' +
+                    '<g>' +
+                    v.outerHTML +
+                    '</g> ' +
+                    '</svg>';
+            });
+            return f;
+
         },
 
         /**

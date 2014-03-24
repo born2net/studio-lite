@@ -4,7 +4,7 @@
  @constructor
  @return {object} instantiated ScreenLayoutEditorView
  **/
-define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
+define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($, Backbone, StackView, ScreenTemplateFactory) {
 
     BB.SERVICES.SCREEN_LAYOUT_EDITOR_VIEW = 'ScreenLayoutEditorView';
 
@@ -31,6 +31,10 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             });
         },
 
+        /**
+         On render load default dashboard properties
+         @method _render
+         **/
         _render: function () {
             var self = this;
             BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
@@ -42,20 +46,76 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
          **/
         _deSelectView: function () {
             var self = this;
-            self.m_canvas.clear().renderAll();
-            $('#screenLayoutEditorCanvasWrap').empty()
-            self.m_canvasID = undefined;
-            self.m_canvas = undefined;
+            self._destroy();
             self.options.stackView.slideToPage(self.options.from, 'left');
         },
 
+        /**
+         Create the canvas to render the screen division
+         @method _canvasFactory
+         @param {Number} i_width
+         @param {Number} i_height
+         **/
         _canvasFactory: function (i_width, i_height) {
             var self = this;
             self.m_canvasID = _.uniqueId('screenLayoutEditorCanvas');
-            if (self.m_canvas==undefined){
+            if (self.m_canvas == undefined) {
                 $('#screenLayoutEditorCanvasWrap').append('<canvas id="' + self.m_canvasID + '" width="' + i_width + 'px" height="' + i_height + 'px" style="border: 1px solid rgb(170, 170, 170);"></canvas>')
                 self.m_canvas = new fabric.Canvas(self.m_canvasID);
             }
+            ;
+
+            /*
+            var i_screenProps = {"sd0":{"campaign_timeline_board_viewer_id":25,"campaign_timeline_id":5,"x":0,"y":0,"w":640,"h":1080},"sd1":{"campaign_timeline_board_viewer_id":26,"campaign_timeline_id":5,"x":640,"y":0,"w":640,"h":1080},"sd2":{"campaign_timeline_board_viewer_id":27,"campaign_timeline_id":5,"x":1280,"y":540,"w":640,"h":540},"sd3":{"campaign_timeline_board_viewer_id":28,"campaign_timeline_id":5,"x":1280,"y":0,"w":640,"h":540}};
+
+             */
+            var screenTemplateData = {
+                orientation: self.m_orientation,
+                resolution: self.m_resolution,
+                screenProps: self.m_screenProps,
+                scale: '5'
+            }
+
+            var screenTemplate = new ScreenTemplateFactory({
+                i_screenTemplateData: screenTemplateData,
+                i_type: ScreenTemplateFactory.VIEWER_SELECTABLE,
+                i_owner: this});
+
+
+            var rects = screenTemplate.createDivisions();
+            for (var i = 0; i < rects.length; i++) {
+
+                var rectProperties = rects[i];
+                var rect = new fabric.Rect({
+                    left: rectProperties.x.baseVal.value,
+                    top: rectProperties.y.baseVal.value,
+                    fill: '#ececec',
+                    hasRotatingPoint: false,
+                    borderColor: '#5d5d5d',
+                    stroke: 'black',
+                    strokeWidth: 1,
+                    lineWidth: 1,
+                    width: rectProperties.width.baseVal.value,
+                    height: rectProperties.height.baseVal.value,
+                    cornerColor: 'black',
+                    cornerSize: 5,
+                    lockRotation: true,
+                    transparentCorners: false
+                });
+                self.m_canvas.add(rect);
+            }
+
+
+            /*var svgs = screenTemplate.createDivisions();
+             for (var i = 0; i < svgs.length; i++){
+             var s = svgs[i];
+             fabric.loadSVGFromString(s, function(objects, options) {
+             log(s);
+             var div = new fabric.PathGroup(objects, options);
+             self.m_canvas.add(div);
+             });
+             };*/
+
 
             var rect;
             rect = new fabric.Rect({
@@ -65,8 +125,8 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
                 hasRotatingPoint: false,
                 width: 20,
                 borderColor: '#5d5d5d',
-                stroke : 'black',
-                strokeWidth : 1,
+                stroke: 'black',
+                strokeWidth: 1,
                 lineWidth: 1,
                 height: 20,
                 cornerColor: 'black',
@@ -75,11 +135,12 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
                 transparentCorners: false
             });
 
-            rect.on('selected', function() {
+
+            rect.on('selected', function () {
                 console.log('object selected a rectangle');
             });
 
-            self.m_canvas.on('object:selected', function() {
+            self.m_canvas.on('object:selected', function () {
                 console.log('object on canvas selected a rectangle');
             });
 
@@ -93,7 +154,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
 
             function onChange(options) {
                 options.target.setCoords();
-                self.m_canvas.forEachObject(function(obj) {
+                self.m_canvas.forEachObject(function (obj) {
                     if (obj === options.target) return;
                     obj.setOpacity(options.target.intersectsWithObject(obj) ? 0.5 : 1);
                 });
@@ -108,15 +169,33 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             }, 500);
         },
 
+        _destroy: function () {
+            var self = this;
+            self.m_canvas.clear().renderAll();
+            $('#screenLayoutEditorCanvasWrap').empty()
+            self.m_canvasID = undefined;
+            self.m_canvas = undefined;
+        },
+
         /**
          Load the editor into DOM using the StackView using animation slider
          @method  selectView
          **/
-        selectView: function () {
+        selectView: function (i_campaign_timeline_id, i_board_template_id) {
             var self = this;
+
+            self.m_campaign_timeline_id = i_campaign_timeline_id;
+            self.m_board_template_id = i_board_template_id;
+            self.m_screenProps = jalapeno.getTemplateViewersScreenProps(self.m_campaign_timeline_id, self.m_board_template_id);
+            self.m_orientation = BB.comBroker.getService(BB.SERVICES['ORIENTATION_SELECTOR_VIEW']).getOrientation();
+            self.m_resolution = BB.comBroker.getService(BB.SERVICES['RESOLUTION_SELECTOR_VIEW']).getResolution();
+
             self.options.stackView.slideToPage(self, 'right');
             require(['fabric'], function () {
-                self._canvasFactory(_.random(200, 500), _.random(200, 500))
+                var resolution = BB.comBroker.getService(BB.SERVICES['RESOLUTION_SELECTOR_VIEW']).getResolution();
+                var w = parseInt(resolution.split('x')[0]) / 5;
+                var h = parseInt(resolution.split('x')[1]) / 5;
+                self._canvasFactory(w, h);
             })
         }
     });

@@ -92,7 +92,8 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
                 if (!self.m_selected)
                     return;
                 var screenLayoutEditor = BB.comBroker.getService(BB.SERVICES.SCREEN_LAYOUT_EDITOR_VIEW);
-                screenLayoutEditor.selectView();
+                var boardTemplateIDs = jalapeno.getTemplatesOfTimeline(self.m_campaign_timeline_id);
+                screenLayoutEditor.selectView(self.m_campaign_timeline_id, boardTemplateIDs[0]);
             };
             $(Elements.EDIT_SCREEN_LAYOUT).on('click',self.m_openScreenLayoutEditorHandler);
 
@@ -208,7 +209,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
                 screenProps: i_screenProps,
                 scale: '7'
             }
-
+            log(JSON.stringify(i_screenProps));
             var screenTemplate = new ScreenTemplateFactory({
                 i_screenTemplateData: screenTemplateData,
                 i_type: ScreenTemplateFactory.VIEWER_SELECTABLE,

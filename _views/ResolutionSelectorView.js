@@ -58,10 +58,21 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             });
         },
 
+        /**
+         Set the campaign's screen resolution
+         @method setResolution
+         @param {Number} i_resolution
+         @return {Number} i_resolution
+         **/
         setResolution: function(i_resolution){
             return this.model.set(BB.CONSTS.RESOLUTION, i_resolution)
         },
 
+        /**
+         Get the campaign's screen resolution
+         @method getResolution
+         @return {Number} i_resolution
+         **/
         getResolution: function(){
             return this.model.get(BB.CONSTS.RESOLUTION)
         }

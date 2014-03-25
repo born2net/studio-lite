@@ -33,6 +33,16 @@ function Jalapeno() {
 Jalapeno.TIMELINE_LENGTH_CHANGED = 'TIMELINE_LENGTH_CHANGED';
 
 /**
+ Custom event fired when a total timeline length (i.e.: channel content within specified timeline) has changed
+ @event Jalapeno.TIMELINE_LENGTH_CHANGED
+ @param {This} caller
+ @param {Event}
+ @static
+ @final
+ **/
+Jalapeno.TEMPLATE_VIEWER_EDITED = 'TEMPLATE_VIEWER_EDITED';
+
+/**
  Custom event fired when a timeline is removed from campaign
  @event Jalapeno.TIMELINE_DELETED
  @param {This} caller
@@ -465,6 +475,47 @@ Jalapeno.prototype = {
             }
         });
         return foundTemplatesIDs;
+    },
+
+    /**
+     Returns this model's attributes as...
+     @method setBoardTemplateViewer
+     @param {Number} i_board_template_viewer_id
+     @return {Number} i_props
+     **/
+    setBoardTemplateViewer: function (i_campaign_timeline_board_template_id, i_board_template_viewer_id, i_props) {
+        var self = this;
+        self.m_msdb.table_board_template_viewers().openForEdit(i_board_template_viewer_id);
+        var recEditBoardTemplateViewer = self.m_msdb.table_board_template_viewers().getRec(i_board_template_viewer_id);
+        recEditBoardTemplateViewer['pixel_x'] = i_props.x;
+        recEditBoardTemplateViewer['pixel_y'] = i_props.y;
+        recEditBoardTemplateViewer['pixel_width'] = i_props.w;
+        recEditBoardTemplateViewer['pixel_height'] = i_props.h;
+        var o = {
+            campaign_timeline_board_template_id: i_campaign_timeline_board_template_id,
+            board_template_viewer_id: i_board_template_viewer_id,
+            props: i_props
+        };
+        $(jalapeno).trigger(self.event(Jalapeno['TEMPLATE_VIEWER_EDITED'], self, null, o));
+    },
+
+    /**
+     Get all the global board template ids of a timeline
+     @method getGlobalTemplateIdOfTimeline
+     @param {Number} i_campaign_timeline_id
+     @return {Array} foundGlobalBoardTemplatesIDs global board template ids
+     **/
+    getGlobalTemplateIdOfTimeline: function (i_campaign_timeline_id) {
+        var self = this;
+        var foundGlobalBoardTemplatesIDs = [];
+
+        $(jalapeno.m_msdb.table_campaign_timeline_board_templates().getAllPrimaryKeys()).each(function (k, table_campaign_timeline_board_template_id) {
+            var recCampaignTimelineBoardTemplate = jalapeno.m_msdb.table_campaign_timeline_board_templates().getRec(table_campaign_timeline_board_template_id);
+            if (recCampaignTimelineBoardTemplate['campaign_timeline_id'] == i_campaign_timeline_id) {
+                foundGlobalBoardTemplatesIDs.push(recCampaignTimelineBoardTemplate['board_template_id']);
+            }
+        });
+        return foundGlobalBoardTemplatesIDs;
     },
 
     /**

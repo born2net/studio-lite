@@ -10,6 +10,17 @@
 define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, Backbone, Channel, ScreenTemplateFactory) {
 
     /**
+     Custom event fired when campaign_timeline_board_template edited
+     @event CAMPAIGN_TIMELINE_VIEWER_EDITED
+     @param {This} caller
+     @param {Self} context caller
+     @param {Event} campaign_timeline_id
+     @static
+     @final
+     BB.EVENTS.CAMPAIGN_TIMELINE_TEMPLATE_EDITED = 'CAMPAIGN_TIMELINE_TEMPLATE_EDITED';
+     **/
+
+    /**
      Custom event fired when a timeline is selected. If a timeline is not of the one selected,
      it ignores the event.
      @event Timeline.CAMPAIGN_TIMELINE_SELECTED
@@ -33,14 +44,17 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             this.m_campaign_timeline_id = self.options.campaignTimelineID;
             this.m_timing = 'sequencer';
             this.m_stackViewID = undefined;
-            this.m_property = BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW);
+            this.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
+            this.m_sequences = BB.comBroker.getService(BB.SERVICES['SEQUENCER_VIEW']);
             this.m_selected = false;
 
             self._populateChannels();
             self._populateTimeline();
             self._listenInputChange();
-            self._listenScreenLayoutEdit();
+            self._listenScreenTemplateEdit();
+            // self._listenScreenTemplateEdited();
             this._onTimelineSelected();
+            $(jalapeno).on(Jalapeno.TEMPLATE_VIEWER_EDITED, $.proxy(self._templateViewerEdited, self));
 
         },
 
@@ -62,7 +76,6 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
                 self.m_selected = true;
                 self._propLoadTimeline();
                 // log('timeline selected ' + self.m_campaign_timeline_id);
-
             });
         },
 
@@ -83,20 +96,31 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
 
         /**
          Pull up the screen layout editor
-         @method _listenScreenLayoutEdit
+         @method _listenScreenTemplateEdit
          @return none
          **/
-        _listenScreenLayoutEdit: function () {
+        _listenScreenTemplateEdit: function () {
             var self = this;
-            self.m_openScreenLayoutEditorHandler = function(e){
+            self.m_openScreenLayoutEditorHandler = function (e) {
                 if (!self.m_selected)
                     return;
                 var screenLayoutEditor = BB.comBroker.getService(BB.SERVICES.SCREEN_LAYOUT_EDITOR_VIEW);
                 var boardTemplateIDs = jalapeno.getTemplatesOfTimeline(self.m_campaign_timeline_id);
                 screenLayoutEditor.selectView(self.m_campaign_timeline_id, boardTemplateIDs[0]);
             };
-            $(Elements.EDIT_SCREEN_LAYOUT).on('click',self.m_openScreenLayoutEditorHandler);
+            $(Elements.EDIT_SCREEN_LAYOUT).on('click', self.m_openScreenLayoutEditorHandler);
+        },
 
+        /**
+         When a campaign_timeline_board_template is edited, modify its related UI (inside sequencer)
+         @method campaign_timeline_board_template_id
+         @param {event} e template viewer ids
+         **/
+        _templateViewerEdited: function (e) {
+            var self = this;
+            if (!self.m_selected)
+                return;
+            self._populateBoardTemplate(e.edata.campaign_timeline_board_template_id);
         },
 
         /**
@@ -181,8 +205,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             switch (self.m_timing) {
                 case 'sequencer':
                 {
-                    var sequences = BB.comBroker.getService(BB.SERVICES.SEQUENCER_VIEW);
-                    sequences.createTimelineThumbnailUI(screenProps);
+                    self.m_sequences.createTimelineThumbnailUI(screenProps);
                     break;
                 }
 
@@ -208,8 +231,8 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
                 resolution: BB.comBroker.getService(BB.SERVICES.RESOLUTION_SELECTOR_VIEW).getResolution(),
                 screenProps: i_screenProps,
                 scale: '7'
-            }
-            log(JSON.stringify(i_screenProps));
+            };
+
             var screenTemplate = new ScreenTemplateFactory({
                 i_screenTemplateData: screenTemplateData,
                 i_type: ScreenTemplateFactory.VIEWER_SELECTABLE,
@@ -275,6 +298,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             jalapeno.removeBoardTemplate(boardTemplateID);
             jalapeno.removeTimelineBoardViewerChannels(campaignTimelineBoardTemplateID);
             jalapeno.removeBoardTemplateViewers(boardTemplateID);
+            BB.comBroker.listen(BB.EVENTS.CAMPAIGN_TIMELINE_TEMPLATE_EDITED, self.m_onTemplateEdited)
             for (var channel in self.m_channels) {
                 self.m_channels[channel].deleteChannel();
                 delete self.m_channels[channel];
@@ -283,7 +307,8 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
                 self[k] = undefined;
             });
 
-            $(Elements.EDIT_SCREEN_LAYOUT).off('click',self.m_openScreenLayoutEditorHandler);
+            $(Elements.EDIT_SCREEN_LAYOUT).off('click', self.m_openScreenLayoutEditorHandler);
+            $(jalapeno).off(Jalapeno.TEMPLATE_VIEWER_EDITED, $.proxy(self._templateViewerEdited, self));
         }
     });
 

@@ -423,6 +423,16 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         /**
+         Convert a string or large float number to a decimal flot (non string)
+         @method parseToFloatDouble
+         @param {Object} i_value
+         @return {Float}
+         **/
+        parseToFloatDouble: function(i_value){
+            return Number(parseFloat(i_value).toFixed(2));
+        },
+
+        /**
          Check if a remote file exists
          @method remoteFileExits
          @param {String} url

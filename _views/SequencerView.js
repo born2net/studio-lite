@@ -147,7 +147,6 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
          **/
         reSequenceTimelines: function () {
             var self = this;
-
             var timelines = $(self.m_thumbsContainer).children().each(function (sequenceIndex) {
                 var element = $(this).find('[data-campaign_timeline_id]').eq(0);
                 var campaign_timeline_id = $(element).data('campaign_timeline_id');

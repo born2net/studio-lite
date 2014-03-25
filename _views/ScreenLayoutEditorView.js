@@ -17,8 +17,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         initialize: function () {
             var self = this;
             BB.comBroker.setService(BB.SERVICES['SCREEN_LAYOUT_EDITOR_VIEW'], self);
+            self.RATIO = 5;
             self.m_canvas = undefined;
             self.m_canvasID = undefined;
+            self.m_selectedViewerID = undefined;
 
             $(this.el).find('#prev').on('click', function (e) {
                 self._deSelectView();
@@ -46,6 +48,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
          **/
         _deSelectView: function () {
             var self = this;
+            // BB.comBroker.fire(BB.EVENTS.CAMPAIGN_TIMELINE_TEMPLATE_EDITED, this, this, self.m_campaign_timeline_board_template_id);
             self._destroy();
             self.options.stackView.slideToPage(self.options.from, 'left');
         },
@@ -68,8 +71,8 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 orientation: self.m_orientation,
                 resolution: self.m_resolution,
                 screenProps: self.m_screenProps,
-                scale: '5'
-            }
+                scale: self.RATIO
+            };
 
             var screenTemplate = new ScreenTemplateFactory({
                 i_screenTemplateData: screenTemplateData,
@@ -79,12 +82,12 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
 
             var rects = screenTemplate.createDivisions();
             for (var i = 0; i < rects.length; i++) {
-
                 var rectProperties = rects[i];
                 var rect = new fabric.Rect({
                     left: rectProperties.x.baseVal.value,
                     top: rectProperties.y.baseVal.value,
                     fill: '#ececec',
+                    id: $(rectProperties).data('campaign_timeline_board_viewer_id'),
                     hasRotatingPoint: false,
                     borderColor: '#5d5d5d',
                     stroke: 'black',
@@ -99,14 +102,39 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 });
                 self.m_canvas.add(rect);
 
-                rect.on('selected', function () {
-                    console.log('object selected a rectangle');
-                });
+                //rect.on('selected', function () {
+                //  console.log('object selected a rectangle');
+                //});
             }
 
-            self.m_canvas.on('object:selected', function () {
-                console.log('object on canvas selected a rectangle');
+            self.m_canvas.on('object:selected', function (e) {
+                log('viewer_id: ' + e.target.id);
+                self.m_selectedViewerID = e.target.id;
             });
+
+            var objectMovingHandler = _.debounce(function (e) {
+                var x = BB.lib.parseToFloatDouble(e.target.left) * self.RATIO;
+                var y = BB.lib.parseToFloatDouble(e.target.top) * self.RATIO;
+                var w = BB.lib.parseToFloatDouble(e.target.currentWidth) * self.RATIO;
+                var h = BB.lib.parseToFloatDouble(e.target.currentHeight) * self.RATIO;
+                var props = {
+                    w: w,
+                    h: h,
+                    x: x,
+                    y: y
+                };
+                jalapeno.setBoardTemplateViewer(self.m_campaign_timeline_board_template_id, e.target.id, props);
+                log('savings: template_id: ' + self.m_global_board_template_id + ' view_id: ' + e.target.id + ' ' + x + 'x' + y + ' ' + w + '/' + h);
+            }, 200);
+            self.m_canvas.on({
+                'object:moving': objectMovingHandler,
+                'object:scaling': objectMovingHandler
+            });
+
+
+            //self.m_canvas.on('object:moving', function (e) {
+            //    log('savings: ' + self.m_global_board_template_id);
+            //});
 
             self.m_canvas.on({
                 'object:moving': onChange,
@@ -138,30 +166,32 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             self.m_canvasID = undefined;
             self.m_canvas = undefined;
             self.m_campaign_timeline_id = undefined;
-            self.m_board_template_id = undefined;
+            self.m_campaign_timeline_board_template_id = undefined;
             self.m_screenProps = undefined;
             self.m_orientation = undefined;
             self.m_resolution = undefined;
+            self.m_global_board_template_id = undefined;
+            self.m_selectedViewerID = undefined;
         },
 
         /**
          Load the editor into DOM using the StackView using animation slider
          @method  selectView
          **/
-        selectView: function (i_campaign_timeline_id, i_board_template_id) {
+        selectView: function (i_campaign_timeline_id, i_campaign_timeline_board_template_id) {
             var self = this;
-
             self.m_campaign_timeline_id = i_campaign_timeline_id;
-            self.m_board_template_id = i_board_template_id;
-            self.m_screenProps = jalapeno.getTemplateViewersScreenProps(self.m_campaign_timeline_id, self.m_board_template_id);
+            self.m_campaign_timeline_board_template_id = i_campaign_timeline_board_template_id;
+            self.m_global_board_template_id = jalapeno.getGlobalTemplateIdOfTimeline(i_campaign_timeline_board_template_id)[0];
+            self.m_screenProps = jalapeno.getTemplateViewersScreenProps(self.m_campaign_timeline_id, self.m_campaign_timeline_board_template_id);
             self.m_orientation = BB.comBroker.getService(BB.SERVICES['ORIENTATION_SELECTOR_VIEW']).getOrientation();
             self.m_resolution = BB.comBroker.getService(BB.SERVICES['RESOLUTION_SELECTOR_VIEW']).getResolution();
 
             self.options.stackView.slideToPage(self, 'right');
             require(['fabric'], function () {
                 var resolution = BB.comBroker.getService(BB.SERVICES['RESOLUTION_SELECTOR_VIEW']).getResolution();
-                var w = parseInt(resolution.split('x')[0]) / 5;
-                var h = parseInt(resolution.split('x')[1]) / 5;
+                var w = parseInt(resolution.split('x')[0]) / self.RATIO;
+                var h = parseInt(resolution.split('x')[1]) / self.RATIO;
                 self._canvasFactory(w, h);
             })
         }

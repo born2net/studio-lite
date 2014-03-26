@@ -1,5 +1,6 @@
 /**
- Screen Layout editor
+ Screen Layout editor is used to edit an existing screen division layout (aka: template > viewers) and when done
+ editing, create new ScreenTemplates via ScreenTemplateFactory for both Thumb and main Timeline UIs
  @class ScreenLayoutEditorView
  @constructor
  @return {object} instantiated ScreenLayoutEditorView
@@ -48,7 +49,6 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
          **/
         _deSelectView: function () {
             var self = this;
-            // BB.comBroker.fire(BB.EVENTS.CAMPAIGN_TIMELINE_TEMPLATE_EDITED, this, this, self.m_campaign_timeline_board_template_id);
             self._destroy();
             self.options.stackView.slideToPage(self.options.from, 'left');
         },
@@ -78,7 +78,6 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 i_screenTemplateData: screenTemplateData,
                 i_type: ScreenTemplateFactory.VIEWER_SELECTABLE,
                 i_owner: this});
-
 
             var rects = screenTemplate.createDivisions();
             for (var i = 0; i < rects.length; i++) {
@@ -117,14 +116,15 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 var y = BB.lib.parseToFloatDouble(e.target.top) * self.RATIO;
                 var w = BB.lib.parseToFloatDouble(e.target.currentWidth) * self.RATIO;
                 var h = BB.lib.parseToFloatDouble(e.target.currentHeight) * self.RATIO;
+
                 var props = {
                     w: w,
                     h: h,
                     x: x,
                     y: y
                 };
+
                 jalapeno.setBoardTemplateViewer(self.m_campaign_timeline_board_template_id, e.target.id, props);
-                log('savings: template_id: ' + self.m_global_board_template_id + ' view_id: ' + e.target.id + ' ' + x + 'x' + y + ' ' + w + '/' + h);
             }, 200);
             self.m_canvas.on({
                 'object:moving': objectMovingHandler,
@@ -159,6 +159,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             }, 500);
         },
 
+        /**
+         One exit UI destroy all members
+         @method _destroy
+         **/
         _destroy: function () {
             var self = this;
             self.m_canvas.clear().renderAll();

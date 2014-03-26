@@ -31,11 +31,9 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         /**
          Constructor
          @method initialize
-         @return {} Unique clientId.
          **/
         initialize: function () {
             this.m_services = [];
-            this.m_uniqueCounter = 0;
             Backbone.EVENTS.SERVICE_REGISTERED = 'SERVICE_REGISTERED'
         },
 
@@ -103,6 +101,16 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         /**
+         Clear all current registered services
+         @method clearServices
+         **/
+        clearServices: function(){
+            var self = this;
+            // delete self.m_services;
+            self.m_services = undefined;
+        },
+
+        /**
          Trigger an event within the context of the CommBroker thus reducing DOM capture / bubble.
          @method fire
          @param {Event} i_event
@@ -151,7 +159,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         listenWithNamespace: function (event, caller, func) {
             if (caller.eventNamespace == undefined)
-                caller.eventNamespace = this.m_uniqueCounter++;
+                caller.eventNamespace = _.uniqueId();
             var namespacEvent = event + '.' + caller.eventNamespace;
             $(this).bind(namespacEvent, func);
         },

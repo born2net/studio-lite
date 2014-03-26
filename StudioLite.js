@@ -21,7 +21,11 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             BB.lib = new Lib();
             BB.lib.addBackboneViewOptions();
             BB.comBroker = new ComBroker();
+            BB.comBroker.name = 'AppBroker';
             BB.Jalapeno = new Jalapeno();
+            _.extend(BB.Jalapeno,BB.comBroker);
+            BB.Jalapeno.clearServices();
+            BB.Jalapeno.name = 'JalapenoBroker';
             BB.JalapenoHelper = new JalapenoHelper();
             window.jalapeno = BB.Jalapeno;
             window.log = BB.lib.log;

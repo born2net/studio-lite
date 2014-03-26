@@ -423,13 +423,13 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         /**
-         Convert a string or large float number to a decimal flot (non string)
+         Convert number or string to float with double precision
          @method parseToFloatDouble
          @param {Object} i_value
-         @return {Float}
+         @return {Number}
          **/
         parseToFloatDouble: function(i_value){
-            return Number(parseFloat(i_value).toFixed(2));
+            return parseFloat(parseFloat(i_value).toFixed(2));
         },
 
         /**

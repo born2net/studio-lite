@@ -47,8 +47,8 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             self.m_noneSelectedTimelines = new BB.View({el: Elements.NONE_SELECTED_SCREEN_LAYOUT})
             self.m_timelineViewStack.addView(self.m_noneSelectedTimelines);
 
-            $(jalapeno).on(Jalapeno.NEW_TIMELINE_CREATED, $.proxy(self._updDelTimelimeButtonStatus, self));
-            $(jalapeno).on(Jalapeno.TIMELINE_DELETED, $.proxy(self._updDelTimelimeButtonStatus, self));
+            jalapeno.listen(Jalapeno.NEW_TIMELINE_CREATED, $.proxy(self._updDelTimelimeButtonStatus, self));
+            jalapeno.listen(Jalapeno.TIMELINE_DELETED, $.proxy(self._updDelTimelimeButtonStatus, self));
 
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self)
@@ -318,7 +318,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
          **/
         _listenTimelineLengthChanged: function () {
             var self = this;
-            $(jalapeno).on(Jalapeno.TIMELINE_LENGTH_CHANGED, $.proxy(self._updatedTimelinesLengthUI, self));
+            jalapeno.listen(Jalapeno.TIMELINE_LENGTH_CHANGED, $.proxy(self._updatedTimelinesLengthUI, self));
         },
 
         /**

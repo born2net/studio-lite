@@ -34,7 +34,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             self._listenResourceRemoved();
             self._listenBlockLengthChanged();
 
-            $(jalapeno).on(Jalapeno.TIMELINE_DELETED, $.proxy(self._onTimelineDeleted, self));
+            jalapeno.listen(Jalapeno.TIMELINE_DELETED, $.proxy(self._onTimelineDeleted, self));
 
         },
 
@@ -304,7 +304,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
          **/
         _listenBlockLengthChanged: function () {
             var self = this;
-            $(jalapeno).on(Jalapeno.BLOCK_LENGTH_CHANGED, $.proxy(self._onBlockLengthChanged, self));
+            jalapeno.listen(Jalapeno.BLOCK_LENGTH_CHANGED, $.proxy(self._onBlockLengthChanged, self));
         },
 
         /**

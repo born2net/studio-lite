@@ -21,13 +21,14 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
             var self = this;
             this.m_thumbsContainer = this.$el;
             this.m_timelines = {};
+            this.m_screenTemplates = {};
 
             self._initLayoutSelectorDragDrop();
             setTimeout(function () {
                 $(Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).trigger('click');
             }, 3000);
 
-            $(jalapeno).on(Jalapeno.TIMELINE_DELETED, $.proxy(self._deleteSequencedTimeline, self));
+            jalapeno.listen(Jalapeno.TIMELINE_DELETED, $.proxy(self._deleteSequencedTimeline, self));
 
         },
 
@@ -91,12 +92,22 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
         _deleteSequencedTimeline: function (e) {
             var self = this;
             var campaign_timeline_id = e.edata;
-            var elementID = self.m_timelines[campaign_timeline_id];
-            $('#' + elementID).remove();
-            // var timeline = self.m_timelines[i_campaign_timeline_id];
+            self._deleteTimelineThumbUI(campaign_timeline_id);
             delete self.m_timelines[campaign_timeline_id];
             jalapeno.removeTimelineFromSequences(campaign_timeline_id);
             self.reSequenceTimelines();
+        },
+
+        /**
+         Remove the element's UI thumb of a template layout
+         @method _deleteTimelineThumbUI
+         @param {Number} i_campaign_timeline_id
+         **/
+        _deleteTimelineThumbUI: function (i_campaign_timeline_id) {
+            var self = this;
+            var elementID = self.m_timelines[i_campaign_timeline_id];
+            $('#' + elementID).remove();
+            self.m_screenTemplates[i_campaign_timeline_id].destroy();
         },
 
         /**
@@ -109,11 +120,20 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
          **/
         createTimelineThumbnailUI: function (i_screenProps) {
             var self = this;
+            var index = -1;
 
-            // Get the timelineid for current the timeline creating
+            // Get the timeline id for current timeline creating
             for (var screenProp in i_screenProps) {
                 var campaign_timeline_id = i_screenProps[screenProp]['campaign_timeline_id']
                 break;
+            }
+
+            // if timeline_id already exists, it means this is an update from ScreenLayoutEditorView so we
+            // must first delete previous UI as well as it's matching instance
+            if (self.m_timelines[campaign_timeline_id] != undefined) {
+                var elementID = '#' + self.m_timelines[campaign_timeline_id];
+                index = $(elementID).index();
+                self._deleteTimelineThumbUI(campaign_timeline_id);
             }
 
             var screenTemplateData = {
@@ -133,10 +153,25 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
             var elementID = $(snippet).attr('id');
 
             self.m_timelines[campaign_timeline_id] = elementID;
+            self.m_screenTemplates[campaign_timeline_id] = screenTemplate;
 
             screenTemplate.selectablelDivision();
             screenTemplate.activate();
-            self.m_thumbsContainer.append(snippet);
+
+            // if template is an update created by ScreenLayoutEditorView, insert the
+            // snippet to specific index, else append end
+            if (index != -1) {
+                var elem;
+                if (index == 0) {
+                    elem = self.m_thumbsContainer.children().eq(0);
+                    $(snippet).insertBefore(elem)
+                } else {
+                    elem = self.m_thumbsContainer.children().eq(index-1);
+                    $(snippet).insertAfter(elem)
+                }
+            } else {
+                self.m_thumbsContainer.append(snippet);
+            }
             screenTemplate.selectableFrame();
         },
 

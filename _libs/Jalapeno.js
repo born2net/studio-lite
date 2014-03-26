@@ -9,7 +9,9 @@
 
  The internal database is referenced as msdb in both code and documentation.
 
- Library requirements: x2js
+ Library requirements:
+    composition: x2js, jQuery
+    inheritance: ComBroker
 
  @class Jalapeno
  @constructor
@@ -241,7 +243,7 @@ Jalapeno.prototype = {
         var campaign = campaigns.createRecord();
         campaign.campaign_name = i_campgianName;
         campaigns.addRecord(campaign);
-        $(jalapeno).trigger(self.event(Jalapeno['NEW_CAMPAIGN_CREATED'], self, null, campaign['campaign_id']));
+        jalapeno.fire(Jalapeno['NEW_CAMPAIGN_CREATED'], self, null, campaign['campaign_id']);
         return campaign['campaign_id'];
     },
 
@@ -364,7 +366,7 @@ Jalapeno.prototype = {
             chanels.addRecord(chanel);
             createdChanels.push(chanel['campaign_timeline_chanel_id']);
         }
-        $(jalapeno).trigger(self.event(Jalapeno['NEW_CHANNEL_CREATED'], self, null, createdChanels));
+        jalapeno.fire(Jalapeno['NEW_CHANNEL_CREATED'], self, null, createdChanels);
         return createdChanels;
     },
 
@@ -407,7 +409,7 @@ Jalapeno.prototype = {
             returnData['viewers'].push(viewer['board_template_viewer_id']);
         }
         returnData['board_template_id'] = board_template_id
-        $(jalapeno).trigger(self.event(Jalapeno['NEW_TEMPLATE_CREATED'], self, null, returnData));
+        jalapeno.fire(Jalapeno['NEW_TEMPLATE_CREATED'], self, null, returnData);
         return returnData;
     },
 
@@ -424,7 +426,7 @@ Jalapeno.prototype = {
         timeline.campaign_id = i_campaign_id;
         timeline.timeline_name = "Timeline";
         timelines.addRecord(timeline);
-        $(jalapeno).trigger(self.event(Jalapeno['NEW_TIMELINE_CREATED'], self, null, timeline['campaign_timeline_id']));
+        jalapeno.fire(Jalapeno['NEW_TIMELINE_CREATED'], self, null, timeline['campaign_timeline_id']);
         return timeline['campaign_timeline_id'];
     },
 
@@ -454,7 +456,7 @@ Jalapeno.prototype = {
             campaign_timeline_chanel_player_id: recTimelinePlayer['campaign_timeline_chanel_player_id'],
             campaign_timeline_chanel_player_data: recTimelinePlayer['player_data']
         };
-        $(jalapeno).trigger(self.event(Jalapeno['NEW_PLAYER_CREATED'], self, null, returnData));
+        jalapeno.fire(Jalapeno['NEW_PLAYER_CREATED'], self, null, returnData);
         return returnData;
     },
 
@@ -485,18 +487,26 @@ Jalapeno.prototype = {
      **/
     setBoardTemplateViewer: function (i_campaign_timeline_board_template_id, i_board_template_viewer_id, i_props) {
         var self = this;
+        var x = Math.round(i_props.x);
+        var y = Math.round(i_props.y);
+        var w = Math.round(i_props.w);
+        var h = Math.round(i_props.h);
+
+        log('savings: template_id: ' + i_campaign_timeline_board_template_id + ' view_id: ' + i_board_template_viewer_id + ' ' + x + 'x' + y + ' ' + w + '/' + h);
+
         self.m_msdb.table_board_template_viewers().openForEdit(i_board_template_viewer_id);
         var recEditBoardTemplateViewer = self.m_msdb.table_board_template_viewers().getRec(i_board_template_viewer_id);
-        recEditBoardTemplateViewer['pixel_x'] = i_props.x;
-        recEditBoardTemplateViewer['pixel_y'] = i_props.y;
-        recEditBoardTemplateViewer['pixel_width'] = i_props.w;
-        recEditBoardTemplateViewer['pixel_height'] = i_props.h;
+        recEditBoardTemplateViewer['pixel_x'] = x;
+        recEditBoardTemplateViewer['pixel_y'] = y;
+        recEditBoardTemplateViewer['pixel_width'] = w;
+        recEditBoardTemplateViewer['pixel_height'] =h;
+
         var o = {
             campaign_timeline_board_template_id: i_campaign_timeline_board_template_id,
             board_template_viewer_id: i_board_template_viewer_id,
             props: i_props
         };
-        $(jalapeno).trigger(self.event(Jalapeno['TEMPLATE_VIEWER_EDITED'], self, null, o));
+        jalapeno.fire(Jalapeno['TEMPLATE_VIEWER_EDITED'], self, null, o);
     },
 
     /**
@@ -954,7 +964,7 @@ Jalapeno.prototype = {
     removeTimelineFromCampaign: function (i_campaign_timeline_id) {
         var self = this;
         self.m_msdb.table_campaign_timelines().openForDelete(i_campaign_timeline_id);
-        $(jalapeno).trigger(self.event(Jalapeno['TIMELINE_DELETED'], self, null, i_campaign_timeline_id));
+        jalapeno.fire(Jalapeno['TIMELINE_DELETED'], self, null, i_campaign_timeline_id);
     },
 
     /**
@@ -1150,7 +1160,7 @@ Jalapeno.prototype = {
             }
         });
         jalapeno.setCampaignTimelineRecord(i_campaign_timeline_id, 'timeline_duration', longestChannelDuration);
-        $(jalapeno).trigger(self.event(Jalapeno['TIMELINE_LENGTH_CHANGED'], self, null, longestChannelDuration));
+        jalapeno.fire(Jalapeno['TIMELINE_LENGTH_CHANGED'], self, null, longestChannelDuration);
     },
 
     /**
@@ -1208,7 +1218,7 @@ Jalapeno.prototype = {
             campaignTimelineChanelPlayerID: i_campaign_timeline_chanel_player_id,
             totalSeconds: totalSeconds
         }
-        $(jalapeno).trigger(self.event(Jalapeno['BLOCK_LENGTH_CHANGED'], self, null, returnData));
+        jalapeno.fire(Jalapeno['BLOCK_LENGTH_CHANGED'], self, null, returnData);
     },
 
     /**
@@ -1465,10 +1475,11 @@ Jalapeno.prototype = {
      @param {Object} i_caller
      @param {Object} i_data
      @return none.
-     **/
+
     event: function (i_event, i_context, i_caller, i_data) {
         return $.Event(i_event, {context: i_context, caller: i_caller, edata: i_data});
     },
+     **/
 
     /**
      Sample function to demonstrate how to enumerate over records to query related tables of a campaign

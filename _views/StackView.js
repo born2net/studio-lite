@@ -30,7 +30,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
         /**
          Add a backbone view so we can control its display mode via one of the derived classes
          @method addView
-         @param {View} i_view add a backbone view to control
+         @param {Object} i_view add a backbone view to control
          @return {String} stack view id added
          **/
         addView: function (i_view) {

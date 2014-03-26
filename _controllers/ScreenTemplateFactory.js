@@ -316,12 +316,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 }
             });
 
-
             $(Elements.CLASS_SCREEN_DIVISION).on('click', function (e) {
                 self._onScreenFrameSelected(e, self);
             });
         },
-
 
         /**
          Release all members to allow for garbage collection.
@@ -329,20 +327,21 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @return none
          **/
         destroy: function () {
-            this.self = this;
-            self.m_owner = null;
-            self.m_myElementID = null;
-            self.m_orientation = null;
-            self.m_resolution = null;
-            self.m_screenProps = null;
-            self.m_scale = null;
-            self.m_svgWidth = null;
-            self.m_svgHeight = null;
-            self.m_useLabels = null;
-            self.m_mouseOverEffect = null;
-            self.m_selectableFrame = null;
-            self.m_selectablDivision = null;
-            self.m_screenTemplateData = null;
+            var self = this;
+            $(Elements.CLASS_SCREEN_DIVISION).off('click', function (e) {
+                self._onScreenViewerSelected(e, self);
+            });
+            $(Elements.CLASS_SCREEN_DIVISION).off('click', function (e) {
+                self._onScreenFrameSelected(e, self);
+            });
+            $(this).off('mouseover',function () {
+                $(this).css({'fill': 'rgb(190,190,190)'});
+            }).mouseout(function () {
+                $(this).css({'fill': 'rgb(230,230,230)'});
+            });
+            $.each(self, function (k) {
+                self[k] = undefined;
+            });
         }
     });
 

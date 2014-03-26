@@ -10,17 +10,6 @@
 define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, Backbone, Channel, ScreenTemplateFactory) {
 
     /**
-     Custom event fired when campaign_timeline_board_template edited
-     @event CAMPAIGN_TIMELINE_VIEWER_EDITED
-     @param {This} caller
-     @param {Self} context caller
-     @param {Event} campaign_timeline_id
-     @static
-     @final
-     BB.EVENTS.CAMPAIGN_TIMELINE_TEMPLATE_EDITED = 'CAMPAIGN_TIMELINE_TEMPLATE_EDITED';
-     **/
-
-    /**
      Custom event fired when a timeline is selected. If a timeline is not of the one selected,
      it ignores the event.
      @event Timeline.CAMPAIGN_TIMELINE_SELECTED
@@ -41,6 +30,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
         initialize: function () {
             var self = this;
             this.m_channels = {}; // hold references to all created channel instances
+            this.m_screenTemplate = undefined;
             this.m_campaign_timeline_id = self.options.campaignTimelineID;
             this.m_timing = 'sequencer';
             this.m_stackViewID = undefined;
@@ -52,10 +42,9 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             self._populateTimeline();
             self._listenInputChange();
             self._listenScreenTemplateEdit();
-            // self._listenScreenTemplateEdited();
             this._onTimelineSelected();
-            $(jalapeno).on(Jalapeno.TEMPLATE_VIEWER_EDITED, $.proxy(self._templateViewerEdited, self));
 
+            jalapeno.listenWithNamespace(Jalapeno.TEMPLATE_VIEWER_EDITED, self, $.proxy(self._templateViewerEdited, self));
         },
 
         /**
@@ -65,18 +54,17 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
          **/
         _onTimelineSelected: function () {
             var self = this;
-
-            BB.comBroker.listen(BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED, function (e) {
+            self.m_campaignTimelineSelectedHandler = function (e) {
                 var timelineID = e.edata;
                 if (self.m_campaign_timeline_id != timelineID) {
                     self.m_selected = false;
                     return;
-                }
-
+                };
                 self.m_selected = true;
                 self._propLoadTimeline();
-                // log('timeline selected ' + self.m_campaign_timeline_id);
-            });
+                log('timeline selected ' + self.m_campaign_timeline_id);
+            };
+            BB.comBroker.listenWithNamespace(BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED, self, self.m_campaignTimelineSelectedHandler);
         },
 
         /**
@@ -86,12 +74,12 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
          **/
         _listenInputChange: function () {
             var self = this;
-            var onChange = _.debounce(function (e) {
+            self.m_inputChangeHandler = _.debounce(function (e) {
                 if (!self.m_selected)
                     return;
                 jalapeno.setCampaignTimelineRecord(self.m_campaign_timeline_id, 'timeline_name', $(Elements.TIME_LINE_PROP_TITLE_ID).val());
             }, 150, false);
-            self.m_inputChangeHandler = $(Elements.TIME_LINE_PROP_TITLE_ID).on("input", onChange);
+            $(Elements.TIME_LINE_PROP_TITLE_ID).on("input", self.m_inputChangeHandler);
         },
 
         /**
@@ -167,8 +155,6 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
          **/
         _populateChannels: function () {
             var self = this;
-
-            var self = this;
             var channelIDs = jalapeno.getChannelsOfTimeline(self.m_campaign_timeline_id);
             for (var i = 0; i < channelIDs.length; i++) {
                 self.m_channels[channelIDs[i]] = new Channel({campaignTimelineChanelID: channelIDs[i]});
@@ -197,8 +183,8 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             } else {
                 BB.comBroker.getService(BB.SERVICES.ORIENTATION_SELECTOR_VIEW).setOrientation(BB.CONSTS.VERTICAL);
             }
-
             var screenProps = jalapeno.getTemplateViewersScreenProps(self.m_campaign_timeline_id, i_campaign_timeline_board_template_id)
+
             self._createTimelineUI(screenProps);
 
             // Future support for scheduler
@@ -224,8 +210,8 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
          @return none
          **/
         _createTimelineUI: function (i_screenProps) {
-
             var self = this;
+
             var screenTemplateData = {
                 orientation: BB.comBroker.getService(BB.SERVICES.ORIENTATION_SELECTOR_VIEW).getOrientation(),
                 resolution: BB.comBroker.getService(BB.SERVICES.RESOLUTION_SELECTOR_VIEW).getResolution(),
@@ -239,7 +225,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
                 i_owner: this});
 
             var snippet = screenTemplate.create();
-            var elemID = $(snippet).attr('id');
+            // var elemID = $(snippet).attr('id');
             var divID1 = 'selectableScreenCollections' + _.uniqueId();
             var divID2 = 'selectableScreenCollections' + _.uniqueId();
 
@@ -253,13 +239,20 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             $(Elements.SELECTED_TIMELINE).append(snippetWrapper);
 
             var timelineViewStack = BB.comBroker.getService(BB.SERVICES.CAMPAIGN_VIEW).getTimelineViewStack();
-            // self.m_stackViewID = timelineViewStack.addChild('#' + divID1);
             $('#' + divID2).append($(snippet));
             screenTemplate.selectablelDivision();
             var view = new BB.View({el: '#' + divID1});
+
+            // if we are updating layout from ScreenLayoutEditorView (but actually creating a new Template layout)
+            // we remove the previous Template Layout from DOM as well as its matching ScreenTemplateFactory instance
+            if (self.m_stackViewID) {
+                $('#' + self.m_stackViewID).remove();
+                self.m_screenTemplate.destroy();
+            };
+
+            self.m_screenTemplate = screenTemplate;
             self.m_stackViewID = timelineViewStack.addView(view);
             screenTemplate.activate();
-
         },
 
         /**
@@ -291,14 +284,17 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
          **/
         deleteTimeline: function () {
             var self = this;
-            $(Elements.TIME_LINE_PROP_TITLE_ID).off("input", self.m_inputChangeHandler);
             var boardTemplateID = jalapeno.getGlobalBoardIDFromTimeline(self.m_campaign_timeline_id);
             jalapeno.removeTimelineFromCampaign(self.m_campaign_timeline_id);
             var campaignTimelineBoardTemplateID = jalapeno.removeBoardTemplateFromTimeline(self.m_campaign_timeline_id);
             jalapeno.removeBoardTemplate(boardTemplateID);
             jalapeno.removeTimelineBoardViewerChannels(campaignTimelineBoardTemplateID);
             jalapeno.removeBoardTemplateViewers(boardTemplateID);
-            BB.comBroker.listen(BB.EVENTS.CAMPAIGN_TIMELINE_TEMPLATE_EDITED, self.m_onTemplateEdited)
+            jalapeno.stopListenWithNamespace(Jalapeno.TEMPLATE_VIEWER_EDITED, self);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED, self);
+            $(Elements.EDIT_SCREEN_LAYOUT).off('click', self.m_openScreenLayoutEditorHandler);
+            $(Elements.TIME_LINE_PROP_TITLE_ID).off("input", self.m_inputChangeHandler);
+
             for (var channel in self.m_channels) {
                 self.m_channels[channel].deleteChannel();
                 delete self.m_channels[channel];
@@ -306,9 +302,6 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             $.each(self, function (k) {
                 self[k] = undefined;
             });
-
-            $(Elements.EDIT_SCREEN_LAYOUT).off('click', self.m_openScreenLayoutEditorHandler);
-            $(jalapeno).off(Jalapeno.TEMPLATE_VIEWER_EDITED, $.proxy(self._templateViewerEdited, self));
         }
     });
 

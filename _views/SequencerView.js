@@ -116,11 +116,11 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
          via the ScreenTemplateFactory public methods.
          @method createTimelineThumbnailUI
          @param {Object} i_screenProps
-         @return none
          **/
         createTimelineThumbnailUI: function (i_screenProps) {
             var self = this;
             var index = -1;
+            var elem = undefined;
 
             // Get the timeline id for current timeline creating
             for (var screenProp in i_screenProps) {
@@ -158,21 +158,37 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
             screenTemplate.selectablelDivision();
             screenTemplate.activate();
 
-            // if template is an update created by ScreenLayoutEditorView, insert the
-            // snippet to specific index, else append end
-            if (index != -1) {
-                var elem;
-                if (index == 0) {
-                    elem = self.m_thumbsContainer.children().eq(0);
-                    $(snippet).insertBefore(elem)
-                } else {
-                    elem = self.m_thumbsContainer.children().eq(index-1);
-                    $(snippet).insertAfter(elem)
+            switch (index) {
+                case -1:
+                {
+                    // position thumbnail in beginning (first creation)
+                    self.m_thumbsContainer.append(snippet);
+                    screenTemplate.selectableFrame();
+                    break;
                 }
-            } else {
-                self.m_thumbsContainer.append(snippet);
+
+                case 0:
+                {
+                    // position thumbnail index in beginning (append if no other thumbnails)
+                    elem = self.m_thumbsContainer.children().eq(0);
+                    if (elem.length > 0) {
+                        $(snippet).insertBefore(elem)
+                    } else {
+                        self.m_thumbsContainer.append(snippet);
+                    }
+                    screenTemplate.selectableFrame();
+                    break;
+                }
+
+                default:
+                {
+                    // position thumbnail as previous index position
+                    elem = self.m_thumbsContainer.children().eq(index - 1);
+                    $(snippet).insertAfter(elem)
+                    screenTemplate.selectableFrame();
+                    break;
+                }
             }
-            screenTemplate.selectableFrame();
         },
 
         /**

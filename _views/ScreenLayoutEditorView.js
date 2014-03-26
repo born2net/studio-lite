@@ -65,6 +65,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             if (self.m_canvas == undefined) {
                 $('#screenLayoutEditorCanvasWrap').append('<canvas id="' + self.m_canvasID + '" width="' + i_width + 'px" height="' + i_height + 'px" style="border: 1px solid rgb(170, 170, 170);"></canvas>')
                 self.m_canvas = new fabric.Canvas(self.m_canvasID);
+                self.m_canvas.selection = false;
             }
 
             var screenTemplateData = {

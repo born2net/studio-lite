@@ -74,7 +74,7 @@ JalapenoHelper.prototype = {
                 getDefaultPlayerData: function (i_resourceID) {
                     return  '<Player player="3130" label="" interactive="0">' +
                                 '<Data>' +
-                                    self._getCommonDefaultXML() +
+                                    self.getCommonDefaultXML() +
                                     '<Resource hResource="' + i_resourceID + '">' +
                                     '<AspectRatio maintain="1" />' +
                                     '<Image />' +
@@ -95,7 +95,7 @@ JalapenoHelper.prototype = {
                 getDefaultPlayerData: function () {
                     return  '<Player player="3160" label="External image Code" interactive="0">' +
                                 '<Data>' +
-                                    self._getCommonDefaultXML() +
+                                    self.getCommonDefaultXML() +
                                     '<LINK src=""/>'+
                                 '</Data>' +
                             '</Player>'
@@ -109,7 +109,7 @@ JalapenoHelper.prototype = {
                 getDefaultPlayerData: function () {
                     return  '<Player player="3150" label="External video" interactive="0">' +
                                 '<Data>' +
-                                    self._getCommonDefaultXML() +
+                                    self.getCommonDefaultXML() +
                                     '<LINK src=""/>'+
                                 '</Data>' +
                             '</Player>'
@@ -123,7 +123,7 @@ JalapenoHelper.prototype = {
                 getDefaultPlayerData: function (i_resourceID) {
                     return '<Player player="3100" label="Video" interactive="0">' +
                                     '<Data>' +
-                                        self._getCommonDefaultXML() +
+                                        self.getCommonDefaultXML() +
                                         '<Resource hResource="' + i_resourceID + '">' +
                                             '<AspectRatio maintain="1" />' +
                                             '<Video autoRewind="1" volume="1" backgroundAlpha="1" />' +
@@ -143,7 +143,7 @@ JalapenoHelper.prototype = {
                 getDefaultPlayerData: function () {
                     return  '<Player player="3430" label="QR Code" interactive="0">' +
                                 '<Data>' +
-                                    self._getCommonDefaultXML() +
+                                    self.getCommonDefaultXML() +
                                     '<Text textSource="static"></Text>' +
                                 '</Data>' +
                             '</Player>'
@@ -157,7 +157,7 @@ JalapenoHelper.prototype = {
                 getDefaultPlayerData: function () {
                     return  '<Player player="3340" label="MRSS / Podcast" interactive="0">' +
                                 '<Data>' +
-                                    self._getCommonDefaultXML() +
+                                    self.getCommonDefaultXML() +
                                     '<Rss url="http://podcast.msnbc.com/audio/podcast/MSNBC-YB-NETCAST-M4V.xml" maintainAspectRatio="1" />'+
                                 '</Data>' +
                             '</Player>'
@@ -171,7 +171,7 @@ JalapenoHelper.prototype = {
                 getDefaultPlayerData: function () {
                     return  '<Player player="3235" label="HTML5" interactive="0">' +
                                 '<Data>' +
-                                    self._getCommonDefaultXML() +
+                                    self.getCommonDefaultXML() +
                                     '<HTML src="http://m.cnn.com" config=""/>' +
                                 '</Data>' +
                             '</Player>'
@@ -185,7 +185,7 @@ JalapenoHelper.prototype = {
                 getDefaultPlayerData: function () {
                     return  '<Player player="3320" label="Clock Date" interactive="0">' +
                                 '<Data>' +
-                                    self._getCommonDefaultXML() +
+                                    self.getCommonDefaultXML() +
                                     '<Clock clockFormat="custom" clockMask="EEEE, MMM. D, YYYY at L:NN A">'+
                                         '<Font fontSize="11" fontColor="13158" fontFamily="Arial" fontWeight="bold" fontStyle="italic" textDecoration="underline" textAlign="center" />'+
                                      '</Clock>'+
@@ -226,7 +226,7 @@ JalapenoHelper.prototype = {
                 getDefaultPlayerData: function () {
                     return  '<Player player="3241" label="Label" interactive="0">' +
                                 '<Data>' +
-                                    self._getCommonDefaultXML() +
+                                    self.getCommonDefaultXML() +
                                     '<Label>'+
                                         '<Text>some text here!</Text>'+
                                         '<Font fontSize="16" fontColor="65280" fontFamily="Arial" fontWeight="normal" fontStyle="normal" textDecoration="none" textAlign="left" />' +
@@ -243,7 +243,7 @@ JalapenoHelper.prototype = {
                 getDefaultPlayerData: function () {
                     return  '<Player player="3345" label="RSS news" interactive="0">' +
                                 '<Data>' +
-                                    self._getCommonDefaultXML() +
+                                    self.getCommonDefaultXML() +
                                     '<Rss url="http://rss.news.yahoo.com/rss/politics" minRefreshTime="30" speed="10" vertical="0" rtl="0">' +
                                         '<Title>' +
                                             '<Font fontSize="16" fontColor="65280" fontFamily="Arial" fontWeight="normal" fontStyle="normal" textDecoration="none" textAlign="left" />' +
@@ -262,12 +262,23 @@ JalapenoHelper.prototype = {
 
     /**
      Get the common properties XML with all default values
-     @method _getCommonDefaultXML
+     @method getCommonDefaultXML
      @return {String} common xml
      **/
-    _getCommonDefaultXML: function(){
+    getCommonDefaultXML: function(){
+        var self = this;
         var common =    '<Appearance alpha="1.0" blendMode="normal" />'+
-                        '<Background style="Gradient" gradientType="linear" angle="90" offsetX="0" offsetY="0">'+
+                        self.getCommonBackgroundXML()
+        return common;
+    },
+
+    /**
+     Get the common properties XML with all default values
+     @method getCommonBackgroundXML
+     @return {String} common xml
+     **/
+    getCommonBackgroundXML: function(){
+        var common =    '<Background style="Gradient" gradientType="linear" angle="90" offsetX="0" offsetY="0">'+
                             '<GradientPoints>'+
                                 '<Point color="4361162" opacity="1" midpoint="125" />'+
                             '</GradientPoints>'+

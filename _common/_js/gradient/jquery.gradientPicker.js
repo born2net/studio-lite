@@ -312,7 +312,7 @@
 
         colorChanged: function(c) {
             this.color = c;
-            log(c);
+            // log(c);
             this.$el.css("background-color", this.color);
             this.listener.updatePreview();
         },

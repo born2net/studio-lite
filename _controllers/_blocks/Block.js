@@ -38,6 +38,7 @@ define(['jquery', 'backbone'], function ($) {
             // common channel
             self._alphaListenChange();
             self._gradientListenChange();
+            self._backgroundStateListenChange();
 
             // block specific: channel / scene
             switch (this.m_placement) {
@@ -110,12 +111,58 @@ define(['jquery', 'backbone'], function ($) {
         },
 
         /**
+         Enable gradient background UI
+         @method _enableGradient
+         **/
+        _enableGradient: function(){
+            var self = this;
+            $(Elements.SHOW_BACKGROUND).prop('checked',true);
+            $(Elements.BG_COLOR_GRADIENT_SELECTOR).show();
+        },
+
+        /**
+         Disable gradient background UI
+         @method _disableGradient
+         **/
+        _disableGradient: function(){
+            var self = this;
+            $(Elements.SHOW_BACKGROUND).prop('checked',false);
+            $(Elements.BG_COLOR_GRADIENT_SELECTOR).hide();
+        },
+
+        _backgroundStateListenChange: function(){
+            var self = this;
+            var xSnippet = undefined;
+            var xBgSnippet = undefined;
+
+            self.m_toggleBackgroundColorHandler = function(e){
+                if (!self.m_selected)
+                    return;
+                var domPlayerData = self._getBlockPlayerData();
+                var v = $(e.target).prop('checked') == true ? 1 : 0;
+                if (v) {
+                    self._enableGradient();
+                    xSnippet = $(domPlayerData).find('Appearance ');
+                    xBgSnippet = BB.JalapenoHelper.getCommonBackgroundXML();
+                    $(xSnippet).append(xBgSnippet);
+                    self._setBlockPlayerData(domPlayerData);
+                    self._gradientPopulate();
+                } else {
+                    self._disableGradient();
+                    xSnippet = $(domPlayerData).find('Background');
+                    $(xSnippet).remove();
+                    self._setBlockPlayerData(domPlayerData);
+                }
+            };
+            $(Elements.SHOW_BACKGROUND).on('click',self.m_toggleBackgroundColorHandler);
+        },
+
+        /**
          Update a block's player_data with new gradient background
          @method _gradientListenChange
          **/
         _gradientListenChange: function () {
             var self = this;
-
             BB.comBroker.listenWithNamespace(BB.EVENTS.GRADIENT_COLOR_CHANGED, self, function (e) {
                 if (!self.m_selected)
                     return;
@@ -153,13 +200,19 @@ define(['jquery', 'backbone'], function ($) {
             gradient.removeAllPoints();
             var domPlayerData = self._getBlockPlayerData();
             var xSnippet = $(domPlayerData).find('GradientPoints');
-            var points = $(xSnippet).find('Point');
 
-            $.each(points, function (i, point) {
-                var pointColor = BB.lib.decimalToHex($(point).attr('color'));
-                var pointMidpoint = (parseInt($(point).attr('midpoint')) / 250);
-                gradient.addPoint(pointMidpoint, pointColor, true);
-            });
+            if (xSnippet.length > 0) {
+                self._enableGradient();
+                var points = $(xSnippet).find('Point');
+                $.each(points, function (i, point) {
+                    var pointColor = BB.lib.decimalToHex($(point).attr('color'));
+                    var pointMidpoint = (parseInt($(point).attr('midpoint')) / 250);
+                    gradient.addPoint(pointMidpoint, pointColor, true);
+                });
+            } else {
+                self._disableGradient();
+            }
+
         },
 
         /**
@@ -348,10 +401,11 @@ define(['jquery', 'backbone'], function ($) {
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_SELECTED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_LENGTH_CHANGING, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.GRADIENT_COLOR_CHANGED, self);
+            $(Elements.SHOW_BACKGROUND).off('click',self.m_toggleBackgroundColorHandler);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.ALPHA_CHANGED, self);
 
-            if (self.onSceneSelectedHandler)
-                self.m_canvas.off('object:selected', self.onSceneSelectedHandler);
+            if (self.m_sceneSelectedHandler)
+                self.m_canvas.off('object:selected', self.m_sceneSelectedHandler);
 
             $.each(self, function (k) {
                 self[k] = undefined;
@@ -383,12 +437,12 @@ define(['jquery', 'backbone'], function ($) {
         listenSceneSelection: function(i_canvas){
             var self = this;
             self.m_canvas = i_canvas;
-            self.onSceneSelectedHandler = function(e) {
+            self.m_sceneSelectedHandler = function(e) {
                 if (e.target!==self) //todo: add || !self.m_selected
                     return;
                 log('Scene block selected id: ' + self.m_block_id);
             };
-            self.m_canvas.on('object:selected', self.onSceneSelectedHandler);
+            self.m_canvas.on('object:selected', self.m_sceneSelectedHandler);
         },
 
         /**

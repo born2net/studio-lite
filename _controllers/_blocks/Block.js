@@ -130,6 +130,10 @@ define(['jquery', 'backbone'], function ($) {
             $(Elements.BG_COLOR_GRADIENT_SELECTOR).hide();
         },
 
+        /**
+         Listen to change in background enable / disable states
+         @method _backgroundStateListenChange
+         **/
         _backgroundStateListenChange: function(){
             var self = this;
             var xSnippet = undefined;
@@ -142,9 +146,9 @@ define(['jquery', 'backbone'], function ($) {
                 var v = $(e.target).prop('checked') == true ? 1 : 0;
                 if (v) {
                     self._enableGradient();
-                    xSnippet = $(domPlayerData).find('Appearance ');
+                    xSnippet = $(domPlayerData).find('Appearance');
                     xBgSnippet = BB.JalapenoHelper.getCommonBackgroundXML();
-                    $(xSnippet).append(xBgSnippet);
+                    $(xSnippet).after(xBgSnippet);
                     self._setBlockPlayerData(domPlayerData);
                     self._gradientPopulate();
                 } else {

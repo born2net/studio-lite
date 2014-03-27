@@ -267,8 +267,7 @@ JalapenoHelper.prototype = {
      **/
     getCommonDefaultXML: function(){
         var self = this;
-        var common =    '<Appearance alpha="1.0" blendMode="normal" />'+
-                        self.getCommonBackgroundXML()
+        var common =    '<Appearance alpha="1.0" blendMode="normal" />' +  self.getCommonBackgroundXML();
         return common;
     },
 

@@ -68,7 +68,6 @@ Elements.VIDEO_VOLUME_WRAP_SLIDER = '#videoVolumeWrapSlider';
 Elements.VIDEO_AUTO_REWIND = '#videoAutoRewind';
 Elements.VIDEO_VOLUME_LABEL = '#videoVolumeLabel';
 Elements.BLOCK_ALPHA_LABEL = '#blockAlphaLabel';
-Elements.FONT_SELECTOR_TEMPLATE = '#fontSelectorTemplate';
 Elements.RSS_FONT_SETTINGS = '#rssFontSettings';
 Elements.RANDOM_PLAYBACK = '#randomPlayback';
 Elements.CHANNEL_PROPERTIES = '#channelProperties';
@@ -100,7 +99,6 @@ Elements.RESOLUTION_SELECTOR = '#resolutionSelector';
 Elements.RESOLUTION_LIST = '#resolutionList';
 Elements.SCREEN_LAYOUT_SELECTOR = '#screenLayoutSelector';
 Elements.EDIT_SCREEN_LAYOUT = '#editScreenLayout';
-Elements.SCREEN_EDITOR_PROPS = '#screenEditorProps';
 Elements.SCREEN_LAYOUT_EDITOR_VIEW = '#screenLayoutEditorView';
 Elements.SCREEN_LAYOUT_LIST = '#screenLayoutList';
 Elements.SORTABLE = '#sortable';
@@ -163,6 +161,10 @@ Elements.PRICING_TABLE_WRAP = '#pricingTableWrap';
 Elements.CONVERT_ACCOUNT = '#convertAccount'
 Elements.SUBSCRIBE_ACCOUNT = '#subscribeAccount';
 Elements.STATION_ALERT = '#stationAlert';
+
+// templates
+Elements.FONT_SELECTOR_TEMPLATE = '#fontSelectorTemplate';
+Elements.DIMENSION_PROPS_TEMPLATE = '#dimensionPropsTemplate';
 
 // classes
 Elements.CLASS_SCREEN_DIVISION = '.screenDivisionClass';

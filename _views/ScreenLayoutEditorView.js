@@ -33,25 +33,11 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
 
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self) {
-                    require(['spinner'],function(){
+                    require(['DimensionProps'],function(DimensionProps){
+                        self.m_dimensionProps = new DimensionProps({el: Elements.DIMENSION_PROPS_TEMPLATE})
                         self._render();
                     });
                 }
-            });
-        },
-
-        /**
-         Listen to spinner changes in x / y / width / height
-         @method _listenViewPropChanges
-         **/
-        _listenViewPropChanges: function () {
-            $('button', Elements.SCREEN_EDITOR_PROPS).on('click', function (e) {
-                log($(e.target).closest('div').attr('name'));
-                log($(e.target).closest('div').siblings('input').val());
-            });
-
-            $('input', Elements.SCREEN_EDITOR_PROPS).on('focusout', function (e) {
-                log($(e.target).val());
             });
         },
 
@@ -62,7 +48,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         _render: function () {
             var self = this;
             self.m_property.resetPropertiesView();
-            $('input', Elements.SCREEN_EDITOR_PROPS).closest('.spinner').spinner({value: 12, min: 10, max: 127, step: 1});
+            // $('input', Elements.SCREEN_EDITOR_PROPS).closest('.spinner').spinner({value: 12, min: 10, max: 127, step: 1});
         },
 
         /**

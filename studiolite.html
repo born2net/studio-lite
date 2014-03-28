@@ -482,7 +482,15 @@
 </div>
 <div id="viewerEditProperties" style="display: none">
     <h5>screen division</h5>
-    <div id="screenEditorProps" >
+
+
+
+
+
+    <!-- Digestions Prop Template -->
+
+
+    <div id="dimensionPropsTemplate" >
         <div>
             <label class="floatLeftWidth">top</label>
             <div style="float: left" class="spinner">
@@ -532,7 +540,7 @@
         <div class="clearFloat">
             <label class="floatLeftWidth">height</label>
 
-            <div id="abc" style="float: left" class="spinner">
+            <div style="float: left" class="spinner">
                 <input type="text" style="width: 60px"
                        class="fontFormatter input-mini spinner-input">
 
@@ -561,9 +569,13 @@
             </div>
         </div>
         <div class="clearFloat"></div>
-        <button id="pushToTop" type="button" class="btn btn-default"><i style="font-size: 1em" class="fa fa-gears"></i>
+        <button class="pushToTopButton" type="button" class="btn btn-default"><i style="font-size: 1em" class="fa fa-gears"></i>
             <span data-localize="pushToTop">Push to top</span></button>
     </div>
+
+
+
+
 
 </div>
 <div id="stationProperties" style="display: none">
@@ -807,7 +819,7 @@
 </div>
 </div>
 <div id="footer"><br>
-    <span id="footerText">&nbsp;MediaSignage Inc &#169; | version 0.8.6 </span></a> </div>
+    <span id="footerText">&nbsp;MediaSignage Inc &#169; | version 0.8.8 </span></a> </div>
 
 <!-- Modal -->
 <div class="modal modal-static fade" id="bsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -847,6 +859,10 @@
         <input type="submit" value="Submit">
     </form>
 </div>
+
+
+<!-- Font Selection Template -->
+
 <div id="fontSelectorTemplate" style="display: none">
     <div class="form-group">
         <select name="fontSelection" class="fontSelection propControlWidth form-control">

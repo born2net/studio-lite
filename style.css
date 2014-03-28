@@ -237,10 +237,6 @@ aside > aside > div > ul > li {
     padding-right: 40px;
 }
 
-#pushToTop {
-    margin-top: 30px;
-    width: 150px;
-}
 
 #stationInfo {
     padding-top: 25px;
@@ -347,7 +343,7 @@ aside > aside > div > ul > li {
     top: 2px;
 }
 
-#screenEditorProps {
+#dimensionPropsTemplate {
     padding-left: 20px;
 }
 
@@ -376,6 +372,11 @@ aside > aside > div > ul > li {
 .yScroll {
     overflow-y: scroll;
     height: 100%;
+}
+
+.pushToTopButton {
+    margin-top: 30px;
+    width: 150px;
 }
 
 .appList {

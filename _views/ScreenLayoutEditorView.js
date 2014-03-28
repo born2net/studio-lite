@@ -42,7 +42,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                                 showAngle: false
                             });
                             $(self.m_dimensionProps).on('changed',function(e){
-                                log('bbbb');
+                                log('upd 2 changed');
                                 var props = e.target.getValues();
                                 self._updateDimensionsInDB(props);
                                 self._moveViewer(props);

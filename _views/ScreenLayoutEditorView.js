@@ -5,7 +5,7 @@
  @constructor
  @return {object} instantiated ScreenLayoutEditorView
  **/
-define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'spinner'], function ($, Backbone, StackView, ScreenTemplateFactory, spinner) {
+define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($, Backbone, StackView, ScreenTemplateFactory) {
 
     BB.SERVICES.SCREEN_LAYOUT_EDITOR_VIEW = 'ScreenLayoutEditorView';
 
@@ -32,22 +32,12 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'spinner'], 
             });
 
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
-                if (e == self)
-                    self._render();
+                if (e == self) {
+                    require(['spinner'],function(){
+                        self._render();
+                    });
+                }
             });
-
-            // self.m_fontSizeInput = $('#screenEditorProps').find(Elements.CLASS_SPINNER_INPUT);
-            // self.m_fontSizeSelector = self.m_fontSizeInput.closest('div');
-            // self.m_fontSizeSelector.spinner({value: 12, min: 1, max: 127, step: 1});
-
-            $('#rssPollSpinner2').spinner({value: 12, min: 1, max: 127, step: 1});
-            $('#rssMinRefreshTime2').closest('div').spinner('value', 123);
-
-
-
-            // var a = $('input', Elements.SCREEN_EDITOR_PROPS).closest('.spinner').spinner({value: 12, min: 10, max: 127, step: 1});
-           // $('#aaa').spinner({value: 12, min: 10, max: 127, step: 1});
-            // self._listenViewPropChanges();
         },
 
         /**
@@ -72,6 +62,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'spinner'], 
         _render: function () {
             var self = this;
             self.m_property.resetPropertiesView();
+            $('input', Elements.SCREEN_EDITOR_PROPS).closest('.spinner').spinner({value: 12, min: 10, max: 127, step: 1});
         },
 
         /**

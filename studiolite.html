@@ -482,100 +482,8 @@
 </div>
 <div id="viewerEditProperties" style="display: none">
     <h5>screen division</h5>
-
-
-
-
-
-    <!-- Digestions Prop Template -->
-
-
-    <div id="dimensionPropsTemplate" >
-        <div>
-            <label class="floatLeftWidth">top</label>
-            <div style="float: left" class="spinner spinnerDimTop">
-                <input type="text" style="width: 60px"
-                       class="fontFormatter input-mini spinner-input">
-
-                <div name="top" class="spinner-buttons	btn-group btn-group-vertical">
-                    <button type="button" name="fontSizeUp" class="squareButton btn spinner-up"><i
-                            class="fa fa-chevron-up"></i></button>
-                    <button type="button" name="fontSizeDown" class="squareButton btn spinner-down"><i
-                            class="fa fa-chevron-down"></i></button>
-                </div>
-            </div>
-        </div>
-        <div class="clearFloat">
-            <label class="floatLeftWidth">left</label>
-            <div style="float: left" class="spinner spinnerDimLeft">
-                <input type="text" style="width: 60px"
-                       class="fontFormatter input-mini spinner-input">
-
-                <div name="left" class="spinner-buttons	btn-group btn-group-vertical">
-                    <button type="button" name="fontSizeUp" class="squareButton btn spinner-up"><i
-                            class="fa fa-chevron-up"></i></button>
-                    <button type="button" name="fontSizeDown" class="squareButton btn spinner-down"><i
-                            class="fa fa-chevron-down"></i></button>
-                </div>
-            </div>
-        </div>
-
-        <div class="clearFloat">
-            <label class="floatLeftWidth">width</label>
-
-            <div style="float: left" class="spinner spinnerDimWidth">
-                <input type="text" style="width: 60px"
-                       class="fontFormatter input-mini spinner-input">
-
-                <div name="width" class="spinner-buttons btn-group btn-group-vertical">
-                    <button type="button" name="fontSizeUp" class="squareButton btn spinner-up"><i
-                            class="fa fa-chevron-up"></i></button>
-                    <button type="button" name="fontSizeDown" class="squareButton btn spinner-down"><i
-                            class="fa fa-chevron-down"></i></button>
-                </div>
-            </div>
-        </div>
-
-        <div class="clearFloat">
-            <label class="floatLeftWidth">height</label>
-
-            <div style="float: left" class="spinner spinnerDimHeight">
-                <input type="text" style="width: 60px"
-                       class="fontFormatter input-mini spinner-input">
-
-                <div name="height" class="spinner-buttons btn-group btn-group-vertical">
-                    <button type="button" name="fontSizeUp" class="squareButton btn spinner-up"><i
-                            class="fa fa-chevron-up"></i></button>
-                    <button type="button" name="fontSizeDown" class="squareButton btn spinner-down"><i
-                            class="fa fa-chevron-down"></i></button>
-                </div>
-            </div>
-        </div>
-
-        <div class="clearFloat DimAngle">
-            <label class="floatLeftWidth">angle</label>
-
-            <div style="float: left" class="spinner spinnerDimAngle">
-                <input type="text" style="width: 60px"
-                       class="fontFormatter input-mini spinner-input">
-
-                <div name="angle" class="spinner-buttons btn-group btn-group-vertical">
-                    <button type="button" name="fontSizeUp" class="squareButton btn spinner-up"><i
-                            class="fa fa-chevron-up"></i></button>
-                    <button type="button" name="fontSizeDown" class="squareButton btn spinner-down"><i
-                            class="fa fa-chevron-down"></i></button>
-                </div>
-            </div>
-        </div>
-        <div class="clearFloat"></div>
-        <button class="pushToTopButton" type="button" class="btn btn-default"><i style="font-size: 1em" class="fa fa-gears"></i>
-            <span data-localize="pushToTop">Push to top</span></button>
+    <div id="viewerDimensions">
     </div>
-
-
-
-
-
 </div>
 <div id="stationProperties" style="display: none">
     <h4 id="stationName"></h4>
@@ -857,6 +765,94 @@
         <br>
         <input type="submit" value="Submit">
     </form>
+</div>
+
+<!-- Dimension Template -->
+
+<div id="dimensionPropsTemplate" style="display: none">
+    <div>
+        <label class="floatLeftWidth">top</label>
+
+        <div style="float: left" class="spinner spinnerDimTop">
+            <input type="text" style="width: 60px"
+                   class="fontFormatter input-mini spinner-input">
+
+            <div name="top" class="spinner-buttons	btn-group btn-group-vertical">
+                <button type="button" name="fontSizeUp" class="squareButton btn spinner-up"><i
+                        class="fa fa-chevron-up"></i></button>
+                <button type="button" name="fontSizeDown" class="squareButton btn spinner-down"><i
+                        class="fa fa-chevron-down"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="clearFloat">
+        <label class="floatLeftWidth">left</label>
+
+        <div style="float: left" class="spinner spinnerDimLeft">
+            <input type="text" style="width: 60px"
+                   class="fontFormatter input-mini spinner-input">
+
+            <div name="left" class="spinner-buttons	btn-group btn-group-vertical">
+                <button type="button" name="fontSizeUp" class="squareButton btn spinner-up"><i
+                        class="fa fa-chevron-up"></i></button>
+                <button type="button" name="fontSizeDown" class="squareButton btn spinner-down"><i
+                        class="fa fa-chevron-down"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearFloat">
+        <label class="floatLeftWidth">width</label>
+
+        <div style="float: left" class="spinner spinnerDimWidth">
+            <input type="text" style="width: 60px"
+                   class="fontFormatter input-mini spinner-input">
+
+            <div name="width" class="spinner-buttons btn-group btn-group-vertical">
+                <button type="button" name="fontSizeUp" class="squareButton btn spinner-up"><i
+                        class="fa fa-chevron-up"></i></button>
+                <button type="button" name="fontSizeDown" class="squareButton btn spinner-down"><i
+                        class="fa fa-chevron-down"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearFloat">
+        <label class="floatLeftWidth">height</label>
+
+        <div style="float: left" class="spinner spinnerDimHeight">
+            <input type="text" style="width: 60px"
+                   class="fontFormatter input-mini spinner-input">
+
+            <div name="height" class="spinner-buttons btn-group btn-group-vertical">
+                <button type="button" name="fontSizeUp" class="squareButton btn spinner-up"><i
+                        class="fa fa-chevron-up"></i></button>
+                <button type="button" name="fontSizeDown" class="squareButton btn spinner-down"><i
+                        class="fa fa-chevron-down"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearFloat DimAngle">
+        <label class="floatLeftWidth">angle</label>
+
+        <div style="float: left" class="spinner spinnerDimAngle">
+            <input type="text" style="width: 60px"
+                   class="fontFormatter input-mini spinner-input">
+
+            <div name="angle" class="spinner-buttons btn-group btn-group-vertical">
+                <button type="button" name="fontSizeUp" class="squareButton btn spinner-up"><i
+                        class="fa fa-chevron-up"></i></button>
+                <button type="button" name="fontSizeDown" class="squareButton btn spinner-down"><i
+                        class="fa fa-chevron-down"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="clearFloat"></div>
+    <button class="pushToTopButton" type="button" class="btn btn-default"><i style="font-size: 1em"
+                                                                             class="fa fa-gears"></i>
+        <span data-localize="pushToTop">Push to top</span>
+    </button>
 </div>
 
 

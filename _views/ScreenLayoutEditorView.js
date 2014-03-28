@@ -37,8 +37,11 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                     if (self.m_dimensionProps == undefined) {
                         require(['DimensionProps'], function (DimensionProps) {
                             self.m_dimensionProps = new DimensionProps({
-                                el: Elements.DIMENSION_PROPS_TEMPLATE,
+                                appendTo: Elements.VIEWER_DIMENSIONS,
                                 showAngle: false
+                            });
+                            $(self.m_dimensionProps).on('changed',function(e){
+                                log('aaaa'+e);
                             });
                             self._render();
                         });

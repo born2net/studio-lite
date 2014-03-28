@@ -161,6 +161,7 @@ Elements.PRICING_TABLE_WRAP = '#pricingTableWrap';
 Elements.CONVERT_ACCOUNT = '#convertAccount'
 Elements.SUBSCRIBE_ACCOUNT = '#subscribeAccount';
 Elements.STATION_ALERT = '#stationAlert';
+Elements.VIEWER_DIMENSIONS = '#viewerDimensions';
 
 // templates
 Elements.FONT_SELECTOR_TEMPLATE = '#fontSelectorTemplate';

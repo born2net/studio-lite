@@ -216,7 +216,6 @@ define(['jquery', 'backbone'], function ($) {
             } else {
                 self._disableGradient();
             }
-
         },
 
         /**

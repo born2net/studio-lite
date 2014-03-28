@@ -5,7 +5,7 @@
  @constructor
  @return {object} instantiated ScreenLayoutEditorView
  **/
-define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($, Backbone, StackView, ScreenTemplateFactory) {
+define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'spinner'], function ($, Backbone, StackView, ScreenTemplateFactory, spinner) {
 
     BB.SERVICES.SCREEN_LAYOUT_EDITOR_VIEW = 'ScreenLayoutEditorView';
 
@@ -23,6 +23,9 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             self.m_canvasID = undefined;
             self.m_selectedViewerID = undefined;
 
+            this.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
+            self.m_property.initPanel(Elements.VIEWER_EDIT_PROPERTIES);
+
             $(this.el).find('#prev').on('click', function (e) {
                 self._deSelectView();
                 return false;
@@ -32,6 +35,34 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 if (e == self)
                     self._render();
             });
+
+            // self.m_fontSizeInput = $('#screenEditorProps').find(Elements.CLASS_SPINNER_INPUT);
+            // self.m_fontSizeSelector = self.m_fontSizeInput.closest('div');
+            // self.m_fontSizeSelector.spinner({value: 12, min: 1, max: 127, step: 1});
+
+            $('#rssPollSpinner2').spinner({value: 12, min: 1, max: 127, step: 1});
+            $('#rssMinRefreshTime2').closest('div').spinner('value', 123);
+
+
+
+            // var a = $('input', Elements.SCREEN_EDITOR_PROPS).closest('.spinner').spinner({value: 12, min: 10, max: 127, step: 1});
+           // $('#aaa').spinner({value: 12, min: 10, max: 127, step: 1});
+            // self._listenViewPropChanges();
+        },
+
+        /**
+         Listen to spinner changes in x / y / width / height
+         @method _listenViewPropChanges
+         **/
+        _listenViewPropChanges: function () {
+            $('button', Elements.SCREEN_EDITOR_PROPS).on('click', function (e) {
+                log($(e.target).closest('div').attr('name'));
+                log($(e.target).closest('div').siblings('input').val());
+            });
+
+            $('input', Elements.SCREEN_EDITOR_PROPS).on('focusout', function (e) {
+                log($(e.target).val());
+            });
         },
 
         /**
@@ -40,7 +71,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
          **/
         _render: function () {
             var self = this;
-            BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
+            self.m_property.resetPropertiesView();
         },
 
         /**
@@ -50,6 +81,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         _deSelectView: function () {
             var self = this;
             self._destroy();
+            self.m_property.resetPropertiesView();
             self.options.stackView.slideToPage(self.options.from, 'left');
         },
 
@@ -61,12 +93,18 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
          **/
         _canvasFactory: function (i_width, i_height) {
             var self = this;
+            var offsetH = i_height / 2;
+            var offsetW = (i_width / 2) + 30;
             self.m_canvasID = _.uniqueId('screenLayoutEditorCanvas');
-            if (self.m_canvas == undefined) {
-                $('#screenLayoutEditorCanvasWrap').append('<canvas id="' + self.m_canvasID + '" width="' + i_width + 'px" height="' + i_height + 'px" style="border: 1px solid rgb(170, 170, 170);"></canvas>')
-                self.m_canvas = new fabric.Canvas(self.m_canvasID);
-                self.m_canvas.selection = false;
-            }
+            $('#screenLayoutEditorCanvasWrap').append('' +
+                '<div>' +
+                '<span align="center">' + self.m_resolution.split('x')[0] + 'px </span>' +
+                '<canvas id="' + self.m_canvasID + '" width="' + i_width + 'px" height="' + i_height + 'px" style="border: 1px solid rgb(170, 170, 170);"></canvas>' +
+                '<span style="position: relative; top: -' + offsetH + 'px; left: -' + offsetW + 'px;">' + self.m_resolution.split('x')[1] + 'px</span>' +
+                '</div>');
+
+            self.m_canvas = new fabric.Canvas(self.m_canvasID);
+            self.m_canvas.selection = false;
 
             var screenTemplateData = {
                 orientation: self.m_orientation,
@@ -107,9 +145,14 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 //});
             }
 
+            self.m_canvas.on('selection:cleared', function (e) {
+                self.m_property.resetPropertiesView();
+            });
+
             self.m_canvas.on('object:selected', function (e) {
-                log('viewer_id: ' + e.target.id);
                 self.m_selectedViewerID = e.target.id;
+                log(self.m_selectedViewerID);
+                self.m_property.viewPanel(Elements.VIEWER_EDIT_PROPERTIES);
             });
 
             var objectMovingHandler = _.debounce(function (e) {
@@ -194,9 +237,9 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
 
             self.options.stackView.slideToPage(self, 'right');
             require(['fabric'], function () {
-                var resolution = BB.comBroker.getService(BB.SERVICES['RESOLUTION_SELECTOR_VIEW']).getResolution();
-                var w = parseInt(resolution.split('x')[0]) / self.RATIO;
-                var h = parseInt(resolution.split('x')[1]) / self.RATIO;
+                // var resolution = BB.comBroker.getService(BB.SERVICES['RESOLUTION_SELECTOR_VIEW']).getResolution();
+                var w = parseInt(self.m_resolution.split('x')[0]) / self.RATIO;
+                var h = parseInt(self.m_resolution.split('x')[1]) / self.RATIO;
                 self._canvasFactory(w, h);
             })
         }

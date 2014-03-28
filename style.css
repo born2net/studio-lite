@@ -237,6 +237,11 @@ aside > aside > div > ul > li {
     padding-right: 40px;
 }
 
+#pushToTop {
+    margin-top: 30px;
+    width: 150px;
+}
+
 #stationInfo {
     padding-top: 25px;
 }
@@ -340,6 +345,10 @@ aside > aside > div > ul > li {
 #blockPropertiesTabber {
     position: relative;
     top: 2px;
+}
+
+#screenEditorProps {
+    padding-left: 20px;
 }
 
 /************************************
@@ -1186,6 +1195,15 @@ Software accelerated vertical
 
 .gradientPicker-ptConfig .color-chooser {
     float: left;
+}
+
+.clearFloat {
+    clear: both;
+}
+
+.floatLeftWidth {
+    float: left;
+    width: 60px;
 }
 
 .hrThin {

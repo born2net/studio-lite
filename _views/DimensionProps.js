@@ -17,8 +17,8 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
         initialize: function () {
             var self = this;
             self.m_showAngle = self.options.showAngle || false;
-
-            if (self.m_showAngle==false)
+            $('.spinner', self.$el).spinner({value: 0, min: -9999, max: 9999, step: 1});
+            if (self.m_showAngle == false)
                 $('.DimAngle').hide();
         },
 

@@ -1,5 +1,5 @@
 /**
- Screen Layout editor is used to edit an existing screen division layout (aka: template > viewers) and when done
+ Singleton Screen Layout editor is used to edit an existing screen division layout (aka: template > viewers) and when done
  editing, create new ScreenTemplates via ScreenTemplateFactory for both Thumb and main Timeline UIs
  @class ScreenLayoutEditorView
  @constructor
@@ -22,6 +22,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             self.m_canvas = undefined;
             self.m_canvasID = undefined;
             self.m_selectedViewerID = undefined;
+            self.m_dimensionProps = undefined;
 
             this.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
             self.m_property.initPanel(Elements.VIEWER_EDIT_PROPERTIES);
@@ -33,13 +34,17 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
 
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self) {
-                    require(['DimensionProps'],function(DimensionProps){
-                        self.m_dimensionProps = new DimensionProps({
-                            el: Elements.DIMENSION_PROPS_TEMPLATE,
-                            showAngle: false
+                    if (self.m_dimensionProps == undefined) {
+                        require(['DimensionProps'], function (DimensionProps) {
+                            self.m_dimensionProps = new DimensionProps({
+                                el: Elements.DIMENSION_PROPS_TEMPLATE,
+                                showAngle: false
+                            });
+                            self._render();
                         });
+                    } else {
                         self._render();
-                    });
+                    }
                 }
             });
         },
@@ -138,15 +143,15 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             }, 500);
         },
 
-        _listenBackgroundSelected: function(){
+        _listenBackgroundSelected: function () {
             var self = this;
-            self.m_bgSelectedHandler =function (e) {
+            self.m_bgSelectedHandler = function (e) {
                 self.m_property.resetPropertiesView();
             };
             self.m_canvas.on('selection:cleared', self.m_bgSelectedHandler);
         },
 
-        _listenObjectsOverlap: function(){
+        _listenObjectsOverlap: function () {
             var self = this;
             self.m_onOverlap = function (options) {
                 options.target.setCoords();
@@ -163,7 +168,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             });
         },
 
-        _listenObjectChanged: function(){
+        _listenObjectChanged: function () {
             var self = this;
             self.m_objectMovingHandler = _.debounce(function (e) {
                 var x = BB.lib.parseToFloatDouble(e.target.left) * self.RATIO;
@@ -224,8 +229,6 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             self.m_resolution = undefined;
             self.m_global_board_template_id = undefined;
             self.m_selectedViewerID = undefined;
-
-
         },
 
         /**

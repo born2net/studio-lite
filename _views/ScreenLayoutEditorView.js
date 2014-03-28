@@ -34,7 +34,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self) {
                     require(['DimensionProps'],function(DimensionProps){
-                        self.m_dimensionProps = new DimensionProps({el: Elements.DIMENSION_PROPS_TEMPLATE})
+                        self.m_dimensionProps = new DimensionProps({
+                            el: Elements.DIMENSION_PROPS_TEMPLATE,
+                            showAngle: false
+                        });
                         self._render();
                     });
                 }
@@ -126,33 +129,6 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 self.m_property.resetPropertiesView();
             });
 
-            self.m_canvas.on('object:selected', function (e) {
-                self.m_selectedViewerID = e.target.id;
-                log(self.m_selectedViewerID);
-                self.m_property.viewPanel(Elements.VIEWER_EDIT_PROPERTIES);
-            });
-
-            var objectMovingHandler = _.debounce(function (e) {
-                var x = BB.lib.parseToFloatDouble(e.target.left) * self.RATIO;
-                var y = BB.lib.parseToFloatDouble(e.target.top) * self.RATIO;
-                var w = BB.lib.parseToFloatDouble(e.target.currentWidth) * self.RATIO;
-                var h = BB.lib.parseToFloatDouble(e.target.currentHeight) * self.RATIO;
-
-                var props = {
-                    w: w,
-                    h: h,
-                    x: x,
-                    y: y
-                };
-
-                jalapeno.setBoardTemplateViewer(self.m_campaign_timeline_board_template_id, e.target.id, props);
-            }, 200);
-            self.m_canvas.on({
-                'object:moving': objectMovingHandler,
-                'object:scaling': objectMovingHandler
-            });
-
-
             //self.m_canvas.on('object:moving', function (e) {
             //    log('savings: ' + self.m_global_board_template_id);
             //});
@@ -180,12 +156,48 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             }, 500);
         },
 
+        _listenObjectChanged: function(){
+            var self = this;
+            self.m_objectMovingHandler = _.debounce(function (e) {
+                var x = BB.lib.parseToFloatDouble(e.target.left) * self.RATIO;
+                var y = BB.lib.parseToFloatDouble(e.target.top) * self.RATIO;
+                var w = BB.lib.parseToFloatDouble(e.target.currentWidth) * self.RATIO;
+                var h = BB.lib.parseToFloatDouble(e.target.currentHeight) * self.RATIO;
+                var a = e.target.get('angle');
+                var props = {
+                    w: w,
+                    h: h,
+                    x: x,
+                    y: y
+                };
+                jalapeno.setBoardTemplateViewer(self.m_campaign_timeline_board_template_id, e.target.id, props);
+                self.m_property.viewPanel(Elements.VIEWER_EDIT_PROPERTIES);
+                self.m_dimensionProps.setValues(props);
+
+            }, 200);
+
+            self.m_canvas.on({
+                'object:moving': self.m_objectMovingHandler,
+                'object:scaling': self.m_objectMovingHandler,
+                'object:selected': self.m_objectMovingHandler,
+                'object:modified': self.m_objectMovingHandler
+            });
+        },
+
         /**
          One exit UI destroy all members
          @method _destroy
          **/
         _destroy: function () {
             var self = this;
+
+            self.m_canvas.off({
+                'object:moving': self.m_objectMovingHandler,
+                'object:scaling': self.m_objectMovingHandler,
+                'object:selected': self.m_objectMovingHandler,
+                'object:modified': self.m_objectMovingHandler
+            });
+
             self.m_canvas.clear().renderAll();
             $('#screenLayoutEditorCanvasWrap').empty()
             self.m_canvasID = undefined;
@@ -197,6 +209,8 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             self.m_resolution = undefined;
             self.m_global_board_template_id = undefined;
             self.m_selectedViewerID = undefined;
+
+
         },
 
         /**
@@ -213,11 +227,13 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             self.m_resolution = BB.comBroker.getService(BB.SERVICES['RESOLUTION_SELECTOR_VIEW']).getResolution();
 
             self.options.stackView.slideToPage(self, 'right');
+
             require(['fabric'], function () {
                 // var resolution = BB.comBroker.getService(BB.SERVICES['RESOLUTION_SELECTOR_VIEW']).getResolution();
                 var w = parseInt(self.m_resolution.split('x')[0]) / self.RATIO;
                 var h = parseInt(self.m_resolution.split('x')[1]) / self.RATIO;
                 self._canvasFactory(w, h);
+                self._listenObjectChanged();
             })
         }
     });

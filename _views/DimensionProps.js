@@ -16,7 +16,10 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
          **/
         initialize: function () {
             var self = this;
-            $('input', self.$el).closest('.spinner').spinner({value: 12, min: 10, max: 127, step: 1});
+            self.m_showAngle = self.options.showAngle || false;
+
+            if (self.m_showAngle==false)
+                $('.DimAngle').hide();
         },
 
         /**
@@ -54,12 +57,27 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
          @param {Number} i_value
          **/
         _updateDimensions: function (i_name, i_value) {
-            if (i_name !== undefined && i_value !== undefined)
-              log(i_name + ' ' + i_value);
+            var self = this;
+            if (i_name !== undefined && i_value !== undefined) {
+                log(i_name + ' ' + i_value);
+                $(self).trigger('changed', i_name, i_value);
+            }
+
         },
 
         _onPushToTopLayer: function (e) {
             log('push to top layer')
+        },
+
+        setValues: function (i_values) {
+            var self = this;
+            $('.spinnerDimWidth', self.$el).spinner('value', Math.round(i_values.w));
+            $('.spinnerDimHeight', self.$el).spinner('value', Math.round(i_values.h));
+            $('.spinnerDimLeft', self.$el).spinner('value', Math.round(i_values.x));
+            $('.spinnerDimTop', self.$el).spinner('value', Math.round(i_values.y));
+
+            if (self.m_showAngle)
+                $('.spinnerDimAngle', self.$el).spinner('value', Math.round(i_values.a));
         }
     });
 

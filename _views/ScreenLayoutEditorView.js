@@ -32,6 +32,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 return false;
             });
 
+
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self) {
                     if (self.m_dimensionProps == undefined) {
@@ -41,7 +42,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                                 showAngle: false
                             });
                             $(self.m_dimensionProps).on('changed',function(e){
-                                log('aaaa'+e);
+                                log('bbbb');
+                                var props = e.target.getValues();
+                                self._updateDimensionsInDB(props);
+                                self._moveViewer(props);
                             });
                             self._render();
                         });
@@ -118,6 +122,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                     borderColor: '#5d5d5d',
                     stroke: 'black',
                     strokeWidth: 1,
+                    borderScaleFactor: 0,
                     lineWidth: 1,
                     width: rectProperties.width.baseVal.value,
                     height: rectProperties.height.baseVal.value,
@@ -185,9 +190,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                     x: x,
                     y: y
                 };
-                jalapeno.setBoardTemplateViewer(self.m_campaign_timeline_board_template_id, e.target.id, props);
                 self.m_property.viewPanel(Elements.VIEWER_EDIT_PROPERTIES);
                 self.m_dimensionProps.setValues(props);
+                self.m_selectedViewerID = e.target.id;
+                self._updateDimensionsInDB(props);
 
             }, 200);
 
@@ -197,6 +203,26 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 'object:selected': self.m_objectMovingHandler,
                 'object:modified': self.m_objectMovingHandler
             });
+        },
+
+        _moveViewer: function(i_props){
+            var self = this;
+            log('moving viewer');
+            var viewer = self.m_canvas.getActiveObject();
+            if (viewer){
+                viewer.setWidth(i_props.w / self.RATIO);
+                viewer.setHeight(i_props.h / self.RATIO);
+                viewer.set('left',i_props.x / self.RATIO);
+                viewer.set('top',i_props.y / self.RATIO);
+                self.m_canvas.renderAll();
+            }
+
+        },
+
+        _updateDimensionsInDB: function(i_props){
+            var self = this;
+            log('Jalapeno ' + self.m_selectedViewerID + ' ' + JSON.stringify(i_props));
+            jalapeno.setBoardTemplateViewer(self.m_campaign_timeline_board_template_id, self.m_selectedViewerID, i_props);
         },
 
         /**
@@ -255,7 +281,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 var h = parseInt(self.m_resolution.split('x')[1]) / self.RATIO;
                 self._canvasFactory(w, h);
                 self._listenObjectChanged();
-                self._listenObjectsOverlap();
+                // self._listenObjectsOverlap();
                 self._listenBackgroundSelected();
             })
         }

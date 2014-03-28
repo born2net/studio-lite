@@ -17,7 +17,7 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
         initialize: function () {
             var self = this;
             self.m_showAngle = self.options.showAngle || false;
-            $('.spinner', self.$el).spinner({value: 0, min: -9999, max: 9999, step: 1});
+
             if (self.m_showAngle == false)
                 $('.DimAngle').hide();
 
@@ -25,6 +25,20 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
             self.el = self.$el[0];
             $(self.options.appendTo).append(self.el).fadeIn();
             self.$el.show();
+
+            var currID = self.$el.attr('id');
+            self.$el.attr('id', _.uniqueId(currID));
+
+            $('.spinner', self.$el).spinner({value: 0, min: -9999, max: 9999, step: 1});
+            $('.spinner', self.$el).on('changed',function(){
+                $(self).trigger('changed');
+            });
+
+            self.m_inputMouseOut = _.debounce(function (e) {
+                $(self).trigger('changed');
+                log('aaa');
+            }, 50);
+
         },
 
         /**
@@ -32,41 +46,8 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
          @method events
          **/
         events: {
-            'click': '_onChangedValue',
             'click .pushToTopButton': '_onPushToTopLayer',
-            'focusout input': function (e) {
-                var name = $(e.target).siblings('div').attr('name');
-                var value = +$(e.target).val();
-                this._updateDimensions(name, value);
-            }
-        },
-
-        /**
-         Listen to changes in value of steppers for x y w h and angle
-         @method _onChangedValue
-         @param {event} e
-         **/
-        _onChangedValue: function (e) {
-            var self = this;
-            var name = $(e.target).closest('div').attr('name');
-            var value = $(e.target).closest('div').siblings('input').val();
-            self._updateDimensions(name, value);
-            e.preventDefault();
-            return false;
-        },
-
-        /**
-         Update the dimensions for x y w h and angle in jalapeno
-         @method _updateDimensions
-         @param {String} i_name
-         @param {Number} i_value
-         **/
-        _updateDimensions: function (i_name, i_value) {
-            var self = this;
-            if (i_name !== undefined && i_value !== undefined) {
-                log(i_name + ' ' + i_value);
-                $(self).trigger('changed');
-            }
+            'mouseout input': 'm_inputMouseOut'
         },
 
         /**
@@ -90,8 +71,31 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
             $('.spinnerDimTop', self.$el).spinner('value', Math.round(i_values.y));
             if (self.m_showAngle)
                 $('.spinnerDimAngle', self.$el).spinner('value', Math.round(i_values.a));
+        },
 
-            $(self).trigger('changed');
+        /**
+         Update the spinners UI with object literal values
+         @method getValues
+         @return {Object} values
+         **/
+        getValues: function () {
+            var self = this;
+            var a = 0;
+            var w = BB.lib.parseToFloatDouble($('.spinnerDimWidth', self.$el).spinner('value'));
+            var h = BB.lib.parseToFloatDouble($('.spinnerDimHeight', self.$el).spinner('value'));
+            var x = BB.lib.parseToFloatDouble($('.spinnerDimLeft', self.$el).spinner('value'));
+            var y = BB.lib.parseToFloatDouble($('.spinnerDimTop', self.$el).spinner('value'));
+
+            if (self.m_showAngle)
+                a = $('.spinnerDimAngle', self.$el).spinner('value');
+
+            return {
+                x: x,
+                y: y,
+                w: w,
+                h: h,
+                a: a
+            }
         }
     });
 

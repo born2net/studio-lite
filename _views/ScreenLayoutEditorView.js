@@ -51,7 +51,6 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         _render: function () {
             var self = this;
             self.m_property.resetPropertiesView();
-            // $('input', Elements.SCREEN_EDITOR_PROPS).closest('.spinner').spinner({value: 12, min: 10, max: 127, step: 1});
         },
 
         /**
@@ -73,6 +72,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
          **/
         _canvasFactory: function (i_width, i_height) {
             var self = this;
+
             var offsetH = i_height / 2;
             var offsetW = (i_width / 2) + 30;
             self.m_canvasID = _.uniqueId('screenLayoutEditorCanvas');
@@ -121,31 +121,13 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 self.m_canvas.add(rect);
 
                 //rect.on('selected', function () {
-                //  console.log('object selected a rectangle');
+                //  log('object selected a rectangle');
                 //});
             }
-
-            self.m_canvas.on('selection:cleared', function (e) {
-                self.m_property.resetPropertiesView();
-            });
 
             //self.m_canvas.on('object:moving', function (e) {
             //    log('savings: ' + self.m_global_board_template_id);
             //});
-
-            self.m_canvas.on({
-                'object:moving': onChange,
-                'object:scaling': onChange,
-                'object:rotating': onChange
-            });
-
-            function onChange(options) {
-                options.target.setCoords();
-                self.m_canvas.forEachObject(function (obj) {
-                    if (obj === options.target) return;
-                    obj.setOpacity(options.target.intersectsWithObject(obj) ? 0.5 : 1);
-                });
-            }
 
             setTimeout(function () {
                 if (!self.m_canvas)
@@ -154,6 +136,31 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 self.m_canvas.setWidth(i_width);
                 self.m_canvas.renderAll();
             }, 500);
+        },
+
+        _listenBackgroundSelected: function(){
+            var self = this;
+            self.m_bgSelectedHandler =function (e) {
+                self.m_property.resetPropertiesView();
+            };
+            self.m_canvas.on('selection:cleared', self.m_bgSelectedHandler);
+        },
+
+        _listenObjectsOverlap: function(){
+            var self = this;
+            self.m_onOverlap = function (options) {
+                options.target.setCoords();
+                self.m_canvas.forEachObject(function (obj) {
+                    if (obj === options.target) return;
+                    obj.setOpacity(options.target.intersectsWithObject(obj) ? 0.5 : 1);
+                });
+            }
+
+            self.m_canvas.on({
+                'object:moving': self.m_onOverlap,
+                'object:scaling': self.m_onOverlap,
+                'object:rotating': self.m_onOverlap
+            });
         },
 
         _listenObjectChanged: function(){
@@ -191,11 +198,19 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         _destroy: function () {
             var self = this;
 
+            self.m_canvas.off('selection:cleared', self.m_bgSelectedHandler);
+
             self.m_canvas.off({
                 'object:moving': self.m_objectMovingHandler,
                 'object:scaling': self.m_objectMovingHandler,
                 'object:selected': self.m_objectMovingHandler,
                 'object:modified': self.m_objectMovingHandler
+            });
+
+            self.m_canvas.off({
+                'object:moving': self.m_onOverlap,
+                'object:scaling': self.m_onOverlap,
+                'object:rotating': self.m_onOverlap
             });
 
             self.m_canvas.clear().renderAll();
@@ -234,6 +249,8 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 var h = parseInt(self.m_resolution.split('x')[1]) / self.RATIO;
                 self._canvasFactory(w, h);
                 self._listenObjectChanged();
+                self._listenObjectsOverlap();
+                self._listenBackgroundSelected();
             })
         }
     });

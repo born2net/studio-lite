@@ -480,7 +480,7 @@ Jalapeno.prototype = {
     },
 
     /**
-     Returns this model's attributes as...
+     Set a Board Template Viewer props
      @method setBoardTemplateViewer
      @param {Number} i_board_template_viewer_id
      @return {Number} i_props
@@ -492,8 +492,7 @@ Jalapeno.prototype = {
         var w = Math.round(i_props.w);
         var h = Math.round(i_props.h);
 
-        // log('savings: template_id: ' + i_campaign_timeline_board_template_id + ' view_id: ' + i_board_template_viewer_id + ' ' + x + 'x' + y + ' ' + w + '/' + h);
-
+        log('savings: template_id: ' + i_campaign_timeline_board_template_id + ' view_id: ' + i_board_template_viewer_id + ' ' + x + 'x' + y + ' ' + w + '/' + h);
         self.m_msdb.table_board_template_viewers().openForEdit(i_board_template_viewer_id);
         var recEditBoardTemplateViewer = self.m_msdb.table_board_template_viewers().getRec(i_board_template_viewer_id);
         recEditBoardTemplateViewer['pixel_x'] = x;
@@ -507,6 +506,23 @@ Jalapeno.prototype = {
             props: i_props
         };
         jalapeno.fire(Jalapeno['TEMPLATE_VIEWER_EDITED'], self, null, o);
+    },
+
+    /**
+     Get a Board Template Viewer props
+     @method getBoardTemplateViewer
+     @param {Number} i_board_template_viewer_id
+     @return {Number} i_props
+     **/
+    getBoardTemplateViewer: function (i_board_template_viewer_id) {
+        var self = this;
+        var recEditBoardTemplateViewer = self.m_msdb.table_board_template_viewers().getRec(i_board_template_viewer_id);
+        return {
+            x: recEditBoardTemplateViewer['pixel_x'],
+            y: recEditBoardTemplateViewer['pixel_y'],
+            w: recEditBoardTemplateViewer['pixel_width'],
+            h: recEditBoardTemplateViewer['pixel_height']
+        };
     },
 
     /**

@@ -179,10 +179,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         _listenObjectChanged: function () {
             var self = this;
             self.m_objectMovingHandler = _.debounce(function (e) {
-                var x = BB.lib.parseToFloatDouble(e.target.left) * self.RATIO;
-                var y = BB.lib.parseToFloatDouble(e.target.top) * self.RATIO;
-                var w = BB.lib.parseToFloatDouble(e.target.currentWidth) * self.RATIO;
-                var h = BB.lib.parseToFloatDouble(e.target.currentHeight) * self.RATIO;
+                var x = parseFloat(e.target.left) * self.RATIO;
+                var y = parseFloat(e.target.top) * self.RATIO;
+                var w = parseFloat(e.target.currentWidth) * self.RATIO;
+                var h = parseFloat(e.target.currentHeight) * self.RATIO;
                 var a = e.target.get('angle');
                 var props = {
                     w: w,
@@ -190,17 +190,24 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                     x: x,
                     y: y
                 };
+
+               self.m_selectedViewerID = e.target.id;
+                self._updateDimensionsInDB(props);
                 self.m_property.viewPanel(Elements.VIEWER_EDIT_PROPERTIES);
                 self.m_dimensionProps.setValues(props);
-                self.m_selectedViewerID = e.target.id;
-                self._updateDimensionsInDB(props);
 
             }, 200);
 
             self.m_canvas.on({
-                'object:moving': self.m_objectMovingHandler,
                 'object:scaling': self.m_objectMovingHandler,
-                'object:selected': self.m_objectMovingHandler,
+
+                'object:selected': function(e){
+                    self.m_selectedViewerID = e.target.id
+                    var props = jalapeno.getBoardTemplateViewer(self.m_selectedViewerID);
+                    self.m_dimensionProps.setValues(props);
+                    self.m_property.viewPanel(Elements.VIEWER_EDIT_PROPERTIES);
+                },
+
                 'object:modified': self.m_objectMovingHandler
             });
         },

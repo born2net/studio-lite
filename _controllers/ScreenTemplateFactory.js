@@ -204,7 +204,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             return self.m_owner;
         },
 
-        createDivisions: function () {
+        /**
+         Create all the screen divisions (aka viewers) as svg snippets and push them into an array
+         @method getDivisions
+         @return {array} f array of all svg divisions
+         **/
+        getDivisions: function () {
             var self = this;
             var svg = self.create();
             return $(svg).find('rect');
@@ -217,7 +222,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     '</svg>';
             });
             return f;
-
         },
 
         /**
@@ -226,7 +230,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @return {Object} html element produced by this factory
          **/
         create: function () {
-
             var self = this;
             var screensDivisons = '';
             var screenLabels = '';

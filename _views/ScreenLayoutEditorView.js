@@ -32,7 +32,6 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 return false;
             });
 
-
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self) {
                     if (self.m_dimensionProps == undefined) {
@@ -109,7 +108,8 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 i_type: ScreenTemplateFactory.VIEWER_SELECTABLE,
                 i_owner: this});
 
-            var rects = screenTemplate.createDivisions();
+            var rects = screenTemplate.getDivisions();
+
             for (var i = 0; i < rects.length; i++) {
                 var rectProperties = rects[i];
                 var rect = new fabric.Rect({
@@ -150,6 +150,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             }, 500);
         },
 
+        /**
+         Listen to changes on selecting the background canvas
+         @method _listenBackgroundSelected
+         **/
         _listenBackgroundSelected: function () {
             var self = this;
             self.m_bgSelectedHandler = function (e) {
@@ -158,6 +162,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             self.m_canvas.on('selection:cleared', self.m_bgSelectedHandler);
         },
 
+        /**
+         Listen to changes in viewer overlaps
+         @method _listenObjectsOverlap
+         **/
         _listenObjectsOverlap: function () {
             var self = this;
             self.m_onOverlap = function (options) {
@@ -175,6 +183,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             });
         },
 
+        /**
+         Listen to changes in a viewer changes in cords and update jalapeno
+         @method i_props
+         **/
         _listenObjectChanged: function () {
             var self = this;
             self.m_objectMovingHandler = _.debounce(function (e) {
@@ -218,9 +230,14 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             });
         },
 
+        /**
+         Move the object / viewer to new set of coords
+         @method _moveViewer
+         @param {Object} i_props
+         **/
         _moveViewer: function(i_props){
             var self = this;
-            log('moving viewer');
+            // log('moving viewer');
             var viewer = self.m_canvas.getActiveObject();
             if (viewer){
                 viewer.setWidth(i_props.w / self.RATIO);
@@ -230,12 +247,16 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 viewer.setCoords();
                 self.m_canvas.renderAll();
             }
-
         },
 
+        /**
+         Update Jalapeno with latest object dimensions
+         @method _updateDimensionsInDB
+         @param {Object} i_props
+         **/
         _updateDimensionsInDB: function(i_props){
             var self = this;
-            log('Jalapeno ' + self.m_selectedViewerID + ' ' + JSON.stringify(i_props));
+            // log('Jalapeno ' + self.m_selectedViewerID + ' ' + JSON.stringify(i_props));
             jalapeno.setBoardTemplateViewer(self.m_campaign_timeline_board_template_id, self.m_selectedViewerID, i_props);
         },
 

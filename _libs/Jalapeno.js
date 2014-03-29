@@ -492,7 +492,8 @@ Jalapeno.prototype = {
         var w = Math.round(i_props.w);
         var h = Math.round(i_props.h);
 
-        log('savings: template_id: ' + i_campaign_timeline_board_template_id + ' view_id: ' + i_board_template_viewer_id + ' ' + x + 'x' + y + ' ' + w + '/' + h);
+        // log('savings: template_id: ' + i_campaign_timeline_board_template_id + ' view_id: ' + i_board_template_viewer_id + ' ' + x + 'x' + y + ' ' + w + '/' + h);
+
         self.m_msdb.table_board_template_viewers().openForEdit(i_board_template_viewer_id);
         var recEditBoardTemplateViewer = self.m_msdb.table_board_template_viewers().getRec(i_board_template_viewer_id);
         recEditBoardTemplateViewer['pixel_x'] = x;

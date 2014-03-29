@@ -41,10 +41,14 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                                 appendTo: Elements.VIEWER_DIMENSIONS,
                                 showAngle: false
                             });
-                            $(self.m_dimensionProps).on('changed',function(e){
+                            $(self.m_dimensionProps).on('changed', function (e) {
                                 log('upd 2 changed');
                                 var props = e.target.getValues();
-                                self._updateDimensionsInDB(props);
+                                props.w = props.w / 5;
+                                props.h = props.h / 5;
+                                props.x = props.x / 5;
+                                props.y = props.y / 5;
+                                // self._updateDimensionsInDB(props);
                                 self._moveViewer(props);
                             });
                             self._render();
@@ -163,31 +167,31 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
 
 
             /*
-            var globscale=1;
+             var globscale=1;
 
-            function displaywheel(e){
-                var SCALE_FACTOR = 2.5;
-                var evt=window.event || e
-                var delta=evt.detail? evt.detail*(-120) : evt.wheelDelta
-                var objects = self.m_canvas.getObjects();
-                var dd = 1;
-                if (delta == 120) dd=SCALE_FACTOR;
-                if (delta == -120) dd=1/SCALE_FACTOR;
-                globscale = globscale * dd;
-                for (var i in objects) {
-                    objects[i].scaleX = globscale;
-                    objects[i].scaleY = globscale;
-                    objects[i].left = objects[i].left * dd;
-                    objects[i].top = objects[i].top * dd;
-                    objects[i].setCoords();
-                }
-                self.m_canvas.renderAll();
-                self.m_canvas.calcOffset();
-            }
-            var mousewheelevt=(/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel"
-            if (document.attachEvent) document.attachEvent("on"+mousewheelevt, displaywheel)
-            else if (document.addEventListener) document.addEventListener(mousewheelevt, displaywheel, false)
-            */
+             function displaywheel(e){
+             var SCALE_FACTOR = 2.5;
+             var evt=window.event || e
+             var delta=evt.detail? evt.detail*(-120) : evt.wheelDelta
+             var objects = self.m_canvas.getObjects();
+             var dd = 1;
+             if (delta == 120) dd=SCALE_FACTOR;
+             if (delta == -120) dd=1/SCALE_FACTOR;
+             globscale = globscale * dd;
+             for (var i in objects) {
+             objects[i].scaleX = globscale;
+             objects[i].scaleY = globscale;
+             objects[i].left = objects[i].left * dd;
+             objects[i].top = objects[i].top * dd;
+             objects[i].setCoords();
+             }
+             self.m_canvas.renderAll();
+             self.m_canvas.calcOffset();
+             }
+             var mousewheelevt=(/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel"
+             if (document.attachEvent) document.attachEvent("on"+mousewheelevt, displaywheel)
+             else if (document.addEventListener) document.addEventListener(mousewheelevt, displaywheel, false)
+             */
 
         },
 
@@ -219,10 +223,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         _listenObjectChanged: function () {
             var self = this;
             self.m_objectMovingHandler = _.debounce(function (e) {
-                var x = e.target.get('left')// * self.RATIO;
-                var y = e.target.get('top')// * self.RATIO;
-                var w = e.target.get('width')// * self.RATIO;
-                var h = e.target.get('height')// * self.RATIO;
+                var x = e.target.get('left') * 5;
+                var y = e.target.get('top') * 5;
+                var w = e.target.currentWidth * 5;
+                var h = e.target.currentHeight * 5;
                 var a = e.target.get('angle');
                 var props = {
                     w: w,
@@ -231,7 +235,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                     y: y
                 };
 
-               self.m_selectedViewerID = e.target.id;
+                self.m_selectedViewerID = e.target.id;
                 self._updateDimensionsInDB(props);
                 self.m_property.viewPanel(Elements.VIEWER_EDIT_PROPERTIES);
                 self.m_dimensionProps.setValues(props);
@@ -240,33 +244,35 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
 
             self.m_canvas.on({
                 'object:scaling': self.m_objectMovingHandler,
-
-                'object:selected': function(e){
-                    self.m_selectedViewerID = e.target.id
-                    var props = jalapeno.getBoardTemplateViewer(self.m_selectedViewerID);
-                    self.m_dimensionProps.setValues(props);
-                    self.m_property.viewPanel(Elements.VIEWER_EDIT_PROPERTIES);
-                },
-
+                'object:selected': self.m_objectMovingHandler,
                 'object:modified': self.m_objectMovingHandler
+
+                /*'object:selected': function(e){
+                 self.m_selectedViewerID = e.target.id
+                 var props = jalapeno.getBoardTemplateViewer(self.m_selectedViewerID);
+                 self.m_dimensionProps.setValues(props);
+                 self.m_property.viewPanel(Elements.VIEWER_EDIT_PROPERTIES);
+                 },
+
+                 'object:modified': self.m_objectMovingHandler                  */
             });
         },
 
-        _moveViewer: function(i_props){
+        _moveViewer: function (i_props) {
             var self = this;
             log('moving viewer');
             var viewer = self.m_canvas.getActiveObject();
-            if (viewer){
+            if (viewer) {
                 viewer.setWidth(i_props.w / self.RATIO);
                 viewer.setHeight(i_props.h / self.RATIO);
-                viewer.set('left',i_props.x / self.RATIO);
-                viewer.set('top',i_props.y / self.RATIO);
+                viewer.set('left', i_props.x / self.RATIO);
+                viewer.set('top', i_props.y / self.RATIO);
                 self.m_canvas.renderAll();
             }
 
         },
 
-        _updateDimensionsInDB: function(i_props){
+        _updateDimensionsInDB: function (i_props) {
             var self = this;
             log('Jalapeno ' + self.m_selectedViewerID + ' ' + JSON.stringify(i_props));
             jalapeno.setBoardTemplateViewer(self.m_campaign_timeline_board_template_id, self.m_selectedViewerID, i_props);

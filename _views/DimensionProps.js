@@ -60,8 +60,8 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
             var self = this;
             $('.spinnerDimWidth', self.$el).spinner('value', i_values.w);
             $('.spinnerDimHeight', self.$el).spinner('value', i_values.h);
-            $('.spinnerDimLeft', self.$el).spinner('value', i_values.x) * 5;
-            $('.spinnerDimTop', self.$el).spinner('value', i_values.y) * 5;
+            $('.spinnerDimLeft', self.$el).spinner('value', i_values.x);
+            $('.spinnerDimTop', self.$el).spinner('value', i_values.y);
             if (self.m_showAngle)
                 $('.spinnerDimAngle', self.$el).spinner('value', i_values.a);
         },
@@ -76,8 +76,8 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
             var a = 0;
             var w = $('.spinnerDimWidth', self.$el).spinner('value');
             var h = $('.spinnerDimHeight', self.$el).spinner('value');
-            var x = $('.spinnerDimLeft', self.$el).spinner('value') / 5;
-            var y = $('.spinnerDimTop', self.$el).spinner('value') / 5;
+            var x = $('.spinnerDimLeft', self.$el).spinner('value');
+            var y = $('.spinnerDimTop', self.$el).spinner('value');
 
             if (self.m_showAngle)
                 a = $('.spinnerDimAngle', self.$el).spinner('value');

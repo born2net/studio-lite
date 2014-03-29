@@ -18,7 +18,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         initialize: function () {
             var self = this;
             BB.comBroker.setService(BB.SERVICES['SCREEN_LAYOUT_EDITOR_VIEW'], self);
-            self.RATIO = 5;
+            self.RATIO = 2;
             self.m_canvas = undefined;
             self.m_canvasID = undefined;
             self.m_selectedViewerID = undefined;

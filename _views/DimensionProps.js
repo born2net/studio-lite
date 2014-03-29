@@ -1,5 +1,5 @@
 /**
- Config the UI of dimensions properties which include x, y, width, height and angle using spinner widgets
+ Config the UI of dimensions props which include x, y, width, height and angle using spinner widgets
  @class DimensionProps
  @constructor
  @return {Object} instantiated DimensionProps

@@ -44,7 +44,6 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
 
 
                             $(self.m_dimensionProps).on('changed', function (e) {
-                                log('upd 2 changed');
                                 var props = e.target.getValues();
                                 self._updateDimensionsInDB(props);
                                 var w = props.w;
@@ -163,8 +162,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
 
             var objects = self.m_canvas.getObjects();
             for (var i in objects) {
-                objects[i].scaleX = 0.2;
-                objects[i].scaleY = 0.2;
+                objects[i].scale(0.2);
                 objects[i].left = objects[i].left / 5;
                 objects[i].top = objects[i].top / 5;
                 objects[i].setCoords();
@@ -270,11 +268,17 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             log('moving viewer ' + i_props.x + ' ' + i_props.y + ' ' + i_props.w + ' ' + i_props.h);
             var viewer = self.m_canvas.getActiveObject();
             if (viewer) {
-                viewer.setWidth(i_props.w);
-                viewer.setHeight(i_props.h);
-                viewer.set('left', i_props.x);
-                viewer.set('top', i_props.y);
+                // viewer.setWidth(i_props.w);
+                // var a = parseFloat(viewer.getHeight());
+                // var b = (a * 0.2) - 1;
+                // log('object is in ' + a + ' and moving him to ' + (b));
+                var a = viewer.currentHeight-1;
+                viewer.set({currentHeight: a});
+                viewer.setCoords();
                 self.m_canvas.renderAll();
+
+                // viewer.set('left', i_props.x);
+                // viewer.set('top', i_props.y);
             }
 
         },

@@ -311,7 +311,6 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                         to: Elements.CAMPAIGN_SELECTOR
                     });
 
-
                     self.m_campaignSliderStackView.addView(self.m_campaignSelectorView);
                     self.m_campaignSliderStackView.addView(self.m_campaignNameSelectorView);
                     self.m_campaignSliderStackView.addView(self.m_orientationSelectorView);

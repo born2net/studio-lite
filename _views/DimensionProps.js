@@ -93,5 +93,4 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
     });
 
     return DimensionProps;
-
 });

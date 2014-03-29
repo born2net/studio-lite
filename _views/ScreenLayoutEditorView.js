@@ -207,7 +207,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
 
                 p.setCoords();
                 self.m_canvas.renderAll();
-
+                p.setCoords();
 
             }, 200);
 

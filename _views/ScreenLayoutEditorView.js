@@ -18,7 +18,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         initialize: function () {
             var self = this;
             BB.comBroker.setService(BB.SERVICES['SCREEN_LAYOUT_EDITOR_VIEW'], self);
-            self.RATIO = 5;
+            self.RATIO = 1;
             self.m_canvas = undefined;
             self.m_canvasID = undefined;
             self.m_selectedViewerID = undefined;
@@ -149,6 +149,46 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 self.m_canvas.setWidth(i_width);
                 self.m_canvas.renderAll();
             }, 500);
+
+            var objects = self.m_canvas.getObjects();
+            for (var i in objects) {
+                objects[i].scaleX = 0.2;
+                objects[i].scaleY = 0.2;
+                objects[i].left = objects[i].left / 5;
+                objects[i].top = objects[i].top / 5;
+                objects[i].setCoords();
+            }
+            self.m_canvas.renderAll();
+            self.m_canvas.calcOffset();
+
+
+            /*
+            var globscale=1;
+
+            function displaywheel(e){
+                var SCALE_FACTOR = 2.5;
+                var evt=window.event || e
+                var delta=evt.detail? evt.detail*(-120) : evt.wheelDelta
+                var objects = self.m_canvas.getObjects();
+                var dd = 1;
+                if (delta == 120) dd=SCALE_FACTOR;
+                if (delta == -120) dd=1/SCALE_FACTOR;
+                globscale = globscale * dd;
+                for (var i in objects) {
+                    objects[i].scaleX = globscale;
+                    objects[i].scaleY = globscale;
+                    objects[i].left = objects[i].left * dd;
+                    objects[i].top = objects[i].top * dd;
+                    objects[i].setCoords();
+                }
+                self.m_canvas.renderAll();
+                self.m_canvas.calcOffset();
+            }
+            var mousewheelevt=(/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel"
+            if (document.attachEvent) document.attachEvent("on"+mousewheelevt, displaywheel)
+            else if (document.addEventListener) document.addEventListener(mousewheelevt, displaywheel, false)
+            */
+
         },
 
         _listenBackgroundSelected: function () {
@@ -179,10 +219,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         _listenObjectChanged: function () {
             var self = this;
             self.m_objectMovingHandler = _.debounce(function (e) {
-                var x = parseFloat(e.target.left) * self.RATIO;
-                var y = parseFloat(e.target.top) * self.RATIO;
-                var w = parseFloat(e.target.currentWidth) * self.RATIO;
-                var h = parseFloat(e.target.currentHeight) * self.RATIO;
+                var x = e.target.get('left')// * self.RATIO;
+                var y = e.target.get('top')// * self.RATIO;
+                var w = e.target.get('width')// * self.RATIO;
+                var h = e.target.get('height')// * self.RATIO;
                 var a = e.target.get('angle');
                 var props = {
                     w: w,
@@ -284,8 +324,8 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
 
             require(['fabric'], function () {
                 // var resolution = BB.comBroker.getService(BB.SERVICES['RESOLUTION_SELECTOR_VIEW']).getResolution();
-                var w = parseInt(self.m_resolution.split('x')[0]) / self.RATIO;
-                var h = parseInt(self.m_resolution.split('x')[1]) / self.RATIO;
+                var w = parseInt(self.m_resolution.split('x')[0]) / 5//self.RATIO;
+                var h = parseInt(self.m_resolution.split('x')[1]) / 5//self.RATIO;
                 self._canvasFactory(w, h);
                 self._listenObjectChanged();
                 // self._listenObjectsOverlap();

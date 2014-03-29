@@ -41,14 +41,16 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                                 appendTo: Elements.VIEWER_DIMENSIONS,
                                 showAngle: false
                             });
+
+
                             $(self.m_dimensionProps).on('changed', function (e) {
                                 log('upd 2 changed');
                                 var props = e.target.getValues();
-                                props.w = props.w / 5;
-                                props.h = props.h / 5;
+                                self._updateDimensionsInDB(props);
+                                props.w = props.w;
+                                props.h = props.h;
                                 props.x = props.x / 5;
                                 props.y = props.y / 5;
-                                // self._updateDimensionsInDB(props);
                                 self._moveViewer(props);
                             });
                             self._render();
@@ -263,10 +265,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             log('moving viewer');
             var viewer = self.m_canvas.getActiveObject();
             if (viewer) {
-                viewer.setWidth(i_props.w / self.RATIO);
-                viewer.setHeight(i_props.h / self.RATIO);
-                viewer.set('left', i_props.x / self.RATIO);
-                viewer.set('top', i_props.y / self.RATIO);
+                viewer.setWidth(i_props.w);
+                viewer.setHeight(i_props.h);
+                viewer.set('left', i_props.x);
+                viewer.set('top', i_props.y);
                 self.m_canvas.renderAll();
             }
 

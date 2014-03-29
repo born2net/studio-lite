@@ -34,10 +34,9 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
                 $(self).trigger('changed');
             });
 
-            //self.m_inputMouseOut = _.debounce(function (e) {
-               // $(self).trigger('changed');
-               // log('aaa');
-            //}, 50);
+            self.m_inputMouseOut = _.debounce(function (e) {
+               $(self).trigger('changed');
+            }, 100);
 
         },
 
@@ -47,6 +46,7 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
          **/
         events: {
             'click .pushToTopButton': '_onPushToTopLayer',
+            'mouseout input': 'm_inputMouseOut'
         },
 
         /**

@@ -18,7 +18,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         initialize: function () {
             var self = this;
             BB.comBroker.setService(BB.SERVICES['SCREEN_LAYOUT_EDITOR_VIEW'], self);
-            self.RATIO = 2;
+            self.RATIO = 4;
             self.m_canvas = undefined;
             self.m_canvasID = undefined;
             self.m_selectedViewerID = undefined;
@@ -42,7 +42,6 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                                 showAngle: false
                             });
                             $(self.m_dimensionProps).on('changed',function(e){
-                                log('bbbb');
                                 var props = e.target.getValues();
                                 self._updateDimensionsInDB(props);
                                 self._moveViewer(props);
@@ -228,6 +227,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 viewer.setHeight(i_props.h / self.RATIO);
                 viewer.set('left',i_props.x / self.RATIO);
                 viewer.set('top',i_props.y / self.RATIO);
+                viewer.setCoords();
                 self.m_canvas.renderAll();
             }
 
@@ -295,7 +295,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 var h = parseInt(self.m_resolution.split('x')[1]) / self.RATIO;
                 self._canvasFactory(w, h);
                 self._listenObjectChanged();
-                // self._listenObjectsOverlap();
+                self._listenObjectsOverlap();
                 self._listenBackgroundSelected();
             })
         }

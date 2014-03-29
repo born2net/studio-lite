@@ -1,5 +1,5 @@
 /**
- Singleton Screen Layout editor is used to edit an existing screen division layout (aka: template > viewers) and when done
+ Singleton Screen Layout editor is used to create / edit an existing screen division layout (aka: template > viewers) and when done
  editing, create new ScreenTemplates via ScreenTemplateFactory for both Thumb and main Timeline UIs
  @class ScreenLayoutEditorView
  @constructor

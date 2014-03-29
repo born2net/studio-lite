@@ -179,6 +179,16 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         _listenObjectChanged: function () {
             var self = this;
             self.m_objectMovingHandler = _.debounce(function (e) {
+
+                var p = e.target;
+                if (p.width != p.currentWidth || p.height != p.currentHeight) {
+                    p.width = p.currentWidth;
+                    p.height = p.currentHeight;
+                    p.scaleX = 1;
+                    p.scaleY = 1;
+                }
+
+
                 var x = BB.lib.parseToFloatDouble(e.target.left) * self.RATIO;
                 var y = BB.lib.parseToFloatDouble(e.target.top) * self.RATIO;
                 var w = BB.lib.parseToFloatDouble(e.target.currentWidth) * self.RATIO;
@@ -194,6 +204,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 self.m_dimensionProps.setValues(props);
                 self.m_selectedViewerID = e.target.id;
                 self._updateDimensionsInDB(props);
+
+                p.setCoords();
+                self.m_canvas.renderAll();
+
 
             }, 200);
 

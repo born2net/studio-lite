@@ -33,6 +33,12 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
             $('.spinner', self.$el).on('changed',function(){
                 $(self).trigger('changed');
             });
+
+            //self.m_inputMouseOut = _.debounce(function (e) {
+               // $(self).trigger('changed');
+               // log('aaa');
+            //}, 50);
+
         },
 
         /**
@@ -40,7 +46,7 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
          @method events
          **/
         events: {
-            'click .pushToTopButton': '_onPushToTopLayer'
+            'click .pushToTopButton': '_onPushToTopLayer',
         },
 
         /**
@@ -58,12 +64,12 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
          **/
         setValues: function (i_values) {
             var self = this;
-            $('.spinnerDimWidth', self.$el).spinner('value', i_values.w);
-            $('.spinnerDimHeight', self.$el).spinner('value', i_values.h);
-            $('.spinnerDimLeft', self.$el).spinner('value', i_values.x);
-            $('.spinnerDimTop', self.$el).spinner('value', i_values.y);
+            $('.spinnerDimWidth', self.$el).spinner('value', Math.round(i_values.w));
+            $('.spinnerDimHeight', self.$el).spinner('value', Math.round(i_values.h));
+            $('.spinnerDimLeft', self.$el).spinner('value', Math.round(i_values.x));
+            $('.spinnerDimTop', self.$el).spinner('value', Math.round(i_values.y));
             if (self.m_showAngle)
-                $('.spinnerDimAngle', self.$el).spinner('value', i_values.a);
+                $('.spinnerDimAngle', self.$el).spinner('value', Math.round(i_values.a));
         },
 
         /**
@@ -74,10 +80,10 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
         getValues: function () {
             var self = this;
             var a = 0;
-            var w = $('.spinnerDimWidth', self.$el).spinner('value');
-            var h = $('.spinnerDimHeight', self.$el).spinner('value');
-            var x = $('.spinnerDimLeft', self.$el).spinner('value');
-            var y = $('.spinnerDimTop', self.$el).spinner('value');
+            var w = BB.lib.parseToFloatDouble($('.spinnerDimWidth', self.$el).spinner('value'));
+            var h = BB.lib.parseToFloatDouble($('.spinnerDimHeight', self.$el).spinner('value'));
+            var x = BB.lib.parseToFloatDouble($('.spinnerDimLeft', self.$el).spinner('value'));
+            var y = BB.lib.parseToFloatDouble($('.spinnerDimTop', self.$el).spinner('value'));
 
             if (self.m_showAngle)
                 a = $('.spinnerDimAngle', self.$el).spinner('value');
@@ -93,4 +99,5 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
     });
 
     return DimensionProps;
+
 });

@@ -97,11 +97,59 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
 
         _listenAddDivision: function () {
             var self = this;
+            $(Elements.LAYOUT_EDITOR_ADD_NEW, self.$el).on('click', function () {
+                var props = {
+                    x: 0,
+                    y: 0,
+                    w: 100,
+                    h: 100
+                }
+                var board_viewer_id = jalapeno.createViewer(self.m_global_board_template_id, props);
+                var campaign_timeline_chanel_id = jalapeno.createTimelineChannel(self.m_campaign_timeline_id);
+                jalapeno.assignViewerToTimelineChannel(self.m_campaign_timeline_board_template_id, board_viewer_id, campaign_timeline_chanel_id);
 
+                var rect = new fabric.Rect({
+                    left: 0,
+                    top: 0,
+                    fill: '#ececec',
+                    id: board_viewer_id,
+                    hasRotatingPoint: false,
+                    borderColor: '#5d5d5d',
+                    stroke: 'black',
+                    strokeWidth: 1,
+                    borderScaleFactor: 0,
+                    lineWidth: 1,
+                    width: 100,
+                    height: 100,
+                    cornerColor: 'black',
+                    cornerSize: 5,
+                    lockRotation: true,
+                    transparentCorners: false
+                });
+                self.m_canvas.add(rect);
+                var o = {
+                    campaign_timeline_board_template_id: self.m_campaign_timeline_board_template_id,
+                    board_template_viewer_id: board_viewer_id
+                };
+                jalapeno.announceTemplateViewerEdited(o);
+            });
         },
 
         _listenRemoveDivision: function () {
             var self = this;
+            $(Elements.LAYOUT_EDITOR_REMOVE, self.$el).on('click', function () {
+                var campaign_timeline_chanel_id = jalapeno.removeTimelineBoardViewerChannel(self.m_selectedViewerID);
+                jalapeno.removeBoardTemplateViewer(self.m_campaign_timeline_board_template_id, self.m_selectedViewerID);
+                jalapeno.removeChannelFromTimeline(campaign_timeline_chanel_id);
+                jalapeno.removeBlocksFromTimelineChannel(campaign_timeline_chanel_id);
+                self.m_canvas.remove(self.m_canvas.getActiveObject());
+                self.m_canvas.renderAll();
+                var o = {
+                    campaign_timeline_board_template_id: self.m_campaign_timeline_board_template_id,
+                    board_template_viewer_id: self.m_selectedViewerID
+                };
+                jalapeno.announceTemplateViewerEdited(o);
+            });
 
         },
 
@@ -293,7 +341,6 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
 
                 o.setCoords();
                 self.m_canvas.renderAll();
-                // o.setCoords();
 
             }, 200);
 

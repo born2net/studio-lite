@@ -45,6 +45,9 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             this._onTimelineSelected();
 
             jalapeno.listenWithNamespace(Jalapeno.TEMPLATE_VIEWER_EDITED, self, $.proxy(self._templateViewerEdited, self));
+            jalapeno.listenWithNamespace(Jalapeno.NEW_CHANNEL_ADDED, self, $.proxy(self._channelAdded, self));
+
+
         },
 
         /**
@@ -59,7 +62,8 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
                 if (self.m_campaign_timeline_id != timelineID) {
                     self.m_selected = false;
                     return;
-                };
+                }
+                ;
                 self.m_selected = true;
                 self._propLoadTimeline();
                 log('timeline selected ' + self.m_campaign_timeline_id);
@@ -109,6 +113,18 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             if (!self.m_selected)
                 return;
             self._populateBoardTemplate(e.edata.campaign_timeline_board_template_id);
+        },
+
+        /**
+         New channel was added to an existing timeline (most likely through the addition of a viewer (screen division) template editor)
+         @method _channelAdded
+         @param {event} e
+         **/
+        _channelAdded: function (e) {
+            var self = this;
+            if (!self.m_selected)
+                return;
+            self.m_channels[e.edata.chanel] = new Channel({campaignTimelineChanelID: e.edata.chanel});
         },
 
         /**
@@ -248,7 +264,8 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             if (self.m_stackViewID) {
                 $('#' + self.m_stackViewID).remove();
                 self.m_screenTemplate.destroy();
-            };
+            }
+            ;
 
             self.m_screenTemplate = screenTemplate;
             self.m_stackViewID = timelineViewStack.addView(view);
@@ -291,6 +308,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             jalapeno.removeTimelineBoardViewerChannels(campaignTimelineBoardTemplateID);
             jalapeno.removeBoardTemplateViewers(boardTemplateID);
             jalapeno.stopListenWithNamespace(Jalapeno.TEMPLATE_VIEWER_EDITED, self);
+            jalapeno.stopListenWithNamespace(Jalapeno.NEW_CHANNEL_ADDED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED, self);
             $(Elements.EDIT_SCREEN_LAYOUT).off('click', self.m_openScreenLayoutEditorHandler);
             $(Elements.TIME_LINE_PROP_TITLE_ID).off("input", self.m_inputChangeHandler);

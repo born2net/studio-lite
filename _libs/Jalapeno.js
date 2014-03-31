@@ -10,8 +10,8 @@
  The internal database is referenced as msdb in both code and documentation.
 
  Library requirements:
-    composition: x2js, jQuery
-    inheritance: ComBroker
+ composition: x2js, jQuery
+ inheritance: ComBroker
 
  @class Jalapeno
  @constructor
@@ -104,6 +104,16 @@ Jalapeno.NEW_TIMELINE_CREATED = 'NEW_TIMELINE_CREATED';
  @final
  **/
 Jalapeno.NEW_CHANNEL_CREATED = 'NEW_CHANNEL_CREATED';
+
+/**
+ Custom event fired when a new channel is added to an existing timeline
+ @event Jalapeno.NEW_CHANNEL_ADDED
+ @param {This} caller
+ @param {Event}
+ @static
+ @final
+ **/
+Jalapeno.NEW_CHANNEL_ADDED = 'NEW_CHANNEL_ADDED';
 
 /**
  Custom event fired when a block (ie Player on channel) changes it's total playback length
@@ -232,6 +242,19 @@ Jalapeno.prototype = {
     },
 
     /**
+     Returns this model's attributes as...
+     @method i_values  var o = {
+                    campaign_timeline_board_template_id: ?
+                    board_template_viewer_id: ?
+                };
+     @param {i_values} i_playerData
+     **/
+    announceTemplateViewerEdited: function (i_values) {
+        var self = this;
+        jalapeno.fire(Jalapeno['TEMPLATE_VIEWER_EDITED'], self, null, i_values);
+    },
+
+    /**
      Create a new campaign in the local database
      @method createCampaign
      @param {Number} i_campgianName
@@ -347,6 +370,23 @@ Jalapeno.prototype = {
     },
 
     /**
+     Create channel and assign that channel to the specified timeline
+     @method createTimelineChannel
+     @param {Number} i_campaign_timeline_id the timeline id to assign channel to
+     @return {Array} createdChanels array of channel ids created
+     **/
+    createTimelineChannel: function (i_campaign_timeline_id) {
+        var self = this;
+        var chanels = self.m_msdb.table_campaign_timeline_chanels();
+        var chanel = chanels.createRecord();
+        chanel.chanel_name = "CH";
+        chanel.campaign_timeline_id = i_campaign_timeline_id;
+        chanels.addRecord(chanel);
+        jalapeno.fire(Jalapeno['NEW_CHANNEL_ADDED'], self, null, {chanel: chanel['campaign_timeline_chanel_id'], campaign_timeline_id: i_campaign_timeline_id});
+        return chanel['campaign_timeline_chanel_id'];
+    },
+
+    /**
      Create channels and assign these channels to the timeline
      @method createTimelineChannels
      @param {Number} i_campaign_timeline_id the timeline id to assign channel to
@@ -411,6 +451,28 @@ Jalapeno.prototype = {
         returnData['board_template_id'] = board_template_id
         jalapeno.fire(Jalapeno['NEW_TEMPLATE_CREATED'], self, null, returnData);
         return returnData;
+    },
+
+    /**
+     Create a global viewer in an existing board_template
+     @method createViewer
+     @param {Number} board_template_id
+     @param {Number} i_board_template_id
+     @param {Object} i_props
+     @return {Number} viewer id
+     **/
+    createViewer: function (i_board_template_id, i_props) {
+        var self = this;
+        var viewers = self.m_msdb.table_board_template_viewers();
+        var viewer = viewers.createRecord();
+        viewer.viewer_name = "Viewer";
+        viewer.pixel_width = i_props['w'];
+        viewer.pixel_height = i_props['h'];
+        viewer.pixel_x = i_props['x'];
+        viewer.pixel_y = i_props['y'];
+        viewer.board_template_id = i_board_template_id;
+        viewers.addRecord(viewer);
+        return viewer['board_template_viewer_id'];
     },
 
     /**
@@ -499,14 +561,14 @@ Jalapeno.prototype = {
         recEditBoardTemplateViewer['pixel_x'] = x;
         recEditBoardTemplateViewer['pixel_y'] = y;
         recEditBoardTemplateViewer['pixel_width'] = w;
-        recEditBoardTemplateViewer['pixel_height'] =h;
+        recEditBoardTemplateViewer['pixel_height'] = h;
 
         var o = {
             campaign_timeline_board_template_id: i_campaign_timeline_board_template_id,
             board_template_viewer_id: i_board_template_viewer_id,
-            props: i_props
+            // props: i_props
         };
-        jalapeno.fire(Jalapeno['TEMPLATE_VIEWER_EDITED'], self, null, o);
+        jalapeno.announceTemplateViewerEdited(o);
     },
 
     /**
@@ -667,6 +729,24 @@ Jalapeno.prototype = {
         timelineTemplate.addRecord(timelineScreen);
 
         return timelineScreen['campaign_timeline_board_template_id'];
+    },
+
+    /**
+     Assign viewer (screen division) on the timeline to channel
+     @method assignViewerToTimelineChannel
+     @param {Number} i_campaign_timeline_board_template_id
+     @param {Object} i_viewers a json object with all viewers
+     @param {Array} i_channels a json object with all channels
+     @return none
+     **/
+    assignViewerToTimelineChannel: function (i_campaign_timeline_board_template_id, i_viewer_id, i_channel_id) {
+        var self = this;
+        var viewerChanels = self.m_msdb.table_campaign_timeline_board_viewer_chanels();
+        var viewerChanel = viewerChanels.createRecord();
+        viewerChanel.campaign_timeline_board_template_id = i_campaign_timeline_board_template_id;
+        viewerChanel.board_template_viewer_id = i_viewer_id;
+        viewerChanel.campaign_timeline_chanel_id = i_channel_id;
+        viewerChanels.addRecord(viewerChanel);
     },
 
     /**
@@ -860,6 +940,22 @@ Jalapeno.prototype = {
     },
 
     /**
+     Remove all blocks (i.e.: players) from campaign > timeline > channel
+     @method removeBlocksFromTimelineChannel
+     @param {Number} i_block_id
+     @return none
+     **/
+    removeBlocksFromTimelineChannel: function (i_campaign_timeline_chanel_id) {
+        var self = this;
+        $(self.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
+            var recCampaignTimelineChannelPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
+            if (recCampaignTimelineChannelPlayer['campaign_timeline_chanel_id'] == i_campaign_timeline_chanel_id) {
+                var status = self.m_msdb.table_campaign_timeline_chanel_players().openForDelete(campaign_timeline_chanel_player_id);
+            }
+        });
+    },
+
+    /**
      Remove a timeline from sequences
      @method removeTimelineFromSequences
      @param {Number} i_timeline_id
@@ -920,6 +1016,17 @@ Jalapeno.prototype = {
     },
 
     /**
+     Remove board template viewer
+     @method removeBoardTemplateViewer
+     @param {Number} i_board_template_id
+     @param {Number} i_board_template_viewer_id
+     **/
+    removeBoardTemplateViewer: function (i_board_template_id, i_board_template_viewer_id) {
+        var self = this;
+        self.m_msdb.table_board_template_viewers().openForDelete(i_board_template_viewer_id);
+    },
+
+    /**
      Remove board template viewers
      @method removeTimelineBoardViewerChannels
      @param {Number} i_campaign_timeline_board_template_id
@@ -934,6 +1041,25 @@ Jalapeno.prototype = {
                 self.m_msdb.table_campaign_timeline_board_viewer_chanels().openForDelete(campaign_timeline_board_viewer_chanel_id);
             }
         });
+    },
+
+    /**
+     Remove the association between the screen division (aka viewer) and all channels that are assigned with that viewer
+     @method removeTimelineBoardViewerChannel
+     @param {Number} i_campaign_timeline_board_template_id
+     @return {Number} return the channel that was de-associated with viewer
+     **/
+    removeTimelineBoardViewerChannel: function (i_board_template_viewer_id) {
+        var self = this;
+        var campaign_timeline_chanel_id = -1;
+        $(self.m_msdb.table_campaign_timeline_board_viewer_chanels().getAllPrimaryKeys()).each(function (k, campaign_timeline_board_viewer_chanel_id) {
+            var recCampaignTimelineViewerChanels = self.m_msdb.table_campaign_timeline_board_viewer_chanels().getRec(campaign_timeline_board_viewer_chanel_id);
+            if (recCampaignTimelineViewerChanels['board_template_viewer_id'] == i_board_template_viewer_id) {
+                campaign_timeline_chanel_id = recCampaignTimelineViewerChanels['campaign_timeline_chanel_id'];
+                self.m_msdb.table_campaign_timeline_board_viewer_chanels().openForDelete(campaign_timeline_board_viewer_chanel_id);
+            }
+        });
+        return campaign_timeline_chanel_id;
     },
 
     /**
@@ -1493,7 +1619,7 @@ Jalapeno.prototype = {
      @param {Object} i_data
      @return none.
 
-    event: function (i_event, i_context, i_caller, i_data) {
+     event: function (i_event, i_context, i_caller, i_data) {
         return $.Event(i_event, {context: i_context, caller: i_caller, edata: i_data});
     },
      **/

@@ -32,6 +32,12 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 return false;
             });
 
+            self._listenAddDivision();
+            self._listenRemoveDivision();
+            self._listenPushToTopDivision();
+            self._listenPushToBottomDivision();
+            self._listenSelectNextDivision();
+
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self) {
                     if (self.m_dimensionProps == undefined) {
@@ -40,7 +46,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                                 appendTo: Elements.VIEWER_DIMENSIONS,
                                 showAngle: false
                             });
-                            $(self.m_dimensionProps).on('changed',function(e){
+                            $(self.m_dimensionProps).on('changed', function (e) {
                                 var props = e.target.getValues();
                                 self._updateDimensionsInDB(props);
                                 self._moveViewer(props);
@@ -55,6 +61,32 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         },
 
         /**
+         Load the editor into DOM using the StackView using animation slider
+         @method  selectView
+         **/
+        selectView: function (i_campaign_timeline_id, i_campaign_timeline_board_template_id) {
+            var self = this;
+            self.m_campaign_timeline_id = i_campaign_timeline_id;
+            self.m_campaign_timeline_board_template_id = i_campaign_timeline_board_template_id;
+            self.m_global_board_template_id = jalapeno.getGlobalTemplateIdOfTimeline(i_campaign_timeline_board_template_id)[0];
+            self.m_screenProps = jalapeno.getTemplateViewersScreenProps(self.m_campaign_timeline_id, self.m_campaign_timeline_board_template_id);
+            self.m_orientation = BB.comBroker.getService(BB.SERVICES['ORIENTATION_SELECTOR_VIEW']).getOrientation();
+            self.m_resolution = BB.comBroker.getService(BB.SERVICES['RESOLUTION_SELECTOR_VIEW']).getResolution();
+
+            self.options.stackView.slideToPage(self, 'right');
+
+            require(['fabric'], function () {
+                var w = parseInt(self.m_resolution.split('x')[0]) / self.RATIO;
+                var h = parseInt(self.m_resolution.split('x')[1]) / self.RATIO;
+
+                self._canvasFactory(w, h);
+                self._listenObjectChanged();
+                self._listenObjectsOverlap();
+                self._listenBackgroundSelected();
+            })
+        },
+
+        /**
          On render load default dashboard properties
          @method _render
          **/
@@ -62,6 +94,49 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             var self = this;
             self.m_property.resetPropertiesView();
         },
+
+        _listenAddDivision: function () {
+            var self = this;
+
+        },
+
+        _listenRemoveDivision: function () {
+            var self = this;
+
+        },
+
+        _listenPushToTopDivision: function () {
+            var self = this;
+            $(Elements.LAYOUT_EDITOR_PUSH_TOP, self.$el).on('click', function () {
+                var view = self.m_canvas.getActiveObject();
+                if (view)
+                    self.m_canvas.bringToFront(view);
+            });
+        },
+
+        _listenPushToBottomDivision: function () {
+            var self = this;
+            $(Elements.LAYOUT_EDITOR_PUSH_BOTTOM, self.$el).on('click', function () {
+                var view = self.m_canvas.getActiveObject();
+                if (view)
+                    self.m_canvas.sendToBack(view);
+            });
+        },
+
+        _listenSelectNextDivision: function () {
+            var self = this;
+            $(Elements.LAYOUT_EDITOR_NEXT, self.$el).on('click', function () {
+                var view = self.m_canvas.getActiveObject();
+                var viewIndex = self.m_canvas.getObjects().indexOf(view);
+                var totalViews = self.m_canvas.getObjects().length;
+                if (viewIndex == totalViews - 1) {
+                    self.m_canvas.setActiveObject(self.m_canvas.item(0));
+                } else {
+                    self.m_canvas.setActiveObject(self.m_canvas.item(viewIndex + 1));
+                }
+            });
+        },
+
 
         /**
          Unload the editor from DOM using the StackView animated slider
@@ -191,19 +266,19 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             var self = this;
             self.m_objectMovingHandler = _.debounce(function (e) {
 
-                var p = e.target;
-                if (p.width != p.currentWidth || p.height != p.currentHeight) {
-                    p.width = p.currentWidth;
-                    p.height = p.currentHeight;
-                    p.scaleX = 1;
-                    p.scaleY = 1;
+                var o = e.target;
+                if (o.width != o.currentWidth || o.height != o.currentHeight) {
+                    o.width = o.currentWidth;
+                    o.height = o.currentHeight;
+                    o.scaleX = 1;
+                    o.scaleY = 1;
                 }
+                ;
 
-
-                var x = BB.lib.parseToFloatDouble(e.target.left) * self.RATIO;
-                var y = BB.lib.parseToFloatDouble(e.target.top) * self.RATIO;
-                var w = BB.lib.parseToFloatDouble(e.target.currentWidth) * self.RATIO;
-                var h = BB.lib.parseToFloatDouble(e.target.currentHeight) * self.RATIO;
+                var x = BB.lib.parseToFloatDouble(o.left) * self.RATIO;
+                var y = BB.lib.parseToFloatDouble(o.top) * self.RATIO;
+                var w = BB.lib.parseToFloatDouble(o.currentWidth) * self.RATIO;
+                var h = BB.lib.parseToFloatDouble(o.currentHeight) * self.RATIO;
                 var a = e.target.get('angle');
                 var props = {
                     w: w,
@@ -213,12 +288,12 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 };
                 self.m_property.viewPanel(Elements.VIEWER_EDIT_PROPERTIES);
                 self.m_dimensionProps.setValues(props);
-                self.m_selectedViewerID = e.target.id;
+                self.m_selectedViewerID = o.id;
                 self._updateDimensionsInDB(props);
 
-                p.setCoords();
+                o.setCoords();
                 self.m_canvas.renderAll();
-                p.setCoords();
+                // o.setCoords();
 
             }, 200);
 
@@ -235,15 +310,15 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
          @method _moveViewer
          @param {Object} i_props
          **/
-        _moveViewer: function(i_props){
+        _moveViewer: function (i_props) {
             var self = this;
             // log('moving viewer');
             var viewer = self.m_canvas.getActiveObject();
-            if (viewer){
+            if (viewer) {
                 viewer.setWidth(i_props.w / self.RATIO);
                 viewer.setHeight(i_props.h / self.RATIO);
-                viewer.set('left',i_props.x / self.RATIO);
-                viewer.set('top',i_props.y / self.RATIO);
+                viewer.set('left', i_props.x / self.RATIO);
+                viewer.set('top', i_props.y / self.RATIO);
                 viewer.setCoords();
                 self.m_canvas.renderAll();
             }
@@ -254,7 +329,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
          @method _updateDimensionsInDB
          @param {Object} i_props
          **/
-        _updateDimensionsInDB: function(i_props){
+        _updateDimensionsInDB: function (i_props) {
             var self = this;
             // log('Jalapeno ' + self.m_selectedViewerID + ' ' + JSON.stringify(i_props));
             jalapeno.setBoardTemplateViewer(self.m_campaign_timeline_board_template_id, self.m_selectedViewerID, i_props);
@@ -293,32 +368,6 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             self.m_resolution = undefined;
             self.m_global_board_template_id = undefined;
             self.m_selectedViewerID = undefined;
-        },
-
-        /**
-         Load the editor into DOM using the StackView using animation slider
-         @method  selectView
-         **/
-        selectView: function (i_campaign_timeline_id, i_campaign_timeline_board_template_id) {
-            var self = this;
-            self.m_campaign_timeline_id = i_campaign_timeline_id;
-            self.m_campaign_timeline_board_template_id = i_campaign_timeline_board_template_id;
-            self.m_global_board_template_id = jalapeno.getGlobalTemplateIdOfTimeline(i_campaign_timeline_board_template_id)[0];
-            self.m_screenProps = jalapeno.getTemplateViewersScreenProps(self.m_campaign_timeline_id, self.m_campaign_timeline_board_template_id);
-            self.m_orientation = BB.comBroker.getService(BB.SERVICES['ORIENTATION_SELECTOR_VIEW']).getOrientation();
-            self.m_resolution = BB.comBroker.getService(BB.SERVICES['RESOLUTION_SELECTOR_VIEW']).getResolution();
-
-            self.options.stackView.slideToPage(self, 'right');
-
-            require(['fabric'], function () {
-                // var resolution = BB.comBroker.getService(BB.SERVICES['RESOLUTION_SELECTOR_VIEW']).getResolution();
-                var w = parseInt(self.m_resolution.split('x')[0]) / self.RATIO;
-                var h = parseInt(self.m_resolution.split('x')[1]) / self.RATIO;
-                self._canvasFactory(w, h);
-                self._listenObjectChanged();
-                self._listenObjectsOverlap();
-                self._listenBackgroundSelected();
-            })
         }
     });
 

@@ -162,6 +162,11 @@ Elements.CONVERT_ACCOUNT = '#convertAccount'
 Elements.SUBSCRIBE_ACCOUNT = '#subscribeAccount';
 Elements.STATION_ALERT = '#stationAlert';
 Elements.VIEWER_DIMENSIONS = '#viewerDimensions';
+Elements.LAYOUT_EDITOR_ADD_NEW = '#layoutEditorAddNew';
+Elements.LAYOUT_EDITOR_REMOVE = '#layoutEditorRemove';
+Elements.LAYOUT_EDITOR_PUSH_TOP = '#layoutEditorPushTop';
+Elements.LAYOUT_EDITOR_PUSH_BOTTOM = '#layoutEditorPushBottom';
+Elements.LAYOUT_EDITOR_NEXT = '#layoutEditorNext';
 
 // templates
 Elements.FONT_SELECTOR_TEMPLATE = '#fontSelectorTemplate';

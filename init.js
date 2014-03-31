@@ -174,7 +174,7 @@ require.config({
 
 if (window.location.href.indexOf('dist') > -1) {
     requirejs.onError = function (err) {
-        alert('Timeout error, network seems to be too slow to run the StudioLite app :( \n\n\n\n ' + err);
+        alert('An error has occurred:( \n\n\n\n ' + err);
     }
 }
 

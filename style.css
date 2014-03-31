@@ -612,6 +612,11 @@ aside > aside > div > ul > li {
     background-color: #75b1ae;
 }
 
+.tooltip-inner {
+    min-width: 150px;
+}
+
+
 
 /************************************
  StackView styling

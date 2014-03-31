@@ -157,8 +157,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             var self = this;
             $(Elements.LAYOUT_EDITOR_PUSH_TOP, self.$el).on('click', function () {
                 var view = self.m_canvas.getActiveObject();
-                if (view)
-                    self.m_canvas.bringToFront(view);
+                if (!view)
+                    return;
+                 self.m_canvas.bringToFront(view);
+                self._updateZorder();
             });
         },
 
@@ -166,8 +168,21 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             var self = this;
             $(Elements.LAYOUT_EDITOR_PUSH_BOTTOM, self.$el).on('click', function () {
                 var view = self.m_canvas.getActiveObject();
-                if (view)
-                    self.m_canvas.sendToBack(view);
+                if (!view)
+                    return;
+                self.m_canvas.sendToBack(view);
+                self._updateZorder();
+            });
+        },
+
+        _updateZorder: function(){
+            var self = this;
+            var totalViews = self.m_canvas.getObjects().length;
+            var i = 0;
+            self.m_canvas.forEachObject(function (obj) {
+                i++;
+                // log((totalViews - i) + ' ' + obj.get('id'))
+                jalapeno.updateTemplateViewerOrder(obj.get('id'),(totalViews - i));
             });
         },
 

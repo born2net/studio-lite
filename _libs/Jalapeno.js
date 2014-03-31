@@ -476,6 +476,19 @@ Jalapeno.prototype = {
     },
 
     /**
+     Change a viewer's (aka screen division) order (layer) z-order
+     @method updateTemplateViewerOrder
+     @param {number} board_template_viewer_id
+     @param {number} i_playerData
+     **/
+    updateTemplateViewerOrder: function(i_board_template_viewer_id, i_zorder){
+        var self = this;
+        self.m_msdb.table_board_template_viewers().openForEdit(i_board_template_viewer_id);
+        var recEditBoardTemplateViewer = self.m_msdb.table_board_template_viewers().getRec(i_board_template_viewer_id);
+        recEditBoardTemplateViewer['viewer_order'] = i_zorder;
+    },
+
+    /**
      Create a new timeline under the specified campaign_id
      @method createNewTimeline
      @param {Number} i_campaign_id

@@ -48,7 +48,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                             });
                             $(self.m_dimensionProps).on('changed', function (e) {
                                 var props = e.target.getValues();
-                                self._updateDimensionsInDB(props);
+                                self._updateDimensionsInDB(self.m_canvas.getActiveObject(), props);
                                 self._moveViewer(props);
                             });
                             self._render();
@@ -112,7 +112,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 var campaign_timeline_chanel_id = jalapeno.createTimelineChannel(self.m_campaign_timeline_id);
                 jalapeno.assignViewerToTimelineChannel(self.m_campaign_timeline_board_template_id, board_viewer_id, campaign_timeline_chanel_id);
 
-                var rect = new fabric.Rect({
+                var viewer = new fabric.Rect({
                     left: 0,
                     top: 0,
                     fill: '#ececec',
@@ -130,12 +130,15 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                     lockRotation: true,
                     transparentCorners: false
                 });
-                self.m_canvas.add(rect);
-                var o = {
-                    campaign_timeline_board_template_id: self.m_campaign_timeline_board_template_id,
-                    board_template_viewer_id: board_viewer_id
-                };
-                jalapeno.announceTemplateViewerEdited(o);
+                self.m_canvas.add(viewer);
+
+                var props = {
+                    x: 0,
+                    y: 0,
+                    w: viewer.get('width') * self.RATIO,
+                    h: viewer.get('height') * self.RATIO
+                }
+                self._updateDimensionsInDB(viewer, props);
             });
         },
 
@@ -158,12 +161,14 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 jalapeno.removeChannelFromTimeline(campaign_timeline_chanel_id);
                 jalapeno.removeBlocksFromTimelineChannel(campaign_timeline_chanel_id);
                 self.m_canvas.remove(self.m_canvas.getActiveObject());
-                self.m_canvas.renderAll();
-                var o = {
-                    campaign_timeline_board_template_id: self.m_campaign_timeline_board_template_id,
-                    board_template_viewer_id: self.m_selectedViewerID
-                };
-                jalapeno.announceTemplateViewerEdited(o);
+                var viewer = self.m_canvas.item(0);
+                var props = {
+                    x: viewer.get('top'),
+                    y: viewer.get('left'),
+                    w: viewer.get('width') * self.RATIO,
+                    h: viewer.get('height') * self.RATIO
+                }
+                self._updateDimensionsInDB(viewer, props);
             });
 
         },
@@ -175,10 +180,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         _listenPushToTopDivision: function () {
             var self = this;
             $(Elements.LAYOUT_EDITOR_PUSH_TOP, self.$el).on('click', function () {
-                var view = self.m_canvas.getActiveObject();
-                if (!view)
+                var viewer = self.m_canvas.getActiveObject();
+                if (!viewer)
                     return;
-                self.m_canvas.bringToFront(view);
+                self.m_canvas.bringToFront(viewer);
                 self._updateZorder();
             });
         },
@@ -190,10 +195,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         _listenPushToBottomDivision: function () {
             var self = this;
             $(Elements.LAYOUT_EDITOR_PUSH_BOTTOM, self.$el).on('click', function () {
-                var view = self.m_canvas.getActiveObject();
-                if (!view)
+                var viewer = self.m_canvas.getActiveObject();
+                if (!viewer)
                     return;
-                self.m_canvas.sendToBack(view);
+                self.m_canvas.sendToBack(viewer);
                 self._updateZorder();
             });
         },
@@ -220,8 +225,8 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         _listenSelectNextDivision: function () {
             var self = this;
             $(Elements.LAYOUT_EDITOR_NEXT, self.$el).on('click', function () {
-                var view = self.m_canvas.getActiveObject();
-                var viewIndex = self.m_canvas.getObjects().indexOf(view);
+                var viewer = self.m_canvas.getActiveObject();
+                var viewIndex = self.m_canvas.getObjects().indexOf(viewer);
                 var totalViews = self.m_canvas.getObjects().length;
                 if (viewIndex == totalViews - 1) {
                     self.m_canvas.setActiveObject(self.m_canvas.item(0));
@@ -358,7 +363,9 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         _enforceViewerVisible: function () {
             var self = this;
             var pass = 0;
+            var viewer;
             self.m_canvas.forEachObject(function (o) {
+                viewer = o;
                 if (pass)
                     return;
                 if (o.get('left') < (0 - o.get('width')) + 20) {
@@ -369,20 +376,39 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                     pass = 1;
                 }
             });
-            if (!pass)
-                log('fail');
+            if (!pass && viewer) {
+                viewer.set({left: 0, top: 0}).setCoords();
+                viewer.setCoords();
+                self.m_canvas.renderAll();
+                bootbox.alert({message: "At least one screen division must be within viewer", title: 'screen division position reset' });
+                var props = {
+                    x: viewer.get('top'),
+                    y: viewer.get('left'),
+                    w: viewer.get('width') * self.RATIO,
+                    h: viewer.get('height') * self.RATIO
+                }
+                self._updateDimensionsInDB(viewer, props);
+            }
         },
 
         /**
          Enforce minimum x y w h props
-         @method self._enforceViewerMinimums(o);
+         @method self._enforceViewerMinimums(i_viewer);
          @param {Object} i_rect
          **/
-        _enforceViewerMinimums: function (o) {
+        _enforceViewerMinimums: function (i_viewer) {
             var self = this;
-            if ((o.width * self.RATIO) < 50 || (o.height * self.RATIO) < 50) {
-                o.width = 50 / self.RATIO;
-                o.height = 50 / self.RATIO;
+            var MIN_SIZE = 100;
+            if ((i_viewer.width * self.RATIO) < MIN_SIZE || (i_viewer.height * self.RATIO) < MIN_SIZE) {
+                i_viewer.width = MIN_SIZE / self.RATIO;
+                i_viewer.height = MIN_SIZE / self.RATIO;
+                var props = {
+                    x: i_viewer.get('top'),
+                    y: i_viewer.get('left'),
+                    w: MIN_SIZE,
+                    h: MIN_SIZE
+                }
+                self._updateDimensionsInDB(i_viewer, props);
             }
         },
 
@@ -393,7 +419,6 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         _listenObjectChanged: function () {
             var self = this;
             self.m_objectMovingHandler = _.debounce(function (e) {
-
                 var o = e.target;
                 if (o.width != o.currentWidth || o.height != o.currentHeight) {
                     o.width = o.currentWidth;
@@ -409,7 +434,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 var y = BB.lib.parseToFloatDouble(o.top) * self.RATIO;
                 var w = BB.lib.parseToFloatDouble(o.currentWidth) * self.RATIO;
                 var h = BB.lib.parseToFloatDouble(o.currentHeight) * self.RATIO;
-                var a = o.get('angle');
+                // var a = o.get('angle');
                 var props = {
                     w: w,
                     h: h,
@@ -419,9 +444,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 self.m_property.viewPanel(Elements.VIEWER_EDIT_PROPERTIES);
                 self.m_dimensionProps.setValues(props);
                 self.m_selectedViewerID = o.id;
-                self._updateDimensionsInDB(props);
-                o.setCoords();
-                self.m_canvas.renderAll();
+                self._updateDimensionsInDB(o, props);
 
             }, 200);
 
@@ -461,10 +484,12 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
          @method _updateDimensionsInDB
          @param {Object} i_props
          **/
-        _updateDimensionsInDB: function (i_props) {
+        _updateDimensionsInDB: function (i_viewer, i_props) {
             var self = this;
-            // log('Jalapeno ' + self.m_selectedViewerID + ' ' + JSON.stringify(i_props));
-            jalapeno.setBoardTemplateViewer(self.m_campaign_timeline_board_template_id, self.m_selectedViewerID, i_props);
+            log('Jalapeno ' +i_viewer.get('id') + ' ' + JSON.stringify(i_props));
+            jalapeno.setBoardTemplateViewer(self.m_campaign_timeline_board_template_id, i_viewer.get('id'), i_props);
+            i_viewer.setCoords();
+            self.m_canvas.renderAll();
         },
 
         /**

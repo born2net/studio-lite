@@ -575,11 +575,9 @@ Jalapeno.prototype = {
         recEditBoardTemplateViewer['pixel_y'] = y;
         recEditBoardTemplateViewer['pixel_width'] = w;
         recEditBoardTemplateViewer['pixel_height'] = h;
-
         var o = {
             campaign_timeline_board_template_id: i_campaign_timeline_board_template_id,
             board_template_viewer_id: i_board_template_viewer_id,
-            // props: i_props
         };
         jalapeno.announceTemplateViewerEdited(o);
     },

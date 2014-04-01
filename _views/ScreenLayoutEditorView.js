@@ -352,16 +352,38 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         },
 
         /**
+         Make sure that at least one screen division is visible within the canvas
+         @method _enforceViewerVisible
+         **/
+        _enforceViewerVisible: function () {
+            var self = this;
+            var pass = 0;
+            self.m_canvas.forEachObject(function (o) {
+                if (pass)
+                    return;
+                if (o.get('left') < (0 - o.get('width')) + 20) {
+                } else if (o.get('left') > self.m_canvas.getWidth() - 20) {
+                } else if (o.get('top') < (0 - o.get('height') + 20)) {
+                } else if (o.get('top') > self.m_canvas.getHeight() - 20) {
+                } else {
+                    pass = 1;
+                }
+            });
+            if (!pass)
+                log('fail');
+        },
+
+        /**
          Enforce minimum x y w h props
          @method self._enforceViewerMinimums(o);
          @param {Object} i_rect
          **/
-        _enforceViewerMinimums: function(o){
+        _enforceViewerMinimums: function (o) {
             var self = this;
-            if ((o.width * self.RATIO) < 50 || (o.height * self.RATIO) < 50 ){
+            if ((o.width * self.RATIO) < 50 || (o.height * self.RATIO) < 50) {
                 o.width = 50 / self.RATIO;
                 o.height = 50 / self.RATIO;
-           }
+            }
         },
 
         /**
@@ -380,19 +402,8 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                     o.scaleY = 1;
                 }
 
-                if (o.get('left') < (0 - o.get('width'))+20) {
-                    log('outta here')
-                } else if (o.get('left') > self.m_canvas.getWidth()-20) {
-                    log('outta here')
-                } else if (o.get('top') < (0 - o.get('height')+20)) {
-                    log('outta here')
-                } else if (o.get('top') > self.m_canvas.getHeight()-20) {
-                    log('outta here')
-                } else {
-                    log('all good');
-                }
-
                 self._enforceViewerMinimums(o);
+                self._enforceViewerVisible();
 
                 var x = BB.lib.parseToFloatDouble(o.left) * self.RATIO;
                 var y = BB.lib.parseToFloatDouble(o.top) * self.RATIO;
@@ -409,7 +420,6 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 self.m_dimensionProps.setValues(props);
                 self.m_selectedViewerID = o.id;
                 self._updateDimensionsInDB(props);
-
                 o.setCoords();
                 self.m_canvas.renderAll();
 
@@ -437,7 +447,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 viewer.setHeight(i_props.h / self.RATIO);
                 viewer.set('left', i_props.x / self.RATIO);
                 viewer.set('top', i_props.y / self.RATIO);
+
                 self._enforceViewerMinimums(viewer);
+                self._enforceViewerVisible();
+
                 viewer.setCoords();
                 self.m_canvas.renderAll();
             }

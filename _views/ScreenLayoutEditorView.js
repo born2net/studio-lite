@@ -95,6 +95,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             self.m_property.resetPropertiesView();
         },
 
+        /**
+         Listen to the addition of a new viewer
+         @method (totalViews - i)
+         **/
         _listenAddDivision: function () {
             var self = this;
             $(Elements.LAYOUT_EDITOR_ADD_NEW, self.$el).on('click', function () {
@@ -135,9 +139,20 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             });
         },
 
+        /**
+         Listen to the removal of an existing screen division
+         @method _listenRemoveDivision
+         **/
         _listenRemoveDivision: function () {
             var self = this;
             $(Elements.LAYOUT_EDITOR_REMOVE, self.$el).on('click', function () {
+
+                var totalViews = self.m_canvas.getObjects().length;
+                if (totalViews < 2) {
+                    bootbox.alert("you must keep at least one viewable screen division");
+                    return;
+                }
+
                 var campaign_timeline_chanel_id = jalapeno.removeTimelineBoardViewerChannel(self.m_selectedViewerID);
                 jalapeno.removeBoardTemplateViewer(self.m_campaign_timeline_board_template_id, self.m_selectedViewerID);
                 jalapeno.removeChannelFromTimeline(campaign_timeline_chanel_id);
@@ -153,17 +168,25 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
 
         },
 
+        /**
+         Listen to re-order of screen division, putting selected on top
+         @method _listenPushToTopDivision
+         **/
         _listenPushToTopDivision: function () {
             var self = this;
             $(Elements.LAYOUT_EDITOR_PUSH_TOP, self.$el).on('click', function () {
                 var view = self.m_canvas.getActiveObject();
                 if (!view)
                     return;
-                 self.m_canvas.bringToFront(view);
+                self.m_canvas.bringToFront(view);
                 self._updateZorder();
             });
         },
 
+        /**
+         Listen to re-order of screen division, putting selected at bottom
+         @method _listenPushToBottomDivision
+         **/
         _listenPushToBottomDivision: function () {
             var self = this;
             $(Elements.LAYOUT_EDITOR_PUSH_BOTTOM, self.$el).on('click', function () {
@@ -175,17 +198,25 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             });
         },
 
-        _updateZorder: function(){
+        /**
+         Change the z-order of viewers in jalapeno
+         @method _updateZorder
+         **/
+        _updateZorder: function () {
             var self = this;
             var totalViews = self.m_canvas.getObjects().length;
             var i = 0;
             self.m_canvas.forEachObject(function (obj) {
                 i++;
                 // log((totalViews - i) + ' ' + obj.get('id'))
-                jalapeno.updateTemplateViewerOrder(obj.get('id'),(totalViews - i));
+                jalapeno.updateTemplateViewerOrder(obj.get('id'), (totalViews - i));
             });
         },
 
+        /**
+         Listen to selection of next viewer
+         @method _listenSelectNextDivision
+         **/
         _listenSelectNextDivision: function () {
             var self = this;
             $(Elements.LAYOUT_EDITOR_NEXT, self.$el).on('click', function () {
@@ -199,7 +230,6 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 }
             });
         },
-
 
         /**
          Unload the editor from DOM using the StackView animated slider
@@ -322,6 +352,19 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         },
 
         /**
+         Enforce minimum x y w h props
+         @method self._enforceViewerMinimums(o);
+         @param {Object} i_rect
+         **/
+        _enforceViewerMinimums: function(o){
+            var self = this;
+            if ((o.width * self.RATIO) < 50 || (o.height * self.RATIO) < 50 ){
+                o.width = 50 / self.RATIO;
+                o.height = 50 / self.RATIO;
+           }
+        },
+
+        /**
          Listen to changes in a viewer changes in cords and update jalapeno
          @method i_props
          **/
@@ -336,13 +379,26 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                     o.scaleX = 1;
                     o.scaleY = 1;
                 }
-                ;
+
+                if (o.get('left') < (0 - o.get('width'))+20) {
+                    log('outta here')
+                } else if (o.get('left') > self.m_canvas.getWidth()-20) {
+                    log('outta here')
+                } else if (o.get('top') < (0 - o.get('height')+20)) {
+                    log('outta here')
+                } else if (o.get('top') > self.m_canvas.getHeight()-20) {
+                    log('outta here')
+                } else {
+                    log('all good');
+                }
+
+                self._enforceViewerMinimums(o);
 
                 var x = BB.lib.parseToFloatDouble(o.left) * self.RATIO;
                 var y = BB.lib.parseToFloatDouble(o.top) * self.RATIO;
                 var w = BB.lib.parseToFloatDouble(o.currentWidth) * self.RATIO;
                 var h = BB.lib.parseToFloatDouble(o.currentHeight) * self.RATIO;
-                var a = e.target.get('angle');
+                var a = o.get('angle');
                 var props = {
                     w: w,
                     h: h,
@@ -381,6 +437,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 viewer.setHeight(i_props.h / self.RATIO);
                 viewer.set('left', i_props.x / self.RATIO);
                 viewer.set('top', i_props.y / self.RATIO);
+                self._enforceViewerMinimums(viewer);
                 viewer.setCoords();
                 self.m_canvas.renderAll();
             }

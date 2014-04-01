@@ -29,6 +29,8 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
             var currID = self.$el.attr('id');
             self.$el.attr('id', _.uniqueId(currID));
 
+            $('.spinnerDimWidth', self.$el).spinner({value: 0, min: 50, max: 9999, step: 1});
+            $('.spinnerDimHeight', self.$el).spinner({value: 0, min: 50, max: 9999, step: 1});
             $('.spinner', self.$el).spinner({value: 0, min: -9999, max: 9999, step: 1});
             $('.spinner', self.$el).on('changed',function(){
                 $(self).trigger('changed');

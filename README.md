@@ -41,7 +41,7 @@ Installation:
 - Download the zip from GitHub
 - On your web server create a root directory and name it: _studiolite-dev
 - Unzip all files into _studiolite-dev directory
-- Point browser to: [YOUR_SERVER]/_studiolite-dev/studiolite.html
+- Point browser to: [YOUR_SERVER]/_studiolite-dev/studiolite.html (IMPORTANT: make sure _studiolite-dev is in the root of web server)
 
 Customization:
 ------------------------------------------------------------------------

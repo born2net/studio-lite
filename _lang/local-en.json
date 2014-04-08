@@ -37,6 +37,14 @@
     "noStation": " No SignagePlayer loaded...",
     "stationSettings": "Station settings",
     "pollInterval": "poll interval (in seconds):",
-    "rightPackage": "Choose the package that's right for you"
+    "rightPackage": "Choose the package that's right for you",
+    "bootBoxRestartStations": "Restart connected stations and apply all your saved work?",
+    "bootBoxStudioLiteAcc": "You must login with StudioLite account and not a Pro account",
+    "bootBoxLoginWrongCred": "You are logged with FREE SignageStudio Pro credentials and not FREE StudioLite credentials so only the Stations module is available. Be sure to create a new FREE StudioLite account to get the full experience",
+    "bootBoxSaveRemoteSrv": "Save the work to remote server",
+    "bootBoxSave": "Save",
+    "bootBoxSaveAndRestart": "Save and restart stations",
+    "bootBoxCancel": "Cancel"
+
 }
 

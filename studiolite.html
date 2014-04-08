@@ -166,7 +166,7 @@
                                     data-localize="timelineLength"> Timelines length </span> <span
                                     id="timelinesTotalLength"> 00:00:00</span></a>
                                 <button style="margin-left: 30px" id="addNewTimelineButton" type="button"
-                                        title="add a new timeline" data-toggle="tooltip"
+                                        title="add new timeline" data-localize="timelineLength" data-toggle="tooltip"
                                         class="btn btn-default btn-sm"><span
                                         class="glyphicon glyphicon-plus"></span></button>
                                 <button id="removeTimelineButton" type="button"
@@ -899,9 +899,21 @@
         </div>
     </div>
 </div>
+
 <div id="stackWaitModalView" style="display: none">
     <h1>please wait</h1>
     <button type="button" class="btn btn-primary modal_close" data-dismiss="modal">Close</button>
     <span style="position: relative; left: 45%; top: 40%"> <img src="./_assets/preload3.gif"> </span></div>
+
+<!-- Messages -->
+<p style="display: none" id="bootBoxRestartStations" data-localize="bootBoxRestartStations">Restart connected stations and apply your saved work?</p>
+<p style="display: none" id="bootBoxStudioLiteAcc" data-localize="bootBoxStudioLiteAcc">You must login with a StudioLite account and not a Pro account</p>
+<p style="display: none" id="bootBoxLoginWrongCred" data-localize="bootBoxLoginWrongCred">You are logged with FREE SignageStudio Pro credentials and not FREE StudioLite credentials so only the Stations module is available. Be sure to create a new FREE StudioLite account to get the full experience...</p>
+<p style="display: none" id="bootBoxSaveRemoteSrv" data-localize="bootBoxSaveRemoteSrv">Save work to remote server</p>
+<p style="display: none" id="bootBoxSave" data-localize="bootBoxSave">Save!</p>
+<p style="display: none" id="bootBoxSaveAndRestart" data-localize="bootBoxSaveAndRestart">Save & restart stations</p>
+<p style="display: none" id="bootBoxCancel" data-localize="bootBoxCancel">Cancel</p>
+
+
 </body>
 </html>

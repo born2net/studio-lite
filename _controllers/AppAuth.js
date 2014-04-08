@@ -91,7 +91,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 // Pro Account (not a Lite account) so limited access
 
                 // if module was not loaded yet wait to be notified from when it does
-                var navigationView = BB.comBroker.listen(BB.SERVICES['NAVIGATION_VIEW']);
+                var navigationView = BB.comBroker.getService(BB.SERVICES['NAVIGATION_VIEW']);
                 if (_.isUndefined(navigationView)) {
                     BB.comBroker.listen(BB.EVENTS.SERVICE_REGISTERED, function (e) {
                         if (e.edata.name == BB.SERVICES['NAVIGATION_VIEW']) {
@@ -128,8 +128,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             // let user know authentication failed
             if (i_status.error == "not a studioLite account") {
                 bootbox.dialog({
-                    message: "You must login with a StudioLite account and not a Pro account",
-                    title: "keep in mind...",
+                    message: $(Elements.MSG_BOOTBOX_STUDIO_LITE_ACC).text(),
                     buttons: {
                         info: {
                             label: "OK",

@@ -146,7 +146,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         forceStationOnlyViewAndDialog: function () {
             var self = this;
             bootbox.dialog({
-                message: "You are logged with FREE SignageStudio Pro credentials and not FREE StudioLite credentials so only the Stations module is available. Be sure to create a new FREE StudioLite account to get the full experience...",
+                message: $(Elements.MSG_BOOTBOX_LOGIN_WRONG_CRED).text(),
                 title: "Login in with Pro credentials..",
                 buttons: {
                     info: {
@@ -188,11 +188,11 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             }
 
             bootbox.dialog({
-                message: "Restart connected stations to apply your latest saved work?",
-                title: "Save work to remote server",
+                message: $(Elements.MSG_BOOTBOX_RESTART_STATIONS).text(),
+                title: $(Elements.MSG_BOOTBOX_SAVE_REMOTE_SRV).text(),
                 buttons: {
                     success: {
-                        label: "Save",
+                        label: $(Elements.MSG_BOOTBOX_SAVE).text(),
                         className: "btn-success",
                         callback: function () {
                             self.save(function () {
@@ -200,7 +200,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                         }
                     },
                     danger: {
-                        label: "Save & restart stations",
+                        label: $(Elements.MSG_BOOTBOX_SAVE_RESTART).text(),
                         className: "btn-success",
                         callback: function () {
                             self.save(function () {
@@ -211,7 +211,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                         }
                     },
                     main: {
-                        label: "Cancel",
+                        label: $(Elements.MSG_BOOTBOX_CANCEL).text(),
                         callback: function () {
                             return;
                         }

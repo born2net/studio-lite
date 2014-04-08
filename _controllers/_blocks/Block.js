@@ -146,9 +146,10 @@ define(['jquery', 'backbone'], function ($) {
                 var v = $(e.target).prop('checked') == true ? 1 : 0;
                 if (v) {
                     self._enableGradient();
-                    xSnippet = $(domPlayerData).find('Appearance');
                     xBgSnippet = BB.JalapenoHelper.getCommonBackgroundXML();
-                    $(xSnippet).after(xBgSnippet);
+                    var xmlString = (new XMLSerializer()).serializeToString(domPlayerData);
+                    xmlString = xmlString.replace("<Appearance", xBgSnippet + "<Appearance");
+                    domPlayerData = $.parseXML(xmlString);
                     self._setBlockPlayerData(domPlayerData);
                     self._gradientPopulate();
                 } else {
@@ -178,16 +179,21 @@ define(['jquery', 'backbone'], function ($) {
                 var domPlayerData = self._getBlockPlayerData();
                 var gradientPoints = $(domPlayerData).find('GradientPoints');
                 $(gradientPoints).empty();
-
+                var pointsXML = "";
                 for (var i = 0; i < points.length; ++i) {
                     var pointMidpoint = (parseInt(points[i].position * 250));
-                    var color = BB.lib.colorToDecimal(points[i].color)
-                    var xPoint = '<Point color="' + color + '" opacity="1" midpoint="' + pointMidpoint + '" />'
+                    var color = BB.lib.colorToDecimal(points[i].color);
+                    var xPoint = '<Point color="' + color + '" opacity="1" midpoint="' + pointMidpoint + '" />';
                     // log(xPoint);
-                    $(gradientPoints).append(xPoint);
+                    // $(gradientPoints).append(xPoint);
+                    pointsXML += xPoint;
                 }
+                // $(domPlayerData).find('GradientPoints').html(pointsXML);
+                var xmlString = (new XMLSerializer()).serializeToString(domPlayerData);
+                xmlString = xmlString.replace(/<GradientPoints[ ]*\/>/, '<GradientPoints>' + pointsXML + '</GradientPoints>');
+                domPlayerData = $.parseXML(xmlString);
                 self._setBlockPlayerData(domPlayerData);
-            })
+            });
         },
 
         /**

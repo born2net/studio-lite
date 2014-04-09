@@ -22,7 +22,6 @@
     "screenOrientation": "Select your screen orientation",
     "screenResolution": "Select your screen resolution",
     "screenLayout": "Select your screen layout",
-    "timelineLength": " Timelines length ",
     "noTimelineSelected": "no timeline selected",
     "addContent": " Add content ",
     "removeContent": " Remove content ",
@@ -44,7 +43,10 @@
     "bootBoxSaveRemoteSrv": "Save the work to remote server",
     "bootBoxSave": "Save",
     "bootBoxSaveAndRestart": "Save and restart stations",
-    "bootBoxCancel": "Cancel"
+    "bootBoxCancel": "Cancel",
+    "addNewTimelineButtonToolTip": "Add a new timeline",
+    "campaignName": "Select a campaign name",
+    "channelProps": "channel props"
 
 }
 

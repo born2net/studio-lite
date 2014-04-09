@@ -17,8 +17,9 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         initialize: function () {
             this.authenticated = false;
-            this.AUTH_USER_PASS = 0
-            this.AUTH_COOKIE = 1
+            this.AUTH_USER_PASS = 0;
+            this.AUTH_COOKIE = 1;
+            this.AUTH_PARAMS = 2;
         },
 
         /**
@@ -35,19 +36,45 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         /**
-         Load user credentials from cookie if exists, else load from form data
+         Check if user / pass were passed in via params
+         @method _loadPassedCredentials
+         @return {Object} user and pass if passed in or undefined if none
+         **/
+        _loadPassedCredentials: function () {
+            var credentials = BB.lib.getURLParameter('param');
+            if (credentials == 'null')
+                return undefined;
+            credentials = $.base64.decode(credentials);
+            var re = /user=(.*),pass=(.*)/;
+            var match = re.exec(credentials);
+            return {
+                user: match[1],
+                pass: match[2]
+            }
+        },
+
+        /**
+         Load user credentials from param or cookie or form data
          @method _loadCredentials
          @param {String} i_user
          @param {String} i_pass
          **/
         _loadCredentials: function (i_user, i_pass) {
             var self = this;
-            var cookie = $.cookie('signagestudioweblite') == undefined ? undefined : $.cookie('signagestudioweblite').split(' ')[0];
-            if (cookie) {
-                var credentials = self._breakCookie(cookie);
-                self._authServer(credentials.user, credentials.pass, this.AUTH_COOKIE);
+
+            var passedCredentials = self._loadPassedCredentials();
+            var cookieCredentials = $.cookie('signagestudioweblite') == undefined ? undefined : $.cookie('signagestudioweblite').split(' ')[0];
+
+            if (passedCredentials){
+                self._authServer(passedCredentials.user, passedCredentials.pass, self.AUTH_PARAMS);
+
+            } else if (cookieCredentials) {
+                var credentials = self._breakCookie(cookieCredentials);
+                self._authServer(credentials.user, credentials.pass, self.AUTH_COOKIE);
+
             } else if (i_user.length > 2 && i_pass.length > 2) {
-                self._authServer(i_user, i_pass, this.AUTH_USER_PASS);
+                self._authServer(i_user, i_pass, self.AUTH_USER_PASS);
+
             } else {
                 BB.comBroker.getService(BB.SERVICES['LAYOUT_ROUTER']).navigate('unauthenticated', {trigger: true});
             }

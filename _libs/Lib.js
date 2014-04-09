@@ -428,7 +428,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @param {Object} i_value
          @return {Number}
          **/
-        parseToFloatDouble: function(i_value){
+        parseToFloatDouble: function (i_value) {
             return parseFloat(parseFloat(i_value).toFixed(2));
         },
 
@@ -447,6 +447,18 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             } else {
                 return false;
             }
+        },
+
+        /**
+         Get specific param name from URL
+         @method function
+         @param {String} i_name
+         @return {String}
+         **/
+        getURLParameter: function (i_name) {
+            return decodeURIComponent(
+                (location.search.match(RegExp("[?|&]" + i_name + '=(.+?)(&|$)')) || [, null])[1]
+            );
         },
 
         /**

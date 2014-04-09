@@ -159,14 +159,14 @@
                 <div class="panel-group" id="timelinesCollapsible">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h4 class="panel-title"><a id="toggleTimelinesCollapsible" data-toggle="collapse"
-                                                       data-parent="#timelinesCollapsible"
-                                                       href="#screenSelectorContainerCollapse"> <span
-                                    class="glyphicon glyphicon-chevron-down"></span><span
-                                    data-localize="timelineLength"> Timelines length </span> <span
-                                    id="timelinesTotalLength"> 00:00:00</span></a>
+                            <h4 class="panel-title">
+                                <a id="toggleTimelinesCollapsible" data-toggle="collapse" data-parent="#timelinesCollapsible" href="#screenSelectorContainerCollapse">
+                                    <span class="glyphicon glyphicon-chevron-down"></span>
+                                <span id="timelinesTotalLength"> 00:00:00</span></a>
                                 <button style="margin-left: 30px" id="addNewTimelineButton" type="button"
-                                        title="add new timeline" data-localize="timelineLength" data-toggle="tooltip"
+                                        title="add new timeline" data-localize="timelineLength"
+                                        data-localize-tooltip="addNewTimelineButtonToolTip"
+                                        data-toggle="tooltip"
                                         class="btn btn-default btn-sm"><span
                                         class="glyphicon glyphicon-plus"></span></button>
                                 <button id="removeTimelineButton" type="button"
@@ -460,7 +460,7 @@
     <hr/>
 </div>
 <div id="campaignProperties" style="display: none">
-    <input id="formCampaignName" type="text" class="form-control" placeholder="Campaign name">
+    <input id="formCampaignName" type="text" data-localize="campaignName" class="form-control" placeholder="Campaign name">
 </div>
 <div id="timelineProperties" style="display: none">
     <label>Length: </label>
@@ -475,7 +475,7 @@
             data-localize="editScreenLayout">edit screen layout</span></button>
 </div>
 <div id="channelProperties" style="display: none">
-    <h5>Channel properties</h5>
+    <h5 data-localize="channelProps">Channel properties</h5>
     <label for="randomPlayback">Random Playback</label>
     <select id="randomPlayback" name="Random playback" data-role="slider">
         <option value="off">Off</option>

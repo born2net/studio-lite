@@ -1,15 +1,13 @@
 
 /*
-Copyright (c) Jim Garvin (http://github.com/coderifous), 2008.
-Dual licensed under the GPL (http://dev.jquery.com/browser/trunk/jquery/GPL-LICENSE.txt) and MIT (http://dev.jquery.com/browser/trunk/jquery/MIT-LICENSE.txt) licenses.
-Written by Jim Garvin (@coderifous) for use on LMGTFY.com.
-http://github.com/coderifous/jquery-localize
-Based off of Keith Wood's Localisation jQuery plugin.
-http://keith-wood.name/localisation.html
-https://github.com/coderifous/jquery-localize
+ Copyright (c) Jim Garvin (http://github.com/coderifous), 2008.
+ Dual licensed under the GPL (http://dev.jquery.com/browser/trunk/jquery/GPL-LICENSE.txt) and MIT (http://dev.jquery.com/browser/trunk/jquery/MIT-LICENSE.txt) licenses.
+ Written by Jim Garvin (@coderifous) for use on LMGTFY.com.
+ http://github.com/coderifous/jquery-localize
+ Based off of Keith Wood's Localisation jQuery plugin.
+ http://keith-wood.name/localisation.html
  */
-
-define(['jquery'], function ($) {
+(function($) {
     var normaliseLang;
     normaliseLang = function(lang) {
         lang = lang.replace(/_/, '-').toLowerCase();
@@ -20,7 +18,7 @@ define(['jquery'], function ($) {
     };
     $.defaultLanguage = normaliseLang(navigator.language || navigator.userLanguage);
     $.localize = function(pkg, options) {
-        var defaultCallback, fileExtension, intermediateLangData, jsonCall, lang, loadLanguage, localizeElement, localizeForSpecialKeys, localizeImageElement, localizeInputElement, localizeOptgroupElement, notifyDelegateLanguageLoaded, regexify, setAttrFromValueForKey, setTextFromValueForKey, valueForKey, wrappedSet;
+        var defaultCallback, fileExtension, intermediateLangData, jsonCall, lang, loadLanguage, localizeElement, localizeForSpecialKeys, localizeImageElement, localizeInputElement, localizeOptgroupElement, notifyDelegateLanguageLoaded, regexify, setAttrFromValueForKey, setTextFromValueForKey, valueForKey, wrappedSet, localizeToolTipForElement;
         if (options == null) {
             options = {};
         }
@@ -95,11 +93,18 @@ define(['jquery'], function ($) {
         defaultCallback = function(data) {
             $.localize.data[pkg] = data;
             return wrappedSet.each(function() {
-                var elem, key, value;
+                var elem, key, value, toolTipKey, toolTipValue;
                 elem = $(this);
                 key = elem.data("localize");
                 key || (key = elem.attr("rel").match(/localize\[(.*?)\]/)[1]);
                 value = valueForKey(key, data);
+                toolTipKey = elem.attr('data-localize-tooltip');
+                if(toolTipKey)
+                    toolTipValue = valueForKey(toolTipKey, data);
+                else
+                    toolTipValue = false;
+                if(toolTipValue)
+                    elem.attr('title', toolTipValue);
                 if (value != null) {
                     return localizeElement(elem, key, value);
                 }
@@ -138,6 +143,9 @@ define(['jquery'], function ($) {
         localizeImageElement = function(elem, key, value) {
             setAttrFromValueForKey(elem, "alt", value);
             return setAttrFromValueForKey(elem, "src", value);
+        };
+        localizeToolTipForElement = function(elem, key, value) {
+            return setAttrFromValueForKey(elem, "title", value);
         };
         valueForKey = function(key, data) {
             var keys, value, _i, _len;
@@ -187,8 +195,4 @@ define(['jquery'], function ($) {
     };
     $.fn.localize = $.localize;
     return $.localize.data = {};
-
-
-});
-
-
+})(jQuery);

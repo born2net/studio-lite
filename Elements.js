@@ -168,6 +168,9 @@ Elements.LAYOUT_EDITOR_PUSH_TOP = '#layoutEditorPushTop';
 Elements.LAYOUT_EDITOR_PUSH_BOTTOM = '#layoutEditorPushBottom';
 Elements.LAYOUT_EDITOR_NEXT = '#layoutEditorNext';
 
+//ADD
+Elements.LANGUAGE_SELECTION_LOGIN = '#languageSelectionLogin';
+
 // messages
 Elements.MSG_BOOTBOX_RESTART_STATIONS = '#bootBoxRestartStations';
 Elements.MSG_BOOTBOX_STUDIO_LITE_ACC = '#bootBoxStudioLiteAcc';
@@ -180,6 +183,9 @@ Elements.MSG_BOOTBOX_CANCEL = '#bootBoxCancel';
 // templates
 Elements.FONT_SELECTOR_TEMPLATE = '#fontSelectorTemplate';
 Elements.DIMENSION_PROPS_TEMPLATE = '#dimensionPropsTemplate';
+
+// ADD
+Elements.LANGUAGE_SELECTOR_TEMPLATE = '#languageSelector';
 
 // classes
 Elements.CLASS_SCREEN_DIVISION = '.screenDivisionClass';
@@ -205,7 +211,6 @@ Elements.CLASS_FONT_SELECTOR_MINICOLOR = '.fontSelectorMiniColor';
 Elements.CLASS_FONT_ALIGNMENT = '.fontAlignment';
 Elements.CLASS_SPINNER_INPUT = '.spinner-input';
 Elements.CLASS_FONT_SELECTION = '.fontSelection';
-
 
 
 /**

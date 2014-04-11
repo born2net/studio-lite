@@ -1320,7 +1320,6 @@ i .spinner-buttons {
 /************************************
 Language selector
 ************************************/
-#languageSelector { padding-top: 15px }
 .dropdownlang dd, .dropdownlang dt, .dropdownlang ul { margin:0px; padding:0px; }
 .dropdownlang dd { position:relative; }
 .dropdownlang a, .dropdownlang a:visited { color:#816c5b; text-decoration:none; outline:none;}

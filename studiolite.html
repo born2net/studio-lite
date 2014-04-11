@@ -74,27 +74,10 @@
         <button id="loginButton" class="btn btn-lg btn-primary btn-block" type="submit" data-localize="signin">Sign in
         </button>
 
-
-
-        <div id="languageSelector" class="dropdownlang">
-            <dt><a href="#"><span>Selected language (English)</span></a></dt>
-            <dd>
-                <ul>
-                    <li><a href="#"><img class="flag " src="_assets/flags/br.png" alt="" />Brazil<span class="value">BR</span></a></li>
-                    <li><a href="#"><img class="flag" src="_assets/flags/fr.png" alt="" />France<span class="value">FR</span></a></li>
-                    <li><a href="#"><img class="flag" src="_assets/flags/de.png" alt="" />Germany<span class="value">DE</span></a></li>
-                    <li><a href="#"><img class="flag" src="_assets/flags/in.png" alt="" />India<span class="value">IN</span></a></li>
-                    <li><a href="#"><img class="flag" src="_assets/flags/il.png" alt="" />Israel<span class="value">IL</span></a></li>
-                    <li><a href="#"><img class="flag" src="_assets/flags/jp.png" alt="" />Japan<span class="value">JP</span></a></li>
-                    <li><a href="#"><img class="flag" src="_assets/flags/cs.png" alt="" />Serbia<span class="value">CS</span></a></li>
-                    <li><a href="#"><img class="flag" src="_assets/flags/gb.png" alt="" />United Kingdom<span class="value">UK</span></a></li>
-                    <li><a href="#"><img class="flag" src="_assets/flags/us.png" alt="" />United States<span class="value">US</span></a></li>
-                </ul>
-            </dd>
+        <!-- ADDED -->
+        <hr class="hrThin"/>
+        <div id="languageSelectionLogin">
         </div>
-
-        <small>Let us know if you wish to help us add your native language</small>
-
 
 
     </form>
@@ -796,6 +779,28 @@
         <input type="submit" value="Submit">
     </form>
 </div>
+
+<!-- ADDED -->
+<!-- Language selection template -->
+
+<div id="languageSelector" class="dropdownlang" style="display: none">
+    <dt><a href="#"><span>Select language</span></a></dt>
+    <dd>
+        <ul>
+            <li><a href="#"><img class="flag " src="_assets/flags/br.png" alt="" />Brazil<span class="value">BR</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/fr.png" alt="" />France<span class="value">FR</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/de.png" alt="" />Germany<span class="value">DE</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/in.png" alt="" />India<span class="value">IN</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/il.png" alt="" />Israel<span class="value">he</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/jp.png" alt="" />Japan<span class="value">JP</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/cs.png" alt="" />Serbia<span class="value">CS</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/gb.png" alt="" />United Kingdom<span class="value">UK</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/us.png" alt="" />United States<span class="value">en</span></a></li>
+        </ul>
+    </dd>
+</div>
+
+<small>Let us know if you wish to help us add your native language</small>
 
 <!-- Dimension Template -->
 

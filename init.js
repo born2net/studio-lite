@@ -77,6 +77,7 @@ require.config({
         'OrientationSelectorView': '_views/OrientationSelectorView',
         'ScreenLayoutSelectorView': '_views/ScreenLayoutSelectorView',
         'ScreenLayoutEditorView': '_views/ScreenLayoutEditorView',
+        'LanguageSelectorView': '_views/LanguageSelectorView',
         'CampaignView': '_views/CampaignView',
         'SequencerView': '_views/SequencerView',
         'ChannelListView': '_views/ChannelListView',

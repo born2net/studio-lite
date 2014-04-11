@@ -17,8 +17,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 var url = $(e.target).attr('href');
                 window.open(url, '_blank');
                 return false;
-            })
-
+            });
         }
     });
 

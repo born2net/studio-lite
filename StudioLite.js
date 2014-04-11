@@ -33,9 +33,9 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             // internationalization
             require(['localizer', 'LanguageSelectorView'], function (localizer, LanguageSelectorView) {
                 this.m_languageSelectionLogin = new LanguageSelectorView({appendTo: Elements.LANGUAGE_SELECTION_LOGIN});
-                var lang = m_languageSelectionLogin.getLanguage();
-                var opts = { language: lang, pathPrefix: "./_lang" };
-                $("[data-localize]").localize("local", opts);
+                var lang = this.m_languageSelectionLogin.getLanguage();
+                if (lang)
+                    this.m_languageSelectionLogin.applyLanguage();
             });
 
             // router init

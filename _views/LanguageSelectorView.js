@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated LanguageSelectorView
  **/
-define(['jquery', 'backbone', 'simplestorage'], function ($, Backbone, simplestorage) {
+define(['jquery', 'backbone', 'simplestorage', 'bootbox', 'localizer'], function ($, Backbone, simplestorage, bootbox, localizer) {
 
     BB.CONSTS.DEFAULT_LANGUAGE = 'en';
 
@@ -56,22 +56,29 @@ define(['jquery', 'backbone', 'simplestorage'], function ($, Backbone, simplesto
             self.m_simpleStorage.set('languageSelected', i_language);
             log('setting language ' + i_language);
             //todo: add text to language file
-            bootbox.alert("Please wait, loading language selection...");
-            location.reload();
+            bootbox.alert("Selected Language will be applied on your next login");
         },
 
         /**
          Get the currently selected language
          @method getLanguage
-         @return {String} return 2 letter language selection
+         @return {Object} return 2 letter language selection
          **/
         getLanguage: function () {
             var self = this;
-            var languageSelected = self.m_simpleStorage.get('languageSelected');
+            return self.m_simpleStorage.get('languageSelected');
+
+            /*var languageSelected = self.m_simpleStorage.get('languageSelected');
             if (_.isUndefined(languageSelected)) {
-                self.setLanguage(BB.CONSTS.DEFAULT_LANGUAGE);
+                if (i_getDefault)
+                   self.setLanguage(BB.CONSTS.DEFAULT_LANGUAGE);
             }
-            return languageSelected;
+            return languageSelected;*/
+        },
+
+        applyLanguage: function(){
+            var opts = { language: lang, pathPrefix: "./_lang" };
+            $("[data-localize]").localize("local", opts);
         }
     });
 

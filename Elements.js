@@ -168,7 +168,7 @@ Elements.LAYOUT_EDITOR_PUSH_TOP = '#layoutEditorPushTop';
 Elements.LAYOUT_EDITOR_PUSH_BOTTOM = '#layoutEditorPushBottom';
 Elements.LAYOUT_EDITOR_NEXT = '#layoutEditorNext';
 
-//ADD
+//TODO ADD
 Elements.LANGUAGE_SELECTION_LOGIN = '#languageSelectionLogin';
 
 // messages
@@ -184,7 +184,7 @@ Elements.MSG_BOOTBOX_CANCEL = '#bootBoxCancel';
 Elements.FONT_SELECTOR_TEMPLATE = '#fontSelectorTemplate';
 Elements.DIMENSION_PROPS_TEMPLATE = '#dimensionPropsTemplate';
 
-// ADD
+//TODO ADD
 Elements.LANGUAGE_SELECTOR_TEMPLATE = '#languageSelector';
 
 // classes

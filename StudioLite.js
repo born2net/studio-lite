@@ -30,6 +30,36 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             window.jalapeno = BB.Jalapeno;
             window.log = BB.lib.log;
 
+
+
+
+            $(".dropdownlang dt a").click(function() {
+                $(".dropdownlang dd ul").toggle();
+            });
+
+            $(".dropdownlang dd ul li a").click(function() {
+                var text = $(this).html();
+                $(".dropdownlang dt a span").html(text);
+                $(".dropdownlang dd ul").hide();
+               log(getSelectedValue("languageSelector"));
+            });
+
+            function getSelectedValue(id) {
+                return $("#" + id).find("dt a span.value").html();
+            }
+
+            $(document).bind('click', function(e) {
+                var $clicked = $(e.target);
+                if (! $clicked.parents().hasClass("dropdownlang"))
+                    $(".dropdownlang dd ul").hide();
+            });
+
+
+
+
+
+
+
             // internationalization
             require(['localizer'], function () {
                 var lang = "en";

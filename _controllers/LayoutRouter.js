@@ -79,7 +79,6 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
              **/
             _routeAuthenticated: function () {
                 this.navigate('app', {trigger: true});
-                this._promptLanguageSelection();
             },
 
             /**
@@ -420,31 +419,6 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 window.onhashchange = function () {
                     window.location.hash = "start_";
                 }
-            },
-
-            _promptLanguageSelection: function(){
-                var self = this;
-                setTimeout(function(){
-                    var modal = bootbox.dialog({
-                        message: '<div id="somediv"></div>',
-                        title: "Custom title",
-                        show: false,
-                        buttons: {
-                            success: {
-                                label: "Continue",
-                                className: "btn-success",
-                                callback: function() {
-                                    $('#somediv').empty();
-                                }
-                            }
-                        }
-                    });
-                    modal.modal("show");
-
-                    require(['LanguageSelectorView'], function (LanguageSelectorView) {
-                        this.m_languageSelectionLogin = new LanguageSelectorView({appendTo: '#somediv'});
-                    });
-                },4000);
             },
 
             /**

@@ -10,6 +10,8 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
 
         // app init
         initialize: function () {
+            var self = this;
+
             window.BB = Backbone;
             BB.globs = {};
             BB.SERVICES = {};
@@ -31,11 +33,11 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             window.log = BB.lib.log;
 
             // internationalization
-            require(['localizer', 'LanguageSelectorView'], function (localizer, LanguageSelectorView) {
-                this.m_languageSelectionLogin = new LanguageSelectorView({appendTo: Elements.LANGUAGE_SELECTION_LOGIN});
-                var lang = this.m_languageSelectionLogin.getLanguage();
+            require(['LanguageSelectorView'], function (LanguageSelectorView) {
+                self.m_languageSelectionLogin = new LanguageSelectorView({appendTo: Elements.LANGUAGE_SELECTION_LOGIN});
+                var lang = self.m_languageSelectionLogin.getLanguage();
                 if (lang)
-                    this.m_languageSelectionLogin.applyLanguage();
+                    self.m_languageSelectionLogin.setLanguage(lang);
             });
 
             // router init

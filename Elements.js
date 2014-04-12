@@ -170,6 +170,7 @@ Elements.LAYOUT_EDITOR_NEXT = '#layoutEditorNext';
 
 //TODO ADD
 Elements.LANGUAGE_SELECTION_LOGIN = '#languageSelectionLogin';
+Elements.LANGUAGE_PROMPT = '#languagePrompt';
 
 // messages
 Elements.MSG_BOOTBOX_RESTART_STATIONS = '#bootBoxRestartStations';

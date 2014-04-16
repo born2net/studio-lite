@@ -47,18 +47,18 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     var selectedElement = self.$el.find('[data-campaignid="' + self.m_selectedCampaignID + '"]');
                     var allCampaignIDs = jalapeno.getStationCampaignIDs();
                     if (_.indexOf(allCampaignIDs, self.m_selectedCampaignID) == -1) {
-                        bootbox.confirm("Are you sure you want to delete the campaign?", function(result) {
+                        bootbox.confirm($(Elements.MSG_BOOTBOX_SURE_DELETE_CAMPAIGN).text(), function(result) {
                             if (result==true){
                                 selectedElement.remove();
                                 self._removeCampaignFromMSDB(self.m_selectedCampaignID);
                             }
                         });
                     } else {
-                        bootbox.alert("You can't delete a campaign that is assigned to a remote station, please fist un-assign it from Stations before you remove the campaign.");
+                        bootbox.alert($(Elements.MSG_BOOTBOX_CANT_DELETE_COMP).text());
                         return false;
                     }
                 } else {
-                    bootbox.alert("You must first select a campaign by clicking on the properties icon.");
+                    bootbox.alert($(Elements.MSG_BOOTBOX_SELECT_COMP_FIRST).text());
                     return false;
                 }
             });

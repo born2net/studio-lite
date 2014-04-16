@@ -186,6 +186,14 @@ Elements.MSG_BOOTBOX_PROBLEM_SAVING = '#bootBoxProblemSaving';
 Elements.MSG_BOOTBOX_LOGIN_PRO_CRED = '#bootBoxLoginWithProCred';
 Elements.MSG_BOOTBOX_PROBLEM = '#bootBoxProblem';
 Elements.MSG_BOOTBOX_WRONG_USER_PASS = '#bootBoxWrongUserOrPass';
+Elements.MSG_BOOTBOX_SURE_DELETE_CAMPAIGN ='#bootBoxSureDeleteCampaign';
+Elements.MSG_BOOTBOX_CANT_DELETE_COMP ='#bootBoxCantDeleteComp';
+Elements.MSG_BOOTBOX_SELECT_COMP_FIRST ='#bootBoxSelectCompFirst';
+Elements.MSG_BOOTBOX_SURE_REMOVE_TIMELINE ='#bootBoxSureRemoveTimeline';
+Elements.MSG_BOOTBOX_SELECT_RESOURCE ='#bootBoxSelectResource';
+Elements.MSG_BOOTBOX_SELECT_CHANNEL ='#bootBoxSelectChannel';
+Elements.MSG_BOOTBOX_AT_LEAST_ONE_DIV ='#bootBoxAtLeastOneDiv';
+Elements.MSG_BOOTBOX_SCREEN_DIV_POS_RESET ='#bootBoxScreenDivPosReset';
 
 // templates
 Elements.FONT_SELECTOR_TEMPLATE = '#fontSelectorTemplate';

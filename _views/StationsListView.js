@@ -259,10 +259,10 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
             var self = i_context;
             if (_.isUndefined(self.m_selected_station_id)) {
                 bootbox.dialog({
-                    message: "No station selected",
+                    message: $(Elements.MSG_BOOTBOX_NO_STATION_SELECTED).text(),
                     buttons: {
                         danger: {
-                            label: "OK",
+                            label: $(Elements.MSG_BOOTBOX_OK).text(),
                             className: "btn-danger",
                             callback: function () {
                             }

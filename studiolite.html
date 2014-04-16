@@ -69,8 +69,8 @@
             style="font-size: 2em; position: relative; top: -5px; padding-left: 5px" data-localize="studioLite">StudioLite Login</span>
 
         <h2 class="form-signin-heading"></h2>
-        <input id="userName" type="text" class="form-control" placeholder="User name" required autofocus>
-        <input id="userPass" type="password" class="form-control" placeholder="Password" required>
+        <input id="userName" type="text" class="form-control" data-localize="username" placeholder="User name" required autofocus>
+        <input id="userPass" type="password" class="form-control" data-localize="password" placeholder="Password" required>
         <label class="checkbox">
             <input id="rememberMe" type="checkbox" checked value="remember-me">
             <span data-localize="rememberMe"> Remember me </span></label>
@@ -132,7 +132,7 @@
                     class="glyphicon glyphicon-chevron-right"></span></button>
             <h3 data-localize="selectCampaignName">Select your campaign name</h3>
             <input id="newCampaignName" type="text" class="form-control" value="My campaign"
-                   placeholder="Enter new campaign name">
+                   placeholder="Enter new campaign name" data-localize="enterNewCompaignName">
         </div>
         <div id="orientationSelector" class="page right">
             <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
@@ -181,6 +181,7 @@
                                         class="glyphicon glyphicon-plus"></span></button>
                                 <button id="removeTimelineButton" type="button"
                                         title="remove the selected timeline (one must exist)" data-toggle="tooltip"
+                                        data-localize-tooltip="removeTimelineButtonToolTip"
                                         class="btn btn-default btn-sm"><span
                                         class="glyphicon glyphicon-minus"></span></button>
                             </h4>
@@ -282,11 +283,11 @@
             <h3 data-localize="editScreenLayoutTitle">Edit screen layout</h3>
 
             <div class="btn-group">
-                <button id="layoutEditorAddNew" type="button" title="add" data-toggle="tooltip" class="btn btn-default btn-sm"><i style="font-size: 1em" class="fa fa-plus"> </i></button>
-                <button id="layoutEditorRemove" type="button" title="remove division" data-toggle="tooltip" class="btn btn-default btn-sm"><i style="font-size: 1em" class="fa fa-minus"> </i></button>
-                <button id="layoutEditorPushTop" type="button" title="push division to top" data-toggle="tooltip" class="btn btn-default btn-sm"><i style="font-size: 1em" class="fa fa-angle-double-up"> </i></button>
-                <button id="layoutEditorPushBottom" type="button" title="push division to bottom" data-toggle="tooltip" class="btn btn-default btn-sm"><i style="font-size: 1em" class="fa fa-angle-double-down"> </i></button>
-                <button id="layoutEditorNext" type="button" title="get next division" data-toggle="tooltip" class="btn btn-default btn-sm"><i style="font-size: 1em" class="fa fa-share"> </i></button>
+                <button id="layoutEditorAddNew" type="button" data-localize-tooltip="addButtonToolTip" title="add" data-toggle="tooltip" class="btn btn-default btn-sm"><i style="font-size: 1em" class="fa fa-plus"> </i></button>
+                <button id="layoutEditorRemove" type="button" data-localize-tooltip="removeButtonToolTip" title="remove division" data-toggle="tooltip" class="btn btn-default btn-sm"><i style="font-size: 1em" class="fa fa-minus"> </i></button>
+                <button id="layoutEditorPushTop" type="button" data-localize-tooltip="pushDivToTopButtonToolTip" title="push division to top" data-toggle="tooltip" class="btn btn-default btn-sm"><i style="font-size: 1em" class="fa fa-angle-double-up"> </i></button>
+                <button id="layoutEditorPushBottom" type="button" data-localize-tooltip="pushDivToBottomButtonToolTip" title="push division to bottom" data-toggle="tooltip" class="btn btn-default btn-sm"><i style="font-size: 1em" class="fa fa-angle-double-down"> </i></button>
+                <button id="layoutEditorNext" type="button" data-localize-tooltip="getNextDivButtonToolTip" title="get next division" data-toggle="tooltip" class="btn btn-default btn-sm"><i style="font-size: 1em" class="fa fa-share"> </i></button>
 
             </div>
 
@@ -321,7 +322,7 @@
     </div>
 </div>
 <div id="stationsPanel" class="yScroll" style="display: none">
-    <button id="stationRemove" title="unregisters a remote station" data-toggle="tooltip" type="button"
+    <button id="stationRemove" title="unregisters a remote station" data-localize-tooltip="unregRemoteStationButtonToolTip" data-toggle="tooltip" type="button"
             class="btn btn-default"><span
             class="glyphicon glyphicon-remove-circle"></span><span data-localize="removeStation"> remove station </span>
     </button>
@@ -350,83 +351,73 @@
         <div id="pricingTableWrap" style="overflow-x: hidden; overflow-y: scroll; height: 100%">
             <div class="col-md-4" id="home-box">
                 <div class="pricing_header1">
-                    <h2 class="pricing_headerh2">StudioLite (FREE)</h2>
+                    <h2 class="pricing_headerh2" data-localize="studioLiteFree">StudioLite (FREE)</h2>
 
                     <div class="space"></div>
                 </div>
                 <ul class="list-group">
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> simple to use interface
-                    </li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Campaign manager</li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Timeline management</li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Screen templates</li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Screen editor</li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Station Manager</li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Support 10 components</li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Scene editor (coming)</li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Files: videos/images/flash
-                    </li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Run on Tablets and phones
-                    </li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Open source (GitHub)</li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="simpleInterface"> simple to use interface</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="campaignManager"> Campaign manager</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="timelineManagement"> Timeline management</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="screenTemplates"> Screen templates</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="screenEditor"> Screen editor</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="StationManager"> Station Manager</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="supportComponents"> Support 10 components</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="sceneEditor"> Scene editor (coming)</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="filesVIF"> Files: videos/images/flash</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="tabletsPhones"> Run on Tablets and phones</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="openSourceGitHub"> Open source (GitHub)</span></li>
                 </ul>
                 <div class="try">
                     <p class="price">$0.00</p>
-                    <button class="btnPrice btn btn-default" disabled="disabled" href="#" type="button">you are here
-                    </button>
+                    <button class="btnPrice btn btn-default" disabled="disabled" href="#" type="button" data-localize="youAreHere">you are here</button>
                 </div>
             </div>
             <div class="col-md-4" id="home-box">
                 <div class="pricing_header2">
-                    <h2 class="pricing_headerh2">StudioPro (FREE)</h2>
+                    <h2 class="pricing_headerh2" data-localize="studioProFree">StudioPro (FREE)</h2>
 
                     <div class="space"></div>
                 </div>
                 <ul class="list-group">
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Higher learning curve</li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Professional editor</li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Campaign manager</li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Timeline management</li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Channel management</li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Scheduler / sequencer</li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Rich scene editor</li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Support more components
-                    </li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Advance Station Manager
-                    </li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Runs on Desktop and Web
-                    </li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> and much more...</li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="higherLearningCurve"> Higher learning curve</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="professionalEditor"> Professional editor</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="campaignManager"> Campaign manager</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="timelineManagement"> Timeline management</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="channelManagement"> Channel management</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="schedulerSequencer"> Scheduler / sequencer</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="richSceneEditor"> Rich scene editor</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="supportMoreComponents"> Support more components</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="advanceStationManager"> Advance Station Manager</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="runDesktopWeb"> Runs on Desktop and Web</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="muchMore"> and much more...</span></li>
                 </ul>
                 <div class="try">
                     <p class="price">$0.00</p>
-                    <a id="convertAccount" class="btnPrice btn-primary btn btn-default" href="#"
-                       type="button">Convert</a></div>
+                    <a id="convertAccount" class="btnPrice btn-primary btn btn-default" href="#" type="button" data-localize="convert">Convert</a></div>
             </div>
             <div class="col-md-4" id="home-box">
                 <div class="pricing_header3">
-                    <h2 class="pricing_headerh2">Enterprise</h2>
+                    <h2 class="pricing_headerh2" data-localize="enterprise">Enterprise</h2>
 
                     <div class="space"></div>
                 </div>
                 <ul class="list-group">
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Everything from Lite & Pro
-                    </li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> White label / branding</li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Support all components</li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Transitions / Effects</li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Multi user management</li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Advertising manager</li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Access control</li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Unlimited cloud storage
-                    </li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Phone support</li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> Hardware discounts</li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span> and much more...</li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="everythingFromLiteAndPro"> Everything from Lite & Pro</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="whiteLabel"> White label / branding</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="supportAllComponents"> Support all components</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="transitions"> Transitions / Effects</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="multiUserManagement"> Multi user management</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="advertisingManager"> Advertising manager</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="accessControl"> Access control</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="unlimitedCloudStorage"> Unlimited cloud storage</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="phoneSupport"> Phone support</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="hardwareDiscounts"> Hardware discounts</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="muchMore"> and much more...</span></li>
                 </ul>
                 <div class="try">
-                    <p class="price">$99/month</p>
-                    <button id="subscribeAccount" class="btnPrice btn-primary btn btn-default" href="#" type="button">
+                    <p class="price">$99/<span data-localize="month">month</span></p>
+                    <button id="subscribeAccount" class="btnPrice btn-primary btn btn-default" href="#" type="button" data-localize="subscribe">
                         Subscribe
                     </button>
                 </div>
@@ -435,26 +426,24 @@
     </div>
 </div>
 <div id="helpPanel" style="display: none">
-    <h3>Video tutorial - learn how to use StudioLite</h3>
+    <h3 data-localize="videoTutorial">Video tutorial - learn how to use StudioLite</h3>
     <a type="button" href="http://www.digitalsignage.com/_html/signage_video.html?videoNumber=StudioLite"
-       class="helpLinks btn btn-primary btn-lg"> Watch it now </a>
+       class="helpLinks btn btn-primary btn-lg" data-localize="watchNow"> Watch it now </a>
     <hr/>
-    <h3>Additional links</h3>
+    <h3 data-localize="additionalLinks">Additional links</h3>
     <ul>
-        <li><a class="helpLinks" href="http://www.digitalsignage.com/_html/signagestudio_lite.html">StudioLite page</a>
-        </li>
-        <li><a class="helpLinks" href="http://script.digitalsignage.com/forum/index.php">Support forum</a></li>
-        <li><a class="helpLinks" href="http://www.digitalsignage.com/_html/live_chat.html">Live Chat / Support</a></li>
-        <li><a class="helpLinks" href="http://git.digitalsignage.com">Open source</a></li>
-        <li><a class="helpLinks" href="http://script.digitalsignage.com/cgi-bin/webinar.cgi">Webinar</a></li>
-        <li><a class="helpLinks" href="http://www.digitalsignage.com/_html/faqs.html">FAQs</a></li>
-        <li><a class="helpLinks" href="http://www.digitalsignage.com/support/upload/index.php?/Knowledgebase/List">Knowledge
-            base</a></li>
+        <li><a class="helpLinks" href="http://www.digitalsignage.com/_html/signagestudio_lite.html" data-localize="studioLitePage">StudioLite page</a></li>
+        <li><a class="helpLinks" href="http://script.digitalsignage.com/forum/index.php" data-localize="supportForum">Support forum</a></li>
+        <li><a class="helpLinks" href="http://www.digitalsignage.com/_html/live_chat.html" data-localize="liveChatSupport">Live Chat / Support</a></li>
+        <li><a class="helpLinks" href="http://git.digitalsignage.com" data-localize="openSource">Open source</a></li>
+        <li><a class="helpLinks" href="http://script.digitalsignage.com/cgi-bin/webinar.cgi" data-localize="webinar">Webinar</a></li>
+        <li><a class="helpLinks" href="http://www.digitalsignage.com/_html/faqs.html" data-localize="faq">FAQs</a></li>
+        <li><a class="helpLinks" href="http://www.digitalsignage.com/support/upload/index.php?/Knowledgebase/List" data-localize="knowledgeBase">Knowledge base</a></li>
     </ul>
     <hr/>
 </div>
 <div id="logoutPanel" style="display: none">
-    <h5>logout</h5>
+    <h5 data-localize="logout">logout</h5>
 </div>
 </div>
 <div id="propPanelWrap" class="hidden-xs col-sm-3 col-lg-3">
@@ -463,9 +452,9 @@
     <h2 data-localize="dashboard">Dashboard</h2>
     <hr/>
     <ul class="alignTextLeft">
-        <li>Server: <span id="serverName"></span></li>
-        <li>Business id: <span id="buisinessID"></span></li>
-        <li>User name: <span id="loggedUserName"></span></li>
+        <li><span data-localize="server"> Server: </span><span id="serverName"></span></li>
+        <li><span data-localize="businessId"> Business id: </span><span id="buisinessID"></span></li>
+        <li><span data-localize="username"> User name: </span><span id="loggedUserName"></span></li>
     </ul>
     <hr/>
 </div>
@@ -474,30 +463,30 @@
 </div>
 <div id="timelineProperties" style="display: none">
     <label>Length: </label>
-    <label id="timelineLength" style="text-align: right">Length: 00:00:00</label>
+    <label id="timelineLength" style="text-align: right"><span data-localize="lenght">Length</span>: 00:00:00</label>
     <hr/>
     <div data-role="fieldcontain" data-inset="true" style="width:99%;">
-        <input type="text" name="name" id="timeLinePropTitleID" value="" placeholder="Timeline Title">
+        <input type="text" name="name" id="timeLinePropTitleID" value="" placeholder="Timeline Title" data-localize="timelineTitle">
     </div>
     <hr/>
-    <button id="editScreenLayout" type="button" class="btn btn-default"><i style="font-size: 1em"
-                                                                           class="fa fa-gears"> </i> <span
-            data-localize="editScreenLayout">edit screen layout</span></button>
+    <button id="editScreenLayout" type="button" class="btn btn-default">
+        <i style="font-size: 1em" class="fa fa-gears"> </i> 
+        <span data-localize="editScreenLayout">edit screen layout</span></button>
 </div>
 <div id="channelProperties" style="display: none">
     <h5 data-localize="channelProps">Channel properties</h5>
-    <label for="randomPlayback">Random Playback</label>
+    <label for="randomPlayback" data-localize="randPlay">Random Playback</label>
     <select id="randomPlayback" name="Random playback" data-role="slider">
-        <option value="off">Off</option>
-        <option value="on">On</option>
+        <option value="off" data-localize="off">Off</option>
+        <option value="on" data-localize="on">On</option>
     </select>
 </div>
 <div id="resourceListProperties" style="display: none">
-    <h5>resource properties</h5>
-    <input id="selectedLibResourceName" type="text" name="name" value="" placeholder="Enter resource name">
+    <h5 data-localize="resProps">resource properties</h5>
+    <input id="selectedLibResourceName" type="text" name="name" value="" data-localize="enterResName" placeholder="Enter resource name">
 </div>
 <div id="viewerEditProperties" style="display: none">
-    <h5>screen division</h5>
+    <h5 data-localize="screenDivision">screen division</h5>
     <div id="viewerDimensions">
     </div>
 </div>
@@ -529,24 +518,23 @@
     </div>
     <div id="stationInfo">
         <ul>
-            <li>OS: <span id="stationOS"></span></li>
-            <li>AIR version: <span id="stationAirVersion"></span></li>
-            <li>Player version: <span id="stationAppVersion"></span></li>
-            <li>Peak memory: <span id="stationPeakMemory"></span></li>
-            <li>Total memory: <span id="stationTotalMemory"></span></li>
-            <li>Running: <span id="stationRunningTime"></span></li>
-            <li>Watchdog: <span id="stationWatchdog"></span></li>
-            <li>Last upd: <span id="stationLastUpdate"></span></li>
+            <li><span data-localize="os">OS </span>: <span id="stationOS"></span></li>
+            <li><span data-localize="airVersion">AIR version </span>: <span id="stationAirVersion"></span></li>
+            <li><span data-localize="playerVersion">Player version </span>: <span id="stationAppVersion"></span></li>
+            <li><span data-localize="peakMemory">Peak memory </span>: <span id="stationPeakMemory"></span></li>
+            <li><span data-localize="totalMemory">Total memory </span>: <span id="stationTotalMemory"></span></li>
+            <li><span data-localize="running">Running </span>: <span id="stationRunningTime"></span></li>
+            <li><span data-localize="watchdog">Watchdog </span>: <span id="stationWatchdog"></span></li>
+            <li><span data-localize="lastUpd">Last upd </span>: <span id="stationLastUpdate"></span></li>
         </ul>
     </div>
-    <input type="text" name="eventName" placeholder="event name" id="stationSendEventValue" value="">
-
+    <input type="text" name="eventName" data-localize="eventName" placeholder="event name" id="stationSendEventValue" value="">
     <p></p>
-    <button id="stationEventSendCommand" class="btn btn-primary">Send station event</button>
+    <button id="stationEventSendCommand" class="btn btn-primary" data-localize="sendStationEvent">Send station event</button>
 </div>
 <div id="blockProperties" class="" style="display: none">
     <div id="channelBlockProps" style="display: none">
-        <p>hours / minutes / seconds</p>
+        <p data-localize="hoursMinutesSeconds">hours / minutes / seconds</p>
     </div>
     <h4 id="selectedChannelResourceName"></h4>
 
@@ -554,21 +542,21 @@
         <p>X=0 / Y=0</p>
     </div>
     <ul id="blockPropertiesTabber" class="nav nav-tabs">
-        <li class="active"><a id="blockSubpropertiesTitle" href="#blockSubProperties" data-toggle="tab">Comp</a></li>
-        <li><a href="#blockCommonProperties" data-toggle="tab">Style</a></li>
+        <li class="active"><a id="blockSubpropertiesTitle" href="#blockSubProperties" data-toggle="tab" data-localize="comp">Comp</a></li>
+        <li><a href="#blockCommonProperties" data-toggle="tab" data-localize="style">Style</a></li>
     </ul>
     <div class="tab-content">
         <div id="blockSubProperties" class="noTopBorder tab-pane active panel panel-default yScroll"
              style="height: 100px;">
             <div class="panel-body">
                 <div id="blockImageCommonProperties" style="display: none">
-                    <label for="imageAspectRatio">Aspect ratio</label>
+                    <label for="imageAspectRatio" data-localize="aspectRatio">Aspect ratio</label>
                     <select id="imageAspectRatio" name="Aspect ratio" data-role="slider">
-                        <option value="off">Off</option>
-                        <option value="on">On</option>
+                        <option value="off" data-localize="off">Off</option>
+                        <option value="on" data-localize="on">On</option>
                     </select>
                 </div>
-                <div id="blockVideoCommonProperties" style="display: none"><span>Volume level</span> <span
+                <div id="blockVideoCommonProperties" style="display: none"><span data-localize="volumeLevel">Volume level</span> <span
                         id="videoVolumeLabel">100</span>
 
                     <div id="videoVolumeWrap" class="propControlWidth">
@@ -578,28 +566,28 @@
                     <div class="checkbox">
                         <label>
                             <input id="videoAutoRewind" type="checkbox">
-                            <span> Auto rewind</span> </label>
+                            <span data-localize="autoRewind"> Auto rewind</span> </label>
                     </div>
                     <div class="checkbox">
                         <label>
                             <input id="videoAspectRatio" type="checkbox">
-                            <span> Aspect ratio</span> </label>
+                            <span data-localize="aspectRatio"> Aspect ratio</span> </label>
                     </div>
                 </div>
                 <div id="blockRSSCommonProperties" style="display: none">
                     <hr class="hrThin"/>
-                    <span>RSS news source</span>
+                    <span data-localize="rssNewsSource">RSS news source</span>
                     <select id="rssSource" class="propControlWidth form-control">
                     </select>
 
                     <div>
                         <div data-role="fieldcontain" data-inset="true">
                             <input id="rssLink" type="text" name="name" class="propControlWidth" value=""
-                                   placeholder="Enter RSS Link Text" style="display: none">
+                                   placeholder="Enter RSS Link Text" data-localize="EnterRSSLink" style="display: none">
                         </div>
                     </div>
                     <hr class="hrThin"/>
-                    <span>RSS refresh timer (minutes)</span>
+                    <span data-localize="rssRefreash">RSS refresh timer (minutes)</span>
 
                     <div id="rssPollSpinner" class="spinner">
                         <input id="rssMinRefreshTime" type="text" class="input-mini spinner-input">
@@ -613,39 +601,38 @@
                     </div>
                     <div style="clear: both"></div>
                     <hr class="hrThin"/>
-                    <span>RSS scroll direction</span>
+                    <span data-localize="rsscroll">RSS scroll direction</span>
                     <select id="rssModeSelect" class="propControlWidth form-control">
-                        <option>Horizontal mode</option>
-                        <option>Vertical mode</option>
+                        <option data-localize="horizontalMode">Horizontal mode</option>
+                        <option data-localize="verticalMode">Vertical mode</option>
                     </select>
                     <hr class="hrThin"/>
-                    <span>Scroll speed</span>
+                    <span data-localize="scrollSpeed">Scroll speed</span>
                     <select id="rssScrollSpeed" class="propControlWidth form-control">
-                        <option>Slow</option>
-                        <option>Medium</option>
-                        <option>Fast</option>
+                        <option data-localize="slow">Slow</option>
+                        <option data-localize="medium">Medium</option>
+                        <option data-localize="fast">Fast</option>
                     </select>
                     <hr class="hrThin"/>
-                    <span>Font</span>
+                    <span data-localize="font">Font</span>
 
                     <div id="rssFontSettings"></div>
                     <hr class="hrThin"/>
                 </div>
                 <div id="blockMRSSCommonProperties" style="display: none">
                     <hr class="hrThin"/>
-                    <span>RSS news source</span>
+                    <span data-localize="rssNewsSource">RSS news source</span>
                     <select id="mrssSource" class="propControlWidth form-control">
                     </select>
-
                     <div>
                         <div data-role="fieldcontain" data-inset="true">
                             <input id="mrssLink" type="text" name="name" class="propControlWidth" value=""
-                                   placeholder="Enter RSS Link Text" style="display: none">
+                                   placeholder="Enter RSS Link Text" data-localize="EnterRSSLink" style="display: none">
                         </div>
                         <div class="checkbox">
                             <label>
                                 <input id="mrssAspectRatio" type="checkbox">
-                                <span> Maintain aspect ratio</span> </label>
+                                <span data-localize="maintainAR"> Maintain aspect ratio</span> </label>
                         </div>
                     </div>
                 </div>
@@ -653,37 +640,37 @@
 
                     <div data-role="fieldcontain" data-inset="true">
                         <input type="text" name="name" id="qrText" value=""
-                               placeholder="Enter QR Text">
+                               placeholder="Enter QR Text" data-localize="enterQRText">
                     </div>
                 </div>
-                <div id="blockHTMLCommonProperties" style="display: none"><span>Web address</span>
+                <div id="blockHTMLCommonProperties" style="display: none"><span data-localize="webAddr">Web address</span>
 
                     <div data-role="fieldcontain" data-inset="true">
                         <input type="text" name="name" id="htmlText" value="" placeholder="http://...">
                     </div>
                 </div>
-                <div id="blockExtImageCommonProperties" style="display: none"><span>URL address</span>
+                <div id="blockExtImageCommonProperties" style="display: none"><span data-localize="urlAddr">URL address</span>
 
                     <div data-role="fieldcontain" data-inset="true">
                         <input type="text" name="name" id="extImageText" value="" placeholder="http://...">
                     </div>
                 </div>
-                <div id="blockExtVideoCommonProperties" style="display: none"><span>URL address</span>
+                <div id="blockExtVideoCommonProperties" style="display: none"><span data-localize="urlAddr">URL address</span>
 
                     <div data-role="fieldcontain" data-inset="true">
                         <input type="text" name="name" id="extVideoText" value="" placeholder="http://...">
                     </div>
                 </div>
-                <div id="blockLabelCommonProperties" style="display: none"><span>Label text</span>
+                <div id="blockLabelCommonProperties" style="display: none"><span data-localize="labelText">Label text</span>
 
                     <div data-role="fieldcontain" data-inset="true">
                         <input id="labelText" type="text" name="name" class="propControlWidth" value=""
-                               placeholder="enter text here">
+                               placeholder="enter text here" data-localize="enterText">
                     </div>
                     <hr class="propControlWidth"/>
                     <div id="labelFontSettings"></div>
                 </div>
-                <div id="blockClockCommonProperties" style="display: none"><span>Choose format</span>
+                <div id="blockClockCommonProperties" style="display: none"><span data-localize="chooseFormat">Choose format</span>
 
                     <div class="radio">
                         <label>
@@ -727,7 +714,7 @@
                 <div class="checkbox">
                     <label>
                         <input id="showBackground" type="checkbox">
-                        <span> Show background color</span>
+                        <span data-localize="showBgColor"> Show background color</span>
                     </label>
                 </div>
                 <div id="bgColorGradientSelector"></div>
@@ -752,14 +739,14 @@
             <div class="modal-header">
                 <button id="toggleProperties" type="button" class="close" data-dismiss="modal"
                         aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                <h4 class="modal-title" id="myModalLabel" data-localize="ModalTitle">Modal title</h4>
             </div>
             <div class="modal-body">
-                <h3>some content</h3>
+                <h3 data-localize="someContent">some content</h3>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" data-localize="close">Close</button>
+                <button type="button" class="btn btn-primary" data-localize="saveChanges">Save changes</button>
             </div>
         </div>
     </div>
@@ -770,13 +757,13 @@
             data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span></button>
 </div>
 <div id="aboutUS" style="display: none">
-    <h1>About us</h1>
-    <button type="button" class="btn btn-primary modal_close" data-dismiss="modal">Close</button>
+    <h1 data-localize="aboutUs">About us</h1>
+    <button type="button" class="btn btn-primary modal_close" data-dismiss="modal" data-localize="colse">Close</button>
     <form action="demo_form.asp">
-        First name:
+        <span data-localize="firstName">First name</span> :
         <input type="text" name="fname">
         <br>
-        Last name:
+        <span data-localize="lastName">Last name</span>:
         <input type="text" name="lname">
         <br>
         <input type="submit" value="Submit">
@@ -810,7 +797,7 @@
 
 <div id="dimensionPropsTemplate" style="display: none">
     <div>
-        <label class="floatLeftWidth">top</label>
+        <label class="floatLeftWidth" data-localize="top">top</label>
 
         <div style="float: left" class="spinner spinnerDimTop">
             <input type="text" style="width: 60px"
@@ -825,7 +812,7 @@
         </div>
     </div>
     <div class="clearFloat">
-        <label class="floatLeftWidth">left</label>
+        <label class="floatLeftWidth" data-localize="left">left</label>
 
         <div style="float: left" class="spinner spinnerDimLeft">
             <input type="text" style="width: 60px"
@@ -841,7 +828,7 @@
     </div>
 
     <div class="clearFloat">
-        <label class="floatLeftWidth">width</label>
+        <label class="floatLeftWidth" data-localize="width">width</label>
 
         <div style="float: left" class="spinner spinnerDimWidth">
             <input type="text" style="width: 60px"
@@ -857,7 +844,7 @@
     </div>
 
     <div class="clearFloat">
-        <label class="floatLeftWidth">height</label>
+        <label class="floatLeftWidth" data-localize="height">height</label>
 
         <div style="float: left" class="spinner spinnerDimHeight">
             <input type="text" style="width: 60px"
@@ -873,7 +860,7 @@
     </div>
 
     <div class="clearFloat DimAngle">
-        <label class="floatLeftWidth">angle</label>
+        <label class="floatLeftWidth" data-localize="angle">angle</label>
 
         <div style="float: left" class="spinner spinnerDimAngle">
             <input type="text" style="width: 60px"
@@ -934,9 +921,9 @@
 </div>
 
 <div id="stackWaitModalView" style="display: none">
-    <h1>please wait</h1>
-    <button type="button" class="btn btn-primary modal_close" data-dismiss="modal">Close</button>
-    <span style="position: relative; left: 45%; top: 40%"> <img src="./_assets/preload3.gif"> </span></div>
+    <h1 data-localize="pleaseWait">please wait</h1>
+    <button type="button" class="btn btn-primary modal_close" data-dismiss="modal" data-localize="close">Close</button>
+    <span style="position: relative; left: 45%; top: 40%"><img src="./_assets/preload3.gif"></span></div>
 
 <!-- Messages -->
 <p style="display: none" id="bootBoxRestartStations" data-localize="bootBoxRestartStations">Restart connected stations and apply your saved work?</p>
@@ -946,7 +933,11 @@
 <p style="display: none" id="bootBoxSave" data-localize="bootBoxSave">Save!</p>
 <p style="display: none" id="bootBoxSaveAndRestart" data-localize="bootBoxSaveAndRestart">Save & restart stations</p>
 <p style="display: none" id="bootBoxCancel" data-localize="bootBoxCancel">Cancel</p>
-
-
+<p style="display: none" id="bootBoxOk" data-localize="bootBoxOk">OK</p>
+<p style="display: none" id="bootBoxNoStationSelected" data-localize="bootBoxNoStationSelected">No station selected</p>
+<p style="display: none" id="bootBoxProblemSaving" data-localize="bootBoxProblemSaving">Problem saving</p>
+<p style="display: none" id="bootBoxLoginWithProCred" data-localize="bootBoxLoginWithProCred">Login in with Pro credentials..</p>
+<p style="display: none" id="bootBoxProblem" data-localize="bootBoxProblem">Problem</p>
+<p style="display: none" id="bootBoxWrongUserOrPass" data-localize="bootBoxWrongUserOrPass">Sorry but the user or password did not match</p>
 </body>
 </html>

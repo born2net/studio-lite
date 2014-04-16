@@ -158,7 +158,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     message: $(Elements.MSG_BOOTBOX_STUDIO_LITE_ACC).text(),
                     buttons: {
                         info: {
-                            label: "OK",
+                            label: $(Elements.MSG_BOOTBOX_OK).text(),
                             className: "btn-primary",
                             callback: function () {
                             }

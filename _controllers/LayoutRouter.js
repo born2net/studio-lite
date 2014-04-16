@@ -95,11 +95,11 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
              **/
             _routeAuthenticationFailed: function () {
                 Bootbox.dialog({
-                    message: "Sorry but the user or password did not match",
-                    title: "Problem",
+                    message: $(Elements.MSG_BOOTBOX_WRONG_USER_PASS).text(),
+                    title: $(Elements.MSG_BOOTBOX_PROBLEM).text(),
                     buttons: {
                         danger: {
-                            label: "OK",
+                            label: $(Elements.MSG_BOOTBOX_OK).text(),
                             className: "btn-danger",
                             callback: function () {
                             }

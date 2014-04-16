@@ -10,6 +10,8 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
 
         // app init
         initialize: function () {
+            var self = this;
+
             window.BB = Backbone;
             BB.globs = {};
             BB.SERVICES = {};
@@ -31,17 +33,17 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             window.log = BB.lib.log;
 
             // internationalization
-            require(['localizer'], function () {
-                var lang = "en";
-                var opts = { language: lang, pathPrefix: "./_lang" };
-                $("[data-localize]").localize("local", opts);
+            require(['LanguageSelectorView'], function (LanguageSelectorView) {
+                self.m_languageSelectionLogin = new LanguageSelectorView({appendTo: Elements.LANGUAGE_SELECTION_LOGIN});
+                var lang = self.m_languageSelectionLogin.getLanguage();
+                if (lang)
+                    self.m_languageSelectionLogin.setLanguage(lang);
             });
 
             // router init
             require(['LayoutRouter'], function (LayoutRouter) {
                 var LayoutRouter = new LayoutRouter();
                 BB.history.start();
-                BB.comBroker.setService(BB.SERVICES['LAYOUT_ROUTER'], LayoutRouter);
                 LayoutRouter.navigate('authenticate/_/_', {trigger: true});
             })
         }

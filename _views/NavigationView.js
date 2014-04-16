@@ -78,6 +78,28 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             $(Elements.LIVE_CHAT).on('click', function () {
                 window.open('http://www.digitalsignage.com/_html/live_chat.html', '_blank');
             });
+
+            $(Elements.LANGUAGE_PROMPT).on('click', function () {
+                require(['LanguageSelectorView'], function (LanguageSelectorView) {
+                    var uniqueID = _.uniqueId('languagePrompt')
+                    var modal = bootbox.dialog({
+                        message: '<div id="' + uniqueID + '"></div>',
+                        title: "Custom title",
+                        show: false,
+                        buttons: {
+                            success: {
+                                label: "Continue",
+                                className: "btn-success",
+                                callback: function () {
+                                    $('#' + uniqueID).empty();
+                                }
+                            }
+                        }
+                    });
+                    modal.modal("show");
+                    self.m_languageSelectionPrompt = new LanguageSelectorView({appendTo: '#' + uniqueID});
+                });
+            });
         },
 
         /**

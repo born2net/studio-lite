@@ -1317,7 +1317,21 @@ i .spinner-buttons {
     border-top-right-radius: 0; !important;
 }
 
-
+/************************************
+Language selector
+************************************/
+.dropdownlang dd, .dropdownlang dt, .dropdownlang ul { margin:0px; padding:0px; }
+.dropdownlang dd { position:relative; }
+.dropdownlang a, .dropdownlang a:visited { color:#816c5b; text-decoration:none; outline:none;}
+.dropdownlang a:hover { color:#5d4617;}
+.dropdownlang dt a:hover { color:#5d4617; border: 1px solid #d0c9af;}
+.dropdownlang dt a {background:#e4dfcb url(_assets/arrow.png) no-repeat scroll right center; display:block; padding-right:20px; border:1px solid #d4ca9a; width:300px;}
+.dropdownlang dt a span {cursor:pointer; display:block; padding:5px;}
+.dropdownlang dd ul { background:#e4dfcb none repeat scroll 0 0; border:1px solid #d4ca9a; color:#C5C0B0; display:none; left:0px; padding:5px 0px; position:absolute; top:2px; width:auto; min-width:300px; list-style:none;}
+.dropdownlang span.value { display:none;}
+.dropdownlang dd ul li a { padding:5px; display:block;}
+.dropdownlang dd ul li a:hover { background-color:#d0c9af;}
+.dropdownlang img.flag { border:none; vertical-align:middle; margin-right:10px; }
 
 /************************************
 minicolors

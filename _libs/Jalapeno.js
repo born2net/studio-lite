@@ -226,7 +226,6 @@ Jalapeno.prototype = {
 
     /**
      Send remote command to retrieve snapshot of a running station
-     Due to IE security limitation use _sendSnapshotCommand which is documented in SignageStudio Lite
      @method sendSnapshot
      @param {String} i_fileName
      @param {Number} i_quality
@@ -238,6 +237,7 @@ Jalapeno.prototype = {
         var url = 'https://' + jalapeno.getUserData().domain + '/WebService/sendCommand.ashx?i_user=' + jalapeno.getUserData().userName + '&i_password=' + jalapeno.getUserData().userPass + '&i_stationId=' + i_stationId + '&i_command=' + 'captureScreen2' + '&i_param1=' + i_fileName + '&i_param2=' + i_quality + '&callback=?';
         $.getJSON(url, i_callBack);
         var path = 'https://' + jalapeno.getUserData().domain + '/Snapshots/business' + jalapeno.getUserData().businessID + "/station" + i_stationId + '/' + i_fileName + '.jpg';
+        log(path);
         return path;
     },
 

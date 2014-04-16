@@ -348,6 +348,13 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
          **/
         _sendSnapshotCommand: function (i_station) {
             var self = this;
+            var d =  new Date().getTime();
+            var path = jalapeno.sendSnapshot(d,0.2,i_station,function(e){});
+            setTimeout(function(){
+                self.m_imagePath = path;
+            },3000);
+
+            /*
             var data = {
                 '@functionName': 'f_captureScreen',
                 '@stationID': i_station,
@@ -357,9 +364,14 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
             self.ajaxJsonGetter.getData(data, onSnapshotReply);
             function onSnapshotReply(e) {
                 if (e.responce['status'] == 'pass') {
+                    log('getting image from ' + e.responce['path']);
                     self.m_imagePath = e.responce['path'];
                 }
             }
+             // self.m_imagePath = 'https://pluto.signage.me/Snapshots/business355181/station12/1397689062944.jpg';
+             // return;
+            */
+
         },
 
         /**

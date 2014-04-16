@@ -176,6 +176,12 @@ Elements.MSG_BOOTBOX_SAVE_REMOTE_SRV = '#bootBoxSaveRemoteSrv';
 Elements.MSG_BOOTBOX_SAVE = '#bootBoxSave';
 Elements.MSG_BOOTBOX_SAVE_RESTART = '#bootBoxSaveAndRestart';
 Elements.MSG_BOOTBOX_CANCEL = '#bootBoxCancel';
+Elements.MSG_BOOTBOX_OK = '#bootBoxOk';
+Elements.MSG_BOOTBOX_NO_STATION_SELECTED = '#bootBoxNoStationSelected';
+Elements.MSG_BOOTBOX_PROBLEM_SAVING = '#bootBoxProblemSaving';
+Elements.MSG_BOOTBOX_LOGIN_PRO_CRED = '#bootBoxLoginWithProCred';
+Elements.MSG_BOOTBOX_PROBLEM = '#bootBoxProblem';
+Elements.MSG_BOOTBOX_WRONG_USER_PASS = '#bootBoxWrongUserOrPass';
 
 // templates
 Elements.FONT_SELECTOR_TEMPLATE = '#fontSelectorTemplate';

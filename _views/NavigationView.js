@@ -147,10 +147,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             bootbox.dialog({
                 message: $(Elements.MSG_BOOTBOX_LOGIN_WRONG_CRED).text(),
-                title: "Login in with Pro credentials..",
+                title: $(Elements.MSG_BOOTBOX_LOGIN_PRO_CRED).text(),
                 buttons: {
                     info: {
-                        label: "OK",
+                        label: $(Elements.MSG_BOOTBOX_OK).text(),
                         className: "btn-primary",
                         callback: function () {
                             self._selectNavigation(Elements.CLASS_STATIONS_PANEL);
@@ -233,10 +233,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 if (!i_status.status) {
                     bootbox.dialog({
                         message: i_status.error,
-                        title: "Problem saving",
+                        title: $(Elements.MSG_BOOTBOX_PROBLEM_SAVING).text(),
                         buttons: {
                             danger: {
-                                label: "OK",
+                                label: $(Elements.MSG_BOOTBOX_OK).text(),
                                 className: "btn-danger",
                                 callback: function () {
                                 }

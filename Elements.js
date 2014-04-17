@@ -167,8 +167,6 @@ Elements.LAYOUT_EDITOR_REMOVE = '#layoutEditorRemove';
 Elements.LAYOUT_EDITOR_PUSH_TOP = '#layoutEditorPushTop';
 Elements.LAYOUT_EDITOR_PUSH_BOTTOM = '#layoutEditorPushBottom';
 Elements.LAYOUT_EDITOR_NEXT = '#layoutEditorNext';
-
-//TODO ADD
 Elements.LANGUAGE_SELECTION_LOGIN = '#languageSelectionLogin';
 Elements.LANGUAGE_PROMPT = '#languagePrompt';
 
@@ -201,8 +199,6 @@ Elements.MSG_BOOTBOX_STEPS ='#bootBoxSteps';
 // templates
 Elements.FONT_SELECTOR_TEMPLATE = '#fontSelectorTemplate';
 Elements.DIMENSION_PROPS_TEMPLATE = '#dimensionPropsTemplate';
-
-//TODO ADD
 Elements.LANGUAGE_SELECTOR_TEMPLATE = '#languageSelector';
 
 // classes

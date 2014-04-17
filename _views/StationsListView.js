@@ -271,7 +271,7 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
                 });
                 return false;
             }
-            bootbox.confirm($(Elements.MSG_BOOTBOX_STEPS).html(), function (result) {
+            bootbox.confirm($(Elements.MSG_BOOTBOX_STEPS).text(), function (result) {
                 if (result == true) {
                     var navigationView = BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW);
                     jalapeno.sendCommand('rebootPlayer', self.m_selected_station_id, function () {

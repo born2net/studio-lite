@@ -230,7 +230,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
         _listenDelTimeline: function () {
             var self = this;
             $(Elements.REMOVE_TIMELINE_BUTTON).on('click', function (e) {
-                bootbox.confirm("Are you sure you want to remove the timeline?", function (i_result) {
+                bootbox.confirm($(Elements.MSG_BOOTBOX_SURE_REMOVE_TIMELINE).text(), function (i_result) {
                     if (i_result == true) {
                         $.proxy(self._deleteTimeline(), self);
                     }

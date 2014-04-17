@@ -152,7 +152,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
 
                 var totalViews = self.m_canvas.getObjects().length;
                 if (totalViews < 2) {
-                    bootbox.alert("you must keep at least one viewable screen division");
+                    bootbox.alert($(Elements.MSG_BOOTBOX_AT_LEAST_ONE_DIV).text());
                     return;
                 }
 
@@ -380,7 +380,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 viewer.set({left: 0, top: 0}).setCoords();
                 viewer.setCoords();
                 self.m_canvas.renderAll();
-                bootbox.alert({message: "At least one screen division must be within viewer", title: 'screen division position reset' });
+                bootbox.alert({
+                    message: $(Elements.MSG_BOOTBOX_AT_LEAST_ONE_DIV).text(), 
+                    title: $(Elements.MSG_BOOTBOX_SCREEN_DIV_POS_RESET).text() 
+                });
                 var props = {
                     x: viewer.get('top'),
                     y: viewer.get('left'),

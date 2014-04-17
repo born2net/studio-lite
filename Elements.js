@@ -194,6 +194,9 @@ Elements.MSG_BOOTBOX_SELECT_RESOURCE ='#bootBoxSelectResource';
 Elements.MSG_BOOTBOX_SELECT_CHANNEL ='#bootBoxSelectChannel';
 Elements.MSG_BOOTBOX_AT_LEAST_ONE_DIV ='#bootBoxAtLeastOneDiv';
 Elements.MSG_BOOTBOX_SCREEN_DIV_POS_RESET ='#bootBoxScreenDivPosReset';
+Elements.MSG_BOOTBOX_COSTUME_TITLE ='#bootBoxCostumeTitle';
+Elements.MSG_BOOTBOX_CONTINUE ='#bootBoxContinue';
+Elements.MSG_BOOTBOX_STEPS ='#bootBoxSteps';
 
 // templates
 Elements.FONT_SELECTOR_TEMPLATE = '#fontSelectorTemplate';

@@ -84,11 +84,11 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     var uniqueID = _.uniqueId('languagePrompt')
                     var modal = bootbox.dialog({
                         message: '<div id="' + uniqueID + '"></div>',
-                        title: "Custom title",
+                        title: $(Elements.MSG_BOOTBOX_COSTUME_TITLE).text(),
                         show: false,
                         buttons: {
                             success: {
-                                label: "Continue",
+                                label: $(Elements.MSG_BOOTBOX_CONTINUE).text(),
                                 className: "btn-success",
                                 callback: function () {
                                     $('#' + uniqueID).empty();

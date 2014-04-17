@@ -271,12 +271,7 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
                 });
                 return false;
             }
-            bootbox.confirm("<p>The following steps will take place, please confirm?</p>" +
-                "<ol>" +
-                "<li>station will be deleted</li>" +
-                "<li>your work will be saved to the server</li>" +
-                "<li>station will be de-registered</li>" +
-                "<ol/>", function (result) {
+            bootbox.confirm($(Elements.MSG_BOOTBOX_STEPS).html(), function (result) {
                 if (result == true) {
                     var navigationView = BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW);
                     jalapeno.sendCommand('rebootPlayer', self.m_selected_station_id, function () {

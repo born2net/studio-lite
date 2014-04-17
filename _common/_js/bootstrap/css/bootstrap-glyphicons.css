@@ -6,6 +6,7 @@
 * http://www.apache.org/licenses/LICENSE-2.0
 *
 * Designed and built with all the love in the world @twitter by @mdo and @fat.
+* CDN: http://cdnjs.com/libraries/twitter-bootstrap/
 */
 article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block;}
 audio,canvas,video{display:inline-block;}
@@ -58,7 +59,7 @@ img{vertical-align:middle;}
 .img-circle{border-radius:50%;}
 hr{margin-top:20px;margin-bottom:20px;border:0;border-top:1px solid #eeeeee;}
 .sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);border:0;}
-@font-face{font-family:'Glyphicons Halflings';src:url('https://galaxy.signage.me/_studiolite-dev/_common/_js/bootstrap/fonts/glyphicons-halflings-regular.eot');src:url('https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),url('https://galaxy.signage.me/_studiolite-dev/_common/_js/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'),url('https://galaxy.signage.me/_studiolite-dev/_common/_js/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'),url('https://galaxy.signage.me/_studiolite-dev/_common/_js/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');}.glyphicon{position:relative;top:1px;display:inline-block;font-family:'Glyphicons Halflings';font-style:normal;font-weight:normal;line-height:1;-webkit-font-smoothing:antialiased;}
+@font-face{font-family:'Glyphicons Halflings';src:url('https://galaxy.signage.me/_studiolite-dev/_common/_js/bootstrap/fonts/glyphicons-halflings-regular.eot');src:url('https://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),url('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/fonts/glyphicons-halflings-regular.woff') format('woff'),url('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.0/fonts/glyphicons-halflings-regular.ttf') format('truetype'),url('https://galaxy.signage.me/_studiolite-dev/_common/_js/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');}.glyphicon{position:relative;top:1px;display:inline-block;font-family:'Glyphicons Halflings';font-style:normal;font-weight:normal;line-height:1;-webkit-font-smoothing:antialiased;}
 .glyphicon-asterisk:before{content:"\2a";}
 .glyphicon-plus:before{content:"\2b";}
 .glyphicon-euro:before{content:"\20ac";}

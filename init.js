@@ -175,7 +175,7 @@ require.config({
 
 if (window.location.href.indexOf('dist') > -1) {
     requirejs.onError = function (err) {
-        alert('An error has occurred:( \n\n\n\n ' + err);
+        console.log('require js error ' + err);
     }
 }
 

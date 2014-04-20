@@ -63,10 +63,9 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
                     self.m_selected = false;
                     return;
                 }
-                ;
                 self.m_selected = true;
                 self._propLoadTimeline();
-                log('timeline selected ' + self.m_campaign_timeline_id);
+                // log('timeline selected ' + self.m_campaign_timeline_id);
             };
             BB.comBroker.listenWithNamespace(BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED, self, self.m_campaignTimelineSelectedHandler);
         },

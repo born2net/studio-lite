@@ -23,7 +23,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         /**
-         Initiate user authentication against the Jalapeno db user credentials
+         Initiate user authentication against the Pepper db user credentials
          @method authenticate
          @param {String} i_user
          @param {String} i_pass
@@ -89,7 +89,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         _authServer: function (i_user, i_pass, i_authMode) {
             var self = this;
-            BB.Jalapeno.dbConnect(i_user, i_pass, function (i_status) {
+            BB.Pepper.dbConnect(i_user, i_pass, function (i_status) {
                 if (i_status.status) {
                     self._authPassed(i_user, i_pass, i_status, i_authMode);
                 } else {

@@ -40,7 +40,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
             $('input[type="radio"]',self.$el).filter(function(i){
                 var radioValue = $(this).attr('value');
-                var currMask = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).getDateTimeMask(radioValue);
+                var currMask = BB.PepperHelper.getBlockBoilerplate(self.m_blockType).getDateTimeMask(radioValue);
                 if (mask == currMask){
                     $(this).prop('checked',true);
                     return false;
@@ -68,7 +68,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 if (!self.m_selected)
                     return;
                 var radioValue = $(e.target).attr('value');
-                var mask = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).getDateTimeMask(radioValue);
+                var mask = BB.PepperHelper.getBlockBoilerplate(self.m_blockType).getDateTimeMask(radioValue);
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Clock');
                 xSnippet.attr('clockMask',mask);

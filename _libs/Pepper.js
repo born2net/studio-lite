@@ -1,5 +1,5 @@
 /**
- Jalapeno SDK is a collection of files that provide a wrapper for the Soap API used to communicate with MediaSignage servers.
+ Pepper SDK is a collection of files that provide a wrapper for the Soap API used to communicate with MediaSignage servers.
  The SDK makes programming easier by abstracting some of the tedious tasks such as enumeration.
 
  The msdb internal Database is the magic sauce as it maps against the actual mediaSERVER remote database via
@@ -13,11 +13,11 @@
  composition: x2js, jQuery
  inheritance: ComBroker
 
- @class Jalapeno
+ @class Pepper
  @constructor
- @return {Object} Jalapeno instance
+ @return {Object} Pepper instance
  **/
-function Jalapeno() {
+function Pepper() {
     this.m_user = undefined;
     this.m_pass = undefined;
     this.m_msdb = undefined;
@@ -26,107 +26,107 @@ function Jalapeno() {
 
 /**
  Custom event fired when a total timeline length (i.e.: channel content within specified timeline) has changed
- @event Jalapeno.TIMELINE_LENGTH_CHANGED
+ @event Pepper.TIMELINE_LENGTH_CHANGED
  @param {This} caller
  @param {Event}
  @static
  @final
  **/
-Jalapeno.TIMELINE_LENGTH_CHANGED = 'TIMELINE_LENGTH_CHANGED';
+Pepper.TIMELINE_LENGTH_CHANGED = 'TIMELINE_LENGTH_CHANGED';
 
 /**
  Custom event fired when a total timeline length (i.e.: channel content within specified timeline) has changed
- @event Jalapeno.TIMELINE_LENGTH_CHANGED
+ @event Pepper.TIMELINE_LENGTH_CHANGED
  @param {This} caller
  @param {Event}
  @static
  @final
  **/
-Jalapeno.TEMPLATE_VIEWER_EDITED = 'TEMPLATE_VIEWER_EDITED';
+Pepper.TEMPLATE_VIEWER_EDITED = 'TEMPLATE_VIEWER_EDITED';
 
 /**
  Custom event fired when a timeline is removed from campaign
- @event Jalapeno.TIMELINE_DELETED
+ @event Pepper.TIMELINE_DELETED
  @param {This} caller
  @param {Event}
  @static
  @final
  **/
-Jalapeno.TIMELINE_DELETED = 'TIMELINE_DELETED';
+Pepper.TIMELINE_DELETED = 'TIMELINE_DELETED';
 
 /**
  Custom event fired when a new player (aka block) was created
- @event Jalapeno.NEW_PLAYER_CREATED
+ @event Pepper.NEW_PLAYER_CREATED
  @param {This} caller
  @param {Event}
  @static
  @final
  **/
-Jalapeno.NEW_PLAYER_CREATED = 'NEW_PLAYER_CREATED';
+Pepper.NEW_PLAYER_CREATED = 'NEW_PLAYER_CREATED';
 
 /**
  Custom event fired when a new campaign was created
- @event Jalapeno.NEW_CAMPAIGN_CREATED
+ @event Pepper.NEW_CAMPAIGN_CREATED
  @param {This} caller
  @param {Event}
  @static
  @final
  **/
-Jalapeno.NEW_CAMPAIGN_CREATED = 'NEW_CAMPAIGN_CREATED';
+Pepper.NEW_CAMPAIGN_CREATED = 'NEW_CAMPAIGN_CREATED';
 
 /**
  Custom event fired when a new template (aka screen division layout in global) was created
- @event Jalapeno.NEW_TEMPLATE_CREATED
+ @event Pepper.NEW_TEMPLATE_CREATED
  @param {This} caller
  @param {Event}
  @static
  @final
  **/
-Jalapeno.NEW_TEMPLATE_CREATED = 'NEW_TEMPLATE_CREATED';
+Pepper.NEW_TEMPLATE_CREATED = 'NEW_TEMPLATE_CREATED';
 
 
 /**
  Custom event fired when a new timeline was created
- @event Jalapeno.NEW_TIMELINE_CREATED
+ @event Pepper.NEW_TIMELINE_CREATED
  @param {This} caller
  @param {Event}
  @static
  @final
  **/
-Jalapeno.NEW_TIMELINE_CREATED = 'NEW_TIMELINE_CREATED';
+Pepper.NEW_TIMELINE_CREATED = 'NEW_TIMELINE_CREATED';
 
 /**
  Custom event fired when a new channel was created
- @event Jalapeno.NEW_CHANNEL_CREATED
+ @event Pepper.NEW_CHANNEL_CREATED
  @param {This} caller
  @param {Event}
  @static
  @final
  **/
-Jalapeno.NEW_CHANNEL_CREATED = 'NEW_CHANNEL_CREATED';
+Pepper.NEW_CHANNEL_CREATED = 'NEW_CHANNEL_CREATED';
 
 /**
  Custom event fired when a new channel is added to an existing timeline
- @event Jalapeno.NEW_CHANNEL_ADDED
+ @event Pepper.NEW_CHANNEL_ADDED
  @param {This} caller
  @param {Event}
  @static
  @final
  **/
-Jalapeno.NEW_CHANNEL_ADDED = 'NEW_CHANNEL_ADDED';
+Pepper.NEW_CHANNEL_ADDED = 'NEW_CHANNEL_ADDED';
 
 /**
  Custom event fired when a block (ie Player on channel) changes it's total playback length
- @event Jalapeno.BLOCK_LENGTH_CHANGED
+ @event Pepper.BLOCK_LENGTH_CHANGED
  @param {This} caller
  @param {Event}
  @static
  @final
  **/
-Jalapeno.BLOCK_LENGTH_CHANGED = 'BLOCK_LENGTH_CHANGED';
+Pepper.BLOCK_LENGTH_CHANGED = 'BLOCK_LENGTH_CHANGED';
 
-Jalapeno.prototype = {
-    constructor: Jalapeno,
+Pepper.prototype = {
+    constructor: Pepper,
 
     /**
      Authenticate against a mediaSERVER
@@ -170,7 +170,7 @@ Jalapeno.prototype = {
     },
 
     /**
-     Returns a reference to the Jalapeno loader
+     Returns a reference to the Pepper loader
      @method getLoader
      @return {Object} reference to loader
      **/
@@ -208,7 +208,7 @@ Jalapeno.prototype = {
      @param {Function} i_callBack
      **/
     sendCommand: function (i_command, i_stationId, i_callBack) {
-        var url = 'https://' + jalapeno.getUserData().domain + '/WebService/sendCommand.ashx?i_user=' + jalapeno.getUserData().userName + '&i_password=' + jalapeno.getUserData().userPass + '&i_stationId=' + i_stationId + '&i_command=' + i_command + '&i_param1=' + 'SignageStudioLite' + '&i_param2=' + '&callback=?';
+        var url = 'https://' + pepper.getUserData().domain + '/WebService/sendCommand.ashx?i_user=' + pepper.getUserData().userName + '&i_password=' + pepper.getUserData().userPass + '&i_stationId=' + i_stationId + '&i_command=' + i_command + '&i_param1=' + 'SignageStudioLite' + '&i_param2=' + '&callback=?';
         $.getJSON(url, i_callBack);
     },
 
@@ -220,7 +220,7 @@ Jalapeno.prototype = {
      @param {Function} i_callBack
      **/
     sendEvent: function (i_eventName, i_stationId, i_callBack) {
-        var url = 'https://' + jalapeno.getUserData().domain + '/WebService/sendCommand.ashx?i_user=' + jalapeno.getUserData().userName + '&i_password=' + jalapeno.getUserData().userPass + '&i_stationId=' + i_stationId + '&i_command=event&i_param1=' + i_eventName + '&i_param2=' + '&callback=?';
+        var url = 'https://' + pepper.getUserData().domain + '/WebService/sendCommand.ashx?i_user=' + pepper.getUserData().userName + '&i_password=' + pepper.getUserData().userPass + '&i_stationId=' + i_stationId + '&i_command=event&i_param1=' + i_eventName + '&i_param2=' + '&callback=?';
         $.getJSON(url, i_callBack);
     },
 
@@ -234,9 +234,9 @@ Jalapeno.prototype = {
      @return {String} image path url
      **/
     sendSnapshot: function (i_fileName, i_quality, i_stationId, i_callBack) {
-        var url = 'https://' + jalapeno.getUserData().domain + '/WebService/sendCommand.ashx?i_user=' + jalapeno.getUserData().userName + '&i_password=' + jalapeno.getUserData().userPass + '&i_stationId=' + i_stationId + '&i_command=' + 'captureScreen2' + '&i_param1=' + i_fileName + '&i_param2=' + i_quality + '&callback=?';
+        var url = 'https://' + pepper.getUserData().domain + '/WebService/sendCommand.ashx?i_user=' + pepper.getUserData().userName + '&i_password=' + pepper.getUserData().userPass + '&i_stationId=' + i_stationId + '&i_command=' + 'captureScreen2' + '&i_param1=' + i_fileName + '&i_param2=' + i_quality + '&callback=?';
         $.getJSON(url, i_callBack);
-        var path = 'https://' + jalapeno.getUserData().domain + '/Snapshots/business' + jalapeno.getUserData().businessID + "/station" + i_stationId + '/' + i_fileName + '.jpg';
+        var path = 'https://' + pepper.getUserData().domain + '/Snapshots/business' + pepper.getUserData().businessID + "/station" + i_stationId + '/' + i_fileName + '.jpg';
         log(path);
         return path;
     },
@@ -251,7 +251,7 @@ Jalapeno.prototype = {
      **/
     announceTemplateViewerEdited: function (i_values) {
         var self = this;
-        jalapeno.fire(Jalapeno['TEMPLATE_VIEWER_EDITED'], self, null, i_values);
+        pepper.fire(Pepper['TEMPLATE_VIEWER_EDITED'], self, null, i_values);
     },
 
     /**
@@ -266,7 +266,7 @@ Jalapeno.prototype = {
         var campaign = campaigns.createRecord();
         campaign.campaign_name = i_campgianName;
         campaigns.addRecord(campaign);
-        jalapeno.fire(Jalapeno['NEW_CAMPAIGN_CREATED'], self, null, campaign['campaign_id']);
+        pepper.fire(Pepper['NEW_CAMPAIGN_CREATED'], self, null, campaign['campaign_id']);
         return campaign['campaign_id'];
     },
 
@@ -382,7 +382,7 @@ Jalapeno.prototype = {
         chanel.chanel_name = "CH";
         chanel.campaign_timeline_id = i_campaign_timeline_id;
         chanels.addRecord(chanel);
-        jalapeno.fire(Jalapeno['NEW_CHANNEL_ADDED'], self, null, {chanel: chanel['campaign_timeline_chanel_id'], campaign_timeline_id: i_campaign_timeline_id});
+        pepper.fire(Pepper['NEW_CHANNEL_ADDED'], self, null, {chanel: chanel['campaign_timeline_chanel_id'], campaign_timeline_id: i_campaign_timeline_id});
         return chanel['campaign_timeline_chanel_id'];
     },
 
@@ -406,7 +406,7 @@ Jalapeno.prototype = {
             chanels.addRecord(chanel);
             createdChanels.push(chanel['campaign_timeline_chanel_id']);
         }
-        jalapeno.fire(Jalapeno['NEW_CHANNEL_CREATED'], self, null, createdChanels);
+        pepper.fire(Pepper['NEW_CHANNEL_CREATED'], self, null, createdChanels);
         return createdChanels;
     },
 
@@ -449,7 +449,7 @@ Jalapeno.prototype = {
             returnData['viewers'].push(viewer['board_template_viewer_id']);
         }
         returnData['board_template_id'] = board_template_id
-        jalapeno.fire(Jalapeno['NEW_TEMPLATE_CREATED'], self, null, returnData);
+        pepper.fire(Pepper['NEW_TEMPLATE_CREATED'], self, null, returnData);
         return returnData;
     },
 
@@ -501,7 +501,7 @@ Jalapeno.prototype = {
         timeline.campaign_id = i_campaign_id;
         timeline.timeline_name = "Timeline";
         timelines.addRecord(timeline);
-        jalapeno.fire(Jalapeno['NEW_TIMELINE_CREATED'], self, null, timeline['campaign_timeline_id']);
+        pepper.fire(Pepper['NEW_TIMELINE_CREATED'], self, null, timeline['campaign_timeline_id']);
         return timeline['campaign_timeline_id'];
     },
 
@@ -519,7 +519,7 @@ Jalapeno.prototype = {
 
         var timelinePlayers = self.m_msdb.table_campaign_timeline_chanel_players();
         var recTimelinePlayer = timelinePlayers.createRecord();
-        var component = BB.JalapenoHelper.getBlockBoilerplate(i_playerCode);
+        var component = BB.PepperHelper.getBlockBoilerplate(i_playerCode);
         var player_data = component.getDefaultPlayerData(i_resourceID);
         recTimelinePlayer.player_data = player_data;
         recTimelinePlayer.campaign_timeline_chanel_id = i_campaign_timeline_chanel_id;
@@ -531,7 +531,7 @@ Jalapeno.prototype = {
             campaign_timeline_chanel_player_id: recTimelinePlayer['campaign_timeline_chanel_player_id'],
             campaign_timeline_chanel_player_data: recTimelinePlayer['player_data']
         };
-        jalapeno.fire(Jalapeno['NEW_PLAYER_CREATED'], self, null, returnData);
+        pepper.fire(Pepper['NEW_PLAYER_CREATED'], self, null, returnData);
         return returnData;
     },
 
@@ -545,8 +545,8 @@ Jalapeno.prototype = {
         var self = this;
         var foundTemplatesIDs = [];
 
-        $(jalapeno.m_msdb.table_campaign_timeline_board_templates().getAllPrimaryKeys()).each(function (k, table_campaign_timeline_board_template_id) {
-            var recCampaignTimelineBoardTemplate = jalapeno.m_msdb.table_campaign_timeline_board_templates().getRec(table_campaign_timeline_board_template_id);
+        $(pepper.m_msdb.table_campaign_timeline_board_templates().getAllPrimaryKeys()).each(function (k, table_campaign_timeline_board_template_id) {
+            var recCampaignTimelineBoardTemplate = pepper.m_msdb.table_campaign_timeline_board_templates().getRec(table_campaign_timeline_board_template_id);
             if (recCampaignTimelineBoardTemplate['campaign_timeline_id'] == i_campaign_timeline_id) {
                 foundTemplatesIDs.push(table_campaign_timeline_board_template_id);
             }
@@ -579,7 +579,7 @@ Jalapeno.prototype = {
             campaign_timeline_board_template_id: i_campaign_timeline_board_template_id,
             board_template_viewer_id: i_board_template_viewer_id,
         };
-        jalapeno.announceTemplateViewerEdited(o);
+        pepper.announceTemplateViewerEdited(o);
     },
 
     /**
@@ -609,8 +609,8 @@ Jalapeno.prototype = {
         var self = this;
         var foundGlobalBoardTemplatesIDs = [];
 
-        $(jalapeno.m_msdb.table_campaign_timeline_board_templates().getAllPrimaryKeys()).each(function (k, table_campaign_timeline_board_template_id) {
-            var recCampaignTimelineBoardTemplate = jalapeno.m_msdb.table_campaign_timeline_board_templates().getRec(table_campaign_timeline_board_template_id);
+        $(pepper.m_msdb.table_campaign_timeline_board_templates().getAllPrimaryKeys()).each(function (k, table_campaign_timeline_board_template_id) {
+            var recCampaignTimelineBoardTemplate = pepper.m_msdb.table_campaign_timeline_board_templates().getRec(table_campaign_timeline_board_template_id);
             if (recCampaignTimelineBoardTemplate['campaign_timeline_id'] == i_campaign_timeline_id) {
                 foundGlobalBoardTemplatesIDs.push(recCampaignTimelineBoardTemplate['board_template_id']);
             }
@@ -628,8 +628,8 @@ Jalapeno.prototype = {
         var self = this;
         var foundChannelsIDs = [];
 
-        $(jalapeno.m_msdb.table_campaign_timeline_chanels().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_id) {
-            var recCampaignTimelineChannel = jalapeno.m_msdb.table_campaign_timeline_chanels().getRec(campaign_timeline_chanel_id);
+        $(pepper.m_msdb.table_campaign_timeline_chanels().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_id) {
+            var recCampaignTimelineChannel = pepper.m_msdb.table_campaign_timeline_chanels().getRec(campaign_timeline_chanel_id);
             if (i_campaign_timeline_id == recCampaignTimelineChannel['campaign_timeline_id']) {
                 foundChannelsIDs.push(campaign_timeline_chanel_id);
             }
@@ -659,7 +659,7 @@ Jalapeno.prototype = {
      **/
     setBlockRecord: function (i_block_id, i_key, i_value) {
         var self = this;
-        jalapeno.m_msdb.table_campaign_timeline_chanel_players().openForEdit(i_block_id);
+        pepper.m_msdb.table_campaign_timeline_chanel_players().openForEdit(i_block_id);
         var recEditBlock = self.m_msdb.table_campaign_timeline_chanel_players().getRec(i_block_id);
         recEditBlock[i_key] = i_value;
     },
@@ -676,11 +676,11 @@ Jalapeno.prototype = {
 
         for (var i = 0; i < i_blocks.length; i++) {
             var block_id = i_blocks[i];
-            $(jalapeno.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
+            $(pepper.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
                 if (block_id == campaign_timeline_chanel_player_id) {
                     var recCampaignTimelineChannelPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
                     var playerDuration = recCampaignTimelineChannelPlayer['player_duration']
-                    jalapeno.m_msdb.table_campaign_timeline_chanel_players().openForEdit(campaign_timeline_chanel_player_id);
+                    pepper.m_msdb.table_campaign_timeline_chanel_players().openForEdit(campaign_timeline_chanel_player_id);
                     // log('player ' + block_id + ' offset ' + totalChannelLength + ' playerDuration ' + playerDuration);
                     totalChannelLength = totalChannelLength + parseFloat(playerDuration);
                 }
@@ -699,11 +699,11 @@ Jalapeno.prototype = {
      **/
     getGlobalBoardRecFromTemplate: function (i_campaign_timeline_board_template_id) {
         var self = this;
-        var recCampaignTimelineBoardTemplate = jalapeno.m_msdb.table_campaign_timeline_board_templates().getRec(i_campaign_timeline_board_template_id);
+        var recCampaignTimelineBoardTemplate = pepper.m_msdb.table_campaign_timeline_board_templates().getRec(i_campaign_timeline_board_template_id);
         var board_template_id = recCampaignTimelineBoardTemplate['board_template_id'];
-        var recBoardTemplate = jalapeno.m_msdb.table_board_templates().getRec(board_template_id);
+        var recBoardTemplate = pepper.m_msdb.table_board_templates().getRec(board_template_id);
         var board_id = recBoardTemplate['board_id'];
-        var recBoard = jalapeno.m_msdb.table_boards().getRec(board_id);
+        var recBoard = pepper.m_msdb.table_boards().getRec(board_id);
         return recBoard;
     },
 
@@ -714,9 +714,9 @@ Jalapeno.prototype = {
      @return {Number} board_id
      **/
     getGlobalBoardIDFromTimeline: function (i_campaign_timeline_board_template_id) {
-        var recCampaignTimelineBoardTemplate = jalapeno.m_msdb.table_campaign_timeline_board_templates().getRec(i_campaign_timeline_board_template_id);
+        var recCampaignTimelineBoardTemplate = pepper.m_msdb.table_campaign_timeline_board_templates().getRec(i_campaign_timeline_board_template_id);
         var board_template_id = recCampaignTimelineBoardTemplate['board_template_id'];
-        var recBoardTemplate = jalapeno.m_msdb.table_board_templates().getRec(board_template_id);
+        var recBoardTemplate = pepper.m_msdb.table_board_templates().getRec(board_template_id);
         return recBoardTemplate['board_id'];
     },
 
@@ -990,7 +990,7 @@ Jalapeno.prototype = {
      **/
     removeBoardTemplateFromTimeline: function (i_timeline_id) {
         var self = this;
-        var campaign_timeline_board_template_id = jalapeno.getTemplatesOfTimeline(i_timeline_id)[0];
+        var campaign_timeline_board_template_id = pepper.getTemplatesOfTimeline(i_timeline_id)[0];
         self.m_msdb.table_campaign_timeline_board_templates().openForDelete(campaign_timeline_board_template_id);
         return campaign_timeline_board_template_id;
     },
@@ -1016,7 +1016,7 @@ Jalapeno.prototype = {
         var self = this;
         var boardTemplateViewerIDs = [];
 
-        $(jalapeno.m_msdb.table_board_template_viewers().getAllPrimaryKeys()).each(function (k, board_template_viewer_id) {
+        $(pepper.m_msdb.table_board_template_viewers().getAllPrimaryKeys()).each(function (k, board_template_viewer_id) {
             var recBoardTemplateViewers = self.m_msdb.table_board_template_viewers().getRec(board_template_viewer_id);
             if (recBoardTemplateViewers['board_template_id'] == i_board_template_id) {
                 var a = self.m_msdb.table_board_template_viewers().openForDelete(board_template_viewer_id);
@@ -1104,7 +1104,7 @@ Jalapeno.prototype = {
             } catch (e) {
             }
             if (resourceID != undefined && resourceID == i_resource_id) {
-                jalapeno.removeBlockFromTimelineChannel(campaign_timeline_chanel_player_id);
+                pepper.removeBlockFromTimelineChannel(campaign_timeline_chanel_player_id);
             }
         });
     },
@@ -1118,7 +1118,7 @@ Jalapeno.prototype = {
     removeTimelineFromCampaign: function (i_campaign_timeline_id) {
         var self = this;
         self.m_msdb.table_campaign_timelines().openForDelete(i_campaign_timeline_id);
-        jalapeno.fire(Jalapeno['TIMELINE_DELETED'], self, null, i_campaign_timeline_id);
+        pepper.fire(Pepper['TIMELINE_DELETED'], self, null, i_campaign_timeline_id);
     },
 
     /**
@@ -1313,8 +1313,8 @@ Jalapeno.prototype = {
                 });
             }
         });
-        jalapeno.setCampaignTimelineRecord(i_campaign_timeline_id, 'timeline_duration', longestChannelDuration);
-        jalapeno.fire(Jalapeno['TIMELINE_LENGTH_CHANGED'], self, null, longestChannelDuration);
+        pepper.setCampaignTimelineRecord(i_campaign_timeline_id, 'timeline_duration', longestChannelDuration);
+        pepper.fire(Pepper['TIMELINE_LENGTH_CHANGED'], self, null, longestChannelDuration);
     },
 
     /**
@@ -1372,7 +1372,7 @@ Jalapeno.prototype = {
             campaignTimelineChanelPlayerID: i_campaign_timeline_chanel_player_id,
             totalSeconds: totalSeconds
         }
-        jalapeno.fire(Jalapeno['BLOCK_LENGTH_CHANGED'], self, null, returnData);
+        pepper.fire(Pepper['BLOCK_LENGTH_CHANGED'], self, null, returnData);
     },
 
     /**
@@ -1385,7 +1385,7 @@ Jalapeno.prototype = {
     getChannelBlocks: function (i_campaign_timeline_chanel_id) {
         var self = this;
         var foundBlocks = [];
-        $(jalapeno.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
+        $(pepper.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
             var recCampaignTimelineChannelPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
             if (i_campaign_timeline_chanel_id == recCampaignTimelineChannelPlayer['campaign_timeline_chanel_id']) {
                 foundBlocks.push(campaign_timeline_chanel_player_id);
@@ -1525,7 +1525,7 @@ Jalapeno.prototype = {
         var counter = -1;
         var screenProps = {};
 
-        $(jalapeno.m_msdb.table_campaign_timeline_board_viewer_chanels().getAllPrimaryKeys()).each(function (k, campaign_timeline_board_viewer_chanel_id) {
+        $(pepper.m_msdb.table_campaign_timeline_board_viewer_chanels().getAllPrimaryKeys()).each(function (k, campaign_timeline_board_viewer_chanel_id) {
 
             var recCampaignTimelineBoardViewerChanel = self.m_msdb.table_campaign_timeline_board_viewer_chanels().getRec(campaign_timeline_board_viewer_chanel_id);
             if (recCampaignTimelineBoardViewerChanel['campaign_timeline_board_template_id'] == i_campaign_timeline_board_template_id) {

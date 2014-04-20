@@ -28,7 +28,7 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
                 $(Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).trigger('click');
             }, 3000);
 
-            jalapeno.listen(Jalapeno.TIMELINE_DELETED, $.proxy(self._deleteSequencedTimeline, self));
+            pepper.listen(Pepper.TIMELINE_DELETED, $.proxy(self._deleteSequencedTimeline, self));
 
         },
 
@@ -94,7 +94,7 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
             var campaign_timeline_id = e.edata;
             self._deleteTimelineThumbUI(campaign_timeline_id);
             delete self.m_timelines[campaign_timeline_id];
-            jalapeno.removeTimelineFromSequences(campaign_timeline_id);
+            pepper.removeTimelineFromSequences(campaign_timeline_id);
             self.reSequenceTimelines();
         },
 
@@ -202,7 +202,7 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
                 var element = $(this).find('[data-campaign_timeline_id]').eq(0);
                 var campaign_timeline_id = $(element).data('campaign_timeline_id');
                 var selectedCampaign = BB.comBroker.getService(BB.SERVICES.CAMPAIGN_VIEW).getSelectedCampaign();
-                jalapeno.setCampaignTimelineSequencerIndex(selectedCampaign, campaign_timeline_id, sequenceIndex);
+                pepper.setCampaignTimelineSequencerIndex(selectedCampaign, campaign_timeline_id, sequenceIndex);
             });
         },
 

@@ -45,7 +45,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             $(Elements.REMOVE_CAMPAIGN).on('click', function (e) {
                 if (self.m_selectedCampaignID != -1) {
                     var selectedElement = self.$el.find('[data-campaignid="' + self.m_selectedCampaignID + '"]');
-                    var allCampaignIDs = jalapeno.getStationCampaignIDs();
+                    var allCampaignIDs = pepper.getStationCampaignIDs();
                     if (_.indexOf(allCampaignIDs, self.m_selectedCampaignID) == -1) {
                         bootbox.confirm($(Elements.MSG_BOOTBOX_SURE_DELETE_CAMPAIGN).text(), function(result) {
                             if (result==true){
@@ -73,10 +73,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
 
             self.m_selected_resource_id = undefined;
-            var campaignIDs = jalapeno.getCampaignIDs();
+            var campaignIDs = pepper.getCampaignIDs();
             for (var i = 0; i < campaignIDs.length; i++) {
                 var campaignID = campaignIDs[i];
-                var recCampaign = jalapeno.getCampaignRecord(campaignID);
+                var recCampaign = pepper.getCampaignRecord(campaignID);
                 var playListMode = recCampaign['campaign_playlist_mode'] == 0 ? 'sequencer' : 'scheduler';
 
                 var snippet = '<a href="#" class="' + BB.lib.unclass(Elements.CLASS_CAMPIGN_LIST_ITEM) + ' list-group-item" data-campaignid="' + campaignID + '">' +
@@ -118,7 +118,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 $(Elements.CLASS_CAMPIGN_LIST_ITEM, self.el).removeClass('active');
                 var elem = $(e.target).closest('a').addClass('active');
                 self.m_selectedCampaignID = $(elem).data('campaignid');
-                var recCampaign = jalapeno.getCampaignRecord(self.m_selectedCampaignID);
+                var recCampaign = pepper.getCampaignRecord(self.m_selectedCampaignID);
                 $(Elements.FORM_CAMPAIGN_NAME).val(recCampaign['campaign_name']);
                 self.m_propertiesPanel.selectView(self.m_campainProperties);
                 self.m_propertiesPanel.openPropertiesPanel();
@@ -134,37 +134,37 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _removeCampaignFromMSDB: function (i_campaign_id) {
             var self = this;
 
-            var timelineIDs = jalapeno.getCampaignTimelines(i_campaign_id);
+            var timelineIDs = pepper.getCampaignTimelines(i_campaign_id);
 
             for (var i = 0; i < timelineIDs.length; i++) {
                 var timelineID = timelineIDs[i];
-                jalapeno.removeTimelineFromCampaign(timelineID);
-                var campaignTimelineBoardTemplateID = jalapeno.removeBoardTemplateFromTimeline(timelineID);
-                jalapeno.removeTimelineBoardViewerChannels(campaignTimelineBoardTemplateID);
-                var boardTemplateID = jalapeno.getGlobalBoardIDFromTimeline(timelineID);
-                jalapeno.removeBoardTemplate(boardTemplateID);
-                jalapeno.removeBoardTemplateViewers(boardTemplateID);
-                jalapeno.removeTimelineFromSequences(timelineID);
+                pepper.removeTimelineFromCampaign(timelineID);
+                var campaignTimelineBoardTemplateID = pepper.removeBoardTemplateFromTimeline(timelineID);
+                pepper.removeTimelineBoardViewerChannels(campaignTimelineBoardTemplateID);
+                var boardTemplateID = pepper.getGlobalBoardIDFromTimeline(timelineID);
+                pepper.removeBoardTemplate(boardTemplateID);
+                pepper.removeBoardTemplateViewers(boardTemplateID);
+                pepper.removeTimelineFromSequences(timelineID);
 
-                var channelsIDs = jalapeno.getChannelsOfTimeline(timelineID);
+                var channelsIDs = pepper.getChannelsOfTimeline(timelineID);
                 for (var n = 0; n < channelsIDs.length; n++) {
                     var channelID = channelsIDs[n];
-                    jalapeno.removeChannelFromTimeline(channelID);
+                    pepper.removeChannelFromTimeline(channelID);
 
-                    var blockIDs = jalapeno.getChannelBlocks(channelID);
+                    var blockIDs = pepper.getChannelBlocks(channelID);
                     for (var x = 0; x < blockIDs.length; x++) {
                         var blockID = blockIDs[x];
-                        jalapeno.removeBlockFromTimelineChannel(blockID);
+                        pepper.removeBlockFromTimelineChannel(blockID);
                     }
                 }
             }
-            jalapeno.removeCampaign(i_campaign_id);
-            jalapeno.removeCampaignBoard(i_campaign_id);
+            pepper.removeCampaign(i_campaign_id);
+            pepper.removeCampaignBoard(i_campaign_id);
 
             // check to see if any other campaigns are left, do some clean house and remove all campaign > boards
-            var campaignIDs = jalapeno.getCampaignIDs();
+            var campaignIDs = pepper.getCampaignIDs();
             if (campaignIDs.length == 0)
-                jalapeno.removeAllBoards();
+                pepper.removeAllBoards();
 
             self.m_selectedCampaignID = -1;
             self.m_propertiesPanel.selectView(Elements.EMPTY_PROPERTIES);
@@ -179,7 +179,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             var onChange = _.debounce(function (e) {
                 var text = $(e.target).val();
-                jalapeno.setCampaignRecord(self.m_selectedCampaignID, 'campaign_name', text);
+                pepper.setCampaignRecord(self.m_selectedCampaignID, 'campaign_name', text);
                 self.$el.find('[data-campaignid="' + self.m_selectedCampaignID + '"]').find('h4').text(text);
             }, 333, false);
             $(Elements.FORM_CAMPAIGN_NAME).on("input", onChange);

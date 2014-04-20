@@ -226,7 +226,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                         className: "btn-success",
                         callback: function () {
                             self.save(function () {
-                                jalapeno.sendCommand('rebootPlayer', -1, function () {
+                                pepper.sendCommand('rebootPlayer', -1, function () {
                                 });
 
                             });
@@ -250,7 +250,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         save: function (i_callBack) {
             var appEntryFaderView = BB.comBroker.getService(BB.SERVICES['APP_ENTRY_FADER_VIEW']);
             appEntryFaderView.selectView(Elements.WAITS_SCREEN_ENTRY_APP);
-            jalapeno.save(function (i_status) {
+            pepper.save(function (i_status) {
                 appEntryFaderView.selectView(Elements.APP_CONTENT);
                 if (!i_status.status) {
                     bootbox.dialog({

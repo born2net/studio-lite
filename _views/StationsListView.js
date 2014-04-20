@@ -203,14 +203,14 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
             var self = this;
             $(Elements.STATION_PLAY_COMMAND + ' , ' + Elements.STATION_STOP_COMMAND).on('click', function (e) {
                 var command = BB.lib.unhash(Elements.STATION_PLAY_COMMAND) == e.currentTarget.id ? 'start' : 'stop';
-                jalapeno.sendCommand(command, self.m_selected_station_id, function () {
+                pepper.sendCommand(command, self.m_selected_station_id, function () {
                     // log('cmd done'+command);
                 });
                 return false;
             });
 
             $(Elements.STATION_RELOAD_COMMAND).on('click', function (e) {
-                jalapeno.sendCommand('rebootPlayer', self.m_selected_station_id, function () {
+                pepper.sendCommand('rebootPlayer', self.m_selected_station_id, function () {
                 });
                 return false;
             });
@@ -226,7 +226,7 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
 
             $(Elements.STATION_EVENT_SEND_COMMAND).on('click', function () {
                 var eventValue = $(Elements.STATION_SEND_EVENT_VALUE).val();
-                jalapeno.sendEvent(eventValue, self.m_selected_station_id, function () {
+                pepper.sendEvent(eventValue, self.m_selected_station_id, function () {
                 });
             });
         },
@@ -274,12 +274,12 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
             bootbox.confirm($(Elements.MSG_BOOTBOX_STEPS).text(), function (result) {
                 if (result == true) {
                     var navigationView = BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW);
-                    jalapeno.sendCommand('rebootPlayer', self.m_selected_station_id, function () {
+                    pepper.sendCommand('rebootPlayer', self.m_selected_station_id, function () {
                     });
-                    jalapeno.removeStation(self.m_selected_station_id);
+                    pepper.removeStation(self.m_selected_station_id);
                     navigationView.save(function () {
                     });
-                    jalapeno.sync();
+                    pepper.sync();
                     self._removeStationFromLI(self.m_selected_station_id);
                     navigationView.resetPropertiesView();
                 }
@@ -308,7 +308,7 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
                 self._listenSnapshotComplete();
 
                 /* Can't use short path due to IE error, gotta go long route via _sendSnapshotCommand
-                 self.m_imagePath = jalapeno.sendSnapshot(Date.now(), '0.2', self.m_selected_station_id, function (e) {});
+                 self.m_imagePath = pepper.sendSnapshot(Date.now(), '0.2', self.m_selected_station_id, function (e) {});
                  log(self.m_imagePath);
                  */
 
@@ -344,7 +344,7 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
         _sendSnapshotCommand: function (i_station) {
             var self = this;
             var d =  new Date().getTime();
-            var path = jalapeno.sendSnapshot(d,0.2,i_station,function(e){});
+            var path = pepper.sendSnapshot(d,0.2,i_station,function(e){});
             setTimeout(function(){
                 self.m_imagePath = path;
             },3000);
@@ -411,7 +411,7 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
          **/
         _selectCampaignDropDownForStation: function (i_stationID) {
             var self = this;
-            var campaignID = jalapeno.getStationCampaignID(i_stationID);
+            var campaignID = pepper.getStationCampaignID(i_stationID);
             self._populateStationCampaignDropDown(campaignID);
         },
 
@@ -425,10 +425,10 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
             $(Elements.STATION_SELECTION_CAMPAIGN).empty();
             if (i_campaignID == undefined || i_campaignID == -1)
                 $(Elements.STATION_SELECTION_CAMPAIGN).append('<option selected data-campaign_id="-1">Select campaign</option>');
-            var campaignIDs = jalapeno.getCampaignIDs();
+            var campaignIDs = pepper.getCampaignIDs();
             for (var i = 0; i < campaignIDs.length; i++) {
                 var campaignID = campaignIDs[i];
-                var recCampaign = jalapeno.getCampaignRecord(campaignID);
+                var recCampaign = pepper.getCampaignRecord(campaignID);
                 var selected = campaignID == i_campaignID ? 'selected' : '';
                 var snippet = '<option ' + selected + ' data-campaign_id="' + campaignID + '">' + recCampaign['campaign_name'] + '</option>';
                 $(Elements.STATION_SELECTION_CAMPAIGN).append(snippet);
@@ -444,7 +444,7 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
             var campaign_id = $(Elements.STATION_SELECTION_CAMPAIGN + ' option:selected').attr('data-campaign_id');
             if (campaign_id == -1)
                 return;
-            jalapeno.setStationCampaignID(self.m_selected_station_id, campaign_id);
+            pepper.setStationCampaignID(self.m_selected_station_id, campaign_id);
         },
 
         /**
@@ -466,7 +466,7 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
          @method restartStation
          **/
         restartStation: function () {
-            jalapeno.sendCommand('rebootPlayer', -1, function () {
+            pepper.sendCommand('rebootPlayer', -1, function () {
             });
             return false;
         }

@@ -28,7 +28,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 var self = this;
                 BB.comBroker.setService(BB.SERVICES['LAYOUT_ROUTER'], self);
 
-                // global x2j required by jalapeno
+                // global x2j required by pepper
                 window.x2js = new X2JS({escapeMode: true, attributePrefix: "_", arrayAccessForm: "none", emptyNodeForm: "text", enableToStringFunc: true, arrayAccessFormPaths: [], skipEmptyTextNodesForObj: true});
                 BB.comBroker.setService('compX2JS', window.x2js);
                 BB.comBroker.setService('XDATE', new XDate());
@@ -175,9 +175,9 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
              @method Update
              **/
             _initDashBoard: function () {
-                $(Elements.SERVER_NAME).text(jalapeno.getUserData().domain);
-                $(Elements.BUISINESS_ID).text(jalapeno.getUserData().businessID);
-                $(Elements.LOGGED_USER_NAME).text(jalapeno.getUserData().userName);
+                $(Elements.SERVER_NAME).text(pepper.getUserData().domain);
+                $(Elements.BUISINESS_ID).text(pepper.getUserData().businessID);
+                $(Elements.LOGGED_USER_NAME).text(pepper.getUserData().userName);
             },
 
             /**

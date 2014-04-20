@@ -35,10 +35,10 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var domPlayerData = self._getBlockPlayerData();
             var xSnippet = $(domPlayerData).find('Resource');
             self.m_resourceID = $(xSnippet).attr('hResource');
-            self.m_blockName = jalapeno.getResourceRecord(self.m_resourceID).resource_name;
-            self.m_blockDescription = jalapeno.getResourceName(self.m_resourceID);
-            var fileFormat = jalapeno.getResourceType(self.m_resourceID);
-            self.m_blockIcon = BB.JalapenoHelper.getIcon(fileFormat);
+            self.m_blockName = pepper.getResourceRecord(self.m_resourceID).resource_name;
+            self.m_blockDescription = pepper.getResourceName(self.m_resourceID);
+            var fileFormat = pepper.getResourceType(self.m_resourceID);
+            self.m_blockIcon = BB.PepperHelper.getIcon(fileFormat);
         },
 
         /**

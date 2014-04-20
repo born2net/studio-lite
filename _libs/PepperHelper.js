@@ -1,12 +1,12 @@
 /**
- The JalapenoHelper class is used to manage real time data that is not in the msdb such as
+ The PepperHelper class is used to manage real time data that is not in the msdb such as
  blocks and related methods that have to do with player_data which is a vital part of each
  channel or scene block (i.e.: player)
- @class JalapenoHelper
+ @class PepperHelper
  @constructor
  @return none
  **/
-function JalapenoHelper() {
+function PepperHelper() {
 
     this.self = this;
     this.m_components = {};
@@ -15,8 +15,8 @@ function JalapenoHelper() {
     this._initComponents();
 };
 
-JalapenoHelper.prototype = {
-    constructor: JalapenoHelper,
+PepperHelper.prototype = {
+    constructor: PepperHelper,
 
     /**
      The _initComponents initializes data constants for components and used to relieve member data

@@ -34,7 +34,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             self._listenResourceRemoved();
             self._listenBlockLengthChanged();
 
-            jalapeno.listen(Jalapeno.TIMELINE_DELETED, $.proxy(self._onTimelineDeleted, self));
+            pepper.listen(Pepper.TIMELINE_DELETED, $.proxy(self._onTimelineDeleted, self));
 
         },
 
@@ -84,13 +84,13 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             var playerOffsetTime = 0;
             $(blocks).each(function (i) {
                 var block_id = $(this).data('block_id');
-                var recBlock = jalapeno.getBlockRecord(block_id);
+                var recBlock = pepper.getBlockRecord(block_id);
                 var playerDuration = recBlock['player_duration']
-                jalapeno.setBlockRecord(block_id, 'player_offset_time', playerOffsetTime);
+                pepper.setBlockRecord(block_id, 'player_offset_time', playerOffsetTime);
                 log('player ' + block_id + ' offset ' + playerOffsetTime + ' playerDuration ' + playerDuration);
                 playerOffsetTime = parseFloat(playerOffsetTime) + parseFloat(playerDuration);
             });
-            jalapeno.calcTimelineTotalDuration(this.selected_campaign_timeline_id);
+            pepper.calcTimelineTotalDuration(this.selected_campaign_timeline_id);
         },
 
         /**
@@ -106,7 +106,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
                 var block_id = $(this).data('block_id');
                 blocksIDs.push(block_id);
             });
-            var totalChannelLength = jalapeno.getTotalDurationOfBlocks(blocksIDs);
+            var totalChannelLength = pepper.getTotalDurationOfBlocks(blocksIDs);
             return totalChannelLength;
         },
 
@@ -137,7 +137,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             var self = this;
 
             var totalChannelLength = self._getTotalDurationChannel();
-            var jData = jalapeno.createNewPlayer(self.selected_campaign_timeline_chanel_id, i_blockID, totalChannelLength, i_resourceID);
+            var jData = pepper.createNewPlayer(self.selected_campaign_timeline_chanel_id, i_blockID, totalChannelLength, i_resourceID);
             var campaign_timeline_chanel_player_id = jData['campaign_timeline_chanel_player_id'];
             var campaign_timeline_chanel_player_data = jData['campaign_timeline_chanel_player_data'];
 
@@ -193,7 +193,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
 
                 if (e.context.m_owner instanceof Timeline) {
 
-                    var recCampaignTimelineViewerChanels = jalapeno.getChannelIdFromCampaignTimelineBoardViewer(self.selected_campaign_timeline_board_viewer_id, self.selected_campaign_timeline_id);
+                    var recCampaignTimelineViewerChanels = pepper.getChannelIdFromCampaignTimelineBoardViewer(self.selected_campaign_timeline_board_viewer_id, self.selected_campaign_timeline_id);
                     self._loadChannelBlocks(self.selected_campaign_timeline_id, recCampaignTimelineViewerChanels['campaign_timeline_chanel_id']);
                     $(Elements.ADD_BLOCK_BUTTON).fadeIn();
                     $(Elements.REMOVE_BLOCK_BUTTON).fadeIn();
@@ -226,7 +226,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
 
             for (var block in blocks) {
                 var blockData = blocks[block].getBlockData();
-                var duration = jalapeno.getBlockTimelineChannelBlockLength(blockData.blockID).totalInSeconds;
+                var duration = pepper.getBlockTimelineChannelBlockLength(blockData.blockID).totalInSeconds;
                 var durationFormatted = xdate.clearTime().addSeconds(duration).toString('HH:mm:ss');
                 $(Elements.SORTABLE).append($('<li class="' + BB.lib.unclass(Elements.CLASS_CHANNEL_LIST_ITEMS) + '  list-group-item" data-block_id="' + blockData.blockID + '">' +
                     '<a href="#">' +
@@ -304,7 +304,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
          **/
         _listenBlockLengthChanged: function () {
             var self = this;
-            jalapeno.listen(Jalapeno.BLOCK_LENGTH_CHANGED, $.proxy(self._onBlockLengthChanged, self));
+            pepper.listen(Pepper.BLOCK_LENGTH_CHANGED, $.proxy(self._onBlockLengthChanged, self));
         },
 
         /**

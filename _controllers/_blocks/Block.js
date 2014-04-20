@@ -29,9 +29,9 @@ define(['jquery', 'backbone'], function ($) {
             self.m_block_id = options.i_block_id;
             self.m_blockType = options.blockType;
             self.m_selected = false;
-            self.m_blockName = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).name;
-            self.m_blockDescription = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).description;
-            self.m_blockIcon = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).icon;
+            self.m_blockName = BB.PepperHelper.getBlockBoilerplate(self.m_blockType).name;
+            self.m_blockDescription = BB.PepperHelper.getBlockBoilerplate(self.m_blockType).description;
+            self.m_blockIcon = BB.PepperHelper.getBlockBoilerplate(self.m_blockType).icon;
             self.m_resourceID = undefined;
             self.m_blockProperty = BB.comBroker.getService(BB.SERVICES['BLOCK_PROPERTIES']);
 
@@ -146,7 +146,7 @@ define(['jquery', 'backbone'], function ($) {
                 var v = $(e.target).prop('checked') == true ? 1 : 0;
                 if (v) {
                     self._enableGradient();
-                    xBgSnippet = BB.JalapenoHelper.getCommonBackgroundXML();
+                    xBgSnippet = BB.PepperHelper.getCommonBackgroundXML();
                     var xmlString = (new XMLSerializer()).serializeToString(domPlayerData);
                     xmlString = xmlString.replace("<Appearance", xBgSnippet + "<Appearance");
                     domPlayerData = $.parseXML(xmlString);
@@ -288,7 +288,7 @@ define(['jquery', 'backbone'], function ($) {
          **/
         _updateTitleTab: function () {
             var self = this;
-            self.m_blockAcronym = BB.JalapenoHelper.getBlockBoilerplate(self.m_blockType).acronym;
+            self.m_blockAcronym = BB.PepperHelper.getBlockBoilerplate(self.m_blockType).acronym;
             $(Elements.BLOCK_SUBPROPERTIES_TITLE).text(self.m_blockAcronym);
         },
 
@@ -299,7 +299,7 @@ define(['jquery', 'backbone'], function ($) {
          **/
         _updateBlockLength: function () {
             var self = this;
-            var lengthData = jalapeno.getBlockTimelineChannelBlockLength(self.m_block_id);
+            var lengthData = pepper.getBlockTimelineChannelBlockLength(self.m_block_id);
             $(Elements.BLOCK_LENGTH_HOURS).val(lengthData.hours).trigger('change');
             $(Elements.BLOCK_LENGTH_MINUTES).val(lengthData.minutes).trigger('change');
             $(Elements.BLOCK_LENGTH_SECONDS).val(lengthData.seconds).trigger('change');
@@ -345,7 +345,7 @@ define(['jquery', 'backbone'], function ($) {
                         }
                     }
                     // log('upd: ' + self.m_block_id + ' ' + hours + ' ' + minutes + ' ' + seconds);
-                    jalapeno.setBlockTimelineChannelBlockLength(self.m_block_id, hours, minutes, seconds);
+                    pepper.setBlockTimelineChannelBlockLength(self.m_block_id, hours, minutes, seconds);
                 }
             });
         },
@@ -361,7 +361,7 @@ define(['jquery', 'backbone'], function ($) {
             switch (self.m_placement) {
                 case BB.CONSTS.PLACEMENT_CHANNEL:
                 {
-                    jalapeno.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', xmlString);
+                    pepper.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', xmlString);
                     break;
                 }
                 case BB.CONSTS.PLACEMENT_SCENE:
@@ -384,13 +384,13 @@ define(['jquery', 'backbone'], function ($) {
 
                 case BB.CONSTS.PLACEMENT_CHANNEL:
                 {
-                    recBlock = jalapeno.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
+                    recBlock = pepper.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
                     break;
                 }
 
                 case BB.CONSTS.PLACEMENT_SCENE:
                 {
-                    // recBlock = jalapeno.get...(self.m_block_id);
+                    // recBlock = pepper.get...(self.m_block_id);
                     break;
                 }
             }
@@ -405,7 +405,7 @@ define(['jquery', 'backbone'], function ($) {
          **/
         _deleteBlock: function () {
             var self = this;
-            jalapeno.removeBlockFromTimelineChannel(self.m_block_id);
+            pepper.removeBlockFromTimelineChannel(self.m_block_id);
 
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_SELECTED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_LENGTH_CHANGING, self);

@@ -5,7 +5,7 @@
  @constructor
  @return {Object} instantiated StudioLite
  **/
-define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 'ComBroker', 'Lib', 'Jalapeno', 'JalapenoHelper'], function (_, $, Backbone, Bootstrap, backbonecontroller, ComBroker, Lib, Jalapeno, JalapenoHelper) {
+define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 'ComBroker', 'Lib', 'Pepper', 'PepperHelper'], function (_, $, Backbone, Bootstrap, backbonecontroller, ComBroker, Lib, Pepper, PepperHelper) {
     var StudioLite = Backbone.Controller.extend({
 
         // app init
@@ -24,12 +24,12 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             BB.lib.addBackboneViewOptions();
             BB.comBroker = new ComBroker();
             BB.comBroker.name = 'AppBroker';
-            BB.Jalapeno = new Jalapeno();
-            _.extend(BB.Jalapeno,BB.comBroker);
-            BB.Jalapeno.clearServices();
-            BB.Jalapeno.name = 'JalapenoBroker';
-            BB.JalapenoHelper = new JalapenoHelper();
-            window.jalapeno = BB.Jalapeno;
+            BB.Pepper = new Pepper();
+            _.extend(BB.Pepper,BB.comBroker);
+            BB.Pepper.clearServices();
+            BB.Pepper.name = 'JalapenoBroker';
+            BB.PepperHelper = new PepperHelper();
+            window.pepper = BB.Pepper;
             window.log = BB.lib.log;
 
             // internationalization

@@ -47,8 +47,8 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             self.m_noneSelectedTimelines = new BB.View({el: Elements.NONE_SELECTED_SCREEN_LAYOUT})
             self.m_timelineViewStack.addView(self.m_noneSelectedTimelines);
 
-            jalapeno.listen(Jalapeno.NEW_TIMELINE_CREATED, $.proxy(self._updDelTimelimeButtonStatus, self));
-            jalapeno.listen(Jalapeno.TIMELINE_DELETED, $.proxy(self._updDelTimelimeButtonStatus, self));
+            pepper.listen(Pepper.NEW_TIMELINE_CREATED, $.proxy(self._updDelTimelimeButtonStatus, self));
+            pepper.listen(Pepper.TIMELINE_DELETED, $.proxy(self._updDelTimelimeButtonStatus, self));
 
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self)
@@ -87,10 +87,10 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             var self = this;
             var sequenceOrder = [];
 
-            var timelineIDs = jalapeno.getCampaignTimelines(self.m_selected_campaign_id);
+            var timelineIDs = pepper.getCampaignTimelines(self.m_selected_campaign_id);
             for (var i = 0; i < timelineIDs.length; i++) {
                 var campaign_timeline_id = timelineIDs[i];
-                var sequenceIndex = jalapeno.getCampaignTimelineSequencerIndex(campaign_timeline_id);
+                var sequenceIndex = pepper.getCampaignTimelineSequencerIndex(campaign_timeline_id);
                 sequenceOrder[parseInt(sequenceIndex)] = parseInt(campaign_timeline_id);
             }
 
@@ -107,7 +107,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
          **/
         _loadSequencerFirstTimeline: function () {
             var self = this;
-            var firstTimelineID = jalapeno.getCampaignTimelineIdOfSequencerIndex(self.m_selected_campaign_id, 0);
+            var firstTimelineID = pepper.getCampaignTimelineIdOfSequencerIndex(self.m_selected_campaign_id, 0);
             if (self.m_sequencerView.selectTimeline(firstTimelineID) == -1)
                 self.m_timelineViewStack.selectView(self.m_noneSelectedTimelines);
         },
@@ -144,7 +144,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
                 ////////////////////////////////////////////////
 
                 if (e.context.m_owner instanceof Timeline) {
-                    var recCampaignTimelineViewerChanels = jalapeno.getChannelIdFromCampaignTimelineBoardViewer(campaign_timeline_board_viewer_id, campaign_timeline_id);
+                    var recCampaignTimelineViewerChanels = pepper.getChannelIdFromCampaignTimelineBoardViewer(campaign_timeline_board_viewer_id, campaign_timeline_id);
                     var campaign_timeline_channel_id = recCampaignTimelineViewerChanels['campaign_timeline_chanel_id']
                     BB.comBroker.fire(BB.EVENTS.CAMPAIGN_TIMELINE_CHANNEL_SELECTED, this, null, campaign_timeline_channel_id);
                     return;
@@ -166,18 +166,18 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
 
                         var width = BB.comBroker.getService(BB.SERVICES['RESOLUTION_SELECTOR_VIEW']).getResolution().split('x')[0];
                         var height = BB.comBroker.getService(BB.SERVICES['RESOLUTION_SELECTOR_VIEW']).getResolution().split('x')[1];
-                        board_id = jalapeno.createBoard('board', width, height);
+                        board_id = pepper.createBoard('board', width, height);
 
-                        var newTemplateData = jalapeno.createNewTemplate(board_id, e.caller.screenTemplateData.screenProps);
+                        var newTemplateData = pepper.createNewTemplate(board_id, e.caller.screenTemplateData.screenProps);
                         var board_template_id = newTemplateData['board_template_id']
                         var viewers = newTemplateData['viewers'];
 
-                        self.m_selected_campaign_id = jalapeno.createCampaign('campaign');
-                        campaign_board_id = jalapeno.assignCampaignToBoard(self.m_selected_campaign_id, board_id);
+                        self.m_selected_campaign_id = pepper.createCampaign('campaign');
+                        campaign_board_id = pepper.assignCampaignToBoard(self.m_selected_campaign_id, board_id);
 
                         // set campaign name
                         var campaignName = BB.comBroker.getService(BB.SERVICES['CAMPAIGN_NAME_SELECTOR_VIEW']).getCampaignName();
-                        jalapeno.setCampaignRecord(self.m_selected_campaign_id, 'campaign_name', campaignName);
+                        pepper.setCampaignRecord(self.m_selected_campaign_id, 'campaign_name', campaignName);
 
                     } else {
 
@@ -185,20 +185,20 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
                         // Add Timeline to an existing campaign
                         ////////////////////////////////////////////////
 
-                        campaign_board_id = jalapeno.getFirstBoardIDofCampaign(self.m_selected_campaign_id);
-                        board_id = jalapeno.getBoardFromCampaignBoard(campaign_board_id);
-                        var newTemplateData = jalapeno.createNewTemplate(board_id, e.caller.screenTemplateData.screenProps);
+                        campaign_board_id = pepper.getFirstBoardIDofCampaign(self.m_selected_campaign_id);
+                        board_id = pepper.getBoardFromCampaignBoard(campaign_board_id);
+                        var newTemplateData = pepper.createNewTemplate(board_id, e.caller.screenTemplateData.screenProps);
                         var board_template_id = newTemplateData['board_template_id']
                         var viewers = newTemplateData['viewers'];
                     }
 
-                    campaign_timeline_id = jalapeno.createNewTimeline(self.m_selected_campaign_id);
-                    jalapeno.setCampaignTimelineSequencerIndex(self.m_selected_campaign_id, campaign_timeline_id, 0);
-                    jalapeno.setTimelineTotalDuration(campaign_timeline_id, '0');
+                    campaign_timeline_id = pepper.createNewTimeline(self.m_selected_campaign_id);
+                    pepper.setCampaignTimelineSequencerIndex(self.m_selected_campaign_id, campaign_timeline_id, 0);
+                    pepper.setTimelineTotalDuration(campaign_timeline_id, '0');
 
-                    var campaign_timeline_board_template_id = jalapeno.assignTemplateToTimeline(campaign_timeline_id, board_template_id, campaign_board_id);
-                    var channels = jalapeno.createTimelineChannels(campaign_timeline_id, viewers);
-                    jalapeno.assignViewersToTimelineChannels(campaign_timeline_board_template_id, viewers, channels);
+                    var campaign_timeline_board_template_id = pepper.assignTemplateToTimeline(campaign_timeline_id, board_template_id, campaign_board_id);
+                    var channels = pepper.createTimelineChannels(campaign_timeline_id, viewers);
+                    pepper.assignViewersToTimelineChannels(campaign_timeline_board_template_id, viewers, channels);
 
                     self.m_timelines[campaign_timeline_id] = new Timeline({campaignTimelineID: campaign_timeline_id});
                     BB.comBroker.fire(BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED, this, null, campaign_timeline_id);
@@ -244,7 +244,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
          **/
         _updDelTimelimeButtonStatus: function () {
             var self = this;
-            var totalTimelines = jalapeno.getCampaignTimelines(self.m_selected_campaign_id).length;
+            var totalTimelines = pepper.getCampaignTimelines(self.m_selected_campaign_id).length;
             if (totalTimelines > 1) {
                 $(Elements.REMOVE_TIMELINE_BUTTON).prop('disabled', false);
             } else {
@@ -313,12 +313,12 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
         },
 
         /**
-         Listen for updates on changes in length of currently selected timeline through the jalapeno framework
+         Listen for updates on changes in length of currently selected timeline through the pepper framework
          @method _listenTimelineLengthChanged
          **/
         _listenTimelineLengthChanged: function () {
             var self = this;
-            jalapeno.listen(Jalapeno.TIMELINE_LENGTH_CHANGED, $.proxy(self._updatedTimelinesLengthUI, self));
+            pepper.listen(Pepper.TIMELINE_LENGTH_CHANGED, $.proxy(self._updatedTimelinesLengthUI, self));
         },
 
         /**
@@ -330,7 +330,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             var totalDuration = 0;
             self.m_xdate = BB.comBroker.getService('XDATE');
             $.each(self.m_timelines, function (timelineID) {
-                totalDuration = parseInt(jalapeno.getTimelineTotalDuration(timelineID)) + totalDuration;
+                totalDuration = parseInt(pepper.getTimelineTotalDuration(timelineID)) + totalDuration;
             });
             var durationFormatted = self.m_xdate.clearTime().addSeconds(totalDuration).toString('HH:mm:ss');
             $(Elements.TIMELINES_TOTAL_LENGTH).text(durationFormatted);

@@ -68,8 +68,8 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             var self = this;
             self.m_campaign_timeline_id = i_campaign_timeline_id;
             self.m_campaign_timeline_board_template_id = i_campaign_timeline_board_template_id;
-            self.m_global_board_template_id = jalapeno.getGlobalTemplateIdOfTimeline(i_campaign_timeline_board_template_id)[0];
-            self.m_screenProps = jalapeno.getTemplateViewersScreenProps(self.m_campaign_timeline_id, self.m_campaign_timeline_board_template_id);
+            self.m_global_board_template_id = pepper.getGlobalTemplateIdOfTimeline(i_campaign_timeline_board_template_id)[0];
+            self.m_screenProps = pepper.getTemplateViewersScreenProps(self.m_campaign_timeline_id, self.m_campaign_timeline_board_template_id);
             self.m_orientation = BB.comBroker.getService(BB.SERVICES['ORIENTATION_SELECTOR_VIEW']).getOrientation();
             self.m_resolution = BB.comBroker.getService(BB.SERVICES['RESOLUTION_SELECTOR_VIEW']).getResolution();
 
@@ -108,9 +108,9 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                     w: 100,
                     h: 100
                 }
-                var board_viewer_id = jalapeno.createViewer(self.m_global_board_template_id, props);
-                var campaign_timeline_chanel_id = jalapeno.createTimelineChannel(self.m_campaign_timeline_id);
-                jalapeno.assignViewerToTimelineChannel(self.m_campaign_timeline_board_template_id, board_viewer_id, campaign_timeline_chanel_id);
+                var board_viewer_id = pepper.createViewer(self.m_global_board_template_id, props);
+                var campaign_timeline_chanel_id = pepper.createTimelineChannel(self.m_campaign_timeline_id);
+                pepper.assignViewerToTimelineChannel(self.m_campaign_timeline_board_template_id, board_viewer_id, campaign_timeline_chanel_id);
 
                 var viewer = new fabric.Rect({
                     left: 0,
@@ -156,10 +156,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                     return;
                 }
 
-                var campaign_timeline_chanel_id = jalapeno.removeTimelineBoardViewerChannel(self.m_selectedViewerID);
-                jalapeno.removeBoardTemplateViewer(self.m_campaign_timeline_board_template_id, self.m_selectedViewerID);
-                jalapeno.removeChannelFromTimeline(campaign_timeline_chanel_id);
-                jalapeno.removeBlocksFromTimelineChannel(campaign_timeline_chanel_id);
+                var campaign_timeline_chanel_id = pepper.removeTimelineBoardViewerChannel(self.m_selectedViewerID);
+                pepper.removeBoardTemplateViewer(self.m_campaign_timeline_board_template_id, self.m_selectedViewerID);
+                pepper.removeChannelFromTimeline(campaign_timeline_chanel_id);
+                pepper.removeBlocksFromTimelineChannel(campaign_timeline_chanel_id);
                 self.m_canvas.remove(self.m_canvas.getActiveObject());
                 var viewer = self.m_canvas.item(0);
                 var props = {
@@ -204,7 +204,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         },
 
         /**
-         Change the z-order of viewers in jalapeno
+         Change the z-order of viewers in pepper
          @method _updateZorder
          **/
         _updateZorder: function () {
@@ -214,7 +214,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             self.m_canvas.forEachObject(function (obj) {
                 i++;
                 // log((totalViews - i) + ' ' + obj.get('id'))
-                jalapeno.updateTemplateViewerOrder(obj.get('id'), (totalViews - i));
+                pepper.updateTemplateViewerOrder(obj.get('id'), (totalViews - i));
             });
         },
 
@@ -416,7 +416,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         },
 
         /**
-         Listen to changes in a viewer changes in cords and update jalapeno
+         Listen to changes in a viewer changes in cords and update pepper
          @method i_props
          **/
         _listenObjectChanged: function () {
@@ -483,14 +483,14 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         },
 
         /**
-         Update Jalapeno with latest object dimensions
+         Update Pepper with latest object dimensions
          @method _updateDimensionsInDB
          @param {Object} i_props
          **/
         _updateDimensionsInDB: function (i_viewer, i_props) {
             var self = this;
-            log('Jalapeno ' +i_viewer.get('id') + ' ' + JSON.stringify(i_props));
-            jalapeno.setBoardTemplateViewer(self.m_campaign_timeline_board_template_id, i_viewer.get('id'), i_props);
+            log('Pepper ' +i_viewer.get('id') + ' ' + JSON.stringify(i_props));
+            pepper.setBoardTemplateViewer(self.m_campaign_timeline_board_template_id, i_viewer.get('id'), i_props);
             i_viewer.setCoords();
             self.m_canvas.renderAll();
         },

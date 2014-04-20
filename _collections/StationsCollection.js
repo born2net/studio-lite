@@ -116,7 +116,7 @@ define(['jquery', 'backbone', 'StationModel', 'simplestorage'], function ($, Bac
          **/
         _getRemoteStations: function () {
             var self = this;
-            var userData = jalapeno.getUserData();
+            var userData = pepper.getUserData();
             var url = 'https://' + userData.domain + '/WebService/getStatus.ashx?user=' + userData.userName + '&password=' + userData.userPass + '&callback=?';
             // url = 'https://moon.signage.me/WebService/getStatus.ashx?user=moon1@ms.com&password=xxx&callback=?';
             $.getJSON(url,

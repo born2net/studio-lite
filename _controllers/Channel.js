@@ -82,7 +82,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
         _onChangeRandomPlayback: function (e) {
             var self = this;
             var state = $(Elements.RANDOM_PLAYBACK + ' option:selected').val() == "on" ? 'True' : 'False';
-            jalapeno.setCampaignTimelineChannelRecord(self.m_campaign_timeline_chanel_id, 'random_order', state)
+            pepper.setCampaignTimelineChannelRecord(self.m_campaign_timeline_chanel_id, 'random_order', state)
         },
 
         /**
@@ -112,7 +112,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
         _propLoadChannel: function () {
             var self = this;
 
-            var recChannel = jalapeno.getCampaignTimelineChannelRecord(self.m_campaign_timeline_chanel_id);
+            var recChannel = pepper.getCampaignTimelineChannelRecord(self.m_campaign_timeline_chanel_id);
             var state = recChannel['random_order'] == 'True' ? 'on' : 'off';
 
             $(Elements.RANDOM_PLAYBACK + ' option[value=' + state + ']').attr("selected", "selected");
@@ -146,10 +146,10 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
          **/
         _createChannelBlocks: function () {
             var self = this;
-            var blockIDs = jalapeno.getChannelBlocks(self.m_campaign_timeline_chanel_id);
+            var blockIDs = pepper.getChannelBlocks(self.m_campaign_timeline_chanel_id);
             for (var i = 0; i < blockIDs.length; i++) {
                 var blockID = blockIDs[i];
-                var recBlock = jalapeno.getBlockRecord(blockID);
+                var recBlock = pepper.getBlockRecord(blockID);
                 self.createChannelBlock(blockID, recBlock['player_data'])
             }
         },
@@ -179,7 +179,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
             var self = this;
             var blocksSorted = [];
             for (var block_id in self.m_blocks) {
-                var recBlock = jalapeno.getBlockRecord(block_id);
+                var recBlock = pepper.getBlockRecord(block_id);
                 var offsetTime = parseInt(recBlock['player_offset_time']);
                 blocksSorted[offsetTime] = self.m_blocks[block_id];
             }
@@ -205,7 +205,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
         deleteChannel: function () {
             var self = this;
             $(Elements.RANDOM_PLAYBACK).off('change', self.m_randomPlaybackHandler);
-            jalapeno.removeChannelFromTimeline(self.m_campaign_timeline_chanel_id);
+            pepper.removeChannelFromTimeline(self.m_campaign_timeline_chanel_id);
             for (var blockID in self.m_blocks) {
                 self.deleteBlock(blockID);
             }

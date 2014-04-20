@@ -61,7 +61,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             var onChange = _.debounce( function (e) {
                 var text = $(e.target).val();
-                jalapeno.setResourceRecord(self.m_selected_resource_id, 'resource_name', text);
+                pepper.setResourceRecord(self.m_selected_resource_id, 'resource_name', text);
                 var elem = self.$el.find('[data-resource_id="' + self.m_selected_resource_id + '"]');
                 elem.find('span').text(text);
             }, 333);
@@ -77,7 +77,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             $(Elements.RESOURCE_LIB_LIST).empty();
 
-            var recResources = jalapeno.getResources();
+            var recResources = pepper.getResources();
             $(recResources).each(function (i) {
                 // dont process deleted resources
                 if (recResources[i]['change_type'] == 3)
@@ -88,7 +88,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
                 var snippet = '<li class="' + BB.lib.unclass(Elements.CLASS_RESOURCES_LIST_ITEMS) + ' list-group-item" data-resource_id="' + recResources[i]['resource_id'] + '">' +
                     '<a href="#">' +
-                    '<img src="' + BB.JalapenoHelper.getIcon(recResources[i]['resource_type']) + '">' +
+                    '<img src="' + BB.PepperHelper.getIcon(recResources[i]['resource_type']) + '">' +
                     '<span>' + recResources[i]['resource_name'] + '</span>' +
                     '<p>' + resourceDescription + '</p></a>' +
                     '</a>' +
@@ -111,8 +111,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 // remove a resource from resources, notify before so channel instances
                 // can remove corresponding blocks and after so channelList can refresh UI
                 BB.comBroker.fire(BB.EVENTS.REMOVING_RESOURCE,this,null,self.m_selected_resource_id);
-                jalapeno.removeResource(self.m_selected_resource_id);
-                jalapeno.removeBlocksWithResourceID(self.m_selected_resource_id);
+                pepper.removeResource(self.m_selected_resource_id);
+                pepper.removeBlocksWithResourceID(self.m_selected_resource_id);
                 self._loadResourceList();
                 self._listenResourceSelected();
                 BB.comBroker.fire(BB.EVENTS.REMOVED_RESOURCE,this,null,self.m_selected_resource_id);
@@ -132,7 +132,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 self.m_selected_resource_id = $(resourceElem).data('resource_id');
                 $(Elements.CLASS_RESOURCES_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
                 $(resourceElem).addClass('activated').find('a').addClass('whiteFont');
-                var recResource = jalapeno.getResourceRecord(self.m_selected_resource_id);
+                var recResource = pepper.getResourceRecord(self.m_selected_resource_id);
                 $(Elements.SELECTED_LIB_RESOURCE_NAME).val(recResource['resource_name']);
                 self.m_property.viewPanel(Elements.RESOURCE_LIST_PROPERTIES);
                 return false;
@@ -146,7 +146,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         _onFileSelected: function (e) {
             var self = this;
-            jalapeno.uploadResources('file');
+            pepper.uploadResources('file');
             self._loadResourceList();
             self._listenResourceSelected();
             self._listenRemoveResource();

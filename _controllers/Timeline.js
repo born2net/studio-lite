@@ -44,8 +44,8 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             self._listenScreenTemplateEdit();
             this._onTimelineSelected();
 
-            jalapeno.listenWithNamespace(Jalapeno.TEMPLATE_VIEWER_EDITED, self, $.proxy(self._templateViewerEdited, self));
-            jalapeno.listenWithNamespace(Jalapeno.NEW_CHANNEL_ADDED, self, $.proxy(self._channelAdded, self));
+            pepper.listenWithNamespace(Pepper.TEMPLATE_VIEWER_EDITED, self, $.proxy(self._templateViewerEdited, self));
+            pepper.listenWithNamespace(Pepper.NEW_CHANNEL_ADDED, self, $.proxy(self._channelAdded, self));
 
 
         },
@@ -80,7 +80,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             self.m_inputChangeHandler = _.debounce(function (e) {
                 if (!self.m_selected)
                     return;
-                jalapeno.setCampaignTimelineRecord(self.m_campaign_timeline_id, 'timeline_name', $(Elements.TIME_LINE_PROP_TITLE_ID).val());
+                pepper.setCampaignTimelineRecord(self.m_campaign_timeline_id, 'timeline_name', $(Elements.TIME_LINE_PROP_TITLE_ID).val());
             }, 150, false);
             $(Elements.TIME_LINE_PROP_TITLE_ID).on("input", self.m_inputChangeHandler);
         },
@@ -96,7 +96,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
                 if (!self.m_selected)
                     return;
                 var screenLayoutEditor = BB.comBroker.getService(BB.SERVICES.SCREEN_LAYOUT_EDITOR_VIEW);
-                var boardTemplateIDs = jalapeno.getTemplatesOfTimeline(self.m_campaign_timeline_id);
+                var boardTemplateIDs = pepper.getTemplatesOfTimeline(self.m_campaign_timeline_id);
                 screenLayoutEditor.selectView(self.m_campaign_timeline_id, boardTemplateIDs[0]);
             };
             $(Elements.EDIT_SCREEN_LAYOUT).on('click', self.m_openScreenLayoutEditorHandler);
@@ -133,7 +133,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
         _propLoadTimeline: function () {
             var self = this;
             self.m_property.viewPanel(Elements.TIMELINE_PROPERTIES);
-            var recTimeline = jalapeno.getCampaignTimelineRecord(self.m_campaign_timeline_id);
+            var recTimeline = pepper.getCampaignTimelineRecord(self.m_campaign_timeline_id);
             $(Elements.TIME_LINE_PROP_TITLE_ID).val(recTimeline['timeline_name']);
             self._populateTimelineLength();
         },
@@ -145,7 +145,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
         _populateTimelineLength: function () {
             var self = this;
             self.m_xdate = BB.comBroker.getService('XDATE');
-            var totalDuration = parseInt(jalapeno.getTimelineTotalDuration(self.m_campaign_timeline_id));
+            var totalDuration = parseInt(pepper.getTimelineTotalDuration(self.m_campaign_timeline_id));
             totalDuration = self.m_xdate.clearTime().addSeconds(totalDuration).toString('HH:mm:ss');
             $(Elements.TIMELINE_LENGTH).text(totalDuration);
         },
@@ -157,7 +157,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
          **/
         _populateTimeline: function () {
             var self = this;
-            var boardTemplateIDs = jalapeno.getTemplatesOfTimeline(self.m_campaign_timeline_id);
+            var boardTemplateIDs = pepper.getTemplatesOfTimeline(self.m_campaign_timeline_id);
             for (var i = 0; i < boardTemplateIDs.length; i++) {
                 self._populateBoardTemplate(boardTemplateIDs[i]);
             }
@@ -170,7 +170,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
          **/
         _populateChannels: function () {
             var self = this;
-            var channelIDs = jalapeno.getChannelsOfTimeline(self.m_campaign_timeline_id);
+            var channelIDs = pepper.getChannelsOfTimeline(self.m_campaign_timeline_id);
             for (var i = 0; i < channelIDs.length; i++) {
                 self.m_channels[channelIDs[i]] = new Channel({campaignTimelineChanelID: channelIDs[i]});
             }
@@ -188,7 +188,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
         _populateBoardTemplate: function (i_campaign_timeline_board_template_id) {
             var self = this;
 
-            var recBoard = jalapeno.getGlobalBoardRecFromTemplate(i_campaign_timeline_board_template_id);
+            var recBoard = pepper.getGlobalBoardRecFromTemplate(i_campaign_timeline_board_template_id);
             var width = parseInt(recBoard['board_pixel_width']);
             var height = parseInt(recBoard['board_pixel_height']);
 
@@ -198,7 +198,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             } else {
                 BB.comBroker.getService(BB.SERVICES.ORIENTATION_SELECTOR_VIEW).setOrientation(BB.CONSTS.VERTICAL);
             }
-            var screenProps = jalapeno.getTemplateViewersScreenProps(self.m_campaign_timeline_id, i_campaign_timeline_board_template_id)
+            var screenProps = pepper.getTemplateViewersScreenProps(self.m_campaign_timeline_id, i_campaign_timeline_board_template_id)
 
             self._createTimelineUI(screenProps);
 
@@ -300,14 +300,14 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
          **/
         deleteTimeline: function () {
             var self = this;
-            var boardTemplateID = jalapeno.getGlobalBoardIDFromTimeline(self.m_campaign_timeline_id);
-            jalapeno.removeTimelineFromCampaign(self.m_campaign_timeline_id);
-            var campaignTimelineBoardTemplateID = jalapeno.removeBoardTemplateFromTimeline(self.m_campaign_timeline_id);
-            jalapeno.removeBoardTemplate(boardTemplateID);
-            jalapeno.removeTimelineBoardViewerChannels(campaignTimelineBoardTemplateID);
-            jalapeno.removeBoardTemplateViewers(boardTemplateID);
-            jalapeno.stopListenWithNamespace(Jalapeno.TEMPLATE_VIEWER_EDITED, self);
-            jalapeno.stopListenWithNamespace(Jalapeno.NEW_CHANNEL_ADDED, self);
+            var boardTemplateID = pepper.getGlobalBoardIDFromTimeline(self.m_campaign_timeline_id);
+            pepper.removeTimelineFromCampaign(self.m_campaign_timeline_id);
+            var campaignTimelineBoardTemplateID = pepper.removeBoardTemplateFromTimeline(self.m_campaign_timeline_id);
+            pepper.removeBoardTemplate(boardTemplateID);
+            pepper.removeTimelineBoardViewerChannels(campaignTimelineBoardTemplateID);
+            pepper.removeBoardTemplateViewers(boardTemplateID);
+            pepper.stopListenWithNamespace(Pepper.TEMPLATE_VIEWER_EDITED, self);
+            pepper.stopListenWithNamespace(Pepper.NEW_CHANNEL_ADDED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED, self);
             $(Elements.EDIT_SCREEN_LAYOUT).off('click', self.m_openScreenLayoutEditorHandler);
             $(Elements.TIME_LINE_PROP_TITLE_ID).off("input", self.m_inputChangeHandler);

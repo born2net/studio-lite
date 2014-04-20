@@ -31,7 +31,7 @@ define(['jquery', 'backbone', 'AjaxRPC', 'RC4'], function ($, Backbone, AjaxRPC,
             var self = this;
 
             var rc4 = new RC4(self.m_key);
-            var crumb = jalapeno.getUserData().userName + ':SignageStudioLite:' + jalapeno.getUserData().userPass + ':' + ' USER'
+            var crumb = pepper.getUserData().userName + ':SignageStudioLite:' + pepper.getUserData().userPass + ':' + ' USER'
             crumb = rc4.doEncrypt(crumb);
             // BB.comBroker.setValue('key', crumb);
 

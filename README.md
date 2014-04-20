@@ -18,9 +18,9 @@ Links:
 - Working site: https://secure.dynawebs.net/_studiolite-dist/studiolite.html
 - Home page: http://www.digitalsignage.com/_html/signagestudio_lite.html
 - SignageStudio Web Lite on-line documentation: http://www.digitalsignage.com/msdocs/
-- Pepper SDK on-line documentation: http://www.digitalsignage.com/msdocs/classes/Pepper.html
+- Pepper / Jalapeno SDK on-line documentation: http://www.digitalsignage.com/msdocs/classes/Pepper.html
 - Support: http://script.digitalsignage.com/forum/index.php/board,9.0.html
-- Dev video Pepper SDK/Jalapeno SDK: http://www.digitalsignage.com/_html/signage_video.html?videoNumber=opensource
+- Dev video Pepper / Jalapeno SDK: http://www.digitalsignage.com/_html/signage_video.html?videoNumber=opensource
 - StudioLite Video: http://www.digitalsignage.com/_html/signage_video.html?videoNumber=StudioLite
 - Development page: http://www.digitalsignage.com/_html/open_source_digital_signage.html
 
@@ -31,8 +31,8 @@ Technical data:
 - Includes jQuery, Underscore as base libs
 - Powered by Bootstrap using responsive design for phones, tablets and desktops
 - Runs with require js for on demand modulated loading
-- Driven using Soap API and includes Helper SDK (Pepper)
-- Uses a local msdb (database) through Pepper for offline work
+- Driven using Soap API and includes Helper SDK
+- Uses a local msdb (database) through SDK for offline work
 - Available as obfuscated and raw source
 - Support available through the MediaSignage support forum
 

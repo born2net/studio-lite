@@ -45,6 +45,11 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 self.resetPropertiesView();
             });
 
+            $(Elements.CLASS_SCENES_PANEL).on('click', function () {
+                appContentFaderView.selectView(Elements.SCENES_PANEL);
+                self.resetPropertiesView();
+            });
+
             $(Elements.CLASS_SETTINGS_PANEL).on('click', function () {
                 appContentFaderView.selectView(Elements.SETTINGS_PANEL);
                 self.resetPropertiesView();

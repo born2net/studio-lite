@@ -35,6 +35,8 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
          **/
         addView: function (i_view) {
             i_view.$el.hide();
+            if (i_view.el==undefined)
+                log('')
             var oid = i_view.el.id === '' ? i_view.cid : i_view.el.id;
             this.m_views[oid] = i_view;
             return oid;

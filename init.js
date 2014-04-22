@@ -64,6 +64,7 @@ require.config({
         'LoginView': '_views/LoginView',
         'StationsViewLoader': '_views/StationsViewLoader',
         'StationsListView': '_views/StationsListView',
+        'ScenesView': '_views/ScenesView',
         'SettingsView': '_views/SettingsView',
         'ProStudioView': '_views/ProStudioView',
         'HelpView': '_views/HelpView',

@@ -107,7 +107,8 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
             var self = this;
             var elementID = self.m_timelines[i_campaign_timeline_id];
             $('#' + elementID).remove();
-            self.m_screenTemplates[i_campaign_timeline_id].destroy();
+            if (self.m_screenTemplates[i_campaign_timeline_id])
+                self.m_screenTemplates[i_campaign_timeline_id].destroy();
         },
 
         /**

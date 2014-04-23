@@ -7,7 +7,7 @@
  @param {string} i_campaign_timeline_chanel_id
  @return {object} Channel instantiated
  **/
-define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
+define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockVideo'], function ($, Backbone, X2JS, BlockImage, BlockVideo) {
 
     /**
      Event fires when a channel is selected on a timeline. The event includes the channel id that was selected.
@@ -32,7 +32,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
             self.m_blocks = {}; // hold references to all created player instances
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
             self.m_blockFactory = BB.comBroker.getService(BB.SERVICES['BLOCK_FACTORY']);
-            BB.comBroker.listenOnce(BB.EVENTS.BLOCKS_LOADED, $.proxy(self._onBlocksLoaded,self));
+            BB.comBroker.listenOnce(BB.EVENTS.BLOCKS_LOADED, $.proxy(self._onBlocksLoaded, self));
             self.m_blockFactory.loadBlockModules();
         },
 
@@ -40,7 +40,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
          When all block modules have loaded, begin creating blocks
          @method _onBlocksLoaded
          **/
-        _onBlocksLoaded: function(){
+        _onBlocksLoaded: function () {
             var self = this;
             self._createChannelBlocks();
             self.initUI();
@@ -51,7 +51,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
          After blocks loaded, continue initiliazation
          @method initUI
          **/
-        initUI: function(){
+        initUI: function () {
             var self = this;
             self._onTimelineChannelSelected();
             self._wireUI();

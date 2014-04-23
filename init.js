@@ -3,7 +3,7 @@
  @class Require init js
  **/
 require.config({
-    waitSeconds: 25,
+    waitSeconds: 45,
     baseUrl: '/_studiolite-dev/',
     paths: {
         'jquery': '_common/_jquery/std/jq1.9.1/jquery-1.9.1',
@@ -53,7 +53,8 @@ require.config({
         'NavigationView': '_views/NavigationView',
         'WaitView': '_views/WaitView',
         'ResourcesView': '_views/ResourcesView',
-        'SceneEditorView': 'SceneEditorView',
+        'ScenesView': '_views/ScenesView',
+        'SceneEditorView': '_views/SceneEditorView',
         'ResourceListView': '_views/ResourceListView',
         'AddBlockView': '_views/AddBlockView',
         'BlockProperties': '_views/BlockProperties',
@@ -64,7 +65,6 @@ require.config({
         'LoginView': '_views/LoginView',
         'StationsViewLoader': '_views/StationsViewLoader',
         'StationsListView': '_views/StationsListView',
-        'ScenesView': '_views/ScenesView',
         'SettingsView': '_views/SettingsView',
         'ProStudioView': '_views/ProStudioView',
         'HelpView': '_views/HelpView',

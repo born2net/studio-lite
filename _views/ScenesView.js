@@ -29,7 +29,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         _render: function () {
             var self = this;
-            require(['nouislider', 'simplestorage'], function (nouislider, simpleStorage) {
+            require(['SceneEditorView'], function (SceneEditorView) {
             });
         }
     });

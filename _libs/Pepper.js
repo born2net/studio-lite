@@ -898,7 +898,6 @@ Pepper.prototype = {
         recResource[i_key] = i_value;
     },
 
-
     /**
      Remove a campaign record
      @method removeCampaign

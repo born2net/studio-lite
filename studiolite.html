@@ -33,7 +33,7 @@
         <a class="navbar-brand" href="#">StudioLite</a></div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-            <li class="hidden-lg" dropdown><a href="#" class="dropdown-toggle" data-toggle="dropdown">Navigatior<b
+            <li class="hidden-lg" dropdown><a href="#" class="dropdown-toggle" data-toggle="dropdown">Navigator<b
                     class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li><a data-localize="navCampaign" class="campaignManagerView" href="#">Campaign</a></li>
@@ -71,8 +71,10 @@
             style="font-size: 2em; position: relative; top: -5px; padding-left: 5px" data-localize="studioLite">StudioLite Login</span>
 
         <h2 class="form-signin-heading"></h2>
-        <input id="userName" type="text" class="form-control" data-localize="username" placeholder="User name" required autofocus>
-        <input id="userPass" type="password" class="form-control" data-localize="password" placeholder="Password" required>
+        <input id="userName" type="text" class="form-control" data-localize="username" placeholder="User name" required
+               autofocus>
+        <input id="userPass" type="password" class="form-control" data-localize="password" placeholder="Password"
+               required>
         <label class="checkbox">
             <input id="rememberMe" type="checkbox" checked value="remember-me">
             <span data-localize="rememberMe"> Remember me </span></label>
@@ -102,7 +104,8 @@
                 data-localize="navResources">Resources</span>
         <li class="stationsPanel list-group-item"><i class="navicons fa fa-desktop"></i><span
                 data-localize="navStation">Stations</span>
-        <li class="scenesPanel list-group-item"><i class="navicons fa fa-gears"></i><span data-localize="navScenes">Scenes</span>
+        <li class="scenesPanel list-group-item"><i class="navicons fa fa-pencil-square-o"></i><span
+                data-localize="navScenes">Scenes</span>
         <li class="settingsPanel list-group-item"><i class="navicons fa fa-gears"></i><span data-localize="navSettings">Settings</span>
         <li class="proStudioPanel list-group-item"><i class="navicons fa fa-cloud-upload"></i><span
                 data-localize="navStudioPanel">Pro (FREE)</span>
@@ -114,196 +117,209 @@
 <button id="togglePanel" class="propPanelIsOpen btn btn-default btn-sm hidden-lg"><span
         class="glyphicon glyphicon-resize-horizontal"></span></button>
 <div id="campaignManagerView">
-    <div class="campaignSlider noScroll">
-        <div id="campaignSelector" class="page center">
-            <div class="yScroll">
-                <div id="campaignSelectionButtons" class="btn-group">
-                    <button id="newCampaign" type="button" class="btn btn-default"><i style="font-size: 1em"
-                                                                                      class="fa fa-magic"></i> <span
-                            data-localize="campaign_wizard">new campaign wizard</span></button>
-                    <button id="removeCampaign" type="button" class="btn btn-default"><i style="font-size: 1em"
-                                                                                         class="fa fa-trash-o"></i>
-                        <span data-localize="campaign_remove">remove</span></button>
+<div class="campaignSlider noScroll">
+<div id="campaignSelector" class="page center">
+    <div class="yScroll">
+        <div id="campaignSelectionButtons" class="btn-group">
+            <button id="newCampaign" type="button" class="btn btn-default"><i style="font-size: 1em"
+                                                                              class="fa fa-magic"></i> <span
+                    data-localize="campaign_wizard">new campaign wizard</span></button>
+            <button id="removeCampaign" type="button" class="btn btn-default"><i style="font-size: 1em"
+                                                                                 class="fa fa-trash-o"></i>
+                <span data-localize="campaign_remove">remove</span></button>
+        </div>
+        <div id="campaignSelectorList" class="appList list-group"></div>
+    </div>
+</div>
+<div id="campaignNameSelectorView" class="page right">
+    <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
+            class="glyphicon glyphicon-chevron-left"></span></button>
+    <button id="next" type="button" class="openPropsButton btn btn-default btn-sm"><span
+            class="glyphicon glyphicon-chevron-right"></span></button>
+    <h3 data-localize="selectCampaignName">Select your campaign name</h3>
+    <input id="newCampaignName" type="text" class="form-control" value="My campaign"
+           placeholder="Enter new campaign name" data-localize="enterNewCompaignName">
+</div>
+<div id="orientationSelector" class="page right">
+    <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
+            class="glyphicon glyphicon-chevron-left"></span></button>
+    <h3 data-localize="screenOrientation">Select your screen orientation</h3>
+
+    <div id="orientationView">
+        <table width="100%" border="0" cellspacing="0" cellpadding="50">
+            <tr>
+                <td align="center"><img class="img-responsive" id="imgHorizontal"
+                                        src="_assets/orientationH.png"/>
+                </td>
+                <td align="center"><img class="img-responsive" id="imgVertical" src="_assets/orientationV.png"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div id="resolutionSelector" class="page right">
+    <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
+            class="glyphicon glyphicon-chevron-left"></span></button>
+    <h3 data-localize="screenResolution">Select your screen resolution</h3>
+
+    <div id="resolutionList" class="list-group"></div>
+</div>
+<div id="screenLayoutSelector" class="page right">
+    <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
+            class="glyphicon glyphicon-chevron-left"></span></button>
+    <h3 data-localize="screenLayout">Select your screen layout</h3>
+
+    <div id="screenLayoutList"></div>
+</div>
+<div id="campaign" class="page right">
+    <div id="campaignView" class="yScroll">
+        <div class="panel-group" id="timelinesCollapsible">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a id="toggleTimelinesCollapsible" data-toggle="collapse"
+                           data-parent="#timelinesCollapsible" href="#screenSelectorContainerCollapse">
+                            <span class="glyphicon glyphicon-chevron-down"></span>
+                            <span id="timelinesTotalLength"> 00:00:00</span></a>
+                        <button style="margin-left: 30px" id="addNewTimelineButton" type="button"
+                                title="add new timeline" data-localize="timelineLength"
+                                data-localize-tooltip="addNewTimelineButtonToolTip"
+                                data-toggle="tooltip"
+                                class="btn btn-default btn-sm"><span
+                                class="glyphicon glyphicon-plus"></span></button>
+                        <button id="removeTimelineButton" type="button"
+                                title="remove the selected timeline (one must exist)" data-toggle="tooltip"
+                                data-localize-tooltip="removeTimelineButtonToolTip"
+                                class="btn btn-default btn-sm"><span
+                                class="glyphicon glyphicon-minus"></span></button>
+                    </h4>
                 </div>
-                <div id="campaignSelectorList" class="appList list-group"></div>
+                <div id="screenSelectorContainerCollapse" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <aside>
+                            <aside>
+                                <div id="screenSelectorContainer" vertical-align="middle">
+                                    <hr class="dottedHR">
+                                    <ul id="screenLayoutsUL">
+                                    </ul>
+                                </div>
+                            </aside>
+                        </aside>
+                    </div>
+                </div>
             </div>
         </div>
-        <div id="campaignNameSelectorView" class="page right">
-            <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
-                    class="glyphicon glyphicon-chevron-left"></span></button>
-            <button id="next" type="button" class="openPropsButton btn btn-default btn-sm"><span
-                    class="glyphicon glyphicon-chevron-right"></span></button>
-            <h3 data-localize="selectCampaignName">Select your campaign name</h3>
-            <input id="newCampaignName" type="text" class="form-control" value="My campaign"
-                   placeholder="Enter new campaign name" data-localize="enterNewCompaignName">
-        </div>
-        <div id="orientationSelector" class="page right">
-            <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
-                    class="glyphicon glyphicon-chevron-left"></span></button>
-            <h3 data-localize="screenOrientation">Select your screen orientation</h3>
+        <a href="index.html" style="display:none" id="attachDragDropMainScreenSelection"
+           data-role="button">Link button</a> <a href="index.html" style="display:none"
+                                                 id="dettachDragDropMainScreenSelection"
+                                                 data-role="button">Link button</a>
 
-            <div id="orientationView">
-                <table width="100%" border="0" cellspacing="0" cellpadding="50">
-                    <tr>
-                        <td align="center"><img class="img-responsive" id="imgHorizontal" src="_assets/orientationH.png"/>
-                        </td>
-                        <td align="center"><img class="img-responsive" id="imgVertical" src="_assets/orientationV.png"/>
-                        </td>
-                    </tr>
-                </table>
+        <div id="selectedTimeline" style="display: none">
+            <div id="noneSelectedScreenLayout">
+                <div align="center" id="screenMainSelector">
+                    <div align="center">
+                        <h1 data-localize="noTimelineSelected">no timeline selected</h1>
+                    </div>
+                </div>
+            </div>
+            <div align="center" id="selectedLayoutContainer" class="centerContent"></div>
+        </div>
+        <div id="channelListView">
+            <div>
+                <button id="addBlockButton" type="button" class="btn btn-default"><span
+                        class="glyphicon glyphicon-plus"></span><span
+                        data-localize="addContent"> Add content </span></button>
+                <button id="removeBlockButton" type="button" class="btn btn-default"><span
+                        class="glyphicon glyphicon-minus"></span><span
+                        data-localize="removeContent"> Remove content </span>
+                </button>
+            </div>
+            <div>
+                <ul class="list-group" id="sortable" style="padding:20px">
+                </ul>
             </div>
         </div>
-        <div id="resolutionSelector" class="page right">
-            <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
-                    class="glyphicon glyphicon-chevron-left"></span></button>
-            <h3 data-localize="screenResolution">Select your screen resolution</h3>
+    </div>
+</div>
+<div id="addBlockView" class="page right">
+    <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
+            class="glyphicon glyphicon-chevron-left"></span></button>
+    <h3 data-localize="contentToAdd">Select new content to add</h3>
 
-            <div id="resolutionList" class="list-group"></div>
-        </div>
-        <div id="screenLayoutSelector" class="page right">
-            <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
-                    class="glyphicon glyphicon-chevron-left"></span></button>
-            <h3 data-localize="screenLayout">Select your screen layout</h3>
-
-            <div id="screenLayoutList"></div>
-        </div>
-        <div id="campaign" class="page right">
-            <div id="campaignView" class="yScroll">
-                <div class="panel-group" id="timelinesCollapsible">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a id="toggleTimelinesCollapsible" data-toggle="collapse" data-parent="#timelinesCollapsible" href="#screenSelectorContainerCollapse">
-                                    <span class="glyphicon glyphicon-chevron-down"></span>
-                                <span id="timelinesTotalLength"> 00:00:00</span></a>
-                                <button style="margin-left: 30px" id="addNewTimelineButton" type="button"
-                                        title="add new timeline" data-localize="timelineLength"
-                                        data-localize-tooltip="addNewTimelineButtonToolTip"
-                                        data-toggle="tooltip"
-                                        class="btn btn-default btn-sm"><span
-                                        class="glyphicon glyphicon-plus"></span></button>
-                                <button id="removeTimelineButton" type="button"
-                                        title="remove the selected timeline (one must exist)" data-toggle="tooltip"
-                                        data-localize-tooltip="removeTimelineButtonToolTip"
-                                        class="btn btn-default btn-sm"><span
-                                        class="glyphicon glyphicon-minus"></span></button>
-                            </h4>
-                        </div>
-                        <div id="screenSelectorContainerCollapse" class="panel-collapse collapse in">
-                            <div class="panel-body">
-                                <aside>
-                                    <aside>
-                                        <div id="screenSelectorContainer" vertical-align="middle">
-                                            <hr class="dottedHR">
-                                            <ul id="screenLayoutsUL">
-                                            </ul>
-                                        </div>
-                                    </aside>
-                                </aside>
-                            </div>
-                        </div>
-                    </div>
+    <div id="addNewBlockListWrap" class="yScroll">
+        <div class="panel-group" id="addNewBlockList">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title"><a data-toggle="collapse" data-parent="#addNewBlockList"
+                                               href="#collapseOne" data-localize="components"> components </a>
+                    </h4>
                 </div>
-                <a href="index.html" style="display:none" id="attachDragDropMainScreenSelection"
-                   data-role="button">Link button</a> <a href="index.html" style="display:none"
-                                                         id="dettachDragDropMainScreenSelection"
-                                                         data-role="button">Link button</a>
-
-                <div id="selectedTimeline" style="display: none">
-                    <div id="noneSelectedScreenLayout">
-                        <div align="center" id="screenMainSelector">
-                            <div align="center">
-                                <h1 data-localize="noTimelineSelected">no timeline selected</h1>
-                            </div>
-                        </div>
-                    </div>
-                    <div align="center" id="selectedLayoutContainer" class="centerContent"></div>
-                </div>
-                <div id="channelListView">
-                    <div>
-                        <button id="addBlockButton" type="button" class="btn btn-default"><span
-                                class="glyphicon glyphicon-plus"></span><span
-                                data-localize="addContent"> Add content </span></button>
-                        <button id="removeBlockButton" type="button" class="btn btn-default"><span
-                                class="glyphicon glyphicon-minus"></span><span data-localize="removeContent"> Remove content </span>
-                        </button>
-                    </div>
-                    <div>
-                        <ul class="list-group" id="sortable" style="padding:20px">
+                <div id="collapseOne" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <ul class="list-group" id="addComponentBlockList" style="padding:20px">
                         </ul>
                     </div>
                 </div>
             </div>
-        </div>
-        <div id="addBlockView" class="page right">
-            <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
-                    class="glyphicon glyphicon-chevron-left"></span></button>
-            <h3 data-localize="contentToAdd">Select new content to add</h3>
-
-            <div id="addNewBlockListWrap" class="yScroll">
-                <div class="panel-group" id="addNewBlockList">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title"><a data-toggle="collapse" data-parent="#addNewBlockList"
-                                                       href="#collapseOne" data-localize="components"> components </a>
-                            </h4>
-                        </div>
-                        <div id="collapseOne" class="panel-collapse collapse in">
-                            <div class="panel-body">
-                                <ul class="list-group" id="addComponentBlockList" style="padding:20px">
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title"><a data-toggle="collapse" data-parent="#addNewBlockList"
-                                                       href="#collapseTwo" data-localize="resources"> resources </a>
-                            </h4>
-                        </div>
-                        <div id="collapseTwo" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                <ul class="list-group" id="addResourceBlockList" style="padding:20px">
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title"><a data-toggle="collapse" data-parent="#addNewBlockList"
-                                                       href="#collapseThree" data-localize="scenes"> scenes </a></h4>
-                        </div>
-                        <div id="collapseThree" class="panel-collapse collapse">
-                            <div class="panel-body" data-localize="comingSoon"> coming soon...</div>
-                        </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title"><a data-toggle="collapse" data-parent="#addNewBlockList"
+                                               href="#collapseTwo" data-localize="resources"> resources </a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <ul class="list-group" id="addResourceBlockList" style="padding:20px">
+                        </ul>
                     </div>
                 </div>
             </div>
-        </div>
-        <div id="screenLayoutEditorView" class="page right">
-            <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
-                    class="glyphicon glyphicon-chevron-left"></span></button>
-            <h3 data-localize="editScreenLayoutTitle">Edit screen layout</h3>
-
-            <div class="btn-group">
-                <button id="layoutEditorAddNew" type="button" data-localize-tooltip="addButtonToolTip" title="add" data-toggle="tooltip" class="btn btn-default btn-sm"><i style="font-size: 1em" class="fa fa-plus"> </i></button>
-                <button id="layoutEditorRemove" type="button" data-localize-tooltip="removeButtonToolTip" title="remove division" data-toggle="tooltip" class="btn btn-default btn-sm"><i style="font-size: 1em" class="fa fa-minus"> </i></button>
-                <button id="layoutEditorPushTop" type="button" data-localize-tooltip="pushDivToTopButtonToolTip" title="push division to top" data-toggle="tooltip" class="btn btn-default btn-sm"><i style="font-size: 1em" class="fa fa-angle-double-up"> </i></button>
-                <button id="layoutEditorPushBottom" type="button" data-localize-tooltip="pushDivToBottomButtonToolTip" title="push division to bottom" data-toggle="tooltip" class="btn btn-default btn-sm"><i style="font-size: 1em" class="fa fa-angle-double-down"> </i></button>
-                <button id="layoutEditorNext" type="button" data-localize-tooltip="getNextDivButtonToolTip" title="get next division" data-toggle="tooltip" class="btn btn-default btn-sm"><i style="font-size: 1em" class="fa fa-share"> </i></button>
-
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title"><a data-toggle="collapse" data-parent="#addNewBlockList"
+                                               href="#collapseThree" data-localize="scenes"> scenes </a></h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse">
+                    <div class="panel-body" data-localize="comingSoon"> coming soon...</div>
+                </div>
             </div>
-
-            <div id="screenLayoutEditorCanvasWrap" align="center"
-                 style="width: 100%; height: 100%; -webkit-user-select: none;">
-            </div>
-        </div>
-        <div id="waitScreenMainPanel" class="page center" style="display: none">
-            <div class="yScroll">
-                <h1 data-localize="pleaseWait">Please wait</h1>
-                <span> <img src="./_assets/preload7.gif"> </span></div>
         </div>
     </div>
+</div>
+<div id="screenLayoutEditorView" class="page right">
+    <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
+            class="glyphicon glyphicon-chevron-left"></span></button>
+    <h3 data-localize="editScreenLayoutTitle">Edit screen layout</h3>
+
+    <div class="btn-group">
+        <button id="layoutEditorAddNew" type="button" data-localize-tooltip="addButtonToolTip" title="add"
+                data-toggle="tooltip" class="btn btn-default btn-sm"><i style="font-size: 1em"
+                                                                        class="fa fa-plus"> </i></button>
+        <button id="layoutEditorRemove" type="button" data-localize-tooltip="removeButtonToolTip"
+                title="remove division" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                style="font-size: 1em" class="fa fa-minus"> </i></button>
+        <button id="layoutEditorPushTop" type="button" data-localize-tooltip="pushDivToTopButtonToolTip"
+                title="push division to top" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                style="font-size: 1em" class="fa fa-angle-double-up"> </i></button>
+        <button id="layoutEditorPushBottom" type="button" data-localize-tooltip="pushDivToBottomButtonToolTip"
+                title="push division to bottom" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                style="font-size: 1em" class="fa fa-angle-double-down"> </i></button>
+        <button id="layoutEditorNext" type="button" data-localize-tooltip="getNextDivButtonToolTip"
+                title="get next division" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                style="font-size: 1em" class="fa fa-share"> </i></button>
+
+    </div>
+
+    <div id="screenLayoutEditorCanvasWrap" align="center"
+         style="width: 100%; height: 100%; -webkit-user-select: none;">
+    </div>
+</div>
+<div id="waitScreenMainPanel" class="page center" style="display: none">
+    <div class="yScroll">
+        <h1 data-localize="pleaseWait">Please wait</h1>
+        <span> <img src="./_assets/preload7.gif"> </span></div>
+</div>
+</div>
 </div>
 <div id="resourcesPanel" style="display: none">
     <div id="resourcesListView">
@@ -325,7 +341,8 @@
     </div>
 </div>
 <div id="stationsPanel" class="yScroll" style="display: none">
-    <button id="stationRemove" title="unregisters a remote station" data-localize-tooltip="unregRemoteStationButtonToolTip" data-toggle="tooltip" type="button"
+    <button id="stationRemove" title="unregisters a remote station"
+            data-localize-tooltip="unregRemoteStationButtonToolTip" data-toggle="tooltip" type="button"
             class="btn btn-default"><span
             class="glyphicon glyphicon-remove-circle"></span><span data-localize="removeStation"> remove station </span>
     </button>
@@ -334,9 +351,63 @@
     <ul class="list-group" id="stationListView">
     </ul>
 </div>
+
+
+
+
 <div id="scenesPanel" class="yScroll" style="display: none">
-    <h3>Scenes coming soon...</h3>
+    <div style="width: 400px; margin-left:auto; margin-right:auto;" >
+        <div style="padding-bottom: 20px; padding-top: 20px;">
+            <div class="input-group" style="width: 200px; float: left">
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default input-sm dropdown-toggle" data-toggle="dropdown">
+                        Select
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Scene A</a></li>
+                        <li><a href="#">Scene B</a></li>
+                    </ul>
+                </div>
+                <input type="text" id="aaa" class="form-control input-sm" placeholder="scene">
+            </div>
+            <div class="btn-group">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default input-sm dropdown-toggle" data-toggle="dropdown">
+                        <i style="font-size: 1em" class="fa fa-plus"> </i> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Add scene</a></li>
+                        <li><a href="#">Add component</a></li>
+                    </ul>
+                </div>
+                <button id="sceneEditorRemove" type="button" data-localize-tooltip="removeButtonToolTip"
+                        title="remove division" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                        style="font-size: 1em" class="fa fa-minus"> </i></button>
+                <button id="sceneEditorPushTop" type="button" data-localize-tooltip="pushDivToTopButtonToolTip"
+                        title="push division to top" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                        style="font-size: 1em" class="fa fa-angle-double-up"> </i></button>
+                <button id="sceneEditorPushBottom" type="button" data-localize-tooltip="pushDivToBottomButtonToolTip"
+                        title="push division to bottom" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                        style="font-size: 1em" class="fa fa-angle-double-down"> </i></button>
+                <button id="sceneEditorNext" type="button" data-localize-tooltip="getNextDivButtonToolTip"
+                        title="get next division" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                        style="font-size: 1em" class="fa fa-share"> </i></button>
+            </div>
+        </div>
+    </div>
+    <div id="sceneCanvasWrap" align="center" style="width: 100%; height: 100%; -webkit-user-select: none;">
+        <canvas id="sceneCanvas" width="500px" height="500px" style="border: 1px solid rgb(170, 170, 170);">
+        </canvas>
+    </div>
+
 </div>
+
+
+
+
+
+
 <div id="settingsPanel" style="display: none">
     <h3 data-localize="stationSettings">Station settings</h3>
 
@@ -362,21 +433,34 @@
                     <div class="space"></div>
                 </div>
                 <ul class="list-group">
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="simpleInterface"> simple to use interface</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="campaignManager"> Campaign manager</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="timelineManagement"> Timeline management</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="screenTemplates"> Screen templates</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="screenEditor"> Screen editor</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="StationManager"> Station Manager</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="supportComponents"> Support 10 components</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="sceneEditor"> Scene editor (coming)</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="filesVIF"> Files: videos/images/flash</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="tabletsPhones"> Run on Tablets and phones</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="openSourceGitHub"> Open source (GitHub)</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="simpleInterface"> simple to use interface</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="campaignManager"> Campaign manager</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="timelineManagement"> Timeline management</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="screenTemplates"> Screen templates</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="screenEditor"> Screen editor</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="StationManager"> Station Manager</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="supportComponents"> Support 10 components</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="sceneEditor"> Scene editor (coming)</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="filesVIF"> Files: videos/images/flash</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="tabletsPhones"> Run on Tablets and phones</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="openSourceGitHub"> Open source (GitHub)</span></li>
                 </ul>
                 <div class="try">
                     <p class="price">$0.00</p>
-                    <button class="btnPrice btn btn-default" disabled="disabled" href="#" type="button" data-localize="youAreHere">you are here</button>
+                    <button class="btnPrice btn btn-default" disabled="disabled" href="#" type="button"
+                            data-localize="youAreHere">you are here
+                    </button>
                 </div>
             </div>
             <div class="col-md-4" id="home-box">
@@ -386,21 +470,33 @@
                     <div class="space"></div>
                 </div>
                 <ul class="list-group">
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="higherLearningCurve"> Higher learning curve</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="professionalEditor"> Professional editor</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="campaignManager"> Campaign manager</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="timelineManagement"> Timeline management</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="channelManagement"> Channel management</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="schedulerSequencer"> Scheduler / sequencer</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="richSceneEditor"> Rich scene editor</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="supportMoreComponents"> Support more components</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="advanceStationManager"> Advance Station Manager</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="runDesktopWeb"> Runs on Desktop and Web</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="muchMore"> and much more...</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="higherLearningCurve"> Higher learning curve</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="professionalEditor"> Professional editor</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="campaignManager"> Campaign manager</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="timelineManagement"> Timeline management</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="channelManagement"> Channel management</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="schedulerSequencer"> Scheduler / sequencer</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="richSceneEditor"> Rich scene editor</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="supportMoreComponents"> Support more components</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="advanceStationManager"> Advance Station Manager</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="runDesktopWeb"> Runs on Desktop and Web</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="muchMore"> and much more...</span></li>
                 </ul>
                 <div class="try">
                     <p class="price">$0.00</p>
-                    <a id="convertAccount" class="btnPrice btn-primary btn btn-default" href="#" type="button" data-localize="convert">Convert</a></div>
+                    <a id="convertAccount" class="btnPrice btn-primary btn btn-default" href="#" type="button"
+                       data-localize="convert">Convert</a></div>
             </div>
             <div class="col-md-4" id="home-box">
                 <div class="pricing_header3">
@@ -409,21 +505,33 @@
                     <div class="space"></div>
                 </div>
                 <ul class="list-group">
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="everythingFromLiteAndPro"> Everything from Lite & Pro</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="whiteLabel"> White label / branding</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="supportAllComponents"> Support all components</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="transitions"> Transitions / Effects</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="multiUserManagement"> Multi user management</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="advertisingManager"> Advertising manager</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="accessControl"> Access control</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="unlimitedCloudStorage"> Unlimited cloud storage</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="phoneSupport"> Phone support</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="hardwareDiscounts"> Hardware discounts</span></li>
-                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span data-localize="muchMore"> and much more...</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="everythingFromLiteAndPro"> Everything from Lite & Pro</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="whiteLabel"> White label / branding</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="supportAllComponents"> Support all components</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="transitions"> Transitions / Effects</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="multiUserManagement"> Multi user management</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="advertisingManager"> Advertising manager</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="accessControl"> Access control</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="unlimitedCloudStorage"> Unlimited cloud storage</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="phoneSupport"> Phone support</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="hardwareDiscounts"> Hardware discounts</span></li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="muchMore"> and much more...</span></li>
                 </ul>
                 <div class="try">
                     <p class="price">$99/<span data-localize="month">month</span></p>
-                    <button id="subscribeAccount" class="btnPrice btn-primary btn btn-default" href="#" type="button" data-localize="subscribe">
+                    <button id="subscribeAccount" class="btnPrice btn-primary btn btn-default" href="#" type="button"
+                            data-localize="subscribe">
                         Subscribe
                     </button>
                 </div>
@@ -438,13 +546,18 @@
     <hr/>
     <h3 data-localize="additionalLinks">Additional links</h3>
     <ul>
-        <li><a class="helpLinks" href="http://www.digitalsignage.com/_html/signagestudio_lite.html" data-localize="studioLitePage">StudioLite page</a></li>
-        <li><a class="helpLinks" href="http://script.digitalsignage.com/forum/index.php" data-localize="supportForum">Support forum</a></li>
-        <li><a class="helpLinks" href="http://www.digitalsignage.com/_html/live_chat.html" data-localize="liveChatSupport">Live Chat / Support</a></li>
+        <li><a class="helpLinks" href="http://www.digitalsignage.com/_html/signagestudio_lite.html"
+               data-localize="studioLitePage">StudioLite page</a></li>
+        <li><a class="helpLinks" href="http://script.digitalsignage.com/forum/index.php" data-localize="supportForum">Support
+            forum</a></li>
+        <li><a class="helpLinks" href="http://www.digitalsignage.com/_html/live_chat.html"
+               data-localize="liveChatSupport">Live Chat / Support</a></li>
         <li><a class="helpLinks" href="http://git.digitalsignage.com" data-localize="openSource">Open source</a></li>
-        <li><a class="helpLinks" href="http://script.digitalsignage.com/cgi-bin/webinar.cgi" data-localize="webinar">Webinar</a></li>
+        <li><a class="helpLinks" href="http://script.digitalsignage.com/cgi-bin/webinar.cgi" data-localize="webinar">Webinar</a>
+        </li>
         <li><a class="helpLinks" href="http://www.digitalsignage.com/_html/faqs.html" data-localize="faq">FAQs</a></li>
-        <li><a class="helpLinks" href="http://www.digitalsignage.com/support/upload/index.php?/Knowledgebase/List" data-localize="knowledgeBase">Knowledge base</a></li>
+        <li><a class="helpLinks" href="http://www.digitalsignage.com/support/upload/index.php?/Knowledgebase/List"
+               data-localize="knowledgeBase">Knowledge base</a></li>
     </ul>
     <hr/>
 </div>
@@ -465,18 +578,20 @@
     <hr/>
 </div>
 <div id="campaignProperties" style="display: none">
-    <input id="formCampaignName" type="text" data-localize="campaignName" class="form-control" placeholder="Campaign name">
+    <input id="formCampaignName" type="text" data-localize="campaignName" class="form-control"
+           placeholder="Campaign name">
 </div>
 <div id="timelineProperties" style="display: none">
     <label>Length: </label>
     <label id="timelineLength" style="text-align: right"><span data-localize="lenght">Length</span>: 00:00:00</label>
     <hr/>
     <div data-role="fieldcontain" data-inset="true" style="width:99%;">
-        <input type="text" name="name" id="timeLinePropTitleID" value="" placeholder="Timeline Title" data-localize="timelineTitle">
+        <input type="text" name="name" id="timeLinePropTitleID" value="" placeholder="Timeline Title"
+               data-localize="timelineTitle">
     </div>
     <hr/>
     <button id="editScreenLayout" type="button" class="btn btn-default">
-        <i style="font-size: 1em" class="fa fa-gears"> </i> 
+        <i style="font-size: 1em" class="fa fa-gears"> </i>
         <span data-localize="editScreenLayout">edit screen layout</span></button>
 </div>
 <div id="channelProperties" style="display: none">
@@ -489,10 +604,12 @@
 </div>
 <div id="resourceListProperties" style="display: none">
     <h5 data-localize="resProps">resource properties</h5>
-    <input id="selectedLibResourceName" type="text" name="name" value="" data-localize="enterResName" placeholder="Enter resource name">
+    <input id="selectedLibResourceName" type="text" name="name" value="" data-localize="enterResName"
+           placeholder="Enter resource name">
 </div>
 <div id="viewerEditProperties" style="display: none">
     <h5 data-localize="screenDivision">screen division</h5>
+
     <div id="viewerDimensions">
     </div>
 </div>
@@ -534,9 +651,12 @@
             <li><span data-localize="lastUpd">Last upd </span>: <span id="stationLastUpdate"></span></li>
         </ul>
     </div>
-    <input type="text" name="eventName" data-localize="eventName" placeholder="event name" id="stationSendEventValue" value="">
+    <input type="text" name="eventName" data-localize="eventName" placeholder="event name" id="stationSendEventValue"
+           value="">
+
     <p></p>
-    <button id="stationEventSendCommand" class="btn btn-primary" data-localize="sendStationEvent">Send station event</button>
+    <button id="stationEventSendCommand" class="btn btn-primary" data-localize="sendStationEvent">Send station event
+    </button>
 </div>
 <div id="blockProperties" class="" style="display: none">
     <div id="channelBlockProps" style="display: none">
@@ -548,7 +668,8 @@
         <p>X=0 / Y=0</p>
     </div>
     <ul id="blockPropertiesTabber" class="nav nav-tabs">
-        <li class="active"><a id="blockSubpropertiesTitle" href="#blockSubProperties" data-toggle="tab" data-localize="comp">Comp</a></li>
+        <li class="active"><a id="blockSubpropertiesTitle" href="#blockSubProperties" data-toggle="tab"
+                              data-localize="comp">Comp</a></li>
         <li><a href="#blockCommonProperties" data-toggle="tab" data-localize="style">Style</a></li>
     </ul>
     <div class="tab-content">
@@ -630,6 +751,7 @@
                     <span data-localize="rssNewsSource">RSS news source</span>
                     <select id="mrssSource" class="propControlWidth form-control">
                     </select>
+
                     <div>
                         <div data-role="fieldcontain" data-inset="true">
                             <input id="mrssLink" type="text" name="name" class="propControlWidth" value=""
@@ -649,25 +771,29 @@
                                placeholder="Enter QR Text" data-localize="enterQRText">
                     </div>
                 </div>
-                <div id="blockHTMLCommonProperties" style="display: none"><span data-localize="webAddr">Web address</span>
+                <div id="blockHTMLCommonProperties" style="display: none"><span
+                        data-localize="webAddr">Web address</span>
 
                     <div data-role="fieldcontain" data-inset="true">
                         <input type="text" name="name" id="htmlText" value="" placeholder="http://...">
                     </div>
                 </div>
-                <div id="blockExtImageCommonProperties" style="display: none"><span data-localize="urlAddr">URL address</span>
+                <div id="blockExtImageCommonProperties" style="display: none"><span
+                        data-localize="urlAddr">URL address</span>
 
                     <div data-role="fieldcontain" data-inset="true">
                         <input type="text" name="name" id="extImageText" value="" placeholder="http://...">
                     </div>
                 </div>
-                <div id="blockExtVideoCommonProperties" style="display: none"><span data-localize="urlAddr">URL address</span>
+                <div id="blockExtVideoCommonProperties" style="display: none"><span
+                        data-localize="urlAddr">URL address</span>
 
                     <div data-role="fieldcontain" data-inset="true">
                         <input type="text" name="name" id="extVideoText" value="" placeholder="http://...">
                     </div>
                 </div>
-                <div id="blockLabelCommonProperties" style="display: none"><span data-localize="labelText">Label text</span>
+                <div id="blockLabelCommonProperties" style="display: none"><span
+                        data-localize="labelText">Label text</span>
 
                     <div data-role="fieldcontain" data-inset="true">
                         <input id="labelText" type="text" name="name" class="propControlWidth" value=""
@@ -735,7 +861,7 @@
 </div>
 </div>
 <div id="footer"><br>
-    <span id="footerText">&nbsp;MediaSignage Inc &#169; | version 0.9.27 </span>
+    <span id="footerText">&nbsp;MediaSignage Inc &#169; | version 0.9.28 </span>
 </div>
 
 <!-- Modal -->
@@ -784,20 +910,28 @@
     <dt><a href="#"><span>Select language</span></a></dt>
     <dd>
         <ul>
-            <li><a href="#"><img class="flag " src="_assets/flags/br.png" alt="" />Brazil<span class="value">BR</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/fr.png" alt="" />France<span class="value">FR</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/de.png" alt="" />Germany<span class="value">DE</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/in.png" alt="" />India<span class="value">IN</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/il.png" alt="" />Israel<span class="value">he</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/jp.png" alt="" />Japan<span class="value">JP</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/cs.png" alt="" />Serbia<span class="value">CS</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/gb.png" alt="" />United Kingdom<span class="value">UK</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/us.png" alt="" />United States<span class="value">en</span></a></li>
+            <li><a href="#"><img class="flag " src="_assets/flags/br.png" alt=""/>Brazil<span
+                    class="value">BR</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/fr.png" alt=""/>France<span class="value">FR</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/de.png" alt=""/>Germany<span
+                    class="value">DE</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/in.png" alt=""/>India<span class="value">IN</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/il.png" alt=""/>Israel<span class="value">he</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/jp.png" alt=""/>Japan<span class="value">JP</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/cs.png" alt=""/>Serbia<span class="value">CS</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/gb.png" alt=""/>United Kingdom<span
+                    class="value">UK</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/us.png" alt=""/>United States<span
+                    class="value">en</span></a></li>
         </ul>
     </dd>
     <small>Let us know if you wish to help us add your native language</small>
 </div>
-
 
 
 <!-- Dimension Template -->
@@ -934,30 +1068,68 @@
 
 
 <!-- Messages -->
-<p style="display: none" id="bootBoxRestartStations" data-localize="bootBoxRestartStations">Restart connected stations and apply your saved work?</p>
-<p style="display: none" id="bootBoxStudioLiteAcc" data-localize="bootBoxStudioLiteAcc">You must login with a StudioLite account and not a Pro account</p>
-<p style="display: none" id="bootBoxLoginWrongCred" data-localize="bootBoxLoginWrongCred">You are logged with FREE SignageStudio Pro credentials and not FREE StudioLite credentials so only the Stations module is available. Be sure to create a new FREE StudioLite account to get the full experience...</p>
+<p style="display: none" id="bootBoxRestartStations" data-localize="bootBoxRestartStations">Restart connected stations
+    and apply your saved work?</p>
+
+<p style="display: none" id="bootBoxStudioLiteAcc" data-localize="bootBoxStudioLiteAcc">You must login with a StudioLite
+    account and not a Pro account</p>
+
+<p style="display: none" id="bootBoxLoginWrongCred" data-localize="bootBoxLoginWrongCred">You are logged with FREE
+    SignageStudio Pro credentials and not FREE StudioLite credentials so only the Stations module is available. Be sure
+    to create a new FREE StudioLite account to get the full experience...</p>
+
 <p style="display: none" id="bootBoxSaveRemoteSrv" data-localize="bootBoxSaveRemoteSrv">Save work to remote server</p>
+
 <p style="display: none" id="bootBoxSave" data-localize="bootBoxSave">Save!</p>
+
 <p style="display: none" id="bootBoxSaveAndRestart" data-localize="bootBoxSaveAndRestart">Save & restart stations</p>
+
 <p style="display: none" id="bootBoxCancel" data-localize="bootBoxCancel">Cancel</p>
+
 <p style="display: none" id="bootBoxOk" data-localize="bootBoxOk">OK</p>
+
 <p style="display: none" id="bootBoxNoStationSelected" data-localize="bootBoxNoStationSelected">No station selected</p>
+
 <p style="display: none" id="bootBoxProblemSaving" data-localize="bootBoxProblemSaving">Problem saving</p>
-<p style="display: none" id="bootBoxLoginWithProCred" data-localize="bootBoxLoginWithProCred">Login in with Pro credentials..</p>
+
+<p style="display: none" id="bootBoxLoginWithProCred" data-localize="bootBoxLoginWithProCred">Login in with Pro
+    credentials..</p>
+
 <p style="display: none" id="bootBoxProblem" data-localize="bootBoxProblem">Problem</p>
-<p style="display: none" id="bootBoxWrongUserOrPass" data-localize="bootBoxWrongUserOrPass">Sorry but the user or password did not match</p>
-<p style="display: none" id="bootBoxSureDeleteCampaign" data-localize="bootBoxSureDeleteCampaign">Are you sure you want to delete the campaign?</p>
-<p style="display: none" id="bootBoxCantDeleteComp" data-localize="bootBoxCantDeleteComp">You can't delete a campaign that is assigned to a remote station, please fist un-assign it from Stations before you remove the campaign.</p>
-<p style="display: none" id="bootBoxSelectCompFirst" data-localize="bootBoxSelectCompFirst">You must first select a campaign by clicking on the properties icon.</p>
-<p style="display: none" id="bootBoxSureRemoveTimeline" data-localize="bootBoxSureRemoveTimeline">Are you sure you want to remove the timeline?</p>
-<p style="display: none" id="bootBoxSelectResource" data-localize="bootBoxSelectResource">Please select a resource first and try again</p>
-<p style="display: none" id="bootBoxSelectChannel" data-localize="bootBoxSelectChannel">Please first select a channel to associate asset with</p>
-<p style="display: none" id="bootBoxAtLeastOneDiv" data-localize="bootBoxAtLeastOneDiv">you must keep at least one viewable screen division</p>
-<p style="display: none" id="bootBoxScreenDivPosReset" data-localize="bootBoxScreenDivPosReset">screen division position reset</p>
+
+<p style="display: none" id="bootBoxWrongUserOrPass" data-localize="bootBoxWrongUserOrPass">Sorry but the user or
+    password did not match</p>
+
+<p style="display: none" id="bootBoxSureDeleteCampaign" data-localize="bootBoxSureDeleteCampaign">Are you sure you want
+    to delete the campaign?</p>
+
+<p style="display: none" id="bootBoxCantDeleteComp" data-localize="bootBoxCantDeleteComp">You can't delete a campaign
+    that is assigned to a remote station, please fist un-assign it from Stations before you remove the campaign.</p>
+
+<p style="display: none" id="bootBoxSelectCompFirst" data-localize="bootBoxSelectCompFirst">You must first select a
+    campaign by clicking on the properties icon.</p>
+
+<p style="display: none" id="bootBoxSureRemoveTimeline" data-localize="bootBoxSureRemoveTimeline">Are you sure you want
+    to remove the timeline?</p>
+
+<p style="display: none" id="bootBoxSelectResource" data-localize="bootBoxSelectResource">Please select a resource first
+    and try again</p>
+
+<p style="display: none" id="bootBoxSelectChannel" data-localize="bootBoxSelectChannel">Please first select a channel to
+    associate asset with</p>
+
+<p style="display: none" id="bootBoxAtLeastOneDiv" data-localize="bootBoxAtLeastOneDiv">you must keep at least one
+    viewable screen division</p>
+
+<p style="display: none" id="bootBoxScreenDivPosReset" data-localize="bootBoxScreenDivPosReset">screen division position
+    reset</p>
+
 <p style="display: none" id="bootBoxCostumeTitle" data-localize="bootBoxCostumeTitle">Custom title</p>
+
 <p style="display: none" id="bootBoxContinue" data-localize="bootBoxContinue">Continue</p>
-<p style="display: none" id="bootBoxSteps" data-localize="bootBoxSteps">Station will be deleted, your work will be saved to the server and your remote station (SignagePlayer) de-registered...</p>
+
+<p style="display: none" id="bootBoxSteps" data-localize="bootBoxSteps">Station will be deleted, your work will be saved
+    to the server and your remote station (SignagePlayer) de-registered...</p>
 
 </body>
 </html>

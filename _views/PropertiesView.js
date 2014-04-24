@@ -188,7 +188,9 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
          @method resetPropertiesView
          **/
         resetPropertiesView: function(){
+            var self = this;
             this.selectView(Elements.EMPTY_PROPERTIES);
+            return self;
         },
 
         /**

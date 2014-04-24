@@ -4,7 +4,7 @@
  @constructor
  @return {object} instantiated SceneEditorView
  **/
-define(['jquery', 'backbone', 'StackView','BlockRSS'], function ($, Backbone, StackView, BlockRSS) {
+define(['jquery', 'backbone', 'fabric', 'BlockRSS'], function ($, Backbone, fabric, BlockRSS) {
 
     BB.SERVICES.SCREEN_LAYOUT_EDITOR_VIEW = 'SceneEditorView';
 
@@ -19,21 +19,103 @@ define(['jquery', 'backbone', 'StackView','BlockRSS'], function ($, Backbone, St
             BB.comBroker.setService(BB.SERVICES['SCREEN_LAYOUT_EDITOR_VIEW'], self);
             self.m_canvas = undefined;
             self.m_canvasID = undefined;
+            self.m_properties = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
+            self.m_blockFactory = BB.comBroker.getService(BB.SERVICES['BLOCK_FACTORY']);
+            BB.comBroker.listenOnce(BB.EVENTS.BLOCKS_LOADED, $.proxy(self._onBlocksLoaded, self));
+            self.m_blockFactory.loadBlockModules();
+        },
 
-            $(this.el).find('#prev').on('click', function (e) {
-                self._deSelectView();
-                return false;
-            });
 
-            self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
-                if (e == self)
-                    self._render();
-            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /**
+         @method _blockSelected
+         @param {Event} e
+         **/
+        _blockSelected: function (i_selected_block_id) {
+            var self = this;
+            self.selected_block_id = i_selected_block_id;
+            BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.selected_block_id);
+            $(Elements.CLASS_CHANNEL_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
+            return false;
+        },
+
+        /**
+         When all block modules have loaded, begin creating blocks
+         @method _onBlocksLoaded
+         **/
+        _onBlocksLoaded: function () {
+            var self = this;
+            self._render();
+            self._listenObjectChanged();
+            // $(Elements.SCENE_CANVAS).fadeTo(333,1)
         },
 
         _render: function () {
             var self = this;
-            BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
+            self.m_canvas = new fabric.Canvas(BB.lib.unhash(Elements.SCENE_CANVAS));
+
+            /*var rect = new fabric.Rect({
+                left: 60,
+                top: 10,
+                fill: '#ececec',
+                hasRotatingPoint: false,
+                width: 20,
+                borderColor: '#5d5d5d',
+                stroke : 'black',
+                strokeWidth : 1,
+                lineWidth: 1,
+                height: 20,
+                cornerColor: 'black',
+                cornerSize: 5,
+                lockRotation: true,
+                transparentCorners: false
+            });
+
+            self.m_canvas.add(rect);
+            self.m_canvas.renderAll();
+            */
+            self._canvasFactory(1,1);
+        },
+
+        /**
+         Listen to changes in a viewer changes in cords and update pepper
+         @method i_props
+         **/
+        _listenObjectChanged: function () {
+            var self = this;
+            self.m_objectMovingHandler = _.debounce(function (e) {
+                var o = e.target;
+                if (o.width != o.currentWidth || o.height != o.currentHeight) {
+                    o.width = o.currentWidth;
+                    o.height = o.currentHeight;
+                    o.scaleX = 1;
+                    o.scaleY = 1;
+                }
+                self.m_canvas.renderAll();
+            });
+
+            self.m_canvas.on({
+                'object:moving': self.m_objectMovingHandler,
+                'object:scaling': self.m_objectMovingHandler,
+                'object:selected': self.m_objectMovingHandler,
+                'object:modified': self.m_objectMovingHandler
+            });
         },
 
         /**
@@ -51,11 +133,11 @@ define(['jquery', 'backbone', 'StackView','BlockRSS'], function ($, Backbone, St
 
         _canvasFactory: function (i_width, i_height) {
             var self = this;
-            self.m_canvasID = _.uniqueId('screenLayoutEditorCanvas');
-            if (self.m_canvas==undefined){
-                $('#screenLayoutEditorCanvasWrap').append('<canvas id="' + self.m_canvasID + '" width="' + i_width + 'px" height="' + i_height + 'px" style="border: 1px solid rgb(170, 170, 170);"></canvas>')
-                self.m_canvas = new fabric.Canvas(self.m_canvasID);
-            }
+           // self.m_canvasID = _.uniqueId('screenLayoutEditorCanvas');
+           // if (self.m_canvas==undefined){
+           //     $('#screenLayoutEditorCanvasWrap').append('<canvas id="' + self.m_canvasID + '" width="' + i_width + 'px" height="' + i_height + 'px" style="border: 1px solid rgb(170, 170, 170);"></canvas>')
+           //     self.m_canvas = new fabric.Canvas(self.m_canvasID);
+           // }
 
             var rect;
 
@@ -86,8 +168,9 @@ define(['jquery', 'backbone', 'StackView','BlockRSS'], function ($, Backbone, St
                 console.log('object selected a rectangle');
             });
 
-            self.m_canvas.on('object:selected', function() {
+            self.m_canvas.on('object:selected', function(e) {
                 console.log('object on canvas selected a rectangle');
+                self._blockSelected(e.target.m_block_id);
             });
 
             _.extend(blockRSS, rect);
@@ -99,7 +182,6 @@ define(['jquery', 'backbone', 'StackView','BlockRSS'], function ($, Backbone, St
                 'object:scaling': onChange,
                 'object:rotating': onChange
             });
-
 
             rect = new fabric.Rect({
                 left: 160,
@@ -123,7 +205,7 @@ define(['jquery', 'backbone', 'StackView','BlockRSS'], function ($, Backbone, St
                 i_block_id: 20000
             });
 
-            rect.on('selected', function() {
+            rect.on('selected', function(e) {
                 console.log('object selected a rectangle');
             });
 
@@ -139,7 +221,7 @@ define(['jquery', 'backbone', 'StackView','BlockRSS'], function ($, Backbone, St
                     obj.setOpacity(options.target.intersectsWithObject(obj) ? 0.5 : 1);
                 });
             }
-
+            /*
             setTimeout(function () {
                 if (!self.m_canvas)
                     return;
@@ -147,6 +229,7 @@ define(['jquery', 'backbone', 'StackView','BlockRSS'], function ($, Backbone, St
                 self.m_canvas.setWidth(i_width);
                 self.m_canvas.renderAll();
             }, 500);
+            */
         },
 
         /**

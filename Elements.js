@@ -89,6 +89,7 @@ Elements.STATION_LIST_VIEW = '#stationListView';
 Elements.STATION_PROPERTIES = '#stationProperties';
 Elements.VIEWER_EDIT_PROPERTIES = '#viewerEditProperties';
 Elements.SCENES_PANEL = '#scenesPanel';
+Elements.SCENE_CANVAS = '#sceneCanvas';
 Elements.SETTINGS_PANEL = '#settingsPanel';
 Elements.PRO_STUDIO_PANEL = '#proStudioPanel';
 Elements.HELP_PANEL = '#helpPanel';

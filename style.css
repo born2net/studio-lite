@@ -444,6 +444,11 @@ aside > aside > div > ul > li {
     display: none;
 }
 
+* {
+    border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+}
+
 .propControlWidth {
     width: 180px;
 }

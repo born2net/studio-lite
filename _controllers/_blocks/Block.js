@@ -435,7 +435,7 @@ define(['jquery', 'backbone'], function ($) {
                 blockName: self.m_blockName,
                 blockDescription: self.m_blockDescription,
                 blockIcon: self.m_blockIcon
-            }
+            };
             return data;
         },
 

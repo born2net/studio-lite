@@ -149,7 +149,7 @@
     "EnterRSSLink": "Enter RSS link text",
     "enterText": "Enter Text Here",
     "removeTimelineButtonToolTip": "remove the selected timeline (one must exist)",
-    "addButtonToolTip": "add",
+    "addButtonToolTip": "add3",
     "removeButtonToolTip": "remove division",
     "pushDivToTopButtonToolTip": "push division to top",
     "pushDivToBottomButtonToolTip": "push division to bottom",
@@ -182,7 +182,16 @@
     "addNewTimelineButtonToolTip": "Add a new timeline",
     "campaignName": "Select a campaign name",
     "channelProps": "channel props",
-    "bootBoxSteps": "Station will be deleted, your work will be saved to the server and your remote station (SignagePlayer) de-registered"
+    "bootBoxSteps": "Station will be deleted, your work will be saved to the server and your remote station (SignagePlayer) de-registered",
+
+
+
+    "sceneHolder": "scene",
+    "selectScene": "Select a Scene",
+    "removeItemToolTip": "remove item",
+    "pushItemToTopButtonToolTip": "push item to top",
+    "pushItemToBottomButtonToolTip": "push item to bottom",
+    "getNextItemButtonToolTip": "get next item"
 }
 
 

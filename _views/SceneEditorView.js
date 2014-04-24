@@ -21,8 +21,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockRSS'], function ($, Backbone, fabr
             self.m_canvasID = undefined;
             self.m_properties = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
             self.m_blockFactory = BB.comBroker.getService(BB.SERVICES['BLOCK_FACTORY']);
-            BB.comBroker.listenOnce(BB.EVENTS.BLOCKS_LOADED, $.proxy(self._onBlocksLoaded, self));
-            self.m_blockFactory.loadBlockModules();
+            // BB.comBroker.listenOnce(BB.EVENTS.BLOCKS_LOADED, $.proxy(self._onBlocksLoaded, self));
+            // self.m_blockFactory.loadBlockModules();
         },
 
 
@@ -182,6 +182,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockRSS'], function ($, Backbone, fabr
                 'object:scaling': onChange,
                 'object:rotating': onChange
             });
+
 
             rect = new fabric.Rect({
                 left: 160,

@@ -521,6 +521,17 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
         capitaliseFirst: function (string) {
             return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+        },
+
+        setIntervalTimes: function(i_func, i_sleep, i_timesRun){
+            var timesRun = 0;
+            var interval = setInterval(function(){
+                timesRun += 1;
+                if(timesRun === i_timesRun){
+                    clearInterval(interval);
+                }
+                i_func();
+            }, i_sleep);
         }
 
     });

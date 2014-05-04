@@ -8,6 +8,8 @@ html,
 body {
     height: 100%;
     background-color: #ffffff;
+    font-size: 12px;
+    font-family: 'Roboto', sans-serif;
 }
 
 a {
@@ -115,7 +117,11 @@ aside > aside > div > ul > li {
 #appNavigator {
     padding: 0px;
     margin: 0px;
+    background-color: white;
     border-right: 1px solid #dddddd;
+    -webkit-box-shadow: 2px 0px 5px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    2px 0px 5px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         2px 0px 5px 0px rgba(50, 50, 50, 0.75);
 }
 
 #appNavigator li {

@@ -29,7 +29,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _render: function () {
             var self = this;
             require(['ScenesEditView', 'ScenesToolbarView'], function (ScenesEditView) {
-                self.m_scenesEditView = new ScenesEditView();
+                self.m_scenesEditView = new ScenesEditView({el: Elements.SCENE_CANVAS_CONTAINER});
             });
         }
     });

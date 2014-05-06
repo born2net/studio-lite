@@ -18,31 +18,22 @@ define(['jquery', 'backbone', 'fabric', 'BlockRSS', 'ScenesToolbarView'], functi
             var self = this;
             BB.comBroker.setService(BB.SERVICES['SCREEN_LAYOUT_EDITOR_VIEW'], self);
             self.m_canvas = undefined;
-            self.m_canvasID = undefined;
+            // self.m_canvasID = undefined;
             self.m_properties = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
             self.m_blockFactory = BB.comBroker.getService(BB.SERVICES['BLOCK_FACTORY']);
-            self.m_scenesToolbarView = new ScenesToolbarView();
+
+            self.m_scenesToolbarView = new ScenesToolbarView({el: Elements.SCENE_TOOLBAR});
 
             // BB.comBroker.listenOnce(BB.EVENTS.BLOCKS_LOADED, $.proxy(self._onBlocksLoaded, self));
             // self.m_blockFactory.loadBlockModules();
+
+            self._render();
         },
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        _render: function () {
+            var self = this;
+            self.m_canvas = new fabric.Canvas(BB.lib.unhash(Elements.SCENE_CANVAS));
+        },
 
 
         /**
@@ -68,7 +59,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockRSS', 'ScenesToolbarView'], functi
             // $(Elements.SCENE_CANVAS).fadeTo(333,1)
         },
 
-        _render: function () {
+        _renderOld: function () {
             var self = this;
             self.m_canvas = new fabric.Canvas(BB.lib.unhash(Elements.SCENE_CANVAS));
 
@@ -92,7 +83,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockRSS', 'ScenesToolbarView'], functi
              self.m_canvas.add(rect);
              self.m_canvas.renderAll();
              */
-            self._canvasFactory(1,1);
+            self._canvasFactory(1, 1);
         },
 
         /**
@@ -150,8 +141,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockRSS', 'ScenesToolbarView'], functi
                 hasRotatingPoint: false,
                 width: 20,
                 borderColor: '#5d5d5d',
-                stroke : 'black',
-                strokeWidth : 1,
+                stroke: 'black',
+                strokeWidth: 1,
                 lineWidth: 1,
                 height: 20,
                 cornerColor: 'black',
@@ -166,11 +157,11 @@ define(['jquery', 'backbone', 'fabric', 'BlockRSS', 'ScenesToolbarView'], functi
                 i_block_id: 10000
             });
 
-            rect.on('selected', function() {
+            rect.on('selected', function () {
                 console.log('object selected a rectangle');
             });
 
-            self.m_canvas.on('object:selected', function(e) {
+            self.m_canvas.on('object:selected', function (e) {
                 console.log('object on canvas selected a rectangle');
                 self._blockSelected(e.target.m_block_id);
             });
@@ -193,8 +184,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockRSS', 'ScenesToolbarView'], functi
                 hasRotatingPoint: false,
                 width: 20,
                 borderColor: '#5d5d5d',
-                stroke : 'green',
-                strokeWidth : 1,
+                stroke: 'green',
+                strokeWidth: 1,
                 lineWidth: 1,
                 height: 20,
                 cornerColor: 'black',
@@ -208,7 +199,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockRSS', 'ScenesToolbarView'], functi
                 i_block_id: 20000
             });
 
-            rect.on('selected', function(e) {
+            rect.on('selected', function (e) {
                 console.log('object selected a rectangle');
             });
 
@@ -219,11 +210,12 @@ define(['jquery', 'backbone', 'fabric', 'BlockRSS', 'ScenesToolbarView'], functi
 
             function onChange(options) {
                 options.target.setCoords();
-                self.m_canvas.forEachObject(function(obj) {
+                self.m_canvas.forEachObject(function (obj) {
                     if (obj === options.target) return;
                     obj.setOpacity(options.target.intersectsWithObject(obj) ? 0.5 : 1);
                 });
             }
+
             /*
              setTimeout(function () {
              if (!self.m_canvas)

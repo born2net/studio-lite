@@ -359,17 +359,17 @@ aside > aside > div > ul > li {
     margin-right:auto;
 }
 
-#scenePanelWrap2 {
+#sceneToolbar {
      padding-bottom: 20px;
      padding-top: 20px;
 }
 
-#scenePanelWrap2 .input-group {
+#sceneToolbar .input-group {
     width: 200px;
     float: left;
 }
 
-#sceneCanvasWrap {
+#sceneCanvasContainer {
     width: 100%;
     height: 100%;
     -webkit-user-select: none;

@@ -354,7 +354,7 @@
 </div>
 <div id="scenesPanel" class="yScroll" style="display: none">
     <div id="scenePanelWrap1" >
-        <div id="scenePanelWrap2">
+        <div id="sceneToolbar">
             <div class="input-group">
                 <div class="input-group-btn">
                     <button type="button" class="btn btn-default input-sm dropdown-toggle" data-toggle="dropdown">
@@ -364,7 +364,7 @@
                     <ul id="sceneSelectList" class="dropdown-menu">
                     </ul>
                 </div>
-                <input type="text" class="form-control input-sm" data-localize="sceneHolder" placeholder="scene">
+                <input id="sceneSelectedName" type="text" class="form-control input-sm" data-localize="sceneHolder" placeholder="scene">
             </div>
             <div class="btn-group">
                 <div class="btn-group">
@@ -391,7 +391,7 @@
             </div>
         </div>
     </div>
-    <div id="sceneCanvasWrap" align="center">
+    <div id="sceneCanvasContainer" align="center">
         <canvas id="sceneCanvas" width="650px" height="450px">
         </canvas>
     </div>

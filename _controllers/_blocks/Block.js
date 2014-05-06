@@ -142,6 +142,7 @@ define(['jquery', 'backbone'], function ($) {
             self.m_toggleBackgroundColorHandler = function(e){
                 if (!self.m_selected)
                     return;
+
                 var domPlayerData = self._getBlockPlayerData();
                 var v = $(e.target).prop('checked') == true ? 1 : 0;
                 if (v) {

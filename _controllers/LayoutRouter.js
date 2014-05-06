@@ -5,8 +5,8 @@
  @constructor
  @return {Object} instantiated AppRouter
  **/
-define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEntryFaderView', 'LoginView', 'AppContentFaderView', 'WaitView', 'bootbox', 'CampaignManagerView', 'ResourcesView', 'ResourcesView', 'StationsViewLoader', 'ScenesView', 'SettingsView', 'ProStudioView', 'HelpView', 'LogoutView', 'CampaignSliderStackView', 'ScreenLayoutSelectorView', 'X2JS', 'XDate', 'LanguageSelectorView'],
-    function (_, $, Backbone, AppAuth, NavigationView, AppEntryFaderView, LoginView, AppContentFaderView, WaitView, Bootbox, CampaignManagerView, ResourcesView, ResourcesView, StationsViewLoader, ScenesView, SettingsView, ProStudioView, HelpView, LogoutView, CampaignSliderStackView, ScreenLayoutSelectorView, X2JS, XDate, LanguageSelectorView) {
+define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEntryFaderView', 'LoginView', 'AppContentFaderView', 'WaitView', 'bootbox', 'CampaignManagerView', 'ResourcesView', 'ResourcesView', 'StationsViewLoader', 'SettingsView', 'ProStudioView', 'HelpView', 'LogoutView', 'CampaignSliderStackView', 'ScreenLayoutSelectorView', 'X2JS', 'XDate', 'LanguageSelectorView', 'ScenesLoaderView'],
+    function (_, $, Backbone, AppAuth, NavigationView, AppEntryFaderView, LoginView, AppContentFaderView, WaitView, Bootbox, CampaignManagerView, ResourcesView, ResourcesView, StationsViewLoader, SettingsView, ProStudioView, HelpView, LogoutView, CampaignSliderStackView, ScreenLayoutSelectorView, X2JS, XDate, LanguageSelectorView, ScenesLoaderView) {
 
         BB.SERVICES.LAYOUT_ROUTER = 'LayoutRouter';
 
@@ -210,7 +210,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                     stackView: this.m_appContentFaderView
                 });
 
-                this.m_scenesView = new ScenesView({
+                this.m_scenesLoaderView = new ScenesLoaderView({
                     el: Elements.SCENES_PANEL,
                     stackView: this.m_appContentFaderView
                 });
@@ -238,13 +238,13 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 this.m_appContentFaderView.addView(this.m_campaignManagerView);
                 this.m_appContentFaderView.addView(this.m_resourcesView);
                 this.m_appContentFaderView.addView(this.m_stationsViewLoader);
-                this.m_appContentFaderView.addView(this.m_scenesView);
+                this.m_appContentFaderView.addView(this.m_scenesLoaderView);
                 this.m_appContentFaderView.addView(this.m_settingsView);
                 this.m_appContentFaderView.addView(this.m_proStudioView);
                 this.m_appContentFaderView.addView(this.m_helpView);
                 this.m_appContentFaderView.addView(this.m_logoutView);
-                this.m_appContentFaderView.selectView(this.m_campaignManagerView);
-
+                // this.m_appContentFaderView.selectView(this.m_campaignManagerView);
+                this.m_appContentFaderView.selectView(this.m_scenesLoaderView); // debug mode
                 BB.comBroker.setService(BB.SERVICES['NAVIGATION_VIEW'], this.m_navigationView);
             },
 

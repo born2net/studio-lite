@@ -60,6 +60,7 @@ Elements.FILE_SELECTION = '#file';
 Elements.FILE_REMOVE = '#fileRemove';
 Elements.CHANNEL_BLOCK_PROPS = '#channelBlockProps';
 Elements.SCENE_BLOCK_PROPS = '#sceneBlockProps';
+Elements.SCENE_SELECT_LIST = '#sceneSelectList';
 Elements.BLOCK_LENGTH_HOURS = '#blockLengthHours';
 Elements.BLOCK_LENGTH_MINUTES = '#blockLengthMinutes';
 Elements.BLOCK_LENGTH_SECONDS = '#blockLengthSeconds';

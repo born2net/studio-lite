@@ -242,6 +242,23 @@ Pepper.prototype = {
     },
 
     /**
+     Returns all scenes
+     @method getSceneNames
+     @param {Number} i_playerData
+     @return {Object} scene names
+     **/
+    getSceneNames: function(){
+        var self = this;
+        var sceneNames = {};
+        $(self.m_msdb.table_player_data().getAllPrimaryKeys()).each(function (k, player_data_id) {
+            var recPlayerData = self.m_msdb.table_player_data().getRec(player_data_id);
+            var domPlayerData = $.parseXML(recPlayerData['player_data_value'])
+            sceneNames[player_data_id] = ($(domPlayerData).find('Player').attr('label'));
+        });
+        return sceneNames;
+    },
+
+    /**
      Returns this model's attributes as...
      @method i_values  var o = {
                     campaign_timeline_board_template_id: ?

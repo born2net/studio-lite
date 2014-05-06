@@ -4,11 +4,11 @@
  @constructor
  @return {object} instantiated SceneEditorView
  **/
-define(['jquery', 'backbone', 'fabric', 'BlockRSS'], function ($, Backbone, fabric, BlockRSS) {
+define(['jquery', 'backbone', 'fabric', 'BlockRSS', 'ScenesToolbarView'], function ($, Backbone, fabric, BlockRSS, ScenesToolbarView) {
 
     BB.SERVICES.SCREEN_LAYOUT_EDITOR_VIEW = 'SceneEditorView';
 
-    var SceneEditorView = BB.View.extend({
+    var ScenesEditView = BB.View.extend({
 
         /**
          Constructor
@@ -21,6 +21,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockRSS'], function ($, Backbone, fabr
             self.m_canvasID = undefined;
             self.m_properties = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
             self.m_blockFactory = BB.comBroker.getService(BB.SERVICES['BLOCK_FACTORY']);
+            self.m_scenesToolbarView = new ScenesToolbarView();
+
             // BB.comBroker.listenOnce(BB.EVENTS.BLOCKS_LOADED, $.proxy(self._onBlocksLoaded, self));
             // self.m_blockFactory.loadBlockModules();
         },
@@ -71,25 +73,25 @@ define(['jquery', 'backbone', 'fabric', 'BlockRSS'], function ($, Backbone, fabr
             self.m_canvas = new fabric.Canvas(BB.lib.unhash(Elements.SCENE_CANVAS));
 
             /*var rect = new fabric.Rect({
-                left: 60,
-                top: 10,
-                fill: '#ececec',
-                hasRotatingPoint: false,
-                width: 20,
-                borderColor: '#5d5d5d',
-                stroke : 'black',
-                strokeWidth : 1,
-                lineWidth: 1,
-                height: 20,
-                cornerColor: 'black',
-                cornerSize: 5,
-                lockRotation: true,
-                transparentCorners: false
-            });
+             left: 60,
+             top: 10,
+             fill: '#ececec',
+             hasRotatingPoint: false,
+             width: 20,
+             borderColor: '#5d5d5d',
+             stroke : 'black',
+             strokeWidth : 1,
+             lineWidth: 1,
+             height: 20,
+             cornerColor: 'black',
+             cornerSize: 5,
+             lockRotation: true,
+             transparentCorners: false
+             });
 
-            self.m_canvas.add(rect);
-            self.m_canvas.renderAll();
-            */
+             self.m_canvas.add(rect);
+             self.m_canvas.renderAll();
+             */
             self._canvasFactory(1,1);
         },
 
@@ -133,11 +135,11 @@ define(['jquery', 'backbone', 'fabric', 'BlockRSS'], function ($, Backbone, fabr
 
         _canvasFactory: function (i_width, i_height) {
             var self = this;
-           // self.m_canvasID = _.uniqueId('screenLayoutEditorCanvas');
-           // if (self.m_canvas==undefined){
-           //     $('#screenLayoutEditorCanvasWrap').append('<canvas id="' + self.m_canvasID + '" width="' + i_width + 'px" height="' + i_height + 'px" style="border: 1px solid rgb(170, 170, 170);"></canvas>')
-           //     self.m_canvas = new fabric.Canvas(self.m_canvasID);
-           // }
+            // self.m_canvasID = _.uniqueId('screenLayoutEditorCanvas');
+            // if (self.m_canvas==undefined){
+            //     $('#screenLayoutEditorCanvasWrap').append('<canvas id="' + self.m_canvasID + '" width="' + i_width + 'px" height="' + i_height + 'px" style="border: 1px solid rgb(170, 170, 170);"></canvas>')
+            //     self.m_canvas = new fabric.Canvas(self.m_canvasID);
+            // }
 
             var rect;
 
@@ -223,14 +225,14 @@ define(['jquery', 'backbone', 'fabric', 'BlockRSS'], function ($, Backbone, fabr
                 });
             }
             /*
-            setTimeout(function () {
-                if (!self.m_canvas)
-                    return;
-                self.m_canvas.setHeight(i_height);
-                self.m_canvas.setWidth(i_width);
-                self.m_canvas.renderAll();
-            }, 500);
-            */
+             setTimeout(function () {
+             if (!self.m_canvas)
+             return;
+             self.m_canvas.setHeight(i_height);
+             self.m_canvas.setWidth(i_width);
+             self.m_canvas.renderAll();
+             }, 500);
+             */
         },
 
         /**
@@ -246,7 +248,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockRSS'], function ($, Backbone, fabr
         }
     });
 
-    return SceneEditorView;
+    return ScenesEditView;
 });
 
 

@@ -35,7 +35,7 @@ define(['jquery', 'backbone'], function ($) {
             self.m_resourceID = undefined;
             self.m_blockProperty = BB.comBroker.getService(BB.SERVICES['BLOCK_PROPERTIES']);
 
-            // common channel
+            // common props
             self._alphaListenChange();
             self._gradientListenChange();
             self._backgroundStateListenChange();
@@ -267,11 +267,19 @@ define(['jquery', 'backbone'], function ($) {
                         self._updateBlockLength();
                         break;
                     }
-                    // Future support
+
                     case BB.CONSTS.PLACEMENT_SCENE:
                     {
                         $(Elements.CHANNEL_BLOCK_PROPS).hide();
                         $(Elements.SCENE_BLOCK_PROPS).show();
+                        self._updateBlockDimensions();
+                        break;
+                    }
+
+                    case BB.CONSTS.PLACEMENT_IS_SCENE:
+                    {
+                        $(Elements.CHANNEL_BLOCK_PROPS).show();
+                        $(Elements.SCENE_BLOCK_PROPS).hide();
                         self._updateBlockDimensions();
                         break;
                     }
@@ -333,6 +341,7 @@ define(['jquery', 'backbone'], function ($) {
             BB.comBroker.listenWithNamespace(BB.EVENTS.BLOCK_LENGTH_CHANGING, this, function (e) {
 
                 if (self.m_selected) {
+
                     var hours = $(Elements.BLOCK_LENGTH_HOURS).val();
                     var minutes = $(Elements.BLOCK_LENGTH_MINUTES).val();
                     var seconds = $(Elements.BLOCK_LENGTH_SECONDS).val();
@@ -354,8 +363,29 @@ define(['jquery', 'backbone'], function ($) {
                             break;
                         }
                     }
+
                     // log('upd: ' + self.m_block_id + ' ' + hours + ' ' + minutes + ' ' + seconds);
-                    pepper.setBlockTimelineChannelBlockLength(self.m_block_id, hours, minutes, seconds);
+
+                    switch (self.m_placement) {
+                        case BB.CONSTS.PLACEMENT_CHANNEL:
+                        {
+                            pepper.setBlockTimelineChannelBlockLength(self.m_block_id, hours, minutes, seconds);
+                            break;
+                        }
+                        case BB.CONSTS.PLACEMENT_SCENE:
+                        {
+                            break;
+                        }
+                        case BB.CONSTS.PLACEMENT_IS_SCENE:
+                        {
+                            log('upd: ' + self.m_block_id + ' ' + hours + ' ' + minutes + ' ' + seconds);
+                            pepper.setSceneDefaultDuration(self.m_block_id, hours, minutes, seconds);
+                            break;
+                        }
+                    }
+
+
+
                 }
             });
         },

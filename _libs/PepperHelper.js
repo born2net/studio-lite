@@ -244,6 +244,11 @@ PepperHelper.prototype = {
                     return  '<Player player="3510" label="My scene" interactive="0">' +
                                 '<Data>' +
                                     self.getCommonDefaultXML() +
+                                    '<Scene defaultDuration="10">' +
+                                        '<Layout>' +
+                                            '<BasicLayout/>' +
+                                        '</Layout>' +
+                                    '</Scene>' +
                                 '</Data>' +
                             '</Player>'
                 },

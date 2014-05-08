@@ -149,6 +149,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _populate: function () {
             var self = this;
 
+
+            //todo: if block resides in scene, we need to get its data from player_data using negative position value
             var domPlayerData = self._getBlockPlayerData();
             var xSnippet = $(domPlayerData).find('Rss');
             var xSnippetTitle = $(xSnippet).find('Font').eq(0);

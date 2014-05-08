@@ -251,6 +251,29 @@ Pepper.prototype = {
         return path;
     },
 
+
+    /**
+     Set a scene's default length (can be overridden on timeline)
+     @method setSceneDefaultDuration
+     @param {i_block_id} i_playerData
+     @param {hours} hours
+     @param {minutes} minutes
+     @param {seconds} seconds
+     **/
+    setSceneDefaultDuration: function(i_player_data_id, i_hours, i_minutes, i_seconds){
+        var self = this;
+        var totalSecInMin = 60
+        var totalSecInHour = totalSecInMin * 60
+        var totalSeconds = parseInt(i_seconds) + (parseInt(i_minutes) * totalSecInMin) + (parseInt(i_hours) * totalSecInHour);
+        var recPlayerData = pepper.getScenePlayerRecord(i_player_data_id);
+        var player_data = recPlayerData['player_data_value'];
+        var domPlayerData = $.parseXML(player_data)
+        var xSnippet = $(domPlayerData).find('Scene');
+        xSnippet.attr('defaultDuration',totalSeconds);
+        var player_data = (new XMLSerializer()).serializeToString(domPlayerData);
+        pepper.setScenePlayerData(i_player_data_id, player_data);
+    },
+
     /**
      Returns all scenes
      @method getSceneNames

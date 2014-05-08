@@ -64,7 +64,6 @@ Elements.SCENE_BLOCK_PROPS = '#sceneBlockProps';
 Elements.SCENE_SELECT_LIST = '#sceneSelectList';
 Elements.SCENE_SELECTED_NAME = '#sceneSelectedName';
 Elements.SCENE_CANVAS_CONTAINER = '#sceneCanvasContainer';
-Elements.LOAD_SCENE_MODULE = '#loadSceneModule';
 Elements.BLOCK_LENGTH_HOURS = '#blockLengthHours';
 Elements.BLOCK_LENGTH_MINUTES = '#blockLengthMinutes';
 Elements.BLOCK_LENGTH_SECONDS = '#blockLengthSeconds';

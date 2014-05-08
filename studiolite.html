@@ -353,9 +353,6 @@
     </ul>
 </div>
 <div id="scenesPanel" class="yScroll" style="display: none">
-    <div id="loadSceneModule">
-        <span data-localize="loadSceneModule">Loading scene module</span>
-    </div>
     <div id="scenePanelWrap" class="sceneElements" >
         <div id="sceneToolbar">
             <div class="input-group">
@@ -755,10 +752,20 @@
                         </div>
                     </div>
                 </div>
-                <div id="blockSceneCommonProperties" style="display: none"><span>Scene</span>
+                <div id="blockSceneCommonProperties" style="display: none"><span>Scene properties</span>
                     <div data-role="fieldcontain" data-inset="true">
-                        <input type="text" name="name" value="" placeholder="Enter Scene Text" data-localize="enterQRText">
+                        <input type="text" name="name" value="" placeholder="Scene name" data-localize="enterSceneText">
                     </div>
+
+                    <div data-role="fieldcontain" data-inset="true">
+                        <input type="text" name="name" value="" placeholder="Scene width" data-localize="enterSceneWidth">
+                    </div>
+
+                    <div data-role="fieldcontain" data-inset="true">
+                        <input type="text" name="name" value="" placeholder="Scene height" data-localize="enterSceneHeight">
+                    </div>
+
+
                 </div>
                 <div id="blockQRCommonProperties" style="display: none"><span>QR</span>
 

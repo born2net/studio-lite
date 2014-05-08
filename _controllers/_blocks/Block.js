@@ -44,27 +44,27 @@ define(['jquery', 'backbone'], function ($) {
             self._onTimelineChannelBlockSelected();
             self._onTimelineChannelBlockLengthChanged();
             /*switch (this.m_placement) {
-                case BB.CONSTS.PLACEMENT_CHANNEL:
-                {
-                    self._onTimelineChannelBlockSelected();
-                    self._onTimelineChannelBlockLengthChanged();
-                    break;
-                }
+             case BB.CONSTS.PLACEMENT_CHANNEL:
+             {
+             self._onTimelineChannelBlockSelected();
+             self._onTimelineChannelBlockLengthChanged();
+             break;
+             }
 
-                case BB.CONSTS.PLACEMENT_SCENE:
-                {
-                    self._onTimelineChannelBlockSelected();
-                    self._onTimelineChannelBlockLengthChanged();
-                    break;
-                },
+             case BB.CONSTS.PLACEMENT_SCENE:
+             {
+             self._onTimelineChannelBlockSelected();
+             self._onTimelineChannelBlockLengthChanged();
+             break;
+             },
 
-                case BB.CONSTS.PLACEMENT_IS_SCENE:
-                {
-                    self._onTimelineChannelBlockSelected();
-                    self._onTimelineChannelBlockLengthChanged();
-                    break;
-                }
-            } */
+             case BB.CONSTS.PLACEMENT_IS_SCENE:
+             {
+             self._onTimelineChannelBlockSelected();
+             self._onTimelineChannelBlockLengthChanged();
+             break;
+             }
+             } */
         },
 
         /**
@@ -123,9 +123,9 @@ define(['jquery', 'backbone'], function ($) {
          Enable gradient background UI
          @method _enableGradient
          **/
-        _enableGradient: function(){
+        _enableGradient: function () {
             var self = this;
-            $(Elements.SHOW_BACKGROUND).prop('checked',true);
+            $(Elements.SHOW_BACKGROUND).prop('checked', true);
             $(Elements.BG_COLOR_GRADIENT_SELECTOR).show();
         },
 
@@ -133,9 +133,9 @@ define(['jquery', 'backbone'], function ($) {
          Disable gradient background UI
          @method _disableGradient
          **/
-        _disableGradient: function(){
+        _disableGradient: function () {
             var self = this;
-            $(Elements.SHOW_BACKGROUND).prop('checked',false);
+            $(Elements.SHOW_BACKGROUND).prop('checked', false);
             $(Elements.BG_COLOR_GRADIENT_SELECTOR).hide();
         },
 
@@ -143,12 +143,12 @@ define(['jquery', 'backbone'], function ($) {
          Listen to change in background enable / disable states
          @method _backgroundStateListenChange
          **/
-        _backgroundStateListenChange: function(){
+        _backgroundStateListenChange: function () {
             var self = this;
             var xSnippet = undefined;
             var xBgSnippet = undefined;
 
-            self.m_toggleBackgroundColorHandler = function(e){
+            self.m_toggleBackgroundColorHandler = function (e) {
                 if (!self.m_selected)
                     return;
 
@@ -169,7 +169,7 @@ define(['jquery', 'backbone'], function ($) {
                     self._setBlockPlayerData(domPlayerData);
                 }
             };
-            $(Elements.SHOW_BACKGROUND).on('click',self.m_toggleBackgroundColorHandler);
+            $(Elements.SHOW_BACKGROUND).on('click', self.m_toggleBackgroundColorHandler);
         },
 
         /**
@@ -378,6 +378,11 @@ define(['jquery', 'backbone'], function ($) {
                 {
                     break;
                 }
+                case BB.CONSTS.PLACEMENT_IS_SCENE:
+                {
+                    pepper.setScenePlayerData(self.m_block_id, xmlString);
+                    break;
+                }
             }
         },
 
@@ -395,6 +400,7 @@ define(['jquery', 'backbone'], function ($) {
                 case BB.CONSTS.PLACEMENT_CHANNEL:
                 {
                     recBlock = pepper.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
+                    return $.parseXML(recBlock['player_data']);
                     break;
                 }
 
@@ -406,11 +412,12 @@ define(['jquery', 'backbone'], function ($) {
 
                 case BB.CONSTS.PLACEMENT_IS_SCENE:
                 {
+                    var recPlayerData = BB.Pepper.getScenePlayerRecord(self.m_block_id);
+                    var xPlayerdata = recPlayerData['player_data_value'];
+                    return $.parseXML(xPlayerdata);
                     break;
                 }
-
             }
-            return $.parseXML(recBlock['player_data']);
         },
 
         /**
@@ -426,7 +433,7 @@ define(['jquery', 'backbone'], function ($) {
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_SELECTED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_LENGTH_CHANGING, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.GRADIENT_COLOR_CHANGED, self);
-            $(Elements.SHOW_BACKGROUND).off('click',self.m_toggleBackgroundColorHandler);
+            $(Elements.SHOW_BACKGROUND).off('click', self.m_toggleBackgroundColorHandler);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.ALPHA_CHANGED, self);
 
             if (self.m_sceneSelectedHandler)
@@ -459,11 +466,11 @@ define(['jquery', 'backbone'], function ($) {
          Listen for when this instance is selected within a scene canvas
          @method listenSceneSelection
          **/
-        listenSceneSelection: function(i_canvas){
+        listenSceneSelection: function (i_canvas) {
             var self = this;
             self.m_canvas = i_canvas;
-            self.m_sceneSelectedHandler = function(e) {
-                if (e.target!==self) //todo: add || !self.m_selected
+            self.m_sceneSelectedHandler = function (e) {
+                if (e.target !== self) //todo: add || !self.m_selected
                     return;
                 log('Scene block selected id: ' + self.m_block_id);
             };

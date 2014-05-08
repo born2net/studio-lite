@@ -244,8 +244,8 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 this.m_appContentFaderView.addView(this.m_helpView);
                 this.m_appContentFaderView.addView(this.m_logoutView);
                 this.m_appContentFaderView.selectView(this.m_campaignManagerView);
-                // this.m_appContentFaderView.selectView(this.m_scenesLoaderView); // debug mode
-                BB.comBroker.setService(BB.SERVICES['NAVIGATION_VIEW'], this.m_navigationView);
+                this.m_appContentFaderView.selectView(this.m_scenesLoaderView); // debug mode
+                // BB.comBroker.setService(BB.SERVICES['NAVIGATION_VIEW'], this.m_navigationView);
             },
 
             /**

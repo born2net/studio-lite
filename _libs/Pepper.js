@@ -32,6 +32,16 @@ function Pepper() {
  @static
  @final
  **/
+Pepper.SCENE_CREATED = 'SCENE_CREATED';
+
+/**
+ Custom event fired when a total timeline length (i.e.: channel content within specified timeline) has changed
+ @event Pepper.TIMELINE_LENGTH_CHANGED
+ @param {This} caller
+ @param {Event}
+ @static
+ @final
+ **/
 Pepper.TIMELINE_LENGTH_CHANGED = 'TIMELINE_LENGTH_CHANGED';
 
 /**
@@ -259,16 +269,40 @@ Pepper.prototype = {
     },
 
     /**
+     Create a new Scene
+     @method createScene
+     @return {Number} scene player_data id
+     **/
+    createScene: function(){
+        var self = this;
+        var table_player_data = self.m_msdb.table_player_data();
+        var recPlayerData = table_player_data.createRecord();
+        table_player_data.addRecord(recPlayerData);
+        pepper.fire(Pepper['SCENE_CREATED'], self, null, recPlayerData['player_data_id']);
+        return recPlayerData['player_data_id'];
+    },
+
+    /**
+     set scene playerdata
+     @method setScenePlayerData
+     @return {Number} scene player_data id
+     **/
+    setScenePlayerData: function(i_player_data_id, i_player_data){
+        var self = this;
+        self.m_msdb.table_player_data().openForEdit(i_player_data_id);
+        var recPlayerData = self.m_msdb.table_player_data().getRec(i_player_data_id);
+        recPlayerData['player_data_value'] = i_player_data;
+    },
+
+    /**
      Get Scene playerdata
      @method getScenePlayerdata
      @param {Number} i_sceneID
      @return {Object} XML playerdata
      **/
-    getScenePlayerdata: function (i_player_data_id) {
+    getScenePlayerRecord: function (i_player_data_id) {
         var self = this;
-        var recPlayerData = self.m_msdb.table_player_data().getRec(i_player_data_id);
-        var xPlayerdata = recPlayerData['player_data_value'];
-        return $.parseXML(xPlayerdata);
+        return self.m_msdb.table_player_data().getRec(i_player_data_id);
     },
 
     /**

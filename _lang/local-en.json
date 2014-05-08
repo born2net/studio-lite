@@ -191,7 +191,8 @@
     "removeItemToolTip": "remove item",
     "pushItemToTopButtonToolTip": "push item to top",
     "pushItemToBottomButtonToolTip": "push item to bottom",
-    "getNextItemButtonToolTip": "get next item"
+    "getNextItemButtonToolTip": "get next item",
+    "loadSceneModule": "Loading the scene module..."
 }
 
 

@@ -353,7 +353,10 @@
     </ul>
 </div>
 <div id="scenesPanel" class="yScroll" style="display: none">
-    <div id="scenePanelWrap1" >
+    <div id="loadSceneModule">
+        <span data-localize="loadSceneModule">Loading scene module</span>
+    </div>
+    <div id="scenePanelWrap" class="sceneElements" >
         <div id="sceneToolbar">
             <div class="input-group">
                 <div class="input-group-btn">
@@ -391,7 +394,7 @@
             </div>
         </div>
     </div>
-    <div id="sceneCanvasContainer" align="center">
+    <div id="sceneCanvasContainer" class="sceneElements" align="center">
         <canvas id="sceneCanvas" width="650px" height="450px">
         </canvas>
     </div>

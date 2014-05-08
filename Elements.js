@@ -64,6 +64,7 @@ Elements.SCENE_BLOCK_PROPS = '#sceneBlockProps';
 Elements.SCENE_SELECT_LIST = '#sceneSelectList';
 Elements.SCENE_SELECTED_NAME = '#sceneSelectedName';
 Elements.SCENE_CANVAS_CONTAINER = '#sceneCanvasContainer';
+Elements.LOAD_SCENE_MODULE = '#loadSceneModule';
 Elements.BLOCK_LENGTH_HOURS = '#blockLengthHours';
 Elements.BLOCK_LENGTH_MINUTES = '#blockLengthMinutes';
 Elements.BLOCK_LENGTH_SECONDS = '#blockLengthSeconds';
@@ -92,6 +93,7 @@ Elements.STATIONS_PANEL = '#stationsPanel';
 Elements.STATION_LIST_VIEW = '#stationListView';
 Elements.STATION_PROPERTIES = '#stationProperties';
 Elements.VIEWER_EDIT_PROPERTIES = '#viewerEditProperties';
+Elements.SCENE_PANEL_WRAP = '#scenePanelWrap';
 Elements.SCENES_PANEL = '#scenesPanel';
 Elements.SCENE_CANVAS = '#sceneCanvas';
 Elements.SCENE_TOOLBAR = '#sceneToolbar';
@@ -209,6 +211,7 @@ Elements.DIMENSION_PROPS_TEMPLATE = '#dimensionPropsTemplate';
 Elements.LANGUAGE_SELECTOR_TEMPLATE = '#languageSelector';
 
 // classes
+Elements.CLASS_SCENE_ELEMENTS = '.sceneElements';
 Elements.CLASS_SCREEN_DIVISION = '.screenDivisionClass';
 Elements.CLASS_CHANNEL_LIST_ITEMS = '.channelListItems';
 Elements.CLASS_ADD_BLOCK_LIST_ITEMS = '.addBlockListItems';

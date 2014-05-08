@@ -1,6 +1,6 @@
 /**
- * Block QR block resided inside a Scenes or timeline
- * @class BlockQR
+ * BlockScene block resided inside a Scenes or timeline
+ * @class BlockScene
  * @extends Block
  * @constructor
  * @param {string} i_placement location where objects resides which can be scene or timeline
@@ -9,7 +9,7 @@
  */
 define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
-    var BlockQR = Block.extend({
+    var BlockScene = Block.extend({
 
         /**
          Constructor
@@ -17,10 +17,10 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         constructor: function (options) {
             var self = this;
-            self.m_blockType = 3430;
+            self.m_blockType = 3510;
             _.extend(options, {blockType: self.m_blockType})
             Block.prototype.constructor.call(this, options);
-            self._initSubPanel(Elements.BLOCK_QR_COMMON_PROPERTIES);
+            self._initSubPanel(Elements.BLOCK_SCENE_COMMON_PROPERTIES);
             self._listenInputChange();
         },
 
@@ -51,9 +51,9 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _populate: function () {
             var self = this;
-            var domPlayerData = self._getBlockPlayerData();
-            var xSnippet = $(domPlayerData).find('Text');
-            $(Elements.QR_TEXT).val(xSnippet.text());
+            //var domPlayerData = self._getBlockPlayerData();
+            //var xSnippet = $(domPlayerData).find('Text');
+            //$(Elements.QR_TEXT).val(xSnippet.text());
         },
 
         /**
@@ -64,7 +64,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _loadBlockSpecificProps: function () {
             var self = this;
             self._populate();
-            this._viewSubPanel(Elements.BLOCK_QR_COMMON_PROPERTIES);
+            this._viewSubPanel(Elements.BLOCK_SCENE_COMMON_PROPERTIES);
         },
 
         /**
@@ -79,5 +79,5 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         }
     });
 
-    return BlockQR;
+    return BlockScene;
 });

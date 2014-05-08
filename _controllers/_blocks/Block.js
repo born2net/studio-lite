@@ -40,8 +40,10 @@ define(['jquery', 'backbone'], function ($) {
             self._gradientListenChange();
             self._backgroundStateListenChange();
 
-            // block specific: channel / scene
-            switch (this.m_placement) {
+
+            self._onTimelineChannelBlockSelected();
+            self._onTimelineChannelBlockLengthChanged();
+            /*switch (this.m_placement) {
                 case BB.CONSTS.PLACEMENT_CHANNEL:
                 {
                     self._onTimelineChannelBlockSelected();
@@ -54,8 +56,15 @@ define(['jquery', 'backbone'], function ($) {
                     self._onTimelineChannelBlockSelected();
                     self._onTimelineChannelBlockLengthChanged();
                     break;
+                },
+
+                case BB.CONSTS.PLACEMENT_IS_SCENE:
+                {
+                    self._onTimelineChannelBlockSelected();
+                    self._onTimelineChannelBlockLengthChanged();
+                    break;
                 }
-            }
+            } */
         },
 
         /**
@@ -394,6 +403,12 @@ define(['jquery', 'backbone'], function ($) {
                     // recBlock = pepper.get...(self.m_block_id);
                     break;
                 }
+
+                case BB.CONSTS.PLACEMENT_IS_SCENE:
+                {
+                    break;
+                }
+
             }
             return $.parseXML(recBlock['player_data']);
         },

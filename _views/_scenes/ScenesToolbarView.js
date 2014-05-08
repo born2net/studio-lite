@@ -64,6 +64,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _loadScene: function (i_name, i_id) {
             self.m_selectedSceneID = i_id;
             $(Elements.SCENE_SELECTED_NAME).val(i_name);
+            BB.comBroker.fire(BB.EVENTS.LOAD_SCENE, this, null, i_id);
         },
 
         /**

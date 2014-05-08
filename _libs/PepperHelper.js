@@ -236,6 +236,19 @@ PepperHelper.prototype = {
                 },
                 icon: self.getIcon('label')
             },
+            3510: {
+                name: 'Scene',
+                acronym: 'Scene',
+                description: 'A Scene editor',
+                getDefaultPlayerData: function () {
+                    return  '<Player player="3510" label="My scene" interactive="0">' +
+                                '<Data>' +
+                                    self.getCommonDefaultXML() +
+                                '</Data>' +
+                            '</Player>'
+                },
+                icon: self.getIcon('label')
+            },
             3345: {
                 name: 'Really Simple Syndication',
                 acronym: 'RSS',

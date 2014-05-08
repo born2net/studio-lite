@@ -259,6 +259,19 @@ Pepper.prototype = {
     },
 
     /**
+     Get Scene playerdata
+     @method getScenePlayerdata
+     @param {Number} i_sceneID
+     @return {Object} XML playerdata
+     **/
+    getScenePlayerdata: function (i_player_data_id) {
+        var self = this;
+        var recPlayerData = self.m_msdb.table_player_data().getRec(i_player_data_id);
+        var xPlayerdata = recPlayerData['player_data_value'];
+        return $.parseXML(xPlayerdata);
+    },
+
+    /**
      Returns this model's attributes as...
      @method i_values  var o = {
                     campaign_timeline_board_template_id: ?

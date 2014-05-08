@@ -243,13 +243,13 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 this.m_appContentFaderView.addView(this.m_proStudioView);
                 this.m_appContentFaderView.addView(this.m_helpView);
                 this.m_appContentFaderView.addView(this.m_logoutView);
-                // this.m_appContentFaderView.selectView(this.m_campaignManagerView);
-                this.m_appContentFaderView.selectView(this.m_scenesLoaderView); // debug mode
+                this.m_appContentFaderView.selectView(this.m_campaignManagerView);
+                // this.m_appContentFaderView.selectView(this.m_scenesLoaderView); // debug mode
                 BB.comBroker.setService(BB.SERVICES['NAVIGATION_VIEW'], this.m_navigationView);
             },
 
             /**
-             Use the previously created CampaignSliderStackView to add new views to it for campaign wizard slider animation which include
+             Use the previously created CampaignSliderStackView to add new views for campaign wizard slider animation which include
              CampaignSelector, Screen Orientation, Screen Resolution and Campaign
              @method _initCampaignWizardPage
              **/

@@ -4,7 +4,7 @@
  @constructor
  @return {object} instantiated SceneEditorView
  **/
-define(['jquery', 'backbone', 'fabric', 'BlockRSS', 'ScenesToolbarView'], function ($, Backbone, fabric, BlockRSS, ScenesToolbarView) {
+define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbarView'], function ($, Backbone, fabric, BlockScene, BlockRSS, ScenesToolbarView) {
 
     BB.SERVICES.SCREEN_LAYOUT_EDITOR_VIEW = 'SceneEditorView';
 
@@ -16,23 +16,76 @@ define(['jquery', 'backbone', 'fabric', 'BlockRSS', 'ScenesToolbarView'], functi
          **/
         initialize: function () {
             var self = this;
-            BB.comBroker.setService(BB.SERVICES['SCREEN_LAYOUT_EDITOR_VIEW'], self);
+            BB.comBroker.setService(BB.SERVICES['SCENE_EDIT_VIEW'], self);
             self.m_canvas = undefined;
-            // self.m_canvasID = undefined;
             self.m_properties = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
-            self.m_blockFactory = BB.comBroker.getService(BB.SERVICES['BLOCK_FACTORY']);
-
             self.m_scenesToolbarView = new ScenesToolbarView({el: Elements.SCENE_TOOLBAR});
+            self._initializeFactory();
+        },
+
+        _initializeFactory: function () {
+            var self = this;
+            self.m_blockFactory = BB.comBroker.getService(BB.SERVICES['BLOCK_FACTORY']);
+            if (self.m_blockFactory) {
+                self._initializeCanvas();
+            } else {
+                BB.comBroker.listenOnce(BB.EVENTS.BLOCKS_LOADED, function (e) {
+                    self._initializeCanvas();
+                });
+                require(['BlockFactory'], function (BlockFactory) {
+                    self.m_blockFactory = new BlockFactory();
+                    self.m_blockFactory.loadBlockModules();
+                });
+            }
+
+        },
+
+        _initializeCanvas: function () {
+            var self = this;
+            self.m_canvas = new fabric.Canvas(BB.lib.unhash(Elements.SCENE_CANVAS));
+
+            self.m_canvas.on('mouse:down', function (options) {
+                log('a' + options.e.clientX, options.e.clientY);
+                // self.m_canvas._loadBlockSpecificProps();
+                BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, -1);
+            });
 
             // BB.comBroker.listenOnce(BB.EVENTS.BLOCKS_LOADED, $.proxy(self._onBlocksLoaded, self));
-            // self.m_blockFactory.loadBlockModules();
+            /* var sceneBlock = new BlockScene({
+                i_placement: BB.CONSTS.PLACEMENT_IS_SCENE,
+                i_block_id: -1,
+                blockType: 3510
+            }); */
 
-            self._render();
+            self._initializeScene();
+
         },
+
+        _initializeScene: function () {
+            var self = this;
+            var player_data = BB.PepperHelper.getBlockBoilerplate('3510').getDefaultPlayerData()
+            self.m_sceneBlock = self.m_blockFactory.createBlock(-1, player_data, BB.CONSTS.PLACEMENT_IS_SCENE);
+            _.extend(self.m_canvas, self.m_sceneBlock);
+        },
+
 
         _render: function () {
             var self = this;
-            self.m_canvas = new fabric.Canvas(BB.lib.unhash(Elements.SCENE_CANVAS));
+
+            self.m_canvas.on('mouse:up', function (e) {
+                var target = e.target;
+                console.log(e.target);
+            });
+
+        },
+
+
+        _playerdataSerialize: function (i_playerdata) {
+            var players = $(i_playerdata).find('Player').find('Player');
+        },
+
+        _playerdataDeserialize: function () {
+
         },
 
 
@@ -153,7 +206,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockRSS', 'ScenesToolbarView'], functi
 
             var blockRSS;
             blockRSS = new BlockRSS({
-                i_placement: 'PLACEMENT_SCENE',
+                i_placement: BB.CONSTS['PLACEMENT_SCENE'],
                 i_block_id: 10000
             });
 
@@ -195,7 +248,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockRSS', 'ScenesToolbarView'], functi
             });
 
             blockRSS = new BlockRSS({
-                i_placement: 'PLACEMENT_SCENE',
+                i_placement: BB.CONSTS['PLACEMENT_SCENE'],
                 i_block_id: 20000
             });
 
@@ -230,17 +283,63 @@ define(['jquery', 'backbone', 'fabric', 'BlockRSS', 'ScenesToolbarView'], functi
         /**
          Load the editor into DOM using the StackView using animation slider
          @method  selectView
-         **/
-        selectView: function () {
+
+         selectView: function () {
             var self = this;
             self.options.stackView.slideToPage(self, 'right');
             require(['fabric'], function () {
                 self._canvasFactory(_.random(200, 500), _.random(200, 500))
             })
         }
+         **/
     });
 
     return ScenesEditView;
 });
 
 
+/*
+ rect = new fabric.Rect({
+ left: 60,
+ top: 10,
+ fill: '#ececec',
+ hasRotatingPoint: false,
+ width: 20,
+ borderColor: '#5d5d5d',
+ stroke: 'black',
+ strokeWidth: 1,
+ lineWidth: 1,
+ height: 20,
+ cornerColor: 'black',
+ cornerSize: 5,
+ lockRotation: true,
+ transparentCorners: false
+ });
+
+ var blockRSS;
+ blockRSS = new BlockRSS({
+ i_placement: BB.CONSTS['PLACEMENT_SCENE'],
+ i_block_id: 0
+ });
+
+ rect.on('selected', function () {
+ console.log('object selected a rectangle');
+ });
+
+ self.m_canvas.on('object:selected', function (e) {
+ console.log('object on canvas selected a rectangle');
+ self._blockSelected(e.target.m_block_id);
+ });
+
+ _.extend(blockRSS, rect);
+ self.m_canvas.add(blockRSS);
+ self.m_canvas.renderAll();
+ */
+
+/*_listenSceneSelected: function(){
+ var self = this;
+ BB.comBroker.listen(BB.EVENTS.LOAD_SCENE, function(e){
+ var playerdata = BB.Pepper.getScenePlayerdata(e.edata);
+ self._playerdataSerialize(playerdata);
+ });
+ },*/

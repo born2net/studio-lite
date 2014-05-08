@@ -24,6 +24,7 @@ Elements.BLOCK_COMMON_PROPERTIES = '#blockCommonProperties';
 Elements.BLOCK_IMAGE_COMMON_PROPERTIES = '#blockImageCommonProperties';
 Elements.BLOCK_VIDEO_COMMON_PROPERTIES = '#blockVideoCommonProperties';
 Elements.BLOCK_QR_COMMON_PROPERTIES = '#blockQRCommonProperties';
+Elements.BLOCK_SCENE_COMMON_PROPERTIES = '#blockSceneCommonProperties';
 Elements.BLOCK_EXT_IMAGE_COMMON_PROPERTIES = '#blockExtImageCommonProperties';
 Elements.BLOCK_EXT_VIDEO_COMMON_PROPERTIES = '#blockExtVideoCommonProperties';
 Elements.QR_TEXT = '#qrText';

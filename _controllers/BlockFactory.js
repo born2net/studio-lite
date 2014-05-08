@@ -33,6 +33,16 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
      */
     BB.CONSTS.PLACEMENT_CHANNEL = 'PLACEMENT_CHANNEL';
 
+    /**
+     block.PLACEMENT_IS_SCENE indicates the insertion is itself a Scene
+     @property Block.PLACEMENT_IS_SCENE
+     @static
+     @final
+     @type String
+     */
+    BB.CONSTS.PLACEMENT_IS_SCENE = 'PLACEMENT_IS_SCENE';
+
+
     BB.SERVICES.BLOCK_FACTORY = 'BlockFactory';
 
     var BlockFactory = BB.Controller.extend({
@@ -55,11 +65,12 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
          **/
         loadBlockModules: function () {
             var self = this;
-            require(['BlockProperties', 'Block', 'BlockRSS', 'BlockQR', 'BlockVideo', 'BlockImage', 'BlockExtImage', 'BlockExtVideo', 'BlockMRSS', 'BlockHTML', 'BlockLabel', 'BlockClock'  ], function (BlockProperties, Block, BlockRSS, BlockQR, BlockVideo, BlockImage, BlockExtImage, BlockExtVideo, BlockMRSS, BlockHTML, BlockLabel, BlockClock) {
+            require(['BlockProperties', 'Block', 'BlockScene', 'BlockRSS', 'BlockQR', 'BlockVideo', 'BlockImage', 'BlockExtImage', 'BlockExtVideo', 'BlockMRSS', 'BlockHTML', 'BlockLabel', 'BlockClock'  ], function (BlockProperties, Block, BlockScene, BlockRSS, BlockQR, BlockVideo, BlockImage, BlockExtImage, BlockExtVideo, BlockMRSS, BlockHTML, BlockLabel, BlockClock) {
                 if (!self.m_blockProperties)
                     self.m_blockProperties = new BlockProperties({el: Elements.BLOCK_PROPERTIES});
 
                 self.m_block = Block;
+                self.m_blockScene = BlockScene;
                 self.m_blockRSS = BlockRSS;
                 self.m_blockQR = BlockQR;
                 self.m_blockVideo = BlockVideo;
@@ -79,22 +90,30 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
          This is factory method produces block instances which will reside on the timeline and referenced within this
          channel instance. The factory will parse the blockCode and create the appropriate block type.
          @method createBlock
-         @param {Number} i_campaign_timeline_chanel_player_id
+         @param {Number} block_id
          @param {XML} i_playerData
          @return {Object} reference to the block instance
          **/
-        createBlock: function (i_campaign_timeline_chanel_player_id, i_player_data, i_placement) {
+        createBlock: function (block_id, i_player_data, i_placement) {
             var self = this;
             var block = undefined;
             var playerData = this.x2js.xml_str2json(i_player_data);
             var blockCode = playerData['Player']['_player'];
 
             switch (parseInt(blockCode)) {
+                case 3510:
+                {
+                    block = new self.m_blockScene({
+                        i_placement: i_placement,
+                        i_block_id: block_id
+                    });
+                    break;
+                }
                 case 3345:
                 {
                     block = new self.m_blockRSS({
                         i_placement: i_placement,
-                        i_block_id: i_campaign_timeline_chanel_player_id
+                        i_block_id: block_id
                     });
                     break;
                 }
@@ -102,7 +121,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
                 {
                     block = new self.m_blockQR({
                         i_placement: i_placement,
-                        i_block_id: i_campaign_timeline_chanel_player_id
+                        i_block_id: block_id
                     });
                     break;
                 }
@@ -110,7 +129,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
                 {
                     block = new self.m_blockVideo({
                         i_placement: i_placement,
-                        i_block_id: i_campaign_timeline_chanel_player_id
+                        i_block_id: block_id
                     });
                     break;
                 }
@@ -118,7 +137,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
                 {
                     block = new self.m_blockImage({
                         i_placement: i_placement,
-                        i_block_id: i_campaign_timeline_chanel_player_id
+                        i_block_id: block_id
                     });
                     break;
                 }
@@ -126,7 +145,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
                 {
                     block = new self.m_blockExtImage({
                         i_placement: i_placement,
-                        i_block_id: i_campaign_timeline_chanel_player_id
+                        i_block_id: block_id
                     });
                     break;
                 }
@@ -134,7 +153,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
                 {
                     block = new self.m_blockExtVideo({
                         i_placement: i_placement,
-                        i_block_id: i_campaign_timeline_chanel_player_id
+                        i_block_id: block_id
                     });
                     break;
                 }
@@ -142,7 +161,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
                 {
                     block = new self.m_blockClock({
                         i_placement: i_placement,
-                        i_block_id: i_campaign_timeline_chanel_player_id
+                        i_block_id: block_id
                     });
                     break;
                 }
@@ -150,7 +169,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
                 {
                     block = new self.m_blockHTML({
                         i_placement: i_placement,
-                        i_block_id: i_campaign_timeline_chanel_player_id
+                        i_block_id: block_id
                     });
                     break;
                 }
@@ -158,7 +177,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
                 {
                     block = new self.m_blockLabel({
                         i_placement: i_placement,
-                        i_block_id: i_campaign_timeline_chanel_player_id
+                        i_block_id: block_id
                     });
                     break;
                 }
@@ -166,7 +185,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
                 {
                     block = new self.m_blockMRSS({
                         i_placement: i_placement,
-                        i_block_id: i_campaign_timeline_chanel_player_id
+                        i_block_id: block_id
                     });
                     break;
                 }

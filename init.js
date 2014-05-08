@@ -39,6 +39,7 @@ require.config({
         'Timeline': '_controllers/Timeline',
         'Channel': '_controllers/Channel',
         'Block': '_controllers/_blocks/Block',
+        'BlockScene': '_controllers/_blocks/BlockScene',
         'BlockRSS': '_controllers/_blocks/BlockRSS',
         'BlockQR': '_controllers/_blocks/BlockQR',
         'BlockVideo': '_controllers/_blocks/BlockVideo',

@@ -149,11 +149,28 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _populate: function () {
             var self = this;
 
+            switch (self.m_placement) {
 
-            //todo: if block resides in scene, we need to get its data from player_data using negative position value
-            var domPlayerData = self._getBlockPlayerData();
-            var xSnippet = $(domPlayerData).find('Rss');
-            var xSnippetTitle = $(xSnippet).find('Font').eq(0);
+                case BB.CONSTS.PLACEMENT_CHANNEL:
+                {
+                    var domPlayerData = self._getBlockPlayerData();
+                    var xSnippet = $(domPlayerData).find('Rss');
+                    var xSnippetTitle = $(xSnippet).find('Font').eq(0);
+                    break;
+                }
+
+                case BB.CONSTS.PLACEMENT_SCENE:
+                {
+                    return;
+                    //todo: if block resides in scene, we need to get its data from player_data using negative position value
+                    var recPlayerData = BB.Pepper.getScenePlayerRecord(self.m_block_id);
+                    var xPlayerdata = recPlayerData['player_data_value'];
+                    return $.parseXML(xPlayerdata);
+                    break;
+                }
+            }
+
+
             var url = xSnippet.attr('url');
             self.m_rssLinkSelector.setRssLink(url);
 

@@ -141,7 +141,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             /*
              blockRSS.listenSceneSelection(self.m_canvas);
              self.m_canvas.add(blockRSS);
-             //todo: delete rect after we extend into blockRSS
 
              function onChange(options) {
              options.target.setCoords();

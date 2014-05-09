@@ -118,9 +118,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 transparentCorners: false
             });
 
+
             var player_data = BB.PepperHelper.getBlockBoilerplate('3345').getDefaultPlayerData();
-                                                           //todo: fix id so it matches player_data position and add minus -
-            var blockRSS = self.m_blockFactory.createBlock(_.random(10000,20000), player_data, BB.CONSTS.PLACEMENT_SCENE);
+            var blockRSS = self.m_blockFactory.createBlock(null, player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_sceneID);
             _.extend(blockRSS, rect);
 
 

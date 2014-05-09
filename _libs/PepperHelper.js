@@ -248,6 +248,8 @@ PepperHelper.prototype = {
                                         '<Layout>' +
                                             '<BasicLayout/>' +
                                         '</Layout>' +
+                                        '<Players>' +
+                                        '</Players>' +
                                     '</Scene>' +
                                 '</Data>' +
                             '</Player>'

@@ -260,18 +260,18 @@ Pepper.prototype = {
      @param {minutes} minutes
      @param {seconds} seconds
      **/
-    setSceneDefaultDuration: function(i_player_data_id, i_hours, i_minutes, i_seconds){
+    setSceneDefaultDuration: function (i_scene_player_data_id, i_hours, i_minutes, i_seconds) {
         var self = this;
         var totalSecInMin = 60
         var totalSecInHour = totalSecInMin * 60
         var totalSeconds = parseInt(i_seconds) + (parseInt(i_minutes) * totalSecInMin) + (parseInt(i_hours) * totalSecInHour);
-        var recPlayerData = pepper.getScenePlayerRecord(i_player_data_id);
+        var recPlayerData = pepper.getScenePlayerRecord(i_scene_player_data_id);
         var player_data = recPlayerData['player_data_value'];
         var domPlayerData = $.parseXML(player_data)
         var xSnippet = $(domPlayerData).find('Scene');
-        xSnippet.attr('defaultDuration',totalSeconds);
+        xSnippet.attr('defaultDuration', totalSeconds);
         var player_data = (new XMLSerializer()).serializeToString(domPlayerData);
-        pepper.setScenePlayerData(i_player_data_id, player_data);
+        pepper.setScenePlayerData(i_scene_player_data_id, player_data);
     },
 
     /**
@@ -280,7 +280,7 @@ Pepper.prototype = {
      @param {Number} i_playerData
      @return {Object} scene names
      **/
-    getSceneNames: function(){
+    getSceneNames: function () {
         var self = this;
         var sceneNames = {};
         $(self.m_msdb.table_player_data().getAllPrimaryKeys()).each(function (k, player_data_id) {
@@ -296,7 +296,7 @@ Pepper.prototype = {
      @method createScene
      @return {Number} scene player_data id
      **/
-    createScene: function(){
+    createScene: function () {
         var self = this;
         var table_player_data = self.m_msdb.table_player_data();
         var recPlayerData = table_player_data.createRecord();
@@ -306,15 +306,67 @@ Pepper.prototype = {
     },
 
     /**
+     append scene player block to pepper player_data table
+     @method appendScenePlayerBlock
+     @param {Number} i_scene_player_data_id
+     @param {XML} i_player_data
+     **/
+    appendScenePlayerBlock: function (i_scene_player_data_id, i_player_data) {
+        var self = this;
+        self.m_msdb.table_player_data().openForEdit(i_scene_player_data_id);
+        var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_player_data_id);
+        var scene_player_data = recPlayerData['player_data_value'];
+        var sceneDomPlayerData = $.parseXML(scene_player_data)
+        $(sceneDomPlayerData).find('Players').append(i_player_data);
+        recPlayerData['player_data_value'] = (new XMLSerializer()).serializeToString(sceneDomPlayerData)
+    },
+
+    /**
      set scene playerdata
      @method setScenePlayerData
      @return {Number} scene player_data id
      **/
-    setScenePlayerData: function(i_player_data_id, i_player_data){
+    setScenePlayerData: function (i_scene_player_data_id, i_player_data) {
         var self = this;
-        self.m_msdb.table_player_data().openForEdit(i_player_data_id);
-        var recPlayerData = self.m_msdb.table_player_data().getRec(i_player_data_id);
+        self.m_msdb.table_player_data().openForEdit(i_scene_player_data_id);
+        var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_player_data_id);
         recPlayerData['player_data_value'] = i_player_data;
+    },
+
+    /**
+     get a scene block item for specific i_player_data_id
+     @method getSceneBlockItem
+     @param {Number} i_scene_player_data_id
+     @param {Number} i_player_data_id
+     @return {Number} i_player_data_id
+     **/
+    getSceneBlockItem: function (i_scene_player_data_id, i_player_data_id) {
+        var self = this;
+        self.m_msdb.table_player_data().openForEdit(i_scene_player_data_id);
+        var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_player_data_id);
+        var player_data = recPlayerData['player_data_value'];
+        var domPlayerData = $.parseXML(player_data)
+        var foundSnippet =  $(domPlayerData).find('Player').find('[id="'+i_player_data_id + '"]');
+        return foundSnippet[0];
+    },
+
+    /**
+     set a block id inside a scene with new player_data
+     @method setSceneBlockItem
+     @param {Number} i_scene_player_data_id
+     @param {Number} i_player_data_id
+     @param {XML} player_data
+     **/
+    setSceneBlockItem: function (i_scene_player_data_id, i_player_data_id, i_player_data) {
+        var self = this;
+        self.m_msdb.table_player_data().openForEdit(i_scene_player_data_id);
+        var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_player_data_id);
+        var player_data = recPlayerData['player_data_value'];
+        var domPlayerData = $.parseXML(player_data)
+        $(domPlayerData).find('Player').find('[id="'+i_player_data_id + '"]').remove();
+        var xSnippet = (new XMLSerializer()).serializeToString(domPlayerData);
+        self.setScenePlayerData(i_scene_player_data_id, xSnippet);
+        self.appendScenePlayerBlock(i_scene_player_data_id, i_player_data);
     },
 
     /**
@@ -323,9 +375,9 @@ Pepper.prototype = {
      @param {Number} i_sceneID
      @return {Object} XML playerdata
      **/
-    getScenePlayerRecord: function (i_player_data_id) {
+    getScenePlayerRecord: function (i_scene_player_data_id) {
         var self = this;
-        return self.m_msdb.table_player_data().getRec(i_player_data_id);
+        return self.m_msdb.table_player_data().getRec(i_scene_player_data_id);
     },
 
     /**
@@ -568,7 +620,7 @@ Pepper.prototype = {
      @param {number} board_template_viewer_id
      @param {number} i_playerData
      **/
-    updateTemplateViewerOrder: function(i_board_template_viewer_id, i_zorder){
+    updateTemplateViewerOrder: function (i_board_template_viewer_id, i_zorder) {
         var self = this;
         self.m_msdb.table_board_template_viewers().openForEdit(i_board_template_viewer_id);
         var recEditBoardTemplateViewer = self.m_msdb.table_board_template_viewers().getRec(i_board_template_viewer_id);

@@ -346,7 +346,7 @@ Pepper.prototype = {
         var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_player_data_id);
         var player_data = recPlayerData['player_data_value'];
         var domPlayerData = $.parseXML(player_data)
-        var foundSnippet =  $(domPlayerData).find('Player').find('[id="'+i_player_data_id + '"]');
+        var foundSnippet =  $(domPlayerData).find('[id="'+i_player_data_id + '"]');
         return foundSnippet[0];
     },
 
@@ -363,7 +363,7 @@ Pepper.prototype = {
         var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_player_data_id);
         var player_data = recPlayerData['player_data_value'];
         var domPlayerData = $.parseXML(player_data)
-        $(domPlayerData).find('Player').find('[id="'+i_player_data_id + '"]').remove();
+        $(domPlayerData).find('[id="'+i_player_data_id + '"]').remove();
         var xSnippet = (new XMLSerializer()).serializeToString(domPlayerData);
         self.setScenePlayerData(i_scene_player_data_id, xSnippet);
         self.appendScenePlayerBlock(i_scene_player_data_id, i_player_data);

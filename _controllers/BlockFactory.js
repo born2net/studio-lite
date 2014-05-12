@@ -101,9 +101,9 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
             var blockCode = playerData['Player']['_player'];
 
 
-            // add unique id='xxxx' since we are adding a block to a scene's player_data
             if (i_placement == BB.CONSTS.PLACEMENT_SCENE) {
-                block_id = ($.base64.encode(_.uniqueId('blockid'))).replace('=','');
+                // var sceneEditView = BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']);
+                // block_id = ($.base64.encode(_.uniqueId('blockid'))).replace('=','');
                 var domPlayerData = $.parseXML(i_player_data);
                 $(domPlayerData).find('Player').eq(0).attr('id', block_id);
                 i_player_data = (new XMLSerializer()).serializeToString(domPlayerData);

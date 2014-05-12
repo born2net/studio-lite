@@ -271,7 +271,7 @@ Pepper.prototype = {
         var xSnippet = $(domPlayerData).find('Scene');
         xSnippet.attr('defaultDuration', totalSeconds);
         var player_data = (new XMLSerializer()).serializeToString(domPlayerData);
-        pepper.setScenePlayerData(i_scene_player_data_id, player_data);
+        pepper.setSceneBlockPlayerData(i_scene_player_data_id, player_data);
     },
 
     /**
@@ -326,11 +326,66 @@ Pepper.prototype = {
      @method setScenePlayerData
      @return {Number} scene player_data id
      **/
-    setScenePlayerData: function (i_scene_player_data_id, i_player_data) {
+    setScenePlayerData: function (i_scene_id, i_player_data) {
         var self = this;
-        self.m_msdb.table_player_data().openForEdit(i_scene_player_data_id);
-        var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_player_data_id);
+        self.m_msdb.table_player_data().openForEdit(i_scene_id);
+        var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_id);
         recPlayerData['player_data_value'] = i_player_data;
+    },
+
+    /**
+     Get a unique scene > player id
+     @method getUniqueSceneBlockID
+     @return {Number} Unique scene player id
+     **/
+    getUniqueSceneBlockID: function(){
+        return ($.base64.encode(_.uniqueId('blockid'))).replace('=', '');
+    },
+
+    /**
+     Inject unique player ids for all scene players
+     @method createScenePlayersIDs
+     **/
+    createScenePlayersIDs: function(){
+        var self = this;
+        var scenes = pepper.getScenes();
+        _.each(scenes, function (domPlayerData, scene_id) {
+            var players = $(domPlayerData).find('Players').find('Player').each(function(i, player){
+                var blockID = pepper.getUniqueSceneBlockID();
+                $(player).attr('id', blockID);
+            });
+            pepper.setScenePlayerData(scene_id, (new XMLSerializer()).serializeToString(domPlayerData));
+        });
+    },
+
+    /**
+     Remove all player ids for all scene players
+     @method removeScenePlayersIDs
+     **/
+    removeScenePlayersIDs: function(){
+        var self = this;
+        self.m_tempScenePlayerIDs = {};
+        var scenes = pepper.getScenes();
+        _.each(scenes, function (domPlayerData, scene_id) {
+            self.m_tempScenePlayerIDs[scene_id] = domPlayerData;
+            var players = $(scene).find('Players').find('Player').each(function(i, player){
+                var blockID = pepper.getUniqueSceneBlockID();
+                $(player).removeAttr('id');
+            });
+            pepper.setSceneBlockPlayerData(scene_id, (new XMLSerializer()).serializeToString(domPlayerData));
+        });
+    },
+
+    /**
+     When remove scene player ids we actually store them aside so we can restore them back after a save as the
+     remote server expects a scene's player_data to have no player ids on its scene player_data
+     @method restoreScenesWithPlayersIDs
+     **/
+    restoreScenesWithPlayersIDs: function(){
+        var self = this;
+        _.each(self.m_tempScenePlayerIDs, function (domPlayerData, scene_id) {
+            pepper.setSceneBlockPlayerData(scene_id, (new XMLSerializer()).serializeToString(domPlayerData));
+        });
     },
 
     /**
@@ -365,19 +420,58 @@ Pepper.prototype = {
         var domPlayerData = $.parseXML(player_data)
         $(domPlayerData).find('[id="'+i_player_data_id + '"]').remove();
         var xSnippet = (new XMLSerializer()).serializeToString(domPlayerData);
-        self.setScenePlayerData(i_scene_player_data_id, xSnippet);
+        self.setSceneBlockPlayerData(i_scene_player_data_id, xSnippet);
         self.appendScenePlayerBlock(i_scene_player_data_id, i_player_data);
     },
 
     /**
-     Get Scene playerdata
-     @method getScenePlayerdata
+     Get all Scenes and convert them to dom objects returning a hash of object literals
+     @method getScenes
+     @return {Object} all scenes as objects
+     **/
+    getScenes: function () {
+        var self = this;
+        var scenes = {};
+        $(self.m_msdb.table_player_data().getAllPrimaryKeys()).each(function (k, player_data_id) {
+            var recPlayerData = self.m_msdb.table_player_data().getRec(player_data_id);
+            var domPlayerData = $.parseXML(recPlayerData['player_data_value'])
+            scenes[recPlayerData['player_data_id']] = domPlayerData;
+        });
+        return scenes;
+    },
+
+    /**
+     Get Scene player record
+     @method getScenePlayerRecord
      @param {Number} i_sceneID
      @return {Object} XML playerdata
      **/
-    getScenePlayerRecord: function (i_scene_player_data_id) {
+    getScenePlayerRecord: function (i_scene_id) {
         var self = this;
-        return self.m_msdb.table_player_data().getRec(i_scene_player_data_id);
+        return self.m_msdb.table_player_data().getRec(i_scene_id);
+    },
+
+    /**
+     Get Scene player data
+     @method getScenePlayerData
+     @param {Number} i_scene_id
+     @return {Object} XML scene player data
+     **/
+    getScenePlayerData: function (i_scene_id) {
+        var self = this;
+        return pepper.getScenePlayerRecord(i_scene_id)['player_data_value'];
+    },
+
+    /**
+     Get Scene player data as dom
+     @method getSceneBlockPlayerdata
+     @param {Number} i_sceneID
+     @return {Object} dom
+     **/
+    getSceneBlockPlayerdata: function (i_sceneID) {
+        var self = this;
+        var scene_player_data = pepper.getScenePlayerRecord(i_sceneID)['player_data_value'];
+        return $.parseXML(scene_player_data)
     },
 
     /**

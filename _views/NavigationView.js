@@ -204,7 +204,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         saveAndRestartPrompt: function (i_callBack) {
             var self = this;
-            self.m_stationsListView = BB.comBroker.getService(BB.SERVICES['STATIONS_LIST_VIEW'])
+            self.m_stationsListView = BB.comBroker.getService(BB.SERVICES['STATIONS_LIST_VIEW']);
             if (self.m_stationsListView != undefined) {
                 var totalStations = self.m_stationsListView.getTotalActiveStation();
                 if (totalStations == 0) {
@@ -247,16 +247,20 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             });
         },
 
+
         /**
          Save config to remote mediaSERVER
          @method save
          @params {Function} i_callBack
          **/
         save: function (i_callBack) {
+            var self = this;
             var appEntryFaderView = BB.comBroker.getService(BB.SERVICES['APP_ENTRY_FADER_VIEW']);
             appEntryFaderView.selectView(Elements.WAITS_SCREEN_ENTRY_APP);
+            pepper.removeScenePlayersIDs();
             pepper.save(function (i_status) {
                 appEntryFaderView.selectView(Elements.APP_CONTENT);
+                pepper.restoreScenesWithPlayersIDs();
                 if (!i_status.status) {
                     bootbox.dialog({
                         message: i_status.error,

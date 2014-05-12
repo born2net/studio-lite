@@ -17,11 +17,14 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         initialize: function () {
             var self = this;
             BB.comBroker.setService(BB.SERVICES['SCENE_EDIT_VIEW'], self);
+            self.m_selectedSceneID = undefined;
             self.m_canvas = undefined;
+            self.m_scenes = {};
             self.m_properties = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
             self.m_scenesToolbarView = new ScenesToolbarView({el: Elements.SCENE_TOOLBAR});
+            pepper.createScenePlayersIDs();
             self._initializeFactory();
-            // bootbox.alert('aaa');
+            self._listenSceneSelected();
         },
 
         _initializeFactory: function () {
@@ -56,13 +59,13 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 var group = self.m_canvas.getActiveGroup();
 
                 // Group
-                if (group){
+                if (group) {
                     log('group selected')
                     return;
                 }
 
                 // Object
-                if (options.target || active){
+                if (options.target || active) {
                     var selectedObject = options.target || active;
                     log('object: ' + selectedObject.m_blockType);
                     var blockID = selectedObject.getBlockData().blockID;
@@ -72,32 +75,56 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
                 // Scene
                 log('scene: ' + self.m_canvas.m_blockType);
-                BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.m_sceneID);
+                BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.m_selectedSceneID);
                 // log('object ' + options.e.clientX + ' ' + options.e.clientY + ' ' + options.target.m_blockType);
 
             });
-            self._initializeScene();
         },
 
         _initializeScene: function () {
             var self = this;
-            self.m_sceneID = BB.Pepper.createScene();
-            var player_data = BB.PepperHelper.getBlockBoilerplate('3510').getDefaultPlayerData();
-            BB.Pepper.setScenePlayerData(self.m_sceneID, player_data);
-            self.m_sceneBlock = self.m_blockFactory.createBlock(self.m_sceneID, player_data, BB.CONSTS.PLACEMENT_IS_SCENE);
+            // self.m_sceneID = BB.Pepper.createScene();
+            // var player_data = BB.PepperHelper.getBlockBoilerplate('3510').getDefaultPlayerData();
+            // BB.Pepper.setSceneBlockPlayerData(self.m_sceneID, player_data);
+            var scene_player_data = pepper.getScenePlayerData(self.m_selectedSceneID);
+            self.m_sceneBlock = self.m_blockFactory.createBlock(self.m_selectedSceneID, scene_player_data, BB.CONSTS.PLACEMENT_IS_SCENE);
             _.extend(self.m_canvas, self.m_sceneBlock);
             self._render();
         },
 
-        _render: function () {
+        _listenSceneSelected: function () {
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS.LOAD_SCENE, function (e) {
+                self.m_selectedSceneID = e.edata;
+                var domPlayerData = pepper.getSceneBlockPlayerdata(self.m_selectedSceneID);
+                self._clearCanvas();
+                self._initializeScene(self.m_selectedSceneID);
+                self._render(domPlayerData);
+            });
+        },
+
+        _clearCanvas: function () {
+            var self = this;
+            _.each(self.m_canvas.getObjects(), function (obj) {
+                self.m_canvas.dispose(obj);
+            });
+        },
+
+        _render: function (i_domPlayerData) {
             var self = this;
             // $(Elements.LOAD_SCENE_MODULE).hide();
             // $(Elements.CLASS_SCENE_ELEMENTS).show();
-            self._createBlocksSamples();
-            self._createBlocksSamples();
+            // self._createBlocksSamples();
+            // self._createBlocksSamples();
+
+            var players = $(i_domPlayerData).find('Players').find('Player').each(function (i, player) {
+                var blockID = $(player).attr('id');
+                self._createBlocksSamples(blockID, self.m_selectedSceneID);
+            });
+
         },
 
-        _createBlocksSamples: function () {
+        _createBlocksSamples: function (i_blockID) {
             var self = this;
 
 
@@ -118,11 +145,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 transparentCorners: false
             });
 
-
             var player_data = BB.PepperHelper.getBlockBoilerplate('3345').getDefaultPlayerData();
-            var blockRSS = self.m_blockFactory.createBlock(null, player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_sceneID);
+            var blockRSS = self.m_blockFactory.createBlock(i_blockID, player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_selectedSceneID);
             _.extend(blockRSS, rect);
-
 
             _.extend(blockRSS, rect);
             blockRSS.listenSceneSelection(self.m_canvas);
@@ -241,6 +266,15 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.options.stackView.slideToPage(self.options.from, 'left');
         },
 
+        /**
+         Deserialize the Scene before saving to remote server which includes removing any player IDs and
+         converting the player_data object to player_data string inside pepper
+         @method deserializeScenes
+         **/
+        deserializeScenes: function () {
+            log('de-serializing scenes');
+        }
+
 
         /**
          Load the editor into DOM using the StackView using animation slider
@@ -298,13 +332,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
  self.m_canvas.renderAll();
  */
 
-/*_listenSceneSelected: function(){
- var self = this;
- BB.comBroker.listen(BB.EVENTS.LOAD_SCENE, function(e){
- var playerdata = BB.Pepper.getScenePlayerdata(e.edata);
- self._playerdataSerialize(playerdata);
- });
- },*/
+
 
 // BB.comBroker.listenOnce(BB.EVENTS.BLOCKS_LOADED, $.proxy(self._onBlocksLoaded, self));
 /* var sceneBlock = new BlockScene({

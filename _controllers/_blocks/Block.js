@@ -27,7 +27,7 @@ define(['jquery', 'backbone'], function ($) {
             var self = this;
             self.m_placement = options.i_placement;
             self.m_block_id = options.i_block_id;
-            self.m_scenePlayerDataID = options.i_scene_player_data_id;
+            self.m_sceneID = options.i_scene_player_data_id;
             self.m_blockType = options.blockType;
             self.m_selected = false;
             self.m_blockName = BB.PepperHelper.getBlockBoilerplate(self.m_blockType).name;
@@ -407,7 +407,7 @@ define(['jquery', 'backbone'], function ($) {
                 }
                 case BB.CONSTS.PLACEMENT_SCENE:
                 {
-                    pepper.setSceneBlockItem(self.m_scenePlayerDataID, self.m_block_id, xmlString);
+                    pepper.setSceneBlockItem(self.m_sceneID, self.m_block_id, xmlString);
                     break;
                 }
                 case BB.CONSTS.PLACEMENT_IS_SCENE:
@@ -438,7 +438,7 @@ define(['jquery', 'backbone'], function ($) {
 
                 case BB.CONSTS.PLACEMENT_SCENE:
                 {
-                    return pepper.getSceneBlockItem(self.m_scenePlayerDataID, self.m_block_id);
+                    return pepper.getSceneBlockItem(self.m_sceneID, self.m_block_id);
                 }
 
                 case BB.CONSTS.PLACEMENT_IS_SCENE:

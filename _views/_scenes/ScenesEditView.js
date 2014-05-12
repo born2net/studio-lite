@@ -19,42 +19,43 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             BB.comBroker.setService(BB.SERVICES['SCENE_EDIT_VIEW'], self);
             self.m_selectedSceneID = undefined;
             self.m_canvas = undefined;
-            self.m_scenes = {};
             self.m_properties = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
             self.m_scenesToolbarView = new ScenesToolbarView({el: Elements.SCENE_TOOLBAR});
+
             pepper.createScenePlayersIDs();
-            self._initializeFactory();
+            self._initializeBlockFactory();
             self._listenSceneSelected();
         },
 
-        _initializeFactory: function () {
+        _initializeBlockFactory: function () {
             var self = this;
             self.m_blockFactory = BB.comBroker.getService(BB.SERVICES['BLOCK_FACTORY']);
+
             if (self.m_blockFactory) {
-                self._initializeCanvas();
+                $(Elements.SCENE_TOOLBAR).fadeTo(500,1);
             } else {
-                BB.comBroker.listenOnce(BB.EVENTS.BLOCKS_LOADED, function (e) {
-                    self._initializeCanvas();
+                BB.comBroker.listenOnce(BB.EVENTS['BLOCKS_LOADED'], function () {
+                    $(Elements.SCENE_TOOLBAR).fadeTo(500,1);
                 });
                 require(['BlockFactory'], function (BlockFactory) {
                     self.m_blockFactory = new BlockFactory();
                     self.m_blockFactory.loadBlockModules();
+                    $('#sceneToolbar').fadeIn();
                 });
             }
         },
 
-        _initializeCanvas: function () {
+        _initializeCanvas: function (w, h) {
             var self = this;
             var canvasID = BB.lib.unhash(Elements.SCENE_CANVAS);
-            $('#sceneCanvasContainer').empty();
-            $('#sceneCanvasContainer').append('<canvas id="' + canvasID + '" width="650px" height="450px"/>');
+            $(Elements.SCENE_CANVAS_CONTAINER).empty();
+            $(Elements.SCENE_CANVAS_CONTAINER).append('<canvas id="' + canvasID + '" width="' + w + 'px" height="' + h + 'px"/>');
             self.m_canvas = new fabric.Canvas(canvasID);
 
             self._listenObjectChanged();
             self.m_canvas.on('object:selected', function (e) {
                 log('object: ' + e.target.m_blockType);
             });
-
 
             // scene selected
             self.m_canvas.on('mouse:up', function (options) {
@@ -98,14 +99,16 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 self.m_selectedSceneID = e.edata;
                 var domPlayerData = pepper.getSceneBlockPlayerdata(self.m_selectedSceneID);
                 self._clearCanvas();
+                self._initializeCanvas(640, 400);
                 self._initializeScene(self.m_selectedSceneID);
-                self._initializeCanvas();
                 self._render(domPlayerData);
             });
         },
 
         _clearCanvas: function () {
             var self = this;
+            if (!self.m_canvas)
+                return;
             _.each(self.m_canvas.getObjects(), function (obj) {
                 self.m_canvas.dispose(obj);
             });
@@ -117,6 +120,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 var blockID = $(player).attr('id');
                 self._createBlocksSamples(blockID, self.m_selectedSceneID);
             });
+            // $('.sceneElements').fadeIn();
         },
 
         _createBlocksSamples: function (i_blockID) {
@@ -142,30 +146,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var blockRSS = self.m_blockFactory.createBlock(i_blockID, player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_selectedSceneID);
             _.extend(blockRSS, rect);
             blockRSS.listenSceneSelection(self.m_canvas);
-
-
             self.m_canvas.add(blockRSS);
-
-            /*
-             self.m_canvas.on({
-             'object:moving': onChange,
-             'object:scaling': onChange,
-             'object:rotating': onChange
-             });
-             */
-
-            /*
-             blockRSS.listenSceneSelection(self.m_canvas);
-             self.m_canvas.add(blockRSS);
-
-             function onChange(options) {
-             options.target.setCoords();
-             self.m_canvas.forEachObject(function (obj) {
-             if (obj === options.target) return;
-             obj.setOpacity(options.target.intersectsWithObject(obj) ? 0.5 : 1);
-             });
-             }
-             */
         },
 
         /**
@@ -214,75 +195,31 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             // self._render();
             self._listenObjectChanged();
             // $(Elements.SCENE_CANVAS).fadeTo(333,1)
-        },
-
-        _renderOld: function () {
-            var self = this;
-            self.m_canvas = new fabric.Canvas(BB.lib.unhash(Elements.SCENE_CANVAS));
-
-            /*var rect = new fabric.Rect({
-             left: 60,
-             top: 10,
-             fill: '#ececec',
-             hasRotatingPoint: false,
-             width: 20,
-             borderColor: '#5d5d5d',
-             stroke : 'black',
-             strokeWidth : 1,
-             lineWidth: 1,
-             height: 20,
-             cornerColor: 'black',
-             cornerSize: 5,
-             lockRotation: true,
-             transparentCorners: false
-             });
-
-             self.m_canvas.add(rect);
-             self.m_canvas.renderAll();
-             */
-            self._canvasFactory(1, 1);
-        },
-
-
-        /**
-         Unload the editor from DOM using the StackView animated slider
-         @method  selectView
-         **/
-        _deSelectView: function () {
-            var self = this;
-            self.m_canvas.clear().renderAll();
-            $('#screenLayoutEditorCanvasWrap').empty()
-            self.m_canvasID = undefined;
-            self.m_canvas = undefined;
-            self.options.stackView.slideToPage(self.options.from, 'left');
-        },
-
-        /**
-         Deserialize the Scene before saving to remote server which includes removing any player IDs and
-         converting the player_data object to player_data string inside pepper
-         @method deserializeScenes
-         **/
-        deserializeScenes: function () {
-            log('de-serializing scenes');
         }
 
 
-        /**
-         Load the editor into DOM using the StackView using animation slider
-         @method  selectView
-
-         selectView: function () {
-            var self = this;
-            self.options.stackView.slideToPage(self, 'right');
-            require(['fabric'], function () {
-                self._canvasFactory(_.random(200, 500), _.random(200, 500))
-            })
-        }
-         **/
     });
 
     return ScenesEditView;
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*
@@ -440,4 +377,85 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
  },
 
+ */
+
+
+/*
+ self.m_canvas.on({
+ 'object:moving': onChange,
+ 'object:scaling': onChange,
+ 'object:rotating': onChange
+ });
+ */
+
+/*
+ blockRSS.listenSceneSelection(self.m_canvas);
+ self.m_canvas.add(blockRSS);
+
+ function onChange(options) {
+ options.target.setCoords();
+ self.m_canvas.forEachObject(function (obj) {
+ if (obj === options.target) return;
+ obj.setOpacity(options.target.intersectsWithObject(obj) ? 0.5 : 1);
+ });
+ }
+ */
+
+/*
+_renderOld: function () {
+    var self = this;
+    self.m_canvas = new fabric.Canvas(BB.lib.unhash(Elements.SCENE_CANVAS));
+
+    var rect = new fabric.Rect({
+     left: 60,
+     top: 10,
+     fill: '#ececec',
+     hasRotatingPoint: false,
+     width: 20,
+     borderColor: '#5d5d5d',
+     stroke : 'black',
+     strokeWidth : 1,
+     lineWidth: 1,
+     height: 20,
+     cornerColor: 'black',
+     cornerSize: 5,
+     lockRotation: true,
+     transparentCorners: false
+     });
+
+     self.m_canvas.add(rect);
+     self.m_canvas.renderAll();
+
+    self._canvasFactory(1, 1);
+},
+
+ */
+
+
+/*
+ Unload the editor from DOM using the StackView animated slider
+ @method  selectView
+
+_deSelectView: function () {
+    var self = this;
+    self.m_canvas.clear().renderAll();
+    $('#screenLayoutEditorCanvasWrap').empty()
+    self.m_canvasID = undefined;
+    self.m_canvas = undefined;
+    self.options.stackView.slideToPage(self.options.from, 'left');
+},
+ */
+
+
+/*
+ Load the editor into DOM using the StackView using animation slider
+ @method  selectView
+
+ selectView: function () {
+            var self = this;
+            self.options.stackView.slideToPage(self, 'right');
+            require(['fabric'], function () {
+                self._canvasFactory(_.random(200, 500), _.random(200, 500))
+            })
+        }
  */

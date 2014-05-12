@@ -45,11 +45,14 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
         _initializeCanvas: function () {
             var self = this;
-            self.m_canvas = new fabric.Canvas(BB.lib.unhash(Elements.SCENE_CANVAS));
+            var canvasID = BB.lib.unhash(Elements.SCENE_CANVAS);
+            $('#sceneCanvasContainer').empty();
+            $('#sceneCanvasContainer').append('<canvas id="' + canvasID + '" width="650px" height="450px"/>');
+            self.m_canvas = new fabric.Canvas(canvasID);
 
             self._listenObjectChanged();
             self.m_canvas.on('object:selected', function (e) {
-                // log('object: ' + e.target.m_blockType);
+                log('object: ' + e.target.m_blockType);
             });
 
 
@@ -83,13 +86,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
         _initializeScene: function () {
             var self = this;
-            // self.m_sceneID = BB.Pepper.createScene();
-            // var player_data = BB.PepperHelper.getBlockBoilerplate('3510').getDefaultPlayerData();
-            // BB.Pepper.setSceneBlockPlayerData(self.m_sceneID, player_data);
             var scene_player_data = pepper.getScenePlayerData(self.m_selectedSceneID);
             self.m_sceneBlock = self.m_blockFactory.createBlock(self.m_selectedSceneID, scene_player_data, BB.CONSTS.PLACEMENT_IS_SCENE);
             _.extend(self.m_canvas, self.m_sceneBlock);
-            self._render();
+            // self._render();
         },
 
         _listenSceneSelected: function () {
@@ -99,6 +99,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 var domPlayerData = pepper.getSceneBlockPlayerdata(self.m_selectedSceneID);
                 self._clearCanvas();
                 self._initializeScene(self.m_selectedSceneID);
+                self._initializeCanvas();
                 self._render(domPlayerData);
             });
         },
@@ -112,22 +113,14 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
         _render: function (i_domPlayerData) {
             var self = this;
-            // $(Elements.LOAD_SCENE_MODULE).hide();
-            // $(Elements.CLASS_SCENE_ELEMENTS).show();
-            // self._createBlocksSamples();
-            // self._createBlocksSamples();
-
             var players = $(i_domPlayerData).find('Players').find('Player').each(function (i, player) {
                 var blockID = $(player).attr('id');
                 self._createBlocksSamples(blockID, self.m_selectedSceneID);
             });
-
         },
 
         _createBlocksSamples: function (i_blockID) {
             var self = this;
-
-
             var rect = new fabric.Rect({
                 left: 60,
                 top: 10,
@@ -147,8 +140,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
             var player_data = BB.PepperHelper.getBlockBoilerplate('3345').getDefaultPlayerData();
             var blockRSS = self.m_blockFactory.createBlock(i_blockID, player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_selectedSceneID);
-            _.extend(blockRSS, rect);
-
             _.extend(blockRSS, rect);
             blockRSS.listenSceneSelection(self.m_canvas);
 
@@ -220,7 +211,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _onBlocksLoaded: function () {
             var self = this;
-            self._render();
+            // self._render();
             self._listenObjectChanged();
             // $(Elements.SCENE_CANVAS).fadeTo(333,1)
         },

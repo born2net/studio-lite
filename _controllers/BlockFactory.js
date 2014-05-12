@@ -100,7 +100,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
             var playerData = this.x2js.xml_str2json(i_player_data);
             var blockCode = playerData['Player']['_player'];
 
-
+            /*
             if (i_placement == BB.CONSTS.PLACEMENT_SCENE) {
                 // var sceneEditView = BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']);
                 // block_id = ($.base64.encode(_.uniqueId('blockid'))).replace('=','');
@@ -109,6 +109,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
                 i_player_data = (new XMLSerializer()).serializeToString(domPlayerData);
                 pepper.appendScenePlayerBlock(i_scene_player_data_id, i_player_data);
             }
+            */
 
             switch (parseInt(blockCode)) {
                 case 3510:

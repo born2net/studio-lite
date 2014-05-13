@@ -37,36 +37,11 @@ define(['jquery', 'backbone'], function ($) {
 
             self.m_blockProperty = BB.comBroker.getService(BB.SERVICES['BLOCK_PROPERTIES']);
 
-            // common props
             self._alphaListenChange();
             self._gradientListenChange();
             self._backgroundStateListenChange();
-
-
-            self._onTimelineChannelBlockSelected();
-            self._onTimelineChannelBlockLengthChanged();
-            /*switch (this.m_placement) {
-             case BB.CONSTS.PLACEMENT_CHANNEL:
-             {
-             self._onTimelineChannelBlockSelected();
-             self._onTimelineChannelBlockLengthChanged();
-             break;
-             }
-
-             case BB.CONSTS.PLACEMENT_SCENE:
-             {
-             self._onTimelineChannelBlockSelected();
-             self._onTimelineChannelBlockLengthChanged();
-             break;
-             },
-
-             case BB.CONSTS.PLACEMENT_IS_SCENE:
-             {
-             self._onTimelineChannelBlockSelected();
-             self._onTimelineChannelBlockLengthChanged();
-             break;
-             }
-             } */
+            self._onBlockSelected();
+            self._onBlockLengthChanged();
         },
 
         /**
@@ -239,10 +214,10 @@ define(['jquery', 'backbone'], function ($) {
         /**
          Notify this object that it has been selected so it can populate it's own the properties box etc
          The function triggers from the BLOCK_SELECTED event.
-         @method _onTimelineChannelBlockSelected
+         @method _onBlockSelected
          @return none
          **/
-        _onTimelineChannelBlockSelected: function () {
+        _onBlockSelected: function () {
             var self = this;
 
             BB.comBroker.listenWithNamespace(BB.EVENTS.BLOCK_SELECTED, self, function (e) {
@@ -282,7 +257,7 @@ define(['jquery', 'backbone'], function ($) {
                     {
                         $(Elements.CHANNEL_BLOCK_PROPS).show();
                         $(Elements.SCENE_BLOCK_PROPS).hide();
-                        self._updateBlockDimensions();
+                        self._updateBlockLength();
                         break;
                     }
                 }
@@ -319,7 +294,20 @@ define(['jquery', 'backbone'], function ($) {
          **/
         _updateBlockLength: function () {
             var self = this;
-            var lengthData = pepper.getBlockTimelineChannelBlockLength(self.m_block_id);
+            var lengthData;
+
+            switch (self.m_placement) {
+                case BB.CONSTS.PLACEMENT_CHANNEL:
+                {
+                    lengthData = pepper.getBlockTimelineChannelBlockLength(self.m_block_id);
+                    break;
+                }
+                case BB.CONSTS.PLACEMENT_IS_SCENE:
+                {
+                    lengthData = pepper.getSceneDuration(self.m_block_id);
+                    break;
+                }
+            }
             $(Elements.BLOCK_LENGTH_HOURS).val(lengthData.hours).trigger('change');
             $(Elements.BLOCK_LENGTH_MINUTES).val(lengthData.minutes).trigger('change');
             $(Elements.BLOCK_LENGTH_SECONDS).val(lengthData.seconds).trigger('change');
@@ -334,10 +322,10 @@ define(['jquery', 'backbone'], function ($) {
 
         /**
          Take action when block length has changed which is triggered by the BLOCK_LENGTH_CHANGING event
-         @method _onTimelineChannelBlockLengthChanged
+         @method _onBlockLengthChanged
          @return none
          **/
-        _onTimelineChannelBlockLengthChanged: function () {
+        _onBlockLengthChanged: function () {
             var self = this;
 
             BB.comBroker.listenWithNamespace(BB.EVENTS.BLOCK_LENGTH_CHANGING, this, function (e) {
@@ -347,6 +335,7 @@ define(['jquery', 'backbone'], function ($) {
                     var hours = $(Elements.BLOCK_LENGTH_HOURS).val();
                     var minutes = $(Elements.BLOCK_LENGTH_MINUTES).val();
                     var seconds = $(Elements.BLOCK_LENGTH_SECONDS).val();
+                    // log('upd: ' + self.m_block_id + ' ' + hours + ' ' + minutes + ' ' + seconds);
 
                     switch (e.caller) {
                         case 'blockLengthHours':
@@ -365,28 +354,19 @@ define(['jquery', 'backbone'], function ($) {
                             break;
                         }
                     }
-
-                    // log('upd: ' + self.m_block_id + ' ' + hours + ' ' + minutes + ' ' + seconds);
-
                     switch (self.m_placement) {
                         case BB.CONSTS.PLACEMENT_CHANNEL:
                         {
                             pepper.setBlockTimelineChannelBlockLength(self.m_block_id, hours, minutes, seconds);
                             break;
                         }
-                        case BB.CONSTS.PLACEMENT_SCENE:
-                        {
-                            break;
-                        }
                         case BB.CONSTS.PLACEMENT_IS_SCENE:
                         {
                             log('upd: ' + self.m_block_id + ' ' + hours + ' ' + minutes + ' ' + seconds);
-                            pepper.setSceneDefaultDuration(self.m_block_id, hours, minutes, seconds);
+                            pepper.setSceneDuration(self.m_block_id, hours, minutes, seconds);
                             break;
                         }
                     }
-
-
                 }
             });
         },
@@ -398,21 +378,21 @@ define(['jquery', 'backbone'], function ($) {
          **/
         _setBlockPlayerData: function (i_xmlDoc) {
             var self = this;
-            var xmlString = (new XMLSerializer()).serializeToString(i_xmlDoc);
+            var player_data = (new XMLSerializer()).serializeToString(i_xmlDoc);
             switch (self.m_placement) {
                 case BB.CONSTS.PLACEMENT_CHANNEL:
                 {
-                    pepper.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', xmlString);
+                    pepper.setCampaignTimelineChannelPlayerRecord(self.m_block_id, 'player_data', player_data);
                     break;
                 }
                 case BB.CONSTS.PLACEMENT_SCENE:
                 {
-                    pepper.setScenePlayerdataBlock(self.m_sceneID, self.m_block_id, xmlString);
+                    pepper.setScenePlayerdataBlock(self.m_sceneID, self.m_block_id, player_data);
                     break;
                 }
                 case BB.CONSTS.PLACEMENT_IS_SCENE:
                 {
-                    pepper.setScenePlayerData(self.m_block_id, xmlString);
+                    pepper.setScenePlayerData(self.m_block_id, player_data);
                     break;
                 }
             }

@@ -65,36 +65,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_canvas = new fabric.Canvas(canvasID);
 
             self._listenObjectChangeResetScale();
-
-            //self.m_canvas.on('object:selected', function (e) {
-            //    log('object: ' + e.target.m_blockType);
-            //});
-
-            self.m_canvas.on('mouse:up', function (options) {
-                var active = self.m_canvas.getActiveObject();
-                var group = self.m_canvas.getActiveGroup();
-
-                //// Group
-                if (group) {
-                    log('group selected')
-                    return;
-                }
-
-                //// Object
-                if (options.target || active) {
-                    var selectedObject = options.target || active;
-                    log('object: ' + selectedObject.m_blockType);
-                    var blockID = selectedObject.getBlockData().blockID;
-                    BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, blockID);
-                    return;
-                }
-
-                //// Scene
-                log('scene: ' + self.m_canvas.m_blockType);
-                BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.m_selectedSceneID);
-                // log('object ' + options.e.clientX + ' ' + options.e.clientY + ' ' + options.target.m_blockType);
-
-            });
+            self._listenCanvasSelections();
         },
 
         /**
@@ -167,6 +138,44 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             _.extend(blockRSS, rect);
             blockRSS.listenSceneSelection(self.m_canvas);
             self.m_canvas.add(blockRSS);
+        },
+
+        /**
+         Listen to canvas selections
+         @method _listenCanvasSelections
+         **/
+        _listenCanvasSelections: function () {
+            var self = this;
+
+            //self.m_canvas.on('object:selected', function (e) {
+            //    log('object: ' + e.target.m_blockType);
+            //});
+
+            self.m_canvas.on('mouse:up', function (options) {
+                var active = self.m_canvas.getActiveObject();
+                var group = self.m_canvas.getActiveGroup();
+
+                //// Group
+                if (group) {
+                    log('group selected')
+                    return;
+                }
+
+                //// Object
+                if (options.target || active) {
+                    var selectedObject = options.target || active;
+                    log('object: ' + selectedObject.m_blockType);
+                    var blockID = selectedObject.getBlockData().blockID;
+                    BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, blockID);
+                    return;
+                }
+
+                //// Scene
+                log('scene: ' + self.m_canvas.m_blockType);
+                BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.m_selectedSceneID);
+                // log('object ' + options.e.clientX + ' ' + options.e.clientY + ' ' + options.target.m_blockType);
+
+            });
         },
 
         /**

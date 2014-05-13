@@ -251,16 +251,57 @@ Pepper.prototype = {
         return path;
     },
 
+    /**
+     get a scene's default length
+     @method getSceneDuration
+     @param {number} i_scene_player_data_id
+     @return {number} total seconds
+     **/
+    getSceneDuration: function (i_scene_player_data_id) {
+        var self = this;
+        var seconds = 0;
+        var minutes = 0;
+        var hours = 0;
+        var totalInSeconds = 0;
+
+        var recPlayerData = pepper.getScenePlayerRecord(i_scene_player_data_id);
+        var player_data = recPlayerData['player_data_value'];
+        var domPlayerData = $.parseXML(player_data)
+        var xSnippet = $(domPlayerData).find('Scene');
+        var totalSeconds = parseInt(xSnippet.attr('defaultDuration'));
+
+        totalInSeconds = totalSeconds;
+        if (totalSeconds >= 3600) {
+            hours = Math.floor(totalSeconds / 3600);
+            totalSeconds = totalSeconds - (hours * 3600);
+        }
+        if (totalSeconds >= 60) {
+            minutes = Math.floor(totalSeconds / 60);
+            seconds = totalSeconds - (minutes * 60);
+        }
+        if (hours == 0 && minutes == 0)
+            seconds = totalSeconds;
+
+        var playbackLength = {
+            hours: hours,
+            minutes: minutes,
+            seconds: seconds,
+            totalInSeconds: totalInSeconds
+        };
+        return playbackLength;
+
+
+    },
 
     /**
      Set a scene's default length (can be overridden on timeline)
-     @method setSceneDefaultDuration
-     @param {i_block_id} i_playerData
-     @param {hours} hours
-     @param {minutes} minutes
-     @param {seconds} seconds
+     @method setSceneDuration
+     @param {number} i_scene_player_data_id
+     @param {string} hours
+     @param {string} minutes
+     @param {string} seconds
      **/
-    setSceneDefaultDuration: function (i_scene_player_data_id, i_hours, i_minutes, i_seconds) {
+    setSceneDuration: function (i_scene_player_data_id, i_hours, i_minutes, i_seconds) {
         var self = this;
         var totalSecInMin = 60
         var totalSecInHour = totalSecInMin * 60
@@ -1674,8 +1715,8 @@ Pepper.prototype = {
      The method uses generic key / value fields so it can set any part of the record.
      @method setCampaignTimelineChannelPlayerRecord
      @param {Number} i_player_id
-     @param {Number} i_key
-     @param {String} i_value
+     @param {Object} i_key
+     @param {Object} i_value
      @return none
      **/
     setCampaignTimelineChannelPlayerRecord: function (i_player_id, i_key, i_value) {

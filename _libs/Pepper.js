@@ -271,7 +271,7 @@ Pepper.prototype = {
         var xSnippet = $(domPlayerData).find('Scene');
         xSnippet.attr('defaultDuration', totalSeconds);
         var player_data = (new XMLSerializer()).serializeToString(domPlayerData);
-        pepper.setSceneBlockPlayerData(i_scene_player_data_id, player_data);
+        pepper.setScenePlayerData(i_scene_player_data_id, player_data);
     },
 
     /**
@@ -316,7 +316,7 @@ Pepper.prototype = {
         self.m_msdb.table_player_data().openForEdit(i_scene_player_data_id);
         var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_player_data_id);
         var scene_player_data = recPlayerData['player_data_value'];
-        var sceneDomPlayerData = $.parseXML(scene_player_data)
+        var sceneDomPlayerData = $.parseXML(scene_player_data);
         $(sceneDomPlayerData).find('Players').append(i_player_data);
         recPlayerData['player_data_value'] = (new XMLSerializer()).serializeToString(sceneDomPlayerData)
     },
@@ -367,12 +367,12 @@ Pepper.prototype = {
         self.m_tempScenePlayerIDs = {};
         var scenes = pepper.getScenes();
         _.each(scenes, function (domPlayerData, scene_id) {
-            self.m_tempScenePlayerIDs[scene_id] = domPlayerData;
-            var players = $(scene).find('Players').find('Player').each(function(i, player){
+            self.m_tempScenePlayerIDs[scene_id] = (new XMLSerializer()).serializeToString(domPlayerData);
+            var players = $(domPlayerData).find('Players').find('Player').each(function(i, player){
                 var blockID = pepper.getUniqueSceneBlockID();
                 $(player).removeAttr('id');
             });
-            pepper.setSceneBlockPlayerData(scene_id, (new XMLSerializer()).serializeToString(domPlayerData));
+            pepper.setScenePlayerData(scene_id, (new XMLSerializer()).serializeToString(domPlayerData));
         });
     },
 
@@ -383,8 +383,8 @@ Pepper.prototype = {
      **/
     restoreScenesWithPlayersIDs: function(){
         var self = this;
-        _.each(self.m_tempScenePlayerIDs, function (domPlayerData, scene_id) {
-            pepper.setSceneBlockPlayerData(scene_id, (new XMLSerializer()).serializeToString(domPlayerData));
+        _.each(self.m_tempScenePlayerIDs, function (scene_player_data, scene_id) {
+            pepper.setScenePlayerData(scene_id, scene_player_data);
         });
     },
 
@@ -420,7 +420,7 @@ Pepper.prototype = {
         var domPlayerData = $.parseXML(player_data)
         $(domPlayerData).find('[id="'+i_player_data_id + '"]').remove();
         var xSnippet = (new XMLSerializer()).serializeToString(domPlayerData);
-        self.setSceneBlockPlayerData(i_scene_player_data_id, xSnippet);
+        self.setScenePlayerData(i_scene_player_data_id, xSnippet);
         self.appendScenePlayerBlock(i_scene_player_data_id, i_player_data);
     },
 

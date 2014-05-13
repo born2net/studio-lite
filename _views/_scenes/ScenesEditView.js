@@ -18,13 +18,14 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             BB.comBroker.setService(BB.SERVICES['SCENE_EDIT_VIEW'], self);
             self.m_selectedSceneID = undefined;
+            self.m_blocks = {}; // hold references to all created player instances
             self.m_canvas = undefined;
             self.m_properties = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
             self.m_scenesToolbarView = new ScenesToolbarView({el: Elements.SCENE_TOOLBAR});
 
             pepper.createScenePlayersIDs();
             self._initializeBlockFactory();
-            self._listenSceneSelected();
+            self._listenSceneToolbarSelected();
         },
 
         _initializeBlockFactory: function () {
@@ -32,10 +33,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_blockFactory = BB.comBroker.getService(BB.SERVICES['BLOCK_FACTORY']);
 
             if (self.m_blockFactory) {
-                $(Elements.SCENE_TOOLBAR).fadeTo(500,1);
+                $(Elements.SCENE_TOOLBAR).fadeTo(500, 1);
             } else {
                 BB.comBroker.listenOnce(BB.EVENTS['BLOCKS_LOADED'], function () {
-                    $(Elements.SCENE_TOOLBAR).fadeTo(500,1);
+                    $(Elements.SCENE_TOOLBAR).fadeTo(500, 1);
                 });
                 require(['BlockFactory'], function (BlockFactory) {
                     self.m_blockFactory = new BlockFactory();
@@ -52,23 +53,23 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             $(Elements.SCENE_CANVAS_CONTAINER).append('<canvas id="' + canvasID + '" width="' + w + 'px" height="' + h + 'px"/>');
             self.m_canvas = new fabric.Canvas(canvasID);
 
-            self._listenObjectChanged();
-            self.m_canvas.on('object:selected', function (e) {
-                log('object: ' + e.target.m_blockType);
-            });
+            self._listenObjectChgResetScale();
 
-            // scene selected
+            //self.m_canvas.on('object:selected', function (e) {
+            //    log('object: ' + e.target.m_blockType);
+            //});
+
             self.m_canvas.on('mouse:up', function (options) {
                 var active = self.m_canvas.getActiveObject();
                 var group = self.m_canvas.getActiveGroup();
 
-                // Group
+                //// Group
                 if (group) {
                     log('group selected')
                     return;
                 }
 
-                // Object
+                //// Object
                 if (options.target || active) {
                     var selectedObject = options.target || active;
                     log('object: ' + selectedObject.m_blockType);
@@ -77,7 +78,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     return;
                 }
 
-                // Scene
+                //// Scene
                 log('scene: ' + self.m_canvas.m_blockType);
                 BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.m_selectedSceneID);
                 // log('object ' + options.e.clientX + ' ' + options.e.clientY + ' ' + options.target.m_blockType);
@@ -90,28 +91,33 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var scene_player_data = pepper.getScenePlayerData(self.m_selectedSceneID);
             self.m_sceneBlock = self.m_blockFactory.createBlock(self.m_selectedSceneID, scene_player_data, BB.CONSTS.PLACEMENT_IS_SCENE);
             _.extend(self.m_canvas, self.m_sceneBlock);
-            // self._render();
         },
 
-        _listenSceneSelected: function () {
+        _listenSceneToolbarSelected: function () {
             var self = this;
             BB.comBroker.listen(BB.EVENTS.LOAD_SCENE, function (e) {
                 self.m_selectedSceneID = e.edata;
                 var domPlayerData = pepper.getSceneBlockPlayerdata(self.m_selectedSceneID);
-                self._clearCanvas();
+                self._disposeScene();
                 self._initializeCanvas(640, 400);
                 self._initializeScene(self.m_selectedSceneID);
                 self._render(domPlayerData);
             });
         },
 
-        _clearCanvas: function () {
+        _disposeScene: function () {
             var self = this;
             if (!self.m_canvas)
                 return;
             _.each(self.m_canvas.getObjects(), function (obj) {
                 self.m_canvas.dispose(obj);
             });
+            _.each(self.m_blocks, function (block) {
+                block.deleteBlock();
+            });
+            self.m_sceneBlock.deleteBlock();
+            self.m_blocks = {};
+
         },
 
         _render: function (i_domPlayerData) {
@@ -120,7 +126,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 var blockID = $(player).attr('id');
                 self._createBlocksSamples(blockID, self.m_selectedSceneID);
             });
-            // $('.sceneElements').fadeIn();
         },
 
         _createBlocksSamples: function (i_blockID) {
@@ -144,6 +149,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
             var player_data = BB.PepperHelper.getBlockBoilerplate('3345').getDefaultPlayerData();
             var blockRSS = self.m_blockFactory.createBlock(i_blockID, player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_selectedSceneID);
+            self.m_blocks[i_blockID] = blockRSS;
             _.extend(blockRSS, rect);
             blockRSS.listenSceneSelection(self.m_canvas);
             self.m_canvas.add(blockRSS);
@@ -153,7 +159,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          Listen to changes in a viewer changes in cords and update pepper
          @method i_props
          **/
-        _listenObjectChanged: function () {
+        _listenObjectChgResetScale: function () {
             var self = this;
             self.m_objectMovingHandler = _.debounce(function (e) {
                 var o = e.target;
@@ -172,36 +178,22 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 'object:selected': self.m_objectMovingHandler,
                 'object:modified': self.m_objectMovingHandler
             });
-        },
-
-        /**
-         @method _blockSelected
-         @param {Event} e
-         **/
-        _blockSelected: function (i_selected_block_id) {
-            var self = this;
-            self.selected_block_id = i_selected_block_id;
-            BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.selected_block_id);
-            $(Elements.CLASS_CHANNEL_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
-            return false;
-        },
-
-        /**
-         When all block modules have loaded, begin creating blocks
-         @method _onBlocksLoaded
-         **/
-        _onBlocksLoaded: function () {
-            var self = this;
-            // self._render();
-            self._listenObjectChanged();
-            // $(Elements.SCENE_CANVAS).fadeTo(333,1)
         }
-
-
     });
 
     return ScenesEditView;
 });
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -355,7 +347,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
  _.extend(blockRSS, rect);
  blockRSS.listenSceneSelection(self.m_canvas);
  self.m_canvas.add(blockRSS);
- //todo: delete rect after we extend into blockRSS
 
  function onChange(options) {
  options.target.setCoords();
@@ -402,32 +393,32 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
  */
 
 /*
-_renderOld: function () {
-    var self = this;
-    self.m_canvas = new fabric.Canvas(BB.lib.unhash(Elements.SCENE_CANVAS));
+ _renderOld: function () {
+ var self = this;
+ self.m_canvas = new fabric.Canvas(BB.lib.unhash(Elements.SCENE_CANVAS));
 
-    var rect = new fabric.Rect({
-     left: 60,
-     top: 10,
-     fill: '#ececec',
-     hasRotatingPoint: false,
-     width: 20,
-     borderColor: '#5d5d5d',
-     stroke : 'black',
-     strokeWidth : 1,
-     lineWidth: 1,
-     height: 20,
-     cornerColor: 'black',
-     cornerSize: 5,
-     lockRotation: true,
-     transparentCorners: false
-     });
+ var rect = new fabric.Rect({
+ left: 60,
+ top: 10,
+ fill: '#ececec',
+ hasRotatingPoint: false,
+ width: 20,
+ borderColor: '#5d5d5d',
+ stroke : 'black',
+ strokeWidth : 1,
+ lineWidth: 1,
+ height: 20,
+ cornerColor: 'black',
+ cornerSize: 5,
+ lockRotation: true,
+ transparentCorners: false
+ });
 
-     self.m_canvas.add(rect);
-     self.m_canvas.renderAll();
+ self.m_canvas.add(rect);
+ self.m_canvas.renderAll();
 
-    self._canvasFactory(1, 1);
-},
+ self._canvasFactory(1, 1);
+ },
 
  */
 
@@ -436,14 +427,14 @@ _renderOld: function () {
  Unload the editor from DOM using the StackView animated slider
  @method  selectView
 
-_deSelectView: function () {
-    var self = this;
-    self.m_canvas.clear().renderAll();
-    $('#screenLayoutEditorCanvasWrap').empty()
-    self.m_canvasID = undefined;
-    self.m_canvas = undefined;
-    self.options.stackView.slideToPage(self.options.from, 'left');
-},
+ _deSelectView: function () {
+ var self = this;
+ self.m_canvas.clear().renderAll();
+ $('#screenLayoutEditorCanvasWrap').empty()
+ self.m_canvasID = undefined;
+ self.m_canvas = undefined;
+ self.options.stackView.slideToPage(self.options.from, 'left');
+ },
  */
 
 
@@ -452,10 +443,36 @@ _deSelectView: function () {
  @method  selectView
 
  selectView: function () {
-            var self = this;
-            self.options.stackView.slideToPage(self, 'right');
-            require(['fabric'], function () {
-                self._canvasFactory(_.random(200, 500), _.random(200, 500))
-            })
-        }
+ var self = this;
+ self.options.stackView.slideToPage(self, 'right');
+ require(['fabric'], function () {
+ self._canvasFactory(_.random(200, 500), _.random(200, 500))
+ })
+ }
  */
+
+
+/*
+ @method _blockSelected
+ @param {Event} e
+
+_blockSelected: function (i_selected_block_id) {
+    var self = this;
+    self.selected_block_id = i_selected_block_id;
+    BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.selected_block_id);
+    $(Elements.CLASS_CHANNEL_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
+    return false;
+},
+
+
+ When all block modules have loaded, begin creating blocks
+ @method _onBlocksLoaded
+
+_onBlocksLoaded: function () {
+    var self = this;
+    // self._render();
+    self._listenObjectChgResetScale();
+    // $(Elements.SCENE_CANVAS).fadeTo(333,1)
+}
+
+*/

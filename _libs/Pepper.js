@@ -322,7 +322,7 @@ Pepper.prototype = {
     },
 
     /**
-     set scene playerdata
+     set entire scene playerdata
      @method setScenePlayerData
      @return {Number} scene player_data id
      **/
@@ -343,7 +343,7 @@ Pepper.prototype = {
     },
 
     /**
-     Inject unique player ids for all scene players
+     Inject unique player ids for all players within a scene
      @method createScenePlayersIDs
      **/
     createScenePlayersIDs: function(){
@@ -359,7 +359,7 @@ Pepper.prototype = {
     },
 
     /**
-     Remove all player ids for all scene players
+     Remove all player ids from player_data inside a scene
      @method removeScenePlayersIDs
      **/
     removeScenePlayersIDs: function(){
@@ -377,7 +377,7 @@ Pepper.prototype = {
     },
 
     /**
-     When remove scene player ids we actually store them aside so we can restore them back after a save as the
+     When we remove scene player ids we actually store them aside so we can restore them back after a save as the
      remote server expects a scene's player_data to have no player ids on its scene player_data
      @method restoreScenesWithPlayersIDs
      **/
@@ -389,13 +389,13 @@ Pepper.prototype = {
     },
 
     /**
-     get a scene block item for specific i_player_data_id
-     @method getSceneBlockItem
+     get a scene block playerdata
+     @method getScenePlayerdataBlock
      @param {Number} i_scene_player_data_id
      @param {Number} i_player_data_id
      @return {Number} i_player_data_id
      **/
-    getSceneBlockItem: function (i_scene_player_data_id, i_player_data_id) {
+    getScenePlayerdataBlock: function (i_scene_player_data_id, i_player_data_id) {
         var self = this;
         self.m_msdb.table_player_data().openForEdit(i_scene_player_data_id);
         var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_player_data_id);
@@ -407,12 +407,12 @@ Pepper.prototype = {
 
     /**
      set a block id inside a scene with new player_data
-     @method setSceneBlockItem
+     @method setScenePlayerdataBlock
      @param {Number} i_scene_player_data_id
      @param {Number} i_player_data_id
      @param {XML} player_data
      **/
-    setSceneBlockItem: function (i_scene_player_data_id, i_player_data_id, i_player_data) {
+    setScenePlayerdataBlock: function (i_scene_player_data_id, i_player_data_id, i_player_data) {
         var self = this;
         self.m_msdb.table_player_data().openForEdit(i_scene_player_data_id);
         var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_player_data_id);
@@ -441,7 +441,7 @@ Pepper.prototype = {
     },
 
     /**
-     Get Scene player record
+     Get Scene player record from player_data table
      @method getScenePlayerRecord
      @param {Number} i_sceneID
      @return {Object} XML playerdata
@@ -453,34 +453,31 @@ Pepper.prototype = {
 
     /**
      Get Scene player data
-     @method getScenePlayerData
+     @method getScenePlayerdata
      @param {Number} i_scene_id
      @return {Object} XML scene player data
      **/
-    getScenePlayerData: function (i_scene_id) {
+    getScenePlayerdata: function (i_scene_id) {
         var self = this;
         return pepper.getScenePlayerRecord(i_scene_id)['player_data_value'];
     },
 
     /**
      Get Scene player data as dom
-     @method getSceneBlockPlayerdata
+     @method getScenePlayerdataDom
      @param {Number} i_sceneID
      @return {Object} dom
      **/
-    getSceneBlockPlayerdata: function (i_sceneID) {
+    getScenePlayerdataDom: function (i_sceneID) {
         var self = this;
         var scene_player_data = pepper.getScenePlayerRecord(i_sceneID)['player_data_value'];
         return $.parseXML(scene_player_data)
     },
 
     /**
-     Returns this model's attributes as...
-     @method i_values  var o = {
-                    campaign_timeline_board_template_id: ?
-                    board_template_viewer_id: ?
-                };
-     @param {i_values} i_playerData
+     Announce via event that a template view (screen layout) has been edited
+     @method announceTemplateViewerEdited
+     @param {Object} i_values
      **/
     announceTemplateViewerEdited: function (i_values) {
         var self = this;

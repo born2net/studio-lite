@@ -6,6 +6,7 @@ require.config({
     waitSeconds: 45,
     baseUrl: '/_studiolite-dev/',
     paths: {
+        'Elements': 'Elements',
         'jquery': '_common/_jquery/std/jq1.9.1/jquery-1.9.1',
         'jqueryui': '_common/_jquery/std/jq1.10.1/jquery-ui-1.10.1',
         'backbone': '_common/_js/backbone/backbone',
@@ -28,7 +29,6 @@ require.config({
         'Knob': '_common/_js/knob/jquery.knob',
         'TouchPunch': '_common/_js/touchpunch/TouchPunch',
         'X2JS': '_common/_js/x2js/xml2json',
-        'Elements': 'Elements',
         'LayoutRouter': '_controllers/LayoutRouter',
         'ComBroker': '_controllers/ComBroker',
         'ScreenTemplateFactory': '_controllers/ScreenTemplateFactory',
@@ -97,6 +97,9 @@ require.config({
     },
 
     shim: {
+        'Elements': {
+            exports: 'Elements'
+        },
         'backbone': {
             deps: ['underscore', 'jquery'],
             exports: 'Backbone'
@@ -105,7 +108,7 @@ require.config({
             deps: ['underscore', 'jquery']
         },
         'LayoutRouter': {
-            deps: ['Elements', 'backbone.controller']
+            deps: ['backbone.controller']
         },
         'Lib': {
             deps: ['backbone', 'jquery']
@@ -125,9 +128,6 @@ require.config({
         },
         'AppAuth': {
             deps: ['RC4', 'Cookie']
-        },
-        'Elements': {
-            exports: 'Elements'
         },
         'X2JS': {
             exports: 'X2JS'

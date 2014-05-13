@@ -407,7 +407,7 @@ define(['jquery', 'backbone'], function ($) {
                 }
                 case BB.CONSTS.PLACEMENT_SCENE:
                 {
-                    pepper.setSceneBlockItem(self.m_sceneID, self.m_block_id, xmlString);
+                    pepper.setScenePlayerdataBlock(self.m_sceneID, self.m_block_id, xmlString);
                     break;
                 }
                 case BB.CONSTS.PLACEMENT_IS_SCENE:
@@ -438,7 +438,7 @@ define(['jquery', 'backbone'], function ($) {
 
                 case BB.CONSTS.PLACEMENT_SCENE:
                 {
-                    return pepper.getSceneBlockItem(self.m_sceneID, self.m_block_id);
+                    return pepper.getScenePlayerdataBlock(self.m_sceneID, self.m_block_id);
                 }
 
                 case BB.CONSTS.PLACEMENT_IS_SCENE:

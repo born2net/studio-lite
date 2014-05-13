@@ -28,6 +28,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._listenSceneToolbarSelected();
         },
 
+        /**
+         Init block factory if it hasn't already been loaded
+         @method _initializeBlockFactory
+         **/
         _initializeBlockFactory: function () {
             var self = this;
             self.m_blockFactory = BB.comBroker.getService(BB.SERVICES['BLOCK_FACTORY']);
@@ -46,14 +50,21 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             }
         },
 
+        /**
+         Init a new canvas and listen to even changes on that new canvas
+         @method 1-888-384-8400 id
+         @param {Number} w width
+         @param {Number} h height
+         **/
         _initializeCanvas: function (w, h) {
             var self = this;
+
             var canvasID = BB.lib.unhash(Elements.SCENE_CANVAS);
             $(Elements.SCENE_CANVAS_CONTAINER).empty();
             $(Elements.SCENE_CANVAS_CONTAINER).append('<canvas id="' + canvasID + '" width="' + w + 'px" height="' + h + 'px"/>');
             self.m_canvas = new fabric.Canvas(canvasID);
 
-            self._listenObjectChgResetScale();
+            self._listenObjectChangeResetScale();
 
             //self.m_canvas.on('object:selected', function (e) {
             //    log('object: ' + e.target.m_blockType);
@@ -86,18 +97,26 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             });
         },
 
+        /**
+         Init a new scene and subclass off a standard Block
+         @method _initializeScene
+         **/
         _initializeScene: function () {
             var self = this;
-            var scene_player_data = pepper.getScenePlayerData(self.m_selectedSceneID);
+            var scene_player_data = pepper.getScenePlayerdata(self.m_selectedSceneID);
             self.m_sceneBlock = self.m_blockFactory.createBlock(self.m_selectedSceneID, scene_player_data, BB.CONSTS.PLACEMENT_IS_SCENE);
             _.extend(self.m_canvas, self.m_sceneBlock);
         },
 
+        /**
+         Listen to changes in a new scene selection
+         @method _listenSceneToolbarSelected
+         **/
         _listenSceneToolbarSelected: function () {
             var self = this;
             BB.comBroker.listen(BB.EVENTS.LOAD_SCENE, function (e) {
                 self.m_selectedSceneID = e.edata;
-                var domPlayerData = pepper.getSceneBlockPlayerdata(self.m_selectedSceneID);
+                var domPlayerData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
                 self._disposeScene();
                 self._initializeCanvas(640, 400);
                 self._initializeScene(self.m_selectedSceneID);
@@ -105,30 +124,25 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             });
         },
 
-        _disposeScene: function () {
-            var self = this;
-            if (!self.m_canvas)
-                return;
-            _.each(self.m_canvas.getObjects(), function (obj) {
-                self.m_canvas.dispose(obj);
-            });
-            _.each(self.m_blocks, function (block) {
-                block.deleteBlock();
-            });
-            self.m_sceneBlock.deleteBlock();
-            self.m_blocks = {};
-
-        },
-
+        /**
+         Render the canvas thus creating all associated player blocks of the scene
+         @method _render
+         @param {Object} i_domPlayerData
+         **/
         _render: function (i_domPlayerData) {
             var self = this;
             var players = $(i_domPlayerData).find('Players').find('Player').each(function (i, player) {
                 var blockID = $(player).attr('id');
-                self._createBlocksSamples(blockID, self.m_selectedSceneID);
+                self._createBlock(blockID, self.m_selectedSceneID);
             });
         },
 
-        _createBlocksSamples: function (i_blockID) {
+        /**
+         Create a block inside a scene using it's player_data
+         @method _createBlock
+         @param {Number} i_blockID
+         **/
+        _createBlock: function (i_blockID) {
             var self = this;
             var rect = new fabric.Rect({
                 left: 60,
@@ -156,10 +170,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         },
 
         /**
-         Listen to changes in a viewer changes in cords and update pepper
-         @method i_props
+         Listen to changes in scale so we can reset back to non-zoom on any block object
+         @method _listenObjectChangeResetScale
          **/
-        _listenObjectChgResetScale: function () {
+        _listenObjectChangeResetScale: function () {
             var self = this;
             self.m_objectMovingHandler = _.debounce(function (e) {
                 var o = e.target;
@@ -178,6 +192,25 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 'object:selected': self.m_objectMovingHandler,
                 'object:modified': self.m_objectMovingHandler
             });
+        },
+
+        /**
+         Remove a Scene and cleanup after
+         @method _disposeScene
+         **/
+        _disposeScene: function () {
+            var self = this;
+            if (!self.m_canvas)
+                return;
+            self.m_canvas.off('mouse:up');
+            _.each(self.m_canvas.getObjects(), function (obj) {
+                self.m_canvas.dispose(obj);
+            });
+            _.each(self.m_blocks, function (block) {
+                block.deleteBlock();
+            });
+            self.m_sceneBlock.deleteBlock();
+            self.m_blocks = {};
         }
     });
 
@@ -471,7 +504,7 @@ _blockSelected: function (i_selected_block_id) {
 _onBlocksLoaded: function () {
     var self = this;
     // self._render();
-    self._listenObjectChgResetScale();
+    self._listenObjectChangeResetScale();
     // $(Elements.SCENE_CANVAS).fadeTo(333,1)
 }
 

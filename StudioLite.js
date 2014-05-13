@@ -33,7 +33,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             window.log = BB.lib.log;
 
             // internationalization
-            require(['LanguageSelectorView'], function (LanguageSelectorView) {
+            require(['LanguageSelectorView', 'Elements'], function (LanguageSelectorView, Elements) {
                 self.m_languageSelectionLogin = new LanguageSelectorView({appendTo: Elements.LANGUAGE_SELECTION_LOGIN});
                 var lang = self.m_languageSelectionLogin.getLanguage();
                 if (lang)

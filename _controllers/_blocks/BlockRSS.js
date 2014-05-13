@@ -159,7 +159,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
                 case BB.CONSTS.PLACEMENT_SCENE:
                 {
-                    domPlayerData = pepper.getSceneBlockItem(self.m_sceneID, self.m_block_id);
+                    domPlayerData = pepper.getScenePlayerdataBlock(self.m_sceneID, self.m_block_id);
                     break;
                 }
             }

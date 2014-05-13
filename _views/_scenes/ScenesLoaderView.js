@@ -29,7 +29,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _render: function () {
             var self = this;
             require(['SceneFaderView', 'SceneEditorView', 'ScenesToolbarView', 'StackView', 'AddBlockView'], function (SceneFaderView, SceneEditorView, ScenesToolbarView, StackView, AddBlockView) {
-                return;
+
                 self.m_sceneStackFaderView = new SceneFaderView({
                     el: Elements.SCENE_STACKFADER_VIEW,
                     duration: 500
@@ -38,7 +38,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 self.m_sceneAddBlockView = new AddBlockView({
                     stackView: self.m_sceneStackFaderView,
                     el: Elements.SCENE_ADD_NEW_BLOCK
-                    // appendTo: // el: Elements.ADD_BLOCK_VIEW
                 });
 
                 self.m_sceneEditorView = new SceneEditorView({

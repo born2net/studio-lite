@@ -29,23 +29,13 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         initialize: function () {
             var self = this;
 
-            /*
-            self.$el = $(Elements.ADD_BLOCK_TEMPLATE).clone();
-            self.el = self.$el[0];
-            $(self.options.appendTo).append(self.el).fadeIn();
-            self.$el.show();
-            */
-
-
+            // Clone Add Block template
             var e = $(Elements.ADD_BLOCK_TEMPLATE).clone();
-            $(Elements.ADD_BLOCK_VIEW).append(e).fadeIn();
+            $(self.options.el).append(e).fadeIn();
             $(e).show();
             self.el = self.$el[0];
 
-
-
-
-            $(this.el).find('#prev').on('click',function(e){
+            $(this.el).find('#prev').on('click', function (e) {
                 self.options.stackView.slideToPage(self.options.from, 'left');
                 return false;
             });
@@ -54,6 +44,8 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 if (e == self)
                     self._render();
             });
+
+            self._buildBSAccordion();
         },
 
         /**
@@ -67,8 +59,8 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
 
             BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW).resetPropertiesView();
 
-            $(Elements.ADD_COMPONENT_BLOCK_LIST).empty();
-            $(Elements.ADD_RESOURCE_BLOCK_LIST).empty();
+            $(Elements.ADD_COMPONENT_BLOCK_LIST, self.el).empty();
+            $(Elements.ADD_RESOURCE_BLOCK_LIST, self.el).empty();
 
             /////////////////////////////////////////////////////////
             // show component selection list
@@ -78,12 +70,12 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 // don't show image or video component in component list
                 if (componentID == 3130 || componentID == 3100)
                     continue;
-                var snippet = '<li class="list-group-item ' + BB.lib.unclass(Elements.CLASS_ADD_BLOCK_LIST_ITEMS) + '" data-component_id="' + componentID + '" data-component_name="' + components[componentID].name + '">' +
+                var snippet = '<li class="list-group-item ' + BB.lib.unclass(Elements.CLASS_ADD_BLOCK_LIST_ITEMS, self.el) + '" data-component_id="' + componentID + '" data-component_name="' + components[componentID].name + '">' +
                     '<img class="img-responsive" src="' + components[componentID].icon + '">' +
                     '<span>' + components[componentID].name + '</span>' +
                     '<h6>' + components[componentID].description + '</h6>' +
                     '</li>';
-                $(Elements.ADD_COMPONENT_BLOCK_LIST).append(snippet);
+                $(Elements.ADD_COMPONENT_BLOCK_LIST, self.el).append(snippet);
             }
 
             /////////////////////////////////////////////////////////
@@ -100,15 +92,15 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 var size = (parseInt(recResources[i]['resource_bytes_total']) / 1000).toFixed(2);
                 var resourceDescription = 'size: ' + size + 'K dimenstion: ' + recResources[i]['resource_pixel_width'] + 'x' + recResources[i]['resource_pixel_height'];
 
-                var snippet = '<li class="list-group-item ' + BB.lib.unclass(Elements.CLASS_ADD_BLOCK_LIST_ITEMS) + '" data-resource_id="' + recResources[i]['resource_id'] + '" data-resource_name="' + recResources[i]['resource_name'] + '">'+
+                var snippet = '<li class="list-group-item ' + BB.lib.unclass(Elements.CLASS_ADD_BLOCK_LIST_ITEMS, self.el) + '" data-resource_id="' + recResources[i]['resource_id'] + '" data-resource_name="' + recResources[i]['resource_name'] + '">' +
                     '<img src="' + BB.PepperHelper.getIcon(recResources[i]['resource_type']) + '">' +
                     '<span>' + recResources[i]['resource_name'] + '</span>' +
                     '<br/><small>' + resourceDescription + '</small>' +
                     '</li>';
-                $(Elements.ADD_RESOURCE_BLOCK_LIST).append(snippet);
+                $(Elements.ADD_RESOURCE_BLOCK_LIST, self.el).append(snippet);
             });
 
-            $(Elements.CLASS_ADD_BLOCK_LIST_ITEMS).on('click', function (e) {
+            $(Elements.CLASS_ADD_BLOCK_LIST_ITEMS, self.el).on('click', function (e) {
                 var component_id = $(e.target).closest('li').data('component_id');
                 var resource_id = $(e.target).closest('li').data('resource_id');
                 var blockCode = -1;
@@ -127,11 +119,36 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
 
         },
 
-        selectView: function(){
+        /**
+         Hook onto bootstrap accordion so user can select new block to add
+         @method _buildBSAccordion
+         **/
+        _buildBSAccordion: function(){
+            var self = this;
+            var uniqueID = _.uniqueId('addBlockAccord')
+            self.$el.find('#addNewBlockListPanel').attr('id', uniqueID);
+            self.$el.find('a').attr('data-parent', '#' + uniqueID).eq(0);
+            for (var i = 0; i < 3; i++) {
+                var unique = _.uniqueId('addBlockAccord')
+                self.$el.find('a').eq(i).attr('href', '#' + unique);
+                self.$el.find('.panel-collapse').eq(i).attr('id', unique);
+            }
+        },
+
+        /**
+         Select current view which will animate page loading
+         @method selectView
+         **/
+        selectView: function () {
             var self = this;
             self.options.stackView.slideToPage(self, 'right');
         },
-        deSelectView: function(){
+
+        /**
+         Deselect current view which will animate page unloading
+         @method selectView
+         **/
+        deSelectView: function () {
             var self = this;
             self.options.stackView.slideToPage(self.options.from, 'left');
         }

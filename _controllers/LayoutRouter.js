@@ -313,8 +313,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                         stackView: self.m_campaignSliderStackView,
                         from: Elements.CAMPAIGN,
                         el: Elements.ADD_BLOCK_VIEW,
-                        to: Elements.CAMPAIGN_SELECTOR,
-                        appendTo: Elements.ADD_BLOCK_VIEW
+                        to: Elements.CAMPAIGN_SELECTOR
                     });
                     BB.comBroker.setService(BB.SERVICES.ADD_BLOCK_VIEW, self.m_addBlockView);
 
@@ -410,7 +409,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 $(Elements.PRICING_TABLE_WRAP).height(h - 200);
                 $(Elements.BLOCK_SUBPROPERTIES).height(h - 200);
                 $(Elements.BLOCK_COMMON_PROPERTIES).height(h - 200);
-                $(Elements.ADD_NEW_BLOCK_LIST_WRAP).height(h - 100);
+                $(Elements.CLASS_ADD_NEW_BLOCK_LIST_WRAP).height(h - 100);
 
                 BB.comBroker.fire(BB.EVENTS.APP_SIZED, this, null, {width: self._appWidth, height: self._appHeight});
             },

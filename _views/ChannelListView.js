@@ -119,7 +119,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             var self = this;
             var addBlockView = BB.comBroker.getService(BB.SERVICES.ADD_BLOCK_VIEW);
             addBlockView.selectView();
-            BB.comBroker.listenOnce(BB.EVENTS.ADD_NEW_BLOCK, function (e) {
+            BB.comBroker.listenOnce(BB.EVENTS.ADD_NEW_BLOCK_CHANNEL, function (e) {
                 self._createNewChannelBlock(e.edata.blockCode, e.edata.resourceID);
                 e.stopImmediatePropagation();
                 e.preventDefault();

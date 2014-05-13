@@ -9,14 +9,15 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
 
     /**
      Custom event fired when a new block is added to timeline_channel
-     @event ADD_NEW_BLOCK
+     @event ADD_NEW_BLOCK_CHANNEL
      @param {this} caller
      @param {self} context caller
      @param {event} player_code which represents a specific code assigned for each block type
      @static
      @final
      **/
-    BB.EVENTS.ADD_NEW_BLOCK = 'ADD_NEW_BLOCK';
+    BB.EVENTS.ADD_NEW_BLOCK_CHANNEL = 'ADD_NEW_BLOCK_CHANNEL';
+    BB.EVENTS.ADD_NEW_BLOCK_SCENE = 'ADD_NEW_BLOCK_SCENE';
 
     BB.SERVICES.ADD_BLOCK_VIEW = 'AddBlockView';
 
@@ -29,14 +30,14 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         initialize: function () {
             var self = this;
 
-            // Clone Add Block template
+            // Clone AddBlockTemplate
             var e = $(Elements.ADD_BLOCK_TEMPLATE).clone();
             $(self.options.el).append(e).fadeIn();
             $(e).show();
             self.el = self.$el[0];
 
-            $(this.el).find('#prev').on('click', function (e) {
-                self.options.stackView.slideToPage(self.options.from, 'left');
+            $(self.el).find('#prev').on('click', function () {
+                self._goBack();
                 return false;
             });
 
@@ -50,7 +51,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
 
         /**
          Build two lists, components and resources allowing for item selection.
-         Once an LI is selected AddBlockWizard.ADD_NEW_BLOCK is fired to announce block is added.
+         Once an LI is selected AddBlockWizard.ADD_NEW_BLOCK_CHANNEL is fired to announce block is added.
          @method _render
          @return none
          **/
@@ -110,7 +111,8 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 } else {
                     blockCode = BB.PepperHelper.getBlockCodeFromFileExt(pepper.getResourceType(resource_id));
                 }
-                BB.comBroker.fire(BB.EVENTS.ADD_NEW_BLOCK, this, self, {
+                var eventName = self.options.placement == BB.CONSTS.PLACEMENT_CHANNEL ? BB.EVENTS.ADD_NEW_BLOCK_CHANNEL : BB.EVENTS.ADD_NEW_BLOCK_SCENE;
+                BB.comBroker.fire(eventName, this, self.options.placement, {
                     blockCode: blockCode,
                     resourceID: resource_id
                 });
@@ -123,7 +125,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
          Hook onto bootstrap accordion so user can select new block to add
          @method _buildBSAccordion
          **/
-        _buildBSAccordion: function(){
+        _buildBSAccordion: function () {
             var self = this;
             var uniqueID = _.uniqueId('addBlockAccord')
             self.$el.find('#addNewBlockListPanel').attr('id', uniqueID);
@@ -132,6 +134,28 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 var unique = _.uniqueId('addBlockAccord')
                 self.$el.find('a').eq(i).attr('href', '#' + unique);
                 self.$el.find('.panel-collapse').eq(i).attr('id', unique);
+            }
+        },
+
+        /**
+         Go back after selection
+         @method _goBack
+         **/
+        _goBack: function () {
+            var self = this;
+            switch (self.options.placement) {
+                case BB.CONSTS.PLACEMENT_CHANNEL:
+                {
+                    self.options.stackView.slideToPage(self.options.from, 'left');
+                    break;
+                }
+
+                case BB.CONSTS.PLACEMENT_SCENE:
+                {
+                    self.m_sceneFaderView = BB.comBroker.getService(BB.SERVICES['SCENE_FADER_VIEW']);
+                    self.m_sceneFaderView.selectView(Elements.SCENE_PANEL_WRAP);
+                    break;
+                }
             }
         },
 
@@ -150,7 +174,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
          **/
         deSelectView: function () {
             var self = this;
-            self.options.stackView.slideToPage(self.options.from, 'left');
+            self._goBack();
         }
     });
 

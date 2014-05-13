@@ -313,7 +313,8 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                         stackView: self.m_campaignSliderStackView,
                         from: Elements.CAMPAIGN,
                         el: Elements.ADD_BLOCK_VIEW,
-                        to: Elements.CAMPAIGN_SELECTOR
+                        to: Elements.CAMPAIGN_SELECTOR,
+                        placement: BB.CONSTS.PLACEMENT_CHANNEL
                     });
                     BB.comBroker.setService(BB.SERVICES.ADD_BLOCK_VIEW, self.m_addBlockView);
 

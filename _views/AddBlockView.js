@@ -29,6 +29,22 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         initialize: function () {
             var self = this;
 
+            /*
+            self.$el = $(Elements.ADD_BLOCK_TEMPLATE).clone();
+            self.el = self.$el[0];
+            $(self.options.appendTo).append(self.el).fadeIn();
+            self.$el.show();
+            */
+
+
+            var e = $(Elements.ADD_BLOCK_TEMPLATE).clone();
+            $(Elements.ADD_BLOCK_VIEW).append(e).fadeIn();
+            $(e).show();
+            self.el = self.$el[0];
+
+
+
+
             $(this.el).find('#prev').on('click',function(e){
                 self.options.stackView.slideToPage(self.options.from, 'left');
                 return false;

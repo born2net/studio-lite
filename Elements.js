@@ -93,6 +93,8 @@ Elements.STATION_LIST_VIEW = '#stationListView';
 Elements.STATION_PROPERTIES = '#stationProperties';
 Elements.VIEWER_EDIT_PROPERTIES = '#viewerEditProperties';
 Elements.SCENE_PANEL_WRAP = '#scenePanelWrap';
+Elements.SCENE_STACKFADER_VIEW = '#sceneStackFaderView';
+Elements.SCENE_ADD_NEW_BLOCK = '#sceneAddNewBlock';
 Elements.SCENES_PANEL = '#scenesPanel';
 Elements.SCENE_CANVAS = '#sceneCanvas';
 Elements.SCENE_TOOLBAR = '#sceneToolbar';
@@ -208,8 +210,11 @@ Elements.MSG_BOOTBOX_STEPS ='#bootBoxSteps';
 Elements.FONT_SELECTOR_TEMPLATE = '#fontSelectorTemplate';
 Elements.DIMENSION_PROPS_TEMPLATE = '#dimensionPropsTemplate';
 Elements.LANGUAGE_SELECTOR_TEMPLATE = '#languageSelector';
+Elements.ADD_BLOCK_TEMPLATE = '#addBlockTemplate';
 
 // classes
+Elements.CLASS_SELECT_SCENE_DROPDOWN = '.selectSceneDropDown';
+Elements.CLASS_SCENE_ADD_NEW = '.sceneAddNew';
 Elements.CLASS_SCENE_ELEMENTS = '.sceneElements';
 Elements.CLASS_SCREEN_DIVISION = '.screenDivisionClass';
 Elements.CLASS_CHANNEL_LIST_ITEMS = '.channelListItems';

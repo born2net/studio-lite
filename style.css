@@ -353,9 +353,14 @@ aside > aside > div > ul > li {
     padding-left: 20px;
 }
 
+#sceneStackView {
+    width: 100%;
+    margin-left:auto;
+    margin-right:auto;
+}
+
 #scenePanelWrap {
-    /* opacity: 0; */
-    width: 400px;
+    width: 100%;
     margin-left:auto;
     margin-right:auto;
 }

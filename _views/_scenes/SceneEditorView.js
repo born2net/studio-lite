@@ -8,7 +8,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
     BB.SERVICES.SCREEN_LAYOUT_EDITOR_VIEW = 'SceneEditorView';
 
-    var ScenesEditView = BB.View.extend({
+    var SceneEditorView = BB.View.extend({
 
         /**
          Constructor
@@ -20,7 +20,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_selectedSceneID = undefined;
             self.m_blocks = {}; // hold references to all created player instances
             self.m_canvas = undefined;
-            self.m_properties = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
+            self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
             self.m_scenesToolbarView = new ScenesToolbarView({el: Elements.SCENE_TOOLBAR});
 
             pepper.createScenePlayersIDs();
@@ -89,6 +89,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 self.m_selectedSceneID = e.edata;
                 var domPlayerData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
                 self._disposeScene();
+                self.m_property.resetPropertiesView();
                 self._initializeCanvas(640, 400);
                 self._initializeScene(self.m_selectedSceneID);
                 self._render(domPlayerData);
@@ -223,7 +224,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         }
     });
 
-    return ScenesEditView;
+    return SceneEditorView;
 });
 
 
@@ -498,23 +499,23 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
  @method _blockSelected
  @param {Event} e
 
-_blockSelected: function (i_selected_block_id) {
-    var self = this;
-    self.selected_block_id = i_selected_block_id;
-    BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.selected_block_id);
-    $(Elements.CLASS_CHANNEL_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
-    return false;
-},
+ _blockSelected: function (i_selected_block_id) {
+ var self = this;
+ self.selected_block_id = i_selected_block_id;
+ BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.selected_block_id);
+ $(Elements.CLASS_CHANNEL_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
+ return false;
+ },
 
 
  When all block modules have loaded, begin creating blocks
  @method _onBlocksLoaded
 
-_onBlocksLoaded: function () {
-    var self = this;
-    // self._render();
-    self._listenObjectChangeResetScale();
-    // $(Elements.SCENE_CANVAS).fadeTo(333,1)
-}
+ _onBlocksLoaded: function () {
+ var self = this;
+ // self._render();
+ self._listenObjectChangeResetScale();
+ // $(Elements.SCENE_CANVAS).fadeTo(333,1)
+ }
 
-*/
+ */

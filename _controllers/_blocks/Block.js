@@ -34,7 +34,6 @@ define(['jquery', 'backbone'], function ($) {
             self.m_blockDescription = BB.PepperHelper.getBlockBoilerplate(self.m_blockType).description;
             self.m_blockIcon = BB.PepperHelper.getBlockBoilerplate(self.m_blockType).icon;
             self.m_resourceID = undefined;
-
             self.m_blockProperty = BB.comBroker.getService(BB.SERVICES['BLOCK_PROPERTIES']);
 
             self._alphaListenChange();
@@ -419,6 +418,7 @@ define(['jquery', 'backbone'], function ($) {
                 case BB.CONSTS.PLACEMENT_SCENE:
                 {
                     return pepper.getScenePlayerdataBlock(self.m_sceneID, self.m_block_id);
+                    break;
                 }
 
                 case BB.CONSTS.PLACEMENT_IS_SCENE:

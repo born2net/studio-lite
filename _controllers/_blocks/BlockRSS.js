@@ -220,7 +220,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             $(Elements.RSS_MODE_SELECT).off('change', self.m_rssModeSelect);
             $(Elements.RSS_SCROLL_SPEED).off('change', self.m_rssScrollSpeed);
 
-
             self._deleteBlock();
         }
     });

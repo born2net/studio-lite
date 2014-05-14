@@ -124,9 +124,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _render: function (i_domPlayerData) {
             var self = this;
-            var players = $(i_domPlayerData).find('Players').find('Player').each(function (i, player) {
+            $(i_domPlayerData).find('Players').find('Player').each(function (i, player) {
                 var blockID = $(player).attr('id');
-                var player_data = BB.PepperHelper.getBlockBoilerplate('3345').getDefaultPlayerData(BB.CONSTS.PLACEMENT_SCENE);
+                var player_data = (new XMLSerializer()).serializeToString(player);
                 self._createBlock(blockID, player_data);
             });
         },
@@ -138,17 +138,20 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _createBlock: function (i_blockID, i_player_data) {
             var self = this;
+            var domPlayerData = $.parseXML(i_player_data);
+            var layout = $(domPlayerData).find('Layout');
+
             var rect = new fabric.Rect({
-                left: 0,
-                top: 0,
+                left: parseInt(layout.attr('x')),
+                top: parseInt(layout.attr('y')),
+                width: parseInt(layout.attr('width')),
+                height: parseInt(layout.attr('height')),
                 fill: '#ececec',
                 hasRotatingPoint: false,
-                width: 100,
                 borderColor: '#5d5d5d',
                 stroke: 'black',
                 strokeWidth: 1,
                 lineWidth: 1,
-                height: 100,
                 cornerColor: 'black',
                 cornerSize: 5,
                 lockRotation: true,
@@ -179,25 +182,63 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
                 //// Group
                 if (group) {
-                    log('group selected')
+
+                    var selectedGroup = options.target || group;
+
+                    log('group selected');
+                    _.each(group.objects,function(selectedObject){
+
+
+                        var groupPos = {
+                            x: selectedGroup.left,
+                            y: selectedGroup.top
+                        }
+
+                        var objectPos = {
+                            xStart: (groupPos.x - (selectedObject.left*-1) )  ,
+                            xEnd: (groupPos.x - (selectedObject.left*-1)) + (selectedObject.width),
+                            yStart: (groupPos.y - (selectedObject.top*-1)),
+                            yEnd: (groupPos.y - (selectedObject.top*-1)) + (selectedObject.height)
+                        }
+
+
+                        var blockID = selectedObject.getBlockData().blockID;
+                        log('object: ' + selectedObject.m_blockType + ' ' + blockID);
+                        self._updateBlockCords(blockID, objectPos.xStart, objectPos.yStart, selectedObject.currentWidth, selectedObject.currentHeight);
+                        // BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, blockID);
+                    });
                     return;
                 }
 
                 //// Object
                 if (options.target || active) {
                     var selectedObject = options.target || active;
-                    log('object: ' + selectedObject.m_blockType);
                     var blockID = selectedObject.getBlockData().blockID;
+                    log('object: ' + selectedObject.m_blockType + ' ' + blockID);
+                    self._updateBlockCords(blockID, selectedObject.left, selectedObject.top, selectedObject.currentWidth, selectedObject.currentHeight);
                     BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, blockID);
                     return;
                 }
 
                 //// Scene
-                log('scene: ' + self.m_canvas.m_blockType);
+                log('scene: ' + self.m_canvas.m_blockType + ' ' + self.m_selectedSceneID);
                 BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.m_selectedSceneID);
                 // log('object ' + options.e.clientX + ' ' + options.e.clientY + ' ' + options.target.m_blockType);
 
             });
+        },
+
+        _updateBlockCords: function(i_blockID, x, y, w, h){
+            var self = this;
+            var domPlayerData = pepper.getScenePlayerdataBlock(self.m_selectedSceneID, i_blockID);
+            var layout = $(domPlayerData).find('Layout');
+            layout.attr('x',x);
+            layout.attr('y',y);
+            layout.attr('width',w);
+            layout.attr('height',h);
+            log(x + ' ' + y + ' ' + w + ' ' + h);
+            var player_data = (new XMLSerializer()).serializeToString(domPlayerData);
+            pepper.setScenePlayerdataBlock(self.m_selectedSceneID, i_blockID, player_data);
         },
 
         /**

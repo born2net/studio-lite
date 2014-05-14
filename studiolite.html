@@ -306,7 +306,7 @@
                 <div class="input-group">
                     <div class="input-group-btn">
                         <button type="button" class="btn btn-default input-sm dropdown-toggle" data-toggle="dropdown">
-                            <span data-localize="selectScene">Select</span> <span class="caret"></span></button>
+                            <span data-localize="selectScene">Select a scene</span> <span class="caret"></span></button>
                         <ul id="sceneSelectList" class="selectSceneDropDown dropdown-menu">
                         </ul>
                     </div>
@@ -338,6 +338,14 @@
                             data-localize-tooltip="getNextItemButtonToolTip"
                             title="get next item" data-toggle="tooltip" class="btn btn-default btn-sm"><i
                             style="font-size: 1em" class="fa fa-share"> </i></button>
+                    <button id="sceneZoomIn" type="button" data-localize="empty"
+                            data-localize-tooltip="sceneZoomIn"
+                            title="zoom in" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                            style="font-size: 1.3em" class="fa fa-search-plus"> </i></button>
+                    <button id="sceneZoomOut" type="button" data-localize="empty"
+                            data-localize-tooltip="sceneZoomOut"
+                            title="zoom out" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                            style="font-size: 1.3em" class="fa fa-search-minus"> </i></button>
                 </div>
             </div>
             <div id="sceneCanvasContainer" class="sceneElements" align="center"></div>

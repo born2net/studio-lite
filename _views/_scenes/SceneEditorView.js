@@ -23,10 +23,15 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
             self.m_scenesToolbarView = new ScenesToolbarView({el: Elements.SCENE_TOOLBAR});
 
+            self.canvasScale = 1;
+            self.SCALE_FACTOR = 1.2;
+            
+
             pepper.injectScenePlayersIDs();
             self._initializeBlockFactory();
             self._listenAddBlockWizard();
             self._listenSceneToolbarSelected();
+            self._listenZoom();
         },
 
         /**
@@ -233,6 +238,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          @method _listenObjectChangeResetScale
          **/
         _listenObjectChangeResetScale: function () {
+            return;
             var self = this;
             self.m_objectMovingHandler = _.debounce(function (e) {
                 var o = e.target;
@@ -270,6 +276,106 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             });
             self.m_sceneBlock.deleteBlock();
             self.m_blocks = {};
+        },
+
+        _listenZoom: function () {
+            var self = this;
+            $(Elements.sceneZoomIn).on('click',function(e){
+                self._zoomIn();
+            });
+            $(Elements.sceneZoomOut).on('click',function(e){
+                self._zoomOut();
+            });
+            //$(Elements.sceneZoomReset).on('click',function(e){
+            //    self._zoomReset();
+            //});
+        },
+
+        _zoomIn: function () {
+            var self = this;
+            self.canvasScale = self.canvasScale * self.SCALE_FACTOR;
+
+            self.m_canvas.setHeight(self.m_canvas.getHeight() * self.SCALE_FACTOR);
+            self.m_canvas.setWidth(self.m_canvas.getWidth() * self.SCALE_FACTOR);
+
+            var objects = self.m_canvas.getObjects();
+            for (var i in objects) {
+                var scaleX = objects[i].scaleX;
+                var scaleY = objects[i].scaleY;
+                var left = objects[i].left;
+                var top = objects[i].top;
+
+                var tempScaleX = scaleX * self.SCALE_FACTOR;
+                var tempScaleY = scaleY * self.SCALE_FACTOR;
+                var tempLeft = left * self.SCALE_FACTOR;
+                var tempTop = top * self.SCALE_FACTOR;
+
+                objects[i].scaleX = tempScaleX;
+                objects[i].scaleY = tempScaleY;
+                objects[i].left = tempLeft;
+                objects[i].top = tempTop;
+                objects[i].setCoords();
+            }
+            self.m_canvas.renderAll();
+        },
+
+        _zoomOut: function () {
+            var self = this;
+
+            self.canvasScale = self.canvasScale / self.SCALE_FACTOR;
+
+            self.m_canvas.setHeight(self.m_canvas.getHeight() * (1 / self.SCALE_FACTOR));
+            self.m_canvas.setWidth(self.m_canvas.getWidth() * (1 / self.SCALE_FACTOR));
+
+            var objects = self.m_canvas.getObjects();
+            for (var i in objects) {
+                var scaleX = objects[i].scaleX;
+                var scaleY = objects[i].scaleY;
+                var left = objects[i].left;
+                var top = objects[i].top;
+
+                var tempScaleX = scaleX * (1 / self.SCALE_FACTOR);
+                var tempScaleY = scaleY * (1 / self.SCALE_FACTOR);
+                var tempLeft = left * (1 / self.SCALE_FACTOR);
+                var tempTop = top * (1 / self.SCALE_FACTOR);
+
+                objects[i].scaleX = tempScaleX;
+                objects[i].scaleY = tempScaleY;
+                objects[i].left = tempLeft;
+                objects[i].top = tempTop;
+
+                objects[i].setCoords();
+            }
+
+            self.m_canvas.renderAll();
+        },
+
+        _zoomReset: function () {
+            var self = this;
+            self.m_canvas.setHeight(self.m_canvas.getHeight() * (1 / self.canvasScale));
+            self.m_canvas.setWidth(self.m_canvas.getWidth() * (1 / self.canvasScale));
+
+            var objects = self.m_canvas.getObjects();
+            for (var i in objects) {
+                var scaleX = objects[i].scaleX;
+                var scaleY = objects[i].scaleY;
+                var left = objects[i].left;
+                var top = objects[i].top;
+
+                var tempScaleX = scaleX * (1 / self.canvasScale);
+                var tempScaleY = scaleY * (1 / self.canvasScale);
+                var tempLeft = left * (1 / self.canvasScale);
+                var tempTop = top * (1 / self.canvasScale);
+
+                objects[i].scaleX = tempScaleX;
+                objects[i].scaleY = tempScaleY;
+                objects[i].left = tempLeft;
+                objects[i].top = tempTop;
+
+                objects[i].setCoords();
+            }
+            self.m_canvas.renderAll();
+            self.canvasScale = 1;
         }
     });
 

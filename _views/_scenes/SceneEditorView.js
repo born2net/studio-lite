@@ -25,6 +25,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
             pepper.createScenePlayersIDs();
             self._initializeBlockFactory();
+            self._listenAddBlockWizard();
             self._listenSceneToolbarSelected();
         },
 
@@ -93,6 +94,19 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 self._initializeCanvas(640, 400);
                 self._initializeScene(self.m_selectedSceneID);
                 self._render(domPlayerData);
+            });
+        },
+
+        /**
+         Listen to and add new component / resources to scene
+         @method _listenAddBlockWizard
+         @param {event} e
+         **/
+        _listenAddBlockWizard: function (e) {
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS.ADD_NEW_BLOCK_SCENE, function (e) {
+                e.stopImmediatePropagation();
+                e.preventDefault();
             });
         },
 

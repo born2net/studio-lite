@@ -137,7 +137,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             var self = this;
 
             var totalChannelLength = self._getTotalDurationChannel();
-            var jData = pepper.createNewPlayer(self.selected_campaign_timeline_chanel_id, i_blockID, totalChannelLength, i_resourceID);
+            var jData = pepper.createNewChannelPlayer(self.selected_campaign_timeline_chanel_id, i_blockID, totalChannelLength, i_resourceID);
             var campaign_timeline_chanel_player_id = jData['campaign_timeline_chanel_player_id'];
             var campaign_timeline_chanel_player_data = jData['campaign_timeline_chanel_player_data'];
 

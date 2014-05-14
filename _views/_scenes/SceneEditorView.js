@@ -106,7 +106,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             BB.comBroker.listen(BB.EVENTS.ADD_NEW_BLOCK_SCENE, function (e) {
                 var blockID = pepper.getUniqueSceneBlockID();
-                var player_data = BB.PepperHelper.getBlockBoilerplate('3345').getDefaultPlayerData();
+                var player_data = BB.PepperHelper.getBlockBoilerplate('3345').getDefaultPlayerData(BB.CONSTS.PLACEMENT_SCENE);
                 var domPlayerData = $.parseXML(player_data);
                 $(domPlayerData).find('Player').attr('id', blockID);
                 player_data = (new XMLSerializer()).serializeToString(domPlayerData);
@@ -126,7 +126,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             var players = $(i_domPlayerData).find('Players').find('Player').each(function (i, player) {
                 var blockID = $(player).attr('id');
-                var player_data = BB.PepperHelper.getBlockBoilerplate('3345').getDefaultPlayerData();
+                var player_data = BB.PepperHelper.getBlockBoilerplate('3345').getDefaultPlayerData(BB.CONSTS.PLACEMENT_SCENE);
                 self._createBlock(blockID, player_data);
             });
         },

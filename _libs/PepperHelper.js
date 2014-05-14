@@ -67,14 +67,36 @@ PepperHelper.prototype = {
         };
 
         self.m_components = {
+            3100: {
+                name: 'Video',
+                acronym: 'Video',
+                description: 'Movie file',
+                getDefaultPlayerData: function (i_placement, i_resourceID) {
+                    return  '<Player player="3100" label="Video" interactive="0">' +
+                                '<Data>' +
+                                    self.getCommonDefaultXML() +
+                                    self.getCommonSceneLayout(i_placement) +
+                                    '<Resource hResource="' + i_resourceID + '">' +
+                                    '<AspectRatio maintain="1" />' +
+                                    '<Video autoRewind="1" volume="1" backgroundAlpha="1" />' +
+                                    '</Resource>' +
+                                '</Data>' +
+                            '</Player>';
+                },
+                ext: [
+                    0, 'flv',
+                    1, 'mp4'
+                ]
+            },
             3130: {
                 name: 'Image',
                 acronym: 'Image',
-                description: 'Bimap file',
-                getDefaultPlayerData: function (i_resourceID) {
+                description: 'Bitmap file',
+                getDefaultPlayerData: function (i_placement, i_resourceID) {
                     return  '<Player player="3130" label="" interactive="0">' +
                                 '<Data>' +
                                     self.getCommonDefaultXML() +
+                                    self.getCommonSceneLayout(i_placement) +
                                     '<Resource hResource="' + i_resourceID + '">' +
                                     '<AspectRatio maintain="1" />' +
                                     '<Image />' +
@@ -92,10 +114,11 @@ PepperHelper.prototype = {
                 name: 'External image',
                 acronym: 'External image',
                 description: 'Download images and Flash swf from external web links',
-                getDefaultPlayerData: function () {
+                getDefaultPlayerData: function (i_placement) {
                     return  '<Player player="3160" label="External image Code" interactive="0">' +
                                 '<Data>' +
                                     self.getCommonDefaultXML() +
+                                    self.getCommonSceneLayout(i_placement) +
                                     '<LINK src=""/>'+
                                 '</Data>' +
                             '</Player>'
@@ -106,44 +129,26 @@ PepperHelper.prototype = {
                 name: 'External video',
                 acronym: 'External video',
                 description: 'Download video from external web links',
-                getDefaultPlayerData: function () {
+                getDefaultPlayerData: function (i_placement) {
                     return  '<Player player="3150" label="External video" interactive="0">' +
                                 '<Data>' +
                                     self.getCommonDefaultXML() +
+                                    self.getCommonSceneLayout(i_placement) +
                                     '<LINK src=""/>'+
                                 '</Data>' +
                             '</Player>'
                 },
                 icon: self.getIcon('extvideo')
             },
-            3100: {
-                name: 'Video',
-                acronym: 'Video',
-                description: 'Movie file',
-                getDefaultPlayerData: function (i_resourceID) {
-                    return '<Player player="3100" label="Video" interactive="0">' +
-                                    '<Data>' +
-                                        self.getCommonDefaultXML() +
-                                        '<Resource hResource="' + i_resourceID + '">' +
-                                            '<AspectRatio maintain="1" />' +
-                                            '<Video autoRewind="1" volume="1" backgroundAlpha="1" />' +
-                                        '</Resource>' +
-                                    '</Data>' +
-                                '</Player>';
-                },
-                ext: [
-                    0, 'flv',
-                    1, 'mp4'
-                ]
-            },
             3430: {
                 name: 'QR',
                 acronym: 'QR',
                 description: 'QR code for mobile device integration',
-                getDefaultPlayerData: function () {
+                getDefaultPlayerData: function (i_placement) {
                     return  '<Player player="3430" label="QR Code" interactive="0">' +
                                 '<Data>' +
                                     self.getCommonDefaultXML() +
+                                    self.getCommonSceneLayout(i_placement) +
                                     '<Text textSource="static"></Text>' +
                                 '</Data>' +
                             '</Player>'
@@ -154,10 +159,11 @@ PepperHelper.prototype = {
                 name: 'Multimedia RSS',
                 acronym: 'MRSS',
                 description: 'multimedia video stream',
-                getDefaultPlayerData: function () {
+                getDefaultPlayerData: function (i_placement) {
                     return  '<Player player="3340" label="MRSS / Podcast" interactive="0">' +
                                 '<Data>' +
                                     self.getCommonDefaultXML() +
+                                    self.getCommonSceneLayout(i_placement) +
                                     '<Rss url="http://podcast.msnbc.com/audio/podcast/MSNBC-YB-NETCAST-M4V.xml" maintainAspectRatio="1" />'+
                                 '</Data>' +
                             '</Player>'
@@ -168,10 +174,11 @@ PepperHelper.prototype = {
                 name: 'HTML Website content',
                 acronym: 'HTML5',
                 description: 'HTML5 web integration',
-                getDefaultPlayerData: function () {
+                getDefaultPlayerData: function (i_placement) {
                     return  '<Player player="3235" label="HTML5" interactive="0">' +
                                 '<Data>' +
                                     self.getCommonDefaultXML() +
+                                    self.getCommonSceneLayout(i_placement) +
                                     '<HTML src="http://m.cnn.com" config=""/>' +
                                 '</Data>' +
                             '</Player>'
@@ -182,10 +189,11 @@ PepperHelper.prototype = {
                 name: 'Clock Date/Time',
                 acronym: 'Clock',
                 description: 'Set live local date and time',
-                getDefaultPlayerData: function () {
+                getDefaultPlayerData: function (i_placement) {
                     return  '<Player player="3320" label="Clock Date" interactive="0">' +
                                 '<Data>' +
                                     self.getCommonDefaultXML() +
+                                    self.getCommonSceneLayout(i_placement) +
                                     '<Clock clockFormat="custom" clockMask="EEEE, MMM. D, YYYY at L:NN A">'+
                                         '<Font fontSize="11" fontColor="13158" fontFamily="Arial" fontWeight="bold" fontStyle="italic" textDecoration="underline" textAlign="center" />'+
                                      '</Clock>'+
@@ -223,10 +231,11 @@ PepperHelper.prototype = {
                 name: 'Label text',
                 acronym: 'Label',
                 description: 'Label editor with custom text properties',
-                getDefaultPlayerData: function () {
+                getDefaultPlayerData: function (i_placement) {
                     return  '<Player player="3241" label="Label" interactive="0">' +
                                 '<Data>' +
                                     self.getCommonDefaultXML() +
+                                    self.getCommonSceneLayout(i_placement) +
                                     '<Label>'+
                                         '<Text>some text here!</Text>'+
                                         '<Font fontSize="16" fontColor="65280" fontFamily="Arial" fontWeight="normal" fontStyle="normal" textDecoration="none" textAlign="left" />' +
@@ -240,10 +249,11 @@ PepperHelper.prototype = {
                 name: 'Scene',
                 acronym: 'Scene',
                 description: 'A Scene editor',
-                getDefaultPlayerData: function () {
+                getDefaultPlayerData: function (i_placement) {
                     return  '<Player player="3510" label="My scene" interactive="0">' +
                                 '<Data>' +
                                     self.getCommonDefaultXML() +
+                                    self.getCommonSceneLayout(i_placement) +
                                     '<Scene defaultDuration="10">' +
                                         '<Layout>' +
                                             '<BasicLayout/>' +
@@ -260,10 +270,11 @@ PepperHelper.prototype = {
                 name: 'Really Simple Syndication',
                 acronym: 'RSS',
                 description: 'RSS for daily fresh scrolling news feed',
-                getDefaultPlayerData: function () {
+                getDefaultPlayerData: function (i_placement) {
                     return  '<Player player="3345" label="RSS news" interactive="0">' +
                                 '<Data>' +
                                     self.getCommonDefaultXML() +
+                                    self.getCommonSceneLayout(i_placement) +
                                     '<Rss url="http://rss.news.yahoo.com/rss/politics" minRefreshTime="30" speed="10" vertical="0" rtl="0">' +
                                         '<Title>' +
                                             '<Font fontSize="16" fontColor="65280" fontFamily="Arial" fontWeight="normal" fontStyle="normal" textDecoration="none" textAlign="left" />' +
@@ -278,6 +289,19 @@ PepperHelper.prototype = {
                 icon: self.getIcon('rss')
             }
         };
+    },
+
+    /**
+     Get the common layout which only applies when block is inside a scene
+     @method getCommonSceneLayout
+     @param {string} i_placement
+     @return {String} common xml
+     **/
+    getCommonSceneLayout: function(i_placement){
+        var self = this;
+        if (i_placement == BB.CONSTS.PLACEMENT_CHANNEL)
+            return '';
+        return '<Layout rotation="0" x="0" y="0" width="100" height="100" />';
     },
 
     /**

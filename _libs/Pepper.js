@@ -379,7 +379,7 @@ Pepper.prototype = {
      @method getUniqueSceneBlockID
      @return {Number} Unique scene player id
      **/
-    getUniqueSceneBlockID: function(){
+    getUniqueSceneBlockID: function () {
         return ($.base64.encode(_.uniqueId('blockid'))).replace('=', '');
     },
 
@@ -387,11 +387,11 @@ Pepper.prototype = {
      Inject unique player ids for all players within a scene
      @method createScenePlayersIDs
      **/
-    createScenePlayersIDs: function(){
+    createScenePlayersIDs: function () {
         var self = this;
         var scenes = pepper.getScenes();
         _.each(scenes, function (domPlayerData, scene_id) {
-            var players = $(domPlayerData).find('Players').find('Player').each(function(i, player){
+            var players = $(domPlayerData).find('Players').find('Player').each(function (i, player) {
                 var blockID = pepper.getUniqueSceneBlockID();
                 $(player).attr('id', blockID);
             });
@@ -403,13 +403,13 @@ Pepper.prototype = {
      Remove all player ids from player_data inside a scene
      @method removeScenePlayersIDs
      **/
-    removeScenePlayersIDs: function(){
+    removeScenePlayersIDs: function () {
         var self = this;
         self.m_tempScenePlayerIDs = {};
         var scenes = pepper.getScenes();
         _.each(scenes, function (domPlayerData, scene_id) {
             self.m_tempScenePlayerIDs[scene_id] = (new XMLSerializer()).serializeToString(domPlayerData);
-            var players = $(domPlayerData).find('Players').find('Player').each(function(i, player){
+            var players = $(domPlayerData).find('Players').find('Player').each(function (i, player) {
                 var blockID = pepper.getUniqueSceneBlockID();
                 $(player).removeAttr('id');
             });
@@ -422,7 +422,7 @@ Pepper.prototype = {
      remote server expects a scene's player_data to have no player ids on its scene player_data
      @method restoreScenesWithPlayersIDs
      **/
-    restoreScenesWithPlayersIDs: function(){
+    restoreScenesWithPlayersIDs: function () {
         var self = this;
         _.each(self.m_tempScenePlayerIDs, function (scene_player_data, scene_id) {
             pepper.setScenePlayerData(scene_id, scene_player_data);
@@ -442,7 +442,7 @@ Pepper.prototype = {
         var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_player_data_id);
         var player_data = recPlayerData['player_data_value'];
         var domPlayerData = $.parseXML(player_data)
-        var foundSnippet =  $(domPlayerData).find('[id="'+i_player_data_id + '"]');
+        var foundSnippet = $(domPlayerData).find('[id="' + i_player_data_id + '"]');
         return foundSnippet[0];
     },
 
@@ -459,7 +459,7 @@ Pepper.prototype = {
         var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_player_data_id);
         var player_data = recPlayerData['player_data_value'];
         var domPlayerData = $.parseXML(player_data)
-        $(domPlayerData).find('[id="'+i_player_data_id + '"]').remove();
+        $(domPlayerData).find('[id="' + i_player_data_id + '"]').remove();
         var xSnippet = (new XMLSerializer()).serializeToString(domPlayerData);
         self.setScenePlayerData(i_scene_player_data_id, xSnippet);
         self.appendScenePlayerBlock(i_scene_player_data_id, i_player_data);
@@ -778,20 +778,20 @@ Pepper.prototype = {
 
     /**
      Create a new player (a.k.a block) and add it to the specified channel_id
-     @method createNewPlayer
+     @method createNewChannelPlayer
      @param {Number} i_campaign_timeline_chanel_id is the channel id assign player to
      @param {Number} i_playerCode is a unique pre-set code that exists per type of block (see component list for all available code)
      @param {Number} i_offset set in seconds of when to begin playing the content with respect to timeline_channel
      @param {Number} i_resourceID optional param used when creating a block with embedded resource (i.e.: video / image / swf)
      @return {Object} campaign_timeline_chanel_player_id and campaign_timeline_chanel_player_data as json object
      **/
-    createNewPlayer: function (i_campaign_timeline_chanel_id, i_playerCode, i_offset, i_resourceID) {
+    createNewChannelPlayer: function (i_campaign_timeline_chanel_id, i_playerCode, i_offset, i_resourceID) {
         var self = this;
 
         var timelinePlayers = self.m_msdb.table_campaign_timeline_chanel_players();
         var recTimelinePlayer = timelinePlayers.createRecord();
         var component = BB.PepperHelper.getBlockBoilerplate(i_playerCode);
-        var player_data = component.getDefaultPlayerData(i_resourceID);
+        var player_data = component.getDefaultPlayerData(BB.CONSTS.PLACEMENT_CHANNEL, i_resourceID);
         recTimelinePlayer.player_data = player_data;
         recTimelinePlayer.campaign_timeline_chanel_id = i_campaign_timeline_chanel_id;
         recTimelinePlayer.player_duration = 10;

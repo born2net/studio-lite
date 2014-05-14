@@ -182,29 +182,16 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
                 //// Group
                 if (group) {
-
-                    var selectedGroup = options.target || group;
-
                     log('group selected');
-                    _.each(group.objects,function(selectedObject){
-
-
-                        var groupPos = {
-                            x: selectedGroup.left,
-                            y: selectedGroup.top
-                        }
-
+                    var selectedGroup = options.target || group;
+                    _.each(group.objects, function (selectedObject) {
                         var objectPos = {
-                            xStart: (groupPos.x - (selectedObject.left*-1) )  ,
-                            xEnd: (groupPos.x - (selectedObject.left*-1)) + (selectedObject.width),
-                            yStart: (groupPos.y - (selectedObject.top*-1)),
-                            yEnd: (groupPos.y - (selectedObject.top*-1)) + (selectedObject.height)
-                        }
-
-
+                            x: (selectedGroup.left + (selectedObject.left)),
+                            y: (selectedGroup.top + (selectedObject.top))
+                        };
                         var blockID = selectedObject.getBlockData().blockID;
                         log('object: ' + selectedObject.m_blockType + ' ' + blockID);
-                        self._updateBlockCords(blockID, objectPos.xStart, objectPos.yStart, selectedObject.currentWidth, selectedObject.currentHeight);
+                        self._updateBlockCords(blockID, objectPos.x, objectPos.y, selectedObject.currentWidth, selectedObject.currentHeight);
                         // BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, blockID);
                     });
                     return;
@@ -228,14 +215,14 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             });
         },
 
-        _updateBlockCords: function(i_blockID, x, y, w, h){
+        _updateBlockCords: function (i_blockID, x, y, w, h) {
             var self = this;
             var domPlayerData = pepper.getScenePlayerdataBlock(self.m_selectedSceneID, i_blockID);
             var layout = $(domPlayerData).find('Layout');
-            layout.attr('x',x);
-            layout.attr('y',y);
-            layout.attr('width',w);
-            layout.attr('height',h);
+            layout.attr('x', parseInt(x));
+            layout.attr('y', parseInt(y));
+            layout.attr('width', parseInt(w));
+            layout.attr('height', parseInt(h));
             log(x + ' ' + y + ' ' + w + ' ' + h);
             var player_data = (new XMLSerializer()).serializeToString(domPlayerData);
             pepper.setScenePlayerdataBlock(self.m_selectedSceneID, i_blockID, player_data);

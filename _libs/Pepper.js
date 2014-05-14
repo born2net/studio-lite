@@ -385,9 +385,9 @@ Pepper.prototype = {
 
     /**
      Inject unique player ids for all players within a scene
-     @method createScenePlayersIDs
+     @method injectScenePlayersIDs
      **/
-    createScenePlayersIDs: function () {
+    injectScenePlayersIDs: function () {
         var self = this;
         var scenes = pepper.getScenes();
         _.each(scenes, function (domPlayerData, scene_id) {

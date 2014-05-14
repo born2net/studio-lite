@@ -50,7 +50,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 $.each([xSnippetTitle, xSnippetDescription],function(k,xmlData){
                     config.bold == true ? xmlData.attr('fontWeight', 'bold') : xmlData.attr('fontWeight', 'normal');
                     config.italic == true ? xmlData.attr('fontStyle', 'italic') : xmlData.attr('fontStyle', 'normal');
-                    config.underline == true ? xmlData.attr('textDecoration', 'underline') : xmlData.attr('textDecoration', 'normal');
+                    config.underline == true ? xmlData.attr('textDecoration', 'underline') : xmlData.attr('textDecoration', 'none');
                     xmlData.attr('fontColor', BB.lib.colorToDecimal(config.color));
                     xmlData.attr('fontSize', config.size);
                     xmlData.attr('fontFamily', config.font);

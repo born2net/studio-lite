@@ -18,12 +18,12 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             BB.comBroker.setService(BB.SERVICES['SCENE_EDIT_VIEW'], self);
             self.m_selectedSceneID = undefined;
-            self.m_blocks = {}; // hold references to all created player instances
+            self.m_blocks = {};
             self.m_canvas = undefined;
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
             self.m_scenesToolbarView = new ScenesToolbarView({el: Elements.SCENE_TOOLBAR});
 
-            pepper.createScenePlayersIDs();
+            pepper.injectScenePlayersIDs();
             self._initializeBlockFactory();
             self._listenAddBlockWizard();
             self._listenSceneToolbarSelected();
@@ -53,7 +53,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
         /**
          Init a new canvas and listen to even changes on that new canvas
-         @method 1-888-384-8400 id
+         @method _initializeCanvas
          @param {Number} w width
          @param {Number} h height
          **/
@@ -106,7 +106,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             BB.comBroker.listen(BB.EVENTS.ADD_NEW_BLOCK_SCENE, function (e) {
                 var blockID = pepper.getUniqueSceneBlockID();
-                var player_data = BB.PepperHelper.getBlockBoilerplate('3345').getDefaultPlayerData(BB.CONSTS.PLACEMENT_SCENE);
+                var player_data = BB.PepperHelper.getBlockBoilerplate(e.edata.blockCode).getDefaultPlayerData(BB.CONSTS.PLACEMENT_SCENE, e.edata.resourceID);
                 var domPlayerData = $.parseXML(player_data);
                 $(domPlayerData).find('Player').attr('id', blockID);
                 player_data = (new XMLSerializer()).serializeToString(domPlayerData);
@@ -139,16 +139,16 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         _createBlock: function (i_blockID, i_player_data) {
             var self = this;
             var rect = new fabric.Rect({
-                left: 60,
-                top: 10,
+                left: 0,
+                top: 0,
                 fill: '#ececec',
                 hasRotatingPoint: false,
-                width: 200,
+                width: 100,
                 borderColor: '#5d5d5d',
                 stroke: 'black',
                 strokeWidth: 1,
                 lineWidth: 1,
-                height: 20,
+                height: 100,
                 cornerColor: 'black',
                 cornerSize: 5,
                 lockRotation: true,
@@ -158,7 +158,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var block = self.m_blockFactory.createBlock(i_blockID, i_player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_selectedSceneID);
             self.m_blocks[i_blockID] = block;
             _.extend(block, rect);
-            block.listenSceneSelection(self.m_canvas);
+            // block.listenSceneSelection(self.m_canvas);
             self.m_canvas.add(block);
         },
 

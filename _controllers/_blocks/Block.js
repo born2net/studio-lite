@@ -476,17 +476,17 @@ define(['jquery', 'backbone'], function ($) {
         /**
          Listen for when this instance is selected within a scene canvas
          @method listenSceneSelection
-         **/
         listenSceneSelection: function (i_canvas) {
             var self = this;
             self.m_canvas = i_canvas;
             self.m_sceneSelectedHandler = function (e) {
-                if (e.target !== self) //todo: add || !self.m_selected
+                if (e.target !== self)
                     return;
                 log('Scene block selected id: ' + self.m_block_id);
             };
             self.m_canvas.on('object:selected', self.m_sceneSelectedHandler);
         },
+         **/
 
         /**
          Delete block is a public method used as fall back method, if not overridden by inherited instance.

@@ -93,7 +93,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
                 config.bold == true ? xSnippetFont.attr('fontWeight', 'bold') : xSnippetFont.attr('fontWeight', 'normal');
                 config.italic == true ? xSnippetFont.attr('fontStyle', 'italic') : xSnippetFont.attr('fontStyle', 'normal');
-                config.underline == true ? xSnippetFont.attr('textDecoration', 'underline') : xSnippetFont.attr('textDecoration', 'normal');
+                config.underline == true ? xSnippetFont.attr('textDecoration', 'underline') : xSnippetFont.attr('textDecoration', 'none');
                 xSnippetFont.attr('fontColor', BB.lib.colorToDecimal(config.color));
                 xSnippetFont.attr('fontSize', config.size);
                 xSnippetFont.attr('fontFamily', config.font);

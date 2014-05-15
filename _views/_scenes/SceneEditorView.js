@@ -31,6 +31,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._listenAddBlockWizard();
             self._listenSceneToolbarSelected();
             self._listenZoom();
+            self._listenPushToTop();
+            self._listenPushToBottom();
         },
 
         /**
@@ -94,6 +96,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 self.m_selectedSceneID = e.edata;
                 var domPlayerData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
                 self._disposeScene();
+                self._zoomReset();
                 self.m_property.resetPropertiesView();
                 self._initializeCanvas(600, 400);
                 self._initializeScene(self.m_selectedSceneID);
@@ -122,6 +125,55 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         },
 
         /**
+         Listen to re-order of screen division, putting selected on top
+         @method _listenPushToTop
+         **/
+        _listenPushToTop: function () {
+            var self = this;
+            $(Elements.SCENE_EDITOR_PUSH_TOP, self.$el).on('click', function () {
+                var block = self.m_canvas.getActiveObject();
+                if (!block)
+                    return;
+                self.m_canvas.bringToFront(block);
+                self._updateZorder();
+            });
+        },
+
+        /**
+         Listen to re-order of screen division, putting selected at bottom
+         @method _listenPushToBottom
+         **/
+        _listenPushToBottom: function () {
+            var self = this;
+            $(Elements.SCENE_EDITOR_PUSH_BOTTOM, self.$el).on('click', function () {
+                var block = self.m_canvas.getActiveObject();
+                if (!block)
+                    return;
+                self.m_canvas.sendToBack(block);
+                self._updateZorder();
+            });
+        },
+
+        /**
+         Change the z-order of objects in pepper
+         @method _updateZorder
+         **/
+        _updateZorder: function () {
+            var self = this;
+            var totalViews = self.m_canvas.getObjects().length;
+            var i = 0;
+            var domSceneData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
+            self.m_canvas.forEachObject(function (obj) {
+                i++;
+                var blockID = obj.getBlockData().blockID;
+                log((totalViews - i) + ' ' + blockID);
+                var o = $(domSceneData).find('[id="' + blockID + '"]');
+                $(domSceneData).find('Players').prepend(o);
+            });
+            pepper.setScenePlayerData(self.m_selectedSceneID, (new XMLSerializer()).serializeToString(domSceneData));
+        },
+
+        /**
          Render the canvas thus creating all associated player blocks of the scene
          @method _render
          @param {Object} i_domPlayerData
@@ -131,7 +183,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             $(i_domPlayerData).find('Players').find('Player').each(function (i, player) {
                 var blockID = $(player).attr('id');
                 var player_data = (new XMLSerializer()).serializeToString(player);
-                self._createBlock(blockID, player_data);
+                var block = self._createBlock(blockID, player_data);
+                self.m_canvas.bringToFront(block);
+
             });
         },
 
@@ -139,6 +193,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          Create a block inside a scene using it's player_data
          @method _createBlock
          @param {Number} i_blockID
+         @return {Object} block
          **/
         _createBlock: function (i_blockID, i_player_data) {
             var self = this;
@@ -167,6 +222,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             _.extend(block, rect);
             // block.listenSceneSelection(self.m_canvas);
             self.m_canvas.add(block);
+            return block;
         },
 
         /**
@@ -196,6 +252,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         var blockID = selectedObject.getBlockData().blockID;
                         log('object: ' + selectedObject.m_blockType + ' ' + blockID);
                         self._updateBlockCords(blockID, objectPos.x, objectPos.y, selectedObject.currentWidth, selectedObject.currentHeight);
+                        self._updateZorder();
                         // BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, blockID);
                     });
                     return;
@@ -210,6 +267,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     var zoomedOut = 1 - selectedObject.scaleY;
                     self._updateBlockCords(blockID, selectedObject.left, selectedObject.top, selectedObject.currentWidth, selectedObject.currentHeight);
                     BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, blockID);
+                    self._updateZorder();
                     return;
                 }
 
@@ -227,14 +285,14 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var sx = 1 / self.m_canvasScale;
             h = h * sy;
             w = w * sx;
-            log(h + ' ' + w);
+            x = x * sx;
+            y = y * sy;
             var domPlayerData = pepper.getScenePlayerdataBlock(self.m_selectedSceneID, i_blockID);
             var layout = $(domPlayerData).find('Layout');
             layout.attr('x', parseInt(x));
             layout.attr('y', parseInt(y));
             layout.attr('width', parseInt(w));
             layout.attr('height', parseInt(h));
-
             var player_data = (new XMLSerializer()).serializeToString(domPlayerData);
             pepper.setScenePlayerdataBlock(self.m_selectedSceneID, i_blockID, player_data);
         },
@@ -357,6 +415,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
         _zoomReset: function () {
             var self = this;
+            if (!self.m_canvas)
+                return;
             self.m_canvas.setHeight(self.m_canvas.getHeight() * (1 / self.m_canvasScale));
             self.m_canvas.setWidth(self.m_canvas.getWidth() * (1 / self.m_canvasScale));
 

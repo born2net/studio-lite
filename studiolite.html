@@ -310,8 +310,6 @@
                         <ul id="sceneSelectList" class="selectSceneDropDown dropdown-menu">
                         </ul>
                     </div>
-                    <input id="sceneSelectedName" type="text" class="form-control input-sm" data-localize="sceneHolder"
-                           placeholder="scene">
                 </div>
                 <div class="btn-group">
                     <div class="btn-group">
@@ -715,15 +713,13 @@
             <div id="blockSceneCommonProperties" style="display: none"><span>Scene properties</span>
 
                 <div data-role="fieldcontain" data-inset="true">
-                    <input type="text" name="name" value="" placeholder="Scene name" data-localize="enterSceneText">
+                    <input id="sceneNameInput" type="text" name="name" value="" placeholder="Scene name" data-localize="enterSceneText">
                 </div>
                 <div data-role="fieldcontain" data-inset="true">
-                    <input type="text" name="name" value="" placeholder="Scene width"
-                           data-localize="enterSceneWidth">
+                    <input id="sceneWidthInput" type="text" name="name" value="" placeholder="Scene width" data-localize="enterSceneWidth">
                 </div>
                 <div data-role="fieldcontain" data-inset="true">
-                    <input type="text" name="name" value="" placeholder="Scene height"
-                           data-localize="enterSceneHeight">
+                    <input id="sceneHeightInput" type="text" name="name" value="" placeholder="Scene height" data-localize="enterSceneHeight">
                 </div>
             </div>
             <div id="blockQRCommonProperties" style="display: none"><span>QR</span>

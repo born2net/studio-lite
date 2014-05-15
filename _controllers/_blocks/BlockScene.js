@@ -21,7 +21,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             _.extend(options, {blockType: self.m_blockType})
             Block.prototype.constructor.call(this, options);
             self._initSubPanel(Elements.BLOCK_SCENE_COMMON_PROPERTIES);
-            self._listenInputChange();
+            self._listenInputChanges();
         },
 
         /**
@@ -29,9 +29,22 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          @method _listenInputChange
          @return none
          **/
-        _listenInputChange: function () {
+        _listenInputChanges: function () {
             var self = this;
-            self.m_inputChangeHandler = _.debounce(function (e) {
+
+            self.m_inputNameChangeHandler = _.debounce(function (e) {
+                if (!self.m_selected)
+                    return;
+                var text = $(e.target).val();
+                var domPlayerData = self._getBlockPlayerData();
+                $(domPlayerData).find('Player').eq(0).attr('label',text);
+                self._setBlockPlayerData(domPlayerData);
+                BB.comBroker.fire(BB.EVENTS.SCENE_RENAMED, this);
+            }, 150);
+            $(Elements.SCENE_NAME_INPUT).on("input", self.m_inputNameChangeHandler);
+
+
+            self.m_inputWidthChangeHandler = _.debounce(function (e) {
                 if (!self.m_selected)
                     return;
                 var text = $(e.target).val();
@@ -39,9 +52,19 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var xSnippet = $(domPlayerData).find('Text');
                 $(xSnippet).text(text);
                 self._setBlockPlayerData(domPlayerData);
-                // log(xSnippet[0].outerHTML);
             }, 150);
-            $(Elements.QR_TEXT).on("input", self.m_inputChangeHandler);
+            $(Elements.SCENE_WIDTH_INPUT).on("input", self.m_inputWidthChangeHandler);
+
+            self.m_inputHeightChangeHandler = _.debounce(function (e) {
+                if (!self.m_selected)
+                    return;
+                var text = $(e.target).val();
+                var domPlayerData = self._getBlockPlayerData();
+                var xSnippet = $(domPlayerData).find('Text');
+                $(xSnippet).text(text);
+                self._setBlockPlayerData(domPlayerData);
+            }, 150);
+            $(Elements.SCENE_HEIGHT_INPUT).on("input", self.m_inputHeightChangeHandler);
         },
 
         /**
@@ -51,9 +74,9 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _populate: function () {
             var self = this;
-            //var domPlayerData = self._getBlockPlayerData();
-            //var xSnippet = $(domPlayerData).find('Text');
-            //$(Elements.QR_TEXT).val(xSnippet.text());
+            var domPlayerData = self._getBlockPlayerData();
+            var label = $(domPlayerData).find('Player').eq(0).attr('label');
+            $(Elements.SCENE_NAME_INPUT).val(label);
         },
 
         /**
@@ -74,7 +97,9 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         deleteBlock: function () {
             var self = this;
-            $(Elements.QR_TEXT).off("input", self.m_inputChangeHandler);
+            $(Elements.SCENE_NAME_INPUT).off("input", self.m_inputNameChangeHandler);
+            $(Elements.SCENE_WIDTH_INPUT).off("input", self.m_inputWidthChangeHandler);
+            $(Elements.SCENE_HEIGHT_INPUT).off("input", self.m_inputHeightChangeHandler);
             self._deleteBlock();
         }
     });

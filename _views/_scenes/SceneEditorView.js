@@ -161,12 +161,12 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         _updateZorder: function () {
             var self = this;
             var totalViews = self.m_canvas.getObjects().length;
-            var i = 0;
+            // var i = 0;
             var domSceneData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
             self.m_canvas.forEachObject(function (obj) {
-                i++;
+                // i++;
                 var blockID = obj.getBlockData().blockID;
-                log((totalViews - i) + ' ' + blockID);
+                // log((totalViews - i) + ' ' + blockID);
                 var o = $(domSceneData).find('[id="' + blockID + '"]');
                 $(domSceneData).find('Players').prepend(o);
             });
@@ -356,8 +356,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
         _zoomIn: function () {
             var self = this;
+            self.m_canvas.discardActiveGroup();
             self.m_canvasScale = self.m_canvasScale * self.SCALE_FACTOR;
-
             self.m_canvas.setHeight(self.m_canvas.getHeight() * self.SCALE_FACTOR);
             self.m_canvas.setWidth(self.m_canvas.getWidth() * self.SCALE_FACTOR);
 
@@ -384,9 +384,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
         _zoomOut: function () {
             var self = this;
-
+            self.m_canvas.discardActiveGroup();
             self.m_canvasScale = self.m_canvasScale / self.SCALE_FACTOR;
-
             self.m_canvas.setHeight(self.m_canvas.getHeight() * (1 / self.SCALE_FACTOR));
             self.m_canvas.setWidth(self.m_canvas.getWidth() * (1 / self.SCALE_FACTOR));
 
@@ -417,6 +416,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             if (!self.m_canvas)
                 return;
+            self.m_canvas.discardActiveGroup();
             self.m_canvas.setHeight(self.m_canvas.getHeight() * (1 / self.m_canvasScale));
             self.m_canvas.setWidth(self.m_canvas.getWidth() * (1 / self.m_canvasScale));
 
@@ -446,267 +446,3 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
     return SceneEditorView;
 });
-
-
-/*
- rect = new fabric.Rect({
- left: 60,
- top: 10,
- fill: '#ececec',
- hasRotatingPoint: false,
- width: 20,
- borderColor: '#5d5d5d',
- stroke: 'black',
- strokeWidth: 1,
- lineWidth: 1,
- height: 20,
- cornerColor: 'black',
- cornerSize: 5,
- lockRotation: true,
- transparentCorners: false
- });
-
- var blockRSS;
- blockRSS = new BlockRSS({
- i_placement: BB.CONSTS['PLACEMENT_SCENE'],
- i_block_id: 0
- });
-
- rect.on('selected', function () {
- console.log('object selected a rectangle');
- });
-
- self.m_canvas.on('object:selected', function (e) {
- console.log('object on canvas selected a rectangle');
- self._blockSelected(e.target.m_block_id);
- });
-
- _.extend(blockRSS, rect);
- self.m_canvas.add(blockRSS);
- self.m_canvas.renderAll();
- */
-
-
-
-// BB.comBroker.listenOnce(BB.EVENTS.BLOCKS_LOADED, $.proxy(self._onBlocksLoaded, self));
-/* var sceneBlock = new BlockScene({
- i_placement: BB.CONSTS.PLACEMENT_IS_SCENE,
- i_block_id: -1,
- blockType: 3510
- }); */
-
-// self.m_canvas._loadBlockSpecificProps();
-
-/*
-
- _canvasFactory: function (i_width, i_height) {
- var self = this;
- // self.m_canvasID = _.uniqueId('screenLayoutEditorCanvas');
- // if (self.m_canvas==undefined){
- //     $('#screenLayoutEditorCanvasWrap').append('<canvas id="' + self.m_canvasID + '" width="' + i_width + 'px" height="' + i_height + 'px" style="border: 1px solid rgb(170, 170, 170);"></canvas>')
- //     self.m_canvas = new fabric.Canvas(self.m_canvasID);
- // }
-
- var rect;
-
- rect = new fabric.Rect({
- left: 60,
- top: 10,
- fill: '#ececec',
- hasRotatingPoint: false,
- width: 20,
- borderColor: '#5d5d5d',
- stroke: 'black',
- strokeWidth: 1,
- lineWidth: 1,
- height: 20,
- cornerColor: 'black',
- cornerSize: 5,
- lockRotation: true,
- transparentCorners: false
- });
-
- var blockRSS;
- blockRSS = new BlockRSS({
- i_placement: BB.CONSTS['PLACEMENT_SCENE'],
- i_block_id: 10000
- });
-
- rect.on('selected', function () {
- console.log('object selected a rectangle');
- });
-
- self.m_canvas.on('object:selected', function (e) {
- console.log('object on canvas selected a rectangle');
- self._blockSelected(e.target.m_block_id);
- });
-
- _.extend(blockRSS, rect);
- blockRSS.listenSceneSelection(self.m_canvas);
- self.m_canvas.add(blockRSS);
-
- self.m_canvas.on({
- 'object:moving': onChange,
- 'object:scaling': onChange,
- 'object:rotating': onChange
- });
-
-
- rect = new fabric.Rect({
- left: 160,
- top: 60,
- fill: '#ececec',
- hasRotatingPoint: false,
- width: 20,
- borderColor: '#5d5d5d',
- stroke: 'green',
- strokeWidth: 1,
- lineWidth: 1,
- height: 20,
- cornerColor: 'black',
- cornerSize: 5,
- lockRotation: true,
- transparentCorners: false
- });
-
- blockRSS = new BlockRSS({
- i_placement: BB.CONSTS['PLACEMENT_SCENE'],
- i_block_id: 20000
- });
-
- rect.on('selected', function (e) {
- console.log('object selected a rectangle');
- });
-
- _.extend(blockRSS, rect);
- blockRSS.listenSceneSelection(self.m_canvas);
- self.m_canvas.add(blockRSS);
-
- function onChange(options) {
- options.target.setCoords();
- self.m_canvas.forEachObject(function (obj) {
- if (obj === options.target) return;
- obj.setOpacity(options.target.intersectsWithObject(obj) ? 0.5 : 1);
- });
- }
-
-
- //setTimeout(function () {
- //if (!self.m_canvas)
- //return;
- //self.m_canvas.setHeight(i_height);
- //self.m_canvas.setWidth(i_width);
- //self.m_canvas.renderAll();
- //}, 500);
-
-
- },
-
- */
-
-
-/*
- self.m_canvas.on({
- 'object:moving': onChange,
- 'object:scaling': onChange,
- 'object:rotating': onChange
- });
- */
-
-/*
- blockRSS.listenSceneSelection(self.m_canvas);
- self.m_canvas.add(blockRSS);
-
- function onChange(options) {
- options.target.setCoords();
- self.m_canvas.forEachObject(function (obj) {
- if (obj === options.target) return;
- obj.setOpacity(options.target.intersectsWithObject(obj) ? 0.5 : 1);
- });
- }
- */
-
-/*
- _renderOld: function () {
- var self = this;
- self.m_canvas = new fabric.Canvas(BB.lib.unhash(Elements.SCENE_CANVAS));
-
- var rect = new fabric.Rect({
- left: 60,
- top: 10,
- fill: '#ececec',
- hasRotatingPoint: false,
- width: 20,
- borderColor: '#5d5d5d',
- stroke : 'black',
- strokeWidth : 1,
- lineWidth: 1,
- height: 20,
- cornerColor: 'black',
- cornerSize: 5,
- lockRotation: true,
- transparentCorners: false
- });
-
- self.m_canvas.add(rect);
- self.m_canvas.renderAll();
-
- self._canvasFactory(1, 1);
- },
-
- */
-
-
-/*
- Unload the editor from DOM using the StackView animated slider
- @method  selectView
-
- _deSelectView: function () {
- var self = this;
- self.m_canvas.clear().renderAll();
- $('#screenLayoutEditorCanvasWrap').empty()
- self.m_canvasID = undefined;
- self.m_canvas = undefined;
- self.options.stackView.slideToPage(self.options.from, 'left');
- },
- */
-
-
-/*
- Load the editor into DOM using the StackView using animation slider
- @method  selectView
-
- selectView: function () {
- var self = this;
- self.options.stackView.slideToPage(self, 'right');
- require(['fabric'], function () {
- self._canvasFactory(_.random(200, 500), _.random(200, 500))
- })
- }
- */
-
-
-/*
- @method _blockSelected
- @param {Event} e
-
- _blockSelected: function (i_selected_block_id) {
- var self = this;
- self.selected_block_id = i_selected_block_id;
- BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.selected_block_id);
- $(Elements.CLASS_CHANNEL_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
- return false;
- },
-
-
- When all block modules have loaded, begin creating blocks
- @method _onBlocksLoaded
-
- _onBlocksLoaded: function () {
- var self = this;
- // self._render();
- self._listenObjectChangeResetScale();
- // $(Elements.SCENE_CANVAS).fadeTo(333,1)
- }
-
- */

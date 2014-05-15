@@ -190,7 +190,6 @@
     "enterSceneWidth": "Scene width",
     "enterSceneHeight": "Scene height",
     "enterSceneText": "Scene name",
-    "sceneHolder": "scene",
     "selectScene": "Select a Scene",
     "removeItemToolTip": "remove item",
     "pushItemToTopButtonToolTip": "push item to top",

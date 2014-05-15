@@ -7,6 +7,16 @@
 define(['jquery', 'backbone'], function ($, Backbone) {
 
     /**
+     Custom event fired when a scene was renamed
+     @event SCENE_NAME_CHANGED
+     @param {This} caller
+     @param {Self} context caller
+     @param {Event} rss link
+     @static
+     @final
+     **/
+    BB.EVENTS.SCENE_RENAMED = 'SCENE_RENAMED';
+    /**
      event fires when block is selected
      @event Block.BLOCK_SELECTED
      @param {this} caller
@@ -27,6 +37,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self.m_selectedSceneID = undefined;
             self._render();
             self._listenSceneSelection();
+            self._listenSceneRenamed();
             self._listenAddNew();
         },
 
@@ -37,6 +48,13 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _render: function () {
             var self = this;
             self._populateSceneSelection();
+        },
+
+        _listenSceneRenamed: function(){
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS.SCENE_RENAMED, function(e){
+                self._populateSceneSelection();
+            });
         },
 
         /**
@@ -66,7 +84,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 switch ($(e.target).attr('name')){
                     case 'component': {
                         self.m_stackFaderView.selectView(Elements.SCENE_ADD_NEW_BLOCK);
-                        // self.m_stackFaderView.selectView(Elements.ADD_BLOCK_VIEW);
                         break;
                     }
                     case 'scene': {
@@ -85,7 +102,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         _loadScene: function (i_name, i_id) {
             self.m_selectedSceneID = i_id;
-            $(Elements.SCENE_SELECTED_NAME).val(i_name);
             BB.comBroker.fire(BB.EVENTS.LOAD_SCENE, this, null, i_id);
         },
 
@@ -97,6 +113,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var scenenames = BB.Pepper.getSceneNames();
             if (_.size(scenenames) == 0)
                 return;
+            $(Elements.SCENE_SELECT_LIST).empty();
             _.forEach(scenenames, function (i_name, i_id) {
                 var snippet = '<li><a data-scene_player_data_id="' + i_id + '" href="#">' + i_name + '</a></li>';
                 $(Elements.SCENE_SELECT_LIST).append(snippet);

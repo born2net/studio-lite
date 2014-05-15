@@ -376,8 +376,9 @@ aside > aside > div > ul > li {
 }
 
 #sceneToolbar .input-group {
-    width: 200px;
+    width: 126px;
     float: left;
+    margin-left: 3px;
 }
 
 #sceneCanvasContainer {

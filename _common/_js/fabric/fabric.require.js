@@ -7948,18 +7948,24 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
           target.fire('mouseover');
           if (this._hoveredTarget) {
             this.fire('mouse:out', { target: this._hoveredTarget });
-            this._hoveredTarget.fire('mouseout');
+              //todo: Sean fixed bug 5-19-2014
+              if (!this._hoveredTarget.fire)
+                return;
+              this._hoveredTarget.fire('mouseout');
           }
           this._hoveredTarget = target;
         }
       }
       else if (this._hoveredTarget) {
         this.fire('mouse:out', { target: this._hoveredTarget });
+        //todo: Sean fixed bug 5-19-2014
+        if (!this._hoveredTarget.fire)
+            return;
         this._hoveredTarget.fire('mouseout');
         this._hoveredTarget = null;
       }
     },
-    
+
     /**
     * @private
     */
@@ -7988,14 +7994,14 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
       // Cache all targets where their bounding box contains point.
       var target,
           pointer = this.getPointer(e);
-          
+
       if (this._activeObject && this._checkTarget(e, this._activeObject, pointer)) {
         this.relatedTarget = this._activeObject;
         return this._activeObject;
       }
 
       var i = this._objects.length;
-      
+
       while(i--) {
          if (this._checkTarget(e, this._objects[i], pointer)){
            this.relatedTarget = this._objects[i];
@@ -10535,7 +10541,7 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
       }
 
       this[key] = value;
-      
+
       return this;
     },
 
@@ -19933,7 +19939,7 @@ fabric.Image.filters.BaseFilter = fabric.util.createClass(/** @lends fabric.Imag
       this.exitEditingOnOthers();
 
       this.isEditing = true;
-      
+
       this.initHiddenTextarea();
       this._updateTextarea();
       this._saveEditingProps();

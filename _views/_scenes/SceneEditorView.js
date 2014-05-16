@@ -131,8 +131,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 var blockID = e.edata;
                 log('block edited ' + blockID);
                 var domPlayerData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
-                // var tmpCanvasScale = self.m_canvasScale;
-                // var nZooms = Math.round(Math.log(1 / (self.SCALE_FACTOR * self.m_canvasScale)) / Math.log(self.SCALE_FACTOR)+1);
                 var nZooms = Math.round(Math.log(1 / self.m_canvasScale) / Math.log(1.2));
                 self._zoomReset();
                 self._render(domPlayerData);

@@ -35,6 +35,18 @@ function Pepper() {
 Pepper.SCENE_CREATED = 'SCENE_CREATED';
 
 /**
+ Custom event fired when scene changed
+ @event Pepper.SCENE_CHANGED
+ @param {This} caller
+ @param {Event}
+ @static
+ @final
+
+Pepper.SCENE_CHANGED = 'SCENE_CHANGED';
+ **/
+
+
+/**
  Custom event fired when a total timeline length (i.e.: channel content within specified timeline) has changed
  @event Pepper.TIMELINE_LENGTH_CHANGED
  @param {This} caller
@@ -372,6 +384,7 @@ Pepper.prototype = {
         self.m_msdb.table_player_data().openForEdit(i_scene_id);
         var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_id);
         recPlayerData['player_data_value'] = i_player_data;
+        // pepper.fire(Pepper['SCENE_CHANGED'], self, null, i_scene_id);
     },
 
     /**

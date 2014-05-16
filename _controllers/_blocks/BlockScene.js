@@ -47,10 +47,10 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_inputWidthChangeHandler = _.debounce(function (e) {
                 if (!self.m_selected)
                     return;
-                var text = $(e.target).val();
+                var width = $(e.target).val();
                 var domPlayerData = self._getBlockPlayerData();
-                var xSnippet = $(domPlayerData).find('Text');
-                $(xSnippet).text(text);
+                var xSnippet = $(domPlayerData).find('Player').eq(0).find('Layout');
+                $(xSnippet).attr('width',width);
                 self._setBlockPlayerData(domPlayerData);
             }, 150);
             $(Elements.SCENE_WIDTH_INPUT).on("input", self.m_inputWidthChangeHandler);
@@ -58,10 +58,10 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_inputHeightChangeHandler = _.debounce(function (e) {
                 if (!self.m_selected)
                     return;
-                var text = $(e.target).val();
+                var height = $(e.target).val();
                 var domPlayerData = self._getBlockPlayerData();
-                var xSnippet = $(domPlayerData).find('Text');
-                $(xSnippet).text(text);
+                var xSnippet = $(domPlayerData).find('Player').eq(0).find('Layout');
+                $(xSnippet).attr('height',height);
                 self._setBlockPlayerData(domPlayerData);
             }, 150);
             $(Elements.SCENE_HEIGHT_INPUT).on("input", self.m_inputHeightChangeHandler);
@@ -75,8 +75,11 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _populate: function () {
             var self = this;
             var domPlayerData = self._getBlockPlayerData();
-            var label = $(domPlayerData).find('Player').eq(0).attr('label');
-            $(Elements.SCENE_NAME_INPUT).val(label);
+            var domPlayer = $(domPlayerData).find('Player').eq(0);
+            var domPlayerLayout = $(domPlayerData).find('Player').eq(0).find('Layout');
+            $(Elements.SCENE_NAME_INPUT).val($(domPlayer).attr('label'));
+            $(Elements.SCENE_WIDTH_INPUT).val($(domPlayerLayout).attr('width'));
+            $(Elements.SCENE_HEIGHT_INPUT).val($(domPlayerLayout).attr('height'));
         },
 
         /**

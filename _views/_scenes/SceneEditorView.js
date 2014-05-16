@@ -33,6 +33,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._listenZoom();
             self._listenPushToTop();
             self._listenPushToBottom();
+            self._listenSceneChanged();
         },
 
         /**
@@ -70,6 +71,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             $(Elements.SCENE_CANVAS_CONTAINER).empty();
             $(Elements.SCENE_CANVAS_CONTAINER).append('<canvas id="' + canvasID + '" width="' + w + 'px" height="' + h + 'px"/>');
             self.m_canvas = new fabric.Canvas(canvasID);
+            self.m_canvas.renderOnAddRemove = false;
 
             self._listenObjectChangeResetScale();
             self._listenCanvasSelections();
@@ -94,13 +96,62 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             BB.comBroker.listen(BB.EVENTS.LOAD_SCENE, function (e) {
                 self.m_selectedSceneID = e.edata;
+                self._loadScene();
+            });
+        },
+
+        _loadScene: function () {
+            var self = this;
+            var domPlayerData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
+            self._disposeScene();
+            self._zoomReset();
+            self.m_property.resetPropertiesView();
+            self._initializeCanvas(600, 400);
+            self._initializeScene(self.m_selectedSceneID);
+            self._render(domPlayerData);
+        },
+
+        _listenSceneChanged: function (e) {
+            var self = this;
+            /* self.m_sceneChanged = _.debounce(function (e) {
+             var blockID = e.edata;
+             log('block edited ' + blockID);
+             var domPlayerData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
+             self._render(domPlayerData);
+             BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, blockID);
+             _.each(self.m_canvas.getObjects(), function (obj) {
+             if (blockID == obj.getBlockData().blockID) {
+             self.m_canvas.setActiveObject(obj);
+             }
+             });
+             }, 333);
+             */
+
+            BB.comBroker.listen(BB.EVENTS['SCENE_BLOCK_CHANGED'], function (e) {
+                var blockID = e.edata;
+                log('block edited ' + blockID);
                 var domPlayerData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
-                self._disposeScene();
+                // var tmpCanvasScale = self.m_canvasScale;
+                // var nZooms = Math.round(Math.log(1 / (self.SCALE_FACTOR * self.m_canvasScale)) / Math.log(self.SCALE_FACTOR)+1);
+                var nZooms = Math.round(Math.log(1 / self.m_canvasScale) / Math.log(1.2));
                 self._zoomReset();
-                self.m_property.resetPropertiesView();
-                self._initializeCanvas(600, 400);
-                self._initializeScene(self.m_selectedSceneID);
                 self._render(domPlayerData);
+                BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, blockID);
+                for (var i = 0; i < self.m_canvas.getObjects().length; i++) {
+                    if (blockID == self.m_canvas.item(i).getBlockData().blockID) {
+                        self.m_canvas.setActiveObject(self.m_canvas.item(i));
+                        break;
+                    }
+                }
+                if (nZooms > 0) {
+                    for (var i = 0; i < nZooms; i++)
+                        self._zoomOut();
+                } else {
+                    for (var i = 0; i > nZooms; nZooms++)
+                        self._zoomIn();
+                }
+
+                self.m_canvas.renderAll();
             });
         },
 
@@ -180,12 +231,14 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _render: function (i_domPlayerData) {
             var self = this;
+            self.m_canvas.clear();
+            self._disposeBlocks();
+            log('rendering');
             $(i_domPlayerData).find('Players').find('Player').each(function (i, player) {
                 var blockID = $(player).attr('id');
                 var player_data = (new XMLSerializer()).serializeToString(player);
                 var block = self._createBlock(blockID, player_data);
                 self.m_canvas.bringToFront(block);
-
             });
         },
 
@@ -334,10 +387,21 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             _.each(self.m_canvas.getObjects(), function (obj) {
                 self.m_canvas.dispose(obj);
             });
+            self._disposeBlocks();
+            self.m_sceneBlock.deleteBlock();
+        },
+
+        /**
+         Remove a Scene and cleanup after
+         @method _disposeScene
+         **/
+        _disposeBlocks: function () {
+            var self = this;
+            if (!self.m_canvas)
+                return;
             _.each(self.m_blocks, function (block) {
                 block.deleteBlock();
             });
-            self.m_sceneBlock.deleteBlock();
             self.m_blocks = {};
         },
 

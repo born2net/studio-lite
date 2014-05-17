@@ -34,7 +34,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._listenPushToTop();
             self._listenPushToBottom();
             self._listenSceneChanged();
-            self._delegateRenderer();
+            self._delegateRenderAnnouncer();
         },
 
         /**
@@ -101,6 +101,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             });
         },
 
+        /**
+         Load a new scene and dispose of any previous ones
+         @return {Number} Unique clientId.
+         **/
         _loadScene: function () {
             var self = this;
             var domPlayerData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
@@ -112,10 +116,15 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._render(domPlayerData);
         },
 
+        /**
+         Listen to the event of scene changes which normally comes from a block that modified its data
+         and re-render all scene content
+         @method _listenSceneChanged
+         **/
         _listenSceneChanged: function (e) {
             var self = this;
 
-            BB.comBroker.listen(BB.EVENTS['SCENE_BLOCK_CHANGED'], function (e) {
+            BB.comBroker.listen(BB.EVENTS['SCENE_BLOCK_CHANGE'], function (e) {
                 var blockID = e.edata, i;
                 log('block edited ' + blockID);
                 var domPlayerData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
@@ -138,6 +147,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 }
                 self._resetAllObjectScale();
                 self.m_canvas.renderAll();
+                self._announceSceneRendered();
             });
         },
 
@@ -220,7 +230,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             self.m_canvas.clear();
             self._disposeBlocks();
-            log('rendering');
+            log('rendering new blocks');
             $(i_domPlayerData).find('Players').find('Player').each(function (i, player) {
                 var blockID = $(player).attr('id');
                 var player_data = (new XMLSerializer()).serializeToString(player);
@@ -266,7 +276,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         },
 
         /**
-         Listen to canvas selections
+         Listen to canvas user selections
          @method _listenCanvasSelections
          **/
         _listenCanvasSelections: function () {
@@ -319,6 +329,15 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             });
         },
 
+        /**
+         Update the coordinates of a block
+         @method _updateBlockCords
+         @param {String} i_blockID
+         @param {Number} x
+         @param {Number} y
+         @param {Number} w
+         @param {Number} h
+         **/
         _updateBlockCords: function (i_blockID, x, y, w, h) {
             var self = this;
             var sy = 1 / self.m_canvasScale;
@@ -337,6 +356,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             pepper.setScenePlayerdataBlock(self.m_selectedSceneID, i_blockID, player_data);
         },
 
+        /**
+         Reset all canvas objects to their scale is set to 1
+         @method _resetAllObjectScale
+         **/
         _resetAllObjectScale: function () {
             var self = this;
             _.each(self.m_canvas.getObjects(), function (obj) {
@@ -344,6 +367,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             });
         },
 
+        /**
+         Reset a canvas object so its scale is set to 1
+         @method _resetObjectScale
+         **/
         _resetObjectScale: function (i_target) {
             var self = this;
             if (i_target.width != i_target.currentWidth || i_target.height != i_target.currentHeight) {
@@ -356,11 +383,15 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
         },
 
-        _delegateRenderer: function(){
+        /**
+         Announce to all that scene was re-rendered but do it via debounce
+         @method _delegateRenderAnnouncer
+         **/
+        _delegateRenderAnnouncer: function () {
             var self = this;
-            self._renderAll = _.debounce(function (e) {
-                self.m_canvas.renderAll();
-                log('rendering all....')
+            self._announceSceneRendered = _.debounce(function (e) {
+                BB.comBroker.fire(BB.EVENTS.SCENE_BLOCKS_RENDERED, self, self.m_canvas);
+                log('announcing rendering done')
             }, 200);
         },
 
@@ -398,8 +429,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         },
 
         /**
-         Remove a Scene and cleanup after
-         @method _disposeScene
+         Remove all block instances
+         @method _disposeBlocks
          **/
         _disposeBlocks: function () {
             var self = this;
@@ -411,6 +442,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_blocks = {};
         },
 
+        /**
+         Listen to all zoom events via wiring the UI
+         @method _listenZoom
+         **/
         _listenZoom: function () {
             var self = this;
             $(Elements.SCENE_ZOOM_IN).on('click', function (e) {
@@ -427,6 +462,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             });
         },
 
+        /**
+         Zoom scene in
+         @method _zoomIn
+         **/
         _zoomIn: function () {
             var self = this;
             self.m_canvas.discardActiveGroup();
@@ -454,6 +493,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             }
         },
 
+        /**
+         Zoom scene out
+         @method _zoomOut
+         **/
         _zoomOut: function () {
             var self = this;
             self.m_canvas.discardActiveGroup();
@@ -482,6 +525,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             }
         },
 
+        /**
+         Zoom reset back to scale 1
+         @method _zoomReset
+         **/
         _zoomReset: function () {
             var self = this;
             if (!self.m_canvas)

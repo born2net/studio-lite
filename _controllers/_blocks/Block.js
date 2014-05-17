@@ -10,12 +10,21 @@
 define(['jquery', 'backbone'], function ($) {
 
     /**
-     event fires when scene block is changed
-     @event Block.SCENE_BLOCK_CHANGED
+     event fires when scene block was changed so scene needs to be re-rendered
+     @event Block.SCENE_BLOCK_CHANGE
      @param {this} caller
      @param {String} selected block_id
      **/
-    BB.EVENTS.SCENE_BLOCK_CHANGED = 'SCENE_BLOCK_CHANGED';
+    BB.EVENTS.SCENE_BLOCK_CHANGE = 'SCENE_BLOCK_CHANGE';
+
+    /**
+     event fires when scene blocks freshly re-rendered onto the scene canvas so we need to update the UI of ALL blocks
+     normally occurs after a Block.SCENE_BLOCK_CHANGE event
+     @event Block.SCENE_BLOCKS_RENDERED
+     @param {this} caller
+     @param {String} selected block_id
+     **/
+    BB.EVENTS.SCENE_BLOCKS_RENDERED = 'SCENE_BLOCKS_RENDERED';
 
     /**
      event fires when block is selected
@@ -395,13 +404,13 @@ define(['jquery', 'backbone'], function ($) {
                 case BB.CONSTS.PLACEMENT_SCENE:
                 {
                     pepper.setScenePlayerdataBlock(self.m_sceneID, self.m_block_id, player_data);
-                    BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGED'],self,null,self.m_block_id);
+                    BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'],self,null,self.m_block_id);
                     break;
                 }
                 case BB.CONSTS.PLACEMENT_IS_SCENE:
                 {
                     pepper.setScenePlayerData(self.m_block_id, player_data);
-                    BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGED'],self,null,self.m_block_id);
+                    BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'],self,null,self.m_block_id);
                     break;
                 }
             }

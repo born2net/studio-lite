@@ -141,11 +141,12 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         break;
                     }
                 }
+                var i;
                 if (nZooms > 0) {
-                    for (var i = 0; i < nZooms; i++)
+                    for (i = 0; i < nZooms; i++)
                         self._zoomOut();
                 } else {
-                    for (var i = 0; i > nZooms; nZooms++)
+                    for (i = 0; i > nZooms; nZooms++)
                         self._zoomIn();
                 }
 
@@ -210,12 +211,13 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         _updateZorder: function () {
             var self = this;
             var totalViews = self.m_canvas.getObjects().length;
-            // var i = 0;
+            var i = 0;
+            log('--------------------');
             var domSceneData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
             self.m_canvas.forEachObject(function (obj) {
-                // i++;
+                i++;
                 var blockID = obj.getBlockData().blockID;
-                // log((totalViews - i) + ' ' + blockID);
+                log((totalViews - i) + ' ' + blockID);
                 var o = $(domSceneData).find('[id="' + blockID + '"]');
                 $(domSceneData).find('Players').prepend(o);
             });

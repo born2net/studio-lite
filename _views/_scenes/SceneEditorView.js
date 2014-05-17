@@ -34,6 +34,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._listenPushToTop();
             self._listenPushToBottom();
             self._listenSceneChanged();
+            self._delegateRenderer();
         },
 
         /**
@@ -350,8 +351,17 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 i_target.height = i_target.currentHeight;
                 i_target.scaleX = 1;
                 i_target.scaleY = 1;
+                self.m_canvas.renderAll();
             }
-            self.m_canvas.renderAll();
+
+        },
+
+        _delegateRenderer: function(){
+            var self = this;
+            self._renderAll = _.debounce(function (e) {
+                self.m_canvas.renderAll();
+                log('rendering all....')
+            }, 200);
         },
 
         /**
@@ -442,7 +452,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 objects[i].top = tempTop;
                 objects[i].setCoords();
             }
-            self.m_canvas.renderAll();
         },
 
         _zoomOut: function () {
@@ -471,8 +480,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
                 objects[i].setCoords();
             }
-
-            self.m_canvas.renderAll();
         },
 
         _zoomReset: function () {
@@ -489,21 +496,16 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 var scaleY = objects[i].scaleY;
                 var left = objects[i].left;
                 var top = objects[i].top;
-
                 var tempScaleX = scaleX * (1 / self.m_canvasScale);
                 var tempScaleY = scaleY * (1 / self.m_canvasScale);
                 var tempLeft = left * (1 / self.m_canvasScale);
                 var tempTop = top * (1 / self.m_canvasScale);
-
                 objects[i].scaleX = tempScaleX;
                 objects[i].scaleY = tempScaleY;
                 objects[i].left = tempLeft;
                 objects[i].top = tempTop;
-
                 objects[i].setCoords();
             }
-
-            self.m_canvas.renderAll();
             self.m_canvasScale = 1;
         }
     });

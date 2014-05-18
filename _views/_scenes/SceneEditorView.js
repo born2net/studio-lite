@@ -29,6 +29,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             pepper.injectScenePlayersIDs();
             self._initializeBlockFactory();
             self._listenAddBlockWizard();
+            // self._listenDimensionProps();
             self._listenSceneToolbarSelected();
             self._listenZoom();
             self._listenPushToTop();
@@ -87,6 +88,23 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var scene_player_data = pepper.getScenePlayerdata(self.m_selectedSceneID);
             self.m_sceneBlock = self.m_blockFactory.createBlock(self.m_selectedSceneID, scene_player_data, BB.CONSTS.PLACEMENT_IS_SCENE);
             _.extend(self.m_canvas, self.m_sceneBlock);
+        },
+
+        /**
+         Init the dimension props class
+         @method _listenDimensionProps
+         **/
+        _listenDimensionProps: function(){
+            var self = this;
+            self.m_dimensionProps = new DimensionProps({
+                appendTo: Elements.SCENE_BLOCK_PROPS,
+                showAngle: true
+            });
+            $(self.m_dimensionProps).on('changed', function (e) {
+                var props = e.target.getValues();
+                self._updateDimensionsInDB(self.m_canvas.getActiveObject(), props);
+                self._moveViewer(props);
+            });
         },
 
         /**

@@ -4,7 +4,7 @@
  @constructor
  @return {object} instantiated SceneEditorView
  **/
-define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbarView'], function ($, Backbone, fabric, BlockScene, BlockRSS, ScenesToolbarView) {
+define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbarView', 'DimensionProps'], function ($, Backbone, fabric, BlockScene, BlockRSS, ScenesToolbarView, DimensionProps) {
 
     BB.SERVICES.SCREEN_LAYOUT_EDITOR_VIEW = 'SceneEditorView';
 
@@ -29,7 +29,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             pepper.injectScenePlayersIDs();
             self._initializeBlockFactory();
             self._listenAddBlockWizard();
-            // self._listenDimensionProps();
+            self._listenDimensionProps();
             self._listenSceneToolbarSelected();
             self._listenZoom();
             self._listenPushToTop();
@@ -94,7 +94,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          Init the dimension props class
          @method _listenDimensionProps
          **/
-        _listenDimensionProps: function(){
+        _listenDimensionProps: function () {
             var self = this;
             self.m_dimensionProps = new DimensionProps({
                 appendTo: Elements.SCENE_BLOCK_PROPS,

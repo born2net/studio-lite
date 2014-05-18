@@ -201,6 +201,17 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
                 }
             }
             return block;
+        },
+
+        /**
+         Get the status of modules, i.e.: loaded yet?
+         @method blocksLoaded
+         **/
+        blocksLoaded: function(){
+            var self = this;
+            if (self.m_block)
+                return true;
+            return false;
         }
     });
 

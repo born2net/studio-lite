@@ -46,7 +46,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             self.m_blockFactory = BB.comBroker.getService(BB.SERVICES['BLOCK_FACTORY']);
 
-            if (self.m_blockFactory) {
+            if (self.m_blockFactory && self.m_blockFactory.blocksLoaded()) {
                 $(Elements.SCENE_TOOLBAR).fadeTo(500, 1);
             } else {
                 BB.comBroker.listenOnce(BB.EVENTS['BLOCKS_LOADED'], function () {

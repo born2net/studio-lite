@@ -187,65 +187,66 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
              @method _initContentPage
              **/
             _initContentPage: function () {
-
-                this.m_navigationView = new NavigationView({
+                var self = this;
+                self.m_navigationView = new NavigationView({
                     el: Elements.FILE_MENU
                 });
 
-                this.m_campaignManagerView = new CampaignManagerView({
+                self.m_campaignManagerView = new CampaignManagerView({
                     el: Elements.CAMPAIGN_MANAGER_VIEW
                 });
 
-                this.m_campaignSliderStackView = new CampaignSliderStackView({
+                self.m_campaignSliderStackView = new CampaignSliderStackView({
                     el: Elements.CAMPAIGN_SLIDER
                 });
 
-                this.m_resourcesView = new ResourcesView({
+                self.m_resourcesView = new ResourcesView({
                     el: Elements.RESOURCES_PANEL,
-                    stackView: this.m_appContentFaderView
+                    stackView: self.m_appContentFaderView
                 });
 
-                this.m_stationsViewLoader = new StationsViewLoader({
+                self.m_stationsViewLoader = new StationsViewLoader({
                     el: Elements.STATIONS_PANEL,
-                    stackView: this.m_appContentFaderView
+                    stackView: self.m_appContentFaderView
                 });
 
-                this.m_scenesLoaderView = new ScenesLoaderView({
+                self.m_scenesLoaderView = new ScenesLoaderView({
                     el: Elements.SCENES_PANEL,
-                    stackView: this.m_appContentFaderView
+                    stackView: self.m_appContentFaderView
                 });
 
-                this.m_settingsView = new SettingsView({
+                self.m_settingsView = new SettingsView({
                     el: Elements.SETTINGS_PANEL,
-                    stackView: this.m_appContentFaderView
+                    stackView: self.m_appContentFaderView
                 });
 
-                this.m_proStudioView = new ProStudioView({
+                self.m_proStudioView = new ProStudioView({
                     el: Elements.PRO_STUDIO_PANEL,
-                    stackView: this.m_appContentFaderView
+                    stackView: self.m_appContentFaderView
                 });
 
-                this.m_helpView = new HelpView({
+                self.m_helpView = new HelpView({
                     el: Elements.HELP_PANEL,
                     stackView: this.m_appContentFaderView
                 });
 
                 this.m_logoutView = new LogoutView({
                     el: Elements.LOGOUT_PANEL,
-                    stackView: this.m_appContentFaderView
+                    stackView: self.m_appContentFaderView
                 });
 
-                this.m_appContentFaderView.addView(this.m_campaignManagerView);
-                this.m_appContentFaderView.addView(this.m_resourcesView);
-                this.m_appContentFaderView.addView(this.m_stationsViewLoader);
-                this.m_appContentFaderView.addView(this.m_scenesLoaderView);
-                this.m_appContentFaderView.addView(this.m_settingsView);
-                this.m_appContentFaderView.addView(this.m_proStudioView);
-                this.m_appContentFaderView.addView(this.m_helpView);
-                this.m_appContentFaderView.addView(this.m_logoutView);
-                this.m_appContentFaderView.selectView(this.m_campaignManagerView);
-                // this.m_appContentFaderView.selectView(this.m_scenesLoaderView); // debug mode
-                 BB.comBroker.setService(BB.SERVICES['NAVIGATION_VIEW'], this.m_navigationView);
+                self.m_appContentFaderView.addView(self.m_campaignManagerView);
+                self.m_appContentFaderView.addView(self.m_resourcesView);
+                self.m_appContentFaderView.addView(self.m_stationsViewLoader);
+                self.m_appContentFaderView.addView(self.m_scenesLoaderView);
+                self.m_appContentFaderView.addView(self.m_settingsView);
+                self.m_appContentFaderView.addView(self.m_proStudioView);
+                self.m_appContentFaderView.addView(self.m_helpView);
+                self.m_appContentFaderView.addView(self.m_logoutView);
+                // self.m_appContentFaderView.selectView(self.m_campaignManagerView);
+                self.m_appContentFaderView.selectView(self.m_scenesLoaderView); // debug mode
+
+                 BB.comBroker.setService(BB.SERVICES['NAVIGATION_VIEW'], self.m_navigationView);
             },
 
             /**

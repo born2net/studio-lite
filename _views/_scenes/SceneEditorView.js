@@ -4,7 +4,7 @@
  @constructor
  @return {object} instantiated SceneEditorView
  **/
-define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbarView', 'DimensionProps'], function ($, Backbone, fabric, BlockScene, BlockRSS, ScenesToolbarView, DimensionProps) {
+define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbarView'], function ($, Backbone, fabric, BlockScene, BlockRSS, ScenesToolbarView) {
 
     BB.SERVICES.SCREEN_LAYOUT_EDITOR_VIEW = 'SceneEditorView';
 
@@ -19,17 +19,16 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             BB.comBroker.setService(BB.SERVICES['SCENE_EDIT_VIEW'], self);
             self.m_selectedSceneID = undefined;
             self.m_blocks = {};
+            self.m_dimensionProps = undefined;
             self.m_canvas = undefined;
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
             self.m_scenesToolbarView = new ScenesToolbarView({el: Elements.SCENE_TOOLBAR});
 
             self.m_canvasScale = 1;
             self.SCALE_FACTOR = 1.2;
-
             pepper.injectScenePlayersIDs();
             self._initializeBlockFactory();
             self._listenAddBlockWizard();
-            self._listenDimensionProps();
             self._listenSceneToolbarSelected();
             self._listenZoom();
             self._listenPushToTop();
@@ -45,19 +44,73 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         _initializeBlockFactory: function () {
             var self = this;
             self.m_blockFactory = BB.comBroker.getService(BB.SERVICES['BLOCK_FACTORY']);
+            if (self.m_blockFactory && self.m_blockFactory.blocksLoaded()) {
+                self._initDimensionProps();
+                return
+            }
+
+            BB.comBroker.listenOnce(BB.EVENTS['BLOCKS_LOADED'], function () {
+                self._initDimensionProps();
+            });
+            require(['BlockFactory'], function (BlockFactory) {
+                self.m_blockFactory = new BlockFactory();
+                self.m_blockFactory.loadBlockModules();
+            });
+        },
+
+        /**
+         Init block factory if it hasn't already been loaded
+         @method _initializeBlockFactory
+         **/
+        _initializeBlockFactory: function () {
+            var self = this;
+            self.m_blockFactory = BB.comBroker.getService(BB.SERVICES['BLOCK_FACTORY']);
 
             if (self.m_blockFactory && self.m_blockFactory.blocksLoaded()) {
-                $(Elements.SCENE_TOOLBAR).fadeTo(500, 1);
+                self._initDimensionProps();
+
             } else {
+
                 BB.comBroker.listenOnce(BB.EVENTS['BLOCKS_LOADED'], function () {
-                    $(Elements.SCENE_TOOLBAR).fadeTo(500, 1);
+                    self._initDimensionProps();
                 });
+
                 require(['BlockFactory'], function (BlockFactory) {
                     self.m_blockFactory = new BlockFactory();
                     self.m_blockFactory.loadBlockModules();
-                    $('#sceneToolbar').fadeIn();
                 });
             }
+        },
+
+        /**
+         Init the dimension props class
+         @method _initDimensionProps
+         **/
+        _initDimensionProps: function () {
+            var self = this;
+            require(['DimensionProps'], function (DimensionProps) {
+                self.m_dimensionProps = new DimensionProps({
+                    appendTo: Elements.SCENE_BLOCK_PROPS,
+                    showAngle: true
+                });
+                $(self.m_dimensionProps).on('changed', function (e) {
+                    var block = self.m_canvas.getActiveObject();
+                    if (!block)
+                        return;
+                    var props = e.target.getValues();
+                    var block_id = block.getBlockData().blockID;
+                    self._updateDimensionsInDB(self.m_canvas.getActiveObject(), props);
+                    BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'],self,null,block_id);
+                    // self._moveViewer(props);
+                });
+                self._sceneActive();
+            })
+        },
+
+        _sceneActive: function () {
+            var self = this;
+            $('#sceneToolbar').fadeIn();
+            $(Elements.SCENE_TOOLBAR).fadeTo(500, 1);
         },
 
         /**
@@ -91,20 +144,40 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         },
 
         /**
-         Init the dimension props class
-         @method _listenDimensionProps
+         Move the object / viewer to new set of coords
+         @method _moveViewer
+         @param {Object} i_props
          **/
-        _listenDimensionProps: function () {
+        _moveViewer: function (i_props) {
             var self = this;
-            self.m_dimensionProps = new DimensionProps({
-                appendTo: Elements.SCENE_BLOCK_PROPS,
-                showAngle: true
-            });
-            $(self.m_dimensionProps).on('changed', function (e) {
-                var props = e.target.getValues();
-                self._updateDimensionsInDB(self.m_canvas.getActiveObject(), props);
-                self._moveViewer(props);
-            });
+            // log('moving viewer');
+            var block = self.m_canvas.getActiveObject();
+            if (block) {
+                block.setWidth(i_props.w / 1);
+                block.setHeight(i_props.h / 1);
+                block.set('left', i_props.x / 1);
+                block.set('top', i_props.y / 1);
+
+                // self._enforceViewerMinimums(block);
+                // self._enforceViewerVisible();
+                // block.setCoords();
+                // self.m_canvas.renderAll();
+                // var block_id = block.getBlockData().blockID;
+                // BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'],self,null,block_id);
+            }
+        },
+
+        /**
+         Update Pepper with latest object dimensions
+         @method _updateDimensionsInDB
+         @param {Object} i_props
+         **/
+        _updateDimensionsInDB: function (i_block, i_props) {
+            var self = this;
+            log('Pepper ' + i_block.getBlockData().blockID + ' ' + JSON.stringify(i_props));
+            // pepper.setBoardTemplateViewer(self.m_campaign_timeline_board_template_id, i_block.get('id'), i_props);
+            // i_block.setCoords();
+            // self.m_canvas.renderAll();
         },
 
         /**

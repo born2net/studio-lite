@@ -23,6 +23,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
      @param {String} selected block_id
      **/
     BB.EVENTS.LOAD_SCENE = 'LOAD_SCENE';
+    BB.EVENTS.SCENE_ZOOM_IN = 'SCENE_ZOOM_IN';
+    BB.EVENTS.SCENE_ZOOM_OUT = 'SCENE_ZOOM_OUT';
+    BB.EVENTS.SCENE_ZOOM_RESET = 'SCENE_ZOOM_RESET';
+    BB.EVENTS.SCENE_PUSH_TOP = 'SCENE_PUSH_TOP';
+    BB.EVENTS.SCENE_PUSH_BOTTOM = 'SCENE_PUSH_BOTTOM';
+    BB.EVENTS.SCENE_SELECT_NEXT = 'SCENE_SELECT_NEXT';
 
     var ScenesToolbarView = Backbone.View.extend({
 
@@ -40,6 +46,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self._listenSceneDimensionsChanged();
             self._listenSceneRenamed();
             self._listenAddNew();
+            self._listenZoom();
+            self._listenPushToTop();
+            self._listenPushToBottom();
+            self._listenSelectNextBlock();
         },
 
         /**
@@ -49,6 +59,56 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _render: function () {
             var self = this;
             self._populateSceneSelection();
+        },
+
+        /**
+         Listen to selection of next block
+         @method _listenSelectNextDivision
+         **/
+        _listenSelectNextBlock: function () {
+            var self = this;
+            $(Elements.SCENE_EDITOR_NEXT, self.$el).on('click', function () {
+                BB.comBroker.fire(BB.EVENTS.SCENE_SELECT_NEXT);
+            });
+        },
+
+        /**
+         Listen to re-order of screen division, putting selected on top
+         @method _listenPushToTop
+         **/
+        _listenPushToTop: function () {
+            var self = this;
+            $(Elements.SCENE_EDITOR_PUSH_TOP, self.$el).on('click', function () {
+                BB.comBroker.fire(BB.EVENTS.SCENE_PUSH_TOP);
+            });
+        },
+
+        /**
+         Listen to re-order of screen division, putting selected at bottom
+         @method _listenPushToBottom
+         **/
+        _listenPushToBottom: function () {
+            var self = this;
+            $(Elements.SCENE_EDITOR_PUSH_BOTTOM, self.$el).on('click', function () {
+                BB.comBroker.fire(BB.EVENTS.SCENE_PUSH_BOTTOM);
+            });
+        },
+
+        /**
+         Listen to all zoom events via wiring the UI
+         @method _listenZoom
+         **/
+        _listenZoom: function () {
+            var self = this;
+            $(Elements.SCENE_ZOOM_IN).on('click', function (e) {
+                BB.comBroker.fire(BB.EVENTS.SCENE_ZOOM_IN);
+            });
+            $(Elements.SCENE_ZOOM_OUT).on('click', function (e) {
+                BB.comBroker.fire(BB.EVENTS.SCENE_ZOOM_OUT);
+            });
+            $(Elements.SCENE_ZOOM_RESET).on('click', function (e) {
+                BB.comBroker.fire(BB.EVENTS.SCENE_ZOOM_RESET);
+            });
         },
 
         _listenSceneRenamed: function(){

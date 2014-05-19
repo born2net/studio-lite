@@ -65,6 +65,7 @@ Elements.SCENE_ZOOM_IN = '#sceneZoomIn';
 Elements.SCENE_ZOOM_OUT = '#sceneZoomOut';
 Elements.SCENE_ZOOM_RESET = '#sceneZoomReset';
 Elements.SCENE_CANVAS_CONTAINER = '#sceneCanvasContainer';
+Elements.SCENE_EDITOR_NEXT = '#sceneEditorNext';
 Elements.BLOCK_LENGTH_HOURS = '#blockLengthHours';
 Elements.BLOCK_LENGTH_MINUTES = '#blockLengthMinutes';
 Elements.BLOCK_LENGTH_SECONDS = '#blockLengthSeconds';

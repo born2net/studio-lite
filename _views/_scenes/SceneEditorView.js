@@ -27,6 +27,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_canvasScale = 1;
             self.SCALE_FACTOR = 1.2;
             pepper.injectScenePlayersIDs();
+
             self._initializeBlockFactory();
             self._listenAddBlockWizard();
             self._listenSceneToolbarSelected();
@@ -34,6 +35,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._listenPushToTop();
             self._listenPushToBottom();
             self._listenSceneChanged();
+            self._listenSelectNextBlock();
             self._delegateRenderAnnouncer();
         },
 
@@ -173,6 +175,29 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         },
 
         /**
+         Listen to selection of next block
+         @method _listenSelectNextDivision
+         **/
+        _listenSelectNextBlock: function () {
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS.SCENE_SELECT_NEXT, function () {
+                var viewer = self.m_canvas.getActiveObject();
+                var viewIndex = self.m_canvas.getObjects().indexOf(viewer);
+                var totalViews = self.m_canvas.getObjects().length;
+                var blockID = undefined;
+                if (viewIndex == totalViews - 1) {
+                    self.m_canvas.setActiveObject(self.m_canvas.item(0));
+                    blockID = self.m_canvas.getActiveObject().getBlockData().blockID;
+                    BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, blockID);
+                } else {
+                    self.m_canvas.setActiveObject(self.m_canvas.item(viewIndex + 1));
+                    blockID = self.m_canvas.getActiveObject().getBlockData().blockID;
+                    BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, blockID);
+                }
+            });
+        },
+
+        /**
          Listen to the event of scene changes which normally comes from a block that modified its data
          and re-render all scene content
          @method _listenSceneChanged
@@ -233,7 +258,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _listenPushToTop: function () {
             var self = this;
-            $(Elements.SCENE_EDITOR_PUSH_TOP, self.$el).on('click', function () {
+            BB.comBroker.listen(BB.EVENTS.SCENE_PUSH_TOP, function() {
                 var block = self.m_canvas.getActiveObject();
                 if (!block)
                     return;
@@ -248,7 +273,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _listenPushToBottom: function () {
             var self = this;
-            $(Elements.SCENE_EDITOR_PUSH_BOTTOM, self.$el).on('click', function () {
+            BB.comBroker.listen(BB.EVENTS.SCENE_PUSH_BOTTOM, function() {
                 var block = self.m_canvas.getActiveObject();
                 if (!block)
                     return;
@@ -341,7 +366,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
 
             //self.m_canvas.on('object:selected', function (e) {
-            //    log('object: ' + e.target.m_blockType);
+            //    var blockID = e.target.m_blockType;
+            //    BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, blockID);
             //});
 
             self.m_canvas.on('mouse:up', function (options) {
@@ -509,15 +535,15 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _listenZoom: function () {
             var self = this;
-            $(Elements.SCENE_ZOOM_IN).on('click', function (e) {
+            BB.comBroker.listen(BB.EVENTS.SCENE_ZOOM_IN, function (e) {
                 self._zoomIn();
                 self._resetAllObjectScale();
             });
-            $(Elements.SCENE_ZOOM_OUT).on('click', function (e) {
+            BB.comBroker.listen(BB.EVENTS.SCENE_ZOOM_OUT, function (e) {
                 self._zoomOut();
                 self._resetAllObjectScale();
             });
-            $(Elements.SCENE_ZOOM_RESET).on('click', function (e) {
+            BB.comBroker.listen(BB.EVENTS.SCENE_ZOOM_RESET, function (e) {
                 self._zoomReset();
                 self._resetAllObjectScale();
             });

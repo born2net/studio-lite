@@ -6,7 +6,7 @@
  **/
 define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbarView'], function ($, Backbone, fabric, BlockScene, BlockRSS, ScenesToolbarView) {
 
-    BB.SERVICES.SCREEN_LAYOUT_EDITOR_VIEW = 'SceneEditorView';
+    BB.SERVICES.SCENE_EDIT_VIEW = 'SceneEditorView';
 
     var SceneEditorView = BB.View.extend({
 

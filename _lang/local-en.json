@@ -192,11 +192,13 @@
     "enterSceneWidth": "Scene width",
     "enterSceneHeight": "Scene height",
     "enterSceneText": "Scene name",
-    "selectScene": "Select a Scene",
+    "selectScene": "Scene",
     "removeItemToolTip": "remove item",
     "pushItemToTopButtonToolTip": "push item to top",
     "pushItemToBottomButtonToolTip": "push item to bottom",
-    "getNextItemButtonToolTip": "get next item"
+    "getNextItemButtonToolTip": "get next item",
+    "bootBoxSceneRemove": "Are you sure you want to remove this scene?",
+    "bootBoxSceneMustSelectScene": "You must first select or add a scene"
 }
 
 

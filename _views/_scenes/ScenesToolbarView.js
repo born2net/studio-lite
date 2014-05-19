@@ -7,21 +7,9 @@
 define(['jquery', 'backbone'], function ($, Backbone) {
 
     /**
-     Custom event fired when a scene was renamed
-     @event SCENE_NAME_CHANGED
-     @param {This} caller
-     @param {Self} context caller
-     @param {Event} rss link
-     @static
-     @final
+     events
      **/
     BB.EVENTS.SCENE_RENAMED = 'SCENE_RENAMED';
-    /**
-     event fires when block is selected
-     @event Block.BLOCK_SELECTED
-     @param {this} caller
-     @param {String} selected block_id
-     **/
     BB.EVENTS.LOAD_SCENE = 'LOAD_SCENE';
     BB.EVENTS.SCENE_ZOOM_IN = 'SCENE_ZOOM_IN';
     BB.EVENTS.SCENE_ZOOM_OUT = 'SCENE_ZOOM_OUT';
@@ -29,6 +17,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
     BB.EVENTS.SCENE_PUSH_TOP = 'SCENE_PUSH_TOP';
     BB.EVENTS.SCENE_PUSH_BOTTOM = 'SCENE_PUSH_BOTTOM';
     BB.EVENTS.SCENE_SELECT_NEXT = 'SCENE_SELECT_NEXT';
+    BB.EVENTS.SCENE_EDITOR_REMOVE = 'SCENE_EDITOR_REMOVE';
 
     var ScenesToolbarView = Backbone.View.extend({
 
@@ -50,6 +39,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self._listenPushToTop();
             self._listenPushToBottom();
             self._listenSelectNextBlock();
+            self._listenSceneRemove();
         },
 
         /**
@@ -59,6 +49,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _render: function () {
             var self = this;
             self._populateSceneSelection();
+        },
+
+        _listenSceneRemove: function () {
+            $(Elements.SCENE_EDITOR_REMOVE, self.$el).on('click', function () {
+                BB.comBroker.fire(BB.EVENTS.SCENE_EDITOR_REMOVE);
+            });
         },
 
         /**
@@ -111,10 +107,25 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             });
         },
 
-        _listenSceneRenamed: function(){
+        _listenSceneRenamed: function () {
             var self = this;
-            BB.comBroker.listen(BB.EVENTS.SCENE_RENAMED, function(e){
+            BB.comBroker.listen(BB.EVENTS.SCENE_RENAMED, function (e) {
                 self._populateSceneSelection();
+            });
+        },
+
+        /**
+         Populate dropdown UI of all available scenes
+         @method _listenSceneSelection
+         **/
+        _populateSceneSelection: function () {
+            $(Elements.SCENE_SELECT_LIST).empty();
+            var scenenames = BB.Pepper.getSceneNames();
+            if (_.size(scenenames) == 0)
+                return;
+            _.forEach(scenenames, function (i_name, i_id) {
+                var snippet = '<li><a data-scene_player_data_id="' + i_id + '" href="#">' + i_name + '</a></li>';
+                $(Elements.SCENE_SELECT_LIST).append(snippet);
             });
         },
 
@@ -161,18 +172,26 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _listenAddNew: function () {
             var self = this;
             $(Elements.CLASS_SCENE_ADD_NEW, self.el).on('click', function (e) {
-                switch ($(e.target).attr('name')){
-                    case 'component': {
+                switch ($(e.target).attr('name')) {
+                    case 'component':
+                    {
+                        var sceneEditorView = BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']);
+                        if (!sceneEditorView.getSelectedSceneID()) {
+                            bootbox.alert({
+                                message: $(Elements.MSG_BOOTBOX_MUST_SELECT_SCENE).text()
+                            });
+                            return;
+                        }
                         self.m_stackFaderView.selectView(Elements.SCENE_ADD_NEW_BLOCK);
                         break;
                     }
-                    case 'scene': {
+                    case 'scene':
+                    {
                         break;
                     }
                 }
             });
         },
-
 
         /**
          Load a selected Scene
@@ -183,21 +202,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _loadScene: function (i_name, i_id) {
             self.m_selectedSceneID = i_id;
             BB.comBroker.fire(BB.EVENTS.LOAD_SCENE, this, null, i_id);
-        },
-
-        /**
-         Populate dropdown UI of all available scenes
-         @method _listenSceneSelection
-         **/
-        _populateSceneSelection: function () {
-            var scenenames = BB.Pepper.getSceneNames();
-            if (_.size(scenenames) == 0)
-                return;
-            $(Elements.SCENE_SELECT_LIST).empty();
-            _.forEach(scenenames, function (i_name, i_id) {
-                var snippet = '<li><a data-scene_player_data_id="' + i_id + '" href="#">' + i_name + '</a></li>';
-                $(Elements.SCENE_SELECT_LIST).append(snippet);
-            });
         }
     });
 

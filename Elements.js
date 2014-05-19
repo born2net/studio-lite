@@ -64,6 +64,7 @@ Elements.SCENE_SELECT_LIST = '#sceneSelectList';
 Elements.SCENE_ZOOM_IN = '#sceneZoomIn';
 Elements.SCENE_ZOOM_OUT = '#sceneZoomOut';
 Elements.SCENE_ZOOM_RESET = '#sceneZoomReset';
+Elements.SCENE_EDITOR_REMOVE = '#sceneEditorRemove';
 Elements.SCENE_CANVAS_CONTAINER = '#sceneCanvasContainer';
 Elements.SCENE_EDITOR_NEXT = '#sceneEditorNext';
 Elements.BLOCK_LENGTH_HOURS = '#blockLengthHours';
@@ -212,6 +213,8 @@ Elements.MSG_BOOTBOX_SCREEN_DIV_POS_RESET ='#bootBoxScreenDivPosReset';
 Elements.MSG_BOOTBOX_COSTUME_TITLE ='#bootBoxCostumeTitle';
 Elements.MSG_BOOTBOX_CONTINUE ='#bootBoxContinue';
 Elements.MSG_BOOTBOX_STEPS ='#bootBoxSteps';
+Elements.MSG_BOOTBOX_SCENE_REMOVE ='#bootBoxSceneRemove';
+Elements.MSG_BOOTBOX_MUST_SELECT_SCENE = '#bootBoxSceneMustSelectScene';
 
 // templates
 Elements.FONT_SELECTOR_TEMPLATE = '#fontSelectorTemplate';

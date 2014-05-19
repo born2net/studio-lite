@@ -22,7 +22,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_dimensionProps = undefined;
             self.m_canvas = undefined;
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
-            self.m_scenesToolbarView = new ScenesToolbarView({el: Elements.SCENE_TOOLBAR});
+            new ScenesToolbarView({el: Elements.SCENE_TOOLBAR});
 
             self.m_canvasScale = 1;
             self.SCALE_FACTOR = 1.2;
@@ -36,6 +36,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._listenPushToBottom();
             self._listenSceneChanged();
             self._listenSelectNextBlock();
+            self._listenSceneRemove();
             self._delegateRenderAnnouncer();
         },
 
@@ -162,13 +163,13 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _loadScene: function () {
             var self = this;
+            self._disposeScene();
+            self._zoomReset();
+            self.m_property.resetPropertiesView();
             var domPlayerData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
             var l = $(domPlayerData).find('Layout').eq(0);
             var w = $(l).attr('width');
             var h = $(l).attr('height');
-            self._disposeScene();
-            self._zoomReset();
-            self.m_property.resetPropertiesView();
             self._initializeCanvas(w, h);
             self._initializeScene(self.m_selectedSceneID);
             self._render(domPlayerData);
@@ -181,6 +182,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         _listenSelectNextBlock: function () {
             var self = this;
             BB.comBroker.listen(BB.EVENTS.SCENE_SELECT_NEXT, function () {
+                if (!self.m_selectedSceneID)
+                    return;
                 var viewer = self.m_canvas.getActiveObject();
                 var viewIndex = self.m_canvas.getObjects().indexOf(viewer);
                 var totalViews = self.m_canvas.getObjects().length;
@@ -194,6 +197,29 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     blockID = self.m_canvas.getActiveObject().getBlockData().blockID;
                     BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, blockID);
                 }
+            });
+        },
+
+        /**
+         Listen to when a user selects to delete a scene
+         @method SCENE_EDITOR_REMOVE
+         **/
+        _listenSceneRemove: function () {
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS.SCENE_EDITOR_REMOVE, function () {
+                if (!self.m_selectedSceneID)
+                    return;
+
+                bootbox.confirm($(Elements.MSG_BOOTBOX_SCENE_REMOVE).text(), function (result) {
+                    if (result == true) {
+                        pepper.removeScene(self.m_selectedSceneID);
+                        BB.comBroker.fire(BB.EVENTS.SCENE_RENAMED, this, null);
+                        self._disposeScene();
+                        self._zoomReset();
+                        self.m_property.resetPropertiesView();
+                        self.m_selectedSceneID = undefined;
+                    }
+                });
             });
         },
 
@@ -247,6 +273,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 player_data = (new XMLSerializer()).serializeToString(domPlayerData);
                 pepper.appendScenePlayerBlock(self.m_selectedSceneID, player_data);
                 self._createBlock(blockID, player_data);
+                self.m_canvas.renderAll();
                 e.stopImmediatePropagation();
                 e.preventDefault();
             });
@@ -258,7 +285,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _listenPushToTop: function () {
             var self = this;
-            BB.comBroker.listen(BB.EVENTS.SCENE_PUSH_TOP, function() {
+            BB.comBroker.listen(BB.EVENTS.SCENE_PUSH_TOP, function () {
+                if (!self.m_selectedSceneID)
+                    return;
                 var block = self.m_canvas.getActiveObject();
                 if (!block)
                     return;
@@ -273,7 +302,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _listenPushToBottom: function () {
             var self = this;
-            BB.comBroker.listen(BB.EVENTS.SCENE_PUSH_BOTTOM, function() {
+            BB.comBroker.listen(BB.EVENTS.SCENE_PUSH_BOTTOM, function () {
+                if (!self.m_selectedSceneID)
+                    return;
                 var block = self.m_canvas.getActiveObject();
                 if (!block)
                     return;
@@ -288,7 +319,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _updateZorder: function () {
             var self = this;
-            var totalViews = self.m_canvas.getObjects().length;
+            if (!self.m_selectedSceneID)
+                return;
+            // var totalViews = self.m_canvas.getObjects().length;
             // var i = 0;
             // log('--------------------');
             var domSceneData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
@@ -449,6 +482,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _resetAllObjectScale: function () {
             var self = this;
+            if (!self.m_selectedSceneID)
+                return;
             _.each(self.m_canvas.getObjects(), function (obj) {
                 self._resetObjectScale(obj);
             });
@@ -513,6 +548,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             });
             self._disposeBlocks();
             self.m_sceneBlock.deleteBlock();
+            self.m_canvas = undefined;
         },
 
         /**
@@ -555,6 +591,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _zoomIn: function () {
             var self = this;
+            if (!self.m_selectedSceneID)
+                return;
             self.m_canvas.discardActiveGroup();
             self.m_canvasScale = self.m_canvasScale * self.SCALE_FACTOR;
             self.m_canvas.setHeight(self.m_canvas.getHeight() * self.SCALE_FACTOR);
@@ -586,6 +624,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _zoomOut: function () {
             var self = this;
+            if (!self.m_selectedSceneID)
+                return;
             self.m_canvas.discardActiveGroup();
             self.m_canvasScale = self.m_canvasScale / self.SCALE_FACTOR;
             self.m_canvas.setHeight(self.m_canvas.getHeight() * (1 / self.SCALE_FACTOR));
@@ -607,7 +647,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 objects[i].scaleY = tempScaleY;
                 objects[i].left = tempLeft;
                 objects[i].top = tempTop;
-
                 objects[i].setCoords();
             }
         },
@@ -618,7 +657,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _zoomReset: function () {
             var self = this;
-            if (!self.m_canvas)
+            if (!self.m_selectedSceneID || !self.m_canvas)
                 return;
             self.m_canvas.discardActiveGroup();
             self.m_canvas.setHeight(self.m_canvas.getHeight() * (1 / self.m_canvasScale));
@@ -643,6 +682,16 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 objects[i]['canvasScale'] = 1;
             }
             self.m_canvasScale = 1;
+        },
+
+        /**
+         Get currently selected scene id
+         @method getSelectedSceneID
+         @return {Number} scene id
+         **/
+        getSelectedSceneID: function(){
+            var self = this;
+            return self.m_selectedSceneID;
         }
     });
 

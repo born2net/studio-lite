@@ -6,7 +6,10 @@
  **/
 define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
 
+    // Service name when lives inside Scene
     BB.SERVICES.DIMENSION_PROPS_SCENE = 'DimensionPropsScene';
+
+    // Service name when lives inside Screen layout editor
     BB.SERVICES.DIMENSION_PROPS_LAYOUT = 'DimensionPropsLayout';
 
     var DimensionProps = BB.View.extend({

@@ -100,7 +100,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         return;
                     var props = e.target.getValues();
                     var block_id = block.getBlockData().blockID;
-                    self._updateBlockCords(block_id, false, props.x, props.y, props.w, props.h);
+                    self._updateBlockCords(block_id, false, props.x, props.y, props.w, props.h, props.a);
                     BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, block_id);
                 });
                 self._sceneActive();
@@ -308,6 +308,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 top: parseInt(layout.attr('y')),
                 width: parseInt(layout.attr('width')),
                 height: parseInt(layout.attr('height')),
+                angle: parseInt(layout.attr('rotation')),
                 fill: '#ececec',
                 hasRotatingPoint: false,
                 borderColor: '#5d5d5d',
@@ -355,7 +356,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         };
                         var blockID = selectedObject.getBlockData().blockID;
                         log('object: ' + selectedObject.m_blockType + ' ' + blockID);
-                        self._updateBlockCords(blockID, true, objectPos.x, objectPos.y, selectedObject.currentWidth, selectedObject.currentHeight);
+                        self._updateBlockCords(blockID, true, objectPos.x, objectPos.y, selectedObject.currentWidth, selectedObject.currentHeight, selectedObject.angle);
                         self._updateZorder();
                         // BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, blockID);
                     });
@@ -368,7 +369,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     var blockID = selectedObject.getBlockData().blockID;
                     log('object: ' + selectedObject.m_blockType + ' ' + blockID);
                     // var zoomedOut = 1 - selectedObject.scaleY;
-                    self._updateBlockCords(blockID, true, selectedObject.left, selectedObject.top, selectedObject.currentWidth, selectedObject.currentHeight);
+                    self._updateBlockCords(blockID, true, selectedObject.left, selectedObject.top, selectedObject.currentWidth, selectedObject.currentHeight, selectedObject.angle);
                     BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, blockID);
                     self._updateZorder();
                     return;
@@ -392,7 +393,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          @param {Number} w
          @param {Number} h
          **/
-        _updateBlockCords: function (i_blockID, i_calcScale, x, y, w, h) {
+        _updateBlockCords: function (i_blockID, i_calcScale, x, y, w, h, a) {
             var self = this;
             if (i_calcScale) {
                 var sy = 1 / self.m_canvasScale;
@@ -404,6 +405,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             }
             var domPlayerData = pepper.getScenePlayerdataBlock(self.m_selectedSceneID, i_blockID);
             var layout = $(domPlayerData).find('Layout');
+            layout.attr('rotation', parseInt(a));
             layout.attr('x', parseInt(x));
             layout.attr('y', parseInt(y));
             layout.attr('width', parseInt(w));
@@ -447,7 +449,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             self._announceSceneRendered = _.debounce(function (e) {
                 BB.comBroker.fire(BB.EVENTS.SCENE_BLOCKS_RENDERED, self, self.m_canvas);
-                log('announcing rendering done')
+                log('announcing rendering done, now blocks can populate')
             }, 200);
         },
 

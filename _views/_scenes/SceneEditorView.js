@@ -161,10 +161,13 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         _loadScene: function () {
             var self = this;
             var domPlayerData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
+            var l = $(domPlayerData).find('Layout').eq(0);
+            var w = $(l).attr('width');
+            var h = $(l).attr('height');
             self._disposeScene();
             self._zoomReset();
             self.m_property.resetPropertiesView();
-            self._initializeCanvas(600, 400);
+            self._initializeCanvas(w, h);
             self._initializeScene(self.m_selectedSceneID);
             self._render(domPlayerData);
         },

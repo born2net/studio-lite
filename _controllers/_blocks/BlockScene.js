@@ -9,6 +9,14 @@
  */
 define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
+    /**
+     event fires when scene the scene width or height modified by user
+     @event Block.SCENE_BLOCK_DIMENSIONS_CHANGE
+     @param {this} caller
+     @param {String} selected block_id
+     **/
+    BB.EVENTS.SCENE_BLOCK_DIMENSIONS_CHANGE = 'SCENE_BLOCK_DIMENSIONS_CHANGE';
+
     var BlockScene = Block.extend({
 
         /**
@@ -37,9 +45,9 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                     return;
                 var text = $(e.target).val();
                 var domPlayerData = self._getBlockPlayerData();
-                $(domPlayerData).find('Player').eq(0).attr('label',text);
+                $(domPlayerData).find('Player').eq(0).attr('label', text);
                 self._setBlockPlayerData(domPlayerData);
-                BB.comBroker.fire(BB.EVENTS.SCENE_RENAMED, this);
+                BB.comBroker.fire(BB.EVENTS['SCENE_RENAMED'], this);
             }, 150);
             $(Elements.SCENE_NAME_INPUT).on("input", self.m_inputNameChangeHandler);
 
@@ -47,24 +55,26 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_inputWidthChangeHandler = _.debounce(function (e) {
                 if (!self.m_selected)
                     return;
-                var width = $(e.target).val();
+                if (parseFloat($(e.target).val()) < 100)
+                    return;
                 var domPlayerData = self._getBlockPlayerData();
-                var xSnippet = $(domPlayerData).find('Player').eq(0).find('Layout');
-                $(xSnippet).attr('width',width);
+                $(domPlayerData).find('Layout').eq(0).attr('width', $(e.target).val());
                 self._setBlockPlayerData(domPlayerData);
-            }, 150);
-            $(Elements.SCENE_WIDTH_INPUT).on("input", self.m_inputWidthChangeHandler);
+                BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_DIMENSIONS_CHANGE'], self, null, self.m_block_id);
+            }, 200);
+            $(Elements.SCENE_WIDTH_INPUT).on("blur", self.m_inputWidthChangeHandler);
 
             self.m_inputHeightChangeHandler = _.debounce(function (e) {
                 if (!self.m_selected)
                     return;
-                var height = $(e.target).val();
+                if (parseFloat($(e.target).val()) < 100)
+                    return;
                 var domPlayerData = self._getBlockPlayerData();
-                var xSnippet = $(domPlayerData).find('Player').eq(0).find('Layout');
-                $(xSnippet).attr('height',height);
+                $(domPlayerData).find('Layout').eq(0).attr('height', $(e.target).val());
                 self._setBlockPlayerData(domPlayerData);
-            }, 150);
-            $(Elements.SCENE_HEIGHT_INPUT).on("input", self.m_inputHeightChangeHandler);
+                BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_DIMENSIONS_CHANGE'], self, null, self.m_block_id);
+            }, 200);
+            $(Elements.SCENE_HEIGHT_INPUT).on("blur", self.m_inputHeightChangeHandler);
         },
 
         /**

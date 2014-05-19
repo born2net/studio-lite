@@ -37,6 +37,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self.m_selectedSceneID = undefined;
             self._render();
             self._listenSceneSelection();
+            self._listenSceneDimensionsChanged();
             self._listenSceneRenamed();
             self._listenAddNew();
         },
@@ -71,6 +72,25 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                         self._loadScene(i_name, i_id)
                     }
                 });
+            });
+        },
+
+        /**
+         Listen to event of scene dimensions changed
+         @method _listenSceneDimensionsChanged
+         @param {event} e
+         **/
+        _listenSceneDimensionsChanged: function () {
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS['SCENE_BLOCK_DIMENSIONS_CHANGE'], function (e) {
+                var selectedSceneID = e.edata;
+                var scenes = pepper.getScenes();
+                _.forEach(scenes, function (i_name, i_id) {
+                    if (selectedSceneID == i_id) {
+                        self._loadScene(i_name, i_id)
+                    }
+                });
+                return false;
             });
         },
 

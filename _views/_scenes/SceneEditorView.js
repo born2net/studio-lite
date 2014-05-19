@@ -93,15 +93,15 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     appendTo: Elements.SCENE_BLOCK_PROPS,
                     showAngle: true
                 });
+                BB.comBroker.setService(BB.SERVICES['DIMENSION_PROPS_LAYOUT'], self.m_dimensionProps);
                 $(self.m_dimensionProps).on('changed', function (e) {
                     var block = self.m_canvas.getActiveObject();
                     if (!block)
                         return;
                     var props = e.target.getValues();
                     var block_id = block.getBlockData().blockID;
-                    self._updateDimensionsInDB(self.m_canvas.getActiveObject(), props);
-                    BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'],self,null,block_id);
-                    // self._moveViewer(props);
+                    self._updateBlockCords(block_id, false, props.x, props.y, props.w, props.h);
+                    BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, block_id);
                 });
                 self._sceneActive();
             })
@@ -121,7 +121,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _initializeCanvas: function (w, h) {
             var self = this;
-
             var canvasID = BB.lib.unhash(Elements.SCENE_CANVAS);
             $(Elements.SCENE_CANVAS_CONTAINER).empty();
             $(Elements.SCENE_CANVAS_CONTAINER).append('<canvas id="' + canvasID + '" width="' + w + 'px" height="' + h + 'px"/>');
@@ -141,43 +140,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var scene_player_data = pepper.getScenePlayerdata(self.m_selectedSceneID);
             self.m_sceneBlock = self.m_blockFactory.createBlock(self.m_selectedSceneID, scene_player_data, BB.CONSTS.PLACEMENT_IS_SCENE);
             _.extend(self.m_canvas, self.m_sceneBlock);
-        },
-
-        /**
-         Move the object / viewer to new set of coords
-         @method _moveViewer
-         @param {Object} i_props
-         **/
-        _moveViewer: function (i_props) {
-            var self = this;
-            // log('moving viewer');
-            var block = self.m_canvas.getActiveObject();
-            if (block) {
-                block.setWidth(i_props.w / 1);
-                block.setHeight(i_props.h / 1);
-                block.set('left', i_props.x / 1);
-                block.set('top', i_props.y / 1);
-
-                // self._enforceViewerMinimums(block);
-                // self._enforceViewerVisible();
-                // block.setCoords();
-                // self.m_canvas.renderAll();
-                // var block_id = block.getBlockData().blockID;
-                // BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'],self,null,block_id);
-            }
-        },
-
-        /**
-         Update Pepper with latest object dimensions
-         @method _updateDimensionsInDB
-         @param {Object} i_props
-         **/
-        _updateDimensionsInDB: function (i_block, i_props) {
-            var self = this;
-            log('Pepper ' + i_block.getBlockData().blockID + ' ' + JSON.stringify(i_props));
-            // pepper.setBoardTemplateViewer(self.m_campaign_timeline_board_template_id, i_block.get('id'), i_props);
-            // i_block.setCoords();
-            // self.m_canvas.renderAll();
         },
 
         /**
@@ -362,6 +324,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_blocks[i_blockID] = block;
             _.extend(block, rect);
             // block.listenSceneSelection(self.m_canvas);
+            block['canvasScale'] = self.m_canvasScale;
             self.m_canvas.add(block);
             return block;
         },
@@ -392,7 +355,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         };
                         var blockID = selectedObject.getBlockData().blockID;
                         log('object: ' + selectedObject.m_blockType + ' ' + blockID);
-                        self._updateBlockCords(blockID, objectPos.x, objectPos.y, selectedObject.currentWidth, selectedObject.currentHeight);
+                        self._updateBlockCords(blockID, true, objectPos.x, objectPos.y, selectedObject.currentWidth, selectedObject.currentHeight);
                         self._updateZorder();
                         // BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, blockID);
                     });
@@ -404,9 +367,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     var selectedObject = options.target || active;
                     var blockID = selectedObject.getBlockData().blockID;
                     log('object: ' + selectedObject.m_blockType + ' ' + blockID);
-
-                    var zoomedOut = 1 - selectedObject.scaleY;
-                    self._updateBlockCords(blockID, selectedObject.left, selectedObject.top, selectedObject.currentWidth, selectedObject.currentHeight);
+                    // var zoomedOut = 1 - selectedObject.scaleY;
+                    self._updateBlockCords(blockID, true, selectedObject.left, selectedObject.top, selectedObject.currentWidth, selectedObject.currentHeight);
                     BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, blockID);
                     self._updateZorder();
                     return;
@@ -421,22 +383,25 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         },
 
         /**
-         Update the coordinates of a block
+         Update the coordinates of a block in pepper db
          @method _updateBlockCords
          @param {String} i_blockID
+         @param {Boolean} i_calcScale
          @param {Number} x
          @param {Number} y
          @param {Number} w
          @param {Number} h
          **/
-        _updateBlockCords: function (i_blockID, x, y, w, h) {
+        _updateBlockCords: function (i_blockID, i_calcScale, x, y, w, h) {
             var self = this;
-            var sy = 1 / self.m_canvasScale;
-            var sx = 1 / self.m_canvasScale;
-            h = h * sy;
-            w = w * sx;
-            x = x * sx;
-            y = y * sy;
+            if (i_calcScale) {
+                var sy = 1 / self.m_canvasScale;
+                var sx = 1 / self.m_canvasScale;
+                h = h * sy;
+                w = w * sx;
+                x = x * sx;
+                y = y * sy;
+            }
             var domPlayerData = pepper.getScenePlayerdataBlock(self.m_selectedSceneID, i_blockID);
             var layout = $(domPlayerData).find('Layout');
             layout.attr('x', parseInt(x));
@@ -570,12 +535,12 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 var scaleY = objects[i].scaleY;
                 var left = objects[i].left;
                 var top = objects[i].top;
-
                 var tempScaleX = scaleX * self.SCALE_FACTOR;
                 var tempScaleY = scaleY * self.SCALE_FACTOR;
                 var tempLeft = left * self.SCALE_FACTOR;
                 var tempTop = top * self.SCALE_FACTOR;
 
+                objects[i]['canvasScale'] = self.m_canvasScale;
                 objects[i].scaleX = tempScaleX;
                 objects[i].scaleY = tempScaleY;
                 objects[i].left = tempLeft;
@@ -601,12 +566,12 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 var scaleY = objects[i].scaleY;
                 var left = objects[i].left;
                 var top = objects[i].top;
-
                 var tempScaleX = scaleX * (1 / self.SCALE_FACTOR);
                 var tempScaleY = scaleY * (1 / self.SCALE_FACTOR);
                 var tempLeft = left * (1 / self.SCALE_FACTOR);
                 var tempTop = top * (1 / self.SCALE_FACTOR);
 
+                objects[i]['canvasScale'] = self.m_canvasScale;
                 objects[i].scaleX = tempScaleX;
                 objects[i].scaleY = tempScaleY;
                 objects[i].left = tempLeft;
@@ -638,11 +603,13 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 var tempScaleY = scaleY * (1 / self.m_canvasScale);
                 var tempLeft = left * (1 / self.m_canvasScale);
                 var tempTop = top * (1 / self.m_canvasScale);
+
                 objects[i].scaleX = tempScaleX;
                 objects[i].scaleY = tempScaleY;
                 objects[i].left = tempLeft;
                 objects[i].top = tempTop;
                 objects[i].setCoords();
+                objects[i]['canvasScale'] = 1;
             }
             self.m_canvasScale = 1;
         }

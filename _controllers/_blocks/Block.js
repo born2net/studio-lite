@@ -334,6 +334,16 @@ define(['jquery', 'backbone'], function ($) {
          @method _updateBlockDimensions
          **/
         _updateBlockDimensions: function () {
+            var self = this;
+            var dimensionProps = BB.comBroker.getService(BB.SERVICES['DIMENSION_PROPS_LAYOUT']);
+            var values = {
+                y: self['canvasScale'] == 1 ? self.top : self.top * (1 / self['canvasScale']),
+                x: self['canvasScale'] == 1 ? self.left : self.left * (1 / self['canvasScale']),
+                w: self['canvasScale'] == 1 ? self.width : self.width * (1 / self['canvasScale']),
+                h: self['canvasScale'] == 1 ? self.height : self.height * (1 / self['canvasScale']),
+                a: self.angle
+            };
+            dimensionProps.setValues(values);
         },
 
         /**
@@ -404,13 +414,13 @@ define(['jquery', 'backbone'], function ($) {
                 case BB.CONSTS.PLACEMENT_SCENE:
                 {
                     pepper.setScenePlayerdataBlock(self.m_sceneID, self.m_block_id, player_data);
-                    BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'],self,null,self.m_block_id);
+                    BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, self.m_block_id);
                     break;
                 }
                 case BB.CONSTS.PLACEMENT_IS_SCENE:
                 {
                     pepper.setScenePlayerData(self.m_block_id, player_data);
-                    BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'],self,null,self.m_block_id);
+                    BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, self.m_block_id);
                     break;
                 }
             }
@@ -495,7 +505,7 @@ define(['jquery', 'backbone'], function ($) {
         /**
          Listen for when this instance is selected within a scene canvas
          @method listenSceneSelection
-        listenSceneSelection: function (i_canvas) {
+         listenSceneSelection: function (i_canvas) {
             var self = this;
             self.m_canvas = i_canvas;
             self.m_sceneSelectedHandler = function (e) {

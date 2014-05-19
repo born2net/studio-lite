@@ -1,12 +1,13 @@
 /**
- Config the UI of dimensions props which include x, y, width, height and angle using spinner widgets
+ Config the UI of dimension props which include x, y, width, height and angle using spinner widgets
  @class DimensionProps
  @constructor
  @return {Object} instantiated DimensionProps
  **/
 define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
 
-    BB.SERVICES.DIMENSION_PROPS = 'DimensionProps';
+    BB.SERVICES.DIMENSION_PROPS_SCENE = 'DimensionPropsScene';
+    BB.SERVICES.DIMENSION_PROPS_LAYOUT = 'DimensionPropsLayout';
 
     var DimensionProps = BB.View.extend({
 

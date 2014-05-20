@@ -356,7 +356,14 @@
                             data-localize-tooltip="redo"
                             title="redo" data-toggle="tooltip" class="btn btn-default btn-sm"><i
                             style="font-size: 1.3em" class="fa fa-reply"> </i></button>
-
+                    <div class="input-group" style="margin-left: 0px">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default input-sm dropdown-toggle" data-toggle="dropdown">
+                                <span data-localize="sceneBlockList">Scene</span> <span class="caret"></span></button>
+                            <ul id="sceneBlockList" class="selectSceneDropDown dropdown-menu">
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div id="sceneCanvasContainer" class="sceneElements" align="center"></div>
@@ -721,13 +728,16 @@
             <div id="blockSceneCommonProperties" style="display: none"><span>Scene properties</span>
 
                 <div data-role="fieldcontain" data-inset="true">
-                    <input id="sceneNameInput" type="text" name="name" value="" placeholder="Scene name" data-localize="enterSceneText">
+                    <input id="sceneNameInput" type="text" name="name" value="" placeholder="Scene name"
+                           data-localize="enterSceneText">
                 </div>
                 <div data-role="fieldcontain" data-inset="true">
-                    <input id="sceneWidthInput" type="text" name="name" value="" placeholder="Scene width" data-localize="enterSceneWidth">
+                    <input id="sceneWidthInput" type="text" name="name" value="" placeholder="Scene width"
+                           data-localize="enterSceneWidth">
                 </div>
                 <div data-role="fieldcontain" data-inset="true">
-                    <input id="sceneHeightInput" type="text" name="name" value="" placeholder="Scene height" data-localize="enterSceneHeight">
+                    <input id="sceneHeightInput" type="text" name="name" value="" placeholder="Scene height"
+                           data-localize="enterSceneHeight">
                 </div>
             </div>
             <div id="blockQRCommonProperties" style="display: none"><span>QR</span>
@@ -1063,8 +1073,11 @@
 
 <!-- Messages -->
 
-<p style="display: none" id="bootBoxSceneMustSelectScene" data-localize="bootBoxSceneMustSelectScene">You must first select a Scene</p>
-<p style="display: none" id="bootBoxSceneRemove" data-localize="bootBoxSceneRemove">Are you sure you want to remove the scene?</p>
+<p style="display: none" id="bootBoxSceneMustSelectScene" data-localize="bootBoxSceneMustSelectScene">You must first
+    select a Scene</p>
+
+<p style="display: none" id="bootBoxSceneRemove" data-localize="bootBoxSceneRemove">Are you sure you want to remove the
+    scene?</p>
 
 <p style="display: none" id="bootBoxRestartStations" data-localize="bootBoxRestartStations">Restart connected stations
     and apply your saved work?</p>

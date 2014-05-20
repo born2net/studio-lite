@@ -106,6 +106,7 @@ Elements.SCENE_EDITOR_PUSH_BOTTOM = '#sceneEditorPushBottom';
 Elements.SCENE_NAME_INPUT = '#sceneNameInput';
 Elements.SCENE_WIDTH_INPUT  = '#sceneWidthInput';
 Elements.SCENE_HEIGHT_INPUT  = '#sceneHeightInput';
+Elements.SCENE_BLOCK_LIST = '#sceneBlockList';
 Elements.SETTINGS_PANEL = '#settingsPanel';
 Elements.PRO_STUDIO_PANEL = '#proStudioPanel';
 Elements.HELP_PANEL = '#helpPanel';

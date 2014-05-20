@@ -4,7 +4,7 @@
  @constructor
  @return {object} instantiated SceneEditorView
  **/
-define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbarView'], function ($, Backbone, fabric, BlockScene, BlockRSS, ScenesToolbarView) {
+define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbarView', 'BlockFactory'], function ($, Backbone, fabric, BlockScene, BlockRSS, ScenesToolbarView, BlockFactory) {
 
     BB.SERVICES.SCENE_EDIT_VIEW = 'SceneEditorView';
 
@@ -159,6 +159,22 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         },
 
         /**
+         Announce that block count changed with block array of ids
+         @method self._blockCountChanged();
+         **/
+        _blockCountChanged: function () {
+            var self = this;
+            var blocks = [];
+            for (var i = 0; i < self.m_canvas.getObjects().length; i++) {
+                blocks.push({
+                    id: self.m_canvas.item(i).getBlockData().blockID,
+                    name: self.m_canvas.item(i).getBlockData().blockName
+                });
+            }
+            BB.comBroker.fire(BB.EVENTS.SCENE_BLOCK_LIST_UPDATED, this, null, blocks);
+        },
+
+        /**
          Load a new scene and dispose of any previous ones
          @return {Number} Unique clientId.
          **/
@@ -174,6 +190,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._initializeCanvas(w, h);
             self._initializeScene(self.m_selectedSceneID);
             self._render(domPlayerData);
+            $(Elements.SCENE_CANVAS).addClass('basicBorder');
+            self._blockCountChanged();
         },
 
         /**
@@ -219,6 +237,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         self._zoomReset();
                         self.m_property.resetPropertiesView();
                         self.m_selectedSceneID = undefined;
+                        $(Elements.SCENE_CANVAS).removeClass('basicBorder');
                     }
                 });
             });
@@ -228,9 +247,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          Listen to user selection of new scene
          @method _listenSceneNew
          **/
-        _listenSceneNew: function(){
+        _listenSceneNew: function () {
             var self = this;
-            BB.comBroker.listen(BB.EVENTS.NEW_SCENE, function(e){
+            BB.comBroker.listen(BB.EVENTS.NEW_SCENE, function (e) {
                 var player_data = BB.PepperHelper.getBlockBoilerplate('3510').getDefaultPlayerData(BB.CONSTS.PLACEMENT_IS_SCENE);
                 self.m_selectedSceneID = pepper.createScene(player_data);
                 self._loadScene();
@@ -288,6 +307,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 player_data = (new XMLSerializer()).serializeToString(domPlayerData);
                 pepper.appendScenePlayerBlock(self.m_selectedSceneID, player_data);
                 self._createBlock(blockID, player_data);
+                self._blockCountChanged();
                 self.m_canvas.renderAll();
                 e.stopImmediatePropagation();
                 e.preventDefault();
@@ -706,7 +726,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          @method getSelectedSceneID
          @return {Number} scene id
          **/
-        getSelectedSceneID: function(){
+        getSelectedSceneID: function () {
             var self = this;
             return self.m_selectedSceneID;
         }

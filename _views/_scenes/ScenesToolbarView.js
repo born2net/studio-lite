@@ -10,6 +10,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
      events
      **/
     BB.EVENTS.SCENE_LIST_UPDATED = 'SCENE_LIST_UPDATED';
+    BB.EVENTS.SCENE_BLOCK_LIST_UPDATED = 'SCENE_BLOCK_LIST_UPDATED';
     BB.EVENTS.LOAD_SCENE = 'LOAD_SCENE';
     BB.EVENTS.SCENE_ZOOM_IN = 'SCENE_ZOOM_IN';
     BB.EVENTS.SCENE_ZOOM_OUT = 'SCENE_ZOOM_OUT';
@@ -41,6 +42,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self._listenPushToBottom();
             self._listenSelectNextBlock();
             self._listenSceneRemove();
+            self._listenSceneBlockList();
         },
 
         /**
@@ -50,6 +52,19 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _render: function () {
             var self = this;
             self._populateSceneSelection();
+        },
+
+        _listenSceneBlockList: function(){
+            BB.comBroker.listen(BB.EVENTS.SCENE_BLOCK_LIST_UPDATED, function (e) {
+                var blocks = e.edata;
+                $(Elements.SCENE_BLOCK_LIST).empty();
+                var snippet = '<li><a data-block_id="' + -1 + '" href="#">Canvas</a></li>';
+                $(Elements.SCENE_BLOCK_LIST).append(snippet);
+                _.forEach(blocks, function (i_block) {
+                    var snippet = '<li><a data-block_id="' + i_block.id + '" href="#">' + i_block.name + '</a></li>';
+                    $(Elements.SCENE_BLOCK_LIST).append(snippet);
+                });
+            });
         },
 
         _listenSceneRemove: function () {

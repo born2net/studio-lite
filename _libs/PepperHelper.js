@@ -253,7 +253,7 @@ PepperHelper.prototype = {
                     return  '<Player player="3510" label="My scene" interactive="0">' +
                                 '<Data>' +
                                     self.getCommonDefaultXML() +
-                                    self.getCommonSceneLayout(i_placement) +
+                                    self.getCommonSceneLayout(i_placement, 1024, 768) +
                                     '<Scene defaultDuration="10">' +
                                         '<Layout>' +
                                             '<BasicLayout/>' +
@@ -297,11 +297,13 @@ PepperHelper.prototype = {
      @param {string} i_placement
      @return {String} common xml
      **/
-    getCommonSceneLayout: function(i_placement){
+    getCommonSceneLayout: function(i_placement, w, h){
         var self = this;
+        w = w == undefined ? 100 : w;
+        h = h == undefined ? 100 : h;
         if (i_placement == BB.CONSTS.PLACEMENT_CHANNEL)
             return '';
-        return '<Layout rotation="0" x="0" y="0" width="100" height="100" />';
+        return '<Layout rotation="0" x="0" y="0" width="' + w + '" height="' + h + '" />';
     },
 
     /**

@@ -214,7 +214,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 bootbox.confirm($(Elements.MSG_BOOTBOX_SCENE_REMOVE).text(), function (result) {
                     if (result == true) {
                         pepper.removeScene(self.m_selectedSceneID);
-                        BB.comBroker.fire(BB.EVENTS.SCENE_RENAMED, this, null);
+                        BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this, null);
                         self._disposeScene();
                         self._zoomReset();
                         self.m_property.resetPropertiesView();
@@ -231,7 +231,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         _listenSceneNew: function(){
             var self = this;
             BB.comBroker.listen(BB.EVENTS.NEW_SCENE, function(e){
-                self.m_selectedSceneID = pepper.createScene();
+                var player_data = BB.PepperHelper.getBlockBoilerplate('3510').getDefaultPlayerData(BB.CONSTS.PLACEMENT_IS_SCENE);
+                self.m_selectedSceneID = pepper.createScene(player_data);
+                self._loadScene();
+                BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this, null);
             });
         },
 
@@ -432,8 +435,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         log('object: ' + selectedObject.m_blockType + ' ' + blockID);
                         self._updateBlockCords(blockID, true, objectPos.x, objectPos.y, selectedObject.currentWidth, selectedObject.currentHeight, selectedObject.angle);
                         self._updateZorder();
-                        // BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, blockID);
                     });
+                    selectedGroup.hasControls = false;
+                    self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
+                    self.m_canvas.renderAll();
                     return;
                 }
 

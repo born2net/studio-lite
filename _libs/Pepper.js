@@ -349,10 +349,11 @@ Pepper.prototype = {
      @method createScene
      @return {Number} scene player_data id
      **/
-    createScene: function () {
+    createScene: function (i_player_data) {
         var self = this;
         var table_player_data = self.m_msdb.table_player_data();
         var recPlayerData = table_player_data.createRecord();
+        recPlayerData['player_data_value'] = i_player_data;
         table_player_data.addRecord(recPlayerData);
         pepper.fire(Pepper['SCENE_CREATED'], self, null, recPlayerData['player_data_id']);
         return recPlayerData['player_data_id'];

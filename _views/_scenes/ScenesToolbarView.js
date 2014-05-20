@@ -9,7 +9,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
     /**
      events
      **/
-    BB.EVENTS.SCENE_RENAMED = 'SCENE_RENAMED';
+    BB.EVENTS.SCENE_LIST_UPDATED = 'SCENE_LIST_UPDATED';
     BB.EVENTS.LOAD_SCENE = 'LOAD_SCENE';
     BB.EVENTS.SCENE_ZOOM_IN = 'SCENE_ZOOM_IN';
     BB.EVENTS.SCENE_ZOOM_OUT = 'SCENE_ZOOM_OUT';
@@ -110,7 +110,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
         _listenSceneRenamed: function () {
             var self = this;
-            BB.comBroker.listen(BB.EVENTS.SCENE_RENAMED, function (e) {
+            BB.comBroker.listen(BB.EVENTS.SCENE_LIST_UPDATED, function (e) {
                 self._populateSceneSelection();
             });
         },

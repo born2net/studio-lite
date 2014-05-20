@@ -37,6 +37,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._listenSceneChanged();
             self._listenSelectNextBlock();
             self._listenSceneRemove();
+            self._listenSceneNew();
             self._delegateRenderAnnouncer();
         },
 
@@ -220,6 +221,17 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         self.m_selectedSceneID = undefined;
                     }
                 });
+            });
+        },
+
+        /**
+         Listen to user selection of new scene
+         @method _listenSceneNew
+         **/
+        _listenSceneNew: function(){
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS.NEW_SCENE, function(e){
+                self.m_selectedSceneID = pepper.createScene();
             });
         },
 
@@ -696,4 +708,5 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
     });
 
     return SceneEditorView;
+
 });

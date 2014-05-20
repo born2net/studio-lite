@@ -18,6 +18,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
     BB.EVENTS.SCENE_PUSH_BOTTOM = 'SCENE_PUSH_BOTTOM';
     BB.EVENTS.SCENE_SELECT_NEXT = 'SCENE_SELECT_NEXT';
     BB.EVENTS.SCENE_EDITOR_REMOVE = 'SCENE_EDITOR_REMOVE';
+    BB.EVENTS.NEW_SCENE = 'NEW_SCENE';
 
     var ScenesToolbarView = Backbone.View.extend({
 
@@ -187,6 +188,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     }
                     case 'scene':
                     {
+                        BB.comBroker.fire(BB.EVENTS.NEW_SCENE, this, null);
                         break;
                     }
                 }

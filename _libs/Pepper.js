@@ -439,7 +439,6 @@ Pepper.prototype = {
         self.m_msdb.table_player_data().openForDelete(i_scene_player_data_id);
     },
 
-
     /**
      When we remove scene player ids we actually store them aside so we can restore them back after a save as the
      remote server expects a scene's player_data to have no player ids on its scene player_data

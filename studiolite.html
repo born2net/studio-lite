@@ -316,14 +316,18 @@
                         <button type="button" class="btn btn-default input-sm dropdown-toggle" data-toggle="dropdown"><i
                                 style="font-size: 1em" class="fa fa-plus"> </i> <span class="caret"></span></button>
                         <ul class="sceneAddNew dropdown-menu" role="menu">
-                            <li><a href="#" name="scene">Add scene</a></li>
-                            <li><a href="#" name="component">Add component</a></li>
+                            <li><a href="#" data-localize="addScene" name="addScene">Add scene</a></li>
+                            <li><a href="#" data-localize="addItem" name="addItem">Add component</a></li>
                         </ul>
                     </div>
-                    <button id="sceneEditorRemove" type="button" data-localize="empty"
-                            data-localize-tooltip="removeItemToolTip"
-                            title="remove item" data-toggle="tooltip" class="btn btn-default btn-sm"><i
-                            style="font-size: 1em" class="fa fa-minus"> </i></button>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default input-sm dropdown-toggle" data-toggle="dropdown"><i
+                                style="font-size: 1em" class="fa fa-minus"> </i> <span class="caret"></span></button>
+                        <ul class="sceneRemoves dropdown-menu" role="menu">
+                            <li><a href="#" data-localize="removeScene" name="removeScene">Remove scene</a></li>
+                            <li><a href="#" data-localize="removeItem" name="removeItem">Remove item</a></li>
+                        </ul>
+                    </div>
                     <button id="sceneEditorPushTop" type="button" data-localize="empty"
                             data-localize-tooltip="pushItemToTopButtonToolTip"
                             title="push item to top" data-toggle="tooltip" class="btn btn-default btn-sm"><i
@@ -332,10 +336,6 @@
                             data-localize-tooltip="pushItemToBottomButtonToolTip"
                             title="push item to bottom" data-toggle="tooltip" class="btn btn-default btn-sm"><i
                             style="font-size: 1em" class="fa fa-angle-double-down"> </i></button>
-                    <button id="sceneEditorNext" type="button" data-localize="empty"
-                            data-localize-tooltip="getNextItemButtonToolTip"
-                            title="get next item" data-toggle="tooltip" class="btn btn-default btn-sm"><i
-                            style="font-size: 1em" class="fa fa-th-large"> </i></button>
                     <button id="sceneZoomIn" type="button" data-localize="empty"
                             data-localize-tooltip="sceneZoomIn"
                             title="zoom in" data-toggle="tooltip" class="btn btn-default btn-sm"><i
@@ -837,7 +837,7 @@
 </div>
 </div>
 <div id="footer"><br>
-    <span id="footerText">&nbsp;MediaSignage Inc &#169; | version 0.9.32 </span></div>
+    <span id="footerText">&nbsp;MediaSignage Inc &#169; | version 0.9.33 </span></div>
 
 <!-- Modal -->
 <div class="modal modal-static fade" id="bsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"

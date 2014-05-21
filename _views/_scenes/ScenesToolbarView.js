@@ -17,8 +17,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
     BB.EVENTS.SCENE_ZOOM_RESET = 'SCENE_ZOOM_RESET';
     BB.EVENTS.SCENE_PUSH_TOP = 'SCENE_PUSH_TOP';
     BB.EVENTS.SCENE_PUSH_BOTTOM = 'SCENE_PUSH_BOTTOM';
-    BB.EVENTS.SCENE_SELECT_NEXT = 'SCENE_SELECT_NEXT';
     BB.EVENTS.SCENE_EDITOR_REMOVE = 'SCENE_EDITOR_REMOVE';
+    BB.EVENTS.SCENE_ITEM_REMOVE = 'SCENE_ITEM_REMOVE';
     BB.EVENTS.NEW_SCENE = 'NEW_SCENE';
 
     var ScenesToolbarView = Backbone.View.extend({
@@ -37,11 +37,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self._listenSceneDimensionsChanged();
             self._listenSceneRenamed();
             self._listenAddNew();
+            self._listenRemoves();
             self._listenZoom();
             self._listenPushToTop();
             self._listenPushToBottom();
-            self._listenSelectNextBlock();
-            self._listenSceneRemove();
             self._listenSceneBlockList();
         },
 
@@ -67,22 +66,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             });
         },
 
-        _listenSceneRemove: function () {
-            $(Elements.SCENE_EDITOR_REMOVE, self.$el).on('click', function () {
-                BB.comBroker.fire(BB.EVENTS.SCENE_EDITOR_REMOVE);
-            });
-        },
-
-        /**
-         Listen to selection of next block
-         @method _listenSelectNextDivision
-         **/
-        _listenSelectNextBlock: function () {
-            var self = this;
-            $(Elements.SCENE_EDITOR_NEXT, self.$el).on('click', function () {
-                BB.comBroker.fire(BB.EVENTS.SCENE_SELECT_NEXT);
-            });
-        },
 
         /**
          Listen to re-order of screen division, putting selected on top
@@ -152,13 +135,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _listenSceneSelection: function () {
             var self = this;
             $(Elements.CLASS_SELECT_SCENE_DROPDOWN, self.el).on('click', function (e) {
-                var selectedSceneID = $(e.target).data('scene_player_data_id');
-                var scenenames = BB.Pepper.getSceneNames();
-                _.forEach(scenenames, function (i_name, i_id) {
-                    if (selectedSceneID == i_id) {
-                        self._loadScene(i_name, i_id)
-                    }
-                });
+                var id = $(e.target).data('scene_player_data_id');
+                self._loadScene(id);
             });
         },
 
@@ -170,14 +148,29 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _listenSceneDimensionsChanged: function () {
             var self = this;
             BB.comBroker.listen(BB.EVENTS['SCENE_BLOCK_DIMENSIONS_CHANGE'], function (e) {
-                var selectedSceneID = e.edata;
-                var scenes = pepper.getScenes();
-                _.forEach(scenes, function (i_name, i_id) {
-                    if (selectedSceneID == i_id) {
-                        self._loadScene(i_name, i_id)
+                self._loadScene(e.edata)
+            });
+        },
+
+        /**
+         Listen to user selection of existing scene
+         @method _listenAddNew
+         **/
+        _listenRemoves: function () {
+            var self = this;
+            $(Elements.CLASS_SCENE_REMOVES, self.el).on('click', function (e) {
+                switch ($(e.target).attr('name')) {
+                    case 'removeScene':
+                    {
+                        BB.comBroker.fire(BB.EVENTS.SCENE_EDITOR_REMOVE);
+                        break;
                     }
-                });
-                return false;
+                    case 'removeItem':
+                    {
+                        BB.comBroker.fire(BB.EVENTS.SCENE_ITEM_REMOVE);
+                        break;
+                    }
+                }
             });
         },
 
@@ -189,10 +182,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             $(Elements.CLASS_SCENE_ADD_NEW, self.el).on('click', function (e) {
                 switch ($(e.target).attr('name')) {
-                    case 'component':
+                    case 'addItem':
                     {
                         var sceneEditorView = BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']);
-                        if (!sceneEditorView.getSelectedSceneID()) {
+                        if (_.isUndefined(sceneEditorView.getSelectedSceneID())) {
                             bootbox.alert({
                                 message: $(Elements.MSG_BOOTBOX_MUST_SELECT_SCENE).text()
                             });
@@ -201,7 +194,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                         self.m_stackFaderView.selectView(Elements.SCENE_ADD_NEW_BLOCK);
                         break;
                     }
-                    case 'scene':
+                    case 'addScene':
                     {
                         BB.comBroker.fire(BB.EVENTS.NEW_SCENE, this, null);
                         break;
@@ -216,7 +209,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @param {String} i_name
          @param {String} i_id
          **/
-        _loadScene: function (i_name, i_id) {
+        _loadScene: function (i_id) {
             self.m_selectedSceneID = i_id;
             BB.comBroker.fire(BB.EVENTS.LOAD_SCENE, this, null, i_id);
         }

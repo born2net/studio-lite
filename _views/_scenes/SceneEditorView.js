@@ -37,6 +37,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._listenSceneChanged();
             self._listenSelectNextBlock();
             self._listenSceneRemove();
+            self._listenSceneBlockRemove();
             self._listenSceneNew();
             self._delegateRenderAnnouncer();
         },
@@ -100,7 +101,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 BB.comBroker.setService(BB.SERVICES['DIMENSION_PROPS_LAYOUT'], self.m_dimensionProps);
                 $(self.m_dimensionProps).on('changed', function (e) {
                     var block = self.m_canvas.getActiveObject();
-                    if (!block)
+                    if (_.isUndefined(block))
                         return;
                     var props = e.target.getValues();
                     var block_id = block.getBlockData().blockID;
@@ -155,6 +156,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             BB.comBroker.listen(BB.EVENTS.LOAD_SCENE, function (e) {
                 self.m_selectedSceneID = e.edata;
                 self._loadScene();
+                BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.m_selectedSceneID);
             });
         },
 
@@ -200,8 +202,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _listenSelectNextBlock: function () {
             var self = this;
-            BB.comBroker.listen(BB.EVENTS.SCENE_SELECT_NEXT, function () {
-                if (!self.m_selectedSceneID)
+            BB.comBroker.listen(BB.EVENTS['SCENE_SELECT_NEXT'], function () {
+                if (_.isUndefined(self.m_selectedSceneID))
                     return;
                 var viewer = self.m_canvas.getActiveObject();
                 var viewIndex = self.m_canvas.getObjects().indexOf(viewer);
@@ -220,13 +222,33 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         },
 
         /**
+         Listen to when a user selects to delete a block
+         @method _listenSceneBlockRemove
+         **/
+        _listenSceneBlockRemove: function () {
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS.SCENE_ITEM_REMOVE, function () {
+                if (_.isUndefined(self.m_selectedSceneID))
+                    return;
+                var block = self.m_canvas.getActiveObject();
+                var blockID = block.getBlockData().blockID;
+                self.m_canvas.discardActiveObject();
+                delete self.m_blocks[blockID];
+                pepper.removeScenePlayer(self.m_selectedSceneID, blockID);
+                BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, null);
+                block.deleteBlock();
+                self._blockCountChanged();
+            });
+        },
+
+        /**
          Listen to when a user selects to delete a scene
-         @method SCENE_EDITOR_REMOVE
+         @method _listenSceneRemove
          **/
         _listenSceneRemove: function () {
             var self = this;
             BB.comBroker.listen(BB.EVENTS.SCENE_EDITOR_REMOVE, function () {
-                if (!self.m_selectedSceneID)
+                if (_.isUndefined(self.m_selectedSceneID))
                     return;
 
                 bootbox.confirm($(Elements.MSG_BOOTBOX_SCENE_REMOVE).text(), function (result) {
@@ -321,10 +343,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         _listenPushToTop: function () {
             var self = this;
             BB.comBroker.listen(BB.EVENTS.SCENE_PUSH_TOP, function () {
-                if (!self.m_selectedSceneID)
+                if (_.isUndefined(self.m_selectedSceneID))
                     return;
                 var block = self.m_canvas.getActiveObject();
-                if (!block)
+                if (_.isUndefined(block))
                     return;
                 self.m_canvas.bringToFront(block);
                 self._updateZorder();
@@ -338,10 +360,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         _listenPushToBottom: function () {
             var self = this;
             BB.comBroker.listen(BB.EVENTS.SCENE_PUSH_BOTTOM, function () {
-                if (!self.m_selectedSceneID)
+                if (_.isUndefined(self.m_selectedSceneID))
                     return;
                 var block = self.m_canvas.getActiveObject();
-                if (!block)
+                if (_.isUndefined(block))
                     return;
                 self.m_canvas.sendToBack(block);
                 self._updateZorder();
@@ -354,7 +376,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _updateZorder: function () {
             var self = this;
-            if (!self.m_selectedSceneID)
+            if (_.isUndefined(self.m_selectedSceneID))
                 return;
             // var totalViews = self.m_canvas.getObjects().length;
             // var i = 0;
@@ -519,7 +541,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _resetAllObjectScale: function () {
             var self = this;
-            if (!self.m_selectedSceneID)
+            if (_.isUndefined(self.m_selectedSceneID))
                 return;
             _.each(self.m_canvas.getObjects(), function (obj) {
                 self._resetObjectScale(obj);
@@ -539,7 +561,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 i_target.scaleY = 1;
                 self.m_canvas.renderAll();
             }
-
         },
 
         /**
@@ -577,7 +598,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _disposeScene: function () {
             var self = this;
-            if (!self.m_canvas)
+            if (_.isUndefined(self.m_canvas))
                 return;
             self.m_canvas.off('mouse:up');
             _.each(self.m_canvas.getObjects(), function (obj) {
@@ -594,7 +615,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _disposeBlocks: function () {
             var self = this;
-            if (!self.m_canvas)
+            if (_.isUndefined(self.m_canvas))
                 return;
             _.each(self.m_blocks, function (block) {
                 block.deleteBlock();
@@ -628,7 +649,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _zoomIn: function () {
             var self = this;
-            if (!self.m_selectedSceneID)
+            if (_.isUndefined(self.m_selectedSceneID))
                 return;
             self.m_canvas.discardActiveGroup();
             self.m_canvasScale = self.m_canvasScale * self.SCALE_FACTOR;
@@ -661,7 +682,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _zoomOut: function () {
             var self = this;
-            if (!self.m_selectedSceneID)
+            if (_.isUndefined(self.m_selectedSceneID))
                 return;
             self.m_canvas.discardActiveGroup();
             self.m_canvasScale = self.m_canvasScale / self.SCALE_FACTOR;
@@ -694,7 +715,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _zoomReset: function () {
             var self = this;
-            if (!self.m_selectedSceneID || !self.m_canvas)
+            if (_.isUndefined(self.m_selectedSceneID) || _.isUndefined(self.m_canvas))
                 return;
             self.m_canvas.discardActiveGroup();
             self.m_canvas.setHeight(self.m_canvas.getHeight() * (1 / self.m_canvasScale));

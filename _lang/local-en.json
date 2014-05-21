@@ -184,6 +184,11 @@
     "channelProps": "channel props",
     "bootBoxSteps": "Station will be deleted, your work will be saved to the server and your remote station (SignagePlayer) de-registered",
 
+
+    "addScene": "add scene",
+    "addItem": "add item",
+    "removeScene": "remove scene",
+    "removeItem": "remove item",
     "sceneBlockList": "Items",
     "redo": "redo",
     "undo": "undo",
@@ -194,7 +199,6 @@
     "enterSceneHeight": "Scene height",
     "enterSceneText": "Scene name",
     "selectScene": "Scene",
-    "removeItemToolTip": "remove item",
     "pushItemToTopButtonToolTip": "push item to top",
     "pushItemToBottomButtonToolTip": "push item to bottom",
     "getNextItemButtonToolTip": "get next item",

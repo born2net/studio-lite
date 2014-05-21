@@ -159,7 +159,7 @@
     "bootBoxLoginWrongCred": "Vous êtes connécté avec les informations de SignageStudio Pro et non pas avec ceux de StudioLite GRATUIT, donc seul le module des stations est disponible. Veuillez créer un compte StudioLite GRATUIT pour avoir toute l'expérience",
     "bootBoxSaveRemoteSrv": "Sauvegarder les changements dans le serveur",
     "bootBoxSave": "Sauvegarder",
-    "bootBoxSaveAndRestart": "Sauvegarder et redémarrer les stations",
+    "bootBoxSaveAndRest  art": "Sauvegarder et redémarrer les stations",
     "bootBoxCancel": "Annuler",
     "bootBoxOk": "D'accord",
     "bootBoxNoStationSelected": "Aucune station séléctionnée",

@@ -30,6 +30,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
     BB.EVENTS.SCENE_EDITOR_REMOVE = 'SCENE_EDITOR_REMOVE';
     BB.EVENTS.SCENE_ITEM_REMOVE = 'SCENE_ITEM_REMOVE';
     BB.EVENTS.NEW_SCENE = 'NEW_SCENE';
+    BB.EVENTS.SCENE_UNDO = 'SCENE_UNDO';
+    BB.EVENTS.SCENE_REDO = 'SCENE_REDO';
 
     var ScenesToolbarView = Backbone.View.extend({
 
@@ -53,6 +55,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self._listenPushToTop();
             self._listenPushToBottom();
             self._listenSceneBlockList();
+            self._listenMemento();
         },
 
         /**
@@ -157,6 +160,21 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             $(Elements.CLASS_SELECT_SCENE_DROPDOWN, self.el).on('click', function (e) {
                 var id = $(e.target).data('scene_player_data_id');
                 self._loadScene(id);
+            });
+        },
+
+        /**
+         Listen for undo and redo
+         @method _listenMemento
+         **/
+        _listenMemento: function () {
+            var self = this;
+            $(Elements.SCENE_UNDO, self.el).on('click', function (e) {
+                BB.comBroker.fire(BB.EVENTS.SCENE_UNDO, this, null);
+            });
+
+            $(Elements.SCENE_REDO, self.el).on('click', function (e) {
+                BB.comBroker.fire(BB.EVENTS.SCENE_REDO, this, null);
             });
         },
 

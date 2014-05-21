@@ -19,6 +19,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             BB.comBroker.setService(BB.SERVICES['SCENE_EDIT_VIEW'], self);
             self.m_selectedSceneID = undefined;
             self.m_blocks = {};
+            self.m_history = {};
             self.m_dimensionProps = undefined;
             self.m_canvas = undefined;
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
@@ -112,6 +113,16 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             })
         },
 
+        /**
+         Init a history
+         @method _initSceneHistory
+         **/
+        _initSceneHistory: function () {
+            var self = this;
+            if (_.isUndefined(self.m_history[self.m_selectedSceneID]))
+                self.m_history[self.m_selectedSceneID] = [];
+        },
+
         _sceneActive: function () {
             var self = this;
             $('#sceneToolbar').fadeIn();
@@ -134,6 +145,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
             self._listenObjectChangeResetScale();
             self._listenCanvasSelections();
+            self._listenCanvasSelectionsFromToolbar();
         },
 
         /**
@@ -156,7 +168,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             BB.comBroker.listen(BB.EVENTS.LOAD_SCENE, function (e) {
                 self.m_selectedSceneID = e.edata;
                 self._loadScene();
-                BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.m_selectedSceneID);
+                self._sceneCanvasSelected();
             });
         },
 
@@ -167,6 +179,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         _blockCountChanged: function () {
             var self = this;
             var blocks = [];
+            if (_.isUndefined(self.m_selectedSceneID)) {
+                BB.comBroker.fire(BB.EVENTS.SCENE_BLOCK_LIST_UPDATED, this, null, null);
+                return;
+            }
             for (var i = 0; i < self.m_canvas.getObjects().length; i++) {
                 blocks.push({
                     id: self.m_canvas.item(i).getBlockData().blockID,
@@ -194,6 +210,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._render(domPlayerData);
             $(Elements.SCENE_CANVAS).addClass('basicBorder');
             self._blockCountChanged();
+            self._initSceneHistory();
         },
 
         /**
@@ -231,6 +248,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 if (_.isUndefined(self.m_selectedSceneID))
                     return;
                 var block = self.m_canvas.getActiveObject();
+                if (block == null)
+                    return;
                 var blockID = block.getBlockData().blockID;
                 self.m_canvas.discardActiveObject();
                 delete self.m_blocks[blockID];
@@ -260,6 +279,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         self.m_property.resetPropertiesView();
                         self.m_selectedSceneID = undefined;
                         $(Elements.SCENE_CANVAS).removeClass('basicBorder');
+                        self._blockCountChanged();
                     }
                 });
             });
@@ -486,21 +506,70 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
                 //// Object
                 if (options.target || active) {
-                    var selectedObject = options.target || active;
-                    var blockID = selectedObject.getBlockData().blockID;
-                    log('object: ' + selectedObject.m_blockType + ' ' + blockID);
-                    // var zoomedOut = 1 - selectedObject.scaleY;
-                    self._updateBlockCords(blockID, true, selectedObject.left, selectedObject.top, selectedObject.currentWidth, selectedObject.currentHeight, selectedObject.angle);
-                    BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, blockID);
-                    self._updateZorder();
+                    var block = options.target || active;
+                    self._sceneBlockSelected(block);
                     return;
                 }
 
                 //// Scene
+                self._sceneCanvasSelected();
                 log('scene: ' + self.m_canvas.m_blockType + ' ' + self.m_selectedSceneID);
-                BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.m_selectedSceneID);
                 // log('object ' + options.e.clientX + ' ' + options.e.clientY + ' ' + options.target.m_blockType);
 
+            });
+        },
+
+        /**
+         Select a block object on the canvas
+         @method _sceneBlockSelected
+         @param {Object} i_block
+         **/
+        _sceneBlockSelected: function (i_block) {
+            var self = this;
+            self.m_canvas.setActiveObject(i_block);
+            var blockID = i_block.getBlockData().blockID;
+            log('object: ' + i_block.m_blockType + ' ' + blockID);
+            // var zoomedOut = 1 - selectedObject.scaleY;
+            self._updateBlockCords(blockID, true, i_block.left, i_block.top, i_block.currentWidth, i_block.currentHeight, i_block.angle);
+            BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, blockID);
+            self._updateZorder();
+        },
+
+        /**
+         Set the scene (i.e.: Canvas) as the selected block
+         @method _sceneCanvasSelected
+         **/
+        _sceneCanvasSelected: function () {
+            var self = this;
+            self.m_canvas.discardActiveGroup();
+            self.m_canvas.discardActiveObject();
+            BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.m_selectedSceneID);
+        },
+
+        /**
+         Listen to scene block / item selection initiated by user selection of toolbar dropdown
+         @method _listenCanvasSelectionsFromToolbar
+         **/
+        _listenCanvasSelectionsFromToolbar: function () {
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS.SCENE_ITEM_SELECTED, function (e) {
+                var blockID = e.edata;
+
+                // Scene selected
+                if (blockID == BB.CONSTS.SCENE_CANVAS_SELECTED) {
+                    self._sceneCanvasSelected();
+                    return;
+                }
+
+                // block selected
+                var objects = self.m_canvas.getObjects();
+                for (var i in objects) {
+                    var block = objects[i];
+                    if (block.getBlockData().blockID == blockID) {
+                        self._sceneBlockSelected(block);
+                        break;
+                    }
+                }
             });
         },
 

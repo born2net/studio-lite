@@ -7,10 +7,20 @@
 define(['jquery', 'backbone'], function ($, Backbone) {
 
     /**
+     Indicates the scene canvas was selected
+     @property BB.CONSTS.SCENE_CANVAS_SELECTED
+     @static
+     @final
+     @type String
+     */
+    BB.CONSTS.SCENE_CANVAS_SELECTED = 'SCENE_CANVAS_SELECTED';
+
+    /**
      events
      **/
     BB.EVENTS.SCENE_LIST_UPDATED = 'SCENE_LIST_UPDATED';
     BB.EVENTS.SCENE_BLOCK_LIST_UPDATED = 'SCENE_BLOCK_LIST_UPDATED';
+    BB.EVENTS.SCENE_ITEM_SELECTED = 'SCENE_ITEM_SELECTED';
     BB.EVENTS.LOAD_SCENE = 'LOAD_SCENE';
     BB.EVENTS.SCENE_ZOOM_IN = 'SCENE_ZOOM_IN';
     BB.EVENTS.SCENE_ZOOM_OUT = 'SCENE_ZOOM_OUT';
@@ -34,6 +44,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self.m_selectedSceneID = undefined;
             self._render();
             self._listenSceneSelection();
+            self._listenSceneItemSelection();
             self._listenSceneDimensionsChanged();
             self._listenSceneRenamed();
             self._listenAddNew();
@@ -53,19 +64,24 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self._populateSceneSelection();
         },
 
-        _listenSceneBlockList: function(){
+        /**
+         Listen to changes in the block list within a scene (canvas) and update the dropdown selection dialog
+         @method _listenSceneBlockList
+         **/
+        _listenSceneBlockList: function () {
             BB.comBroker.listen(BB.EVENTS.SCENE_BLOCK_LIST_UPDATED, function (e) {
                 var blocks = e.edata;
                 $(Elements.SCENE_BLOCK_LIST).empty();
-                var snippet = '<li><a data-block_id="' + -1 + '" href="#">Canvas</a></li>';
-                $(Elements.SCENE_BLOCK_LIST).append(snippet);
+                if (blocks != null) {
+                    var snippet = '<li><a data-block_id="' + BB.CONSTS.SCENE_CANVAS_SELECTED + '" href="#">Canvas</a></li>';
+                    $(Elements.SCENE_BLOCK_LIST).append(snippet);
+                }
                 _.forEach(blocks, function (i_block) {
                     var snippet = '<li><a data-block_id="' + i_block.id + '" href="#">' + i_block.name + '</a></li>';
                     $(Elements.SCENE_BLOCK_LIST).append(snippet);
                 });
             });
         },
-
 
         /**
          Listen to re-order of screen division, putting selected on top
@@ -106,6 +122,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             });
         },
 
+        /**
+         Listen to changes in scene name
+         @method _listenSceneRenamed
+         **/
         _listenSceneRenamed: function () {
             var self = this;
             BB.comBroker.listen(BB.EVENTS.SCENE_LIST_UPDATED, function (e) {
@@ -115,7 +135,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
         /**
          Populate dropdown UI of all available scenes
-         @method _listenSceneSelection
+         @method _populateSceneSelection
          **/
         _populateSceneSelection: function () {
             $(Elements.SCENE_SELECT_LIST).empty();
@@ -137,6 +157,20 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             $(Elements.CLASS_SELECT_SCENE_DROPDOWN, self.el).on('click', function (e) {
                 var id = $(e.target).data('scene_player_data_id');
                 self._loadScene(id);
+            });
+        },
+
+        /**
+         Listen to user selection a scene block / item
+         @method _listenSceneItemSelection
+         **/
+        _listenSceneItemSelection: function () {
+            var self = this;
+            $(Elements.CLASS_SELECT_SCENE_ITEM_DROPDOWN, self.el).on('click', function (e) {
+                var id = $(e.target).data('block_id');
+                if (_.isUndefined(id))
+                    return;
+                BB.comBroker.fire(BB.EVENTS.SCENE_ITEM_SELECTED, this, null, id);
             });
         },
 

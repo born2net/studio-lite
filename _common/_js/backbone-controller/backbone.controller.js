@@ -157,9 +157,9 @@
     // Supporting default Backbone events like on, off, trigger, listenTo etc
     // Provides remove method which can be called on controller removal.
     _.extend(Backbone.Controller.prototype, Backbone.Events, {
-        remove: function() {
-            this.stopListening();
-        }
+        //remove: function() {
+        //    this.stopListening();
+        //}
     });
 
     return Backbone.Controller;

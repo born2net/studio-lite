@@ -160,7 +160,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 self.m_selectedSceneID = e.edata;
                 self._loadScene();
                 self._sceneCanvasSelected();
-                self._mementoAddState();
+                if (self._mementoInit())
+                    self._mementoAddState();
             });
         },
 
@@ -271,6 +272,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 pepper.removeScenePlayer(self.m_selectedSceneID, blockID);
                 BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, null);
                 block.deleteBlock();
+                self._mementoAddState();
             });
         },
 
@@ -366,6 +368,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 self._createBlock(blockID, player_data);
                 self._blockCountChanged();
                 self.m_canvas.renderAll();
+                self._mementoAddState();
                 e.stopImmediatePropagation();
                 e.preventDefault();
             });
@@ -422,6 +425,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         /**
          Init a undo / redo via memento pattern
          @method _mementoInit
+         @return {Boolean} return true if memento created false if one already existed
          **/
         _mementoInit: function () {
             var self = this;
@@ -430,7 +434,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     playerData: [],
                     cursor: -1
                 };
+                return true;
             }
+            return false;
         },
 
         /**
@@ -606,6 +612,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     selectedGroup.hasControls = false;
                     self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
                     self.m_canvas.renderAll();
+                    self._mementoAddState();
                     return;
                 }
 

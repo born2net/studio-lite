@@ -160,6 +160,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 self.m_selectedSceneID = e.edata;
                 self._loadScene();
                 self._sceneCanvasSelected();
+                self._mementoAddState();
             });
         },
 
@@ -231,8 +232,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         /**
          Listen to when a user selects to delete a block
          @method _listenSceneBlockRemove
-         **/
-        _listenSceneBlockRemove: function () {
+
+         _listenSceneBlockRemove: function () {
             var self = this;
             BB.comBroker.listen(BB.EVENTS.SCENE_ITEM_REMOVE, function () {
                 if (_.isUndefined(self.m_selectedSceneID))
@@ -250,11 +251,11 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 // self._blockCountChanged();
             });
         },
-
+         **/
         /**
          Listen to when a user selects to delete a block
          @method _listenSceneBlockRemove
-
+         **/
         _listenSceneBlockRemove: function () {
             var self = this;
             BB.comBroker.listen(BB.EVENTS.SCENE_ITEM_REMOVE, function () {
@@ -268,13 +269,11 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 self.m_canvas.remove(block);
                 delete self.m_blocks[blockID];
                 pepper.removeScenePlayer(self.m_selectedSceneID, blockID);
-                // self._loadScene();
                 BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, null);
                 block.deleteBlock();
-                // self._blockCountChanged();
             });
         },
-         **/
+
 
         /**
          Listen to when a user selects to delete a scene
@@ -444,42 +443,54 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             if (_.isUndefined(self.m_selectedSceneID))
                 return;
             self._mementoInit(self.m_selectedSceneID);
-            var player_data = pepper.getScenePlayerdata(self.m_selectedSceneID);
-            if (self.m_memento[self.m_selectedSceneID].playerData.length > MAX) {
+
+            // maintain memento to stack MAX value
+            if (self.m_memento[self.m_selectedSceneID].playerData.length > MAX)
                 self.m_memento[self.m_selectedSceneID].playerData.shift();
-            }
+
+            // if undo / redo was executed, remove ahead mementos
+            if (self.m_memento[self.m_selectedSceneID].cursor != self.m_memento[self.m_selectedSceneID].playerData.length - 1)
+                self.m_memento[self.m_selectedSceneID].playerData.splice(self.m_memento[self.m_selectedSceneID].cursor + 1);
+
+            var player_data = pepper.getScenePlayerdata(self.m_selectedSceneID);
             self.m_memento[self.m_selectedSceneID].playerData.push(player_data);
-            self.m_memento[self.m_selectedSceneID].cursor = self.m_memento[self.m_selectedSceneID].playerData.length;
+            self.m_memento[self.m_selectedSceneID].cursor = self.m_memento[self.m_selectedSceneID].playerData.length - 1;
         },
 
         /**
          Remember current memento state
          @method _mementoLoadState
          **/
-        _mementoLoadState: function (i_cursor) {
+        _mementoLoadState: function (i_direction) {
             var self = this;
             if (_.isUndefined(self.m_selectedSceneID))
                 return;
+            self._mementoInit(self.m_selectedSceneID);
             if (self.m_memento[self.m_selectedSceneID].playerData.length == 0)
                 return;
 
-            self._mementoInit(self.m_selectedSceneID);
-            switch (i_cursor) {
-                // go back
+            switch (i_direction) {
                 case 'undo':
                 {
-                    var cursor = self.m_memento[self.m_selectedSceneID].cursor--;
-                    var player_data = self.m_memento[self.m_selectedSceneID].playerData[cursor];
-                    pepper.setScenePlayerData(self.m_selectedSceneID, player_data);
+                    var cursor = self.m_memento[self.m_selectedSceneID].cursor;
+                    if (cursor == 0)
+                        return;
+                    self.m_memento[self.m_selectedSceneID].cursor--;
+                    cursor = self.m_memento[self.m_selectedSceneID].cursor;
                     break;
                 }
-                // go forward
                 case 'redo':
                 {
+                    var cursor = self.m_memento[self.m_selectedSceneID].cursor;
+                    if (cursor == self.m_memento[self.m_selectedSceneID].playerData.length - 1)
+                        return;
+                    self.m_memento[self.m_selectedSceneID].cursor++;
+                    cursor = self.m_memento[self.m_selectedSceneID].cursor;
                     break;
                 }
             }
-
+            var player_data = self.m_memento[self.m_selectedSceneID].playerData[cursor];
+            pepper.setScenePlayerData(self.m_selectedSceneID, player_data);
             self._loadScene();
             BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this, null);
         },
@@ -878,7 +889,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _zoomReset: function () {
             var self = this;
-            if (_.isUndefined(self.m_selectedSceneID) || _.isUndefined(self.m_canvas)){
+            if (_.isUndefined(self.m_selectedSceneID) || _.isUndefined(self.m_canvas)) {
                 self.m_canvasScale = 1;
                 return;
             }

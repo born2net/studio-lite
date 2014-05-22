@@ -348,6 +348,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 self._resetAllObjectScale();
                 self.m_canvas.renderAll();
                 self._announceSceneRendered();
+
             });
         },
 
@@ -388,6 +389,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     return;
                 self.m_canvas.bringToFront(block);
                 self._updateZorder();
+                self._mementoAddState();
             });
         },
 
@@ -405,6 +407,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     return;
                 self.m_canvas.sendToBack(block);
                 self._updateZorder();
+                self._mementoAddState();
             });
         },
 
@@ -753,6 +756,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._announceSceneRendered = _.debounce(function (e) {
                 BB.comBroker.fire(BB.EVENTS.SCENE_BLOCKS_RENDERED, self, self.m_canvas);
                 log('announcing rendering done, now blocks can populate')
+                self._mementoAddState();
             }, 200);
         },
 

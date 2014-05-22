@@ -41,7 +41,7 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
             });
 
             self.m_inputMouseOut = _.debounce(function (e) {
-               $(self).trigger('changed');
+               // $(self).trigger('changed');
             }, 100);
 
         },

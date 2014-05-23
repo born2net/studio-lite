@@ -58,8 +58,6 @@ define(['jquery', 'backbone'], function ($) {
             self._backgroundStateListenChange();
             self._listenBlockSelected();
             self._onBlockLengthChanged();
-
-            log('zz Creating block ' + self.m_block_id + ' m_placement ' + self.m_placement);
         },
 
         /**

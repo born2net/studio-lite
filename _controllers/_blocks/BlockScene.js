@@ -1,5 +1,5 @@
 /**
- * BlockScene block resided inside a Scenes or timeline
+ * BlockScene block resided inside a Scenes or Channel
  * @class BlockScene
  * @extends Block
  * @constructor
@@ -40,6 +40,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _listenInputChanges: function () {
             var self = this;
 
+            // Scene name
             self.m_inputNameChangeHandler = _.debounce(function (e) {
                 if (!self.m_selected)
                     return;
@@ -51,7 +52,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             }, 150);
             $(Elements.SCENE_NAME_INPUT).on("input", self.m_inputNameChangeHandler);
 
-
+            // Scene width
             self.m_inputWidthChangeHandler = _.debounce(function (e) {
                 if (!self.m_selected)
                     return;
@@ -64,6 +65,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             }, 200);
             $(Elements.SCENE_WIDTH_INPUT).on("blur", self.m_inputWidthChangeHandler);
 
+            // Scene height
             self.m_inputHeightChangeHandler = _.debounce(function (e) {
                 if (!self.m_selected)
                     return;
@@ -114,8 +116,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _getBlockPlayerData: function () {
             var self = this;
             var recBlock = undefined;
-
-            log('Loading ' + self.m_block_id + ' in ' + self.m_placement);
 
             switch (self.m_placement) {
 
@@ -170,8 +170,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                     break;
                 }
             }
-
-
         },
 
         /**

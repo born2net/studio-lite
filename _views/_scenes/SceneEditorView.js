@@ -272,6 +272,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 pepper.removeScenePlayer(self.m_selectedSceneID, blockID);
                 BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, null);
                 block.deleteBlock();
+                self._blockCountChanged();
                 self._mementoAddState();
             });
         },

@@ -362,13 +362,14 @@ Pepper.prototype = {
     /**
      append scene player block to pepper player_data table
      @method appendScenePlayerBlock
-     @param {Number} i_scene_player_data_id
+     @param {Number} i_scene_id
      @param {XML} i_player_data
      **/
-    appendScenePlayerBlock: function (i_scene_player_data_id, i_player_data) {
+    appendScenePlayerBlock: function (i_scene_id, i_player_data) {
         var self = this;
-        self.m_msdb.table_player_data().openForEdit(i_scene_player_data_id);
-        var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_player_data_id);
+        i_scene_id = pepper.pseudoIdToSceneId(i_scene_id);
+        self.m_msdb.table_player_data().openForEdit(i_scene_id);
+        var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_id);
         var scene_player_data = recPlayerData['player_data_value'];
         var sceneDomPlayerData = $.parseXML(scene_player_data);
         $(sceneDomPlayerData).find('Players').append(i_player_data);
@@ -492,17 +493,18 @@ Pepper.prototype = {
     /**
      Remove specific player id (i.e.: block) from scene player_data
      @method removeScenePlayer
-     @param {Number} i_scene_player_data_id
+     @param {Number} i_scene_id
      @param {Number} i_player_id
      **/
-    removeScenePlayer: function (i_scene_player_data_id, i_player_data_id) {
+    removeScenePlayer: function (i_scene_id, i_player_data_id) {
         var self = this;
-        self.m_msdb.table_player_data().openForEdit(i_scene_player_data_id);
-        var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_player_data_id);
+        i_scene_id = pepper.pseudoIdToSceneId(i_scene_id);
+        self.m_msdb.table_player_data().openForEdit(i_scene_id);
+        var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_id);
         var player_data = recPlayerData['player_data_value'];
         var domPlayerData = $.parseXML(player_data)
         $(domPlayerData).find('[id="' + i_player_data_id + '"]').remove();
-        pepper.setScenePlayerData(i_scene_player_data_id, (new XMLSerializer()).serializeToString(domPlayerData));
+        pepper.setScenePlayerData(i_scene_id, (new XMLSerializer()).serializeToString(domPlayerData));
     },
 
     /**

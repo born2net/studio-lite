@@ -78,18 +78,100 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         },
 
         /**
+         Update the msdb for the block with new values inside its player_data
+         @method _setBlockPlayerData
+         @param {Object} i_xmlDoc
+         **/
+        _setBlockPlayerData: function (i_xmlDoc) {
+            var self = this;
+            var player_data = (new XMLSerializer()).serializeToString(i_xmlDoc);
+            switch (self.m_placement) {
+                case BB.CONSTS.PLACEMENT_CHANNEL:
+                {
+                    var recBlock = pepper.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
+                    var domPlayerData = $.parseXML(recBlock['player_data']);
+                    var scene_id = $(domPlayerData).find('Player').attr('hDataSrc');
+                    var player_data = (new XMLSerializer()).serializeToString(i_xmlDoc);
+                    pepper.setScenePlayerData(scene_id, player_data);
+                    break;
+                }
+
+                case BB.CONSTS.PLACEMENT_IS_SCENE:
+                {
+                    pepper.setScenePlayerData(self.m_block_id, player_data);
+                    BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, self.m_block_id);
+                    break;
+                }
+            }
+        },
+
+        /**
+         OVERRIDE base method:
+         Get the XML player data of a block, depending where its placed
+         @method _getBlockPlayerData
+         @return {Object} player data of block (aka player) parsed as DOM
+         **/
+        _getBlockPlayerData: function () {
+            var self = this;
+            var recBlock = undefined;
+
+            log('Loading ' + self.m_block_id + ' in ' + self.m_placement);
+
+            switch (self.m_placement) {
+
+                case BB.CONSTS.PLACEMENT_CHANNEL:
+                {
+                    recBlock = pepper.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
+                    var domPlayerData = $.parseXML(recBlock['player_data']);
+                    var sceneHandle = $(domPlayerData).find('Player').attr('hDataSrc');
+                    return pepper.getScenePlayerdataDom(sceneHandle);
+                    break;
+                }
+
+                case BB.CONSTS.PLACEMENT_IS_SCENE:
+                {
+                    var blockID = pepper.getSceneIdFromPseudoId(self.m_block_id);
+                    var recPlayerData = BB.Pepper.getScenePlayerRecord(blockID);
+                    var xPlayerdata = recPlayerData['player_data_value'];
+                    return $.parseXML(xPlayerdata);
+                    break;
+                }
+            }
+        },
+
+        /**
          Load up property values in the common panel
          @method _populate
          @return none
          **/
         _populate: function () {
             var self = this;
-            var domPlayerData = self._getBlockPlayerData();
-            var domPlayer = $(domPlayerData).find('Player').eq(0);
-            var domPlayerLayout = $(domPlayerData).find('Player').eq(0).find('Layout');
-            $(Elements.SCENE_NAME_INPUT).val($(domPlayer).attr('label'));
-            $(Elements.SCENE_WIDTH_INPUT).val($(domPlayerLayout).attr('width'));
-            $(Elements.SCENE_HEIGHT_INPUT).val($(domPlayerLayout).attr('height'));
+
+            switch (self.m_placement) {
+                case BB.CONSTS.PLACEMENT_CHANNEL:
+                {
+                    $(Elements.SCENE_WIDTH_INPUT).hide();
+                    $(Elements.SCENE_HEIGHT_INPUT).hide();
+                    break;
+                }
+
+                case BB.CONSTS.PLACEMENT_IS_SCENE:
+                {
+                    $(Elements.SCENE_WIDTH_INPUT).show();
+                    $(Elements.SCENE_HEIGHT_INPUT).show();
+                    $(Elements.SCENE_WIDTH_INPUT).val($(domPlayerLayout).attr('width'));
+                    $(Elements.SCENE_HEIGHT_INPUT).val($(domPlayerLayout).attr('height'));
+                    var domPlayerData = self._getBlockPlayerData();
+                    var domPlayer = $(domPlayerData).find('Player').eq(0);
+                    var domPlayerLayout = $(domPlayerData).find('Player').eq(0).find('Layout');
+                    $(Elements.SCENE_NAME_INPUT).val($(domPlayer).attr('label'));
+                    $(Elements.SCENE_WIDTH_INPUT).val($(domPlayerLayout).attr('width'));
+                    $(Elements.SCENE_HEIGHT_INPUT).val($(domPlayerLayout).attr('height'));
+                    break;
+                }
+            }
+
+
         },
 
         /**

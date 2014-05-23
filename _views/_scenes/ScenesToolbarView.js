@@ -146,7 +146,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             if (_.size(scenenames) == 0)
                 return;
             _.forEach(scenenames, function (i_name, i_id) {
-                var snippet = '<li><a data-scene_player_data_id="' + i_id + '" href="#">' + i_name + '</a></li>';
+                var pseudoID = pepper.getPseudoIdFromSceneId(i_id);
+                var snippet = '<li><a data-scene_player_data_id="' + pseudoID + '" href="#">' + i_name + '</a></li>';
                 $(Elements.SCENE_SELECT_LIST).append(snippet);
             });
         },

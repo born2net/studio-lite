@@ -27,7 +27,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
             self.m_canvasScale = 1;
             self.SCALE_FACTOR = 1.2;
-            pepper.injectScenePlayersIDs();
 
             self._initializeBlockFactory();
             self._listenAddBlockWizard();
@@ -41,6 +40,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._listenSceneBlockRemove();
             self._listenSceneNew();
             self._listenMemento();
+            self._listenCanvasSelectionsFromToolbar();
             self._delegateRenderAnnouncer();
         },
 
@@ -136,7 +136,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
             self._listenObjectChangeResetScale();
             self._listenCanvasSelections();
-            self._listenCanvasSelectionsFromToolbar();
+
         },
 
         /**
@@ -678,10 +678,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 }
 
                 // block selected
-                var objects = self.m_canvas.getObjects();
-                for (var i in objects) {
-                    if (objects[i].getBlockData().blockID == blockID) {
-                        self._sceneBlockSelected(objects[i]);
+                for (var i = 0; i < self.m_canvas.getObjects().length; i++) {
+                    if (self.m_canvas.item(i).getBlockData().blockID == blockID) {
+                        self._sceneBlockSelected(self.m_canvas.item(i));
                         break;
                     }
                 }

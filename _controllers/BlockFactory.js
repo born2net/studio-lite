@@ -108,14 +108,6 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
             }
 
             switch (parseInt(blockCode)) {
-                //case 1000:
-                //{
-                //    block = new self.m_blockScene({
-                //        i_placement: i_placement,
-                //        i_block_id: block_id
-                //    });
-                //    break;
-                //}
                 case 3510:
                 {
                     block = new self.m_blockScene({

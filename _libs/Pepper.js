@@ -266,17 +266,18 @@ Pepper.prototype = {
     /**
      get a scene's default length
      @method getSceneDuration
-     @param {number} i_scene_player_data_id
+     @param {number} i_scene_id
      @return {number} total seconds
      **/
-    getSceneDuration: function (i_scene_player_data_id) {
+    getSceneDuration: function (i_scene_id) {
         var self = this;
+        i_scene_id = pepper.pseudoIdToSceneId(i_scene_id);
         var seconds = 0;
         var minutes = 0;
         var hours = 0;
         var totalInSeconds = 0;
 
-        var recPlayerData = pepper.getScenePlayerRecord(i_scene_player_data_id);
+        var recPlayerData = pepper.getScenePlayerRecord(i_scene_id);
         var player_data = recPlayerData['player_data_value'];
         var domPlayerData = $.parseXML(player_data)
         var xSnippet = $(domPlayerData).find('Scene');
@@ -301,30 +302,29 @@ Pepper.prototype = {
             totalInSeconds: totalInSeconds
         };
         return playbackLength;
-
-
     },
 
     /**
      Set a scene's default length (can be overridden on timeline)
      @method setSceneDuration
-     @param {number} i_scene_player_data_id
+     @param {number} i_scene_id
      @param {string} hours
      @param {string} minutes
      @param {string} seconds
      **/
-    setSceneDuration: function (i_scene_player_data_id, i_hours, i_minutes, i_seconds) {
+    setSceneDuration: function (i_scene_id, i_hours, i_minutes, i_seconds) {
         var self = this;
+        i_scene_id = pepper.pseudoIdToSceneId(i_scene_id);
         var totalSecInMin = 60
         var totalSecInHour = totalSecInMin * 60
         var totalSeconds = parseInt(i_seconds) + (parseInt(i_minutes) * totalSecInMin) + (parseInt(i_hours) * totalSecInHour);
-        var recPlayerData = pepper.getScenePlayerRecord(i_scene_player_data_id);
+        var recPlayerData = pepper.getScenePlayerRecord(i_scene_id);
         var player_data = recPlayerData['player_data_value'];
         var domPlayerData = $.parseXML(player_data)
         var xSnippet = $(domPlayerData).find('Scene');
         xSnippet.attr('defaultDuration', totalSeconds);
         var player_data = (new XMLSerializer()).serializeToString(domPlayerData);
-        pepper.setScenePlayerData(i_scene_player_data_id, player_data);
+        pepper.setScenePlayerData(i_scene_id, player_data);
     },
 
     /**
@@ -382,10 +382,10 @@ Pepper.prototype = {
      **/
     setScenePlayerData: function (i_scene_id, i_player_data) {
         var self = this;
+        i_scene_id = pepper.pseudoIdToSceneId(i_scene_id);
         self.m_msdb.table_player_data().openForEdit(i_scene_id);
         var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_id);
         recPlayerData['player_data_value'] = i_player_data;
-        // pepper.fire(Pepper['SCENE_CHANGED'], self, null, i_scene_id);
     },
 
     /**
@@ -397,15 +397,72 @@ Pepper.prototype = {
         return ($.base64.encode(_.uniqueId('blockid'))).replace('=', '');
     },
 
+    pseudoIdToSceneId: function(i_id){
+        var self = this;
+        var id = parseInt(i_id);
+        if (_.isNaN(id))
+            return pepper.getSceneIdFromPseudoId(i_id);
+        return i_id;
+    },
+
+    /**
+     Translate a scene id from table_player_data to it's injected id
+     @method createPseudoSceneID
+     @param {Number} i_scene_id
+     @return {Number} injected id
+     **/
+    createPseudoSceneID: function(i_scene_id){
+        var self = this;
+        var domPlayerData = pepper.getScenePlayerdataDom(i_scene_id);
+        return $(domPlayerData).find('Player').eq(0).attr('id');
+    },
+
+    /**
+     Translate a scene id to its matching pseudo scene id
+     @method getPseudoIdFromSceneId
+     @param {Number} i_scene_id
+     @return {Number} pseudo id
+     **/
+    getPseudoIdFromSceneId: function(i_scene_id){
+        var self = this;
+        var found = undefined;
+        var scenes = pepper.getScenes();
+        _.each(scenes, function (domPlayerData, scene_id) {
+            var injectedID = $(domPlayerData).find('Player').eq(0).attr('id');
+            if (i_scene_id == scene_id)
+                found = injectedID;
+        });
+        return found;
+    },
+
+    /**
+     Translate an injected id to a table_player_data scene id
+     @method createPseudoSceneID
+     @param {Number} getSceneIdFromPseudoId
+     @return {Number} scene id
+     **/
+    getSceneIdFromPseudoId: function(i_pseudo_id){
+        var self = this;
+        var found = undefined;
+        var scenes = pepper.getScenes();
+        _.each(scenes, function (domPlayerData, scene_id) {
+            var pseudo_id = $(domPlayerData).find('Player').eq(0).attr('id');
+            if (pseudo_id == i_pseudo_id)
+                found = scene_id;
+        });
+        return found;
+    },
+
     /**
      Inject unique player ids for all players within a scene
-     @method injectScenePlayersIDs
+     @method injectPseudoScenePlayersIDs
      **/
-    injectScenePlayersIDs: function () {
+    injectPseudoScenePlayersIDs: function () {
         var self = this;
         var scenes = pepper.getScenes();
         _.each(scenes, function (domPlayerData, scene_id) {
-            var players = $(domPlayerData).find('Players').find('Player').each(function (i, player) {
+            $(domPlayerData).find('Player').eq(0).attr('id', pepper.getUniqueSceneBlockID());
+            $(domPlayerData).find('Players').find('Player').each(function (i, player) {
                 var blockID = pepper.getUniqueSceneBlockID();
                 $(player).attr('id', blockID);
             });
@@ -422,6 +479,7 @@ Pepper.prototype = {
         self.m_tempScenePlayerIDs = {};
         var scenes = pepper.getScenes();
         _.each(scenes, function (domPlayerData, scene_id) {
+            $(domPlayerData).find('Player').eq(0).removeAttr('id');
             self.m_tempScenePlayerIDs[scene_id] = (new XMLSerializer()).serializeToString(domPlayerData);
             var players = $(domPlayerData).find('Players').find('Player').each(function (i, player) {
                 var blockID = pepper.getUniqueSceneBlockID();
@@ -471,14 +529,15 @@ Pepper.prototype = {
     /**
      get a scene block playerdata
      @method getScenePlayerdataBlock
-     @param {Number} i_scene_player_data_id
+     @param {Number} i_scene_id
      @param {Number} i_player_data_id
      @return {Number} i_player_data_id
      **/
-    getScenePlayerdataBlock: function (i_scene_player_data_id, i_player_data_id) {
+    getScenePlayerdataBlock: function (i_scene_id, i_player_data_id) {
         var self = this;
-        self.m_msdb.table_player_data().openForEdit(i_scene_player_data_id);
-        var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_player_data_id);
+        i_scene_id = pepper.pseudoIdToSceneId(i_scene_id);
+        self.m_msdb.table_player_data().openForEdit(i_scene_id);
+        var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_id);
         var player_data = recPlayerData['player_data_value'];
         var domPlayerData = $.parseXML(player_data)
         var foundSnippet = $(domPlayerData).find('[id="' + i_player_data_id + '"]');
@@ -488,19 +547,20 @@ Pepper.prototype = {
     /**
      set a block id inside a scene with new player_data
      @method setScenePlayerdataBlock
-     @param {Number} i_scene_player_data_id
+     @param {Number} i_scene_id
      @param {Number} i_player_data_id
      @param {XML} player_data
      **/
-    setScenePlayerdataBlock: function (i_scene_player_data_id, i_player_data_id, i_player_data) {
+    setScenePlayerdataBlock: function (i_scene_id, i_player_data_id, i_player_data) {
         var self = this;
-        self.m_msdb.table_player_data().openForEdit(i_scene_player_data_id);
-        var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_player_data_id);
+        i_scene_id = pepper.pseudoIdToSceneId(i_scene_id);
+        self.m_msdb.table_player_data().openForEdit(i_scene_id);
+        var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_id);
         var player_data = recPlayerData['player_data_value'];
         var domPlayerData = $.parseXML(player_data)
         $(domPlayerData).find('[id="' + i_player_data_id + '"]').replaceWith(i_player_data);
         player_data = (new XMLSerializer()).serializeToString(domPlayerData);
-        self.setScenePlayerData(i_scene_player_data_id, player_data);
+        self.setScenePlayerData(i_scene_id, player_data);
     },
 
     /**
@@ -538,6 +598,7 @@ Pepper.prototype = {
      **/
     getScenePlayerdata: function (i_scene_id) {
         var self = this;
+        i_scene_id = pepper.pseudoIdToSceneId(i_scene_id);
         return pepper.getScenePlayerRecord(i_scene_id)['player_data_value'];
     },
 
@@ -547,9 +608,10 @@ Pepper.prototype = {
      @param {Number} i_sceneID
      @return {Object} dom
      **/
-    getScenePlayerdataDom: function (i_sceneID) {
+    getScenePlayerdataDom: function (i_scene_id) {
         var self = this;
-        var scene_player_data = pepper.getScenePlayerRecord(i_sceneID)['player_data_value'];
+        i_scene_id = pepper.pseudoIdToSceneId(i_scene_id);
+        var scene_player_data = pepper.getScenePlayerRecord(i_scene_id)['player_data_value'];
         return $.parseXML(scene_player_data)
     },
 
@@ -638,7 +700,7 @@ Pepper.prototype = {
     },
 
     /**
-     Translate a campaign_board into it's matching pair in global boards.
+     Get a campaign_board into it's matching pair in global boards.
      @method getBoardFromCampaignBoard
      @param {Number} i_campaign_board_id
      @return {Number} board_id
@@ -650,7 +712,7 @@ Pepper.prototype = {
     },
 
     /**
-     Translate i_campaign_board_id into campaign_id using local table_campaign_boards (not global boards)
+     Get i_campaign_board_id into campaign_id using local table_campaign_boards (not global boards)
      @method getCampaignIdFromCampaignBoardId
      @param {Number} i_campaign_board_id
      @return {Number} campaign_id
@@ -662,7 +724,7 @@ Pepper.prototype = {
     },
 
     /**
-     Translate i_campaign_id into campaign_board_id using local table_campaign_boards (not global boards)
+     Get i_campaign_id into campaign_board_id using local table_campaign_boards (not global boards)
      @method getCampaignIdFromCampaignBoardId
      @param {Number} i_campaign_board_id
      @return {Number} campaign_id

@@ -56,8 +56,10 @@ define(['jquery', 'backbone'], function ($) {
             self._alphaListenChange();
             self._gradientListenChange();
             self._backgroundStateListenChange();
-            self._onBlockSelected();
+            self._listenBlockSelected();
             self._onBlockLengthChanged();
+
+            log('zz Creating block ' + self.m_block_id + ' m_placement ' + self.m_placement);
         },
 
         /**
@@ -230,57 +232,60 @@ define(['jquery', 'backbone'], function ($) {
         /**
          Notify this object that it has been selected so it can populate it's own the properties box etc
          The function triggers from the BLOCK_SELECTED event.
-         @method _onBlockSelected
+         @method _listenBlockSelected
          @return none
          **/
-        _onBlockSelected: function () {
+        _listenBlockSelected: function () {
             var self = this;
-
             BB.comBroker.listenWithNamespace(BB.EVENTS.BLOCK_SELECTED, self, function (e) {
                 var blockID = e.edata;
                 if (self.m_block_id != blockID) {
                     self.m_selected = false;
                     return;
                 }
+                self._onBlockSelected();
+            });
+        },
 
-                self.m_selected = true;
-                self.m_blockProperty.viewPanel(Elements.BLOCK_PROPERTIES);
-                self._updateTitle();
-                self._updateTitleTab();
-                self._alphaPopulate();
-                self._gradientPopulate();
+        _onBlockSelected: function () {
+            var self = this;
+            self.m_selected = true;
+            self.m_blockProperty.viewPanel(Elements.BLOCK_PROPERTIES);
+            self._updateTitle();
+            self._updateTitleTab();
+            self._alphaPopulate();
+            self._gradientPopulate();
 
-                // log('block selected ' + self.m_block_id);
+            log('block selected ' + self.m_block_id);
 
-                switch (self.m_placement) {
-                    case BB.CONSTS.PLACEMENT_CHANNEL:
-                    {
-                        $(Elements.CHANNEL_BLOCK_PROPS).show();
-                        $(Elements.SCENE_BLOCK_PROPS).hide();
-                        self._updateBlockLength();
-                        break;
-                    }
-
-                    case BB.CONSTS.PLACEMENT_SCENE:
-                    {
-                        $(Elements.CHANNEL_BLOCK_PROPS).hide();
-                        $(Elements.SCENE_BLOCK_PROPS).show();
-                        self._updateBlockDimensions();
-                        break;
-                    }
-
-                    case BB.CONSTS.PLACEMENT_IS_SCENE:
-                    {
-                        $(Elements.CHANNEL_BLOCK_PROPS).show();
-                        $(Elements.SCENE_BLOCK_PROPS).hide();
-                        self._updateBlockLength();
-                        break;
-                    }
+            switch (self.m_placement) {
+                case BB.CONSTS.PLACEMENT_CHANNEL:
+                {
+                    $(Elements.CHANNEL_BLOCK_PROPS).show();
+                    $(Elements.SCENE_BLOCK_PROPS).hide();
+                    self._updateBlockLength();
+                    break;
                 }
 
-                if (self._loadBlockSpecificProps)
-                    self._loadBlockSpecificProps();
-            });
+                case BB.CONSTS.PLACEMENT_SCENE:
+                {
+                    $(Elements.CHANNEL_BLOCK_PROPS).hide();
+                    $(Elements.SCENE_BLOCK_PROPS).show();
+                    self._updateBlockDimensions();
+                    break;
+                }
+
+                case BB.CONSTS.PLACEMENT_IS_SCENE:
+                {
+                    $(Elements.CHANNEL_BLOCK_PROPS).show();
+                    $(Elements.SCENE_BLOCK_PROPS).hide();
+                    self._updateBlockLength();
+                    break;
+                }
+            }
+
+            if (self._loadBlockSpecificProps)
+                self._loadBlockSpecificProps();
         },
 
         /**
@@ -452,9 +457,11 @@ define(['jquery', 'backbone'], function ($) {
 
                 case BB.CONSTS.PLACEMENT_IS_SCENE:
                 {
-                    var recPlayerData = BB.Pepper.getScenePlayerRecord(self.m_block_id);
-                    var xPlayerdata = recPlayerData['player_data_value'];
-                    return $.parseXML(xPlayerdata);
+                    log('will nevery come herre')
+                    //var scene_id = pepper.translateInjectedIdToSceneId(self.m_block_id)
+                    //var recPlayerData = BB.Pepper.getScenePlayerRecord(scene_id);
+                    //var xPlayerdata = recPlayerData['player_data_value'];
+                    //return $.parseXML(xPlayerdata);
                     break;
                 }
             }

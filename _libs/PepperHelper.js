@@ -51,6 +51,7 @@ PepperHelper.prototype = {
         // XmlPlayer 4200
 
         self.m_icons = {
+            'scene': { image: './_assets/rss.png' },
             'qr':  { image: './_assets/qr.png' },
             'rss': { image: './_assets/rss.png' },
             'mrss': { image: './_assets/mrss.png' },

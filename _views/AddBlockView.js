@@ -17,6 +17,16 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
      @final
      **/
     BB.EVENTS.ADD_NEW_BLOCK_CHANNEL = 'ADD_NEW_BLOCK_CHANNEL';
+
+    /**
+     Custom event fired when a new block is added to scene
+     @event ADD_NEW_BLOCK_SCENE
+     @param {this} caller
+     @param {self} context caller
+     @param {event} player_code which represents a specific code assigned for each block type
+     @static
+     @final
+     **/
     BB.EVENTS.ADD_NEW_BLOCK_SCENE = 'ADD_NEW_BLOCK_SCENE';
 
     BB.SERVICES.ADD_BLOCK_VIEW = 'AddBlockView';
@@ -27,8 +37,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
          Constructor
          @method initialize
          **/
-        initialize: function () {
+        initialize: function (options) {
             var self = this;
+
+            self.m_placement = options.placement;
 
             // Clone AddBlockTemplate
             var e = $(Elements.ADD_BLOCK_TEMPLATE).clone();
@@ -62,6 +74,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
 
             $(Elements.ADD_COMPONENT_BLOCK_LIST, self.el).empty();
             $(Elements.ADD_RESOURCE_BLOCK_LIST, self.el).empty();
+            $(Elements.ADD_SCENE_BLOCK_LIST, self.el).empty();
 
             /////////////////////////////////////////////////////////
             // show component selection list
@@ -91,8 +104,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                     return;
 
                 var size = (parseInt(recResources[i]['resource_bytes_total']) / 1000).toFixed(2);
-                var resourceDescription = 'size: ' + size + 'K dimenstion: ' + recResources[i]['resource_pixel_width'] + 'x' + recResources[i]['resource_pixel_height'];
-
+                var resourceDescription = 'size: ' + size + 'K dimension: ' + recResources[i]['resource_pixel_width'] + 'x' + recResources[i]['resource_pixel_height'];
                 var snippet = '<li class="list-group-item ' + BB.lib.unclass(Elements.CLASS_ADD_BLOCK_LIST_ITEMS, self.el) + '" data-resource_id="' + recResources[i]['resource_id'] + '" data-resource_name="' + recResources[i]['resource_name'] + '">' +
                     '<img src="' + BB.PepperHelper.getIcon(recResources[i]['resource_type']) + '">' +
                     '<span>' + recResources[i]['resource_name'] + '</span>' +
@@ -101,9 +113,31 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 $(Elements.ADD_RESOURCE_BLOCK_LIST, self.el).append(snippet);
             });
 
+            /////////////////////////////////////////////////////////
+            // show scene selection list
+            /////////////////////////////////////////////////////////
+
+            if (self.m_placement == BB.CONSTS.PLACEMENT_CHANNEL) {
+                var scenes = pepper.getScenes();
+                _.each(scenes, function (scene, i) {
+                    var snippet = '<li class="list-group-item ' + BB.lib.unclass(Elements.CLASS_ADD_BLOCK_LIST_ITEMS, self.el) + '" data-resource_id="' + recResources[i]['resource_id'] + '" data-resource_name="' + recResources[i]['resource_name'] + '">' +
+                        '<img src="' + BB.PepperHelper.getIcon('scene') + '">' +
+                        '<span>' + 'name' + '</span>' +
+                        '<br/><small>aaa</small>' +
+                        '</li>';
+                    $(Elements.ADD_SCENE_BLOCK_LIST, self.el).append(snippet);
+                });
+            }
+
+            if (self.m_placement == BB.CONSTS.PLACEMENT_SCENE) {
+                $(Elements.ADD_SCENE_BLOCK_LIST_CONTAINER, self.el).remove();
+            }
+
+
             $(Elements.CLASS_ADD_BLOCK_LIST_ITEMS, self.el).on('click', function (e) {
                 var component_id = $(e.target).closest('li').data('component_id');
                 var resource_id = $(e.target).closest('li').data('resource_id');
+                var scene_id = $(e.target).closest('li').data('scene_id');
                 var blockCode = -1;
 
                 if (component_id) {
@@ -114,7 +148,8 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 var eventName = self.options.placement == BB.CONSTS.PLACEMENT_CHANNEL ? BB.EVENTS.ADD_NEW_BLOCK_CHANNEL : BB.EVENTS.ADD_NEW_BLOCK_SCENE;
                 BB.comBroker.fire(eventName, this, self.options.placement, {
                     blockCode: blockCode,
-                    resourceID: resource_id
+                    resourceID: resource_id,
+                    sceneID: scene_id
                 });
                 self.deSelectView();
             });

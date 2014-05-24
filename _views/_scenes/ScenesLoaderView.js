@@ -39,6 +39,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     stackView: self.m_sceneStackFaderView,
                     el: Elements.SCENE_ADD_NEW_BLOCK,
                     placement: BB.CONSTS.PLACEMENT_SCENE
+
                 });
 
                 self.m_sceneEditorView = new SceneEditorView({

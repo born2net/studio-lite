@@ -271,7 +271,7 @@ Pepper.prototype = {
      **/
     getSceneDuration: function (i_scene_id) {
         var self = this;
-        i_scene_id = pepper.pseudoIdToSceneId(i_scene_id);
+        i_scene_id = pepper.sterilizePseudoId(i_scene_id);
         var seconds = 0;
         var minutes = 0;
         var hours = 0;
@@ -314,7 +314,7 @@ Pepper.prototype = {
      **/
     setSceneDuration: function (i_scene_id, i_hours, i_minutes, i_seconds) {
         var self = this;
-        i_scene_id = pepper.pseudoIdToSceneId(i_scene_id);
+        i_scene_id = pepper.sterilizePseudoId(i_scene_id);
         var totalSecInMin = 60
         var totalSecInHour = totalSecInMin * 60
         var totalSeconds = parseInt(i_seconds) + (parseInt(i_minutes) * totalSecInMin) + (parseInt(i_hours) * totalSecInHour);
@@ -355,8 +355,10 @@ Pepper.prototype = {
         var recPlayerData = table_player_data.createRecord();
         recPlayerData['player_data_value'] = i_player_data;
         table_player_data.addRecord(recPlayerData);
+        var scene_id = recPlayerData['player_data_id']
+        self.injectPseudoScenePlayersIDs(scene_id);
         pepper.fire(Pepper['SCENE_CREATED'], self, null, recPlayerData['player_data_id']);
-        return recPlayerData['player_data_id'];
+        return self.getPseudoIdFromSceneId(scene_id);
     },
 
     /**
@@ -367,7 +369,7 @@ Pepper.prototype = {
      **/
     appendScenePlayerBlock: function (i_scene_id, i_player_data) {
         var self = this;
-        i_scene_id = pepper.pseudoIdToSceneId(i_scene_id);
+        i_scene_id = pepper.sterilizePseudoId(i_scene_id);
         self.m_msdb.table_player_data().openForEdit(i_scene_id);
         var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_id);
         var scene_player_data = recPlayerData['player_data_value'];
@@ -383,7 +385,7 @@ Pepper.prototype = {
      **/
     setScenePlayerData: function (i_scene_id, i_player_data) {
         var self = this;
-        i_scene_id = pepper.pseudoIdToSceneId(i_scene_id);
+        i_scene_id = pepper.sterilizePseudoId(i_scene_id);
         self.m_msdb.table_player_data().openForEdit(i_scene_id);
         var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_id);
         recPlayerData['player_data_value'] = i_player_data;
@@ -391,31 +393,25 @@ Pepper.prototype = {
 
     /**
      Get a unique scene > player id
-     @method getUniqueSceneBlockID
+     @method generateSceneId
      @return {Number} Unique scene player id
      **/
-    getUniqueSceneBlockID: function () {
+    generateSceneId: function () {
         return ($.base64.encode(_.uniqueId('blockid'))).replace('=', '');
     },
 
-    pseudoIdToSceneId: function(i_id){
+    /**
+     Sterilize pseudo id to scene id always retuns scene_id even if scene_id is what's arged in
+     @method sterilizePseudoId
+     @param {Number} i_id
+     @return {Number} i_id
+     **/
+    sterilizePseudoId: function(i_id){
         var self = this;
         var id = parseInt(i_id);
         if (_.isNaN(id))
             return pepper.getSceneIdFromPseudoId(i_id);
         return i_id;
-    },
-
-    /**
-     Translate a scene id from table_player_data to it's injected id
-     @method createPseudoSceneID
-     @param {Number} i_scene_id
-     @return {Number} injected id
-     **/
-    createPseudoSceneID: function(i_scene_id){
-        var self = this;
-        var domPlayerData = pepper.getScenePlayerdataDom(i_scene_id);
-        return $(domPlayerData).find('Player').eq(0).attr('id');
     },
 
     /**
@@ -457,14 +453,21 @@ Pepper.prototype = {
     /**
      Inject unique player ids for all players within a scene
      @method injectPseudoScenePlayersIDs
+     @param {Number} i_scene_id
      **/
-    injectPseudoScenePlayersIDs: function () {
+    injectPseudoScenePlayersIDs: function (i_scene_id) {
         var self = this;
-        var scenes = pepper.getScenes();
+        var scenes = {};
+        if (i_scene_id){
+            var domPlayerData = self.getScenePlayerdataDom(i_scene_id);
+            scenes[i_scene_id] = domPlayerData;
+        } else {
+            scenes = pepper.getScenes();
+        }
         _.each(scenes, function (domPlayerData, scene_id) {
-            $(domPlayerData).find('Player').eq(0).attr('id', pepper.getUniqueSceneBlockID());
+            $(domPlayerData).find('Player').eq(0).attr('id', pepper.generateSceneId());
             $(domPlayerData).find('Players').find('Player').each(function (i, player) {
-                var blockID = pepper.getUniqueSceneBlockID();
+                var blockID = pepper.generateSceneId();
                 $(player).attr('id', blockID);
             });
             pepper.setScenePlayerData(scene_id, (new XMLSerializer()).serializeToString(domPlayerData));
@@ -483,7 +486,7 @@ Pepper.prototype = {
             $(domPlayerData).find('Player').eq(0).removeAttr('id');
             self.m_tempScenePlayerIDs[scene_id] = (new XMLSerializer()).serializeToString(domPlayerData);
             var players = $(domPlayerData).find('Players').find('Player').each(function (i, player) {
-                var blockID = pepper.getUniqueSceneBlockID();
+                var blockID = pepper.generateSceneId();
                 $(player).removeAttr('id');
             });
             pepper.setScenePlayerData(scene_id, (new XMLSerializer()).serializeToString(domPlayerData));
@@ -498,7 +501,7 @@ Pepper.prototype = {
      **/
     removeScenePlayer: function (i_scene_id, i_player_data_id) {
         var self = this;
-        i_scene_id = pepper.pseudoIdToSceneId(i_scene_id);
+        i_scene_id = pepper.sterilizePseudoId(i_scene_id);
         self.m_msdb.table_player_data().openForEdit(i_scene_id);
         var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_id);
         var player_data = recPlayerData['player_data_value'];
@@ -537,7 +540,7 @@ Pepper.prototype = {
      **/
     getScenePlayerdataBlock: function (i_scene_id, i_player_data_id) {
         var self = this;
-        i_scene_id = pepper.pseudoIdToSceneId(i_scene_id);
+        i_scene_id = pepper.sterilizePseudoId(i_scene_id);
         self.m_msdb.table_player_data().openForEdit(i_scene_id);
         var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_id);
         var player_data = recPlayerData['player_data_value'];
@@ -555,7 +558,7 @@ Pepper.prototype = {
      **/
     setScenePlayerdataBlock: function (i_scene_id, i_player_data_id, i_player_data) {
         var self = this;
-        i_scene_id = pepper.pseudoIdToSceneId(i_scene_id);
+        i_scene_id = pepper.sterilizePseudoId(i_scene_id);
         self.m_msdb.table_player_data().openForEdit(i_scene_id);
         var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_id);
         var player_data = recPlayerData['player_data_value'];
@@ -600,7 +603,7 @@ Pepper.prototype = {
      **/
     getScenePlayerdata: function (i_scene_id) {
         var self = this;
-        i_scene_id = pepper.pseudoIdToSceneId(i_scene_id);
+        i_scene_id = pepper.sterilizePseudoId(i_scene_id);
         return pepper.getScenePlayerRecord(i_scene_id)['player_data_value'];
     },
 
@@ -612,7 +615,7 @@ Pepper.prototype = {
      **/
     getScenePlayerdataDom: function (i_scene_id) {
         var self = this;
-        i_scene_id = pepper.pseudoIdToSceneId(i_scene_id);
+        i_scene_id = pepper.sterilizePseudoId(i_scene_id);
         var scene_player_data = pepper.getScenePlayerRecord(i_scene_id)['player_data_value'];
         return $.parseXML(scene_player_data)
     },

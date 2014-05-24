@@ -103,7 +103,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 BB.comBroker.setService(BB.SERVICES['DIMENSION_PROPS_LAYOUT'], self.m_dimensionProps);
                 $(self.m_dimensionProps).on('changed', function (e) {
                     var block = self.m_canvas.getActiveObject();
-                    if (_.isUndefined(block))
+                    if (_.isNull(block))
                         return;
                     var props = e.target.getValues();
                     var block_id = block.getBlockData().blockID;
@@ -260,6 +260,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         _listenSceneBlockRemove: function () {
             var self = this;
             BB.comBroker.listen(BB.EVENTS.SCENE_ITEM_REMOVE, function () {
+                self.m_property.resetPropertiesView();
                 if (_.isUndefined(self.m_selectedSceneID))
                     return;
                 var block = self.m_canvas.getActiveObject();
@@ -361,7 +362,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         _listenAddBlockWizard: function (e) {
             var self = this;
             BB.comBroker.listen(BB.EVENTS.ADD_NEW_BLOCK_SCENE, function (e) {
-                var blockID = pepper.getUniqueSceneBlockID();
+                var blockID = pepper.generateSceneId();
                 var player_data = BB.PepperHelper.getBlockBoilerplate(e.edata.blockCode).getDefaultPlayerData(BB.CONSTS.PLACEMENT_SCENE, e.edata.resourceID);
                 var domPlayerData = $.parseXML(player_data);
                 $(domPlayerData).find('Player').attr('id', blockID);
@@ -512,6 +513,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         _updateZorder: function () {
             var self = this;
             if (_.isUndefined(self.m_selectedSceneID))
+                return;
+            var active = self.m_canvas.getActiveGroup();
+            if (active)
                 return;
             // var totalViews = self.m_canvas.getObjects().length;
             // var i = 0;

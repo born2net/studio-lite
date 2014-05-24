@@ -246,7 +246,7 @@ PepperHelper.prototype = {
                 icon: self.getIcon('label')
             },
 
-            1000: {
+            /*1000: {
                 name: 'Timeline Scene',
                 acronym: 'TimelineScene',
                 description: 'A Scene on the timeline',
@@ -266,7 +266,7 @@ PepperHelper.prototype = {
                             '</Player>'
                 },
                 icon: self.getIcon('label')
-            },
+            }, */
 
 
             3510: {

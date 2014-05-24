@@ -114,6 +114,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             })
         },
 
+        /**
+         Bring the scene into view
+         @method _sceneActive
+         **/
         _sceneActive: function () {
             var self = this;
             $('#sceneToolbar').fadeIn();
@@ -612,15 +616,20 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                             x: (selectedGroup.left + (selectedObject.left)),
                             y: (selectedGroup.top + (selectedObject.top))
                         };
+                        if (objectPos.x < 0 && objectPos.y < 0) {
+                            objectPos.x = objectPos.x * -1;
+                            objectPos.y = objectPos.y * -1;
+                        }
                         var blockID = selectedObject.getBlockData().blockID;
                         log('object: ' + selectedObject.m_blockType + ' ' + blockID);
                         self._updateBlockCords(blockID, true, objectPos.x, objectPos.y, selectedObject.currentWidth, selectedObject.currentHeight, selectedObject.angle);
                         self._updateZorder();
                     });
+                    self._mementoAddState();
                     selectedGroup.hasControls = false;
                     self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
                     self.m_canvas.renderAll();
-                    self._mementoAddState();
+
                     return;
                 }
 

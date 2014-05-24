@@ -69,7 +69,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             var components = BB.PepperHelper.getBlocks();
             for (var componentID in components) {
                 // don't show image or video component in component list
-                if (componentID == 3130 || componentID == 3100)
+                if (componentID == 3130 || componentID == 3100 || componentID == 3510)
                     continue;
                 var snippet = '<li class="list-group-item ' + BB.lib.unclass(Elements.CLASS_ADD_BLOCK_LIST_ITEMS, self.el) + '" data-component_id="' + componentID + '" data-component_name="' + components[componentID].name + '">' +
                     '<img class="img-responsive" src="' + components[componentID].icon + '">' +

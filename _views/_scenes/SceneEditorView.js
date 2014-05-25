@@ -629,7 +629,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     selectedGroup.hasControls = false;
                     self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
                     self.m_canvas.renderAll();
-
                     return;
                 }
 

@@ -120,18 +120,18 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             if (self.m_placement == BB.CONSTS.PLACEMENT_CHANNEL) {
                 var scenes = pepper.getScenes();
                 _.each(scenes, function (scene, i) {
-                    var snippet = '<li class="list-group-item ' + BB.lib.unclass(Elements.CLASS_ADD_BLOCK_LIST_ITEMS, self.el) + '" data-resource_id="' + recResources[i]['resource_id'] + '" data-resource_name="' + recResources[i]['resource_name'] + '">' +
+                    var label = $(scene).find('Player').eq(0).attr('label');
+                    var snippet = '<li class="list-group-item ' + BB.lib.unclass(Elements.CLASS_ADD_BLOCK_LIST_ITEMS, self.el) + '" data-scene_id="' + recResources[i]['resource_id'] + '" data-resource_name="' + recResources[i]['resource_name'] + '">' +
                         '<img src="' + BB.PepperHelper.getIcon('scene') + '">' +
-                        '<span>' + 'name' + '</span>' +
-                        '<br/><small>aaa</small>' +
+                        '<span>' + label + '</span>' +
+                        '<br/><small></small>' +
                         '</li>';
                     $(Elements.ADD_SCENE_BLOCK_LIST, self.el).append(snippet);
                 });
             }
 
-            if (self.m_placement == BB.CONSTS.PLACEMENT_SCENE) {
+            if (self.m_placement == BB.CONSTS.PLACEMENT_SCENE)
                 $(Elements.ADD_SCENE_BLOCK_LIST_CONTAINER, self.el).remove();
-            }
 
 
             $(Elements.CLASS_ADD_BLOCK_LIST_ITEMS, self.el).on('click', function (e) {
@@ -140,10 +140,12 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 var scene_id = $(e.target).closest('li').data('scene_id');
                 var blockCode = -1;
 
-                if (component_id) {
+                if (!_.isUndefined(component_id)) {
                     blockCode = component_id;
-                } else {
+                } else if (!_.isUndefined(resource_id)) {
                     blockCode = BB.PepperHelper.getBlockCodeFromFileExt(pepper.getResourceType(resource_id));
+                } else if (!_.isUndefined(scene_id)) {
+
                 }
                 var eventName = self.options.placement == BB.CONSTS.PLACEMENT_CHANNEL ? BB.EVENTS.ADD_NEW_BLOCK_CHANNEL : BB.EVENTS.ADD_NEW_BLOCK_SCENE;
                 BB.comBroker.fire(eventName, this, self.options.placement, {

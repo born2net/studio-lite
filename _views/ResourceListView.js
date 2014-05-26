@@ -90,7 +90,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     '<a href="#">' +
                     '<img src="' + BB.PepperHelper.getIcon(recResources[i]['resource_type']) + '">' +
                     '<span>' + recResources[i]['resource_name'] + '</span>' +
-                    '<p>' + resourceDescription + '</p></a>' +
+                    '<p>' + '' + '</p></a>' +
                     '</a>' +
                     '</li>';
 

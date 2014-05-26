@@ -195,7 +195,8 @@ define(['jquery', 'backbone'], function ($) {
                 var xmlString = (new XMLSerializer()).serializeToString(domPlayerData);
                 xmlString = xmlString.replace(/<GradientPoints[ ]*\/>/, '<GradientPoints>' + pointsXML + '</GradientPoints>');
                 domPlayerData = $.parseXML(xmlString);
-                self._setBlockPlayerData(domPlayerData);
+                // return;
+                self._setBlockPlayerData(domPlayerData, true);
             });
         },
 
@@ -405,7 +406,7 @@ define(['jquery', 'backbone'], function ($) {
          @method _setBlockPlayerData
          @param {Object} i_xmlDoc
          **/
-        _setBlockPlayerData: function (i_xmlDoc) {
+        _setBlockPlayerData: function (i_xmlDoc, i_quiet) {
             var self = this;
             var player_data = (new XMLSerializer()).serializeToString(i_xmlDoc);
             switch (self.m_placement) {
@@ -417,13 +418,15 @@ define(['jquery', 'backbone'], function ($) {
                 case BB.CONSTS.PLACEMENT_SCENE:
                 {
                     pepper.setScenePlayerdataBlock(self.m_sceneID, self.m_block_id, player_data);
-                    BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, self.m_block_id);
+                    if (!i_quiet)
+                        BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, self.m_block_id);
                     break;
                 }
                 case BB.CONSTS.PLACEMENT_IS_SCENE:
                 {
                     pepper.setScenePlayerData(self.m_block_id, player_data);
-                    BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, self.m_block_id);
+                    if (!i_quiet)
+                        BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, self.m_block_id);
                     break;
                 }
             }

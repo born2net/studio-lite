@@ -147,6 +147,11 @@
             if (quiet)
                 return;
             this.opts.change(result, styles);
+            // this.opts.closed(result, styles);
+            return {
+                result: result,
+                styles: styles
+            }
         },
 
         removeControlPoint: function(ctrlPt) {
@@ -259,13 +264,13 @@
         this.$el.css("background-color", '#'+this.color);
 
         /* if (this.color.match('rgb')){
-            console.log('rgb color ' + this.color);
-            this.$el.css("background-color", this.color);
-        } else {
-            var rgbc = hexToRgb(this.color);
-            var rgbv = 'rgb(' + rgbc.r + ',' + rgbc.g + ',' + rgbc.b + ')';
-            this.$el.css("background-color", rgbv);
-        }  */
+         console.log('rgb color ' + this.color);
+         this.$el.css("background-color", this.color);
+         } else {
+         var rgbc = hexToRgb(this.color);
+         var rgbv = 'rgb(' + rgbc.r + ',' + rgbc.g + ',' + rgbc.b + ')';
+         this.$el.css("background-color", rgbv);
+         }  */
 
 
         if (orientation == "horizontal") {
@@ -280,6 +285,7 @@
         this.stop = bind(this.stop, this);
         this.clicked = bind(this.clicked, this);
         this.colorChanged = bind(this.colorChanged, this);
+        this.colorClosed = bind(this.colorClosed, this);
         this.$el.draggable({
             axis: (orientation == "horizontal") ? "x" : "y",
             drag: this.drag,
@@ -310,6 +316,9 @@
             return false;
         },
 
+        colorClosed: function () {
+        },
+
         colorChanged: function(c) {
             this.color = c;
             // log(c);
@@ -333,9 +342,11 @@
         this.$el.append($rmEl);
 
         this.colorChanged = bind(this.colorChanged, this);
+        this.colorClosed = bind(this.colorClosed, this);
         this.removeClicked = bind(this.removeClicked, this);
         $cpicker.ColorPicker({
-            onChange: this.colorChanged
+            onChange: this.colorChanged,
+            onHide: this.colorClosed
         });
         this.$cpicker = $cpicker;
         this.opts = opts;
@@ -366,6 +377,13 @@
             if (this.visible) {
                 this.$el.css("visibility", "hidden");
                 this.visible = false;
+            }
+        },
+
+        colorClosed: function(hsb, hex, rgb) {
+            if (this.opts.closed){
+                var changes = this.listener.listener.updatePreview(false);
+                this.opts.closed(changes.result, changes.styles)
             }
         },
 

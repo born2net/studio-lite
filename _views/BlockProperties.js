@@ -109,11 +109,26 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                 BB.comBroker.fire(BB.EVENTS.GRADIENT_COLOR_CHANGED, self, null, {points: points, styles: styles})
             }, 333);
 
+            var renderGradientBG = function(){
+                log('render gradient');
+            }
+
             $(Elements.BG_COLOR_GRADIENT_SELECTOR).gradientPicker({
                 change: lazyUpdateBgColor,
+                closed: renderGradientBG,
                 fillDirection: "90deg"
-                //,controlPoints: ["#428bca 0%", "white 100%"]
             });
+
+            /*
+             var lazyUpdateBgColor = _.debounce(function (points, styles) {
+             BB.comBroker.fire(BB.EVENTS.GRADIENT_COLOR_CHANGED, self, null, {points: points, styles: styles})
+             }, 333);
+             $(Elements.BG_COLOR_GRADIENT_SELECTOR).gradientPicker({
+             change: lazyUpdateBgColor,
+             fillDirection: "90deg"
+             //,controlPoints: ["#428bca 0%", "white 100%"]
+             });
+             */
 
             // to destroy the plugin instance
             // gradient = {}; $(Elements.BG_COLOR_GRADIENT_SELECTOR).remove();
@@ -158,13 +173,13 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                         this.g.lineWidth = this.lineWidth;
 
                         this.o.cursor
-                            && (sat = eat - 0.3)
+                        && (sat = eat - 0.3)
                         && (eat = eat + 0.3);
 
                         if (this.o.displayPrevious) {
                             ea = this.startAngle + this.angle(this.v);
                             this.o.cursor
-                                && (sa = ea - 0.3)
+                            && (sa = ea - 0.3)
                             && (ea = ea + 0.3);
                             this.g.beginPath();
                             this.g.strokeStyle = this.pColor;
@@ -215,7 +230,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
          Create instance of RSSLink used in select property settings
          @method _rssSourceSelectorInit
          **/
-        _rssSourceSelectorInit: function(){
+        _rssSourceSelectorInit: function () {
             var self = this;
             self.m_rssLinkSelector = new RSSLinks({
                 el: Elements.RSS_SOURCE
@@ -226,7 +241,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
          Create instance of RSSLink used in select property settings
          @method _rssSourceSelectorInit
          **/
-        _mrssSourceSelectorInit: function(){
+        _mrssSourceSelectorInit: function () {
             var self = this;
             self.m_mrssLinkSelector = new MRSSLinks({
                 el: Elements.MRSS_SOURCE
@@ -237,7 +252,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
          Create instance of FontSelector used in font property settings
          @method _rssFontSelectorInit
          **/
-        _rssFontSelectorInit: function(){
+        _rssFontSelectorInit: function () {
             var self = this;
             self.m_rssFontSelector = new FontSelector({
                 appendTo: Elements.RSS_FONT_SETTINGS,
@@ -250,7 +265,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
          @method _rssPollTimeInit
          @param {Number} _rssPollTimeInit
          **/
-        _rssPollTimeInit: function(){
+        _rssPollTimeInit: function () {
             var self = this;
             $(Elements.RSS_POLL_SPINNER).spinner({
                 value: 30,
@@ -264,7 +279,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
          Create instance of FontSelector used in font property settings
          @method _labelFontSelectorInit
          **/
-        _labelFontSelectorInit: function(){
+        _labelFontSelectorInit: function () {
             var self = this;
             self.m_labelFontSelector = new FontSelector({
                 appendTo: Elements.LABEL_FONT_SETTINGS,
@@ -276,7 +291,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
          Create instance of FontSelector used in font property settings
          @method _labelFontSelectorInit
          **/
-        _labelClockFontSelectorInit: function(){
+        _labelClockFontSelectorInit: function () {
             var self = this;
             self.m_clockFontSelector = new FontSelector({
                 appendTo: Elements.CLOCK_FONT_SETTINGS,
@@ -288,7 +303,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
          Bring into view the Block property StackView panel
          @method viewPanel
          **/
-        viewPanel: function(i_panel){
+        viewPanel: function (i_panel) {
             var self = this;
             self.m_property.viewPanel(i_panel);
         },
@@ -297,7 +312,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
          Bring into view the Block property StackView SubPanel
          @method showBlockProperty
          **/
-        initSubPanel: function(i_panel){
+        initSubPanel: function (i_panel) {
             var self = this;
             self.m_property.initSubPanel(i_panel);
         },
@@ -306,7 +321,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
          Bring into view the Block property StackView SubPanel
          @method showBlockProperty
          **/
-        viewSubPanel: function(i_panel){
+        viewSubPanel: function (i_panel) {
             var self = this;
             self.m_property.viewSubPanel(i_panel);
         },
@@ -316,9 +331,9 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
          @method getRssFontSelector
          @return {Object} m_rssFontSelector instance
          **/
-        getRssFontSelector: function(){
+        getRssFontSelector: function () {
             var self = this;
-           return self.m_rssFontSelector;
+            return self.m_rssFontSelector;
         },
 
         /**
@@ -326,7 +341,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
          @method getClockFontSelector
          @return {Object} m_clockFontSelector instance
          **/
-        getClockFontSelector: function(){
+        getClockFontSelector: function () {
             var self = this;
             return self.m_clockFontSelector;
         },
@@ -336,7 +351,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
          @method getLabelFontSelector
          @return {Object} m_rssFontSelector instance
          **/
-        getLabelFontSelector: function(){
+        getLabelFontSelector: function () {
             var self = this;
             return self.m_labelFontSelector;
         },
@@ -346,7 +361,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
          @method getRssLinkSelector
          @return {Object} m_rssLinks instance
          **/
-        getRssLinkSelector: function(){
+        getRssLinkSelector: function () {
             var self = this;
             return self.m_rssLinkSelector;
         },
@@ -356,7 +371,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
          @method getMRssLinkSelector
          @return {Object} m_mrssLinkSelector instance
          **/
-        getMRssLinkSelector: function(){
+        getMRssLinkSelector: function () {
             var self = this;
             return self.m_mrssLinkSelector;
         }

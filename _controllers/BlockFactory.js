@@ -94,7 +94,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
          @param {XML} i_playerData
          @return {Object} reference to the block instance
          **/
-        createBlock: function (block_id, i_player_data, i_placement, i_scene_player_data_id) {
+        createBlock: function (block_id, i_player_data, i_placement, i_scene_id) {
             var self = this;
             var block = undefined;
             var playerData = this.x2js.xml_str2json(i_player_data);
@@ -105,7 +105,12 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
             } else {
                 // Scene
                 blockCode = 3510;
+                if (_.isUndefined(i_scene_id)){
+                    var domPlayerData = $.parseXML(i_player_data);
+                    i_scene_id = $(domPlayerData).find('Player').attr('hDataSrc');
+                }
             }
+
 
             switch (parseInt(blockCode)) {
                 case 3510:
@@ -121,7 +126,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
                     block = new self.m_blockRSS({
                         i_placement: i_placement,
                         i_block_id: block_id,
-                        i_scene_player_data_id: i_scene_player_data_id
+                        i_scene_player_data_id: i_scene_id
                     });
                     break;
                 }
@@ -130,7 +135,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
                     block = new self.m_blockQR({
                         i_placement: i_placement,
                         i_block_id: block_id,
-                        i_scene_player_data_id: i_scene_player_data_id
+                        i_scene_player_data_id: i_scene_id
                     });
                     break;
                 }
@@ -139,7 +144,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
                     block = new self.m_blockVideo({
                         i_placement: i_placement,
                         i_block_id: block_id,
-                        i_scene_player_data_id: i_scene_player_data_id
+                        i_scene_player_data_id: i_scene_id
                     });
                     break;
                 }
@@ -148,7 +153,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
                     block = new self.m_blockImage({
                         i_placement: i_placement,
                         i_block_id: block_id,
-                        i_scene_player_data_id: i_scene_player_data_id
+                        i_scene_player_data_id: i_scene_id
                     });
                     break;
                 }
@@ -157,7 +162,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
                     block = new self.m_blockExtImage({
                         i_placement: i_placement,
                         i_block_id: block_id,
-                        i_scene_player_data_id: i_scene_player_data_id
+                        i_scene_player_data_id: i_scene_id
                     });
                     break;
                 }
@@ -166,7 +171,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
                     block = new self.m_blockExtVideo({
                         i_placement: i_placement,
                         i_block_id: block_id,
-                        i_scene_player_data_id: i_scene_player_data_id
+                        i_scene_player_data_id: i_scene_id
                     });
                     break;
                 }
@@ -175,7 +180,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
                     block = new self.m_blockClock({
                         i_placement: i_placement,
                         i_block_id: block_id,
-                        i_scene_player_data_id: i_scene_player_data_id
+                        i_scene_player_data_id: i_scene_id
                     });
                     break;
                 }
@@ -184,7 +189,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
                     block = new self.m_blockHTML({
                         i_placement: i_placement,
                         i_block_id: block_id,
-                        i_scene_player_data_id: i_scene_player_data_id
+                        i_scene_player_data_id: i_scene_id
                     });
                     break;
                 }
@@ -193,7 +198,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
                     block = new self.m_blockLabel({
                         i_placement: i_placement,
                         i_block_id: block_id,
-                        i_scene_player_data_id: i_scene_player_data_id
+                        i_scene_player_data_id: i_scene_id
                     });
                     break;
                 }
@@ -202,7 +207,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
                     block = new self.m_blockMRSS({
                         i_placement: i_placement,
                         i_block_id: block_id,
-                        i_scene_player_data_id: i_scene_player_data_id
+                        i_scene_player_data_id: i_scene_id
                     });
                     break;
                 }

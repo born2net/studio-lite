@@ -33,6 +33,21 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         },
 
         /**
+         Override getBlockData to get a Scene's real name
+         @method setPlayerData
+         @param {Number} i_playerData
+         @return {Number} Unique clientId.
+         **/
+        getBlockData: function () {
+            var self = this;
+            var data = Block.prototype.getBlockData.call(this);
+            var domPlayerData = self._getBlockPlayerData();
+            data.blockName = $(domPlayerData).find('Player').eq(0).attr('label');
+            return data;
+        },
+
+
+        /**
          When user changes a URL link for the feed, update the msdb
          @method _listenInputChange
          @return none
@@ -48,7 +63,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var domPlayerData = self._getBlockPlayerData();
                 $(domPlayerData).find('Player').eq(0).attr('label', text);
                 self._setBlockPlayerData(domPlayerData);
-                BB.comBroker.fire(BB.EVENTS['SCENE_LIST_UPDATED'], this);
+                if (BB.EVENTS['SCENE_LIST_UPDATED'])
+                    BB.comBroker.fire(BB.EVENTS['SCENE_LIST_UPDATED'], this);
             }, 150);
             $(Elements.SCENE_NAME_INPUT).on("input", self.m_inputNameChangeHandler);
 
@@ -152,6 +168,10 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 {
                     $(Elements.SCENE_WIDTH_INPUT).hide();
                     $(Elements.SCENE_HEIGHT_INPUT).hide();
+                    var domPlayerData = self._getBlockPlayerData();
+                    var domPlayer = $(domPlayerData).find('Player').eq(0);
+                    var domPlayerLayout = $(domPlayerData).find('Player').eq(0).find('Layout');
+                    $(Elements.SCENE_NAME_INPUT).val($(domPlayer).attr('label'));
                     break;
                 }
 

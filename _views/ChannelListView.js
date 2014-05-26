@@ -120,7 +120,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             var addBlockView = BB.comBroker.getService(BB.SERVICES.ADD_BLOCK_VIEW);
             addBlockView.selectView();
             BB.comBroker.listenOnce(BB.EVENTS.ADD_NEW_BLOCK_CHANNEL, function (e) {
-                self._createNewChannelBlock(e.edata.blockCode, e.edata.resourceID);
+                self._createNewChannelBlock(e.edata.blockCode, e.edata.resourceID, e.edata.sceneID);
                 e.stopImmediatePropagation();
                 e.preventDefault();
             });
@@ -131,13 +131,14 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
          @method _createNewChannelBlock
          @param {Number} i_blockID
          @param {Number} i_resourceID optional param used when creating a block with embedded resource (i.e.: video / image / swf)
+         @param {Number} i_sceneID optional param used when creating a block with embedded scene
          @return {Boolean} false
          **/
-        _createNewChannelBlock: function (i_blockID, i_resourceID) {
+        _createNewChannelBlock: function (i_blockID, i_resourceID, i_sceneID) {
             var self = this;
 
             var totalChannelLength = self._getTotalDurationChannel();
-            var jData = pepper.createNewChannelPlayer(self.selected_campaign_timeline_chanel_id, i_blockID, totalChannelLength, i_resourceID);
+            var jData = pepper.createNewChannelPlayer(self.selected_campaign_timeline_chanel_id, i_blockID, totalChannelLength, i_resourceID, i_sceneID);
             var campaign_timeline_chanel_player_id = jData['campaign_timeline_chanel_player_id'];
             var campaign_timeline_chanel_player_data = jData['campaign_timeline_chanel_player_data'];
 

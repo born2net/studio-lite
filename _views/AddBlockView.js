@@ -145,7 +145,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 } else if (!_.isUndefined(resource_id)) {
                     blockCode = BB.PepperHelper.getBlockCodeFromFileExt(pepper.getResourceType(resource_id));
                 } else if (!_.isUndefined(scene_id)) {
-
+                    blockCode = 3510;
                 }
                 var eventName = self.options.placement == BB.CONSTS.PLACEMENT_CHANNEL ? BB.EVENTS.ADD_NEW_BLOCK_CHANNEL : BB.EVENTS.ADD_NEW_BLOCK_SCENE;
                 BB.comBroker.fire(eventName, this, self.options.placement, {

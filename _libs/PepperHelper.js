@@ -247,29 +247,6 @@ PepperHelper.prototype = {
                 icon: self.getIcon('label')
             },
 
-            /*1000: {
-                name: 'Timeline Scene',
-                acronym: 'TimelineScene',
-                description: 'A Scene on the timeline',
-                getDefaultPlayerData: function (i_placement) {
-                    return  '<Player player="3510" label="My scene" interactive="0">' +
-                                '<Data>' +
-                                    self.getCommonDefaultXML() +
-                                    self.getCommonSceneLayout(i_placement, 1024, 768) +
-                                    '<Scene defaultDuration="10">' +
-                                        '<Layout>' +
-                                            '<BasicLayout/>' +
-                                        '</Layout>' +
-                                        '<Players>' +
-                                        '</Players>' +
-                                    '</Scene>' +
-                                '</Data>' +
-                            '</Player>'
-                },
-                icon: self.getIcon('label')
-            }, */
-
-
             3510: {
                 name: 'Scene',
                 acronym: 'Scene',
@@ -289,7 +266,7 @@ PepperHelper.prototype = {
                                 '</Data>' +
                             '</Player>'
                 },
-                icon: self.getIcon('label')
+                icon: self.getIcon('scene')
             },
             3345: {
                 name: 'Really Simple Syndication',

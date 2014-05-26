@@ -617,8 +617,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                             y: (selectedGroup.top + (selectedObject.top))
                         };
                         if (objectPos.x < 0 && objectPos.y < 0) {
-                            objectPos.x = objectPos.x * -1;
-                            objectPos.y = objectPos.y * -1;
+                            // objectPos.x = objectPos.x * -1;
+                            // objectPos.y = objectPos.y * -1;
+                            return;
                         }
                         var blockID = selectedObject.getBlockData().blockID;
                         log('object: ' + selectedObject.m_blockType + ' ' + blockID);

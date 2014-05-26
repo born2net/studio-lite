@@ -42,7 +42,7 @@ Pepper.SCENE_CREATED = 'SCENE_CREATED';
  @static
  @final
 
-Pepper.SCENE_CHANGED = 'SCENE_CHANGED';
+ Pepper.SCENE_CHANGED = 'SCENE_CHANGED';
  **/
 
 
@@ -406,7 +406,7 @@ Pepper.prototype = {
      @param {Number} i_id
      @return {Number} i_id
      **/
-    sterilizePseudoId: function(i_id){
+    sterilizePseudoId: function (i_id) {
         var self = this;
         var id = parseInt(i_id);
         if (_.isNaN(id))
@@ -420,7 +420,7 @@ Pepper.prototype = {
      @param {Number} i_scene_id
      @return {Number} pseudo id
      **/
-    getPseudoIdFromSceneId: function(i_scene_id){
+    getPseudoIdFromSceneId: function (i_scene_id) {
         var self = this;
         var found = undefined;
         var scenes = pepper.getScenes();
@@ -438,7 +438,7 @@ Pepper.prototype = {
      @param {Number} getSceneIdFromPseudoId
      @return {Number} scene id
      **/
-    getSceneIdFromPseudoId: function(i_pseudo_id){
+    getSceneIdFromPseudoId: function (i_pseudo_id) {
         var self = this;
         var found = undefined;
         var scenes = pepper.getScenes();
@@ -458,7 +458,7 @@ Pepper.prototype = {
     injectPseudoScenePlayersIDs: function (i_scene_id) {
         var self = this;
         var scenes = {};
-        if (i_scene_id){
+        if (i_scene_id) {
             var domPlayerData = self.getScenePlayerdataDom(i_scene_id);
             scenes[i_scene_id] = domPlayerData;
         } else {
@@ -888,15 +888,21 @@ Pepper.prototype = {
      @param {Number} i_playerCode is a unique pre-set code that exists per type of block (see component list for all available code)
      @param {Number} i_offset set in seconds of when to begin playing the content with respect to timeline_channel
      @param {Number} i_resourceID optional param used when creating a block with embedded resource (i.e.: video / image / swf)
+     @param {Number} i_sceneID optional param used when creating a block with embedded scene
      @return {Object} campaign_timeline_chanel_player_id and campaign_timeline_chanel_player_data as json object
      **/
-    createNewChannelPlayer: function (i_campaign_timeline_chanel_id, i_playerCode, i_offset, i_resourceID) {
+    createNewChannelPlayer: function (i_campaign_timeline_chanel_id, i_playerCode, i_offset, i_resourceID, i_sceneID) {
         var self = this;
 
         var timelinePlayers = self.m_msdb.table_campaign_timeline_chanel_players();
         var recTimelinePlayer = timelinePlayers.createRecord();
         var component = BB.PepperHelper.getBlockBoilerplate(i_playerCode);
         var player_data = component.getDefaultPlayerData(BB.CONSTS.PLACEMENT_CHANNEL, i_resourceID);
+
+        // dealing with embedded scene, override player_data with scene handle
+        if (!_.isUndefined(i_sceneID))
+            player_data = '<Player hDataSrc="' + i_sceneID + '"/>';
+
         recTimelinePlayer.player_data = player_data;
         recTimelinePlayer.campaign_timeline_chanel_id = i_campaign_timeline_chanel_id;
         recTimelinePlayer.player_duration = 10;

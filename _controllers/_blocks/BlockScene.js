@@ -33,7 +33,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         },
 
         /**
-         Override getBlockData to get a Scene's real name
+         set player data for a scene
+         @Override
          @method setPlayerData
          @param {Number} i_playerData
          @return {Number} Unique clientId.
@@ -100,7 +101,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          @method _setBlockPlayerData
          @param {Object} i_xmlDoc
          **/
-        _setBlockPlayerData: function (i_xmlDoc) {
+        _setBlockPlayerData: function (i_xmlDoc, i_quiet) {
             var self = this;
             var player_data = (new XMLSerializer()).serializeToString(i_xmlDoc);
             switch (self.m_placement) {
@@ -117,15 +118,16 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 case BB.CONSTS.PLACEMENT_IS_SCENE:
                 {
                     pepper.setScenePlayerData(self.m_block_id, player_data);
-                    BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, self.m_block_id);
+                    if (!i_quiet)
+                        BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, self.m_block_id);
                     break;
                 }
             }
         },
 
         /**
-         OVERRIDE base method:
          Get the XML player data of a block, depending where its placed
+         @Override
          @method _getBlockPlayerData
          @return {Object} player data of block (aka player) parsed as DOM
          **/
@@ -153,6 +155,18 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                     break;
                 }
             }
+        },
+
+        /**
+         Find the gradient blocks in player_data for selected block
+         @Override
+         @method _findGradientPoints
+         @return {Xml} xSnippet
+         **/
+        _findGradientPoints: function(i_domPlayerData){
+            var self = this;
+            var xSnippet = $(i_domPlayerData).find('GradientPoints').eq(0);
+            return xSnippet;
         },
 
         /**

@@ -119,17 +119,6 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                 fillDirection: "90deg"
             });
 
-            /*
-             var lazyUpdateBgColor = _.debounce(function (points, styles) {
-             BB.comBroker.fire(BB.EVENTS.GRADIENT_COLOR_CHANGED, self, null, {points: points, styles: styles})
-             }, 333);
-             $(Elements.BG_COLOR_GRADIENT_SELECTOR).gradientPicker({
-             change: lazyUpdateBgColor,
-             fillDirection: "90deg"
-             //,controlPoints: ["#428bca 0%", "white 100%"]
-             });
-             */
-
             // to destroy the plugin instance
             // gradient = {}; $(Elements.BG_COLOR_GRADIENT_SELECTOR).remove();
         },

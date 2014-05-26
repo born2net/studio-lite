@@ -153,8 +153,8 @@ define(['jquery', 'backbone'], function ($) {
                     var xmlString = (new XMLSerializer()).serializeToString(domPlayerData);
                     xmlString = xmlString.replace("<Appearance", xBgSnippet + "<Appearance");
                     domPlayerData = $.parseXML(xmlString);
-                    self._setBlockPlayerData(domPlayerData);
                     self._gradientPopulate();
+                    self._setBlockPlayerData(domPlayerData);
                 } else {
                     self._disableGradient();
                     xSnippet = $(domPlayerData).find('Background');
@@ -180,7 +180,7 @@ define(['jquery', 'backbone'], function ($) {
                     return;
 
                 var domPlayerData = self._getBlockPlayerData();
-                var gradientPoints = $(domPlayerData).find('GradientPoints');
+                var gradientPoints = self._findGradientPoints(domPlayerData);
                 $(gradientPoints).empty();
                 var pointsXML = "";
                 for (var i = 0; i < points.length; ++i) {
@@ -200,6 +200,12 @@ define(['jquery', 'backbone'], function ($) {
             });
         },
 
+        _findGradientPoints: function(i_domPlayerData){
+            var self = this;
+            var xSnippet = $(i_domPlayerData).find('GradientPoints');
+            return xSnippet;
+        },
+
         /**
          On changes in msdb model updated UI common gradient background properties
          @method _gradientPopulate
@@ -213,8 +219,7 @@ define(['jquery', 'backbone'], function ($) {
             // gradient.changeFillDirection("top"); /* change direction future support */
             gradient.removeAllPoints();
             var domPlayerData = self._getBlockPlayerData();
-            var xSnippet = $(domPlayerData).find('GradientPoints');
-
+            var xSnippet = self._findGradientPoints(domPlayerData);
             if (xSnippet.length > 0) {
                 self._enableGradient();
                 var points = $(xSnippet).find('Point');
@@ -453,16 +458,6 @@ define(['jquery', 'backbone'], function ($) {
                 case BB.CONSTS.PLACEMENT_SCENE:
                 {
                     return pepper.getScenePlayerdataBlock(self.m_sceneID, self.m_block_id);
-                    break;
-                }
-
-                case BB.CONSTS.PLACEMENT_IS_SCENE:
-                {
-                    log('will nevery come herre')
-                    //var scene_id = pepper.translateInjectedIdToSceneId(self.m_block_id)
-                    //var recPlayerData = BB.Pepper.getScenePlayerRecord(scene_id);
-                    //var xPlayerdata = recPlayerData['player_data_value'];
-                    //return $.parseXML(xPlayerdata);
                     break;
                 }
             }

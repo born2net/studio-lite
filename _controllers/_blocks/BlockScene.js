@@ -158,14 +158,42 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         },
 
         /**
-         Find the gradient blocks in player_data for selected block
+         Find the background section in player_data for selected block
+         @Override
+         @method _findBackground
+         @param  {object} i_domPlayerData
+         @return {Xml} xSnippet
+         **/
+        _findBackground: function (i_domPlayerData) {
+            var self = this;
+            var xSnippet = $(i_domPlayerData).find('Layout').eq(0).siblings().filter('Background');
+            return xSnippet;
+        },
+
+        /**
+         Find the appearance section in player_data for selected block
+         @Override
+         @method _findAppearance
+         @param  {object} i_domPlayerData
+         @return {Xml} xSnippet
+         **/
+        _findAppearance: function (i_domPlayerData) {
+            var self = this;
+            var xSnippet = $(i_domPlayerData).find('Appearance').eq(0);
+            return xSnippet;
+        },
+
+        /**
+         Find the gradient blocks in player_data for selected scene block
          @Override
          @method _findGradientPoints
+         @param  {object} i_domPlayerData
          @return {Xml} xSnippet
          **/
         _findGradientPoints: function(i_domPlayerData){
             var self = this;
-            var xSnippet = $(i_domPlayerData).find('GradientPoints').eq(0);
+            var xBackground = $(i_domPlayerData).find('Layout').eq(0).siblings().filter('Background');
+            var xSnippet = $(xBackground).find('GradientPoints').eq(0);
             return xSnippet;
         },
 

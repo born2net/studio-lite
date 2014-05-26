@@ -91,7 +91,7 @@ define(['jquery', 'backbone'], function ($) {
                     return;
                 var alpha = e.edata;
                 var domPlayerData = self._getBlockPlayerData();
-                var xSnippet = $(domPlayerData).find('Appearance');
+                var xSnippet = self._findAppearance(domPlayerData);
                 $(xSnippet).attr('alpha', alpha);
                 self._setBlockPlayerData(domPlayerData);
             });
@@ -106,7 +106,7 @@ define(['jquery', 'backbone'], function ($) {
         _alphaPopulate: function () {
             var self = this;
             var domPlayerData = self._getBlockPlayerData();
-            var xSnippet = $(domPlayerData).find('Appearance');
+            var xSnippet = self._findAppearance(domPlayerData)
             var alpha = $(xSnippet).attr('alpha');
             alpha = parseFloat(alpha) * 100;
             $(Elements.BLOCK_ALPHA_SLIDER).val(alpha);
@@ -130,6 +130,9 @@ define(['jquery', 'backbone'], function ($) {
             var self = this;
             $(Elements.SHOW_BACKGROUND).prop('checked', false);
             $(Elements.BG_COLOR_GRADIENT_SELECTOR).hide();
+            var domPlayerData = self._getBlockPlayerData();
+            var gradientPoints = self._findGradientPoints(domPlayerData);
+            $(gradientPoints).empty();
         },
 
         /**
@@ -157,7 +160,7 @@ define(['jquery', 'backbone'], function ($) {
                     self._setBlockPlayerData(domPlayerData);
                 } else {
                     self._disableGradient();
-                    xSnippet = $(domPlayerData).find('Background');
+                    var xSnippet = self._findBackground(domPlayerData);
                     $(xSnippet).remove();
                     self._setBlockPlayerData(domPlayerData);
                 }
@@ -200,7 +203,37 @@ define(['jquery', 'backbone'], function ($) {
             });
         },
 
-        _findGradientPoints: function(i_domPlayerData){
+        /**
+         Find the background section in player_data for selected block
+         @method _findBackground
+         @param  {object} i_domPlayerData
+         @return {Xml} xSnippet
+         **/
+        _findBackground: function (i_domPlayerData) {
+            var self = this;
+            var xSnippet = $(i_domPlayerData).find('Background');
+            return xSnippet;
+        },
+
+        /**
+         Find the appearance section in player_data for selected block
+         @method _findAppearance
+         @param  {object} i_domPlayerData
+         @return {Xml} xSnippet
+         **/
+        _findAppearance: function (i_domPlayerData) {
+            var self = this;
+            var xSnippet = $(i_domPlayerData).find('Appearance');
+            return xSnippet;
+        },
+
+        /**
+         Find the gradient blocks in player_data for selected block
+         @method _findGradientPoints
+         @param  {object} i_domPlayerData
+         @return {Xml} xSnippet
+         **/
+        _findGradientPoints: function (i_domPlayerData) {
             var self = this;
             var xSnippet = $(i_domPlayerData).find('GradientPoints');
             return xSnippet;

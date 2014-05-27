@@ -361,6 +361,12 @@ Pepper.prototype = {
         return self.getPseudoIdFromSceneId(scene_id);
     },
 
+    /**
+     "Good" old IE, always a headache, jQuery workarounds....
+     @method ieFixEscaped
+     @param {String} escapedHTML
+     @return {String}
+     **/
     ieFixEscaped: function (escapedHTML) {
         return escapedHTML.replace(/xmlns="http:\/\/www.w3.org\/1999\/xhtml"/g, '').
             replace(/&lt;/g, '<').
@@ -375,8 +381,16 @@ Pepper.prototype = {
             replace(/<description/g, '<Description').replace(/description>/g, 'Description>').
             replace(/<data/g, '<Data').replace(/data>/g, 'Data>').
             replace(/<player/g, '<Player').replace(/player>/g, 'Player>').
+            replace(/<players/g, '<Players').replace(/players>/g, 'Players>').
             replace(/<text/g, '<Text').replace(/text>/g, 'Text>').
-            replace(/<point/g, '<Point').replace(/point>/g, 'Point>');
+            replace(/<eventCommands/g, '<EventCommands').replace(/eventCommands>/g, 'EventCommands>').
+            replace(/<border/g, '<Border').replace(/border>/g, 'Border>').
+            replace(/<scene/g, '<Scene').replace(/scene>/g, 'Scene>').
+            replace(/<clock/g, '<Clock').replace(/clock>/g, 'Clock>').
+            replace(/<point/g, '<Point').replace(/point>/g, 'Point>').
+            replace(/<video/g, '<Video').replace(/video>/g, 'Video>').
+            replace(/<image/g, '<Image').replace(/image>/g, 'Image>').
+            replace(/<resource/g, '<Resource').replace(/resource>/g, 'Resource>');
     },
 
     /**

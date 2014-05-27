@@ -123,7 +123,7 @@ define(['jquery', 'backbone'], function ($) {
         },
 
         /**
-         Disable gradient background UI
+         Disable the gradient background UI
          @method _disableGradient
          **/
         _disableGradient: function () {

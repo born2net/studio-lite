@@ -361,6 +361,24 @@ Pepper.prototype = {
         return self.getPseudoIdFromSceneId(scene_id);
     },
 
+    ieFixEscaped: function (escapedHTML) {
+        return escapedHTML.replace(/xmlns="http:\/\/www.w3.org\/1999\/xhtml"/g, '').
+            replace(/&lt;/g, '<').
+            replace(/&gt;/g, '>').
+            replace(/&amp;/g, '&').
+            replace(/<rss/g, '<Rss').replace(/rss>/g, 'Rss>').
+            replace(/<background/g, '<Background').replace(/background>/g, 'Background>').
+            replace(/<appearance/g, '<Appearance').replace(/appearance>/g, 'Appearance>').
+            replace(/<gradientpoints/g, '<GradientPoints').replace(/gradientpoints>/g, 'GradientPoints>').
+            replace(/<layout/g, '<Layout').replace(/layout>/g, 'Layout>').
+            replace(/<title/g, '<Title').replace(/title>/g, 'Title>').
+            replace(/<description/g, '<Description').replace(/description>/g, 'Description>').
+            replace(/<data/g, '<Data').replace(/data>/g, 'Data>').
+            replace(/<player/g, '<Player').replace(/player>/g, 'Player>').
+            replace(/<text/g, '<Text').replace(/text>/g, 'Text>').
+            replace(/<point/g, '<Point').replace(/point>/g, 'Point>');
+    },
+
     /**
      append scene player block to pepper player_data table
      @method appendScenePlayerBlock
@@ -374,8 +392,11 @@ Pepper.prototype = {
         var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_id);
         var scene_player_data = recPlayerData['player_data_value'];
         var sceneDomPlayerData = $.parseXML(scene_player_data);
-        $(sceneDomPlayerData).find('Players').append(i_player_data);
-        recPlayerData['player_data_value'] = (new XMLSerializer()).serializeToString(sceneDomPlayerData)
+        $(sceneDomPlayerData).find('Players').append($(i_player_data));
+        var player_data = (new XMLSerializer()).serializeToString(sceneDomPlayerData);
+        player_data = pepper.ieFixEscaped(player_data);
+        recPlayerData['player_data_value'] = player_data;
+        return;
     },
 
     /**
@@ -563,8 +584,9 @@ Pepper.prototype = {
         var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_id);
         var player_data = recPlayerData['player_data_value'];
         var domPlayerData = $.parseXML(player_data)
-        $(domPlayerData).find('[id="' + i_player_data_id + '"]').replaceWith(i_player_data);
+        $(domPlayerData).find('[id="' + i_player_data_id + '"]').replaceWith($(i_player_data));
         player_data = (new XMLSerializer()).serializeToString(domPlayerData);
+        player_data = pepper.ieFixEscaped(player_data);
         self.setScenePlayerData(i_scene_id, player_data);
     },
 

@@ -362,6 +362,18 @@ Pepper.prototype = {
     },
 
     /**
+     Returns this model's attributes as...
+     @method xmlToStringIEfix
+     @param {Object} i_domPlayerData
+     @return {String} xml string
+     **/
+    xmlToStringIEfix: function(i_domPlayerData){
+        var self = this;
+        var player_data = (new XMLSerializer()).serializeToString(i_domPlayerData);
+        return self.ieFixEscaped(player_data);
+    },
+
+    /**
      "Good" old IE, always a headache, jQuery workarounds....
      @method ieFixEscaped
      @param {String} escapedHTML
@@ -391,6 +403,8 @@ Pepper.prototype = {
             replace(/<video/g, '<Video').replace(/video>/g, 'Video>').
             replace(/<image/g, '<Image').replace(/image>/g, 'Image>').
             replace(/minrefreshtime/g, 'minRefreshTime').
+            replace(/gradienttype/g, 'gradientType').
+            replace(/gradienttype/g, 'gradientType').
             replace(/<resource/g, '<Resource').replace(/resource>/g, 'Resource>');
     },
 
@@ -408,8 +422,7 @@ Pepper.prototype = {
         var scene_player_data = recPlayerData['player_data_value'];
         var sceneDomPlayerData = $.parseXML(scene_player_data);
         $(sceneDomPlayerData).find('Players').append($(i_player_data));
-        var player_data = (new XMLSerializer()).serializeToString(sceneDomPlayerData);
-        player_data = pepper.ieFixEscaped(player_data);
+        var player_data = pepper.xmlToStringIEfix(sceneDomPlayerData);
         recPlayerData['player_data_value'] = player_data;
         return;
     },
@@ -600,8 +613,7 @@ Pepper.prototype = {
         var player_data = recPlayerData['player_data_value'];
         var domPlayerData = $.parseXML(player_data)
         $(domPlayerData).find('[id="' + i_player_data_id + '"]').replaceWith($(i_player_data));
-        player_data = (new XMLSerializer()).serializeToString(domPlayerData);
-        player_data = pepper.ieFixEscaped(player_data);
+        player_data = pepper.xmlToStringIEfix(domPlayerData);
         self.setScenePlayerData(i_scene_id, player_data);
     },
 

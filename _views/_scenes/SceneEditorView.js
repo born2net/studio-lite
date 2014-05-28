@@ -237,29 +237,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         /**
          Listen to when a user selects to delete a block
          @method _listenSceneBlockRemove
-
-         _listenSceneBlockRemove: function () {
-            var self = this;
-            BB.comBroker.listen(BB.EVENTS.SCENE_ITEM_REMOVE, function () {
-                if (_.isUndefined(self.m_selectedSceneID))
-                    return;
-                var block = self.m_canvas.getActiveObject();
-                if (block == null)
-                    return;
-                var blockID = block.getBlockData().blockID;
-                self.m_canvas.discardActiveObject();
-                delete self.m_blocks[blockID];
-                pepper.removeScenePlayer(self.m_selectedSceneID, blockID);
-                self._loadScene();
-                // BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, null);
-                // block.deleteBlock();
-                // self._blockCountChanged();
-            });
-        },
-         **/
-        /**
-         Listen to when a user selects to delete a block
-         @method _listenSceneBlockRemove
          **/
         _listenSceneBlockRemove: function () {
             var self = this;

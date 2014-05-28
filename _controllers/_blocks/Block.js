@@ -91,7 +91,8 @@ define(['jquery', 'backbone'], function ($) {
                     return;
                 var alpha = e.edata;
                 var domPlayerData = self._getBlockPlayerData();
-                var xSnippet = self._findAppearance(domPlayerData);
+                var data = $(domPlayerData).find('Data').eq(0);
+                var xSnippet = $(data).find('Appearance').eq(0);
                 $(xSnippet).attr('alpha', alpha);
                 self._setBlockPlayerData(domPlayerData);
             });
@@ -106,7 +107,8 @@ define(['jquery', 'backbone'], function ($) {
         _alphaPopulate: function () {
             var self = this;
             var domPlayerData = self._getBlockPlayerData();
-            var xSnippet = self._findAppearance(domPlayerData)
+            var data = $(domPlayerData).find('Data').eq(0);
+            var xSnippet = $(data).find('Appearance').eq(0);
             var alpha = $(xSnippet).attr('alpha');
             alpha = parseFloat(alpha) * 100;
             $(Elements.BLOCK_ALPHA_SLIDER).val(alpha);
@@ -149,13 +151,19 @@ define(['jquery', 'backbone'], function ($) {
                     return;
 
                 var domPlayerData = self._getBlockPlayerData();
-                var v = $(e.target).prop('checked') == true ? 1 : 0;
-                if (v) {
+                var checked = $(e.target).prop('checked') == true ? 1 : 0;
+                if (checked) {
                     self._enableGradient();
                     xBgSnippet = BB.PepperHelper.getCommonBackgroundXML();
-                    var xmlString = (new XMLSerializer()).serializeToString(domPlayerData);
-                    xmlString = xmlString.replace("<Appearance", xBgSnippet + "<Appearance");
-                    domPlayerData = $.parseXML(xmlString);
+                    var data = $(domPlayerData).find('Data').eq(0);
+                    var bgData = $(data).find('Background');
+                    if (bgData.length > 0 && ! _.isUndefined(bgData.replace)) { // ie bug workaround
+                        bgData.replace($(xBgSnippet));
+                    } else {
+                        $(data).append($(xBgSnippet));
+                    }
+                    var player_data = pepper.xmlToStringIEfix(domPlayerData);
+                    domPlayerData = $.parseXML(player_data);
                     self._gradientPopulate();
                     self._setBlockPlayerData(domPlayerData);
                 } else {
@@ -212,18 +220,6 @@ define(['jquery', 'backbone'], function ($) {
         _findBackground: function (i_domPlayerData) {
             var self = this;
             var xSnippet = $(i_domPlayerData).find('Background');
-            return xSnippet;
-        },
-
-        /**
-         Find the appearance section in player_data for selected block
-         @method _findAppearance
-         @param  {object} i_domPlayerData
-         @return {Xml} xSnippet
-         **/
-        _findAppearance: function (i_domPlayerData) {
-            var self = this;
-            var xSnippet = $(i_domPlayerData).find('Appearance');
             return xSnippet;
         },
 

@@ -176,12 +176,13 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          @method _findAppearance
          @param  {object} i_domPlayerData
          @return {Xml} xSnippet
-         **/
+
         _findAppearance: function (i_domPlayerData) {
             var self = this;
             var xSnippet = $(i_domPlayerData).find('Appearance').eq(0);
             return xSnippet;
         },
+         **/
 
         /**
          Find the gradient blocks in player_data for selected scene block

@@ -189,7 +189,6 @@ define(['jquery', 'backbone'], function ($) {
                 var styles = e.edata.styles;
                 if (points.length == 0)
                     return;
-
                 var domPlayerData = self._getBlockPlayerData();
                 var gradientPoints = self._findGradientPoints(domPlayerData);
                 $(gradientPoints).empty();

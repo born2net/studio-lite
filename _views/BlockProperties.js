@@ -106,6 +106,8 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
             var self = this;
 
             var lazyUpdateBgColor = _.debounce(function (points, styles) {
+                if (points.length==0)
+                    return;
                 BB.comBroker.fire(BB.EVENTS.GRADIENT_COLOR_CHANGED, self, null, {points: points, styles: styles})
             }, 333);
 

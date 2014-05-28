@@ -565,7 +565,8 @@ Pepper.prototype = {
      **/
     removeScene: function (i_scene_player_data_id) {
         var self = this;
-        self.m_msdb.table_player_data().openForDelete(i_scene_player_data_id);
+        var i_scene_id = pepper.sterilizePseudoId(i_scene_player_data_id);
+        self.m_msdb.table_player_data().openForDelete(i_scene_id);
     },
 
     /**

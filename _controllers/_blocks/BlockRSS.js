@@ -93,7 +93,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Rss');
                 $(xSnippet).attr('minRefreshTime', minRefreshTime);
-                self._setBlockPlayerData(domPlayerData);
+                self._setBlockPlayerData(domPlayerData, true);
             }
             $(Elements.RSS_POLL_SPINNER).on('change', self.m_rssPollSpinner);
         },
@@ -136,7 +136,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Rss');
                 $(xSnippet).attr('speed', scrollSpeed);
-                self._setBlockPlayerData(domPlayerData);
+                self._setBlockPlayerData(domPlayerData, true);
             };
             $(Elements.RSS_SCROLL_SPEED).on('change', self.m_rssScrollSpeed);
         },
@@ -173,7 +173,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             $(Elements.RSS_MIN_REFRESH_TIME).closest('div').spinner('value', parseInt(minRefreshTime));
 
             var scrollDirection = parseInt(xSnippet.attr('vertical'));
-            $(Elements.RSS_MODE_SELECT + ' option').eq(scrollDirection).attr('selected', 'selected');
+            $(Elements.RSS_MODE_SELECT + ' option').eq(scrollDirection).prop('selected', 'selected');
 
             var scrollSpeed = parseInt(xSnippet.attr('speed'));
             if (scrollSpeed == '20')
@@ -182,7 +182,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 scrollSpeed = 1;
             if (scrollSpeed == '100')
                 scrollSpeed = 2;
-            $(Elements.RSS_SCROLL_SPEED + ' option').eq(scrollSpeed).attr('selected', 'selected');
+            $(Elements.RSS_SCROLL_SPEED + ' option').eq(scrollSpeed).prop('selected', 'selected');
 
             self.m_rssFontSelector.setConfig({
                 bold: xSnippetTitle.attr('fontWeight') == 'bold' ? true : false,

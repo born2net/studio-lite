@@ -70,11 +70,13 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
             self.$el.show();
 
             self._initColorSelector();
+            self._initFontSelector();
             self._initFontSizeSelector();
             self._initFontList();
-
+            self._initFontSe
             var currID = self.$el.attr('id');
             self.$el.attr('id', _.uniqueId(currID));
+
         },
 
         /**
@@ -83,7 +85,7 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
          **/
         events: {
             'click': '_onClick',
-            'focusout': function(e) {
+            'focusout': function (e) {
                 var self = this;
                 if ($(e.target).is("input")) {
                     self.m_config.size = self.m_fontSizeInput.val();
@@ -103,7 +105,7 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
 
             self._deSelectFontAlignments();
             // self.m_colorSelector.minicolors('value', self.m_config.color);
-            $('.minicolors-swatch-color',self.$el).css({'backgroundColor': self.m_config.color});
+            $('.minicolors-swatch-color', self.$el).css({'backgroundColor': self.m_config.color});
 
             var buttonBold = self.m_colorSelector = self.$el.find('[name="bold"]');
             self.m_config.bold == true ? buttonBold.addClass('active') : buttonBold.removeClass('active');
@@ -120,7 +122,7 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
             var buttonAlignment = self.m_colorSelector = self.$el.find('[name="' + buttonName + '"]');
             $(buttonAlignment).addClass('active');
 
-            $('option:contains("' + self.m_config.font + '")',self.$el).prop('selected','selected');
+            $('option:contains("' + self.m_config.font + '")', self.$el).prop('selected', 'selected');
             // $('#selDiv option:contains("Selection 1")')
         },
 
@@ -128,7 +130,7 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
          Initialize the font size spinner UI selector
          @method i_config
          **/
-        _initFontSizeSelector: function(){
+        _initFontSizeSelector: function () {
             var self = this;
             self.m_fontSizeInput = self.$el.find(Elements.CLASS_SPINNER_INPUT);
             self.m_fontSizeSelector = self.m_fontSizeInput.closest('div');
@@ -146,13 +148,31 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
         },
 
         /**
+         Font selected
+         @method _initFontSelector
+         @param {Number} i_playerData
+         @return {Number} Unique clientId.
+         **/
+        _initFontSelector: function() {
+            var self = this;
+            $(Elements.CLASS_FONT_SELECTION, self.$el).on('change',function(e){
+                var font = $(e.target).val();
+                if (font != self.m_config.font) {
+                    self.m_config.font = font;
+                    console.log(self.m_config.font);
+                    BB.comBroker.fire(BB.EVENTS.FONT_SELECTION_CHANGED, self, self, self.m_config);
+                }
+            });
+        },
+
+        /**
          Build list of available fonts to chose from
          @method fontList
          **/
-        _initFontList: function(){
+        _initFontList: function () {
             var self = this;
             var snippet = '';
-            $.each(self.fontList,function(k,v){
+            $.each(self.fontList, function (k, v) {
                 snippet = snippet + '\n<option>' + v + '</option>';
             });
             $(Elements.CLASS_FONT_SELECTION, self.$el).append(snippet);
@@ -176,8 +196,8 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
          **/
         _onFontSelected: function (i_target) {
             var self = this;
-            self.m_config.font = $(i_target).val();
-            BB.comBroker.fire(BB.EVENTS.FONT_SELECTION_CHANGED, self, self, self.m_config);
+
+            return false;
         },
 
         /**
@@ -198,7 +218,7 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
             var self = this;
 
             if ($(e.target).is("select")) {
-                self._onFontSelected(e.target)
+                e.preventDefault();
                 return;
             }
 
@@ -264,7 +284,7 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
             return false;
         },
 
-        setConfig: function(i_config){
+        setConfig: function (i_config) {
             var self = this;
             self.m_config = i_config;
             self._render()

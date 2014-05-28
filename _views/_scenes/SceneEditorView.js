@@ -526,6 +526,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             // log('--------------------');
             var domSceneData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
             self.m_canvas.forEachObject(function (obj) {
+                if (_.isNull(obj))
+                    return;
                 // i++;
                 var blockID = obj.getBlockData().blockID;
                 // log((totalViews - i) + ' ' + blockID);
@@ -751,6 +753,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _resetObjectScale: function (i_target) {
             var self = this;
+            if (_.isNull(i_target))
+                return;
             if (i_target.width != i_target.currentWidth || i_target.height != i_target.currentHeight) {
                 i_target.width = i_target.currentWidth;
                 i_target.height = i_target.currentHeight;
@@ -856,6 +860,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
             var objects = self.m_canvas.getObjects();
             for (var i in objects) {
+                if (_.isNull(objects[i]))
+                    return;
                 var scaleX = objects[i].scaleX;
                 var scaleY = objects[i].scaleY;
                 var left = objects[i].left;
@@ -889,6 +895,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
             var objects = self.m_canvas.getObjects();
             for (var i in objects) {
+                if (_.isNull(objects[i]))
+                    return;
                 var scaleX = objects[i].scaleX;
                 var scaleY = objects[i].scaleY;
                 var left = objects[i].left;
@@ -924,6 +932,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
             var objects = self.m_canvas.getObjects();
             for (var i in objects) {
+                if (_.isNull(objects[i]))
+                    return;
                 var scaleX = objects[i].scaleX;
                 var scaleY = objects[i].scaleY;
                 var left = objects[i].left;

@@ -390,6 +390,7 @@ Pepper.prototype = {
             replace(/<point/g, '<Point').replace(/point>/g, 'Point>').
             replace(/<video/g, '<Video').replace(/video>/g, 'Video>').
             replace(/<image/g, '<Image').replace(/image>/g, 'Image>').
+            replace(/minrefreshtime/g, 'minRefreshTime').
             replace(/<resource/g, '<Resource').replace(/resource>/g, 'Resource>');
     },
 

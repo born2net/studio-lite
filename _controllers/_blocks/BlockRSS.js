@@ -215,11 +215,9 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var self = this;
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.RSSLINK_CHANGED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.FONT_SELECTION_CHANGED, self);
-
             $(Elements.RSS_POLL_SPINNER).off('change', self.m_rssPollSpinner);
             $(Elements.RSS_MODE_SELECT).off('change', self.m_rssModeSelect);
             $(Elements.RSS_SCROLL_SPEED).off('change', self.m_rssScrollSpeed);
-
             self._deleteBlock();
         }
     });

@@ -243,7 +243,6 @@ define(['jquery', 'backbone'], function ($) {
          **/
         _gradientPopulate: function () {
             var self = this;
-
             var gradient = $(Elements.BG_COLOR_GRADIENT_SELECTOR).data("gradientPicker-sel");
             // gradient.changeFillDirection("top"); /* change direction future support */
             gradient.removeAllPoints();
@@ -501,7 +500,6 @@ define(['jquery', 'backbone'], function ($) {
         _deleteBlock: function () {
             var self = this;
             pepper.removeBlockFromTimelineChannel(self.m_block_id);
-
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_SELECTED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_LENGTH_CHANGING, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.GRADIENT_COLOR_CHANGED, self);

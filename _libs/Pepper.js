@@ -374,6 +374,17 @@ Pepper.prototype = {
     },
 
     /**
+     Fix jQuery blocking of HTML tag
+     @method ieFixHTMLTag
+     @param {String} escapedHTML
+     @return {String}
+     **/
+    ieFixHTMLTag: function(escapedHTML){
+        var self = this;
+        return escapedHTML.replace(/HTML/g, 'htdata');
+    },
+
+    /**
      "Good" old IE, always a headache, jQuery workarounds....
      @method ieFixEscaped
      @param {String} escapedHTML
@@ -405,7 +416,9 @@ Pepper.prototype = {
             replace(/minrefreshtime/g, 'minRefreshTime').
             replace(/gradienttype/g, 'gradientType').
             replace(/gradienttype/g, 'gradientType').
-            replace(/<resource/g, '<Resource').replace(/resource>/g, 'Resource>');
+            replace(/<resource/g, '<Resource').replace(/resource>/g, 'Resource>').
+            replace(/<link/g, '<LINK').replace(/link>/g, 'LINK>').
+            replace(/<htdata/gi, '<HTML').replace(/htdata>/gi, 'HTML>');
     },
 
     /**
@@ -612,7 +625,8 @@ Pepper.prototype = {
         self.m_msdb.table_player_data().openForEdit(i_scene_id);
         var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_id);
         var player_data = recPlayerData['player_data_value'];
-        var domPlayerData = $.parseXML(player_data)
+        var domPlayerData = $.parseXML(player_data);
+        i_player_data = self.ieFixHTMLTag(i_player_data);
         $(domPlayerData).find('[id="' + i_player_data_id + '"]').replaceWith($(i_player_data));
         player_data = pepper.xmlToStringIEfix(domPlayerData);
         self.setScenePlayerData(i_scene_id, player_data);

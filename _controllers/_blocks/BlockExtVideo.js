@@ -40,7 +40,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('LINK');
                 xSnippet.attr('src', text);
-                self._setBlockPlayerData(domPlayerData);
+                self._setBlockPlayerData(domPlayerData, true);
             }, 150);
             $(Elements.EXT_VIDEO_TEXT).on("input", self.m_inputChangeHandler);
         },

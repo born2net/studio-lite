@@ -57,7 +57,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                     xmlData.attr('textAlign', config.alignment);
 
                 });
-                self._setBlockPlayerData(domPlayerData);
+                self._setBlockPlayerData(domPlayerData, true);
             });
         },
 
@@ -73,7 +73,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Rss');
                 $(xSnippet).attr('url', e.edata);
-                self._setBlockPlayerData(domPlayerData);
+                self._setBlockPlayerData(domPlayerData, true);
                 // log(xSnippet[0].outerHTML);
             });
         },
@@ -112,7 +112,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Rss');
                 $(xSnippet).attr('vertical', modeSelect);
-                self._setBlockPlayerData(domPlayerData);
+                self._setBlockPlayerData(domPlayerData, true);
             };
             $(Elements.RSS_MODE_SELECT).on('change', self.m_rssModeSelect);
         },

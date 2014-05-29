@@ -413,6 +413,15 @@ Pepper.prototype = {
             replace(/<point/g, '<Point').replace(/point>/g, 'Point>').
             replace(/<video/g, '<Video').replace(/video>/g, 'Video>').
             replace(/<image/g, '<Image').replace(/image>/g, 'Image>').
+            replace(/<label/g, '<Label').replace(/label>/g, 'Label>').
+            replace(/<font/g, '<Font').replace(/font>/g, 'Font>').
+            replace(/fontsize/g, 'fontSize').
+            replace(/fontcolor/g, 'fontColor').
+            replace(/fontfamily/g, 'fontFamily').
+            replace(/fontweight/g, 'fontWeight').
+            replace(/fontstyle/g, 'fontStyle').
+            replace(/textdecoration/g, 'textDecoration').
+            replace(/textalign/g, 'textAlign').
             replace(/minrefreshtime/g, 'minRefreshTime').
             replace(/gradienttype/g, 'gradientType').
             replace(/gradienttype/g, 'gradientType').

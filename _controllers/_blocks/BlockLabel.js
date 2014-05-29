@@ -68,7 +68,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 color: BB.lib.colorToHex(BB.lib.decimalToHex(xSnippetFont.attr('fontColor'))),
                 size: xSnippetFont.attr('fontSize')
             });
-
         },
 
         /**

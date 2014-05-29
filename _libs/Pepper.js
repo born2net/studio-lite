@@ -395,38 +395,41 @@ Pepper.prototype = {
             replace(/&lt;/g, '<').
             replace(/&gt;/g, '>').
             replace(/&amp;/g, '&').
-            replace(/<rss/g, '<Rss').replace(/rss>/g, 'Rss>').
-            replace(/<background/g, '<Background').replace(/background>/g, 'Background>').
-            replace(/<appearance/g, '<Appearance').replace(/appearance>/g, 'Appearance>').
-            replace(/<gradientpoints/g, '<GradientPoints').replace(/gradientpoints>/g, 'GradientPoints>').
-            replace(/<layout/g, '<Layout').replace(/layout>/g, 'Layout>').
-            replace(/<title/g, '<Title').replace(/title>/g, 'Title>').
-            replace(/<description/g, '<Description').replace(/description>/g, 'Description>').
-            replace(/<data/g, '<Data').replace(/data>/g, 'Data>').
-            replace(/<player/g, '<Player').replace(/player>/g, 'Player>').
-            replace(/<players/g, '<Players').replace(/players>/g, 'Players>').
-            replace(/<text/g, '<Text').replace(/text>/g, 'Text>').
-            replace(/<eventCommands/g, '<EventCommands').replace(/eventCommands>/g, 'EventCommands>').
-            replace(/<border/g, '<Border').replace(/border>/g, 'Border>').
-            replace(/<scene/g, '<Scene').replace(/scene>/g, 'Scene>').
-            replace(/<clock/g, '<Clock').replace(/clock>/g, 'Clock>').
-            replace(/<point/g, '<Point').replace(/point>/g, 'Point>').
-            replace(/<video/g, '<Video').replace(/video>/g, 'Video>').
-            replace(/<image/g, '<Image').replace(/image>/g, 'Image>').
-            replace(/<label/g, '<Label').replace(/label>/g, 'Label>').
-            replace(/<font/g, '<Font').replace(/font>/g, 'Font>').
-            replace(/fontsize/g, 'fontSize').
-            replace(/fontcolor/g, 'fontColor').
-            replace(/fontfamily/g, 'fontFamily').
-            replace(/fontweight/g, 'fontWeight').
-            replace(/fontstyle/g, 'fontStyle').
-            replace(/textdecoration/g, 'textDecoration').
-            replace(/textalign/g, 'textAlign').
-            replace(/minrefreshtime/g, 'minRefreshTime').
-            replace(/gradienttype/g, 'gradientType').
-            replace(/gradienttype/g, 'gradientType').
-            replace(/<resource/g, '<Resource').replace(/resource>/g, 'Resource>').
-            replace(/<link/g, '<LINK').replace(/link>/g, 'LINK>').
+            replace(/<rss/gi, '<Rss').replace(/rss>/g, 'Rss>').
+            replace(/<background/gi, '<Background').replace(/background>/gi, 'Background>').
+            replace(/<appearance/gi, '<Appearance').replace(/appearance>/gi, 'Appearance>').
+            replace(/<gradientpoints/gi, '<GradientPoints').replace(/gradientpoints>/gi, 'GradientPoints>').
+            replace(/<aspectratio/gi, '<AspectRatio').replace(/aspectratio>/gi, 'AspectRatio>').
+            replace(/<layout/gi, '<Layout').replace(/layout>/gi, 'Layout>').
+            replace(/<title/gi, '<Title').replace(/title>/gi, 'Title>').
+            replace(/<description/gi, '<Description').replace(/description>/gi, 'Description>').
+            replace(/<data/gi, '<Data').replace(/data>/gi, 'Data>').
+            replace(/<player/gi, '<Player').replace(/player>/gi, 'Player>').
+            replace(/<players/gi, '<Players').replace(/players>/gi, 'Players>').
+            replace(/<text/gi, '<Text').replace(/text>/gi, 'Text>').
+            replace(/<eventCommands/gi, '<EventCommands').replace(/eventCommands>/gi, 'EventCommands>').
+            replace(/<border/gi, '<Border').replace(/border>/gi, 'Border>').
+            replace(/<scene/gi, '<Scene').replace(/scene>/gi, 'Scene>').
+            replace(/<clock/gi, '<Clock').replace(/clock>/gi, 'Clock>').
+            replace(/<point/gi, '<Point').replace(/point>/gi, 'Point>').
+            replace(/<video/gi, '<Video').replace(/video>/gi, 'Video>').
+            replace(/<image/gi, '<Image').replace(/image>/gi, 'Image>').
+            replace(/<label/gi, '<Label').replace(/label>/gi, 'Label>').
+            replace(/<font/gi, '<Font').replace(/font>/gi, 'Font>').
+            replace(/fontsize/gi, 'fontSize').
+            replace(/fontcolor/gi, 'fontColor').
+            replace(/fontfamily/gi, 'fontFamily').
+            replace(/fontweight/gi, 'fontWeight').
+            replace(/fontstyle/gi, 'fontStyle').
+            replace(/textdecoration/gi, 'textDecoration').
+            replace(/textalign/gi, 'textAlign').
+            replace(/minrefreshtime/gi, 'minRefreshTime').
+            replace(/gradienttype/gi, 'gradientType').
+            replace(/gradienttype/gi, 'gradientType').
+            replace(/hresource/gi, 'hResource').
+            replace(/maintainaspectratio/gi, 'maintainAspectRatio').
+            replace(/<resource/gi, '<Resource').replace(/resource>/g, 'Resource>').
+            replace(/<link/gi, '<LINK').replace(/link>/g, 'LINK>').
             replace(/<htdata/gi, '<HTML').replace(/htdata>/gi, 'HTML>');
     },
 

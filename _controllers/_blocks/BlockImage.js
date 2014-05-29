@@ -92,7 +92,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var domPlayerData = self._getBlockPlayerData();
             var xSnippet = $(domPlayerData).find('AspectRatio');
             var aspectRatio = xSnippet.attr('maintain') == '1' ? 'on' : 'off';
-            $(Elements.IMAGE_ASPECT_RATIO + ' option[value="' + aspectRatio + '"]').attr("selected", "selected");
+            $(Elements.IMAGE_ASPECT_RATIO + ' option[value="' + aspectRatio + '"]').prop("selected", "selected");
         },
 
         /**

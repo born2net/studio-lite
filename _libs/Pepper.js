@@ -425,7 +425,7 @@ Pepper.prototype = {
             replace(/textalign/gi, 'textAlign').
             replace(/minrefreshtime/gi, 'minRefreshTime').
             replace(/gradienttype/gi, 'gradientType').
-            replace(/gradienttype/gi, 'gradientType').
+            replace(/autorewind/gi, 'autoRewind').
             replace(/hresource/gi, 'hResource').
             replace(/maintainaspectratio/gi, 'maintainAspectRatio').
             replace(/<resource/gi, '<Resource').replace(/resource>/g, 'Resource>').

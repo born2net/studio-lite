@@ -41,7 +41,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Video');
                 $(xSnippet).attr('volume', volume);
-                self._setBlockPlayerData(domPlayerData);
+                self._setBlockPlayerData(domPlayerData, true);
             };
             BB.comBroker.listen(BB.EVENTS.VIDEO_VOLUME_CHANGED, self.m_inputVolumeHandler);
         },
@@ -97,7 +97,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('AspectRatio');
                 $(xSnippet).attr('maintain', v);
-                self._setBlockPlayerData(domPlayerData);
+                self._setBlockPlayerData(domPlayerData, true);
             };
             $(Elements.VIDEO_ASPECT_RATIO).on('change', self.m_inputAspectHandler);
         },
@@ -116,7 +116,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Video');
                 $(xSnippet).attr('autoRewind', v);
-                self._setBlockPlayerData(domPlayerData);
+                self._setBlockPlayerData(domPlayerData, true);
             };
             $(Elements.VIDEO_AUTO_REWIND).on('change', self.m_inputRewind);
         },

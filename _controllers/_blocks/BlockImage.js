@@ -77,7 +77,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var xSnippet = $(domPlayerData).find('AspectRatio');
                 $(xSnippet).attr('maintain', aspectRatio);
                 self._setBlockPlayerData(domPlayerData, true);
-                // log(xSnippet[0].parentElement.parentElement.parentElement.outerHTML);
             };
             $(Elements.IMAGE_ASPECT_RATIO).on('change', self.m_inputChangeHandler);
         },

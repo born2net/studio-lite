@@ -543,7 +543,21 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var domPlayerData = $.parseXML(i_player_data);
             var layout = $(domPlayerData).find('Layout');
 
-            var rect = new fabric.Rect({
+            var a, imgElement;
+            if (self.a){
+                a = $('<img style="display: none" id="hope2" src="https://secure.digitalsignage.com/_studiolite-dev/_assets/png.png"/>')
+                $('body').append(a);
+                // imgElement = document.getElementById('hope2');
+                imgElement = $('#hope2')[0];
+            } else {
+                a = $('<img style="display: none" id="hope1" src="https://secure.digitalsignage.com/_studiolite-dev/_assets/flv.png"/>')
+                $('body').append(a);
+                imgElement = $('#hope1')[0];
+                self.a = 1;
+            }
+
+            $('body').append(a);
+            var rect = new fabric.Image(imgElement,{
                 left: parseInt(layout.attr('x')),
                 top: parseInt(layout.attr('y')),
                 width: parseInt(layout.attr('width')),
@@ -567,6 +581,11 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             // block.listenSceneSelection(self.m_canvas);
             block['canvasScale'] = self.m_canvasScale;
             self.m_canvas.add(block);
+
+            setTimeout(function(){
+                self.m_canvas.renderAll();
+            },500);
+
             return block;
         },
 

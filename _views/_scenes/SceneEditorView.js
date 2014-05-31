@@ -135,6 +135,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             var canvasID = BB.lib.unhash(Elements.SCENE_CANVAS);
             $(Elements.SCENE_CANVAS_CONTAINER).empty();
+            $(Elements.SCENE_CANVAS).removeClass('basicBorder');
             $(Elements.SCENE_CANVAS_CONTAINER).append('<canvas id="' + canvasID + '" width="' + w + 'px" height="' + h + 'px"/>');
             self.m_canvas = new fabric.Canvas(canvasID);
             self.m_canvas.renderOnAddRemove = false;
@@ -206,7 +207,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._initializeCanvas(w, h);
             self._initializeScene(self.m_selectedSceneID);
             self._render(domPlayerData);
-            $(Elements.SCENE_CANVAS).addClass('basicBorder');
             self._blockCountChanged();
         },
 
@@ -334,6 +334,14 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     break;
                 }
             }
+            self._zoomTo(nZooms);
+            self._resetAllObjectScale();
+            $(Elements.SCENE_CANVAS).addClass('basicBorder');
+            self.m_canvas.renderAll();
+        },
+
+        _zoomTo: function(nZooms){
+            var self = this, i;
             if (nZooms > 0) {
                 for (i = 0; i < nZooms; i++)
                     self._zoomOut();
@@ -341,8 +349,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 for (i = 0; i > nZooms; nZooms++)
                     self._zoomIn();
             }
-            self._resetAllObjectScale();
-            self.m_canvas.renderAll();
         },
 
         /**
@@ -531,10 +537,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _render: function (i_domPlayerData) {
             var self = this;
-
             self.modIndex = [];
             self.modData = {};
-
+            $(Elements.SCENE_CANVAS).removeClass('basicBorder');
             self.m_canvas.clear();
             self._disposeBlocks();
             log('rendering new blocks');
@@ -543,10 +548,11 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 var player_data = (new XMLSerializer()).serializeToString(player);
                 self.modIndex.push(blockID);
                 self.modData[blockID] = player_data;
-                // var block = self._createBlockSvg(blockID, player_data);
-                // self.m_canvas.bringToFront(block);
+                // var block = self._createBlockImage(blockID, player_data); // image
+                // self.m_canvas.bringToFront(block); // image
             });
             self._createBlockSvg();
+            // self._postRender(); // image
         },
 
         /**
@@ -561,6 +567,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var i_blockID = self.modIndex.shift();
             if (i_blockID == undefined){
                 self._postRender();
+                self.m_canvas.renderAll();
                 return;
             }
 
@@ -600,7 +607,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 // block.listenSceneSelection(self.m_canvas);
                 block['canvasScale'] = self.m_canvasScale;
                 self.m_canvas.add(block);
-                self.m_canvas.renderAll();
                 self._createBlockSvg();
             });
         },

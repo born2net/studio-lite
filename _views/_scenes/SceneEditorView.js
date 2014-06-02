@@ -18,15 +18,12 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             BB.comBroker.setService(BB.SERVICES['SCENE_EDIT_VIEW'], self);
             self.m_selectedSceneID = undefined;
-            // self.m_blocks = {};
             self.m_memento = {};
             self.m_pendingBlocks = {
-                blocks: [],
-                blocksCreated: {},
-                nZoom: 0,
+                blocksPre: [],
+                blocksPost: {},
                 blockSelected: undefined
             };
-            // self.m_postRender = {};
             self.m_dimensionProps = undefined;
             self.m_canvas = undefined;
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
@@ -316,17 +313,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
             BB.comBroker.listen(BB.EVENTS['SCENE_BLOCK_CHANGE'], function (e) {
                 var blockID = e.edata;
-                // self.m_canvas.clear();
                 log('block edited ' + blockID);
                 var domPlayerData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
-                var nZooms = Math.round(Math.log(1 / self.m_canvasScale) / Math.log(1.2));
-                self.m_pendingBlocks.nZoom = nZooms;
+                // var nZooms = Math.round(Math.log(1 / self.m_canvasScale) / Math.log(1.2));
                 self.m_pendingBlocks.blockSelected = blockID;
-                //self.m_postRender = {
-                //    nZooms: nZooms,
-                //    blockID: blockID
-                //};
-                // self._zoomReset();
                 self._preRender(domPlayerData);
                 self._mementoAddState();
             });
@@ -410,10 +400,14 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             BB.comBroker.listen(BB.EVENTS.SCENE_UNDO, function (e) {
                 self.m_pendingBlocks.blockSelected = undefined;
+                self.m_canvas.discardActiveGroup();
+                self.m_canvas.discardActiveObject();
                 self._mementoLoadState('undo');
             });
             BB.comBroker.listen(BB.EVENTS.SCENE_REDO, function (e) {
                 self.m_pendingBlocks.blockSelected = undefined;
+                self.m_canvas.discardActiveGroup();
+                self.m_canvas.discardActiveObject();
                 self._mementoLoadState('redo');
             });
         },
@@ -533,14 +527,14 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     blockType: $(player).attr('player'),
                     player_data: (new XMLSerializer()).serializeToString(player)
                 };
-                self.m_pendingBlocks.blocks.push(block);
+                self.m_pendingBlocks.blocksPre.push(block);
             });
             self._createBlocks();
         },
 
         _createBlocks: function () {
             var self = this;
-            var block = self.m_pendingBlocks.blocks.shift();
+            var block = self.m_pendingBlocks.blocksPre.shift();
             if (block == undefined) {
                 self._render();
                 return;
@@ -567,7 +561,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 transparentCorners: false
             };
 
-            switch (self.m_pendingBlocks.blocks.blockType) {
+            switch (self.m_pendingBlocks.blocksPre.blockType) {
 
                 case 355011:
                 {
@@ -586,7 +580,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         _.extend(block, rect);
                         // block.listenSceneSelection(self.m_canvas);
                         block['canvasScale'] = self.m_canvasScale;
-                        self.m_pendingBlocks.blocksCreated[blockID] = block;
+                        self.m_pendingBlocks.blocksPost[blockID] = block;
                         // self.m_canvas.add(block);
                         // self._createBlockSvg();
                         self._createBlocks();
@@ -614,7 +608,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var blockID = self.m_pendingBlocks.blockSelected;
             self._disposeBlocks();
             self._zoomReset();
-            _.forEach(self.m_pendingBlocks.blocksCreated, function (i_block) {
+            _.forEach(self.m_pendingBlocks.blocksPost, function (i_block) {
                 self.m_canvas.add(i_block);
             });
             self._zoomTo(nZooms);
@@ -936,9 +930,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             if (_.isUndefined(self.m_canvas))
                 return;
             self.m_canvas.off('mouse:up');
-            //_.each(self.m_canvas.getObjects(), function (obj) {
-            //    self.m_canvas.dispose(obj);
-            //});
+            self.m_pendingBlocks.blocksPost = {};
             self._disposeBlocks();
             self.m_sceneBlock.deleteBlock();
             self.m_canvas = undefined;
@@ -964,7 +956,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 }
             }
             self.m_canvas.clear();
-            log(self.m_pendingBlocks.blocksCreated);
             // self.m_blocks = {};
         },
 

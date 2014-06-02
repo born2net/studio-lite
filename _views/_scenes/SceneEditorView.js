@@ -18,9 +18,15 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             BB.comBroker.setService(BB.SERVICES['SCENE_EDIT_VIEW'], self);
             self.m_selectedSceneID = undefined;
-            self.m_blocks = {};
+            // self.m_blocks = {};
             self.m_memento = {};
-            self.m_postRender = {};
+            self.m_pendingBlocks = {
+                blocks: [],
+                blocksCreated: {},
+                nZoom: 0,
+                blockSelected: undefined
+            };
+            // self.m_postRender = {};
             self.m_dimensionProps = undefined;
             self.m_canvas = undefined;
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
@@ -135,10 +141,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             var canvasID = BB.lib.unhash(Elements.SCENE_CANVAS);
             $(Elements.SCENE_CANVAS_CONTAINER).empty();
-            $(Elements.SCENE_CANVAS).removeClass('basicBorder');
             $(Elements.SCENE_CANVAS_CONTAINER).append('<canvas id="' + canvasID + '" width="' + w + 'px" height="' + h + 'px"/>');
             self.m_canvas = new fabric.Canvas(canvasID);
             self.m_canvas.renderOnAddRemove = false;
+            $(Elements.SCENE_CANVAS).addClass('basicBorder');
 
             self._listenObjectChangeResetScale();
             self._listenCanvasSelections();
@@ -206,7 +212,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var h = $(l).attr('height');
             self._initializeCanvas(w, h);
             self._initializeScene(self.m_selectedSceneID);
-            self._render(domPlayerData);
+            self._preRender(domPlayerData);
             self._blockCountChanged();
         },
 
@@ -251,7 +257,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 var blockID = block.getBlockData().blockID;
                 self.m_canvas.discardActiveObject();
                 self.m_canvas.remove(block);
-                delete self.m_blocks[blockID];
+                // delete self.m_blocks[blockID];
                 pepper.removeScenePlayer(self.m_selectedSceneID, blockID);
                 BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, null);
                 block.deleteBlock();
@@ -310,37 +316,23 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
             BB.comBroker.listen(BB.EVENTS['SCENE_BLOCK_CHANGE'], function (e) {
                 var blockID = e.edata;
+                // self.m_canvas.clear();
                 log('block edited ' + blockID);
                 var domPlayerData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
                 var nZooms = Math.round(Math.log(1 / self.m_canvasScale) / Math.log(1.2));
-                self.m_postRender = {
-                    nZooms: nZooms,
-                    blockID: blockID
-                };
-                self._zoomReset();
-                self._render(domPlayerData);
+                self.m_pendingBlocks.nZoom = nZooms;
+                self.m_pendingBlocks.blockSelected = blockID;
+                //self.m_postRender = {
+                //    nZooms: nZooms,
+                //    blockID: blockID
+                //};
+                // self._zoomReset();
+                self._preRender(domPlayerData);
                 self._mementoAddState();
             });
         },
 
-        _postRender: function () {
-            var self = this;
-            var blockID = self.m_postRender.blockID;
-            var nZooms = self.m_postRender.nZooms;
-            BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, blockID);
-            for (var i = 0; i < self.m_canvas.getObjects().length; i++) {
-                if (blockID == self.m_canvas.item(i).getBlockData().blockID) {
-                    self.m_canvas.setActiveObject(self.m_canvas.item(i));
-                    break;
-                }
-            }
-            self._zoomTo(nZooms);
-            self._resetAllObjectScale();
-            $(Elements.SCENE_CANVAS).addClass('basicBorder');
-            self.m_canvas.renderAll();
-        },
-
-        _zoomTo: function(nZooms){
+        _zoomTo: function (nZooms) {
             var self = this, i;
             if (nZooms > 0) {
                 for (i = 0; i < nZooms; i++)
@@ -417,9 +409,11 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         _listenMemento: function () {
             var self = this;
             BB.comBroker.listen(BB.EVENTS.SCENE_UNDO, function (e) {
+                self.m_pendingBlocks.blockSelected = undefined;
                 self._mementoLoadState('undo');
             });
             BB.comBroker.listen(BB.EVENTS.SCENE_REDO, function (e) {
+                self.m_pendingBlocks.blockSelected = undefined;
                 self._mementoLoadState('redo');
             });
         },
@@ -530,54 +524,31 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             pepper.setScenePlayerData(self.m_selectedSceneID, (new XMLSerializer()).serializeToString(domSceneData));
         },
 
-        /**
-         Render the canvas thus creating all associated player blocks of the scene
-         @method _render
-         @param {Object} i_domPlayerData
-         **/
-        _render: function (i_domPlayerData) {
+        _preRender: function (i_domPlayerData) {
             var self = this;
-            self.modIndex = [];
-            self.modData = {};
-            $(Elements.SCENE_CANVAS).removeClass('basicBorder');
-            self.m_canvas.clear();
-            self._disposeBlocks();
             log('rendering new blocks');
             $(i_domPlayerData).find('Players').find('Player').each(function (i, player) {
-                var blockID = $(player).attr('id');
-                var player_data = (new XMLSerializer()).serializeToString(player);
-                self.modIndex.push(blockID);
-                self.modData[blockID] = player_data;
-                // var block = self._createBlockImage(blockID, player_data); // image
-                // self.m_canvas.bringToFront(block); // image
+                var block = {
+                    blockID: $(player).attr('id'),
+                    blockType: $(player).attr('player'),
+                    player_data: (new XMLSerializer()).serializeToString(player)
+                };
+                self.m_pendingBlocks.blocks.push(block);
             });
-            self._createBlockSvg();
-            // self._postRender(); // image
+            self._createBlocks();
         },
 
-        /**
-         Create a block inside a scene using it's player_data
-         @method _createBlock
-         @param {Number} i_blockID
-         @return {Object} block
-         **/
-        _createBlockSvg: function () {
+        _createBlocks: function () {
             var self = this;
-
-            var i_blockID = self.modIndex.shift();
-            if (i_blockID == undefined){
-                self._postRender();
-                self.m_canvas.renderAll();
+            var block = self.m_pendingBlocks.blocks.shift();
+            if (block == undefined) {
+                self._render();
                 return;
             }
-
-            var i_player_data = self.modData[i_blockID];
-            var domPlayerData = $.parseXML(i_player_data);
+            var blockID = block.blockID;
+            var player_data = block.player_data;
+            var domPlayerData = $.parseXML(player_data);
             var layout = $(domPlayerData).find('Layout');
-
-            //fabric.loadSVGFromString(document.getElementById('svg').innerHTML, function (objects, options) {
-            //    var obj = fabric.util.groupSVGElements(objects, options);
-            //});
 
             var opts = {
                 left: parseInt(layout.attr('x')),
@@ -596,19 +567,68 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 transparentCorners: false
             };
 
-            var svg = new String('<?xml version="1.0" encoding="utf-8"?><svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="31px" height="30px" viewBox="0 0 31 30" enable-background="new 0 0 31 30" xml:space="preserve"><path fill="#006633" d="M14.446,3.622L7.073,3.596C3.106,3.596,0,6.639,0,10.376v11.388v7.737h4.544v-7.849V10.401c0-0.694,0.283-1.345,0.798-1.829C5.854,8.09,6.539,7.821,7.27,7.821c0.002,0,6.527-0.022,7.174-0.027V3.622H14.446z"/><polygon fill="#006633" points="14.28,7.512 13.504,10.895 30,5.699 13.504,0.499 14.28,3.885 "/></svg>');
-            // fabric.loadSVGFromString(document.getElementById('svg').innerHTML, function (objects, options) {
-            fabric.loadSVGFromString(svg, function (objects, options) {
-                _.extend(options, opts);
-                var rect = fabric.util.groupSVGElements(objects, options);
-                var block = self.m_blockFactory.createBlock(i_blockID, i_player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_selectedSceneID);
-                self.m_blocks[i_blockID] = block;
-                _.extend(block, rect);
-                // block.listenSceneSelection(self.m_canvas);
-                block['canvasScale'] = self.m_canvasScale;
-                self.m_canvas.add(block);
-                self._createBlockSvg();
+            switch (self.m_pendingBlocks.blocks.blockType) {
+
+                case 355011:
+                {
+                    break;
+                }
+
+                default:
+                {
+                    var svg = new String('<?xml version="1.0" encoding="utf-8"?><svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="31px" height="30px" viewBox="0 0 31 30" enable-background="new 0 0 31 30" xml:space="preserve"><path fill="#006633" d="M14.446,3.622L7.073,3.596C3.106,3.596,0,6.639,0,10.376v11.388v7.737h4.544v-7.849V10.401c0-0.694,0.283-1.345,0.798-1.829C5.854,8.09,6.539,7.821,7.27,7.821c0.002,0,6.527-0.022,7.174-0.027V3.622H14.446z"/><polygon fill="#006633" points="14.28,7.512 13.504,10.895 30,5.699 13.504,0.499 14.28,3.885 "/></svg>');
+                    // fabric.loadSVGFromString(document.getElementById('svg').innerHTML, function (objects, options) {
+                    fabric.loadSVGFromString(svg, function (objects, options) {
+                        _.extend(options, opts);
+                        var rect = fabric.util.groupSVGElements(objects, options);
+                        var block = self.m_blockFactory.createBlock(blockID, player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_selectedSceneID);
+                        // self.m_blocks[blockID] = block;
+                        _.extend(block, rect);
+                        // block.listenSceneSelection(self.m_canvas);
+                        block['canvasScale'] = self.m_canvasScale;
+                        self.m_pendingBlocks.blocksCreated[blockID] = block;
+                        // self.m_canvas.add(block);
+                        // self._createBlockSvg();
+                        self._createBlocks();
+                    });
+                }
+
+            }
+
+            /*var i_blockID = self.modIndex.shift();
+             if (i_blockID == undefined){
+             self._render();
+             self.m_canvas.renderAll();
+             return;
+             } */
+
+
+            //fabric.loadSVGFromString(document.getElementById('svg').innerHTML, function (objects, options) {
+            //    var obj = fabric.util.groupSVGElements(objects, options);
+            //});
+        },
+
+        _render: function () {
+            var self = this;
+            var nZooms = Math.round(Math.log(1 / self.m_canvasScale) / Math.log(1.2));
+            var blockID = self.m_pendingBlocks.blockSelected;
+            self._disposeBlocks();
+            self._zoomReset();
+            _.forEach(self.m_pendingBlocks.blocksCreated, function (i_block) {
+                self.m_canvas.add(i_block);
             });
+            self._zoomTo(nZooms);
+            self._resetAllObjectScale();
+            self.m_canvas.renderAll();
+            if (_.isUndefined(blockID))
+                return;
+            BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, blockID);
+            for (var i = 0; i < self.m_canvas.getObjects().length; i++) {
+                if (blockID == self.m_canvas.item(i).getBlockData().blockID) {
+                    self._sceneBlockSelected(self.m_canvas.item(i));
+                    break;
+                }
+            }
         },
 
         /**
@@ -654,7 +674,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             });
 
             var block = self.m_blockFactory.createBlock(i_blockID, i_player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_selectedSceneID);
-            self.m_blocks[i_blockID] = block;
+            // self.m_blocks[i_blockID] = block;
             _.extend(block, rect);
             // block.listenSceneSelection(self.m_canvas);
             block['canvasScale'] = self.m_canvasScale;
@@ -697,7 +717,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             });
 
             var block = self.m_blockFactory.createBlock(i_blockID, i_player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_selectedSceneID);
-            self.m_blocks[i_blockID] = block;
+            // self.m_blocks[i_blockID] = block;
             _.extend(block, rect);
             // block.listenSceneSelection(self.m_canvas);
             block['canvasScale'] = self.m_canvasScale;
@@ -916,9 +936,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             if (_.isUndefined(self.m_canvas))
                 return;
             self.m_canvas.off('mouse:up');
-            _.each(self.m_canvas.getObjects(), function (obj) {
-                self.m_canvas.dispose(obj);
-            });
+            //_.each(self.m_canvas.getObjects(), function (obj) {
+            //    self.m_canvas.dispose(obj);
+            //});
             self._disposeBlocks();
             self.m_sceneBlock.deleteBlock();
             self.m_canvas = undefined;
@@ -929,13 +949,23 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          @method _disposeBlocks
          **/
         _disposeBlocks: function () {
-            var self = this;
+            var self = this, i;
             if (_.isUndefined(self.m_canvas))
                 return;
-            _.each(self.m_blocks, function (block) {
-                block.deleteBlock();
-            });
-            self.m_blocks = {};
+            var totalObjects = self.m_canvas.getObjects().length;
+            var c = -1;
+            for (i = 0; i < totalObjects; i++) {
+                c++;
+                var block = self.m_canvas.item(c);
+                self.m_canvas.remove(block);
+                if (block) {
+                    block.deleteBlock();
+                    c--;
+                }
+            }
+            self.m_canvas.clear();
+            log(self.m_pendingBlocks.blocksCreated);
+            // self.m_blocks = {};
         },
 
         /**

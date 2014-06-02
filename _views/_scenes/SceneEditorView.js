@@ -210,7 +210,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._initializeCanvas(w, h);
             self._initializeScene(self.m_selectedSceneID);
             self._preRender(domPlayerData);
-            self._blockCountChanged();
         },
 
         /**
@@ -254,7 +253,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 var blockID = block.getBlockData().blockID;
                 self.m_canvas.discardActiveObject();
                 self.m_canvas.remove(block);
-                // delete self.m_blocks[blockID];
                 pepper.removeScenePlayer(self.m_selectedSceneID, blockID);
                 BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, null);
                 block.deleteBlock();
@@ -310,27 +308,14 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _listenSceneChanged: function (e) {
             var self = this;
-
             BB.comBroker.listen(BB.EVENTS['SCENE_BLOCK_CHANGE'], function (e) {
                 var blockID = e.edata;
                 log('block edited ' + blockID);
                 var domPlayerData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
-                // var nZooms = Math.round(Math.log(1 / self.m_canvasScale) / Math.log(1.2));
                 self.m_pendingBlocks.blockSelected = blockID;
                 self._preRender(domPlayerData);
                 self._mementoAddState();
             });
-        },
-
-        _zoomTo: function (nZooms) {
-            var self = this, i;
-            if (nZooms > 0) {
-                for (i = 0; i < nZooms; i++)
-                    self._zoomOut();
-            } else {
-                for (i = 0; i > nZooms; nZooms++)
-                    self._zoomIn();
-            }
         },
 
         /**
@@ -347,12 +332,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 $(domPlayerData).find('Player').attr('id', blockID);
                 player_data = (new XMLSerializer()).serializeToString(domPlayerData);
                 pepper.appendScenePlayerBlock(self.m_selectedSceneID, player_data);
-                self._createBlock(blockID, player_data);
-                self._blockCountChanged();
-                self.m_canvas.renderAll();
-                self._mementoAddState();
-                e.stopImmediatePropagation();
-                e.preventDefault();
+                BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, blockID);
+                return;
             });
         },
 
@@ -502,22 +483,26 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var active = self.m_canvas.getActiveGroup();
             if (active)
                 return;
-            // var totalViews = self.m_canvas.getObjects().length;
-            // var i = 0;
-            // log('--------------------');
+            // var totalViews = self.m_canvas.getObjects().length; var i = 0; log('--------------------');
             var domSceneData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
             self.m_canvas.forEachObject(function (obj) {
                 if (_.isNull(obj))
                     return;
-                // i++;
                 var blockID = obj.getBlockData().blockID;
-                // log((totalViews - i) + ' ' + blockID);
+                // i++; log((totalViews - i) + ' ' + blockID);
                 var o = $(domSceneData).find('[id="' + blockID + '"]');
                 $(domSceneData).find('Players').prepend(o);
             });
             pepper.setScenePlayerData(self.m_selectedSceneID, (new XMLSerializer()).serializeToString(domSceneData));
         },
 
+        /**
+         Pre render creates all of the Fabric blocks that will later get added when we call _render
+         This allows for smooth (non flickering) rendering since when we are ready to render, the blocks have
+         already been instantiated and ready to be added to canvas
+         @method _preRender
+         @param {Object} i_domPlayerData
+         **/
         _preRender: function (i_domPlayerData) {
             var self = this;
             log('rendering new blocks');
@@ -532,6 +517,42 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._createBlocks();
         },
 
+        /**
+         Render the pre created blocks (via _preRender) and add all blocks to fabric canvas
+         @method _render
+         **/
+        _render: function () {
+            var self = this;
+            var nZooms = Math.round(Math.log(1 / self.m_canvasScale) / Math.log(1.2));
+            var selectedBlockID = self.m_pendingBlocks.blockSelected;
+            self._disposeBlocks();
+            self._zoomReset();
+            _.forEach(self.m_pendingBlocks.blocksPost, function (i_block) {
+                self.m_canvas.add(i_block);
+            });
+            self._zoomTo(nZooms);
+            self._resetAllObjectScale();
+            self.m_canvas.renderAll();
+            self._blockCountChanged();
+
+            if (_.isUndefined(selectedBlockID))
+                return;
+
+            BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, selectedBlockID);
+            for (var i = 0; i < self.m_canvas.getObjects().length; i++) {
+                if (selectedBlockID == self.m_canvas.item(i).getBlockData().blockID) {
+                    self._sceneBlockSelected(self.m_canvas.item(i));
+                    break;
+                }
+            }
+        },
+
+        /**
+         Create all the blocks that have been pre injected to m_pendingBlocks.blocksPre and after each block
+         is created created the next block; thus creating blocks sequentially due to fabric bug. When no
+         more blocks are to be created (m_pendingBlocks.blocksPre queue is empty) we _render the canvas
+         @method _createBlocks
+         **/
         _createBlocks: function () {
             var self = this;
             var block = self.m_pendingBlocks.blocksPre.shift();
@@ -576,53 +597,17 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         _.extend(options, opts);
                         var rect = fabric.util.groupSVGElements(objects, options);
                         var block = self.m_blockFactory.createBlock(blockID, player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_selectedSceneID);
-                        // self.m_blocks[blockID] = block;
                         _.extend(block, rect);
-                        // block.listenSceneSelection(self.m_canvas);
                         block['canvasScale'] = self.m_canvasScale;
                         self.m_pendingBlocks.blocksPost[blockID] = block;
-                        // self.m_canvas.add(block);
-                        // self._createBlockSvg();
                         self._createBlocks();
                     });
                 }
 
             }
-
-            /*var i_blockID = self.modIndex.shift();
-             if (i_blockID == undefined){
-             self._render();
-             self.m_canvas.renderAll();
-             return;
-             } */
-
-
             //fabric.loadSVGFromString(document.getElementById('svg').innerHTML, function (objects, options) {
             //    var obj = fabric.util.groupSVGElements(objects, options);
             //});
-        },
-
-        _render: function () {
-            var self = this;
-            var nZooms = Math.round(Math.log(1 / self.m_canvasScale) / Math.log(1.2));
-            var blockID = self.m_pendingBlocks.blockSelected;
-            self._disposeBlocks();
-            self._zoomReset();
-            _.forEach(self.m_pendingBlocks.blocksPost, function (i_block) {
-                self.m_canvas.add(i_block);
-            });
-            self._zoomTo(nZooms);
-            self._resetAllObjectScale();
-            self.m_canvas.renderAll();
-            if (_.isUndefined(blockID))
-                return;
-            BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, blockID);
-            for (var i = 0; i < self.m_canvas.getObjects().length; i++) {
-                if (blockID == self.m_canvas.item(i).getBlockData().blockID) {
-                    self._sceneBlockSelected(self.m_canvas.item(i));
-                    break;
-                }
-            }
         },
 
         /**
@@ -956,7 +941,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 }
             }
             self.m_canvas.clear();
-            // self.m_blocks = {};
         },
 
         /**
@@ -977,6 +961,22 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 self._zoomReset();
                 self._resetAllObjectScale();
             });
+        },
+
+        /**
+         Zoom to scale size
+         @method _zoomTo
+         @param {Number} nZooms
+         **/
+        _zoomTo: function (nZooms) {
+            var self = this, i;
+            if (nZooms > 0) {
+                for (i = 0; i < nZooms; i++)
+                    self._zoomOut();
+            } else {
+                for (i = 0; i > nZooms; nZooms++)
+                    self._zoomIn();
+            }
         },
 
         /**

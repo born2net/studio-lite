@@ -24,6 +24,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 blocksPost: {},
                 blockSelected: undefined
             };
+            self.m_t = 0;
             self.m_dimensionProps = undefined;
             self.m_canvas = undefined;
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
@@ -501,7 +502,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _preRender: function (i_domPlayerData) {
             var self = this;
-            log('rendering new blocks');
+            log('pre-rendering new blocks');
+            self.m_t = 0;
             self.m_pendingBlocks.blocksPre = [];
             self.m_pendingBlocks.blocksPost = {};
             $(i_domPlayerData).find('Players').find('Player').each(function (i, player) {
@@ -588,118 +590,77 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
                 default:
                 {
-                    var svg = new String('<?xml version="1.0" encoding="utf-8"?><svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="31px" height="30px" viewBox="0 0 31 30" enable-background="new 0 0 31 30" xml:space="preserve"><path fill="#006633" d="M14.446,3.622L7.073,3.596C3.106,3.596,0,6.639,0,10.376v11.388v7.737h4.544v-7.849V10.401c0-0.694,0.283-1.345,0.798-1.829C5.854,8.09,6.539,7.821,7.27,7.821c0.002,0,6.527-0.022,7.174-0.027V3.622H14.446z"/><polygon fill="#006633" points="14.28,7.512 13.504,10.895 30,5.699 13.504,0.499 14.28,3.885 "/></svg>');
-                    // fabric.loadSVGFromString(document.getElementById('svg').innerHTML, function (objects, options) {
-                    fabric.loadSVGFromString(svg, function (objects, options) {
-                        _.extend(options, opts);
-                        var rect = fabric.util.groupSVGElements(objects, options);
+                    self.m_t++;
+
+                    if (self.m_t < 2) {
+
+                        var svg = new String('<?xml version="1.0" encoding="utf-8"?><svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="31px" height="30px" viewBox="0 0 31 30" enable-background="new 0 0 31 30" xml:space="preserve"><path fill="#006633" d="M14.446,3.622L7.073,3.596C3.106,3.596,0,6.639,0,10.376v11.388v7.737h4.544v-7.849V10.401c0-0.694,0.283-1.345,0.798-1.829C5.854,8.09,6.539,7.821,7.27,7.821c0.002,0,6.527-0.022,7.174-0.027V3.622H14.446z"/><polygon fill="#006633" points="14.28,7.512 13.504,10.895 30,5.699 13.504,0.499 14.28,3.885 "/></svg>');
+                        // fabric.loadSVGFromString(document.getElementById('svg').innerHTML, function (objects, options) {
+                        fabric.loadSVGFromString(svg, function (objects, options) {
+                            _.extend(options, opts);
+                            var rect = fabric.util.groupSVGElements(objects, options);
+                            var block = self.m_blockFactory.createBlock(blockID, player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_selectedSceneID);
+                            _.extend(block, rect);
+                            block['canvasScale'] = self.m_canvasScale;
+                            self.m_pendingBlocks.blocksPost[blockID] = block;
+                            self._createBlocks();
+                        });
+
+                    } else {
+
+                        var imgElement;
+                        var a = $('<img style="display: none" id="hope2" src="https://secure.digitalsignage.com/_studiolite-dev/_assets/png.png"/>')
+                        $('body').append(a);
+                        // imgElement = document.getElementById('hope2');
+                        imgElement = $('#hope2')[0];
+
+                        /*
+                        var rect = new fabric.Rect({
+                            left: parseInt(layout.attr('x')),
+                            top: parseInt(layout.attr('y')),
+                            width: parseInt(layout.attr('width')),
+                            height: parseInt(layout.attr('height')),
+                            angle: parseInt(layout.attr('rotation')),
+                            fill: '#ececec',
+                            hasRotatingPoint: false,
+                            borderColor: '#5d5d5d',
+                            stroke: 'black',
+                            strokeWidth: 1,
+                            lineWidth: 1,
+                            cornerColor: 'black',
+                            cornerSize: 5,
+                            lockRotation: true,
+                            transparentCorners: false
+                        }); */
+
+                        var rect = new fabric.Image(imgElement, {
+                            left: parseInt(layout.attr('x')),
+                            top: parseInt(layout.attr('y')),
+                            width: parseInt(layout.attr('width')),
+                            height: parseInt(layout.attr('height')),
+                            angle: parseInt(layout.attr('rotation')),
+                            fill: '#ececec',
+                            hasRotatingPoint: false,
+                            borderColor: '#5d5d5d',
+                            stroke: 'black',
+                            strokeWidth: 1,
+                            lineWidth: 1,
+                            cornerColor: 'black',
+                            cornerSize: 5,
+                            lockRotation: true,
+                            transparentCorners: false
+                        });
+
                         var block = self.m_blockFactory.createBlock(blockID, player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_selectedSceneID);
-                        _.extend(block, rect);
-                        block['canvasScale'] = self.m_canvasScale;
                         self.m_pendingBlocks.blocksPost[blockID] = block;
+                        _.extend(block, rect);
+                        // block.listenSceneSelection(self.m_canvas);
+                        block['canvasScale'] = self.m_canvasScale;
                         self._createBlocks();
-                    });
+                    }
+
                 }
-
             }
-            //fabric.loadSVGFromString(document.getElementById('svg').innerHTML, function (objects, options) {
-            //    var obj = fabric.util.groupSVGElements(objects, options);
-            //});
-        },
-
-        /**
-         Create a block inside a scene using it's player_data
-         @method _createBlockImage
-         @param {Number} i_blockID
-         @return {Object} block
-         **/
-        _createBlockImage: function (i_blockID, i_player_data) {
-            var self = this;
-            var domPlayerData = $.parseXML(i_player_data);
-            var layout = $(domPlayerData).find('Layout');
-
-            var a, imgElement;
-            if (self.a) {
-                a = $('<img style="display: none" id="hope2" src="https://secure.digitalsignage.com/_studiolite-dev/_assets/png.png"/>')
-                $('body').append(a);
-                // imgElement = document.getElementById('hope2');
-                imgElement = $('#hope2')[0];
-            } else {
-                a = $('<img style="display: none" id="hope1" src="https://secure.digitalsignage.com/_studiolite-dev/_assets/flv.png"/>')
-                $('body').append(a);
-                imgElement = $('#hope1')[0];
-                self.a = 1;
-            }
-
-            var rect = new fabric.Image(imgElement, {
-                left: parseInt(layout.attr('x')),
-                top: parseInt(layout.attr('y')),
-                width: parseInt(layout.attr('width')),
-                height: parseInt(layout.attr('height')),
-                angle: parseInt(layout.attr('rotation')),
-                fill: '#ececec',
-                hasRotatingPoint: false,
-                borderColor: '#5d5d5d',
-                stroke: 'black',
-                strokeWidth: 1,
-                lineWidth: 1,
-                cornerColor: 'black',
-                cornerSize: 5,
-                lockRotation: true,
-                transparentCorners: false
-            });
-
-            var block = self.m_blockFactory.createBlock(i_blockID, i_player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_selectedSceneID);
-            // self.m_blocks[i_blockID] = block;
-            _.extend(block, rect);
-            // block.listenSceneSelection(self.m_canvas);
-            block['canvasScale'] = self.m_canvasScale;
-            self.m_canvas.add(block);
-
-            setTimeout(function () {
-                self.m_canvas.renderAll();
-            }, 500);
-
-            return block;
-        },
-
-        /**
-         Create a block inside a scene using it's player_data
-         @method _createBlockRect
-         @param {Number} i_blockID
-         @return {Object} block
-         **/
-        _createBlockRect: function (i_blockID, i_player_data) {
-            var self = this;
-            var domPlayerData = $.parseXML(i_player_data);
-            var layout = $(domPlayerData).find('Layout');
-
-            var rect = new fabric.Rect({
-                left: parseInt(layout.attr('x')),
-                top: parseInt(layout.attr('y')),
-                width: parseInt(layout.attr('width')),
-                height: parseInt(layout.attr('height')),
-                angle: parseInt(layout.attr('rotation')),
-                fill: '#ececec',
-                hasRotatingPoint: false,
-                borderColor: '#5d5d5d',
-                stroke: 'black',
-                strokeWidth: 1,
-                lineWidth: 1,
-                cornerColor: 'black',
-                cornerSize: 5,
-                lockRotation: true,
-                transparentCorners: false
-            });
-
-            var block = self.m_blockFactory.createBlock(i_blockID, i_player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_selectedSceneID);
-            // self.m_blocks[i_blockID] = block;
-            _.extend(block, rect);
-            // block.listenSceneSelection(self.m_canvas);
-            block['canvasScale'] = self.m_canvasScale;
-            self.m_canvas.add(block);
-            self.m_canvas.renderAll();
-            return block;
         },
 
         /**

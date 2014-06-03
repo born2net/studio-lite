@@ -1021,6 +1021,26 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 objects[i].left = tempLeft;
                 objects[i].top = tempTop;
                 objects[i].setCoords();
+
+                objects[i].forEachObject(function(obj) {
+
+                    var scaleX = obj.scaleX;
+                    var scaleY = obj.scaleY;
+                    var left = obj.left;
+                    var top = obj.top;
+                    var tempScaleX = scaleX * self.SCALE_FACTOR;
+                    var tempScaleY = scaleY * self.SCALE_FACTOR;
+                    var tempLeft = left * self.SCALE_FACTOR;
+                    var tempTop = top * self.SCALE_FACTOR;
+
+                    obj['canvasScale'] = self.m_canvasScale;
+                    obj.scaleX = tempScaleX;
+                    obj.scaleY = tempScaleY;
+                    obj.left = tempLeft;
+                    obj.top = tempTop;
+                    obj.setCoords();
+
+                });
             }
         },
 
@@ -1041,6 +1061,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             for (var i in objects) {
                 if (_.isNull(objects[i]))
                     return;
+
                 var scaleX = objects[i].scaleX;
                 var scaleY = objects[i].scaleY;
                 var left = objects[i].left;
@@ -1056,6 +1077,30 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 objects[i].left = tempLeft;
                 objects[i].top = tempTop;
                 objects[i].setCoords();
+
+                objects[i].forEachObject(function(obj) {
+
+                    var scaleX = obj.scaleX;
+                    var scaleY = obj.scaleY;
+                    var left = obj.left;
+                    var top = obj.top;
+                    var tempScaleX = scaleX * (1 / self.SCALE_FACTOR);
+                    var tempScaleY = scaleY * (1 / self.SCALE_FACTOR);
+                    var tempLeft = left * (1 / self.SCALE_FACTOR);
+                    var tempTop = top * (1 / self.SCALE_FACTOR);
+
+                    obj['canvasScale'] = self.m_canvasScale;
+                    obj.scaleX = tempScaleX;
+                    obj.scaleY = tempScaleY;
+                    obj.left = tempLeft;
+                    obj.top = tempTop;
+                    obj.setCoords();
+
+                });
+
+
+
+
             }
         },
 
@@ -1078,6 +1123,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             for (var i in objects) {
                 if (_.isNull(objects[i]))
                     return;
+
                 var scaleX = objects[i].scaleX;
                 var scaleY = objects[i].scaleY;
                 var left = objects[i].left;
@@ -1093,7 +1139,30 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 objects[i].top = tempTop;
                 objects[i].setCoords();
                 objects[i]['canvasScale'] = 1;
+
+                objects[i].forEachObject(function(obj) {
+
+                    var scaleX = obj.scaleX;
+                    var scaleY = obj.scaleY;
+                    var left = obj.left;
+                    var top = obj.top;
+                    var tempScaleX = scaleX * (1 / self.m_canvasScale);
+                    var tempScaleY = scaleY * (1 / self.m_canvasScale);
+                    var tempLeft = left * (1 / self.m_canvasScale);
+                    var tempTop = top * (1 / self.m_canvasScale);
+
+                    obj.scaleX = tempScaleX;
+                    obj.scaleY = tempScaleY;
+                    obj.left = tempLeft;
+                    obj.top = tempTop;
+                    obj.setCoords();
+                    obj['canvasScale'] = 1;
+
+                });
             }
+
+
+
             self.m_canvasScale = 1;
         },
 

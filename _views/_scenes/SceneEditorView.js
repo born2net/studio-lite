@@ -1002,45 +1002,35 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_canvas.setHeight(self.m_canvas.getHeight() * self.SCALE_FACTOR);
             self.m_canvas.setWidth(self.m_canvas.getWidth() * self.SCALE_FACTOR);
 
-            var objects = self.m_canvas.getObjects();
-            for (var i in objects) {
-                if (_.isNull(objects[i]))
-                    return;
-                var scaleX = objects[i].scaleX;
-                var scaleY = objects[i].scaleY;
-                var left = objects[i].left;
-                var top = objects[i].top;
+            var zoomFix = function(i_obj){
+                var scaleX = i_obj.scaleX;
+                var scaleY = i_obj.scaleY;
+                var left = i_obj.left;
+                var top = i_obj.top;
                 var tempScaleX = scaleX * self.SCALE_FACTOR;
                 var tempScaleY = scaleY * self.SCALE_FACTOR;
                 var tempLeft = left * self.SCALE_FACTOR;
                 var tempTop = top * self.SCALE_FACTOR;
 
-                objects[i]['canvasScale'] = self.m_canvasScale;
-                objects[i].scaleX = tempScaleX;
-                objects[i].scaleY = tempScaleY;
-                objects[i].left = tempLeft;
-                objects[i].top = tempTop;
-                objects[i].setCoords();
+                i_obj['canvasScale'] = self.m_canvasScale;
+                i_obj.scaleX = tempScaleX;
+                i_obj.scaleY = tempScaleY;
+                i_obj.left = tempLeft;
+                i_obj.top = tempTop;
+                i_obj.setCoords();
 
-                objects[i].forEachObject(function(obj) {
+                if (i_obj.forEachObject != undefined){
+                    i_obj.forEachObject(function(obj2) {
+                        zoomFix(obj2);
+                    });
+                }
+            };
 
-                    var scaleX = obj.scaleX;
-                    var scaleY = obj.scaleY;
-                    var left = obj.left;
-                    var top = obj.top;
-                    var tempScaleX = scaleX * self.SCALE_FACTOR;
-                    var tempScaleY = scaleY * self.SCALE_FACTOR;
-                    var tempLeft = left * self.SCALE_FACTOR;
-                    var tempTop = top * self.SCALE_FACTOR;
-
-                    obj['canvasScale'] = self.m_canvasScale;
-                    obj.scaleX = tempScaleX;
-                    obj.scaleY = tempScaleY;
-                    obj.left = tempLeft;
-                    obj.top = tempTop;
-                    obj.setCoords();
-
-                });
+            var objects = self.m_canvas.getObjects();
+            for (var i in objects) {
+                if (_.isNull(objects[i]))
+                    return;
+                zoomFix(objects[i]);
             }
         },
 
@@ -1056,6 +1046,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_canvasScale = self.m_canvasScale / self.SCALE_FACTOR;
             self.m_canvas.setHeight(self.m_canvas.getHeight() * (1 / self.SCALE_FACTOR));
             self.m_canvas.setWidth(self.m_canvas.getWidth() * (1 / self.SCALE_FACTOR));
+
+            var zoomFix = function(i_obj){
+
+            };
 
             var objects = self.m_canvas.getObjects();
             for (var i in objects) {

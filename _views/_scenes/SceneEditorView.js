@@ -251,7 +251,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 if (block == null)
                     return;
                 var blockID = block.getBlockData().blockID;
-                self.m_canvas.discardActiveObject();
+                self._discardSelections();
                 pepper.removeScenePlayer(self.m_selectedSceneID, blockID);
                 BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, null);
             });
@@ -319,7 +319,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          @method _listenAddBlockWizard
          @param {event} e
          **/
-        _listenAddBlockWizard: function (e) {
+        _listenAddBlockWizard: function () {
             var self = this;
             BB.comBroker.listen(BB.EVENTS.ADD_NEW_BLOCK_SCENE, function (e) {
                 var blockID = pepper.generateSceneId();
@@ -328,8 +328,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 $(domPlayerData).find('Player').attr('id', blockID);
                 player_data = (new XMLSerializer()).serializeToString(domPlayerData);
                 pepper.appendScenePlayerBlock(self.m_selectedSceneID, player_data);
-                BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, blockID);
-                return;
+                setTimeout(function () {
+                    self._loadScene();
+                }, 10);
             });
         },
 
@@ -343,8 +344,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 if (_.isUndefined(self.m_selectedSceneID))
                     return;
                 var block = self.m_canvas.getActiveObject();
-                if (_.isUndefined(block))
+                if (_.isNull(block)){
+                    self._discardSelections();
                     return;
+                }
                 self.m_canvas.bringToFront(block);
                 self._updateZorder();
                 self._mementoAddState();
@@ -361,8 +364,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 if (_.isUndefined(self.m_selectedSceneID))
                     return;
                 var block = self.m_canvas.getActiveObject();
-                if (_.isUndefined(block))
+                if (_.isNull(block)){
+                    self._discardSelections();
                     return;
+                }
                 self.m_canvas.sendToBack(block);
                 self._updateZorder();
                 self._mementoAddState();
@@ -377,14 +382,12 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             BB.comBroker.listen(BB.EVENTS.SCENE_UNDO, function (e) {
                 self.m_blocks.blockSelected = undefined;
-                self.m_canvas.discardActiveGroup();
-                self.m_canvas.discardActiveObject();
+                self._discardSelections();
                 self._mementoLoadState('undo');
             });
             BB.comBroker.listen(BB.EVENTS.SCENE_REDO, function (e) {
                 self.m_blocks.blockSelected = undefined;
-                self.m_canvas.discardActiveGroup();
-                self.m_canvas.discardActiveObject();
+                self._discardSelections();
                 self._mementoLoadState('redo');
             });
         },
@@ -632,16 +635,16 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         transparentCorners: false
                     });
 
-                    /*r.setGradient('fill', {
-                     x1: 0,
-                     y1: r.height,
-                     x2: r.width,
-                     y2: r.height,
-                     colorStops: {
-                     0: "red",
-                     1: "blue"
-                     }
-                     });*/
+                    r.setGradient('fill', {
+                        x1: 0,
+                        y1: r.height,
+                        x2: r.width,
+                        y2: r.height,
+                        colorStops: {
+                            0: "red",
+                            1: "blue"
+                        }
+                    });
 
                     var t = new fabric.IText("RSS", {
                         fill: 'black',
@@ -761,7 +764,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 if (options.target || active) {
                     var block = options.target || active;
                     self._sceneBlockSelected(block);
-                    self._mementoAddState();
+                    // self._mementoAddState();
                     return;
                 }
 
@@ -783,10 +786,19 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_canvas.setActiveObject(i_block);
             var blockID = i_block.getBlockData().blockID;
             log('object: ' + i_block.m_blockType + ' ' + blockID);
-            // var zoomedOut = 1 - selectedObject.scaleY;
             self._updateBlockCords(blockID, true, i_block.left, i_block.top, i_block.currentWidth, i_block.currentHeight, i_block.angle);
             BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, blockID);
             self._updateZorder();
+        },
+
+        /**
+         Deselect current group and or block selections
+         @method _canvasDiscardSelections
+         **/
+        _discardSelections: function(){
+            var self = this;
+            self.m_canvas.discardActiveGroup();
+            self.m_canvas.discardActiveObject();
         },
 
         /**
@@ -795,8 +807,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _sceneCanvasSelected: function () {
             var self = this;
-            self.m_canvas.discardActiveGroup();
-            self.m_canvas.discardActiveObject();
+            self._discardSelections();
             BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.m_selectedSceneID);
         },
 
@@ -905,14 +916,25 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _listenObjectChangeResetScale: function () {
             var self = this;
-            self.m_objectMovingHandler = _.debounce(function (e) {
-                self._resetObjectScale(e.target);
-            });
+            //self.m_objectMovingHandler = _.debounce(function (e) {
+            //    self._resetObjectScale(e.target);
+            //});
+
+            self.m_objectScaleHandler = _.debounce(function (e) {
+                // self._resetObjectScale(e.target);
+                var block = e.target;
+                // if group
+                if (block.hasControls == false)
+                    return;
+                var blockID = block.getBlockData().blockID;
+                BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, blockID);
+            },50);
+
             self.m_canvas.on({
-                'object:moving': self.m_objectMovingHandler,
-                'object:scaling': self.m_objectMovingHandler,
-                'object:selected': self.m_objectMovingHandler,
-                'object:modified': self.m_objectMovingHandler
+                //'object:moving': self.m_objectMovingHandler,
+                // 'object:scaling': self.m_objectMovingHandler,
+                // 'object:selected': self.m_objectMovingHandler,
+                'object:modified': self.m_objectScaleHandler
             });
         },
 
@@ -997,7 +1019,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             if (_.isUndefined(self.m_selectedSceneID))
                 return;
-            self.m_canvas.discardActiveGroup();
+            self._discardSelections();
             self.m_canvasScale = self.m_canvasScale * self.SCALE_FACTOR;
             self.m_canvas.setHeight(self.m_canvas.getHeight() * self.SCALE_FACTOR);
             self.m_canvas.setWidth(self.m_canvas.getWidth() * self.SCALE_FACTOR);
@@ -1022,7 +1044,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 objects[i].top = tempTop;
                 objects[i].setCoords();
 
-                objects[i].forEachObject(function(obj) {
+                objects[i].forEachObject(function (obj) {
 
                     var scaleX = obj.scaleX;
                     var scaleY = obj.scaleY;
@@ -1052,7 +1074,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             if (_.isUndefined(self.m_selectedSceneID))
                 return;
-            self.m_canvas.discardActiveGroup();
+            self._discardSelections();
             self.m_canvasScale = self.m_canvasScale / self.SCALE_FACTOR;
             self.m_canvas.setHeight(self.m_canvas.getHeight() * (1 / self.SCALE_FACTOR));
             self.m_canvas.setWidth(self.m_canvas.getWidth() * (1 / self.SCALE_FACTOR));
@@ -1078,7 +1100,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 objects[i].top = tempTop;
                 objects[i].setCoords();
 
-                objects[i].forEachObject(function(obj) {
+                objects[i].forEachObject(function (obj) {
 
                     var scaleX = obj.scaleX;
                     var scaleY = obj.scaleY;
@@ -1097,10 +1119,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     obj.setCoords();
 
                 });
-
-
-
-
             }
         },
 
@@ -1115,7 +1133,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 return;
             }
 
-            self.m_canvas.discardActiveGroup();
+            self._discardSelections();
             self.m_canvas.setHeight(self.m_canvas.getHeight() * (1 / self.m_canvasScale));
             self.m_canvas.setWidth(self.m_canvas.getWidth() * (1 / self.m_canvasScale));
 
@@ -1140,7 +1158,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 objects[i].setCoords();
                 objects[i]['canvasScale'] = 1;
 
-                objects[i].forEachObject(function(obj) {
+                objects[i].forEachObject(function (obj) {
 
                     var scaleX = obj.scaleX;
                     var scaleY = obj.scaleY;
@@ -1160,7 +1178,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
                 });
             }
-
 
 
             self.m_canvasScale = 1;

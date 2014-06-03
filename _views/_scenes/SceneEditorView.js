@@ -344,7 +344,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 if (_.isUndefined(self.m_selectedSceneID))
                     return;
                 var block = self.m_canvas.getActiveObject();
-                if (_.isNull(block)){
+                if (_.isNull(block)) {
                     self._discardSelections();
                     return;
                 }
@@ -364,7 +364,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 if (_.isUndefined(self.m_selectedSceneID))
                     return;
                 var block = self.m_canvas.getActiveObject();
-                if (_.isNull(block)){
+                if (_.isNull(block)) {
                     self._discardSelections();
                     return;
                 }
@@ -581,25 +581,25 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     // imgElement = document.getElementById('hope2');
                     imgElement = $('#hope2')[0];
 
+
+                    var i = new fabric.Image(imgElement, {
+                        left: parseInt(layout.attr('x')),
+                        top: parseInt(layout.attr('y')),
+                        width: parseInt(layout.attr('width')),
+                        height: parseInt(layout.attr('height')),
+                        angle: parseInt(layout.attr('rotation')),
+                        hasRotatingPoint: false,
+                        borderColor: '#5d5d5d',
+                        stroke: 'black',
+                        strokeWidth: 1,
+                        lineWidth: 1,
+                        cornerColor: 'black',
+                        cornerSize: 5,
+                        lockRotation: true,
+                        transparentCorners: false
+                    });
+
                     /*
-                     var rect = new fabric.Image(imgElement, {
-                     left: parseInt(layout.attr('x')),
-                     top: parseInt(layout.attr('y')),
-                     width: parseInt(layout.attr('width')),
-                     height: parseInt(layout.attr('height')),
-                     angle: parseInt(layout.attr('rotation')),
-                     hasRotatingPoint: false,
-                     borderColor: '#5d5d5d',
-                     stroke: 'black',
-                     strokeWidth: 1,
-                     lineWidth: 1,
-                     cornerColor: 'black',
-                     cornerSize: 5,
-                     lockRotation: true,
-                     transparentCorners: false
-                     });
-
-
                      var rect = new fabric.Rect({
                      left: parseInt(layout.attr('x')),
                      top: parseInt(layout.attr('y')),
@@ -795,7 +795,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          Deselect current group and or block selections
          @method _canvasDiscardSelections
          **/
-        _discardSelections: function(){
+        _discardSelections: function () {
             var self = this;
             self.m_canvas.discardActiveGroup();
             self.m_canvas.discardActiveObject();
@@ -928,7 +928,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     return;
                 var blockID = block.getBlockData().blockID;
                 BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, blockID);
-            },50);
+            }, 50);
 
             self.m_canvas.on({
                 //'object:moving': self.m_objectMovingHandler,

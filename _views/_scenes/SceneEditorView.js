@@ -19,12 +19,11 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             BB.comBroker.setService(BB.SERVICES['SCENE_EDIT_VIEW'], self);
             self.m_selectedSceneID = undefined;
             self.m_memento = {};
-            self.m_pendingBlocks = {
+            self.m_blocks = {
                 blocksPre: [],
                 blocksPost: {},
                 blockSelected: undefined
             };
-            self.m_t = 0;
             self.m_dimensionProps = undefined;
             self.m_canvas = undefined;
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
@@ -309,7 +308,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 var blockID = e.edata;
                 log('block edited ' + blockID);
                 var domPlayerData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
-                self.m_pendingBlocks.blockSelected = blockID;
+                self.m_blocks.blockSelected = blockID;
                 self._preRender(domPlayerData);
                 self._mementoAddState();
             });
@@ -377,13 +376,13 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         _listenMemento: function () {
             var self = this;
             BB.comBroker.listen(BB.EVENTS.SCENE_UNDO, function (e) {
-                self.m_pendingBlocks.blockSelected = undefined;
+                self.m_blocks.blockSelected = undefined;
                 self.m_canvas.discardActiveGroup();
                 self.m_canvas.discardActiveObject();
                 self._mementoLoadState('undo');
             });
             BB.comBroker.listen(BB.EVENTS.SCENE_REDO, function (e) {
-                self.m_pendingBlocks.blockSelected = undefined;
+                self.m_blocks.blockSelected = undefined;
                 self.m_canvas.discardActiveGroup();
                 self.m_canvas.discardActiveObject();
                 self._mementoLoadState('redo');
@@ -503,16 +502,15 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         _preRender: function (i_domPlayerData) {
             var self = this;
             log('pre-rendering new blocks');
-            self.m_t = 0;
-            self.m_pendingBlocks.blocksPre = [];
-            self.m_pendingBlocks.blocksPost = {};
+            self.m_blocks.blocksPre = [];
+            self.m_blocks.blocksPost = {};
             $(i_domPlayerData).find('Players').find('Player').each(function (i, player) {
                 var block = {
                     blockID: $(player).attr('id'),
                     blockType: $(player).attr('player'),
                     player_data: (new XMLSerializer()).serializeToString(player)
                 };
-                self.m_pendingBlocks.blocksPre.push(block);
+                self.m_blocks.blocksPre.push(block);
             });
             self._createBlocks();
         },
@@ -524,10 +522,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         _render: function () {
             var self = this;
             var nZooms = Math.round(Math.log(1 / self.m_canvasScale) / Math.log(1.2));
-            var selectedBlockID = self.m_pendingBlocks.blockSelected;
+            var selectedBlockID = self.m_blocks.blockSelected;
             self._disposeBlocks();
             self._zoomReset();
-            _.forEach(self.m_pendingBlocks.blocksPost, function (i_block) {
+            _.forEach(self.m_blocks.blocksPost, function (i_block) {
                 self.m_canvas.add(i_block);
             });
             self._zoomTo(nZooms);
@@ -547,118 +545,172 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         },
 
         /**
-         Create all the blocks that have been pre injected to m_pendingBlocks.blocksPre and after each block
+         Create all the blocks that have been pre injected to m_blocks.blocksPre and after each block
          is created created the next block; thus creating blocks sequentially due to fabric bug. When no
-         more blocks are to be created (m_pendingBlocks.blocksPre queue is empty) we _render the canvas
+         more blocks are to be created (m_blocks.blocksPre queue is empty) we _render the canvas
          @method _createBlocks
          **/
         _createBlocks: function () {
             var self = this;
-            var block = self.m_pendingBlocks.blocksPre.shift();
+            var block = self.m_blocks.blocksPre.shift();
             if (block == undefined) {
                 self._render();
                 return;
             }
             var blockID = block.blockID;
+            var blockType = block.blockType;
             var player_data = block.player_data;
             var domPlayerData = $.parseXML(player_data);
             var layout = $(domPlayerData).find('Layout');
 
-            var opts = {
-                left: parseInt(layout.attr('x')),
-                top: parseInt(layout.attr('y')),
-                width: parseInt(layout.attr('width')),
-                height: parseInt(layout.attr('height')),
-                angle: parseInt(layout.attr('rotation')),
-                hasRotatingPoint: false,
-                borderColor: '#5d5d5d',
-                stroke: 'black',
-                strokeWidth: 1,
-                lineWidth: 1,
-                cornerColor: 'black',
-                cornerSize: 5,
-                lockRotation: true,
-                transparentCorners: false
-            };
 
-            switch (self.m_pendingBlocks.blocksPre.blockType) {
+            // var blockType = block.getBlockData().blockType;
+            switch (blockType) {
 
-                case 355011:
+                case '3160':
                 {
+                }
+                case '3150':
+                {
+                    var imgElement;
+                    var a = $('<img style="display: none" id="hope2" src="https://secure.digitalsignage.com/_studiolite-dev/_assets/png.png"/>')
+                    $('body').append(a);
+                    // imgElement = document.getElementById('hope2');
+                    imgElement = $('#hope2')[0];
+
+                    /*
+                     var rect = new fabric.Image(imgElement, {
+                     left: parseInt(layout.attr('x')),
+                     top: parseInt(layout.attr('y')),
+                     width: parseInt(layout.attr('width')),
+                     height: parseInt(layout.attr('height')),
+                     angle: parseInt(layout.attr('rotation')),
+                     hasRotatingPoint: false,
+                     borderColor: '#5d5d5d',
+                     stroke: 'black',
+                     strokeWidth: 1,
+                     lineWidth: 1,
+                     cornerColor: 'black',
+                     cornerSize: 5,
+                     lockRotation: true,
+                     transparentCorners: false
+                     });
+
+
+                     var rect = new fabric.Rect({
+                     left: parseInt(layout.attr('x')),
+                     top: parseInt(layout.attr('y')),
+                     width: parseInt(layout.attr('width')),
+                     height: parseInt(layout.attr('height')),
+                     angle: parseInt(layout.attr('rotation')),
+                     fill: '#ececec',
+                     hasRotatingPoint: false,
+                     borderColor: '#5d5d5d',
+                     stroke: 'black',
+                     strokeWidth: 1,
+                     lineWidth: 1,
+                     cornerColor: 'black',
+                     cornerSize: 5,
+                     lockRotation: true,
+                     transparentCorners: false
+                     });
+                     */
+
+
+                    var r = new fabric.Rect({
+                        width: parseInt(layout.attr('width')),
+                        height: parseInt(layout.attr('height')),
+                        fill: '#ececec',
+                        hasRotatingPoint: false,
+                        borderColor: '#5d5d5d',
+                        stroke: 'black',
+                        strokeWidth: 1,
+                        lineWidth: 1,
+                        cornerColor: 'black',
+                        cornerSize: 5,
+                        lockRotation: true,
+                        transparentCorners: false
+                    });
+
+                    /*r.setGradient('fill', {
+                        x1: 0,
+                        y1: r.height,
+                        x2: r.width,
+                        y2: r.height,
+                        colorStops: {
+                            0: "red",
+                            1: "blue"
+                        }
+                    });*/
+
+                    var t = new fabric.IText("RSS", {
+                        fill: 'black',
+                        fontSize: 12,
+                        top: 5,
+                        left: 5
+
+
+                    });
+
+
+                    var rect = new fabric.Group([ r, t ], {
+                        left: parseInt(layout.attr('x')),
+                        top: parseInt(layout.attr('y')),
+                        width: parseInt(layout.attr('width')),
+                        height: parseInt(layout.attr('height')),
+                        angle: parseInt(layout.attr('rotation')),
+                        hasRotatingPoint: false,
+                        borderColor: '#5d5d5d',
+                        stroke: 'black',
+                        strokeWidth: 1,
+                        lineWidth: 1,
+                        cornerColor: 'black',
+                        cornerSize: 5,
+                        lockRotation: true,
+                        transparentCorners: false
+                    });
+
+                    var block = self.m_blockFactory.createBlock(blockID, player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_selectedSceneID);
+                    self.m_blocks.blocksPost[blockID] = block;
+                    _.extend(block, rect);
+                    // block.listenSceneSelection(self.m_canvas);
+                    block['canvasScale'] = self.m_canvasScale;
+                    self._createBlocks();
                     break;
                 }
 
                 default:
                 {
-                    self.m_t++;
 
-                    if (self.m_t < 2) {
+                    var opts = {
+                        left: parseInt(layout.attr('x')),
+                        top: parseInt(layout.attr('y')),
+                        width: parseInt(layout.attr('width')),
+                        height: parseInt(layout.attr('height')),
+                        angle: parseInt(layout.attr('rotation')),
+                        hasRotatingPoint: false,
+                        borderColor: '#5d5d5d',
+                        stroke: 'black',
+                        strokeWidth: 1,
+                        lineWidth: 1,
+                        cornerColor: 'black',
+                        cornerSize: 5,
+                        lockRotation: true,
+                        transparentCorners: false
+                    };
 
-                        var svg = new String('<?xml version="1.0" encoding="utf-8"?><svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="31px" height="30px" viewBox="0 0 31 30" enable-background="new 0 0 31 30" xml:space="preserve"><path fill="#006633" d="M14.446,3.622L7.073,3.596C3.106,3.596,0,6.639,0,10.376v11.388v7.737h4.544v-7.849V10.401c0-0.694,0.283-1.345,0.798-1.829C5.854,8.09,6.539,7.821,7.27,7.821c0.002,0,6.527-0.022,7.174-0.027V3.622H14.446z"/><polygon fill="#006633" points="14.28,7.512 13.504,10.895 30,5.699 13.504,0.499 14.28,3.885 "/></svg>');
-                        // fabric.loadSVGFromString(document.getElementById('svg').innerHTML, function (objects, options) {
-                        fabric.loadSVGFromString(svg, function (objects, options) {
-                            _.extend(options, opts);
-                            var rect = fabric.util.groupSVGElements(objects, options);
-                            var block = self.m_blockFactory.createBlock(blockID, player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_selectedSceneID);
-                            _.extend(block, rect);
-                            block['canvasScale'] = self.m_canvasScale;
-                            self.m_pendingBlocks.blocksPost[blockID] = block;
-                            self._createBlocks();
-                        });
+                    var svg = new String('<?xml version="1.0" encoding="iso-8859-1"?><!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  --><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"	 width="24.332px" height="24.311px" viewBox="0 0 24.332 24.311" style="enable-background:new 0 0 24.332 24.311;"	 xml:space="preserve"><g id="c40_rss">	<path style="fill:#000000;" d="M3.607,17.099C1.618,17.099,0,18.716,0,20.707c0,1.984,1.618,3.604,3.607,3.604		s3.607-1.619,3.607-3.604C7.214,18.716,5.596,17.099,3.607,17.099z"/>	<path style="fill:#000000;" d="M0.375,7.941C0.169,7.941,0,8.11,0,8.318v4.578c0,0.206,0.169,0.374,0.375,0.374		c5.879,0,10.665,4.784,10.665,10.665c0,0.205,0.166,0.375,0.375,0.375h4.581h0.016c0.209,0,0.377-0.17,0.377-0.375l-0.018-0.117		C16.305,15.054,9.152,7.941,0.375,7.941z"/>	<path style="fill:#000000;" d="M24.311,23.818C24.246,10.671,13.531,0,0.375,0C0.169,0,0,0.169,0,0.377v4.711		c0,0.207,0.169,0.375,0.375,0.375c10.186,0,18.472,8.287,18.472,18.473c0,0.205,0.168,0.375,0.373,0.375h4.713h0.02		c0.205,0,0.379-0.17,0.379-0.375L24.311,23.818z"/></g><g id="Capa_1"></g></svg>');
 
-                    } else {
-
-                        var imgElement;
-                        var a = $('<img style="display: none" id="hope2" src="https://secure.digitalsignage.com/_studiolite-dev/_assets/png.png"/>')
-                        $('body').append(a);
-                        // imgElement = document.getElementById('hope2');
-                        imgElement = $('#hope2')[0];
-
-                        /*
-                        var rect = new fabric.Rect({
-                            left: parseInt(layout.attr('x')),
-                            top: parseInt(layout.attr('y')),
-                            width: parseInt(layout.attr('width')),
-                            height: parseInt(layout.attr('height')),
-                            angle: parseInt(layout.attr('rotation')),
-                            fill: '#ececec',
-                            hasRotatingPoint: false,
-                            borderColor: '#5d5d5d',
-                            stroke: 'black',
-                            strokeWidth: 1,
-                            lineWidth: 1,
-                            cornerColor: 'black',
-                            cornerSize: 5,
-                            lockRotation: true,
-                            transparentCorners: false
-                        }); */
-
-                        var rect = new fabric.Image(imgElement, {
-                            left: parseInt(layout.attr('x')),
-                            top: parseInt(layout.attr('y')),
-                            width: parseInt(layout.attr('width')),
-                            height: parseInt(layout.attr('height')),
-                            angle: parseInt(layout.attr('rotation')),
-                            fill: '#ececec',
-                            hasRotatingPoint: false,
-                            borderColor: '#5d5d5d',
-                            stroke: 'black',
-                            strokeWidth: 1,
-                            lineWidth: 1,
-                            cornerColor: 'black',
-                            cornerSize: 5,
-                            lockRotation: true,
-                            transparentCorners: false
-                        });
-
+                    // fabric.loadSVGFromString(document.getElementById('svg').innerHTML, function (objects, options) {
+                    fabric.loadSVGFromString(svg, function (objects, options) {
+                        _.extend(options, opts);
+                        var rect = fabric.util.groupSVGElements(objects, options);
                         var block = self.m_blockFactory.createBlock(blockID, player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_selectedSceneID);
-                        self.m_pendingBlocks.blocksPost[blockID] = block;
                         _.extend(block, rect);
-                        // block.listenSceneSelection(self.m_canvas);
                         block['canvasScale'] = self.m_canvasScale;
+                        self.m_blocks.blocksPost[blockID] = block;
                         self._createBlocks();
-                    }
-
+                    });
                 }
             }
         },
@@ -873,7 +925,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             if (_.isUndefined(self.m_canvas))
                 return;
             self.m_canvas.off('mouse:up');
-            self.m_pendingBlocks.blocksPost = {};
+            self.m_blocks.blocksPost = {};
             self._disposeBlocks();
             self.m_sceneBlock.deleteBlock();
             self.m_canvas = undefined;

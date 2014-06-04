@@ -716,6 +716,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 var active = self.m_canvas.getActiveObject();
                 var group = self.m_canvas.getActiveGroup();
 
+                //options.e.stopImmediatePropagation();
+                //options.e.preventDefault();
+
                 //// Group
                 if (group) {
                     log('group selected');
@@ -929,6 +932,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             if (_.isUndefined(self.m_canvas))
                 return;
             self.m_canvas.off('mouse:up');
+            self.m_canvas.dispose();
             self.m_blocks.blocksPost = {};
             self._disposeBlocks();
             self.m_sceneBlock.deleteBlock();

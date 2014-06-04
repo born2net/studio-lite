@@ -48,6 +48,7 @@ define(['jquery', 'backbone'], function ($) {
             self.m_blockType = options.blockType;
             self.m_selected = false;
             self.m_blockName = BB.PepperHelper.getBlockBoilerplate(self.m_blockType).name;
+            self.m_blockAcronym = BB.PepperHelper.getBlockBoilerplate(self.m_blockType).acronym;
             self.m_blockDescription = BB.PepperHelper.getBlockBoilerplate(self.m_blockType).description;
             self.m_blockIcon = BB.PepperHelper.getBlockBoilerplate(self.m_blockType).icon;
             self.m_resourceID = undefined;
@@ -335,7 +336,6 @@ define(['jquery', 'backbone'], function ($) {
          **/
         _updateTitleTab: function () {
             var self = this;
-            self.m_blockAcronym = BB.PepperHelper.getBlockBoilerplate(self.m_blockType).acronym;
             $(Elements.BLOCK_SUBPROPERTIES_TITLE).text(self.m_blockAcronym);
         },
 
@@ -526,7 +526,8 @@ define(['jquery', 'backbone'], function ($) {
                 blockType: self.m_blockType,
                 blockName: self.m_blockName,
                 blockDescription: self.m_blockDescription,
-                blockIcon: self.m_blockIcon
+                blockIcon: self.m_blockIcon,
+                blockAcronym: self.m_blockAcronym
             };
             return data;
         },

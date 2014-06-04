@@ -12,6 +12,13 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+@font-face {
+    font-family: 'Jolly Lodger';
+    font-style: normal;
+    font-weight: 600;
+    src: local('Jolly Lodger'), local('JollyLodger'), url(https://themes.googleusercontent.com/static/fonts/jollylodger/v1/RX8HnkBgaEKQSHQyP9itiaRDOzjiPcYnFooOUGCOsRk.woff) format('woff');
+}
+
 a {
     text-decoration: none !important;
 }

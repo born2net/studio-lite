@@ -70,7 +70,7 @@ PepperHelper.prototype = {
         self.m_components = {
             3100: {
                 name: 'Video',
-                acronym: 'Video',
+                acronym: 'video',
                 description: 'Movie file',
                 getDefaultPlayerData: function (i_placement, i_resourceID) {
                     return  '<Player player="3100" label="Video" interactive="0">' +
@@ -113,7 +113,7 @@ PepperHelper.prototype = {
             },
             3160: {
                 name: 'External image',
-                acronym: 'External image',
+                acronym: 'ext image',
                 description: 'Download images and Flash swf from external web links',
                 getDefaultPlayerData: function (i_placement) {
                     return  '<Player player="3160" label="External image Code" interactive="0">' +
@@ -128,7 +128,7 @@ PepperHelper.prototype = {
             },
             3150: {
                 name: 'External video',
-                acronym: 'External video',
+                acronym: 'ext video',
                 description: 'Download video from external web links',
                 getDefaultPlayerData: function (i_placement) {
                     return  '<Player player="3150" label="External video" interactive="0">' +
@@ -143,7 +143,7 @@ PepperHelper.prototype = {
             },
             3430: {
                 name: 'QR',
-                acronym: 'QR',
+                acronym: 'qr',
                 description: 'QR code for mobile device integration',
                 getDefaultPlayerData: function (i_placement) {
                     return  '<Player player="3430" label="QR Code" interactive="0">' +
@@ -158,7 +158,7 @@ PepperHelper.prototype = {
             },
             3340: {
                 name: 'Multimedia RSS',
-                acronym: 'MRSS',
+                acronym: 'mrss',
                 description: 'multimedia video stream',
                 getDefaultPlayerData: function (i_placement) {
                     return  '<Player player="3340" label="MRSS / Podcast" interactive="0">' +
@@ -173,7 +173,7 @@ PepperHelper.prototype = {
             },
             3235: {
                 name: 'HTML Website content',
-                acronym: 'HTML5',
+                acronym: 'web',
                 description: 'HTML5 web integration',
                 getDefaultPlayerData: function (i_placement) {
                     return  '<Player player="3235" label="HTML5" interactive="0">' +
@@ -188,7 +188,7 @@ PepperHelper.prototype = {
             },
             3320: {
                 name: 'Clock Date/Time',
-                acronym: 'Clock',
+                acronym: 'clock',
                 description: 'Set live local date and time',
                 getDefaultPlayerData: function (i_placement) {
                     return  '<Player player="3320" label="Clock Date" interactive="0">' +
@@ -230,7 +230,7 @@ PepperHelper.prototype = {
             },
             3241: {
                 name: 'Label text',
-                acronym: 'Label',
+                acronym: 'text',
                 description: 'Label editor with custom text properties',
                 getDefaultPlayerData: function (i_placement) {
                     return  '<Player player="3241" label="Label" interactive="0">' +
@@ -249,7 +249,7 @@ PepperHelper.prototype = {
 
             3510: {
                 name: 'Scene',
-                acronym: 'Scene',
+                acronym: 'scene',
                 description: 'A Scene editor',
                 getDefaultPlayerData: function (i_placement) {
                     return  '<Player player="3510" label="My scene" interactive="0">' +
@@ -270,7 +270,7 @@ PepperHelper.prototype = {
             },
             3345: {
                 name: 'Really Simple Syndication',
-                acronym: 'RSS',
+                acronym: 'rss',
                 description: 'RSS for daily fresh scrolling news feed',
                 getDefaultPlayerData: function (i_placement) {
                     return  '<Player player="3345" label="RSS news" interactive="0">' +

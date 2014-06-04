@@ -516,7 +516,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 };
                 self.m_blocks.blocksPre.push(block);
             });
-            self._createBlocks();
+            self._createSceneBlock();
         },
 
         /**
@@ -552,15 +552,15 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          Create all the blocks that have been pre injected to m_blocks.blocksPre and after each block
          is created created the next block; thus creating blocks sequentially due to fabric bug. When no
          more blocks are to be created (m_blocks.blocksPre queue is empty) we _render the canvas
-         @method _createBlocks
+         @method _createSceneBlock
          **/
-        _createBlocks: function () {
+        _createSceneBlock: function () {
             var self = this;
 
             var applyBlock = function (i_block, i_rect) {
                 _.extend(i_block, i_rect);
                 block['canvasScale'] = self.m_canvasScale;
-                self._createBlocks();
+                self._createSceneBlock();
             };
 
             var block = self.m_blocks.blocksPre.shift();

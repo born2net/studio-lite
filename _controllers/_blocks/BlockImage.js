@@ -95,6 +95,43 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         },
 
         /**
+         Convert the block into a fabric js compatible object
+         @Override
+         @method fabricateBlock
+         **/
+        fabricateBlock: function(i_canvasScale, i_callback){
+            var self = this;
+
+            var domPlayerData = self._getBlockPlayerData();
+            var layout = $(domPlayerData).find('Layout');
+            var imgPath = 'https://upload.wikimedia.org/wikipedia/commons/0/0f/Aquarium_in_HK_Ocean_Park.jpg';
+            var imgElement;
+            var a = $('<img style="display: none" id="hope2" src="' + imgPath + '"/>');
+            $('body').append(a);
+            imgElement = $('#hope2')[0];
+
+            var img = new fabric.Image(imgElement, {
+                left: parseInt(layout.attr('x')),
+                top: parseInt(layout.attr('y')),
+                width: parseInt(layout.attr('width')),
+                height: parseInt(layout.attr('height')),
+                angle: parseInt(layout.attr('rotation')),
+                hasRotatingPoint: false,
+                borderColor: '#5d5d5d',
+                stroke: 'black',
+                strokeWidth: 1,
+                lineWidth: 1,
+                cornerColor: 'black',
+                cornerSize: 5,
+                lockRotation: true,
+                transparentCorners: false
+            });
+            _.extend(self, img);
+            self['canvasScale'] = i_canvasScale;
+            i_callback();
+        },
+
+        /**
          Get the resource id of the embedded resource
          @method getResourceID
          @return {Number} resource_id;

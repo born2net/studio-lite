@@ -557,148 +557,17 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         _createSceneBlock: function () {
             var self = this;
 
-            var applyBlock = function (i_block, i_rect) {
-                _.extend(i_block, i_rect);
-                block['canvasScale'] = self.m_canvasScale;
-                self._createSceneBlock();
-            };
-
             var block = self.m_blocks.blocksPre.shift();
             if (block == undefined) {
                 self._render();
                 return;
             }
-            var blockID = block.blockID;
-            var blockType = block.blockType;
-            var player_data = block.player_data;
-            var domPlayerData = $.parseXML(player_data);
-            var layout = $(domPlayerData).find('Layout');
-            var block = self.m_blockFactory.createBlock(blockID, player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_selectedSceneID);
-
-            // add blocks to hash so we can post process all blocks once they have been instantiated
-            self.m_blocks.blocksPost[blockID] = block;
-
-            switch (blockType) {
-
-                case '3130':
-                {
-                    // Create image block
-                    // var imgPath https://secure.digitalsignage.com/_studiolite-dev/_assets/png.png"
-                    var imgPath = 'https://upload.wikimedia.org/wikipedia/commons/0/0f/Aquarium_in_HK_Ocean_Park.jpg';
-                    var imgElement;
-                    var a = $('<img style="display: none" id="hope2" src="' + imgPath + '"/>');
-                    $('body').append(a);
-                    imgElement = $('#hope2')[0];
-
-                    var rect = new fabric.Image(imgElement, {
-                        left: parseInt(layout.attr('x')),
-                        top: parseInt(layout.attr('y')),
-                        width: parseInt(layout.attr('width')),
-                        height: parseInt(layout.attr('height')),
-                        angle: parseInt(layout.attr('rotation')),
-                        hasRotatingPoint: false,
-                        borderColor: '#5d5d5d',
-                        stroke: 'black',
-                        strokeWidth: 1,
-                        lineWidth: 1,
-                        cornerColor: 'black',
-                        cornerSize: 5,
-                        lockRotation: true,
-                        transparentCorners: false
-                    });
-                    applyBlock(block, rect);
-                    break;
-                }
-
-                // case 'not_used_svg_graphics':
-                case '3430':
-                {
-                    // Not used, SVG based block (future enhancement)
-                    var opts = {
-                        left: parseInt(layout.attr('x')),
-                        top: parseInt(layout.attr('y')),
-                        width: parseInt(layout.attr('width')),
-                        height: parseInt(layout.attr('height')),
-                        angle: parseInt(layout.attr('rotation')),
-                        hasRotatingPoint: false,
-                        borderColor: '#5d5d5d',
-                        stroke: 'black',
-                        strokeWidth: 1,
-                        lineWidth: 1,
-                        cornerColor: 'black',
-                        cornerSize: 5,
-                        lockRotation: true,
-                        transparentCorners: false
-                    };
-                    var svg = new String('<?xml version="1.0" encoding="iso-8859-1"?><!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  --><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"	 width="24.332px" height="24.311px" viewBox="0 0 24.332 24.311" style="enable-background:new 0 0 24.332 24.311;"	 xml:space="preserve"><g id="c40_rss">	<path style="fill:#000000;" d="M3.607,17.099C1.618,17.099,0,18.716,0,20.707c0,1.984,1.618,3.604,3.607,3.604		s3.607-1.619,3.607-3.604C7.214,18.716,5.596,17.099,3.607,17.099z"/>	<path style="fill:#000000;" d="M0.375,7.941C0.169,7.941,0,8.11,0,8.318v4.578c0,0.206,0.169,0.374,0.375,0.374		c5.879,0,10.665,4.784,10.665,10.665c0,0.205,0.166,0.375,0.375,0.375h4.581h0.016c0.209,0,0.377-0.17,0.377-0.375l-0.018-0.117		C16.305,15.054,9.152,7.941,0.375,7.941z"/>	<path style="fill:#000000;" d="M24.311,23.818C24.246,10.671,13.531,0,0.375,0C0.169,0,0,0.169,0,0.377v4.711		c0,0.207,0.169,0.375,0.375,0.375c10.186,0,18.472,8.287,18.472,18.473c0,0.205,0.168,0.375,0.373,0.375h4.713h0.02		c0.205,0,0.379-0.17,0.379-0.375L24.311,23.818z"/></g><g id="Capa_1"></g></svg>');
-                    // fabric.loadSVGFromString(document.getElementById('svg').innerHTML, function (objects, options) {
-                    fabric.loadSVGFromString(svg, function (objects, options) {
-                        _.extend(options, opts);
-                        var rect = fabric.util.groupSVGElements(objects, options);
-                        applyBlock(block, rect);
-                    });
-                    break;
-                }
-
-                default:
-                {
-                    // Components (RSS / QR etc, non images)
-                    var r = new fabric.Rect({
-                        width: parseInt(layout.attr('width')),
-                        height: parseInt(layout.attr('height')),
-                        fill: '#ececec',
-                        hasRotatingPoint: false,
-                        borderColor: '#5d5d5d',
-                        stroke: 'black',
-                        strokeWidth: 1,
-                        lineWidth: 1,
-                        cornerColor: 'black',
-                        cornerSize: 5,
-                        lockRotation: true,
-                        transparentCorners: false
-                    });
-
-                    r.setGradient('fill', {
-                        x1: 0,
-                        y1: r.height,
-                        x2: r.width,
-                        y2: r.height,
-                        colorStops: {
-                            0: "red",
-                            1: "blue"
-                        }
-                    });
-                    var blockName = block.getBlockData().blockAcronym;
-                    var t = new fabric.IText(blockName, {
-                        fill: 'black',
-                        fontSize: 20,
-                        fontFamily: 'Jolly Lodger',
-                        textDecoration: 'none',
-                        top: 5,
-                        left: 5
-                    });
-
-
-                    var rect = new fabric.Group([ r, t ], {
-                        left: parseInt(layout.attr('x')),
-                        top: parseInt(layout.attr('y')),
-                        width: parseInt(layout.attr('width')),
-                        height: parseInt(layout.attr('height')),
-                        angle: parseInt(layout.attr('rotation')),
-                        hasRotatingPoint: false,
-                        borderColor: '#5d5d5d',
-                        stroke: 'black',
-                        strokeWidth: 1,
-                        lineWidth: 1,
-                        cornerColor: 'black',
-                        cornerSize: 5,
-                        lockRotation: true,
-                        transparentCorners: false
-                    });
-                    applyBlock(block, rect);
-                    break;
-                }
-            }
+            var block = self.m_blockFactory.createBlock(block.blockID, block.player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_selectedSceneID);
+            var blockID = block.getBlockData().blockID;
+            block.fabricateBlock(self.m_canvasScale, function(){
+                self.m_blocks.blocksPost[blockID] = block;
+                self._createSceneBlock();
+            });
         },
 
         /**

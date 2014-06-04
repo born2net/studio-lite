@@ -200,6 +200,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _loadScene: function () {
             var self = this;
+            self._disposeBlocks();
             self._disposeScene();
             self._zoomReset();
             self.m_property.resetPropertiesView();

@@ -37,7 +37,7 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
             $('.spinnerDimHeight', self.$el).spinner({value: 0, min: 50, max: 9999, step: 1});
             $('.spinner', self.$el).spinner({value: 0, min: -9999, max: 9999, step: 1});
 
-            $('.spinner', self.$el).on('changed', function () {
+            self.m_userInput = _.debounce(function (e) {
                 var values = self.getValues();
                 if (values.w < 50) {
                     values.w = 50;
@@ -48,12 +48,9 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
                     self.setValues(values);
                 }
                 $(self).trigger('changed');
-            });
+            }, 500);
 
-            self.m_inputMouseOut = _.debounce(function (e) {
-                // $(self).trigger('changed');
-            }, 100);
-
+            $('.spinner', self.$el).on('changed', self.m_userInput);
         },
 
         /**

@@ -143,7 +143,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_canvas.renderOnAddRemove = false;
             $(Elements.SCENE_CANVAS).addClass('basicBorder');
 
-            self._listenObjectChangeResetScale();
+            self._listenBlockModified();
             self._listenCanvasSelections();
 
         },
@@ -564,7 +564,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             }
             var block = self.m_blockFactory.createBlock(block.blockID, block.player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_selectedSceneID);
             var blockID = block.getBlockData().blockID;
-            block.fabricateBlock(self.m_canvasScale, function(){
+            block.fabricateBlock(self.m_canvasScale, function () {
                 self.m_blocks.blocksPost[blockID] = block;
                 self._createSceneBlock();
             });
@@ -692,7 +692,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         },
 
         /**
-         Update the coordinates of a block in pepper db
+         Update the coordinates of a block in pepper db, don't allow below w/h MIN_SIZE
          @method _updateBlockCords
          @param {String} i_blockID
          @param {Boolean} i_calcScale
@@ -703,6 +703,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _updateBlockCords: function (i_blockID, i_calcScale, x, y, w, h, a) {
             var self = this;
+            var MIN_SIZE = 50;
+
             if (i_calcScale) {
                 var sy = 1 / self.m_canvasScale;
                 var sx = 1 / self.m_canvasScale;
@@ -711,6 +713,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 x = x * sx;
                 y = y * sy;
             }
+
+            if (h < MIN_SIZE || w < MIN_SIZE)
+                return;
+
             var domPlayerData = pepper.getScenePlayerdataBlock(self.m_selectedSceneID, i_blockID);
             var layout = $(domPlayerData).find('Layout');
             layout.attr('rotation', parseInt(a));
@@ -767,9 +773,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
         /**
          Listen to changes in scale so we can reset back to non-zoom on any block object
-         @method _listenObjectChangeResetScale
+         @method _listenBlockModified
          **/
-        _listenObjectChangeResetScale: function () {
+        _listenBlockModified: function () {
             var self = this;
             //self.m_objectMovingHandler = _.debounce(function (e) {
             //    self._resetObjectScale(e.target);

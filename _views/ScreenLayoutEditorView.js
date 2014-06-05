@@ -401,7 +401,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
          **/
         _enforceViewerMinimums: function (i_viewer) {
             var self = this;
-            var MIN_SIZE = 100;
+            var MIN_SIZE = 50;
             if ((i_viewer.width * self.RATIO) < MIN_SIZE || (i_viewer.height * self.RATIO) < MIN_SIZE) {
                 i_viewer.width = MIN_SIZE / self.RATIO;
                 i_viewer.height = MIN_SIZE / self.RATIO;

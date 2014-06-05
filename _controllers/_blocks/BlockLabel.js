@@ -107,6 +107,74 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             this._viewSubPanel(Elements.BLOCK_LABEL_COMMON_PROPERTIES);
         },
 
+
+        /**
+         Convert the block into a fabric js compatible object
+         @method fabricateBlock
+         **/
+        fabricateBlock: function(i_canvasScale, i_callback){
+            var self = this;
+
+            var domPlayerData = self._getBlockPlayerData();
+            var layout = $(domPlayerData).find('Layout');
+
+            var r = new fabric.Rect({
+                width: parseInt(layout.attr('width')),
+                height: parseInt(layout.attr('height')),
+                fill: '#ececec',
+                hasRotatingPoint: false,
+                borderColor: '#5d5d5d',
+                stroke: 'black',
+                strokeWidth: 1,
+                lineWidth: 1,
+                cornerColor: 'black',
+                cornerSize: 5,
+                lockRotation: true,
+                transparentCorners: false
+            });
+
+            r.setGradient('fill', {
+                x1: 0,
+                y1: r.height,
+                x2: r.width,
+                y2: r.height,
+                colorStops: {
+                    0: "red",
+                    1: "blue"
+                }
+            });
+            var t = new fabric.IText(self.m_blockAcronym, {
+                fill: 'black',
+                fontSize: 20,
+                fontFamily: 'Jolly Lodger',
+                textDecoration: 'none',
+                top: 5,
+                left: 5
+            });
+
+
+            var group = new fabric.Group([ r, t ], {
+                left: parseInt(layout.attr('x')),
+                top: parseInt(layout.attr('y')),
+                width: parseInt(layout.attr('width')),
+                height: parseInt(layout.attr('height')),
+                angle: parseInt(layout.attr('rotation')),
+                hasRotatingPoint: false,
+                borderColor: '#5d5d5d',
+                stroke: 'black',
+                strokeWidth: 1,
+                lineWidth: 1,
+                cornerColor: 'black',
+                cornerSize: 5,
+                lockRotation: true,
+                transparentCorners: false
+            });
+
+            _.extend(self, group);
+            self['canvasScale'] = i_canvasScale;
+            i_callback();
+        },
+
         /**
          Delete this block
          @method deleteBlock

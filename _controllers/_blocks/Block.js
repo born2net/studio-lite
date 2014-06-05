@@ -51,6 +51,7 @@ define(['jquery', 'backbone'], function ($) {
             self.m_blockAcronym = BB.PepperHelper.getBlockBoilerplate(self.m_blockType).acronym;
             self.m_blockDescription = BB.PepperHelper.getBlockBoilerplate(self.m_blockType).description;
             self.m_blockIcon = BB.PepperHelper.getBlockBoilerplate(self.m_blockType).icon;
+            self.m_blockSvg = BB.PepperHelper.getBlockBoilerplate(self.m_blockType).svg;
             self.m_resourceID = undefined;
             self.m_blockProperty = BB.comBroker.getService(BB.SERVICES['BLOCK_PROPERTIES']);
 
@@ -515,6 +516,7 @@ define(['jquery', 'backbone'], function ($) {
 
         /**
          Convert the block into a fabric js compatible object
+         @Override
          @method fabricateBlock
          **/
         fabricateBlock: function(i_canvasScale, i_callback){
@@ -524,6 +526,8 @@ define(['jquery', 'backbone'], function ($) {
             var layout = $(domPlayerData).find('Layout');
 
             var r = new fabric.Rect({
+                top: 0,
+                left: 0,
                 width: parseInt(layout.attr('width')),
                 height: parseInt(layout.attr('height')),
                 fill: '#ececec',
@@ -544,40 +548,35 @@ define(['jquery', 'backbone'], function ($) {
                 x2: r.width,
                 y2: r.height,
                 colorStops: {
-                    0: "red",
-                    1: "blue"
+                    0: "#dedede",
+                    1: "#dedede"
                 }
             });
-            var t = new fabric.IText(self.m_blockAcronym, {
-                fill: 'black',
-                fontSize: 20,
-                fontFamily: 'Jolly Lodger',
-                textDecoration: 'none',
-                top: 5,
-                left: 5
+
+            fabric.loadSVGFromString(self.m_blockSvg, function (objects, options) {
+                var qrCode = fabric.util.groupSVGElements(objects, options);
+
+                var group = new fabric.Group([r, qrCode], {
+                    left: parseInt(layout.attr('x')),
+                    top: parseInt(layout.attr('y')),
+                    width: parseInt(layout.attr('width')),
+                    height: parseInt(layout.attr('height')),
+                    angle: parseInt(layout.attr('rotation')),
+                    hasRotatingPoint: false,
+                    borderColor: '#5d5d5d',
+                    stroke: 'black',
+                    strokeWidth: 1,
+                    lineWidth: 1,
+                    cornerColor: 'black',
+                    cornerSize: 5,
+                    lockRotation: true,
+                    transparentCorners: false
+                });
+
+                _.extend(self, group);
+                self['canvasScale'] = i_canvasScale;
+                i_callback();
             });
-
-
-            var group = new fabric.Group([ r, t ], {
-                left: parseInt(layout.attr('x')),
-                top: parseInt(layout.attr('y')),
-                width: parseInt(layout.attr('width')),
-                height: parseInt(layout.attr('height')),
-                angle: parseInt(layout.attr('rotation')),
-                hasRotatingPoint: false,
-                borderColor: '#5d5d5d',
-                stroke: 'black',
-                strokeWidth: 1,
-                lineWidth: 1,
-                cornerColor: 'black',
-                cornerSize: 5,
-                lockRotation: true,
-                transparentCorners: false
-            });
-
-            _.extend(self, group);
-            self['canvasScale'] = i_canvasScale;
-            i_callback();
         },
 
         /**

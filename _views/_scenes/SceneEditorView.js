@@ -571,6 +571,34 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         },
 
         /**
+         Listen to changes in scale so we can reset back to non-zoom on any block object
+         @method _listenBlockModified
+         **/
+        _listenBlockModified: function () {
+            var self = this;
+            //self.m_objectMovingHandler = _.debounce(function (e) {
+            //    self._resetObjectScale(e.target);
+            //});
+
+            self.m_objectScaleHandler = _.debounce(function (e) {
+                // self._resetObjectScale(e.target);
+                var block = e.target;
+                // if group
+                if (block.hasControls == false)
+                    return;
+                var blockID = block.getBlockData().blockID;
+                BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, blockID);
+            }, 50);
+
+            self.m_canvas.on({
+                //'object:moving': self.m_objectMovingHandler,
+                // 'object:scaling': self.m_objectMovingHandler,
+                // 'object:selected': self.m_objectMovingHandler,
+                'object:modified': self.m_objectScaleHandler
+            });
+        },
+
+        /**
          Listen to canvas user selections
          @method _listenCanvasSelections
          **/
@@ -769,34 +797,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 log('announcing rendering done, now blocks can populate')
                 self._mementoAddState();
             }, 200);
-        },
-
-        /**
-         Listen to changes in scale so we can reset back to non-zoom on any block object
-         @method _listenBlockModified
-         **/
-        _listenBlockModified: function () {
-            var self = this;
-            //self.m_objectMovingHandler = _.debounce(function (e) {
-            //    self._resetObjectScale(e.target);
-            //});
-
-            self.m_objectScaleHandler = _.debounce(function (e) {
-                // self._resetObjectScale(e.target);
-                var block = e.target;
-                // if group
-                if (block.hasControls == false)
-                    return;
-                var blockID = block.getBlockData().blockID;
-                BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, blockID);
-            }, 50);
-
-            self.m_canvas.on({
-                //'object:moving': self.m_objectMovingHandler,
-                // 'object:scaling': self.m_objectMovingHandler,
-                // 'object:selected': self.m_objectMovingHandler,
-                'object:modified': self.m_objectScaleHandler
-            });
         },
 
         /**

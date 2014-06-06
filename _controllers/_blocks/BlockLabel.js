@@ -111,7 +111,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         /**
          Convert the block into a fabric js compatible object
          @method fabricateBlock
-         **/
+        **/
         fabricateBlock: function(i_canvasScale, i_callback){
             var self = this;
 

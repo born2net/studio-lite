@@ -2,7 +2,7 @@
  Scene Editor Backbone view
  @class SceneEditorView
  @constructor
- @return {object} instantiated SceneEditorView
+ @return {object} instantiated the SceneEditorView
  **/
 define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbarView', 'BlockFactory'], function ($, Backbone, fabric, BlockScene, BlockRSS, ScenesToolbarView, BlockFactory) {
 

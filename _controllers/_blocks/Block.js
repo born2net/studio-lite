@@ -1,5 +1,5 @@
 /**
- This base class for all Blocks / players which reside on the timeline_channel or inside scenes.
+ This base class for all the Blocks / players which reside on the timeline_channel or inside scenes.
  The base class implements basic timeline and scene interfaces including the management the properties UI.
  @class Block
  @constructor

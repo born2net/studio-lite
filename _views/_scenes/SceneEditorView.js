@@ -46,6 +46,15 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._listenMemento();
             self._listenCanvasSelectionsFromToolbar();
             self._delegateRenderAnnouncer();
+
+            self.mouseDown = 0;
+            document.body.onmousedown = function(e) {
+                self.mouseDown = 1;
+            }
+            document.body.onmouseup = function(e) {
+                self.mouseDown = 0;
+            }
+
         },
 
         /**
@@ -576,11 +585,18 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _listenBlockModified: function () {
             var self = this;
-            //self.m_objectMovingHandler = _.debounce(function (e) {
-            //    self._resetObjectScale(e.target);
-            //});
+            self.upd = 0;
+            var objectScaling = function(){
+                self.upd = 1;
+            };
 
-            self.m_objectScaleHandler = _.debounce(function (e) {
+            /*self.m_objectScaleHandler = _.debounce(function (e) {
+                if (self.upd == 0)
+                    return;
+                self.upd = 0;
+                if (self.mouseDown)
+                    return;
+                log('yes');
                 // self._resetObjectScale(e.target);
                 var block = e.target;
                 // if group
@@ -588,13 +604,56 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     return;
                 var blockID = block.getBlockData().blockID;
                 BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, blockID);
-            }, 50);
+            }, 50);*/
+
+            //if (self.mouseDown) {
+            //    return;
+            //}
+
+            self.objectScaling = 0;
+            var objectScaling = function(e){
+
+                if (self.objectScaling)
+                    return;
+
+                self.objectScaling = 1;
+                var block = e.target;
+                block.on('modified', function() {
+
+                    // it's a group, abort
+                    if (block.hasControls == false){
+                        block.off('modified');
+                        self.objectScaling = 0;
+                        return;
+                    }
+
+                    setTimeout(function(){
+                        console.log('object modified');
+
+                        // mouse was re-pressed, abort
+                        if (self.mouseDown)
+                            return;
+                        // block is gone, abort
+                        if (_.isUndefined(block))
+                            return;
+
+                        block.off('modified');
+                        var blockID = block.getBlockData().blockID;
+                        BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, blockID);
+
+                        setTimeout(function(){
+                            self.objectScaling = 0;
+                        },100);
+                    },5);
+
+                });
+            };
 
             self.m_canvas.on({
-                //'object:moving': self.m_objectMovingHandler,
-                // 'object:scaling': self.m_objectMovingHandler,
-                // 'object:selected': self.m_objectMovingHandler,
-                'object:modified': self.m_objectScaleHandler
+                //'object:moving': self.m_objectScaleHandler,
+                'object:scaling': objectScaling
+                //'object:selected': self.m_objectScaleHandler,
+                // 'object:modified': self.m_objectScaleHandler
             });
         },
 

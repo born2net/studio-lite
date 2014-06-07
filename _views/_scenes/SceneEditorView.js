@@ -616,6 +616,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                             return;
 
                         block.off('modified');
+                        if (block == undefined || block.getBlockData == undefined)
+                            return;
+
                         var blockID = block.getBlockData().blockID;
 
                         self.m_canvas.forEachObject(function (obj) {

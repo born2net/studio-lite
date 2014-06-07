@@ -548,8 +548,8 @@ define(['jquery', 'backbone'], function ($) {
                 x2: r.width,
                 y2: r.height,
                 colorStops: {
-                    0: "#dedede",
-                    1: "#dedede"
+                    0: "red",
+                    1: "black"
                 }
             });
 

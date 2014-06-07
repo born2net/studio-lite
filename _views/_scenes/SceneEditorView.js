@@ -639,6 +639,11 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
                         block.off('modified');
                         var blockID = block.getBlockData().blockID;
+
+                        self.m_canvas.forEachObject(function (obj) {
+                            obj.selectable  = false;
+                        });
+
                         BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, blockID);
 
                         setTimeout(function(){

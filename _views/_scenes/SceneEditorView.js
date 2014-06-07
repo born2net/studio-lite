@@ -590,26 +590,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 self.upd = 1;
             };
 
-            /*self.m_objectScaleHandler = _.debounce(function (e) {
-                if (self.upd == 0)
-                    return;
-                self.upd = 0;
-                if (self.mouseDown)
-                    return;
-                log('yes');
-                // self._resetObjectScale(e.target);
-                var block = e.target;
-                // if group
-                if (block.hasControls == false)
-                    return;
-                var blockID = block.getBlockData().blockID;
-                BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, blockID);
-            }, 50);*/
-
-            //if (self.mouseDown) {
-            //    return;
-            //}
-
             self.objectScaling = 0;
             var objectScaling = function(e){
 
@@ -630,10 +610,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     setTimeout(function(){
                         console.log('object modified');
 
-                        // mouse was re-pressed, abort
                         if (self.mouseDown)
                             return;
-                        // block is gone, abort
                         if (_.isUndefined(block))
                             return;
 
@@ -656,9 +634,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
             self.m_canvas.on({
                 //'object:moving': self.m_objectScaleHandler,
-                'object:scaling': objectScaling
                 //'object:selected': self.m_objectScaleHandler,
                 // 'object:modified': self.m_objectScaleHandler
+                'object:scaling': objectScaling
             });
         },
 

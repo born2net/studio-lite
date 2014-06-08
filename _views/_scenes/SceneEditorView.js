@@ -48,10 +48,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._delegateRenderAnnouncer();
 
             self.mouseDown = 0;
-            document.body.onmousedown = function(e) {
+            document.body.onmousedown = function (e) {
                 self.mouseDown = 1;
             }
-            document.body.onmouseup = function(e) {
+            document.body.onmouseup = function (e) {
                 self.mouseDown = 0;
             }
 
@@ -587,25 +587,19 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
 
             self.objectScaling = 0;
-            var objectScaling = function(e){
-
+            var objectScaling = function (e) {
                 if (self.objectScaling)
                     return;
-
                 self.objectScaling = 1;
                 var block = e.target;
-                block.on('modified', function() {
-
+                block.on('modified', function () {
                     // it's a group, abort
-                    if (block.hasControls == false){
+                    if (block.hasControls == false) {
                         block.off('modified');
                         self.objectScaling = 0;
                         return;
                     }
-
-                    setTimeout(function(){
-                        console.log('object modified');
-
+                    setTimeout(function () {
                         if (self.mouseDown)
                             return;
                         if (_.isUndefined(block))
@@ -618,16 +612,11 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         var blockID = block.getBlockData().blockID;
 
                         self.m_canvas.forEachObject(function (obj) {
-                            obj.selectable  = false;
+                            obj.selectable = false;
                         });
-
                         BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, blockID);
-
-                        setTimeout(function(){
-                            self.objectScaling = 0;
-                        },100);
-                    },5);
-
+                        self.objectScaling = 0;
+                    }, 5);
                 });
             };
 

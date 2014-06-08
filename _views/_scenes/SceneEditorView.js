@@ -45,8 +45,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._listenSceneNew();
             self._listenMemento();
             self._listenCanvasSelectionsFromToolbar();
-            self._delegateRenderAnnouncer();
+            self._delegateSceneBlockModified();
 
+            /*
             self.mouseDown = 0;
             document.body.onmousedown = function (e) {
                 self.mouseDown = 1;
@@ -54,6 +55,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             document.body.onmouseup = function (e) {
                 self.mouseDown = 0;
             }
+            */
 
         },
 
@@ -593,15 +595,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 self.objectScaling = 1;
                 var block = e.target;
                 block.on('modified', function () {
-                    // it's a group, abort
-                    if (block.hasControls == false) {
-                        block.off('modified');
-                        self.objectScaling = 0;
-                        return;
-                    }
                     setTimeout(function () {
-                        if (self.mouseDown)
-                            return;
                         if (_.isUndefined(block))
                             return;
                         block.off('modified');
@@ -613,14 +607,14 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         });
                         BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, blockID);
                         self.objectScaling = 0;
-                    }, 5);
+                    }, 15);
                 });
             };
 
             self.m_canvas.on({
                 //'object:moving': self.m_objectScaleHandler,
                 //'object:selected': self.m_objectScaleHandler,
-                // 'object:modified': self.m_objectScaleHandler
+                'object:modified': self._sceneBlockModified,
                 'object:scaling': objectScaling
             });
         },
@@ -815,11 +809,11 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
         /**
          Announce to all that scene was re-rendered but do it via debounce
-         @method _delegateRenderAnnouncer
+         @method _delegateSceneBlockModified
          **/
-        _delegateRenderAnnouncer: function () {
+        _delegateSceneBlockModified: function () {
             var self = this;
-            self._announceSceneRendered = _.debounce(function (e) {
+            self._sceneBlockModified = _.debounce(function (e) {
                 BB.comBroker.fire(BB.EVENTS.SCENE_BLOCKS_RENDERED, self, self.m_canvas);
                 log('announcing rendering done, now blocks can populate')
                 self._mementoAddState();

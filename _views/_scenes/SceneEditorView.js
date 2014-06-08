@@ -596,15 +596,11 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 var block = e.target;
                 block.on('modified', function () {
                     setTimeout(function () {
-                        if (_.isUndefined(block))
-                            return;
                         block.off('modified');
-                        if (block == undefined || block.getBlockData == undefined)
-                            return;
                         var blockID = block.getBlockData().blockID;
                         self.m_canvas.forEachObject(function (obj) {
                             obj.selectable = false;
-                        });
+                        }, self);
                         BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, blockID);
                         self.objectScaling = 0;
                     }, 15);

@@ -588,18 +588,24 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
             self.objectScaling = 0;
             var objectScaling = function (e) {
+
                 if (self.objectScaling)
                     return;
+
                 self.objectScaling = 1;
                 var block = e.target;
                 block.on('modified', function () {
+
                     // it's a group, abort
                     if (block.hasControls == false) {
                         block.off('modified');
                         self.objectScaling = 0;
                         return;
                     }
+
                     setTimeout(function () {
+                        console.log('object modified');
+
                         if (self.mouseDown)
                             return;
                         if (_.isUndefined(block))
@@ -614,9 +620,11 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         self.m_canvas.forEachObject(function (obj) {
                             obj.selectable = false;
                         });
+
                         BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, blockID);
                         self.objectScaling = 0;
                     }, 5);
+
                 });
             };
 

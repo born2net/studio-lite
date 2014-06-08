@@ -505,7 +505,8 @@ define(['jquery', 'backbone'], function ($) {
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.GRADIENT_COLOR_CHANGED, self);
             $(Elements.SHOW_BACKGROUND).off('click', self.m_toggleBackgroundColorHandler);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.ALPHA_CHANGED, self);
-            self.off('modified');
+            if (self.off != undefined)
+                self.off('modified');
 
             if (self.m_sceneSelectedHandler)
                 self.m_canvas.off('object:selected', self.m_sceneSelectedHandler);

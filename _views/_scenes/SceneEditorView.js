@@ -585,10 +585,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _listenBlockModified: function () {
             var self = this;
-            self.upd = 0;
-            var objectScaling = function(){
-                self.upd = 1;
-            };
 
             self.objectScaling = 0;
             var objectScaling = function(e){

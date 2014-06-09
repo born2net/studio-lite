@@ -583,6 +583,19 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         },
 
         /**
+         Announce to all that scene was re-rendered but do it via debounce
+         @method _delegateSceneBlockModified
+         **/
+        _delegateSceneBlockModified: function () {
+            var self = this;
+            self._sceneBlockModified = _.debounce(function (e) {
+                BB.comBroker.fire(BB.EVENTS.SCENE_BLOCKS_RENDERED, self, self.m_canvas);
+                log('announcing rendering done, now blocks can populate')
+                self._mementoAddState();
+            }, 200);
+        },
+
+        /**
          Scene block scales via mouse UI
          @method _sceneBlockModified
          @param {Event} e
@@ -808,19 +821,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 i_target.scaleY = 1;
                 self.m_canvas.renderAll();
             }
-        },
-
-        /**
-         Announce to all that scene was re-rendered but do it via debounce
-         @method _delegateSceneBlockModified
-         **/
-        _delegateSceneBlockModified: function () {
-            var self = this;
-            self._sceneBlockModified = _.debounce(function (e) {
-                BB.comBroker.fire(BB.EVENTS.SCENE_BLOCKS_RENDERED, self, self.m_canvas);
-                log('announcing rendering done, now blocks can populate')
-                self._mementoAddState();
-            }, 200);
         },
 
         /**

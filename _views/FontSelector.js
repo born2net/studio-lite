@@ -73,7 +73,7 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
             self._initFontSelector();
             self._initFontSizeSelector();
             self._initFontList();
-            self._initFontSe
+            self._delegateAnnounceChange();
             var currID = self.$el.attr('id');
             self.$el.attr('id', _.uniqueId(currID));
 
@@ -84,15 +84,26 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
          @method events
          **/
         events: {
-            'click': '_onClick',
-            'focusout': function (e) {
+            'click': '_onClick'
+            /*,'focusout': function (e) {
                 var self = this;
                 if ($(e.target).is("input")) {
                     self.m_config.size = self.m_fontSizeInput.val();
-                    BB.comBroker.fire(BB.EVENTS.FONT_SELECTION_CHANGED, self, self, self.m_config);
-                    return;
+                    self._fontModified();
+                    return false;
                 }
-            }
+            }*/
+        },
+
+        /**
+         Announce changes to font props
+         @method _delegateAnnounceChange
+         **/
+        _delegateAnnounceChange: function () {
+            var self = this;
+            self._fontModified = _.debounce(function (e) {
+                BB.comBroker.fire(BB.EVENTS.FONT_SELECTION_CHANGED, self, self, self.m_config);
+            }, 150);
         },
 
         /**
@@ -268,7 +279,7 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
                     $button.toggleClass('active');
                     break;
                 }
-                case 'fontSi    zeUp':
+                case 'fontSizeUp':
                 {
                     self.m_config.size = self.m_fontSizeInput.val();
                     break;
@@ -280,7 +291,7 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
                 }
             }
 
-            BB.comBroker.fire(BB.EVENTS.FONT_SELECTION_CHANGED, self, self, self.m_config);
+            self._fontModified();
             return false;
         },
 

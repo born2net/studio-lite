@@ -42,9 +42,9 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var xSnippetText = $(xSnippet).find('Text');
                 $(xSnippetText).text(text);
                 self._setBlockPlayerData(domPlayerData);
-            }, 500);
+            }, 150);
             $(Elements.LABEL_TEXT).on("input", self.m_inputChangeHandler);
-            $(Elements.LABEL_TEXT).on("blur", self.m_inputChangeHandler);
+            // $(Elements.LABEL_TEXT).on("blur", self.m_inputChangeHandler);
         },
 
         /**

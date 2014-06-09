@@ -6,6 +6,17 @@
  **/
 define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbarView', 'BlockFactory'], function ($, Backbone, fabric, BlockScene, BlockRSS, ScenesToolbarView, BlockFactory) {
 
+    /**
+     Custom event fired when a mouse hovers over canvas
+     @event MOUSE_ENTERS_CANVAS
+     @param {This} caller
+     @param {Self} context caller
+     @param {Event} event
+     @static
+     @final
+     **/
+    BB.EVENTS.MOUSE_ENTERS_CANVAS = 'MOUSE_ENTERS_CANVAS';
+
     BB.SERVICES.SCENE_EDIT_VIEW = 'SceneEditorView';
 
     var SceneEditorView = BB.View.extend({
@@ -44,6 +55,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._listenSceneRemove();
             self._listenSceneBlockRemove();
             self._listenSceneNew();
+            self._listenMouseEnterCanvas();
             self._listenMemento();
             self._listenCanvasSelectionsFromToolbar();
             self._delegateSceneBlockModified();
@@ -59,6 +71,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
              */
 
         },
+
 
         /**
          Init block factory if it hasn't already been loaded
@@ -307,6 +320,17 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 self.m_selectedSceneID = pepper.createScene(player_data);
                 self._loadScene();
                 BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this, null);
+            });
+        },
+
+        /**
+         Listen for when mouse enters canvas wrapper and announce it
+         @method _listenMouseEnterCanvas
+         **/
+        _listenMouseEnterCanvas: function () {
+            var self = this;
+            $(Elements.SCENE_CANVAS_CONTAINER).on("mouseover", function (e) {
+                BB.comBroker.fire(BB.EVENTS.MOUSE_ENTERS_CANVAS, self, self);
             });
         },
 
@@ -782,7 +806,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 y = y * sy;
             }
 
-            if (h < blockMinHeight )
+            if (h < blockMinHeight)
                 h = blockMinHeight;
             if (w < blockMinWidth)
                 w = blockMinWidth;

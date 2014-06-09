@@ -24,6 +24,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_labelFontSelector = self.m_blockProperty.getLabelFontSelector();
             self._listenInputChange();
             self._listenFontSelectionChange();
+            self._listenMouseEntersSceneCanvas();
         },
 
         /**
@@ -33,7 +34,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _listenInputChange: function () {
             var self = this;
-            self.m_inputChangeHandler = _.debounce(function (e) {
+            self.m_inputChangeHandler = function(e) {
                 if (!self.m_selected)
                     return;
                 var text = $(e.target).val();
@@ -42,9 +43,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var xSnippetText = $(xSnippet).find('Text');
                 $(xSnippetText).text(text);
                 self._setBlockPlayerData(domPlayerData);
-            }, 150);
-            $(Elements.LABEL_TEXT).on("input", self.m_inputChangeHandler);
-            // $(Elements.LABEL_TEXT).on("blur", self.m_inputChangeHandler);
+            };
+            $(Elements.LABEL_TEXT).on("mouseout", self.m_inputChangeHandler);
         },
 
         /**
@@ -68,6 +68,19 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 font: xSnippetFont.attr('fontFamily'),
                 color: BB.lib.colorToHex(BB.lib.decimalToHex(xSnippetFont.attr('fontColor'))),
                 size: xSnippetFont.attr('fontSize')
+            });
+        },
+
+        /**
+         Listen to changes in font UI selection from Block property and take action on changes
+         @method _listenFontSelectionChange
+         **/
+        _listenMouseEntersSceneCanvas: function () {
+            var self = this;
+            BB.comBroker.listenWithNamespace(BB.EVENTS.MOUSE_ENTERS_CANVAS, self, function (e) {
+                if (!self.m_selected)
+                    return;
+                $(Elements.LABEL_TEXT).blur();
             });
         },
 
@@ -112,8 +125,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         /**
          Convert the block into a fabric js compatible object
          @method fabricateBlock
-        **/
-        fabricateBlock: function(i_canvasScale, i_callback){
+         **/
+        fabricateBlock: function (i_canvasScale, i_callback) {
             var self = this;
 
             var domPlayerData = self._getBlockPlayerData();
@@ -195,6 +208,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             $(Elements.LABEL_TEXT).off("input", self.m_inputChangeHandler);
             $(Elements.LABEL_TEXT).off("blur", self.m_inputChangeHandler);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.FONT_SELECTION_CHANGED, self);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.MOUSE_ENTERS_CANVAS, self);
             self._deleteBlock();
         }
     });

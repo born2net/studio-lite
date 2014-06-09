@@ -42,8 +42,9 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var xSnippetText = $(xSnippet).find('Text');
                 $(xSnippetText).text(text);
                 self._setBlockPlayerData(domPlayerData);
-            }, 150);
+            }, 500);
             $(Elements.LABEL_TEXT).on("input", self.m_inputChangeHandler);
+            $(Elements.LABEL_TEXT).on("blur", self.m_inputChangeHandler);
         },
 
         /**
@@ -117,6 +118,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
             var domPlayerData = self._getBlockPlayerData();
             var layout = $(domPlayerData).find('Layout');
+            var label = $(domPlayerData).find('Label');
+            var text = $(label).find('Text').text();
 
             var r = new fabric.Rect({
                 width: parseInt(layout.attr('width')),
@@ -143,7 +146,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                     1: "blue"
                 }
             });
-            var t = new fabric.IText(self.m_blockAcronym, {
+            var t = new fabric.IText(text, {
                 fill: 'black',
                 fontSize: 20,
                 fontFamily: 'Jolly Lodger',
@@ -183,6 +186,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         deleteBlock: function () {
             var self = this;
             $(Elements.LABEL_TEXT).off("input", self.m_inputChangeHandler);
+            $(Elements.LABEL_TEXT).off("blur", self.m_inputChangeHandler);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.FONT_SELECTION_CHANGED, self);
             self._deleteBlock();
         }

@@ -77,7 +77,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                     return;
                 var domPlayerData = self._getBlockPlayerData();
                 $(domPlayerData).find('Layout').eq(0).attr('width', $(e.target).val());
-                self._setBlockPlayerData(domPlayerData);
+                self._setBlockPlayerData(domPlayerData, true);
                 BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_DIMENSIONS_CHANGE'], self, null, self.m_block_id);
             }, 200);
             $(Elements.SCENE_WIDTH_INPUT).on("blur", self.m_inputWidthChangeHandler);
@@ -90,7 +90,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                     return;
                 var domPlayerData = self._getBlockPlayerData();
                 $(domPlayerData).find('Layout').eq(0).attr('height', $(e.target).val());
-                self._setBlockPlayerData(domPlayerData);
+                self._setBlockPlayerData(domPlayerData, true);
                 BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_DIMENSIONS_CHANGE'], self, null, self.m_block_id);
             }, 200);
             $(Elements.SCENE_HEIGHT_INPUT).on("blur", self.m_inputHeightChangeHandler);

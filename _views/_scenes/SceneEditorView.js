@@ -852,6 +852,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             for (i = 0; i < totalObjects; i++) {
                 c++;
                 var block = self.m_canvas.item(c);
+                block.selectable = false;
                 self.m_canvas.remove(block);
                 if (block) {
                     block.deleteBlock();

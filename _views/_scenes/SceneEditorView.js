@@ -18,6 +18,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             BB.comBroker.setService(BB.SERVICES['SCENE_EDIT_VIEW'], self);
             self.m_selectedSceneID = undefined;
+            self.m_objectScaling = 0;
             self.m_memento = {};
             self.m_blocks = {
                 blocksPre: [],
@@ -48,14 +49,14 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._delegateSceneBlockModified();
 
             /*
-            self.mouseDown = 0;
-            document.body.onmousedown = function (e) {
-                self.mouseDown = 1;
-            }
-            document.body.onmouseup = function (e) {
-                self.mouseDown = 0;
-            }
-            */
+             self.mouseDown = 0;
+             document.body.onmousedown = function (e) {
+             self.mouseDown = 1;
+             }
+             document.body.onmouseup = function (e) {
+             self.mouseDown = 0;
+             }
+             */
 
         },
 
@@ -582,36 +583,42 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         },
 
         /**
+         Scene block scales via mouse UI
+         @method _sceneBlockModified
+         @param {Event} e
+         **/
+        _sceneBlockScaled: function (e) {
+            var self = this;
+            if (self.m_objectScaling)
+                return;
+            self.m_objectScaling = 1;
+            var block = e.target;
+            if (_.isUndefined(block))
+                return;
+            block.on('modified', function () {
+                setTimeout(function () {
+                    block.off('modified');
+                    var blockID = block.getBlockData().blockID;
+                    self.m_canvas.forEachObject(function (obj) {
+                        obj.selectable = false;
+                    }, self);
+                    BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, blockID);
+                    self.m_objectScaling = 0;
+                }, 15);
+            });
+        },
+
+        /**
          Listen to changes in scale so we can reset back to non-zoom on any block object
          @method _listenBlockModified
          **/
         _listenBlockModified: function () {
             var self = this;
-
-            self.objectScaling = 0;
-            var objectScaling = function (e) {
-                if (self.objectScaling)
-                    return;
-                self.objectScaling = 1;
-                var block = e.target;
-                block.on('modified', function () {
-                    setTimeout(function () {
-                        block.off('modified');
-                        var blockID = block.getBlockData().blockID;
-                        self.m_canvas.forEachObject(function (obj) {
-                            obj.selectable = false;
-                        }, self);
-                        BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, blockID);
-                        self.objectScaling = 0;
-                    }, 15);
-                });
-            };
-
             self.m_canvas.on({
                 //'object:moving': self.m_objectScaleHandler,
                 //'object:selected': self.m_objectScaleHandler,
                 'object:modified': self._sceneBlockModified,
-                'object:scaling': objectScaling
+                'object:scaling': $.proxy(self._sceneBlockScaled, self)
             });
         },
 

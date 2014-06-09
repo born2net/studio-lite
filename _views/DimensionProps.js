@@ -48,7 +48,7 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
                     self.setValues(values);
                 }
                 $(self).trigger('changed');
-            }, 450);
+            }, 150);
 
             $('.spinner', self.$el).on('changed', self.m_userInput);
         },

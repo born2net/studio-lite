@@ -47,6 +47,7 @@ define(['jquery', 'backbone'], function ($) {
             self.m_sceneID = options.i_scene_player_data_id;
             self.m_blockType = options.blockType;
             self.m_selected = false;
+            self.m_minSize = {w: 50, h: 50};
             self.m_blockName = BB.PepperHelper.getBlockBoilerplate(self.m_blockType).name;
             self.m_blockAcronym = BB.PepperHelper.getBlockBoilerplate(self.m_blockType).acronym;
             self.m_blockDescription = BB.PepperHelper.getBlockBoilerplate(self.m_blockType).description;
@@ -159,7 +160,7 @@ define(['jquery', 'backbone'], function ($) {
                     xBgSnippet = BB.PepperHelper.getCommonBackgroundXML();
                     var data = $(domPlayerData).find('Data').eq(0);
                     var bgData = $(data).find('Background');
-                    if (bgData.length > 0 && ! _.isUndefined(bgData.replace)) { // ie bug workaround
+                    if (bgData.length > 0 && !_.isUndefined(bgData.replace)) { // ie bug workaround
                         bgData.replace($(xBgSnippet));
                     } else {
                         $(data).append($(xBgSnippet));
@@ -521,7 +522,7 @@ define(['jquery', 'backbone'], function ($) {
          @Override
          @method fabricateBlock
          **/
-        fabricateBlock: function(i_canvasScale, i_callback){
+        fabricateBlock: function (i_canvasScale, i_callback) {
             var self = this;
 
             var domPlayerData = self._getBlockPlayerData();
@@ -595,7 +596,9 @@ define(['jquery', 'backbone'], function ($) {
                 blockName: self.m_blockName,
                 blockDescription: self.m_blockDescription,
                 blockIcon: self.m_blockIcon,
-                blockAcronym: self.m_blockAcronym
+                blockAcronym: self.m_blockAcronym,
+                blockMinWidth: self.m_minSize.w,
+                blockMinHeight: self.m_minSize.h
             };
             return data;
         },

@@ -123,7 +123,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         return;
                     var props = e.target.getValues();
                     var block_id = block.getBlockData().blockID;
-                    self._updateBlockCords(block_id, false, props.x, props.y, props.w, props.h, props.a);
+                    self._updateBlockCords(block, false, props.x, props.y, props.w, props.h, props.a);
                     BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, block_id);
                 });
                 self._sceneActive();
@@ -670,7 +670,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         }
                         var blockID = selectedObject.getBlockData().blockID;
                         log('object: ' + selectedObject.m_blockType + ' ' + blockID);
-                        self._updateBlockCords(blockID, true, objectPos.x, objectPos.y, selectedObject.currentWidth, selectedObject.currentHeight, selectedObject.angle);
+                        self._updateBlockCords(selectedObject, true, objectPos.x, objectPos.y, selectedObject.currentWidth, selectedObject.currentHeight, selectedObject.angle);
                         self._updateZorder();
                     });
                     self._mementoAddState();
@@ -706,7 +706,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_canvas.setActiveObject(i_block);
             var blockID = i_block.getBlockData().blockID;
             log('object: ' + i_block.m_blockType + ' ' + blockID);
-            self._updateBlockCords(blockID, true, i_block.left, i_block.top, i_block.currentWidth, i_block.currentHeight, i_block.angle);
+            self._updateBlockCords(i_block, true, i_block.left, i_block.top, i_block.currentWidth, i_block.currentHeight, i_block.angle);
             BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, blockID);
             self._updateZorder();
         },
@@ -759,16 +759,19 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         /**
          Update the coordinates of a block in pepper db, don't allow below w/h MIN_SIZE
          @method _updateBlockCords
-         @param {String} i_blockID
+         @param {String} blockID
          @param {Boolean} i_calcScale
          @param {Number} x
          @param {Number} y
          @param {Number} w
          @param {Number} h
          **/
-        _updateBlockCords: function (i_blockID, i_calcScale, x, y, w, h, a) {
+        _updateBlockCords: function (i_block, i_calcScale, x, y, w, h, a) {
             var self = this;
-            var MIN_SIZE = 50;
+
+            var blockID = i_block.getBlockData().blockID;
+            var blockMinWidth = i_block.getBlockData().blockMinWidth;
+            var blockMinHeight = i_block.getBlockData().blockMinHeight;
 
             if (i_calcScale) {
                 var sy = 1 / self.m_canvasScale;
@@ -779,10 +782,13 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 y = y * sy;
             }
 
-            if (h < MIN_SIZE || w < MIN_SIZE)
-                return;
+            if (h < blockMinHeight )
+                h = blockMinHeight;
+            if (w < blockMinWidth)
+                w = blockMinWidth;
 
-            var domPlayerData = pepper.getScenePlayerdataBlock(self.m_selectedSceneID, i_blockID);
+
+            var domPlayerData = pepper.getScenePlayerdataBlock(self.m_selectedSceneID, blockID);
             var layout = $(domPlayerData).find('Layout');
             layout.attr('rotation', parseInt(a));
             layout.attr('x', parseInt(x));
@@ -790,7 +796,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             layout.attr('width', parseInt(w));
             layout.attr('height', parseInt(h));
             var player_data = (new XMLSerializer()).serializeToString(domPlayerData);
-            pepper.setScenePlayerdataBlock(self.m_selectedSceneID, i_blockID, player_data);
+            pepper.setScenePlayerdataBlock(self.m_selectedSceneID, blockID, player_data);
         },
 
         /**
@@ -852,7 +858,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             for (i = 0; i < totalObjects; i++) {
                 c++;
                 var block = self.m_canvas.item(c);
-                block.selectable = false;
+                block.selectable = false; // fix fabric scale block bug
                 self.m_canvas.remove(block);
                 if (block) {
                     block.deleteBlock();

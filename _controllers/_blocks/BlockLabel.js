@@ -120,6 +120,10 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var layout = $(domPlayerData).find('Layout');
             var label = $(domPlayerData).find('Label');
             var text = $(label).find('Text').text();
+            var fontSize = $(label).find('Font').attr('fontSize');
+
+            self.m_minSize.w = fontSize * 1.4;
+            self.m_minSize.h = fontSize * 1.4;
 
             var r = new fabric.Rect({
                 width: parseInt(layout.attr('width')),
@@ -148,13 +152,16 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             });
             var t = new fabric.IText(text, {
                 fill: 'black',
-                fontSize: 20,
+                fontSize: fontSize,
                 fontFamily: 'Jolly Lodger',
                 textDecoration: 'none',
                 top: 5,
                 left: 5
             });
 
+
+            self.m_minSize.w = t.currentWidth < 50 ? 50 : t.currentWidth * 1.2;
+            self.m_minSize.h = t.currentHeight < 50 ? 50 : t.currentHeight * 1.2;
 
             var group = new fabric.Group([ r, t ], {
                 left: parseInt(layout.attr('x')),

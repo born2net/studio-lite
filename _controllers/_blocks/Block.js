@@ -89,7 +89,7 @@ define(['jquery', 'backbone'], function ($) {
          **/
         _alphaListenChange: function () {
             var self = this;
-            BB.comBroker.listenWithNamespace(BB.EVENTS.ALPHA_CHANGED, self, function (e) {
+            self._alphaChanged = _.debounce(function (e) {
                 if (!self.m_selected)
                     return;
                 var alpha = e.edata;
@@ -98,7 +98,9 @@ define(['jquery', 'backbone'], function ($) {
                 var xSnippet = $(data).find('Appearance').eq(0);
                 $(xSnippet).attr('alpha', alpha);
                 self._setBlockPlayerData(domPlayerData);
-            });
+            }, 100);
+
+            BB.comBroker.listenWithNamespace(BB.EVENTS.ALPHA_CHANGED, self, self._alphaChanged);
         },
 
         /**
@@ -527,6 +529,8 @@ define(['jquery', 'backbone'], function ($) {
 
             var domPlayerData = self._getBlockPlayerData();
             var layout = $(domPlayerData).find('Layout');
+            var appearance = $(domPlayerData).find('Appearance');
+            var opacity = $(appearance).attr('alpha');
 
             var r = new fabric.Rect({
                 top: 0,
@@ -577,6 +581,7 @@ define(['jquery', 'backbone'], function ($) {
                 });
 
                 _.extend(self, group);
+                self.setOpacity(opacity);
                 self['canvasScale'] = i_canvasScale;
                 i_callback();
             });

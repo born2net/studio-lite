@@ -73,6 +73,7 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
             self._initFontSelector();
             self._initFontSizeSelector();
             self._initFontList();
+            self._initPreventFocus();
             self._delegateAnnounceChange();
             var currID = self.$el.attr('id');
             self.$el.attr('id', _.uniqueId(currID));
@@ -84,15 +85,14 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
          @method events
          **/
         events: {
-            'click': '_onClick'
-            /*,'focusout': function (e) {
+            'click': '_onClick', 'focusout': function (e) {
                 var self = this;
                 if ($(e.target).is("input")) {
                     self.m_config.size = self.m_fontSizeInput.val();
                     self._fontModified();
                     return false;
                 }
-            }*/
+            }
         },
 
         /**
@@ -159,14 +159,25 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
         },
 
         /**
+         Prevent font selection focus forcing use of arrow keys
+         @method _initPreventFocus
+         **/
+        _initPreventFocus: function(){
+            $('.spinner-input', self.$el).on('focus',function(){
+                $(this).blur();
+                return false;
+            });
+        },
+
+        /**
          Font selected
          @method _initFontSelector
          @param {Number} i_playerData
          @return {Number} Unique clientId.
          **/
-        _initFontSelector: function() {
+        _initFontSelector: function () {
             var self = this;
-            $(Elements.CLASS_FONT_SELECTION, self.$el).on('change',function(e){
+            $(Elements.CLASS_FONT_SELECTION, self.$el).on('change', function (e) {
                 var font = $(e.target).val();
                 if (font != self.m_config.font) {
                     self.m_config.font = font;
@@ -295,6 +306,11 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
             return false;
         },
 
+        /**
+         Set the configuration data for this font selector component
+         @method setConfig
+         @param {Object} i_config
+         **/
         setConfig: function (i_config) {
             var self = this;
             self.m_config = i_config;

@@ -34,10 +34,10 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _listenInputChange: function () {
             var self = this;
-            self.m_inputChangeHandler = function(e) {
+            self.m_inputChangeHandler = function() {
                 if (!self.m_selected)
                     return;
-                var text = $(e.target).val();
+                var text = $(Elements.LABEL_TEXT).val();
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Label');
                 var xSnippetText = $(xSnippet).find('Text');
@@ -45,6 +45,16 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 self._setBlockPlayerData(domPlayerData);
             };
             $(Elements.LABEL_TEXT).on("mouseout", self.m_inputChangeHandler);
+
+
+            self._labelEnterKey = _.debounce(function (e) {
+                if (!self.m_selected)
+                    return;
+                if ( e.which == 13 )
+                    self.m_inputChangeHandler(e);
+                e.preventDefault();
+            }, 50);
+            $(Elements.LABEL_TEXT).on("keydown", self._labelEnterKey);
         },
 
         /**
@@ -135,12 +145,23 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var text = $(label).find('Text').text();
             var fontSize = $(label).find('Font').attr('fontSize');
 
-            self.m_minSize.w = fontSize * 1.4;
-            self.m_minSize.h = fontSize * 1.4;
+            var t = new fabric.IText(text, {
+                fill: 'black',
+                fontSize: fontSize,
+                fontFamily: 'Jolly Lodger',
+                textDecoration: 'none',
+                top: 5,
+                left: 5
+            });
+
+            self.m_minSize.w = t.currentWidth < 50 ? 50 : t.currentWidth * 1.2;
+            self.m_minSize.h = t.currentHeight < 50 ? 50 : t.currentHeight * 1.2;
+            var w = parseInt(layout.attr('width')) < self.m_minSize.w ? self.m_minSize.w :  parseInt(layout.attr('width'));
+            var h = parseInt(layout.attr('height')) < self.m_minSize.h ? self.m_minSize.h :  parseInt(layout.attr('height'));
 
             var r = new fabric.Rect({
-                width: parseInt(layout.attr('width')),
-                height: parseInt(layout.attr('height')),
+                width: w,
+                height: h,
                 fill: '#ececec',
                 hasRotatingPoint: false,
                 borderColor: '#5d5d5d',
@@ -163,24 +184,14 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                     1: "blue"
                 }
             });
-            var t = new fabric.IText(text, {
-                fill: 'black',
-                fontSize: fontSize,
-                fontFamily: 'Jolly Lodger',
-                textDecoration: 'none',
-                top: 5,
-                left: 5
-            });
 
-
-            self.m_minSize.w = t.currentWidth < 50 ? 50 : t.currentWidth * 1.2;
-            self.m_minSize.h = t.currentHeight < 50 ? 50 : t.currentHeight * 1.2;
+            log(w);
 
             var group = new fabric.Group([ r, t ], {
                 left: parseInt(layout.attr('x')),
                 top: parseInt(layout.attr('y')),
-                width: parseInt(layout.attr('width')),
-                height: parseInt(layout.attr('height')),
+                width: w,
+                height: h,
                 angle: parseInt(layout.attr('rotation')),
                 hasRotatingPoint: false,
                 borderColor: '#5d5d5d',
@@ -205,7 +216,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         deleteBlock: function () {
             var self = this;
-            $(Elements.LABEL_TEXT).off("input", self.m_inputChangeHandler);
+            // $(Elements.LABEL_TEXT).off("input", self.m_inputChangeHandler);
             $(Elements.LABEL_TEXT).off("blur", self.m_inputChangeHandler);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.FONT_SELECTION_CHANGED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.MOUSE_ENTERS_CANVAS, self);

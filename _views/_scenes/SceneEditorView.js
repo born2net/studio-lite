@@ -578,7 +578,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, selectedBlockID);
             for (var i = 0; i < self.m_canvas.getObjects().length; i++) {
                 if (selectedBlockID == self.m_canvas.item(i).getBlockData().blockID) {
-                    self._sceneBlockSelected(self.m_canvas.item(i));
+                     self._sceneBlockSelected(self.m_canvas.item(i));
                     break;
                 }
             }

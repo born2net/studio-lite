@@ -131,7 +131,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             this._viewSubPanel(Elements.BLOCK_LABEL_COMMON_PROPERTIES);
         },
 
-
         /**
          Convert the block into a fabric js compatible object
          @method fabricateBlock
@@ -144,6 +143,9 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var label = $(domPlayerData).find('Label');
             var text = $(label).find('Text').text();
             var font = $(label).find('Font');
+            var appearance = $(domPlayerData).find('Appearance');
+            var opacity = $(appearance).attr('alpha');
+
             var t = new fabric.IText(text, {
                 fontSize: $(font).attr('fontSize'),
                 //fontFamily: 'Jolly Lodger',
@@ -177,18 +179,22 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 transparentCorners: false
             });
 
+            // log(' w:' + w + ' h:' + h);
+
             r.setGradient('fill', {
-                x1: 0,
-                y1: r.height,
-                x2: r.width,
-                y2: r.height,
+                x1: 0 - (w/2),
+                y1: 0,
+                x2: (w/2),
+                y2: 0,
                 colorStops: {
                     0: "red",
-                    1: "blue"
+                    0.1: "black",
+                    0.2: "yellow",
+                    0.3: "green",
+                    0.8: "blue",
+                    1: "purple"
                 }
             });
-
-            log(w);
 
             var group = new fabric.Group([ r, t ], {
                 left: parseInt(layout.attr('x')),
@@ -208,6 +214,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             });
 
             _.extend(self, group);
+            self.setOpacity(opacity);
             self['canvasScale'] = i_canvasScale;
             i_callback();
         },

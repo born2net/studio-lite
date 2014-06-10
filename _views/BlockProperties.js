@@ -8,15 +8,26 @@
 define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'FontSelector', 'RSSLinks', 'MRSSLinks'], function ($, Backbone, Knob, nouislider, gradient, spinner, FontSelector, RSSLinks, MRSSLinks) {
 
     /**
-     Custom event fired when a new block is added to timeline_channel
+     Custom event fired when a gradient color picked
      @event COLOR_SELECTED
      @param {this} caller
      @param {self} context caller
-     @param {Event} player_code which represents a specific code assigned for each block type
+     @param {Event} event
      @static
      @final
      **/
     BB.EVENTS.GRADIENT_COLOR_CHANGED = 'GRADIENT_COLOR_CHANGED';
+
+    /**
+     Custom event fired when gradient color selection picker closed
+     @event GRADIENT_COLOR_CLOSED
+     @param {this} caller
+     @param {self} context caller
+     @param {Event} event
+     @static
+     @final
+     **/
+    BB.EVENTS.GRADIENT_COLOR_CLOSED = 'GRADIENT_COLOR_CLOSED';
 
     /**
      event fires when block length is changing (requesting a change), normally by a knob property widget
@@ -108,16 +119,17 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
             var lazyUpdateBgColor = _.debounce(function (points, styles) {
                 if (points.length==0)
                     return;
-                BB.comBroker.fire(BB.EVENTS.GRADIENT_COLOR_CHANGED, self, null, {points: points, styles: styles})
-            }, 333);
+                BB.comBroker.fire(BB.EVENTS.GRADIENT_COLOR_CHANGED, self, null, {points: points, styles: styles});
+            }, 50);
 
-            var renderGradientBG = function(){
+            var gradientColorPickerClosed = function(){
                 log('render gradient');
+                BB.comBroker.fire(BB.EVENTS.GRADIENT_COLOR_CLOSED, self, null);
             }
 
             $(Elements.BG_COLOR_GRADIENT_SELECTOR).gradientPicker({
                 change: lazyUpdateBgColor,
-                closed: renderGradientBG,
+                closed: gradientColorPickerClosed,
                 fillDirection: "90deg"
             });
 

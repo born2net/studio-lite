@@ -390,7 +390,7 @@
          }
          },*/
 
-        colorClosed: function () {
+        colorClosed: function (hsb, hex, rgb) {
             if (this.opts.closed) {
                 this.opts.closed();
             }

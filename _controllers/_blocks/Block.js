@@ -58,6 +58,7 @@ define(['jquery', 'backbone'], function ($) {
 
             self._alphaListenChange();
             self._gradientListenChange();
+            self._gradientListenColorPickerClosed();
             self._backgroundStateListenChange();
             self._listenBlockSelected();
             self._onBlockLengthChanged();
@@ -99,7 +100,6 @@ define(['jquery', 'backbone'], function ($) {
                 $(xSnippet).attr('alpha', alpha);
                 self._setBlockPlayerData(domPlayerData);
             }, 100);
-
             BB.comBroker.listenWithNamespace(BB.EVENTS.ALPHA_CHANGED, self, self._alphaChanged);
         },
 
@@ -210,8 +210,21 @@ define(['jquery', 'backbone'], function ($) {
                 var xmlString = (new XMLSerializer()).serializeToString(domPlayerData);
                 xmlString = xmlString.replace(/<GradientPoints[ ]*\/>/, '<GradientPoints>' + pointsXML + '</GradientPoints>');
                 domPlayerData = $.parseXML(xmlString);
-                // return;
                 self._setBlockPlayerData(domPlayerData, true);
+            });
+        },
+
+        /**
+         Update a block's player_data with new gradient background
+         @method _gradientListenChange
+         **/
+        _gradientListenColorPickerClosed: function () {
+            var self = this;
+            BB.comBroker.listenWithNamespace(BB.EVENTS.GRADIENT_COLOR_CLOSED, self, function (e) {
+                if (!self.m_selected)
+                    return;
+                var domPlayerData = self._getBlockPlayerData();
+                self._setBlockPlayerData(domPlayerData);
             });
         },
 
@@ -506,6 +519,7 @@ define(['jquery', 'backbone'], function ($) {
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_SELECTED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_LENGTH_CHANGING, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.GRADIENT_COLOR_CHANGED, self);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.GRADIENT_COLOR_CLOSED, self);
             $(Elements.SHOW_BACKGROUND).off('click', self.m_toggleBackgroundColorHandler);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.ALPHA_CHANGED, self);
             if (self.off != undefined)
@@ -531,18 +545,30 @@ define(['jquery', 'backbone'], function ($) {
             var layout = $(domPlayerData).find('Layout');
             var appearance = $(domPlayerData).find('Appearance');
             var opacity = $(appearance).attr('alpha');
+            var gradientPoints = $(domPlayerData).find('GradientPoints');
+            var points = $(gradientPoints).find('Point');
+            var colorStops = {}
+            _.each(points, function(point){
+                var color = '#' + BB.lib.decimalToHex($(point).attr('color'));
+                var offset = $(point).attr('midpoint');
+                offset = offset / 250;
+                colorStops[offset] = color;
+            });
+
+            var w = parseInt(layout.attr('width'));
+            var h = parseInt(layout.attr('height'));
 
             var r = new fabric.Rect({
                 top: 0,
                 left: 0,
-                width: parseInt(layout.attr('width')),
-                height: parseInt(layout.attr('height')),
+                width: w,
+                height: h,
                 fill: '#ececec',
                 hasRotatingPoint: false,
-                borderColor: '#5d5d5d',
-                stroke: 'black',
-                strokeWidth: 1,
-                lineWidth: 1,
+                stroke: 'transparent',
+                // borderColor: '#5d5d5d',
+                // strokeWidth: 1,
+                // lineWidth: 1,
                 cornerColor: 'black',
                 cornerSize: 5,
                 lockRotation: true,
@@ -550,14 +576,19 @@ define(['jquery', 'backbone'], function ($) {
             });
 
             r.setGradient('fill', {
-                x1: 0,
-                y1: r.height,
-                x2: r.width,
-                y2: r.height,
-                colorStops: {
+                x1: 0 - (w/2),
+                y1: 0,
+                x2: (w/2),
+                y2: 0,
+                colorStops: colorStops
+                /*colorStops: {
                     0: "red",
-                    1: "black"
-                }
+                    0.1: "black",
+                    0.2: "yellow",
+                    0.3: "green",
+                    0.8: "blue",
+                    1: "purple"
+                } */
             });
 
             fabric.loadSVGFromString(self.m_blockSvg, function (objects, options) {
@@ -570,10 +601,10 @@ define(['jquery', 'backbone'], function ($) {
                     height: parseInt(layout.attr('height')),
                     angle: parseInt(layout.attr('rotation')),
                     hasRotatingPoint: false,
-                    borderColor: '#5d5d5d',
-                    stroke: 'black',
-                    strokeWidth: 1,
-                    lineWidth: 1,
+                    stroke: 'transparent',
+                    // borderColor: '#5d5d5d',
+                    // strokeWidth: 1,
+                    // lineWidth: 1,
                     cornerColor: 'black',
                     cornerSize: 5,
                     lockRotation: true,
@@ -582,6 +613,7 @@ define(['jquery', 'backbone'], function ($) {
 
                 _.extend(self, group);
                 self.setOpacity(opacity);
+                self.hasBorders = false;
                 self['canvasScale'] = i_canvasScale;
                 i_callback();
             });

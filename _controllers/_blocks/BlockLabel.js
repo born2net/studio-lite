@@ -34,7 +34,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _listenInputChange: function () {
             var self = this;
-            self.m_inputChangeHandler = function() {
+            self.m_inputChangeHandler = function () {
                 if (!self.m_selected)
                     return;
                 var text = $(Elements.LABEL_TEXT).val();
@@ -50,7 +50,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self._labelEnterKey = _.debounce(function (e) {
                 if (!self.m_selected)
                     return;
-                if ( e.which == 13 )
+                if (e.which == 13)
                     self.m_inputChangeHandler(e);
                 e.preventDefault();
             }, 50);
@@ -143,21 +143,24 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var layout = $(domPlayerData).find('Layout');
             var label = $(domPlayerData).find('Label');
             var text = $(label).find('Text').text();
-            var fontSize = $(label).find('Font').attr('fontSize');
-
+            var font = $(label).find('Font');
             var t = new fabric.IText(text, {
-                fill: 'black',
-                fontSize: fontSize,
-                fontFamily: 'Jolly Lodger',
-                textDecoration: 'none',
+                fontSize: $(font).attr('fontSize'),
+                //fontFamily: 'Jolly Lodger',
+                fontFamily: 'Arial',
+                fill: '#' + BB.lib.decimalToHex($(font).attr('fontColor')),
+                textDecoration: $(font).attr('textDecoration'),
+                fontWeight: $(font).attr('fontWeight'),
+                fontStyle: $(font).attr('fontStyle'),
+                textAlign: $(font).attr('textAlign'),
                 top: 5,
                 left: 5
             });
 
             self.m_minSize.w = t.currentWidth < 50 ? 50 : t.currentWidth * 1.2;
             self.m_minSize.h = t.currentHeight < 50 ? 50 : t.currentHeight * 1.2;
-            var w = parseInt(layout.attr('width')) < self.m_minSize.w ? self.m_minSize.w :  parseInt(layout.attr('width'));
-            var h = parseInt(layout.attr('height')) < self.m_minSize.h ? self.m_minSize.h :  parseInt(layout.attr('height'));
+            var w = parseInt(layout.attr('width')) < self.m_minSize.w ? self.m_minSize.w : parseInt(layout.attr('width'));
+            var h = parseInt(layout.attr('height')) < self.m_minSize.h ? self.m_minSize.h : parseInt(layout.attr('height'));
 
             var r = new fabric.Rect({
                 width: w,

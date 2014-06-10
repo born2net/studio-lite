@@ -324,7 +324,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         },
 
         /**
-         Listen for when mouse enters canvas wrapper and announce it
+         Listen when mouse enters canvas wrapper and announce it
          @method _listenMouseEnterCanvas
          **/
         _listenMouseEnterCanvas: function () {

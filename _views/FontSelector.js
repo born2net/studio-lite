@@ -170,7 +170,7 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
         },
 
         /**
-         Font selected
+         Font selection
          @method _initFontSelector
          @param {Number} i_playerData
          @return {Number} Unique clientId.

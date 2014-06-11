@@ -73,7 +73,7 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
             self._initFontSelector();
             self._initFontSizeSelector();
             self._initFontList();
-            self._initPreventFocus();
+            // self._initPreventFocus();
             self._delegateAnnounceChange();
             var currID = self.$el.attr('id');
             self.$el.attr('id', _.uniqueId(currID));
@@ -103,7 +103,7 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
             var self = this;
             self._fontModified = _.debounce(function (e) {
                 BB.comBroker.fire(BB.EVENTS.FONT_SELECTION_CHANGED, self, self, self.m_config);
-            }, 150);
+            }, 50);
         },
 
         /**
@@ -177,6 +177,14 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
          **/
         _initFontSelector: function () {
             var self = this;
+
+            var userInputFocus = _.debounce(function () {
+                $('.spinner-input', self.$el).blur();
+                BB.comBroker.fire(BB.EVENTS.FONT_SELECTION_CHANGED, self, self, self.m_config);
+            }, 50);
+            $('.spinner-input', self.$el).on('mouseout', userInputFocus);
+
+
             $(Elements.CLASS_FONT_SELECTION, self.$el).on('change', function (e) {
                 var font = $(e.target).val();
                 if (font != self.m_config.font) {

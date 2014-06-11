@@ -20,6 +20,7 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
          **/
         initialize: function () {
             var self = this;
+            self.m_cachedValues = {};
             self.m_showAngle = self.options.showAngle || false;
 
             if (self.m_showAngle == false)
@@ -37,8 +38,11 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
             $('.spinnerDimHeight', self.$el).spinner({value: 0, min: 50, max: 9999, step: 1});
             $('.spinner', self.$el).spinner({value: 0, min: -9999, max: 9999, step: 1});
 
-            var updateValues = function(){
+            var updateValues = _.debounce(function () {
                 var values = self.getValues();
+                if (_.isEqual(values, self.m_cachedValues))
+                    return;
+
                 if (values.w < 50) {
                     values.w = 50;
                     self.setValues(values);
@@ -48,22 +52,25 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
                     self.setValues(values);
                 }
                 $(self).trigger('changed');
-            };
+            }, 50);
 
             // update changes on icons up/down clicks
-            var userInputButtons = _.debounce(function (e) {
+            $('.spinner', self.$el).on('mouseup', function(e){
                 if ($(e.target).prop("tagName") == 'INPUT')
                     return;
                 updateValues();
-            }, 50);
-            $('.spinner', self.$el).on('mouseup', userInputButtons);
+            });
+
 
             // update on mouse leaving input focus
-            var userInputFocus = _.debounce(function () {
-                $('.spinner-input', self.$el).blur();
-                updateValues();
-            }, 50);
-            $('.spinner-input', self.$el).on('mouseout', userInputFocus);
+            $('.spinner-input', self.$el).on('focusin', function(){
+                self.m_cachedValues = self.getValues();
+                $('.spinner-input', self.$el).on('mouseout', function() {
+                    $('.spinner-input', self.$el).blur();
+                    $('.spinner-input', self.$el).off('mouseout');
+                    updateValues();
+                });
+            });
         },
 
         /**

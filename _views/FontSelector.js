@@ -73,11 +73,9 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
             self._initFontSelector();
             self._initFontSizeSelector();
             self._initFontList();
-            // self._initPreventFocus();
             self._delegateAnnounceChange();
             var currID = self.$el.attr('id');
             self.$el.attr('id', _.uniqueId(currID));
-
         },
 
         /**
@@ -159,17 +157,6 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
         },
 
         /**
-         Prevent font selection focus forcing use of arrow keys
-         @method _initPreventFocus
-         **/
-        _initPreventFocus: function(){
-            $('.spinner-input', self.$el).on('focus',function(){
-                $(this).blur();
-                return false;
-            });
-        },
-
-        /**
          Font selection
          @method _initFontSelector
          @param {Number} i_playerData
@@ -178,12 +165,14 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
         _initFontSelector: function () {
             var self = this;
 
-            var userInputFocus = _.debounce(function () {
-                $('.spinner-input', self.$el).blur();
-                BB.comBroker.fire(BB.EVENTS.FONT_SELECTION_CHANGED, self, self, self.m_config);
-            }, 50);
-            $('.spinner-input', self.$el).on('mouseout', userInputFocus);
-
+            $('.spinner-input', self.$el).on('focusin', function(){
+                $('.spinner-input', self.$el).on('mouseout', function() {
+                    $('.spinner-input', self.$el).blur();
+                    $('.spinner-input', self.$el).off('mouseout');
+                    $('.spinner-input', self.$el).blur();
+                    self._fontModified();
+                });
+            });
 
             $(Elements.CLASS_FONT_SELECTION, self.$el).on('change', function (e) {
                 var font = $(e.target).val();

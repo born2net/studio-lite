@@ -65,9 +65,8 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
             // update on mouse leaving input focus
             $('.spinner-input', self.$el).on('focusin', function(){
                 self.m_cachedValues = self.getValues();
-                $('.spinner-input', self.$el).on('mouseout', function() {
+                $('.spinner-input', self.$el).one('mouseout', function() {
                     $('.spinner-input', self.$el).blur();
-                    $('.spinner-input', self.$el).off('mouseout');
                     updateValues();
                 });
             });

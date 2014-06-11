@@ -166,9 +166,7 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
             var self = this;
 
             $('.spinner-input', self.$el).on('focusin', function(){
-                $('.spinner-input', self.$el).on('mouseout', function() {
-                    $('.spinner-input', self.$el).blur();
-                    $('.spinner-input', self.$el).off('mouseout');
+                $('.spinner-input', self.$el).one('mouseout', function() {
                     $('.spinner-input', self.$el).blur();
                     self._fontModified();
                 });

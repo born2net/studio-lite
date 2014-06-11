@@ -30,6 +30,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             Block.prototype.constructor.call(this, options);
             self._initSubPanel(Elements.BLOCK_SCENE_COMMON_PROPERTIES);
             self._listenInputChanges();
+            self.m_canvas = undefined;
         },
 
         /**
@@ -244,6 +245,18 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var self = this;
             self._populate();
             this._viewSubPanel(Elements.BLOCK_SCENE_COMMON_PROPERTIES);
+        },
+
+        /**
+         Set reference to managed canvas
+         @method setCanvas
+         @param  {object} i_canvas
+         **/
+        setCanvas: function(i_canvas){
+            var self = this;
+            self.m_canvas = i_canvas;
+            // self.m_canvas.setBackgroundColor('rgba(255, 73, 64, 0.6)');
+            // self.m_canvas.renderAll();
         },
 
         /**

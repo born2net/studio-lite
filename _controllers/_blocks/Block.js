@@ -177,6 +177,11 @@ define(['jquery', 'backbone'], function ($) {
                     $(xSnippet).remove();
                     self._setBlockPlayerData(domPlayerData);
                 }
+
+                //if (self.m_placement == BB.CONSTS.PLACEMENT_IS_SCENE){
+                //    self.m_canvas.setBackgroundColor('rgba(255, 73, 64, 0.6)');
+                //}
+
             };
             $(Elements.SHOW_BACKGROUND).on('click', self.m_toggleBackgroundColorHandler);
         },
@@ -533,6 +538,11 @@ define(['jquery', 'backbone'], function ($) {
             });
         },
 
+        /**
+         Fabricate alpha to canvas
+         @method _fabricAlpha
+         @param {xml} i_domPlayerData
+         **/
         _fabricAlpha: function (i_domPlayerData) {
             var self = this;
             var appearance = $(i_domPlayerData).find('Appearance');
@@ -540,6 +550,11 @@ define(['jquery', 'backbone'], function ($) {
             self.setOpacity(opacity);
         },
 
+        /**
+         Fabricate color points to canvas
+         @method _fabricColorPoints
+         @param {xml} i_domPlayerData
+         **/
         _fabricColorPoints: function (i_domPlayerData) {
             var self = this;
             var gradientPoints = $(i_domPlayerData).find('GradientPoints');
@@ -554,6 +569,14 @@ define(['jquery', 'backbone'], function ($) {
             return colorStops;
         },
 
+        /**
+         Fabricate color points to canvas
+         @method _fabricRect
+         @param {number} i_width
+         @param {number} i_height
+         @param {xml} i_domPlayerData
+         @return {object} r fabric js rectangular
+         **/
         _fabricRect: function (i_width, i_height, i_domPlayerData) {
             var self = this;
 
@@ -621,6 +644,10 @@ define(['jquery', 'backbone'], function ($) {
                 });
 
                 _.extend(self, group);
+                // push to garbage collector
+                group = undefined;
+                groupSvg = undefined;
+                rec = undefined;
                 self._fabricAlpha(domPlayerData);
                 self['canvasScale'] = i_canvasScale;
                 i_callback();

@@ -181,7 +181,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             var scene_player_data = pepper.getScenePlayerdata(self.m_selectedSceneID);
             self.m_sceneBlock = self.m_blockFactory.createBlock(self.m_selectedSceneID, scene_player_data, BB.CONSTS.PLACEMENT_IS_SCENE);
-            _.extend(self.m_canvas, self.m_sceneBlock);
+            self.m_sceneBlock.setCanvas(self.m_canvas);
+            // _.extend(self.m_canvas, self.m_sceneBlock);
         },
 
         /**

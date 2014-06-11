@@ -133,10 +133,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
         /**
          Convert the block into a fabric js compatible object
-         @method fabricateBlock
-         **/
-        /**
-         Convert the block into a fabric js compatible object
          @Override
          @method fabricateBlock
          **/

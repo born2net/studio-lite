@@ -37,7 +37,7 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
             $('.spinnerDimHeight', self.$el).spinner({value: 0, min: 50, max: 9999, step: 1});
             $('.spinner', self.$el).spinner({value: 0, min: -9999, max: 9999, step: 1});
 
-            self.m_userInput = _.debounce(function (e) {
+            var updateValues = function(){
                 var values = self.getValues();
                 if (values.w < 50) {
                     values.w = 50;
@@ -48,27 +48,40 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
                     self.setValues(values);
                 }
                 $(self).trigger('changed');
-            }, 150);
+            };
 
-            $('.spinner', self.$el).on('changed', self.m_userInput);
+            // update changes on icons up/down clicks
+            var userInputButtons = _.debounce(function (e) {
+                if ($(e.target).prop("tagName") == 'INPUT')
+                    return;
+                updateValues();
+            }, 50);
+            $('.spinner', self.$el).on('mouseup', userInputButtons);
+
+            // update on mouse leaving input focus
+            var userInputFocus = _.debounce(function () {
+                $('.spinner-input', self.$el).blur();
+                updateValues();
+            }, 50);
+            $('.spinner-input', self.$el).on('mouseout', userInputFocus);
         },
 
         /**
          Listen to backbone events (maintain this)
          @method events
-         **/
         events: {
             'click .pushToTopButton': '_onPushToTopLayer',
             'mouseout input': 'm_inputMouseOut'
         },
+         **/
 
         /**
          Send the selected division (viewer) to be top most
          @method _onPushToTopLayer
-         **/
         _onPushToTopLayer: function (e) {
             log('push to top layer')
         },
+         **/
 
         /**
          Update the spinners UI with object literal values

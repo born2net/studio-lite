@@ -135,6 +135,11 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          Convert the block into a fabric js compatible object
          @method fabricateBlock
          **/
+        /**
+         Convert the block into a fabric js compatible object
+         @Override
+         @method fabricateBlock
+         **/
         fabricateBlock: function (i_canvasScale, i_callback) {
             var self = this;
 
@@ -143,8 +148,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var label = $(domPlayerData).find('Label');
             var text = $(label).find('Text').text();
             var font = $(label).find('Font');
-            var appearance = $(domPlayerData).find('Appearance');
-            var opacity = $(appearance).attr('alpha');
 
             var t = new fabric.IText(text, {
                 fontSize: $(font).attr('fontSize'),
@@ -159,44 +162,14 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 left: 5
             });
 
+            // calculate block so it can always contain the text it holds and doesn't bleed
             self.m_minSize.w = t.currentWidth < 50 ? 50 : t.currentWidth * 1.2;
             self.m_minSize.h = t.currentHeight < 50 ? 50 : t.currentHeight * 1.2;
             var w = parseInt(layout.attr('width')) < self.m_minSize.w ? self.m_minSize.w : parseInt(layout.attr('width'));
             var h = parseInt(layout.attr('height')) < self.m_minSize.h ? self.m_minSize.h : parseInt(layout.attr('height'));
 
-            var r = new fabric.Rect({
-                width: w,
-                height: h,
-                fill: '#ececec',
-                hasRotatingPoint: false,
-                borderColor: '#5d5d5d',
-                stroke: 'black',
-                strokeWidth: 1,
-                lineWidth: 1,
-                cornerColor: 'black',
-                cornerSize: 5,
-                lockRotation: true,
-                transparentCorners: false
-            });
-
-            // log(' w:' + w + ' h:' + h);
-
-            r.setGradient('fill', {
-                x1: 0 - (w/2),
-                y1: 0,
-                x2: (w/2),
-                y2: 0,
-                colorStops: {
-                    0: "red",
-                    0.1: "black",
-                    0.2: "yellow",
-                    0.3: "green",
-                    0.8: "blue",
-                    1: "purple"
-                }
-            });
-
-            var group = new fabric.Group([ r, t ], {
+            var rec = self._fabricRect(w,h, domPlayerData);
+            var group = new fabric.Group([ rec, t ], {
                 left: parseInt(layout.attr('x')),
                 top: parseInt(layout.attr('y')),
                 width: w,
@@ -214,7 +187,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             });
 
             _.extend(self, group);
-            self.setOpacity(opacity);
+            self._fabricAlpha(domPlayerData);
             self['canvasScale'] = i_canvasScale;
             i_callback();
         },

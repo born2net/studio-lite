@@ -533,39 +533,39 @@ define(['jquery', 'backbone'], function ($) {
             });
         },
 
-        /**
-         Convert the block into a fabric js compatible object
-         @Override
-         @method fabricateBlock
-         **/
-        fabricateBlock: function (i_canvasScale, i_callback) {
+        _fabricAlpha: function (i_domPlayerData) {
             var self = this;
-
-            var domPlayerData = self._getBlockPlayerData();
-            var layout = $(domPlayerData).find('Layout');
-            var appearance = $(domPlayerData).find('Appearance');
+            var appearance = $(i_domPlayerData).find('Appearance');
             var opacity = $(appearance).attr('alpha');
-            var gradientPoints = $(domPlayerData).find('GradientPoints');
+            self.setOpacity(opacity);
+        },
+
+        _fabricColorPoints: function (i_domPlayerData) {
+            var self = this;
+            var gradientPoints = $(i_domPlayerData).find('GradientPoints');
             var points = $(gradientPoints).find('Point');
             var colorStops = {}
-            _.each(points, function(point){
+            _.each(points, function (point) {
                 var color = '#' + BB.lib.decimalToHex($(point).attr('color'));
                 var offset = $(point).attr('midpoint');
                 offset = offset / 250;
                 colorStops[offset] = color;
             });
+            return colorStops;
+        },
 
-            var w = parseInt(layout.attr('width'));
-            var h = parseInt(layout.attr('height'));
+        _fabricRect: function (i_width, i_height, i_domPlayerData) {
+            var self = this;
 
             var r = new fabric.Rect({
                 top: 0,
                 left: 0,
-                width: w,
-                height: h,
+                width: i_width,
+                height: i_height,
                 fill: '#ececec',
                 hasRotatingPoint: false,
                 stroke: 'transparent',
+                // stroke: 'red',
                 // borderColor: '#5d5d5d',
                 // strokeWidth: 1,
                 // lineWidth: 1,
@@ -576,25 +576,34 @@ define(['jquery', 'backbone'], function ($) {
             });
 
             r.setGradient('fill', {
-                x1: 0 - (w/2),
+                x1: 0 - (i_width / 2),
                 y1: 0,
-                x2: (w/2),
+                x2: (i_width / 2),
                 y2: 0,
-                colorStops: colorStops
-                /*colorStops: {
-                    0: "red",
-                    0.1: "black",
-                    0.2: "yellow",
-                    0.3: "green",
-                    0.8: "blue",
-                    1: "purple"
-                } */
+                colorStops: self._fabricColorPoints(i_domPlayerData)
             });
+            return r;
+        },
+
+        /**
+         Convert the block into a fabric js compatible object
+         @Override
+         @method fabricateBlock
+         **/
+        fabricateBlock: function (i_canvasScale, i_callback) {
+            var self = this;
+
+            var domPlayerData = self._getBlockPlayerData();
+            var layout = $(domPlayerData).find('Layout');
+
+            var w = parseInt(layout.attr('width'));
+            var h = parseInt(layout.attr('height'));
+            var rec = self._fabricRect(w, h, domPlayerData);
 
             fabric.loadSVGFromString(self.m_blockSvg, function (objects, options) {
-                var qrCode = fabric.util.groupSVGElements(objects, options);
+                var groupSvg = fabric.util.groupSVGElements(objects, options);
 
-                var group = new fabric.Group([r, qrCode], {
+                var group = new fabric.Group([rec, groupSvg], {
                     left: parseInt(layout.attr('x')),
                     top: parseInt(layout.attr('y')),
                     width: parseInt(layout.attr('width')),
@@ -612,8 +621,7 @@ define(['jquery', 'backbone'], function ($) {
                 });
 
                 _.extend(self, group);
-                self.setOpacity(opacity);
-                self.hasBorders = false;
+                self._fabricAlpha(domPlayerData);
                 self['canvasScale'] = i_canvasScale;
                 i_callback();
             });

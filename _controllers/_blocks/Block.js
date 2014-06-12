@@ -152,7 +152,6 @@ define(['jquery', 'backbone'], function ($) {
          **/
         _backgroundStateListenChange: function () {
             var self = this;
-            var xSnippet = undefined;
             var xBgSnippet = undefined;
 
             self.m_toggleBackgroundColorHandler = function (e) {
@@ -181,11 +180,6 @@ define(['jquery', 'backbone'], function ($) {
                     $(xSnippet).remove();
                     self._setBlockPlayerData(domPlayerData);
                 }
-
-                //if (self.m_placement == BB.CONSTS.PLACEMENT_IS_SCENE){
-                //    self.m_canvas.setBackgroundColor('rgba(255, 73, 64, 0.6)');
-                //}
-
             };
             $(Elements.SHOW_BACKGROUND).on('click', self.m_toggleBackgroundColorHandler);
         },

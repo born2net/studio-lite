@@ -10,6 +10,16 @@
 define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
     /**
+     Custom event fired when a new scene background color changed
+     @event SCENE_BG_COLOR_CHANGED
+     @param {This} caller
+     @param {Self} context caller
+     @param {Event} color
+     @static
+     @final
+     **/
+    BB.EVENTS.SCENE_BG_COLOR_CHANGED = 'SCENE_BG_COLOR_CHANGED';
+    /**
      event fires when scene the scene width or height modified by user
      @event Block.SCENE_BLOCK_DIMENSIONS_CHANGE
      @param {this} caller
@@ -30,6 +40,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             Block.prototype.constructor.call(this, options);
             self._initSubPanel(Elements.BLOCK_SCENE_COMMON_PROPERTIES);
             self._listenInputChanges();
+            self._listenBgColorChanges();
             self.m_canvas = undefined;
         },
 
@@ -49,16 +60,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         },
 
         /**
-         Enable scene background selector
-         @Override
-         @method _bgPopulate
-         **/
-        _bgPopulate: function () {
-            var self = this;
-            self._enableBgSelection();
-        },
-
-        /**
          Enable gradient background UI
          @method _enableBgSelection
          **/
@@ -67,6 +68,21 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             $(Elements.SHOW_BACKGROUND).prop('checked', true);
             $(Elements.BG_COLOR_SOLID_SELECTOR).show();
             $(Elements.BG_COLOR_GRADIENT_SELECTOR).hide();
+        },
+
+        /**
+         Listen to changes in scene background color selection
+         @method _listenBgColorChanges
+         **/
+        _listenBgColorChanges: function(){
+            var self = this;
+            BB.comBroker.listenWithNamespace(BB.EVENTS.SCENE_BG_COLOR_CHANGED, self, function (e) {
+                var color = e.edata;
+                log(color);
+                // self.m_canvas.setBackgroundColor('rgba(255, 73, 64, 0.6)');
+                self.m_canvas.setBackgroundColor(color);
+                self.m_canvas.renderAll();
+            });
         },
 
         /**
@@ -192,20 +208,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         },
 
         /**
-         Find the appearance section in player_data for selected block
-         @Override
-         @method _findAppearance
-         @param  {object} i_domPlayerData
-         @return {Xml} xSnippet
-
-         _findAppearance: function (i_domPlayerData) {
-            var self = this;
-            var xSnippet = $(i_domPlayerData).find('Appearance').eq(0);
-            return xSnippet;
-        },
-         **/
-
-        /**
          Find the gradient blocks in player_data for selected scene block
          @Override
          @method _findGradientPoints
@@ -286,6 +288,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         deleteBlock: function () {
             var self = this;
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.SCENE_BG_COLOR_CHANGED, self);
             $(Elements.SCENE_NAME_INPUT).off("input", self.m_inputNameChangeHandler);
             $(Elements.SCENE_WIDTH_INPUT).off("input", self.m_inputWidthChangeHandler);
             $(Elements.SCENE_WIDTH_INPUT).off("blur", self.m_inputWidthChangeHandler);

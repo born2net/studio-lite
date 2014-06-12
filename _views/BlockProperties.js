@@ -75,6 +75,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
 
             self._alphaSliderInit();
             self._bgGradientInit();
+            self._bgSceneInit();
             self._propLengthKnobsInit();
             self._videoVolumeSliderInit()
             self._rssFontSelectorInit();
@@ -83,28 +84,6 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
             self._rssPollTimeInit();
             self._labelFontSelectorInit();
             self._labelClockFontSelectorInit();
-
-            self.m_colorSettings = {
-                animationSpeed: 50,
-                animationEasing: 'swing',
-                change: $.proxy(self._onColorSelected, self),
-                changeDelay: 100,
-                control: 'hue',
-                value: '#ffffff',
-                defaultValue: '#428bca',
-                hide: null,
-                hideSpeed: 100,
-                inline: false,
-                letterCase: 'lowercase',
-                opacity: false,
-                position: 'bottom left',
-                show: null,
-                showSpeed: 100,
-                theme: 'bootstrap'
-            };
-
-            $(Elements.SCENE_BACKGROUND_SELECTOR).minicolors(self.m_colorSettings);
-
         },
 
         /**
@@ -157,6 +136,43 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
 
             // to destroy the plugin instance
             // gradient = {}; $(Elements.BG_COLOR_GRADIENT_SELECTOR).remove();
+        },
+
+        /**
+         Init the scene backgroud selector
+         @method _bgSceneInit
+         **/
+        _bgSceneInit: function () {
+            var self = this;
+            self.m_colorSettings = {
+                animationSpeed: 50,
+                animationEasing: 'swing',
+                change: $.proxy(self._onSceneBgColorSelected, self),
+                changeDelay: 100,
+                control: 'hue',
+                value: '#ffffff',
+                defaultValue: '#428bca',
+                hide: null,
+                hideSpeed: 100,
+                inline: false,
+                letterCase: 'lowercase',
+                opacity: false,
+                position: 'bottom left',
+                show: null,
+                showSpeed: 100,
+                theme: 'bootstrap'
+            };
+            $(Elements.SCENE_BACKGROUND_SELECTOR).minicolors(self.m_colorSettings);
+        },
+
+        /**
+         On scene background new color selected by minicolors
+         @method _onSceneBgColorSelected
+         @param {String} i_color
+         **/
+        _onSceneBgColorSelected: function (i_color) {
+            var self = this;
+            BB.comBroker.fire(BB.EVENTS.SCENE_BG_COLOR_CHANGED, self, self, i_color);
         },
 
         /**

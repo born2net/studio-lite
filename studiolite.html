@@ -821,18 +821,22 @@
             <div id="blockAlphaWrap" class="propControlWidth">
                 <div id="blockAlphaSlider"
                      class="noUi-target noUi-ltr noUi-horizontal noUi-background">
-
                 </div>
             </div>
             <hr/>
-            <div id="blockCommonBackgroundWrap">
-                <div class="checkbox">
-                    <label>
-                        <input id="showBackground" type="checkbox">
-                        <span data-localize="showBgColor"> Show background color</span> </label>
-                </div>
-                <div id="bgColorGradientSelector">
-                </div>
+
+            <div class="checkbox">
+                <label>
+                    <input id="showBackground" type="checkbox">
+                    <span data-localize="showBgColor"> Show background color</span> </label>
+            </div>
+
+            <div id="bgColorGradientSelector">
+            </div>
+            <div class="divPadding"></div>
+            <div id="bgColorSolidSelector" style="display: none">
+                <span>Scene background</span>
+                <input id="sceneBackgroundSelector" type="text" name="colorSelect" class="fontSelectorMiniColor fontFormatter form-control minicolor-mini" data-control="hue">
             </div>
 
     </div>

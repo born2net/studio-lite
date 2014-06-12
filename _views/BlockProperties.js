@@ -83,6 +83,28 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
             self._rssPollTimeInit();
             self._labelFontSelectorInit();
             self._labelClockFontSelectorInit();
+
+            self.m_colorSettings = {
+                animationSpeed: 50,
+                animationEasing: 'swing',
+                change: $.proxy(self._onColorSelected, self),
+                changeDelay: 100,
+                control: 'hue',
+                value: '#ffffff',
+                defaultValue: '#428bca',
+                hide: null,
+                hideSpeed: 100,
+                inline: false,
+                letterCase: 'lowercase',
+                opacity: false,
+                position: 'bottom left',
+                show: null,
+                showSpeed: 100,
+                theme: 'bootstrap'
+            };
+
+            $(Elements.SCENE_BACKGROUND_SELECTOR).minicolors(self.m_colorSettings);
+
         },
 
         /**

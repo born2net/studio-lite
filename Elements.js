@@ -88,7 +88,7 @@ Elements.STACK_WAIT_MODAL_VIEW = '#stackWaitModalView';
 Elements.BS_MODAL = '#bsModal';
 Elements.TOGGLE_PANEL = '#togglePanel';
 Elements.BG_COLOR_GRADIENT_SELECTOR = '#bgColorGradientSelector';
-Elements.BLOCK_COMMON_BACKGROUND_WRAP = '#blockCommonBackgroundWrap';
+Elements.BG_COLOR_SOLID_SELECTOR = '#bgColorSolidSelector';
 Elements.SHOW_BACKGROUND = '#showBackground';
 Elements.USER_NAME = '#userName';
 Elements.USER_PASS = '#userPass';
@@ -128,6 +128,7 @@ Elements.REMOVE_TIMELINE_BUTTON = '#removeTimelineButton';
 Elements.TIMELINES_TOTAL_LENGTH = '#timelinesTotalLength';
 Elements.TIMELINE_LENGTH = '#timelineLength';
 Elements.NEXT = '#next';
+Elements.SCENE_BACKGROUND_SELECTOR = '#sceneBackgroundSelector';
 Elements.PREVIOUS = '#prev';
 Elements.SERVER_NAME = '#serverName';
 Elements.BUISINESS_ID = '#buisinessID';
@@ -192,6 +193,7 @@ Elements.LAYOUT_EDITOR_PUSH_BOTTOM = '#layoutEditorPushBottom';
 Elements.LAYOUT_EDITOR_NEXT = '#layoutEditorNext';
 Elements.LANGUAGE_SELECTION_LOGIN = '#languageSelectionLogin';
 Elements.LANGUAGE_PROMPT = '#languagePrompt';
+
 
 // messages
 Elements.MSG_BOOTBOX_RESTART_STATIONS = '#bootBoxRestartStations';

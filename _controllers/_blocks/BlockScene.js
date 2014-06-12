@@ -48,6 +48,26 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             return data;
         },
 
+        /**
+         Enable scene background selector
+         @Override
+         @method _bgPopulate
+         **/
+        _bgPopulate: function () {
+            var self = this;
+            self._enableBgSelection();
+        },
+
+        /**
+         Enable gradient background UI
+         @method _enableBgSelection
+         **/
+        _enableBgSelection: function () {
+            var self = this;
+            $(Elements.SHOW_BACKGROUND).prop('checked', true);
+            $(Elements.BG_COLOR_SOLID_SELECTOR).show();
+            $(Elements.BG_COLOR_GRADIENT_SELECTOR).hide();
+        },
 
         /**
          When user changes a URL link for the feed, update the msdb
@@ -178,7 +198,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          @param  {object} i_domPlayerData
          @return {Xml} xSnippet
 
-        _findAppearance: function (i_domPlayerData) {
+         _findAppearance: function (i_domPlayerData) {
             var self = this;
             var xSnippet = $(i_domPlayerData).find('Appearance').eq(0);
             return xSnippet;
@@ -192,7 +212,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          @param  {object} i_domPlayerData
          @return {Xml} xSnippet
          **/
-        _findGradientPoints: function(i_domPlayerData){
+        _findGradientPoints: function (i_domPlayerData) {
             var self = this;
             var xBackground = $(i_domPlayerData).find('Layout').eq(0).siblings().filter('Background');
             var xSnippet = $(xBackground).find('GradientPoints').eq(0);
@@ -252,7 +272,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          @method setCanvas
          @param  {object} i_canvas
          **/
-        setCanvas: function(i_canvas){
+        setCanvas: function (i_canvas) {
             var self = this;
             self.m_canvas = i_canvas;
             // self.m_canvas.setBackgroundColor('rgba(255, 73, 64, 0.6)');

@@ -121,26 +121,30 @@ define(['jquery', 'backbone'], function ($) {
 
         /**
          Enable gradient background UI
-         @method _enableGradient
+         @method _enableBgSelection
          **/
-        _enableGradient: function () {
+        _enableBgSelection: function () {
             var self = this;
             $(Elements.SHOW_BACKGROUND).prop('checked', true);
+            $(Elements.BG_COLOR_SOLID_SELECTOR).hide();
             $(Elements.BG_COLOR_GRADIENT_SELECTOR).show();
         },
 
         /**
          Disable the gradient background UI
-         @method _disableGradient
+         @method _disableBgSelection
          **/
-        _disableGradient: function () {
+        _disableBgSelection: function () {
             var self = this;
             $(Elements.SHOW_BACKGROUND).prop('checked', false);
             $(Elements.BG_COLOR_GRADIENT_SELECTOR).hide();
+            $(Elements.BG_COLOR_SOLID_SELECTOR).hide();
             var domPlayerData = self._getBlockPlayerData();
             var gradientPoints = self._findGradientPoints(domPlayerData);
             $(gradientPoints).empty();
         },
+
+
 
         /**
          Listen to change in background enable / disable states
@@ -158,7 +162,7 @@ define(['jquery', 'backbone'], function ($) {
                 var domPlayerData = self._getBlockPlayerData();
                 var checked = $(e.target).prop('checked') == true ? 1 : 0;
                 if (checked) {
-                    self._enableGradient();
+                    self._enableBgSelection();
                     xBgSnippet = BB.PepperHelper.getCommonBackgroundXML();
                     var data = $(domPlayerData).find('Data').eq(0);
                     var bgData = $(data).find('Background');
@@ -169,10 +173,10 @@ define(['jquery', 'backbone'], function ($) {
                     }
                     var player_data = pepper.xmlToStringIEfix(domPlayerData);
                     domPlayerData = $.parseXML(player_data);
-                    self._gradientPopulate();
+                    self._bgPopulate();
                     self._setBlockPlayerData(domPlayerData);
                 } else {
-                    self._disableGradient();
+                    self._disableBgSelection();
                     var xSnippet = self._findBackground(domPlayerData);
                     $(xSnippet).remove();
                     self._setBlockPlayerData(domPlayerData);
@@ -259,11 +263,11 @@ define(['jquery', 'backbone'], function ($) {
 
         /**
          On changes in msdb model updated UI common gradient background properties
-         @method _gradientPopulate
+         @method _bgPopulate
          @param {Number} i_playerData
          @return {Number} Unique clientId.
          **/
-        _gradientPopulate: function () {
+        _bgPopulate: function () {
             var self = this;
             var gradient = $(Elements.BG_COLOR_GRADIENT_SELECTOR).data("gradientPicker-sel");
             // gradient.changeFillDirection("top"); /* change direction future support */
@@ -271,7 +275,7 @@ define(['jquery', 'backbone'], function ($) {
             var domPlayerData = self._getBlockPlayerData();
             var xSnippet = self._findGradientPoints(domPlayerData);
             if (xSnippet.length > 0) {
-                self._enableGradient();
+                self._enableBgSelection();
                 var points = $(xSnippet).find('Point');
                 $.each(points, function (i, point) {
                     var pointColor = BB.lib.decimalToHex($(point).attr('color'));
@@ -279,7 +283,7 @@ define(['jquery', 'backbone'], function ($) {
                     gradient.addPoint(pointMidpoint, pointColor, true);
                 });
             } else {
-                self._disableGradient();
+                self._disableBgSelection();
             }
         },
 
@@ -308,7 +312,7 @@ define(['jquery', 'backbone'], function ($) {
             self._updateTitle();
             self._updateTitleTab();
             self._alphaPopulate();
-            self._gradientPopulate();
+            self._bgPopulate();
 
             log('block selected ' + self.m_block_id);
 
@@ -317,7 +321,6 @@ define(['jquery', 'backbone'], function ($) {
                 {
                     $(Elements.CHANNEL_BLOCK_PROPS).show();
                     $(Elements.SCENE_BLOCK_PROPS).hide();
-                    $(Elements.BLOCK_COMMON_BACKGROUND_WRAP).show();
                     self._updateBlockLength();
                     break;
                 }
@@ -326,7 +329,6 @@ define(['jquery', 'backbone'], function ($) {
                 {
                     $(Elements.CHANNEL_BLOCK_PROPS).hide();
                     $(Elements.SCENE_BLOCK_PROPS).show();
-                    $(Elements.BLOCK_COMMON_BACKGROUND_WRAP).show();
                     self._updateBlockDimensions();
                     break;
                 }
@@ -335,7 +337,6 @@ define(['jquery', 'backbone'], function ($) {
                 {
                     $(Elements.CHANNEL_BLOCK_PROPS).hide();
                     $(Elements.SCENE_BLOCK_PROPS).hide();
-                    $(Elements.BLOCK_COMMON_BACKGROUND_WRAP).hide();
                     self._updateBlockLength();
                     break;
                 }

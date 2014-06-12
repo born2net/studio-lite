@@ -88,6 +88,7 @@ Elements.STACK_WAIT_MODAL_VIEW = '#stackWaitModalView';
 Elements.BS_MODAL = '#bsModal';
 Elements.TOGGLE_PANEL = '#togglePanel';
 Elements.BG_COLOR_GRADIENT_SELECTOR = '#bgColorGradientSelector';
+Elements.BLOCK_COMMON_BACKGROUND_WRAP = '#blockCommonBackgroundWrap';
 Elements.SHOW_BACKGROUND = '#showBackground';
 Elements.USER_NAME = '#userName';
 Elements.USER_PASS = '#userPass';

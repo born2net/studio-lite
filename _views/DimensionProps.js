@@ -23,13 +23,13 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
             self.m_cachedValues = {};
             self.m_showAngle = self.options.showAngle || false;
 
-            if (self.m_showAngle == false)
-                $('.DimAngle').hide();
-
             self.$el = $(Elements.DIMENSION_PROPS_TEMPLATE).clone();
             self.el = self.$el[0];
             $(self.options.appendTo).append(self.el).fadeIn();
             self.$el.show();
+
+            if (self.m_showAngle == false)
+                $('.DimAngle', self.el).hide();
 
             var currID = self.$el.attr('id');
             self.$el.attr('id', _.uniqueId(currID));

@@ -358,7 +358,8 @@
                             style="font-size: 1.3em" class="fa fa-share"> </i></button>
                     <div class="input-group" style="margin-left: 0px">
                         <div class="input-group-btn">
-                            <button type="button" class="btn btn-default input-sm dropdown-toggle" data-toggle="dropdown">
+                            <button type="button" class="btn btn-default input-sm dropdown-toggle"
+                                    data-toggle="dropdown">
                                 <span data-localize="sceneBlockList">Scene</span> <span class="caret"></span></button>
                             <ul id="sceneBlockList" class="selectSceneItemDropDown dropdown-menu">
                             </ul>
@@ -633,201 +634,209 @@
     <li><a href="#blockCommonProperties" data-toggle="tab" data-localize="style">Style</a></li>
 </ul>
 <div class="tab-content">
-    <div id="blockSubProperties" class="noTopBorder tab-pane active panel panel-default yScroll"
-         style="height: 100px;">
-        <div class="panel-body">
-            <div id="blockImageCommonProperties" style="display: none">
-                <label for="imageAspectRatio" data-localize="aspectRatio">Aspect ratio</label>
-                <select id="imageAspectRatio" name="Aspect ratio" data-role="slider">
-                    <option value="off" data-localize="off">Off</option>
-                    <option value="on" data-localize="on">On</option>
-                </select>
+<div id="blockSubProperties" class="noTopBorder tab-pane active panel panel-default yScroll"
+     style="height: 100px;">
+    <div class="panel-body">
+        <div id="blockImageCommonProperties" style="display: none">
+            <label for="imageAspectRatio" data-localize="aspectRatio">Aspect ratio</label>
+            <select id="imageAspectRatio" name="Aspect ratio" data-role="slider">
+                <option value="off" data-localize="off">Off</option>
+                <option value="on" data-localize="on">On</option>
+            </select>
+        </div>
+        <div id="blockVideoCommonProperties" style="display: none"><span
+                data-localize="volumeLevel">Volume level</span> <span
+                id="videoVolumeLabel">100</span>
+
+            <div id="videoVolumeWrap" class="propControlWidth">
+                <div id="videoVolumeWrapSlider"
+                     class="noUi-target noUi-ltr noUi-horizontal noUi-background"></div>
             </div>
-            <div id="blockVideoCommonProperties" style="display: none"><span
-                    data-localize="volumeLevel">Volume level</span> <span
-                    id="videoVolumeLabel">100</span>
-
-                <div id="videoVolumeWrap" class="propControlWidth">
-                    <div id="videoVolumeWrapSlider"
-                         class="noUi-target noUi-ltr noUi-horizontal noUi-background"></div>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        <input id="videoAutoRewind" type="checkbox">
-                        <span data-localize="autoRewind"> Auto rewind</span> </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        <input id="videoAspectRatio" type="checkbox">
-                        <span data-localize="aspectRatio"> Aspect ratio</span> </label>
-                </div>
+            <div class="checkbox">
+                <label>
+                    <input id="videoAutoRewind" type="checkbox">
+                    <span data-localize="autoRewind"> Auto rewind</span> </label>
             </div>
-            <div id="blockRSSCommonProperties" style="display: none">
-                <hr class="hrThin"/>
-                <span data-localize="rssNewsSource">RSS news source</span>
-                <select id="rssSource" class="propControlWidth form-control">
-                </select>
-
-                <div>
-                    <div data-role="fieldcontain" data-inset="true">
-                        <input id="rssLink" type="text" name="name" class="propControlWidth" value=""
-                               placeholder="Enter RSS Link Text" data-localize="EnterRSSLink" style="display: none">
-                    </div>
-                </div>
-                <hr class="hrThin"/>
-                <span data-localize="rssRefreash">RSS refresh timer (minutes)</span>
-
-                <div id="rssPollSpinner" class="spinner">
-                    <input id="rssMinRefreshTime" type="text" class="input-mini spinner-input">
-
-                    <div class="spinner-buttons	btn-group btn-group-vertical">
-                        <button type="button" class="squareButton btn spinner-up"><i class="fa fa-chevron-up"></i>
-                        </button>
-                        <button type="button" class="squareButton btn spinner-down"><i
-                                class="fa fa-chevron-down"></i></button>
-                    </div>
-                </div>
-                <div style="clear: both"></div>
-                <hr class="hrThin"/>
-                <span data-localize="rsscroll">RSS scroll direction</span>
-                <select id="rssModeSelect" class="propControlWidth form-control">
-                    <option data-localize="horizontalMode">Horizontal mode</option>
-                    <option data-localize="verticalMode">Vertical mode</option>
-                </select>
-                <hr class="hrThin"/>
-                <span data-localize="scrollSpeed">Scroll speed</span>
-                <select id="rssScrollSpeed" class="propControlWidth form-control">
-                    <option data-localize="slow">Slow</option>
-                    <option data-localize="medium">Medium</option>
-                    <option data-localize="fast">Fast</option>
-                </select>
-                <hr class="hrThin"/>
-                <span data-localize="font">Font</span>
-
-                <div id="rssFontSettings"></div>
-                <hr class="hrThin"/>
-            </div>
-            <div id="blockMRSSCommonProperties" style="display: none">
-                <hr class="hrThin"/>
-                <span data-localize="rssNewsSource">RSS news source</span>
-                <select id="mrssSource" class="propControlWidth form-control">
-                </select>
-
-                <div>
-                    <div data-role="fieldcontain" data-inset="true">
-                        <input id="mrssLink" type="text" name="name" class="propControlWidth" value=""
-                               placeholder="Enter RSS Link Text" data-localize="EnterRSSLink" style="display: none">
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input id="mrssAspectRatio" type="checkbox">
-                            <span data-localize="maintainAR"> Maintain aspect ratio</span> </label>
-                    </div>
-                </div>
-            </div>
-            <div id="blockSceneCommonProperties" style="display: none"><span>Scene properties</span>
-
-                <div data-role="fieldcontain" data-inset="true">
-                    <input id="sceneNameInput" type="text" name="name" value="" placeholder="Scene name"
-                           data-localize="enterSceneText">
-                </div>
-                <div data-role="fieldcontain" data-inset="true">
-                    <input id="sceneWidthInput" type="text" name="name" value="" placeholder="Scene width"
-                           data-localize="enterSceneWidth">
-                </div>
-                <div data-role="fieldcontain" data-inset="true">
-                    <input id="sceneHeightInput" type="text" name="name" value="" placeholder="Scene height"
-                           data-localize="enterSceneHeight">
-                </div>
-            </div>
-            <div id="blockQRCommonProperties" style="display: none"><span>QR</span>
-
-                <div data-role="fieldcontain" data-inset="true">
-                    <input type="text" name="name" id="qrText" value=""
-                           placeholder="Enter QR Text" data-localize="enterQRText">
-                </div>
-            </div>
-            <div id="blockHTMLCommonProperties" style="display: none"><span
-                    data-localize="webAddr">Web address</span>
-
-                <div data-role="fieldcontain" data-inset="true">
-                    <input type="text" name="name" id="htmlText" value="" placeholder="http://...">
-                </div>
-            </div>
-            <div id="blockExtImageCommonProperties" style="display: none"><span
-                    data-localize="urlAddr">URL address</span>
-
-                <div data-role="fieldcontain" data-inset="true">
-                    <input type="text" name="name" id="extImageText" value="" placeholder="http://...">
-                </div>
-            </div>
-            <div id="blockExtVideoCommonProperties" style="display: none"><span
-                    data-localize="urlAddr">URL address</span>
-
-                <div data-role="fieldcontain" data-inset="true">
-                    <input type="text" name="name" id="extVideoText" value="" placeholder="http://...">
-                </div>
-            </div>
-            <div id="blockLabelCommonProperties" style="display: none"><span data-localize="labelText">Label text</span>
-
-                <div data-role="fieldcontain" data-inset="true">
-                    <textarea id="labelText" class="span8 propControlWidth" rows="3" placeholder="enter text here" data-localize="enterText">
-                    </textarea>
-                </div>
-
-                <hr class="propControlWidth"/>
-                <div id="labelFontSettings"></div>
-            </div>
-            <div id="blockClockCommonProperties" style="display: none"><span
-                    data-localize="chooseFormat">Choose format</span>
-
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="clockRadioOpts" value="longDateAndTime" checked>
-                        <span><small>Friday, Mar 21 2014 at 8:59AM</small></span> </label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="clockRadioOpts" value="longDate" checked>
-                        <span><small>Friday, Mar 21 2014</small></span> </label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="clockRadioOpts" value="shortDayTime" checked>
-                        <span><small>Friday 9:10 AM</small></span> </label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="clockRadioOpts" value="date" checked>
-                        <span><small>3/21/14</small></span> </label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="clockRadioOpts" value="time" checked>
-                        <span><small>9:00:39 AM</small></span> </label>
-                </div>
-                <hr class="propControlWidth"/>
-                <div id="clockFontSettings"></div>
+            <div class="checkbox">
+                <label>
+                    <input id="videoAspectRatio" type="checkbox">
+                    <span data-localize="aspectRatio"> Aspect ratio</span> </label>
             </div>
         </div>
+        <div id="blockRSSCommonProperties" style="display: none">
+            <hr class="hrThin"/>
+            <span data-localize="rssNewsSource">RSS news source</span>
+            <select id="rssSource" class="propControlWidth form-control">
+            </select>
+
+            <div>
+                <div data-role="fieldcontain" data-inset="true">
+                    <input id="rssLink" type="text" name="name" class="propControlWidth" value=""
+                           placeholder="Enter RSS Link Text" data-localize="EnterRSSLink" style="display: none">
+                </div>
+            </div>
+            <hr class="hrThin"/>
+            <span data-localize="rssRefreash">RSS refresh timer (minutes)</span>
+
+            <div id="rssPollSpinner" class="spinner">
+                <input id="rssMinRefreshTime" type="text" class="input-mini spinner-input">
+
+                <div class="spinner-buttons	btn-group btn-group-vertical">
+                    <button type="button" class="squareButton btn spinner-up"><i class="fa fa-chevron-up"></i>
+                    </button>
+                    <button type="button" class="squareButton btn spinner-down"><i
+                            class="fa fa-chevron-down"></i></button>
+                </div>
+            </div>
+            <div style="clear: both"></div>
+            <hr class="hrThin"/>
+            <span data-localize="rsscroll">RSS scroll direction</span>
+            <select id="rssModeSelect" class="propControlWidth form-control">
+                <option data-localize="horizontalMode">Horizontal mode</option>
+                <option data-localize="verticalMode">Vertical mode</option>
+            </select>
+            <hr class="hrThin"/>
+            <span data-localize="scrollSpeed">Scroll speed</span>
+            <select id="rssScrollSpeed" class="propControlWidth form-control">
+                <option data-localize="slow">Slow</option>
+                <option data-localize="medium">Medium</option>
+                <option data-localize="fast">Fast</option>
+            </select>
+            <hr class="hrThin"/>
+            <span data-localize="font">Font</span>
+
+            <div id="rssFontSettings"></div>
+            <hr class="hrThin"/>
+        </div>
+        <div id="blockMRSSCommonProperties" style="display: none">
+            <hr class="hrThin"/>
+            <span data-localize="rssNewsSource">RSS news source</span>
+            <select id="mrssSource" class="propControlWidth form-control">
+            </select>
+
+            <div>
+                <div data-role="fieldcontain" data-inset="true">
+                    <input id="mrssLink" type="text" name="name" class="propControlWidth" value=""
+                           placeholder="Enter RSS Link Text" data-localize="EnterRSSLink" style="display: none">
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input id="mrssAspectRatio" type="checkbox">
+                        <span data-localize="maintainAR"> Maintain aspect ratio</span> </label>
+                </div>
+            </div>
+        </div>
+        <div id="blockSceneCommonProperties" style="display: none"><span>Scene properties</span>
+
+            <div data-role="fieldcontain" data-inset="true">
+                <input id="sceneNameInput" type="text" name="name" value="" placeholder="Scene name"
+                       data-localize="enterSceneText">
+            </div>
+            <div data-role="fieldcontain" data-inset="true">
+                <input id="sceneWidthInput" type="text" name="name" value="" placeholder="Scene width"
+                       data-localize="enterSceneWidth">
+            </div>
+            <div data-role="fieldcontain" data-inset="true">
+                <input id="sceneHeightInput" type="text" name="name" value="" placeholder="Scene height"
+                       data-localize="enterSceneHeight">
+            </div>
+        </div>
+        <div id="blockQRCommonProperties" style="display: none"><span>QR</span>
+
+            <div data-role="fieldcontain" data-inset="true">
+                <input type="text" name="name" id="qrText" value=""
+                       placeholder="Enter QR Text" data-localize="enterQRText">
+            </div>
+        </div>
+        <div id="blockHTMLCommonProperties" style="display: none"><span
+                data-localize="webAddr">Web address</span>
+
+            <div data-role="fieldcontain" data-inset="true">
+                <input type="text" name="name" id="htmlText" value="" placeholder="http://...">
+            </div>
+        </div>
+        <div id="blockExtImageCommonProperties" style="display: none"><span
+                data-localize="urlAddr">URL address</span>
+
+            <div data-role="fieldcontain" data-inset="true">
+                <input type="text" name="name" id="extImageText" value="" placeholder="http://...">
+            </div>
+        </div>
+        <div id="blockExtVideoCommonProperties" style="display: none"><span
+                data-localize="urlAddr">URL address</span>
+
+            <div data-role="fieldcontain" data-inset="true">
+                <input type="text" name="name" id="extVideoText" value="" placeholder="http://...">
+            </div>
+        </div>
+        <div id="blockLabelCommonProperties" style="display: none"><span data-localize="labelText">Label text</span>
+
+            <div data-role="fieldcontain" data-inset="true">
+                <textarea id="labelText" class="span8 propControlWidth" rows="3" placeholder="enter text here"
+                          data-localize="enterText">
+                </textarea>
+            </div>
+
+            <hr class="propControlWidth"/>
+            <div id="labelFontSettings"></div>
+        </div>
+        <div id="blockClockCommonProperties" style="display: none"><span
+                data-localize="chooseFormat">Choose format</span>
+
+            <div class="radio">
+                <label>
+                    <input type="radio" name="clockRadioOpts" value="longDateAndTime" checked>
+                    <span><small>Friday, Mar 21 2014 at 8:59AM</small></span> </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="clockRadioOpts" value="longDate" checked>
+                    <span><small>Friday, Mar 21 2014</small></span> </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="clockRadioOpts" value="shortDayTime" checked>
+                    <span><small>Friday 9:10 AM</small></span> </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="clockRadioOpts" value="date" checked>
+                    <span><small>3/21/14</small></span> </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="clockRadioOpts" value="time" checked>
+                    <span><small>9:00:39 AM</small></span> </label>
+            </div>
+            <hr class="propControlWidth"/>
+            <div id="clockFontSettings"></div>
+        </div>
     </div>
-    <div id="blockCommonProperties" class="noTopBorder tab-pane panel panel-default yScroll"
-         style="height: 100px;">
-        <div class="panel-body"><span>Alpha </span> <span id="blockAlphaLabel">100</span>
+</div>
+<div id="blockCommonProperties" class="noTopBorder tab-pane panel panel-default yScroll"
+     style="height: 100px;">
+    <div class="panel-body"><span>Alpha </span> <span id="blockAlphaLabel">100</span>
+
 
             <div id="blockAlphaWrap" class="propControlWidth">
                 <div id="blockAlphaSlider"
-                     class="noUi-target noUi-ltr noUi-horizontal noUi-background"></div>
+                     class="noUi-target noUi-ltr noUi-horizontal noUi-background">
+
+                </div>
             </div>
             <hr/>
-            <div class="checkbox">
-                <label>
-                    <input id="showBackground" type="checkbox">
-                    <span data-localize="showBgColor"> Show background color</span> </label>
+            <div id="blockCommonBackgroundWrap">
+                <div class="checkbox">
+                    <label>
+                        <input id="showBackground" type="checkbox">
+                        <span data-localize="showBgColor"> Show background color</span> </label>
+                </div>
+                <div id="bgColorGradientSelector">
+                </div>
             </div>
-            <div id="bgColorGradientSelector"></div>
-        </div>
+
     </div>
+</div>
 </div>
 </div>
 </div>
@@ -837,7 +846,7 @@
 </div>
 </div>
 <div id="footer"><br>
-    <span id="footerText">&nbsp;MediaSignage Inc &#169; | version 0.9.41 </span></div>
+    <span id="footerText">&nbsp;MediaSignage Inc &#169; | version 0.9.42 </span></div>
 
 <!-- Modal -->
 <div class="modal modal-static fade" id="bsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -989,7 +998,8 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h4 class="panel-title"><a data-toggle="collapse" data-parent="#" href="#c1" data-localize="components"> components </a>
+                    <h4 class="panel-title"><a data-toggle="collapse" data-parent="#" href="#c1"
+                                               data-localize="components"> components </a>
                     </h4>
                 </div>
                 <div id="c1" class="panel-collapse collapse">
@@ -1002,7 +1012,8 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h4 class="panel-title"><a data-toggle="collapse" data-parent="#" href="#c2" data-localize="resources"> resources </a>
+                    <h4 class="panel-title"><a data-toggle="collapse" data-parent="#" href="#c2"
+                                               data-localize="resources"> resources </a>
                     </h4>
                 </div>
                 <div id="c2" class="panel-collapse collapse">
@@ -1015,7 +1026,8 @@
 
             <div id="addSceneBlockListContainer" class="panel panel-default">
                 <div class="panel-heading">
-                    <h4 class="panel-title"><a data-toggle="collapse" data-parent="#" href="#c3" data-localize="scenes"> scenes </a>
+                    <h4 class="panel-title"><a data-toggle="collapse" data-parent="#" href="#c3" data-localize="scenes">
+                        scenes </a>
                     </h4>
                 </div>
                 <div id="c3" class="panel-collapse collapse">

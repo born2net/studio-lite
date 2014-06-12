@@ -317,6 +317,7 @@ define(['jquery', 'backbone'], function ($) {
                 {
                     $(Elements.CHANNEL_BLOCK_PROPS).show();
                     $(Elements.SCENE_BLOCK_PROPS).hide();
+                    $(Elements.BLOCK_COMMON_BACKGROUND_WRAP).show();
                     self._updateBlockLength();
                     break;
                 }
@@ -325,6 +326,7 @@ define(['jquery', 'backbone'], function ($) {
                 {
                     $(Elements.CHANNEL_BLOCK_PROPS).hide();
                     $(Elements.SCENE_BLOCK_PROPS).show();
+                    $(Elements.BLOCK_COMMON_BACKGROUND_WRAP).show();
                     self._updateBlockDimensions();
                     break;
                 }
@@ -333,6 +335,7 @@ define(['jquery', 'backbone'], function ($) {
                 {
                     $(Elements.CHANNEL_BLOCK_PROPS).hide();
                     $(Elements.SCENE_BLOCK_PROPS).hide();
+                    $(Elements.BLOCK_COMMON_BACKGROUND_WRAP).hide();
                     self._updateBlockLength();
                     break;
                 }

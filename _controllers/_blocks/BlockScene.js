@@ -268,6 +268,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var self = this;
             $(Elements.SCENE_NAME_INPUT).off("input", self.m_inputNameChangeHandler);
             $(Elements.SCENE_WIDTH_INPUT).off("input", self.m_inputWidthChangeHandler);
+            $(Elements.SCENE_WIDTH_INPUT).off("blur", self.m_inputWidthChangeHandler);
+            $(Elements.SCENE_HEIGHT_INPUT).off("blur", self.m_inputWidthChangeHandler);
             $(Elements.SCENE_HEIGHT_INPUT).off("input", self.m_inputHeightChangeHandler);
             self._deleteBlock();
         }

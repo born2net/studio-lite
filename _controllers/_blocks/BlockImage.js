@@ -1,5 +1,5 @@
 /**
- * Image block resided inside a Scenes or timeline
+ * Image block resided inside a Scenes or timeline and in scene renders loaded images
  * @class BlockImage
  * @extends Block
  * @constructor

@@ -1341,6 +1341,42 @@ Pepper.prototype = {
     },
 
     /**
+     Get the type of a resource (png/jpg...) for specified native_id
+     @method getResourceType
+     @param {Number} i_resource_id
+     @return {String} resourceType
+     **/
+    getResourceType: function (i_resource_id) {
+        var self = this;
+        var recResource = self.m_msdb.table_resources().getRec(i_resource_id);
+        return recResource['resource_type'];
+    },
+
+    /**
+     Get the native resource id from handle
+     @method getResourceNativeID
+     @param {Number} i_resource_id
+     @return {Number} nativeID
+     **/
+    getResourceNativeID: function (i_resource_id) {
+        var self = this;
+        var recResource = self.m_msdb.table_resources().getRec(i_resource_id);
+        return recResource['native_id'];
+    },
+
+    /**
+     Get the name of a resource from the resources table using it's native_id
+     @method getResourceName
+     @param {Number} i_resource_id
+     @return {Number} resourceName
+     **/
+    getResourceName: function (i_resource_id) {
+        var self = this;
+        var recResource = self.m_msdb.table_resources().getRec(i_resource_id);
+        return recResource['resource_name'];
+    },
+
+    /**
      Set a resource record via its resource_id.
      The method uses generic key / value fields so it can set any part of the record.
      @method setResourceRecord
@@ -1698,30 +1734,6 @@ Pepper.prototype = {
                 self.m_msdb.table_station_ads().openForDelete(branch_station_id);
             }
         });
-    },
-
-    /**
-     Get the type of a resource (png/jpg...) for specified native_id
-     @method getResourceType
-     @param {Number} i_resource_id
-     @return {String} resourceType
-     **/
-    getResourceType: function (i_resource_id) {
-        var self = this;
-        var recResource = self.m_msdb.table_resources().getRec(i_resource_id);
-        return recResource['resource_type'];
-    },
-
-    /**
-     Get the name of a resource from the resources table using it's native_id
-     @method getResourceName
-     @param {Number} i_resource_id
-     @return {Number} resourceName
-     **/
-    getResourceName: function (i_resource_id) {
-        var self = this;
-        var recResource = self.m_msdb.table_resources().getRec(i_resource_id);
-        return recResource['resource_name'];
     },
 
     /**

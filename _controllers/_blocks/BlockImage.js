@@ -35,10 +35,11 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var domPlayerData = self._getBlockPlayerData();
             var xSnippet = $(domPlayerData).find('Resource');
             self.m_resourceID = $(xSnippet).attr('hResource');
+            self.m_nativeID = pepper.getResourceNativeID(self.m_resourceID);
             self.m_blockName = pepper.getResourceRecord(self.m_resourceID).resource_name;
             self.m_blockDescription = pepper.getResourceName(self.m_resourceID);
-            var fileFormat = pepper.getResourceType(self.m_resourceID);
-            self.m_blockIcon = BB.PepperHelper.getIcon(fileFormat);
+            self.m_fileFormat = pepper.getResourceType(self.m_resourceID);
+            self.m_blockIcon = BB.PepperHelper.getIcon(self.m_fileFormat);
         },
 
         /**
@@ -104,31 +105,45 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
             var domPlayerData = self._getBlockPlayerData();
             var layout = $(domPlayerData).find('Layout');
-            var imgPath = 'https://upload.wikimedia.org/wikipedia/commons/0/0f/Aquarium_in_HK_Ocean_Park.jpg';
-            var imgElement;
-            var a = $('<img style="display: none" id="hope2" src="' + imgPath + '"/>');
-            $('body').append(a);
-            imgElement = $('#hope2')[0];
 
-            var img = new fabric.Image(imgElement, {
-                left: parseInt(layout.attr('x')),
-                top: parseInt(layout.attr('y')),
-                width: parseInt(layout.attr('width')),
-                height: parseInt(layout.attr('height')),
-                angle: parseInt(layout.attr('rotation')),
-                hasRotatingPoint: false,
-                borderColor: '#5d5d5d',
-                stroke: 'black',
-                strokeWidth: 1,
-                lineWidth: 1,
-                cornerColor: 'black',
-                cornerSize: 5,
-                lockRotation: true,
-                transparentCorners: false
-            });
-            _.extend(self, img);
-            self['canvasScale'] = i_canvasScale;
-            i_callback();
+            // var resource = $(domPlayerData).find('Resource');
+            // var hResource = $(resource).attr('hResource');
+            // var resourceName = pepper.getResourceName(hResource);
+            var businessID = pepper.getUserData().businessID;
+            var elemID = _.uniqueId('imgElemrand')
+            var imgPath = 'https://s3-us-west-2.amazonaws.com/oregon-signage-resources/business' + businessID + '/resources/' + self.m_nativeID + '.' + self.m_fileFormat;
+            //var imgPath = 'https://s3-us-west-2.amazonaws.com/oregon-signage-resources/business1000/resources/333.png';
+            // var imgElement;
+            // var a = $('<img style="display: none" id="' + elemID + '" src="' + imgPath + '"/>');
+            // $('body').append(a);
+            // imgElement = $('#'+elemID)[0];
+
+            $('<img src="'+ imgPath +'" style="display: none" >').load(function() {
+                $(this).width(1000).height(800).appendTo('body');
+
+                var img = new fabric.Image(this, {
+                    left: parseInt(layout.attr('x')),
+                    top: parseInt(layout.attr('y')),
+                    width: parseInt(layout.attr('width')),
+                    height: parseInt(layout.attr('height')),
+                    angle: parseInt(layout.attr('rotation')),
+                    hasRotatingPoint: false,
+                    borderColor: '#5d5d5d',
+                    stroke: 'black',
+                    strokeWidth: 1,
+                    lineWidth: 1,
+                    cornerColor: 'black',
+                    cornerSize: 5,
+                    lockRotation: true,
+                    transparentCorners: false
+                });
+                _.extend(self, img);
+                self._fabricAlpha(domPlayerData);
+                self['canvasScale'] = i_canvasScale;
+                i_callback();
+            })
+
+
         },
 
         /**

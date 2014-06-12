@@ -105,18 +105,9 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
             var domPlayerData = self._getBlockPlayerData();
             var layout = $(domPlayerData).find('Layout');
-
-            // var resource = $(domPlayerData).find('Resource');
-            // var hResource = $(resource).attr('hResource');
-            // var resourceName = pepper.getResourceName(hResource);
             var businessID = pepper.getUserData().businessID;
             var elemID = _.uniqueId('imgElemrand')
             var imgPath = 'https://s3-us-west-2.amazonaws.com/oregon-signage-resources/business' + businessID + '/resources/' + self.m_nativeID + '.' + self.m_fileFormat;
-            //var imgPath = 'https://s3-us-west-2.amazonaws.com/oregon-signage-resources/business1000/resources/333.png';
-            // var imgElement;
-            // var a = $('<img style="display: none" id="' + elemID + '" src="' + imgPath + '"/>');
-            // $('body').append(a);
-            // imgElement = $('#'+elemID)[0];
 
             $('<img src="'+ imgPath +'" style="display: none" >').load(function() {
                 $(this).width(1000).height(800).appendTo('body');
@@ -142,8 +133,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 self['canvasScale'] = i_canvasScale;
                 i_callback();
             })
-
-
         },
 
         /**

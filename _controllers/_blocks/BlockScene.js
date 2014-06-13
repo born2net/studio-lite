@@ -78,10 +78,10 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var self = this;
             BB.comBroker.listenWithNamespace(BB.EVENTS.SCENE_BG_COLOR_CHANGED, self, function (e) {
                 var color = e.edata;
-                log(color);
-                // self.m_canvas.setBackgroundColor('rgba(255, 73, 64, 0.6)');
-                self.m_canvas.setBackgroundColor(color);
-                self.m_canvas.renderAll();
+                var domPlayerData = self._getBlockPlayerData();
+                var xPoints = self._findGradientPoints(domPlayerData);
+                $(xPoints).find('Point').attr('color', BB.lib.hexToDecimal(color));
+                self._setBlockPlayerData(domPlayerData);
             });
         },
 
@@ -253,6 +253,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                     $(Elements.SCENE_NAME_INPUT).val($(domPlayer).attr('label'));
                     $(Elements.SCENE_WIDTH_INPUT).val($(domPlayerLayout).attr('width'));
                     $(Elements.SCENE_HEIGHT_INPUT).val($(domPlayerLayout).attr('height'));
+                    self._setBgScene();
                     break;
                 }
             }
@@ -270,6 +271,21 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         },
 
         /**
+         Set a scene's background solid color
+         @method _setBgScene
+         **/
+        _setBgScene: function(){
+            var self = this;
+            var domPlayerData = self._getBlockPlayerData();
+            var color = self._fabricColorPoints(domPlayerData);
+            if (_.isUndefined(color['0.5']))
+                return;
+            self.m_canvas.setBackgroundColor(color['0.5']);
+            self.m_canvas.renderAll();
+
+        },
+
+        /**
          Set reference to managed canvas
          @method setCanvas
          @param  {object} i_canvas
@@ -277,8 +293,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         setCanvas: function (i_canvas) {
             var self = this;
             self.m_canvas = i_canvas;
-            // self.m_canvas.setBackgroundColor('rgba(255, 73, 64, 0.6)');
-            // self.m_canvas.renderAll();
         },
 
         /**

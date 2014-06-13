@@ -172,7 +172,7 @@ define(['jquery', 'backbone'], function ($) {
                     }
                     var player_data = pepper.xmlToStringIEfix(domPlayerData);
                     domPlayerData = $.parseXML(player_data);
-                    self._bgPopulate();
+                    self._bgPropsPopulate();
                     self._setBlockPlayerData(domPlayerData);
                 } else {
                     self._disableBgSelection();
@@ -257,11 +257,11 @@ define(['jquery', 'backbone'], function ($) {
 
         /**
          On changes in msdb model updated UI common gradient background properties
-         @method _bgPopulate
+         @method _bgPropsPopulate
          @param {Number} i_playerData
          @return {Number} Unique clientId.
          **/
-        _bgPopulate: function () {
+        _bgPropsPopulate: function () {
             var self = this;
             var gradient = $(Elements.BG_COLOR_GRADIENT_SELECTOR).data("gradientPicker-sel");
             // gradient.changeFillDirection("top"); /* change direction future support */
@@ -306,7 +306,7 @@ define(['jquery', 'backbone'], function ($) {
             self._updateTitle();
             self._updateTitleTab();
             self._alphaPopulate();
-            self._bgPopulate();
+            self._bgPropsPopulate();
 
             log('block selected ' + self.m_block_id);
 
@@ -607,7 +607,7 @@ define(['jquery', 'backbone'], function ($) {
         },
 
         /**
-         Convert the block into a fabric js compatible object
+         Convert the block into a fabric js compatible object, called externally on creation of block
          @Override
          @method fabricateBlock
          **/

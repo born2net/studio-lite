@@ -295,10 +295,12 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _populateSceneBg: function () {
             var self = this;
             var domPlayerData = self._getBlockPlayerData();
-            var color = self._fabricColorPoints(domPlayerData);
-            if (_.isUndefined(color['0.5']))
-                color['0.5'] = '#ffffff';
-            self.m_canvas.setBackgroundColor(color['0.5']);
+            var colorPoints = self._findGradientPoints(domPlayerData)
+            var color = $(colorPoints).find('Point').attr('color');
+            if (_.isUndefined(color))
+                color = '16777215';
+            color = '#' + BB.lib.decimalToHex(color);
+            self.m_canvas.setBackgroundColor(color, function(){});
             self.m_canvas.renderAll();
         },
 

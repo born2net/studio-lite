@@ -170,7 +170,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
             self._listenBlockModified();
             self._listenCanvasSelections();
-
         },
 
         /**

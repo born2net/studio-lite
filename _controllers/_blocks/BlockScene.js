@@ -68,7 +68,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             $(Elements.SHOW_BACKGROUND).prop('checked', true);
             $(Elements.BG_COLOR_SOLID_SELECTOR).show();
             $(Elements.BG_COLOR_GRADIENT_SELECTOR).hide();
-            self._setBgScenePropColorPicker();
+            self._populateSceneBgPropColorPicker();
         },
 
         /**
@@ -76,14 +76,14 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          @method setbgSceneSetPropColorPicker
          @param {Number} i_color
          **/
-        _setBgScenePropColorPicker: function () {
+        _populateSceneBgPropColorPicker: function () {
             var self = this;
             var domPlayerData = self._getBlockPlayerData();
             var xPoints = self._findGradientPoints(domPlayerData);
             var color = $(xPoints).find('Point').attr('color');
             if (_.isUndefined(color))
                 color = '16777215';
-            color = '#'+BB.lib.decimalToHex(color);
+            color = '#' + BB.lib.decimalToHex(color);
             log(color);
             self.m_blockProperty.setBgScenePropColorPicker(color);
         },
@@ -92,7 +92,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          Listen to changes in scene background color selection
          @method _listenBgColorChanges
          **/
-        _listenBgColorChanges: function(){
+        _listenBgColorChanges: function () {
             var self = this;
             BB.comBroker.listenWithNamespace(BB.EVENTS.SCENE_BG_COLOR_CHANGED, self, function (e) {
                 var color = e.edata;
@@ -118,10 +118,10 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var text = $(e.target).val();
                 var domPlayerData = self._getBlockPlayerData();
                 $(domPlayerData).find('Player').eq(0).attr('label', text);
-                self._setBlockPlayerData(domPlayerData);
+                self._setBlockPlayerData(domPlayerData, true);
                 if (BB.EVENTS['SCENE_LIST_UPDATED'])
                     BB.comBroker.fire(BB.EVENTS['SCENE_LIST_UPDATED'], this);
-            }, 150);
+            }, 200);
             $(Elements.SCENE_NAME_INPUT).on("input", self.m_inputNameChangeHandler);
 
             // Scene width
@@ -271,7 +271,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                     $(Elements.SCENE_NAME_INPUT).val($(domPlayer).attr('label'));
                     $(Elements.SCENE_WIDTH_INPUT).val($(domPlayerLayout).attr('width'));
                     $(Elements.SCENE_HEIGHT_INPUT).val($(domPlayerLayout).attr('height'));
-                    self._setBgScene();
+                    self._populateSceneBg();
                     break;
                 }
             }
@@ -290,9 +290,9 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
         /**
          Set a scene's background solid color
-         @method _setBgScene
+         @method _populateSceneBg
          **/
-        _setBgScene: function(){
+        _populateSceneBg: function () {
             var self = this;
             var domPlayerData = self._getBlockPlayerData();
             var color = self._fabricColorPoints(domPlayerData);
@@ -310,6 +310,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         setCanvas: function (i_canvas) {
             var self = this;
             self.m_canvas = i_canvas;
+            self._populateSceneBg();
         },
 
         /**

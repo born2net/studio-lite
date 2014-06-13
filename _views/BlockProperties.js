@@ -144,7 +144,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
          **/
         _bgSceneInit: function () {
             var self = this;
-            self.m_colorSettings = {
+            var colorSettings = {
                 animationSpeed: 50,
                 animationEasing: 'swing',
                 change: $.proxy(self._onSceneBgColorSelected, self),
@@ -162,7 +162,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                 showSpeed: 100,
                 theme: 'bootstrap'
             };
-            $(Elements.SCENE_BACKGROUND_SELECTOR).minicolors(self.m_colorSettings);
+            $(Elements.SCENE_BACKGROUND_SELECTOR).minicolors(colorSettings);
         },
 
         /**
@@ -365,6 +365,15 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         viewSubPanel: function (i_panel) {
             var self = this;
             self.m_property.viewSubPanel(i_panel);
+        },
+
+        /**
+         Set the color picker color of scene background
+         @method setBgScenePropColorPicker
+         @param {Number} i_color
+         **/
+        setBgScenePropColorPicker: function (i_color) {
+            $(Elements.SCENE_BACKGROUND_SELECTOR).minicolors('value', i_color);
         },
 
         /**

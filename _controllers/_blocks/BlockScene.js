@@ -68,6 +68,24 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             $(Elements.SHOW_BACKGROUND).prop('checked', true);
             $(Elements.BG_COLOR_SOLID_SELECTOR).show();
             $(Elements.BG_COLOR_GRADIENT_SELECTOR).hide();
+            self._setBgScenePropColorPicker();
+        },
+
+        /**
+         Set the color picker color of scene background
+         @method setbgSceneSetPropColorPicker
+         @param {Number} i_color
+         **/
+        _setBgScenePropColorPicker: function () {
+            var self = this;
+            var domPlayerData = self._getBlockPlayerData();
+            var xPoints = self._findGradientPoints(domPlayerData);
+            var color = $(xPoints).find('Point').attr('color');
+            if (_.isUndefined(color))
+                color = '16777215';
+            color = '#'+BB.lib.decimalToHex(color);
+            log(color);
+            self.m_blockProperty.setBgScenePropColorPicker(color);
         },
 
         /**
@@ -279,10 +297,9 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var domPlayerData = self._getBlockPlayerData();
             var color = self._fabricColorPoints(domPlayerData);
             if (_.isUndefined(color['0.5']))
-                return;
+                color['0.5'] = '#ffffff';
             self.m_canvas.setBackgroundColor(color['0.5']);
             self.m_canvas.renderAll();
-
         },
 
         /**

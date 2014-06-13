@@ -126,7 +126,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         /**
-         Listen to changes in scene name
+         Listen to changes in the scene name
          @method _listenSceneRenamed
          **/
         _listenSceneRenamed: function () {

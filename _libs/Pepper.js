@@ -475,7 +475,7 @@ Pepper.prototype = {
     },
 
     /**
-     Sterilize pseudo id to scene id always retuns scene_id even if scene_id is what's arged in
+     Sterilize pseudo id to scene id always returns scene_id as an integer rather pseudo id
      @method sterilizePseudoId
      @param {Number} i_id
      @return {Number} i_id
@@ -532,7 +532,7 @@ Pepper.prototype = {
     injectPseudoScenePlayersIDs: function (i_scene_id) {
         var self = this;
         var scenes = {};
-        if (i_scene_id) {
+        if (!_.isUndefined(i_scene_id)) {
             var domPlayerData = self.getScenePlayerdataDom(i_scene_id);
             scenes[i_scene_id] = domPlayerData;
         } else {
@@ -550,17 +550,17 @@ Pepper.prototype = {
 
     /**
      Remove all player ids from player_data inside a scene
-     @method removeScenePlayersIDs
+     @method stripScenePlayersIDs
      **/
-    removeScenePlayersIDs: function () {
+    stripScenePlayersIDs: function () {
         var self = this;
         self.m_tempScenePlayerIDs = {};
         var scenes = pepper.getScenes();
         _.each(scenes, function (domPlayerData, scene_id) {
-            $(domPlayerData).find('Player').eq(0).removeAttr('id');
+            // $(domPlayerData).find('Player').eq(0).removeAttr('id');
             self.m_tempScenePlayerIDs[scene_id] = (new XMLSerializer()).serializeToString(domPlayerData);
             var players = $(domPlayerData).find('Players').find('Player').each(function (i, player) {
-                var blockID = pepper.generateSceneId();
+                // var blockID = pepper.generateSceneId();
                 $(player).removeAttr('id');
             });
             pepper.setScenePlayerData(scene_id, (new XMLSerializer()).serializeToString(domPlayerData));
@@ -585,8 +585,8 @@ Pepper.prototype = {
     },
 
     /**
-     Remove all player ids from player_data inside a scene
-     @method removeScenePlayersIDs
+     Remove a scene
+     @method removeScene
      **/
     removeScene: function (i_scene_player_data_id) {
         var self = this;

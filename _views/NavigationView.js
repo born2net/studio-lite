@@ -257,7 +257,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             var appEntryFaderView = BB.comBroker.getService(BB.SERVICES['APP_ENTRY_FADER_VIEW']);
             appEntryFaderView.selectView(Elements.WAITS_SCREEN_ENTRY_APP);
-            pepper.removeScenePlayersIDs();
+            pepper.stripScenePlayersIDs();
             pepper.save(function (i_status) {
                 appEntryFaderView.selectView(Elements.APP_CONTENT);
                 pepper.restoreScenesWithPlayersIDs();
@@ -275,6 +275,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                         }
                     });
                 }
+                BB.comBroker.fire(BB.EVENTS['SCENE_LIST_UPDATED'], self);
                 i_callBack(i_status);
             });
         }

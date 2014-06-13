@@ -50,9 +50,20 @@ define(['jquery', 'backbone', 'simplestorage', 'bootbox', 'localizer'], function
          **/
         setLanguage: function (i_language) {
             var self = this;
+            i_language = self._cleanTags(i_language);
             self.m_simpleStorage.set('languageSelected', i_language);
             var opts = { language: i_language, pathPrefix: "./_lang" };
             $("[data-localize]").localize("local", opts);
+        },
+
+        _cleanTags: function(i_language){
+            if (_.isUndefined(i_language))
+                return 'en';
+            i_language = i_language.replace(/<font>/gi,'');
+            i_language = i_language.replace(/<\/font>/gi,'');
+            if (i_language == 'in')
+                return 'en';
+            return i_language;
         },
 
         /**
@@ -62,7 +73,8 @@ define(['jquery', 'backbone', 'simplestorage', 'bootbox', 'localizer'], function
          **/
         getLanguage: function () {
             var self = this;
-            return self.m_simpleStorage.get('languageSelected');
+            var lang = self.m_simpleStorage.get('languageSelected');
+            return self._cleanTags(lang);
         }
     });
 

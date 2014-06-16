@@ -225,6 +225,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _loadScene: function () {
             var self = this;
+            if (_.isUndefined(self.m_selectedSceneID))
+                return;
             self._disposeBlocks();
             self._disposeScene();
             self._zoomReset();
@@ -751,6 +753,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _sceneCanvasSelected: function () {
             var self = this;
+            if (_.isUndefined(self.m_selectedSceneID))
+                return;
             self._discardSelections();
             BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.m_selectedSceneID);
         },

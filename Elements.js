@@ -129,6 +129,7 @@ Elements.TIMELINES_TOTAL_LENGTH = '#timelinesTotalLength';
 Elements.TIMELINE_LENGTH = '#timelineLength';
 Elements.NEXT = '#next';
 Elements.SCENE_BACKGROUND_SELECTOR = '#sceneBackgroundSelector';
+Elements.SCENE_BORDER_COLOR_SELECTOR = '#sceneBorderColorSelector';
 Elements.PREVIOUS = '#prev';
 Elements.SERVER_NAME = '#serverName';
 Elements.BUISINESS_ID = '#buisinessID';

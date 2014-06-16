@@ -111,24 +111,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
             $('<img src="'+ imgPath +'" style="display: none" >').load(function() {
                 $(this).width(1000).height(800).appendTo('body');
-
-                var img = new fabric.Image(this, {
-                    left: parseInt(layout.attr('x')),
-                    top: parseInt(layout.attr('y')),
-                    width: parseInt(layout.attr('width')),
-                    height: parseInt(layout.attr('height')),
-                    angle: parseInt(layout.attr('rotation')),
-                    hasRotatingPoint: false,
-                    stroke: 'transparent',
-                    // stroke: 'red',
-                    // borderColor: '#5d5d5d',
-                    // strokeWidth: 1,
-                    // lineWidth: 1,
-                    cornerColor: 'black',
-                    cornerSize: 5,
-                    lockRotation: true,
-                    transparentCorners: false
-                });
+                var options = self._fabricateOptions(parseInt(layout.attr('y')), parseInt(layout.attr('x')), parseInt(layout.attr('width')), parseInt(layout.attr('height')), parseInt(layout.attr('rotation')));
+                var img = new fabric.Image(this, options);
                 _.extend(self, img);
                 self._fabricAlpha(domPlayerData);
                 self['canvasScale'] = i_canvasScale;

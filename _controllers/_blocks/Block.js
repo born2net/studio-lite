@@ -18,6 +18,14 @@ define(['jquery', 'backbone'], function ($) {
     BB.EVENTS.SCENE_BLOCK_CHANGE = 'SCENE_BLOCK_CHANGE';
 
     /**
+     event fires when block border changed so scene needs to be re-rendered
+     @event Block.BLOCK_BORDER_CHANGE
+     @param {this} caller
+     @param {String} selected block_id
+     **/
+    BB.EVENTS.BLOCK_BORDER_CHANGE = 'BLOCK_BORDER_CHANGE';
+
+    /**
      event fires when scene blocks freshly re-rendered onto the scene canvas so we need to update the UI of ALL blocks
      normally occurs after a Block.SCENE_BLOCK_CHANGE event
      @event Block.SCENE_BLOCKS_RENDERED
@@ -56,10 +64,11 @@ define(['jquery', 'backbone'], function ($) {
             self.m_resourceID = undefined;
             self.m_blockProperty = BB.comBroker.getService(BB.SERVICES['BLOCK_PROPERTIES']);
 
-            self._alphaListenChange();
-            self._gradientListenChange();
-            self._gradientListenColorPickerClosed();
-            self._backgroundStateListenChange();
+            self._listenAlphaChange();
+            self._listenGradientChange();
+            self._listenGradientColorPickerClosed();
+            self._listenBackgroundStateChange();
+            self._listenBorderColorChange();
             self._listenBlockSelected();
             self._onBlockLengthChanged();
         },
@@ -86,9 +95,9 @@ define(['jquery', 'backbone'], function ($) {
 
         /**
          Listen to changes in Alpha UI properties selection and update msdb
-         @method _alphaListenChange
+         @method _listenAlphaChange
          **/
-        _alphaListenChange: function () {
+        _listenAlphaChange: function () {
             var self = this;
             self._alphaChanged = _.debounce(function (e) {
                 if (!self.m_selected)
@@ -145,12 +154,11 @@ define(['jquery', 'backbone'], function ($) {
         },
 
 
-
         /**
          Listen to change in background enable / disable states
-         @method _backgroundStateListenChange
+         @method _listenBackgroundStateChange
          **/
-        _backgroundStateListenChange: function () {
+        _listenBackgroundStateChange: function () {
             var self = this;
             var xBgSnippet = undefined;
 
@@ -186,9 +194,9 @@ define(['jquery', 'backbone'], function ($) {
 
         /**
          Update a block's player_data with new gradient background
-         @method _gradientListenChange
+         @method _listenGradientChange
          **/
-        _gradientListenChange: function () {
+        _listenGradientChange: function () {
             var self = this;
             BB.comBroker.listenWithNamespace(BB.EVENTS.GRADIENT_COLOR_CHANGED, self, function (e) {
                 if (!self.m_selected)
@@ -218,10 +226,27 @@ define(['jquery', 'backbone'], function ($) {
         },
 
         /**
-         Update a block's player_data with new gradient background
-         @method _gradientListenChange
+         Update a block's player_data with new border background
+         @method _listenGradientChange
          **/
-        _gradientListenColorPickerClosed: function () {
+        _listenBorderColorChange: function () {
+            var self = this;
+            BB.comBroker.listenWithNamespace(BB.EVENTS.BLOCK_BORDER_CHANGE, self, function (e) {
+                if (!self.m_selected)
+                    return;
+                var color = e.edata;
+                var domPlayerData = self._getBlockPlayerData();
+                $(domPlayerData).find('Border').attr('borderColor', BB.lib.hexToDecimal(color));
+                self._setBlockPlayerData(domPlayerData);
+            });
+        },
+
+
+        /**
+         Update a block's player_data with new gradient background
+         @method _listenGradientChange
+         **/
+        _listenGradientColorPickerClosed: function () {
             var self = this;
             BB.comBroker.listenWithNamespace(BB.EVENTS.GRADIENT_COLOR_CLOSED, self, function (e) {
                 if (!self.m_selected)
@@ -299,6 +324,10 @@ define(['jquery', 'backbone'], function ($) {
             });
         },
 
+        /**
+         When a block is selected, find out where is it placed (scene/ channel) and change props accordingly
+         @method _onBlockSelected
+         **/
         _onBlockSelected: function () {
             var self = this;
             self.m_selected = true;
@@ -523,6 +552,7 @@ define(['jquery', 'backbone'], function ($) {
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_LENGTH_CHANGING, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.GRADIENT_COLOR_CHANGED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.GRADIENT_COLOR_CLOSED, self);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_BORDER_CHANGE, self);
             $(Elements.SHOW_BACKGROUND).off('click', self.m_toggleBackgroundColorHandler);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.ALPHA_CHANGED, self);
             if (self.off != undefined)
@@ -568,6 +598,39 @@ define(['jquery', 'backbone'], function ($) {
         },
 
         /**
+         Build the options injected into a newly created fabric object
+         @method _fabricateOptions
+         @param {Number} i_top
+         @param {Number} i_left
+         @param {Number} i_width
+         @param {Number} i_height
+         @param {Number} i_angle
+         @return {object} object literal
+         **/
+        _fabricateOptions: function(i_top, i_left, i_width, i_height, i_angle){
+            var self = this;
+            var options = {
+                top: i_top,
+                left: i_left,
+                width: i_width,
+                height: i_height,
+                angle: i_angle,
+                fill: '#ececec',
+                hasRotatingPoint: false,
+                // stroke: 'transparent',
+                transparentCorners: false,
+                cornerColor: 'black',
+                cornerSize: 5,
+                lockRotation: true,
+                stroke: 'red',
+                borderColor: '#5d5d5d',
+                strokeWidth: 1,
+                lineWidth: 1
+            };
+            return options;
+        },
+
+        /**
          Fabricate color points to canvas
          @method _fabricRect
          @param {number} i_width
@@ -577,25 +640,8 @@ define(['jquery', 'backbone'], function ($) {
          **/
         _fabricRect: function (i_width, i_height, i_domPlayerData) {
             var self = this;
-
-            var r = new fabric.Rect({
-                top: 0,
-                left: 0,
-                width: i_width,
-                height: i_height,
-                fill: '#ececec',
-                hasRotatingPoint: false,
-                stroke: 'transparent',
-                // stroke: 'red',
-                // borderColor: '#5d5d5d',
-                // strokeWidth: 1,
-                // lineWidth: 1,
-                cornerColor: 'black',
-                cornerSize: 5,
-                lockRotation: true,
-                transparentCorners: false
-            });
-
+            var options = self._fabricateOptions(0, 0, i_width, i_height, 0);
+            var r = new fabric.Rect(options);
             r.setGradient('fill', {
                 x1: 0 - (i_width / 2),
                 y1: 0,
@@ -632,9 +678,6 @@ define(['jquery', 'backbone'], function ($) {
                     angle: parseInt(layout.attr('rotation')),
                     hasRotatingPoint: false,
                     stroke: 'transparent',
-                    // borderColor: '#5d5d5d',
-                    // strokeWidth: 1,
-                    // lineWidth: 1,
                     cornerColor: 'black',
                     cornerSize: 5,
                     lockRotation: true,

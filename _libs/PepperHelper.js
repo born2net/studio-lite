@@ -328,8 +328,19 @@ PepperHelper.prototype = {
      **/
     getCommonDefaultXML: function(){
         var self = this;
-        var common =    '<Appearance alpha="1.0" blendMode="normal" />' +  self.getCommonBackgroundXML();
+        // var common =    '<Appearance alpha="1.0" blendMode="normal" />' +  self.getCommonBackgroundXML();
+        var common =    '<Appearance alpha="1.0" blendMode="normal" />' +  self.getCommonBackgroundXML() + self.getCommonBorderXML();
         return common;
+    },
+
+
+    /**
+     Get the common border XML with all default values
+     @method getCommonBorderXML
+     @return {String} common xml
+     **/
+    getCommonBorderXML: function(){
+        return '<Border borderThickness="0" borderColor="65535" cornerRadius="0"/>';
     },
 
     /**

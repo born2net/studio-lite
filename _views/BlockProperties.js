@@ -76,6 +76,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
             self._alphaSliderInit();
             self._bgGradientInit();
             self._bgSceneInit();
+            self._borderSceneColorInit();
             self._propLengthKnobsInit();
             self._videoVolumeSliderInit()
             self._rssFontSelectorInit();
@@ -166,7 +167,44 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         },
 
         /**
-         On scene background new color selected by minicolors
+         Init the scene backgroud selector
+         @method _bgSceneInit
+         **/
+        _borderSceneColorInit: function () {
+            var self = this;
+            var colorSettings = {
+                animationSpeed: 50,
+                animationEasing: 'swing',
+                change: $.proxy(self._onSceneBorderColorSelected, self),
+                changeDelay: 100,
+                control: 'hue',
+                value: '#ffffff',
+                defaultValue: '#428bca',
+                hide: null,
+                hideSpeed: 100,
+                inline: false,
+                letterCase: 'lowercase',
+                opacity: false,
+                position: 'bottom left',
+                show: null,
+                showSpeed: 100,
+                theme: 'bootstrap'
+            };
+            $(Elements.SCENE_BORDER_COLOR_SELECTOR).minicolors(colorSettings);
+        },
+
+        /**
+         On scene block border color selected by minicolors
+         @method _onSceneBorderColorSelected
+         @param {String} i_color
+         **/
+        _onSceneBorderColorSelected: function (i_color) {
+            var self = this;
+            BB.comBroker.fire(BB.EVENTS.BLOCK_BORDER_CHANGE, self, self, i_color);
+        },
+
+        /**
+         On scene background color selected by minicolors
          @method _onSceneBgColorSelected
          @param {String} i_color
          **/

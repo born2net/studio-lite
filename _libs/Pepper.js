@@ -421,6 +421,9 @@ Pepper.prototype = {
             replace(/fontfamily/gi, 'fontFamily').
             replace(/fontweight/gi, 'fontWeight').
             replace(/fontstyle/gi, 'fontStyle').
+            replace(/bordercolor/gi, 'borderColor').
+            replace(/borderthickness/gi, 'borderThickness').
+            replace(/cornerradius/gi, 'cornerRadius').
             replace(/textdecoration/gi, 'textDecoration').
             replace(/textalign/gi, 'textAlign').
             replace(/minrefreshtime/gi, 'minRefreshTime').

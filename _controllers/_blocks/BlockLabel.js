@@ -135,6 +135,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          Convert the block into a fabric js compatible object
          @Override
          @method fabricateBlock
+         @param {number} i_canvasScale
+         @param {function} i_callback
          **/
         fabricateBlock: function (i_canvasScale, i_callback) {
             var self = this;
@@ -165,23 +167,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var h = parseInt(layout.attr('height')) < self.m_minSize.h ? self.m_minSize.h : parseInt(layout.attr('height'));
 
             var rec = self._fabricRect(w,h, domPlayerData);
-            var group = new fabric.Group([ rec, t ], {
-                left: parseInt(layout.attr('x')),
-                top: parseInt(layout.attr('y')),
-                width: w,
-                height: h,
-                angle: parseInt(layout.attr('rotation')),
-                hasRotatingPoint: false,
-                borderColor: '#5d5d5d',
-                stroke: 'black',
-                strokeWidth: 1,
-                lineWidth: 1,
-                cornerColor: 'black',
-                cornerSize: 5,
-                lockRotation: true,
-                transparentCorners: false
-            });
-
+            var options = self._fabricateOptions(parseInt(layout.attr('y')), parseInt(layout.attr('x')), w, h, parseInt(layout.attr('rotation')));
+            var group = new fabric.Group([ rec, t ], options);
             _.extend(self, group);
             self._fabricAlpha(domPlayerData);
             self['canvasScale'] = i_canvasScale;

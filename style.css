@@ -110,6 +110,18 @@ aside > aside > div > ul > li {
     margin: 0px;
 }
 
+#blockThickness {
+    float: left;
+    padding-top: 0;
+    margin-top: 0;
+    padding-left: 15px;
+}
+
+#blockThickness > span {
+    float: left;
+    padding-bottom: 10px;
+}
+
 #github {
     position: relative;
     top: -8px;

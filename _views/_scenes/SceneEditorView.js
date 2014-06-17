@@ -195,6 +195,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 self.m_selectedSceneID = e.edata;
                 self._loadScene();
                 self._sceneCanvasSelected();
+                BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
                 if (self._mementoInit())
                     self._mementoAddState();
             });
@@ -586,10 +587,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
             if (_.isUndefined(selectedBlockID))
                 return;
-            BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, selectedBlockID);
+            // BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, selectedBlockID);
             for (var i = 0; i < self.m_canvas.getObjects().length; i++) {
                 if (selectedBlockID == self.m_canvas.item(i).getBlockData().blockID) {
-                     self._sceneBlockSelected(self.m_canvas.item(i));
+                    self._sceneBlockSelected(self.m_canvas.item(i));
                     break;
                 }
             }
@@ -599,7 +600,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          Prevent rendering of canvas to continue and remove canvas listeners
          @method _renderPause
          **/
-        _renderPause: function(){
+        _renderPause: function () {
             var self = this;
             self.m_rendering = true;
             if (_.isUndefined(self.m_canvas))
@@ -611,7 +612,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          Allow rendering of canvas to continue and add canvas listeners
          @method _renderContinue
          **/
-        _renderContinue: function(){
+        _renderContinue: function () {
             var self = this;
             self.m_rendering = false;
             if (_.isUndefined(self.m_canvas))
@@ -929,7 +930,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_canvas.clear();
         },
 
-        _canvasUnselectable: function(){
+        _canvasUnselectable: function () {
             var self = this, i;
             if (_.isUndefined(self.m_canvas))
                 return;

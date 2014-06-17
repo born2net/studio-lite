@@ -433,11 +433,15 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         _listenMemento: function () {
             var self = this;
             BB.comBroker.listen(BB.EVENTS.SCENE_UNDO, function (e) {
+                if (self.m_rendering)
+                    return;
                 self.m_blocks.blockSelected = undefined;
                 self._discardSelections();
                 self._mementoLoadState('undo');
             });
             BB.comBroker.listen(BB.EVENTS.SCENE_REDO, function (e) {
+                if (self.m_rendering)
+                    return;
                 self.m_blocks.blockSelected = undefined;
                 self._discardSelections();
                 self._mementoLoadState('redo');
@@ -558,6 +562,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             log('pre-rendering new blocks');
             self.m_rendering = true;
+            self._canvasUnselectable();
             self.m_blocks.blocksPre = [];
             self.m_blocks.blocksPost = {};
             $(i_domPlayerData).find('Players').find('Player').each(function (i, player) {
@@ -590,6 +595,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._blockCountChanged();
 
             self.m_rendering = false;
+            self.m_canvas._initEventListeners();
             if (_.isUndefined(selectedBlockID))
                 return;
             BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, selectedBlockID);
@@ -599,6 +605,23 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     break;
                 }
             }
+        },
+
+        _renderPause: function(){
+            var self = this;
+            self.m_rendering = false;
+            if (_.isUndefined(self.m_canvas))
+                return;
+            self.m_canvas.removeListeners();
+        },
+
+        _renderContinue: function(){
+            var self = this;
+            self.m_rendering = true;
+            if (_.isUndefined(self.m_canvas))
+                return;
+            self.m_canvas._initEventListeners();
+            self.m_canvas.renderAll();
         },
 
         /**
@@ -908,6 +931,26 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 }
             }
             self.m_canvas.clear();
+        },
+
+        _canvasUnselectable: function(){
+            var self = this, i;
+            if (_.isUndefined(self.m_canvas))
+                return;
+
+            self.m_canvas.removeListeners();
+            //self.m_canvas.interactive = false;
+            // self.m_canvas.selection = false;
+
+            var totalObjects = self.m_canvas.getObjects().length;
+            var c = -1;
+            for (i = 0; i < totalObjects; i++) {
+                c++;
+                var block = self.m_canvas.item(c);
+                block.selectable = false;
+                if (block)
+                    c--;
+            }
         },
 
         /**

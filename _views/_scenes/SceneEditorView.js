@@ -344,16 +344,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _listenSceneChanged: function (e) {
             var self = this;
-            /*var aa = _.debounce(function (e) {
-                var blockID = e.edata;
-                log('block edited ' + blockID);
-                var domPlayerData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
-                self.m_blocks.blockSelected = blockID;
-                self._preRender(domPlayerData);
-                self._mementoAddState();
-            }, 1000);
-            BB.comBroker.listen(BB.EVENTS['SCENE_BLOCK_CHANGE'], aa); */
-
             BB.comBroker.listen(BB.EVENTS['SCENE_BLOCK_CHANGE'], function (e) {
                 if (self.m_rendering)
                     return;
@@ -561,8 +551,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         _preRender: function (i_domPlayerData) {
             var self = this;
             log('pre-rendering new blocks');
-            // self.m_rendering = true;
-            // self._canvasUnselectable();
             self._renderPause();
             self.m_blocks.blocksPre = [];
             self.m_blocks.blocksPost = {};
@@ -595,8 +583,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_canvas.renderAll();
             self._blockCountChanged();
             self._renderContinue();
-            // self.m_rendering = false;
-            // self.m_canvas._initEventListeners();
 
             if (_.isUndefined(selectedBlockID))
                 return;
@@ -609,6 +595,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             }
         },
 
+        /**
+         Prevent rendering of canvas to continue and remove canvas listeners
+         @method _renderPause
+         **/
         _renderPause: function(){
             var self = this;
             self.m_rendering = true;
@@ -617,6 +607,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_canvas.removeListeners();
         },
 
+        /**
+         Allow rendering of canvas to continue and add canvas listeners
+         @method _renderContinue
+         **/
         _renderContinue: function(){
             var self = this;
             self.m_rendering = false;

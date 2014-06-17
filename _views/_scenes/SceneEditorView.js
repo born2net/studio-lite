@@ -561,8 +561,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         _preRender: function (i_domPlayerData) {
             var self = this;
             log('pre-rendering new blocks');
-            self.m_rendering = true;
-            self._canvasUnselectable();
+            // self.m_rendering = true;
+            // self._canvasUnselectable();
+            self._renderPause();
             self.m_blocks.blocksPre = [];
             self.m_blocks.blocksPost = {};
             $(i_domPlayerData).find('Players').find('Player').each(function (i, player) {
@@ -593,9 +594,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._resetAllObjectScale();
             self.m_canvas.renderAll();
             self._blockCountChanged();
+            self._renderContinue();
+            // self.m_rendering = false;
+            // self.m_canvas._initEventListeners();
 
-            self.m_rendering = false;
-            self.m_canvas._initEventListeners();
             if (_.isUndefined(selectedBlockID))
                 return;
             BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, selectedBlockID);
@@ -609,7 +611,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
         _renderPause: function(){
             var self = this;
-            self.m_rendering = false;
+            self.m_rendering = true;
             if (_.isUndefined(self.m_canvas))
                 return;
             self.m_canvas.removeListeners();
@@ -617,7 +619,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
         _renderContinue: function(){
             var self = this;
-            self.m_rendering = true;
+            self.m_rendering = false;
             if (_.isUndefined(self.m_canvas))
                 return;
             self.m_canvas._initEventListeners();

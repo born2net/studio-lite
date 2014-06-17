@@ -30,6 +30,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             BB.comBroker.setService(BB.SERVICES['SCENE_EDIT_VIEW'], self);
             self.m_selectedSceneID = undefined;
             self.m_objectScaling = 0;
+            self.m_rendering = false;
             self.m_memento = {};
             self.m_blocks = {
                 blocksPre: [],
@@ -343,7 +344,19 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _listenSceneChanged: function (e) {
             var self = this;
+            /*var aa = _.debounce(function (e) {
+                var blockID = e.edata;
+                log('block edited ' + blockID);
+                var domPlayerData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
+                self.m_blocks.blockSelected = blockID;
+                self._preRender(domPlayerData);
+                self._mementoAddState();
+            }, 1000);
+            BB.comBroker.listen(BB.EVENTS['SCENE_BLOCK_CHANGE'], aa); */
+
             BB.comBroker.listen(BB.EVENTS['SCENE_BLOCK_CHANGE'], function (e) {
+                if (self.m_rendering)
+                    return;
                 var blockID = e.edata;
                 log('block edited ' + blockID);
                 var domPlayerData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
@@ -544,6 +557,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         _preRender: function (i_domPlayerData) {
             var self = this;
             log('pre-rendering new blocks');
+            self.m_rendering = true;
             self.m_blocks.blocksPre = [];
             self.m_blocks.blocksPost = {};
             $(i_domPlayerData).find('Players').find('Player').each(function (i, player) {
@@ -575,6 +589,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_canvas.renderAll();
             self._blockCountChanged();
 
+            self.m_rendering = false;
             if (_.isUndefined(selectedBlockID))
                 return;
             BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, selectedBlockID);
@@ -594,7 +609,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _createSceneBlock: function () {
             var self = this;
-
             var block = self.m_blocks.blocksPre.shift();
             if (block == undefined) {
                 self._render();
@@ -716,7 +730,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
                 //// Scene
                 self._sceneCanvasSelected();
-                log('scene: ' + self.m_canvas.m_blockType + ' ' + self.m_selectedSceneID);
+                log('scene: ' + self.m_selectedSceneID);
                 // log('object ' + options.e.clientX + ' ' + options.e.clientY + ' ' + options.target.m_blockType);
 
             });

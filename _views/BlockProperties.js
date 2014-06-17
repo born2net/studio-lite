@@ -415,6 +415,15 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         },
 
         /**
+         Set the color picker color of scene border
+         @method setBorderBlockPropColorPicker
+         @param {Number} i_color
+         **/
+        setBorderBlockPropColorPicker: function (i_color) {
+            $(Elements.SCENE_BORDER_COLOR_SELECTOR).minicolors('value', i_color);
+        },
+
+        /**
          Returns the instance of rss font selector
          @method getRssFontSelector
          @return {Object} m_rssFontSelector instance

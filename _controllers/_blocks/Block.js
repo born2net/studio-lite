@@ -598,6 +598,25 @@ define(['jquery', 'backbone'], function ($) {
         },
 
         /**
+         Config the fabric block border
+         @method _fabricateBorder
+         @param {i_options} i_options
+         @return {object} object literal
+         **/
+        _fabricateBorder: function(i_options){
+            var self = this;
+
+            var domPlayerData = self._getBlockPlayerData();
+            var color = '#' + BB.lib.decimalToHex($(domPlayerData).find('Border').attr('borderColor'));
+            return _.extend({
+                // stroke: 'transparent',
+                // borderColor: '#5d5d5d',
+                stroke: color,
+                strokeWidth: 1
+            }, i_options);
+        },
+
+        /**
          Build the options injected into a newly created fabric object
          @method _fabricateOptions
          @param {Number} i_top
@@ -617,17 +636,14 @@ define(['jquery', 'backbone'], function ($) {
                 angle: i_angle,
                 fill: '#ececec',
                 hasRotatingPoint: false,
-                // stroke: 'transparent',
                 transparentCorners: false,
                 cornerColor: 'black',
                 cornerSize: 5,
                 lockRotation: true,
-                stroke: 'red',
-                borderColor: '#5d5d5d',
-                strokeWidth: 1,
                 lineWidth: 1
             };
-            return options;
+
+            return self._fabricateBorder(options);
         },
 
         /**

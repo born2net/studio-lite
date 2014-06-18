@@ -213,6 +213,19 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         },
 
         /**
+         Find the border section in player_data for selected block
+         @method
+         @method _findBorder
+         @param  {object} i_domPlayerData
+         @return {Xml} xSnippet
+         **/
+        _findBorder: function (i_domPlayerData) {
+            var self = this;
+            var xSnippet = $(i_domPlayerData).find('Layout').eq(0).siblings().filter('Border');
+            return xSnippet;
+        },
+
+        /**
          Find the background section in player_data for selected block
          @Override
          @method _findBackground

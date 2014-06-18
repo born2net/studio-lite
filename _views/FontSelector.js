@@ -213,7 +213,6 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
          **/
         _onFontSelected: function (i_target) {
             var self = this;
-
             return false;
         },
 

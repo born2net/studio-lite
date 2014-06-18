@@ -129,6 +129,24 @@ define(['jquery', 'backbone'], function ($) {
         },
 
         /**
+         Set the block border picker color
+         @method setPlayerData
+         @param {Number} _borderPopulate
+         **/
+        _borderPopulate: function(){
+            var self = this;
+            if (!self.m_selected)
+                return;
+            var domPlayerData = self._getBlockPlayerData();
+            var border = self._findBorder(domPlayerData);
+            var color = $(border).attr('borderColor');
+            if (_.isUndefined(color))
+                color = '16777215';
+            color = '#' + BB.lib.decimalToHex(color);
+            self.m_blockProperty.setBorderBlockPropColorPicker(color);
+        },
+
+        /**
          Enable gradient background UI
          @method _enableBgSelection
          **/
@@ -236,7 +254,8 @@ define(['jquery', 'backbone'], function ($) {
                     return;
                 var color = e.edata;
                 var domPlayerData = self._getBlockPlayerData();
-                $(domPlayerData).find('Border').attr('borderColor', BB.lib.hexToDecimal(color));
+                var border = self._findBorder(domPlayerData);
+                $(border).attr('borderColor', BB.lib.hexToDecimal(color));
                 self._setBlockPlayerData(domPlayerData);
             });
         },
@@ -265,6 +284,18 @@ define(['jquery', 'backbone'], function ($) {
         _findBackground: function (i_domPlayerData) {
             var self = this;
             var xSnippet = $(i_domPlayerData).find('Background');
+            return xSnippet;
+        },
+
+        /**
+         Find the border section in player_data for selected block
+         @method _findBorder
+         @param  {object} i_domPlayerData
+         @return {Xml} xSnippet
+         **/
+        _findBorder: function (i_domPlayerData) {
+            var self = this;
+            var xSnippet = $(i_domPlayerData).find('Border');
             return xSnippet;
         },
 
@@ -335,6 +366,7 @@ define(['jquery', 'backbone'], function ($) {
             self._updateTitle();
             self._updateTitleTab();
             self._alphaPopulate();
+            self._borderPopulate();
             self._bgPropsPopulate();
 
             log('block selected ' + self.m_block_id);
@@ -605,7 +637,6 @@ define(['jquery', 'backbone'], function ($) {
          **/
         _fabricateBorder: function(i_options){
             var self = this;
-
             var domPlayerData = self._getBlockPlayerData();
             var color = '#' + BB.lib.decimalToHex($(domPlayerData).find('Border').attr('borderColor'));
             return _.extend({

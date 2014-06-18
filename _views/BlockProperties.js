@@ -417,7 +417,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         /**
          Set the color picker color of scene border
          @method setBorderBlockPropColorPicker
-         @param {Number} i_color
+         @param {String} i_color
          **/
         setBorderBlockPropColorPicker: function (i_color) {
             $(Elements.SCENE_BORDER_COLOR_SELECTOR).minicolors('value', i_color);

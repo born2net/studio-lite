@@ -115,7 +115,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 xSnippetFont.attr('fontSize', config.size);
                 xSnippetFont.attr('fontFamily', config.font);
                 xSnippetFont.attr('textAlign', config.alignment);
-
                 self._setBlockPlayerData(domPlayerData);
             });
         },

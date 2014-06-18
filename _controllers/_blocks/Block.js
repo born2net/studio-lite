@@ -133,7 +133,7 @@ define(['jquery', 'backbone'], function ($) {
          @method setPlayerData
          @param {Number} _borderPopulate
          **/
-        _borderPopulate: function(){
+        _borderPopulate: function () {
             var self = this;
             if (!self.m_selected)
                 return;
@@ -158,10 +158,36 @@ define(['jquery', 'backbone'], function ($) {
         },
 
         /**
-         Disable the gradient background UI
-         @method _disableBgSelection
+         On changes in msdb model updated UI common gradient background properties
+         @method _bgPropsPopulate
+         @param {Number} i_playerData
+         @return {Number} Unique clientId.
          **/
-        _disableBgSelection: function () {
+        _bgPropsPopulate: function () {
+            var self = this;
+            var gradient = $(Elements.BG_COLOR_GRADIENT_SELECTOR).data("gradientPicker-sel");
+            // gradient.changeFillDirection("top"); /* change direction future support */
+            gradient.removeAllPoints();
+            var domPlayerData = self._getBlockPlayerData();
+            var xSnippet = self._findGradientPoints(domPlayerData);
+            if (xSnippet.length > 0) {
+                self._enableBgSelection();
+                var points = $(xSnippet).find('Point');
+                $.each(points, function (i, point) {
+                    var pointColor = BB.lib.decimalToHex($(point).attr('color'));
+                    var pointMidpoint = (parseInt($(point).attr('midpoint')) / 250);
+                    gradient.addPoint(pointMidpoint, pointColor, true);
+                });
+            } else {
+                self._bgPropsUnpopulate();
+            }
+        },
+
+        /**
+         Disable the gradient background UI
+         @method _bgPropsUnpopulate
+         **/
+        _bgPropsUnpopulate: function () {
             var self = this;
             $(Elements.SHOW_BACKGROUND).prop('checked', false);
             $(Elements.BG_COLOR_GRADIENT_SELECTOR).hide();
@@ -171,6 +197,35 @@ define(['jquery', 'backbone'], function ($) {
             $(gradientPoints).empty();
         },
 
+        _toggleBackgroundColorHandler: function (e) {
+            var self = this;
+            if (!self.m_selected)
+                return;
+
+            var xBgSnippet = undefined;
+            var domPlayerData = self._getBlockPlayerData();
+            var checked = $(e.target).prop('checked') == true ? 1 : 0;
+            if (checked) {
+                self._enableBgSelection();
+                xBgSnippet = BB.PepperHelper.getCommonBackgroundXML();
+                var data = $(domPlayerData).find('Data').eq(0);
+                var bgData = $(data).find('Background');
+                if (bgData.length > 0 && !_.isUndefined(bgData.replace)) { // ie bug workaround
+                    bgData.replace($(xBgSnippet));
+                } else {
+                    $(data).append($(xBgSnippet));
+                }
+                var player_data = pepper.xmlToStringIEfix(domPlayerData);
+                domPlayerData = $.parseXML(player_data);
+                self._setBlockPlayerData(domPlayerData);
+                self._bgPropsPopulate();
+            } else {
+                var xSnippet = self._findBackground(domPlayerData);
+                $(xSnippet).remove();
+                self._bgPropsUnpopulate();
+                self._setBlockPlayerData(domPlayerData);
+            }
+        },
 
         /**
          Listen to change in background enable / disable states
@@ -178,36 +233,9 @@ define(['jquery', 'backbone'], function ($) {
          **/
         _listenBackgroundStateChange: function () {
             var self = this;
-            var xBgSnippet = undefined;
-
-            self.m_toggleBackgroundColorHandler = function (e) {
-                if (!self.m_selected)
-                    return;
-
-                var domPlayerData = self._getBlockPlayerData();
-                var checked = $(e.target).prop('checked') == true ? 1 : 0;
-                if (checked) {
-                    self._enableBgSelection();
-                    xBgSnippet = BB.PepperHelper.getCommonBackgroundXML();
-                    var data = $(domPlayerData).find('Data').eq(0);
-                    var bgData = $(data).find('Background');
-                    if (bgData.length > 0 && !_.isUndefined(bgData.replace)) { // ie bug workaround
-                        bgData.replace($(xBgSnippet));
-                    } else {
-                        $(data).append($(xBgSnippet));
-                    }
-                    var player_data = pepper.xmlToStringIEfix(domPlayerData);
-                    domPlayerData = $.parseXML(player_data);
-                    self._bgPropsPopulate();
-                    self._setBlockPlayerData(domPlayerData);
-                } else {
-                    self._disableBgSelection();
-                    var xSnippet = self._findBackground(domPlayerData);
-                    $(xSnippet).remove();
-                    self._setBlockPlayerData(domPlayerData);
-                }
-            };
-            $(Elements.SHOW_BACKGROUND).on('click', self.m_toggleBackgroundColorHandler);
+            self.m_proxyToggleBg = $.proxy(self._toggleBackgroundColorHandler, self);
+            self.m_proxyToggleBgKey = _.uniqueId('click.');
+            $(Elements.SHOW_BACKGROUND).on(self.m_proxyToggleBgKey, self.m_proxyToggleBg);
         },
 
         /**
@@ -308,32 +336,6 @@ define(['jquery', 'backbone'], function ($) {
             var self = this;
             var xSnippet = $(i_domPlayerData).find('GradientPoints');
             return xSnippet;
-        },
-
-        /**
-         On changes in msdb model updated UI common gradient background properties
-         @method _bgPropsPopulate
-         @param {Number} i_playerData
-         @return {Number} Unique clientId.
-         **/
-        _bgPropsPopulate: function () {
-            var self = this;
-            var gradient = $(Elements.BG_COLOR_GRADIENT_SELECTOR).data("gradientPicker-sel");
-            // gradient.changeFillDirection("top"); /* change direction future support */
-            gradient.removeAllPoints();
-            var domPlayerData = self._getBlockPlayerData();
-            var xSnippet = self._findGradientPoints(domPlayerData);
-            if (xSnippet.length > 0) {
-                self._enableBgSelection();
-                var points = $(xSnippet).find('Point');
-                $.each(points, function (i, point) {
-                    var pointColor = BB.lib.decimalToHex($(point).attr('color'));
-                    var pointMidpoint = (parseInt($(point).attr('midpoint')) / 250);
-                    gradient.addPoint(pointMidpoint, pointColor, true);
-                });
-            } else {
-                self._disableBgSelection();
-            }
         },
 
         /**
@@ -584,8 +586,8 @@ define(['jquery', 'backbone'], function ($) {
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.GRADIENT_COLOR_CHANGED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.GRADIENT_COLOR_CLOSED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_BORDER_CHANGE, self);
-            $(Elements.SHOW_BACKGROUND).off('click', self.m_toggleBackgroundColorHandler);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.ALPHA_CHANGED, self);
+            $(Elements.SHOW_BACKGROUND).off(self.m_proxyToggleBgKey, self.m_proxyToggleBg);
             if (self.off != undefined)
                 self.off('modified');
 
@@ -634,7 +636,7 @@ define(['jquery', 'backbone'], function ($) {
          @param {i_options} i_options
          @return {object} object literal
          **/
-        _fabricateBorder: function(i_options){
+        _fabricateBorder: function (i_options) {
             var self = this;
             var domPlayerData = self._getBlockPlayerData();
             var color = '#' + BB.lib.decimalToHex($(domPlayerData).find('Border').attr('borderColor'));
@@ -656,7 +658,7 @@ define(['jquery', 'backbone'], function ($) {
          @param {Number} i_angle
          @return {object} object literal
          **/
-        _fabricateOptions: function(i_top, i_left, i_width, i_height, i_angle){
+        _fabricateOptions: function (i_top, i_left, i_width, i_height, i_angle) {
             var self = this;
             var options = {
                 top: i_top,

@@ -100,7 +100,9 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var xPoints = self._findGradientPoints(domPlayerData);
                 $(xPoints).find('Point').attr('color', BB.lib.hexToDecimal(color));
                 self._setBlockPlayerData(domPlayerData);
-                self._populateSceneBg();
+
+                if ( self.m_placement == BB.CONSTS.PLACEMENT_IS_SCENE )
+                    self._populateSceneBg();
             });
         },
 
@@ -318,6 +320,13 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 return;
             self.m_canvas.setBackgroundColor(color, function(){});
             self.m_canvas.renderAll();
+        },
+
+        _toggleBackgroundColorHandler: function (e) {
+            var self = this;
+            Block.prototype._toggleBackgroundColorHandler.call(this, e);
+            if (self.m_placement == BB.CONSTS.PLACEMENT_IS_SCENE)
+                self._populateSceneBg();
         },
 
         /**

@@ -204,7 +204,7 @@ PepperHelper.prototype = {
                                     self.getCommonDefaultXML() +
                                     self.getCommonSceneLayout(i_placement) +
                                     '<Clock clockFormat="custom" clockMask="EEEE, MMM. D, YYYY at L:NN A">'+
-                                        '<Font fontSize="11" fontColor="13158" fontFamily="Arial" fontWeight="bold" fontStyle="italic" textDecoration="underline" textAlign="center" />'+
+                                        '<Font fontSize="11" fontColor="13158" fontFamily="Arial" fontWeight="bold" fontStyle="italic" textDecoration="none" textAlign="center" />'+
                                      '</Clock>'+
                                 '</Data>' +
                             '</Player>'

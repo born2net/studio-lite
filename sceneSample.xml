@@ -31,7 +31,7 @@
 					<Data>
 						<Layout rotation="0" x="38" y="302" width="301" height="58"/>
 						<Clock clockFormat="time" clockMask="J:NN:SS">
-							<Font fontSize="72" fontColor="3355443" fontFamily="Arial Rounded MT Bold" fontWeight="bold" fontStyle="normal" textDecoration="none" textAlign="left"/>
+							<Font fontSize="72" fontColor="3355443" fontFamily="Arial Rounded MT Bold" fontWeight="bold" fontStyle="none" textDecoration="none" textAlign="left"/>
 						</Clock>
 					</Data>
 				</Player>

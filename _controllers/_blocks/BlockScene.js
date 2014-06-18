@@ -19,6 +19,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
      @final
      **/
     BB.EVENTS.SCENE_BG_COLOR_CHANGED = 'SCENE_BG_COLOR_CHANGED';
+
     /**
      event fires when scene the scene width or height modified by user
      @event Block.SCENE_BLOCK_DIMENSIONS_CHANGE
@@ -95,6 +96,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _listenBgColorChanges: function () {
             var self = this;
             BB.comBroker.listenWithNamespace(BB.EVENTS.SCENE_BG_COLOR_CHANGED, self, function (e) {
+                if (!self.m_selected)
+                    return;
                 var color = e.edata;
                 var domPlayerData = self._getBlockPlayerData();
                 var xPoints = self._findGradientPoints(domPlayerData);
@@ -113,7 +116,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _listenInputChanges: function () {
             var self = this;
-
             // Scene name
             self.m_inputNameChangeHandler = _.debounce(function (e) {
                 if (!self.m_selected)

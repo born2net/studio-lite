@@ -322,6 +322,12 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_canvas.renderAll();
         },
 
+        /**
+         Toggle block background on UI checkbox selection
+         @Override
+         @method _toggleBackgroundColorHandler
+         @param {event} e
+         **/
         _toggleBackgroundColorHandler: function (e) {
             var self = this;
             Block.prototype._toggleBackgroundColorHandler.call(this, e);

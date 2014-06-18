@@ -197,6 +197,11 @@ define(['jquery', 'backbone'], function ($) {
             $(gradientPoints).empty();
         },
 
+        /**
+         Toggle block background on UI checkbox selection
+         @method _toggleBackgroundColorHandler
+         @param {event} e
+         **/
         _toggleBackgroundColorHandler: function (e) {
             var self = this;
             if (!self.m_selected)

@@ -38,7 +38,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Text');
                 $(xSnippet).text(text);
-                self._setBlockPlayerData(domPlayerData, true);
+                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
                 // log(xSnippet[0].outerHTML);
             }, 150);
             $(Elements.QR_TEXT).on("input", self.m_inputChangeHandler);

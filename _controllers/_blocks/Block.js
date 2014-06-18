@@ -10,6 +10,15 @@
 define(['jquery', 'backbone'], function ($) {
 
     /**
+     Quiet mode, don't announce
+     @property BB.CONSTS.NO_NOTIFICATION
+     @static
+     @final
+     @type String
+     */
+    BB.CONSTS.NO_NOTIFICATION = true;
+
+    /**
      event fires when scene block was changed so scene needs to be re-rendered
      @event Block.SCENE_BLOCK_CHANGE
      @param {this} caller
@@ -130,7 +139,7 @@ define(['jquery', 'backbone'], function ($) {
 
         /**
          Set the block border picker color
-         @method setPlayerData
+         @method _borderPopulate
          @param {Number} _borderPopulate
          **/
         _borderPopulate: function () {
@@ -222,8 +231,9 @@ define(['jquery', 'backbone'], function ($) {
                 }
                 var player_data = pepper.xmlToStringIEfix(domPlayerData);
                 domPlayerData = $.parseXML(player_data);
-                self._setBlockPlayerData(domPlayerData);
+                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
                 self._bgPropsPopulate();
+                self._announceBlockChanged();
             } else {
                 var xSnippet = self._findBackground(domPlayerData);
                 $(xSnippet).remove();
@@ -272,7 +282,7 @@ define(['jquery', 'backbone'], function ($) {
                 var xmlString = (new XMLSerializer()).serializeToString(domPlayerData);
                 xmlString = xmlString.replace(/<GradientPoints[ ]*\/>/, '<GradientPoints>' + pointsXML + '</GradientPoints>');
                 domPlayerData = $.parseXML(xmlString);
-                self._setBlockPlayerData(domPlayerData, true);
+                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
             });
         },
 
@@ -521,11 +531,21 @@ define(['jquery', 'backbone'], function ($) {
         },
 
         /**
+         Announce that this block has changed
+         @method _announceBlockChanged
+         @param {Number} i_player_data
+         **/
+        _announceBlockChanged: function () {
+            var self = this;
+            BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, self.m_block_id);
+        },
+
+        /**
          Update the msdb for the block with new values inside its player_data
          @method _setBlockPlayerData
          @param {Object} i_xmlDoc
          **/
-        _setBlockPlayerData: function (i_xmlDoc, i_quiet) {
+        _setBlockPlayerData: function (i_xmlDoc, i_noNotify) {
             var self = this;
             var player_data = (new XMLSerializer()).serializeToString(i_xmlDoc);
             switch (self.m_placement) {
@@ -537,15 +557,15 @@ define(['jquery', 'backbone'], function ($) {
                 case BB.CONSTS.PLACEMENT_SCENE:
                 {
                     pepper.setScenePlayerdataBlock(self.m_sceneID, self.m_block_id, player_data);
-                    if (!i_quiet)
-                        BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, self.m_block_id);
+                    if (!i_noNotify)
+                        self._announceBlockChanged();
                     break;
                 }
                 case BB.CONSTS.PLACEMENT_IS_SCENE:
                 {
                     pepper.setScenePlayerData(self.m_block_id, player_data);
-                    if (!i_quiet)
-                        BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, self.m_block_id);
+                    if (!i_noNotify)
+                        self._announceBlockChanged();
                     break;
                 }
             }

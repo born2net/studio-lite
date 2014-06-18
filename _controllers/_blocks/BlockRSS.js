@@ -57,7 +57,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                     xmlData.attr('textAlign', config.alignment);
 
                 });
-                self._setBlockPlayerData(domPlayerData, true);
+                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
             });
         },
 
@@ -73,7 +73,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Rss');
                 $(xSnippet).attr('url', e.edata);
-                self._setBlockPlayerData(domPlayerData, true);
+                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
                 // log(xSnippet[0].outerHTML);
             });
         },
@@ -93,7 +93,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Rss');
                 $(xSnippet).attr('minRefreshTime', minRefreshTime);
-                self._setBlockPlayerData(domPlayerData, true);
+                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
             }
             $(Elements.RSS_POLL_SPINNER).on('change', self.m_rssPollSpinner);
         },
@@ -112,7 +112,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Rss');
                 $(xSnippet).attr('vertical', modeSelect);
-                self._setBlockPlayerData(domPlayerData, true);
+                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
             };
             $(Elements.RSS_MODE_SELECT).on('change', self.m_rssModeSelect);
         },
@@ -136,7 +136,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Rss');
                 $(xSnippet).attr('speed', scrollSpeed);
-                self._setBlockPlayerData(domPlayerData, true);
+                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
             };
             $(Elements.RSS_SCROLL_SPEED).on('change', self.m_rssScrollSpeed);
         },

@@ -40,7 +40,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('HTML');
                 xSnippet.attr('src', text);
-                self._setBlockPlayerData(domPlayerData, true);
+                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
             }, 150);
             $(Elements.HTML_TEXT).on("input", self.m_inputChangeHandler);
         },

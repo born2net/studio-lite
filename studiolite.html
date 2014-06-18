@@ -829,7 +829,7 @@
         <div class="checkbox">
             <label>
                 <input id="showBackground" type="checkbox">
-                <span data-localize="showBgColor"> Show background color</span> </label>
+                <span data-localize="showBgColor"> background color</span> </label>
         </div>
 
         <div id="bgColorGradientSelector">
@@ -845,10 +845,17 @@
 
     <div id="blockThickness" class="propControlWidth">
         <hr class="hrThin"/>
-        <span data-localize="borderProperties">border properties</span>
+        <!-- <span data-localize="borderProperties">border properties</span> -->
 
         <div style="float: left">
 
+            <div class="checkbox">
+                <label>
+                    <input id="showBorder" type="checkbox">
+                    <span data-localize="showBorder"> border</span> </label>
+            </div>
+
+            <!--
             <label class="floatLeftWidth" data-localize="thickness">thickness</label>
 
             <div style="float: left" class="spinner spinnerDimTop">
@@ -862,12 +869,12 @@
                             class="fa fa-chevron-down"></i></button>
                 </div>
             </div>
-
+            -->
             <div class="colorSelectorDiv" style="float: left">
                 <div class="divPadding">
                 </div>
-                <span data-localize="color">
-                    color
+                <span data-localize="borderColor">
+                    border color
                 </span>
                 <input id="sceneBorderColorSelector" type="text" name="colorSelect"
                        class="fontSelectorMiniColor fontFormatter form-control minicolor-mini" data-control="hue">
@@ -886,7 +893,7 @@
 </div>
 </div>
 <div id="footer"><br>
-    <span id="footerText">&nbsp;MediaSignage Inc &#169; | version 0.9.54 </span></div>
+    <span id="footerText">&nbsp;MediaSignage Inc &#169; | version 0.9.55 </span></div>
 
 <!-- Modal -->
 <div class="modal modal-static fade" id="bsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"

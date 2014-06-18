@@ -48,7 +48,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         /**
          set player data for a scene
          @Override
-         @method setPlayerData
+         @method getPlayerData
          @param {Number} i_playerData
          @return {Number} Unique clientId.
          **/
@@ -123,7 +123,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var text = $(e.target).val();
                 var domPlayerData = self._getBlockPlayerData();
                 $(domPlayerData).find('Player').eq(0).attr('label', text);
-                self._setBlockPlayerData(domPlayerData, true);
+                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
                 if (BB.EVENTS['SCENE_LIST_UPDATED'])
                     BB.comBroker.fire(BB.EVENTS['SCENE_LIST_UPDATED'], this);
             }, 200);
@@ -137,7 +137,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                     return;
                 var domPlayerData = self._getBlockPlayerData();
                 $(domPlayerData).find('Layout').eq(0).attr('width', $(e.target).val());
-                self._setBlockPlayerData(domPlayerData, true);
+                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
                 BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_DIMENSIONS_CHANGE'], self, null, self.m_block_id);
             }, 200);
             $(Elements.SCENE_WIDTH_INPUT).on("blur", self.m_inputWidthChangeHandler);
@@ -150,7 +150,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                     return;
                 var domPlayerData = self._getBlockPlayerData();
                 $(domPlayerData).find('Layout').eq(0).attr('height', $(e.target).val());
-                self._setBlockPlayerData(domPlayerData, true);
+                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
                 BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_DIMENSIONS_CHANGE'], self, null, self.m_block_id);
             }, 200);
             $(Elements.SCENE_HEIGHT_INPUT).on("blur", self.m_inputHeightChangeHandler);
@@ -161,7 +161,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          @method _setBlockPlayerData
          @param {Object} i_xmlDoc
          **/
-        _setBlockPlayerData: function (i_xmlDoc, i_quiet) {
+        _setBlockPlayerData: function (i_xmlDoc, i_noNotify) {
             var self = this;
             var player_data = (new XMLSerializer()).serializeToString(i_xmlDoc);
             switch (self.m_placement) {
@@ -178,8 +178,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 case BB.CONSTS.PLACEMENT_IS_SCENE:
                 {
                     pepper.setScenePlayerData(self.m_block_id, player_data);
-                    if (!i_quiet)
-                        BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, self.m_block_id);
+                    if (!i_noNotify)
+                        self._announceBlockChanged();
                     break;
                 }
             }

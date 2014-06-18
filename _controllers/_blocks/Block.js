@@ -260,7 +260,6 @@ define(['jquery', 'backbone'], function ($) {
             });
         },
 
-
         /**
          Update a block's player_data with new gradient background
          @method _listenGradientChange

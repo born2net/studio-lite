@@ -349,6 +349,19 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         },
 
         /**
+         Get the scene id that's associated with this block given that it resides in a timeline > channel
+         @method getChannelBlockSceneID
+         @return {Number} scene_id;
+         **/
+        getChannelBlockSceneID: function () {
+            var self = this;
+            var recBlock = pepper.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
+            var domPlayerData = $.parseXML(recBlock['player_data']);
+            var scene_id = $(domPlayerData).find('Player').attr('hDataSrc');
+            return scene_id;
+        },
+
+        /**
          Delete this block
          @method deleteBlock
          @return none

@@ -59,7 +59,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         _listenInputChange: function () {
             var self = this;
-            var onChange = _.debounce( function (e) {
+            var onChange = _.debounce(function (e) {
                 var text = $(e.target).val();
                 pepper.setResourceRecord(self.m_selected_resource_id, 'resource_name', text);
                 var elem = self.$el.find('[data-resource_id="' + self.m_selected_resource_id + '"]');
@@ -105,17 +105,17 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         _listenRemoveResource: function () {
             var self = this;
-            $(Elements.FILE_REMOVE).on('click',function (e) {
+            $(Elements.FILE_REMOVE).on('click', function (e) {
                 if (self.m_selected_resource_id == undefined)
                     return;
                 // remove a resource from resources, notify before so channel instances
                 // can remove corresponding blocks and after so channelList can refresh UI
-                BB.comBroker.fire(BB.EVENTS.REMOVING_RESOURCE,this,null,self.m_selected_resource_id);
+                BB.comBroker.fire(BB.EVENTS.REMOVING_RESOURCE, this, null, self.m_selected_resource_id);
                 pepper.removeResource(self.m_selected_resource_id);
                 pepper.removeBlocksWithResourceID(self.m_selected_resource_id);
                 self._loadResourceList();
                 self._listenResourceSelected();
-                BB.comBroker.fire(BB.EVENTS.REMOVED_RESOURCE,this,null,self.m_selected_resource_id);
+                BB.comBroker.fire(BB.EVENTS.REMOVED_RESOURCE, this, null, self.m_selected_resource_id);
             });
         },
 
@@ -127,7 +127,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
 
             $(Elements.CLASS_RESOURCES_LIST_ITEMS).off('click');
-            $(Elements.CLASS_RESOURCES_LIST_ITEMS).on('click',function (e) {
+            $(Elements.CLASS_RESOURCES_LIST_ITEMS).on('click', function (e) {
                 var resourceElem = $(e.target).closest('li');
                 self.m_selected_resource_id = $(resourceElem).data('resource_id');
                 $(Elements.CLASS_RESOURCES_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');

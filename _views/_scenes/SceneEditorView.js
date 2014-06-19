@@ -300,6 +300,15 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
                 bootbox.confirm($(Elements.MSG_BOOTBOX_SCENE_REMOVE).text(), function (result) {
                     if (result == true) {
+
+                        if (self.m_canvas)
+                            self.m_canvas.setBackgroundColor('#ffffff', function(){}).renderAll();
+
+                        // remove a scene and notify before so channel instances
+                        // can remove corresponding blocks and after so channelList can refresh UI
+                        var sceneID = pepper.getSceneIdFromPseudoId(self.m_selectedSceneID);
+                        BB.comBroker.fire(BB.EVENTS.REMOVING_SCENE, this, null, sceneID);
+                        pepper.removeBlocksWithSceneID(sceneID);
                         pepper.removeScene(self.m_selectedSceneID);
                         BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this, null);
                         self._disposeScene();
@@ -308,6 +317,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         self.m_selectedSceneID = undefined;
                         $(Elements.SCENE_CANVAS).removeClass('basicBorder');
                         self._blockCountChanged();
+                        BB.comBroker.fire(BB.EVENTS.REMOVED_SCENE, this, null, self.m_selected_resource_id);
                     }
                 });
             });

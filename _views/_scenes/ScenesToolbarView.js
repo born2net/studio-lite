@@ -32,6 +32,9 @@ define(['jquery', 'backbone'], function ($, Backbone) {
     BB.EVENTS.NEW_SCENE = 'NEW_SCENE';
     BB.EVENTS.SCENE_UNDO = 'SCENE_UNDO';
     BB.EVENTS.SCENE_REDO = 'SCENE_REDO';
+    BB.EVENTS.REMOVING_SCENE = 'REMOVING_SCENE';
+    BB.EVENTS.REMOVED_SCENE = 'REMOVED_SCENE';
+
 
     var ScenesToolbarView = Backbone.View.extend({
 

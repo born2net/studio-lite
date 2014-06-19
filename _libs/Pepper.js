@@ -1606,6 +1606,25 @@ Pepper.prototype = {
     },
 
     /**
+     Remove blocks (a.k.a players) from all campaign that use the specified scene_id
+     @method removeBlocksWithSceneID
+     @param {Number} i_scene_id
+     @return none
+     **/
+    removeBlocksWithSceneID: function (i_scene_id) {
+        var self = this;
+
+        $(self.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
+            var recCampaignTimelineChannelPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
+            var playerData = recCampaignTimelineChannelPlayer['player_data'];
+            var domPlayerData = $.parseXML(playerData);
+            var scene_id = $(domPlayerData).find('Player').attr('hDataSrc');
+            if (scene_id == i_scene_id)
+                pepper.removeBlockFromTimelineChannel(campaign_timeline_chanel_player_id);
+        });
+    },
+
+    /**
      Remove a timeline from a campaign.
      @method removeTimelineFromCampaign
      @param {Number} i_campaign_timeline_id

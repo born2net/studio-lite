@@ -32,6 +32,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             self._wireUI();
             self._listenTimelineSelected();
             self._listenResourceRemoved();
+            self._listenSceneRemoved();
             self._listenBlockLengthChanged();
 
             pepper.listen(Pepper.TIMELINE_DELETED, $.proxy(self._onTimelineDeleted, self));
@@ -168,6 +169,22 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
         _listenResourceRemoved: function () {
             var self = this;
             BB.comBroker.listen(BB.EVENTS.REMOVED_RESOURCE, function (e) {
+                if (self.selected_campaign_timeline_id != undefined && self.selected_campaign_timeline_chanel_id != undefined) {
+                    $(Elements.SORTABLE).empty();
+                    self._loadChannelBlocks(self.selected_campaign_timeline_id, self.selected_campaign_timeline_chanel_id);
+                    self._reOrderChannelBlocks();
+                }
+            });
+        },
+
+        /**
+         Listen to when a resource has been deleted so we can delete the associated block and re calc channel length
+         @method _listenSceneRemoved
+         @return none
+         **/
+        _listenSceneRemoved: function () {
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS.REMOVED_SCENE, function () {
                 if (self.selected_campaign_timeline_id != undefined && self.selected_campaign_timeline_chanel_id != undefined) {
                     $(Elements.SORTABLE).empty();
                     self._loadChannelBlocks(self.selected_campaign_timeline_id, self.selected_campaign_timeline_chanel_id);

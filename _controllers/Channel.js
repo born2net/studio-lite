@@ -7,7 +7,7 @@
  @param {string} i_campaign_timeline_chanel_id
  @return {object} Channel instantiated
  **/
-define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockVideo'], function ($, Backbone, X2JS, BlockImage, BlockVideo) {
+define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockVideo', 'BlockScene'], function ($, Backbone, X2JS, BlockImage, BlockVideo, BlockScene) {
 
     /**
      Event fires when a channel is selected on a timeline. The event includes the channel id that was selected.
@@ -57,6 +57,7 @@ define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockVideo'], function ($, 
             self._wireUI();
             self._propLoadChannel();
             self._listenResourceRemoving();
+            self._listenSceneRemoving();
         },
 
         /**
@@ -97,6 +98,26 @@ define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockVideo'], function ($, 
                 for (var blockID in self.m_blocks) {
                     if (self.m_blocks[blockID] instanceof BlockImage || self.m_blocks[blockID] instanceof BlockVideo) {
                         if (removingResoucreID == self.m_blocks[blockID].getResourceID()) {
+                            self.deleteBlock(blockID);
+                        }
+                    }
+                }
+            });
+        },
+
+        /**
+         Listen to when a scene removing from scenes so we can remove corresponding blocks
+         @method _listenSceneRemoving
+         @return none
+         **/
+        _listenSceneRemoving: function () {
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS.REMOVING_SCENE, function (e) {
+                var removingSceneID = e.edata;
+                for (var blockID in self.m_blocks) {
+                    if (self.m_blocks[blockID] instanceof BlockScene) {
+                        var sceneID = self.m_blocks[blockID].getChannelBlockSceneID();
+                        if (removingSceneID == sceneID) {
                             self.deleteBlock(blockID);
                         }
                     }

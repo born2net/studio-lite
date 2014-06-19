@@ -85,7 +85,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             if (_.isUndefined(color))
                 color = '16777215';
             color = '#' + BB.lib.decimalToHex(color);
-            log(color);
             self.m_blockProperty.setBgScenePropColorPicker(color);
         },
 

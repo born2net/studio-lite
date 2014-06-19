@@ -77,6 +77,7 @@ define(['jquery', 'backbone'], function ($) {
             self._listenGradientChange();
             self._listenGradientColorPickerClosed();
             self._listenBackgroundStateChange();
+            self._listenBorderStateChange();
             self._listenBorderColorChange();
             self._listenBlockSelected();
             self._onBlockLengthChanged();
@@ -138,24 +139,6 @@ define(['jquery', 'backbone'], function ($) {
         },
 
         /**
-         Set the block border picker color
-         @method _borderPopulate
-         @param {Number} _borderPopulate
-         **/
-        _borderPopulate: function () {
-            var self = this;
-            if (!self.m_selected)
-                return;
-            var domPlayerData = self._getBlockPlayerData();
-            var border = self._findBorder(domPlayerData);
-            var color = $(border).attr('borderColor');
-            if (_.isUndefined(color))
-                color = '16777215';
-            color = '#' + BB.lib.decimalToHex(color);
-            self.m_blockProperty.setBorderBlockPropColorPicker(color);
-        },
-
-        /**
          Enable gradient background UI
          @method _enableBgSelection
          **/
@@ -164,6 +147,16 @@ define(['jquery', 'backbone'], function ($) {
             $(Elements.SHOW_BACKGROUND).prop('checked', true);
             $(Elements.BG_COLOR_SOLID_SELECTOR).hide();
             $(Elements.BG_COLOR_GRADIENT_SELECTOR).show();
+        },
+
+        /**
+         Enable gradient background UI
+         @method _enableBgSelection
+         **/
+        _enableBorderSelection: function () {
+            var self = this;
+            $(Elements.SHOW_BORDER).prop('checked', true);
+            $(Elements.BLOCK_BORDER_WRAP).show();
         },
 
         /**
@@ -193,6 +186,24 @@ define(['jquery', 'backbone'], function ($) {
         },
 
         /**
+         On changes in msdb model updated UI common border properties
+         @method _borderPropsPopulate
+         **/
+        _borderPropsPopulate: function () {
+            var self = this;
+            var domPlayerData = self._getBlockPlayerData();
+            var xSnippet = self._findBorder(domPlayerData);
+            if (xSnippet.length > 0) {
+                self._enableBorderSelection();
+                var color = $(xSnippet).attr('borderColor');
+                color = '#' + BB.lib.decimalToHex(color);
+                self.m_blockProperty.setBorderBlockPropColorPicker(color);
+            } else {
+                self._borderPropsUnpopulate();
+            }
+        },
+
+        /**
          Disable the gradient background UI
          @method _bgPropsUnpopulate
          **/
@@ -204,6 +215,19 @@ define(['jquery', 'backbone'], function ($) {
             var domPlayerData = self._getBlockPlayerData();
             var gradientPoints = self._findGradientPoints(domPlayerData);
             $(gradientPoints).empty();
+        },
+
+        /**
+         Disable the border UI
+         @method _borderPropsUnpopulate
+         **/
+        _borderPropsUnpopulate: function () {
+            var self = this;
+            $(Elements.SHOW_BORDER).prop('checked', false);
+            $(Elements.BLOCK_BORDER_WRAP).hide();
+            var domPlayerData = self._getBlockPlayerData();
+            var border = self._findBorder(domPlayerData);
+            $(border).empty();
         },
 
         /**
@@ -243,6 +267,42 @@ define(['jquery', 'backbone'], function ($) {
         },
 
         /**
+         Toggle block background on UI checkbox selection
+         @method _toggleBackgroundColorHandler
+         @param {event} e
+         **/
+        _toggleBorderHandler: function (e) {
+            var self = this;
+            if (!self.m_selected)
+                return;
+
+            var xBgSnippet = undefined;
+            var domPlayerData = self._getBlockPlayerData();
+            var checked = $(e.target).prop('checked') == true ? 1 : 0;
+            if (checked) {
+                self._enableBorderSelection();
+                xBgSnippet = BB.PepperHelper.getCommonBorderXML();
+                var data = $(domPlayerData).find('Data').eq(0);
+                var bgData = self._findBorder(data);
+                if (bgData.length > 0 && !_.isUndefined(bgData.replace)) { // ie bug workaround
+                    bgData.replace($(xBgSnippet));
+                } else {
+                    $(data).append($(xBgSnippet));
+                }
+                var player_data = pepper.xmlToStringIEfix(domPlayerData);
+                domPlayerData = $.parseXML(player_data);
+                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
+                self._borderPropsPopulate();
+                self._announceBlockChanged();
+            } else {
+                var xSnippet = self._findBorder(domPlayerData);
+                $(xSnippet).remove();
+                self._borderPropsUnpopulate();
+                self._setBlockPlayerData(domPlayerData);
+            }
+        },
+
+        /**
          Listen to change in background enable / disable states
          @method _listenBackgroundStateChange
          **/
@@ -251,6 +311,17 @@ define(['jquery', 'backbone'], function ($) {
             self.m_proxyToggleBg = $.proxy(self._toggleBackgroundColorHandler, self);
             self.m_proxyToggleBgKey = _.uniqueId('click.');
             $(Elements.SHOW_BACKGROUND).on(self.m_proxyToggleBgKey, self.m_proxyToggleBg);
+        },
+
+        /**
+         Listen to change in background enable / disable states
+         @method _listenBackgroundStateChange
+         **/
+        _listenBorderStateChange: function () {
+            var self = this;
+            self.m_proxyToggleBorder = $.proxy(self._toggleBorderHandler, self);
+            self.m_proxyToggleBorderKey = _.uniqueId('click.');
+            $(Elements.SHOW_BORDER).on(self.m_proxyToggleBorderKey, self.m_proxyToggleBorder);
         },
 
         /**
@@ -288,7 +359,7 @@ define(['jquery', 'backbone'], function ($) {
 
         /**
          Update a block's player_data with new border background
-         @method _listenGradientChange
+         @method _listenBorderColorChange
          **/
         _listenBorderColorChange: function () {
             var self = this;
@@ -337,8 +408,7 @@ define(['jquery', 'backbone'], function ($) {
          **/
         _findBorder: function (i_domPlayerData) {
             var self = this;
-            var xSnippet = $(i_domPlayerData).find('Border');
-            return xSnippet;
+            return $(i_domPlayerData).find('Border');
         },
 
         /**
@@ -382,7 +452,7 @@ define(['jquery', 'backbone'], function ($) {
             self._updateTitle();
             self._updateTitleTab();
             self._alphaPopulate();
-            self._borderPopulate();
+            self._borderPropsPopulate();
             self._bgPropsPopulate();
 
             log('block selected ' + self.m_block_id);
@@ -613,6 +683,8 @@ define(['jquery', 'backbone'], function ($) {
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_BORDER_CHANGE, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.ALPHA_CHANGED, self);
             $(Elements.SHOW_BACKGROUND).off(self.m_proxyToggleBgKey, self.m_proxyToggleBg);
+            $(Elements.SHOW_BORDER).off(self.m_proxyToggleBorderKey, self.m_proxyToggleBorder);
+
             if (self.off != undefined)
                 self.off('modified');
 
@@ -664,9 +736,9 @@ define(['jquery', 'backbone'], function ($) {
         _fabricateBorder: function (i_options) {
             var self = this;
             var domPlayerData = self._getBlockPlayerData();
-            var color = '#' + BB.lib.decimalToHex($(domPlayerData).find('Border').attr('borderColor'));
+            var border = self._findBorder(domPlayerData);
+            var color = border.length == 0 ? 'transparent' : '#' + BB.lib.decimalToHex($(border).attr('borderColor'));
             return _.extend({
-                // stroke: 'transparent',
                 // borderColor: '#5d5d5d',
                 stroke: color,
                 strokeWidth: 1

@@ -35,7 +35,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
     BB.EVENTS.REMOVING_SCENE = 'REMOVING_SCENE';
     BB.EVENTS.REMOVED_SCENE = 'REMOVED_SCENE';
 
-
     var ScenesToolbarView = Backbone.View.extend({
 
         /**

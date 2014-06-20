@@ -26,6 +26,7 @@ Elements.BLOCK_QR_COMMON_PROPERTIES = '#blockQRCommonProperties';
 Elements.BLOCK_SCENE_COMMON_PROPERTIES = '#blockSceneCommonProperties';
 Elements.BLOCK_EXT_IMAGE_COMMON_PROPERTIES = '#blockExtImageCommonProperties';
 Elements.BLOCK_EXT_VIDEO_COMMON_PROPERTIES = '#blockExtVideoCommonProperties';
+Elements.DIMENSION_APPLY_SCENE = '#dimensionApplyScene';
 Elements.QR_TEXT = '#qrText';
 Elements.HTML_TEXT = '#htmlText';
 Elements.EXT_VIDEO_TEXT = '#extVideoText';

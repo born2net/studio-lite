@@ -128,31 +128,27 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             }, 200);
             $(Elements.SCENE_NAME_INPUT).on("input", self.m_inputNameChangeHandler);
 
-            // Scene width
-            self.m_inputWidthChangeHandler = _.debounce(function (e) {
+            self.m_inputChangeHandler = _.debounce(function (e) {
                 if (!self.m_selected)
                     return;
-                if (parseFloat($(e.target).val()) < 100)
-                    return;
-                var domPlayerData = self._getBlockPlayerData();
-                $(domPlayerData).find('Layout').eq(0).attr('width', $(e.target).val());
-                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
-                BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_DIMENSIONS_CHANGE'], self, null, self.m_block_id);
-            }, 200);
-            $(Elements.SCENE_WIDTH_INPUT).on("blur", self.m_inputWidthChangeHandler);
 
-            // Scene height
-            self.m_inputHeightChangeHandler = _.debounce(function (e) {
-                if (!self.m_selected)
-                    return;
-                if (parseFloat($(e.target).val()) < 100)
-                    return;
                 var domPlayerData = self._getBlockPlayerData();
-                $(domPlayerData).find('Layout').eq(0).attr('height', $(e.target).val());
+                var w1 = parseFloat($(Elements.SCENE_WIDTH_INPUT).val());
+                var h1 = parseFloat($(Elements.SCENE_HEIGHT_INPUT).val());
+                var w2 = parseFloat($(domPlayerData).find('Layout').eq(0).attr('width'));
+                var h2 = parseFloat($(domPlayerData).find('Layout').eq(0).attr('height'));
+
+                if (w1 < 100 || h2 < 100)
+                    return;
+                if (w1==w2 && h1==h2)
+                    return;
+
+                $(domPlayerData).find('Layout').eq(0).attr('width', w1);
+                $(domPlayerData).find('Layout').eq(0).attr('height', h1);
                 self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
                 BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_DIMENSIONS_CHANGE'], self, null, self.m_block_id);
-            }, 200);
-            $(Elements.SCENE_HEIGHT_INPUT).on("blur", self.m_inputHeightChangeHandler);
+            }, 333);
+            $(Elements.DIMENSION_APPLY_SCENE).on('click', self.m_inputChangeHandler);
         },
 
         /**

@@ -445,6 +445,11 @@ aside > aside > div > ul > li {
     height: 100%;
 }
 
+.xyScroll {
+    overflow: scroll;
+    height: 100%;
+}
+
 .pushToTopButton {
     margin-top: 30px;
     width: 150px;

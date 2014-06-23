@@ -429,6 +429,8 @@ Pepper.prototype = {
             replace(/minrefreshtime/gi, 'minRefreshTime').
             replace(/gradienttype/gi, 'gradientType').
             replace(/autorewind/gi, 'autoRewind').
+            replace(/clockformat/gi, 'clockFormat').
+            replace(/clockmask/gi, 'clockMask').
             replace(/hresource/gi, 'hResource').
             replace(/maintainaspectratio/gi, 'maintainAspectRatio').
             replace(/<resource/gi, '<Resource').replace(/resource>/g, 'Resource>').

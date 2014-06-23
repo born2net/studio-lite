@@ -1,5 +1,5 @@
 /**
- * BlockClock block resided inside a Scenes or timeline
+ * BlockClock time block resided inside a Scenes or timeline
  * @class BlockClock
  * @extends Block
  * @constructor
@@ -72,7 +72,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Clock');
                 xSnippet.attr('clockMask',mask);
-                self._setBlockPlayerData(domPlayerData);
+                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
+
             }
             $('input[type="radio"]',self.$el).on('change',self.m_clockMaskHandler);
         },
@@ -98,8 +99,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 xSnippetFont.attr('fontSize', config.size);
                 xSnippetFont.attr('fontFamily', config.font);
                 xSnippetFont.attr('textAlign', config.alignment);
-
-                self._setBlockPlayerData(domPlayerData);
+                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
             });
         },
 

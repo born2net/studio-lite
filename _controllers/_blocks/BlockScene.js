@@ -138,7 +138,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var w2 = parseFloat($(domPlayerData).find('Layout').eq(0).attr('width'));
                 var h2 = parseFloat($(domPlayerData).find('Layout').eq(0).attr('height'));
 
-                if (w1 < 100 || h2 < 100)
+                if (w1 < 100 || h1 < 100 || _.isNaN(w1) || _.isNaN(h1))
                     return;
                 if (w1==w2 && h1==h2)
                     return;
@@ -265,6 +265,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 {
                     $(Elements.SCENE_WIDTH_INPUT).hide();
                     $(Elements.SCENE_HEIGHT_INPUT).hide();
+                    $(Elements.DIMENSION_APPLY_SCENE).hide();
                     var domPlayerData = self._getBlockPlayerData();
                     var domPlayer = $(domPlayerData).find('Player').eq(0);
                     var domPlayerLayout = $(domPlayerData).find('Player').eq(0).find('Layout');
@@ -276,6 +277,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 {
                     $(Elements.SCENE_WIDTH_INPUT).show();
                     $(Elements.SCENE_HEIGHT_INPUT).show();
+                    $(Elements.DIMENSION_APPLY_SCENE).show();
                     $(Elements.SCENE_WIDTH_INPUT).val($(domPlayerLayout).attr('width'));
                     $(Elements.SCENE_HEIGHT_INPUT).val($(domPlayerLayout).attr('height'));
                     var domPlayerData = self._getBlockPlayerData();

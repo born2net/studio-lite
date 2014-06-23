@@ -472,17 +472,35 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             return n;
         },
 
+        /**
+         Decimal to hex converter
+         @method decimalToHex
+         @param {Number} d
+         @return {String} hex
+         **/
         decimalToHex: function (d) {
             var hex = Number(d).toString(16);
             hex = "000000".substr(0, 6 - hex.length) + hex;
             return hex;
         },
 
+        /**
+         Hex to decimal converter
+         @method hexToDecimal
+         @param {String} h
+         @return {Number} decimal
+         **/
         hexToDecimal: function (h) {
             var h = h.replace(/#/gi, '');
             return parseInt(h, 16);
         },
 
+        /**
+         RGB color to hex converter
+         @method rgbToHex
+         @param {Number} rgb
+         @return {String} hex
+         **/
         rgbToHex: function (rgb) {
             function componentFromStr(numStr, percent) {
                 var num = Math.max(0, parseInt(numStr, 10));
@@ -501,6 +519,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             return hex;
         },
 
+        /**
+         Smart convert color (many) to decinal
+         @method colorToDecimal
+         @param {String} color
+         @return {Number} decimal
+         **/
         colorToDecimal: function (color) {
             if (color.match('rgb')) {
                 color = this.rgbToHex(color);
@@ -509,6 +533,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             return this.hexToDecimal(color);
         },
 
+        /**
+         Smart convert color (many) to hex
+         @method colorToHex
+         @param {String} color
+         @return {String} hex
+         **/
         colorToHex: function (color) {
             if (color.match('#')) {
                 return color;
@@ -519,21 +549,47 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             return '#' + color;
         },
 
+        /**
+         Capitilize first letter
+         @method capitaliseFirst
+         @param {String} string
+         @return {String} string
+         **/
         capitaliseFirst: function (string) {
             return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
         },
 
-        setIntervalTimes: function(i_func, i_sleep, i_timesRun){
+        /**
+         Run a function n number of times with sleep in between
+         @method setIntervalTimes
+         @param {Function} i_func
+         @param {Number} i_sleep
+         @param {Number} i_timesRun
+         **/
+        setIntervalTimes: function (i_func, i_sleep, i_timesRun) {
             var timesRun = 0;
-            var interval = setInterval(function(){
+            var interval = setInterval(function () {
                 timesRun += 1;
-                if(timesRun === i_timesRun){
+                if (timesRun === i_timesRun) {
                     clearInterval(interval);
                 }
                 i_func();
             }, i_sleep);
-        }
+        },
 
+        /**
+         Remove characters that a problemtaic to app / js
+         @method cleanProbCharacters
+         @param {String} string
+         @return {String} string
+         **/
+        cleanProbCharacters: function (i_string) {
+            i_string = i_string.replace(/'/ig,"`");
+            i_string = i_string.replace(/&/ig,"and");
+            i_string = i_string.replace(/</ig,"(");
+            i_string = i_string.replace(/>/ig,")");
+            return i_string;
+        },
     });
 
     return Lib;

@@ -349,7 +349,7 @@ PepperHelper.prototype = {
      @return {String} common xml
      **/
     getCommonBackgroundXML: function(){
-        var common =    '<Background style="Gradient" gradientType="linear" angle="90" offsetX="0" offsetY="0">'+
+        var common =    '<Background style="Gradient" gradientType="linear" angle="0" offsetX="0" offsetY="0">'+
                             '<GradientPoints>'+
                                 '<Point color="4361162" opacity="1" midpoint="125" />'+
                             '</GradientPoints>'+

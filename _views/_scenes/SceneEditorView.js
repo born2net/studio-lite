@@ -29,6 +29,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             BB.comBroker.setService(BB.SERVICES['SCENE_EDIT_VIEW'], self);
             self.m_selectedSceneID = undefined;
+            self.m_sceneScrollTop = 0;
+            self.m_sceneScrollLeft = 0;
             self.m_objectScaling = 0;
             self.m_rendering = false;
             self.m_memento = {};
@@ -49,6 +51,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._listenAddBlockWizard();
             self._listenSceneToolbarSelected();
             self._listenZoom();
+            self._listenToCanvasScroll();
             self._listenPushToTop();
             self._listenPushToBottom();
             self._listenSceneChanged();
@@ -70,7 +73,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
              self.mouseDown = 0;
              }
              */
-
         },
 
 
@@ -368,6 +370,22 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         },
 
         /**
+         Listen to canvas scrolling
+         @method _listenToCanvasScroll
+         **/
+        _listenToCanvasScroll: function () {
+            var self = this;
+            var sceneScrolling = _.debounce(function(){
+                $(Elements.SCENES_PANEL).scroll(function (e) {
+                    self.m_sceneScrollTop = $('#scenesPanel').scrollTop();
+                    self.m_sceneScrollLeft = $('#scenesPanel').scrollLeft();
+                    self.m_canvas.calcOffset();
+                });
+            }, 500);
+            $('#scenesPanel').scroll(sceneScrolling);
+        },
+
+        /**
          Listen to and add new component / resources to scene
          @method _listenAddBlockWizard
          @param {event} e
@@ -590,6 +608,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 self.m_canvas.add(i_block);
             });
             self._zoomTo(nZooms);
+            self._scrollTo(self.m_sceneScrollTop, self.m_sceneScrollLeft);
             self._resetAllObjectScale();
             self.m_canvas.renderAll();
             self._blockCountChanged();
@@ -997,6 +1016,19 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 for (i = 0; i > nZooms; nZooms++)
                     self._zoomIn();
             }
+
+        },
+
+        /**
+         Scroll canvas to set position
+         @method _scrollTo
+         @param {Number} i_top
+         @param {Number} i_left
+         **/
+        _scrollTo: function(i_top, i_left){
+            var self = this;
+            $(Elements.SCENES_PANEL).scrollTop(i_top);
+            $(Elements.SCENES_PANEL).scrollLeft(i_left);
         },
 
         /**

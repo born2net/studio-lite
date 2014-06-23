@@ -408,6 +408,7 @@ aside > aside > div > ul > li {
 #sceneCanvasContainer {
     width: 100%;
     height: 100%;
+    padding-top: 100px;
     -webkit-user-select: none;
     /* opacity: 0.01; */
 }

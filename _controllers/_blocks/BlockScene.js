@@ -120,6 +120,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 if (!self.m_selected)
                     return;
                 var text = $(e.target).val();
+                text = BB.lib.cleanProbCharacters(text);
                 var domPlayerData = self._getBlockPlayerData();
                 $(domPlayerData).find('Player').eq(0).attr('label', text);
                 self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);

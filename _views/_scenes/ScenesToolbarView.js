@@ -55,6 +55,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self._listenRemoves();
             self._listenZoom();
             self._listenPushToTop();
+            self._listenScenePlayPreview();
             self._listenPushToBottom();
             self._listenSceneBlockList();
             self._listenMemento();
@@ -96,6 +97,18 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             $(Elements.SCENE_EDITOR_PUSH_TOP, self.$el).on('click', function () {
                 BB.comBroker.fire(BB.EVENTS.SCENE_PUSH_TOP);
+            });
+        },
+
+        /**
+         Listen to live preview of scene
+         @method _listenScenePlayPreview
+         **/
+        _listenScenePlayPreview: function () {
+            var self = this;
+            $(Elements.SCENE_PLAY_PREVIEW, self.$el).on('click', function () {
+                var livePreview = BB.comBroker.getService(BB.SERVICES['LIVEPREVIEW']);
+                livePreview.play();
             });
         },
 

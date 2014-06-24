@@ -1,6 +1,7 @@
 // elemenets
 Elements.APP_ENTRY = '#appEntry';
 Elements.WAITS_SCREEN_ENTRY_APP = '#waitScreenEntryApp';
+Elements.LIVE_PREVIEW = '#livePreview'
 Elements.APP_LOGIN = '#appLogin';
 Elements.APP_LOGOUT = '#appLogout';
 Elements.FILE_MENU = '#fileMenu';
@@ -65,6 +66,12 @@ Elements.SCENE_SELECT_LIST = '#sceneSelectList';
 Elements.SCENE_UNDO = '#sceneUndo';
 Elements.SCENE_REDO = '#sceneRedo';
 Elements.SCENE_ZOOM_IN = '#sceneZoomIn';
+Elements.SCENE_PLAY_PREVIEW = '#scenePlayPreview';
+Elements.IFRAME_PREVIEW = '#iFramePreview';
+Elements.PLAYER_PREVIEW_REPLAY = '#playerPreviewReplay';
+Elements.PLAYER_PREVIEW_STOP = '#playerPreviewStop';
+Elements.PLAYER_PREVIEW_EXIT = '#playerPreviewExit';
+Elements.IFRAME_EMBEDDED = '#iFrameEmbedded';
 Elements.SCENE_ZOOM_OUT = '#sceneZoomOut';
 Elements.SCENE_ZOOM_RESET = '#sceneZoomReset';
 Elements.SCENE_CANVAS_CONTAINER = '#sceneCanvasContainer';

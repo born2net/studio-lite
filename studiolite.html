@@ -87,11 +87,44 @@
         <div id="languageSelectionLogin"></div>
     </form>
 </div>
-<div id="waitScreenEntryApp" style="display: none"><span style="position: absolute; left: 45%; top: 20%"> <img
-        src="./_assets/preload5.gif"> </span></div>
-<div id="appLogout" style="display: none"> <span style="position: absolute; left: 40%; top: 20%">
-      <h3 data-localize="haveNiceDay">Have a nice day :)</h3>
-      </span></div>
+<div id="waitScreenEntryApp" style="display: none"><span style="position: absolute; left: 45%; top: 20%"> <img src="./_assets/preload5.gif"> </span></div>
+<div id="appLogout" style="display: none">
+      <span style="position: absolute; left: 40%; top: 20%">
+        <h3 data-localize="haveNiceDay">Have a nice day :)</h3>
+      </span>
+</div>
+<div id="livePreview" style="display: none">
+    <div id="livePreviewWrap">
+        <div id="livePreviewButtons" class="alignTextCenter">
+
+
+            <button id="playerPreviewReplay" title="launch player"
+                    data-localize-tooltip="playPreview" data-toggle="tooltip" type="button"
+                    class="btn btn-default">
+                    <i style="font-size: 1em" class="fa fa-rocket"></i>
+                    <span data-localize="launch"> launch </span>
+            </button>
+
+            <button id="playerPreviewStop" title="stop playback"
+                    data-localize-tooltip="stopPreview" data-toggle="tooltip" type="button"
+                    class="btn btn-default">
+                    <i style="font-size: 1em" class="fa fa-stop"></i>
+                    <span data-localize="stop"> stop </span>
+            </button>
+
+            <button id="playerPreviewExit" title="exit preview"
+                    data-localize-tooltip="exitPreview" data-toggle="tooltip" type="button"
+                    class="btn btn-default">
+                    <i style="font-size: 1em" class="fa fa-sign-out"></i>
+                    <span data-localize="exit"> exit </span>
+            </button>
+
+        </div>
+        <div id="iFramePreview" style="width: 100%; background-color: #222222">
+            <IFRAME ID="iFrameEmbedded" width="100%" height="100%"></IFRAME>
+        </div>
+    </div>
+</div>
 <div id="appContent" class="noScroll container" style="display: none">
 <div id="appRow " class="row">
 <div id="appNavigator" class="hidden-xs hidden-sm hidden-md col-lg-1">
@@ -329,6 +362,10 @@
                             <li><a href="#" data-localize="removeItem" name="removeItem">Remove item</a></li>
                         </ul>
                     </div>
+                    <button id="scenePlayPreview" type="button" data-localize="empty"
+                            data-localize-tooltip="playPreview"
+                            title="play preview" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                            style="font-size: 1em" class="fa fa-play"> </i></button>
                     <button id="sceneEditorPushTop" type="button" data-localize="empty"
                             data-localize-tooltip="pushItemToTopButtonToolTip"
                             title="push item to top" data-toggle="tooltip" class="btn btn-default btn-sm"><i
@@ -900,7 +937,7 @@
 </div>
 </div>
 <div id="footer"><br>
-    <span id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.68 </span></div>
+    <span id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.69 </span></div>
 
 <!-- Modal -->
 <div class="modal modal-static fade" id="bsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"

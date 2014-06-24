@@ -263,6 +263,23 @@ Pepper.prototype = {
         return path;
     },
 
+    livePreviewCampaign: function (i_recCampaignBoardNativeID) {
+        var self = this;
+        var playerParams = pepper.getUserData().businessID + ',1,' + i_recCampaignBoardNativeID;
+    },
+
+    livePreviewTimeline: function (i_recCampaignBoardNativeID, i_recCampaignTimelineNativeID) {
+        var self = this;
+        var playerParams = pepper.getUserData().businessID + ',2,' + i_recCampaignBoardNativeID + "," + i_recCampaignTimelineNativeID;
+    },
+
+    livePreviewScene: function (i_recPlayerDataNativeID) {
+        var self = this;
+        var playerParams = pepper.getUserData().businessID + ',3,' + i_recPlayerDataNativeID;
+        var domain = pepper.getUserData().domain;
+        var url = 'http://' + domain + '.signage.me/WebService/SignagePlayerApp420_d.html?eri=f7bee07a7e79c8f1d7951b4d24de4713c22f160f5ebf607c&playerParams=' + playerParams;
+    },
+
     /**
      get a scene's default length
      @method getSceneDuration
@@ -367,7 +384,7 @@ Pepper.prototype = {
      @param {Object} i_domPlayerData
      @return {String} xml string
      **/
-    xmlToStringIEfix: function(i_domPlayerData){
+    xmlToStringIEfix: function (i_domPlayerData) {
         var self = this;
         var player_data = (new XMLSerializer()).serializeToString(i_domPlayerData);
         return self.ieFixEscaped(player_data);
@@ -379,7 +396,7 @@ Pepper.prototype = {
      @param {String} escapedHTML
      @return {String}
      **/
-    ieFixHTMLTag: function(escapedHTML){
+    ieFixHTMLTag: function (escapedHTML) {
         var self = this;
         return escapedHTML.replace(/HTML/g, 'htdata');
     },

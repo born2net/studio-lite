@@ -72,6 +72,27 @@ aside > aside > div > ul > li {
     padding-left: 20px;
 }
 
+iframe {
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    display: block;
+    background-color: black;
+}
+
+#livePreviewWrap {
+    width: 100%;
+    height: 60px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: black;
+}
+
+#livePreviewButtons {
+    padding-bottom: 10px;
+}
+
+
 #propPanel {
     margin: 0 auto;
     height: 100%;

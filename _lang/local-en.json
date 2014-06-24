@@ -207,12 +207,14 @@
     "bootBoxSceneRemove": "Are you sure you want to remove this scene?",
     "bootBoxSceneMustSelectScene": "You must first select or add a scene",
 
+    "campaignPreviewTooltip": "campaign preview",
     "playPreview": "play preview",
     "stopPreview": "stop preview",
     "exitPreview": "exit preview",
     "launch": "launch",
     "stop": "stop",
-    "exit": "exit"
+    "exit": "exit",
+    "preview": "preview"
 }
 
 

@@ -101,7 +101,7 @@
             <button id="playerPreviewReplay" title="launch player"
                     data-localize-tooltip="playPreview" data-toggle="tooltip" type="button"
                     class="btn btn-default">
-                    <i style="font-size: 1em" class="fa fa-rocket"></i>
+                    <i style="font-size: 1em" class="fa fa-youtube-play"></i>
                     <span data-localize="launch"> launch </span>
             </button>
 
@@ -217,10 +217,16 @@
                                         class="btn btn-default btn-sm"><span
                                         class="glyphicon glyphicon-plus"></span></button>
                                 <button id="removeTimelineButton" type="button"
-                                        title="remove the selected timeline (one must exist)" data-toggle="tooltip"
+                                        title="remove the selected timeline" data-toggle="tooltip"
                                         data-localize-tooltip="removeTimelineButtonToolTip"
                                         class="btn btn-default btn-sm"><span
                                         class="glyphicon glyphicon-minus"></span></button>
+                                <button id="campaignPreview" type="button"
+                                        title="campaign preview" data-toggle="tooltip"
+                                        data-localize-tooltip="campaignPreviewTooltip"
+                                        class="btn btn-default btn-sm">
+                                        <i style="font-size: 1.5em" class="fa fa-play-circle"></i>
+                                </button>
                             </h4>
                         </div>
                         <div id="screenSelectorContainerCollapse" class="panel-collapse collapse in">
@@ -251,7 +257,14 @@
                             </div>
                         </div>
                     </div>
-                    <div align="center" id="selectedLayoutContainer" class="centerContent"></div>
+                    <div align="center" id="selectedLayoutContainer" class="centerContent">
+                        <button type="button" style="float: left"
+                                title="preview" data-toggle="tooltip"
+                                data-localize-tooltip="review"
+                                class="btn btn-default btn-sm">
+                                <i style="font-size: 1.5em" class="fa fa-play-circle-o"></i>
+                                </button>
+                    </div>
                 </div>
                 <div id="channelListView">
                     <div>
@@ -592,9 +605,7 @@
                data-localize="timelineTitle">
     </div>
     <hr/>
-    <button id="editScreenLayout" type="button" class="btn btn-default"><i style="font-size: 1em"
-                                                                           class="fa fa-gears"> </i> <span
-            data-localize="editScreenLayout">edit screen layout</span></button>
+    <button id="editScreenLayout" type="button" class="btn btn-default"><i style="font-size: 1em" class="fa fa-gears"> </i> <span data-localize="editScreenLayout">edit screen layout</span></button>
 </div>
 <div id="channelProperties" style="display: none">
     <h5 data-localize="channelProps">Channel properties</h5>

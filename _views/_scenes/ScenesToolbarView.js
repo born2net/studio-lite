@@ -108,7 +108,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             $(Elements.SCENE_PLAY_PREVIEW, self.$el).on('click', function () {
                 var livePreview = BB.comBroker.getService(BB.SERVICES['LIVEPREVIEW']);
-                livePreview.play();
+                livePreview.launch();
             });
         },
 

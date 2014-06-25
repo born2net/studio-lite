@@ -20,6 +20,7 @@ require.config({
         'minicolors': '_common/_js/minicolors/jquery.minicolors',
         'colorpicker': '_common/_js/gradient/colorpicker',
         'RC4': '_common/_js/rc4/RC4',
+        'RC4V2': '_common/_js/rc4/RC4V2',
         'localizer': '_common/_js/localizer/dist/jquery.localize',
         'spinner': '_common/_js/fuelux/src/spinner',
         'simplestorage': '_common/_js/simplestorage/simpleStorage',
@@ -137,6 +138,9 @@ require.config({
         'RC4': {
             exports: 'RC4'
         },
+        'RC4V2': {
+            exports: 'RC4V2'
+        },
         'nouislider': {
             exports: 'nouislider'
         },
@@ -151,7 +155,7 @@ require.config({
             deps: ['backbone', 'jquery']
         },
         'Pepper': {
-            deps: ['jquery', 'Base64'],
+            deps: ['jquery', 'Base64', 'RC4V2'],
             exports: 'Pepper'
         },
         'PepperHelper': {

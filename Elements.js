@@ -73,7 +73,6 @@ Elements.PLAYER_PREVIEW_STOP = '#playerPreviewStop';
 Elements.PLAYER_PREVIEW_EXIT = '#playerPreviewExit';
 Elements.IFRAME_EMBEDDED = '#iFrameEmbedded';
 Elements.CAMPAIGN_PREVIEW = '#campaignPreview';
-Elements.CAMPAIGN_PREVIEW = '#campaignPreview';
 Elements.TIMELIME_PREVIEW = '#timelimePreview';
 Elements.SCENE_ZOOM_OUT = '#sceneZoomOut';
 Elements.SCENE_ZOOM_RESET = '#sceneZoomReset';

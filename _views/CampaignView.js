@@ -45,6 +45,8 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             self._listenDelTimeline();
             self._onWireTimeLineOrViewerSelected();
             self._listenAddNewTimeline();
+            self._listenCampaignPreview();
+            self._listenCampaignTimelinePreview();
             self._listenToggleTimelinesCollapsible();
 
             self.m_noneSelectedTimelines = new BB.View({el: Elements.NONE_SELECTED_SCREEN_LAYOUT})
@@ -222,6 +224,30 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             $(Elements.ADD_NEW_TIMELINE_BUTTON).on('click', function () {
                 BB.comBroker.getService(BB.SERVICES['SCREEN_LAYOUT_SELECTOR_VIEW']).hidePreviousButton();
                 self.options.stackView.slideToPage(Elements.SCREEN_LAYOUT_SELECTOR, 'left');
+            });
+        },
+
+        /**
+         Wire the UI for launching campaign preview
+         @method _listenCampaignPreview
+         **/
+        _listenCampaignPreview: function () {
+            var self = this;
+            $(Elements.CAMPAIGN_PREVIEW).on('click', function () {
+                var livePreview = BB.comBroker.getService(BB.SERVICES['LIVEPREVIEW']);
+                livePreview.launchCampaign(self.m_selected_campaign_id);
+            });
+        },
+
+        /**
+         Wire the UI for launching specific timeline preview
+         @method _listenCampaignTimelinePreview
+         **/
+        _listenCampaignTimelinePreview: function () {
+            var self = this;
+            $(Elements.TIMELIME_PREVIEW).on('click', function () {
+                var livePreview = BB.comBroker.getService(BB.SERVICES['LIVEPREVIEW']);
+                livePreview.launchTimelime(self.m_selected_campaign_id, self.m_selected_timeline_id);
             });
         },
 

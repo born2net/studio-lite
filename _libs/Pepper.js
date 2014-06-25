@@ -268,44 +268,66 @@ Pepper.prototype = {
     /**
      Create a live preview URL for campaign
      @method livePreviewCampaign
-     @param {Number} i_recCampaignBoardNativeID
+     @param {Number} i_campaignID
      @return {String} url
      **/
-    livePreviewCampaign: function (i_recCampaignBoardNativeID) {
+    livePreviewCampaign: function (i_campaignID) {
         var self = this;
-        var playerParams = pepper.getUserData().businessID + ',1,' + i_recCampaignBoardNativeID;
+        var campaignBoardId = pepper.getCampaignBoardIdFromCampaignId(i_campaignID);
+        var recCampaignBoard = self.m_msdb.table_campaign_boards().getRec(campaignBoardId);
+        var campaignNativeID = recCampaignBoard['native_id'];
+        var playerParams = pepper.getUserData().businessID + ',1,' + campaignNativeID;
+        var rc4v2 = new RC4V2();
+        playerParams = rc4v2.encrypt(playerParams, '8547963624824263');
+        var domain = pepper.getUserData().domain;
+        var eri = pepper.getUserData().eri;
+        var url = 'https://' + domain + '/WebService/SignagePlayerApp420_d.html?eri=' + eri + '&playerParams=' + playerParams + '&banner=1';
+        return url;
     },
 
     /**
      Create a live preview URL for campaign
      @method livePreviewTimeline
-     @param {Number} i_recCampaignBoardNativeID
+     @param {Number} i_campaignID
+     @param {Number} i_timelineID
      @return {String} url
      **/
-    livePreviewTimeline: function (i_recCampaignBoardNativeID, i_recCampaignTimelineNativeID) {
+    livePreviewTimeline: function (i_campaignID, i_timelineID) {
         var self = this;
-        var playerParams = pepper.getUserData().businessID + ',2,' + i_recCampaignBoardNativeID + "," + i_recCampaignTimelineNativeID;
+        var campaignBoardId = pepper.getCampaignBoardIdFromCampaignId(i_campaignID);
+        var recCampaignBoard = self.m_msdb.table_campaign_boards().getRec(campaignBoardId);
+        var campaignNativeID = recCampaignBoard['native_id'];
+        var recCampaignTimeline = pepper.getCampaignTimelineRecord(i_timelineID);
+        var timelineNativeID = recCampaignTimeline['native_id'];
+        var playerParams = pepper.getUserData().businessID + ',2,' + campaignNativeID + "," + timelineNativeID;
+        log(playerParams);
+        var rc4v2 = new RC4V2();
+        playerParams = rc4v2.encrypt(playerParams, '8547963624824263');
+        var domain = pepper.getUserData().domain;
+        var eri = pepper.getUserData().eri;
+        var url = 'https://' + domain + '/WebService/SignagePlayerApp420_d.html?eri=' + eri + '&playerParams=' + playerParams + '&banner=1';
+        log(url);
+        return url;
     },
 
     /**
      Create a live preview URL for a scene
      @method livePreviewScene
-     @param {Number} i_recCampaignBoardNativeID
+     @param {Number} i_scene_id
      @return {String} url
      **/
     livePreviewScene: function (i_scene_id) {
         var self = this;
         var sceneID = pepper.getSceneIdFromPseudoId(i_scene_id);
         var recPlayerData = pepper.getScenePlayerRecord(sceneID);
-        var i_recPlayerDataNativeID = recPlayerData['native_id'];
-        var playerParams = pepper.getUserData().businessID + ',3,' + i_recPlayerDataNativeID;
-        var rc4o = new RC4('8547963624824263');
-        playerParams = rc4o.doEncrypt(playerParams);
+        var nativeID = recPlayerData['native_id'];
+        var playerParams = pepper.getUserData().businessID + ',3,' + nativeID;
+        var rc4v2 = new RC4V2();
+        playerParams = rc4v2.encrypt(playerParams, '8547963624824263');
         var domain = pepper.getUserData().domain;
         var eri = pepper.getUserData().eri;
         var url = 'https://' + domain + '/WebService/SignagePlayerApp420_d.html?eri=' + eri + '&playerParams=' + playerParams + '&banner=1';
         return url;
-        //var url = 'http://' + domain + '.signage.me/WebService/SignagePlayerApp420_d.html?eri=f7bee07a7e79c8f1d7951b4d24de4713c22f160f5ebf607c&playerParams=' + playerParams;
     },
 
     /**

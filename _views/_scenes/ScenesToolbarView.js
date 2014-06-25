@@ -108,7 +108,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             $(Elements.SCENE_PLAY_PREVIEW, self.$el).on('click', function () {
                 var livePreview = BB.comBroker.getService(BB.SERVICES['LIVEPREVIEW']);
-                livePreview.launch();
+                livePreview.launchScene(self.m_selectedSceneID);
             });
         },
 
@@ -174,8 +174,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _listenSceneSelection: function () {
             var self = this;
             $(Elements.CLASS_SELECT_SCENE_DROPDOWN, self.el).on('click', function (e) {
-                var id = $(e.target).data('scene_player_data_id');
-                self._loadScene(id);
+                self.m_selectedSceneID = $(e.target).data('scene_player_data_id');
+                self._loadScene(self.m_selectedSceneID);
             });
         },
 
@@ -279,7 +279,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         _loadScene: function (i_id) {
             self.m_selectedSceneID = i_id;
-            BB.comBroker.fire(BB.EVENTS.LOAD_SCENE, this, null, i_id);
+            BB.comBroker.fire(BB.EVENTS.LOAD_SCENE, this, null, self.m_selectedSceneID);
         }
     });
 

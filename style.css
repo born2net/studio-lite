@@ -80,6 +80,10 @@ iframe {
     background-color: black;
 }
 
+#timelimePreview {
+    float: left;
+}
+
 #livePreviewWrap {
     width: 100%;
     height: 60px;

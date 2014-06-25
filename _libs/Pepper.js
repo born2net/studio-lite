@@ -169,6 +169,7 @@ Pepper.prototype = {
                 self.m_authenticated = true;
                 self.m_domain = self.m_loaderManager['m_domain'];
                 self.m_businessID = self.m_loaderManager['m_businessId'];
+                self.m_eri = self.m_loaderManager['m_eri'];
                 self.m_authTime = Date.now();
             }
             i_callBack(i_result);
@@ -187,6 +188,7 @@ Pepper.prototype = {
             userPass: self.m_pass,
             domain: self.m_domain,
             businessID: self.m_businessID,
+            eri: self.m_eri,
             authTime: self.m_authTime
         };
     },
@@ -263,21 +265,47 @@ Pepper.prototype = {
         return path;
     },
 
+    /**
+     Create a live preview URL for campaign
+     @method livePreviewCampaign
+     @param {Number} i_recCampaignBoardNativeID
+     @return {String} url
+     **/
     livePreviewCampaign: function (i_recCampaignBoardNativeID) {
         var self = this;
         var playerParams = pepper.getUserData().businessID + ',1,' + i_recCampaignBoardNativeID;
     },
 
+    /**
+     Create a live preview URL for campaign
+     @method livePreviewTimeline
+     @param {Number} i_recCampaignBoardNativeID
+     @return {String} url
+     **/
     livePreviewTimeline: function (i_recCampaignBoardNativeID, i_recCampaignTimelineNativeID) {
         var self = this;
         var playerParams = pepper.getUserData().businessID + ',2,' + i_recCampaignBoardNativeID + "," + i_recCampaignTimelineNativeID;
     },
 
-    livePreviewScene: function (i_recPlayerDataNativeID) {
+    /**
+     Create a live preview URL for a scene
+     @method livePreviewScene
+     @param {Number} i_recCampaignBoardNativeID
+     @return {String} url
+     **/
+    livePreviewScene: function (i_scene_id) {
         var self = this;
+        var sceneID = pepper.getSceneIdFromPseudoId(i_scene_id);
+        var recPlayerData = pepper.getScenePlayerRecord(sceneID);
+        var i_recPlayerDataNativeID = recPlayerData['native_id'];
         var playerParams = pepper.getUserData().businessID + ',3,' + i_recPlayerDataNativeID;
+        var rc4o = new RC4('8547963624824263');
+        playerParams = rc4o.doEncrypt(playerParams);
         var domain = pepper.getUserData().domain;
-        var url = 'http://' + domain + '.signage.me/WebService/SignagePlayerApp420_d.html?eri=f7bee07a7e79c8f1d7951b4d24de4713c22f160f5ebf607c&playerParams=' + playerParams;
+        var eri = pepper.getUserData().eri;
+        var url = 'https://' + domain + '/WebService/SignagePlayerApp420_d.html?eri=' + eri + '&playerParams=' + playerParams + '&banner=1';
+        return url;
+        //var url = 'http://' + domain + '.signage.me/WebService/SignagePlayerApp420_d.html?eri=f7bee07a7e79c8f1d7951b4d24de4713c22f160f5ebf607c&playerParams=' + playerParams;
     },
 
     /**

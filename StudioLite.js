@@ -5,7 +5,7 @@
  @constructor
  @return {Object} instantiated StudioLite
  **/
-define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 'ComBroker', 'Lib', 'Pepper', 'PepperHelper'], function (_, $, Backbone, Bootstrap, backbonecontroller, ComBroker, Lib, Pepper, PepperHelper) {
+define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 'ComBroker', 'Lib', 'Pepper', 'PepperHelper', 'Elements'], function (_, $, Backbone, Bootstrap, backbonecontroller, ComBroker, Lib, Pepper, PepperHelper, Elements) {
     var StudioLite = Backbone.Controller.extend({
 
         // app init
@@ -25,12 +25,24 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             BB.comBroker = new ComBroker();
             BB.comBroker.name = 'AppBroker';
             BB.Pepper = new Pepper();
-            _.extend(BB.Pepper,BB.comBroker);
+            _.extend(BB.Pepper, BB.comBroker);
             BB.Pepper.clearServices();
             BB.Pepper.name = 'JalapenoBroker';
             BB.PepperHelper = new PepperHelper();
             window.pepper = BB.Pepper;
             window.log = BB.lib.log;
+
+            // support for canvas / HTML5
+            var elem = document.createElement('canvas');
+            var canvasSupport = !!(elem.getContext && elem.getContext('2d'));
+            if (!canvasSupport) {
+                require(['bootbox'], function (bootbox) {
+                    bootbox.alert({
+                        message: $(Elements.MSG_BOOTBOX_OLD_BROWSER).text()
+                    });
+                });
+                return;
+            }
 
             // internationalization
             require(['LanguageSelectorView', 'Elements'], function (LanguageSelectorView, Elements) {

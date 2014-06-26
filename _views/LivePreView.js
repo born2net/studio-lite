@@ -61,8 +61,14 @@ define(['jquery', 'backbone', 'flashdetect'], function ($, Backbone, flashdetect
             });
         },
 
+        /**
+         Check that flash is installed
+         @method _checkFlash
+         @param {Number} i_playerData
+         @return {Number} Unique clientId.
+         **/
         _checkFlash: function () {
-            if (!FlashDetect.installed) {
+            if (!FlashDetect.installed || !FlashDetect.versionAtLeast(13)) {
                 bootbox.alert({
                     message: $(Elements.MSG_BOOTBOX_NO_FLASH).text()
                 });

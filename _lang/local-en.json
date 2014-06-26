@@ -207,6 +207,7 @@
     "bootBoxSceneRemove": "Are you sure you want to remove this scene?",
     "bootBoxSceneMustSelectScene": "You must first select or add a scene",
 
+    "bootBoxOldBrowser": "Geeesh your browser is a dinosaur. Use the latest browser, Google chrome recommended",
     "bootBoxNoFlash": "Adobe Flash must be installed so you can live preview",
     "campaignPreviewTooltip": "campaign preview",
     "playPreview": "play preview",

@@ -38,7 +38,9 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 if (!text.match('http://'))
                     text = 'http://' + text;
                 var domPlayerData = self._getBlockPlayerData();
-                var xSnippet = $(domPlayerData).find('HTML');
+                var xSnippet = $(domPlayerData).find('htdata');
+                if (xSnippet.length==0)
+                    xSnippet = $(domPlayerData).find('HTML');
                 xSnippet.attr('src', text);
                 self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
             }, 150);
@@ -53,7 +55,9 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _populate: function () {
             var self = this;
             var domPlayerData = self._getBlockPlayerData();
-            var xSnippet = $(domPlayerData).find('HTML');
+            var xSnippet = $(domPlayerData).find('htdata');
+            if (xSnippet.length==0)
+                xSnippet = $(domPlayerData).find('HTML');
             var src = xSnippet.attr('src');
             $(Elements.HTML_TEXT).val(src);
         },

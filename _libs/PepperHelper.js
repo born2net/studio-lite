@@ -101,7 +101,7 @@ PepperHelper.prototype = {
                                     self.getCommonDefaultXML() +
                                     self.getCommonSceneLayout(i_placement) +
                                     '<Resource hResource="' + i_resourceID + '">' +
-                                    '<AspectRatio maintain="1" />' +
+                                    '<AspectRatio maintain="0" />' +
                                     '<Image />' +
                                     '</Resource>' +
                                 '</Data>' +

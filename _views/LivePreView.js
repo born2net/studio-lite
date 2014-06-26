@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated WaitView
  **/
-define(['jquery', 'backbone'], function ($, Backbone) {
+define(['jquery', 'backbone', 'flashdetect'], function ($, Backbone, flashdetect) {
 
     BB.SERVICES.LIVEPREVIEW = 'LivePreView';
 
@@ -44,7 +44,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _listenStop: function () {
             var self = this;
             $(Elements.PLAYER_PREVIEW_STOP, self.$el).on('click', function () {
-                $(Elements.IFRAME_EMBEDDED).attr('src','');
+                $(Elements.IFRAME_EMBEDDED).attr('src', '');
             });
         },
 
@@ -55,28 +55,41 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _listenExit: function () {
             var self = this;
             $(Elements.PLAYER_PREVIEW_EXIT, self.$el).on('click', function () {
-                $(Elements.IFRAME_EMBEDDED).attr('src','');
+                $(Elements.IFRAME_EMBEDDED).attr('src', '');
                 var appEntryFaderView = BB.comBroker.getService(BB.SERVICES['APP_ENTRY_FADER_VIEW']);
                 appEntryFaderView.selectView(Elements.APP_CONTENT);
             });
+        },
+
+        _checkFlash: function () {
+            if (!FlashDetect.installed) {
+                bootbox.alert({
+                    message: $(Elements.MSG_BOOTBOX_NO_FLASH).text()
+                });
+                return false;
+            } else {
+                return true;
+            }
         },
 
         /**
          Listen to live preview launch
          @method launch
          **/
-        launchScene: function(i_sceneID) {
+        launchScene: function (i_sceneID) {
             var self = this;
             if (_.isUndefined(i_sceneID) && _.isUndefined(self.m_sceneID))
+                return;
+            if (self._checkFlash() == false)
                 return;
             self.m_sceneID = i_sceneID != undefined ? i_sceneID : self.m_sceneID;
             self.m_lastLaunce = self.launchScene;
             var appEntryFaderView = BB.comBroker.getService(BB.SERVICES['APP_ENTRY_FADER_VIEW']);
             var navigationView = BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW);
-            navigationView.save(function(){
+            navigationView.save(function () {
                 appEntryFaderView.selectView(Elements.LIVE_PREVIEW);
                 var url = pepper.livePreviewScene(self.m_sceneID);
-                $(Elements.IFRAME_EMBEDDED).attr('src',url);
+                $(Elements.IFRAME_EMBEDDED).attr('src', url);
             });
         },
 
@@ -84,19 +97,21 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          Listen to live preview launch
          @method launch  i_campaignTimelineNativeID
          **/
-        launchTimeline: function(i_campaignID, i_campaignTimelineID) {
+        launchTimeline: function (i_campaignID, i_campaignTimelineID) {
             var self = this;
             if (_.isUndefined(i_campaignTimelineID) && _.isUndefined(self.m_campaignTimelineID))
+                return;
+            if (self._checkFlash() == false)
                 return;
             self.m_campaignTimelineID = i_campaignTimelineID != undefined ? i_campaignTimelineID : self.m_campaignTimelineID;
             self.m_campaignID = i_campaignID != undefined ? i_campaignID : self.m_campaignID;
             self.m_lastLaunce = self.launchTimeline;
             var appEntryFaderView = BB.comBroker.getService(BB.SERVICES['APP_ENTRY_FADER_VIEW']);
             var navigationView = BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW);
-            navigationView.save(function(){
+            navigationView.save(function () {
                 appEntryFaderView.selectView(Elements.LIVE_PREVIEW);
-                var url = pepper.livePreviewTimeline(self.m_campaignID,  self.m_campaignTimelineID);
-                $(Elements.IFRAME_EMBEDDED).attr('src',url);
+                var url = pepper.livePreviewTimeline(self.m_campaignID, self.m_campaignTimelineID);
+                $(Elements.IFRAME_EMBEDDED).attr('src', url);
             });
         },
 
@@ -104,18 +119,20 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          Listen to live view launch
          @method launch
          **/
-        launchCampaign: function(i_campaignID) {
+        launchCampaign: function (i_campaignID) {
             var self = this;
             if (_.isUndefined(i_campaignID) && _.isUndefined(self.m_campaignID))
+                return;
+            if (self._checkFlash() == false)
                 return;
             self.m_campaignID = i_campaignID != undefined ? i_campaignID : self.m_campaignID;
             self.m_lastLaunce = self.launchCampaign;
             var appEntryFaderView = BB.comBroker.getService(BB.SERVICES['APP_ENTRY_FADER_VIEW']);
             var navigationView = BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW);
-            navigationView.save(function(){
+            navigationView.save(function () {
                 appEntryFaderView.selectView(Elements.LIVE_PREVIEW);
                 var url = pepper.livePreviewCampaign(self.m_campaignID)
-                $(Elements.IFRAME_EMBEDDED).attr('src',url);
+                $(Elements.IFRAME_EMBEDDED).attr('src', url);
             });
         }
     });

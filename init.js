@@ -19,6 +19,7 @@ require.config({
         'gradient': '_common/_js/gradient/jquery.gradientPicker',
         'minicolors': '_common/_js/minicolors/jquery.minicolors',
         'colorpicker': '_common/_js/gradient/colorpicker',
+        'flashdetect': '_common/_js/flashdetect/flashdetect',
         'RC4': '_common/_js/rc4/RC4',
         'RC4V2': '_common/_js/rc4/RC4V2',
         'localizer': '_common/_js/localizer/dist/jquery.localize',

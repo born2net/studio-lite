@@ -235,6 +235,7 @@ Elements.MSG_BOOTBOX_CONTINUE ='#bootBoxContinue';
 Elements.MSG_BOOTBOX_STEPS ='#bootBoxSteps';
 Elements.MSG_BOOTBOX_SCENE_REMOVE ='#bootBoxSceneRemove';
 Elements.MSG_BOOTBOX_MUST_SELECT_SCENE = '#bootBoxSceneMustSelectScene';
+Elements.MSG_BOOTBOX_NO_FLASH = '#bootBoxNoFlash';
 
 // templates
 Elements.FONT_SELECTOR_TEMPLATE = '#fontSelectorTemplate';

@@ -53,6 +53,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self._listenSceneRenamed();
             self._listenAddNewScene();
             self._listenAddedNewScene();
+            self._listenSceneRemoved();
             self._listenRemoves();
             self._listenZoom();
             self._listenPushToTop();
@@ -109,6 +110,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             $(Elements.SCENE_PLAY_PREVIEW, self.$el).on('click', function () {
                 var livePreview = BB.comBroker.getService(BB.SERVICES['LIVEPREVIEW']);
+                if (_.isUndefined(self.m_selectedSceneID))
+                    return;
                 livePreview.launchScene(self.m_selectedSceneID);
             });
         },
@@ -280,6 +283,17 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             BB.comBroker.listen(BB.EVENTS['NEW_SCENE_ADDED'], function (e) {
                 self.m_selectedSceneID = e.edata;
+            });
+        },
+
+        /**
+         Listen to scene removed
+         @method _listenSceneRemoved
+         **/
+        _listenSceneRemoved: function(){
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS['REMOVED_SCENE'], function (e) {
+                self.m_selectedSceneID = undefined;
             });
         },
 

@@ -18,7 +18,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
     /**
      events
      **/
-    BB.EVENTS.SCENE_LIST_UPDATED = 'SCENE_LIST_UPDATED';
     BB.EVENTS.SCENE_BLOCK_LIST_UPDATED = 'SCENE_BLOCK_LIST_UPDATED';
     BB.EVENTS.SCENE_ITEM_SELECTED = 'SCENE_ITEM_SELECTED';
     BB.EVENTS.LOAD_SCENE = 'LOAD_SCENE';
@@ -29,7 +28,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
     BB.EVENTS.SCENE_PUSH_BOTTOM = 'SCENE_PUSH_BOTTOM';
     BB.EVENTS.SCENE_EDITOR_REMOVE = 'SCENE_EDITOR_REMOVE';
     BB.EVENTS.SCENE_ITEM_REMOVE = 'SCENE_ITEM_REMOVE';
-    BB.EVENTS.NEW_SCENE = 'NEW_SCENE';
+    BB.EVENTS.NEW_SCENE_ADD = 'NEW_SCENE_ADD';
+    BB.EVENTS.NEW_SCENE_ADDED = 'NEW_SCENE_ADDED';
     BB.EVENTS.SCENE_UNDO = 'SCENE_UNDO';
     BB.EVENTS.SCENE_REDO = 'SCENE_REDO';
     BB.EVENTS.REMOVING_SCENE = 'REMOVING_SCENE';
@@ -51,7 +51,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self._listenSceneItemSelection();
             self._listenSceneDimensionsChanged();
             self._listenSceneRenamed();
-            self._listenAddNew();
+            self._listenAddNewScene();
+            self._listenAddedNewScene();
             self._listenRemoves();
             self._listenZoom();
             self._listenPushToTop();
@@ -222,7 +223,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
         /**
          Listen to user selection of existing scene
-         @method _listenAddNew
+         @method _listenAddNewScene
          **/
         _listenRemoves: function () {
             var self = this;
@@ -244,9 +245,9 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
         /**
          Listen to user selection of existing scene
-         @method _listenAddNew
+         @method _listenAddNewScene
          **/
-        _listenAddNew: function () {
+        _listenAddNewScene: function () {
             var self = this;
             $(Elements.CLASS_SCENE_ADD_NEW, self.el).on('click', function (e) {
                 switch ($(e.target).attr('name')) {
@@ -264,10 +265,21 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     }
                     case 'addScene':
                     {
-                        BB.comBroker.fire(BB.EVENTS.NEW_SCENE, this, null);
+                        BB.comBroker.fire(BB.EVENTS.NEW_SCENE_ADD, this, null);
                         break;
                     }
                 }
+            });
+        },
+
+        /**
+         Newly added scene completed
+         @method _listenAddedNewScene
+         **/
+        _listenAddedNewScene: function(){
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS['NEW_SCENE_ADDED'], function (e) {
+                self.m_selectedSceneID = e.edata;
             });
         },
 

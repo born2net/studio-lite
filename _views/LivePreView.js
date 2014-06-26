@@ -21,7 +21,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self.m_sceneID = undefined;
             self.m_campaignID = undefined;
             self.m_campaignTimelineID = undefined;
-            // self.url = '<IFRAME ID="frm" src="https://neptune.signage.me/WebService/SignagePlayerApp.html?eri=f7bee07a7e79c8f1d7951b4d24de4713c22f160f5ebf607c&playerParams=137c997e8f08050f9ab8a92fedd119788cccdf47&banner=1" WIDTH="100%" HEIGHT="100%"></IFRAME>';
             self._listenReplay();
             self._listenStop();
             self._listenExit();
@@ -73,30 +72,36 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self.m_sceneID = i_sceneID != undefined ? i_sceneID : self.m_sceneID;
             self.m_lastLaunce = self.launchScene;
             var appEntryFaderView = BB.comBroker.getService(BB.SERVICES['APP_ENTRY_FADER_VIEW']);
-            appEntryFaderView.selectView(Elements.LIVE_PREVIEW);
-            var url = pepper.livePreviewScene(self.m_sceneID);
-            $(Elements.IFRAME_EMBEDDED).attr('src',url);
+            var navigationView = BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW);
+            navigationView.save(function(){
+                appEntryFaderView.selectView(Elements.LIVE_PREVIEW);
+                var url = pepper.livePreviewScene(self.m_sceneID);
+                $(Elements.IFRAME_EMBEDDED).attr('src',url);
+            });
         },
 
         /**
          Listen to live preview launch
          @method launch  i_campaignTimelineNativeID
          **/
-        launchTimelime: function(i_campaignID, i_campaignTimelineID) {
+        launchTimeline: function(i_campaignID, i_campaignTimelineID) {
             var self = this;
             if (_.isUndefined(i_campaignTimelineID) && _.isUndefined(self.m_campaignTimelineID))
                 return;
             self.m_campaignTimelineID = i_campaignTimelineID != undefined ? i_campaignTimelineID : self.m_campaignTimelineID;
             self.m_campaignID = i_campaignID != undefined ? i_campaignID : self.m_campaignID;
-            self.m_lastLaunce = self.launchTimelime;
+            self.m_lastLaunce = self.launchTimeline;
             var appEntryFaderView = BB.comBroker.getService(BB.SERVICES['APP_ENTRY_FADER_VIEW']);
-            appEntryFaderView.selectView(Elements.LIVE_PREVIEW);
-            var url = pepper.livePreviewTimeline(self.m_campaignID,  self.m_campaignTimelineID);
-            $(Elements.IFRAME_EMBEDDED).attr('src',url);
+            var navigationView = BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW);
+            navigationView.save(function(){
+                appEntryFaderView.selectView(Elements.LIVE_PREVIEW);
+                var url = pepper.livePreviewTimeline(self.m_campaignID,  self.m_campaignTimelineID);
+                $(Elements.IFRAME_EMBEDDED).attr('src',url);
+            });
         },
 
         /**
-         Listen to live preview launch
+         Listen to live view launch
          @method launch
          **/
         launchCampaign: function(i_campaignID) {
@@ -106,9 +111,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self.m_campaignID = i_campaignID != undefined ? i_campaignID : self.m_campaignID;
             self.m_lastLaunce = self.launchCampaign;
             var appEntryFaderView = BB.comBroker.getService(BB.SERVICES['APP_ENTRY_FADER_VIEW']);
-            appEntryFaderView.selectView(Elements.LIVE_PREVIEW);
-            var url = pepper.livePreviewCampaign(self.m_campaignID)
-            $(Elements.IFRAME_EMBEDDED).attr('src',url);
+            var navigationView = BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW);
+            navigationView.save(function(){
+                appEntryFaderView.selectView(Elements.LIVE_PREVIEW);
+                var url = pepper.livePreviewCampaign(self.m_campaignID)
+                $(Elements.IFRAME_EMBEDDED).attr('src',url);
+            });
         }
     });
 

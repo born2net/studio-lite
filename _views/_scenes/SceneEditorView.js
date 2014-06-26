@@ -331,9 +331,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _listenSceneNew: function () {
             var self = this;
-            BB.comBroker.listen(BB.EVENTS.NEW_SCENE, function (e) {
+            BB.comBroker.listen(BB.EVENTS.NEW_SCENE_ADD, function (e) {
                 var player_data = BB.PepperHelper.getBlockBoilerplate('3510').getDefaultPlayerData(BB.CONSTS.PLACEMENT_IS_SCENE);
                 self.m_selectedSceneID = pepper.createScene(player_data);
+                BB.comBroker.fire(BB.EVENTS.NEW_SCENE_ADDED, this, null, self.m_selectedSceneID);
                 self._loadScene();
                 BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this, null);
             });

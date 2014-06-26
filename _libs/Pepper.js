@@ -266,6 +266,21 @@ Pepper.prototype = {
     },
 
     /**
+     Build URL for player preview using supplied player parameters
+     @method _livePreviewGetLink
+     @param {String} i_playerParams
+     @return {String} url
+     **/
+    _livePreviewGetLink: function(i_playerParams){
+        var self = this;
+        var rc4v2 = new RC4V2();
+        var playerParams = rc4v2.encrypt(i_playerParams, '8547963624824263');
+        var domain = pepper.getUserData().domain;
+        var eri = pepper.getUserData().eri;
+        return 'https://' + domain + '/WebService/SignagePlayerApp420_d.html?eri=' + eri + '&playerParams=' + playerParams + '&banner=1';
+    },
+
+    /**
      Create a live preview URL for campaign
      @method livePreviewCampaign
      @param {Number} i_campaignID
@@ -277,12 +292,7 @@ Pepper.prototype = {
         var recCampaignBoard = self.m_msdb.table_campaign_boards().getRec(campaignBoardId);
         var campaignNativeID = recCampaignBoard['native_id'];
         var playerParams = pepper.getUserData().businessID + ',1,' + campaignNativeID;
-        var rc4v2 = new RC4V2();
-        playerParams = rc4v2.encrypt(playerParams, '8547963624824263');
-        var domain = pepper.getUserData().domain;
-        var eri = pepper.getUserData().eri;
-        var url = 'https://' + domain + '/WebService/SignagePlayerApp420_d.html?eri=' + eri + '&playerParams=' + playerParams + '&banner=1';
-        return url;
+        return pepper._livePreviewGetLink(playerParams);
     },
 
     /**
@@ -300,14 +310,7 @@ Pepper.prototype = {
         var recCampaignTimeline = pepper.getCampaignTimelineRecord(i_timelineID);
         var timelineNativeID = recCampaignTimeline['native_id'];
         var playerParams = pepper.getUserData().businessID + ',2,' + campaignNativeID + "," + timelineNativeID;
-        log(playerParams);
-        var rc4v2 = new RC4V2();
-        playerParams = rc4v2.encrypt(playerParams, '8547963624824263');
-        var domain = pepper.getUserData().domain;
-        var eri = pepper.getUserData().eri;
-        var url = 'https://' + domain + '/WebService/SignagePlayerApp420_d.html?eri=' + eri + '&playerParams=' + playerParams + '&banner=1';
-        log(url);
-        return url;
+        return pepper._livePreviewGetLink(playerParams);
     },
 
     /**
@@ -322,12 +325,7 @@ Pepper.prototype = {
         var recPlayerData = pepper.getScenePlayerRecord(sceneID);
         var nativeID = recPlayerData['native_id'];
         var playerParams = pepper.getUserData().businessID + ',3,' + nativeID;
-        var rc4v2 = new RC4V2();
-        playerParams = rc4v2.encrypt(playerParams, '8547963624824263');
-        var domain = pepper.getUserData().domain;
-        var eri = pepper.getUserData().eri;
-        var url = 'https://' + domain + '/WebService/SignagePlayerApp420_d.html?eri=' + eri + '&playerParams=' + playerParams + '&banner=1';
-        return url;
+        return pepper._livePreviewGetLink(playerParams);
     },
 
     /**

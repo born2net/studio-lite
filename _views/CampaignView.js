@@ -247,7 +247,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             var self = this;
             $(Elements.TIMELIME_PREVIEW).on('click', function () {
                 var livePreview = BB.comBroker.getService(BB.SERVICES['LIVEPREVIEW']);
-                livePreview.launchTimelime(self.m_selected_campaign_id, self.m_selected_timeline_id);
+                livePreview.launchTimeline(self.m_selected_campaign_id, self.m_selected_timeline_id);
             });
         },
 

@@ -35,12 +35,12 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 if (!self.m_selected)
                     return;
                 var text = $(e.target).val();
-                if (!text.match('http://'))
+                if (!text.match('http://') && !text.match('https://'))
                     text = 'http://' + text;
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('LINK');
                 xSnippet.attr('src', text);
-                self._setBlockPlayerData(domPlayerData, BB.CONST.NO_NOTIFICATION);
+                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
             }, 150);
             $(Elements.EXT_VIDEO_TEXT).on("input", self.m_inputChangeHandler);
         },

@@ -216,7 +216,12 @@
     "launch": "launch",
     "stop": "stop",
     "exit": "exit",
-    "preview": "preview"
+    "preview": "preview",
+    "cut": "cut",
+    "copy": "copy",
+    "paste": "paste",
+    "pushTop": "push top",
+    "pushBottom": "push bottom"
 
 }
 

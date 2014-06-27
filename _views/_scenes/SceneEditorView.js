@@ -363,11 +363,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         break;
                     }
                 }
-                var updateDimensions = _.debounce(function () {
-                    dimensionProps.setValues(values, true);
-                }, 1000);
                 dimensionProps.setValues(values, true);
-                // updateDimensions();
                 return false;
             });
         },
@@ -423,8 +419,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _listenContextMenu: function(){
             var self = this;
-            $('#sceneCanvasContainer').contextmenu({
-                target: '#context-menu',
+            $(Elements.SCENE_CANVAS_CONTAINER).contextmenu({
+                target: Elements.SCENE_CONTEXT_MENU,
                 before: function (e, element, target) {
                     e.preventDefault();
 
@@ -434,16 +430,26 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         return false;
                     }
 
-                    // select scene
-                    var block = self.m_canvas.getActiveObject();
-                    if (_.isNull(block)) {
-                        this.getMenu().find("li").eq(2).find('a').html("This was dynamically changed");
+                    // group selected
+                    var active = self.m_canvas.getActiveGroup();
+                    if (active){
+                        $('.blocksOnly', Elements.SCENE_CONTEXT_MENU).show();
                         return true;
                     }
 
-                    // select object
+                    // scene selected
+                    var block = self.m_canvas.getActiveObject();
+                    if (_.isNull(block)) {
+                        // this.getMenu().find("li").eq(2).find('a').html("This was dynamically changed");
+                        $('.blocksOnly', Elements.SCENE_CONTEXT_MENU).hide();
+                        return true;
+                    }
+
+                    // object selected
+                    $('.blocksOnly', Elements.SCENE_CONTEXT_MENU).show();
                     return true;
                 },
+
                 onItem: function(context,e) {
                     log($(e.target).text());
                 }

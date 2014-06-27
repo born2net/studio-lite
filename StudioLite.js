@@ -41,6 +41,12 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
                     self.m_languageSelectionLogin.setLanguage(lang);
             });
 
+            // exit warning
+            $(window).on('beforeunload', function () {
+                return 'Did you save your work?'
+            });
+
+
             // router init
             require(['LayoutRouter'], function (LayoutRouter) {
                 var LayoutRouter = new LayoutRouter();

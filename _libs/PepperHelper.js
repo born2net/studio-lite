@@ -232,7 +232,6 @@ PepperHelper.prototype = {
                             return 'J:NN:SS A';
                             break;
                         }
-
                     }
                 }
             },

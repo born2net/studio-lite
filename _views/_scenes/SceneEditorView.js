@@ -59,7 +59,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._listenSceneRemove();
             self._listenSceneBlockRemove();
             self._listenSceneNew();
-            self._listenKeyboard();
             self._listenMouseEnterCanvas();
             self._listenMemento();
             self._listenCanvasSelectionsFromToolbar();
@@ -167,13 +166,14 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             var canvasID = BB.lib.unhash(Elements.SCENE_CANVAS);
             $(Elements.SCENE_CANVAS_CONTAINER).empty();
-            $(Elements.SCENE_CANVAS_CONTAINER).append('<canvas id="' + canvasID + '" width="' + w + 'px" height="' + h + 'px"/>');
+            $(Elements.SCENE_CANVAS_CONTAINER).append('<canvas id="' + canvasID + '" width="' + w + 'px" height="' + h + 'px" />');
             self.m_canvas = new fabric.Canvas(canvasID);
             self.m_canvas.renderOnAddRemove = false;
             $(Elements.SCENE_CANVAS).addClass('basicBorder');
 
             self._listenBlockModified();
             self._listenCanvasSelections();
+            self._listenKeyboard();
         },
 
         /**
@@ -305,7 +305,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     if (result == true) {
 
                         if (self.m_canvas)
-                            self.m_canvas.setBackgroundColor('#ffffff', function(){}).renderAll();
+                            self.m_canvas.setBackgroundColor('#ffffff', function () {
+                            }).renderAll();
 
                         // remove a scene and notify before so channel instances
                         // can remove corresponding blocks and after so channelList can refresh UI
@@ -334,9 +335,40 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             if (_.isUndefined(self.m_canvas))
                 return;
-            $(self.m_canvas).on('keydown',function(e){
-                log(e.which)
-            })
+
+            $('canvas').attr('tabindex', '1');
+            $('.upper-canvas').keydown(function (e) {
+                var block = self.m_canvas.getActiveObject();
+                if (_.isNull(block))
+                    return;
+                var dimensionProps = BB.comBroker.getService(BB.SERVICES['DIMENSION_PROPS_LAYOUT']);
+                var values = dimensionProps.getValues();
+                var val = e.shiftKey ? 25 : 1;
+                switch (e.keyCode){
+                    case 38: {
+                        values.y = values.y - val;
+                        break;
+                    }
+                    case 40: {
+                        values.y = values.y + val;
+                        break;
+                    }
+                    case 37: {
+                        values.x = values.x - val;
+                        break;
+                    }
+                    case 39: {
+                        values.x = values.x + val;
+                        break;
+                    }
+                }
+                var updateDimensions = _.debounce(function () {
+                    dimensionProps.setValues(values, true);
+                }, 1000);
+                dimensionProps.setValues(values, true);
+                // updateDimensions();
+                return false;
+            });
         },
 
         /**
@@ -390,7 +422,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _listenToCanvasScroll: function () {
             var self = this;
-            var sceneScrolling = _.debounce(function(){
+            var sceneScrolling = _.debounce(function () {
                 $(Elements.SCENES_PANEL).scroll(function (e) {
                     self.m_sceneScrollTop = $('#scenesPanel').scrollTop();
                     self.m_sceneScrollLeft = $('#scenesPanel').scrollLeft();
@@ -1040,7 +1072,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          @param {Number} i_top
          @param {Number} i_left
          **/
-        _scrollTo: function(i_top, i_left){
+        _scrollTo: function (i_top, i_left) {
             var self = this;
             $(Elements.SCENES_PANEL).scrollTop(i_top);
             $(Elements.SCENES_PANEL).scrollLeft(i_left);

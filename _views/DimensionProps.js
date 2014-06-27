@@ -89,12 +89,13 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
         },
          **/
 
+
         /**
          Update the spinners UI with object literal values
          @method setValues
          @param {Object} i_values
          **/
-        setValues: function (i_values) {
+        setValues: function (i_values, i_notifyChange) {
             var self = this;
             $('.spinnerDimWidth', self.$el).spinner('value', Math.round(i_values.w));
             $('.spinnerDimHeight', self.$el).spinner('value', Math.round(i_values.h));
@@ -102,6 +103,8 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
             $('.spinnerDimTop', self.$el).spinner('value', Math.round(i_values.y));
             if (self.m_showAngle)
                 $('.spinnerDimAngle', self.$el).spinner('value', Math.round(i_values.a));
+            if (i_notifyChange)
+                $(self).trigger('changed');
         },
 
         /**

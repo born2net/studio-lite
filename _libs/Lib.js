@@ -48,6 +48,43 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             })(Backbone.View);
         },
 
+
+        /**
+         Force browser compatability
+         @method foreceBrowserCompatability
+         **/
+        forceBrowserCompatability: function () {
+            $.getJSON('https://galaxy.signage.me/WebService/getBrowserInfo.ashx?a=2&callback=?',
+                function (data) {
+                    // alert(data.version + ' ' + data.platform + ' ' + data.type + ' ' + data.name);
+                    var statusFail = false;
+                    require(['bootbox'], function (bootbox) {
+
+                        if (data.name.toLowerCase() == 'safari' && data.platform.toLowerCase() == 'winnt')
+                            statusFail = true;
+                        if (data.name.toLowerCase() == 'ie' && parseInt(data.version) < 11)
+                            statusFail = true;
+
+                        if (statusFail) {
+                            bootbox.dialog({
+                                message: $(Elements.MSG_BOOTBOX_OLD_BROWSER).text(),
+                                buttons: {
+                                    danger: {
+                                        label: $(Elements.MSG_BOOTBOX_OK).text(),
+                                        className: "btn-danger",
+                                        callback: function () {
+                                            $('body').empty();
+                                            // window.location.replace("http://www.digitalsignage.com");
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+            );
+        },
+
         /**
          Validate email address format using regexp
          @method validateEmail

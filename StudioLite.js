@@ -31,18 +31,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             BB.PepperHelper = new PepperHelper();
             window.pepper = BB.Pepper;
             window.log = BB.lib.log;
-
-            // support for canvas / HTML5
-            var elem = document.createElement('canvas');
-            var canvasSupport = !!(elem.getContext && elem.getContext('2d'));
-            if (!canvasSupport) {
-                require(['bootbox'], function (bootbox) {
-                    bootbox.alert({
-                        message: $(Elements.MSG_BOOTBOX_OLD_BROWSER).text()
-                    });
-                });
-                return;
-            }
+            BB.lib.forceBrowserCompatability();
 
             // internationalization
             require(['LanguageSelectorView', 'Elements'], function (LanguageSelectorView, Elements) {

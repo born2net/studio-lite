@@ -264,9 +264,7 @@ PepperHelper.prototype = {
                 getDefaultPlayerData: function (i_placement) {
                     return  '<Player player="3510" label="My scene" interactive="0">' +
                                 '<Data>' +
-                                    // self.getCommonBackgroundXML() +
-                                    self.getCommonDefaultXML() +
-                                    // '<Appearance alpha="1.0" blendMode="normal" />' +
+                                    self.getCommonSceneDefaultXML() +
                                     self.getCommonSceneLayout(i_placement, 1024, 768) +
                                     '<Scene defaultDuration="10">' +
                                         '<Layout>' +
@@ -328,11 +326,20 @@ PepperHelper.prototype = {
      **/
     getCommonDefaultXML: function(){
         var self = this;
-        // var common =    '<Appearance alpha="1.0" blendMode="normal" />' +  self.getCommonBackgroundXML();
         var common =    '<Appearance alpha="1.0" blendMode="normal" />' +  self.getCommonBackgroundXML() + self.getCommonBorderXML();
         return common;
     },
 
+    /**
+     Get the common properties Scene XML with all default values
+     @method getCommonSceneDefaultXML
+     @return {String} common xml
+     **/
+    getCommonSceneDefaultXML: function(){
+        var self = this;
+        var common =    '<Appearance alpha="1.0" blendMode="normal" />' +  self.getCommonBorderXML();
+        return common;
+    },
 
     /**
      Get the common border XML with all default values

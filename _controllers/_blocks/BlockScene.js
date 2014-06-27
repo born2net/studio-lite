@@ -305,6 +305,16 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         },
 
         /**
+         Add the checkers background to a scene
+         @method _populateSceneCheckersBg
+         **/
+        _applySceneCheckersBg: function(){
+            var self = this;
+            $('#sceneCanvasContainer').find('.canvas-container').addClass('checkers');
+            self.m_canvas.renderAll();
+        },
+
+        /**
          Set a scene's background solid color
          @method _populateSceneBg
          **/
@@ -313,8 +323,12 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var domPlayerData = self._getBlockPlayerData();
             var colorPoints = self._findGradientPoints(domPlayerData)
             var color = $(colorPoints).find('Point').attr('color');
-            if (_.isUndefined(color))
+            if (_.isUndefined(color)) {
+                if ($(Elements.SCENE_CANVAS_CONTAINER).find('.checkers').length>0)
+                    return;
                 color = '16777215';
+            }
+
             color = '#' + BB.lib.decimalToHex(color);
             if (self.m_canvas.backgroundColor == color)
                 return;
@@ -330,6 +344,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _toggleBackgroundColorHandler: function (e) {
             var self = this;
+            $(Elements.SCENE_CANVAS_CONTAINER).find('.canvas-container').removeClass('checkers');
             Block.prototype._toggleBackgroundColorHandler.call(this, e);
             if (self.m_placement == BB.CONSTS.PLACEMENT_IS_SCENE)
                 self._populateSceneBg();
@@ -343,7 +358,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         setCanvas: function (i_canvas) {
             var self = this;
             self.m_canvas = i_canvas;
-            self._populateSceneBg();
+            // self._populateSceneBg();
+            self._applySceneCheckersBg();
         },
 
         /**

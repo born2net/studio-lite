@@ -59,6 +59,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._listenSceneRemove();
             self._listenSceneBlockRemove();
             self._listenSceneNew();
+            self._listenKeyboard();
             self._listenMouseEnterCanvas();
             self._listenMemento();
             self._listenCanvasSelectionsFromToolbar();
@@ -323,6 +324,19 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     }
                 });
             });
+        },
+
+        /**
+         Listen to keyboard eventd
+         @method _listenKeyboard
+         **/
+        _listenKeyboard: function () {
+            var self = this;
+            if (_.isUndefined(self.m_canvas))
+                return;
+            $(self.m_canvas).on('keydown',function(e){
+                log(e.which)
+            })
         },
 
         /**

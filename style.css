@@ -35,6 +35,11 @@ aside > aside > div > ul > li {
     margin-left: 30px;
 }
 
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    background-color: #428bca
+}
+
+
 /************************************
  StudioLite CSS element styling
  ************************************/
@@ -100,7 +105,6 @@ iframe {
 #livePreviewButtons {
     padding-bottom: 10px;
 }
-
 
 #propPanel {
     margin: 0 auto;
@@ -169,8 +173,8 @@ iframe {
     background-color: white;
     border-right: 1px solid #dddddd;
     -webkit-box-shadow: 2px 0px 5px 0px rgba(50, 50, 50, 0.75);
-    -moz-box-shadow:    2px 0px 5px 0px rgba(50, 50, 50, 0.75);
-    box-shadow:         2px 0px 5px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow: 2px 0px 5px 0px rgba(50, 50, 50, 0.75);
+    box-shadow: 2px 0px 5px 0px rgba(50, 50, 50, 0.75);
     z-index: 10;
 }
 
@@ -198,7 +202,6 @@ iframe {
     top: -3px;
     border: 1px #cccccc solid;
 }
-
 
 #screenLayoutList {
     overflow-y: scroll;
@@ -404,7 +407,7 @@ iframe {
     top: 2px;
 }
 
-#sceneAddNewBlock{
+#sceneAddNewBlock {
     padding-top: 10px;
 }
 
@@ -414,19 +417,19 @@ iframe {
 
 #sceneStackView {
     width: 100%;
-    margin-left:auto;
-    margin-right:auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #scenePanelWrap {
     width: 100%;
-    margin-left:auto;
-    margin-right:auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #sceneToolbar {
-     padding-bottom: 20px;
-     padding-top: 20px;
+    padding-bottom: 20px;
+    padding-top: 20px;
 }
 
 #sceneToolbar .input-group {
@@ -442,8 +445,6 @@ iframe {
     -webkit-user-select: none;
     /* opacity: 0.01; */
 }
-
-
 
 /************************************
  StudioLite class styling
@@ -467,9 +468,9 @@ iframe {
 }
 
 .noTopBorder {
-    border-top: none; !important;
+    border-top: none;
+!important;
 }
-
 
 .yScroll {
     overflow-y: scroll;
@@ -727,8 +728,6 @@ iframe {
 .tooltip-inner {
     min-width: 150px;
 }
-
-
 
 /************************************
  StackView styling
@@ -1355,7 +1354,6 @@ Software accelerated vertical
  fuelux
  ************************************/
 
-
 .spinner .btn {
     position: relative;
     width: 20px;
@@ -1364,10 +1362,11 @@ Software accelerated vertical
     padding-right: 9px;
     padding-left: 9px;
     -webkit-appearance: none;
-    -webkit-border-radius: 0px; !important;
-    border-bottom-left-radius: 0; !important;
+    -webkit-border-radius: 0px;
+!important;
+    border-bottom-left-radius: 0;
+!important;
 }
-
 
 .spinner .btn.disabled {
     cursor: not-allowed;
@@ -1422,28 +1421,91 @@ i .spinner-buttons {
 
 #rssPollSpinner .squareButton {
     -webkit-appearance: none;
-    -webkit-border-radius: 0px; !important;
-    border-bottom-right-radius: 0; !important;
-    border-bottom-left-radius: 0; !important;
-    border-top-left-radius: 0; !important;
-    border-top-right-radius: 0; !important;
+    -webkit-border-radius: 0px;
+!important;
+    border-bottom-right-radius: 0;
+!important;
+    border-bottom-left-radius: 0;
+!important;
+    border-top-left-radius: 0;
+!important;
+    border-top-right-radius: 0;
+!important;
 }
 
 /************************************
 Language selector
 ************************************/
-.dropdownlang dd, .dropdownlang dt, .dropdownlang ul { margin:0px; padding:0px; }
-.dropdownlang dd { position:relative; }
-.dropdownlang a, .dropdownlang a:visited { color:#816c5b; text-decoration:none; outline:none;}
-.dropdownlang a:hover { color:#5d4617;}
-.dropdownlang dt a:hover { color:#5d4617; border: 1px solid #d0c9af;}
-.dropdownlang dt a {background:#e4dfcb url(_assets/arrow.png) no-repeat scroll right center; display:block; padding-right:20px; border:1px solid #d4ca9a; width:300px;}
-.dropdownlang dt a span {cursor:pointer; display:block; padding:5px;}
-.dropdownlang dd ul { background:#e4dfcb none repeat scroll 0 0; border:1px solid #d4ca9a; color:#C5C0B0; display:none; left:0px; padding:5px 0px; position:absolute; top:2px; width:auto; min-width:300px; list-style:none;}
-.dropdownlang span.value { display:none;}
-.dropdownlang dd ul li a { padding:5px; display:block;}
-.dropdownlang dd ul li a:hover { background-color:#d0c9af;}
-.dropdownlang img.flag { border:none; vertical-align:middle; margin-right:10px; }
+.dropdownlang dd, .dropdownlang dt, .dropdownlang ul {
+    margin: 0px;
+    padding: 0px;
+}
+
+.dropdownlang dd {
+    position: relative;
+}
+
+.dropdownlang a, .dropdownlang a:visited {
+    color: #816c5b;
+    text-decoration: none;
+    outline: none;
+}
+
+.dropdownlang a:hover {
+    color: #5d4617;
+}
+
+.dropdownlang dt a:hover {
+    color: #5d4617;
+    border: 1px solid #d0c9af;
+}
+
+.dropdownlang dt a {
+    background: #e4dfcb url(_assets/arrow.png) no-repeat scroll right center;
+    display: block;
+    padding-right: 20px;
+    border: 1px solid #d4ca9a;
+    width: 300px;
+}
+
+.dropdownlang dt a span {
+    cursor: pointer;
+    display: block;
+    padding: 5px;
+}
+
+.dropdownlang dd ul {
+    background: #e4dfcb none repeat scroll 0 0;
+    border: 1px solid #d4ca9a;
+    color: #C5C0B0;
+    display: none;
+    left: 0px;
+    padding: 5px 0px;
+    position: absolute;
+    top: 2px;
+    width: auto;
+    min-width: 300px;
+    list-style: none;
+}
+
+.dropdownlang span.value {
+    display: none;
+}
+
+.dropdownlang dd ul li a {
+    padding: 5px;
+    display: block;
+}
+
+.dropdownlang dd ul li a:hover {
+    background-color: #d0c9af;
+}
+
+.dropdownlang img.flag {
+    border: none;
+    vertical-align: middle;
+    margin-right: 10px;
+}
 
 /************************************
 minicolors
@@ -1657,20 +1719,24 @@ minicolors
     width: 18px;
     height: 18px;
 }
+
 .minicolors-theme-default.minicolors-position-right .minicolors-swatch {
     left: auto;
     right: 5px;
 }
+
 .minicolors-theme-default.minicolors {
     width: auto;
     display: inline-block;
 }
+
 .minicolors-theme-default .minicolors-input {
     height: 20px;
     width: auto;
     display: inline-block;
     padding-left: 26px;
 }
+
 .minicolors-theme-default.minicolors-position-right .minicolors-input {
     padding-right: 26px;
     padding-left: inherit;
@@ -1684,13 +1750,16 @@ minicolors
     height: 28px;
     border-radius: 3px;
 }
+
 .minicolors-theme-bootstrap.minicolors-position-right .minicolors-swatch {
     left: auto;
     right: 3px;
 }
+
 .minicolors-theme-bootstrap .minicolors-input {
     padding-left: 44px;
 }
+
 .minicolors-theme-bootstrap.minicolors-position-right .minicolors-input {
     padding-right: 44px;
     padding-left: 12px;

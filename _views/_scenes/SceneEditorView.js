@@ -4,7 +4,7 @@
  @constructor
  @return {object} instantiated the SceneEditorView
  **/
-define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbarView', 'BlockFactory'], function ($, Backbone, fabric, BlockScene, BlockRSS, ScenesToolbarView, BlockFactory) {
+define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbarView', 'BlockFactory', 'contextmenu'], function ($, Backbone, fabric, BlockScene, BlockRSS, ScenesToolbarView, BlockFactory, contextmenu) {
 
     /**
      Custom event fired when a mouse hovers over canvas
@@ -55,6 +55,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._listenPushToTop();
             self._listenPushToBottom();
             self._listenSceneChanged();
+            self._listenContextMenu();
             self._listenSelectNextBlock();
             self._listenSceneRemove();
             self._listenSceneBlockRemove();
@@ -413,6 +414,39 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 self.m_blocks.blockSelected = blockID;
                 self._preRender(domPlayerData);
                 self._mementoAddState();
+            });
+        },
+
+        /**
+         Listen to canvas right click
+         @method _listenContextMenu
+         **/
+        _listenContextMenu: function(){
+            var self = this;
+            $('#sceneCanvasContainer').contextmenu({
+                target: '#context-menu',
+                before: function (e, element, target) {
+                    e.preventDefault();
+
+                    // no canvas
+                    if (_.isUndefined(self.m_canvas)){
+                        this.closemenu();
+                        return false;
+                    }
+
+                    // select scene
+                    var block = self.m_canvas.getActiveObject();
+                    if (_.isNull(block)) {
+                        this.getMenu().find("li").eq(2).find('a').html("This was dynamically changed");
+                        return true;
+                    }
+
+                    // select object
+                    return true;
+                },
+                onItem: function(context,e) {
+                    log($(e.target).text());
+                }
             });
         },
 

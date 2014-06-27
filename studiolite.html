@@ -417,7 +417,17 @@
                     </div>
                 </div>
             </div>
-            <div id="sceneCanvasContainer" class="sceneElements" align="center"></div>
+            <div id="sceneCanvasContainer" data-toggle="context" data-target="#context-menu" class="context sceneElements" align="center"></div>
+            <div id="context-menu">
+                <ul id="sceneContext" class="dropdown-menu" role="menu">
+                    <li><a tabindex="-1">cut</a></li>
+                    <li><a tabindex="-1">copy</a></li>
+                    <li><a tabindex="-1">paste</a></li>
+                    <li><a tabindex="-1">push forward</a></li>
+                    <li><a tabindex="-1">push back</a></li>
+                    <li><a tabindex="-1">remove</a></li>
+                </ul>
+            </div>
         </div>
         <div id="sceneAddNewBlock" style="display: none">
         </div>
@@ -947,7 +957,7 @@
 </div>
 </div>
 <div id="footer"><br>
-    <span id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.74 </span></div>
+    <span id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.75 </span></div>
 
 <!-- Modal -->
 <div class="modal modal-static fade" id="bsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"

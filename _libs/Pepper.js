@@ -1237,15 +1237,17 @@ Pepper.prototype = {
 
     /**
      Get a timeline's global board_id that is mapped to its local table_campaign_timeline_board_template id
-     @method getGlobalBoardIDFromTimeline
+     @method getGlobalBoardTemplateIDFromTimeline
      @param {Number} i_playerData
      @return {Number} board_id
      **/
-    getGlobalBoardIDFromTimeline: function (i_campaign_timeline_board_template_id) {
-        var recCampaignTimelineBoardTemplate = pepper.m_msdb.table_campaign_timeline_board_templates().getRec(i_campaign_timeline_board_template_id);
+    getGlobalBoardTemplateIDFromTimeline: function (i_campaign_timeline_id) {
+        var self = this;
+        var campaign_timeline_board_template_id = pepper.getGlobalTemplateIdOfTimeline(i_campaign_timeline_id)[0];
+        var recCampaignTimelineBoardTemplate = pepper.m_msdb.table_campaign_timeline_board_templates().getRec(campaign_timeline_board_template_id);
         var board_template_id = recCampaignTimelineBoardTemplate['board_template_id'];
         var recBoardTemplate = pepper.m_msdb.table_board_templates().getRec(board_template_id);
-        return recBoardTemplate['board_id'];
+        return recBoardTemplate['board_template_id'];
     },
 
     /**

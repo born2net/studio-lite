@@ -43,7 +43,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
 
             // exit warning
             $(window).on('beforeunload', function () {
-                return 'Did you save your work?'
+                //return 'Did you save your work?'
             });
 
 

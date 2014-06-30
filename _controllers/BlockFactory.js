@@ -92,6 +92,8 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
          @method createBlock
          @param {Number} block_id
          @param {XML} i_playerData
+         @param {String} i_placement where does the block reside, scene or channel
+         @param {Number} i_scene_id
          @return {Object} reference to the block instance
          **/
         createBlock: function (block_id, i_player_data, i_placement, i_scene_id) {

@@ -420,7 +420,7 @@ Pepper.prototype = {
         var recPlayerData = table_player_data.createRecord();
         recPlayerData['player_data_value'] = i_player_data;
         table_player_data.addRecord(recPlayerData);
-        var scene_id = recPlayerData['player_data_id']
+        var scene_id = recPlayerData['player_data_id'];
         self.injectPseudoScenePlayersIDs(scene_id);
         pepper.fire(Pepper['SCENE_CREATED'], self, null, recPlayerData['player_data_id']);
         return self.getPseudoIdFromSceneId(scene_id);

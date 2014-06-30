@@ -121,7 +121,9 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 var scenes = pepper.getScenes();
                 _.each(scenes, function (scene, i) {
                     var label = $(scene).find('Player').eq(0).attr('label');
-                    var snippet = '<li class="list-group-item ' + BB.lib.unclass(Elements.CLASS_ADD_BLOCK_LIST_ITEMS, self.el) + '" data-scene_id="' + recResources[i]['resource_id'] + '" data-resource_name="' + recResources[i]['resource_name'] + '">' +
+                    var sceneID = $(scene).find('Player').eq(0).attr('id');
+                    sceneID = pepper.sterilizePseudoId(sceneID);
+                    var snippet = '<li class="list-group-item ' + BB.lib.unclass(Elements.CLASS_ADD_BLOCK_LIST_ITEMS, self.el) + '" data-scene_id="' + sceneID + '">' +
                         '<img src="' + BB.PepperHelper.getIcon('scene') + '">' +
                         '<span>' + label + '</span>' +
                         '<br/><small></small>' +

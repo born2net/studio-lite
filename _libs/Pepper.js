@@ -445,12 +445,12 @@ Pepper.prototype = {
      @return {String}
     ieFixHTMLTag: function (escapedHTML) {
         var self = this;
-        return escapedHTML.replace(/HTML/g, 'HTM');
+        return escapedHTML.replace(/HTML/g, 'webs');
     },
      **/
 
     /**
-     "Good" old IE, always a headache, jQuery replacement workarounds....
+     "Good" old IE, always a headache, jQuery workarounds....
      @method ieFixEscaped
      @param {String} escapedHTML
      @return {String}
@@ -499,8 +499,9 @@ Pepper.prototype = {
             replace(/hresource/gi, 'hResource').
             replace(/maintainaspectratio/gi, 'maintainAspectRatio').
             replace(/<resource/gi, '<Resource').replace(/resource>/g, 'Resource>').
-            replace(/<link/gi, '<LINK').replace(/link>/g, 'LINK>').
-            replace(/<html/gi, '<HTML').replace(/html>/gi, 'HTML>');
+            // replace(/<htdata/gi, '<htData').replace(/htdata>/gi, 'htData>').
+            replace(/<link/gi, '<LINK').replace(/link>/g, 'LINK>');
+
     },
 
     /**

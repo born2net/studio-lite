@@ -32,6 +32,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_sceneScrollTop = 0;
             self.m_sceneScrollLeft = 0;
             self.m_objectScaling = 0;
+            self.mouseX = 0;
+            self.mouseY = 0;
             self.m_rendering = false;
             self.m_memento = {};
             self.m_copiesObjects = [];
@@ -59,24 +61,27 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._listenContextMenu();
             self._listenSelectNextBlock();
             self._listenSceneRemove();
+            self._listenMouseDown();
             self._listenSceneBlockRemove();
             self._listenSceneNew();
-            self._listenMouseEnterCanvas();
             self._listenMemento();
             self._listenCanvasSelectionsFromToolbar();
             self._delegateSceneBlockModified();
-
-            /*
-             self.mouseDown = 0;
-             document.body.onmousedown = function (e) {
-             self.mouseDown = 1;
-             }
-             document.body.onmouseup = function (e) {
-             self.mouseDown = 0;
-             }
-             */
         },
 
+        _listenMouseDown: function(){
+            var self = this;
+            if (!self.m_canvas)
+                return;
+            self.m_canvas.on('mouse:down', function (e) {
+                getMouse(e);
+            });
+
+            function getMouse(e) {
+                console.log('x'+e.e.clientX);
+                console.log('y'+e.e.clientY);
+            }
+        },
 
         /**
          Init block factory if it hasn't already been loaded
@@ -176,6 +181,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._listenBlockModified();
             self._listenCanvasSelections();
             self._listenKeyboard();
+            self._listenMouseDown();
         },
 
         /**
@@ -424,6 +430,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _listenContextMenu: function () {
             var self = this;
+
             $(Elements.SCENE_CANVAS_CONTAINER).contextmenu({
                 target: Elements.SCENE_CONTEXT_MENU,
                 before: function (e, element, target) {
@@ -433,6 +440,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         this.closemenu();
                         return false;
                     }
+                    // remember right click position for paste
+                    self.mouseX = e.offsetX;
+                    self.mouseY = e.offsetY;
                     // group selected
                     var active = self.m_canvas.getActiveGroup();
                     if (active) {
@@ -504,12 +514,20 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     }
                     case 'paste':
                     {
-                        _.each(self.m_copiesObjects, function (domPlayerData) {
-                            var blockID = pepper.generateSceneId();
+                        var x, y, blockID, origX, origY;
+                        _.each(self.m_copiesObjects, function (domPlayerData, i) {
+                            blockID = pepper.generateSceneId();
                             $(domPlayerData).attr('id', blockID);
                             var layout = $(domPlayerData).find('Layout');
-                            var x = parseInt(layout.attr('x')) + 10;
-                            var y = parseInt(layout.attr('y')) + 10;
+                            if (i==0){
+                                origX = parseInt(layout.attr('x'));
+                                origY = parseInt(layout.attr('y'));
+                                x = self.mouseX;
+                                y = self.mouseY;
+                            } else {
+                                x = self.mouseX + (parseInt(layout.attr('x') - origX));
+                                y = self.mouseY + (parseInt(layout.attr('y') - origY));
+                            }
                             layout.attr('x', x);
                             layout.attr('y', y);
                             var player_data = (new XMLSerializer()).serializeToString(domPlayerData);

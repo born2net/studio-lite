@@ -1,6 +1,6 @@
 SignageStudio Web Lite
 ======================
-current version: 1.0.84 dev-build
+current version: 1.0.85 dev-build
 
 The world's only enterprise level, open source, 100% FREE, Digital Signage platform
 ------------------------------------------------------------------------

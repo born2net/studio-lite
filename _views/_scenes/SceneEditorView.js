@@ -346,20 +346,24 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 var dimensionProps = BB.comBroker.getService(BB.SERVICES['DIMENSION_PROPS_LAYOUT']);
                 var values = dimensionProps.getValues();
                 var val = e.shiftKey ? 25 : 1;
-                switch (e.keyCode){
-                    case 38: {
+                switch (e.keyCode) {
+                    case 38:
+                    {
                         values.y = values.y - val;
                         break;
                     }
-                    case 40: {
+                    case 40:
+                    {
                         values.y = values.y + val;
                         break;
                     }
-                    case 37: {
+                    case 37:
+                    {
                         values.x = values.x - val;
                         break;
                     }
-                    case 39: {
+                    case 39:
+                    {
                         values.x = values.x + val;
                         break;
                     }
@@ -418,20 +422,20 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          Listen to canvas right click
          @method _listenContextMenu
          **/
-        _listenContextMenu: function(){
+        _listenContextMenu: function () {
             var self = this;
             $(Elements.SCENE_CANVAS_CONTAINER).contextmenu({
                 target: Elements.SCENE_CONTEXT_MENU,
                 before: function (e, element, target) {
                     e.preventDefault();
                     // no canvas
-                    if (_.isUndefined(self.m_canvas)){
+                    if (_.isUndefined(self.m_canvas)) {
                         this.closemenu();
                         return false;
                     }
                     // group selected
                     var active = self.m_canvas.getActiveGroup();
-                    if (active){
+                    if (active) {
                         $('.blocksOnly', Elements.SCENE_CONTEXT_MENU).show();
                         return true;
                     }
@@ -445,7 +449,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     $('.blocksOnly', Elements.SCENE_CONTEXT_MENU).show();
                     return true;
                 },
-                onItem: function(context,e) {
+                onItem: function (context, e) {
                     self._onContentMenuSelection($(e.target).text())
                 }
             });
@@ -456,67 +460,76 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          @method _onContentMenuSelection
          @param {String} i_command
          **/
-        _onContentMenuSelection: function(i_command){
+        _onContentMenuSelection: function (i_command) {
             var self = this;
             var blocks = [];
 
-            var contextCmd = function(i_blocks){
-              switch (i_command){
-                  case 'copy': {
-                      self.m_copiesObjects = [];
-                      _.each(i_blocks, function (selectedObject) {
-                          var blockPlayerData = selectedObject.getBlockData().blockData;
-                          blockPlayerData = pepper.stripPlayersID(blockPlayerData);
-                          self.m_copiesObjects.push(blockPlayerData);
-                      });
-                      break;
-                  }
-                  case 'cut': {
-                      self.m_copiesObjects = [];
-                      _.each(i_blocks, function (selectedObject) {
-                          var blockData = selectedObject.getBlockData();
-                          var blockPlayerData = blockData.blockData;
-                          self._discardSelections();
-                          pepper.removeScenePlayer(self.m_selectedSceneID, blockData.blockID);
-                          blockPlayerData = pepper.stripPlayersID(blockPlayerData);
-                          self.m_copiesObjects.push(blockPlayerData);
-                      });
-                      BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, null);
-                      break;
+            var contextCmd = function (i_blocks) {
+                switch (i_command) {
+                    case 'copy':
+                    {
+                        self.m_copiesObjects = [];
+                        _.each(i_blocks, function (selectedObject) {
+                            var blockPlayerData = selectedObject.getBlockData().blockData;
+                            blockPlayerData = pepper.stripPlayersID(blockPlayerData);
+                            self.m_copiesObjects.push(blockPlayerData);
+                        });
+                        break;
+                    }
+                    case 'cut':
+                    {
+                        self.m_copiesObjects = [];
+                        _.each(i_blocks, function (selectedObject) {
+                            var blockData = selectedObject.getBlockData();
+                            var blockPlayerData = blockData.blockData;
+                            self._discardSelections();
+                            pepper.removeScenePlayer(self.m_selectedSceneID, blockData.blockID);
+                            blockPlayerData = pepper.stripPlayersID(blockPlayerData);
+                            self.m_copiesObjects.push(blockPlayerData);
+                        });
+                        BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, null);
+                        break;
 
-                  }
-                  case 'remove': {
-                      _.each(i_blocks, function (selectedObject) {
-                          var blockData = selectedObject.getBlockData();
-                          self._discardSelections();
-                          pepper.removeScenePlayer(self.m_selectedSceneID, blockData.blockID);
-                      });
-                      BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, null);
-                      break;
+                    }
+                    case 'remove':
+                    {
+                        _.each(i_blocks, function (selectedObject) {
+                            var blockData = selectedObject.getBlockData();
+                            self._discardSelections();
+                            pepper.removeScenePlayer(self.m_selectedSceneID, blockData.blockID);
+                        });
+                        BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, null);
+                        break;
 
-                  }
-                  case 'paste': {
-                      _.each(self.m_copiesObjects, function (domPlayerData) {
-                          var blockID = pepper.generateSceneId();
-                          $(domPlayerData).attr('id', blockID);
-                          player_data = (new XMLSerializer()).serializeToString(domPlayerData);
-                          pepper.appendScenePlayerBlock(self.m_selectedSceneID, player_data);
-                      });
-                      self._discardSelections();
-                      BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, null);
-                      break;
-                  }
-              }
+                    }
+                    case 'paste':
+                    {
+                        _.each(self.m_copiesObjects, function (domPlayerData) {
+                            var blockID = pepper.generateSceneId();
+                            $(domPlayerData).attr('id', blockID);
+                            var layout = $(domPlayerData).find('Layout');
+                            var x = parseInt(layout.attr('x')) + 10;
+                            var y = parseInt(layout.attr('y')) + 10;
+                            layout.attr('x', x);
+                            layout.attr('y', y);
+                            var player_data = (new XMLSerializer()).serializeToString(domPlayerData);
+                            pepper.appendScenePlayerBlock(self.m_selectedSceneID, player_data);
+                        });
+                        self._discardSelections();
+                        BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, null);
+                        break;
+                    }
+                }
             };
 
 
             // no canvas
-            if (_.isUndefined(self.m_canvas)){
+            if (_.isUndefined(self.m_canvas)) {
                 return;
             }
             // group selected
             var group = self.m_canvas.getActiveGroup();
-            if (group){
+            if (group) {
                 log(i_command + ' on group');
                 blocks = [];
                 _.each(group.objects, function (selectedObject) {

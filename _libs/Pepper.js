@@ -1145,15 +1145,14 @@ Pepper.prototype = {
      **/
     getGlobalTemplateIdOfTimeline: function (i_campaign_timeline_id) {
         var self = this;
-        var foundGlobalBoardTemplatesIDs = [];
-
+        var found = [];
         $(pepper.m_msdb.table_campaign_timeline_board_templates().getAllPrimaryKeys()).each(function (k, table_campaign_timeline_board_template_id) {
             var recCampaignTimelineBoardTemplate = pepper.m_msdb.table_campaign_timeline_board_templates().getRec(table_campaign_timeline_board_template_id);
             if (recCampaignTimelineBoardTemplate['campaign_timeline_id'] == i_campaign_timeline_id) {
-                foundGlobalBoardTemplatesIDs.push(recCampaignTimelineBoardTemplate['board_template_id']);
+                found.push(recCampaignTimelineBoardTemplate['board_template_id']);
             }
         });
-        return foundGlobalBoardTemplatesIDs;
+        return found[0];
     },
 
     /**
@@ -1243,21 +1242,6 @@ Pepper.prototype = {
         var board_id = recBoardTemplate['board_id'];
         var recBoard = pepper.m_msdb.table_boards().getRec(board_id);
         return recBoard;
-    },
-
-    /**
-     Get a timeline's global board_id that is mapped to its local table_campaign_timeline_board_template id
-     @method getGlobalBoardTemplateIDFromTimeline
-     @param {Number} i_playerData
-     @return {Number} board_id
-     **/
-    getGlobalBoardTemplateIDFromTimeline: function (i_campaign_timeline_id) {
-        var self = this;
-        var campaign_timeline_board_template_id = pepper.getGlobalTemplateIdOfTimeline(i_campaign_timeline_id)[0];
-        var recCampaignTimelineBoardTemplate = pepper.m_msdb.table_campaign_timeline_board_templates().getRec(campaign_timeline_board_template_id);
-        var board_template_id = recCampaignTimelineBoardTemplate['board_template_id'];
-        var recBoardTemplate = pepper.m_msdb.table_board_templates().getRec(board_template_id);
-        return recBoardTemplate['board_template_id'];
     },
 
     /**

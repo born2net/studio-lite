@@ -358,8 +358,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         setCanvas: function (i_canvas) {
             var self = this;
             self.m_canvas = i_canvas;
-            // self._populateSceneBg();
-            self._applySceneCheckersBg();
+            self._populateSceneBg();
+            // self._applySceneCheckersBg();
         },
 
         /**

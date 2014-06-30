@@ -68,7 +68,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             var self = this;
             self.m_campaign_timeline_id = i_campaign_timeline_id;
             self.m_campaign_timeline_board_template_id = i_campaign_timeline_board_template_id;
-            self.m_global_board_template_id = pepper.getGlobalTemplateIdOfTimeline(i_campaign_timeline_board_template_id)[0];
+            self.m_global_board_template_id = pepper.getGlobalTemplateIdOfTimeline(i_campaign_timeline_board_template_id);
             self.m_screenProps = pepper.getTemplateViewersScreenProps(self.m_campaign_timeline_id, self.m_campaign_timeline_board_template_id);
             self.m_orientation = BB.comBroker.getService(BB.SERVICES['ORIENTATION_SELECTOR_VIEW']).getOrientation();
             self.m_resolution = BB.comBroker.getService(BB.SERVICES['RESOLUTION_SELECTOR_VIEW']).getResolution();

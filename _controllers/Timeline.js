@@ -300,7 +300,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
          **/
         deleteTimeline: function () {
             var self = this;
-            var boardTemplateID = pepper.getGlobalBoardTemplateIDFromTimeline(self.m_campaign_timeline_id);
+            var boardTemplateID = pepper.getGlobalTemplateIdOfTimeline(self.m_campaign_timeline_id);
             pepper.removeTimelineFromCampaign(self.m_campaign_timeline_id);
             var campaignTimelineBoardTemplateID = pepper.removeBoardTemplateFromTimeline(self.m_campaign_timeline_id);
             pepper.removeBoardTemplate(boardTemplateID);

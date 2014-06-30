@@ -138,7 +138,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
             for (var i = 0; i < timelineIDs.length; i++) {
                 var timelineID = timelineIDs[i];
-                var boardTemplateID = pepper.getGlobalBoardTemplateIDFromTimeline(timelineID);
+                var boardTemplateID = pepper.getGlobalTemplateIdOfTimeline(timelineID);
                 pepper.removeTimelineFromCampaign(timelineID);
                 var campaignTimelineBoardTemplateID = pepper.removeBoardTemplateFromTimeline(timelineID);
                 pepper.removeTimelineBoardViewerChannels(campaignTimelineBoardTemplateID);

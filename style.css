@@ -170,7 +170,7 @@ iframe {
 #appNavigator {
     padding: 0px;
     margin: 0px;
-    background-color: white;
+    background-color: #3e3f48;
     border-right: 1px solid #dddddd;
     -webkit-box-shadow: 2px 0px 5px 0px rgba(50, 50, 50, 0.75);
     -moz-box-shadow: 2px 0px 5px 0px rgba(50, 50, 50, 0.75);
@@ -180,11 +180,20 @@ iframe {
 
 #appNavigator li {
     cursor: pointer;
+    background-color: #3e3f48;
+    border-color: #3e3f48;
     padding-top: 15px;
     padding-bottom: 15px;
     border-right: 0px;
 }
 
+#appNavigator span, #appNavigator i {
+    color: white;
+}
+
+#propPanelWrap{
+    background-color: #f5f5f5;
+}
 #waitScreenMainPanel span {
     position: relative;
     left: 45%;

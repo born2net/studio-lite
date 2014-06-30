@@ -443,6 +443,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     // remember right click position for paste
                     self.mouseX = e.offsetX;
                     self.mouseY = e.offsetY;
+
                     // group selected
                     var active = self.m_canvas.getActiveGroup();
                     if (active) {
@@ -1285,7 +1286,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         obj.setCoords();
                     });
                 }
-
             }
         },
 

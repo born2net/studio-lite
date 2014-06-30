@@ -324,9 +324,10 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var colorPoints = self._findGradientPoints(domPlayerData)
             var color = $(colorPoints).find('Point').attr('color');
             if (_.isUndefined(color)) {
-                if ($(Elements.SCENE_CANVAS_CONTAINER).find('.checkers').length>0)
+                // if ($(Elements.SCENE_CANVAS_CONTAINER).find('.checkers').length>0)
+                // color = '16777215';
+                self._applySceneCheckersBg();
                     return;
-                color = '16777215';
             }
 
             color = '#' + BB.lib.decimalToHex(color);

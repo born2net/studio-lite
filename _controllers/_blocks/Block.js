@@ -856,7 +856,8 @@ define(['jquery', 'backbone'], function ($) {
                 blockIcon: self.m_blockIcon,
                 blockAcronym: self.m_blockAcronym,
                 blockMinWidth: self.m_minSize.w,
-                blockMinHeight: self.m_minSize.h
+                blockMinHeight: self.m_minSize.h,
+                blockData: self._getBlockPlayerData()
             };
             return data;
         },

@@ -638,6 +638,16 @@ Pepper.prototype = {
     },
 
     /**
+     Remove all player ids from i_domPlayerData
+     @method stripPlayersID
+     **/
+    stripPlayersID: function (i_domPlayerData) {
+        var self = this;
+        $(i_domPlayerData).removeAttr('id');
+        return i_domPlayerData;
+    },
+
+    /**
      Remove specific player id (i.e.: block) from scene player_data
      @method removeScenePlayer
      @param {Number} i_scene_id

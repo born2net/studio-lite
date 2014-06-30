@@ -34,6 +34,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_objectScaling = 0;
             self.m_rendering = false;
             self.m_memento = {};
+            self.m_copiesObjects = [];
             self.m_blocks = {
                 blocksPre: [],
                 blocksPost: {},
@@ -423,37 +424,121 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 target: Elements.SCENE_CONTEXT_MENU,
                 before: function (e, element, target) {
                     e.preventDefault();
-
                     // no canvas
                     if (_.isUndefined(self.m_canvas)){
                         this.closemenu();
                         return false;
                     }
-
                     // group selected
                     var active = self.m_canvas.getActiveGroup();
                     if (active){
                         $('.blocksOnly', Elements.SCENE_CONTEXT_MENU).show();
                         return true;
                     }
-
                     // scene selected
                     var block = self.m_canvas.getActiveObject();
                     if (_.isNull(block)) {
-                        // this.getMenu().find("li").eq(2).find('a').html("This was dynamically changed");
                         $('.blocksOnly', Elements.SCENE_CONTEXT_MENU).hide();
                         return true;
                     }
-
                     // object selected
                     $('.blocksOnly', Elements.SCENE_CONTEXT_MENU).show();
                     return true;
                 },
-
                 onItem: function(context,e) {
-                    log($(e.target).text());
+                    self._onContentMenuSelection($(e.target).text())
                 }
             });
+        },
+
+        /**
+         On Scene right click context menu selection command
+         @method _onContentMenuSelection
+         @param {String} i_command
+         **/
+        _onContentMenuSelection: function(i_command){
+            var self = this;
+            var blocks = [];
+
+            var contextCmd = function(i_blocks){
+              switch (i_command){
+                  case 'copy': {
+                      self.m_copiesObjects = [];
+                      _.each(i_blocks, function (selectedObject) {
+                          var blockPlayerData = selectedObject.getBlockData().blockData;
+                          blockPlayerData = pepper.stripPlayersID(blockPlayerData);
+                          self.m_copiesObjects.push(blockPlayerData);
+                      });
+                      break;
+                  }
+                  case 'cut': {
+                      self.m_copiesObjects = [];
+                      _.each(i_blocks, function (selectedObject) {
+                          var blockData = selectedObject.getBlockData();
+                          var blockPlayerData = blockData.blockData;
+                          self._discardSelections();
+                          pepper.removeScenePlayer(self.m_selectedSceneID, blockData.blockID);
+                          blockPlayerData = pepper.stripPlayersID(blockPlayerData);
+                          self.m_copiesObjects.push(blockPlayerData);
+                      });
+                      BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, null);
+                      break;
+
+                  }
+                  case 'remove': {
+                      _.each(i_blocks, function (selectedObject) {
+                          var blockData = selectedObject.getBlockData();
+                          self._discardSelections();
+                          pepper.removeScenePlayer(self.m_selectedSceneID, blockData.blockID);
+                      });
+                      BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, null);
+                      break;
+
+                  }
+                  case 'paste': {
+                      _.each(self.m_copiesObjects, function (domPlayerData) {
+                          var blockID = pepper.generateSceneId();
+                          $(domPlayerData).attr('id', blockID);
+                          player_data = (new XMLSerializer()).serializeToString(domPlayerData);
+                          pepper.appendScenePlayerBlock(self.m_selectedSceneID, player_data);
+                      });
+                      self._discardSelections();
+                      BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, null);
+                      break;
+                  }
+              }
+            };
+
+
+            // no canvas
+            if (_.isUndefined(self.m_canvas)){
+                return;
+            }
+            // group selected
+            var group = self.m_canvas.getActiveGroup();
+            if (group){
+                log(i_command + ' on group');
+                blocks = [];
+                _.each(group.objects, function (selectedObject) {
+                    blocks.push(selectedObject);
+                });
+                contextCmd(blocks);
+                return;
+            }
+            // scene selected
+            var block = self.m_canvas.getActiveObject();
+            if (_.isNull(block)) {
+                log(i_command + ' on scene');
+                contextCmd(null);
+                return;
+            }
+            // object selected
+            log(i_command + ' on object');
+            blocks = [];
+            blocks.push(block);
+            contextCmd(blocks);
+            return true;
+
         },
 
         /**

@@ -122,7 +122,6 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
 
                     // inject pseudo scene / player IDs
                     pepper.injectPseudoScenePlayersIDs();
-
                 } else {
                     this.navigate('unauthenticated', {trigger: true});
                 }

@@ -187,7 +187,7 @@ PepperHelper.prototype = {
                                 '<Data>' +
                                     self.getCommonDefaultXML() +
                                     self.getCommonSceneLayout(i_placement) +
-                                    '<htdata src="http://m.cnn.com" config="" />' +
+                                    '<HTML src="http://m.cnn.com" config="" />' +
                                 '</Data>' +
                             '</Player>'
                 },

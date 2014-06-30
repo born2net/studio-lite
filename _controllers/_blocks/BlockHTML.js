@@ -38,12 +38,13 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 if (!text.match('http://') && !text.match('https://'))
                     text = 'http://' + text;
                 var domPlayerData = self._getBlockPlayerData();
-                var xSnippet = $(domPlayerData).find('htdata');
-                if (xSnippet.length==0)
-                    xSnippet = $(domPlayerData).find('HTML');
+                // ie bug in searching for HTML
+                var playerData = (new XMLSerializer()).serializeToString(domPlayerData);
+                playerData = playerData.replace(/src=\"(.*)"\ /gi, 'src="' + text + '" ');
+                xSnippet = $(domPlayerData).find('HTML');
                 xSnippet.attr('src', text);
                 self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
-            }, 150);
+            }, 200);
             $(Elements.HTML_TEXT).on("input", self.m_inputChangeHandler);
         },
 
@@ -55,9 +56,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _populate: function () {
             var self = this;
             var domPlayerData = self._getBlockPlayerData();
-            var xSnippet = $(domPlayerData).find('htdata');
-            if (xSnippet.length==0)
-                xSnippet = $(domPlayerData).find('HTML');
+            xSnippet = $(domPlayerData).find('HTML');
             var src = xSnippet.attr('src');
             $(Elements.HTML_TEXT).val(src);
         },

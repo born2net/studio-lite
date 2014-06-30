@@ -443,14 +443,14 @@ Pepper.prototype = {
      @method ieFixHTMLTag
      @param {String} escapedHTML
      @return {String}
-     **/
     ieFixHTMLTag: function (escapedHTML) {
         var self = this;
-        return escapedHTML.replace(/HTML/g, 'htdata');
+        return escapedHTML.replace(/HTML/g, 'HTM');
     },
+     **/
 
     /**
-     "Good" old IE, always a headache, jQuery workarounds....
+     "Good" old IE, always a headache, jQuery replacement workarounds....
      @method ieFixEscaped
      @param {String} escapedHTML
      @return {String}
@@ -500,7 +500,7 @@ Pepper.prototype = {
             replace(/maintainaspectratio/gi, 'maintainAspectRatio').
             replace(/<resource/gi, '<Resource').replace(/resource>/g, 'Resource>').
             replace(/<link/gi, '<LINK').replace(/link>/g, 'LINK>').
-            replace(/<htdata/gi, '<HTML').replace(/htdata>/gi, 'HTML>');
+            replace(/<html/gi, '<HTML').replace(/html>/gi, 'HTML>');
     },
 
     /**
@@ -718,7 +718,7 @@ Pepper.prototype = {
         var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_id);
         var player_data = recPlayerData['player_data_value'];
         var domPlayerData = $.parseXML(player_data);
-        i_player_data = self.ieFixHTMLTag(i_player_data);
+        // i_player_data = self.ieFixHTMLTag(i_player_data);
         $(domPlayerData).find('[id="' + i_player_data_id + '"]').replaceWith($(i_player_data));
         player_data = pepper.xmlToStringIEfix(domPlayerData);
         self.setScenePlayerData(i_scene_id, player_data);

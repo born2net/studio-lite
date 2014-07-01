@@ -170,6 +170,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var group = new fabric.Group([ rec, t ], options);
             _.extend(self, group);
             self._fabricAlpha(domPlayerData);
+            self._fabricLock();
             self['canvasScale'] = i_canvasScale;
             i_callback();
         },

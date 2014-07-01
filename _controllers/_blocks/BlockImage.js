@@ -115,6 +115,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var img = new fabric.Image(this, options);
                 _.extend(self, img);
                 self._fabricAlpha(domPlayerData);
+                self._fabricLock();
                 self['canvasScale'] = i_canvasScale;
                 i_callback();
             })

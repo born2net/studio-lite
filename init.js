@@ -7,6 +7,7 @@ require.config({
     baseUrl: '/_studiolite-dev/',
     paths: {
         'Elements': 'Elements',
+        'Events': 'Events',
         'jquery': '_common/_jquery/std/jq1.9.1/jquery-1.9.1',
         'jqueryui': '_common/_jquery/std/jq1.10.1/jquery-ui-1.10.1',
         'backbone': '_common/_js/backbone/backbone',
@@ -104,6 +105,9 @@ require.config({
     shim: {
         'Elements': {
             exports: 'Elements'
+        },
+        'Events': {
+            exports: 'Events'
         },
         'backbone': {
             deps: ['underscore', 'jquery'],

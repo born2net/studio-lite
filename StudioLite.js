@@ -55,7 +55,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
 
 
             // router init
-            require(['LayoutRouter'], function (LayoutRouter) {
+            require(['LayoutRouter', 'Events'], function (LayoutRouter) {
                 var LayoutRouter = new LayoutRouter();
                 BB.history.start();
                 LayoutRouter.navigate('authenticate/_/_', {trigger: true});

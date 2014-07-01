@@ -51,6 +51,17 @@ define(['jquery', 'backbone'], function ($) {
      **/
     BB.EVENTS.BLOCK_SELECTED = 'BLOCK_SELECTED';
 
+    /**
+     Custom event fired when a block state changes
+     @event LOCK_CHANGED
+     @param {This} caller
+     @param {Self} context caller
+     @param {Event}
+     @static
+     @final
+     **/
+    BB.EVENTS.LOCK_CHANGED = 'LOCK_CHANGED';
+
     var Block = BB.Controller.extend({
 
         /**
@@ -74,6 +85,7 @@ define(['jquery', 'backbone'], function ($) {
             self.m_blockProperty = BB.comBroker.getService(BB.SERVICES['BLOCK_PROPERTIES']);
 
             self._listenAlphaChange();
+            self._listenToggleLock();
             self._listenGradientChange();
             self._listenGradientColorPickerClosed();
             self._listenBackgroundStateChange();
@@ -102,6 +114,56 @@ define(['jquery', 'backbone'], function ($) {
             var self = this;
             self.m_blockProperty.viewSubPanel(i_panel);
         },
+
+        /**
+         On changes in msdb model updated UI common lock properties
+         @method _fabricLock
+         **/
+        _fabricLock: function () {
+            var self = this;
+            var domPlayerData = self._getBlockPlayerData();
+            var locked = $(domPlayerData).attr('locked');
+            var dimensionProps = BB.comBroker.getService(BB.SERVICES['DIMENSION_PROPS_LAYOUT']);
+            if (_.isUndefined(locked) || locked == '0'){
+                locked = false;
+            } else {
+                locked = true;
+            }
+            self.lockMovementX = locked;
+            self.lockMovementY = locked;
+            //self.lockScalingX = locked;
+            //self.lockScalingY = locked;
+            //self.lockUniScaling = locked;
+            //self.lockRotation = locked;
+            if (!self.m_selected)
+                return;
+            dimensionProps.setLock(locked);
+        },
+
+        /**
+         Toggle lock status
+         @method _toggleLock
+         @param {xml} i_domPlayerData
+         **/
+        _listenToggleLock: function () {
+            var self = this;
+            self._toggleLock = function (e) {
+                if (!self.m_selected)
+                    return;
+                self.lockMovementX = e.edata;
+                self.lockMovementY = e.edata;
+                //self.lockScalingX = e.edata;
+                //self.lockScalingY = e.edata;
+                //self.lockUniScaling = e.edata;
+                //self.lockRotation = e.edata;
+                var v = e.edata == true ? 1 : 0;
+                var domPlayerData = self._getBlockPlayerData();
+                $(domPlayerData).attr('locked',v);
+                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
+            };
+            BB.comBroker.listenWithNamespace(BB.EVENTS.LOCK_CHANGED, self, self._toggleLock);
+        },
+
 
         /**
          Listen to changes in Alpha UI properties selection and update msdb
@@ -452,6 +514,7 @@ define(['jquery', 'backbone'], function ($) {
             self._updateTitle();
             self._updateTitleTab();
             self._alphaPopulate();
+            self._fabricLock();
             self._borderPropsPopulate();
             self._bgPropsPopulate();
 
@@ -682,6 +745,7 @@ define(['jquery', 'backbone'], function ($) {
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.GRADIENT_COLOR_CLOSED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_BORDER_CHANGE, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.ALPHA_CHANGED, self);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.LOCK_CHANGED, self);
             $(Elements.SHOW_BACKGROUND).off(self.m_proxyToggleBgKey, self.m_proxyToggleBg);
             $(Elements.SHOW_BORDER).off(self.m_proxyToggleBorderKey, self.m_proxyToggleBorder);
 
@@ -699,7 +763,7 @@ define(['jquery', 'backbone'], function ($) {
         /**
          Fabricate alpha to canvas
          @method _fabricAlpha
-         @param {xml} i_domPlayerData
+         @param {Object} i_domPlayerData
          **/
         _fabricAlpha: function (i_domPlayerData) {
             var self = this;
@@ -835,6 +899,7 @@ define(['jquery', 'backbone'], function ($) {
                 groupSvg = undefined;
                 rec = undefined;
                 self._fabricAlpha(domPlayerData);
+                self._fabricLock();
                 self['canvasScale'] = i_canvasScale;
                 i_callback();
             });

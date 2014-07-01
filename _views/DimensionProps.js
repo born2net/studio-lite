@@ -10,7 +10,7 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
     BB.SERVICES['DIMENSION_PROPS_SCENE'] = 'DimensionPropsScene';
 
     // Service name when lives inside Screen layout editor
-    BB.SERVICES.DIMENSION_PROPS_LAYOUT = 'DimensionPropsLayout';
+    BB.SERVICES['DIMENSION_PROPS_LAYOUT'] = 'DimensionPropsLayout';
 
     var DimensionProps = BB.View.extend({
 
@@ -22,14 +22,20 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
             var self = this;
             self.m_cachedValues = {};
             self.m_showAngle = self.options.showAngle || false;
+            self.m_showLock = self.options.showLock || false;
 
             self.$el = $(Elements.DIMENSION_PROPS_TEMPLATE).clone();
             self.el = self.$el[0];
             $(self.options.appendTo).append(self.el).fadeIn();
             self.$el.show();
 
+            self._listenLockChange();
+
             if (self.m_showAngle == false)
                 $('.DimAngle', self.el).hide();
+
+            if (self.m_showLock == false)
+                $('.lockPosition', self.el).hide();
 
             var currID = self.$el.attr('id');
             self.$el.attr('id', _.uniqueId(currID));
@@ -55,7 +61,7 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
             }, 50);
 
             // update changes on icons up/down clicks
-            $('.spinner', self.$el).on('mouseup', function(e){
+            $('.spinner', self.$el).on('mouseup', function (e) {
                 if ($(e.target).prop("tagName") == 'INPUT')
                     return;
                 updateValues();
@@ -63,9 +69,9 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
 
 
             // update on mouse leaving input focus
-            $('.spinner-input', self.$el).on('focusin', function(){
+            $('.spinner-input', self.$el).on('focusin', function () {
                 self.m_cachedValues = self.getValues();
-                $('.spinner-input', self.$el).one('mouseout', function() {
+                $('.spinner-input', self.$el).one('mouseout', function () {
                     $('.spinner-input', self.$el).blur();
                     updateValues();
                 });
@@ -73,9 +79,20 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
         },
 
         /**
+         Listen to changes in lock status
+         @method _listenLockChange
+         **/
+        _listenLockChange: function () {
+            var self = this;
+            $(Elements.CLASS_LOCK_INPUT, self.$el).on('change', function (e) {
+                BB.comBroker.fire(BB.EVENTS.LOCK_CHANGED, self, null, $(e.target).prop('checked'));
+            });
+        },
+
+        /**
          Listen to backbone events (maintain this)
          @method events
-        events: {
+         events: {
             'click .pushToTopButton': '_onPushToTopLayer',
             'mouseout input': 'm_inputMouseOut'
         },
@@ -84,11 +101,20 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
         /**
          Send the selected division (viewer) to be top most
          @method _onPushToTopLayer
-        _onPushToTopLayer: function (e) {
+         _onPushToTopLayer: function (e) {
             log('push to top layer')
         },
          **/
 
+        /**
+         Set the status of UI for lock status
+         @method setLock
+         @param {Boolean} i_status
+         **/
+        setLock: function(i_status){
+            var self = this;
+            $(Elements.CLASS_LOCK_INPUT, self.$el).prop('checked', i_status);
+        },
 
         /**
          Update the spinners UI with object literal values

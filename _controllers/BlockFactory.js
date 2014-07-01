@@ -91,7 +91,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
          channel instance. The factory will parse the blockCode and create the appropriate block type.
          @method createBlock
          @param {Number} block_id
-         @param {XML} i_playerData
+         @param {String} i_playerData
          @param {String} i_placement where does the block reside, scene or channel
          @param {Number} i_scene_id
          @return {Object} reference to the block instance

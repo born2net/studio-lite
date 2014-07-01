@@ -39,7 +39,6 @@ aside > aside > div > ul > li {
     background-color: #428bca
 }
 
-
 /************************************
  StudioLite CSS element styling
  ************************************/
@@ -191,9 +190,10 @@ iframe {
     color: white;
 }
 
-#propPanelWrap{
+#propPanelWrap {
     background-color: #f5f5f5;
 }
+
 #waitScreenMainPanel span {
     position: relative;
     left: 45%;
@@ -461,6 +461,11 @@ iframe {
 
 .basicBorder {
     border: 1px solid rgb(170, 170, 170);
+}
+
+.lockPosition input {
+    position: relative;
+    left: 50px;
 }
 
 .draggableScreenPlaceHolder {

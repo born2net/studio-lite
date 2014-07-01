@@ -61,26 +61,11 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._listenContextMenu();
             self._listenSelectNextBlock();
             self._listenSceneRemove();
-            self._listenMouseDown();
             self._listenSceneBlockRemove();
             self._listenSceneNew();
             self._listenMemento();
             self._listenCanvasSelectionsFromToolbar();
             self._delegateSceneBlockModified();
-        },
-
-        _listenMouseDown: function(){
-            var self = this;
-            if (!self.m_canvas)
-                return;
-            self.m_canvas.on('mouse:down', function (e) {
-                getMouse(e);
-            });
-
-            function getMouse(e) {
-                console.log('x'+e.e.clientX);
-                console.log('y'+e.e.clientY);
-            }
         },
 
         /**
@@ -137,7 +122,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             require(['DimensionProps'], function (DimensionProps) {
                 self.m_dimensionProps = new DimensionProps({
                     appendTo: Elements.SCENE_BLOCK_PROPS,
-                    showAngle: true
+                    showAngle: true,
+                    showLock: true
                 });
                 BB.comBroker.setService(BB.SERVICES['DIMENSION_PROPS_LAYOUT'], self.m_dimensionProps);
                 $(self.m_dimensionProps).on('changed', function (e) {
@@ -181,7 +167,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._listenBlockModified();
             self._listenCanvasSelections();
             self._listenKeyboard();
-            self._listenMouseDown();
         },
 
         /**
@@ -810,6 +795,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._zoomReset();
             _.forEach(self.m_blocks.blocksPost, function (i_block) {
                 self.m_canvas.add(i_block);
+                // i_block._fabricLock();
             });
             self._zoomTo(nZooms);
             self._scrollTo(self.m_sceneScrollTop, self.m_sceneScrollLeft);
@@ -890,7 +876,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
         /**
          Scene block scales via mouse UI
-         @method _sceneBlockModified
+         @method _sceneBlockScaled
          @param {Event} e
          **/
         _sceneBlockScaled: function (e) {

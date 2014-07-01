@@ -221,7 +221,8 @@
     "copy": "copy",
     "paste": "paste",
     "pushTop": "push top",
-    "pushBottom": "push bottom"
+    "pushBottom": "push bottom",
+    "lockMovement": "lock move"
 
 }
 

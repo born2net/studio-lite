@@ -195,6 +195,7 @@ Elements.STATION_EVENT_SEND_COMMAND = '#stationEventSendCommand';
 Elements.STATION_SEND_EVENT_VALUE = '#stationSendEventValue';
 Elements.STATION_POLL_SLIDER = '#stationPollSlider';
 Elements.STATION_POLL_LABEL = '#stationPollLabel';
+Elements.PREVIEW_FULL_OPTION = '#previewFullOption';
 Elements.PRICING_TABLE_WRAP = '#pricingTableWrap';
 Elements.CONVERT_ACCOUNT = '#convertAccount'
 Elements.SUBSCRIBE_ACCOUNT = '#subscribeAccount';

@@ -133,12 +133,19 @@ define(['jquery', 'backbone', 'flashdetect'], function ($, Backbone, flashdetect
                 return;
             self.m_campaignID = i_campaignID != undefined ? i_campaignID : self.m_campaignID;
             self.m_lastLaunce = self.launchCampaign;
-            var appEntryFaderView = BB.comBroker.getService(BB.SERVICES['APP_ENTRY_FADER_VIEW']);
-            var navigationView = BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW);
+
+            var navigationView = BB.comBroker.getService(BB.SERVICES['NAVIGATION_VIEW']);
             navigationView.save(function () {
-                appEntryFaderView.selectView(Elements.LIVE_PREVIEW);
                 var url = pepper.livePreviewCampaign(self.m_campaignID)
-                $(Elements.IFRAME_EMBEDDED).attr('src', url);
+                require(['simplestorage'], function (simpleStorage) {
+                    if (simpleStorage.get('fullScreenPreview') == 'on') {
+                        window.open(url, '_blank');
+                    } else {
+                        var appEntryFaderView = BB.comBroker.getService(BB.SERVICES['APP_ENTRY_FADER_VIEW']);
+                        appEntryFaderView.selectView(Elements.LIVE_PREVIEW);
+                        $(Elements.IFRAME_EMBEDDED).attr('src', url);
+                    }
+                });
             });
         }
     });

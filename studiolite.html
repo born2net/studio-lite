@@ -432,14 +432,27 @@
     </div>
 </div>
 <div id="settingsPanel" style="display: none">
-    <h3 data-localize="stationSettings">Station settings</h3>
+    <h3 data-localize="appSettings">app settings</h3>
 
-    <div id="stationPollSliderContainer"><span id="stationPollSliderText" data-localize="pollInterval">poll interval (in seconds):</span>
-
+    <div class="settingsItem">
+        <label id="stationPollSliderText" data-localize="pollInterval">station polling (seconds):</label>
         <div id="stationPollSliderWrap">
             <div id="stationPollSlider" class="noUi-target noUi-ltr noUi-horizontal noUi-background"></div>
         </div>
-        <span id="stationPollLabel">120</span></div>
+        <span id="stationPollLabel">120</span>
+    </div>
+
+    <div class="settingsItem">
+        <label style="padding-right: 78px" for="previewFullOption" data-localize="fullScreenPreview">Full screen preview</label>
+        <select id="previewFullOption" name="preview full screen" data-role="slider">
+            <option value="off" data-localize="off">Off</option>
+            <option value="on" data-localize="on">On</option>
+        </select>
+        <p data-localize="enablePopups">(must enable browser popups)</p>
+
+    </div>
+
+
 </div>
 <div id="proStudioPanel" style="display: none">
     <h3 data-localize="rightPackage">Choose the package that's right for you</h3>

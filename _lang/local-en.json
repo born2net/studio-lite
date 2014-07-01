@@ -35,8 +35,6 @@
     "remove": "remove",
     "removeStation": " remove station ",
     "noStation": " No SignagePlayer loaded...",
-    "stationSettings": "Station settings",
-    "pollInterval": "poll interval (in seconds):",
     "rightPackage": "Choose the package that's right for you!",
     "studioLiteFree": " StudioLite (FREE)",
     "simpleInterface": " simple to use interface",
@@ -222,7 +220,11 @@
     "paste": "paste",
     "pushTop": "push top",
     "pushBottom": "push bottom",
-    "lockMovement": "lock move"
+    "lockMovement": "lock move",
+    "pollInterval": "station polling (seconds)",
+    "fullScreenPreview": "full screen preview",
+    "enablePopups": "(must enable browser popups)",
+    "appSettings": "app settings"
 
 }
 

@@ -123,7 +123,7 @@ define(['jquery', 'backbone'], function ($) {
             var self = this;
             var domPlayerData = self._getBlockPlayerData();
             var locked = $(domPlayerData).attr('locked');
-            if (_.isUndefined(locked) || locked == '0'){
+            if (_.isUndefined(locked) || locked == '0') {
                 locked = false;
             } else {
                 locked = true;
@@ -154,7 +154,7 @@ define(['jquery', 'backbone'], function ($) {
                 //self.lockScalingX = e.edata; self.lockScalingY = e.edata; self.lockUniScaling = e.edata; self.lockRotation = e.edata;
                 var v = e.edata == true ? 1 : 0;
                 var domPlayerData = self._getBlockPlayerData();
-                $(domPlayerData).attr('locked',v);
+                $(domPlayerData).attr('locked', v);
                 self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
             };
             BB.comBroker.listenWithNamespace(BB.EVENTS.LOCK_CHANGED, self, self._toggleLock);

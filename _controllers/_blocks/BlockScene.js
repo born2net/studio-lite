@@ -310,6 +310,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _applySceneCheckersBg: function(){
             var self = this;
+            self.m_canvas.setBackgroundColor('', self.m_canvas.renderAll.bind(self.m_canvas));
             $('#sceneCanvasContainer').find('.canvas-container').addClass('checkers');
             self.m_canvas.renderAll();
         },
@@ -329,7 +330,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 self._applySceneCheckersBg();
                     return;
             }
-
             color = '#' + BB.lib.decimalToHex(color);
             if (self.m_canvas.backgroundColor == color)
                 return;

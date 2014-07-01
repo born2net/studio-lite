@@ -1,7 +1,7 @@
 /* build: `node build.js modules=ALL exclude=gestures,cufon,json minifier=uglifyjs` */
 /*! Fabric.js Copyright 2008-2014, Printio (Juriy Zaytsev, Maxim Chernyak) */
 
-var fabric = fabric || { version: "1.4.6" };
+var fabric = fabric || { version: "1.4.7" };
 if (typeof exports !== 'undefined') {
     exports.fabric = fabric;
 }
@@ -14428,6 +14428,10 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
             q: 4,
             t: 2,
             a: 7
+        },
+        repeatedCommands = {
+            m: 'l',
+            M: 'L'
         };
 
     if (fabric.Path) {
@@ -14564,6 +14568,8 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
         _render: function(ctx) {
             var current, // current instruction
                 previous = null,
+                subpathStartX = 0,
+                subpathStartY = 0,
                 x = 0, // current x
                 y = 0, // current y
                 controlX = 0, // current control point x
@@ -14573,8 +14579,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
                 tempControlX,
                 tempControlY,
                 l = -((this.width / 2) + this.pathOffset.x),
-                t = -((this.height / 2) + this.pathOffset.y),
-                methodName;
+                t = -((this.height / 2) + this.pathOffset.y);
 
             for (var i = 0, len = this.path.length; i < len; ++i) {
 
@@ -14617,21 +14622,17 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
                     case 'm': // moveTo, relative
                         x += current[1];
                         y += current[2];
-                        // draw a line if previous command was moveTo as well (otherwise, it will have no effect)
-                        methodName = (previous && (previous[0] === 'm' || previous[0] === 'M'))
-                            ? 'lineTo'
-                            : 'moveTo';
-                        ctx[methodName](x + l, y + t);
+                        subpathStartX = x;
+                        subpathStartY = y;
+                        ctx.moveTo(x + l, y + t);
                         break;
 
                     case 'M': // moveTo, absolute
                         x = current[1];
                         y = current[2];
-                        // draw a line if previous command was moveTo as well (otherwise, it will have no effect)
-                        methodName = (previous && (previous[0] === 'm' || previous[0] === 'M'))
-                            ? 'lineTo'
-                            : 'moveTo';
-                        ctx[methodName](x + l, y + t);
+                        subpathStartX = x;
+                        subpathStartY = y;
+                        ctx.moveTo(x + l, y + t);
                         break;
 
                     case 'c': // bezierCurveTo, relative
@@ -14842,6 +14843,8 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
 
                     case 'z':
                     case 'Z':
+                        x = subpathStartX;
+                        y = subpathStartY;
                         ctx.closePath();
                         break;
                 }
@@ -14996,12 +14999,14 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
                     }
                 }
 
-                var command = coordsParsed[0].toLowerCase(),
-                    commandLength = commandLengths[command];
+                var command = coordsParsed[0],
+                    commandLength = commandLengths[command.toLowerCase()],
+                    repeatedCommand = repeatedCommands[command] || command;
 
                 if (coordsParsed.length - 1 > commandLength) {
                     for (var k = 1, klen = coordsParsed.length; k < klen; k += commandLength) {
-                        result.push([ coordsParsed[0] ].concat(coordsParsed.slice(k, k + commandLength)));
+                        result.push([ command ].concat(coordsParsed.slice(k, k + commandLength)));
+                        command = repeatedCommand;
                     }
                 }
                 else {
@@ -20779,6 +20784,7 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
         this.__lastClickTime = this.__newClickTime;
         this.__lastPointer = newPointer;
         this.__lastIsEditing = this.isEditing;
+        this.__lastSelected = this.selected;
     },
 
     isDoubleClick: function(newPointer) {
@@ -20890,7 +20896,7 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
             this.__isMousedown = false;
             if (this._isObjectMoved(options.e)) return;
 
-            if (this.selected) {
+            if (this.__lastSelected) {
                 this.enterEditing();
                 this.initDelayedCursor(true);
             }
@@ -21038,6 +21044,9 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
 
         fabric.util.addListener(this.hiddenTextarea, 'keydown', this.onKeyDown.bind(this));
         fabric.util.addListener(this.hiddenTextarea, 'keypress', this.onKeyPress.bind(this));
+        fabric.util.addListener(this.hiddenTextarea, 'copy', this.copy.bind(this));
+        fabric.util.addListener(this.hiddenTextarea, 'paste', this.paste.bind(this));
+
 
         if (!this._clickHandlerInitialized && this.canvas) {
             fabric.util.addListener(this.canvas.upperCanvasEl, 'click', this.onClick.bind(this));
@@ -21063,8 +21072,6 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
      */
     _ctrlKeysMap: {
         65: 'selectAll',
-        67: 'copy',
-        86: 'paste',
         88: 'cut'
     },
 
@@ -21090,7 +21097,6 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
             return;
         }
 
-        e.preventDefault();
         e.stopPropagation();
 
         this.canvas && this.canvas.renderAll();
@@ -21108,9 +21114,17 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
 
     /**
      * Copies selected text
+     * @param {Event} e Event object
      */
-    copy: function() {
-        var selectedText = this.getSelectedText();
+    copy: function(e) {
+        var selectedText = this.getSelectedText(),
+            clipboardData = this._getClipboardData(e);
+
+        // Check for backward compatibility with old browsers
+        if (clipboardData) {
+            clipboardData.setData('text', selectedText);
+        }
+
         this.copiedText = selectedText;
         this.copiedStyles = this.getSelectionStyles(
             this.selectionStart,
@@ -21119,19 +21133,43 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
 
     /**
      * Pastes text
+     * @param {Event} e Event object
      */
-    paste: function() {
-        if (this.copiedText) {
-            this.insertChars(this.copiedText);
+    paste: function(e) {
+        var copiedText = null,
+            clipboardData = this._getClipboardData(e);
+
+        // Check for backward compatibility with old browsers
+        if (clipboardData) {
+            copiedText = clipboardData.getData('text');
+        } else {
+            copiedText = this.copiedText;
+        }
+
+        if (copiedText) {
+            this.insertChars(copiedText);
         }
     },
 
     /**
      * Cuts text
+     * @param {Event} e Event object
      */
     cut: function(e) {
+        if (this.selectionStart === this.selectionEnd) {
+            return;
+        }
+
         this.copy();
         this.removeChars(e);
+    },
+
+    /**
+     * @private
+     * @param {Event} e Event object
+     */
+    _getClipboardData: function(e) {
+        return e && (e.clipboardData || fabric.window.clipboardData);
     },
 
     /**
@@ -21145,7 +21183,6 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
 
         this.insertChars(String.fromCharCode(e.which));
 
-        e.preventDefault();
         e.stopPropagation();
     },
 
@@ -21634,7 +21671,6 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
         }
     }
 });
-
 
 /* _TO_SVG_START_ */
 fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.prototype */ {

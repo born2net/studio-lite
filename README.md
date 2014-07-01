@@ -15,7 +15,7 @@ Best of all, you will take full advantage of the world's most popular Digital Si
 
 Links:
 ------------------------------------------------------------------------
-- Working site: https://secure.dynawebs.net/_studiolite-dist/studiolite.html
+- Working site: http://lite.digitalsignage.com
 - Home page: http://www.digitalsignage.com/_html/signagestudio_lite.html
 - SignageStudio Web Lite on-line documentation: http://www.digitalsignage.com/msdocs/
 - Pepper / Jalapeno SDK on-line documentation: http://www.digitalsignage.com/msdocs/classes/Pepper.html

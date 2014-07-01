@@ -123,7 +123,6 @@ define(['jquery', 'backbone'], function ($) {
             var self = this;
             var domPlayerData = self._getBlockPlayerData();
             var locked = $(domPlayerData).attr('locked');
-            var dimensionProps = BB.comBroker.getService(BB.SERVICES['DIMENSION_PROPS_LAYOUT']);
             if (_.isUndefined(locked) || locked == '0'){
                 locked = false;
             } else {
@@ -131,11 +130,11 @@ define(['jquery', 'backbone'], function ($) {
             }
             self.lockMovementX = locked;
             self.lockMovementY = locked;
-            //self.lockScalingX = locked;
-            //self.lockScalingY = locked;
-            //self.lockUniScaling = locked;
-            //self.lockRotation = locked;
+            //self.lockScalingX = locked; self.lockScalingY = locked; self.lockUniScaling = locked; self.lockRotation = locked;
             if (!self.m_selected)
+                return;
+            var dimensionProps = BB.comBroker.getService(BB.SERVICES['DIMENSION_PROPS_LAYOUT']);
+            if (_.isUndefined(dimensionProps))
                 return;
             dimensionProps.setLock(locked);
         },
@@ -152,10 +151,7 @@ define(['jquery', 'backbone'], function ($) {
                     return;
                 self.lockMovementX = e.edata;
                 self.lockMovementY = e.edata;
-                //self.lockScalingX = e.edata;
-                //self.lockScalingY = e.edata;
-                //self.lockUniScaling = e.edata;
-                //self.lockRotation = e.edata;
+                //self.lockScalingX = e.edata; self.lockScalingY = e.edata; self.lockUniScaling = e.edata; self.lockRotation = e.edata;
                 var v = e.edata == true ? 1 : 0;
                 var domPlayerData = self._getBlockPlayerData();
                 $(domPlayerData).attr('locked',v);

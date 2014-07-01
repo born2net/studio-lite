@@ -19,6 +19,13 @@ body {
     src: local('Jolly Lodger'), local('JollyLodger'), url(https://themes.googleusercontent.com/static/fonts/jollylodger/v1/RX8HnkBgaEKQSHQyP9itiaRDOzjiPcYnFooOUGCOsRk.woff) format('woff');
 }
 
+@font-face {
+    font-family: 'Lobster Two';
+    font-style: normal;
+    font-weight: 600;
+    src: local('Lobster Two'), local('LobsterTwo'), url(https://themes.googleusercontent.com/static/fonts/lobstertwo/v5/Law3VVulBOoxyKPkrNsAaIbN6UDyHWBl620a-IRfuBk.woff) format('woff');
+}
+
 a {
     text-decoration: none !important;
 }
@@ -55,6 +62,20 @@ aside > aside > div > ul > li {
 #headerPad {
     background-color: #428bca;
     min-height: 55px;
+}
+
+#logoContainer {
+    position: relative;
+    top: 13px;
+    left: 8px;
+    float: left;
+    padding: 0;
+    margin: 0;
+}
+
+#logoContainer img {
+    width: 39px;
+    height: 25px;
 }
 
 #mainPanelWrap {
@@ -1783,4 +1804,59 @@ minicolors
     color: #ffffff;
     width: 30px;
     border: 0px;
+}
+
+.flip {
+    -webkit-perspective: 800;
+    -ms-perspective: 800;
+    -moz-perspective: 800;
+
+    width: 39px;
+    height: 25px;
+    position: relative;
+    margin: 50px auto;
+}
+
+.flip .card.flipped {
+    -webkit-transform: rotatey(-180deg);
+    -ms-transform: rotatey(-180deg);
+    -moz-transform: rotatey(-180deg);
+}
+
+.flip .card {
+    width: 39px;
+    height: 25px;
+    -webkit-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+
+    -webkit-transition: 0.5s;
+    -ms-transition: 0.5s;
+    -moz-transition: 0.5s;
+}
+
+.flip .card .face {
+    width: 39px;
+    height: 25px;
+    position: absolute;
+    -webkit-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    z-index: 2;
+    font-size: 3em;
+    text-align: center;
+    line-height: 39px;
+}
+
+.flip .card .front {
+    position: absolute;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.flip .card .back {
+    -webkit-transform: rotatex(-180deg);
+    -ms-transform: rotatex(-180deg);
+    -moz-transform: rotatex(-180deg);
+    cursor: pointer;
 }

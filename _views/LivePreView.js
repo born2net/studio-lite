@@ -136,7 +136,7 @@ define(['jquery', 'backbone', 'flashdetect'], function ($, Backbone, flashdetect
 
             var navigationView = BB.comBroker.getService(BB.SERVICES['NAVIGATION_VIEW']);
             navigationView.save(function () {
-                var url = pepper.livePreviewCampaign(self.m_campaignID)
+                var url = pepper.livePreviewCampaign(self.m_campaignID);
                 require(['simplestorage'], function (simpleStorage) {
                     if (simpleStorage.get('fullScreenPreview') == 'on') {
                         window.open(url, '_blank');

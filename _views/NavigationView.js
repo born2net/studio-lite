@@ -31,6 +31,15 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
             this._render();
 
+
+            /*$(function() {
+                $('.navbar-nav').on('click', function(){
+                    if($('.navbar-header .navbar-toggle').css('display') !='none'){
+                        $(".navbar-header .navbar-toggle").trigger( "click" );
+                    }
+                });
+            });*/
+
             var appContentFaderView = BB.comBroker.getService(BB.SERVICES['APP_CONTENT_FADER_VIEW']);
             var appEntryFaderView = BB.comBroker.getService(BB.SERVICES['APP_ENTRY_FADER_VIEW']);
 
@@ -43,56 +52,67 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 self._checkLimitedAccess();
                 appContentFaderView.selectView(Elements.CAMPAIGN_MANAGER_VIEW);
                 self.resetPropertiesView();
+                self._closeMobileNavigation();
             });
 
             $(Elements.CLASS_RESOURCES_PANEL).on('click', function () {
                 self._checkLimitedAccess();
                 appContentFaderView.selectView(Elements.RESOURCES_PANEL);
                 self.resetPropertiesView();
+                self._closeMobileNavigation();
             });
 
             $(Elements.CLASS_STATIONS_PANEL).on('click', function () {
                 appContentFaderView.selectView(Elements.STATIONS_PANEL);
                 self.resetPropertiesView();
+                self._closeMobileNavigation();
             });
 
             $(Elements.CLASS_SCENES_PANEL).on('click', function () {
                 appContentFaderView.selectView(Elements.SCENES_PANEL);
                 self.resetPropertiesView();
+                self._closeMobileNavigation();
             });
 
             $(Elements.CLASS_SETTINGS_PANEL).on('click', function () {
                 appContentFaderView.selectView(Elements.SETTINGS_PANEL);
                 self.resetPropertiesView();
+                self._closeMobileNavigation();
             });
 
             $(Elements.CLASSS_PRO_STUDIO_PANEL).on('click', function () {
                 appContentFaderView.selectView(Elements.PRO_STUDIO_PANEL);
                 self.resetPropertiesView();
+                self._closeMobileNavigation();
             });
 
             $(Elements.CLASS_HELP_PANEL).on('click', function () {
                 appContentFaderView.selectView(Elements.HELP_PANEL);
                 self.resetPropertiesView();
+                self._closeMobileNavigation();
             });
 
             $(Elements.CLASS_LOGOUT_PANEL).on('click', function () {
                 self.resetPropertiesView();
                 appEntryFaderView.selectView(Elements.APP_LOGOUT);
                 BB.comBroker.getService(BB.SERVICES['APP_AUTH']).logout();
+                self._closeMobileNavigation();
             });
 
             $(Elements.DASHBOARD).on('click', function () {
                 self.resetPropertiesView();
+                self._closeMobileNavigation();
             });
 
             $(Elements.SAVE_CONFIG).on('click', function () {
                 self.saveAndRestartPrompt(function () {
                 });
+                self._closeMobileNavigation();
             });
 
             $(Elements.LIVE_CHAT).on('click', function () {
                 window.open('http://www.digitalsignage.com/_html/live_chat.html', '_blank');
+                self._closeMobileNavigation();
             });
 
             $(Elements.LANGUAGE_PROMPT).on('click', function () {
@@ -116,6 +136,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     self.m_languageSelectionPrompt = new LanguageSelectorView({appendTo: '#' + uniqueID});
                 });
             });
+        },
+
+        _closeMobileNavigation: function(){
+            if($('.navbar-header .navbar-toggle').css('display') !='none'){
+                $(".navbar-header .navbar-toggle").trigger( "click" );
+            }
         },
 
         /**

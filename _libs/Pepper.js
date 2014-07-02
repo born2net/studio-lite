@@ -512,24 +512,11 @@ Pepper.prototype = {
         var sceneDomPlayerData = $.parseXML(scene_player_data);
         var playerData = $.parseXML(i_player_data);
         // use first child to overcome the removal by jquery of the HTML tag
-        $(sceneDomPlayerData).find('Players').append($(playerData.firstChild));
+        $(sceneDomPlayerData).find('Players').append(playerData.firstChild);
+        // $(sceneDomPlayerData).find('Players').append($(i_player_data));
         var player_data = pepper.xmlToStringIEfix(sceneDomPlayerData);
         recPlayerData['player_data_value'] = player_data;
     },
-
-    /*originalappendScenePlayerBlock: function (i_scene_id, i_player_data) {
-        var self = this;
-        i_scene_id = pepper.sterilizePseudoId(i_scene_id);
-        self.m_msdb.table_player_data().openForEdit(i_scene_id);
-        var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_id);
-        var scene_player_data = recPlayerData['player_data_value'];
-        var sceneDomPlayerData = $.parseXML(scene_player_data);
-        $(sceneDomPlayerData).find('Players').append($(i_player_data));
-        var player_data = pepper.xmlToStringIEfix(sceneDomPlayerData);
-        recPlayerData['player_data_value'] = player_data;
-        return;
-    },*/
-
 
     /**
      set entire scene playerdata

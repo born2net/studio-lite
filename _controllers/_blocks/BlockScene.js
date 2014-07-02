@@ -313,8 +313,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _applySceneBgImage: function (i_image) {
             var self = this;
             self.m_canvas.setBackgroundColor('', self.m_canvas.renderAll.bind(self.m_canvas));
-            $(Elements.SCENE_CANVAS_CONTAINER).find('.canvas-container').removeClass('checkers').removeClass('grid25').removeClass('grid50');
-            $(Elements.SCENE_CANVAS_CONTAINER).find('.canvas-container').addClass(i_image);
+            $(Elements.SCENE_CANVAS_CONTAINER).find('.canvas-container').removeClass('checkers').removeClass('grid25').removeClass('grid50').addClass(i_image);
             self.m_canvas.renderAll();
         },
 
@@ -373,7 +372,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         /**
          Set reference to managed canvas
          @method setCanvas
-         @param  {object} i_canvas
+         @param  {Object} i_canvas
+         @param  {Number} i_magneticGridMode
          **/
         setCanvas: function (i_canvas, i_magneticGridMode) {
             var self = this;

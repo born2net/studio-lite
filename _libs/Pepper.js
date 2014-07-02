@@ -277,7 +277,7 @@ Pepper.prototype = {
         var playerParams = rc4v2.encrypt(i_playerParams, '8547963624824263');
         var domain = pepper.getUserData().domain;
         var eri = pepper.getUserData().eri;
-        return 'https://' + domain + '/WebService/SignagePlayerApp420_d.html?eri=' + eri + '&playerParams=' + playerParams + '&banner=1';
+        return 'https://' + domain + '/WebService/SignagePlayerApp420_d.html?eri=' + eri + '&playerParams=' + playerParams + '&banner=0';
     },
 
     /**

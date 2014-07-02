@@ -34,6 +34,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 BB.comBroker.setService('XDATE', new XDate());
 
                 self._initLoginPage();
+                self._listenLogoHover();
                 self._listenSizeChanges();
 
                 $(window).trigger('resize');
@@ -386,6 +387,19 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                     popModalView.addView(self.m_popUpWait);
 
                     BB.comBroker.setService(BB.SERVICES.POP_MODAL_VIEW, popModalView);
+                });
+            },
+
+            /**
+             Listen logo mouse hover
+             @method _listenLogoHover
+             **/
+            _listenLogoHover: function(){
+                $('.flip').mouseenter(function(){
+                    $(this).find('.card').addClass('flipped').mouseleave(function(){
+                        $(this).removeClass('flipped');
+                    });
+                    return false;
                 });
             },
 

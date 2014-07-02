@@ -33,13 +33,6 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             window.log = BB.lib.log;
             BB.lib.forceBrowserCompatability();
 
-            $('.flip').mouseenter(function(){
-                $(this).find('.card').addClass('flipped').mouseleave(function(){
-                    $(this).removeClass('flipped');
-                });
-                return false;
-            });
-
             // internationalization
             require(['LanguageSelectorView', 'Elements'], function (LanguageSelectorView, Elements) {
                 self.m_languageSelectionLogin = new LanguageSelectorView({appendTo: Elements.LANGUAGE_SELECTION_LOGIN});

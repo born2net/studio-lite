@@ -443,17 +443,6 @@ Pepper.prototype = {
     },
 
     /**
-     Fix jQuery blocking of HTML tag
-     @method ieFixHTMLTag
-     @param {String} escapedHTML
-     @return {String}
-    ieFixHTMLTag: function (escapedHTML) {
-        var self = this;
-        return escapedHTML.replace(/HTML/g, 'webs');
-    },
-     **/
-
-    /**
      "Good" old IE, always a headache, jQuery workarounds....
      @method ieFixEscaped
      @param {String} escapedHTML
@@ -521,11 +510,26 @@ Pepper.prototype = {
         var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_id);
         var scene_player_data = recPlayerData['player_data_value'];
         var sceneDomPlayerData = $.parseXML(scene_player_data);
+        var playerData = $.parseXML(i_player_data);
+        // use first child to overcome the removal by jquery of the HTML tag
+        $(sceneDomPlayerData).find('Players').append($(playerData.firstChild));
+        var player_data = pepper.xmlToStringIEfix(sceneDomPlayerData);
+        recPlayerData['player_data_value'] = player_data;
+    },
+
+    /*originalappendScenePlayerBlock: function (i_scene_id, i_player_data) {
+        var self = this;
+        i_scene_id = pepper.sterilizePseudoId(i_scene_id);
+        self.m_msdb.table_player_data().openForEdit(i_scene_id);
+        var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_id);
+        var scene_player_data = recPlayerData['player_data_value'];
+        var sceneDomPlayerData = $.parseXML(scene_player_data);
         $(sceneDomPlayerData).find('Players').append($(i_player_data));
         var player_data = pepper.xmlToStringIEfix(sceneDomPlayerData);
         recPlayerData['player_data_value'] = player_data;
         return;
-    },
+    },*/
+
 
     /**
      set entire scene playerdata
@@ -723,8 +727,9 @@ Pepper.prototype = {
         var recPlayerData = self.m_msdb.table_player_data().getRec(i_scene_id);
         var player_data = recPlayerData['player_data_value'];
         var domPlayerData = $.parseXML(player_data);
-        // i_player_data = self.ieFixHTMLTag(i_player_data);
-        $(domPlayerData).find('[id="' + i_player_data_id + '"]').replaceWith($(i_player_data));
+        var playerData = $.parseXML(i_player_data);
+        // use first child to overcome the removal by jquery of the HTML tag
+        $(domPlayerData).find('[id="' + i_player_data_id + '"]').replaceWith(playerData.firstChild);
         player_data = pepper.xmlToStringIEfix(domPlayerData);
         self.setScenePlayerData(i_scene_id, player_data);
     },

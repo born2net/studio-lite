@@ -187,7 +187,7 @@ PepperHelper.prototype = {
                                 '<Data>' +
                                     self.getCommonDefaultXML() +
                                     self.getCommonSceneLayout(i_placement) +
-                                    '<webs src="http://google.com" config="" />' +
+                                    '<HTML src="http://google.com" config="" />' +
                                 '</Data>' +
                             '</Player>'
                 },

@@ -65,6 +65,7 @@ Elements.SCENE_BLOCK_PROPS = '#sceneBlockProps';
 Elements.SCENE_SELECT_LIST = '#sceneSelectList';
 Elements.SCENE_UNDO = '#sceneUndo';
 Elements.SCENE_REDO = '#sceneRedo';
+Elements.SCENE_GRID_MAGNET = '#sceneGridMagnet';
 Elements.SCENE_ZOOM_IN = '#sceneZoomIn';
 Elements.SCENE_PLAY_PREVIEW = '#scenePlayPreview';
 Elements.IFRAME_PREVIEW = '#iFramePreview';

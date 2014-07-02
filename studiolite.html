@@ -315,7 +315,7 @@
                         style="font-size: 1em" class="fa fa-angle-double-down"> </i></button>
                 <button id="layoutEditorNext" type="button" data-localize-tooltip="getNextDivButtonToolTip"
                         title="get next division" data-toggle="tooltip" class="btn btn-default btn-sm"><i
-                        style="font-size: 1em" class="fa fa-th-large"> </i></button>
+                        style="font-size: 1em" class="fa fa-caret-square-o-up"> </i></button>
             </div>
             <div id="screenLayoutEditorCanvasWrap" align="center"
                  style="width: 100%; height: 100%; -webkit-user-select: none;"></div>
@@ -418,6 +418,10 @@
                             data-localize-tooltip="redo"
                             title="redo" data-toggle="tooltip" class="btn btn-default btn-sm"><i
                             style="font-size: 1.3em" class="fa fa-share"> </i></button>
+                    <button id="sceneGridMagnet" type="button" data-localize="empty"
+                            data-localize-tooltip="magneticGrid"
+                            title="magnetic grid" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                            style="font-size: 1.3em" class="fa fa-th-large"> </i></button>
                     <div class="input-group" style="margin-left: 0px">
                         <div class="input-group-btn">
                             <button type="button" class="btn btn-default input-sm dropdown-toggle"
@@ -457,11 +461,9 @@
     <div class="settingsItem">
         <label style="padding-right: 78px" for="previewFullOption" data-localize="fullScreenPreview">Full screen preview</label>
         <select id="previewFullOption" name="preview full screen" data-role="slider">
-            <option value="off" data-localize="off">Off</option>
-            <option value="on" data-localize="on">On</option>
+            <option value="1" data-localize="off">Off</option>
+            <option value="0" data-localize="on">On</option>
         </select>
-        <p data-localize="enablePopups">(must enable browser popups)</p>
-
     </div>
 
 

@@ -50,13 +50,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     self.m_simpleStorage.set('pollStationsTime', pollStationsTime);
                 }
 
-                var fullScreenPreview = self.m_simpleStorage.get('fullScreenPreview');
-                if (_.isUndefined(fullScreenPreview)) {
-                    fullScreenPreview = 'off';
-                    self.m_simpleStorage.set('fullScreenPreview', fullScreenPreview);
+                var bannerMode = self.m_simpleStorage.get('bannerMode');
+                if (_.isUndefined(bannerMode)) {
+                    bannerMode = 1;
+                    self.m_simpleStorage.set('bannerMode', bannerMode);
                 }
-
-                $(Elements.PREVIEW_FULL_OPTION + ' option[value=' + fullScreenPreview + ']').attr("selected", "selected");
+                $(Elements.PREVIEW_FULL_OPTION + ' option[value=' + bannerMode + ']').attr("selected", "selected");
 
                 self.m_stationsPollingSlider = $(Elements.STATION_POLL_SLIDER).noUiSlider({
                     handles: 1,
@@ -69,20 +68,21 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 });
 
                 self._listenStationsPollingSlider();
-                self._listenChangeFullScreenPreviewChange();
+                self._listenBannerPreviewChange();
 
             });
         },
 
         /**
          Listen changes in full screen preview settings options
-         @method _listenChangeFullScreenPreviewChange
+         @method _listenBannerPreviewChange
          **/
-        _listenChangeFullScreenPreviewChange: function () {
+        _listenBannerPreviewChange: function () {
             var self = this;
             $(Elements.PREVIEW_FULL_OPTION).on('change', function (e) {
-                var state = $(Elements.PREVIEW_FULL_OPTION + ' option:selected').val() == "on" ? 'on' : 'off';
-                self.m_simpleStorage.set('fullScreenPreview', state);
+                // var state = $(Elements.PREVIEW_FULL_OPTION + ' option:selected').val() == "on" ? 1 : 0;
+                var state = $(Elements.PREVIEW_FULL_OPTION + ' option:selected').val();
+                self.m_simpleStorage.set('bannerMode', state);
             });
         },
 

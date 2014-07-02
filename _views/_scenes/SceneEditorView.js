@@ -32,8 +32,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_sceneScrollTop = 0;
             self.m_sceneScrollLeft = 0;
             self.m_objectScaling = 0;
-            self.mouseX = 0;
-            self.mouseY = 0;
+            self.m_mouseX = 0;
+            self.m_mouseY = 0;
+            self.m_gridMagneticMode = 0;
             self.m_rendering = false;
             self.m_memento = {};
             self.m_copiesObjects = [];
@@ -64,6 +65,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._listenSceneBlockRemove();
             self._listenSceneNew();
             self._listenMemento();
+            self._listenGridMagnet();
             self._listenCanvasSelectionsFromToolbar();
             self._delegateSceneBlockModified();
         },
@@ -177,7 +179,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             var scene_player_data = pepper.getScenePlayerdata(self.m_selectedSceneID);
             self.m_sceneBlock = self.m_blockFactory.createBlock(self.m_selectedSceneID, scene_player_data, BB.CONSTS.PLACEMENT_IS_SCENE);
-            self.m_sceneBlock.setCanvas(self.m_canvas);
+            self.m_sceneBlock.setCanvas(self.m_canvas, self.m_gridMagneticMode);
             //_.extend(self.m_canvas, self.m_sceneBlock);
         },
 
@@ -426,8 +428,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         return false;
                     }
                     // remember right click position for paste
-                    self.mouseX = e.offsetX;
-                    self.mouseY = e.offsetY;
+                    self.m_mouseX = e.offsetX;
+                    self.m_mouseY = e.offsetY;
 
                     // group selected
                     var active = self.m_canvas.getActiveGroup();
@@ -505,14 +507,14 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                             blockID = pepper.generateSceneId();
                             $(domPlayerData).attr('id', blockID);
                             var layout = $(domPlayerData).find('Layout');
-                            if (i==0){
+                            if (i == 0) {
                                 origX = parseInt(layout.attr('x'));
                                 origY = parseInt(layout.attr('y'));
-                                x = self.mouseX;
-                                y = self.mouseY;
+                                x = self.m_mouseX;
+                                y = self.m_mouseY;
                             } else {
-                                x = self.mouseX + (parseInt(layout.attr('x') - origX));
-                                y = self.mouseY + (parseInt(layout.attr('y') - origY));
+                                x = self.m_mouseX + (parseInt(layout.attr('x') - origX));
+                                y = self.m_mouseY + (parseInt(layout.attr('y') - origY));
                             }
                             layout.attr('x', x);
                             layout.attr('y', y);
@@ -631,6 +633,36 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 self.m_canvas.sendToBack(block);
                 self._updateZorder();
                 self._mementoAddState();
+            });
+        },
+
+        /**
+         Listen grid magnet when dragging objects
+         @method _listenGridMagnet
+         **/
+        _listenGridMagnet: function () {
+            var self = this;
+            $(Elements.SCENE_GRID_MAGNET).on('click', function () {
+                if (self.m_rendering || _.isUndefined(self.m_canvas))
+                    return;
+                switch (self.m_gridMagneticMode) {
+                    case 0:
+                    {
+                        self.m_gridMagneticMode = 1;
+                        break;
+                    }
+                    case 1:
+                    {
+                        self.m_gridMagneticMode = 2;
+                        break;
+                    }
+                    case 2:
+                    {
+                        self.m_gridMagneticMode = 0;
+                        break;
+                    }
+                }
+                self.m_sceneBlock.setCanvas(self.m_canvas, self.m_gridMagneticMode);
             });
         },
 
@@ -804,8 +836,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._blockCountChanged();
             self._renderContinue();
 
+
             if (_.isUndefined(selectedBlockID))
                 return;
+
             // BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, selectedBlockID);
             for (var i = 0; i < self.m_canvas.getObjects().length; i++) {
                 if (selectedBlockID == self.m_canvas.item(i).getBlockData().blockID) {
@@ -813,6 +847,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     break;
                 }
             }
+            // self._drawGrid();
         },
 
         /**
@@ -871,6 +906,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 BB.comBroker.fire(BB.EVENTS.SCENE_BLOCKS_RENDERED, self, self.m_canvas);
                 log('announcing rendering done, now blocks can populate')
                 self._mementoAddState();
+                // self._drawGrid();
             }, 200);
         },
 
@@ -901,6 +937,28 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         },
 
         /**
+         Scene block moving
+         @method _sceneBlockMoving
+         @param {Object} i_options
+         **/
+        _sceneBlockMoving: function (i_options) {
+            var self = this;
+            var grid = 0;
+            if (i_options.target.lockMovementX)
+                return;
+            if (self.m_gridMagneticMode == 0)
+                return;
+            if (self.m_gridMagneticMode == 1)
+                grid = 5;
+            if (self.m_gridMagneticMode == 2)
+                grid = 10;
+            i_options.target.set({
+                left: Math.round(i_options.target.left / grid) * grid,
+                top: Math.round(i_options.target.top / grid) * grid
+            });
+        },
+
+        /**
          Listen to changes in scale so we can reset back to non-zoom on any block object
          @method _listenBlockModified
          **/
@@ -912,6 +970,27 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 'object:modified': self._sceneBlockModified,
                 'object:scaling': $.proxy(self._sceneBlockScaled, self)
             });
+            self.m_canvas.on('object:moving',$.proxy(self._sceneBlockMoving, self));
+        },
+
+        _drawGrid: function () {
+            var self = this;
+            self.m_canvas.setBackgroundColor('', self.m_canvas.renderAll.bind(self.m_canvas));
+            var context = $(self.m_canvas)[0].getContext("2d");
+            var h = 600;
+            var w = 700;
+            for (var x = 0.5; x < (w + 1); x += 10) {
+                context.moveTo(x, 0);
+                context.lineTo(x, (h + 1));
+            }
+            for (var y = 0.5; y < (h + 1); y += 10) {
+                context.moveTo(0, y);
+                context.lineTo(w, y);
+            }
+            context.globalAlpha = 0.1;
+            context.strokeStyle = "black";
+            context.stroke();
+            context.globalAlpha = 1;
         },
 
         /**

@@ -114,6 +114,18 @@ iframe {
     display: inline-block;
 }
 
+.grid25 {
+    background-image: url(data:image/gif;base64,R0lGODlhGQAZAKIAAAAAAP///+rq6tLS0v///wAAAAAAAAAAACH5BAEAAAQALAAAAAAZABkAAAM2OLrc3iLKSWtUNmesu+ReB4bbQIrmWaorW43ulcbfTAtwnLs726u/U5A0DBU9R9SttpQ9ntAEADs=);
+    display: inline-block;
+}
+
+.grid50 {
+    background-image: url(data:image/gif;base64,R0lGODlhMgAyAKIAAAAAAP///+rq6tLS0v///wAAAAAAAAAAACH5BAEAAAQALAAAAAAyADIAAAN8OLrc/jA6Qau9OOtdFf9gSHliaY7DqYbk6mbtK6NzLcT2iufnzpe+HyslVAWLnCNSo1ximk4LNEqjgqZUbFTr5C69SHBRLCT/zDx0Tm1j19wzuEz+orvsOqI1qd8z+35PgIFSg4RVhxd4RoaHiz2NhI8mk0CRgRKZmpsNCQA7);
+    display: inline-block;
+}
+
+
+
 #livePreviewWrap {
     width: 100%;
     height: 60px;

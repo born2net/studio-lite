@@ -90,12 +90,17 @@ define(['jquery', 'backbone', 'flashdetect'], function ($, Backbone, flashdetect
                 return;
             self.m_sceneID = i_sceneID != undefined ? i_sceneID : self.m_sceneID;
             self.m_lastLaunce = self.launchScene;
-            var appEntryFaderView = BB.comBroker.getService(BB.SERVICES['APP_ENTRY_FADER_VIEW']);
-            var navigationView = BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW);
+            var navigationView = BB.comBroker.getService(BB.SERVICES['NAVIGATION_VIEW']);
             navigationView.save(function () {
-                appEntryFaderView.selectView(Elements.LIVE_PREVIEW);
-                var url = pepper.livePreviewScene(self.m_sceneID);
-                $(Elements.IFRAME_EMBEDDED).attr('src', url);
+                require(['simplestorage'], function (simpleStorage) {
+                    var bannerMode = simpleStorage.get('bannerMode');
+                    if (_.isUndefined(bannerMode))
+                        bannerMode = 1;
+                    var url = pepper.livePreviewScene(self.m_sceneID, bannerMode);
+                    var appEntryFaderView = BB.comBroker.getService(BB.SERVICES['APP_ENTRY_FADER_VIEW']);
+                    appEntryFaderView.selectView(Elements.LIVE_PREVIEW);
+                    $(Elements.IFRAME_EMBEDDED).attr('src', url);
+                });
             });
         },
 
@@ -112,12 +117,18 @@ define(['jquery', 'backbone', 'flashdetect'], function ($, Backbone, flashdetect
             self.m_campaignTimelineID = i_campaignTimelineID != undefined ? i_campaignTimelineID : self.m_campaignTimelineID;
             self.m_campaignID = i_campaignID != undefined ? i_campaignID : self.m_campaignID;
             self.m_lastLaunce = self.launchTimeline;
-            var appEntryFaderView = BB.comBroker.getService(BB.SERVICES['APP_ENTRY_FADER_VIEW']);
-            var navigationView = BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW);
+
+            var navigationView = BB.comBroker.getService(BB.SERVICES['NAVIGATION_VIEW']);
             navigationView.save(function () {
-                appEntryFaderView.selectView(Elements.LIVE_PREVIEW);
-                var url = pepper.livePreviewTimeline(self.m_campaignID, self.m_campaignTimelineID);
-                $(Elements.IFRAME_EMBEDDED).attr('src', url);
+                require(['simplestorage'], function (simpleStorage) {
+                    var bannerMode = simpleStorage.get('bannerMode');
+                    if (_.isUndefined(bannerMode))
+                        bannerMode = 1;
+                    var url = pepper.livePreviewTimeline(self.m_campaignID, self.m_campaignTimelineID, bannerMode);
+                    var appEntryFaderView = BB.comBroker.getService(BB.SERVICES['APP_ENTRY_FADER_VIEW']);
+                    appEntryFaderView.selectView(Elements.LIVE_PREVIEW);
+                    $(Elements.IFRAME_EMBEDDED).attr('src', url);
+                });
             });
         },
 
@@ -136,15 +147,14 @@ define(['jquery', 'backbone', 'flashdetect'], function ($, Backbone, flashdetect
 
             var navigationView = BB.comBroker.getService(BB.SERVICES['NAVIGATION_VIEW']);
             navigationView.save(function () {
-                var url = pepper.livePreviewCampaign(self.m_campaignID);
                 require(['simplestorage'], function (simpleStorage) {
-                    if (simpleStorage.get('fullScreenPreview') == 'on') {
-                        window.open(url, '_blank');
-                    } else {
-                        var appEntryFaderView = BB.comBroker.getService(BB.SERVICES['APP_ENTRY_FADER_VIEW']);
-                        appEntryFaderView.selectView(Elements.LIVE_PREVIEW);
-                        $(Elements.IFRAME_EMBEDDED).attr('src', url);
-                    }
+                    var bannerMode = simpleStorage.get('bannerMode');
+                    if (_.isUndefined(bannerMode))
+                        bannerMode = 1;
+                    var url = pepper.livePreviewCampaign(self.m_campaignID, bannerMode);
+                    var appEntryFaderView = BB.comBroker.getService(BB.SERVICES['APP_ENTRY_FADER_VIEW']);
+                    appEntryFaderView.selectView(Elements.LIVE_PREVIEW);
+                    $(Elements.IFRAME_EMBEDDED).attr('src', url);
                 });
             });
         }

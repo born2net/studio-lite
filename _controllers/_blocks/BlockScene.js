@@ -43,6 +43,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self._listenInputChanges();
             self._listenBgColorChanges();
             self.m_canvas = undefined;
+            self.m_gridMagneticMode = 0;
         },
 
         /**
@@ -103,7 +104,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 $(xPoints).find('Point').attr('color', BB.lib.hexToDecimal(color));
                 self._setBlockPlayerData(domPlayerData);
 
-                if ( self.m_placement == BB.CONSTS.PLACEMENT_IS_SCENE )
+                if (self.m_placement == BB.CONSTS.PLACEMENT_IS_SCENE)
                     self._populateSceneBg();
             });
         },
@@ -141,7 +142,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
                 if (w1 < 100 || h1 < 100 || _.isNaN(w1) || _.isNaN(h1))
                     return;
-                if (w1==w2 && h1==h2)
+                if (w1 == w2 && h1 == h2)
                     return;
 
                 $(domPlayerData).find('Layout').eq(0).attr('width', w1);
@@ -306,17 +307,19 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
         /**
          Add the checkers background to a scene
-         @method _populateSceneCheckersBg
+         @method _applySceneBgImage
+         @param {String} i_image
          **/
-        _applySceneCheckersBg: function(){
+        _applySceneBgImage: function (i_image) {
             var self = this;
             self.m_canvas.setBackgroundColor('', self.m_canvas.renderAll.bind(self.m_canvas));
-            $('#sceneCanvasContainer').find('.canvas-container').addClass('checkers');
+            $(Elements.SCENE_CANVAS_CONTAINER).find('.canvas-container').removeClass('checkers').removeClass('grid25').removeClass('grid50');
+            $(Elements.SCENE_CANVAS_CONTAINER).find('.canvas-container').addClass(i_image);
             self.m_canvas.renderAll();
         },
 
         /**
-         Set a scene's background solid color
+         Set a scene's background color or image
          @method _populateSceneBg
          **/
         _populateSceneBg: function () {
@@ -324,17 +327,33 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var domPlayerData = self._getBlockPlayerData();
             var colorPoints = self._findGradientPoints(domPlayerData)
             var color = $(colorPoints).find('Point').attr('color');
-            if (_.isUndefined(color)) {
-                // if ($(Elements.SCENE_CANVAS_CONTAINER).find('.checkers').length>0)
-                // color = '16777215';
-                self._applySceneCheckersBg();
-                    return;
+
+            switch (self.m_gridMagneticMode) {
+                case 0:
+                {
+                    if (_.isUndefined(color)) {
+                        self._applySceneBgImage('checkers');
+                        return;
+                    }
+                    color = '#' + BB.lib.decimalToHex(color);
+                    if (self.m_canvas.backgroundColor == color)
+                        return;
+                    self.m_canvas.setBackgroundColor(color, function () {
+                    });
+                    self.m_canvas.renderAll();
+                    break;
+                }
+                case 1:
+                {
+                    self._applySceneBgImage('grid25');
+                    break;
+                }
+                case 2:
+                {
+                    self._applySceneBgImage('grid50');
+                    break;
+                }
             }
-            color = '#' + BB.lib.decimalToHex(color);
-            if (self.m_canvas.backgroundColor == color)
-                return;
-            self.m_canvas.setBackgroundColor(color, function(){});
-            self.m_canvas.renderAll();
         },
 
         /**
@@ -356,11 +375,11 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          @method setCanvas
          @param  {object} i_canvas
          **/
-        setCanvas: function (i_canvas) {
+        setCanvas: function (i_canvas, i_magneticGridMode) {
             var self = this;
             self.m_canvas = i_canvas;
+            self.m_gridMagneticMode = i_magneticGridMode;
             self._populateSceneBg();
-            // self._applySceneCheckersBg();
         },
 
         /**

@@ -119,20 +119,26 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
             var self = this;
 
             var lazyUpdateBgColor = _.debounce(function (points, styles) {
-                if (points.length==0)
+                if (points.length == 0)
                     return;
                 BB.comBroker.fire(BB.EVENTS.GRADIENT_COLOR_CHANGED, self, null, {points: points, styles: styles});
             }, 50);
 
-            var gradientColorPickerClosed = function(){
+            var gradientColorPickerClosed = function () {
                 log('render gradient');
                 BB.comBroker.fire(BB.EVENTS.GRADIENT_COLOR_CLOSED, self, null);
-            }
+            };
 
             $(Elements.BG_COLOR_GRADIENT_SELECTOR).gradientPicker({
                 change: lazyUpdateBgColor,
                 closed: gradientColorPickerClosed,
                 fillDirection: "90deg"
+            });
+
+            // always close gradient color picker on mouseout
+            $('.colorpicker').on('mouseleave', function (e) {
+                $(document).trigger('mousedown');
+                BB.comBroker.fire(BB.EVENTS.GRADIENT_COLOR_CLOSED, self, self);
             });
 
             // to destroy the plugin instance

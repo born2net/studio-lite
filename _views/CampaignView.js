@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated CampaignView
  **/
-define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', 'Timeline', 'ScreenLayoutSelectorView', 'BlockFactory'], function ($, Backbone, SequencerView, ChannelListView, StackView, Timeline, ScreenLayoutSelectorView, BlockFactory) {
+define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', 'Timeline', 'ScreenLayoutSelectorView', 'StorylineView', 'BlockFactory'], function ($, Backbone, SequencerView, ChannelListView, StackView, Timeline, ScreenLayoutSelectorView, StorylineView, BlockFactory) {
 
     BB.SERVICES.CAMPAIGN_VIEW = 'CampaignView';
 

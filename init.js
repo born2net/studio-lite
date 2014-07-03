@@ -71,6 +71,7 @@ require.config({
         'AppEntryFaderView': '_views/AppEntryFaderView',
         'LoginView': '_views/LoginView',
         'LivePreView': '_views/LivePreView',
+        'StorylineView': '_views/StorylineView',
         'StationsViewLoader': '_views/StationsViewLoader',
         'StationsListView': '_views/StationsListView',
         'SettingsView': '_views/SettingsView',

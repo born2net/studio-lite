@@ -334,7 +334,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         /**
-         Select a division / viewer using it's viewer_id, only applicable when class represents an actual timelime > board > viewer_id
+         Select a division (aka viewer) using it's viewer_id, only applicable when class represents an actual timelime > board > viewer_id
          @method selectDivison
          @param {Number} i_campaign_timeline_board_viewer_id
          **/

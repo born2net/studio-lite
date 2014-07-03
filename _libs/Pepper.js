@@ -183,6 +183,7 @@ Pepper.prototype = {
      **/
     getUserData: function () {
         var self = this;
+
         return {
             userName: self.m_user,
             userPass: self.m_pass,
@@ -222,6 +223,20 @@ Pepper.prototype = {
         var self = this;
         self.m_loaderManager.requestData(function (i_callBack) {
         });
+    },
+
+    /**
+     Get proof of play stats report
+     @method getProofOfPlayStats
+     @param {Number} i_playerData
+     @return {Number} Unique clientId.
+     **/
+    getProofOfPlayStats: function (i_callBack, i_year, i_month) {
+        var self = this;
+        self.m_loaderManager.requestAdsReport(function (data) {
+            log(data);
+            i_callBack(data);
+        }, i_year, i_month)
     },
 
     /**
@@ -272,7 +287,7 @@ Pepper.prototype = {
      @param {Number} i_bannerMode
      @return {String} url
      **/
-    _livePreviewGetLink: function(i_playerParams, i_bannerMode){
+    _livePreviewGetLink: function (i_playerParams, i_bannerMode) {
         var self = this;
         var rc4v2 = new RC4V2();
         var playerParams = rc4v2.encrypt(i_playerParams, '8547963624824263');

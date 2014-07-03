@@ -228,8 +228,10 @@ Pepper.prototype = {
     /**
      Get proof of play stats report
      @method getProofOfPlayStats
+     @param {Function} i_callBack
+     @param {Number} i_year
      @param {Number} i_playerData
-     @return {Number} Unique clientId.
+     @return {Number} i_month clientId.
      **/
     getProofOfPlayStats: function (i_callBack, i_year, i_month) {
         var self = this;

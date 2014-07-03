@@ -30,6 +30,13 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
 
             pepper.listen(Pepper.TIMELINE_DELETED, $.proxy(self._deleteSequencedTimeline, self));
 
+            $('#test1').on('click', function (e) {
+                self.m_screenTemplates[0].selectDivison(28);
+            });
+            $('#test2').on('click', function (e) {
+                self.m_screenTemplates[0].selectDivison(29);
+            });
+
         },
 
         /**

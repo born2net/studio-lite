@@ -185,7 +185,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var a = $('#' + self.m_myElementID);
             var b = $('#' + self.m_myElementID).find('rect');
             $('#' + self.m_myElementID).find('rect').each(function () {
-                $(this).on('mouseover',function () {
+                $(this).on('mouseover', function () {
                     $(this).css({'fill': 'rgb(190,190,190)'});
                 }).mouseout(function () {
                     $(this).css({'fill': 'rgb(230,230,230)'});
@@ -325,6 +325,27 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         /**
+         The public method version of _deselectViewers, which de-selects all viewers
+         @method deselectDivisons
+         **/
+        deselectDivisons: function () {
+            var self = this;
+            self._deselectViewers();
+        },
+
+        /**
+         Select a division / viewer using it's viewer_id, only applicable when class represents an actual timelime > board > viewer_id
+         @method selectDivison
+         @param {Number} i_campaign_timeline_board_viewer_id
+         **/
+        selectDivison: function (i_campaign_timeline_board_viewer_id) {
+            var self = this;
+            self._deselectViewers();
+            var selectedElement = $('#' + self.m_myElementID).find('[data-campaign_timeline_board_viewer_id="' + i_campaign_timeline_board_viewer_id + '"]');
+            $(selectedElement).css({'fill': 'rgb(200,200,200)'});
+        },
+
+        /**
          Release all members to allow for garbage collection.
          @method destroy
          @return none
@@ -337,7 +358,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             $(Elements.CLASS_SCREEN_DIVISION).off('click', function (e) {
                 self._onScreenFrameSelected(e, self);
             });
-            $(this).off('mouseover',function () {
+            $(this).off('mouseover', function () {
                 $(this).css({'fill': 'rgb(190,190,190)'});
             }).mouseout(function () {
                 $(this).css({'fill': 'rgb(230,230,230)'});

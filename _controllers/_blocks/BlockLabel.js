@@ -42,10 +42,12 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Label');
                 var xSnippetText = $(xSnippet).find('Text');
+                if (text == xSnippetText.text())
+                    return;
                 $(xSnippetText).text(text);
                 self._setBlockPlayerData(domPlayerData);
             };
-            $(Elements.LABEL_TEXT).on("mouseout", self.m_inputChangeHandler);
+            $(Elements.LABEL_TEXT).on("mousemove", self.m_inputChangeHandler);
 
             self._labelEnterKey = _.debounce(function (e) {
                 if (!self.m_selected)
@@ -182,7 +184,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         deleteBlock: function () {
             var self = this;
-            // $(Elements.LABEL_TEXT).off("input", self.m_inputChangeHandler);
+            $(Elements.LABEL_TEXT).off("mousemove", self.m_inputChangeHandler);
+            $(Elements.LABEL_TEXT).off("keydown", self.m_inputChangeHandler);
             $(Elements.LABEL_TEXT).off("blur", self.m_inputChangeHandler);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.FONT_SELECTION_CHANGED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.MOUSE_ENTERS_CANVAS, self);

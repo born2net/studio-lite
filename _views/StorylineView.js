@@ -1,5 +1,5 @@
 /**
- StoryLineView module presents the Timeline > channels UI while displaying the visual length in time for each block on the selected channel
+ StoryLineView module manages the Timeline > channels UI while displaying the visual length in time for each block on the selected channel
  @class StorylineView
  @constructor
  @param {String}
@@ -17,8 +17,17 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         initialize: function () {
             var self = this;
-        }
+            BB.comBroker.listen(BB.EVENTS.APP_SIZED, $.proxy(self._render, self));
+            self._render();
+        },
 
+        /**
+         Draw a fresh storyline for current timelime
+         @method _render
+         **/
+        _render: function(){
+            log($(Elements.STORYLINE_CONTAINER).width());
+        }
     });
 
     return StorylineView;

@@ -35,10 +35,10 @@
         <div id="logoContainer" class="flip">
             <div class="card">
                 <div class="face front">
-                    <img class="img-responsive"  src="_assets/logo_s.png"/>
+                    <img class="img-responsive" src="_assets/logo_s.png"/>
                 </div>
                 <div class="face back">
-                    <img class="img-responsive"  src="_assets/logo_b.png"/>
+                    <img class="img-responsive" src="_assets/logo_b.png"/>
                 </div>
             </div>
         </div>
@@ -97,7 +97,8 @@
         <div id="languageSelectionLogin"></div>
     </form>
 </div>
-<div id="waitScreenEntryApp" style="display: none"><span style="position: absolute; left: 45%; top: 20%"> <img src="./_assets/preload5.gif"> </span></div>
+<div id="waitScreenEntryApp" style="display: none"><span style="position: absolute; left: 45%; top: 20%"> <img
+        src="./_assets/preload5.gif"> </span></div>
 <div id="appLogout" style="display: none">
       <span style="position: absolute; left: 40%; top: 20%">
         <h3 data-localize="haveNiceDay">Have a nice day :)</h3>
@@ -111,22 +112,22 @@
             <button id="playerPreviewReplay" title="launch player"
                     data-localize-tooltip="playPreview" data-toggle="tooltip" type="button"
                     class="btn btn-default">
-                    <i style="font-size: 1em" class="fa fa-youtube-play"></i>
-                    <span data-localize="launch"> launch </span>
+                <i style="font-size: 1em" class="fa fa-youtube-play"></i>
+                <span data-localize="launch"> launch </span>
             </button>
 
             <button id="playerPreviewStop" title="stop playback"
                     data-localize-tooltip="stopPreview" data-toggle="tooltip" type="button"
                     class="btn btn-default">
-                    <i style="font-size: 1em" class="fa fa-stop"></i>
-                    <span data-localize="stop"> stop </span>
+                <i style="font-size: 1em" class="fa fa-stop"></i>
+                <span data-localize="stop"> stop </span>
             </button>
 
             <button id="playerPreviewExit" title="exit preview"
                     data-localize-tooltip="exitPreview" data-toggle="tooltip" type="button"
                     class="btn btn-default">
-                    <i style="font-size: 1em" class="fa fa-sign-out"></i>
-                    <span data-localize="exit"> exit </span>
+                <i style="font-size: 1em" class="fa fa-sign-out"></i>
+                <span data-localize="exit"> exit </span>
             </button>
 
         </div>
@@ -158,188 +159,280 @@
 <button id="togglePanel" class="propPanelIsOpen btn btn-default btn-sm hidden-lg"><span
         class="glyphicon glyphicon-resize-horizontal"></span></button>
 <div id="campaignManagerView">
-    <div class="campaignSlider noScroll">
-        <div id="campaignSelector" class="page center">
-            <div class="yScroll">
-                <div id="campaignSelectionButtons" class="btn-group">
-                    <button id="newCampaign" type="button" class="btn btn-default"><i style="font-size: 1em"
-                                                                                      class="fa fa-magic"></i> <span
-                            data-localize="campaign_wizard">new campaign wizard</span></button>
-                    <button id="removeCampaign" type="button" class="btn btn-default"><i style="font-size: 1em"
-                                                                                         class="fa fa-trash-o"></i>
-                        <span data-localize="campaign_remove">remove</span></button>
-                </div>
-                <div id="campaignSelectorList" class="appList list-group"></div>
-            </div>
+<div class="campaignSlider noScroll">
+<div id="campaignSelector" class="page center">
+    <div class="yScroll">
+        <div id="campaignSelectionButtons" class="btn-group">
+            <button id="newCampaign" type="button" class="btn btn-default"><i style="font-size: 1em"
+                                                                              class="fa fa-magic"></i> <span
+                    data-localize="campaign_wizard">new campaign wizard</span></button>
+            <button id="removeCampaign" type="button" class="btn btn-default"><i style="font-size: 1em"
+                                                                                 class="fa fa-trash-o"></i>
+                <span data-localize="campaign_remove">remove</span></button>
         </div>
-        <div id="campaignNameSelectorView" class="page right">
-            <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
-                    class="glyphicon glyphicon-chevron-left"></span></button>
-            <button id="next" type="button" class="openPropsButton btn btn-default btn-sm"><span
-                    class="glyphicon glyphicon-chevron-right"></span></button>
-            <h3 data-localize="selectCampaignName">Select your campaign name</h3>
-            <input id="newCampaignName" type="text" class="form-control" value="My campaign"
-                   placeholder="Enter new campaign name" data-localize="enterNewCompaignName">
-        </div>
-        <div id="orientationSelector" class="page right">
-            <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
-                    class="glyphicon glyphicon-chevron-left"></span></button>
-            <h3 data-localize="screenOrientation">Select your screen orientation</h3>
+        <div id="campaignSelectorList" class="appList list-group"></div>
+    </div>
+</div>
+<div id="campaignNameSelectorView" class="page right">
+    <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
+            class="glyphicon glyphicon-chevron-left"></span></button>
+    <button id="next" type="button" class="openPropsButton btn btn-default btn-sm"><span
+            class="glyphicon glyphicon-chevron-right"></span></button>
+    <h3 data-localize="selectCampaignName">Select your campaign name</h3>
+    <input id="newCampaignName" type="text" class="form-control" value="My campaign"
+           placeholder="Enter new campaign name" data-localize="enterNewCompaignName">
+</div>
+<div id="orientationSelector" class="page right">
+    <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
+            class="glyphicon glyphicon-chevron-left"></span></button>
+    <h3 data-localize="screenOrientation">Select your screen orientation</h3>
 
-            <div id="orientationView">
-                <table width="100%" border="0" cellspacing="0" cellpadding="50">
-                    <tr>
-                        <td align="center"><img class="img-responsive" id="imgHorizontal"
-                                                src="_assets/orientationH.png"/></td>
-                        <td align="center"><img class="img-responsive" id="imgVertical" src="_assets/orientationV.png"/>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        <div id="resolutionSelector" class="page right">
-            <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
-                    class="glyphicon glyphicon-chevron-left"></span></button>
-            <h3 data-localize="screenResolution">Select your screen resolution</h3>
+    <div id="orientationView">
+        <table width="100%" border="0" cellspacing="0" cellpadding="50">
+            <tr>
+                <td align="center"><img class="img-responsive" id="imgHorizontal"
+                                        src="_assets/orientationH.png"/></td>
+                <td align="center"><img class="img-responsive" id="imgVertical" src="_assets/orientationV.png"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div id="resolutionSelector" class="page right">
+    <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
+            class="glyphicon glyphicon-chevron-left"></span></button>
+    <h3 data-localize="screenResolution">Select your screen resolution</h3>
 
-            <div id="resolutionList" class="list-group"></div>
-        </div>
-        <div id="screenLayoutSelector" class="page right">
-            <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
-                    class="glyphicon glyphicon-chevron-left"></span></button>
-            <h3 data-localize="screenLayout">Select your screen layout</h3>
+    <div id="resolutionList" class="list-group"></div>
+</div>
+<div id="screenLayoutSelector" class="page right">
+    <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
+            class="glyphicon glyphicon-chevron-left"></span></button>
+    <h3 data-localize="screenLayout">Select your screen layout</h3>
 
-            <div id="screenLayoutList"></div>
-        </div>
-        <div id="campaign" class="page right">
-            <div id="campaignView" class="yScroll">
-                <div class="panel-group" id="timelinesCollapsible">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a id="toggleTimelinesCollapsible" data-toggle="collapse"
-                                                       data-parent="#timelinesCollapsible"
-                                                       href="#screenSelectorContainerCollapse"> <span
-                                    class="glyphicon glyphicon-chevron-down"></span> <span id="timelinesTotalLength"> 00:00:00</span></a>
-                                <button style="margin-left: 30px" id="addNewTimelineButton" type="button"
-                                        title="add new timeline" data-localize="timelineLength"
-                                        data-localize-tooltip="addNewTimelineButtonToolTip"
-                                        data-toggle="tooltip"
-                                        class="btn btn-default btn-sm"><span
-                                        class="glyphicon glyphicon-plus"></span></button>
-                                <button id="removeTimelineButton" type="button"
-                                        title="remove the selected timeline" data-toggle="tooltip"
-                                        data-localize-tooltip="removeTimelineButtonToolTip"
-                                        class="btn btn-default btn-sm"><span
-                                        class="glyphicon glyphicon-minus"></span></button>
-                                <button id="campaignPreview" type="button"
-                                        title="campaign preview" data-toggle="tooltip"
-                                        data-localize-tooltip="campaignPreviewTooltip"
-                                        class="btn btn-default btn-sm">
-                                        <i style="font-size: 1.5em" class="fa fa-play-circle"></i>
-                                </button>
-                            </h4>
-                        </div>
-                        <div id="screenSelectorContainerCollapse" class="panel-collapse collapse in">
-
-                            <!-- TODO: TEST -->
-                            <button id="test1" type="button" title="preview" data-toggle="tooltip"
-                                    data-localize-tooltip="preview"
-                                    class="btn btn-default btn-sm">
-                                <i style="font-size: 1.5em" class="fa fa-play-circle-o"></i>
-                            </button>
-
-                            <button id="test2" type="button" title="preview" data-toggle="tooltip"
-                                    data-localize-tooltip="preview"
-                                    class="btn btn-default btn-sm">
-                                <i style="font-size: 1.5em" class="fa fa-play-circle-o"></i>
-                            </button>
-
-
-                            <div class="panel-body">
-                                <aside>
-                                    <aside>
-                                        <div id="screenSelectorContainer" vertical-align="middle">
-                                            <hr class="dottedHR">
-                                            <ul id="screenLayoutsUL">
-                                            </ul>
-                                        </div>
-                                    </aside>
-                                </aside>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <a href="index.html" style="display:none" id="attachDragDropMainScreenSelection"
-                   data-role="button">Link button</a> <a href="index.html" style="display:none"
-                                                         id="dettachDragDropMainScreenSelection"
-                                                         data-role="button">Link button</a>
-
-                <div id="selectedTimeline" style="display: none">
-                    <div id="noneSelectedScreenLayout">
-                        <div align="center" id="screenMainSelector">
-                            <div align="center">
-                                <h1 data-localize="noTimelineSelected">no timeline selected</h1>
-                            </div>
-                        </div>
-                    </div>
-                    <div align="center" id="selectedLayoutContainer" class="centerContent">
-                        <button id="timelimePreview" type="button" title="preview" data-toggle="tooltip"
-                                data-localize-tooltip="preview"
+    <div id="screenLayoutList"></div>
+</div>
+<div id="campaign" class="page right">
+    <div id="campaignView" class="yScroll">
+        <div class="panel-group" id="timelinesCollapsible">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a id="toggleTimelinesCollapsible" data-toggle="collapse"
+                           data-parent="#timelinesCollapsible"
+                           href="#screenSelectorContainerCollapse"> <span
+                                class="glyphicon glyphicon-chevron-down"></span> <span id="timelinesTotalLength"> 00:00:00</span></a>
+                        <button style="margin-left: 30px" id="addNewTimelineButton" type="button"
+                                title="add new timeline" data-localize="timelineLength"
+                                data-localize-tooltip="addNewTimelineButtonToolTip"
+                                data-toggle="tooltip"
+                                class="btn btn-default btn-sm"><span
+                                class="glyphicon glyphicon-plus"></span></button>
+                        <button id="removeTimelineButton" type="button"
+                                title="remove the selected timeline" data-toggle="tooltip"
+                                data-localize-tooltip="removeTimelineButtonToolTip"
+                                class="btn btn-default btn-sm"><span
+                                class="glyphicon glyphicon-minus"></span></button>
+                        <button id="campaignPreview" type="button"
+                                title="campaign preview" data-toggle="tooltip"
+                                data-localize-tooltip="campaignPreviewTooltip"
                                 class="btn btn-default btn-sm">
-                                <i style="font-size: 1.5em" class="fa fa-play-circle-o"></i>
-                                </button>
-                    </div>
+                            <i style="font-size: 1.5em" class="fa fa-play-circle"></i>
+                        </button>
+                    </h4>
                 </div>
-                <div id="channelListView">
-                    <div>
-                        <button id="addBlockButton" type="button" class="btn btn-default"><span
-                                class="glyphicon glyphicon-plus"></span><span
-                                data-localize="addContent"> Add content </span></button>
-                        <button id="removeBlockButton" type="button" class="btn btn-default"><span
-                                class="glyphicon glyphicon-minus"></span><span
-                                data-localize="removeContent"> Remove content </span></button>
-                    </div>
-                    <div>
-                        <ul class="list-group" id="sortable" style="padding:20px">
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="addBlockView" class="page right">
-        </div>
-        <div id="screenLayoutEditorView" class="page right">
-            <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
-                    class="glyphicon glyphicon-chevron-left"></span></button>
-            <h3 data-localize="editScreenLayoutTitle">Edit screen layout</h3>
+                <div id="screenSelectorContainerCollapse" class="panel-collapse collapse in">
 
-            <div class="btn-group">
-                <button id="layoutEditorAddNew" type="button" data-localize-tooltip="addButtonToolTip" title="add"
-                        data-toggle="tooltip" class="btn btn-default btn-sm"><i style="font-size: 1em"
-                                                                                class="fa fa-plus"> </i></button>
-                <button id="layoutEditorRemove" type="button" data-localize-tooltip="removeButtonToolTip"
-                        title="remove division" data-toggle="tooltip" class="btn btn-default btn-sm"><i
-                        style="font-size: 1em" class="fa fa-minus"> </i></button>
-                <button id="layoutEditorPushTop" type="button" data-localize-tooltip="pushDivToTopButtonToolTip"
-                        title="push division to top" data-toggle="tooltip" class="btn btn-default btn-sm"><i
-                        style="font-size: 1em" class="fa fa-angle-double-up"> </i></button>
-                <button id="layoutEditorPushBottom" type="button" data-localize-tooltip="pushDivToBottomButtonToolTip"
-                        title="push division to bottom" data-toggle="tooltip" class="btn btn-default btn-sm"><i
-                        style="font-size: 1em" class="fa fa-angle-double-down"> </i></button>
-                <button id="layoutEditorNext" type="button" data-localize-tooltip="getNextDivButtonToolTip"
-                        title="get next division" data-toggle="tooltip" class="btn btn-default btn-sm"><i
-                        style="font-size: 1em" class="fa fa-caret-square-o-up"> </i></button>
+                    <!-- TODO: TEST -->
+                    <button id="test1" type="button" title="preview" data-toggle="tooltip"
+                            data-localize-tooltip="preview"
+                            class="btn btn-default btn-sm">
+                        <i style="font-size: 1.5em" class="fa fa-play-circle-o"></i>
+                    </button>
+
+                    <button id="test2" type="button" title="preview" data-toggle="tooltip"
+                            data-localize-tooltip="preview"
+                            class="btn btn-default btn-sm">
+                        <i style="font-size: 1.5em" class="fa fa-play-circle-o"></i>
+                    </button>
+
+
+                    <div class="panel-body">
+                        <aside>
+                            <aside>
+                                <div id="screenSelectorContainer" vertical-align="middle">
+                                    <hr class="dottedHR">
+                                    <ul id="screenLayoutsUL">
+                                    </ul>
+                                </div>
+                            </aside>
+                        </aside>
+                    </div>
+                </div>
             </div>
-            <div id="screenLayoutEditorCanvasWrap" align="center"
-                 style="width: 100%; height: 100%; -webkit-user-select: none;"></div>
         </div>
-        <div id="waitScreenMainPanel" class="page center" style="display: none">
-            <div class="yScroll">
-                <h1 data-localize="pleaseWait">Please wait</h1>
-                <span> <img src="./_assets/preload7.gif"> </span></div>
+        <a href="index.html" style="display:none" id="attachDragDropMainScreenSelection"
+           data-role="button">Link button</a> <a href="index.html" style="display:none"
+                                                 id="dettachDragDropMainScreenSelection"
+                                                 data-role="button">Link button</a>
+
+        <div id="storyLine">
+
+            <table width="100%">
+                <tr class="scalaRuler">
+                    <td class="scalaNum">
+                        00001
+                    </td>
+                    <td class="scalaNum">
+                        21110
+                    </td>
+                    <td class="scalaNum">
+                        31110
+                    </td>
+                    <td class="scalaNum">
+                        41110
+                    </td>
+                    <td class="scalaNum">
+                        51110
+                    </td>
+                    <td class="scalaNum">
+                        61110
+                    </td>
+                    <td class="scalaNum" width=1%>
+                        71110
+                    </td>
+                </tr>
+                <tr>
+                    <td class="scalaDiv">
+                        |
+                    </td>
+                    <td class="scalaDiv">
+                        |
+                    </td>
+                    <td class="scalaDiv">
+                        |
+                    </td>
+                    <td class="scalaDiv">
+                        |
+                    </td>
+                    <td class="scalaDiv">
+                        |
+                    </td>
+                    <td class="scalaDiv">
+                        |
+                    </td>
+                    <td class="scalaDiv" width=1%>
+                        |
+                    </td>
+                </tr>
+            </table>
+
+            <div align="center" id="storylineContainer" class="centerContent">
+
+                <div class="channel">
+                    <div class="channelHead">
+                        1
+                    </div>
+                    <div style="width: 50px; background-color: #fd6060" class="timelineBlock"></div>
+                    <div style="width: 30px; background-color: #24870d" class="timelineBlock"></div>
+                    <div style="width: 200px; background-color: #b3f26a" class="timelineBlock"></div>
+                    <div style="width: 35px; background-color: #5bb5e8" class="timelineBlock"></div>
+                </div>
+
+                <div class="channel">
+                    <div class="channelHead">
+                        2
+                    </div>
+                    <div style="width: 30px; background-color: #fd6060" class="timelineBlock"></div>
+                    <div style="width: 30px; background-color: #24870d" class="timelineBlock"></div>
+                    <div style="width: 10px; background-color: #b3f26a" class="timelineBlock"></div>
+                    <div style="width: 80px; background-color: #5bb5e8" class="timelineBlock"></div>
+                </div>
+
+                <div class="channel">
+                    <div class="channelHead">
+                        3
+                    </div>
+                    <div style="width: 40px; background-color: #fd6060" class="timelineBlock"></div>
+                    <div style="width: 50px; background-color: #24870d" class="timelineBlock"></div>
+                    <div style="width: 100px; background-color: #b3f26a" class="timelineBlock"></div>
+                    <div style="width: 130px; background-color: #5bb5e8" class="timelineBlock"></div>
+                </div>
+
+                <div style="clear: both; height: 2px"></div>
+
+                <hr/>
+
+            </div>
+
+
+        </div>
+
+        <div id="selectedTimeline" style="display: none">
+            <div id="noneSelectedScreenLayout">
+                <div align="center" id="screenMainSelector">
+                    <div align="center">
+                        <h1 data-localize="noTimelineSelected">no timeline selected</h1>
+                    </div>
+                </div>
+            </div>
+            <div align="center" id="selectedLayoutContainer" class="centerContent">
+                <button id="timelimePreview" type="button" title="preview" data-toggle="tooltip"
+                        data-localize-tooltip="preview"
+                        class="btn btn-default btn-sm">
+                    <i style="font-size: 1.5em" class="fa fa-play-circle-o"></i>
+                </button>
+            </div>
+        </div>
+        <div id="channelListView">
+            <div>
+                <button id="addBlockButton" type="button" class="btn btn-default"><span
+                        class="glyphicon glyphicon-plus"></span><span
+                        data-localize="addContent"> Add content </span></button>
+                <button id="removeBlockButton" type="button" class="btn btn-default"><span
+                        class="glyphicon glyphicon-minus"></span><span
+                        data-localize="removeContent"> Remove content </span></button>
+            </div>
+            <div>
+                <ul class="list-group" id="sortable" style="padding:20px">
+                </ul>
+            </div>
         </div>
     </div>
+</div>
+<div id="addBlockView" class="page right">
+</div>
+<div id="screenLayoutEditorView" class="page right">
+    <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
+            class="glyphicon glyphicon-chevron-left"></span></button>
+    <h3 data-localize="editScreenLayoutTitle">Edit screen layout</h3>
+
+    <div class="btn-group">
+        <button id="layoutEditorAddNew" type="button" data-localize-tooltip="addButtonToolTip" title="add"
+                data-toggle="tooltip" class="btn btn-default btn-sm"><i style="font-size: 1em"
+                                                                        class="fa fa-plus"> </i></button>
+        <button id="layoutEditorRemove" type="button" data-localize-tooltip="removeButtonToolTip"
+                title="remove division" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                style="font-size: 1em" class="fa fa-minus"> </i></button>
+        <button id="layoutEditorPushTop" type="button" data-localize-tooltip="pushDivToTopButtonToolTip"
+                title="push division to top" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                style="font-size: 1em" class="fa fa-angle-double-up"> </i></button>
+        <button id="layoutEditorPushBottom" type="button" data-localize-tooltip="pushDivToBottomButtonToolTip"
+                title="push division to bottom" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                style="font-size: 1em" class="fa fa-angle-double-down"> </i></button>
+        <button id="layoutEditorNext" type="button" data-localize-tooltip="getNextDivButtonToolTip"
+                title="get next division" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                style="font-size: 1em" class="fa fa-caret-square-o-up"> </i></button>
+    </div>
+    <div id="screenLayoutEditorCanvasWrap" align="center"
+         style="width: 100%; height: 100%; -webkit-user-select: none;"></div>
+</div>
+<div id="waitScreenMainPanel" class="page center" style="display: none">
+    <div class="yScroll">
+        <h1 data-localize="pleaseWait">Please wait</h1>
+        <span> <img src="./_assets/preload7.gif"> </span></div>
+</div>
+</div>
 </div>
 <div id="resourcesPanel" style="display: none">
     <div id="resourcesListView">
@@ -447,7 +540,8 @@
                     </div>
                 </div>
             </div>
-            <div id="sceneCanvasContainer" data-toggle="context" data-target="#context-menu" class="context sceneElements" align="center"></div>
+            <div id="sceneCanvasContainer" data-toggle="context" data-target="#context-menu"
+                 class="context sceneElements" align="center"></div>
             <div id="sceneContextMenu">
                 <ul id="sceneContext" class="dropdown-menu" role="menu">
                     <li><a tabindex="-1" class="blocksOnly" data-localize="cut">cut</a></li>
@@ -466,6 +560,7 @@
 
     <div class="settingsItem">
         <label id="stationPollSliderText" data-localize="pollInterval">station polling (seconds):</label>
+
         <div id="stationPollSliderWrap">
             <div id="stationPollSlider" class="noUi-target noUi-ltr noUi-horizontal noUi-background"></div>
         </div>
@@ -473,7 +568,8 @@
     </div>
 
     <div class="settingsItem">
-        <label style="padding-right: 78px" for="previewFullOption" data-localize="fullScreenPreview">Full screen preview</label>
+        <label style="padding-right: 78px" for="previewFullOption" data-localize="fullScreenPreview">Full screen
+            preview</label>
         <select id="previewFullOption" name="preview full screen" data-role="slider">
             <option value="1" data-localize="off">Off</option>
             <option value="0" data-localize="on">On</option>
@@ -653,7 +749,9 @@
                data-localize="timelineTitle">
     </div>
     <hr/>
-    <button id="editScreenLayout" type="button" class="btn btn-default"><i style="font-size: 1em" class="fa fa-gears"> </i> <span data-localize="editScreenLayout">edit screen layout</span></button>
+    <button id="editScreenLayout" type="button" class="btn btn-default"><i style="font-size: 1em"
+                                                                           class="fa fa-gears"> </i> <span
+            data-localize="editScreenLayout">edit screen layout</span></button>
 </div>
 <div id="channelProperties" style="display: none">
     <h5 data-localize="channelProps">Channel properties</h5>
@@ -1250,9 +1348,12 @@
 <p style="display: none" id="bootBoxSceneMustSelectScene" data-localize="bootBoxSceneMustSelectScene">You must first
     select a Scene</p>
 
-<p style="display: none" id="bootBoxOldBrowser" data-localize="bootBoxOldBrowser">Geeesh… Your browser is a dinosaur, please use the latest version from Google chrome, Microsoft Internet Explorer or Mozilla Firefox, and we promise you will be amazed...</p>
+<p style="display: none" id="bootBoxOldBrowser" data-localize="bootBoxOldBrowser">Geeesh… Your browser is a dinosaur,
+    please use the latest version from Google chrome, Microsoft Internet Explorer or Mozilla Firefox, and we promise you
+    will be amazed...</p>
 
-<p style="display: none" id="bootBoxNoFlash" data-localize="bootBoxNoFlash">Adobe Flash version 11 or greater must be installed so you can run live preview</p>
+<p style="display: none" id="bootBoxNoFlash" data-localize="bootBoxNoFlash">Adobe Flash version 11 or greater must be
+    installed so you can run live preview</p>
 
 <p style="display: none" id="bootBoxSceneRemove" data-localize="bootBoxSceneRemove">Are you sure you want to remove the
     scene?</p>

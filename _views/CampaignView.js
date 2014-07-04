@@ -1,5 +1,5 @@
 /**
- CampaignView manages campaign related logic and UI
+ CampaignView module manages campaign related logic and UI
  @class CampaignView
  @constructor
  @return {Object} instantiated CampaignView
@@ -32,6 +32,12 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             this.m_sequencerView = new SequencerView({
                 el: Elements.SCREEN_LAYOUTS_UL
             });
+
+            this.m_storylineView = new StorylineView({
+                el: Elements.STORYLINE
+            });
+
+
             BB.comBroker.setService(BB.SERVICES['SEQUENCER_VIEW'], this.m_sequencerView);
 
             this.m_channelListView = new ChannelListView({

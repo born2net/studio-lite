@@ -488,9 +488,97 @@ iframe {
     /* opacity: 0.01; */
 }
 
+#storyLine {
+    font-family: monospace;
+}
+
+#storylineContainer {
+    background-color: #f7f7f7;
+    width: 100%;
+    float: left;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    padding-top: 1px;
+    position: relative;
+    top: -17px
+}
+
 /************************************
  StudioLite class styling
  ************************************/
+
+.scalaRuler {
+    border: 0;
+    border-bottom: 1px dashed #ccc;
+    border-top: 1px solid #ccc;
+    background: #737373;
+}
+
+.scalaNum {
+    color: #d3d3d3;
+}
+
+.scalaDiv {
+    position: relative;
+    top: -15px;
+    left: -10px;
+    color: #d3d3d3;
+}
+
+/*
+.scalaDiv:first-child {
+    position: relative;
+    left: -3px;
+    top: -5px;
+}
+
+.scalaDiv:last-child {
+    position: relative;
+    left: 10px;
+    top: -5px;
+}
+*/
+
+.channelHead {
+    width: 20px;
+    height: 20px;
+    background-color: #c7c7c7;
+    float: left;
+    cursor: pointer;
+}
+
+.channelHead:hover {
+    background-color: #bcbcbc;
+}
+
+
+.channel {
+    margin-bottom: 1px;
+    border-bottom: 1px solid #d0d0d0;
+    height: 22px;
+    float: left;
+    width: 100%;
+    cursor: pointer;
+}
+
+.channel:hover {
+    background-color: #e6e6e6;
+}
+
+.channel:last-child {
+    border-bottom: 0;
+}
+
+.timelineBlock {
+    float: left;
+    background-color: #e6e6e6;
+    border: 1px solid darkgrey;
+    height: 20px;
+}
+
+.timelineBlock:hover {
+    opacity: 0.8;
+}
 
 .basicBorder {
     border: 1px solid rgb(170, 170, 170);

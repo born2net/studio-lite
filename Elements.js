@@ -281,6 +281,7 @@ Elements.CLASS_FONT_ALIGNMENT = '.fontAlignment';
 Elements.CLASS_SPINNER_INPUT = '.spinner-input';
 Elements.CLASS_FONT_SELECTION = '.fontSelection';
 Elements.CLASS_LOCK_INPUT = '.lockPositionInput';
+Elements.CLASS_CHANNEL_BODY_CONTAINER  = '.channelBodyContainer';
 
 
 /**

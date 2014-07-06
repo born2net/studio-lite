@@ -5,13 +5,24 @@
  to populate the view stack with the appropriate data.
  The property manager is also capable of managing common properties which are used for blocks.
  For example, all blocks (QR, RSS etc) have a border color, the property value for the border will appear
- in the sub-panel (m_subViewStack)
+ in the sub-panel via the BlockProperties (m_subViewStack) which co-resides inside the PropertiesView module.
  @class PropertiesView
  @constructor
  @param {string} i_elementID is the the main property HTML ID (div element).
  @return {object} CompProperty instance.
  **/
 define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
+
+    /**
+     Even is fired when Side properties panel changed in size
+     @event SIDE_PANEL_SIZED
+     @param {This} caller
+     @param {Self} context caller
+     @param {Event}
+     @static
+     @final
+     **/
+    BB.EVENTS.SIDE_PANEL_SIZED = 'SIDE_PANEL_SIZED';
 
     BB.SERVICES.PROPERTIES_VIEW = 'PropertiesView';
 
@@ -61,6 +72,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
         _listenClickSlidingPanel: function () {
             var self = this;
             $(Elements.TOGGLE_PANEL).on('click', function () {
+                self._announcePanelSized();
                 self._reConfigPropPanelIcon();
                 if ($(Elements.TOGGLE_PANEL).hasClass('propPanelIsOpen')) {
                     $(Elements.TOGGLE_PANEL).toggleClass('propPanelIsOpen');
@@ -81,6 +93,18 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
                     }, 500)
                 }
             });
+        },
+
+        /**
+         Announce that the side properties panel has changed in size
+         @method _announcePanelSized
+         **/
+        _announcePanelSized: function(){
+            var self = this;
+            setTimeout(function(){
+                BB.comBroker.fire(BB.EVENTS.SIDE_PANEL_SIZED,self,self);
+            },400);
+
         },
 
         /**

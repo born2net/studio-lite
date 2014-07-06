@@ -176,7 +176,7 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
         },
 
         /**
-         When new data is available from the remote server, update the list with current data.
+         When data is available from the remote server, update the list with current data.
          @method _onAddStation
          @param {Event} e remote server data call back from Ajax call
          @return none

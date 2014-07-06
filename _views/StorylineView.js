@@ -17,6 +17,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         initialize: function () {
             var self = this;
+            BB.comBroker.listen(BB.EVENTS.SIDE_PANEL_SIZED, $.proxy(self._render, self));
             BB.comBroker.listen(BB.EVENTS.APP_SIZED, $.proxy(self._render, self));
             self._render();
         },
@@ -25,8 +26,9 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          Draw a fresh storyline for current timelime
          @method _render
          **/
-        _render: function(){
-            log($(Elements.STORYLINE_CONTAINER).width());
+        _render: function () {
+            var w = $(Elements.STORYLINE_CONTAINER).width();
+            $(Elements.CLASS_CHANNEL_BODY_CONTAINER).width(w - 25);
         }
     });
 

@@ -492,6 +492,15 @@ iframe {
     font-family: monospace;
 }
 
+#storyLine span {
+    font-family: arial;
+    font-size: 10px;
+    float: left;
+    position: relative;
+    top: 3px;
+    padding-left: 3px;
+}
+
 #storylineContainer {
     background-color: #f7f7f7;
     width: 100%;
@@ -567,6 +576,18 @@ iframe {
 
 .channel:last-child {
     border-bottom: 0;
+}
+
+.channelBodyContainer {
+    width: 837px;
+    float: left;
+}
+
+.channelBody {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    float:left;
 }
 
 .timelineBlock {

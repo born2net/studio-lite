@@ -85,13 +85,27 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
 
         _populateBlocks: function(i_channelID){
             var self = this;
+            var label;
             var blockIDs = pepper.getChannelBlocks(i_channelID);
             for (var i = 0; i < blockIDs.length; i++) {
                 var blockID = blockIDs[i];
                 var totalDuration = parseInt(pepper.getTimelineTotalDuration(self.m_timelineID));
                 var blockDuration = pepper.getBlockTimelineChannelBlockLength(blockID).totalInSeconds;
                 var percent = Math.floor((parseFloat(blockDuration) / parseFloat(totalDuration) * 100));
-                var snippet = '<div class="timelineBlock" style="width: ' + percent + '%; background-color: red"><span>test</span></div>';
+                var recBlock = pepper.getBlockRecord(blockID);
+                var blockType = $(recBlock.player_data).attr('player') != undefined ? $(recBlock.player_data).attr('player') : '3510';
+                var color = BB.PepperHelper.getBlockBoilerplate(blockType).color;
+                var acronym = BB.PepperHelper.getBlockBoilerplate(blockType).acronym;
+                if (percent<5) {
+                    label = '';
+                } else {
+                    label = $(recBlock).attr('label');
+                    if (_.isEmpty(label)){
+                        label = acronym;
+                    }
+                }
+
+                var snippet = '<div class="timelineBlock" style="width: ' + percent + '%; background-color: ' + color + '"><span>' + label + '</span></div>';
                 $(self.m_storylineContainerSnippet).find('.channelBody:last').append(snippet);
             }
         },

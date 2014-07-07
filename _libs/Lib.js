@@ -614,6 +614,21 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             }, i_sleep);
         },
 
+
+        /**
+         Returns this model's attributes as...
+         @method padZeros
+         @param {Number} n value
+         @param {Number} width pre-pad width
+         @param {Number} z negative as in '-'
+         @return {Number} zero padded string
+         **/
+        padZeros: function (n, width, z) {
+            z = z || '0';
+            n = n + '';
+            return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+        },
+
         /**
          Remove characters that a problemtaic to app / js
          @method cleanProbCharacters
@@ -621,12 +636,14 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @return {String} string
          **/
         cleanProbCharacters: function (i_string) {
-            i_string = i_string.replace(/'/ig,"`");
-            i_string = i_string.replace(/&/ig,"and");
-            i_string = i_string.replace(/</ig,"(");
-            i_string = i_string.replace(/>/ig,")");
+            i_string = i_string.replace(/'/ig, "`");
+            i_string = i_string.replace(/&/ig, "and");
+            i_string = i_string.replace(/</ig, "(");
+            i_string = i_string.replace(/>/ig, ")");
             return i_string;
-        },
+        }
+
+
     });
 
     return Lib;

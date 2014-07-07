@@ -283,6 +283,9 @@ Elements.CLASS_LOCK_INPUT = '.lockPositionInput';
 Elements.CLASS_CHANNEL_BODY_CONTAINER  = '.channelBodyContainer';
 Elements.CLASS_STORYLINE_CHANNEL = '.storylineChannel';
 Elements.CLASS_TIMELINE_BLOCK = '.timelineBlock';
+Elements.CLASS_SCALA_RULER = '.scalaRuler';
+Elements.CLASS_SCALA_NUM = '.scalaNum';
+
 
 /**
  List of all Elements / Classes of elements used in the DOM

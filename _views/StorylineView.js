@@ -40,6 +40,10 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             self._populateChannels();
         },
 
+        /**
+         Build the UI for the top seconds / minutes scala of the storyboard
+         @method _populateScala
+         **/
         _populateScala: function () {
             var self = this, i;
             var ticks = [];

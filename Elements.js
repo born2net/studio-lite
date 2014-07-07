@@ -212,7 +212,6 @@ Elements.LAYOUT_EDITOR_NEXT = '#layoutEditorNext';
 Elements.LANGUAGE_SELECTION_LOGIN = '#languageSelectionLogin';
 Elements.LANGUAGE_PROMPT = '#languagePrompt';
 
-
 // messages
 Elements.MSG_BOOTBOX_RESTART_STATIONS = '#bootBoxRestartStations';
 Elements.MSG_BOOTBOX_STUDIO_LITE_ACC = '#bootBoxStudioLiteAcc';
@@ -282,7 +281,8 @@ Elements.CLASS_SPINNER_INPUT = '.spinner-input';
 Elements.CLASS_FONT_SELECTION = '.fontSelection';
 Elements.CLASS_LOCK_INPUT = '.lockPositionInput';
 Elements.CLASS_CHANNEL_BODY_CONTAINER  = '.channelBodyContainer';
-
+Elements.CLASS_STORYLINE_CHANNEL = '.storylineChannel';
+Elements.CLASS_TIMELINE_BLOCK = '.timelineBlock';
 
 /**
  List of all Elements / Classes of elements used in the DOM

@@ -30,16 +30,26 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
          **/
         _render: function (i_timelineID) {
             var self = this;
-            // $(Elements.STORYLINE).empty();
+            $(Elements.STORYLINE).empty();
             var food = {
                 pizza: 'cheese is cool',
                 burger: 'noSoCoolClass'
             };
 
-            // build the html snippet using underscore template engine
-            var storylineScala = $(storyBoardTemplate).find('table').parent();
-            var snippet = _.template(_.unescape(storylineScala.html()), food);
-            log(snippet);
+            if (_.isUndefined(self.m_storylineContainerSnippet))
+                self.m_storylineContainerSnippet = $(storyBoardTemplate).find(Elements.STORYLINE_CONTAINER).parent();
+
+            if (_.isUndefined(self.m_TableSnippet))
+                self.m_TableSnippet = $(storyBoardTemplate).find('table').parent();
+
+            if (_.isUndefined(self.m_ChannelSnippet))
+                self.m_ChannelSnippet = $(storyBoardTemplate).find(Elements.CLASS_STORYLINE_CHANNEL).parent();
+
+            if (_.isUndefined(self.m_timelineBlockSnippet))
+                self.m_timelineBlockSnippet = $(storyBoardTemplate).find(Elements.CLASS_TIMELINE_BLOCK).parent();
+
+            var s = _.template(_.unescape(self.m_TableSnippet.html()), food);
+            log(s);
         },
 
         _updateWidth: function () {

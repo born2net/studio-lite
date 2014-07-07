@@ -561,7 +561,7 @@ iframe {
 }
 
 
-.channel {
+.storylineChannel {
     margin-bottom: 1px;
     border-bottom: 1px solid #d0d0d0;
     height: 22px;
@@ -570,11 +570,11 @@ iframe {
     cursor: pointer;
 }
 
-.channel:hover {
+.storylineChannel:hover {
     background-color: #e6e6e6;
 }
 
-.channel:last-child {
+.storylineChannel:last-child {
     border-bottom: 0;
 }
 

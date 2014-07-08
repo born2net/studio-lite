@@ -83,6 +83,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             },5)
         },
 
+
         _populateBlocks: function(i_channelID){
             var self = this;
             var label;

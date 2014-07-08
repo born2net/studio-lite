@@ -1191,7 +1191,7 @@ Pepper.prototype = {
     /**
      Get a block's record using it's block_id
      @method getBlockRecord
-     @param {Number} i_block_id
+     @param {Object} i_block_id
      @return {Object} recBlock
      **/
     getBlockRecord: function (i_block_id) {
@@ -1213,31 +1213,6 @@ Pepper.prototype = {
         pepper.m_msdb.table_campaign_timeline_chanel_players().openForEdit(i_block_id);
         var recEditBlock = self.m_msdb.table_campaign_timeline_chanel_players().getRec(i_block_id);
         recEditBlock[i_key] = i_value;
-    },
-
-    /**
-     Get the total duration in seconds of all given block ids
-     @method getTotalDurationOfBlocks
-     @param {Array} i_blocks
-     @return {Number} totalChannelLength
-     **/
-    getTotalDurationOfBlocks: function (i_blocks) {
-        var self = this;
-        var totalChannelLength = 0;
-
-        for (var i = 0; i < i_blocks.length; i++) {
-            var block_id = i_blocks[i];
-            $(pepper.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
-                if (block_id == campaign_timeline_chanel_player_id) {
-                    var recCampaignTimelineChannelPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
-                    var playerDuration = recCampaignTimelineChannelPlayer['player_duration']
-                    pepper.m_msdb.table_campaign_timeline_chanel_players().openForEdit(campaign_timeline_chanel_player_id);
-                    // log('player ' + block_id + ' offset ' + totalChannelLength + ' playerDuration ' + playerDuration);
-                    totalChannelLength = totalChannelLength + parseFloat(playerDuration);
-                }
-            });
-        }
-        return totalChannelLength;
     },
 
     /**
@@ -1849,6 +1824,58 @@ Pepper.prototype = {
     },
 
     /**
+     Set a timeline's total duration
+     @method setTimelineTotalDuration
+     @param {Number} i_campaign_timeline_id
+     @param {Number} i_totalDuration
+     **/
+    setTimelineTotalDuration: function (i_campaign_timeline_id, i_totalDuration) {
+        var self = this;
+        self.m_msdb.table_campaign_timelines().openForEdit(i_campaign_timeline_id);
+        var recCampaignTimeline = self.m_msdb.table_campaign_timelines().getRec(i_campaign_timeline_id);
+        recCampaignTimeline['timeline_duration'] = i_totalDuration;
+    },
+
+    /**
+     Get a timeline's duration which is set as the total sum of all blocks within the longest running channel
+     @method getTimelineTotalDuration
+     @param {Number} i_campaign_timeline_id
+     @return {Number} length in seconds
+     **/
+    getTimelineTotalDuration: function (i_campaign_timeline_id) {
+        var self = this;
+        var recCampaignTimeline = self.m_msdb.table_campaign_timelines().getRec(i_campaign_timeline_id);
+        if (!recCampaignTimeline)
+            return 0;
+        return recCampaignTimeline['timeline_duration'];
+    },
+
+    /**
+     Get the total duration in seconds of all given block ids
+     @method getTotalDurationOfBlocks
+     @param {Array} i_blocks
+     @return {Number} totalChannelLength
+     **/
+    getTotalDurationOfBlocks: function (i_blocks) {
+        var self = this;
+        var totalChannelLength = 0;
+
+        for (var i = 0; i < i_blocks.length; i++) {
+            var block_id = i_blocks[i];
+            $(pepper.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
+                if (block_id == campaign_timeline_chanel_player_id) {
+                    var recCampaignTimelineChannelPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
+                    var playerDuration = recCampaignTimelineChannelPlayer['player_duration']
+                    pepper.m_msdb.table_campaign_timeline_chanel_players().openForEdit(campaign_timeline_chanel_player_id);
+                    // log('player ' + block_id + ' offset ' + totalChannelLength + ' playerDuration ' + playerDuration);
+                    totalChannelLength = totalChannelLength + parseFloat(playerDuration);
+                }
+            });
+        }
+        return totalChannelLength;
+    },
+
+    /**
      Update a timeline's duration which is set as the total sum of all blocks within the longest running channel
      @method calcTimelineTotalDuration
      @param {Number} i_campaign_timeline_id
@@ -1856,7 +1883,6 @@ Pepper.prototype = {
      **/
     calcTimelineTotalDuration: function (i_campaign_timeline_id) {
         var self = this;
-
         var longestChannelDuration = 0;
         // Get all timelines
         $(self.m_msdb.table_campaign_timelines().getAllPrimaryKeys()).each(function (k, campaign_timeline_id) {
@@ -1883,33 +1909,6 @@ Pepper.prototype = {
         });
         pepper.setCampaignTimelineRecord(i_campaign_timeline_id, 'timeline_duration', longestChannelDuration);
         pepper.fire(Pepper['TIMELINE_LENGTH_CHANGED'], self, null, longestChannelDuration);
-    },
-
-    /**
-     Set a timeline's total duration
-     @method setTimelineTotalDuration
-     @param {Number} i_campaign_timeline_id
-     @param {Number} i_totalDuration
-     **/
-    setTimelineTotalDuration: function (i_campaign_timeline_id, i_totalDuration) {
-        var self = this;
-        self.m_msdb.table_campaign_timelines().openForEdit(i_campaign_timeline_id);
-        var recCampaignTimeline = self.m_msdb.table_campaign_timelines().getRec(i_campaign_timeline_id);
-        recCampaignTimeline['timeline_duration'] = i_totalDuration;
-    },
-
-    /**
-     Get a timeline's duration which is set as the total sum of all blocks within the longest running channel
-     @method getTimelineTotalDuration
-     @param {Number} i_campaign_timeline_id
-     @return {Number} length in seconds
-     **/
-    getTimelineTotalDuration: function (i_campaign_timeline_id) {
-        var self = this;
-        var recCampaignTimeline = self.m_msdb.table_campaign_timelines().getRec(i_campaign_timeline_id);
-        if (!recCampaignTimeline)
-            return 0;
-        return recCampaignTimeline['timeline_duration'];
     },
 
     /**

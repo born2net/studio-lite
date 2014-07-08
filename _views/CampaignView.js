@@ -6,6 +6,18 @@
  **/
 define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', 'Timeline', 'ScreenLayoutSelectorView', 'StorylineView', 'BlockFactory'], function ($, Backbone, SequencerView, ChannelListView, StackView, Timeline, ScreenLayoutSelectorView, StorylineView, BlockFactory) {
 
+    /**
+     Custom event fired when a timeline or channel or block within the timeline has changed
+     it ignores the event.
+     @event Timeline.CAMPAIGN_TIMELINE_SELECTED
+     @param {This} caller
+     @param {Self} context caller
+     @param {Event} timelineID of the timeline selected
+     @static
+     @final
+     **/
+    BB.EVENTS.CAMPAIGN_TIMELINE_CHANGED = 'CAMPAIGN_TIMELINE_CHANGED';
+
     BB.SERVICES.CAMPAIGN_VIEW = 'CampaignView';
 
     var CampaignView = BB.View.extend({

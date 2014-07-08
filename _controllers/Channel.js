@@ -173,6 +173,7 @@ define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockVideo', 'BlockScene'],
                 var recBlock = pepper.getBlockRecord(blockID);
                 self.createChannelBlock(blockID, recBlock['player_data'])
             }
+            BB.comBroker.fire(BB.EVENTS.CAMPAIGN_TIMELINE_CHANGED, self);
         },
 
         /**

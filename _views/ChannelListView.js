@@ -92,6 +92,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
                 playerOffsetTime = parseFloat(playerOffsetTime) + parseFloat(playerDuration);
             });
             pepper.calcTimelineTotalDuration(this.selected_campaign_timeline_id);
+            BB.comBroker.fire(BB.EVENTS.CAMPAIGN_TIMELINE_CHANGED, self);
         },
 
         /**

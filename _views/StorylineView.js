@@ -22,22 +22,29 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             BB.comBroker.listen(BB.EVENTS.SIDE_PANEL_SIZED, $.proxy(self._updateWidth, self));
             BB.comBroker.listen(BB.EVENTS.APP_SIZED, $.proxy(self._updateWidth, self));
             self._listenTimelineSelected();
+            self._listenTimelineChanged();
             self._updateWidth();
+
+
         },
 
         /**
-         Draw a fresh storyline for current timelime
+         Draw a fresh storyline for current timeline
          @method _render
          **/
-        _render: function (i_timelineID) {
+        _render: function () {
             var self = this;
-            self.m_timelineID = i_timelineID;
-            $(Elements.STORYLINE).empty();
-            self.m_storylineContainerSnippet = $(storyBoardTemplate).find(Elements.STORYLINE_CONTAINER).parent();
-            self.m_TableSnippet = $(storyBoardTemplate).find('table').parent();
-            self.m_ChannelSnippet = $(storyBoardTemplate).find(Elements.CLASS_STORYLINE_CHANNEL).parent();
-            self._populateScala();
-            self._populateChannels();
+            if (_.isUndefined(self.m_render)){
+                self.m_render = _.debounce(function(){
+                    $(Elements.STORYLINE).empty();
+                    self.m_storylineContainerSnippet = $(storyBoardTemplate).find(Elements.STORYLINE_CONTAINER).parent();
+                    self.m_TableSnippet = $(storyBoardTemplate).find('table').parent();
+                    self.m_ChannelSnippet = $(storyBoardTemplate).find(Elements.CLASS_STORYLINE_CHANNEL).parent();
+                    self._populateScala();
+                    self._populateChannels();
+                },100);
+            }
+            self.m_render();
         },
 
         /**
@@ -89,31 +96,13 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                 self._updateWidth();
             }, 5)
         },
-        /*
-         _findLongestBlockInChannel: function (i_blocks) {
-         var self = this;
-         var blockWinner = undefined, lastDuration = 0;
-         for (var block in i_blocks) {
-         var blockData = i_blocks[block].getBlockData();
-         var blockID = blockData.blockID;
-         var blockDuration = pepper.getBlockTimelineChannelBlockLength(blockID).totalInSeconds;
-         if (blockDuration > lastDuration){
-         blockWinner = blockID;
-         lastDuration = blockDuration;
-         }
-         }
-         return blockWinner;
-         },
-         */
 
         _populateBlocks: function (i_campaign_timeline_chanel_id) {
             var self = this;
-            var label, totalPercent = 0;
+            var label;
             var timeline = BB.comBroker.getService(BB.SERVICES['CAMPAIGN_VIEW']).getTimelineInstance(self.m_timelineID);
             var channel = timeline.getChannelInstance(i_campaign_timeline_chanel_id);
             var blocks = channel.getBlocks();
-            // var longestDurationBlockID = self._findLongestBlockInChannel(blocks);
-
             for (var block in blocks) {
                 var blockData = blocks[block].getBlockData();
                 var blockID = blockData.blockID;
@@ -124,18 +113,15 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                 var blockType = $(recBlock.player_data).attr('player') != undefined ? $(recBlock.player_data).attr('player') : '3510';
                 var color = BB.PepperHelper.getBlockBoilerplate(blockType).color;
                 var acronym = BB.PepperHelper.getBlockBoilerplate(blockType).acronym;
-                if (percent < 5) {
+
+                var blockWidth = (self.m_storyWidth * percent) / 100;
+                if (blockWidth < 50) {
                     label = '';
                 } else {
                     label = $(recBlock).attr('label');
-                    if (_.isEmpty(label)) {
+                    if (_.isEmpty(label))
                         label = acronym;
-                    }
                 }
-                totalPercent += percent;
-                //if ( blockID == longestDurationBlockID)
-                //    percent = (100 - totalPercent) + percent;
-
                 var snippet = '<div class="timelineBlock" style="width: ' + percent + '%; background-color: ' + color + '"><span>' + label + '</span></div>';
                 $(self.m_storylineContainerSnippet).find('.channelBody:last').append(snippet);
             }
@@ -145,14 +131,22 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             var self = this;
             self.m_storyWidth = parseInt($(Elements.STORYLINE_CONTAINER).width()) - 25;
             $(Elements.CLASS_CHANNEL_BODY_CONTAINER).width(self.m_storyWidth);
+            self._render();
         },
 
+        _listenTimelineChanged: function(){
+            var self = this;
+            pepper.listen(Pepper.BLOCK_LENGTH_CHANGED, $.proxy(self._render, self));
+            BB.comBroker.listen(BB.EVENTS.CAMPAIGN_TIMELINE_CHANGED, function(){
+                self._render();
+            })
+        },
 
         _listenTimelineSelected: function () {
             var self = this;
             BB.comBroker.listen(BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED, function (e) {
-                log(e.edata);
-                self._render(e.edata);
+                self.m_timelineID = e.edata;
+                self._render();
             });
         }
     });

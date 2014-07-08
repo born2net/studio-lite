@@ -29,6 +29,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
 
             $(this.el).find('#prev').on('click', function (e) {
                 self._deSelectView();
+                BB.comBroker.fire(BB.EVENTS.CAMPAIGN_TIMELINE_CHANGED, self);
                 return false;
             });
 

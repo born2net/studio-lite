@@ -124,8 +124,6 @@ iframe {
     display: inline-block;
 }
 
-
-
 #livePreviewWrap {
     width: 100%;
     height: 60px;
@@ -560,7 +558,6 @@ iframe {
     background-color: #bcbcbc;
 }
 
-
 .storylineChannel {
     margin-bottom: 1px;
     border-bottom: 1px solid #d0d0d0;
@@ -587,7 +584,7 @@ iframe {
     width: 100%;
     padding: 0;
     margin: 0;
-    float:left;
+    float: left;
 }
 
 .timelineBlock {
@@ -596,6 +593,12 @@ iframe {
     border: 1px solid darkgrey;
     height: 20px;
     display: inline-block;
+}
+
+.timelineBlock span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .timelineBlock:hover {

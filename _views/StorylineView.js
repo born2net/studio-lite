@@ -191,6 +191,10 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             });
         },
 
+        /**
+         Listen to channel selection so we can re-render storyline
+         @method _listenChannelSelected
+         **/
         _listenChannelSelected: function () {
             var self = this;
             $(Elements.CLASS_CHANNEL_HEAD).off('click');
@@ -234,6 +238,10 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             BB.comBroker.fire(BB.EVENTS.ON_VIEWER_SELECTED, this, screenData);
         },
 
+        /**
+         Listen to block selection on the storyline
+         @method _listenBlockSelected
+         **/
         _listenBlockSelected: function () {
             var self = this;
             $(Elements.CLASS_TIMELINE_BLOCK).off('click');

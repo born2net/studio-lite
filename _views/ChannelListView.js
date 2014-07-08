@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated CompCampaignNavigator
  **/
-define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerView', 'ResourceListView'], function ($, Backbone, jqueryui, TouchPunch, Timeline, SequencerView, ResourceListView) {
+define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerView', 'ResourceListView', 'StorylineView'], function ($, Backbone, jqueryui, TouchPunch, Timeline, SequencerView, ResourceListView, StorylineView) {
 
     BB.SERVICES.CHANNEL_LIST_VIEW = 'ChannelListView';
 
@@ -35,6 +35,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             self._listenSceneRemoved();
             self._listenBlockLengthChanged();
             self._listenStorylineBlockSelected();
+            self._listenStorylineChannelSelected();
 
             pepper.listen(Pepper.TIMELINE_DELETED, $.proxy(self._onTimelineDeleted, self));
 
@@ -211,7 +212,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
                 self.selected_campaign_timeline_board_viewer_id = e.caller.campaign_timeline_board_viewer_id;
                 self.selected_campaign_timeline_id = e.caller.campaign_timeline_id;
 
-                if (e.context.m_owner instanceof Timeline) {
+                if (e.context.m_owner instanceof Timeline || e.context.m_owner instanceof StorylineView) {
 
                     var recCampaignTimelineViewerChanels = pepper.getChannelIdFromCampaignTimelineBoardViewer(self.selected_campaign_timeline_board_viewer_id, self.selected_campaign_timeline_id);
                     self._loadChannelBlocks(self.selected_campaign_timeline_id, recCampaignTimelineViewerChanels['campaign_timeline_chanel_id']);
@@ -290,6 +291,18 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             $(Elements.CLASS_CHANNEL_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
             $(resourceElem).addClass('activated').find('a').addClass('whiteFont');
             return false;
+        },
+
+        _listenStorylineChannelSelected: function(){
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS['STORYLINE_CHANNEL_SELECTED'], function(e){
+                self.selected_block_id = e.edata;
+                var resourceElem = $(Elements.CHANNEL_LIST_VIEW).find('[data-block_id="' + self.selected_block_id + '"]');
+                BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.selected_block_id);
+                $(Elements.CLASS_CHANNEL_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
+                $(resourceElem).addClass('activated').find('a').addClass('whiteFont');
+                return false;
+            });
         },
 
         /**

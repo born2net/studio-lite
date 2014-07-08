@@ -8,7 +8,7 @@
 define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], function ($, Backbone, text, storyBoardTemplate) {
 
     /**
-     Custom event fired when a new block is selected on the storyline
+     Custom event fired when a block is selected on the storyline
      @event STORYLINE_BLOCK_SELECTED
      @param {This} caller
      @param {Self} context caller
@@ -29,7 +29,9 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
         initialize: function () {
             var self = this;
             self.m_storyWidth = 0;
+            self.m_owner = self;
             self.m_timelineID = undefined;
+            self.m_selectedChannel = undefined;
             BB.comBroker.listen(BB.EVENTS.SIDE_PANEL_SIZED, $.proxy(self._updateWidth, self));
             BB.comBroker.listen(BB.EVENTS.APP_SIZED, $.proxy(self._updateWidth, self));
             BB.comBroker.listen(BB.EVENTS.APP_SIZED, $.proxy(self._render, self));
@@ -44,8 +46,8 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
          **/
         _render: function () {
             var self = this;
-            if (_.isUndefined(self.m_render)){
-                self.m_render = _.debounce(function(){
+            if (_.isUndefined(self.m_render)) {
+                self.m_render = _.debounce(function () {
                     $(Elements.STORYLINE).empty();
                     self.m_storylineContainerSnippet = $(storyBoardTemplate).find(Elements.STORYLINE_CONTAINER).parent();
                     self.m_TableSnippet = $(storyBoardTemplate).find('table').parent();
@@ -53,7 +55,8 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                     self._populateScala();
                     self._populateChannels();
                     self._listenBlockSelected();
-                },100);
+                    self._listenChannelSelected();
+                }, 100);
             }
             self.m_render();
         },
@@ -102,11 +105,14 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             for (var n = 0; n < channelsIDs.length; n++) {
                 var channelID = channelsIDs[n];
                 var channelSnippet = _.template(_.unescape(self.m_ChannelSnippet.html()), {value: n + 1});
+                var viewerID = pepper.getAssignedViewerIdFromChannelId(channelID);
                 $(self.m_storylineContainerSnippet).find('section').append(channelSnippet);
                 var channelHead = $(self.m_storylineContainerSnippet).find(Elements.CLASS_CHANNEL_HEAD + ':last');
                 var channelBody = $(self.m_storylineContainerSnippet).find(Elements.CLASS_CHANNEL_BODY + ':last');
-                $(channelHead).attr('data-timeline_channel_id',channelID);
-                $(channelBody).attr('data-timeline_channel_id',channelID);
+                $(channelHead).attr('data-timeline_channel_id', channelID);
+                $(channelBody).attr('data-timeline_channel_id', channelID);
+                $(channelHead).attr('data-campaign_timeline_board_viewer_id', viewerID);
+                $(channelBody).attr('data-campaign_timeline_board_viewer_id', viewerID);
                 self._populateBlocks(channelID);
             }
             $(Elements.STORYLINE).append(self.m_storylineContainerSnippet);
@@ -165,10 +171,10 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
          Listen to changes in the timeline (channel, block length etc) so we can re-render the storyline
          @method _listenTimelineChanged
          **/
-        _listenTimelineChanged: function(){
+        _listenTimelineChanged: function () {
             var self = this;
             pepper.listen(Pepper.BLOCK_LENGTH_CHANGED, $.proxy(self._render, self));
-            BB.comBroker.listen(BB.EVENTS.CAMPAIGN_TIMELINE_CHANGED, function(){
+            BB.comBroker.listen(BB.EVENTS.CAMPAIGN_TIMELINE_CHANGED, function () {
                 self._render();
             })
         },
@@ -185,10 +191,53 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             });
         },
 
+        _listenChannelSelected: function () {
+            var self = this;
+            $(Elements.CLASS_CHANNEL_HEAD).off('click');
+            $(Elements.CLASS_CHANNEL_HEAD).on('click', function (e) {
+                $.proxy(self._blockChannelSelected(e), self);
+            });
+            $(Elements.CLASS_CHANNEL_BODY).off('click');
+            $(Elements.CLASS_CHANNEL_BODY).on('click', function (e) {
+                $.proxy(self._blockChannelSelected(e), self);
+            });
+
+        },
+
+        /**
+         When a block is selected within a channel, get the resource element so we can select it and fire
+         the BLOCK_SELECTED event
+         @method _blockSelected
+         @param {Event} e
+         **/
+        _blockChannelSelected: function (e) {
+            var self = this;
+            var blockElem = $(e.target);
+            var timeline_channel_id = $(blockElem).data('timeline_channel_id');
+            var campaign_timeline_board_viewer_id = $(blockElem).data('campaign_timeline_board_viewer_id');
+
+            // if block was selected instead of channel, get closest IDs from parent
+            if (_.isUndefined(timeline_channel_id)){
+                blockElem = $(e.target).closest(Elements.CLASS_CHANNEL_BODY);
+                timeline_channel_id = $(blockElem).data('timeline_channel_id');
+                campaign_timeline_board_viewer_id = $(blockElem).data('campaign_timeline_board_viewer_id');
+            }
+
+            if (self.m_selectedChannel == timeline_channel_id)
+                return;
+            self.m_selectedChannel = timeline_channel_id;
+            var screenData = {
+                m_owner: self,
+                campaign_timeline_id: self.m_timelineID,
+                campaign_timeline_board_viewer_id: campaign_timeline_board_viewer_id
+            };
+            BB.comBroker.fire(BB.EVENTS.ON_VIEWER_SELECTED, this, screenData);
+        },
+
         _listenBlockSelected: function () {
             var self = this;
             $(Elements.CLASS_TIMELINE_BLOCK).off('click');
-            $('.timelineBlock').on('click', function (e) {
+            $(Elements.CLASS_TIMELINE_BLOCK).on('click', function (e) {
                 $.proxy(self._blockSelected(e), self);
             });
         },
@@ -201,16 +250,17 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
          **/
         _blockSelected: function (e) {
             var self = this;
+            self._blockChannelSelected(e);
             var blockElem = $(e.target);
             self.selected_block_id = $(blockElem).data('timeline_channel_block_id');
             // if label was selected
-            if (_.isUndefined(self.selected_block_id)){
+            if (_.isUndefined(self.selected_block_id)) {
                 blockElem = $(e.target).parent();
                 self.selected_block_id = $(blockElem).data('timeline_channel_block_id');
             }
             BB.comBroker.fire(BB.EVENTS.STORYLINE_BLOCK_SELECTED, this, null, self.selected_block_id);
             return false;
-        },
+        }
     });
 
     return StorylineView;

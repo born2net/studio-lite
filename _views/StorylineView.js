@@ -21,11 +21,10 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             self.m_timelineID = undefined;
             BB.comBroker.listen(BB.EVENTS.SIDE_PANEL_SIZED, $.proxy(self._updateWidth, self));
             BB.comBroker.listen(BB.EVENTS.APP_SIZED, $.proxy(self._updateWidth, self));
+            BB.comBroker.listen(BB.EVENTS.APP_SIZED, $.proxy(self._render, self));
             self._listenTimelineSelected();
             self._listenTimelineChanged();
             self._updateWidth();
-
-
         },
 
         /**
@@ -131,7 +130,6 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             var self = this;
             self.m_storyWidth = parseInt($(Elements.STORYLINE_CONTAINER).width()) - 25;
             $(Elements.CLASS_CHANNEL_BODY_CONTAINER).width(self.m_storyWidth);
-            self._render();
         },
 
         _listenTimelineChanged: function(){

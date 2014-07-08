@@ -7,6 +7,17 @@
  **/
 define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], function ($, Backbone, text, storyBoardTemplate) {
 
+    /**
+     Custom event fired when a new block is selected on the storyline
+     @event STORYLINE_BLOCK_SELECTED
+     @param {This} caller
+     @param {Self} context caller
+     @param {Event}
+     @static
+     @final
+     **/
+    BB.EVENTS.STORYLINE_BLOCK_SELECTED = 'STORYLINE_BLOCK_SELECTED';
+
     BB.SERVICES.STORYLINE = 'StoryLine';
 
     var StorylineView = BB.View.extend({
@@ -41,6 +52,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                     self.m_ChannelSnippet = $(storyBoardTemplate).find(Elements.CLASS_STORYLINE_CHANNEL).parent();
                     self._populateScala();
                     self._populateChannels();
+                    self._listenBlockSelected();
                 },100);
             }
             self.m_render();
@@ -91,6 +103,10 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                 var channelID = channelsIDs[n];
                 var channelSnippet = _.template(_.unescape(self.m_ChannelSnippet.html()), {value: n + 1});
                 $(self.m_storylineContainerSnippet).find('section').append(channelSnippet);
+                var channelHead = $(self.m_storylineContainerSnippet).find(Elements.CLASS_CHANNEL_HEAD + ':last');
+                var channelBody = $(self.m_storylineContainerSnippet).find(Elements.CLASS_CHANNEL_BODY + ':last');
+                $(channelHead).attr('data-timeline_channel_id',channelID);
+                $(channelBody).attr('data-timeline_channel_id',channelID);
                 self._populateBlocks(channelID);
             }
             $(Elements.STORYLINE).append(self.m_storylineContainerSnippet);
@@ -130,7 +146,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                     if (_.isEmpty(label))
                         label = acronym;
                 }
-                var snippet = '<div class="timelineBlock" style="width: ' + percent + '%; background-color: ' + color + '"><span>' + label + '</span></div>';
+                var snippet = '<div class="timelineBlock" data-timeline_channel_block_id="' + blockID + '" style="width: ' + percent + '%; background-color: ' + color + '"><span>' + label + '</span></div>';
                 $(self.m_storylineContainerSnippet).find('.channelBody:last').append(snippet);
             }
         },
@@ -167,7 +183,34 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                 self.m_timelineID = e.edata;
                 self._render();
             });
-        }
+        },
+
+        _listenBlockSelected: function () {
+            var self = this;
+            $(Elements.CLASS_TIMELINE_BLOCK).off('click');
+            $('.timelineBlock').on('click', function (e) {
+                $.proxy(self._blockSelected(e), self);
+            });
+        },
+
+        /**
+         When a block is selected within a channel, get the resource element so we can select it and fire
+         the BLOCK_SELECTED event
+         @method _blockSelected
+         @param {Event} e
+         **/
+        _blockSelected: function (e) {
+            var self = this;
+            var blockElem = $(e.target);
+            self.selected_block_id = $(blockElem).data('timeline_channel_block_id');
+            // if label was selected
+            if (_.isUndefined(self.selected_block_id)){
+                blockElem = $(e.target).parent();
+                self.selected_block_id = $(blockElem).data('timeline_channel_block_id');
+            }
+            BB.comBroker.fire(BB.EVENTS.STORYLINE_BLOCK_SELECTED, this, null, self.selected_block_id);
+            return false;
+        },
     });
 
     return StorylineView;

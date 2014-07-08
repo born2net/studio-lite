@@ -34,6 +34,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             self._listenResourceRemoved();
             self._listenSceneRemoved();
             self._listenBlockLengthChanged();
+            self._listenStorylineBlockSelected();
 
             pepper.listen(Pepper.TIMELINE_DELETED, $.proxy(self._onTimelineDeleted, self));
 
@@ -271,26 +272,41 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             // clear previous listeners
             $(Elements.CLASS_CHANNEL_LIST_ITEMS).off('click');
             $(Elements.CLASS_CHANNEL_LIST_ITEMS).on('click', function (e) {
-                $.proxy(self._blockSelected(e), self);
+                $.proxy(self._listenChannelBlockSelected(e), self);
             });
         },
 
         /**
-         When a block is selected within a channel, get the resurce element so we can select it and fire
+         When a block is selected within a channel, get the resource element so we can select it and fire
          the BLOCK_SELECTED event
-         @method _blockSelected
+         @method _listenChannelBlockSelected
          @param {Event} e
          **/
-        _blockSelected: function (e) {
+        _listenChannelBlockSelected: function (e) {
             var self = this;
             var resourceElem = $(e.target).closest('li');
             self.selected_block_id = $(resourceElem).data('block_id');
-
             BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.selected_block_id);
-
             $(Elements.CLASS_CHANNEL_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
             $(resourceElem).addClass('activated').find('a').addClass('whiteFont');
             return false;
+        },
+
+        /**
+         When a block is selected within a storyboard get the resource element so we can select it and fire global block selection event
+         @method _listenStorylineBlockSelected
+         @param {Event} e
+         **/
+        _listenStorylineBlockSelected: function (e) {
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS['STORYLINE_BLOCK_SELECTED'], function(e){
+                self.selected_block_id = e.edata;
+                var resourceElem = $(Elements.CHANNEL_LIST_VIEW).find('[data-block_id="' + self.selected_block_id + '"]');
+                BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.selected_block_id);
+                $(Elements.CLASS_CHANNEL_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
+                $(resourceElem).addClass('activated').find('a').addClass('whiteFont');
+                return false;
+            });
         },
 
         /**

@@ -53,43 +53,67 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                 totalDuration = totalDuration / 60;
                 format = 'm';
             }
+
             var tick = totalDuration / 4;
-            for (i = 1; i < 5; i++)
+            for (i = 1; i < 5; i++) {
+                tick = BB.lib.parseToFloatDouble(tick);
                 ticks.push(tick * i);
+            }
+
             ticks.unshift(0);
             ticks[ticks.length - 1] = totalDuration;
-            var l = String(Math.round(ticks[ticks.length - 1])).length;
+            var l = String((ticks[ticks.length - 1]).toFixed(2)).length;
+            var lastTick = '';
             var scalaRuler = $(self.m_TableSnippet).find(Elements.CLASS_SCALA_RULER);
             for (i = 0; i < ticks.length; i++) {
-                var value = BB.lib.padZeros(Math.floor(ticks[i]), l) + format; // log(value);
-                $(scalaRuler).append('<td class="scalaNum">' + value + '</td>');
+                if (i == ticks.length - 1)
+                    lastTick = 'width="1%"'
+                var value = BB.lib.padZeros(BB.lib.parseToFloatDouble(ticks[i]), l) + format; // log(value);
+                $(scalaRuler).append('<td class="scalaNum"' + lastTick + ' >' + value + '</td>');
             }
             $(Elements.STORYLINE).append(self.m_TableSnippet);
         },
 
-        _populateChannels: function(){
+        _populateChannels: function () {
             var self = this;
             var channelsIDs = pepper.getChannelsOfTimeline(self.m_timelineID);
             for (var n = 0; n < channelsIDs.length; n++) {
                 var channelID = channelsIDs[n];
-                var channelSnippet  = _.template(_.unescape(self.m_ChannelSnippet.html()), {value: n+1});
+                var channelSnippet = _.template(_.unescape(self.m_ChannelSnippet.html()), {value: n + 1});
                 $(self.m_storylineContainerSnippet).find('section').append(channelSnippet);
                 self._populateBlocks(channelID);
             }
             $(Elements.STORYLINE).append(self.m_storylineContainerSnippet);
             self._updateWidth();
-            setTimeout(function(){
+            setTimeout(function () {
                 self._updateWidth();
-            },5)
+            }, 5)
         },
+        /*
+         _findLongestBlockInChannel: function (i_blocks) {
+         var self = this;
+         var blockWinner = undefined, lastDuration = 0;
+         for (var block in i_blocks) {
+         var blockData = i_blocks[block].getBlockData();
+         var blockID = blockData.blockID;
+         var blockDuration = pepper.getBlockTimelineChannelBlockLength(blockID).totalInSeconds;
+         if (blockDuration > lastDuration){
+         blockWinner = blockID;
+         lastDuration = blockDuration;
+         }
+         }
+         return blockWinner;
+         },
+         */
 
-        _populateBlocks: function(i_campaign_timeline_chanel_id){
+        _populateBlocks: function (i_campaign_timeline_chanel_id) {
             var self = this;
-            var label;
-
+            var label, totalPercent = 0;
             var timeline = BB.comBroker.getService(BB.SERVICES['CAMPAIGN_VIEW']).getTimelineInstance(self.m_timelineID);
             var channel = timeline.getChannelInstance(i_campaign_timeline_chanel_id);
             var blocks = channel.getBlocks();
+            // var longestDurationBlockID = self._findLongestBlockInChannel(blocks);
+
             for (var block in blocks) {
                 var blockData = blocks[block].getBlockData();
                 var blockID = blockData.blockID;
@@ -100,14 +124,17 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                 var blockType = $(recBlock.player_data).attr('player') != undefined ? $(recBlock.player_data).attr('player') : '3510';
                 var color = BB.PepperHelper.getBlockBoilerplate(blockType).color;
                 var acronym = BB.PepperHelper.getBlockBoilerplate(blockType).acronym;
-                if (percent<5) {
+                if (percent < 5) {
                     label = '';
                 } else {
                     label = $(recBlock).attr('label');
-                    if (_.isEmpty(label)){
+                    if (_.isEmpty(label)) {
                         label = acronym;
                     }
                 }
+                totalPercent += percent;
+                //if ( blockID == longestDurationBlockID)
+                //    percent = (100 - totalPercent) + percent;
 
                 var snippet = '<div class="timelineBlock" style="width: ' + percent + '%; background-color: ' + color + '"><span>' + label + '</span></div>';
                 $(self.m_storylineContainerSnippet).find('.channelBody:last').append(snippet);

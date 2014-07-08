@@ -549,13 +549,14 @@ iframe {
 .channelHead {
     width: 20px;
     height: 20px;
-    background-color: #c7c7c7;
+    background-color: #737373;
     float: left;
+    color: #bcbcbc;
     cursor: pointer;
 }
 
 .channelHead:hover {
-    background-color: #bcbcbc;
+    opacity: 0.8;
 }
 
 .storylineChannel {

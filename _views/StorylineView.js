@@ -80,6 +80,10 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             $(Elements.STORYLINE).append(self.m_TableSnippet);
         },
 
+        /**
+         Populate UI channels
+         @method _populateChannels
+         **/
         _populateChannels: function () {
             var self = this;
             var channelsIDs = pepper.getChannelsOfTimeline(self.m_timelineID);
@@ -96,6 +100,11 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             }, 5)
         },
 
+        /**
+         Populate UI blocks
+         @method _populateBlocks
+         @params {Number} i_campaign_timeline_chanel_id
+         **/
         _populateBlocks: function (i_campaign_timeline_chanel_id) {
             var self = this;
             var label;
@@ -126,12 +135,20 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             }
         },
 
+        /**
+         Compute the storyline UI width total width
+         @method _updateWidth
+         **/
         _updateWidth: function () {
             var self = this;
             self.m_storyWidth = parseInt($(Elements.STORYLINE_CONTAINER).width()) - 25;
             $(Elements.CLASS_CHANNEL_BODY_CONTAINER).width(self.m_storyWidth);
         },
 
+        /**
+         Listen to changes in the timeline (channel, block length etc) so we can re-render the storyline
+         @method _listenTimelineChanged
+         **/
         _listenTimelineChanged: function(){
             var self = this;
             pepper.listen(Pepper.BLOCK_LENGTH_CHANGED, $.proxy(self._render, self));
@@ -140,6 +157,10 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             })
         },
 
+        /**
+         Listen to a new timeline selection so we can re-render the storyline
+         @method _listenTimelineSelected
+         **/
         _listenTimelineSelected: function () {
             var self = this;
             BB.comBroker.listen(BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED, function (e) {

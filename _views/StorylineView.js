@@ -83,13 +83,16 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             },5)
         },
 
-
-        _populateBlocks: function(i_channelID){
+        _populateBlocks: function(i_campaign_timeline_chanel_id){
             var self = this;
             var label;
-            var blockIDs = pepper.getChannelBlocks(i_channelID);
-            for (var i = 0; i < blockIDs.length; i++) {
-                var blockID = blockIDs[i];
+
+            var timeline = BB.comBroker.getService(BB.SERVICES['CAMPAIGN_VIEW']).getTimelineInstance(self.m_timelineID);
+            var channel = timeline.getChannelInstance(i_campaign_timeline_chanel_id);
+            var blocks = channel.getBlocks();
+            for (var block in blocks) {
+                var blockData = blocks[block].getBlockData();
+                var blockID = blockData.blockID;
                 var totalDuration = parseInt(pepper.getTimelineTotalDuration(self.m_timelineID));
                 var blockDuration = pepper.getBlockTimelineChannelBlockLength(blockID).totalInSeconds;
                 var percent = Math.floor((parseFloat(blockDuration) / parseFloat(totalDuration) * 100));

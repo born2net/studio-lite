@@ -54,8 +54,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                     self.m_ChannelSnippet = $(storyBoardTemplate).find(Elements.CLASS_STORYLINE_CHANNEL).parent();
                     self._populateScala();
                     self._populateChannels();
-                    self._listenBlockSelected();
-                    self._listenChannelSelected();
+                    self._listenSelections();
                 }, 100);
             }
             self.m_render();
@@ -193,19 +192,22 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
 
         /**
          Listen to channel selection so we can re-render storyline
-         @method _listenChannelSelected
+         @method _listenSelections
          **/
-        _listenChannelSelected: function () {
+        _listenSelections: function () {
             var self = this;
             $(Elements.CLASS_CHANNEL_HEAD).off('click');
             $(Elements.CLASS_CHANNEL_HEAD).on('click', function (e) {
                 $.proxy(self._blockChannelSelected(e), self);
             });
-            $(Elements.CLASS_CHANNEL_BODY).off('click');
-            $(Elements.CLASS_CHANNEL_BODY).on('click', function (e) {
+            $(Elements.CLASS_TIMELINE_BLOCK).off('click');
+            $(Elements.CLASS_TIMELINE_BLOCK).on('click', function (e) {
+                $.proxy(self._blockSelected(e), self);
+            });
+            $(Elements.CLASS_STORYLINE_CHANNEL).off('click');
+            $(Elements.CLASS_STORYLINE_CHANNEL).on('click', function (e) {
                 $.proxy(self._blockChannelSelected(e), self);
             });
-
         },
 
         /**
@@ -216,19 +218,24 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
          **/
         _blockChannelSelected: function (e) {
             var self = this;
+            e.stopImmediatePropagation();
             var blockElem = $(e.target);
+
+            if (_.isUndefined($(blockElem).attr('class')))
+                return false;
+
+            if ( $(blockElem).hasClass(BB.lib.unclass(Elements.CLASS_STORYLINE_CHANNEL)))
+                blockElem = $(blockElem).find(Elements.CLASS_CHANNEL_HEAD);
+
+            if ( $(blockElem).hasClass(BB.lib.unclass(Elements.CLASS_TIMELINE_BLOCK)))
+                blockElem = $(blockElem).closest(Elements.CLASS_CHANNEL_BODY);
+
             var timeline_channel_id = $(blockElem).data('timeline_channel_id');
             var campaign_timeline_board_viewer_id = $(blockElem).data('campaign_timeline_board_viewer_id');
 
-            // if block was selected instead of channel, get closest IDs from parent
-            if (_.isUndefined(timeline_channel_id)){
-                blockElem = $(e.target).closest(Elements.CLASS_CHANNEL_BODY);
-                timeline_channel_id = $(blockElem).data('timeline_channel_id');
-                campaign_timeline_board_viewer_id = $(blockElem).data('campaign_timeline_board_viewer_id');
-            }
-
             if (self.m_selectedChannel == timeline_channel_id)
-                return;
+                return false;
+
             self.m_selectedChannel = timeline_channel_id;
             var screenData = {
                 m_owner: self,
@@ -236,18 +243,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                 campaign_timeline_board_viewer_id: campaign_timeline_board_viewer_id
             };
             BB.comBroker.fire(BB.EVENTS.ON_VIEWER_SELECTED, this, screenData);
-        },
-
-        /**
-         Listen to block selection on the storyline
-         @method _listenBlockSelected
-         **/
-        _listenBlockSelected: function () {
-            var self = this;
-            $(Elements.CLASS_TIMELINE_BLOCK).off('click');
-            $(Elements.CLASS_TIMELINE_BLOCK).on('click', function (e) {
-                $.proxy(self._blockSelected(e), self);
-            });
+            return false;
         },
 
         /**
@@ -258,7 +254,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
          **/
         _blockSelected: function (e) {
             var self = this;
-            self._blockChannelSelected(e);
+            e.stopImmediatePropagation();
             var blockElem = $(e.target);
             self.selected_block_id = $(blockElem).data('timeline_channel_block_id');
             // if label was selected
@@ -266,6 +262,8 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                 blockElem = $(e.target).parent();
                 self.selected_block_id = $(blockElem).data('timeline_channel_block_id');
             }
+            e.target = blockElem[0];
+            self._blockChannelSelected(e);
             BB.comBroker.fire(BB.EVENTS.STORYLINE_BLOCK_SELECTED, this, null, self.selected_block_id);
             return false;
         }

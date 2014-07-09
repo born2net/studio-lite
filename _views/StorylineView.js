@@ -63,9 +63,12 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             self.m_render();
         },
 
+        /**
+         Listen for block selection
+         @method _listenBlockSelection
+         **/
         _listenBlockSelection: function () {
             var self = this;
-            //todo: fix selection in storyboard when LI selected as well as deselecting from LI when CH header is selected
             BB.comBroker.listen(BB.EVENTS.BLOCK_SELECTED, function (e) {
                 var blockID = e.edata;
                 if (!_.isNumber(blockID)) // ignore scene blocks
@@ -74,6 +77,11 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             });
         },
 
+        /**
+         Add block selection by marking it on the storyboard and remembering selection
+         @method _addBlockSelection
+         @param {Number} i_blockID
+         **/
         _addBlockSelection: function(i_blockID){
             var self = this;
             if (_.isUndefined(i_blockID))
@@ -84,6 +92,10 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             $(blockElem).addClass(BB.lib.unclass(Elements.CLASS_TIMELINE_BLOCK_SELECTED));
         },
 
+        /**
+         Remove currently selected block by removing selection as well forgetting it
+         @method _removeBlockSelection
+         **/
         _removeBlockSelection: function(){
             var self = this;
             self.m_selectedBlockID = undefined;

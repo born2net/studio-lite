@@ -30,14 +30,15 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             var self = this;
             self.m_storyWidth = 0;
             self.m_owner = self;
-            self.m_timelineID = undefined;
+            self.m_selectedTimelineID = undefined;
+            self.m_selectedBlockID = undefined;
             self.m_selectedChannel = undefined;
             BB.comBroker.listen(BB.EVENTS.SIDE_PANEL_SIZED, $.proxy(self._updateWidth, self));
             BB.comBroker.listen(BB.EVENTS.APP_SIZED, $.proxy(self._updateWidth, self));
             BB.comBroker.listen(BB.EVENTS.APP_SIZED, $.proxy(self._render, self));
             self._listenTimelineSelected();
             self._listenTimelineChanged();
-            self._listenBlockSelected();
+            self._listenBlockSelection();
             self._updateWidth();
         },
 
@@ -56,26 +57,36 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                     self._populateScala();
                     self._populateChannels();
                     self._listenSelections();
+                    self._addBlockSelection(self.m_selectedBlockID);
                 }, 100);
             }
             self.m_render();
         },
 
-        _listenBlockSelected: function () {
+        _listenBlockSelection: function () {
             var self = this;
             //todo: fix selection in storyboard when LI selected as well as deselecting from LI when CH header is selected
             BB.comBroker.listen(BB.EVENTS.BLOCK_SELECTED, function (e) {
                 var blockID = e.edata;
                 if (!_.isNumber(blockID)) // ignore scene blocks
                     return;
-                self._removeBlockSelection();
-                var blockElem = $(Elements.STORYLINE_CONTAINER).find('[data-timeline_channel_block_id="' + blockID + '"]');
-                $(blockElem).addClass(BB.lib.unclass(Elements.CLASS_TIMELINE_BLOCK_SELECTED));
+                self._addBlockSelection(blockID);
             });
+        },
+
+        _addBlockSelection: function(i_blockID){
+            var self = this;
+            if (_.isUndefined(i_blockID))
+                return;
+            self._removeBlockSelection();
+            self.m_selectedBlockID = i_blockID;
+            var blockElem = $(Elements.STORYLINE_CONTAINER).find('[data-timeline_channel_block_id="' + i_blockID + '"]');
+            $(blockElem).addClass(BB.lib.unclass(Elements.CLASS_TIMELINE_BLOCK_SELECTED));
         },
 
         _removeBlockSelection: function(){
             var self = this;
+            self.m_selectedBlockID = undefined;
             $(Elements.CLASS_TIMELINE_BLOCK, Elements.STORYLINE_CONTAINER).removeClass(BB.lib.unclass(Elements.CLASS_TIMELINE_BLOCK_SELECTED));
         },
 
@@ -87,7 +98,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             var self = this, i;
             var ticks = [];
             var format = 's';
-            var totalDuration = parseInt(pepper.getTimelineTotalDuration(self.m_timelineID));
+            var totalDuration = parseInt(pepper.getTimelineTotalDuration(self.m_selectedTimelineID));
             if (totalDuration > 420) {
                 totalDuration = totalDuration / 60;
                 format = 'm';
@@ -119,7 +130,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
          **/
         _populateChannels: function () {
             var self = this;
-            var channelsIDs = pepper.getChannelsOfTimeline(self.m_timelineID);
+            var channelsIDs = pepper.getChannelsOfTimeline(self.m_selectedTimelineID);
             for (var n = 0; n < channelsIDs.length; n++) {
                 var channelID = channelsIDs[n];
                 var channelSnippet = _.template(_.unescape(self.m_ChannelSnippet.html()), {value: n + 1});
@@ -148,13 +159,13 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
         _populateBlocks: function (i_campaign_timeline_chanel_id) {
             var self = this;
             var label;
-            var timeline = BB.comBroker.getService(BB.SERVICES['CAMPAIGN_VIEW']).getTimelineInstance(self.m_timelineID);
+            var timeline = BB.comBroker.getService(BB.SERVICES['CAMPAIGN_VIEW']).getTimelineInstance(self.m_selectedTimelineID);
             var channel = timeline.getChannelInstance(i_campaign_timeline_chanel_id);
             var blocks = channel.getBlocks();
             for (var block in blocks) {
                 var blockData = blocks[block].getBlockData();
                 var blockID = blockData.blockID;
-                var totalDuration = parseInt(pepper.getTimelineTotalDuration(self.m_timelineID));
+                var totalDuration = parseInt(pepper.getTimelineTotalDuration(self.m_selectedTimelineID));
                 var blockDuration = pepper.getBlockTimelineChannelBlockLength(blockID).totalInSeconds;
                 var percent = Math.floor((parseFloat(blockDuration) / parseFloat(totalDuration) * 100));
                 var recBlock = pepper.getBlockRecord(blockID);
@@ -204,7 +215,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
         _listenTimelineSelected: function () {
             var self = this;
             BB.comBroker.listen(BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED, function (e) {
-                self.m_timelineID = e.edata;
+                self.m_selectedTimelineID = e.edata;
                 self._render();
             });
         },
@@ -262,7 +273,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             self.m_selectedChannel = timeline_channel_id;
             var screenData = {
                 m_owner: self,
-                campaign_timeline_id: self.m_timelineID,
+                campaign_timeline_id: self.m_selectedTimelineID,
                 campaign_timeline_board_viewer_id: campaign_timeline_board_viewer_id
             };
 

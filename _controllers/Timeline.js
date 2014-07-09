@@ -46,8 +46,6 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
 
             pepper.listenWithNamespace(Pepper.TEMPLATE_VIEWER_EDITED, self, $.proxy(self._templateViewerEdited, self));
             pepper.listenWithNamespace(Pepper.NEW_CHANNEL_ADDED, self, $.proxy(self._channelAdded, self));
-
-
         },
 
         /**
@@ -200,7 +198,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             }
             var screenProps = pepper.getTemplateViewersScreenProps(self.m_campaign_timeline_id, i_campaign_timeline_board_template_id)
 
-            self._createTimelineUI(screenProps);
+            //self._createTimelineUI(screenProps);
 
             // Future support for scheduler
             switch (self.m_timing) {
@@ -223,7 +221,6 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
          @method _createTimelineUI
          @param {Object} i_screenProps template properties object
          @return none
-         **/
         _createTimelineUI: function (i_screenProps) {
             var self = this;
 
@@ -270,16 +267,17 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             self.m_stackViewID = timelineViewStack.addView(view);
             screenTemplate.activate();
         },
+         **/
 
         /**
          Return the view stack index this timeline occupies in the timelineViewStack manager.
          @method getStackViewID
          @return {Number} m_stackViewID
-         **/
         getStackViewID: function () {
             var self = this;
             return self.m_stackViewID;
         },
+         **/
 
         /**
          The timeline hold references to all of the channels it creates that exist within it.

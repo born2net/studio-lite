@@ -242,21 +242,6 @@
                     </h4>
                 </div>
                 <div id="screenSelectorContainerCollapse" class="panel-collapse collapse in">
-
-                    <!-- TODO: TEST -->
-                    <button id="test1" type="button" title="preview" data-toggle="tooltip"
-                            data-localize-tooltip="preview"
-                            class="btn btn-default btn-sm">
-                        <i style="font-size: 1.5em" class="fa fa-play-circle-o"></i>
-                    </button>
-
-                    <button id="test2" type="button" title="preview" data-toggle="tooltip"
-                            data-localize-tooltip="preview"
-                            class="btn btn-default btn-sm">
-                        <i style="font-size: 1.5em" class="fa fa-play-circle-o"></i>
-                    </button>
-
-
                     <div class="panel-body">
                         <aside>
                             <aside>
@@ -279,22 +264,12 @@
         <div id="storyLine">
         </div>
 
+        <!-- deprecated -->
         <div id="selectedTimeline" style="display: none">
-            <div id="noneSelectedScreenLayout">
-                <div align="center" id="screenMainSelector">
-                    <div align="center">
-                        <h1 data-localize="noTimelineSelected">no timeline selected</h1>
-                    </div>
-                </div>
-            </div>
             <div align="center" id="selectedLayoutContainer" class="centerContent">
-                <button id="timelimePreview" type="button" title="preview" data-toggle="tooltip"
-                        data-localize-tooltip="preview"
-                        class="btn btn-default btn-sm">
-                    <i style="font-size: 1.5em" class="fa fa-play-circle-o"></i>
-                </button>
             </div>
         </div>
+
         <div id="channelListView">
             <div>
                 <button id="addBlockButton" type="button" class="btn btn-default"><span
@@ -303,6 +278,10 @@
                 <button id="removeBlockButton" type="button" class="btn btn-default"><span
                         class="glyphicon glyphicon-minus"></span><span
                         data-localize="removeContent"> Remove content </span></button>
+                <button id="timelinePreview" type="button" class="btn btn-default"><span
+                        class="glyphicon glyphicon-film"></span><span
+                        data-localize="timelinePreview"> Preview </span></button>
+                </button>
             </div>
             <div>
                 <ul class="list-group" id="sortable" style="padding:20px">

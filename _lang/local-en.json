@@ -224,7 +224,8 @@
     "pollInterval": "station polling (seconds)",
     "fullScreenPreview": "full screen preview",
     "magneticGrid": "magnetic grid",
-    "appSettings": "app settings"
+    "appSettings": "app settings",
+    "timelinePreview": " Preview"
 
 }
 

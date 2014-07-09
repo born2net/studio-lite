@@ -67,7 +67,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             self._listenToggleTimelinesCollapsible();
 
             self.m_noneSelectedTimelines = new BB.View({el: Elements.NONE_SELECTED_SCREEN_LAYOUT})
-            self.m_timelineViewStack.addView(self.m_noneSelectedTimelines);
+            //self.m_timelineViewStack.addView(self.m_noneSelectedTimelines);
 
             pepper.listen(Pepper.NEW_TIMELINE_CREATED, $.proxy(self._updDelTimelimeButtonStatus, self));
             pepper.listen(Pepper.TIMELINE_DELETED, $.proxy(self._updDelTimelimeButtonStatus, self));
@@ -130,8 +130,8 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
         _loadSequencerFirstTimeline: function () {
             var self = this;
             var firstTimelineID = pepper.getCampaignTimelineIdOfSequencerIndex(self.m_selected_campaign_id, 0);
-            if (self.m_sequencerView.selectTimeline(firstTimelineID) == -1)
-                self.m_timelineViewStack.selectView(self.m_noneSelectedTimelines);
+            //if (self.m_sequencerView.selectTimeline(firstTimelineID) == -1)
+            //    self.m_timelineViewStack.selectView(self.m_noneSelectedTimelines);
         },
 
         /**
@@ -155,7 +155,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
                 ////////////////////////////////////////////////
 
                 if (e.context.m_owner instanceof SequencerView) {
-                    self.m_timelineViewStack.selectView(self.m_timelines[campaign_timeline_id].getStackViewID());
+                    //self.m_timelineViewStack.selectView(self.m_timelines[campaign_timeline_id].getStackViewID());
                     BB.comBroker.fire(BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED, this, null, campaign_timeline_id);
                     self._updatedTimelinesLengthUI();
                     return;

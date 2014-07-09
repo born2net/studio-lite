@@ -73,6 +73,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             var self = this;
             $(Elements.ADD_BLOCK_BUTTON).fadeOut();
             $(Elements.REMOVE_BLOCK_BUTTON).fadeOut();
+            $(Elements.TIMELIME_PREVIEW).fadeOut();
             self._resetChannel();
         },
 
@@ -218,12 +219,14 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
                     self._loadChannelBlocks(self.selected_campaign_timeline_id, recCampaignTimelineViewerChanels['campaign_timeline_chanel_id']);
                     $(Elements.ADD_BLOCK_BUTTON).fadeIn();
                     $(Elements.REMOVE_BLOCK_BUTTON).fadeIn();
+                    $(Elements.TIMELIME_PREVIEW).fadeIn();
                 }
 
                 if (e.context.m_owner instanceof SequencerView) {
                     self._resetChannel();
                     $(Elements.ADD_BLOCK_BUTTON).fadeOut();
                     $(Elements.REMOVE_BLOCK_BUTTON).fadeOut();
+                    $(Elements.TIMELIME_PREVIEW).fadeOut();
                 }
             });
         },

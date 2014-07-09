@@ -245,7 +245,6 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
 
             var sequencer = BB.comBroker.getService(BB.SERVICES['SEQUENCER_VIEW']);
             sequencer.selectViewer(screenData.campaign_timeline_id, screenData.campaign_timeline_board_viewer_id);
-
             BB.comBroker.fire(BB.EVENTS.ON_VIEWER_SELECTED, this, screenData);
             return false;
         },

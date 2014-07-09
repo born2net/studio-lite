@@ -49,7 +49,6 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
                 el: Elements.STORYLINE
             });
 
-
             BB.comBroker.setService(BB.SERVICES['SEQUENCER_VIEW'], this.m_sequencerView);
 
             this.m_channelListView = new ChannelListView({

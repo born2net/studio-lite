@@ -118,6 +118,11 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
                 self.m_screenTemplates[i_campaign_timeline_id].destroy();
         },
 
+        selectViewer: function (i_timeline_id, i_viewer_id) {
+            var self = this;
+            self.m_screenTemplates[i_timeline_id].selectDivison(i_viewer_id);
+        },
+
         /**
          Create the timeline template (a.k.a timeline thumbnail) via the ScreenTemplateFactory
          and insert it into the sequencer UI. We proceed by activating the newly created timeline thumbnail

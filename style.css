@@ -12,17 +12,22 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+.btn {
+    font-size: 1em;
+}
+
+
 @font-face {
     font-family: 'Jolly Lodger';
     font-style: normal;
-    font-weight: 600;
+    font-weight: 500;
     src: local('Jolly Lodger'), local('JollyLodger'), url(https://themes.googleusercontent.com/static/fonts/jollylodger/v1/RX8HnkBgaEKQSHQyP9itiaRDOzjiPcYnFooOUGCOsRk.woff) format('woff');
 }
 
 @font-face {
     font-family: 'Lobster Two';
     font-style: normal;
-    font-weight: 600;
+    font-weight: 500;
     src: local('Lobster Two'), local('LobsterTwo'), url(https://themes.googleusercontent.com/static/fonts/lobstertwo/v5/Law3VVulBOoxyKPkrNsAaIbN6UDyHWBl620a-IRfuBk.woff) format('woff');
 }
 
@@ -103,10 +108,6 @@ iframe {
     border: 0px;
     display: block;
     background-color: black;
-}
-
-#timelinePreview {
-    float: left;
 }
 
 .checkers {

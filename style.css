@@ -569,7 +569,7 @@ iframe {
 }
 
 .storylineChannel:hover {
-    background-color: #e6e6e6;
+    background-color: #f0f0f0;
 }
 
 .storylineChannel:last-child {
@@ -591,10 +591,15 @@ iframe {
 .timelineBlock {
     float: left;
     background-color: #e6e6e6;
-    border: 1px solid darkgrey;
+    border: 1px solid #cacaca;
     height: 20px;
     display: inline-block;
 }
+
+.timelineBlockSelected {
+    background-color: #428ac9 !important;
+}
+
 
 .timelineBlock span {
     overflow: hidden;
@@ -603,7 +608,7 @@ iframe {
 }
 
 .timelineBlock:hover {
-    opacity: 0.8;
+    border-color: #737373;
 }
 
 .basicBorder {

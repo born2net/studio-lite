@@ -37,6 +37,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             BB.comBroker.listen(BB.EVENTS.APP_SIZED, $.proxy(self._render, self));
             self._listenTimelineSelected();
             self._listenTimelineChanged();
+            self._listenBlockSelected();
             self._updateWidth();
         },
 
@@ -58,6 +59,24 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                 }, 100);
             }
             self.m_render();
+        },
+
+        _listenBlockSelected: function () {
+            var self = this;
+            //todo: fix selection in storyboard when LI selected as well as deselecting from LI when CH header is selected
+            BB.comBroker.listen(BB.EVENTS.BLOCK_SELECTED, function (e) {
+                var blockID = e.edata;
+                if (!_.isNumber(blockID)) // ignore scene blocks
+                    return;
+                self._removeBlockSelection();
+                var blockElem = $(Elements.STORYLINE_CONTAINER).find('[data-timeline_channel_block_id="' + blockID + '"]');
+                $(blockElem).addClass(BB.lib.unclass(Elements.CLASS_TIMELINE_BLOCK_SELECTED));
+            });
+        },
+
+        _removeBlockSelection: function(){
+            var self = this;
+            $(Elements.CLASS_TIMELINE_BLOCK, Elements.STORYLINE_CONTAINER).removeClass(BB.lib.unclass(Elements.CLASS_TIMELINE_BLOCK_SELECTED));
         },
 
         /**
@@ -199,14 +218,16 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             $(Elements.CLASS_CHANNEL_HEAD).off('click');
             $(Elements.CLASS_CHANNEL_HEAD).on('click', function (e) {
                 $.proxy(self._blockChannelSelected(e), self);
-            });
-            $(Elements.CLASS_TIMELINE_BLOCK).off('click');
-            $(Elements.CLASS_TIMELINE_BLOCK).on('click', function (e) {
-                $.proxy(self._blockSelected(e), self);
+                BB.comBroker.fire(BB.EVENTS.CAMPAIGN_TIMELINE_CHANNEL_SELECTED, this, null, self.m_selectedChannel);
             });
             $(Elements.CLASS_STORYLINE_CHANNEL).off('click');
             $(Elements.CLASS_STORYLINE_CHANNEL).on('click', function (e) {
                 $.proxy(self._blockChannelSelected(e), self);
+                BB.comBroker.fire(BB.EVENTS.CAMPAIGN_TIMELINE_CHANNEL_SELECTED, this, null, self.m_selectedChannel);
+            });
+            $(Elements.CLASS_TIMELINE_BLOCK).off('click');
+            $(Elements.CLASS_TIMELINE_BLOCK).on('click', function (e) {
+                $.proxy(self._blockSelected(e), self);
             });
         },
 
@@ -229,6 +250,8 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
 
             if ( $(blockElem).hasClass(BB.lib.unclass(Elements.CLASS_TIMELINE_BLOCK)))
                 blockElem = $(blockElem).closest(Elements.CLASS_CHANNEL_BODY);
+
+            self._removeBlockSelection();
 
             var timeline_channel_id = $(blockElem).data('timeline_channel_id');
             var campaign_timeline_board_viewer_id = $(blockElem).data('campaign_timeline_board_viewer_id');
@@ -268,6 +291,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             e.target = blockElem[0];
             self._blockChannelSelected(e);
             BB.comBroker.fire(BB.EVENTS.STORYLINE_BLOCK_SELECTED, this, null, self.selected_block_id);
+            $(blockElem).addClass(BB.lib.unclass(Elements.CLASS_TIMELINE_BLOCK_SELECTED));
             return false;
         }
     });

@@ -13,7 +13,7 @@ body {
 }
 
 .btn {
-    font-size: 1em;
+    font-size: 12px;
 }
 
 
@@ -477,6 +477,10 @@ iframe {
     width: 74px;
     float: left;
     margin-left: 3px;
+}
+
+#sceneSelectionDropdown {
+    width: 67px !important;
 }
 
 #sceneCanvasContainer {

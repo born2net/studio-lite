@@ -58,6 +58,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                     self._populateChannels();
                     self._listenSelections();
                     self._addBlockSelection(self.m_selectedBlockID);
+                    self._addChannelSelection(self.m_selectedChannel);
                 }, 100);
             }
             self.m_render();
@@ -90,6 +91,32 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             self.m_selectedBlockID = i_blockID;
             var blockElem = $(Elements.STORYLINE_CONTAINER).find('[data-timeline_channel_block_id="' + i_blockID + '"]');
             $(blockElem).addClass(BB.lib.unclass(Elements.CLASS_TIMELINE_BLOCK_SELECTED));
+        },
+
+        /**
+         Add channel selection by marking it on the storyboard and remembering selection
+         @method _addChannelSelection
+         @param {Number} i_selectedChannel
+         **/
+        _addChannelSelection: function(i_selectedChannel){
+            var self = this;
+            if (_.isUndefined(i_selectedChannel))
+                return;
+            self._removeChannelSelection();
+            self.m_selectedChannel = i_selectedChannel;
+            var blockElem = $(Elements.STORYLINE_CONTAINER).find('[data-timeline_channel_id="' + i_selectedChannel + '"]');
+            blockElem = $(blockElem).filter('.channelHead');
+            $(blockElem).addClass(BB.lib.unclass(Elements.CLASS_CHANNEL_HEAD_SELECTED));
+        },
+
+        /**
+         Remove currently selected channel by removing selection as well forgetting it
+         @method _removeChannelSelection
+         **/
+        _removeChannelSelection: function(){
+            var self = this;
+            self.m_selectedChannel = undefined;
+            $(Elements.CLASS_CHANNEL_HEAD_SELECTED, Elements.STORYLINE_CONTAINER).removeClass(BB.lib.unclass(Elements.CLASS_CHANNEL_HEAD_SELECTED));
         },
 
         /**
@@ -262,6 +289,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
          **/
         _blockChannelSelected: function (e) {
             var self = this;
+            var chHead;
             e.stopImmediatePropagation();
             var blockElem = $(e.target);
 
@@ -273,8 +301,6 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
 
             if ( $(blockElem).hasClass(BB.lib.unclass(Elements.CLASS_TIMELINE_BLOCK)))
                 blockElem = $(blockElem).closest(Elements.CLASS_CHANNEL_BODY);
-
-            self._removeBlockSelection();
 
             var timeline_channel_id = $(blockElem).data('timeline_channel_id');
             var campaign_timeline_board_viewer_id = $(blockElem).data('campaign_timeline_board_viewer_id');
@@ -288,7 +314,8 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                 campaign_timeline_id: self.m_selectedTimelineID,
                 campaign_timeline_board_viewer_id: campaign_timeline_board_viewer_id
             };
-
+            self._removeBlockSelection();
+            self._addChannelSelection(self.m_selectedChannel);
             var sequencer = BB.comBroker.getService(BB.SERVICES['SEQUENCER_VIEW']);
             sequencer.selectViewer(screenData.campaign_timeline_id, screenData.campaign_timeline_board_viewer_id);
             BB.comBroker.fire(BB.EVENTS.ON_VIEWER_SELECTED, this, screenData);

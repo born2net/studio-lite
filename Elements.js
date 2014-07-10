@@ -288,6 +288,7 @@ Elements.CLASS_TIMELINE_BLOCK_SELECTED = '.timelineBlockSelected';
 Elements.CLASS_SCALA_RULER = '.scalaRuler';
 Elements.CLASS_SCALA_NUM = '.scalaNum';
 Elements.CLASS_CHANNEL_HEAD = '.channelHead';
+Elements.CLASS_CHANNEL_HEAD_SELECTED = '.channelHeadSelected';
 
 
 /**

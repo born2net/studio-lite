@@ -493,10 +493,10 @@ iframe {
 
 #storyLine span {
     font-family: arial;
-    font-size: 10px;
+    font-size: 11px;
     float: left;
     position: relative;
-    top: 3px;
+    top: 6px;
     padding-left: 3px;
 }
 
@@ -504,7 +504,7 @@ iframe {
     background-color: #f7f7f7;
     width: 100%;
     float: left;
-    border-top: 1px solid #e5e5e5;
+    border-top: 0px solid #e5e5e5;
     border-bottom: 1px solid #e5e5e5;
     padding-top: 1px;
     position: relative;
@@ -517,7 +517,7 @@ iframe {
 
 .scalaRuler {
     border: 0;
-    border-bottom: 1px dashed #ccc;
+    /* border-bottom: 1px dashed #ccc; */
     border-top: 1px solid #ccc;
     background: #737373;
 }
@@ -549,21 +549,26 @@ iframe {
 
 .channelHead {
     width: 20px;
-    height: 20px;
+    height: 30px;
     background-color: #737373;
     float: left;
     color: #bcbcbc;
     cursor: pointer;
+    padding-top: 6px;
 }
 
 .channelHead:hover {
     opacity: 0.8;
 }
 
+.channelHeadSelected {
+    background-color: #428ac9 !important;
+}
+
 .storylineChannel {
     margin-bottom: 1px;
     border-bottom: 1px solid #d0d0d0;
-    height: 22px;
+    height: 32px;
     float: left;
     width: 100%;
     cursor: pointer;
@@ -593,14 +598,13 @@ iframe {
     float: left;
     background-color: #e6e6e6;
     border: 1px solid #cacaca;
-    height: 20px;
+    height: 30px;
     display: inline-block;
 }
 
 .timelineBlockSelected {
     background-color: #428ac9 !important;
 }
-
 
 .timelineBlock span {
     overflow: hidden;
@@ -636,7 +640,6 @@ iframe {
 
 .noTopBorder {
     border-top: none;
-!important;
 }
 
 .yScroll {

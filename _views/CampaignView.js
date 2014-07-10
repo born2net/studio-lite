@@ -67,10 +67,10 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             self._listenToggleTimelinesCollapsible();
 
             self.m_noneSelectedTimelines = new BB.View({el: Elements.NONE_SELECTED_SCREEN_LAYOUT})
-            //self.m_timelineViewStack.addView(self.m_noneSelectedTimelines);
 
-            pepper.listen(Pepper.NEW_TIMELINE_CREATED, $.proxy(self._updDelTimelineButtonStatus, self));
-            pepper.listen(Pepper.TIMELINE_DELETED, $.proxy(self._updDelTimelineButtonStatus, self));
+            //self.m_timelineViewStack.addView(self.m_noneSelectedTimelines);
+            // pepper.listen(Pepper.NEW_TIMELINE_CREATED, $.proxy(self._updDelTimelineButtonStatus, self));
+            // pepper.listen(Pepper.TIMELINE_DELETED, $.proxy(self._updDelTimelineButtonStatus, self));
 
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self)
@@ -97,7 +97,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             self._loadSequencerFirstTimeline();
             self._updatedTimelinesLengthUI();
             self._listenTimelineLengthChanged();
-            self._updDelTimelineButtonStatus();
+            // self._updDelTimelineButtonStatus();
         },
 
         /**
@@ -281,19 +281,31 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
         _listenDelTimeline: function () {
             var self = this;
             $(Elements.REMOVE_TIMELINE_BUTTON).on('click', function (e) {
-                bootbox.confirm($(Elements.MSG_BOOTBOX_SURE_REMOVE_TIMELINE).text(), function (i_result) {
-                    if (i_result == true) {
-                        $.proxy(self._deleteTimeline(), self);
-                    }
-                });
+                var totalTimelines = pepper.getCampaignTimelines(self.m_selected_campaign_id).length;
+                if (totalTimelines == 1) {
+                    bootbox.dialog({
+                        message: $(Elements.MSG_CANT_DELETE_TIMELINE).text(),
+                        buttons: {
+                            danger: {
+                                label: $(Elements.MSG_BOOTBOX_OK).text(),
+                                className: "btn-danger"
+                            }
+                        }
+                    });
+                } else {
+                    bootbox.confirm($(Elements.MSG_BOOTBOX_SURE_REMOVE_TIMELINE).text(), function (i_result) {
+                        if (i_result == true) {
+                            $.proxy(self._deleteTimeline(), self);
+                        }
+                    });
+                }
             });
         },
 
         /**
          Update delete timeline button thus not allowing for less one timeline in campaign
          @method _updDelTimelineButtonStatus
-         **/
-        _updDelTimelineButtonStatus: function () {
+         _updDelTimelineButtonStatus: function () {
             var self = this;
             var totalTimelines = pepper.getCampaignTimelines(self.m_selected_campaign_id).length;
             if (totalTimelines > 1) {
@@ -302,6 +314,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
                 $(Elements.REMOVE_TIMELINE_BUTTON).prop('disabled', true);
             }
         },
+         **/
 
         /**
          Toggle the arrow of the collapsible timelines / sequencer UI widget

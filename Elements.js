@@ -230,6 +230,7 @@ Elements.MSG_BOOTBOX_SURE_DELETE_CAMPAIGN ='#bootBoxSureDeleteCampaign';
 Elements.MSG_BOOTBOX_CANT_DELETE_COMP ='#bootBoxCantDeleteComp';
 Elements.MSG_BOOTBOX_SELECT_COMP_FIRST ='#bootBoxSelectCompFirst';
 Elements.MSG_BOOTBOX_SURE_REMOVE_TIMELINE ='#bootBoxSureRemoveTimeline';
+Elements.MSG_CANT_DELETE_TIMELINE ='#bootBoxCantDeleteTimeline';
 Elements.MSG_BOOTBOX_SELECT_RESOURCE ='#bootBoxSelectResource';
 Elements.MSG_BOOTBOX_SELECT_CHANNEL ='#bootBoxSelectChannel';
 Elements.MSG_BOOTBOX_AT_LEAST_ONE_DIV ='#bootBoxAtLeastOneDiv';

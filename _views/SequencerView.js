@@ -109,14 +109,25 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
                 self.m_screenTemplates[i_campaign_timeline_id].destroy();
         },
 
+        /**
+         Select the first timeline in the Sequencer
+         @method selectFirstTimeline
+         **/
         selectFirstTimeline: function(){
             var self  = this;
-            for (var timeline in self.m_timelines){
+            var timeline;
+            for (timeline in self.m_timelines){
                 self.selectTimeline(timeline);
                 break;
             }
         },
 
+        /**
+         Select a viewer
+         @method selectViewer
+         @param {Number} i_timeline_id
+         @param {Number} i_viewer_id
+         **/
         selectViewer: function (i_timeline_id, i_viewer_id) {
             var self = this;
             self.m_screenTemplates[i_timeline_id].selectDivison(i_viewer_id);

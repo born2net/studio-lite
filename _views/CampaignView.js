@@ -129,8 +129,8 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
          **/
         _loadSequencerFirstTimeline: function () {
             var self = this;
-            //var firstTimelineID = pepper.getCampaignTimelineIdOfSequencerIndex(self.m_selected_campaign_id, 0);
             self.m_sequencerView.selectFirstTimeline();
+            //var firstTimelineID = pepper.getCampaignTimelineIdOfSequencerIndex(self.m_selected_campaign_id, 0);
             //if (self.m_sequencerView.selectTimeline(firstTimelineID) == -1)
             //    self.m_timelineViewStack.selectView(self.m_noneSelectedTimelines);
         },

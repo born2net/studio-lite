@@ -198,8 +198,6 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             }
             var screenProps = pepper.getTemplateViewersScreenProps(self.m_campaign_timeline_id, i_campaign_timeline_board_template_id)
 
-            //self._createTimelineUI(screenProps);
-
             // Future support for scheduler
             switch (self.m_timing) {
                 case 'sequencer':

@@ -212,6 +212,9 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
                     break;
                 }
             }
+
+            //self.selectTimeline(campaign_timeline_id);
+            // self.selectFirstTimeline();
         },
 
         /**

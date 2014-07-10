@@ -254,9 +254,21 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
         _listenTimelineSelected: function () {
             var self = this;
             BB.comBroker.listen(BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED, function (e) {
+                self._deselection();
                 self.m_selectedTimelineID = e.edata;
                 self._render();
             });
+        },
+
+        /**
+         Forget all current selections
+         @method _deselection
+         **/
+        _deselection: function(){
+            var self = this;
+            self.m_selectedTimelineID = undefined;
+            self.m_selectedBlockID = undefined;
+            self.m_selectedChannel = undefined;
         },
 
         /**

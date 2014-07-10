@@ -69,8 +69,8 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             self.m_noneSelectedTimelines = new BB.View({el: Elements.NONE_SELECTED_SCREEN_LAYOUT})
             //self.m_timelineViewStack.addView(self.m_noneSelectedTimelines);
 
-            pepper.listen(Pepper.NEW_TIMELINE_CREATED, $.proxy(self._updDelTimelimeButtonStatus, self));
-            pepper.listen(Pepper.TIMELINE_DELETED, $.proxy(self._updDelTimelimeButtonStatus, self));
+            pepper.listen(Pepper.NEW_TIMELINE_CREATED, $.proxy(self._updDelTimelineButtonStatus, self));
+            pepper.listen(Pepper.TIMELINE_DELETED, $.proxy(self._updDelTimelineButtonStatus, self));
 
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self)
@@ -97,7 +97,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             self._loadSequencerFirstTimeline();
             self._updatedTimelinesLengthUI();
             self._listenTimelineLengthChanged();
-            self._updDelTimelimeButtonStatus();
+            self._updDelTimelineButtonStatus();
         },
 
         /**
@@ -146,7 +146,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             var self = this;
 
             BB.comBroker.listen(BB.EVENTS.ON_VIEWER_SELECTED, function (e) {
-
+                var autoSelectFirstTimeline = true;
                 var campaign_timeline_board_viewer_id = e.caller.campaign_timeline_board_viewer_id;
                 var campaign_timeline_id = e.caller.campaign_timeline_id;
                 self.m_selected_timeline_id = campaign_timeline_id;
@@ -213,8 +213,8 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
                         var newTemplateData = pepper.createNewTemplate(board_id, e.caller.screenTemplateData.screenProps);
                         var board_template_id = newTemplateData['board_template_id']
                         var viewers = newTemplateData['viewers'];
+                        autoSelectFirstTimeline = false;
                     }
-
                     campaign_timeline_id = pepper.createNewTimeline(self.m_selected_campaign_id);
                     pepper.setCampaignTimelineSequencerIndex(self.m_selected_campaign_id, campaign_timeline_id, 0);
                     pepper.setTimelineTotalDuration(campaign_timeline_id, '0');
@@ -225,9 +225,13 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
 
                     self.m_timelines[campaign_timeline_id] = new Timeline({campaignTimelineID: campaign_timeline_id});
                     BB.comBroker.fire(BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED, this, null, campaign_timeline_id);
-
                     BB.comBroker.getService(BB.SERVICES['SEQUENCER_VIEW']).reSequenceTimelines();
-                    self._loadSequencerFirstTimeline();
+
+                    if (autoSelectFirstTimeline) {
+                        self._loadSequencerFirstTimeline();
+                    } else {
+                        self.m_sequencerView.selectTimeline(campaign_timeline_id);
+                    }
                     return;
                 }
             });
@@ -287,9 +291,9 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
 
         /**
          Update delete timeline button thus not allowing for less one timeline in campaign
-         @method _updDelTimelimeButtonStatus
+         @method _updDelTimelineButtonStatus
          **/
-        _updDelTimelimeButtonStatus: function () {
+        _updDelTimelineButtonStatus: function () {
             var self = this;
             var totalTimelines = pepper.getCampaignTimelines(self.m_selected_campaign_id).length;
             if (totalTimelines > 1) {

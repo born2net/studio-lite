@@ -65,6 +65,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             self._listenCampaignPreview();
             self._listenCampaignTimelinePreview();
             self._listenToggleTimelinesCollapsible();
+            self._listenScreenTemplateEdit();
 
             self.m_noneSelectedTimelines = new BB.View({el: Elements.NONE_SELECTED_SCREEN_LAYOUT})
 
@@ -328,6 +329,19 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
                 } else {
                     $(toggle).removeClass('glyphicon-chevron-right').addClass('glyphicon-chevron-down')
                 }
+            });
+        },
+
+        /**
+         Listen screen template edit button
+         @method _listenScreenTemplateEdit
+         **/
+        _listenScreenTemplateEdit: function () {
+            var self = this;
+            $(Elements.EDIT_SCREEN_LAYOUT).on('click', function(e){
+                var screenLayoutEditor = BB.comBroker.getService(BB.SERVICES.SCREEN_LAYOUT_EDITOR_VIEW);
+                var boardTemplateIDs = pepper.getTemplatesOfTimeline(self.m_selected_timeline_id);
+                screenLayoutEditor.selectView(self.m_selected_timeline_id, boardTemplateIDs[0]);
             });
         },
 

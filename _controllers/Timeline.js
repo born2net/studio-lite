@@ -37,13 +37,10 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             this.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
             this.m_sequences = BB.comBroker.getService(BB.SERVICES['SEQUENCER_VIEW']);
             this.m_selected = false;
-
             self._populateChannels();
             self._populateTimeline();
             self._listenInputChange();
-            self._listenScreenTemplateEdit();
             this._onTimelineSelected();
-
             pepper.listenWithNamespace(Pepper.TEMPLATE_VIEWER_EDITED, self, $.proxy(self._templateViewerEdited, self));
             pepper.listenWithNamespace(Pepper.NEW_CHANNEL_ADDED, self, $.proxy(self._channelAdded, self));
         },
@@ -81,23 +78,6 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
                 pepper.setCampaignTimelineRecord(self.m_campaign_timeline_id, 'timeline_name', $(Elements.TIME_LINE_PROP_TITLE_ID).val());
             }, 150, false);
             $(Elements.TIME_LINE_PROP_TITLE_ID).on("input", self.m_inputChangeHandler);
-        },
-
-        /**
-         Pull up the screen layout editor
-         @method _listenScreenTemplateEdit
-         @return none
-         **/
-        _listenScreenTemplateEdit: function () {
-            var self = this;
-            self.m_openScreenLayoutEditorHandler = function (e) {
-                if (!self.m_selected)
-                    return;
-                var screenLayoutEditor = BB.comBroker.getService(BB.SERVICES.SCREEN_LAYOUT_EDITOR_VIEW);
-                var boardTemplateIDs = pepper.getTemplatesOfTimeline(self.m_campaign_timeline_id);
-                screenLayoutEditor.selectView(self.m_campaign_timeline_id, boardTemplateIDs[0]);
-            };
-            $(Elements.EDIT_SCREEN_LAYOUT).on('click', self.m_openScreenLayoutEditorHandler);
         },
 
         /**
@@ -305,7 +285,6 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             pepper.stopListenWithNamespace(Pepper.TEMPLATE_VIEWER_EDITED, self);
             pepper.stopListenWithNamespace(Pepper.NEW_CHANNEL_ADDED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED, self);
-            $(Elements.EDIT_SCREEN_LAYOUT).off('click', self.m_openScreenLayoutEditorHandler);
             $(Elements.TIME_LINE_PROP_TITLE_ID).off("input", self.m_inputChangeHandler);
 
             for (var channel in self.m_channels) {

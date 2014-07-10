@@ -109,6 +109,14 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
                 self.m_screenTemplates[i_campaign_timeline_id].destroy();
         },
 
+        selectFirstTimeline: function(){
+            var self  = this;
+            for (var timeline in self.m_timelines){
+                self.selectTimeline(timeline);
+                break;
+            }
+        },
+
         selectViewer: function (i_timeline_id, i_viewer_id) {
             var self = this;
             self.m_screenTemplates[i_timeline_id].selectDivison(i_viewer_id);
@@ -227,6 +235,7 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
          **/
         selectTimeline: function (i_campaign_timeline_id) {
             var self = this;
+            BB.comBroker.fire(BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED, this, null, i_campaign_timeline_id);
             var total = $(self.m_thumbsContainer).find('[data-campaign_timeline_id="' + i_campaign_timeline_id + '"]').eq(0).trigger('click');
             if (total.length == 0)
                 return -1;

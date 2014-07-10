@@ -1,5 +1,5 @@
 /**
- StoryLineView module manages the Timeline > channels UI while displaying the visual length in time for each block on the selected channel
+ StoryLineView module manages the Timeline > Channels UI while displaying the visual length in time for each block on the selected channel
  @class StorylineView
  @constructor
  @param {String}

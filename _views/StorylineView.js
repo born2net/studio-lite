@@ -213,7 +213,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                 var blockWidth = (self.m_storyWidth * percent) / 100;
                 if (blockWidth < 1)
                     continue;
-                if (totalPercent >= 100)
+                if (totalPercent > 100)
                     continue;
                 if (blockWidth < 25) {
                     snippet = '<div class="timelineBlock" data-timeline_channel_block_id="' + blockID + '" style="width: ' + percent + '%;"></div>';

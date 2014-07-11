@@ -255,7 +255,8 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
                 var durationFormatted = xdate.clearTime().addSeconds(duration).toString('HH:mm:ss');
                 $(Elements.SORTABLE).append($('<li class="' + BB.lib.unclass(Elements.CLASS_CHANNEL_LIST_ITEMS) + '  list-group-item" data-block_id="' + blockData.blockID + '">' +
                     '<a href="#">' +
-                    '<img  class="img-responsive" src="' + blockData.blockIcon + '"/>' +
+                    //'<img  class="img-responsive" src="' + blockData.blockIcon + '"/>' +
+                    '<i class="fa ' + blockData.blockFontAwesome + '"></i>'+
                     '<span>' + blockData.blockName + '</span>' +
                     '<span class="' + BB.lib.unclass(Elements.CLASS_BLOCK_LENGTH_TIMER) + '">' + durationFormatted + '</span>' +
                     '</a>' +

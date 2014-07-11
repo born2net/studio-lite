@@ -735,21 +735,6 @@ iframe {
     width: 180px;
 }
 
-.channelListItems {
-    cursor: pointer;
-}
-
-.channelListItems a img {
-    height: 50px;
-    display: inline;
-    padding-right: 20px;
-}
-
-.channelListItems a span {
-    display: inline;
-    font-size: 1.5em;
-}
-
 .stationListItems {
     cursor: pointer;
     padding-top: 10px;
@@ -764,43 +749,9 @@ iframe {
     cursor: pointer;
 }
 
-.addBlockListItems {
-    cursor: pointer;
-}
-
-.addBlockListItems img {
-    height: 50px;
-    display: inline;
-    padding-right: 20px;
-}
-
-.addBlockListItems span {
-    display: inline;
-    font-size: 1.5em;
-}
-
-.addBlockListItems:hover {
-    background-color: #f5f5f5;
-}
-
-.resourcesListItems {
-    cursor: pointer;
-}
-
-.resourcesListItems img {
-    height: 50px;
-    display: inline;
-    padding-right: 20px;
-}
-
 .blockLengthTimer {
     float: right;
     padding-top: 10px;
-}
-
-.resourcesListItems span {
-    display: inline;
-    font-size: 1.5em;
 }
 
 .alignTextLeft {
@@ -901,6 +852,61 @@ iframe {
 
 .tooltip-inner {
     min-width: 150px;
+}
+
+.resourcesListItems {
+    cursor: pointer;
+}
+
+.resourcesListItems i {
+    font-size: 40px;
+    display: inline;
+    padding-right: 20px;
+}
+
+.resourcesListItems span {
+    display: inline;
+    font-size: 1.5em;
+    position: relative;
+    top: -12px;
+}
+
+.channelListItems {
+    cursor: pointer;
+}
+
+.channelListItems a i {
+    display: inline;
+    font-size: 40px;
+    padding-right: 20px;
+}
+
+.channelListItems a span {
+    display: inline;
+    font-size: 1.5em;
+    position: relative;
+    top: -12px;
+}
+
+.addBlockListItems {
+    cursor: pointer;
+}
+
+.addBlockListItems i {
+    font-size: 40px;
+    display: inline;
+    padding-right: 20px;
+}
+
+.addBlockListItems span {
+    display: inline;
+    font-size: 1.5em;
+    position: relative;
+    top: -8px
+}
+
+.addBlockListItems:hover {
+    background-color: #f5f5f5;
 }
 
 /************************************

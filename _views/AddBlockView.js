@@ -85,7 +85,8 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 if (componentID == 3130 || componentID == 3100 || componentID == 3510)
                     continue;
                 var snippet = '<li class="list-group-item ' + BB.lib.unclass(Elements.CLASS_ADD_BLOCK_LIST_ITEMS, self.el) + '" data-component_id="' + componentID + '" data-component_name="' + components[componentID].name + '">' +
-                    '<img class="img-responsive" src="' + components[componentID].icon + '">' +
+                    //'<img class="img-responsive" src="' + components[componentID].icon + '">' +
+                    '<i class="fa ' + components[componentID].fontAwesome + '"></i>'+
                     '<span>' + components[componentID].name + '</span>' +
                     '<h6>' + components[componentID].description + '</h6>' +
                     '</li>';
@@ -106,7 +107,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 var size = (parseInt(recResources[i]['resource_bytes_total']) / 1000).toFixed(2);
                 var resourceDescription = 'size: ' + size + 'K dimension: ' + recResources[i]['resource_pixel_width'] + 'x' + recResources[i]['resource_pixel_height'];
                 var snippet = '<li class="list-group-item ' + BB.lib.unclass(Elements.CLASS_ADD_BLOCK_LIST_ITEMS, self.el) + '" data-resource_id="' + recResources[i]['resource_id'] + '" data-resource_name="' + recResources[i]['resource_name'] + '">' +
-                    '<img src="' + BB.PepperHelper.getIcon(recResources[i]['resource_type']) + '">' +
+                    '<i class="fa ' + BB.PepperHelper.getFontAwesome(recResources[i]['resource_type']) + '"></i>'+
                     '<span>' + recResources[i]['resource_name'] + '</span>' +
                     '<br/><small>' + resourceDescription + '</small>' +
                     '</li>';
@@ -124,7 +125,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                     var sceneID = $(scene).find('Player').eq(0).attr('id');
                     sceneID = pepper.sterilizePseudoId(sceneID);
                     var snippet = '<li class="list-group-item ' + BB.lib.unclass(Elements.CLASS_ADD_BLOCK_LIST_ITEMS, self.el) + '" data-scene_id="' + sceneID + '">' +
-                        '<img src="' + BB.PepperHelper.getIcon('scene') + '">' +
+                        '<i class="fa ' + BB.PepperHelper.getFontAwesome('scene') + '"></i>'+
                         '<span>' + label + '</span>' +
                         '<br/><small></small>' +
                         '</li>';

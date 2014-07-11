@@ -39,7 +39,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_blockName = pepper.getResourceRecord(self.m_resourceID).resource_name;
             self.m_blockDescription = pepper.getResourceName(self.m_resourceID);
             self.m_fileFormat = pepper.getResourceType(self.m_resourceID);
-            self.m_blockIcon = BB.PepperHelper.getIcon(self.m_fileFormat);
+            self.m_blockFontAwesome = BB.PepperHelper.getFontAwesome(self.m_fileFormat);
         },
 
         /**

@@ -10,7 +10,7 @@ function PepperHelper() {
 
     this.self = this;
     this.m_components = {};
-    this.m_icons = {};
+    this.m_fontAwesome = {};
 
     this._initComponents();
 };
@@ -20,7 +20,7 @@ PepperHelper.prototype = {
 
     /**
      The _initComponents initializes data constants for components and used to relieve member data
-     such as mapping between component code and the type of resource it holds, path for default icon etc.
+     such as mapping between component code and the type of resource it holds etc.
      @method _initComponents
      @return none
      **/
@@ -50,21 +50,21 @@ PepperHelper.prototype = {
         // ExtApp/Capture 3410
         // XmlPlayer 4200
 
-        self.m_icons = {
-            'scene': { image: './_assets/scene.png' },
-            'qr':  { image: './_assets/qr.png' },
-            'rss': { image: './_assets/rss.png' },
-            'mrss': { image: './_assets/mrss.png' },
-            'flv': { image: './_assets/flv.png' },
-            'mp4': { image: './_assets/mp4.png' },
-            'png': { image: './_assets/png.png' },
-            'jpg': { image: './_assets/jpg.png' },
-            'html5': { image: './_assets/html.png' },
-            'clock': { image: './_assets/clock.png' },
-            'label': { image: './_assets/label.png' },
-            'swf': { image: './_assets/swf.png' },
-            'extvideo': { image: './_assets/extvideo.png' },
-            'extimage': { image: './_assets/extimage.png' }
+        self.m_fontAwesome = {
+            'scene': { image: 'fa-pencil-square-o' },
+            'qr':  { image: 'fa-qrcode' },
+            'rss': { image: 'fa-rss' },
+            'mrss': { image: 'fa-rss-square' },
+            'flv': { image: 'fa-file-video-o' },
+            'mp4': { image: 'fa-video-camera' },
+            'png': { image: 'fa-picture-o' },
+            'jpg': { image: 'fa-file-image-o' },
+            'html5': { image: 'fa-html5' },
+            'clock': { image: 'fa-clock-o ' },
+            'label': { image: 'fa-file-text-o' },
+            'swf': { image: 'fa-bolt' },
+            'extvideo': { image: 'fa-share-square-o' },
+            'extimage': { image: 'fa-share-square ' }
         };
 
         self.m_components = {
@@ -133,7 +133,7 @@ PepperHelper.prototype = {
                                 '</Data>' +
                             '</Player>'
                 },
-                icon: self.getIcon('extimage')
+                fontAwesome: self.getFontAwesome('extimage')
             },
             3150: {
                 name: 'External video',
@@ -151,7 +151,7 @@ PepperHelper.prototype = {
                                 '</Data>' +
                             '</Player>'
                 },
-                icon: self.getIcon('extvideo')
+                fontAwesome: self.getFontAwesome('extvideo')
             },
             3430: {
                 name: 'QR',
@@ -169,7 +169,7 @@ PepperHelper.prototype = {
                                 '</Data>' +
                             '</Player>'
                 },
-                icon: self.getIcon('qr')
+                fontAwesome: self.getFontAwesome('qr')
             },
             3340: {
                 name: 'Multimedia RSS',
@@ -187,7 +187,7 @@ PepperHelper.prototype = {
                                 '</Data>' +
                             '</Player>'
                 },
-                icon: self.getIcon('mrss')
+                fontAwesome: self.getFontAwesome('mrss')
             },
             3235: {
                 name: 'HTML Website content',
@@ -205,7 +205,7 @@ PepperHelper.prototype = {
                                 '</Data>' +
                             '</Player>'
                 },
-                icon: self.getIcon('html5')
+                fontAwesome: self.getFontAwesome('html5')
             },
             3320: {
                 name: 'Clock Date/Time',
@@ -225,7 +225,7 @@ PepperHelper.prototype = {
                                 '</Data>' +
                             '</Player>'
                 },
-                icon: self.getIcon('clock'),
+                fontAwesome: self.getFontAwesome('clock'),
                 getDateTimeMask: function(i_mask){
                     switch (i_mask){
                         case 'longDateAndTime': {
@@ -270,7 +270,7 @@ PepperHelper.prototype = {
                                 '</Data>' +
                             '</Player>'
                 },
-                icon: self.getIcon('label')
+                fontAwesome: self.getFontAwesome('label')
             },
 
             3510: {
@@ -295,7 +295,7 @@ PepperHelper.prototype = {
                                 '</Data>' +
                             '</Player>'
                 },
-                icon: self.getIcon('scene')
+                fontAwesome: self.getFontAwesome('scene')
             },
             3345: {
                 name: 'Really Simple Syndication',
@@ -320,7 +320,7 @@ PepperHelper.prototype = {
                                 '</Data>' +
                             '</Player>'
                 },
-                icon: self.getIcon('rss')
+                fontAwesome: self.getFontAwesome('rss')
             }
         };
     },
@@ -427,24 +427,24 @@ PepperHelper.prototype = {
     },
 
     /**
-     Get the icon / image path for a resource type.
-     @method getIcon
-     @param {String} i_resourceType
+     Get the font awesome path
+     @method getFontAwesome
+     @param {String} i_fontName
      @return {String} url path
      **/
-    getIcon: function (i_resourceType) {
+    getFontAwesome: function (i_fontName) {
         var self = this;
-        return self.m_icons[i_resourceType]['image'];
+        return self.m_fontAwesome[i_fontName]['image'];
     },
 
     /**
-     Get the  entire icon set data structure for all images.
-     @method getIcons
+     Get the  entire font awesome set
+     @method getFontsAwesome
      @return {Object} data set
      **/
-    getIcons: function () {
+    getFontsAwesome: function () {
         var self = this;
-        return self.m_icons;
+        return self.m_fontAwesome;
     },
 
     /**

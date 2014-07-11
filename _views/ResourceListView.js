@@ -88,7 +88,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
                 var snippet = '<li class="' + BB.lib.unclass(Elements.CLASS_RESOURCES_LIST_ITEMS) + ' list-group-item" data-resource_id="' + recResources[i]['resource_id'] + '">' +
                     '<a href="#">' +
-                    '<img src="' + BB.PepperHelper.getIcon(recResources[i]['resource_type']) + '">' +
+                    '<i class="fa ' + BB.PepperHelper.getFontAwesome(recResources[i]['resource_type']) + '"></i>'+
                     '<span>' + recResources[i]['resource_name'] + '</span>' +
                     '<p>' + '' + '</p></a>' +
                     '</a>' +

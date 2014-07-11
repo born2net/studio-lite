@@ -80,6 +80,7 @@ define(['jquery', 'backbone'], function ($) {
             self.m_blockAcronym = BB.PepperHelper.getBlockBoilerplate(self.m_blockType).acronym;
             self.m_blockDescription = BB.PepperHelper.getBlockBoilerplate(self.m_blockType).description;
             self.m_blockIcon = BB.PepperHelper.getBlockBoilerplate(self.m_blockType).icon;
+            self.m_blockFontAwesome = BB.PepperHelper.getBlockBoilerplate(self.m_blockType).fontAwesome;
             self.m_blockSvg = BB.PepperHelper.getBlockBoilerplate(self.m_blockType).svg;
             self.m_resourceID = undefined;
             self.m_blockProperty = BB.comBroker.getService(BB.SERVICES['BLOCK_PROPERTIES']);
@@ -918,6 +919,7 @@ define(['jquery', 'backbone'], function ($) {
                 blockName: self.m_blockName,
                 blockDescription: self.m_blockDescription,
                 blockIcon: self.m_blockIcon,
+                blockFontAwesome: self.m_blockFontAwesome,
                 blockAcronym: self.m_blockAcronym,
                 blockMinWidth: self.m_minSize.w,
                 blockMinHeight: self.m_minSize.h,

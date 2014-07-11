@@ -1698,6 +1698,16 @@ Language selector
     margin-right: 10px;
 }
 
+/*
+i.fa {
+    -webkit-animation: show 1s 1;
+}
+@-webkit-keyframes show {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+*/
+
 /************************************
 minicolors
 ************************************/

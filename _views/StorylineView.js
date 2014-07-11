@@ -34,12 +34,13 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             self.m_selectedBlockID = undefined;
             self.m_selectedChannel = undefined;
             BB.comBroker.listen(BB.EVENTS.SIDE_PANEL_SIZED, $.proxy(self._updateWidth, self));
-            BB.comBroker.listen(BB.EVENTS.APP_SIZED, $.proxy(self._updateWidth, self));
-            BB.comBroker.listen(BB.EVENTS.APP_SIZED, $.proxy(self._render, self));
+            //BB.comBroker.listen(BB.EVENTS.APP_SIZED, $.proxy(self._updateWidth, self));
+            //BB.comBroker.listen(BB.EVENTS.APP_SIZED, $.proxy(self._render, self));
             self._listenTimelineSelected();
             self._listenTimelineChanged();
             self._listenBlockSelection();
             self._listenStackViewSelected();
+            self._listenAppResized();
             self._updateWidth();
         },
 
@@ -60,6 +61,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                     self._listenSelections();
                     self._addBlockSelection(self.m_selectedBlockID);
                     self._addChannelSelection(self.m_selectedChannel);
+                    // log('rendering storyline');
                 }, 100);
             }
             self.m_render();
@@ -72,11 +74,23 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
          **/
         _listenStackViewSelected: function () {
             var self = this;
-            self.m_appContentFaderView = BB.comBroker.getService(BB.SERVICES['APP_CONTENT_FADER_VIEW']);
-            self.m_campaignManagerView = BB.comBroker.getService(BB.SERVICES['CAMPAIGN_MANAGER_VIEW']);
-            self.m_appContentFaderView.on(BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
-                if (e == self.m_campaignManagerView) {
-                    self._render();
+            var appContentFaderView = BB.comBroker.getService(BB.SERVICES['APP_CONTENT_FADER_VIEW']);
+            var campaignSliderStackView = BB.comBroker.getService(BB.SERVICES['CAMPAIGN_SLIDER_STACK_VIEW']);
+
+            campaignSliderStackView.on(BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
+                if (e == BB.comBroker.getService(BB.SERVICES['CAMPAIGN_VIEW'])) {
+                    setTimeout(function () {
+                        self._updateWidth();
+                        self._render();
+                    }, 500);
+                }
+            });
+            appContentFaderView.on(BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
+                if (e == BB.comBroker.getService(BB.SERVICES['CAMPAIGN_MANAGER_VIEW'])) {
+                    setTimeout(function () {
+                        self._updateWidth();
+                        self._render();
+                    }, 500);
                 }
             });
         },
@@ -92,6 +106,18 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                 if (!_.isNumber(blockID)) // ignore scene blocks
                     return;
                 self._addBlockSelection(blockID);
+            });
+        },
+
+        /**
+         Listen to when the app is resized so we can re-render
+         @method _listenAppResized
+         **/
+        _listenAppResized: function () {
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS.APP_SIZED, function (e) {
+                self._updateWidth();
+                self._render();
             });
         },
 

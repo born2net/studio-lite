@@ -6,7 +6,7 @@
  **/
 define(['backbone'], function (Backbone) {
 
-    BB.SERVICES.CAMPAIGN_MANAGER_VIEW = 'CAMPAIGN_MANAGER_VIEW';
+    BB.SERVICES.CAMPAIGN_MANAGER_VIEW = 'CampaignManagerView';
 
     var CampaignManagerView = Backbone.View.extend({
 

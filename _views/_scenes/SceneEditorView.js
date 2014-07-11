@@ -67,6 +67,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._listenMemento();
             self._listenGridMagnet();
             self._listenCanvasSelectionsFromToolbar();
+            self._listenAppResized();
+            self._listenStackViewSelected();
             self._delegateSceneBlockModified();
         },
 
@@ -904,10 +906,41 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             self._sceneBlockModified = _.debounce(function (e) {
                 BB.comBroker.fire(BB.EVENTS.SCENE_BLOCKS_RENDERED, self, self.m_canvas);
-                log('announcing rendering done, now blocks can populate')
                 self._mementoAddState();
                 // self._drawGrid();
             }, 200);
+        },
+
+        /**
+         Anytime the containing StackView is selected, re-render
+         removed while we were gone
+         @method _listenStackViewSelected
+         **/
+        _listenStackViewSelected: function () {
+            var self = this;
+            var appContentFaderView = BB.comBroker.getService(BB.SERVICES['APP_CONTENT_FADER_VIEW']);
+            appContentFaderView.on(BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
+                if (e == BB.comBroker.getService(BB.SERVICES['SCENES_LOADER_VIEW'])) {
+                    setTimeout(function () {
+                        if (_.isUndefined(self.m_canvas))
+                            return;
+                        self.m_canvas.calcOffset();
+                    }, 500);
+                }
+            });
+        },
+
+        /**
+         Listen to when the app is resized so we can re-render
+         @method _listenAppResized
+         **/
+        _listenAppResized: function () {
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS.APP_SIZED, function (e) {
+                if (_.isUndefined(self.m_canvas))
+                    return;
+                self.m_canvas.calcOffset();
+            });
         },
 
         /**
@@ -970,7 +1003,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 'object:modified': self._sceneBlockModified,
                 'object:scaling': $.proxy(self._sceneBlockScaled, self)
             });
-            self.m_canvas.on('object:moving',$.proxy(self._sceneBlockMoving, self));
+            self.m_canvas.on('object:moving', $.proxy(self._sceneBlockMoving, self));
         },
 
         _drawGrid: function () {

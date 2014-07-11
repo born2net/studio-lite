@@ -6,6 +6,8 @@
  **/
 define(['jquery', 'backbone'], function ($, Backbone) {
 
+    BB.SERVICES.SCENES_LOADER_VIEW = 'SCENES_LOADER_VIEW';
+
     var ScenesLoaderView = Backbone.View.extend({
 
         /**
@@ -15,6 +17,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         initialize: function () {
             var self = this;
             // $(Elements.SCENE_CANVAS).fadeTo(1,0.01)
+            BB.comBroker.setService(BB.SERVICES['SCENES_LOADER_VIEW'], self);
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self && !self.m_sceneEditorView) {
                     self._render();

@@ -66,16 +66,16 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
         },
 
         /**
-         Anytime the container StackView is selected, we re-render the Storyline as resouces or scenes could have been
+         Anytime the containing StackView is selected, re-render the Storyline as resources or scenes could have been
          removed while we were gone
          @method _listenStackViewSelected
          **/
-        _listenStackViewSelected: function(){
+        _listenStackViewSelected: function () {
             var self = this;
             self.m_appContentFaderView = BB.comBroker.getService(BB.SERVICES['APP_CONTENT_FADER_VIEW']);
             self.m_campaignManagerView = BB.comBroker.getService(BB.SERVICES['CAMPAIGN_MANAGER_VIEW']);
-            self.m_appContentFaderView.on(BB.EVENTS.SELECTED_STACK_VIEW,function(e){
-                if (e==self.m_campaignManagerView){
+            self.m_appContentFaderView.on(BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
+                if (e == self.m_campaignManagerView) {
                     self._render();
                 }
             });

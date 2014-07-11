@@ -623,7 +623,6 @@ define(['jquery', 'backbone'], function ($) {
                     var hours = $(Elements.BLOCK_LENGTH_HOURS).val();
                     var minutes = $(Elements.BLOCK_LENGTH_MINUTES).val();
                     var seconds = $(Elements.BLOCK_LENGTH_SECONDS).val();
-                    // log('upd: ' + self.m_block_id + ' ' + hours + ' ' + minutes + ' ' + seconds);
 
                     switch (e.caller) {
                         case 'blockLengthHours':
@@ -642,6 +641,10 @@ define(['jquery', 'backbone'], function ($) {
                             break;
                         }
                     }
+                    // log('upd: ' + self.m_block_id + ' ' + hours + ' ' + minutes + ' ' + seconds);
+                    if (parseInt(hours) == 0 && parseInt(minutes) == 0 && parseInt(seconds) < 5)
+                        return;
+
                     switch (self.m_placement) {
                         case BB.CONSTS.PLACEMENT_CHANNEL:
                         {

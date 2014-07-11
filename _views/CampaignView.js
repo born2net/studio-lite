@@ -245,7 +245,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
         _listenAddNewTimeline: function () {
             var self = this;
             $(Elements.ADD_NEW_TIMELINE_BUTTON).on('click', function () {
-                BB.comBroker.getService(BB.SERVICES['SCREEN_LAYOUT_SELECTOR_VIEW']).hidePreviousButton();
+                BB.comBroker.getService(BB.SERVICES['SCREEN_LAYOUT_SELECTOR_VIEW']).slideBackDirection('right');
                 self.options.stackView.slideToPage(Elements.SCREEN_LAYOUT_SELECTOR, 'left');
             });
         },

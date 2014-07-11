@@ -616,6 +616,17 @@ iframe {
     text-overflow: ellipsis;
 }
 
+.timelineBlock i {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    float: left;
+    font-size: 20px;
+    color: #424551;
+    padding-top: 4px;
+    padding-left: 4px;
+}
+
 .timelineBlock:hover {
     border-color: #737373;
 }

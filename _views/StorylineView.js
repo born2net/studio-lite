@@ -83,7 +83,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
          @method _addBlockSelection
          @param {Number} i_blockID
          **/
-        _addBlockSelection: function(i_blockID){
+        _addBlockSelection: function (i_blockID) {
             var self = this;
             if (_.isUndefined(i_blockID))
                 return;
@@ -98,7 +98,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
          @method _addChannelSelection
          @param {Number} i_selectedChannel
          **/
-        _addChannelSelection: function(i_selectedChannel){
+        _addChannelSelection: function (i_selectedChannel) {
             var self = this;
             if (_.isUndefined(i_selectedChannel))
                 return;
@@ -113,7 +113,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
          Remove currently selected channel by removing selection as well forgetting it
          @method _removeChannelSelection
          **/
-        _removeChannelSelection: function(){
+        _removeChannelSelection: function () {
             var self = this;
             self.m_selectedChannel = undefined;
             $(Elements.CLASS_CHANNEL_HEAD_SELECTED, Elements.STORYLINE_CONTAINER).removeClass(BB.lib.unclass(Elements.CLASS_CHANNEL_HEAD_SELECTED));
@@ -123,7 +123,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
          Remove currently selected block by removing selection as well forgetting it
          @method _removeBlockSelection
          **/
-        _removeBlockSelection: function(){
+        _removeBlockSelection: function () {
             var self = this;
             self.m_selectedBlockID = undefined;
             $(Elements.CLASS_TIMELINE_BLOCK, Elements.STORYLINE_CONTAINER).removeClass(BB.lib.unclass(Elements.CLASS_TIMELINE_BLOCK_SELECTED));
@@ -197,31 +197,54 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
          **/
         _populateBlocks: function (i_campaign_timeline_chanel_id) {
             var self = this;
-            var label;
             var timeline = BB.comBroker.getService(BB.SERVICES['CAMPAIGN_VIEW']).getTimelineInstance(self.m_selectedTimelineID);
             var channel = timeline.getChannelInstance(i_campaign_timeline_chanel_id);
             var blocks = channel.getBlocks();
+            var snippet, totalPercent = 0;
             for (var block in blocks) {
                 var blockData = blocks[block].getBlockData();
                 var blockID = blockData.blockID;
+                var fontAwesome = blocks[block].getBlockData().blockFontAwesome;
                 var totalDuration = parseInt(pepper.getTimelineTotalDuration(self.m_selectedTimelineID));
                 var blockDuration = pepper.getBlockTimelineChannelBlockLength(blockID).totalInSeconds;
-                var percent = Math.floor((parseFloat(blockDuration) / parseFloat(totalDuration) * 100));
-                var recBlock = pepper.getBlockRecord(blockID);
-                var blockType = $(recBlock.player_data).attr('player') != undefined ? $(recBlock.player_data).attr('player') : '3510';
-                var color = BB.PepperHelper.getBlockBoilerplate(blockType).color;
-                var acronym = BB.PepperHelper.getBlockBoilerplate(blockType).acronym;
+                var percent = (parseFloat(blockDuration) / parseFloat(totalDuration) * 100);
+                totalPercent += percent;
 
                 var blockWidth = (self.m_storyWidth * percent) / 100;
-                if (blockWidth < 50) {
-                    label = '';
+                if (blockWidth < 1)
+                    continue;
+                if (totalPercent >= 100)
+                    continue;
+                if (blockWidth < 25) {
+                    snippet = '<div class="timelineBlock" data-timeline_channel_block_id="' + blockID + '" style="width: ' + percent + '%;"></div>';
                 } else {
-                    label = $(recBlock).attr('label');
-                    if (_.isEmpty(label))
-                        label = acronym;
+                    snippet = '<div class="timelineBlock" data-timeline_channel_block_id="' + blockID + '" style="width: ' + percent + '%;"><i class="fa ' + fontAwesome + '"></i></div>';
                 }
-                var snippet = '<div class="timelineBlock" data-timeline_channel_block_id="' + blockID + '" style="width: ' + percent + '%; background-color: ' + color + '"><span>' + label + '</span></div>';
                 $(self.m_storylineContainerSnippet).find('.channelBody:last').append(snippet);
+
+                /*
+                 var percent = Math.floor((parseFloat(blockDuration) / parseFloat(totalDuration) * 100));
+                 var recBlock = pepper.getBlockRecord(blockID);
+                 var blockType = $(recBlock.player_data).attr('player') != undefined ? $(recBlock.player_data).attr('player') : '3510';
+                 var color = BB.PepperHelper.getBlockBoilerplate(blockType).color;
+                 snippet = '<div class="timelineBlock" data-timeline_channel_block_id="' + blockID + '" style="width: ' + percent + '%; background-color: ' + color + '"><i class="fa fa-jsfiddle"></i>...</div>';
+                 snippet = '<div class="timelineBlock" data-timeline_channel_block_id="' + blockID + '" style="width: ' + percent + '%; background-color: ' + color + '"></div>';
+                 stop = true;
+                 var blockWidth = (self.m_storyWidth * percent) / 100;
+                 if (blockWidth < 50) {
+                 label = '';
+                 } else {
+                 label = $(recBlock).attr('label');
+                 if (_.isEmpty(label))
+                 label = acronym;
+                 }
+                 label = $(recBlock).attr('label'); //if (_.isEmpty(label))
+                 label = acronym;
+                 var acronym = BB.PepperHelper.getBlockBoilerplate(blockType).acronym;
+                 }
+                 var snippet = '<div class="timelineBlock" data-timeline_channel_block_id="' + blockID + '" style="width: ' + percent + '%; background-color: ' + color + '"><span>' + label + '</span></div>';
+                 */
+
             }
         },
 
@@ -264,7 +287,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
          Forget all current selections
          @method _deselection
          **/
-        _deselection: function(){
+        _deselection: function () {
             var self = this;
             self.m_selectedTimelineID = undefined;
             self.m_selectedBlockID = undefined;
@@ -308,10 +331,10 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             if (_.isUndefined($(blockElem).attr('class')))
                 return false;
 
-            if ( $(blockElem).hasClass(BB.lib.unclass(Elements.CLASS_STORYLINE_CHANNEL)))
+            if ($(blockElem).hasClass(BB.lib.unclass(Elements.CLASS_STORYLINE_CHANNEL)))
                 blockElem = $(blockElem).find(Elements.CLASS_CHANNEL_HEAD);
 
-            if ( $(blockElem).hasClass(BB.lib.unclass(Elements.CLASS_TIMELINE_BLOCK)))
+            if ($(blockElem).hasClass(BB.lib.unclass(Elements.CLASS_TIMELINE_BLOCK)))
                 blockElem = $(blockElem).closest(Elements.CLASS_CHANNEL_BODY);
 
             var timeline_channel_id = $(blockElem).data('timeline_channel_id');

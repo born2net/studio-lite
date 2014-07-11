@@ -60,7 +60,7 @@ PepperHelper.prototype = {
             'png': { image: 'fa-picture-o' },
             'jpg': { image: 'fa-file-image-o' },
             'html5': { image: 'fa-html5' },
-            'clock': { image: 'fa-clock-o ' },
+            'clock': { image: 'fa-clock-o' },
             'label': { image: 'fa-file-text-o' },
             'swf': { image: 'fa-bolt' },
             'extvideo': { image: 'fa-share-square-o' },

@@ -82,19 +82,22 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 // dont process deleted resources
                 if (recResources[i]['change_type'] == 3)
                     return;
-
                 var size = (parseInt(recResources[i]['resource_bytes_total']) / 1000).toFixed(2);
                 var resourceDescription = 'size: ' + size + 'K dimenstion: ' + recResources[i]['resource_pixel_width'] + 'x' + recResources[i]['resource_pixel_height'];
+                var resourceFontAwesome = BB.PepperHelper.getFontAwesome(recResources[i]['resource_type'])
+                if (_.isUndefined(resourceFontAwesome)){
+                    bootbox.alert($(Elements.MSG_BOOTBOX_FILE_FORMAT_INVALID).text());
+                } else {
+                    var snippet = '<li class="' + BB.lib.unclass(Elements.CLASS_RESOURCES_LIST_ITEMS) + ' list-group-item" data-resource_id="' + recResources[i]['resource_id'] + '">' +
+                        '<a href="#">' +
+                        '<i class="fa ' + resourceFontAwesome + '"></i>'+
+                        '<span>' + recResources[i]['resource_name'] + '</span>' +
+                        '<p>' + '' + '</p></a>' +
+                        '</a>' +
+                        '</li>';
 
-                var snippet = '<li class="' + BB.lib.unclass(Elements.CLASS_RESOURCES_LIST_ITEMS) + ' list-group-item" data-resource_id="' + recResources[i]['resource_id'] + '">' +
-                    '<a href="#">' +
-                    '<i class="fa ' + BB.PepperHelper.getFontAwesome(recResources[i]['resource_type']) + '"></i>'+
-                    '<span>' + recResources[i]['resource_name'] + '</span>' +
-                    '<p>' + '' + '</p></a>' +
-                    '</a>' +
-                    '</li>';
-
-                $(Elements.RESOURCE_LIB_LIST).append($(snippet));
+                    $(Elements.RESOURCE_LIB_LIST).append($(snippet));
+                }
             });
         },
 

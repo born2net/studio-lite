@@ -434,6 +434,8 @@ PepperHelper.prototype = {
      **/
     getFontAwesome: function (i_fontName) {
         var self = this;
+        if (_.isUndefined((self.m_fontAwesome[i_fontName])))
+            return undefined;
         return self.m_fontAwesome[i_fontName]['image'];
     },
 

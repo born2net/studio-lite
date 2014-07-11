@@ -331,11 +331,13 @@
         <div id="files">
             <div align="left">
                 <label data-role="button" align="left" class="file-upload">
-                    <input id="file" name="file" type="file" multiple data-role="none">
+                    <input id="file" name="file" type="file" accept=".flv,.mp4,.jpg,.png,.swf" class="btn-primary" title="Search for a file to add" data-filename-placement="inside" multiple data-role="none">
                 </label>
                 <button id="fileRemove" type="button" class="btn btn-default"><span
                         class="glyphicon glyphicon-remove"></span><span data-localize="remove"> remove </span></button>
+                <span data-localize="supportedFiles"> (supported files: flv, mp4, jpg, png and swf)</span>
             </div>
+
             <br/>
 
             <div id="resourceLibListWrap" class="yScroll">
@@ -983,7 +985,7 @@
 </div>
 </div>
 <div id="footer"><br>
-    <span id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.110 </span></div>
+    <span id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.111 </span></div>
 
 <!-- Modal -->
 <div class="modal modal-static fade" id="bsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -1304,6 +1306,8 @@
 
 <p style="display: none" id="bootBoxScreenDivPosReset" data-localize="bootBoxScreenDivPosReset">screen division position
     reset</p>
+
+<p style="display: none" id="bootBoxFileFormatInvalid" data-localize="bootBoxFileFormatInvalid">the file format is invalid, supported formats include flv,mp4,png,jpg,swf</p>
 
 <p style="display: none" id="bootBoxCostumeTitle" data-localize="bootBoxCostumeTitle">Custom title</p>
 

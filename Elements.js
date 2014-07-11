@@ -242,6 +242,7 @@ Elements.MSG_BOOTBOX_SCENE_REMOVE ='#bootBoxSceneRemove';
 Elements.MSG_BOOTBOX_MUST_SELECT_SCENE = '#bootBoxSceneMustSelectScene';
 Elements.MSG_BOOTBOX_NO_FLASH = '#bootBoxNoFlash';
 Elements.MSG_BOOTBOX_OLD_BROWSER = '#bootBoxOldBrowser';
+Elements.MSG_BOOTBOX_FILE_FORMAT_INVALID = '#bootBoxFileFormatInvalid';
 
 // templates
 Elements.FONT_SELECTOR_TEMPLATE = '#fontSelectorTemplate';

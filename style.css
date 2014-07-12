@@ -16,7 +16,6 @@ body {
     font-size: 12px;
 }
 
-
 @font-face {
     font-family: 'Jolly Lodger';
     font-style: normal;
@@ -47,10 +46,6 @@ aside > aside > div > ul > li {
     margin-left: 30px;
 }
 
-.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
-    background-color: #428bca
-}
-
 /************************************
  StudioLite CSS element styling
  ************************************/
@@ -61,6 +56,17 @@ aside > aside > div > ul > li {
     height: auto;
     margin: 0 auto -60px; /* respective of footer */
     padding: 0 0 60px; /* respective of footer */
+}
+
+#videoModalHeader {
+    font-size: 22px;
+    color: #428bca;
+}
+
+#videoModalHeaderLite {
+    font-family: Lobster Two;
+    font-size: 25px;
+    color: #428bca;
 }
 
 /* Wrapper to push down from header */
@@ -659,6 +665,10 @@ iframe {
     width: 3px;
     background-color: red;
     opacity: 0.6
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    background-color: #428bca
 }
 
 .noScroll {
@@ -1711,7 +1721,16 @@ Language selector
 }
 
 .video-js {
-  /*  width: 100% !important; */
+    /*  width: 100% !important; */
+}
+
+.vjs-fullscreen-control {
+    display: none;
+}
+
+.vjs-volume-control {
+    width: 50px;
+    right: 85px;
 }
 
 /*

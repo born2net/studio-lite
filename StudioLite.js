@@ -5,7 +5,7 @@
  @constructor
  @return {Object} instantiated StudioLite
  **/
-define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 'ComBroker', 'Lib', 'Pepper', 'PepperHelper', 'Elements'], function (_, $, Backbone, Bootstrap, backbonecontroller, ComBroker, Lib, Pepper, PepperHelper, Elements) {
+define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 'ComBroker', 'Lib', 'Pepper', 'PepperHelper', 'Elements', 'bootbox'], function (_, $, Backbone, Bootstrap, backbonecontroller, ComBroker, Lib, Pepper, PepperHelper, Elements, bootbox) {
     var StudioLite = Backbone.Controller.extend({
 
         // app init
@@ -13,6 +13,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             var self = this;
 
             window.BB = Backbone;
+            window.bootbox = bootbox;
             BB.globs = {};
             BB.SERVICES = {};
             BB.EVENTS = {};
@@ -45,7 +46,6 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             $(window).on('beforeunload', function () {
                 //return 'Did you save your work?'
             });
-
 
             // router init
             require(['LayoutRouter', 'Events'], function (LayoutRouter) {

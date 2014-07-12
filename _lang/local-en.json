@@ -205,9 +205,9 @@
     "getNextItemButtonToolTip": "get next item",
     "bootBoxSceneRemove": "Are you sure you want to remove this scene?",
     "bootBoxSceneMustSelectScene": "You must first select or add a scene",
-
     "bootBoxOldBrowser": "Geeesh… Your browser is a dinosaur, please use the latest version from Google chrome, Microsoft Internet Explorer or Mozilla Firefox, and we promise you will be amazed...",
     "bootBoxNoFlash": "Adobe Flash must be installed so you can live preview",
+    "quickIntro": "watch a quick intro video for ",
     "campaignPreviewTooltip": "campaign preview",
     "playPreview": "play preview",
     "stopPreview": "stop preview",

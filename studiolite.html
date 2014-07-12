@@ -162,16 +162,16 @@
             <div id="videoModalContent" class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="myModalLabel">video tuorial</h4>
+                    <span data-localize="quickIntro" class="modal-title" id="videoModalHeader">watch a quick intro video for </span><span id="videoModalHeaderLite">StudioLite</span>
                 </div>
                 <div class="modal-body">
-                    <video id="MY_VIDEO_1" class="centerElement video-js vjs-default-skin" controls preload="auto" poster="MY_VIDEO_POSTER.jpg"
+                    <video id="MY_VIDEO_1" class="centerElement vjs-big-play-centered video-js vjs-default-skin" controls preload="auto" poster="videoIntro.png"
                            data-setup="{}">
-                        <source src="https://secure.digitalsignage.com/_studiolite-dev/NUC.mp4" type='video/mp4'>
+                        <source src="https://secure.digitalsignage.com/_studiolite-dev/StudioLite.mp4" type='video/mp4'>
                     </video>
                 </div>
                 <div class="modal-footer">
-                    <button id="closeModal" type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    <button id="closeModal" type="button" class="btn btn-primary" data-dismiss="modal">Ok I got it</button>
                 </div>
             </div>
         </div>
@@ -614,8 +614,7 @@
 </div>
 <div id="helpPanel" style="display: none">
     <h3 data-localize="videoTutorial">Video tutorial - learn how to use StudioLite</h3>
-    <a type="button" href="http://www.digitalsignage.com/_html/signage_video.html?videoNumber=StudioLite"
-       class="helpLinks btn btn-primary btn-lg" data-localize="watchNow"> Watch it now </a>
+    <button id="launchDemoModel" class="btn btn-primary btn-lg" data-localize="watchNow">Watch it now</button>
     <hr/>
     <h3 data-localize="additionalLinks">Additional links</h3>
     <ul>
@@ -632,14 +631,6 @@
         <li><a class="helpLinks" href="http://www.digitalsignage.com/support/upload/index.php?/Knowledgebase/List"
                data-localize="knowledgeBase">Knowledge base</a></li>
     </ul>
-
-
-    <!-- Button trigger modal -->
-    <button id="launchDemoModel" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#videoModal">
-        Launch demo modal
-    </button>
-
-
     <hr/>
 </div>
 <div id="logoutPanel" style="display: none">

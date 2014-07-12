@@ -1698,6 +1698,22 @@ Language selector
     margin-right: 10px;
 }
 
+.modal-dialog {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.modal-content {
+    height: 100%;
+    border-radius: 0;
+}
+
+.video-js {
+  /*  width: 100% !important; */
+}
+
 /*
 i.fa {
     -webkit-animation: show 1s 1;

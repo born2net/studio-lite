@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated CampaignNameView
  **/
-define(['jquery', 'backbone'], function ($, Backbone) {
+define(['jquery', 'backbone', 'video'], function ($, Backbone, video) {
 
     BB.SERVICES.CAMPAIGN_NAME_SELECTOR_VIEW = 'CampaignNameSelectorView';
 
@@ -25,6 +25,23 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             $(this.el).find(Elements.PREVIOUS).on('click', function () {
                 self.options.stackView.slideToPage(self.options.from, 'left');
                 return false;
+            });
+
+            $('#launchDemoModel').click(function(e){
+                videojs("MY_VIDEO_1").ready(function(){
+                    self.m_videoPlayer = this;
+                    var w = $('#myModal').width();
+                    var h = $('#myModal').height() - 100;
+                    $('.video-js').width(w).height(h);
+                    self.m_videoPlayer.load();
+                    self.m_videoPlayer.play();
+
+                });
+            });
+
+            $('#closeModal').click(function() {
+                self.m_videoPlayer.pause();
+                self.m_videoPlayer.load();
             });
 
             self._listenInputChange();

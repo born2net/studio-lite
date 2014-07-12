@@ -515,6 +515,18 @@ iframe {
     top: -17px
 }
 
+#videoModalDialog {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+#videoModalContent {
+    height: 100%;
+    border-radius: 0;
+}
+
 /************************************
  StudioLite class styling
  ************************************/
@@ -1696,18 +1708,6 @@ Language selector
     border: none;
     vertical-align: middle;
     margin-right: 10px;
-}
-
-#videoModalDialog {
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-}
-
-#videoModalContent {
-    height: 100%;
-    border-radius: 0;
 }
 
 .video-js {

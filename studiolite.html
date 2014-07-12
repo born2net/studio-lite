@@ -156,6 +156,28 @@
     </ul>
 </div>
 <div id="mainPanelWrap" class="col-xs-12 col-sm-9 col-md-9 col-lg-8">
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div id="aaa" class="modal-dialog">
+            <div id="bbb" class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <video id="MY_VIDEO_1" class="centerElement video-js vjs-default-skin" controls preload="auto" poster="MY_VIDEO_POSTER.jpg"
+                           data-setup="{}">
+                        <source src="https://secure.digitalsignage.com/_studiolite-dev/NUC.mp4" type='video/mp4'>
+                    </video>
+                </div>
+                <div class="modal-footer">
+                    <button id="closeModal" type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <button id="togglePanel" class="propPanelIsOpen btn btn-default btn-sm hidden-lg"><span
         class="glyphicon glyphicon-resize-horizontal"></span></button>
 <div id="campaignManagerView">
@@ -613,32 +635,6 @@
     </ul>
 
 
-    <!-- Button trigger modal -->
-    <button id="launchDemoModel" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-        Launch demo modal
-    </button>
-
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                </div>
-                <div class="modal-body">
-                    <video id="MY_VIDEO_1" class="centerElement video-js vjs-default-skin" controls preload="auto" poster="MY_VIDEO_POSTER.jpg"
-                           data-setup="{}">
-                        <source src="https://secure.digitalsignage.com/_studiolite-dev/NUC.mp4" type='video/mp4'>
-                    </video>
-                </div>
-                <div class="modal-footer">
-                    <button id="closeModal" type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
     <hr/>
 </div>
@@ -1018,7 +1014,7 @@
 <!-- Modal -->
 <div class="modal modal-static fade" id="bsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
-    <div class="modal-dialog">
+    <div id="" class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button id="toggleProperties" type="button" class="close" data-dismiss="modal"

@@ -1698,14 +1698,14 @@ Language selector
     margin-right: 10px;
 }
 
-.modal-dialog {
+#aaa {
     width: 100%;
     height: 100%;
     padding: 0;
     margin: 0;
 }
 
-.modal-content {
+#bbb {
     height: 100%;
     border-radius: 0;
 }

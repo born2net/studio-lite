@@ -46,10 +46,6 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
                 //return 'Did you save your work?'
             });
 
-            setTimeout(function(){
-                $('#launchDemoModel').trigger('click');
-            },5000);
-
 
             // router init
             require(['LayoutRouter', 'Events'], function (LayoutRouter) {

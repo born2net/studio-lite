@@ -209,6 +209,7 @@ iframe {
     margin: 0px;
     background-color: #3e3f48;
     border-right: 1px solid #dddddd;
+    /* enable following for dropshadow on appNavPanel */
     /*-webkit-box-shadow: 2px 0px 5px 0px rgba(50, 50, 50, 0.75);
     -moz-box-shadow: 2px 0px 5px 0px rgba(50, 50, 50, 0.75);
     box-shadow: 2px 0px 5px 0px rgba(50, 50, 50, 0.75);*/

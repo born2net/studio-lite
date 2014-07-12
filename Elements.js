@@ -214,9 +214,11 @@ Elements.LANGUAGE_PROMPT = '#languagePrompt';
 Elements.VIDEO_MODAL = '#videoModal';
 Elements.VIDEO_MODAL_DIALOG = '#videoModalDialog';
 Elements.VIDEO_MODAL_CONTENT = '#videoModalContent';
+Elements.DUPLICATE_SCENE = '#duplicateScene';
 
 // messages
 Elements.MSG_BOOTBOX_RESTART_STATIONS = '#bootBoxRestartStations';
+Elements.MSG_BOOTBOX_DUPLICATE_SCENE = '#bootBoxDuplicateScene';
 Elements.MSG_BOOTBOX_STUDIO_LITE_ACC = '#bootBoxStudioLiteAcc';
 Elements.MSG_BOOTBOX_LOGIN_WRONG_CRED = '#bootBoxLoginWrongCred';
 Elements.MSG_BOOTBOX_SAVE_REMOTE_SRV = '#bootBoxSaveRemoteSrv';

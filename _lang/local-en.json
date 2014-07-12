@@ -226,7 +226,9 @@
     "fullScreenPreview": "full screen preview",
     "magneticGrid": "magnetic grid",
     "appSettings": "app settings",
-    "timelinePreview": "Preview timeline"
+    "timelinePreview": "Preview timeline",
+    "duplicateScene": "duplicate scene",
+    "bootBoxDuplicateScene": "are you sure you want to make a copy of this scene?"
 
 }
 

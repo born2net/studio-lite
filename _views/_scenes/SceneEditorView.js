@@ -65,6 +65,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._listenSceneBlockRemove();
             self._listenSceneNew();
             self._listenMemento();
+            self._listenDuplicateScene();
             self._listenGridMagnet();
             self._listenCanvasSelectionsFromToolbar();
             self._listenAppResized();
@@ -376,10 +377,11 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             BB.comBroker.listen(BB.EVENTS.NEW_SCENE_ADD, function (e) {
                 var player_data = BB.PepperHelper.getBlockBoilerplate('3510').getDefaultPlayerData(BB.CONSTS.PLACEMENT_IS_SCENE);
-                self.m_selectedSceneID = pepper.createScene(player_data);
-                BB.comBroker.fire(BB.EVENTS.NEW_SCENE_ADDED, this, null, self.m_selectedSceneID);
-                self._loadScene();
-                BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this, null);
+                self._createScene(player_data, false);
+                //self.m_selectedSceneID = pepper.createScene(player_data);
+                //BB.comBroker.fire(BB.EVENTS.NEW_SCENE_ADDED, this, null, self.m_selectedSceneID);
+                //self._loadScene();
+                //BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this, null);
             });
         },
 
@@ -687,6 +689,58 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 self.m_blocks.blockSelected = undefined;
                 self._discardSelections();
                 self._mementoLoadState('redo');
+            });
+        },
+
+        /**
+         Create a new scene based on player_data and strip injected IDs if arged
+         @method _createScene
+         @param {String} i_scenePlayerData
+         @param {Boolean} i_stripIDs
+         **/
+        _createScene: function (i_scenePlayerData, i_stripIDs) {
+            var self = this;
+            if (i_stripIDs)
+                i_scenePlayerData = pepper.stripPlayersID(i_scenePlayerData);
+            self.m_selectedSceneID = pepper.createScene(i_scenePlayerData);
+            BB.comBroker.fire(BB.EVENTS.NEW_SCENE_ADDED, this, null, self.m_selectedSceneID);
+            self._loadScene();
+            BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this, null);
+        },
+
+        /**
+         Listen to duplicate scene
+         @method _listenDuplicateScene
+         **/
+        _listenDuplicateScene: function () {
+            var self = this;
+            $(Elements.DUPLICATE_SCENE).on('click', function () {
+                if (_.isUndefined(self.m_canvas))
+                    return;
+                var duplicateScene = function () {
+                    var scenePlayerData = pepper.getScenePlayerdata(self.m_selectedSceneID);
+                    self._createScene(scenePlayerData, true)
+                };
+
+                bootbox.dialog({
+                    message: $(Elements.MSG_BOOTBOX_DUPLICATE_SCENE).text(),
+                    buttons: {
+                        success: {
+                            label: $(Elements.MSG_BOOTBOX_OK).text(),
+                            className: "btn-success",
+                            callback: function () {
+                                duplicateScene()
+                            }
+                        },
+                        main: {
+                            label: $(Elements.MSG_BOOTBOX_CANCEL).text(),
+                            callback: function () {
+                                return;
+                            }
+                        }
+                    }
+                });
+
             });
         },
 

@@ -211,6 +211,8 @@ Elements.LAYOUT_EDITOR_PUSH_BOTTOM = '#layoutEditorPushBottom';
 Elements.LAYOUT_EDITOR_NEXT = '#layoutEditorNext';
 Elements.LANGUAGE_SELECTION_LOGIN = '#languageSelectionLogin';
 Elements.LANGUAGE_PROMPT = '#languagePrompt';
+Elements.VIDEO_MODAL = '#videoModal';
+Elements.VIDEO_MODAL_CONTENT = '#'videoModalContent;
 
 // messages
 Elements.MSG_BOOTBOX_RESTART_STATIONS = '#bootBoxRestartStations';

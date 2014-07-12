@@ -46,9 +46,9 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
                 //return 'Did you save your work?'
             });
 
-            //setTimeout(function(){
-            //    $('#launchDemoModel').trigger('click');
-            //},6000)
+            setTimeout(function(){
+                $('#launchDemoModel').trigger('click');
+            },6000);
 
 
             // router init

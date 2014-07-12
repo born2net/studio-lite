@@ -212,6 +212,7 @@ Elements.LAYOUT_EDITOR_NEXT = '#layoutEditorNext';
 Elements.LANGUAGE_SELECTION_LOGIN = '#languageSelectionLogin';
 Elements.LANGUAGE_PROMPT = '#languagePrompt';
 Elements.VIDEO_MODAL = '#videoModal';
+Elements.VIDEO_MODAL_DIALOG = '#videoModalDialog';
 Elements.VIDEO_MODAL_CONTENT = '#videoModalContent';
 
 // messages

@@ -30,8 +30,8 @@ define(['jquery', 'backbone', 'video'], function ($, Backbone, video) {
             $('#launchDemoModel').click(function(e){
                 videojs("MY_VIDEO_1").ready(function(){
                     self.m_videoPlayer = this;
-                    var w = $('#myModal').width();
-                    var h = $('#myModal').height() - 100;
+                    var w = $(Elements.VIDEO_MODAL).width();
+                    var h = $(Elements.VIDEO_MODAL).height() - 100;
                     $('.video-js').width(w).height(h);
                     self.m_videoPlayer.load();
                     self.m_videoPlayer.play();

@@ -157,9 +157,8 @@
 </div>
 <div id="mainPanelWrap" class="col-xs-12 col-sm-9 col-md-9 col-lg-8">
 
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div id="videoModal" class="modal-dialog">
+    <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div id="videoModalDialog" class="modal-dialog">
             <div id="videoModalContent" class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -636,7 +635,7 @@
 
 
     <!-- Button trigger modal -->
-    <button id="launchDemoModel" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+    <button id="launchDemoModel" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#videoModal">
         Launch demo modal
     </button>
 
@@ -1016,26 +1015,7 @@
 <div id="footer"><br>
     <span id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.114 </span></div>
 
-<!-- Modal -->
-<div class="modal modal-static fade" id="bsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
-    <div id="" class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button id="toggleProperties" type="button" class="close" data-dismiss="modal"
-                        aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel" data-localize="ModalTitle">Modal title</h4>
-            </div>
-            <div class="modal-body">
-                <h3 data-localize="someContent">some content</h3>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" data-localize="close">Close</button>
-                <button type="button" class="btn btn-primary" data-localize="saveChanges">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 <div id="popModal" style="display: none"></div>
 <div id="popupProperties" style="display: none">
     <button style="float: right; margin: 20px" type="button" class="btn btn-default btn-sm modal_close"

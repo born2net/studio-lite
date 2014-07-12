@@ -48,7 +48,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
 
             setTimeout(function(){
                 $('#launchDemoModel').trigger('click');
-            },6000);
+            },5000);
 
 
             // router init

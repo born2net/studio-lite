@@ -115,7 +115,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 imgPath = 'https://s3-us-west-2.amazonaws.com/oregon-signage-resources/business' + businessID + '/resources/' + self.m_nativeID + '.' + self.m_fileFormat;
             }
 
-
             $('<img src="'+ imgPath +'" style="display: none" >').load(function() {
                 $(this).width(1000).height(800).appendTo('body');
                 var options = self._fabricateOptions(parseInt(layout.attr('y')), parseInt(layout.attr('x')), parseInt(layout.attr('width')), parseInt(layout.attr('height')), parseInt(layout.attr('rotation')));

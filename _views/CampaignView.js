@@ -9,7 +9,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
     /**
      Custom event fired when a timeline or channel or block within the timeline has changed
      it ignores the event.
-     @event Timeline.CAMPAIGN_TIMELINE_SELECTED
+     @event CAMPAIGN_TIMELINE_CHANGED
      @param {This} caller
      @param {Self} context caller
      @param {Event} timelineID of the timeline selected
@@ -61,6 +61,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
 
             self._listenDelTimeline();
             self._onWireTimeLineOrViewerSelected();
+            self._listenBackToCampaigns();
             self._listenAddNewTimeline();
             self._listenCampaignPreview();
             self._listenCampaignTimelinePreview();
@@ -235,6 +236,17 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
                     }
                     return;
                 }
+            });
+        },
+
+        /**
+         Go back to campaign selection screen
+         @method _listenBackToCampaigns
+         **/
+        _listenBackToCampaigns: function () {
+            var self = this;
+            $(Elements.BACK_TO_CAMPAIGNS).on('click',function(){
+                self.options.stackView.slideToPage(Elements.CAMPAIGN_SELECTOR, 'left');
             });
         },
 

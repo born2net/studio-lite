@@ -6,6 +6,17 @@
  **/
 define(['jquery', 'backbone'], function ($, Backbone) {
 
+    /**
+     Custom event fired when a going back to campaign selection so we need to reset all
+     @event CAMPAIGN_SELECTION_RESET
+     @param {This} caller
+     @param {Self} context caller
+     @param {Event}
+     @static
+     @final
+     **/
+    BB.EVENTS.CAMPAIGN_SELECTION_RESET = 'CAMPAIGN_SELECTION_RESET';
+
     BB.SERVICES.CAMPAIGN_SELECTOR = 'CampaignSelector';
 
     var CampaignSelectorView = BB.View.extend({
@@ -34,10 +45,11 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          Wire the UI including new campaing creation and delete existing campaign
          @method _wireUI
          **/
-        _wireUI: function(){
+        _wireUI: function () {
             var self = this;
 
             $(Elements.NEW_CAMPAIGN).on('click', function (e) {
+                BB.comBroker.fire(BB.EVENTS.CAMPAIGN_SELECTION_RESET, this);
                 self.options.stackView.slideToPage(self.options.to, 'right');
                 return false;
             });
@@ -47,8 +59,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     var selectedElement = self.$el.find('[data-campaignid="' + self.m_selectedCampaignID + '"]');
                     var allCampaignIDs = pepper.getStationCampaignIDs();
                     if (_.indexOf(allCampaignIDs, self.m_selectedCampaignID) == -1) {
-                        bootbox.confirm($(Elements.MSG_BOOTBOX_SURE_DELETE_CAMPAIGN).text(), function(result) {
-                            if (result==true){
+                        bootbox.confirm($(Elements.MSG_BOOTBOX_SURE_DELETE_CAMPAIGN).text(), function (result) {
+                            if (result == true) {
                                 selectedElement.remove();
                                 self._removeCampaignFromMSDB(self.m_selectedCampaignID);
                             }
@@ -101,6 +113,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 $(Elements.CLASS_CAMPIGN_LIST_ITEM, self.el).removeClass('active');
                 $(this).addClass('active');
                 self.m_selectedCampaignID = $(this).data('campaignid');
+                BB.comBroker.fire(BB.EVENTS.CAMPAIGN_SELECTION_RESET, this);
                 self.options.stackView.slideToPage(Elements.CAMPAIGN, 'right');
                 return false;
             });

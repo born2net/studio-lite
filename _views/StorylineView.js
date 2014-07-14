@@ -34,8 +34,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             self.m_selectedBlockID = undefined;
             self.m_selectedChannel = undefined;
             BB.comBroker.listen(BB.EVENTS.SIDE_PANEL_SIZED, $.proxy(self._updateWidth, self));
-            //BB.comBroker.listen(BB.EVENTS.APP_SIZED, $.proxy(self._updateWidth, self));
-            //BB.comBroker.listen(BB.EVENTS.APP_SIZED, $.proxy(self._render, self));
+            self._listenReset();
             self._listenTimelineSelected();
             self._listenTimelineChanged();
             self._listenBlockSelection();
@@ -65,6 +64,21 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                 }, 100);
             }
             self.m_render();
+        },
+
+
+        /**
+         Listen to reset of when switching to different campaign so we forget current state
+         @method _listenReset
+         **/
+        _listenReset: function () {
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS.CAMPAIGN_RESET, function(){
+                self.m_storyWidth = 0;
+                self.m_selectedTimelineID = undefined;
+                self.m_selectedBlockID = undefined;
+                self.m_selectedChannel = undefined;
+            });
         },
 
         /**

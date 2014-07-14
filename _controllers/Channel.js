@@ -32,8 +32,13 @@ define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockVideo', 'BlockScene'],
             self.m_blocks = {}; // hold references to all created player instances
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
             self.m_blockFactory = BB.comBroker.getService(BB.SERVICES['BLOCK_FACTORY']);
-            BB.comBroker.listenOnce(BB.EVENTS.BLOCKS_LOADED, $.proxy(self._onBlocksLoaded, self));
-            self.m_blockFactory.loadBlockModules();
+            self._listenReset();
+            if (self.m_blockFactory.blocksLoaded()){
+                self._onBlocksLoaded();
+            } else {
+                BB.comBroker.listenOnce(BB.EVENTS['BLOCKS_LOADED'], $.proxy(self._onBlocksLoaded, self));
+                self.m_blockFactory.loadBlockModules();
+            }
         },
 
         /**
@@ -43,29 +48,59 @@ define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockVideo', 'BlockScene'],
         _onBlocksLoaded: function () {
             var self = this;
             self._createChannelBlocks();
-            self.initUI();
+            self._postInit();
             $(Elements.SELECTED_TIMELINE).fadeIn();
         },
 
         /**
          After blocks loaded, continue initiliazation
-         @method initUI
+         @method _postInit
          **/
-        initUI: function () {
+        _postInit: function () {
             var self = this;
             self._onTimelineChannelSelected();
-            self._wireUI();
+            self._listenRandomPlayback();
             self._propLoadChannel();
             self._listenResourceRemoving();
             self._listenSceneRemoving();
+            self._listenViewerRemoved();
+        },
+
+        /**
+         Listen to reset of when switching to different campaign so we forget current state
+         @method _listenReset
+         **/
+        _listenReset: function () {
+            var self = this;
+            BB.comBroker.listenWithNamespace(BB.EVENTS.CAMPAIGN_RESET, self, function () {
+                $(self.m_thumbsContainer).empty();
+                self._reset();
+            });
+        },
+
+        /**
+         Reset current state
+         @method _reset
+         **/
+        _reset: function () {
+            var self = this;
+            $(Elements.RANDOM_PLAYBACK).off('change', self.m_randomPlaybackHandler);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.CAMPAIGN_RESET, self);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.VIEWER_REMOVED, self);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.REMOVING_RESOURCE, self);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.REMOVING_SCENE, self);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.CAMPAIGN_TIMELINE_CHANNEL_SELECTED, self);
+            $.each(self, function (k) {
+                self[k] = undefined;
+            });
         },
 
         /**
          Wire UI and listen to change in related UI (random playback on channel)
-         @method _wireUI
+         @method _listenRandomPlayback
          @return none
          **/
-        _wireUI: function () {
+        _listenRandomPlayback: function () {
             var self = this;
             self.m_randomPlaybackHandler = $(Elements.RANDOM_PLAYBACK).on('change', function (e) {
                 if (!self.m_selected)
@@ -93,15 +128,29 @@ define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockVideo', 'BlockScene'],
          **/
         _listenResourceRemoving: function () {
             var self = this;
-            BB.comBroker.listen(BB.EVENTS.REMOVING_RESOURCE, function (e) {
-                var removingResoucreID = e.edata;
+            BB.comBroker.listenWithNamespace(BB.EVENTS.REMOVING_RESOURCE, self, function (e) {
+                var removingResourceID = e.edata;
                 for (var blockID in self.m_blocks) {
                     if (self.m_blocks[blockID] instanceof BlockImage || self.m_blocks[blockID] instanceof BlockVideo) {
-                        if (removingResoucreID == self.m_blocks[blockID].getResourceID()) {
+                        if (removingResourceID == self.m_blocks[blockID].getResourceID()) {
                             self.deleteBlock(blockID);
                         }
                     }
                 }
+            });
+        },
+
+        /**
+         Listen when a screen division / viewer inside a screen layout was deleted and if the channel
+         is equal to my channel, dispose of self
+         @method _listenViewerRemoved
+         **/
+        _listenViewerRemoved: function () {
+            var self = this;
+            BB.comBroker.listenWithNamespace(BB.EVENTS.VIEWER_REMOVED, self, function(e){
+                if (e.edata.campaign_timeline_chanel_id != self.m_campaign_timeline_chanel_id)
+                    return;
+                self.deleteChannel();
             });
         },
 
@@ -112,7 +161,7 @@ define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockVideo', 'BlockScene'],
          **/
         _listenSceneRemoving: function () {
             var self = this;
-            BB.comBroker.listen(BB.EVENTS.REMOVING_SCENE, function (e) {
+            BB.comBroker.listenWithNamespace(BB.EVENTS.REMOVING_SCENE, self, function (e) {
                 var removingSceneID = e.edata;
                 for (var blockID in self.m_blocks) {
                     if (self.m_blocks[blockID] instanceof BlockScene) {
@@ -147,8 +196,7 @@ define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockVideo', 'BlockScene'],
          **/
         _onTimelineChannelSelected: function () {
             var self = this;
-
-            BB.comBroker.listen(BB.EVENTS.CAMPAIGN_TIMELINE_CHANNEL_SELECTED, function (e) {
+            BB.comBroker.listenWithNamespace(BB.EVENTS.CAMPAIGN_TIMELINE_CHANNEL_SELECTED, self, function (e) {
                 var channelID = e.edata;
                 if (self.m_campaign_timeline_chanel_id != channelID) {
                     self.m_selected = false;
@@ -226,14 +274,11 @@ define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockVideo', 'BlockScene'],
          **/
         deleteChannel: function () {
             var self = this;
-            $(Elements.RANDOM_PLAYBACK).off('change', self.m_randomPlaybackHandler);
             pepper.removeChannelFromTimeline(self.m_campaign_timeline_chanel_id);
             for (var blockID in self.m_blocks) {
                 self.deleteBlock(blockID);
             }
-            $.each(self, function (k) {
-                self[k] = undefined;
-            });
+            self._reset();
         },
 
         /**

@@ -40,9 +40,37 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             self._populateChannels();
             self._populateTimeline();
             self._listenInputChange();
+            self._listenReset();
             this._onTimelineSelected();
             pepper.listenWithNamespace(Pepper.TEMPLATE_VIEWER_EDITED, self, $.proxy(self._templateViewerEdited, self));
             pepper.listenWithNamespace(Pepper.NEW_CHANNEL_ADDED, self, $.proxy(self._channelAdded, self));
+        },
+
+        /**
+         Listen to reset of when switching to different campaign so we forget current state
+         @method _listenReset
+         **/
+        _listenReset: function () {
+            var self = this;
+            BB.comBroker.listenWithNamespace(BB.EVENTS.CAMPAIGN_RESET, self, function(){
+                self._reset();
+            });
+        },
+
+        /**
+         Reset current state
+         @method _reset
+         **/
+        _reset: function(){
+            var self = this;
+            pepper.stopListenWithNamespace(Pepper.TEMPLATE_VIEWER_EDITED, self);
+            pepper.stopListenWithNamespace(Pepper.NEW_CHANNEL_ADDED, self);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.CAMPAIGN_RESET, self);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED, self);
+            $(Elements.TIME_LINE_PROP_TITLE_ID).off("input", self.m_inputChangeHandler);
+            $.each(self, function (k) {
+                self[k] = undefined;
+            });
         },
 
         /**
@@ -282,18 +310,11 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             pepper.removeBoardTemplate(boardTemplateID);
             pepper.removeTimelineBoardViewerChannels(campaignTimelineBoardTemplateID);
             pepper.removeBoardTemplateViewers(boardTemplateID);
-            pepper.stopListenWithNamespace(Pepper.TEMPLATE_VIEWER_EDITED, self);
-            pepper.stopListenWithNamespace(Pepper.NEW_CHANNEL_ADDED, self);
-            BB.comBroker.stopListenWithNamespace(BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED, self);
-            $(Elements.TIME_LINE_PROP_TITLE_ID).off("input", self.m_inputChangeHandler);
-
             for (var channel in self.m_channels) {
                 self.m_channels[channel].deleteChannel();
                 delete self.m_channels[channel];
             }
-            $.each(self, function (k) {
-                self[k] = undefined;
-            });
+           self._reset();
         }
     });
 

@@ -29,34 +29,48 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
                 self._reOrderChannelBlocks();
             });
 
-            self._wireUI();
+            self._listenAddRemoveBlocks();
             self._listenTimelineSelected();
             self._listenResourceRemoved();
             self._listenSceneRemoved();
             self._listenBlockLengthChanged();
             self._listenStorylineBlockSelected();
             self._listenStorylineChannelSelected();
-
+            self._listenReset();
             pepper.listen(Pepper.TIMELINE_DELETED, $.proxy(self._onTimelineDeleted, self));
 
         },
 
         /**
+         Listen to reset of when switching to different campaign so we forget current state
+         @method _listenReset
+         **/
+        _listenReset: function () {
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS.CAMPAIGN_RESET, function(){
+                self.selected_block_id = undefined;
+                self.selected_campaign_timeline_chanel_id = undefined;
+                self.selected_campaign_timeline_id = undefined;
+                self.selected_campaign_timeline_board_viewer_id = undefined;
+            });
+        },
+
+        /**
          Wire the UI and listen to channel remove and channel add button events.
-         @method _wireUI
+         @method _listenAddRemoveBlocks
          @return none
          **/
-        _wireUI: function () {
+        _listenAddRemoveBlocks: function () {
             var self = this;
             $(Elements.REMOVE_BLOCK_BUTTON).on('click', function (e) {
-                if (self.selected_block_id == undefined) {
+                if (_.isUndefined(self.selected_block_id)) {
                     bootbox.alert($(Elements.MSG_BOOTBOX_SELECT_RESOURCE).text());
                     return;
                 }
                 self._deleteChannelBlock(self.selected_block_id);
             });
             $(Elements.ADD_BLOCK_BUTTON).on('click', function (e) {
-                if (self.selected_campaign_timeline_id == undefined) {
+                if (_.isUndefined(self.selected_campaign_timeline_id)) {
                     bootbox.alert($(Elements.MSG_BOOTBOX_SELECT_CHANNEL).text());
                     return;
                 }
@@ -142,7 +156,6 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
          **/
         _createNewChannelBlock: function (i_blockID, i_resourceID, i_sceneID) {
             var self = this;
-
             var totalChannelLength = self._getTotalDurationChannel();
             var jData = pepper.createNewChannelPlayer(self.selected_campaign_timeline_chanel_id, i_blockID, totalChannelLength, i_resourceID, i_sceneID);
             var campaign_timeline_chanel_player_id = jData['campaign_timeline_chanel_player_id'];

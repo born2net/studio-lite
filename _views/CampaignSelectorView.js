@@ -7,15 +7,26 @@
 define(['jquery', 'backbone'], function ($, Backbone) {
 
     /**
-     Custom event fired when a going back to campaign selection so we need to reset all
-     @event CAMPAIGN_SELECTION_RESET
+     Custom event fired when we need to refresh the campaign list
+     @event LOAD_CAMPAIGN_LIST
+     @param {This} caller
+     @param {Self} context caller
+     @param {Event} rss link
+     @static
+     @final
+     **/
+    BB.EVENTS.LOAD_CAMPAIGN_LIST = 'LOAD_CAMPAIGN_LIST';
+
+    /**
+     Custom event fired when a going back to campaign is selected
+     @event CAMPAIGN_SELECTED
      @param {This} caller
      @param {Self} context caller
      @param {Event}
      @static
      @final
      **/
-    BB.EVENTS.CAMPAIGN_SELECTION_RESET = 'CAMPAIGN_SELECTION_RESET';
+    BB.EVENTS.CAMPAIGN_SELECTED = 'CAMPAIGN_SELECTED';
 
     BB.SERVICES.CAMPAIGN_SELECTOR = 'CampaignSelector';
 
@@ -33,23 +44,19 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             });
             self.m_propertiesPanel = BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW);
             self.m_propertiesPanel.addView(this.m_campainProperties);
-
             this._loadCampaignList();
-            this._listenOpenProps();
-            this._listenSelectCampaign();
-            this._listenInputChange();
-            this._wireUI();
         },
 
         /**
          Wire the UI including new campaing creation and delete existing campaign
-         @method _wireUI
+         @method _listenAddRemoveCampaign
          **/
-        _wireUI: function () {
+        _listenAddRemoveCampaign: function () {
             var self = this;
 
             $(Elements.NEW_CAMPAIGN).on('click', function (e) {
-                BB.comBroker.fire(BB.EVENTS.CAMPAIGN_SELECTION_RESET, this);
+                self.m_selectedCampaignID = -1;
+                BB.comBroker.fire(BB.EVENTS.CAMPAIGN_SELECTED, this, this,self.m_selectedCampaignID);
                 self.options.stackView.slideToPage(self.options.to, 'right');
                 return false;
             });
@@ -77,14 +84,26 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         /**
+         Listen for when to refresh the campaign list (new campaign was created)
+         @method _listenLoadCampaignList
+         @return none
+         **/
+        _listenLoadCampaignList: function () {
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS.LOAD_CAMPAIGN_LIST, function (e) {
+                self._loadCampaignList();
+            });
+        },
+
+        /**
          Populate the LI with all available campaigns from msdb
          @method _loadCampaignList
          @return none
          **/
         _loadCampaignList: function () {
             var self = this;
-
             self.m_selected_resource_id = undefined;
+            $(Elements.CAMPAIGN_SELECTOR_LIST).empty();
             var campaignIDs = pepper.getCampaignIDs();
             for (var i = 0; i < campaignIDs.length; i++) {
                 var campaignID = campaignIDs[i];
@@ -100,6 +119,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     '</a>';
                 $(Elements.CAMPAIGN_SELECTOR_LIST).append($(snippet));
             }
+
+            this._listenOpenProps();
+            this._listenSelectCampaign();
+            this._listenInputChange();
+            this._listenAddRemoveCampaign();
+            this._listenLoadCampaignList();
         },
 
         /**
@@ -113,7 +138,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 $(Elements.CLASS_CAMPIGN_LIST_ITEM, self.el).removeClass('active');
                 $(this).addClass('active');
                 self.m_selectedCampaignID = $(this).data('campaignid');
-                BB.comBroker.fire(BB.EVENTS.CAMPAIGN_SELECTION_RESET, this);
+                BB.comBroker.fire(BB.EVENTS.CAMPAIGN_SELECTED, this, this, self.m_selectedCampaignID);
                 self.options.stackView.slideToPage(Elements.CAMPAIGN, 'right');
                 return false;
             });
@@ -126,7 +151,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         _listenOpenProps: function () {
             var self = this;
-
             $(Elements.CLASS_OPEN_PROPS_BUTTON, self.el).on('click', function (e) {
                 $(Elements.CLASS_CAMPIGN_LIST_ITEM, self.el).removeClass('active');
                 var elem = $(e.target).closest('a').addClass('active');

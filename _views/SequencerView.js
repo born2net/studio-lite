@@ -24,6 +24,7 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
             this.m_screenTemplates = {};
 
             self._initLayoutSelectorDragDrop();
+            self._listenReset();
             setTimeout(function () {
                 $(Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).trigger('click');
             }, 3000);
@@ -107,6 +108,19 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
             $('#' + elementID).remove();
             if (self.m_screenTemplates[i_campaign_timeline_id])
                 self.m_screenTemplates[i_campaign_timeline_id].destroy();
+        },
+
+        /**
+         Listen to reset of when switching to different campaign so we forget current state
+         @method _listenReset
+         **/
+        _listenReset: function () {
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS.CAMPAIGN_RESET, function(){
+                self.m_timelines = {};
+                self.m_screenTemplates = {};
+                $(self.m_thumbsContainer).empty();
+            });
         },
 
         /**

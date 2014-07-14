@@ -7,6 +7,17 @@
  **/
 define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($, Backbone, StackView, ScreenTemplateFactory) {
 
+    /**
+     Custom event fired when a screen division / viewer has been removed
+     @event VIEWER_REMOVED
+     @param {This} caller
+     @param {Self} context caller
+     @param {Event} rss link
+     @static
+     @final
+     **/
+    BB.EVENTS.VIEWER_REMOVED = 'VIEWER_REMOVED';
+
     BB.SERVICES.SCREEN_LAYOUT_EDITOR_VIEW = 'ScreenLayoutEditorView';
 
     var ScreenLayoutEditorView = BB.View.extend({
@@ -168,8 +179,12 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                     y: viewer.get('left'),
                     w: viewer.get('width') * self.RATIO,
                     h: viewer.get('height') * self.RATIO
-                }
+                };
                 self._updateDimensionsInDB(viewer, props);
+                BB.comBroker.fire(BB.EVENTS.VIEWER_REMOVED, this, this, {
+                    viewer: self.m_selectedViewerID,
+                    campaign_timeline_chanel_id: campaign_timeline_chanel_id
+                });
             });
 
         },
@@ -382,8 +397,8 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 viewer.setCoords();
                 self.m_canvas.renderAll();
                 bootbox.alert({
-                    message: $(Elements.MSG_BOOTBOX_AT_LEAST_ONE_DIV).text(), 
-                    title: $(Elements.MSG_BOOTBOX_SCREEN_DIV_POS_RESET).text() 
+                    message: $(Elements.MSG_BOOTBOX_AT_LEAST_ONE_DIV).text(),
+                    title: $(Elements.MSG_BOOTBOX_SCREEN_DIV_POS_RESET).text()
                 });
                 var props = {
                     x: viewer.get('top'),
@@ -490,7 +505,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
          **/
         _updateDimensionsInDB: function (i_viewer, i_props) {
             var self = this;
-            log('Pepper ' +i_viewer.get('id') + ' ' + JSON.stringify(i_props));
+            //log('Pepper ' +i_viewer.get('id') + ' ' + JSON.stringify(i_props));
             pepper.setBoardTemplateViewer(self.m_campaign_timeline_board_template_id, i_viewer.get('id'), i_props);
             i_viewer.setCoords();
             self.m_canvas.renderAll();
@@ -504,7 +519,6 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             var self = this;
 
             self.m_canvas.off('selection:cleared', self.m_bgSelectedHandler);
-
             self.m_canvas.off({
                 'object:moving': self.m_objectMovingHandler,
                 'object:scaling': self.m_objectMovingHandler,

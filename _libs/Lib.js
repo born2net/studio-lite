@@ -470,6 +470,20 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         /**
+         Returns the total unique members of an array
+         @method uniqueArray
+         @param {Array} i_array
+         @return {Number} total unique members
+         **/
+        uniqueArraySize: function (i_array) {
+            function onlyUnique(value, index, self) {
+                return self.indexOf(value) === index;
+            }
+            var a = i_array.filter(onlyUnique);
+            return a.length;
+        },
+
+        /**
          Check if a remote file exists
          @method remoteFileExits
          @param {String} url

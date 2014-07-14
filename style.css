@@ -588,6 +588,7 @@ iframe {
     background-color: #428ac9 !important;
 }
 
+/* todo: added */
 .storylineChannel {
     margin-bottom: 1px;
     border-bottom: 1px solid #d0d0d0;
@@ -595,6 +596,7 @@ iframe {
     float: left;
     width: 100%;
     cursor: pointer;
+    overflow: hidden;
 }
 
 .storylineChannel:hover {

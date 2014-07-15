@@ -45,7 +45,7 @@
     "StationManager": " Station Manager",
     "supportComponents": " Support 10 components",
     "sceneEditor": " Scene editor (coming)",
-    "filesVIF": " Files: videos/images/flash",
+    "filesVIF": " videos images flash",
     "tabletsPhones": " Run on Tablets and phones",
     "openSourceGithub": " Open source (GitHub)",
     "youAreHere": "you are here",
@@ -230,7 +230,6 @@
     "duplicateScene": "duplicate scene",
     "backToCampaignsTooltip": "back to campaigns",
     "bootBoxDuplicateScene": "are you sure you want to make a copy of this scene?"
-
 }
 
 

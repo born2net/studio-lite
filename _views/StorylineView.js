@@ -273,7 +273,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                 if (blockWidth < 25) {
                     snippet = '<div class="timelineBlock" data-timeline_channel_block_id="' + blockID + '" style="width: ' + percent + '%;"></div>';
                 } else {
-                    snippet = '<div class="timelineBlock" data-timeline_channel_block_id="' + blockID + '" style="width: ' + percent + '%;"><i class="fa ' + fontAwesome + '"></i></div>';
+                    snippet = '<div class="timelineBlock" data-timeline_channel_block_id="' + blockID + '" style="width: ' + percent + '%;"><i style="font-size: 14px"  class="fa ' + fontAwesome + '"></i></div>';
                 }
                 $(self.m_storylineContainerSnippet).find('.channelBody:last').append(snippet);
 

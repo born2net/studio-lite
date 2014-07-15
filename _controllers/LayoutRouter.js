@@ -5,8 +5,8 @@
  @constructor
  @return {Object} instantiated AppRouter
  **/
-define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEntryFaderView', 'LoginView', 'AppContentFaderView', 'WaitView', 'LivePreView', 'bootbox', 'CampaignManagerView', 'ResourcesView', 'ResourcesView', 'StationsViewLoader', 'SettingsView', 'ProStudioView', 'HelpView', 'LogoutView', 'CampaignSliderStackView', 'ScreenLayoutSelectorView', 'X2JS', 'XDate', 'LanguageSelectorView', 'ScenesLoaderView'],
-    function (_, $, Backbone, AppAuth, NavigationView, AppEntryFaderView, LoginView, AppContentFaderView, WaitView, LivePreView, Bootbox, CampaignManagerView, ResourcesView, ResourcesView, StationsViewLoader, SettingsView, ProStudioView, HelpView, LogoutView, CampaignSliderStackView, ScreenLayoutSelectorView, X2JS, XDate, LanguageSelectorView, ScenesLoaderView) {
+define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEntryFaderView', 'LoginView', 'AppContentFaderView', 'WaitView', 'LivePreView', 'bootbox', 'CampaignManagerView', 'ResourcesLoaderView', 'ResourcesLoaderView', 'StationsViewLoader', 'SettingsView', 'ProStudioView', 'HelpView', 'LogoutView', 'CampaignSliderStackView', 'ScreenLayoutSelectorView', 'X2JS', 'XDate', 'LanguageSelectorView', 'ScenesLoaderView'],
+    function (_, $, Backbone, AppAuth, NavigationView, AppEntryFaderView, LoginView, AppContentFaderView, WaitView, LivePreView, Bootbox, CampaignManagerView, ResourcesLoaderView, ResourcesLoaderView, StationsViewLoader, SettingsView, ProStudioView, HelpView, LogoutView, CampaignSliderStackView, ScreenLayoutSelectorView, X2JS, XDate, LanguageSelectorView, ScenesLoaderView) {
 
         BB.SERVICES.LAYOUT_ROUTER = 'LayoutRouter';
 
@@ -207,7 +207,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                     el: Elements.CAMPAIGN_SLIDER
                 });
 
-                self.m_resourcesView = new ResourcesView({
+                self.m_ResourcesLoaderView = new ResourcesLoaderView({
                     el: Elements.RESOURCES_PANEL,
                     stackView: self.m_appContentFaderView
                 });
@@ -243,7 +243,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 });
 
                 self.m_appContentFaderView.addView(self.m_campaignManagerView);
-                self.m_appContentFaderView.addView(self.m_resourcesView);
+                self.m_appContentFaderView.addView(self.m_ResourcesLoaderView);
                 self.m_appContentFaderView.addView(self.m_stationsViewLoader);
                 self.m_appContentFaderView.addView(self.m_scenesLoaderView);
                 self.m_appContentFaderView.addView(self.m_settingsView);

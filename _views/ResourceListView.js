@@ -5,7 +5,7 @@
  @constructor
  @return {Object} instantiated CompResourcesList
  **/
-define(['jquery', 'backbone'], function ($, Backbone) {
+define(['jquery', 'backbone', 'bootstrapfileinput'], function ($, Backbone, bootstrapfileinput) {
 
     /**
      Custom event fired when resource is removing from resources
@@ -42,13 +42,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
             self.m_property.initPanel(Elements.RESOURCE_LIST_PROPERTIES);
             self._listenInputChange();
-            self._loadResourceList();
-            self._listenResourceSelected();
+            $('input[type=file]').bootstrapFileInput();
             self._listenRemoveResource();
-
             $(Elements.FILE_SELECTION).change(function (e) {
                 self._onFileSelected(e);
             });
+            self.render();
         },
 
         /**
@@ -69,39 +68,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         /**
-         Populate the UI with all resources for the account (i.e.: videos, images, swfs).
-         @method _loadResourceList
-         @return none
-         **/
-        _loadResourceList: function () {
-            var self = this;
-            $(Elements.RESOURCE_LIB_LIST).empty();
-
-            var recResources = pepper.getResources();
-            $(recResources).each(function (i) {
-                // dont process deleted resources
-                if (recResources[i]['change_type'] == 3)
-                    return;
-                var size = (parseInt(recResources[i]['resource_bytes_total']) / 1000).toFixed(2);
-                var resourceDescription = 'size: ' + size + 'K dimenstion: ' + recResources[i]['resource_pixel_width'] + 'x' + recResources[i]['resource_pixel_height'];
-                var resourceFontAwesome = BB.PepperHelper.getFontAwesome(recResources[i]['resource_type'])
-                if (_.isUndefined(resourceFontAwesome)){
-                    bootbox.alert($(Elements.MSG_BOOTBOX_FILE_FORMAT_INVALID).text());
-                } else {
-                    var snippet = '<li class="' + BB.lib.unclass(Elements.CLASS_RESOURCES_LIST_ITEMS) + ' list-group-item" data-resource_id="' + recResources[i]['resource_id'] + '">' +
-                        '<a href="#">' +
-                        '<i class="fa ' + resourceFontAwesome + '"></i>'+
-                        '<span>' + recResources[i]['resource_name'] + '</span>' +
-                        '<p>' + '' + '</p></a>' +
-                        '</a>' +
-                        '</li>';
-
-                    $(Elements.RESOURCE_LIB_LIST).append($(snippet));
-                }
-            });
-        },
-
-        /**
          Listen to remove resource event
          @method _listenRemoveResource
          @return none
@@ -116,7 +82,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 BB.comBroker.fire(BB.EVENTS.REMOVING_RESOURCE, this, null, self.m_selected_resource_id);
                 pepper.removeResource(self.m_selected_resource_id);
                 pepper.removeBlocksWithResourceID(self.m_selected_resource_id);
-                self._loadResourceList();
+                self.render();
                 self._listenResourceSelected();
                 BB.comBroker.fire(BB.EVENTS.REMOVED_RESOURCE, this, null, self.m_selected_resource_id);
             });
@@ -150,9 +116,52 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _onFileSelected: function (e) {
             var self = this;
             pepper.uploadResources('file');
-            self._loadResourceList();
+            self.render();
             self._listenResourceSelected();
             self._listenRemoveResource();
+        },
+
+
+        /**
+         Populate the UI with all resources for the account (i.e.: videos, images, swfs).
+         @method render
+         @return none
+         **/
+        render: function () {
+            var self = this;
+            $(Elements.RESOURCE_LIB_LIST).empty();
+
+            var recResources = pepper.getResources();
+            $(recResources).each(function (i) {
+                // dont process deleted resources
+                if (recResources[i]['change_type'] == 3)
+                    return;
+                var size = (parseInt(recResources[i]['resource_bytes_total']) / 1000).toFixed(2);
+                var resourceDescription = 'size: ' + size + 'K dimenstion: ' + recResources[i]['resource_pixel_width'] + 'x' + recResources[i]['resource_pixel_height'];
+                var resourceFontAwesome = BB.PepperHelper.getFontAwesome(recResources[i]['resource_type'])
+                if (_.isUndefined(resourceFontAwesome)){
+                    bootbox.alert($(Elements.MSG_BOOTBOX_FILE_FORMAT_INVALID).text());
+                } else {
+                    var snippet = '<li class="' + BB.lib.unclass(Elements.CLASS_RESOURCES_LIST_ITEMS) + ' list-group-item" data-resource_id="' + recResources[i]['resource_id'] + '">' +
+                        '<a href="#">' +
+                        '<i class="fa ' + resourceFontAwesome + '"></i>'+
+                        '<span>' + recResources[i]['resource_name'] + '</span>' +
+                        '<p>' + '' + '</p></a>' +
+                        '</a>' +
+                        '</li>';
+
+                    $(Elements.RESOURCE_LIB_LIST).append($(snippet));
+                }
+            });
+            self._listenResourceSelected();
+        },
+
+        /**
+         Unrender, future support
+         @method unrender
+         **/
+        unrender: function(){
+            var self = this;
         }
     });
 

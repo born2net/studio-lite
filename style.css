@@ -16,6 +16,11 @@ body {
     font-size: 12px;
 }
 
+/* todo: added */
+i.fa {
+    font-size: 14px;
+}
+
 @font-face {
     font-family: 'Jolly Lodger';
     font-style: normal;

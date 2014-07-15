@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated ResolutionSelectorView
  **/
-define(['jquery', 'backbone', 'bootstrapfileinput'], function ($, Backbone, bootstrapfileinput) {
+define(['jquery', 'backbone'], function ($, Backbone) {
 
     BB.SERVICES.RESOLUTION_SELECTOR_VIEW = 'ResolutionSelectorView';
     BB.CONSTS.RESOLUTION = 'RESOLUTION';
@@ -17,7 +17,6 @@ define(['jquery', 'backbone', 'bootstrapfileinput'], function ($, Backbone, boot
          **/
         initialize: function () {
             var self = this;
-            $('input[type=file]').bootstrapFileInput();
             $(this.el).find(Elements.PREVIOUS).on('click', function (e) {
                 if (self.options.from == null)
                     return;

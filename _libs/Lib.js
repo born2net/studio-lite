@@ -48,6 +48,18 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             })(Backbone.View);
         },
 
+        /**
+         Prompt on application exit
+         @method promptOnExit
+         **/
+        promptOnExit: function () {
+            if (window.location.href.indexOf('dist') > -1) {
+                $(window).on('beforeunload', function () {
+                    return 'Did you save your work?'
+                });
+            }
+
+        },
 
         /**
          Force browser compatability

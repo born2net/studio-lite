@@ -11,7 +11,6 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
         // app init
         initialize: function () {
             var self = this;
-
             window.BB = Backbone;
             window.bootbox = bootbox;
             BB.globs = {};
@@ -32,6 +31,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             window.pepper = BB.Pepper;
             window.log = BB.lib.log;
             BB.lib.forceBrowserCompatability();
+            BB.lib.promptOnExit();
 
             // internationalization
             require(['LanguageSelectorView', 'Elements'], function (LanguageSelectorView, Elements) {
@@ -40,12 +40,6 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
                 if (lang)
                     self.m_languageSelectionLogin.setLanguage(lang);
             });
-
-            if (window.location.href.indexOf('dist') > -1) {
-                $(window).on('beforeunload', function () {
-                    return 'Did you save your work?'
-                });
-            }
 
             // router init
             require(['LayoutRouter', 'Events'], function (LayoutRouter) {

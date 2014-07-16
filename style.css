@@ -575,6 +575,18 @@ iframe {
 }
 */
 
+/* todo: added */
+.topDrag {
+    z-index: 2;
+    position: relative
+}
+
+/* todo: added */
+.bottomDrag {
+    z-index: 1;
+    position: relative
+}
+
 .channelHead {
     width: 20px;
     height: 30px;

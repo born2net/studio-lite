@@ -33,6 +33,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             self.m_selectedTimelineID = undefined;
             self.m_selectedBlockID = undefined;
             self.m_selectedChannel = undefined;
+            self.m_blockZindex = 3;
             BB.comBroker.listen(BB.EVENTS.SIDE_PANEL_SIZED, $.proxy(self._updateWidth, self));
             self._listenReset();
             self._listenTimelineSelected();
@@ -73,7 +74,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
          **/
         _listenReset: function () {
             var self = this;
-            BB.comBroker.listen(BB.EVENTS.CAMPAIGN_RESET, function(){
+            BB.comBroker.listen(BB.EVENTS.CAMPAIGN_RESET, function () {
                 self.m_storyWidth = 0;
                 self.m_selectedTimelineID = undefined;
                 self.m_selectedBlockID = undefined;
@@ -274,32 +275,20 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                     snippet = '<div class="timelineBlock" data-timeline_channel_block_id="' + blockID + '" style="width: ' + percent + '%;"></div>';
                 } else {
                     snippet = '<div class="timelineBlock" data-timeline_channel_block_id="' + blockID + '" style="width: ' + percent + '%;"><i style="font-size: 14px"  class="fa ' + fontAwesome + '"></i></div>';
+
+                    /* future support draggable */
+                    // snippet = '<div class="draggable ui-widget-content ui-draggable ui-draggable-handle timelineBlock" data-timeline_channel_block_id="' + blockID + '" style="width: ' + percent + '%;"><i style="font-size: 14px"  class="fa ' + fontAwesome + '"></i></div>';
+
                 }
+                /* future support draggable */
+                // setTimeout(function(){
+                //    $(".timelineBlock").draggable({
+                //        axis: "x",
+                //        start: function(event, ui) { $(this).css("z-index", self.m_blockZindex++); }
+                //    });
+                //},700);
+
                 $(self.m_storylineContainerSnippet).find('.channelBody:last').append(snippet);
-
-                /*
-                 var percent = Math.floor((parseFloat(blockDuration) / parseFloat(totalDuration) * 100));
-                 var recBlock = pepper.getBlockRecord(blockID);
-                 var blockType = $(recBlock.player_data).attr('player') != undefined ? $(recBlock.player_data).attr('player') : '3510';
-                 var color = BB.PepperHelper.getBlockBoilerplate(blockType).color;
-                 snippet = '<div class="timelineBlock" data-timeline_channel_block_id="' + blockID + '" style="width: ' + percent + '%; background-color: ' + color + '"><i class="fa fa-jsfiddle"></i>...</div>';
-                 snippet = '<div class="timelineBlock" data-timeline_channel_block_id="' + blockID + '" style="width: ' + percent + '%; background-color: ' + color + '"></div>';
-                 stop = true;
-                 var blockWidth = (self.m_storyWidth * percent) / 100;
-                 if (blockWidth < 50) {
-                 label = '';
-                 } else {
-                 label = $(recBlock).attr('label');
-                 if (_.isEmpty(label))
-                 label = acronym;
-                 }
-                 label = $(recBlock).attr('label'); //if (_.isEmpty(label))
-                 label = acronym;
-                 var acronym = BB.PepperHelper.getBlockBoilerplate(blockType).acronym;
-                 }
-                 var snippet = '<div class="timelineBlock" data-timeline_channel_block_id="' + blockID + '" style="width: ' + percent + '%; background-color: ' + color + '"><span>' + label + '</span></div>';
-                 */
-
             }
         },
 
@@ -368,6 +357,11 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             $(Elements.CLASS_TIMELINE_BLOCK).off('click');
             $(Elements.CLASS_TIMELINE_BLOCK).on('click', function (e) {
                 $.proxy(self._blockSelected(e), self);
+
+                /* future support draggable */
+                // $(this).addClass('top').removeClass('bottom');
+                // $(this).siblings().removeClass('top').addClass('bottom');
+                // $(this).css("z-index", self.m_blockZindex++);
             });
         },
 
@@ -379,7 +373,6 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
          **/
         _blockChannelSelected: function (e) {
             var self = this;
-            var chHead;
             e.stopImmediatePropagation();
             var blockElem = $(e.target);
 

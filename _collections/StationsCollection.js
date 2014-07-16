@@ -147,9 +147,11 @@ define(['jquery', 'backbone', 'StationModel', 'simplestorage'], function ($, Bac
             self._getRemoteStations();
             self.m_pollTimer = parseInt(self.m_pollTimer);
             log('polling on ' + self.m_pollTimer);
+            if (_.isNaN(self.m_pollTimer) || _.isUndefined(self.m_pollTimer))
+                self.m_pollTimer = 30;
             self.m_refreshHandle = setInterval(function () {
                 self._getRemoteStations();
-                log('getting station ' + Date.now())
+                log('getting station ' + Date.now() + ' ' +  self.m_pollTimer);
             }, self.m_pollTimer * 1000);
         }
     });

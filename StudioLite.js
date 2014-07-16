@@ -17,7 +17,6 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             BB.globs = {};
             BB.SERVICES = {};
             BB.EVENTS = {};
-            BB.LOADING = {};
             BB.CONSTS = {};
             BB.globs['UNIQUE_COUNTER'] = 0;
             BB.globs['RC4KEY'] = '226a3a42f34ddd778ed2c3ba56644315';
@@ -42,10 +41,11 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
                     self.m_languageSelectionLogin.setLanguage(lang);
             });
 
-            // exit warning
-            $(window).on('beforeunload', function () {
-                //return 'Did you save your work?'
-            });
+            if (window.location.href.indexOf('dist') > -1) {
+                $(window).on('beforeunload', function () {
+                    return 'Did you save your work?'
+                });
+            }
 
             // router init
             require(['LayoutRouter', 'Events'], function (LayoutRouter) {

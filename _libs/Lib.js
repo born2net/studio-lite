@@ -57,28 +57,48 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             $.getJSON('https://galaxy.signage.me/WebService/getBrowserInfo.ashx?a=2&callback=?',
                 function (data) {
                     // alert(data.version + ' ' + data.platform + ' ' + data.type + ' ' + data.name);
-                    var statusFail = false;
+                    var failLevel = 0;
+
                     require(['bootbox'], function (bootbox) {
-
                         if (data.name.toLowerCase() == 'safari' && data.platform.toLowerCase() == 'winnt')
-                            statusFail = true;
-                        if (data.name.toLowerCase() == 'ie' && parseInt(data.version) < 11)
-                            statusFail = true;
+                            failLevel = 2;
+                        if (data.name.toLowerCase() == 'ie' && parseInt(data.version) < 10)
+                            failLevel = 1;
 
-                        if (statusFail) {
-                            bootbox.dialog({
-                                message: $(Elements.MSG_BOOTBOX_OLD_BROWSER).text(),
-                                buttons: {
-                                    danger: {
-                                        label: $(Elements.MSG_BOOTBOX_OK).text(),
-                                        className: "btn-danger",
-                                        callback: function () {
-                                            $('body').empty();
-                                            // window.location.replace("http://www.digitalsignage.com");
+                        switch (failLevel){
+                            case 0: {
+                                break
+                            }
+                            case 1: {
+                                bootbox.dialog({
+                                    message: $(Elements.MSG_BOOTBOX_OLD_BROWSER).text(),
+                                    buttons: {
+                                        danger: {
+                                            label: $(Elements.MSG_BOOTBOX_OK).text(),
+                                            className: "btn-danger",
+                                            callback: function () {
+                                            }
                                         }
                                     }
-                                }
-                            });
+                                });
+                                break
+                            }
+                            case 2: {
+                                bootbox.dialog({
+                                    message: $(Elements.MSG_BOOTBOX_OLD_BROWSER).text(),
+                                    buttons: {
+                                        danger: {
+                                            label: $(Elements.MSG_BOOTBOX_OK).text(),
+                                            className: "btn-danger",
+                                            callback: function () {
+                                                $('body').empty();
+                                                // window.location.replace("http://www.digitalsignage.com");
+                                            }
+                                        }
+                                    }
+                                });
+                                break
+                            }
                         }
                     });
                 }

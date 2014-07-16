@@ -59,11 +59,18 @@ define(['jquery', 'backbone', 'simplestorage', 'bootbox', 'localizer'], function
         _cleanTags: function(i_language){
             if (_.isUndefined(i_language))
                 return 'en';
-            i_language = i_language.replace(/<font>/gi,'');
-            i_language = i_language.replace(/<\/font>/gi,'');
-            if (i_language == 'in')
+            // workaround for IE 10
+            try {
+                i_language = i_language.replace(/<font>/gi,'');
+                i_language = i_language.replace(/<\/font>/gi,'');
+                if (i_language == 'in')
+                    return 'en';
+                return i_language;
+            } catch (e){
                 return 'en';
-            return i_language;
+            }
+
+
         },
 
         /**

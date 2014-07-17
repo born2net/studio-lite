@@ -184,7 +184,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
             _initDashBoard: function () {
                 $(Elements.SERVER_NAME).text(pepper.getUserData().domain);
                 $(Elements.BUISINESS_ID).text(pepper.getUserData().businessID);
-                $(Elements.LOGGED_USER_NAME).text(pepper.getUserData().userName);
+                $(Elements.CLASS_USER_NAME).text(pepper.getUserData().userName);
             },
 
             /**

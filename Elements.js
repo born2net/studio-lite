@@ -299,6 +299,7 @@ Elements.CLASS_SCALA_RULER = '.scalaRuler';
 Elements.CLASS_SCALA_NUM = '.scalaNum';
 Elements.CLASS_CHANNEL_HEAD = '.channelHead';
 Elements.CLASS_CHANNEL_HEAD_SELECTED = '.channelHeadSelected';
+Elements.CLASS_USER_NAME = '.userName'
 
 
 /**

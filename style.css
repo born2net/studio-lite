@@ -21,14 +21,6 @@ i.fa {
     font-size: 14px;
 }
 
-.installs {
-    font-size: 17px !important;
-    margin-right: 5px  !important;
-    color: #4a4a4a !important;
-    opacity: 1 !important;
-
-}
-
 @font-face {
     font-family: 'Jolly Lodger';
     font-style: normal;
@@ -127,21 +119,6 @@ iframe {
     border: 0px;
     display: block;
     background-color: black;
-}
-
-.checkers {
-    background-image: url(data:image/gif;base64,R0lGODlhCgAKAIAAAOLi4v///yH5BAAHAP8ALAAAAAAKAAoAAAIRhB2ZhxoM3GMSykqd1VltzxQAOw==);
-    display: inline-block;
-}
-
-.grid25 {
-    background-image: url(data:image/gif;base64,R0lGODlhGQAZAKIAAAAAAP///+rq6tLS0v///wAAAAAAAAAAACH5BAEAAAQALAAAAAAZABkAAAM2OLrc3iLKSWtUNmesu+ReB4bbQIrmWaorW43ulcbfTAtwnLs726u/U5A0DBU9R9SttpQ9ntAEADs=);
-    display: inline-block;
-}
-
-.grid50 {
-    background-image: url(data:image/gif;base64,R0lGODlhMgAyAKIAAAAAAP///+rq6tLS0v///wAAAAAAAAAAACH5BAEAAAQALAAAAAAyADIAAAN8OLrc/jA6Qau9OOtdFf9gSHliaY7DqYbk6mbtK6NzLcT2iufnzpe+HyslVAWLnCNSo1ximk4LNEqjgqZUbFTr5C69SHBRLCT/zDx0Tm1j19wzuEz+orvsOqI1qd8z+35PgIFSg4RVhxd4RoaHiz2NhI8mk0CRgRKZmpsNCQA7);
-    display: inline-block;
 }
 
 #livePreviewWrap {
@@ -546,6 +523,35 @@ iframe {
     height: 100%;
     border-radius: 0;
 }
+
+.checkers {
+    background-image: url(data:image/gif;base64,R0lGODlhCgAKAIAAAOLi4v///yH5BAAHAP8ALAAAAAAKAAoAAAIRhB2ZhxoM3GMSykqd1VltzxQAOw==);
+    display: inline-block;
+}
+
+.grid25 {
+    background-image: url(data:image/gif;base64,R0lGODlhGQAZAKIAAAAAAP///+rq6tLS0v///wAAAAAAAAAAACH5BAEAAAQALAAAAAAZABkAAAM2OLrc3iLKSWtUNmesu+ReB4bbQIrmWaorW43ulcbfTAtwnLs726u/U5A0DBU9R9SttpQ9ntAEADs=);
+    display: inline-block;
+}
+
+.grid50 {
+    background-image: url(data:image/gif;base64,R0lGODlhMgAyAKIAAAAAAP///+rq6tLS0v///wAAAAAAAAAAACH5BAEAAAQALAAAAAAyADIAAAN8OLrc/jA6Qau9OOtdFf9gSHliaY7DqYbk6mbtK6NzLcT2iufnzpe+HyslVAWLnCNSo1ximk4LNEqjgqZUbFTr5C69SHBRLCT/zDx0Tm1j19wzuEz+orvsOqI1qd8z+35PgIFSg4RVhxd4RoaHiz2NhI8mk0CRgRKZmpsNCQA7);
+    display: inline-block;
+}
+
+.installopts li {
+    height: 40px;
+    min-height: 40px;
+    overflow: hidden;
+}
+
+.installs {
+    font-size: 22px !important;
+    margin-right: 5px  !important;
+    color: #4a4a4a !important;
+    opacity: 0.8 !important;
+}
+
 
 /************************************
  StudioLite class styling

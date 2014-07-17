@@ -13,26 +13,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @method initialize
          **/
         initialize: function () {
-            $(Elements.CLASS_HELP_LINKS).on('click', function (e) {
+            var self = this;
+            $(Elements.CLASS_HELP_LINKS, self.$el).on('click', function (e) {
                 var url = $(e.target).attr('href');
                 window.open(url, '_blank');
                 return false;
             });
-
-
-            /*
-             bootbox.dialog({
-             message: snippet,
-             buttons: {
-             danger: {
-             label: $(Elements.MSG_BOOTBOX_OK).text(),
-             className: "btn-danger",
-             callback: function () {
-             }
-             }
-             }
-             });
-             */
 
             $('#closeModal').click(function () {
                 self.m_videoPlayer.pause();

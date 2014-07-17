@@ -552,6 +552,10 @@ iframe {
     opacity: 0.8 !important;
 }
 
+.installs:hover {
+    opacity: 1 !important;
+}
+
 
 /************************************
  StudioLite class styling

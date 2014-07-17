@@ -217,6 +217,13 @@ Elements.VIDEO_MODAL_DIALOG = '#videoModalDialog';
 Elements.VIDEO_MODAL_CONTENT = '#videoModalContent';
 Elements.DUPLICATE_SCENE = '#duplicateScene';
 Elements.BACK_TO_CAMPAIGNS = '#backToCampaigns';
+Elements.orderHardware = '#orderHardware';
+Elements.downloadAndroid = '#downloadAndroid';
+Elements.downloadAirWin = '#downloadAirWin';
+Elements.downloadSignagePlayerWin = '#downloadSignagePlayerWin';
+Elements.downloadAirMac = '#downloadAirMac';
+Elements.downloadSignagePlayerMac = '#downloadSignagePlayerMac';
+Elements.downloadIOS = '#downloadIOS';
 
 // messages
 Elements.MSG_BOOTBOX_RESTART_STATIONS = '#bootBoxRestartStations';

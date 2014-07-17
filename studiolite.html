@@ -64,6 +64,8 @@
                     <li class="divider"></li>
                     <li><a data-localize="navHelpPanel" class="helpPanel" href="#">Help</a></li>
                     <li class="divider"></li>
+                    <li><a data-localize="navInstallPanel" class="installPanel" href="#">Install</a></li>
+                    <li class="divider"></li>
                     <li><a data-localize="navLogout" class="logoutPanel" href="#">Logout</a></li>
                 </ul>
             </li>
@@ -152,6 +154,8 @@
         <li class="proStudioPanel list-group-item"><i class="navicons fa fa-cloud-upload"></i><span
                 data-localize="navStudioPanel">Pro (FREE)</span>
         <li class="helpPanel list-group-item"><i class="navicons fa fa-comments"></i><span data-localize="navHelpPanel">Help</span>
+        <li class="installPanel list-group-item"><i class="navicons fa fa-laptop"></i><span
+                data-localize="navInstallPanel">Install</span>
         <li class="logoutPanel list-group-item"><i class="navicons fa fa-power-off"></i><span data-localize="navLogout">Logout</span>
     </ul>
 </div>
@@ -649,6 +653,84 @@
     </ul>
     <hr/>
 </div>
+<div id="installPanel" style="display: none">
+    <h3 data-localize="a">Install the Signage Player</h3>
+    <h5 data-localize="b"><b>Choose which version of the SignagePlayer you would like to get</b></h5>
+    <span style="padding-top: 20px; padding-right: 20px; margin-bottom: 20px" data-localize="c">We recommend that you purchase our device as it is optimized for the signage software. It also has a built in watch-dog and the software comes pre-installed, so you will not need to download anything at all.</span><br/>
+    <br/>
+
+
+    <div>
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                            <i class="installs fa fa-cubes"></i><span>purchase our device (plug-n-play)</span></a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <span>123</span>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                            <i class="installs fa fa-android"></i><span>android (google Play)</span></a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <span>123</span>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                            <i class="installs fa fa-windows"></i><span>windows (download)</span></a>
+                    </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <span>123</span>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                            <i class="installs fa fa-apple"></i><span>mac (download)</span></a>
+                    </h4>
+                </div>
+                <div id="collapseFour" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <span>123</span>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+                            <i class="installs fa fa-apple"></i><span>ios (app store)</span></a>
+                    </h4>
+                </div>
+                <div id="collapseFive" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <span>123</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
 <div id="logoutPanel" style="display: none">
     <h5 data-localize="logout">logout</h5>
 </div>
@@ -1049,18 +1131,30 @@
     <dt><a href="#"><span>Select language</span></a></dt>
     <dd>
         <ul>
-            <li><a href="#"><img class="flag" src="_assets/flags/jo.png" alt=""/>Arabic<span class="value">ar</span></a>            </li>
-            <li><a href="#"><img class="flag" src="_assets/flags/cn.png" alt=""/>Chinese<span class="value">zh</span></a>            </li>
-            <li><a href="#"><img class="flag" src="_assets/flags/nl.png" alt=""/>Dutch<span class="value">nl</span></a>              </li>
-            <li><a href="#"><img class="flag" src="_assets/flags/us.png" alt=""/>English<span class="value">en</span></a>   </li>
-            <li><a href="#"><img class="flag" src="_assets/flags/fr.png" alt=""/>France<span class="value">fr</span></a>      </li>
-            <li><a href="#"><img class="flag" src="_assets/flags/de.png" alt=""/>German<span class="value">de</span></a>            </li>
-            <li><a href="#"><img class="flag" src="_assets/flags/il.png" alt=""/>Hebrew<span class="value">iw</span></a>                </li>
-            <li><a href="#"><img class="flag" src="_assets/flags/in.png" alt=""/>Hindi<span class="value">hi</span></a>               </li>
-            <li><a href="#"><img class="flag" src="_assets/flags/it.png" alt=""/>Italian<span class="value">it</span></a>            </li>
-            <li><a href="#"><img class="flag" src="_assets/flags/jp.png" alt=""/>Japanese<span class="value">ja</span></a>            </li>
-            <li><a href="#"><img class="flag" src="_assets/flags/br.png" alt=""/>Portuguese<span class="value">pt</span></a>            </li>
-            <li><a href="#"><img class="flag" src="_assets/flags/ru.png" alt=""/>Russian<span class="value">ru</span></a>            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/jo.png" alt=""/>Arabic<span class="value">ar</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/cn.png" alt=""/>Chinese<span
+                    class="value">zh</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/nl.png" alt=""/>Dutch<span class="value">nl</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/us.png" alt=""/>English<span
+                    class="value">en</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/fr.png" alt=""/>France<span class="value">fr</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/de.png" alt=""/>German<span class="value">de</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/il.png" alt=""/>Hebrew<span class="value">iw</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/in.png" alt=""/>Hindi<span class="value">hi</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/it.png" alt=""/>Italian<span
+                    class="value">it</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/jp.png" alt=""/>Japanese<span
+                    class="value">ja</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/br.png" alt=""/>Portuguese<span class="value">pt</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/ru.png" alt=""/>Russian<span
+                    class="value">ru</span></a></li>
         </ul>
     </dd>
     <small>Let us know if you wish to help us add your native language</small>

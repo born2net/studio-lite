@@ -21,6 +21,14 @@ i.fa {
     font-size: 14px;
 }
 
+.installs {
+    font-size: 17px !important;
+    margin-right: 5px  !important;
+    color: #4a4a4a !important;
+    opacity: 1 !important;
+
+}
+
 @font-face {
     font-family: 'Jolly Lodger';
     font-style: normal;
@@ -603,6 +611,18 @@ iframe {
 
 .channelHeadSelected {
     background-color: #428ac9 !important;
+}
+
+/* todo: added */
+#installPanel i {
+    font-size: 50px;
+    color: #428ac9;
+    opacity: 0.5;
+    cursor: pointer;
+}
+/* todo: added */
+#installPanel i:hover {
+    opacity: 1;
 }
 
 /* todo: added */

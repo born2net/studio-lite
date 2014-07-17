@@ -92,6 +92,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 self._closeMobileNavigation();
             });
 
+            $(Elements.CLASS_INSTALL_PANEL).on('click', function () {
+                appContentFaderView.selectView(Elements.INSTALL_PANEL);
+                self.resetPropertiesView();
+                self._closeMobileNavigation();
+            });
+
             $(Elements.CLASS_LOGOUT_PANEL).on('click', function () {
                 self.resetPropertiesView();
                 appEntryFaderView.selectView(Elements.APP_LOGOUT);

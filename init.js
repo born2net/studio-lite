@@ -80,6 +80,7 @@ require.config({
         'SettingsView': '_views/SettingsView',
         'ProStudioView': '_views/ProStudioView',
         'HelpView': '_views/HelpView',
+        'InstallView': '_views/InstallView',
         'LogoutView': '_views/LogoutView',
         'PropertiesView': '_views/PropertiesView',
         'CampaignManagerView': '_views/CampaignManagerView',

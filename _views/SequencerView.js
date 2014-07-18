@@ -5,7 +5,7 @@
  @param {String} i_container element that CompCampaignNavigator inserts itself into
  @return {Object} instantiated CompCampaignNavigator
  **/
-define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($, Backbone, jqueryui, ScreenTemplateFactory) {
+define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory', 'contextmenu'], function ($, Backbone, jqueryui, ScreenTemplateFactory, contextmenu) {
 
     BB.SERVICES.SEQUENCER_VIEW = 'SequencerView';
 
@@ -24,6 +24,7 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
             this.m_screenTemplates = {};
 
             self._initLayoutSelectorDragDrop();
+            self._listenContextMenu();
             self._listenReset();
             setTimeout(function () {
                 $(Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).trigger('click');
@@ -83,6 +84,55 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
         },
 
         /**
+         Listen to any canvas right click
+         @method _listenContextMenu
+         **/
+        _listenContextMenu: function () {
+            var self = this;
+            $(Elements.SCREEN_SELECTOR_CONTAINER).contextmenu({
+                target: Elements.SEQUENCER_CONTEXT_MENU,
+                before: function (e, element, target) {
+                    e.preventDefault();
+                    //self.m_mouseX = e.offsetX;
+                    //self.m_mouseY = e.offsetY;
+                    return true;
+                },
+                onItem: function (context, e) {
+                    self._onContentMenuSelection($(e.target).attr('name'))
+                }
+            });
+        },
+
+        /**
+         On Scene right click context menu selection command
+         @method _onContentMenuSelection
+         @param {String} i_command
+         **/
+        _onContentMenuSelection: function (i_command) {
+            var self = this;
+
+            switch (i_command){
+                case 'copy': {
+                    break;
+                }
+                case 'paste': {
+                    break;
+                }
+                case 'remove': {
+                    break;
+                }
+                case 'first': {
+                    break;
+                }
+                case 'last': {
+                    break;
+                }
+            }
+            return true;
+
+        },
+
+        /**
          Delete a timeline from the Sequencer UI, as well as from the local member m_timelines.
          @method _deleteSequencedTimeline
          @param {Number} i_campaign_timeline_id
@@ -116,7 +166,7 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
          **/
         _listenReset: function () {
             var self = this;
-            BB.comBroker.listen(BB.EVENTS.CAMPAIGN_RESET, function(){
+            BB.comBroker.listen(BB.EVENTS.CAMPAIGN_RESET, function () {
                 self.m_timelines = {};
                 self.m_screenTemplates = {};
                 $(self.m_thumbsContainer).empty();
@@ -127,10 +177,10 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory'], function ($,
          Select the first timeline in the Sequencer
          @method selectFirstTimeline
          **/
-        selectFirstTimeline: function(){
-            var self  = this;
+        selectFirstTimeline: function () {
+            var self = this;
             var timeline;
-            for (timeline in self.m_timelines){
+            for (timeline in self.m_timelines) {
                 self.selectTimeline(timeline);
                 break;
             }

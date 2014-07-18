@@ -416,7 +416,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         },
 
         /**
-         Listen to canvas right click
+         Listen to any canvas right click
          @method _listenContextMenu
          **/
         _listenContextMenu: function () {
@@ -452,7 +452,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     return true;
                 },
                 onItem: function (context, e) {
-                    self._onContentMenuSelection($(e.target).text())
+                    self._onContentMenuSelection($(e.target).attr('name'))
                 }
             });
         },

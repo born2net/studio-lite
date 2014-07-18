@@ -281,10 +281,20 @@
                             </h4>
                         </div>
                         <div id="screenSelectorContainerCollapse" class="panel-collapse collapse in">
+
                             <div class="panel-body">
                                 <aside>
                                     <aside>
-                                        <div id="screenSelectorContainer" vertical-align="middle">
+                                        <div id="screenSelectorContainer" class="context" vertical-align="middle" data-toggle="context" data-target="#sequencerContextMenu">
+                                            <div id="sequencerContextMenu">
+                                                <ul id="sequencerMenuContext" class="dropdown-menu" role="menu">
+                                                    <li><a tabindex="-1" name="copy" data-localize="copy" class="blocksOnly" >copy</a></li>
+                                                    <li><a tabindex="-1" name="paste" data-localize="paste" class="blocksOnly" >paste</a></li>
+                                                    <li><a tabindex="-1" name="remove" data-localize="remove" class="blocksOnly" >remove</a></li>
+                                                    <li><a tabindex="-1" name="first" data-localize="moveFirst" class="blocksOnly" >move to first</a></li>
+                                                    <li><a tabindex="-1" name="last" data-localize="moveLast" class="blocksOnly" >move to last</a></li>
+                                                </ul>
+                                            </div>
                                             <hr class="dottedHR">
                                             <ul id="screenLayoutsUL">
                                             </ul>
@@ -474,14 +484,14 @@
                     </div>
                 </div>
             </div>
-            <div id="sceneCanvasContainer" data-toggle="context" data-target="#context-menu"
+            <div id="sceneCanvasContainer" data-toggle="context" data-target="#sceneContextMenu"
                  class="context sceneElements" align="center"></div>
             <div id="sceneContextMenu">
                 <ul id="sceneContext" class="dropdown-menu" role="menu">
-                    <li><a tabindex="-1" class="blocksOnly" data-localize="cut">cut</a></li>
-                    <li><a tabindex="-1" class="blocksOnly" data-localize="copy">copy</a></li>
-                    <li><a tabindex="-1" data-localize="paste">paste</a></li>
-                    <li><a tabindex="-1" class="blocksOnly" data-localize="remove">remove</a></li>
+                    <li><a tabindex="-1" class="blocksOnly" name="cut" data-localize="cut">cut</a></li>
+                    <li><a tabindex="-1" class="blocksOnly" name="copy" data-localize="copy">copy</a></li>
+                    <li><a tabindex="-1" name="paste" data-localize="paste">paste</a></li>
+                    <li><a tabindex="-1" name="remove" class="blocksOnly" data-localize="remove">remove</a></li>
                 </ul>
             </div>
         </div>
@@ -1171,6 +1181,8 @@
                     class="value">it</span></a></li>
             <li><a href="#"><img class="flag" src="_assets/flags/jp.png" alt=""/>Japanese<span
                     class="value">ja</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/kr.png" alt=""/>Korean<span
+                    class="value">ko</span></a></li>
             <li><a href="#"><img class="flag" src="_assets/flags/br.png" alt=""/>Portuguese<span class="value">pt</span></a>
             </li>
             <li><a href="#"><img class="flag" src="_assets/flags/ru.png" alt=""/>Russian<span

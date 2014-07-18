@@ -80,17 +80,12 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             self._listenToggleTimelinesCollapsible();
             self._listenScreenTemplateEdit();
             self._listenTimelineLengthChanged();
-
-            // self.m_noneSelectedTimelines = new BB.View({el: Elements.NONE_SELECTED_SCREEN_LAYOUT})
-            // self.m_timelineViewStack.addView(self.m_noneSelectedTimelines);
-            // pepper.listen(Pepper.NEW_TIMELINE_CREATED, $.proxy(self._updDelTimelineButtonStatus, self));
-            // pepper.listen(Pepper.TIMELINE_DELETED, $.proxy(self._updDelTimelineButtonStatus, self));
-            // self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
-            //    if (e == self)
-            //        self._render();
-            //});
         },
 
+        /**
+         Listen to campaign selection
+         @method _listenCampaignSelected
+         **/
         _listenCampaignSelected: function () {
             var self = this;
             BB.comBroker.listen(BB.EVENTS.CAMPAIGN_SELECTED, function(e){
@@ -333,20 +328,6 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
         },
 
         /**
-         Update delete timeline button thus not allowing for less one timeline in campaign
-         @method _updDelTimelineButtonStatus
-         _updDelTimelineButtonStatus: function () {
-            var self = this;
-            var totalTimelines = pepper.getCampaignTimelines(self.m_selected_campaign_id).length;
-            if (totalTimelines > 1) {
-                $(Elements.REMOVE_TIMELINE_BUTTON).prop('disabled', false);
-            } else {
-                $(Elements.REMOVE_TIMELINE_BUTTON).prop('disabled', true);
-            }
-        },
-         **/
-
-        /**
          Toggle the arrow of the collapsible timelines / sequencer UI widget
          @method _listenToggleTimelinesCollapsible
          **/
@@ -386,6 +367,42 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             self.m_timelines[self.m_selected_timeline_id].deleteTimeline();
             delete self.m_timelines[self.m_selected_timeline_id];
             self._loadSequencerFirstTimeline();
+        },
+
+        /**
+         Listen for updates on changes in length of currently selected timeline through the pepper framework
+         @method _listenTimelineLengthChanged
+         **/
+        _listenTimelineLengthChanged: function () {
+            var self = this;
+            pepper.listen(Pepper.TIMELINE_LENGTH_CHANGED, $.proxy(self._updatedTimelinesLengthUI, self));
+        },
+
+        /**
+         Update UI of total timelines length on length changed
+         @method _updatedTimelinesLengthUI
+         **/
+        _updatedTimelinesLengthUI: function () {
+            var self = this;
+            var totalDuration = 0;
+            self.m_xdate = BB.comBroker.getService('XDATE');
+            $.each(self.m_timelines, function (timelineID) {
+                totalDuration = parseInt(pepper.getTimelineTotalDuration(timelineID)) + totalDuration;
+            });
+            var durationFormatted = self.m_xdate.clearTime().addSeconds(totalDuration).toString('HH:mm:ss');
+            $(Elements.TIMELINES_TOTAL_LENGTH).text(durationFormatted);
+        },
+
+        /**
+         Reset the module and settings
+         @method _restart
+         **/
+        _reset: function(){
+            var self = this;
+            self.m_timelines = {};
+            self.m_selected_timeline_id = -1;
+            self.m_selected_campaign_id = -1;
+            BB.comBroker.fire(BB.EVENTS.CAMPAIGN_RESET);
         },
 
         /**
@@ -430,40 +447,33 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
         },
 
         /**
-         Listen for updates on changes in length of currently selected timeline through the pepper framework
-         @method _listenTimelineLengthChanged
+         Duplicate a campaign_timeline including it's screen layout, channels and blocks
+         @method duplicateTimeline
+         @param {Number} i_playerData
+         @return {Number} Unique clientId.
          **/
-        _listenTimelineLengthChanged: function () {
+        duplicateTimeline: function(i_campaign_timeline_id, i_screenProps){
+            return;
             var self = this;
-            pepper.listen(Pepper.TIMELINE_LENGTH_CHANGED, $.proxy(self._updatedTimelinesLengthUI, self));
-        },
+            var campaign_board_id = pepper.getFirstBoardIDofCampaign(self.m_selected_campaign_id);
+            var board_id = pepper.getBoardFromCampaignBoard(campaign_board_id);
+            var newTemplateData = pepper.createNewTemplate(board_id, i_screenProps);
+            var board_template_id = newTemplateData['board_template_id']
+            var viewers = newTemplateData['viewers'];
+            var campaign_timeline_id = pepper.createNewTimeline(self.m_selected_campaign_id);
+            pepper.setCampaignTimelineSequencerIndex(self.m_selected_campaign_id, campaign_timeline_id, 0);
+            pepper.setTimelineTotalDuration(campaign_timeline_id, '0');
 
-        /**
-         Update UI of total timelines length on length changed
-         @method _updatedTimelinesLengthUI
-         **/
-        _updatedTimelinesLengthUI: function () {
-            var self = this;
-            var totalDuration = 0;
-            self.m_xdate = BB.comBroker.getService('XDATE');
-            $.each(self.m_timelines, function (timelineID) {
-                totalDuration = parseInt(pepper.getTimelineTotalDuration(timelineID)) + totalDuration;
-            });
-            var durationFormatted = self.m_xdate.clearTime().addSeconds(totalDuration).toString('HH:mm:ss');
-            $(Elements.TIMELINES_TOTAL_LENGTH).text(durationFormatted);
-        },
+            var campaign_timeline_board_template_id = pepper.assignTemplateToTimeline(campaign_timeline_id, board_template_id, campaign_board_id);
+            var channels = pepper.createTimelineChannels(campaign_timeline_id, viewers);
+            pepper.assignViewersToTimelineChannels(campaign_timeline_board_template_id, viewers, channels);
 
-        /**
-         Reset the module and settings
-         @method _restart
-         **/
-        _reset: function(){
-            var self = this;
-            self.m_timelines = {};
-            self.m_selected_timeline_id = -1;
-            self.m_selected_campaign_id = -1;
-            BB.comBroker.fire(BB.EVENTS.CAMPAIGN_RESET);
+            self.m_timelines[campaign_timeline_id] = new Timeline({campaignTimelineID: campaign_timeline_id});
+            BB.comBroker.fire(BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED, this, null, campaign_timeline_id);
+            BB.comBroker.getService(BB.SERVICES['SEQUENCER_VIEW']).reSequenceTimelines();
+            self.m_sequencerView.selectTimeline(campaign_timeline_id);
         }
+
     });
 
     return CampaignView;

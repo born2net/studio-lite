@@ -116,6 +116,7 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory', 'contextmenu'
 
             switch (i_command){
                 case 'duplicate': {
+                    BB.comBroker.getService(BB.SERVICES.CAMPAIGN_VIEW).duplicateTimeline(campaign_timeline_id, {});
                     break;
                 }
                 case 'remove': {
@@ -137,7 +138,6 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory', 'contextmenu'
                 }
             }
             return true;
-
         },
 
         /**

@@ -50,6 +50,11 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     self.m_simpleStorage.set('pollStationsTime', pollStationsTime);
                 }
 
+                var theme = self.m_simpleStorage.get('theme');
+                if (_.isUndefined(theme))
+                    theme = 'light';
+                $(Elements.THEME_OPTION + ' option[value=' + theme + ']').attr("selected", "selected");
+
                 var bannerMode = self.m_simpleStorage.get('bannerMode');
                 if (_.isUndefined(bannerMode)) {
                     bannerMode = 1;
@@ -69,6 +74,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
                 self._listenStationsPollingSlider();
                 self._listenBannerPreviewChange();
+                self._listenThemeChange();
 
             });
         },
@@ -83,6 +89,23 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 // var state = $(Elements.PREVIEW_FULL_OPTION + ' option:selected').val() == "on" ? 1 : 0;
                 var state = $(Elements.PREVIEW_FULL_OPTION + ' option:selected').val();
                 self.m_simpleStorage.set('bannerMode', state);
+            });
+        },
+
+        /**
+         Listen changes in theme style
+         @method _listenThemeChange
+         **/
+        _listenThemeChange: function () {
+            var self = this;
+            $(Elements.THEME_OPTION).on('change', function (e) {
+                var theme = $(Elements.THEME_OPTION + ' option:selected').val();
+                self.m_simpleStorage.set('theme', theme);
+                if (theme == 'light'){
+                    bootbox.alert($(Elements.MSG_BOOTBOX_RELOAD_THEME).text());
+                } else {
+                    BB.lib.loadCss('style_' + theme + '.css');
+                }
             });
         },
 

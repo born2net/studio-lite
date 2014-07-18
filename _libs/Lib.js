@@ -62,6 +62,19 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         /**
+         Load non primary CSS
+         @method loadCss
+         @param {String} i_url
+         **/
+        loadCss: function (i_url) {
+            var link = document.createElement("link");
+            link.type = "text/css";
+            link.rel = "stylesheet";
+            link.href = i_url;
+            document.getElementsByTagName("head")[0].appendChild(link);
+        },
+
+        /**
          Force browser compatability
          @method foreceBrowserCompatability
          **/
@@ -77,11 +90,13 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                         if (data.name.toLowerCase() == 'ie' && parseInt(data.version) < 10)
                             failLevel = 1;
 
-                        switch (failLevel){
-                            case 0: {
+                        switch (failLevel) {
+                            case 0:
+                            {
                                 break
                             }
-                            case 1: {
+                            case 1:
+                            {
                                 bootbox.dialog({
                                     message: $(Elements.MSG_BOOTBOX_OLD_BROWSER).text(),
                                     buttons: {
@@ -95,7 +110,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                                 });
                                 break
                             }
-                            case 2: {
+                            case 2:
+                            {
                                 bootbox.dialog({
                                     message: $(Elements.MSG_BOOTBOX_OLD_BROWSER).text(),
                                     buttons: {
@@ -511,6 +527,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             function onlyUnique(value, index, self) {
                 return self.indexOf(value) === index;
             }
+
             var a = i_array.filter(onlyUnique);
             return a.length;
         },

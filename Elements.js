@@ -200,6 +200,7 @@ Elements.STATION_SEND_EVENT_VALUE = '#stationSendEventValue';
 Elements.STATION_POLL_SLIDER = '#stationPollSlider';
 Elements.STATION_POLL_LABEL = '#stationPollLabel';
 Elements.PREVIEW_FULL_OPTION = '#previewFullOption';
+Elements.THEME_OPTION = '#themeOption';
 Elements.PRICING_TABLE_WRAP = '#pricingTableWrap';
 Elements.CONVERT_ACCOUNT = '#convertAccount'
 Elements.SUBSCRIBE_ACCOUNT = '#subscribeAccount';
@@ -252,6 +253,7 @@ Elements.MSG_BOOTBOX_MUST_SELECT_SCENE = '#bootBoxSceneMustSelectScene';
 Elements.MSG_BOOTBOX_NO_FLASH = '#bootBoxNoFlash';
 Elements.MSG_BOOTBOX_OLD_BROWSER = '#bootBoxOldBrowser';
 Elements.MSG_BOOTBOX_FILE_FORMAT_INVALID = '#bootBoxFileFormatInvalid';
+Elements.MSG_BOOTBOX_RELOAD_THEME = '#bootBoxThemeReload';
 
 // templates
 Elements.FONT_SELECTOR_TEMPLATE = '#fontSelectorTemplate';

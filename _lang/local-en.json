@@ -217,6 +217,7 @@
     "preview": "preview",
     "cut": "cut",
     "copy": "copy",
+    "duplicate": "duplicate",
     "paste": "paste",
     "remove": "remove",
     "moveFirst": "move to first",

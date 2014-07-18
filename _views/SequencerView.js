@@ -110,21 +110,29 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory', 'contextmenu'
          **/
         _onContentMenuSelection: function (i_command) {
             var self = this;
+            var campaign_timeline_id = BB.comBroker.getService(BB.SERVICES.CAMPAIGN_VIEW).getSelectedTimeline();
+            if (campaign_timeline_id == -1 || _.isUndefined(campaign_timeline_id))
+                return;
 
             switch (i_command){
-                case 'copy': {
-                    break;
-                }
-                case 'paste': {
+                case 'duplicate': {
                     break;
                 }
                 case 'remove': {
+                    $(Elements.REMOVE_TIMELINE_BUTTON).trigger('click');
                     break;
                 }
                 case 'first': {
+                    var elem =  $(self.m_thumbsContainer).find('[data-campaign_timeline_id="' + campaign_timeline_id + '"]').eq(0).closest('svg');
+                    $(self.m_thumbsContainer).prepend(elem);
+                    self.reSequenceTimelines();
                     break;
                 }
                 case 'last': {
+                    var elem =  $(self.m_thumbsContainer).find('[data-campaign_timeline_id="' + campaign_timeline_id + '"]').eq(0).closest('svg');
+                    $(self.m_thumbsContainer).append(elem);
+                    self.reSequenceTimelines();
+                    break;
                     break;
                 }
             }

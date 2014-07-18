@@ -399,6 +399,16 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
         },
 
         /**
+         Get currently selected timeline id for campaign
+         @method getSelectedTimeline
+         @return {Number} m_selected_timeline_id
+         **/
+        getSelectedTimeline: function () {
+            var self = this;
+            return self.m_selected_timeline_id;
+        },
+
+        /**
          Get selected timeline instance, which we hold a reference to, via it's timeline_id.
          @method getTimelineInstance
          @param {Number} i_campaign_timeline_id

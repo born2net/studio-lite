@@ -232,7 +232,7 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory', 'contextmenu'
 
             var screenTemplate = new ScreenTemplateFactory({
                 i_screenTemplateData: screenTemplateData,
-                i_type: BB.CONSTS.ENTIRE_SELECTABLE,
+                i_selfDestruct: false,
                 i_owner: this
             });
 
@@ -242,8 +242,8 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory', 'contextmenu'
             self.m_timelines[campaign_timeline_id] = elementID;
             self.m_screenTemplates[campaign_timeline_id] = screenTemplate;
 
-            screenTemplate.selectablelDivision();
-            screenTemplate.activate();
+            //screenTemplate.selectablelDivision();
+            //screenTemplate.activate();
 
             switch (index) {
                 case -1:

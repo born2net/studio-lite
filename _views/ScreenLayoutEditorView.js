@@ -294,7 +294,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
 
             var screenTemplate = new ScreenTemplateFactory({
                 i_screenTemplateData: screenTemplateData,
-                i_type: ScreenTemplateFactory.VIEWER_SELECTABLE,
+                i_selfDestruct: true,
                 i_owner: this});
 
             var rects = screenTemplate.getDivisions();

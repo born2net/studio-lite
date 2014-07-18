@@ -73,12 +73,12 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
 
                     var screenTemplate = new ScreenTemplateFactory({
                         i_screenTemplateData: screenTemplateData,
-                        i_type: BB.CONSTS.ENTIRE_SELECTABLE,
+                        i_selfDestruct: true,
                         i_owner: self
                     });
                     var snippet = screenTemplate.create();
                     $(Elements.SCREEN_LAYOUT_LIST).append($(snippet));
-                    screenTemplate.activate();
+                    screenTemplate.selectableFrame();
                     self.m_screens.push(screenTemplate);
                 }
             });

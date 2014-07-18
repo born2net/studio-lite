@@ -13,7 +13,6 @@
  **/
 define(['jquery', 'backbone'], function ($, Backbone) {
 
-
     /**
      This is a key event in the framework as many different instances subscribe to ON_VIEWER_SELECTED to reconfigure
      themselves. The event is fired when a viewer (i.e.: a screen division) is selected inside a Template (i.e. Screen).
@@ -29,25 +28,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
      **/
     BB.EVENTS.ON_VIEWER_SELECTED = 'ON_VIEWER_SELECTED';
 
-    /**
-     Instruct the factory to produce a Template (screen) that each viewer (screen division) can be selected individually
-     as well as the creation of corresponding viewer numbered labels inside each viewer.
-     @property VIEWER_SELECTABLE
-     @static
-     @final
-     @type String
-     */
-    BB.CONSTS.VIEWER_SELECTABLE = 'VIEWER_SELECTABLE';
-
-    /**
-     Instruct the factory to produce a Template (screen) that can only be selected as a whole (no viewers selectable) and no numbered labels.
-     @property ENTIRE_SELECTABLE
-     @static
-     @final
-     @type String
-     */
-    BB.CONSTS.ENTIRE_SELECTABLE = 'ENTIRE_SELECTABLE';
-
     var ScreenTemplateFactory = BB.Controller.extend({
 
         /**
@@ -55,52 +35,29 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @method initialize
          **/
         initialize: function () {
-
-            // i_screenTemplateData, i_type, i_owner
-
             var self = this;
-
             this.m_owner = self.options.i_owner;
             this.m_myElementID = 'svgScreenLayout' + '_' + _.uniqueId();
             this.m_screenTemplateData = self.options.i_screenTemplateData;
+            this.m_selfDestruct = self.options.i_selfDestruct;
             this.m_orientation = self.options.i_screenTemplateData['orientation'];
             this.m_resolution = self.options.i_screenTemplateData['resolution'];
             this.m_screenProps = self.options.i_screenTemplateData['screenProps'];
             this.m_scale = self.options.i_screenTemplateData['scale'];
             this.m_svgWidth = (this.m_resolution.split('x')[0]) / this.m_scale;
             this.m_svgHeight = (this.m_resolution.split('x')[1]) / this.m_scale;
-
-            switch (self.options.i_type) {
-
-                case 'VIEWER_SELECTABLE' :
-                {
-                    this.m_useLabels = true;
-                    this.m_mouseOverEffect = false;
-                    this.m_selectableFrame = false;
-                    this.m_selectablDivision = true;
-                    break;
-                }
-
-                case 'ENTIRE_SELECTABLE' :
-                {
-                    this.m_useLabels = false;
-                    this.m_mouseOverEffect = true;
-                    this.m_selectableFrame = true;
-                    this.m_selectablDivision = false;
-                    break;
-                }
-            }
+            this.m_useLabels = false;
         },
 
         /**
          Method is called when an entire screen frame of the UI is clicked, in contrast to when a single viewer is selected.
          The difference in dispatch of the event depends on how the factory created this instance.
-         @method _onScreenFrameSelected
+         @method _onViewSelected
          @param {Event} e
          @param {Object} i_caller
          @return {Boolean} false
          **/
-        _onScreenFrameSelected: function (e, i_caller) {
+        _onViewSelected: function (e, i_caller) {
             var self = i_caller;
             var element = e.target;
 
@@ -115,50 +72,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 campaign_timeline_id: campaign_timeline_id,
                 screenTemplateData: self.m_screenTemplateData
             };
-
             self._deselectViewers();
-
             BB.comBroker.fire(BB.EVENTS.ON_VIEWER_SELECTED, this, screenData);
-            e.stopImmediatePropagation();
-            return false;
-        },
-
-        /**
-         Method is called when a single viewer (screen division) of the UI is clicked, in contrast to when the entire frame of the screen is selected.
-         The difference in dispatch of the event depends on how the factory created this instance.
-         @method _onScreenViewerSelected
-         @param {Event} e
-         @param {Object} i_caller
-         @return {Boolean} false
-         **/
-        _onScreenViewerSelected: function (e, i_caller) {
-            var element = e.target;
-
-            // Label was pressed
-            if ($(element).data('for') != undefined) {
-                var forDivison = $(element).data('for');
-                element = $('#' + forDivison);
-            }
-
-            i_caller._deselectViewers();
-
-            var campaign_timeline_board_viewer_id = $(element).data('campaign_timeline_board_viewer_id');
-            var campaign_timeline_id = $(element).data('campaign_timeline_id');
-
-            $(element).css({'fill': 'rgb(200,200,200)'});
-
-            var screenData = {
-                sd: $(element).data('sd'),
-                campaign_timeline_board_viewer_id: campaign_timeline_board_viewer_id,
-                campaign_timeline_id: campaign_timeline_id,
-                elementID: i_caller.m_myElementID,
-                owner: i_caller.getOwner(),
-                screenTemplateData: self.m_screenTemplateData
-            }
-
-            BB.comBroker.fire(BB.EVENTS.ON_VIEWER_SELECTED, this, screenData);
-            e.stopImmediatePropagation();
-            return false;
         },
 
         /**
@@ -273,36 +188,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         /**
-         Begin listening to events and in turn set the behavior of the instance.
-         @method activate
-         @return none
-         **/
-        activate: function () {
-            var self = this;
-
-            if (self.m_mouseOverEffect)
-                this._mouseOverEffect();
-
-            if (self.m_selectableFrame)
-                this.selectableFrame();
-
-            if (self.m_selectablDivision)
-                this.selectablelDivision();
-        },
-
-        /**
-         When enabled, selectablelDivision will allow for UI mouse / click of individual viewers (screen divisions) and not entire frame.
-         @method selectablelDivision
-         @return none
-         **/
-        selectablelDivision: function () {
-            var self = this;
-            $(Elements.CLASS_SCREEN_DIVISION).on('click', function (e) {
-                self._onScreenViewerSelected(e, self);
-            });
-        },
-
-        /**
          When enabled, selectableFrame will allow for UI mouse / click of the outer frame of the template (screen) and not
          individual viewers.
          @method selectableFrame
@@ -310,18 +195,23 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         selectableFrame: function () {
             var self = this;
+            var applyToSelected = function (e) {
+                $('#' + self.m_myElementID).parent().parent().parent().find('rect').css({'stroke-width': '2', 'stroke': 'rgb(72,72,72)'});
+                $('#' + self.m_myElementID).find('rect').css({'stroke-width': '4', 'stroke': 'rgb(73,123,174)'});
+                self._onViewSelected(e, self);
+            }
+            // listen one
+            if (self.m_selfDestruct) {
+                $(Elements.CLASS_SCREEN_DIVISION, '#' + self.m_myElementID).one('click contextmenu', function (e) {
+                    applyToSelected(e);
+                });
 
-            BB.comBroker.listen(BB.EVENTS.ON_VIEWER_SELECTED, function (e) {
-                if (e.caller.elementID === self.m_myElementID) {
-                    $('#' + self.m_myElementID).find('rect').css({'stroke-width': '4', 'stroke': 'rgb(73,123,174)'});
-                } else {
-                    $('#' + self.m_myElementID).find('rect').css({'stroke-width': '2', 'stroke': 'rgb(72,72,72)'});
-                }
-            });
-
-            $(Elements.CLASS_SCREEN_DIVISION).on('click', function (e) {
-                self._onScreenFrameSelected(e, self);
-            });
+            } else {
+                // listen on
+                $(Elements.CLASS_SCREEN_DIVISION, '#' + self.m_myElementID).on('click contextmenu', function (e) {
+                    applyToSelected(e);
+                });
+            }
         },
 
         /**
@@ -352,11 +242,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         destroy: function () {
             var self = this;
-            $(Elements.CLASS_SCREEN_DIVISION).off('click', function (e) {
-                self._onScreenViewerSelected(e, self);
-            });
-            $(Elements.CLASS_SCREEN_DIVISION).off('click', function (e) {
-                self._onScreenFrameSelected(e, self);
+            $(Elements.CLASS_SCREEN_DIVISION).off('click contextmenu', function (e) {
+                self._onViewSelected(e, self);
             });
             $(this).off('mouseover', function () {
                 $(this).css({'fill': 'rgb(190,190,190)'});

@@ -716,8 +716,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             i_string = i_string.replace(/>/ig, ")");
             return i_string;
         }
-
-
     });
 
     return Lib;

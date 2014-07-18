@@ -54,7 +54,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
                 var LayoutRouter = new LayoutRouter();
                 BB.history.start();
                 LayoutRouter.navigate('authenticate/_/_', {trigger: true});
-            })
+            });
         }
     });
 

@@ -79,11 +79,22 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @method foreceBrowserCompatability
          **/
         forceBrowserCompatability: function () {
+
+
+
             $.getJSON('https://galaxy.signage.me/WebService/getBrowserInfo.ashx?a=2&callback=?',
                 function (data) {
-                    // alert(data.version + ' ' + data.platform + ' ' + data.type + ' ' + data.name);
-                    var failLevel = 0;
 
+                    //alert(data.version + ' ' + data.platform + ' ' + data.type + ' ' + data.name);
+
+                    // animated loader
+                    if (data.name.toLowerCase() == 'ie') {
+                        $(Elements.WAITS_SCREEN_ENTRY_APP).find('img').eq(1).remove();
+                    } else {
+                        $(Elements.WAITS_SCREEN_ENTRY_APP).find('img').eq(0).remove();
+                    }
+
+                    var failLevel = 0;
                     require(['bootbox'], function (bootbox) {
                         if (data.name.toLowerCase() == 'safari' && data.platform.toLowerCase() == 'winnt')
                             failLevel = 2;

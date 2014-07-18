@@ -2120,9 +2120,10 @@ minicolors
 
 
 
+/* Dark theme */
 
 
-
+/*
 html, body
 {
     background-color	: #262626;
@@ -2291,3 +2292,4 @@ button, select
         margin-right	: 0;
     }
 }
+*/

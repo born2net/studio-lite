@@ -2117,3 +2117,177 @@ minicolors
 }
 
 
+
+
+
+
+
+
+html, body
+{
+    background-color	: #262626;
+}
+body
+{
+    color				: #ccc;
+}
+a
+{
+    color				: #ccc;
+}
+h2
+{
+    color				: #fff;
+}
+hr
+{
+    border-top			: 1px solid #6a6a6a;
+}
+#headerPad
+{
+    background-color	: #ec7c66;
+}
+.navbar-inverse
+{
+    background-color	: #535353;
+    border-color		: #535353;
+}
+#appNavigator
+{
+    background-color	: #535353;
+    border-right		: 1px solid #6a6a6a;
+}
+#appNavigator li
+{
+    background-color	: #535353;
+    border-color		: #595959;
+}
+#appNavigator li:hover
+{
+    background-color	: #4c4c4c;
+}
+#propPanelWrap
+{
+    background-color	: #535353;
+}
+#mainPanelWrap
+{
+    border-right		: 1px solid #6a6a6a;
+}
+#mainPanelWrap hr
+{
+    border-top			: 1px solid #414141;
+}
+.btn-default
+{
+    color				: #ccc;
+    background-color	: #535353;
+    border-color		: #6a6a6a;
+}
+.btn-default:hover
+{
+    background-color	: #4c4c4c;
+}
+.list-group-item
+{
+    background-color	: #535353;
+    border				: 1px solid #6a6a6a;
+}
+a.list-group-item:hover, a.list-group-item:focus
+{
+    background-color	: #4c4c4c;
+}
+a.list-group-item
+{
+    color				: #ccc;
+}
+a:hover, a:focus
+{
+    color				: #ccc;
+}
+#footer
+{
+    background-color	: #535353;
+    border-top			: 1px solid #6a6a6a;
+    padding				: 21px 10px;
+}
+#footerText
+{
+    color				: #ccc;
+}
+#footer br
+{
+    display				: none;
+}
+.btn-primary
+{
+    color				: #fff;
+    background-color	: #535353;
+    border-color		: #6a6a6a;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary
+{
+    background-color	: #4c4c4c;
+    border-color		: #6a6a6a;
+}
+li:hover a
+{
+    color				: #ccc;
+}
+.alert-danger
+{
+    color				: #FFF;
+    background-color	: #ec7c66;
+    border-color		: #ec7c66;
+}
+.noUi-background
+{
+    background			: #535353;
+    box-shadow			: none;
+}
+.noUi-target
+{
+    border				: 1px solid #6a6a6a;
+    box-shadow			: none;
+}
+.noUi-handle
+{
+    border				: 1px solid #6a6a6a;
+    border-radius		: 3px;
+    background			: #535353;
+    cursor				: default;
+    box-shadow			: none;
+}
+button, select
+{
+    text-transform		: none;
+    border				: 1px solid #6a6a6a;
+    background			: #535353;
+}
+.panel
+{
+    background-color	: #535353;
+}
+.panel-default > .panel-heading
+{
+    color				: #fff;
+    background-color	: #535353;
+    border-color		: #6a6a6a;
+}
+.panel-default
+{
+    border-color		: #6a6a6a;
+}
+.installs
+{
+    color				: #ccc !important;
+}
+
+
+@media (min-width: 768px)
+{
+    .navbar-nav.navbar-right:last-child
+    {
+        margin-right	: 0;
+    }
+}

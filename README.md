@@ -17,8 +17,7 @@ Links:
 ------------------------------------------------------------------------
 - Cloud web app: https://galaxy.signage.me/_studiolite-dist/studiolite.html
 - Home page: http://lite.digitalsignage.com
-- SignageStudio Web Lite on-line documentation: http://www.digitalsignage.com/msdocs/
-- Pepper / Jalapeno SDK on-line documentation: http://www.digitalsignage.com/msdocs/classes/Pepper.html
+- Docs: http://www.digitalsignage.com/msdocs/
 - Support: http://script.digitalsignage.com/forum/index.php/board,9.0.html
 - Dev video Pepper / Jalapeno SDK: http://www.digitalsignage.com/_html/signage_video.html?videoNumber=opensource
 - StudioLite Video: http://www.digitalsignage.com/_html/signage_video.html?videoNumber=StudioLite

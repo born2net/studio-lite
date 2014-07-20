@@ -1,5 +1,5 @@
-StudioLite - Digital Signage for the rest of us
-===============================================
+StudioLite - Signage for the rest of us
+========================================
 current version: 1.0.126 dev-build
 
 The world's only enterprise level, open source, 100% FREE, Digital Signage platform

@@ -9,7 +9,7 @@ current version: 1.0.126 dev-build
 
 ------------------------------------------------------------------------
 
-StudioLite is an open source, 100% FREE, Digital Signage platform that was designed for ease of use.
+StudioLite is an open source, 100% FREE, Digital Signage platform that was designed with ease of use in mind.
 With StudioLite anyone can have a Digital Signage solution that is entirely customizable. 
 Take the source code, modify it, brand it and build a product that's right for you and your customers.
 Best of all, you will take full advantage of the world's most popular Digital Signage cloud so you don't have to worry about backend programming or even setup a server, it's all done for you using the mediaCLOUD.

@@ -22,12 +22,12 @@ Best of all, you will take full advantage of the world's most popular Digital Si
 Links:
 ------------------------------------------------------------------------
 - Cloud web app: https://galaxy.signage.me/_studiolite-dist/studiolite.html
-- Home page: http://lite.digitalsignage.com
+- Home: http://lite.digitalsignage.com
 - Docs: http://www.digitalsignage.com/msdocs/
 - Support: http://script.digitalsignage.com/forum/index.php/board,9.0.html
 - Developer video tutorial: http://goo.gl/nkx7wr
-- StudioLite Video: http://www.digitalsignage.com/_html/signage_video.html?videoNumber=StudioLite
-- Development page: http://www.digitalsignage.com/_html/open_source_digital_signage.html
+- StudioLite intro video: http://www.digitalsignage.com/_html/signage_video.html?videoNumber=StudioLite
+- Developers page: http://www.digitalsignage.com/_html/open_source_digital_signage.html
 
 
 Technical data:

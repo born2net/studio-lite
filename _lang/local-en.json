@@ -261,7 +261,8 @@
     "downloadIOS": " download player from the App store:",
     "signageIOS": "SignagePlayer for iOS",
     "signageMac": "SignagePlayer for Mac",
-    "andPass": " and password "
+    "andPass": " and password ",
+    "editLayout": "edit layout"
 }
 
 

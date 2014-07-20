@@ -115,6 +115,10 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory', 'contextmenu'
                 return;
 
             switch (i_command){
+                case 'editLayout': {
+                    $(Elements.EDIT_SCREEN_LAYOUT).trigger('click');
+                    break;
+                }
                 case 'duplicate': {
                     BB.comBroker.getService(BB.SERVICES.CAMPAIGN_VIEW).duplicateTimeline(campaign_timeline_id, {});
                     break;

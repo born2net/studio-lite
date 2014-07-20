@@ -6,9 +6,10 @@ Digital Signage for the rest of us
 
 current version: 1.0.126 dev-build
 
-The world's only enterprise level, open source, 100% FREE, Digital Signage platform
+
 ------------------------------------------------------------------------
 
+StudioLite is the world's only enterprise level, open source, 100% FREE, Digital Signage platform that was designed for ease of use.
 With SignageStudio Lite you can have a Digital Signage solution that is just the way you like it. Take the source code, modify it, brand it and build a product that's right for you and your customers.
 Best of all, you will take full advantage of the world's most popular Digital Signage cloud so you don't have to worry about backend programming or even setup a server, it's all done for you using the mediaCLOUD.
 

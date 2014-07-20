@@ -25,7 +25,7 @@ Links:
 - Home page: http://lite.digitalsignage.com
 - Docs: http://www.digitalsignage.com/msdocs/
 - Support: http://script.digitalsignage.com/forum/index.php/board,9.0.html
-- Dev video Pepper / Jalapeno SDK: http://www.digitalsignage.com/_html/signage_video.html?videoNumber=opensource
+- Developer video tutorial: goo.gl/nkx7wr
 - StudioLite Video: http://www.digitalsignage.com/_html/signage_video.html?videoNumber=StudioLite
 - Development page: http://www.digitalsignage.com/_html/open_source_digital_signage.html
 

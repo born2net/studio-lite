@@ -14,10 +14,10 @@ With StudioLite anyone can have a Digital Signage solution that is entirely cust
 Take the source code, modify it, brand it and build a product that's right for you and your customers.
 Best of all, you will take full advantage of the world's most popular Digital Signage cloud so you don't have to worry about backend programming or even setup a server, it's all done for you using the mediaCLOUD.
 
- - Based on the poplar SignageStudio ( [MediaSignage]: http://www.DigitalSignage.com )
- - Connected to a private mediaSERVER or the public mediaCLOUD
+ - Based on the poplar SignageStudio Pro ( [MediaSignage]: http://www.DigitalSignage.com )
+ - Connected to a private mediaSERVER or the public free mediaCLOUD
  - 100% open source based on GNU V3 license
- - Contributors are welcome, fork and notify
+ - Contributors are welcome, fork, modify and send pull requests
 
 Links:
 ------------------------------------------------------------------------

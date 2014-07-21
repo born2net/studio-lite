@@ -232,7 +232,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             self._deselectViewers();
             var selectedElement = $('#' + self.m_myElementID).find('[data-campaign_timeline_board_viewer_id="' + i_campaign_timeline_board_viewer_id + '"]');
-            $(selectedElement).css({'fill': 'rgb(200,200,200)'});
+            $(selectedElement).css({'fill': '#428ac9'});
         },
 
         /**

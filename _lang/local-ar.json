@@ -257,5 +257,12 @@
 "signageIOS": "SignagePlayer لدائرة الرقابة الداخلية",
 "signageMac": "SignagePlayer لنظام التشغيل Mac",
 "andPass": "وكلمة المرور",
+"dark": "مظلم",
+"duplicate": "تكرار",
+"light": "ضوء",
+"editLayout": "تخطيط تحرير",
+"bootBoxThemeReload": "قد تحتاج إلى إعادة تشغيل StudioLite عن التغييرات نافذة المفعول",
+"createAccount": "أو إنشاء حساب جديد",
+"theme": "موضوع",
 "final": ""
 }

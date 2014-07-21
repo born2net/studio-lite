@@ -257,5 +257,12 @@
 "signageIOS": "SignagePlayer voor iOS",
 "signageMac": "SignagePlayer voor Mac",
 "andPass": "en wachtwoord",
+"duplicate": "duplicaat",
+"dark": "donker",
+"theme": "thema",
+"editLayout": "Lay-out bewerken",
+"light": "licht",
+"createAccount": "of maak een nieuwe account",
+"bootBoxThemeReload": "Mogelijk moet u StudioLite opnieuw opstarten om wijzigingen door te voeren",
 "final": ""
 }

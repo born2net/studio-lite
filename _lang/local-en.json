@@ -262,7 +262,8 @@
     "signageIOS": "SignagePlayer for iOS",
     "signageMac": "SignagePlayer for Mac",
     "andPass": " and password ",
-    "editLayout": "edit layout"
+    "editLayout": "edit layout",
+    "createAccount": "or create a new account"
 }
 
 

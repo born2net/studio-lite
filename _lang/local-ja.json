@@ -257,5 +257,12 @@
 "signageIOS": "iOS用SignagePlayer",
 "signageMac": "Mac用SignagePlayer",
 "andPass": "とパスワード",
+"theme": "テーマ",
+"duplicate": "複製",
+"light": "光",
+"editLayout": "編集レイアウト",
+"dark": "暗い",
+"createAccount": "または、新しいアカウントを作成する",
+"bootBoxThemeReload": "変更を有効にするにはStudioLiteを再起動する必要があります",
 "final": ""
 }

@@ -94,8 +94,8 @@
         <label class="checkbox">
             <input id="rememberMe" type="checkbox" checked value="remember-me">
             <span data-localize="rememberMe"> Remember me </span></label>
-        <button id="loginButton" class="btn btn-lg btn-primary btn-block" type="submit" data-localize="signin">Sign in
-        </button>
+        <button id="loginButton" class="btn btn-lg btn-primary btn-block" type="submit" data-localize="signin">Sign in</button>
+        <button id="createAccountButton" class="btn btn-lg btn-default btn-block" data-localize="createAccount">or create new account</button>
         <hr class="hrThin"/>
         <div id="languageSelectionLogin"></div>
     </form>
@@ -175,10 +175,11 @@
                     id="videoModalHeaderLite">StudioLite</span>
             </div>
             <div class="modal-body">
-                <video id="MY_VIDEO_1" class="centerElement vjs-big-play-centered video-js vjs-default-skin" controls
+                <video id="videoIntro" class="centerElement vjs-big-play-centered video-js vjs-default-skin" controls
                        preload="auto" poster="videoIntro.png"
                        data-setup="{}">
-                    <source src="https://secure.digitalsignage.com/_studiolite-dev/StudioLite.mp4" type='video/mp4'>
+                    <source src="https://galaxy.signage.me/_studiolite-dist/StudioLite.mp4" type='video/mp4'>
+                    <!-- <source src="https://secure.digitalsignage.com/_studiolite-dev/StudioLite.mp4" type='video/mp4'> -->
                 </video>
             </div>
             <div class="modal-footer">
@@ -654,7 +655,7 @@
 </div>
 <div id="helpPanel" style="display: none">
     <h3 data-localize="videoTutorial">Video tutorial - learn how to use StudioLite</h3>
-    <button id="launchDemoModel" class="btn btn-primary btn-lg" data-localize="watchNow">Watch it now</button>
+    <button id="watchIntro" class="btn btn-primary btn-lg" data-localize="watchNow">Watch it now</button>
     <hr/>
     <h3 data-localize="additionalLinks">Additional links</h3>
     <ul>
@@ -1142,7 +1143,7 @@
 </div>
 </div>
 <div id="footer"><br>
-    <span id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.126 </span></div>
+    <span id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.128 </span></div>
 
 
 <div id="popModal" style="display: none"></div>
@@ -1199,7 +1200,6 @@
                     class="value">ru</span></a></li>
         </ul>
     </dd>
-    <small>Let us know if you wish to help us add your native language</small>
 </div>
 
 <!-- Dimension Template -->

@@ -257,5 +257,12 @@
 "signageIOS": "아이폰 OS에 대한 SignagePlayer",
 "signageMac": "Mac 용 SignagePlayer",
 "andPass": "및 암호",
+"duplicate": "복제",
+"theme": "테마",
+"dark": "어두운",
+"light": "빛",
+"editLayout": "편집 레이아웃",
+"createAccount": "또는 새 계정을 만들",
+"bootBoxThemeReload": "변경 내용을 적용하려면 당신은 StudioLite를 다시 시작해야 할 수도 있습니다",
 "final": ""
 }

@@ -26,13 +26,13 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             });
 
             setTimeout(function () {
-                // $('#launchDemoModel').trigger('click');
+                // $(Elements.WATCH_INTRO).trigger('click');
             }, 3000);
 
-            $('#launchDemoModel').click(function (e) {
+            $(Elements.WATCH_INTRO).click(function (e) {
                 bootbox.hideAll()
                 $(Elements.VIDEO_MODAL).modal('show');
-                videojs("MY_VIDEO_1").ready(function () {
+                videojs(BB.lib.unhash(Elements.VIDEO_INTRO)).ready(function () {
                     self.m_videoPlayer = this;
                     var w = $(Elements.VIDEO_MODAL).width();
                     var h = $(Elements.VIDEO_MODAL).height() - 100;

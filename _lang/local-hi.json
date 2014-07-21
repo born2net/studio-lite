@@ -257,5 +257,12 @@
 "signageIOS": "IOS के SignagePlayer",
 "signageMac": "मैक के लिए SignagePlayer",
 "andPass": "और पासवर्ड",
+"dark": "अंधेरा",
+"duplicate": "प्रतिलिपि",
+"light": "प्रकाश",
+"editLayout": "संपादित लेआउट",
+"theme": "विषय",
+"createAccount": "या एक नया खाता बनाने",
+"bootBoxThemeReload": "परिवर्तनों को प्रभावी करने के लिए आप StudioLite पुनः आरंभ करने की आवश्यकता हो सकती है",
 "final": ""
 }

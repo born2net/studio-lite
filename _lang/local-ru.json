@@ -257,5 +257,12 @@
 "signageIOS": "SignagePlayer для МО",
 "signageMac": "SignagePlayer для Mac",
 "andPass": "и пароль",
+"duplicate": "дублировать",
+"theme": "тема",
+"dark": "темно",
+"editLayout": "редактирования макета",
+"bootBoxThemeReload": "Возможно, вам придется перезапустить StudioLite для изменения вступили в силу",
+"light": "свет",
+"createAccount": "или создать новую учетную запись",
 "final": ""
 }

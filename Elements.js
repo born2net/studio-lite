@@ -1,10 +1,14 @@
 // elemenets
 Elements.APP_ENTRY = '#appEntry';
+Elements.LOGIN_BUTTON = '#loginButton';
+Elements.CREATE_ACCOUNT_BUTTON = '#createAccountButton';
 Elements.WAITS_SCREEN_ENTRY_APP = '#waitScreenEntryApp';
 Elements.LIVE_PREVIEW = '#livePreview'
 Elements.APP_LOGIN = '#appLogin';
 Elements.APP_LOGOUT = '#appLogout';
 Elements.FILE_MENU = '#fileMenu';
+Elements.WATCH_INTRO = '#watchIntro';
+Elements.VIDEO_INTRO = '#videoIntro';
 Elements.SAVE_CONFIG = '#saveConfig';
 Elements.LIVE_CHAT = '#liveChat';
 Elements.REMEMBER_ME = '#rememberMe';

@@ -257,5 +257,12 @@
 "signageIOS": "SignagePlayer עבור iOS",
 "signageMac": "SignagePlayer עבור Mac",
 "andPass": "וסיסמא",
+"duplicate": "לשכפל",
+"theme": "נושא",
+"editLayout": "פריסת עריכה",
+"bootBoxThemeReload": "ייתכן שתצטרך להפעיל מחדש StudioLite לשינויים ייכנסו לתוקף",
+"dark": "אפל",
+"light": "אור",
+"createAccount": "או ליצור חשבון חדש",
 "final": ""
 }

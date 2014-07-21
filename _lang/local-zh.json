@@ -257,5 +257,12 @@
 "signageIOS": "SignagePlayer为iOS",
 "signageMac": "SignagePlayer为Mac",
 "andPass": "和密码",
+"theme": "主题",
+"light": "光",
+"editLayout": "编辑布局",
+"bootBoxThemeReload": "您可能需要重新启动StudioLite以使更改生效",
+"duplicate": "复制",
+"createAccount": "或者创建新帐户",
+"dark": "暗",
 "final": ""
 }

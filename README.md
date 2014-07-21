@@ -6,7 +6,6 @@ Digital Signage for the rest of us
 
 current version: 1.0.126 dev-build
 
-
 ------------------------------------------------------------------------
 
 StudioLite is an open source, 100% FREE, Digital Signage platform that was designed with ease of use in mind.
@@ -28,7 +27,6 @@ Links:
 - Developer video tutorial: http://goo.gl/nkx7wr
 - StudioLite intro video: http://www.digitalsignage.com/_html/signage_video.html?videoNumber=StudioLite
 - Developers page: http://www.digitalsignage.com/_html/open_source_digital_signage.html
-
 
 Technical data:
 ------------------------------------------------------------------------

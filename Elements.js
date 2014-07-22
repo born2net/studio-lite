@@ -9,6 +9,7 @@ Elements.APP_LOGOUT = '#appLogout';
 Elements.FILE_MENU = '#fileMenu';
 Elements.WATCH_INTRO = '#watchIntro';
 Elements.VIDEO_INTRO = '#videoIntro';
+Elements.CLOSE_MODAL = '#closeModal';
 Elements.SAVE_CONFIG = '#saveConfig';
 Elements.LIVE_CHAT = '#liveChat';
 Elements.REMEMBER_ME = '#rememberMe';

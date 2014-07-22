@@ -263,7 +263,8 @@
     "signageMac": "SignagePlayer for Mac",
     "andPass": " and password ",
     "editLayout": "edit layout",
-    "createAccount": "or create a new account"
+    "createAccount": "or create a new account",
+    "noAutoPopup": "do not auto popup"
 }
 
 

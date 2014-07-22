@@ -224,6 +224,9 @@ Elements.DUPLICATE_SCENE = '#duplicateScene';
 Elements.BACK_TO_CAMPAIGNS = '#backToCampaigns';
 Elements.SCREEN_SELECTOR_CONTAINER = '#screenSelectorContainer';
 Elements.SEQUENCER_CONTEXT_MENU = '#sequencerContextMenu';
+Elements.AUTO_POPUP = '#autoPopUp';
+Elements.AUTO_POPUP_LABEL = '#autoPopUpLabel';
+
 
 // messages
 Elements.MSG_BOOTBOX_RESTART_STATIONS = '#bootBoxRestartStations';

@@ -687,7 +687,7 @@ easily in the skin designer. http://designer.videojs.com/
   text-transform: lowercase;
 }
 .vjs-default-skin .vjs-menu-button ul li.vjs-selected {
-  background-color: #000;
+  background-color: #fff;
 }
 .vjs-default-skin .vjs-menu-button ul li:focus,
 .vjs-default-skin .vjs-menu-button ul li:hover,
@@ -742,7 +742,7 @@ positioning, use another containing element. Otherwise you risk messing up
 control positioning and full window mode. **
 */
 .video-js {
-  background-color: #000;
+  background-color: #fff;
   position: relative;
   padding: 0;
   /* Start with 10px for base font size so other dimensions can be em based and

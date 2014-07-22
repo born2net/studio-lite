@@ -524,6 +524,13 @@ iframe {
     border-radius: 0;
 }
 
+#closeModal {
+    width: 120px;
+    position: relative;
+    left: 5px;
+}
+ 
+
 /* todo: added */
 
 .checkers {

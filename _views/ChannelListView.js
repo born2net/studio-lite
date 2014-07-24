@@ -296,7 +296,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
         },
 
         /**
-         When a block is selected within a channel, get the resource element so we can select it and fire
+         When block is selected within a channel, get the resource element so we can select it and fire
          the BLOCK_SELECTED event
          @method _listenChannelBlockSelected
          @param {Event} e

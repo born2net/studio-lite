@@ -167,3 +167,28 @@ button, select
         margin-right	: 0;
     }
 }
+
+.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
+    background-color: #777777 !important;
+    border-color: #eb7c66 !important;
+}
+
+.activated {
+    background-color: #777777 !important;
+}
+
+input {
+   background-color: #262626 !important;
+   color: #cbcbcb !important;
+    border-color: #262626 !important;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    color: #fdfdfe !important;
+    background-color: #535353 !important;
+
+}
+
+.panel {
+    border-color: #dcdcdc !important;
+}

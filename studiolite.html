@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="FREE Digital Signage http://www.digitalsignage.com">
-    <meta name="author" content="MediaSignage Inc.">
+    <meta name="description" content="Digital for everyone">
+    <meta name="author" content="Signage.me">
     <meta name="google" value="notranslate">
     <link rel="shortcut icon" href="favicon.ico">
     <title>SignageStudio Lite</title>
@@ -33,7 +33,7 @@
                 data-target="#bs-example-navbar-collapse-1"><span class="sr-only">Toggle navigation</span> <span
                 class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button>
 
-        <div id="logoContainer" class="flip">
+        <div id="logoContainer" class="reshid flip">
             <div class="card">
                 <div class="face front">
                     <img class="img-responsive" src="_assets/logo_s.png"/>
@@ -60,11 +60,11 @@
                     <li class="divider"></li>
                     <li><a data-localize="navSettings" class="settingsPanel" href="#">Settings</a></li>
                     <li class="divider"></li>
-                    <li><a data-localize="navStudioPanel" class="proStudioPanel" href="#">Pro (FREE)</a></li>
+                    <li><a data-localize="navGoPro" class="proStudioPanel" href="#">Go Pro</a></li>
                     <li class="divider"></li>
                     <li><a data-localize="navHelpPanel" class="helpPanel" href="#">Help</a></li>
                     <li class="divider"></li>
-                    <li><a data-localize="navInstallPanel" class="installPanel" href="#">Install</a></li>
+                    <li><a class="reshid" data-localize="navInstallPanel" class="installPanel" href="#">Install</a></li>
                     <li class="divider"></li>
                     <li><a data-localize="navLogout" class="logoutPanel" href="#">Logout</a></li>
                 </ul>
@@ -72,8 +72,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li><a data-localize="saveConfig" id="saveConfig" href="#">Save</a></li>
-            <li><a data-localize="liveChat" id="liveChat" href="#">Live chat</a></li>
-            <!-- TODO: ADDED -->
+            <li><a class="reshid" data-localize="liveChat" id="liveChat" href="#">Live chat</a></li>
             <li><a id="languagePrompt" href="#">Language &nbsp;</a></li>
             <li><a data-localize="dashboard" id="dashboard" href="#">Dashboard &nbsp;</a></li>
         </ul>
@@ -155,10 +154,10 @@
         <li class="scenesPanel list-group-item"><i class="navicons fa fa-pencil-square-o"></i><span
                 data-localize="navScenes">Scenes</span>
         <li class="settingsPanel list-group-item"><i class="navicons fa fa-gears"></i><span data-localize="navSettings">Settings</span>
-        <li class="proStudioPanel list-group-item"><i class="navicons fa fa-cloud-upload"></i><span
-                data-localize="navStudioPanel">Pro (FREE)</span>
-        <li class="helpPanel list-group-item"><i class="navicons fa fa-comments"></i><span data-localize="navHelpPanel">Help</span>
-        <li class="installPanel list-group-item"><i class="navicons fa fa-laptop"></i><span
+        <li class="proStudioPanel list-group-item"><i class="navicons fa fa-cloud-upload"></i>
+        <span data-localize="navStudioPanel">Pro </span><span class="reshid" data-localize="freeBrackets"> (FREE)
+            <li class="helpPanel list-group-item"><i class="navicons fa fa-comments"></i><span data-localize="navHelpPanel">Help</span>
+        <li class="reshid installPanel list-group-item"><i class="navicons fa fa-laptop"></i><span class="reshid"
                 data-localize="navInstallPanel">Install</span>
         <li class="logoutPanel list-group-item"><i class="navicons fa fa-power-off"></i><span data-localize="navLogout">Logout</span>
     </ul>
@@ -178,7 +177,7 @@
                 <video id="videoIntro" class="centerElement vjs-big-play-centered video-js vjs-default-skin" controls
                        preload="auto" poster="videoIntro.png"
                        data-setup="{}">
-                    <source src="https://galaxy.signage.me/_studiolite-dist/StudioLite.mp4" type='video/mp4'>
+                       <source src="https://galaxy.signage.me/_studiolite-dist/StudioLite.mp4" type='video/mp4'>
                 </video>
             </div>
             <div class="modal-footer">
@@ -546,11 +545,12 @@
         <div id="pricingTableWrap" style="overflow-x: hidden; overflow-y: scroll; height: 100%">
             <div class="col-md-4" id="home-box">
                 <div class="pricing_header1">
-                    <h2 class="pricing_headerh2" data-localize="studioLiteFree">StudioLite (FREE)</h2>
-
+                    <h2 class="pricing_headerh2" data-localize="studioLiteFree">StudioLite</h2>
                     <div class="space"></div>
                 </div>
                 <ul class="list-group">
+                    <li class="reshid list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="onehundredFree"> 100% FREE</span></li>
                     <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
                             data-localize="simpleInterface"> simple to use interface</span></li>
                     <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
@@ -574,7 +574,7 @@
                     <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
                             data-localize="openSourceGitHub"> Open source (GitHub)</span></li>
                 </ul>
-                <div class="try">
+                <div class="reshid try">
                     <p class="price">$0.00</p>
                     <button class="btnPrice btn btn-default" disabled="disabled" href="#" type="button"
                             data-localize="youAreHere">you are here
@@ -588,6 +588,8 @@
                     <div class="space"></div>
                 </div>
                 <ul class="list-group">
+                    <li class="reshid list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="onehundredFree"> 100% FREE</span></li>
                     <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
                             data-localize="higherLearningCurve"> Higher learning curve</span></li>
                     <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
@@ -611,10 +613,10 @@
                     <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
                             data-localize="muchMore"> and much more...</span></li>
                 </ul>
-                <div class="try">
+                <div class="reshid try">
                     <p class="price">$0.00</p>
-                    <a id="convertAccount" class="btnPrice btn-primary btn btn-default" href="#" type="button"
-                       data-localize="convert">Convert</a></div>
+                    <a id="convertAccount" class="btnPrice btn-primary btn btn-default" href="#" type="button" data-localize="convert">Convert</a>
+                    </div>
             </div>
             <div class="col-md-4" id="home-box">
                 <div class="pricing_header3">
@@ -623,6 +625,8 @@
                     <div class="space"></div>
                 </div>
                 <ul class="list-group">
+                    <li class="reshid list-group-item"><span class="glyphicon glyphicon-ok"></span><span
+                            data-localize="nintynine"> $99 a month (flat)</span></li>
                     <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
                             data-localize="everythingFromLiteAndPro"> Everything from Lite & Pro</span></li>
                     <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
@@ -647,10 +651,8 @@
                             data-localize="muchMore"> and much more...</span></li>
                 </ul>
                 <div class="try">
-                    <p class="price">$99/<span data-localize="month">month</span></p>
-                    <button id="subscribeAccount" class="btnPrice btn-primary btn btn-default" href="#" type="button"
-                            data-localize="subscribe"> Subscribe
-                    </button>
+                    <p class="reshid price">$99/<span class="reshid" data-localize="month">month</span></p>
+                    <button id="subscribeAccount" class="reshid btnPrice btn-primary btn btn-default" href="#" type="button" data-localize="subscribe"> Subscribe </button>
                 </div>
             </div>
         </div>
@@ -660,21 +662,22 @@
     <h3 data-localize="videoTutorial">Video tutorial - learn how to use StudioLite</h3>
     <button id="watchIntro" class="btn btn-primary btn-lg" data-localize="watchNow">Watch it now</button>
     <hr/>
-    <h3 data-localize="additionalLinks">Additional links</h3>
-    <ul>
-        <li><a class="helpLinks" href="http://lite.digitalsignage.com"
-               data-localize="studioLitePage">StudioLite page</a></li>
-        <li><a class="helpLinks" href="http://script.digitalsignage.com/forum/index.php" data-localize="supportForum">Support
-            forum</a></li>
-        <li><a class="helpLinks" href="http://www.digitalsignage.com/_html/live_chat.html"
-               data-localize="liveChatSupport">Live Chat / Support</a></li>
-        <li><a class="helpLinks" href="http://git.digitalsignage.com" data-localize="openSource">Open source</a></li>
-        <li><a class="helpLinks" href="http://script.digitalsignage.com/cgi-bin/webinar.cgi" data-localize="webinar">Webinar</a>
-        </li>
-        <li><a class="helpLinks" href="http://www.digitalsignage.com/_html/faqs.html" data-localize="faq">FAQs</a></li>
-        <li><a class="helpLinks" href="http://www.digitalsignage.com/support/upload/index.php?/Knowledgebase/List"
-               data-localize="knowledgeBase">Knowledge base</a></li>
-    </ul>
+    <div class="reshid">
+        <h3 data-localize="additionalLinks">Additional links</h3>
+        <ul>
+            <li><a class="helpLinks" href="http://lite.digitalsignage.com"
+                   data-localize="studioLitePage">StudioLite page</a></li>
+            <li><a class="helpLinks" href="http://script.digitalsignage.com/forum/index.php" data-localize="supportForum">Support
+                forum</a></li>
+
+            <li><a class="helpLinks" href="http://git.digitalsignage.com" data-localize="openSource">Open source</a></li>
+            <li><a class="helpLinks" href="http://script.digitalsignage.com/cgi-bin/webinar.cgi" data-localize="webinar">Webinar</a>
+            </li>
+            <li><a class="helpLinks" href="http://www.digitalsignage.com/_html/faqs.html" data-localize="faq">FAQs</a></li>
+            <li><a class="helpLinks" href="http://www.digitalsignage.com/support/upload/index.php?/Knowledgebase/List"
+                   data-localize="knowledgeBase">Knowledge base</a></li>
+        </ul>
+    </div>
     <hr/>
 </div>
 <div id="installPanel" style="display: none">
@@ -1146,7 +1149,8 @@
 </div>
 </div>
 <div id="footer"><br>
-    <span id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.131 </span></div>
+     <span class="reshid" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.131 </span>
+</div>
 
 
 <div id="popModal" style="display: none"></div>
@@ -1168,7 +1172,6 @@
     </form>
 </div>
 
-<!-- TODO ADDED -->
 <!-- Language selection template -->
 
 <div id="languageSelector" class="dropdownlang" style="display: none">
@@ -1415,9 +1418,7 @@
 <p style="display: none" id="bootBoxStudioLiteAcc" data-localize="bootBoxStudioLiteAcc">You must login with a StudioLite
     account and not a Pro account</p>
 
-<p style="display: none" id="bootBoxLoginWrongCred" data-localize="bootBoxLoginWrongCred">You are logged with FREE
-    SignageStudio Pro credentials and not FREE StudioLite credentials so only the Stations module is available. Be sure
-    to create a new FREE StudioLite account to get the full experience...</p>
+<p style="display: none" id="bootBoxLoginWrongCred" data-localize="bootBoxLoginWrongCred">You are logged with SignageStudio Pro credentials and not StudioLite credentials so only the Stations module is available. Be sure to create a new StudioLite account to get the full experience...</p>
 
 <p style="display: none" id="bootBoxSaveRemoteSrv" data-localize="bootBoxSaveRemoteSrv">Save work to remote server</p>
 

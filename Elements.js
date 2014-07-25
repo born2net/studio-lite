@@ -1,5 +1,6 @@
 // elemenets
 Elements.APP_ENTRY = '#appEntry';
+Elements.LOGO_CONTAINER = '#logoContainer';
 Elements.LOGIN_BUTTON = '#loginButton';
 Elements.CREATE_ACCOUNT_BUTTON = '#createAccountButton';
 Elements.WAITS_SCREEN_ENTRY_APP = '#waitScreenEntryApp';
@@ -312,7 +313,7 @@ Elements.CLASS_SCALA_NUM = '.scalaNum';
 Elements.CLASS_CHANNEL_HEAD = '.channelHead';
 Elements.CLASS_CHANNEL_HEAD_SELECTED = '.channelHeadSelected';
 Elements.CLASS_USER_NAME = '.userName'
-
+Elements.CLASS_RES_HID = '.reshid';
 
 /**
  List of all Elements / Classes of elements used in the DOM

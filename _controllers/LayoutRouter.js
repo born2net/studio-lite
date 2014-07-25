@@ -120,6 +120,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                     this._initCampaignWizardPage();
                     this._initModal();
                     this._initDashBoard();
+                    this._initCustomer();
 
                     // inject pseudo scene / player IDs
                     pepper.injectPseudoScenePlayersIDs();
@@ -185,6 +186,16 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 $(Elements.SERVER_NAME).text(pepper.getUserData().domain);
                 $(Elements.BUISINESS_ID).text(pepper.getUserData().businessID);
                 $(Elements.CLASS_USER_NAME).text(pepper.getUserData().userName);
+            },
+
+            /**
+             Setup customer account
+             @method _initCustomer
+             **/
+            _initCustomer: function () {
+                var self = this;
+                //var a = $(Elements.SERVER_NAME).text(pepper.getUserData().domain);
+                $(Elements.CLASS_RES_HID).remove();
             },
 
             /**
@@ -400,9 +411,9 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
              Listen logo mouse hover
              @method _listenLogoHover
              **/
-            _listenLogoHover: function(){
-                $('.flip').mouseenter(function(){
-                    $(this).find('.card').addClass('flipped').mouseleave(function(){
+            _listenLogoHover: function () {
+                $('.flip').mouseenter(function () {
+                    $(this).find('.card').addClass('flipped').mouseleave(function () {
                         $(this).removeClass('flipped');
                     });
                     return false;

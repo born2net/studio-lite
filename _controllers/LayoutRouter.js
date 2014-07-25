@@ -194,8 +194,10 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
              **/
             _initCustomer: function () {
                 var self = this;
-                //var a = $(Elements.SERVER_NAME).text(pepper.getUserData().domain);
-                $(Elements.CLASS_RES_HID).remove();
+                if (window.location.href.indexOf('dist') > -1) {
+                    //var a = $(Elements.SERVER_NAME).text(pepper.getUserData().domain);
+                    $(Elements.CLASS_RES_HID).remove();
+                }
             },
 
             /**

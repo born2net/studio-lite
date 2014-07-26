@@ -156,11 +156,18 @@
                 data-localize="navStation">Stations</span></li>
         <li class="scenesPanel list-group-item"><i class="navicons fa fa-pencil-square-o"></i><span
                 data-localize="navScenes">Scenes</span></li>
-        <li class="settingsPanel list-group-item"><i class="navicons fa fa-gears"></i><span data-localize="navSettings">Settings</span></li>
-        <li class="proStudioPanel list-group-item"><i class="navicons fa fa-cloud-upload"></i><span data-localize="navStudioPanel">Pro </span><span class="reshid" data-localize="freeBrackets"> (FREE)</span></li>
-        <li class="helpPanel list-group-item"><i class="navicons fa fa-comments"></i><span data-localize="navHelpPanel">Help</span></li>
-        <li class="reshid installPanel list-group-item"><i class="navicons fa fa-laptop"></i><span class="reshid" data-localize="navInstallPanel">Install</span></li>
-        <li class="logoutPanel list-group-item"><i class="navicons fa fa-power-off"></i><span data-localize="navLogout">Logout</span></li>
+        <li class="settingsPanel list-group-item"><i class="navicons fa fa-gears"></i><span data-localize="navSettings">Settings</span>
+        </li>
+        <li class="proStudioPanel list-group-item"><i class="navicons fa fa-cloud-upload"></i><span
+                data-localize="navStudioPanel">Pro </span><span class="reshid"
+                                                                data-localize="freeBrackets"> (FREE)</span></li>
+        <li class="helpPanel list-group-item"><i class="navicons fa fa-comments"></i><span data-localize="navHelpPanel">Help</span>
+        </li>
+        <li class="reshid installPanel list-group-item"><i class="navicons fa fa-laptop"></i><span class="reshid"
+                                                                                                   data-localize="navInstallPanel">Install</span>
+        </li>
+        <li class="logoutPanel list-group-item"><i class="navicons fa fa-power-off"></i><span data-localize="navLogout">Logout</span>
+        </li>
     </ul>
 </div>
 <div id="mainPanelWrap" class="col-xs-12 col-sm-9 col-md-9 col-lg-8">
@@ -288,11 +295,6 @@
                                 data-localize-tooltip="campaignPreviewTooltip"
                                 class="btn btn-default btn-sm">
                             <i class="fa fa-play-circle"></i></button>
-                        <button id="selectNextChannel" type="button"
-                                data-localize="empty"
-                                data-toggle="tooltip"
-                                data-localize-tooltip="selectNextChannel"
-                                class="btn btn-default btn-sm">CH
                         </button>
 
                     </h4>
@@ -341,24 +343,22 @@
                                 class="collapsed glyphicon glyphicon-chevron-right"></span>
                             Timeline
                         </a>
-
-                        <button style="margin-left: 30px" id="addBlockButton" type="button"
-                                title="add content" data-localize="empty"
-                                data-localize-tooltip="addContent"
-                                data-toggle="tooltip"
+                        <button style="margin-left: 30px" id="selectNextChannel" type="button"
                                 class="btn btn-default btn-sm">
-                            <i class="fa fa-plus"></i> Add content</button>
+                            <i class="fa fa-crosshairs"></i> next channel
+                        </button>
+                        <button id="addBlockButton" type="button"
+                                class="btn btn-default btn-sm">
+                            <i class="fa fa-plus"></i> add content
+                        </button>
                         <button id="removeBlockButton" type="button"
-                                title="remove content" data-localize="removeContent"
-                                data-localize-tooltip="removeContent"
-                                data-toggle="tooltip"
-                                class="btn btn-default btn-sm"><span
-                                class="glyphicon glyphicon-minus"></span> remove content</button>
-                        <button id="timelinePreview" type="button"
-                                title="campaign preview" data-toggle="tooltip"
-                                data-localize-tooltip="campaignPreviewTooltip"
                                 class="btn btn-default btn-sm">
-                            <i class="fa fa-play-circle"></i> preview timeline</button>
+                            <i class="fa fa-minus"></i></span> remove content
+                        </button>
+                        <button id="timelinePreview" type="button"
+                                class="btn btn-default btn-sm">
+                            <i class="fa fa-play-circle"></i> preview timeline
+                        </button>
                     </h4>
                 </div>
                 <div id="storylineContainerCollapse" class="panel-collapse collapse">
@@ -383,19 +383,6 @@
         </div>
 
         <div id="channelListView">
-            <!--
-            <div>
-                <button id="addBlockButton" type="button" class="btn btn-default"><span
-                        class="glyphicon glyphicon-plus"></span><span
-                        data-localize="addContent"> Add content </span></button>
-                <button id="removeBlockButton" type="button" class="btn btn-default"><span
-                        class="glyphicon glyphicon-minus"></span><span
-                        data-localize="removeContent"> Remove content </span></button>
-                <button id="timelinePreview" type="button" class="btn btn-default"><span
-                        class="glyphicon glyphicon-film"></span><span
-                        data-localize="timelinePreview"> Preview timeline</span></button>
-            </div>
-            -->
             <div>
                 <ul class="list-group" id="sortable" style="padding:20px">
                 </ul>

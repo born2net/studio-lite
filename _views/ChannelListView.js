@@ -324,7 +324,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
         },
 
         /**
-         When a block is selected within a storyboard get the resource element so we can select it and fire global block selection event
+         When a block is selected within a storyline get the resource element so we can select it and fire global block selection event
          @method _listenStorylineBlockSelected
          @param {Event} e
          **/

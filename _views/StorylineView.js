@@ -5,7 +5,7 @@
  @param {String}
  @return {Object} instantiated StorylineView
  **/
-define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], function ($, Backbone, text, storyBoardTemplate) {
+define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], function ($, Backbone, text, storylineTemplate) {
 
     /**
      Custom event fired when a block is selected on the storyline
@@ -34,12 +34,14 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             self.m_selectedBlockID = undefined;
             self.m_selectedChannel = undefined;
             self.m_blockZindex = 3;
+            BB.comBroker.setService(BB.SERVICES.STORYLINE, self);
             BB.comBroker.listen(BB.EVENTS.SIDE_PANEL_SIZED, $.proxy(self._updateWidth, self));
             self._listenReset();
             self._listenTimelineSelected();
             self._listenTimelineChanged();
             self._listenBlockSelection();
             self._listenStackViewSelected();
+            self._listenToggleStorylineCollapsible();
             self._listenAppResized();
             self._updateWidth();
         },
@@ -53,9 +55,9 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             if (_.isUndefined(self.m_render)) {
                 self.m_render = _.debounce(function () {
                     $(Elements.STORYLINE).empty();
-                    self.m_storylineContainerSnippet = $(storyBoardTemplate).find(Elements.STORYLINE_CONTAINER).parent();
-                    self.m_TableSnippet = $(storyBoardTemplate).find('table').parent();
-                    self.m_ChannelSnippet = $(storyBoardTemplate).find(Elements.CLASS_STORYLINE_CHANNEL).parent();
+                    self.m_storylineContainerSnippet = $(storylineTemplate).find(Elements.STORYLINE_CONTAINER).parent();
+                    self.m_TableSnippet = $(storylineTemplate).find('table').parent();
+                    self.m_ChannelSnippet = $(storylineTemplate).find(Elements.CLASS_STORYLINE_CHANNEL).parent();
                     self._populateScala();
                     self._populateChannels();
                     self._listenSelections();
@@ -137,7 +139,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
         },
 
         /**
-         Add block selection by marking it on the storyboard and remembering selection
+         Add block selection by marking it on the storyline and remembering selection
          @method _addBlockSelection
          @param {Number} i_blockID
          **/
@@ -152,7 +154,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
         },
 
         /**
-         Add channel selection by marking it on the storyboard and remembering selection
+         Add channel selection by marking it on the storyline and remembering selection
          @method _addChannelSelection
          @param {Number} i_selectedChannel
          **/
@@ -188,7 +190,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
         },
 
         /**
-         Build the UI for the top seconds / minutes scala of the storyboard
+         Build the UI for the top seconds / minutes scala of the storyline
          @method _populateScala
          **/
         _populateScala: function () {
@@ -426,6 +428,63 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             BB.comBroker.fire(BB.EVENTS.STORYLINE_BLOCK_SELECTED, this, null, self.selected_block_id);
             $(blockElem).addClass(BB.lib.unclass(Elements.CLASS_TIMELINE_BLOCK_SELECTED));
             return false;
+        },
+
+
+        /**
+         Toggle the arrow of the collapsible storyline UI widget
+         @method _listenToggleStorylineCollapsible
+         **/
+        _listenToggleStorylineCollapsible: function () {
+            var self = this;
+            $(Elements.TOGGLE_STORYLINE_COLLAPSIBLE).on('click', function () {
+                var toggle = $(this).find('span')[0];
+                if ($(toggle).hasClass('glyphicon-chevron-down')) {
+                    $(toggle).removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-right')
+                } else {
+                    $(toggle).removeClass('glyphicon-chevron-right').addClass('glyphicon-chevron-down')
+                }
+                $(Elements.STORYLINE).fadeIn(500).queue(function(){
+                    self._render();
+                }).dequeue().delay(100).queue(function(){
+                    self._render();
+                }).dequeue();
+            });
+        },
+
+        /**
+         Select next channel
+         @method selectNextChannel
+         **/
+        selectNextChannel: function () {
+            var self = this;
+            var timeline_channel_id, campaign_timeline_board_viewer_id;
+            log(self.m_selectedChannel);
+            var channelsIDs = pepper.getChannelsOfTimeline(self.m_selectedTimelineID);
+            if (_.isUndefined(self.m_selectedChannel)) {
+                timeline_channel_id = channelsIDs[0];
+            } else {
+                for (var ch in channelsIDs) {
+                    if (channelsIDs[ch] == self.m_selectedChannel) {
+                        if (_.isUndefined(channelsIDs[parseInt(ch) + 1])) {
+                            timeline_channel_id = channelsIDs[0];
+                        } else {
+                            timeline_channel_id = channelsIDs[parseInt(ch) + 1];
+                        }
+                    }
+                }
+            }
+            campaign_timeline_board_viewer_id = pepper.getAssignedViewerIdFromChannelId(timeline_channel_id);
+            var screenData = {
+                m_owner: self,
+                campaign_timeline_id: self.m_selectedTimelineID,
+                campaign_timeline_board_viewer_id: campaign_timeline_board_viewer_id
+            };
+            self._removeBlockSelection();
+            self._addChannelSelection(timeline_channel_id);
+            var sequencer = BB.comBroker.getService(BB.SERVICES['SEQUENCER_VIEW']);
+            sequencer.selectViewer(screenData.campaign_timeline_id, screenData.campaign_timeline_board_viewer_id);
+            BB.comBroker.fire(BB.EVENTS.ON_VIEWER_SELECTED, this, screenData);
         }
     });
 

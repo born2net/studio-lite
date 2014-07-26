@@ -76,6 +76,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             self._listenBackToCampaigns();
             self._listenAddNewTimeline();
             self._listenCampaignPreview();
+            self._listenSelectNextChannel();
             self._listenCampaignTimelinePreview();
             self._listenToggleTimelinesCollapsible();
             self._listenScreenTemplateEdit();
@@ -88,7 +89,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
          **/
         _listenCampaignSelected: function () {
             var self = this;
-            BB.comBroker.listen(BB.EVENTS.CAMPAIGN_SELECTED, function(e){
+            BB.comBroker.listen(BB.EVENTS.CAMPAIGN_SELECTED, function (e) {
                 self._reset();
                 self.m_selected_campaign_id = e.edata;
                 self._render();
@@ -256,7 +257,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
          **/
         _listenBackToCampaigns: function () {
             var self = this;
-            $(Elements.BACK_TO_CAMPAIGNS).on('click',function(){
+            $(Elements.BACK_TO_CAMPAIGNS).on('click', function () {
                 BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
                 self.options.stackView.slideToPage(Elements.CAMPAIGN_SELECTOR, 'left');
             });
@@ -283,6 +284,17 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             $(Elements.CAMPAIGN_PREVIEW).on('click', function () {
                 var livePreview = BB.comBroker.getService(BB.SERVICES['LIVEPREVIEW']);
                 livePreview.launchCampaign(self.m_selected_campaign_id);
+            });
+        },
+
+        /**
+         Listen to select next channel clicj
+         @method _listenSelectNextChannel
+         **/
+        _listenSelectNextChannel: function () {
+            var self = this;
+            $(Elements.SELECT_NEXT_CHANNEL).on('click', function () {
+                BB.comBroker.getService(BB.SERVICES.STORYLINE).selectNextChannel();
             });
         },
 
@@ -348,7 +360,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
          **/
         _listenScreenTemplateEdit: function () {
             var self = this;
-            $(Elements.EDIT_SCREEN_LAYOUT).on('click', function(e){
+            $(Elements.EDIT_SCREEN_LAYOUT).on('click', function (e) {
                 var screenLayoutEditor = BB.comBroker.getService(BB.SERVICES.SCREEN_LAYOUT_EDITOR_VIEW);
                 var boardTemplateIDs = pepper.getTemplatesOfTimeline(self.m_selected_timeline_id);
                 screenLayoutEditor.selectView(self.m_selected_timeline_id, boardTemplateIDs[0]);
@@ -397,7 +409,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
          Reset the module and settings
          @method _restart
          **/
-        _reset: function(){
+        _reset: function () {
             var self = this;
             self.m_timelines = {};
             self.m_selected_timeline_id = -1;
@@ -452,7 +464,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
          @param {Number} i_playerData
          @return {Number} Unique clientId.
          **/
-        duplicateTimeline: function(i_campaign_timeline_id, i_screenProps){
+        duplicateTimeline: function (i_campaign_timeline_id, i_screenProps) {
             return;
             var self = this;
             var campaign_board_id = pepper.getFirstBoardIDofCampaign(self.m_selected_campaign_id);

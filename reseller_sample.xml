@@ -1,0 +1,206 @@
+<!-- Galaxy app_compoenents > app_compontn / module_id -->
+
+<BusinessInfo businessId="300762" name="XXXXXXXXXXXX" businessDescription="" accountStatus="4" archiveState="0" applicationId="3" resellerId="1" providerId="10">
+	<WhiteLabel enabled="1">
+		<Studio>
+			<Application>
+				<Logo tooltip="www.MediaSignage.com" link="http://www.mediasignage.com/b.thml" filename="XXXXXXXXLogo.png"/>
+				<Links home="http://mediasignage.com" download="http://mediasignage.com/html/download.html" contact="http://mediasignage.com/html/contact.html"/>
+				<CreateAccount show="1"/>
+			</Application>
+			<MainMenu>
+				<CommandGroup id="help" label="Help" icon="helpIcon">
+					<Command id="help1" label="Visit site" href="http://mediasignage.com"/>
+					<Command id="help2" label="Video Tutorial" href="http://mediasignage.com/html/signage_video.html"/>
+					<Command id="help3" label="Support" href="http://mediasignage.com/simplemachinesforum/index.php"/>
+					<Command id="help4" label="Report a bug" href="http://mediasignage.com/simplemachinesforum/index.php?board=3.0"/>
+					<Command id="about" label="About..."/>
+				</CommandGroup>
+			</MainMenu>
+			<Banner embeddedReference="1"/>
+			<Twitter show="1" link="http://twitter.com/mediasignage"/>
+			<Chat show="1" link="http://messenger.providesupport.com/messenger/mediasignage.html"/>
+		</Studio>
+	</WhiteLabel>
+	<Privileges defaultPrivilegeId="300079">
+		<Privilege id="301746" name="limited">
+			<Groups>
+				<Group name="Global" visible="0">
+					<Tables global_settings="0"/>
+				</Group>
+				<Group name="Screens" visible="0">
+					<Tables boards="0" board_templates="0" board_template_viewers="0"/>
+				</Group>
+				<Group name="Resources" visible="0" resourceMode="0">
+					<Tables resources="0"/>
+				</Group>
+				<Group name="Editors" visible="0">
+					<Tables player_data="0"/>
+				</Group>
+				<Group name="Catalog" visible="0">
+					<Tables catalog_items="0" catalog_item_infos="0" catalog_item_resources="0" catalog_item_categories="0" category_values="0"/>
+				</Group>
+				<Group name="Campaigns" visible="0">
+					<Tables campaigns="0" campaign_events="0" campaign_timelines="0" campaign_timeline_sequences="0" campaign_timeline_schedules="0" campaign_sequences="0" campaign_sequence_timelines="0" campaign_sequence_schedules="0" campaign_timeline_channels="0" campaign_timeline_chanels="0" campaign_timeline_chanel_players="0" campaign_timeline_board_viewer_channels="0" campaign_timeline_board_viewer_chanels="0" campaign_timeline_board_templates="0" campaign_channels="0" campaign_channel_players="0" campaign_boards="0"/>
+				</Group>
+				<Group name="Transitions" visible="1">
+					<Tables transition_pools="7" transition_pool_items="7"/>
+				</Group>
+				<Group name="AdLocal" visible="0">
+					<Tables ad_local_packages="0" ad_local_contents="0"/>
+				</Group>
+				<Group name="AdOut" visible="0" globalSearch="1">
+					<Tables ad_out_packages="0" ad_out_package_stations="0" ad_out_package_contents="0"/>
+				</Group>
+				<Group name="AdIn" visible="0">
+					<Tables ad_in_domains="0" ad_in_domain_businesses="0" ad_in_domain_business_packages="0" ad_in_domain_business_package_stations="0" ad_rates="0"/>
+				</Group>
+				<Group name="AdRate" visible="0">
+					<Tables ad_rates="0"/>
+				</Group>
+				<Group name="AdAnalytic" visible="0">
+					<Tables/>
+				</Group>
+				<Group name="Music" visible="0">
+					<Tables music_channels="0" music_channel_songs="0"/>
+				</Group>
+				<Group name="Stations" visible="1" stationsNetwork="0" updateOnSave="0" lanServer="0" zwave="0">
+					<Tables branch_stations="7" station_ads="7"/>
+				</Group>
+				<Group name="Changelist" visible="0">
+					<Tables/>
+				</Group>
+			</Groups>
+		</Privilege>
+		<Privilege id="300079" name="privilege">
+			<Groups>
+				<Group name="Global" visible="1">
+					<Tables global_settings="7"/>
+				</Group>
+				<Group name="Screens" visible="1">
+					<Tables boards="7" board_templates="7" board_template_viewers="7"/>
+				</Group>
+				<Group name="Resources" visible="1" resourceMode="0">
+					<Tables resources="7"/>
+				</Group>
+				<Group name="Editors" visible="1">
+					<Tables player_data="7"/>
+				</Group>
+				<Group name="Catalog" visible="1">
+					<Tables catalog_items="7" catalog_item_infos="7" catalog_item_resources="7" catalog_item_categories="7" category_values="7"/>
+				</Group>
+				<Group name="Campaigns" visible="1">
+					<Tables campaigns="7" campaign_events="7" campaign_timelines="7" campaign_timeline_sequences="7" campaign_timeline_schedules="7" campaign_sequences="7" campaign_sequence_timelines="7" campaign_sequence_schedules="7" campaign_timeline_channels="7" campaign_timeline_chanels="7" campaign_timeline_chanel_players="7" campaign_timeline_board_viewer_channels="7" campaign_timeline_board_viewer_chanels="7" campaign_timeline_board_templates="7" campaign_channels="7" campaign_channel_players="7" campaign_boards="7"/>
+				</Group>
+				<Group name="Transitions" visible="1">
+					<Tables transition_pools="7" transition_pool_items="7"/>
+				</Group>
+				<Group name="AdLocal" visible="1">
+					<Tables ad_local_packages="7" ad_local_contents="7"/>
+				</Group>
+				<Group name="AdOut" visible="1" globalSearch="1">
+					<Tables ad_out_packages="7" ad_out_package_stations="7" ad_out_package_contents="7"/>
+				</Group>
+				<Group name="AdIn" visible="1">
+					<Tables ad_in_domains="7" ad_in_domain_businesses="7" ad_in_domain_business_packages="7" ad_in_domain_business_package_stations="7" ad_rates="7"/>
+				</Group>
+				<Group name="AdRate" visible="1">
+					<Tables ad_rates="7"/>
+				</Group>
+				<Group name="AdAnalytic" visible="1">
+					<Tables/>
+				</Group>
+				<Group name="Music" visible="1">
+					<Tables music_channels="7" music_channel_songs="7"/>
+				</Group>
+				<Group name="Stations" visible="1" stationsNetwork="1" updateOnSave="1" lanServer="1" zwave="1">
+					<Tables branch_stations="7" station_ads="7"/>
+				</Group>
+				<Group name="Changelist" visible="1">
+					<Tables/>
+				</Group>
+			</Groups>
+		</Privilege>
+		<Privilege id="301724" name="UpStat">
+			<Groups>
+				<Group name="Global" visible="0">
+					<Tables global_settings="0"/>
+				</Group>
+				<Group name="Screens" visible="0">
+					<Tables boards="0" board_templates="0" board_template_viewers="0"/>
+				</Group>
+				<Group name="Resources" visible="0" resourceMode="0">
+					<Tables resources="0"/>
+				</Group>
+				<Group name="Editors" visible="0">
+					<Tables player_data="0"/>
+				</Group>
+				<Group name="Catalog" visible="0">
+					<Tables catalog_items="0" catalog_item_infos="0" catalog_item_resources="0" catalog_item_categories="0" category_values="0"/>
+				</Group>
+				<Group name="Campaigns" visible="0">
+					<Tables campaigns="0" campaign_events="0" campaign_timelines="0" campaign_timeline_sequences="0" campaign_timeline_schedules="0" campaign_timeline_channels="0" campaign_timeline_chanels="0" campaign_timeline_chanel_players="0" campaign_timeline_board_viewer_channels="0" campaign_timeline_board_viewer_chanels="0" campaign_timeline_board_templates="0" campaign_channels="0" campaign_channel_players="0" campaign_boards="0"/>
+				</Group>
+				<Group name="Transitions" visible="1">
+					<Tables transition_pools="7" transition_pool_items="7"/>
+				</Group>
+				<Group name="AdLocal" visible="0">
+					<Tables ad_local_packages="0" ad_local_contents="0"/>
+				</Group>
+				<Group name="AdOut" visible="0" globalSearch="1">
+					<Tables ad_out_packages="0" ad_out_package_stations="0" ad_out_package_contents="0"/>
+				</Group>
+				<Group name="AdIn" visible="0">
+					<Tables ad_in_domains="0" ad_in_domain_businesses="0" ad_in_domain_business_packages="0" ad_in_domain_business_package_stations="0" ad_rates="0"/>
+				</Group>
+				<Group name="AdRate" visible="0">
+					<Tables ad_rates="0"/>
+				</Group>
+				<Group name="AdAnalytic" visible="0">
+					<Tables/>
+				</Group>
+				<Group name="Music" visible="0">
+					<Tables music_channels="0" music_channel_songs="0"/>
+				</Group>
+				<Group name="Stations" visible="1" stationsNetwork="1" updateOnSave="1" lanServer="0" zwave="0">
+					<Tables branch_stations="7" station_ads="7"/>
+				</Group>
+				<Group name="Changelist" visible="0">
+					<Tables/>
+				</Group>
+			</Groups>
+		</Privilege>
+	</Privileges>
+	<Themes defaultThemeId="0">
+		<Theme name="White" ver="1420" studioStyles="Themes/StudioStyles2.swf" playerStyles="Themes/PlayerStyles2.swf" studioIcons="Themes/StudioIcons2.swf" playerIcons="Themes/AirPlayerIcons2.swf" componentIcons="Themes/componentIcons2.swf" id="1"/>
+		<Theme name="Black" ver="1420" studioStyles="Themes/StudioStyles.swf" playerStyles="Themes/PlayerStyles.swf" studioIcons="Themes/StudioIcons.swf" playerIcons="Themes/AirPlayerIcons.swf" componentIcons="Themes/componentIcons.swf" id="0"/>
+	</Themes>
+	<InstalledApps>
+		<App id="10500" installed="1"/>
+		<App id="10140" installed="1"/>
+		<App id="10050" installed="1"/>
+		<App id="10400" installed="1"/>
+		<App id="10220" installed="1"/>
+		<App id="10130" installed="1"/>
+		<App id="10040" installed="1"/>
+		<App id="10300" installed="1"/>
+		<App id="10210" installed="1"/>
+		<App id="10120" installed="1"/>
+		<App id="10030" installed="1"/>
+		<App id="10200" installed="1"/>
+		<App id="10110" installed="1"/>
+		<App id="10020" installed="1"/>
+		<App id="10190" installed="1"/>
+		<App id="10100" installed="1"/>
+		<App id="10010" installed="1"/>
+		<App id="10005" installed="1"/>
+		<App id="10180" installed="1"/>
+		<App id="10090" installed="1"/>
+		<App id="10080" installed="1"/>
+		<App id="10060" installed="1"/>
+		<App id="10160" installed="1"/>
+		<App id="10070" installed="1"/>
+		<App id="10150" installed="1"/>
+		<App id="10122" installed="1"/>
+	</InstalledApps>
+</BusinessInfo>

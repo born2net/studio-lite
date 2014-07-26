@@ -488,7 +488,12 @@ iframe {
     /* opacity: 0.01; */
 }
 
+#storylineCollapsible {
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
 #storyLine {
+    display: none;
     font-family: monospace;
 }
 

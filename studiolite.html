@@ -118,21 +118,22 @@
         <div id="livePreviewButtons" class="alignTextCenter">
 
             <button id="playerPreviewReplay" title="launch player"
-                    data-localize-tooltip="playPreview" data-toggle="tooltip" type="button"
+                    data-localize-tooltip="playPreview"  type="button"
                     class="btn btn-default">
                 <i style="font-size: 1em" class="fa fa-youtube-play"></i>
                 <span data-localize="launch"> launch </span>
             </button>
 
+            <!-- removed data-toggle="tooltip" so we can support localized tooltips-->
             <button id="playerPreviewStop" title="stop playback"
-                    data-localize-tooltip="stopPreview" data-toggle="tooltip" type="button"
+                    data-localize-tooltip="stopPreview"  type="button"
                     class="btn btn-default">
                 <i style="font-size: 1em" class="fa fa-stop"></i>
                 <span data-localize="stop"> stop </span>
             </button>
 
             <button id="playerPreviewExit" title="exit preview"
-                    data-localize-tooltip="exitPreview" data-toggle="tooltip" type="button"
+                    data-localize-tooltip="exitPreview"  type="button"
                     class="btn btn-default">
                 <i style="font-size: 1em" class="fa fa-sign-out"></i>
                 <span data-localize="exit"> exit </span>
@@ -270,28 +271,26 @@
                         <button style="margin-left: 30px" id="backToCampaigns" type="button"
                                 title="back to campaigns" data-localize="empty"
                                 data-localize-tooltip="backToCampaignsTooltip"
-                                data-toggle="tooltip"
                                 class="btn btn-default btn-sm">
                             <i class="fa fa-tasks "></i>
                         </button>
                         <button id="addNewTimelineButton" type="button"
                                 title="add new timeline" data-localize="timelineLength"
                                 data-localize-tooltip="addNewTimelineButtonToolTip"
-                                data-toggle="tooltip"
                                 class="btn btn-default btn-sm"><span
                                 class="glyphicon glyphicon-plus"></span></button>
                         <button id="removeTimelineButton" type="button"
-                                title="remove the selected timeline" data-toggle="tooltip"
+                                title="remove the selected timeline"
                                 data-localize-tooltip="removeTimelineButtonToolTip"
                                 class="btn btn-default btn-sm"><span
                                 class="glyphicon glyphicon-minus"></span></button>
                         <button id="editScreenLayout" type="button"
-                                title="edit screen layout" data-toggle="tooltip"
+                                title="edit screen layout"
                                 data-localize-tooltip="editScreenLayout"
                                 class="btn btn-default btn-sm">
                             <i class="fa fa-table "></i></button>
                         <button id="campaignPreview" type="button"
-                                title="campaign preview" data-toggle="tooltip"
+                                title="campaign preview"
                                 data-localize-tooltip="campaignPreviewTooltip"
                                 class="btn btn-default btn-sm">
                             <i class="fa fa-play-circle"></i></button>
@@ -331,7 +330,6 @@
            data-role="button">Link button</a> <a href="index.html" style="display:none"
                                                  id="dettachDragDropMainScreenSelection"
                                                  data-role="button">Link button</a>
-
 
         <div class="panel-group" id="storylineCollapsible">
             <div class="panel panel-default">
@@ -405,19 +403,19 @@
 
     <div class="btn-group">
         <button id="layoutEditorAddNew" type="button" data-localize-tooltip="addButtonToolTip" title="add"
-                data-toggle="tooltip" class="btn btn-default btn-sm"><i style="font-size: 1em"
+                 class="btn btn-default btn-sm"><i style="font-size: 1em"
                                                                         class="fa fa-plus"> </i></button>
         <button id="layoutEditorRemove" type="button" data-localize-tooltip="removeButtonToolTip"
-                title="remove division" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                title="remove division"  class="btn btn-default btn-sm"><i
                 style="font-size: 1em" class="fa fa-minus"> </i></button>
         <button id="layoutEditorPushTop" type="button" data-localize-tooltip="pushDivToTopButtonToolTip"
-                title="push division to top" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                title="push division to top"  class="btn btn-default btn-sm"><i
                 style="font-size: 1em" class="fa fa-angle-double-up"> </i></button>
         <button id="layoutEditorPushBottom" type="button" data-localize-tooltip="pushDivToBottomButtonToolTip"
-                title="push division to bottom" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                title="push division to bottom"  class="btn btn-default btn-sm"><i
                 style="font-size: 1em" class="fa fa-angle-double-down"> </i></button>
         <button id="layoutEditorNext" type="button" data-localize-tooltip="getNextDivButtonToolTip"
-                title="get next division" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                title="get next division"  class="btn btn-default btn-sm"><i
                 style="font-size: 1em" class="fa fa-external-link"> </i></button>
     </div>
     <div id="screenLayoutEditorCanvasWrap" align="center"
@@ -453,7 +451,7 @@
 </div>
 <div id="stationsPanel" class="yScroll" style="display: none">
     <button id="stationRemove" title="unregisters a remote station"
-            data-localize-tooltip="unregRemoteStationButtonToolTip" data-toggle="tooltip" type="button"
+            data-localize-tooltip="unregRemoteStationButtonToolTip"  type="button"
             class="btn btn-default"><span
             class="glyphicon glyphicon-remove-circle"></span><span data-localize="removeStation"> remove station </span>
     </button>
@@ -493,43 +491,43 @@
                     </div>
                     <button id="scenePlayPreview" type="button" data-localize="empty"
                             data-localize-tooltip="playPreview"
-                            title="play preview" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                            title="play preview"  class="btn btn-default btn-sm"><i
                             style="font-size: 1em" class="fa fa-play"> </i></button>
                     <button id="sceneEditorPushTop" type="button" data-localize="empty"
                             data-localize-tooltip="pushItemToTopButtonToolTip"
-                            title="push item to top" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                            title="push item to top"  class="btn btn-default btn-sm"><i
                             style="font-size: 1em" class="fa fa-angle-double-up"> </i></button>
                     <button id="sceneEditorPushBottom" type="button" data-localize="empty"
                             data-localize-tooltip="pushItemToBottomButtonToolTip"
-                            title="push item to bottom" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                            title="push item to bottom"  class="btn btn-default btn-sm"><i
                             style="font-size: 1em" class="fa fa-angle-double-down"> </i></button>
                     <button id="sceneZoomIn" type="button" data-localize="empty"
                             data-localize-tooltip="sceneZoomIn"
-                            title="zoom in" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                            title="zoom in"  class="btn btn-default btn-sm"><i
                             style="font-size: 1.3em" class="fa fa-search-plus"> </i></button>
                     <button id="sceneZoomOut" type="button" data-localize="empty"
                             data-localize-tooltip="sceneZoomOut"
-                            title="zoom out" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                            title="zoom out"  class="btn btn-default btn-sm"><i
                             style="font-size: 1.3em" class="fa fa-search-minus"> </i></button>
                     <button id="sceneZoomReset" type="button" data-localize="empty"
                             data-localize-tooltip="sceneZoomReset"
-                            title="zoom reset" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                            title="zoom reset"  class="btn btn-default btn-sm"><i
                             style="font-size: 1.3em" class="fa fa-search"> </i></button>
                     <button id="sceneUndo" type="button" data-localize="empty"
                             data-localize-tooltip="undo"
-                            title="undo" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                            title="undo"  class="btn btn-default btn-sm"><i
                             style="font-size: 1.3em" class="fa fa-reply"> </i></button>
                     <button id="sceneRedo" type="button" data-localize="empty"
                             data-localize-tooltip="redo"
-                            title="redo" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                            title="redo"  class="btn btn-default btn-sm"><i
                             style="font-size: 1.3em" class="fa fa-share"> </i></button>
                     <button id="sceneGridMagnet" type="button" data-localize="empty"
                             data-localize-tooltip="magneticGrid"
-                            title="magnetic grid" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                            title="magnetic grid"  class="btn btn-default btn-sm"><i
                             style="font-size: 1.3em" class="fa fa-th-large"> </i></button>
                     <button id="duplicateScene" type="button" data-localize="empty"
                             data-localize-tooltip="duplicateScene"
-                            title="duplicate scene" data-toggle="tooltip" class="btn btn-default btn-sm"><i
+                            title="duplicate scene"  class="btn btn-default btn-sm"><i
                             style="font-size: 1.3em" class="fa fa-files-o"> </i></button>
                     <div class="input-group" style="margin-left: 0px">
                         <div class="input-group-btn">

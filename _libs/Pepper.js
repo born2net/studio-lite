@@ -168,6 +168,10 @@ Pepper.prototype = {
             if (i_result.status) {
                 self.m_authenticated = true;
                 self.m_domain = self.m_loaderManager['m_domain'];
+                var resellerInfo = self.m_loaderManager['m_resellerInfo'];
+                self.m_whiteLabel = parseInt($(resellerInfo).find('WhiteLabel').attr('enabled'));
+                self.m_resellerId = parseInt($(resellerInfo).find('BusinessInfo').attr('businessId'));
+                self.m_resellerName = $(resellerInfo).find('BusinessInfo').attr('name');
                 self.m_businessID = self.m_loaderManager['m_businessId'];
                 self.m_eri = self.m_loaderManager['m_eri'];
                 self.m_authTime = Date.now();
@@ -183,14 +187,16 @@ Pepper.prototype = {
      **/
     getUserData: function () {
         var self = this;
-
         return {
             userName: self.m_user,
             userPass: self.m_pass,
             domain: self.m_domain,
             businessID: self.m_businessID,
             eri: self.m_eri,
-            authTime: self.m_authTime
+            authTime: self.m_authTime,
+            whiteLabel: self.m_whiteLabel,
+            resellerName: self.m_resellerName,
+            resellerID: self.m_resellerId
         };
     },
 

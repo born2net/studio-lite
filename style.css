@@ -570,6 +570,13 @@ iframe {
     opacity: 1 !important;
 }
 
+.hiddenElement {
+    display: none;
+}
+
+.shownElement {
+    display: block;
+}
 
 /************************************
  StudioLite class styling

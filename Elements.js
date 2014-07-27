@@ -1,5 +1,6 @@
 // elemenets
 Elements.APP_ENTRY = '#appEntry';
+Elements.APP_NAME = '#appName';
 Elements.LOGO_CONTAINER = '#logoContainer';
 Elements.LOGIN_BUTTON = '#loginButton';
 Elements.CREATE_ACCOUNT_BUTTON = '#createAccountButton';

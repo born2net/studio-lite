@@ -194,8 +194,10 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
              **/
             _initCustomer: function () {
                 var self = this;
-                if (window.location.href.indexOf('dist') > -1) {
-                    //var a = $(Elements.SERVER_NAME).text(pepper.getUserData().domain);
+                if (pepper.getUserData().resellerID == 1 || pepper.getUserData().whiteLabel == 0) {
+                    $(Elements.CLASS_RES_HID).fadeIn();
+                } else {
+                    $(Elements.APP_NAME).text(pepper.getUserData().resellerName);
                     $(Elements.CLASS_RES_HID).remove();
                 }
             },

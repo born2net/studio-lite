@@ -7,4 +7,4 @@ r.js -o app.build.js
 tar -pczf /tmp/studiolite-dist.tar.gz ../../_studiolite-dist/
 echo 'uploading...'
 ./copyRemote.js
-cp ../redirect.html ../../_studiolite-dist/studiolite.html
+# cp ../redirect.html ../../_studiolite-dist/studiolite.html

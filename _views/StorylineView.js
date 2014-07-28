@@ -446,7 +446,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                 }
                 $(Elements.STORYLINE).fadeIn(500).queue(function(){
                     self._render();
-                }).dequeue().delay(100).queue(function(){
+                }).dequeue().delay(500).queue(function(){
                     self._render();
                 }).dequeue();
             });

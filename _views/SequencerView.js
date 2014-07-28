@@ -115,6 +115,10 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory', 'contextmenu'
                 return;
 
             switch (i_command){
+                case 'firstChannel': {
+                    $(Elements.SELECT_NEXT_CHANNEL).trigger('click');
+                    break;
+                }
                 case 'editLayout': {
                     $(Elements.EDIT_SCREEN_LAYOUT).trigger('click');
                     break;

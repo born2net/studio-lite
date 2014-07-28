@@ -87,6 +87,8 @@
     "faq": "FAQs",
     "knowledgeBase": "Knowledge base",
     "selectNextChannel": "select next channel",
+    "nextChannel": "next channel",
+    "addFiles": "add files",
     "logout": "logout",
     "server": "Server:",
     "businessId": "Business id:",
@@ -269,7 +271,8 @@
     "andPass": " and password ",
     "editLayout": "edit layout",
     "createAccount": "or create a new account",
-    "noAutoPopup": "do not auto popup"
+    "noAutoPopup": "do not auto popup",
+    "firstChannel": "first channel"
 }
 
 

@@ -41,6 +41,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             self._populateTimeline();
             self._listenInputChange();
             self._listenReset();
+            self._listenViewerRemoved();
             this._onTimelineSelected();
             pepper.listenWithNamespace(Pepper.TEMPLATE_VIEWER_EDITED, self, $.proxy(self._templateViewerEdited, self));
             pepper.listenWithNamespace(Pepper.NEW_CHANNEL_ADDED, self, $.proxy(self._channelAdded, self));
@@ -222,6 +223,24 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
         },
 
         /**
+         Listen when a screen division / viewer inside a screen layout was deleted and if the channel
+         is equal to my channel, dispose of self
+         @method _listenViewerRemoved
+         **/
+        _listenViewerRemoved: function () {
+            var self = this;
+            BB.comBroker.listenWithNamespace(BB.EVENTS.VIEWER_REMOVED, self, function(e){
+                for (var channel in self.m_channels) {
+                    if (e.edata.campaign_timeline_chanel_id == channel){
+                        self.m_channels[channel].deleteChannel();
+                        delete self.m_channels[channel];
+                        break;
+                    }
+                }
+            });
+        },
+
+        /**
          Create the actual UI for this timeline instance. We use the ScreenTemplateFactory for SVG creation
          and insert the snippet onto timelineViewStack so the timeline UI can be presented when selected.
          @method _createTimelineUI
@@ -309,6 +328,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             var campaignTimelineBoardTemplateID = pepper.removeBoardTemplateFromTimeline(self.m_campaign_timeline_id);
             pepper.removeBoardTemplate(boardTemplateID);
             pepper.removeTimelineBoardViewerChannels(campaignTimelineBoardTemplateID);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.VIEWER_REMOVED, self);
             pepper.removeBoardTemplateViewers(boardTemplateID);
             for (var channel in self.m_channels) {
                 self.m_channels[channel].deleteChannel();

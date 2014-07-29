@@ -58,7 +58,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     return 'Did you save your work?'
                 });
             }
-
         },
 
         /**

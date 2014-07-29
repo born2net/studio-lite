@@ -182,7 +182,6 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 };
                 self._updateDimensionsInDB(viewer, props);
                 BB.comBroker.fire(BB.EVENTS.VIEWER_REMOVED, this, this, {
-                    viewer: self.m_selectedViewerID,
                     campaign_timeline_chanel_id: campaign_timeline_chanel_id
                 });
             });
@@ -505,7 +504,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
          **/
         _updateDimensionsInDB: function (i_viewer, i_props) {
             var self = this;
-            //log('Pepper ' +i_viewer.get('id') + ' ' + JSON.stringify(i_props));
+            log('Pepper ' +i_viewer.get('id') + ' ' + JSON.stringify(i_props));
             pepper.setBoardTemplateViewer(self.m_campaign_timeline_board_template_id, i_viewer.get('id'), i_props);
             i_viewer.setCoords();
             self.m_canvas.renderAll();

@@ -63,7 +63,7 @@ define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockVideo', 'BlockScene'],
             self._propLoadChannel();
             self._listenResourceRemoving();
             self._listenSceneRemoving();
-            self._listenViewerRemoved();
+            //self._listenViewerRemoved();
         },
 
         /**
@@ -86,7 +86,6 @@ define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockVideo', 'BlockScene'],
             var self = this;
             $(Elements.RANDOM_PLAYBACK).off('change', self.m_randomPlaybackHandler);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.CAMPAIGN_RESET, self);
-            BB.comBroker.stopListenWithNamespace(BB.EVENTS.VIEWER_REMOVED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.REMOVING_RESOURCE, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.REMOVING_SCENE, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.CAMPAIGN_TIMELINE_CHANNEL_SELECTED, self);
@@ -137,20 +136,6 @@ define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockVideo', 'BlockScene'],
                         }
                     }
                 }
-            });
-        },
-
-        /**
-         Listen when a screen division / viewer inside a screen layout was deleted and if the channel
-         is equal to my channel, dispose of self
-         @method _listenViewerRemoved
-         **/
-        _listenViewerRemoved: function () {
-            var self = this;
-            BB.comBroker.listenWithNamespace(BB.EVENTS.VIEWER_REMOVED, self, function(e){
-                if (e.edata.campaign_timeline_chanel_id != self.m_campaign_timeline_chanel_id)
-                    return;
-                self.deleteChannel();
             });
         },
 

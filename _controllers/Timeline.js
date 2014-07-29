@@ -118,7 +118,8 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             var self = this;
             if (!self.m_selected)
                 return;
-            self._populateBoardTemplate(e.edata.campaign_timeline_board_template_id);
+            var campaign_timeline_board_template_id = e.edata;
+            self._populateBoardTemplate(campaign_timeline_board_template_id);
         },
 
         /**

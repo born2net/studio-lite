@@ -801,24 +801,24 @@ Pepper.prototype = {
     /**
      Announce via event that a template view (screen layout) has been edited
      @method announceTemplateViewerEdited
-     @param {Object} i_values
+     @param {Number} i_campaign_timeline_board_template_id
      **/
-    announceTemplateViewerEdited: function (i_values) {
+    announceTemplateViewerEdited: function (i_campaign_timeline_board_template_id) {
         var self = this;
-        pepper.fire(Pepper['TEMPLATE_VIEWER_EDITED'], self, null, i_values);
+        pepper.fire(Pepper['TEMPLATE_VIEWER_EDITED'], self, null, i_campaign_timeline_board_template_id);
     },
 
     /**
      Create a new campaign in the local database
      @method createCampaign
-     @param {Number} i_campgianName
+     @param {Number} i_campaginName
      @return {Number} campaign id created
      **/
-    createCampaign: function (i_campgianName) {
+    createCampaign: function (i_campaginName) {
         var self = this;
         var campaigns = self.m_msdb.table_campaigns();
         var campaign = campaigns.createRecord();
-        campaign.campaign_name = i_campgianName;
+        campaign.campaign_name = i_campaginName;
         campaigns.addRecord(campaign);
         pepper.fire(Pepper['NEW_CAMPAIGN_CREATED'], self, null, campaign['campaign_id']);
         return campaign['campaign_id'];
@@ -1135,11 +1135,7 @@ Pepper.prototype = {
         recEditBoardTemplateViewer['pixel_y'] = y;
         recEditBoardTemplateViewer['pixel_width'] = w;
         recEditBoardTemplateViewer['pixel_height'] = h;
-        var o = {
-            campaign_timeline_board_template_id: i_campaign_timeline_board_template_id,
-            board_template_viewer_id: i_board_template_viewer_id,
-        };
-        pepper.announceTemplateViewerEdited(o);
+        pepper.announceTemplateViewerEdited(i_campaign_timeline_board_template_id);
     },
 
     /**

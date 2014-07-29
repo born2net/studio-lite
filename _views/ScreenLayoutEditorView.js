@@ -173,19 +173,20 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 pepper.removeChannelFromTimeline(campaign_timeline_chanel_id);
                 pepper.removeBlocksFromTimelineChannel(campaign_timeline_chanel_id);
                 self.m_canvas.remove(self.m_canvas.getActiveObject());
-                var viewer = self.m_canvas.item(0);
+                self.m_canvas.renderAll();
+                /*var viewer = self.m_canvas.item(0);
                 var props = {
-                    x: viewer.get('top'),
-                    y: viewer.get('left'),
+                    y: viewer.get('top'),
+                    x: viewer.get('left'),
                     w: viewer.get('width') * self.RATIO,
                     h: viewer.get('height') * self.RATIO
                 };
-                self._updateDimensionsInDB(viewer, props);
+                self._updateDimensionsInDB(viewer, props);*/
                 BB.comBroker.fire(BB.EVENTS.VIEWER_REMOVED, this, this, {
                     campaign_timeline_chanel_id: campaign_timeline_chanel_id
                 });
+                pepper.announceTemplateViewerEdited(self.m_campaign_timeline_board_template_id);
             });
-
         },
 
         /**

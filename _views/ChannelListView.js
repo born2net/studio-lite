@@ -466,10 +466,15 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
                     break;
                 }
                 case 'first': {
+                    var resourceElem = $('.activated',self.$el);
+                    $(Elements.SORTABLE).prepend($(resourceElem));
+                    self._reOrderChannelBlocks();
                     break;
                 }
                 case 'last': {
-                    break;
+                    var resourceElem = $('.activated',self.$el);
+                    $(Elements.SORTABLE).append($(resourceElem));
+                    self._reOrderChannelBlocks();
                 }
             }
             return true;

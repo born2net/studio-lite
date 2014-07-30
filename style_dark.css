@@ -180,7 +180,7 @@ button, select
 input {
    background-color: #262626 !important;
    color: #cbcbcb !important;
-    border-color: #262626 !important;
+    border-color: #eb7c66 !important;
 }
 
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
@@ -191,4 +191,67 @@ input {
 
 .panel {
     border-color: #dcdcdc !important;
+}
+
+
+#videoModalHeader {
+    color: #eb7c66 !important;
+}
+
+#videoModalHeaderLite {
+    font-family: Lobster Two;
+    color: #eb7c66 !important;
+}
+
+/* Wrapper to push down from header */
+#headerPad {
+    background-color: #eb7c66 !important;
+}
+
+#appNavigator li:hover {
+    background-color: #eb7c66 !important;
+}
+
+.channelHeadSelected {
+    background-color: #eb7c66 !important;
+}
+
+/* todo: added */
+#installPanel i {
+    color: #eb7c66 !important;
+}
+
+.timelineBlockSelected {
+    background-color: #eb7c66 !important;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    background-color: #eb7c66 !important;
+}
+
+.activated {
+    background-color: #eb7c66 !important;
+}
+
+.pricing_header1 {
+    background: none repeat scroll 0% 0% rgb(235, 124, 102);
+    border-radius: 5px 5px 0px 0px;
+}
+
+.pricing_header2 {
+    background: none repeat scroll 0% 0% rgb(235, 66, 71);
+    border-radius: 5px 5px 0px 0px;
+}
+
+.pricing_header3 {
+    background: none repeat scroll 0% 0% rgb(235, 56, 9);
+    border-radius: 5px 5px 0px 0px;
+}
+
+.space {
+    background-color: #b14117;
+}
+
+.noUi-background {
+    background: #eb7c66 !important;
 }

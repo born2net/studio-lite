@@ -47,6 +47,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
                 var theme = simplestorage.get('theme');
                 if (theme && theme != 'light')
                     BB.lib.loadCss('style_' + theme + '.css');
+                BB.CONSTS['THEME'] = _.isUndefined(theme) ? 'light' : theme;
             });
 
             // router init

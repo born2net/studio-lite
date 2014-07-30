@@ -50,6 +50,17 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         /**
+         Get current selection color depnding on theme of light / daek
+         @method _getColor
+         @params {String} color
+         **/
+        _getColor: function(){
+            if (BB.CONSTS['THEME']=='light')
+                return '#428ac9 ';
+            return '#eb7c66';
+        },
+
+        /**
          Method is called when an entire screen frame of the UI is clicked, in contrast to when a single viewer is selected.
          The difference in dispatch of the event depends on how the factory created this instance.
          @method _onViewSelected
@@ -197,7 +208,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             var applyToSelected = function (e) {
                 $('#' + self.m_myElementID).parent().parent().parent().find('rect').css({'stroke-width': '2', 'stroke': 'rgb(72,72,72)'});
-                $('#' + self.m_myElementID).find('rect').css({'stroke-width': '4', 'stroke': 'rgb(73,123,174)'});
+                $('#' + self.m_myElementID).find('rect').css({'stroke-width': '2', 'stroke': self._getColor()});
                 self._onViewSelected(e, self);
             }
             // listen one
@@ -232,7 +243,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             self._deselectViewers();
             var selectedElement = $('#' + self.m_myElementID).find('[data-campaign_timeline_board_viewer_id="' + i_campaign_timeline_board_viewer_id + '"]');
-            $(selectedElement).css({'fill': '#428ac9'});
+            $(selectedElement).css({'fill': self._getColor()});
         },
 
         /**

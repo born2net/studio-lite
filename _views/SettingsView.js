@@ -50,10 +50,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     self.m_simpleStorage.set('pollStationsTime', pollStationsTime);
                 }
 
-                var theme = self.m_simpleStorage.get('theme');
-                if (_.isUndefined(theme))
-                    theme = 'light';
-                $(Elements.THEME_OPTION + ' option[value=' + theme + ']').attr("selected", "selected");
+                BB.CONSTS['THEME'] = self.m_simpleStorage.get('theme');
+                if (_.isUndefined(BB.CONSTS['THEME']))
+                    BB.CONSTS['THEME'] = 'light';
+                $(Elements.THEME_OPTION + ' option[value=' + BB.CONSTS['THEME'] + ']').attr("selected", "selected");
 
                 var bannerMode = self.m_simpleStorage.get('bannerMode');
                 if (_.isUndefined(bannerMode)) {
@@ -99,12 +99,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _listenThemeChange: function () {
             var self = this;
             $(Elements.THEME_OPTION).on('change', function (e) {
-                var theme = $(Elements.THEME_OPTION + ' option:selected').val();
-                self.m_simpleStorage.set('theme', theme);
-                if (theme == 'light'){
+                BB.CONSTS['THEME'] = $(Elements.THEME_OPTION + ' option:selected').val();
+                self.m_simpleStorage.set('theme', BB.CONSTS['THEME']);
+                if (BB.CONSTS['THEME'] == 'light'){
                     bootbox.alert($(Elements.MSG_BOOTBOX_RELOAD_THEME).text());
                 } else {
-                    BB.lib.loadCss('style_' + theme + '.css');
+                    BB.lib.loadCss('style_' + BB.CONSTS['THEME'] + '.css');
                 }
             });
         },

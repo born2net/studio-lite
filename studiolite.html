@@ -299,7 +299,6 @@
                     </h4>
                 </div>
                 <div id="screenSelectorContainerCollapse" class="panel-collapse collapse in">
-
                     <div class="panel-body">
                         <aside>
                             <aside>
@@ -387,7 +386,15 @@
 
         <div id="channelListView">
             <div>
-                <ul class="list-group" id="sortable" style="padding:20px">
+                <div id="channelListContextMenu">
+                    <ul id="channelListMenuContex" class="dropdown-menu" role="menu">
+                        <li><a tabindex="-1" name="remove" data-localize="remove">remove</a></li>
+                        <li><a tabindex="-1" name="first" data-localize="moveFirst">move to first</a></li>
+                        <li><a tabindex="-1" name="last" data-localize="moveLast">move to last</a>
+                        </li>
+                    </ul>
+                </div>
+                <ul id="sortable" class="list-group context"  style="padding:20px" data-toggle="context" data-target="#channelListContextMenu">
                 </ul>
             </div>
         </div>

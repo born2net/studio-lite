@@ -37,6 +37,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             self._listenStorylineBlockSelected();
             self._listenStorylineChannelSelected();
             self._listenReset();
+            self._listenContextMenu();
             pepper.listen(Pepper.TIMELINE_DELETED, $.proxy(self._onTimelineDeleted, self));
 
         },
@@ -290,7 +291,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             var self = this;
             // clear previous listeners
             $(Elements.CLASS_CHANNEL_LIST_ITEMS).off('click');
-            $(Elements.CLASS_CHANNEL_LIST_ITEMS).on('click', function (e) {
+            $(Elements.CLASS_CHANNEL_LIST_ITEMS).on('click contextmenu', function (e) {
                 $.proxy(self._listenChannelBlockSelected(e), self);
             });
         },
@@ -419,6 +420,55 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             channel.deleteBlock(i_block_id);
             self._deselectBlocksFromChannel();
             self._reOrderChannelBlocks();
+        },
+
+
+        /**
+         Listen to any canvas right click
+         @method _listenContextMenu
+         **/
+        _listenContextMenu: function () {
+            var self = this;
+            $(Elements.SORTABLE ).contextmenu({
+                target: Elements.CHANNEL_LIST_CONTEXT_MENU,
+                before: function (e, element, target) {
+                    e.preventDefault();
+                    //self.m_mouseX = e.offsetX;
+                    //self.m_mouseY = e.offsetY;
+                    if (_.isUndefined(self.selected_block_id))
+                        return false;
+                    return true;
+                },
+                onItem: function (context, e) {
+                    self._onContentMenuSelection($(e.target).attr('name'))
+                }
+            });
+        },
+
+        /**
+         On Scene right click context menu selection command
+         @method _onContentMenuSelection
+         @param {String} i_command
+         **/
+        _onContentMenuSelection: function (i_command) {
+            var self = this;
+            var campaign_timeline_id = BB.comBroker.getService(BB.SERVICES.CAMPAIGN_VIEW).getSelectedTimeline();
+            if (campaign_timeline_id == -1 || _.isUndefined(campaign_timeline_id))
+                return;
+
+            switch (i_command){
+                case 'remove': {
+                    $(Elements.REMOVE_BLOCK_BUTTON).trigger('click');
+                    break;
+                }
+                case 'first': {
+                    break;
+                }
+                case 'last': {
+                    break;
+                }
+            }
+            return true;
         }
     });
 

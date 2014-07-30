@@ -142,7 +142,6 @@ define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory', 'contextmenu'
                     $(self.m_thumbsContainer).append(elem);
                     self.reSequenceTimelines();
                     break;
-                    break;
                 }
             }
             return true;

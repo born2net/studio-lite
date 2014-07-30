@@ -87,6 +87,8 @@
 "faq": "Jautājumi un atbildes",
 "knowledgeBase": "Zināšanu bāze",
 "selectNextChannel": "izvēlētos nākamo kanālu",
+"nextChannel": "nākamais kanāls",
+"addFiles": "pievienot failus",
 "logout": "logout",
 "server": "Server:",
 "businessId": "Bizness id:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Lūdzu, vispirms izvēlieties kanālu saistīt aktīvu ar",
 "bootBoxAtLeastOneDiv": "jums ir saglabāt vismaz vienu apskatīt ekrāna dalīšanu",
 "bootBoxScreenDivPosReset": "ekrāna sadalījums amats reset",
-"bootBoxCostumeTitle": "Custom virsraksts",
-"bootBoxContinue": "Turpināt",
 "confirmSteps": "Šādi pasākumi notiks, lūdzu, apstipriniet?",
 "addNewTimelineButtonToolTip": "Pievienot jaunu grafiku",
 "campaignName": "Izvēlieties kampaņas nosaukumu",
@@ -270,5 +270,6 @@
 "editLayout": "rediģēt izkārtojums",
 "createAccount": "vai izveidot jaunu kontu",
 "noAutoPopup": "nav auto uznirstošo",
+"firstChannel": "Pirmais kanāls",
 "final": ""
 }

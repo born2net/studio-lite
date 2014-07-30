@@ -87,6 +87,8 @@
 "faq": "Întrebări frecvente",
 "knowledgeBase": "Bază de cunoștințe",
 "selectNextChannel": "selecta canalul următor",
+"nextChannel": "următor canal",
+"addFiles": "adăuga fișiere",
 "logout": "deconectare",
 "server": "Server:",
 "businessId": "Id-ul de afaceri:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Vă rugăm să selectați mai întâi un canal de a se asocia cu active",
 "bootBoxAtLeastOneDiv": "trebuie să vă păstrați cel puțin o divizie vizibilă a ecranului",
 "bootBoxScreenDivPosReset": "resetare poziție divizie ecran",
-"bootBoxCostumeTitle": "Titlul personalizat",
-"bootBoxContinue": "Continua",
 "confirmSteps": "Următorii pași vor avea loc, vă rugăm să confirmați?",
 "addNewTimelineButtonToolTip": "Adauga un nou calendar",
 "campaignName": "Selectați un nume de campanie",
@@ -270,5 +270,6 @@
 "editLayout": "edita aspect",
 "createAccount": "sau de a crea un cont nou",
 "noAutoPopup": "Nu auto pop-up",
+"firstChannel": "primul canal",
 "final": ""
 }

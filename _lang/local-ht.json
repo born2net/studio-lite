@@ -87,6 +87,8 @@
 "faq": "Kesyon yo mande anpil",
 "knowledgeBase": "Baz konesans",
 "selectNextChannel": "chwazi pwochen kanal",
+"nextChannel": "pwochen kanal",
+"addFiles": "ajoute dosye",
 "logout": "SOTI",
 "server": "Sèvè:",
 "businessId": "Id Biznis:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Tanpri premye chwazi yon kanal asosye avantaj ak",
 "bootBoxAtLeastOneDiv": "ou dwe kenbe omwen yon divizyon wè ekran",
 "bootBoxScreenDivPosReset": "pozisyon divizyon ekran Reyajiste",
-"bootBoxCostumeTitle": "Tit Custom",
-"bootBoxContinue": "Kontinye",
 "confirmSteps": "Etap sa yo pral pran plas, tanpri konfime?",
 "addNewTimelineButtonToolTip": "Ajoute yon nouvo delè",
 "campaignName": "Chwazi yon Non kanpay",
@@ -270,5 +270,6 @@
 "editLayout": "modifye Layout",
 "createAccount": "oubyen kreye yon nouvo kont",
 "noAutoPopup": "pa fè sa oto contextuel",
+"firstChannel": "premye kanal",
 "final": ""
 }

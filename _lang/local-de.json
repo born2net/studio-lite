@@ -87,6 +87,8 @@
 "faq": "FAQs",
 "knowledgeBase": "Wissensdatenbank",
 "selectNextChannel": "Wählen nächsten Kanal",
+"nextChannel": "nächsten Kanal",
+"addFiles": "Dateien hinzufügen",
 "logout": "logout",
 "server": "Server:",
 "businessId": "Geschäfts-ID:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Bitte einen Kanal, um Asset zuordnen wählen Sie zuerst",
 "bootBoxAtLeastOneDiv": "Sie müssen mindestens einen sichtbaren Bildschirmteilung halten",
 "bootBoxScreenDivPosReset": "Bildschirmaufteilung Position zurückgesetzt",
-"bootBoxCostumeTitle": "Benutzerdefinierte Titel",
-"bootBoxContinue": "Fortsetzen",
 "confirmSteps": "Die folgenden Schritte stattfinden wird, bestätigen Sie bitte?",
 "addNewTimelineButtonToolTip": "Fügen Sie einen neuen Timeline",
 "campaignName": "Wählen Sie einen Kampagnennamen",
@@ -270,5 +270,6 @@
 "editLayout": "Layout bearbeiten",
 "createAccount": "oder erstellen Sie ein neues Konto",
 "noAutoPopup": "nicht automatisch popup",
+"firstChannel": "ersten Kanal",
 "final": ""
 }

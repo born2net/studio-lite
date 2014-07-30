@@ -87,6 +87,8 @@
 "faq": "Lazim",
 "knowledgeBase": "Asas pengetahuan",
 "selectNextChannel": "pilih saluran seterusnya",
+"nextChannel": "saluran seterusnya",
+"addFiles": "menambah fail",
 "logout": "logout",
 "server": "Pelayan Komputer:",
 "businessId": "Perniagaan id:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Mula-mula memilih saluran untuk mengaitkan aset dengan",
 "bootBoxAtLeastOneDiv": "anda mesti menyimpan sekurang-kurangnya satu bahagian skrin boleh dilihat",
 "bootBoxScreenDivPosReset": "semula kedudukan bahagian skrin",
-"bootBoxCostumeTitle": "Tajuk adat",
-"bootBoxContinue": "Teruskan",
 "confirmSteps": "Langkah-langkah berikut akan berlaku, sila mengesahkan?",
 "addNewTimelineButtonToolTip": "Tambah garis masa baru",
 "campaignName": "Pilih nama kempen",
@@ -270,5 +270,6 @@
 "editLayout": "edit susun atur",
 "createAccount": "atau membuat akaun baru",
 "noAutoPopup": "tidak auto pop timbul",
+"firstChannel": "Saluran pertama",
 "final": ""
 }

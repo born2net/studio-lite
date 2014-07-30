@@ -87,6 +87,8 @@
 "faq": "Ceisteanna Coitianta",
 "knowledgeBase": "Bonn Eolais",
 "selectNextChannel": "roghnaigh cainéal chugainn",
+"nextChannel": "cainéal chugainn",
+"addFiles": "comhaid a chur",
 "logout": "logála amach",
 "server": "Freastalaí:",
 "businessId": "Gnó id:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Roghnaigh an chéad cainéal sócmhainn a chomhlachú leis",
 "bootBoxAtLeastOneDiv": "caithfidh tú a choinneáil roinn scáileán viewable amháin ar a laghad",
 "bootBoxScreenDivPosReset": "seasamh roinn scáileán athshocrú",
-"bootBoxCostumeTitle": "Teideal an Chustaim",
-"bootBoxContinue": "Leanúint ar aghaidh",
 "confirmSteps": "Beidh na céimeanna seo a leanas ar siúl, le do thoil dhearbhú?",
 "addNewTimelineButtonToolTip": "Cuir amlíne nua",
 "campaignName": "Roghnaigh an t-ainm feachtas",
@@ -270,5 +270,6 @@
 "editLayout": "leagan eagar",
 "createAccount": "nó cuntas nua a chruthú",
 "noAutoPopup": "nach aníos uathoibríoch",
+"firstChannel": "an chéad cainéal",
 "final": ""
 }

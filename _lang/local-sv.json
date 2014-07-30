@@ -87,6 +87,8 @@
 "faq": "Vanliga frågor",
 "knowledgeBase": "Kunskapsbas",
 "selectNextChannel": "välja nästa kanal",
+"nextChannel": "nästa kanal",
+"addFiles": "lägga till filer",
 "logout": "Logga ut",
 "server": "Server:",
 "businessId": "Affärs id:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Välj först en kanal att associera tillgång med",
 "bootBoxAtLeastOneDiv": "du måste hålla minst en synlig skärm division",
 "bootBoxScreenDivPosReset": "skärm division ställs positionen",
-"bootBoxCostumeTitle": "Anpassad titel",
-"bootBoxContinue": "Fortsätt",
 "confirmSteps": "Följande steg kommer att ske, bekräfta?",
 "addNewTimelineButtonToolTip": "Lägg till en ny tidslinje",
 "campaignName": "Välj ett kampanjnamn",
@@ -270,5 +270,6 @@
 "editLayout": "redigera layout",
 "createAccount": "eller skapa ett nytt konto",
 "noAutoPopup": "inte automatisk popup",
+"firstChannel": "första kanalen",
 "final": ""
 }

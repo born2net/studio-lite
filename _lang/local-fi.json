@@ -87,6 +87,8 @@
 "faq": "FAQ",
 "knowledgeBase": "Tietopohjaa",
 "selectNextChannel": "Valitse seuraava kanava",
+"nextChannel": "seuraava kanava",
+"addFiles": "lisätä tiedostoja",
 "logout": "logout",
 "server": "Palvelin:",
 "businessId": "Y-tunnus:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Valitse ensin kanava yhdistää hyödykkeenä",
 "bootBoxAtLeastOneDiv": "sinun täytyy pitää vähintään yhden näyttöruudun jako",
 "bootBoxScreenDivPosReset": "näytön jako aseman asetukseen",
-"bootBoxCostumeTitle": "Custom otsikko",
-"bootBoxContinue": "Jatkaa",
 "confirmSteps": "Seuraavat vaiheet käydään, vahvistakaa?",
 "addNewTimelineButtonToolTip": "Lisää uusi aikajana",
 "campaignName": "Valitse kampanjan nimi",
@@ -270,5 +270,6 @@
 "editLayout": "edit layout",
 "createAccount": "tai luo uusi tili",
 "noAutoPopup": "ei auto ponnahdusikkuna",
+"firstChannel": "ensimmäinen kanava",
 "final": ""
 }

@@ -87,6 +87,8 @@
 "faq": "FAQs",
 "knowledgeBase": "Scientia basi",
 "selectNextChannel": "eligere deinde alveo",
+"nextChannel": "deinde alveo",
+"addFiles": "addere dolor",
 "logout": "logout",
 "server": "Et opere:",
 "businessId": "Id ipsum:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Vivamus varius, primum, quo una cum dignissim",
 "bootBoxAtLeastOneDiv": "tu saltem una parte screen viewable",
 "bootBoxScreenDivPosReset": "elit divisionem locum reponatur",
-"bootBoxCostumeTitle": "Title Lorem ipsum",
-"bootBoxContinue": "Aliquam",
 "confirmSteps": "Haec erit gradus, velim confirmes?",
 "addNewTimelineButtonToolTip": "Add a timeline",
 "campaignName": "Fusce sagittis quam a nomine stipendii",
@@ -270,5 +270,6 @@
 "editLayout": "edit layout",
 "createAccount": "sive propter novas",
 "noAutoPopup": "Non auto populus",
+"firstChannel": "primum alveo",
 "final": ""
 }

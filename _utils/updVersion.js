@@ -20,10 +20,10 @@ doc = doc.replace(/version": "[0-9]+.[0-9]+.[0-9]+",/g, version);
 fs.writeFileSync('yuidoc.json', doc, 'utf8');
 
 // add build number to studiolite page
-var footer = '<span id="footerText">&nbsp;MediaSignage Inc &#169; | version :BUILD: </span>';
+var footer = '<span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version :BUILD: </span>';
 footer = footer.replace(/:BUILD:/gi, fullBuild);
 var studiolite = fs.readFileSync('../studiolite.html','utf8');
-studiolite = studiolite.replace(/<span id="footerText">(.*)<\/span>/gi, footer);
+studiolite = studiolite.replace(/<span class="reshid hiddenElement" id="footerText">(.*)<\/span>/gi, footer);
 fs.writeFileSync('../studiolite.html', studiolite, 'utf8');
 
 // add build number to github

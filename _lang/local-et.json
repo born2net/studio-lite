@@ -87,6 +87,8 @@
 "faq": "KKK",
 "knowledgeBase": "Alusteadmised",
 "selectNextChannel": "valige järgmise kanali",
+"nextChannel": "Järgmine kanal",
+"addFiles": "lisada faile",
 "logout": "Logi välja",
 "server": "Server:",
 "businessId": "Business ID:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Palun vali kanal seostada vara koos",
 "bootBoxAtLeastOneDiv": "siis peab vähemalt üks nähtavast ekraani jagamine",
 "bootBoxScreenDivPosReset": "ekraani jagamise positsiooni reset",
-"bootBoxCostumeTitle": "Custom pealkiri",
-"bootBoxContinue": "Jätkama",
 "confirmSteps": "Järgmised sammud toimub kinnitage?",
 "addNewTimelineButtonToolTip": "Lisa uus ajakava",
 "campaignName": "Valige kampaania nimi",
@@ -270,5 +270,6 @@
 "editLayout": "edit paigutus",
 "createAccount": "või luua uus konto",
 "noAutoPopup": "ei auto hüpikaken",
+"firstChannel": "esimene kanal",
 "final": ""
 }

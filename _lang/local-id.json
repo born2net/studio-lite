@@ -87,6 +87,8 @@
 "faq": "Tanya Jawab",
 "knowledgeBase": "Pengetahuan dasar",
 "selectNextChannel": "pilih saluran berikutnya",
+"nextChannel": "saluran berikutnya",
+"addFiles": "menambahkan file",
 "logout": "logout",
 "server": "Server:",
 "businessId": "Id Bisnis:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Silahkan terlebih dahulu memilih saluran untuk menghubungkan aset dengan",
 "bootBoxAtLeastOneDiv": "Anda harus menyimpan setidaknya satu divisi layar dilihat",
 "bootBoxScreenDivPosReset": "posisi divisi layar ulang",
-"bootBoxCostumeTitle": "Custom title",
-"bootBoxContinue": "Terus",
 "confirmSteps": "Langkah-langkah berikut akan berlangsung, silahkan konfirmasi?",
 "addNewTimelineButtonToolTip": "Tambahkan timeline baru",
 "campaignName": "Pilih nama kampanye",
@@ -270,5 +270,6 @@
 "editLayout": "mengedit tata letak",
 "createAccount": "atau buat akun baru",
 "noAutoPopup": "tidak auto popup",
+"firstChannel": "saluran pertama",
 "final": ""
 }

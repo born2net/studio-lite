@@ -87,6 +87,8 @@
 "faq": "Питання та відповіді",
 "knowledgeBase": "База знань",
 "selectNextChannel": "вибрати інший канал",
+"nextChannel": "наступний канал",
+"addFiles": "додати файли",
 "logout": "вихід",
 "server": "Сервер:",
 "businessId": "Бізнес ID:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Будь ласка, спочатку виберіть канал, щоб зв`язати актив з",
 "bootBoxAtLeastOneDiv": "Ви повинні тримати принаймні одну дивізію екран для перегляду",
 "bootBoxScreenDivPosReset": "скидання положення розділення екрану",
-"bootBoxCostumeTitle": "Користувальницькі назву",
-"bootBoxContinue": "Продовжувати",
 "confirmSteps": "Наступні кроки будуть проходити, будь ласка, підтвердіть?",
 "addNewTimelineButtonToolTip": "Додати нову тимчасову шкалу",
 "campaignName": "Виберіть назву кампанії",
@@ -270,5 +270,6 @@
 "editLayout": "редагування макету",
 "createAccount": "або створити новий обліковий запис",
 "noAutoPopup": "Чи не Автоокно",
+"firstChannel": "Перший канал",
 "final": ""
 }

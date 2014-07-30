@@ -87,6 +87,8 @@
 "faq": "அடிக்கடி கேட்கப்படும் கேள்விகள்",
 "knowledgeBase": "அறிவு தளம்",
 "selectNextChannel": "அடுத்த சேனல் தேர்வு",
+"nextChannel": "அடுத்த சேனல்",
+"addFiles": "கோப்புகளை சேர்க்க",
 "logout": "விடு பதிகை",
 "server": "சர்வர்:",
 "businessId": "வர்த்தக ஐடி:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "முதல் சொத்து தொடர்புபடுத்த ஒரு சேனலை தேர்ந்தெடுக்கவும்",
 "bootBoxAtLeastOneDiv": "நீங்கள் குறைந்தது ஒரு காணக்கூடிய திரையில் பிரிவு வைத்திருக்க வேண்டும்",
 "bootBoxScreenDivPosReset": "திரையில் பிரிவு நிலையை மறு",
-"bootBoxCostumeTitle": "விருப்ப தலைப்பு",
-"bootBoxContinue": "தொடர்",
 "confirmSteps": "பின்வரும் வழிமுறைகளை நடக்கும், உறுதி செய்து?",
 "addNewTimelineButtonToolTip": "ஒரு புதிய காலக்கெடு சேர்",
 "campaignName": "ஒரு பிரச்சாரத்தை பெயர் தேர்வு",
@@ -270,5 +270,6 @@
 "editLayout": "திருத்து",
 "createAccount": "அல்லது ஒரு புதிய கணக்கை உருவாக்க",
 "noAutoPopup": "தானாக பாப் செய்ய",
+"firstChannel": "முதல் சேனல்",
 "final": ""
 }

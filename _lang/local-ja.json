@@ -87,6 +87,8 @@
 "faq": "よくあるご質問",
 "knowledgeBase": "知識ベース",
 "selectNextChannel": "次のチャンネルを選択",
+"nextChannel": "次のチャンネル",
+"addFiles": "ファイルを追加",
 "logout": "ログアウト",
 "server": "サーバー",
 "businessId": "ビジネスID",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "初めにデバイスとそれに関連する内容を選択してください",
 "bootBoxAtLeastOneDiv": "少なくとも一つは閲覧可能なスクリーンの欄を残してください",
 "bootBoxScreenDivPosReset": "スクリーンの欄の配置をリセットします",
-"bootBoxCostumeTitle": "タイトルの変更",
-"bootBoxContinue": "コンティニュー",
 "confirmSteps": "以下の手順で行っていただきます。ご確認ください。",
 "addNewTimelineButtonToolTip": "新しいタイムラインの追加",
 "campaignName": "キャンペーン名を選択してください",
@@ -270,5 +270,6 @@
 "editLayout": "編集レイアウト",
 "createAccount": "または、新しいアカウントを作成する",
 "noAutoPopup": "自動ポップアップをしない",
+"firstChannel": "最初のチャンネル",
 "final": ""
 }

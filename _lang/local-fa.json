@@ -87,6 +87,8 @@
 "faq": "پرسش های متداول",
 "knowledgeBase": "پایگاه دانش",
 "selectNextChannel": "کانال بعدی را انتخاب کنید",
+"nextChannel": "کانال بعدی",
+"addFiles": "اضافه کردن فایل",
 "logout": "خروج از سیستم",
 "server": "سرور:",
 "businessId": "شناسه (شماره کسب و کار:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "لطفا ابتدا یک کانال به شریک دارایی با انتخاب",
 "bootBoxAtLeastOneDiv": "شما باید حداقل یک بخش روی صفحه نمایش قابل مشاهده نگه دارید",
 "bootBoxScreenDivPosReset": "تنظیم مجدد موقعیت تقسیم صفحه نمایش",
-"bootBoxCostumeTitle": "عنوان سفارشی",
-"bootBoxContinue": "ادامه",
 "confirmSteps": "مراحل زیر برگزار خواهد شد، لطفا تأیید کنید؟",
 "addNewTimelineButtonToolTip": "اضافه کردن یک جدول زمانی جدید",
 "campaignName": "انتخاب یک نام کمپین",
@@ -270,5 +270,6 @@
 "editLayout": "ویرایش طرح بندی",
 "createAccount": "و یا ایجاد یک حساب جدید",
 "noAutoPopup": "نمی خودکار پنجره",
+"firstChannel": "کانال اول",
 "final": ""
 }

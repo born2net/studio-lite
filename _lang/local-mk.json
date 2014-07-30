@@ -87,6 +87,8 @@
 "faq": "Прашања и одговори",
 "knowledgeBase": "База на знаење",
 "selectNextChannel": "изберете следниот канал",
+"nextChannel": "следниот канал",
+"addFiles": "додадете датотеки",
 "logout": "одјава",
 "server": "Сервер:",
 "businessId": "Бизнис ID:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Ве молиме прво изберете канал да се дружат средства со",
 "bootBoxAtLeastOneDiv": "мора да се задржи барем една видлива на екранот поделба",
 "bootBoxScreenDivPosReset": "екранот поделба позиција ресетирање",
-"bootBoxCostumeTitle": "Прилагодено наслов",
-"bootBoxContinue": "Продолжи",
 "confirmSteps": "Следните чекори ќе се одржи, ве молиме потврда?",
 "addNewTimelineButtonToolTip": "Додадете нова временска рамка",
 "campaignName": "Изберете име на кампања",
@@ -270,5 +270,6 @@
 "editLayout": "уредување распоред",
 "createAccount": "или да креирате нова сметка",
 "noAutoPopup": "не авто скокачки",
+"firstChannel": "првиот канал",
 "final": ""
 }

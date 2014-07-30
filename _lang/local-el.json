@@ -87,6 +87,8 @@
 "faq": "Συχνές ερωτήσεις",
 "knowledgeBase": "Βάση γνώσεων",
 "selectNextChannel": "επιλέξτε επόμενο κανάλι",
+"nextChannel": "επόμενο κανάλι",
+"addFiles": "προσθέσετε αρχεία",
 "logout": "αποσύνδεση",
 "server": "Διακομιστή:",
 "businessId": "Business id:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Παρακαλώ επιλέξτε πρώτα ένα κανάλι για να συνδέσει με το περιουσιακό στοιχείο",
 "bootBoxAtLeastOneDiv": "θα πρέπει να κρατήσει τουλάχιστον ένα τμήμα θεατό",
 "bootBoxScreenDivPosReset": "επαναφορά θέση διαίρεση της οθόνης",
-"bootBoxCostumeTitle": "Προσαρμοσμένου τίτλου",
-"bootBoxContinue": "Συνέχεια",
 "confirmSteps": "Τα παρακάτω βήματα θα λάβει χώρα, παρακαλούμε να επιβεβαιώσετε;",
 "addNewTimelineButtonToolTip": "Προσθέστε ένα νέο χρονοδιάγραμμα",
 "campaignName": "Επιλέξτε ένα όνομα καμπάνιας",
@@ -270,5 +270,6 @@
 "editLayout": "επεξεργασία διάταξης",
 "createAccount": "ή να δημιουργήσετε ένα νέο λογαριασμό",
 "noAutoPopup": "δεν γίνεται αυτόματα αναδυόμενο",
+"firstChannel": "πρώτο κανάλι",
 "final": ""
 }

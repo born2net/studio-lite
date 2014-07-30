@@ -87,6 +87,8 @@
 "faq": "Vanlige spørsmål",
 "knowledgeBase": "Kunnskapsgrunnlaget",
 "selectNextChannel": "velge neste kanal",
+"nextChannel": "neste kanal",
+"addFiles": "legge til filer",
 "logout": "utlogging",
 "server": "Server:",
 "businessId": "Forretnings id:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Vennligst velg først en kanal for å knytte eiendel med",
 "bootBoxAtLeastOneDiv": "du må holde minst ett synlig skjerm divisjon",
 "bootBoxScreenDivPosReset": "reset skjermen divisjon stilling",
-"bootBoxCostumeTitle": "Definert tittel",
-"bootBoxContinue": "Fortsett",
 "confirmSteps": "Følgende trinn vil finne sted, må du bekrefte?",
 "addNewTimelineButtonToolTip": "Legg til en ny tidslinje",
 "campaignName": "Velg en kampanje navn",
@@ -270,5 +270,6 @@
 "editLayout": "edit layout",
 "createAccount": "eller opprett en ny konto",
 "noAutoPopup": "ikke auto popup",
+"firstChannel": "første kanal",
 "final": ""
 }

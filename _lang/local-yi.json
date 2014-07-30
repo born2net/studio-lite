@@ -87,6 +87,8 @@
 "faq": "פאַקס",
 "knowledgeBase": "וויסן באַזע",
 "selectNextChannel": "אויסקלייַבן ווייַטער קאַנאַל",
+"nextChannel": "ווייַטער קאַנאַל",
+"addFiles": "לייג טעקעס",
 "logout": "logout",
 "server": "סערווירער:",
 "businessId": "געשעפט שייַן:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "ביטע ערשטער אויסקלייַבן אַ קאַנאַל צו קאָנטאַקטירן אַסעט מיט",
 "bootBoxAtLeastOneDiv": "איר מוזן האַלטן בייַ מינדסטער איינער וויעוואַבלע פאַרשטעלן אָפּטייל",
 "bootBoxScreenDivPosReset": "פאַרשטעלן אָפּטייל שטעלע באַשטעטיק",
-"bootBoxCostumeTitle": "מנהג טיטל",
-"bootBoxContinue": "פאָרזעצן",
 "confirmSteps": "די פאלגענדע טריט וועט נעמען אָרט, ביטע באַשטעטיקן?",
 "addNewTimelineButtonToolTip": "לייגן אַ נייַ טיימליין",
 "campaignName": "אויסקלייַבן אַ קאמפאניע נאָמען",
@@ -270,5 +270,6 @@
 "editLayout": "רעדאַגירן אויסלייג",
 "createAccount": "אָדער שאַפֿן אַ נייַ חשבון",
 "noAutoPopup": "טאָן ניט אַוטאָ אויפֿשפּרינג",
+"firstChannel": "ערשטער קאַנאַל",
 "final": ""
 }

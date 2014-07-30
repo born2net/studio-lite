@@ -87,6 +87,8 @@
 "faq": "FAQs",
 "knowledgeBase": "నాలెడ్జ్ బేస్",
 "selectNextChannel": "తదుపరి ఛానెల్ను ఎంచుకోండి",
+"nextChannel": "తదుపరి ఛానల్",
+"addFiles": "ఫైళ్లను",
 "logout": "లాగ్అవుట్",
 "server": "సర్వర్:",
 "businessId": "వ్యాపారం ఐడి:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "మొదటి ఆస్తి అనుబంధం ఒక ఛానెల్ను ఎంచుకోండి",
 "bootBoxAtLeastOneDiv": "మీరు కనీసం ఒక చూపబడుతుంది స్క్రీన్ విభాగం ఉంచేందుకు ఉండాలి",
 "bootBoxScreenDivPosReset": "స్క్రీన్ విభాగం స్థానం రీసెట్",
-"bootBoxCostumeTitle": "కస్టమ్ టైటిల్",
-"bootBoxContinue": "కొనసాగించు",
 "confirmSteps": "కింది విధానాలను జరుగుతాయి, దయచేసి నిర్ధారించండి?",
 "addNewTimelineButtonToolTip": "ఒక కొత్త కాలగమనాన్ని జోడించండి",
 "campaignName": "ఒక ప్రచారం పేరును ఎంచుకోండి",
@@ -270,5 +270,6 @@
 "editLayout": "మార్చు లేఅవుట్",
 "createAccount": "లేదా ఒక కొత్త ఖాతాను సృష్టించండి",
 "noAutoPopup": "ఆటో పాపప్ చేయండి",
+"firstChannel": "మొదటి ఛానల్",
 "final": ""
 }

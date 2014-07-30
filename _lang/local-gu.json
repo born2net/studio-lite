@@ -87,6 +87,8 @@
 "faq": "પ્રશ્નો",
 "knowledgeBase": "જ્ઞાન આધાર",
 "selectNextChannel": "આગામી ચેનલ પસંદ કરો",
+"nextChannel": "આગામી ચેનલ",
+"addFiles": "ફાઈલો ઉમેરો",
 "logout": "લૉગઆઉટ",
 "server": "સર્વર:",
 "businessId": "વ્યાપાર આઈડી:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "પ્રથમ સાથે એસેટ સાંકળવા માટે ચેનલ પસંદ કરો",
 "bootBoxAtLeastOneDiv": "તમે ઓછામાં ઓછું એક જોઈ શકાય સ્ક્રીન વિભાગ રાખવા જ જોઈએ",
 "bootBoxScreenDivPosReset": "સ્ક્રીન વિભાગ સ્થિતિ રીસેટ",
-"bootBoxCostumeTitle": "કસ્ટમ શીર્ષક",
-"bootBoxContinue": "ચાલુ રાખો",
 "confirmSteps": "નીચેના પગલાંઓ લેશે, ખાતરી કરો?",
 "addNewTimelineButtonToolTip": "નવી સમયરેખા ઉમેરો",
 "campaignName": "એક અભિયાન નામ પસંદ કરો",
@@ -270,5 +270,6 @@
 "editLayout": "ફેરફાર કરો લેઆઉટ",
 "createAccount": "કે નવું એકાઉન્ટ બનાવો",
 "noAutoPopup": "નથી ઓટો પોપઅપ કરો",
+"firstChannel": "પ્રથમ ચેનલ",
 "final": ""
 }

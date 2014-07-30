@@ -87,6 +87,8 @@
 "faq": "คำถามที่ถามบ่อย",
 "knowledgeBase": "ฐานความรู้",
 "selectNextChannel": "เลือกช่องถัดไป",
+"nextChannel": "ช่องถัดไป",
+"addFiles": "เพิ่มไฟล์",
 "logout": "ออกจากระบบ",
 "server": "เซิร์ฟเวอร์:",
 "businessId": "id ของธุรกิจ",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "กรุณาเลือกช่องแรกที่จะเชื่อมโยงสินทรัพย์ที่มี",
 "bootBoxAtLeastOneDiv": "คุณต้องเก็บส่วนหน้าจอที่สามารถดูได้อย่างน้อยหนึ่ง",
 "bootBoxScreenDivPosReset": "การตั้งค่าตำแหน่งการแบ่งหน้าจอ",
-"bootBoxCostumeTitle": "ชื่อที่กำหนดเอง",
-"bootBoxContinue": "ต่อ",
 "confirmSteps": "ขั้นตอนต่อไปที่จะเกิดขึ้นโปรดยืนยัน?",
 "addNewTimelineButtonToolTip": "เพิ่มระยะเวลาใหม่",
 "campaignName": "เลือกชื่อแคมเปญ",
@@ -270,5 +270,6 @@
 "editLayout": "รูปแบบการแก้ไข",
 "createAccount": "หรือสร้างบัญชีใหม่",
 "noAutoPopup": "ไม่ป๊อปอัพอัตโนมัติ",
+"firstChannel": "ช่องแรก",
 "final": ""
 }

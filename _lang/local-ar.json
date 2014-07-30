@@ -87,6 +87,8 @@
 "faq": "أسئلة وأجوبة",
 "knowledgeBase": "مجال المعارف",
 "selectNextChannel": "حدد القناة التالية",
+"nextChannel": "قناة المقبل",
+"addFiles": "إضافة ملفات",
 "logout": "تسجيل الخروج",
 "server": "خادم:",
 "businessId": "معرف الخط :",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "الرجاء اختيار قناة لوصلها",
 "bootBoxAtLeastOneDiv": "يجب أن يكون لديك قسم واحد على الأقل على الشاشة",
 "bootBoxScreenDivPosReset": "إعادة القسم لموضعه الأصلي على الشاشة",
-"bootBoxCostumeTitle": "عنوان مخصص",
-"bootBoxContinue": "متابعة",
 "confirmSteps": "سوف يتم القيام بالخطوات التالية، المرجو التأكيد",
 "addNewTimelineButtonToolTip": "إضافة جدول جديد",
 "campaignName": "اختيار اسم حملة",
@@ -270,5 +270,6 @@
 "editLayout": "تخطيط تحرير",
 "createAccount": "أو إنشاء حساب جديد",
 "noAutoPopup": "لا المنبثقة السيارات",
+"firstChannel": "القناة الأولى",
 "final": ""
 }

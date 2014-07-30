@@ -87,6 +87,8 @@
 "faq": "DUK",
 "knowledgeBase": "Žinių bazė",
 "selectNextChannel": "pasirinkite kitą kanalą",
+"nextChannel": "Kitas kanalas",
+"addFiles": "pridėti failus",
 "logout": "logout",
 "server": "Serveris:",
 "businessId": "Verslo id:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Pirmiausia pasirinkite kanalą, kurį norite susieti su turtu",
 "bootBoxAtLeastOneDiv": "jūs turite turėti bent vieną matomo ekrano padalijimą",
 "bootBoxScreenDivPosReset": "Ekrano padalinimo pozicija iš naujo",
-"bootBoxCostumeTitle": "Individualizuotos pavadinimas",
-"bootBoxContinue": "Tęsti",
 "confirmSteps": "Šie veiksmai vyks, prašome patvirtinti?",
 "addNewTimelineButtonToolTip": "Pridėti naują grafikas",
 "campaignName": "Pasirinkite kampanijos pavadinimą",
@@ -270,5 +270,6 @@
 "editLayout": "redaguoti išdėstymas",
 "createAccount": "arba sukurti naują sąskaitą",
 "noAutoPopup": "Negalima Auto laikiną langą",
+"firstChannel": "Pirmasis kanalas",
 "final": ""
 }

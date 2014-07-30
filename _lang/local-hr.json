@@ -87,6 +87,8 @@
 "faq": "Pitanja i odgovori",
 "knowledgeBase": "Baza znanja",
 "selectNextChannel": "odabir sljedećeg kanala",
+"nextChannel": "Sljedeći kanala",
+"addFiles": "dodavanje datoteka",
 "logout": "logout",
 "server": "Server:",
 "businessId": "Poslovni id:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Najprije odaberite kanal na udruživanje imovine s",
 "bootBoxAtLeastOneDiv": "morate držati barem jedan vidljivost na podjelu",
 "bootBoxScreenDivPosReset": "reset screen podjela položaj",
-"bootBoxCostumeTitle": "Custom title",
-"bootBoxContinue": "Nastaviti",
 "confirmSteps": "Sljedeći koraci će se održati, potvrdi?",
 "addNewTimelineButtonToolTip": "Dodaj novi Timeline",
 "campaignName": "Odaberite naziv kampanje",
@@ -270,5 +270,6 @@
 "editLayout": "edit layout",
 "createAccount": "ili stvoriti novi korisnički račun",
 "noAutoPopup": "Nemojte automatski Popup",
+"firstChannel": "prvi kanal",
 "final": ""
 }

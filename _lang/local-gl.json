@@ -87,6 +87,8 @@
 "faq": "FAQs",
 "knowledgeBase": "Base de coñecemento",
 "selectNextChannel": "seleccionar o seguinte canle",
+"nextChannel": "preto canle",
+"addFiles": "engadir ficheiros",
 "logout": "Saír",
 "server": "Servidor:",
 "businessId": "ID de Negocio:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Escolla primeiro unha canle para asociar activos con",
 "bootBoxAtLeastOneDiv": "ten que ter polo menos unha división de pantalla visible",
 "bootBoxScreenDivPosReset": "posición división de pantalla de reset",
-"bootBoxCostumeTitle": "Título personalizado",
-"bootBoxContinue": "Continuar",
 "confirmSteps": "Os pasos seguintes han ter lugar, por favor confirme?",
 "addNewTimelineButtonToolTip": "Engadir un novo programa",
 "campaignName": "Escolla un nome de campaña",
@@ -270,5 +270,6 @@
 "editLayout": "Editar Esquema",
 "createAccount": "ou crear unha nova conta",
 "noAutoPopup": "non auto emerxentes",
+"firstChannel": "primeira canle",
 "final": ""
 }

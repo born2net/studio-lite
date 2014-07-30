@@ -87,6 +87,8 @@
 "faq": "Otázky a odpovědi",
 "knowledgeBase": "Znalostní báze",
 "selectNextChannel": "vybrat další kanál",
+"nextChannel": "další kanál",
+"addFiles": "přidat soubory",
 "logout": "logout",
 "server": "Server:",
 "businessId": "IČ:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Nejprve prosím vyberte kanál, který chcete přidružit aktiva se",
 "bootBoxAtLeastOneDiv": "musíte mít alespoň jednu divizi zobrazitelné obrazovky",
 "bootBoxScreenDivPosReset": "resetování rozdělení obrazovky pozice",
-"bootBoxCostumeTitle": "Vlastní název",
-"bootBoxContinue": "Pokračovat",
 "confirmSteps": "Následující kroky se budou konat, prosím, potvrďte?",
 "addNewTimelineButtonToolTip": "Přidat nové časové osy",
 "campaignName": "Vyberte název kampaně",
@@ -270,5 +270,6 @@
 "editLayout": "upravit rozvržení",
 "createAccount": "nebo vytvořit nový účet",
 "noAutoPopup": "dělat nebudou automaticky otevřené okno",
+"firstChannel": "První kanál",
 "final": ""
 }

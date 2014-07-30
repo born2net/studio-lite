@@ -87,6 +87,8 @@
 "faq": "اکثر پوچھے گئے سوالات",
 "knowledgeBase": "علم کی بنیاد",
 "selectNextChannel": "اگلا چینل کو منتخب کریں",
+"nextChannel": "اگلا چینل",
+"addFiles": "فائلیں شامل کریں",
 "logout": "لاگ آؤٹ کریں",
 "server": "سرور:",
 "businessId": "بزنس ID:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "پہلی اثاثہ منسلک کرنے کے لئے ایک چینل منتخب کریں",
 "bootBoxAtLeastOneDiv": "آپ کو کم از کم ایک دیکھا جا سکتا سکرین ڈویژن رکھنا چاہیے",
 "bootBoxScreenDivPosReset": "سکرین ڈویژن کی پوزیشن ری سیٹ کریں",
-"bootBoxCostumeTitle": "اپنی مرضی کے عنوان",
-"bootBoxContinue": "آگے",
 "confirmSteps": "مندرجہ ذیل اقدامات جگہ لے جائے گا، براہ کرم تصدیق کریں؟",
 "addNewTimelineButtonToolTip": "ایک نئی ٹائم لائن میں شامل کریں",
 "campaignName": "ایک مہم کا نام منتخب کریں",
@@ -270,5 +270,6 @@
 "editLayout": "ترمیم ترتیب",
 "createAccount": "یا ایک نیا اکاؤنٹ بنائیں",
 "noAutoPopup": "نہیں آٹو پاپ اپ کرتے ہیں",
+"firstChannel": "سب سے پہلے چینل",
 "final": ""
 }

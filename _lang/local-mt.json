@@ -87,6 +87,8 @@
 "faq": "FAQs",
 "knowledgeBase": "Bażi ta `għarfien",
 "selectNextChannel": "tagħżel kanal li jmiss",
+"nextChannel": "kanal li jmiss",
+"addFiles": "żid fajls",
 "logout": "logout",
 "server": "Server:",
 "businessId": "Business id:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Jekk jogħġbok agħżel l-ewwel mezz biex l-assi jassoċjaw ma",
 "bootBoxAtLeastOneDiv": "inti għandu jżomm diviżjoni inqas wieħed iskrin viżibbli",
 "bootBoxScreenDivPosReset": "pożizzjoni diviżjoni screen reset",
-"bootBoxCostumeTitle": "Titolu Custom",
-"bootBoxContinue": "Kompli",
 "confirmSteps": "Il-passi li ġejjin ser iseħħ, jekk jogħġbok ikkonferma?",
 "addNewTimelineButtonToolTip": "Żid kalendarju ġdid",
 "campaignName": "Agħżel isem kampanja",
@@ -270,5 +270,6 @@
 "editLayout": "jeditjaw tqassim",
 "createAccount": "jew toħloq kont ġdid",
 "noAutoPopup": "ma popup auto",
+"firstChannel": "ewwel kanal",
 "final": ""
 }

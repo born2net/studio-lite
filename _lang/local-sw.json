@@ -87,6 +87,8 @@
 "faq": "FAQs",
 "knowledgeBase": "Elimu ya msingi",
 "selectNextChannel": "kuchagua channel ijayo",
+"nextChannel": "channel ijayo",
+"addFiles": "kuongeza files",
 "logout": "logout",
 "server": "Server:",
 "businessId": "Business id:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Tafadhali kwanza kuchagua channel kujiunga mali na",
 "bootBoxAtLeastOneDiv": "lazima kuweka viewable screen angalau moja mgawanyo",
 "bootBoxScreenDivPosReset": "screen mgawanyiko nafasi upya",
-"bootBoxCostumeTitle": "Cheo desturi",
-"bootBoxContinue": "Kuendelea",
 "confirmSteps": "hatua zifuatazo utafanyika, tafadhali wasiliana?",
 "addNewTimelineButtonToolTip": "Kuongeza ratiba ya mpya",
 "campaignName": "Kuchagua jina la kampeni",
@@ -270,5 +270,6 @@
 "editLayout": "hariri layout",
 "createAccount": "au kuunda akaunti mpya",
 "noAutoPopup": "si auto popup",
+"firstChannel": "channel kwanza",
 "final": ""
 }

@@ -87,6 +87,8 @@
 "faq": "Ofte stillede spørgsmål",
 "knowledgeBase": "Videnbase",
 "selectNextChannel": "vælge næste kanal",
+"nextChannel": "næste kanal",
+"addFiles": "tilføje filer",
 "logout": "logout",
 "server": "Server:",
 "businessId": "Erhverv id:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Vælg først en kanal til at associere aktiv med",
 "bootBoxAtLeastOneDiv": "du skal holde mindst én synlige skærm division",
 "bootBoxScreenDivPosReset": "skærm division position nulstilling",
-"bootBoxCostumeTitle": "Brugerdefineret titel",
-"bootBoxContinue": "Fortsæt",
 "confirmSteps": "De følgende trin vil finde sted, skal du bekræfte?",
 "addNewTimelineButtonToolTip": "Tilføj en ny tidslinje",
 "campaignName": "Vælg en kampagne navn",
@@ -270,5 +270,6 @@
 "editLayout": "redigere layout",
 "createAccount": "eller oprette en ny konto",
 "noAutoPopup": "ikke auto popup",
+"firstChannel": "første kanal",
 "final": ""
 }

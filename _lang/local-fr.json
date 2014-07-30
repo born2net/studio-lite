@@ -87,6 +87,8 @@
 "faq": "Questions fréquentes",
 "knowledgeBase": "base des connaissances",
 "selectNextChannel": "sélectionner le canal suivant",
+"nextChannel": "canal suivant",
+"addFiles": "ajouter des fichiers",
 "logout": "Se déconnecter",
 "server": "Serveur:",
 "businessId": "L`identificateur du bus:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Veuillez séléctionner un canal pour le relier",
 "bootBoxAtLeastOneDiv": "Vous devez avoir au moins une division sur l`écran",
 "bootBoxScreenDivPosReset": "réinitialisation de la position de la divison sur l`écran",
-"bootBoxCostumeTitle": "Titre personnalisé",
-"bootBoxContinue": "Continuer",
 "confirmSteps": "Les étapes suivantes vont être faites, confirmez SVP ?",
 "addNewTimelineButtonToolTip": "Ajouter un nouveau planning",
 "campaignName": "séléctionner un nom de campaign",
@@ -270,5 +270,6 @@
 "editLayout": "edit layout",
 "createAccount": "ou créer un nouveau compte",
 "noAutoPopup": "faire pas automatiquement le popup",
+"firstChannel": "premier canal",
 "final": ""
 }

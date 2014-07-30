@@ -87,6 +87,8 @@
 "faq": "ხშირად დასმული კითხვები",
 "knowledgeBase": "ბაზა",
 "selectNextChannel": "აირჩიეთ მეორე არხი",
+"nextChannel": "მომდევნო არხი",
+"addFiles": "რჩეულებში ფაილი",
 "logout": "გამოსვლის",
 "server": "სერვერი:",
 "businessId": "ბიზნეს id:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "გთხოვთ აირჩიოთ არხის გაერთიანების აქტივის",
 "bootBoxAtLeastOneDiv": "თქვენ უნდა შევინარჩუნოთ მინიმუმ ერთი ფაქტიური ეკრანზე განყოფილება",
 "bootBoxScreenDivPosReset": "ეკრანზე სამმართველოს პოზიცია აღდგენა",
-"bootBoxCostumeTitle": "Custom სათაური",
-"bootBoxContinue": "გაგრძელება",
 "confirmSteps": "შემდეგი ნაბიჯები გაიმართება, გთხოვთ დაადასტუროთ?",
 "addNewTimelineButtonToolTip": "დაამატოთ ახალი ვადები",
 "campaignName": "აირჩიეთ კამპანიის სახელი",
@@ -270,5 +270,6 @@
 "editLayout": "რედაქტირება განლაგება",
 "createAccount": "ან შექმნათ ახალი ანგარიში",
 "noAutoPopup": "არ ავტომობილზე popup",
+"firstChannel": "პირველი არხი",
 "final": ""
 }

@@ -87,6 +87,8 @@
 "faq": "Често задавани въпроси",
 "knowledgeBase": "База знания",
 "selectNextChannel": "изберете следващия канал",
+"nextChannel": "следващия канал",
+"addFiles": "добавете още файлове",
 "logout": "Изход",
 "server": "Сървър:",
 "businessId": "Бизнес ID:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Моля, първо изберете канал да се сдружават с актив",
 "bootBoxAtLeastOneDiv": "трябва да се запази най-малко един видимо разделяне на екрана",
 "bootBoxScreenDivPosReset": "нулиране на разделяне на екрана позиция",
-"bootBoxCostumeTitle": "Персонализирана заглавие",
-"bootBoxContinue": "Продължавам",
 "confirmSteps": "Следващите стъпки ще се осъществят, моля потвърдете?",
 "addNewTimelineButtonToolTip": "Добавяне на нов график",
 "campaignName": "Изберете име на кампания",
@@ -270,5 +270,6 @@
 "editLayout": "редактиране оформление",
 "createAccount": "или да създадете нов акаунт",
 "noAutoPopup": "Не автоматичен изскачащ",
+"firstChannel": "първи канал",
 "final": ""
 }

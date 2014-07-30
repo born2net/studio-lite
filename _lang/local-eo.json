@@ -87,6 +87,8 @@
 "faq": "FAQs",
 "knowledgeBase": "Scio bazo",
 "selectNextChannel": "selektu apud kanalo",
+"nextChannel": "sekvanta kanalo",
+"addFiles": "aldoni dosierojn",
 "logout": "Elsaluti",
 "server": "Servilo:",
 "businessId": "Komerco id:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Bonvolu unue elekti kanalo asocii aktivo kun",
 "bootBoxAtLeastOneDiv": "vi devas konservi almenaŭ unu viewable ekrano divido",
 "bootBoxScreenDivPosReset": "ekrano divido pozicio reset",
-"bootBoxCostumeTitle": "Propra titolo",
-"bootBoxContinue": "Daŭri",
 "confirmSteps": "La sekvaj paŝoj okazos, bonvolu konfirmi?",
 "addNewTimelineButtonToolTip": "Aldoni novan templinio",
 "campaignName": "Elektu kampanjo nomo",
@@ -270,5 +270,6 @@
 "editLayout": "redaktu aranĝo",
 "createAccount": "aŭ krei novan konton",
 "noAutoPopup": "ne auto-fenestron",
+"firstChannel": "unua kanalo",
 "final": ""
 }

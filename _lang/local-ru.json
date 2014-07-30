@@ -87,6 +87,8 @@
 "faq": "Вопросы и ответы",
 "knowledgeBase": "База знаний",
 "selectNextChannel": "выбрать следующий канал",
+"nextChannel": "следующий канал",
+"addFiles": "добавить файлы",
 "logout": "выход",
 "server": "Сервер:",
 "businessId": "Бизнес ID:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Пожалуйста, сначала выберите канал, чтобы связать актив с",
 "bootBoxAtLeastOneDiv": "Вы должны держать по крайней мере одну дивизию экран для просмотра",
 "bootBoxScreenDivPosReset": "сброс положение разделение экрана",
-"bootBoxCostumeTitle": "Пользовательские название",
-"bootBoxContinue": "Продолжать",
 "confirmSteps": "Следующие шаги будут проходить, пожалуйста, подтвердите?",
 "addNewTimelineButtonToolTip": "Добавить новую временную шкалу",
 "campaignName": "Выберите название кампании",
@@ -270,5 +270,6 @@
 "editLayout": "редактирования макета",
 "createAccount": "или создать новую учетную запись",
 "noAutoPopup": "Не Автоокно",
+"firstChannel": "Первый канал",
 "final": ""
 }

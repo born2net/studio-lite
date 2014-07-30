@@ -312,6 +312,10 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             return false;
         },
 
+        /**
+         Listen to when a channel is selected, but through the storyline so we can re-select appropriate block in channel list
+         @method _listenStorylineChannelSelected
+         **/
         _listenStorylineChannelSelected: function(){
             var self = this;
             BB.comBroker.listen(BB.EVENTS['STORYLINE_CHANNEL_SELECTED'], function(e){

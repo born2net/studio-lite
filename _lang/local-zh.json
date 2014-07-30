@@ -87,6 +87,8 @@
 "faq": "常见问题解答",
 "knowledgeBase": "知识库",
 "selectNextChannel": "选择下一个通道",
+"nextChannel": "下一个通道",
+"addFiles": "添加文件",
 "logout": "注销",
 "server": "服务器：",
 "businessId": "企业ID：",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "请首先选择一个通道，资产与关联",
 "bootBoxAtLeastOneDiv": "你必须保持至少一个可视画面分割",
 "bootBoxScreenDivPosReset": "屏幕分割位置复位",
-"bootBoxCostumeTitle": "自定义标题",
-"bootBoxContinue": "继续",
 "confirmSteps": "下面的步骤将举行，请证实？",
 "addNewTimelineButtonToolTip": "添加一个新的时间线",
 "campaignName": "选择一个广告系列名称",
@@ -270,5 +270,6 @@
 "editLayout": "编辑布局",
 "createAccount": "或者创建新帐户",
 "noAutoPopup": "不自动弹出",
+"firstChannel": "第一个通道",
 "final": ""
 }

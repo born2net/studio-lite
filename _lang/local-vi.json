@@ -87,6 +87,8 @@
 "faq": "Câu hỏi thường gặp",
 "knowledgeBase": "Kiến thức cơ bản",
 "selectNextChannel": "chọn kênh tiếp theo",
+"nextChannel": "kênh tiếp theo",
+"addFiles": "thêm các tập tin",
 "logout": "đăng xuất",
 "server": "Máy chủ:",
 "businessId": "Kinh doanh id:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Trước tiên hãy lựa chọn một kênh để liên kết với tài sản",
 "bootBoxAtLeastOneDiv": "bạn phải giữ ít nhất một phân chia màn hình có thể xem được",
 "bootBoxScreenDivPosReset": "vị trí phân chia màn hình thiết lập lại",
-"bootBoxCostumeTitle": "Tùy chỉnh tiêu đề",
-"bootBoxContinue": "Tiếp tục",
 "confirmSteps": "Các bước sau đây sẽ diễn ra, vui lòng xác nhận?",
 "addNewTimelineButtonToolTip": "Thêm một thời gian mới",
 "campaignName": "Chọn một tên chiến dịch",
@@ -270,5 +270,6 @@
 "editLayout": "chỉnh sửa bố trí",
 "createAccount": "hoặc tạo một tài khoản mới",
 "noAutoPopup": "không tự động BLOCK popup",
+"firstChannel": "kênh đầu tiên",
 "final": ""
 }

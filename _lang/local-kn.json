@@ -87,6 +87,8 @@
 "faq": "ಆಸ್",
 "knowledgeBase": "ಜ್ಞಾನ ಮೂಲ",
 "selectNextChannel": "ಮುಂದಿನ ಚಾನೆಲ್ ಆಯ್ಕೆ",
+"nextChannel": "ಮುಂದಿನ ಚಾನೆಲ್",
+"addFiles": "ಕಡತಗಳನ್ನು ಸೇರಿಸಿ",
 "logout": "ಲಾಗ್ಔಟ್",
 "server": "ಸರ್ವರ್:",
 "businessId": "ವ್ಯಾಪಾರ ಐಡಿ:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "ಮೊದಲ ಆಸ್ತಿ ಸಂಯೋಜಿಸಲು ಒಂದು ಚಾನಲ್ ಆಯ್ಕೆ ಮಾಡಿ",
 "bootBoxAtLeastOneDiv": "ನೀವು ಕನಿಷ್ಟ ಒಂದು ವೀಕ್ಷಿಸಬಹುದಾಗಿದೆ ಪರದೆಯ ವಿಭಾಗ ಇಟ್ಟುಕೊಂಡಿರಬೇಕು",
 "bootBoxScreenDivPosReset": "ಪರದೆಯ ವಿಭಾಗ ಸ್ಥಾನವನ್ನು ರೀಸೆಟ್",
-"bootBoxCostumeTitle": "ಕಸ್ಟಮ್ ಶೀರ್ಷಿಕೆ",
-"bootBoxContinue": "ಮುಂದುವರಿಸಿ",
 "confirmSteps": "ಕೆಳಗಿನ ಕ್ರಮಗಳನ್ನು ನಡೆಯುತ್ತದೆ, ದಯವಿಟ್ಟು ಖಚಿತಪಡಿಸಿ?",
 "addNewTimelineButtonToolTip": "ಹೊಸ ಟೈಮ್ಲೈನ್ ಸೇರಿಸಿ",
 "campaignName": "ಪ್ರಚಾರ ಹೆಸರನ್ನು ಆಯ್ಕೆ",
@@ -270,5 +270,6 @@
 "editLayout": "ಬದಲಾಯಿಸಿ ಲೇಔಟ್",
 "createAccount": "ಅಥವಾ ಹೊಸ ಖಾತೆಯನ್ನು ರಚಿಸಲು",
 "noAutoPopup": "ಸ್ವಯಂ ಪಾಪ್ಅಪ್ ಮಾಡಲು",
+"firstChannel": "ಮೊದಲ ಚಾನೆಲ್",
 "final": ""
 }

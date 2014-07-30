@@ -87,6 +87,8 @@
 "faq": "FAQ",
 "knowledgeBase": "Bilik bazası",
 "selectNextChannel": "Növbəti kanalı seçmək",
+"nextChannel": "Növbəti kanalı",
+"addFiles": "faylları əlavə",
 "logout": "logout",
 "server": "Server:",
 "businessId": "Business id:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Ilk ilə aktivi birləşmək üçün bir kanal seçin",
 "bootBoxAtLeastOneDiv": "Siz ən azı bir görüntülenebilir ekran bölgüsü saxlamaq lazımdır",
 "bootBoxScreenDivPosReset": "ekran bölmə mövqeyi reset",
-"bootBoxCostumeTitle": "Xüsusi adı",
-"bootBoxContinue": "Davam etdirmək",
 "confirmSteps": "Aşağıdakı addımlar keçiriləcək, təsdiq edin?",
 "addNewTimelineButtonToolTip": "Yeni qrafiki əlavə et",
 "campaignName": "Bir kampaniya adı seçin",
@@ -270,5 +270,6 @@
 "editLayout": "redaktə layout",
 "createAccount": "və ya yeni hesab yaratmaq",
 "noAutoPopup": "avtomatik popup etmək",
+"firstChannel": "ilk kanal",
 "final": ""
 }

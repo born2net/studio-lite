@@ -87,6 +87,8 @@
 "faq": "Domande frequenti",
 "knowledgeBase": "Knowledge base",
 "selectNextChannel": "selezionare il canale successivo",
+"nextChannel": "canale successivo",
+"addFiles": "aggiungere i file",
 "logout": "Esci",
 "server": "Server:",
 "businessId": "Affari id:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Per favore prima selezionare un canale da associare attività con",
 "bootBoxAtLeastOneDiv": "si deve tenere almeno una divisione visibile dello schermo",
 "bootBoxScreenDivPosReset": "reset della posizione divisione dello schermo",
-"bootBoxCostumeTitle": "Titolo personalizzato",
-"bootBoxContinue": "Continuare",
 "confirmSteps": "Le seguenti operazioni avranno luogo, si prega di confermare?",
 "addNewTimelineButtonToolTip": "Aggiungere una nuova timeline",
 "campaignName": "Selezionare un nome di una campagna",
@@ -270,5 +270,6 @@
 "editLayout": "Modifica layout",
 "createAccount": "o creare un nuovo account",
 "noAutoPopup": "Non auto popup",
+"firstChannel": "primo canale",
 "final": ""
 }

@@ -87,6 +87,8 @@
 "faq": "Vrae",
 "knowledgeBase": "Kennis",
 "selectNextChannel": "Kies volgende kanaal",
+"nextChannel": "volgende kanaal",
+"addFiles": "voeg lêers",
 "logout": "logout",
 "server": "Bediener:",
 "businessId": "Besigheid id:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Kies eers `n kanaal bate te assosieer met",
 "bootBoxAtLeastOneDiv": "Jy moet ten minste een sigbaar skerm afdeling hou",
 "bootBoxScreenDivPosReset": "skerm afdeling posisie herstel",
-"bootBoxCostumeTitle": "Custom titel",
-"bootBoxContinue": "Gaan voort",
 "confirmSteps": "Die volgende stappe sal plaasvind, bevestig asseblief?",
 "addNewTimelineButtonToolTip": "Voeg `n nuwe tydlyn",
 "campaignName": "Kies `n veldtog naam",
@@ -270,5 +270,6 @@
 "editLayout": "wysig uitleg",
 "createAccount": "of `n nuwe rekening",
 "noAutoPopup": "doen nie outomaties pop",
+"firstChannel": "eerste kanaal",
 "final": ""
 }

@@ -87,6 +87,8 @@
 "faq": "Fakte",
 "knowledgeBase": "Baza e njohurive",
 "selectNextChannel": "zgjidhni kanalin e ardhshme",
+"nextChannel": "kanal tjetër",
+"addFiles": "shtoni fotografi",
 "logout": "logout",
 "server": "Server:",
 "businessId": "Id biznesit:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Ju lutem së pari të zgjidhni një kanal që të lidhen me aktivin",
 "bootBoxAtLeastOneDiv": "ju duhet të mbani të paktën një ndarje ekran shikohet",
 "bootBoxScreenDivPosReset": "Pozicioni ndarje ekran rishkruhet",
-"bootBoxCostumeTitle": "Titulli Custom",
-"bootBoxContinue": "Vazhdoj",
 "confirmSteps": "Hapat e mëposhtëm do të zhvillohet, ju lutem konfirmoni?",
 "addNewTimelineButtonToolTip": "Shto një afat kohor të re",
 "campaignName": "Zgjidhni një emër fushatë",
@@ -270,5 +270,6 @@
 "editLayout": "edit plan urbanistik",
 "createAccount": "ose të krijoni një llogari të re",
 "noAutoPopup": "Mos popup Auto",
+"firstChannel": "kanali i parë",
 "final": ""
 }

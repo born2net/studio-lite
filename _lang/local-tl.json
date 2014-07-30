@@ -87,6 +87,8 @@
 "faq": "Mga Madalas Itanong",
 "knowledgeBase": "Base ng Kaalaman",
 "selectNextChannel": "piliin ang susunod na channel",
+"nextChannel": "susunod na channel",
+"addFiles": "magdagdag ng mga file",
 "logout": "logout",
 "server": "Server:",
 "businessId": "Id Negosyo:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Mangyaring pumili muna ng isang channel upang iugnay ang asset na may",
 "bootBoxAtLeastOneDiv": "dapat mong panatilihin ang hindi bababa sa isang matitingnan screen division",
 "bootBoxScreenDivPosReset": "pag-reset ng posisyon screen division",
-"bootBoxCostumeTitle": "Pasadyang pamagat",
-"bootBoxContinue": "Magpatuloy",
 "confirmSteps": "Ang sumusunod na mga hakbang ay magdadala sa lugar, mangyaring kumpirmahin?",
 "addNewTimelineButtonToolTip": "Magdagdag ng isang bagong hanay ng panahon",
 "campaignName": "Pumili ng isang pangalan ng kampanya",
@@ -270,5 +270,6 @@
 "editLayout": "i-edit ang layout",
 "createAccount": "o lumikha ng isang bagong account",
 "noAutoPopup": "huwag auto popup",
+"firstChannel": "unang channel",
 "final": ""
 }

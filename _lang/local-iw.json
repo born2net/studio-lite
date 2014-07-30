@@ -87,6 +87,8 @@
 "faq": "שאלות נפוצות",
 "knowledgeBase": "בסיס ידע",
 "selectNextChannel": "בחר הערוץ הבא",
+"nextChannel": "הערוץ הבא",
+"addFiles": "להוסיף קבצים",
 "logout": "התנתקות",
 "server": "שרת:",
 "businessId": "id עסקים:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "אנא בחר ערוץ לשייך נכס עם ראשון",
 "bootBoxAtLeastOneDiv": "אתה חייב לשמור על חלוקת מסך לצפייה אחת לפחות",
 "bootBoxScreenDivPosReset": "איפוס עמדת חלוקת מסך",
-"bootBoxCostumeTitle": "כותרת מותאמת אישית",
-"bootBoxContinue": "להמשיך",
 "confirmSteps": "השלבים הבאים יתקיימו, בבקשה לאשר?",
 "addNewTimelineButtonToolTip": "הוספת ציר זמן חדש",
 "campaignName": "בחר שם מסע פרסום",
@@ -270,5 +270,6 @@
 "editLayout": "פריסת עריכה",
 "createAccount": "או ליצור חשבון חדש",
 "noAutoPopup": "לא אוטומטי קופץ",
+"firstChannel": "ערוץ ראשון",
 "final": ""
 }

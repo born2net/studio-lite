@@ -87,6 +87,8 @@
 "faq": "প্রায়শই জিজ্ঞাসিত প্রশ্নাবলী",
 "knowledgeBase": "জ্ঞান ভাণ্ডার",
 "selectNextChannel": "পরবর্তী চ্যানেল নির্বাচন",
+"nextChannel": "পরবর্তী চ্যানেল",
+"addFiles": "ফাইল যোগ করুন",
 "logout": "লগ আউট",
 "server": "সার্ভার:",
 "businessId": "ব্যবসা আইডি:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "প্রথম সাথে সম্পদ সংযুক্ত একটি চ্যানেল নির্বাচন করুন",
 "bootBoxAtLeastOneDiv": "আপনি অন্তত একটি দর্শনীয় পর্দা বিভাগ রাখা আবশ্যক",
 "bootBoxScreenDivPosReset": "পর্দা বিভাজন অবস্থান রিসেট",
-"bootBoxCostumeTitle": "কাস্টম শিরোনাম",
-"bootBoxContinue": "চালিয়ে যাওয়া",
 "confirmSteps": "নিম্নলিখিত ধাপ সঞ্চালিত হবে, নিশ্চিত করুন!",
 "addNewTimelineButtonToolTip": "একটি নতুন টাইমলাইনে যোগ করুন",
 "campaignName": "একটি প্রচারণা নাম নির্বাচন",
@@ -270,5 +270,6 @@
 "editLayout": "সম্পাদনা লেআউট",
 "createAccount": "অথবা একটি নতুন অ্যাকাউন্ট তৈরি",
 "noAutoPopup": "না স্বয়ংক্রিয় পপআপ না",
+"firstChannel": "প্রথম চ্যানেল",
 "final": ""
 }

@@ -87,6 +87,8 @@
 "faq": "FAQs",
 "knowledgeBase": "Base de conhecimento",
 "selectNextChannel": "selecionar o próximo canal",
+"nextChannel": "próximo canal",
+"addFiles": "adicionar arquivos",
 "logout": "sair",
 "server": "Servidor:",
 "businessId": "Id do negócio:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Selecione um canal para associar ao recurso",
 "bootBoxAtLeastOneDiv": "você deve manter pelo menos uma divisão de tela visível",
 "bootBoxScreenDivPosReset": "resetar a posição da divisão de tela",
-"bootBoxCostumeTitle": "Título customizado",
-"bootBoxContinue": "Continuar",
 "confirmSteps": "Os seguintes passos serão executados, confirma?",
 "addNewTimelineButtonToolTip": "Adicionar nova timeline",
 "campaignName": "Nome da campanha",
@@ -270,5 +270,6 @@
 "editLayout": "Editar Layout",
 "createAccount": "ou criar uma nova conta",
 "noAutoPopup": "não auto pop-up",
+"firstChannel": "primeiro canal",
 "final": ""
 }

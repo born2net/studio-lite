@@ -87,6 +87,8 @@
 "faq": "GYIK",
 "knowledgeBase": "Tudásbázis",
 "selectNextChannel": "válassza ki a következő csatornára",
+"nextChannel": "következő csatornára",
+"addFiles": "adjunk hozzá kép",
 "logout": "logout",
 "server": "Szerver:",
 "businessId": "Üzleti id:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Kérjük, először válassza ki a csatornát társítani eszközre",
 "bootBoxAtLeastOneDiv": "meg kell tartani legalább egy látható képernyő osztás",
 "bootBoxScreenDivPosReset": "képernyőfelosztás pozíció visszaállítása",
-"bootBoxCostumeTitle": "Egyedi cím",
-"bootBoxContinue": "Folytatódik",
 "confirmSteps": "A következő lépések kerül sor, kérjük, erősítse meg?",
 "addNewTimelineButtonToolTip": "Adjon hozzá egy új idővonal",
 "campaignName": "Válassza ki a kampány nevét",
@@ -270,5 +270,6 @@
 "editLayout": "Elrendezés szerkesztése",
 "createAccount": "vagy hozzon létre egy új fiókot",
 "noAutoPopup": "nem automatikus előugró",
+"firstChannel": "első csatorna",
 "final": ""
 }

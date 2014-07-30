@@ -87,6 +87,8 @@
 "faq": "Veelgestelde vragen",
 "knowledgeBase": "Kennisbank",
 "selectNextChannel": "selecteert volgende kanaal",
+"nextChannel": "volgende kanaal",
+"addFiles": "bestanden toevoegen",
 "logout": "logout",
 "server": "Server:",
 "businessId": "Zakelijk id:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Gelieve eerst een kanaal om actief te associëren met selecteren",
 "bootBoxAtLeastOneDiv": "U moet ten minste een zichtbaar schermoppervlak divisie houden",
 "bootBoxScreenDivPosReset": "scherm divisie positie-reset",
-"bootBoxCostumeTitle": "Aangepaste titel",
-"bootBoxContinue": "Voortzetten",
 "confirmSteps": "De volgende stappen zal plaatsvinden, gelieve te bevestigen?",
 "addNewTimelineButtonToolTip": "Voeg een nieuwe tijdlijn",
 "campaignName": "Selecteer een campagne naam",
@@ -270,5 +270,6 @@
 "editLayout": "Lay-out bewerken",
 "createAccount": "of maak een nieuwe account",
 "noAutoPopup": "niet automatische pop-up",
+"firstChannel": "eerste kanaal",
 "final": ""
 }

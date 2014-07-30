@@ -87,6 +87,8 @@
 "faq": "FAQs",
 "knowledgeBase": "Banc de coneixements",
 "selectNextChannel": "seleccionar el següent canal",
+"nextChannel": "següent canal",
+"addFiles": "afegir fitxers",
 "logout": "logout",
 "server": "Servidor:",
 "businessId": "Identificació de Negoci:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Si us plau primer seleccioneu el canal que voleu associar amb l`actiu",
 "bootBoxAtLeastOneDiv": "vostè ha de mantenir almenys una divisió de pantalla visible",
 "bootBoxScreenDivPosReset": "restauració de la posició de divisió de pantalla",
-"bootBoxCostumeTitle": "Títol propi",
-"bootBoxContinue": "Continuar",
 "confirmSteps": "Els passos següents es duran a terme, confirmen si us plau?",
 "addNewTimelineButtonToolTip": "Afegir una nova línia de temps",
 "campaignName": "Tria un nom de campanya",
@@ -270,5 +270,6 @@
 "editLayout": "edit layout",
 "createAccount": "o crear un nou compte",
 "noAutoPopup": "No emergent auto",
+"firstChannel": "primer canal",
 "final": ""
 }

@@ -87,6 +87,8 @@
 "faq": "SSS",
 "knowledgeBase": "Bilgi tabanı",
 "selectNextChannel": "sonraki kanalı seçmek",
+"nextChannel": "bir sonraki kanal",
+"addFiles": "dosyaları eklemek",
 "logout": "logout",
 "server": "Sunucu:",
 "businessId": "İş id:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Ile ilk varlık ilişkilendirmek için bir kanal seçiniz",
 "bootBoxAtLeastOneDiv": "en az bir görüntülenebilir ekran bölünmesini tutmalısınız",
 "bootBoxScreenDivPosReset": "ekran bölme pozisyon sıfırlama",
-"bootBoxCostumeTitle": "Özel başlık",
-"bootBoxContinue": "Devam etmek",
 "confirmSteps": "Aşağıdaki adımlar yer alacak, onaylamak lütfen?",
 "addNewTimelineButtonToolTip": "Yeni bir zaman çizelgesi ekle",
 "campaignName": "Bir kampanya adı seçin",
@@ -270,5 +270,6 @@
 "editLayout": "edit düzen",
 "createAccount": "veya yeni bir hesap oluşturun",
 "noAutoPopup": "yok Otomatik Açılan yapmak",
+"firstChannel": "birinci kanal",
 "final": ""
 }

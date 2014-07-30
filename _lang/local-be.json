@@ -87,6 +87,8 @@
 "faq": "Пытанні і адказы",
 "knowledgeBase": "База ведаў",
 "selectNextChannel": "выбраць наступны канал",
+"nextChannel": "наступны канал",
+"addFiles": "дадаць файлы",
 "logout": "выхад",
 "server": "Сервер:",
 "businessId": "Бізнес ID:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Калі ласка, спачатку выберыце канал, каб звязаць актыў з",
 "bootBoxAtLeastOneDiv": "Вы павінны трымаць па крайняй меры адну дывізію экран для прагляду",
 "bootBoxScreenDivPosReset": "скід становішча падзел экрана",
-"bootBoxCostumeTitle": "Прыстасаваныя назву",
-"bootBoxContinue": "Працягваць",
 "confirmSteps": "Наступныя крокі будуць праходзіць, калі ласка, пацвердзіце?",
 "addNewTimelineButtonToolTip": "Дадаць новую часовую шкалу",
 "campaignName": "Выберыце назва кампаніі",
@@ -270,5 +270,6 @@
 "editLayout": "рэдагавання макета",
 "createAccount": "або стварыць новы ўліковы запіс",
 "noAutoPopup": "Ня Автоокно",
+"firstChannel": "Першы канал",
 "final": ""
 }

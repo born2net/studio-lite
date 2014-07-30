@@ -87,6 +87,8 @@
 "faq": "Cwestiynau Cyffredin",
 "knowledgeBase": "Sylfaen wybodaeth",
 "selectNextChannel": "dewis sianel nesaf",
+"nextChannel": "sianel nesaf",
+"addFiles": "ychwanegu ffeiliau",
 "logout": "allgofnodi",
 "server": "Gweinydd:",
 "businessId": "Id busnes:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Dewiswch sianel i gysylltu asedau gyda gyntaf",
 "bootBoxAtLeastOneDiv": "rhaid i chi gadw o leiaf un is-adran sgrîn viewable",
 "bootBoxScreenDivPosReset": "sefyllfa is-adran sgrîn ailosod",
-"bootBoxCostumeTitle": "Teitl Custom",
-"bootBoxContinue": "Parhau",
 "confirmSteps": "Bydd y camau canlynol yn digwydd, os gwelwch yn dda gadarnhau?",
 "addNewTimelineButtonToolTip": "Ychwanegu llinell amser newydd",
 "campaignName": "Dewiswch enw ymgyrch",
@@ -270,5 +270,6 @@
 "editLayout": "golygu cynllun",
 "createAccount": "neu greu cyfrif newydd",
 "noAutoPopup": "peidiwch â popup auto",
+"firstChannel": "sianel gyntaf",
 "final": ""
 }

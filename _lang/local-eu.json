@@ -87,6 +87,8 @@
 "faq": "Maiz egiten diren galderak",
 "knowledgeBase": "Ezagutza-base",
 "selectNextChannel": "hautatu hurrengo kanala",
+"nextChannel": "hurrengo kanala",
+"addFiles": "fitxategiak gehitzeko",
 "logout": "logout",
 "server": "Zerbitzaria:",
 "businessId": "Enpresa id:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Mesedez hautatu lehendabizi kanal bat aktibo lotzeko dituzten",
 "bootBoxAtLeastOneDiv": "ikusgai pantaila zatiketa bat gutxienez mantendu behar duzu",
 "bootBoxScreenDivPosReset": "pantaila zatiketa posizio berrezarri",
-"bootBoxCostumeTitle": "Titulu pertsonalizatua",
-"bootBoxContinue": "Jarraitu",
 "confirmSteps": "Urrats hauek ospatuko da, mesedez baieztatzeko?",
 "addNewTimelineButtonToolTip": "Gehitu denbora-lerro berri bat",
 "campaignName": "Hautatu kanpaina izen bat",
@@ -270,5 +270,6 @@
 "editLayout": "editatu diseinua",
 "createAccount": "edo kontu berri bat sortu",
 "noAutoPopup": "ez auto popup",
+"firstChannel": "Lehenengo kanala",
 "final": ""
 }

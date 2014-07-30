@@ -87,6 +87,8 @@
 "faq": "Algengar spurningar",
 "knowledgeBase": "Þekkingargrunn",
 "selectNextChannel": "velja næstu rás",
+"nextChannel": "Næsta rás",
+"addFiles": "bæta skrám",
 "logout": "Útskrá",
 "server": "Server:",
 "businessId": "Viðskipti id:",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "Vinsamlegast fyrst að velja rás til að tengja eign með",
 "bootBoxAtLeastOneDiv": "þú verður að halda að minnsta kosti einn sýnileg skjár deild",
 "bootBoxScreenDivPosReset": "skjár deild stöðu endurstilla",
-"bootBoxCostumeTitle": "Custom titill",
-"bootBoxContinue": "Halda áfram",
 "confirmSteps": "Eftirfarandi skref munu eiga sér stað, vinsamlegast staðfesta?",
 "addNewTimelineButtonToolTip": "Bæta við nýjum eilífur",
 "campaignName": "Veldu heiti herferðarinnar",
@@ -270,5 +270,6 @@
 "editLayout": "breyta skipulag",
 "createAccount": "eða búa til nýjan reikning",
 "noAutoPopup": "gera ekki sjálfvirkt Popup",
+"firstChannel": "Fyrsta rás",
 "final": ""
 }

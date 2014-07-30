@@ -87,6 +87,8 @@
 "faq": "자주 묻는 질문",
 "knowledgeBase": "기술 자료",
 "selectNextChannel": "다음 채널을 선택",
+"nextChannel": "다음 채널",
+"addFiles": "파일을 추가",
 "logout": "로그 아웃",
 "server": "서버 :",
 "businessId": "비즈니스 ID :",
@@ -178,8 +180,6 @@
 "bootBoxSelectChannel": "첫 번째로 자산을 연결하는 채널을 선택하세요",
 "bootBoxAtLeastOneDiv": "당신은 적어도 하나의 볼 수있는 화면 분할을 유지해야",
 "bootBoxScreenDivPosReset": "화면 분할 위치 재설정",
-"bootBoxCostumeTitle": "사용자 지정 제목",
-"bootBoxContinue": "계속",
 "confirmSteps": "다음 단계는 장소를 취할 것입니다, 확인하시기 바랍니다!",
 "addNewTimelineButtonToolTip": "새로운 타임 라인을 추가",
 "campaignName": "캠페인 이름을 선택",
@@ -270,5 +270,6 @@
 "editLayout": "편집 레이아웃",
 "createAccount": "또는 새 계정을 만들",
 "noAutoPopup": "하지 자동 팝업에게 할",
+"firstChannel": "첫 번째 채널",
 "final": ""
 }

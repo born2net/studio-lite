@@ -180,8 +180,6 @@
     "bootBoxSelectChannel": "Please first select a channel to associate asset with",
     "bootBoxAtLeastOneDiv": "you must keep at least one viewable screen division",
     "bootBoxScreenDivPosReset": "screen division position reset",
-    "bootBoxCostumeTitle": "Custom title",
-    "bootBoxContinue": "Continue",
     "confirmSteps": "The following steps will take place, please confirm?",
     "addNewTimelineButtonToolTip": "Add a new timeline",
     "campaignName": "Select a campaign name",

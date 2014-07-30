@@ -130,7 +130,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                         show: false,
                         buttons: {
                             success: {
-                                label: $(Elements.MSG_BOOTBOX_CONTINUE).text(),
+                                label: '<i style="font-size: 1em" class="fa fa-forward "></i>',
                                 className: "btn-success",
                                 callback: function () {
                                     $('#' + uniqueID).empty();

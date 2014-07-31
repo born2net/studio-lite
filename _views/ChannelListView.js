@@ -466,18 +466,37 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
                     break;
                 }
                 case 'first': {
-                    var resourceElem = $('.activated',self.$el);
-                    $(Elements.SORTABLE).prepend($(resourceElem));
-                    self._reOrderChannelBlocks();
+                    self.moveBlockFirst();
                     break;
                 }
                 case 'last': {
-                    var resourceElem = $('.activated',self.$el);
-                    $(Elements.SORTABLE).append($(resourceElem));
-                    self._reOrderChannelBlocks();
+                    self.moveBlockLast();
+                    break;
                 }
             }
             return true;
+        },
+
+        /**
+         Move current selected block to be the first to play within the channel
+         @method moveBlockFirst
+         **/
+        moveBlockFirst: function(){
+            var self = this;
+            var resourceElem = $('.activated',self.$el);
+            $(Elements.SORTABLE).prepend($(resourceElem));
+            self._reOrderChannelBlocks();
+        },
+
+        /**
+         Move current selected block to be the last to play within the channel
+         @method moveBlockLast
+         **/
+        moveBlockLast: function(){
+            var self = this;
+            var resourceElem = $('.activated',self.$el);
+            $(Elements.SORTABLE).append($(resourceElem));
+            self._reOrderChannelBlocks();
         }
     });
 

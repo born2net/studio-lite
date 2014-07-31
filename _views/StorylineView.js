@@ -33,16 +33,18 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             self.m_selectedTimelineID = undefined;
             self.m_selectedBlockID = undefined;
             self.m_selectedChannel = undefined;
-            self.m_blockZindex = 3;
+            self.m_blockZindex = 3; // future drag support
             BB.comBroker.setService(BB.SERVICES.STORYLINE, self);
             BB.comBroker.listen(BB.EVENTS.SIDE_PANEL_SIZED, $.proxy(self._updateWidth, self));
             self._listenReset();
             self._listenTimelineSelected();
             self._listenTimelineChanged();
             self._listenBlockSelection();
+            self._listenTimelineBlockRemoved();
             self._listenStackViewSelected();
             self._listenToggleStorylineCollapsible();
             self._listenAppResized();
+            self._listenContextMenu();
             self._updateWidth();
         },
 
@@ -63,7 +65,6 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                     self._listenSelections();
                     self._addBlockSelection(self.m_selectedBlockID);
                     self._addChannelSelection(self.m_selectedChannel);
-                    // log('rendering storyline');
                 }, 100);
             }
             self.m_render();
@@ -356,8 +357,8 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                 $.proxy(self._blockChannelSelected(e), self);
                 BB.comBroker.fire(BB.EVENTS.CAMPAIGN_TIMELINE_CHANNEL_SELECTED, this, null, self.m_selectedChannel);
             });
-            $(Elements.CLASS_TIMELINE_BLOCK).off('click');
-            $(Elements.CLASS_TIMELINE_BLOCK).on('click', function (e) {
+            $(Elements.CLASS_TIMELINE_BLOCK).off('click contextmenu');
+            $(Elements.CLASS_TIMELINE_BLOCK).on('click contextmenu', function (e) {
                 $.proxy(self._blockSelected(e), self);
 
                 /* future support draggable */
@@ -375,11 +376,15 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
          **/
         _blockChannelSelected: function (e) {
             var self = this;
-            e.stopImmediatePropagation();
+            if (e.button == 0) {
+                e.stopImmediatePropagation();
+                $(Elements.STORYLINE_CONTEXT_MENU).hide();
+            }
+
             var blockElem = $(e.target);
 
             if (_.isUndefined($(blockElem).attr('class')))
-                return false;
+                return true;
 
             if ($(blockElem).hasClass(BB.lib.unclass(Elements.CLASS_STORYLINE_CHANNEL)))
                 blockElem = $(blockElem).find(Elements.CLASS_CHANNEL_HEAD);
@@ -390,8 +395,11 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             var timeline_channel_id = $(blockElem).data('timeline_channel_id');
             var campaign_timeline_board_viewer_id = $(blockElem).data('campaign_timeline_board_viewer_id');
 
+            //if (_.isUndefined(timeline_channel_id) || _.isUndefined(campaign_timeline_board_viewer_id))
+            //    return false;
+
             if (self.m_selectedChannel == timeline_channel_id)
-                return false;
+                return true;
 
             self.m_selectedChannel = timeline_channel_id;
             var screenData = {
@@ -404,7 +412,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             var sequencer = BB.comBroker.getService(BB.SERVICES['SEQUENCER_VIEW']);
             sequencer.selectViewer(screenData.campaign_timeline_id, screenData.campaign_timeline_board_viewer_id);
             BB.comBroker.fire(BB.EVENTS.ON_VIEWER_SELECTED, this, screenData);
-            return false;
+            return true;
         },
 
         /**
@@ -415,7 +423,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
          **/
         _blockSelected: function (e) {
             var self = this;
-            e.stopImmediatePropagation();
+            //e.stopImmediatePropagation();
             var blockElem = $(e.target);
             self.selected_block_id = $(blockElem).data('timeline_channel_block_id');
             // if label was selected
@@ -427,7 +435,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             self._blockChannelSelected(e);
             BB.comBroker.fire(BB.EVENTS.STORYLINE_BLOCK_SELECTED, this, null, self.selected_block_id);
             $(blockElem).addClass(BB.lib.unclass(Elements.CLASS_TIMELINE_BLOCK_SELECTED));
-            return false;
+            //return false;
         },
 
 
@@ -453,13 +461,83 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
         },
 
         /**
+         Listen to any canvas right click
+         @method _listenContextMenu
+         **/
+        _listenContextMenu: function () {
+            var self = this;
+            $(Elements.STORYLINE).contextmenu({
+                target: Elements.STORYLINE_CONTEXT_MENU,
+                before: function (e, element, target) {
+                    e.preventDefault();
+                    //self.m_mouseX = e.offsetX;
+                    //self.m_mouseY = e.offsetY;
+                    if (_.isUndefined(self.m_selectedBlockID))
+                        return false;
+                    return true;
+                },
+                onItem: function (context, e) {
+                    self._onContentMenuSelection($(e.target).attr('name'))
+                }
+            });
+        },
+
+        /**
+         On Scene right click context menu selection command
+         @method _onContentMenuSelection
+         @param {String} i_command
+         **/
+        _onContentMenuSelection: function (i_command) {
+            var self = this;
+            var campaign_timeline_id = BB.comBroker.getService(BB.SERVICES.CAMPAIGN_VIEW).getSelectedTimeline();
+            if (campaign_timeline_id == -1 || _.isUndefined(campaign_timeline_id))
+                return;
+
+            switch (i_command){
+                case 'nextChannel': {
+                    self.selectNextChannel();
+                    break;
+                }
+                case 'addContent': {
+                    $(Elements.ADD_BLOCK_BUTTON).trigger('click');
+                    break;
+                }
+                case 'removeContent': {
+                    $(Elements.REMOVE_BLOCK_BUTTON).trigger('click');
+                    break;
+                }
+                case 'first': {
+                    BB.comBroker.getService(BB.SERVICES.CHANNEL_LIST_VIEW).moveBlockFirst();
+                    break;
+                }
+                case 'last': {
+                    BB.comBroker.getService(BB.SERVICES.CHANNEL_LIST_VIEW).moveBlockLast();
+                    break;
+                }
+            }
+            return true;
+        },
+
+        /**
+         Listen to when a timeline block is removed
+         @method _listenTimelineBlockRemoved
+         @param {Object} e
+         **/
+        _listenTimelineBlockRemoved: function(){
+            var self = this;
+            pepper.listen(Pepper.REMOVE_TIMELINE_CHANNEL_BLOCK, function(e){
+                self.m_selectedBlockID = undefined;
+                self._removeBlockSelection();
+            });
+        },
+
+        /**
          Select next channel
          @method selectNextChannel
          **/
         selectNextChannel: function () {
             var self = this;
             var timeline_channel_id, campaign_timeline_board_viewer_id;
-            log(self.m_selectedChannel);
             var channelsIDs = pepper.getChannelsOfTimeline(self.m_selectedTimelineID);
             if (_.isUndefined(self.m_selectedChannel)) {
                 timeline_channel_id = channelsIDs[0];
@@ -482,9 +560,9 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             };
             self._removeBlockSelection();
             self._addChannelSelection(timeline_channel_id);
-            var sequencer = BB.comBroker.getService(BB.SERVICES['SEQUENCER_VIEW']);
-            sequencer.selectViewer(screenData.campaign_timeline_id, screenData.campaign_timeline_board_viewer_id);
+            BB.comBroker.getService(BB.SERVICES['SEQUENCER_VIEW']).selectViewer(screenData.campaign_timeline_id, screenData.campaign_timeline_board_viewer_id);
             BB.comBroker.fire(BB.EVENTS.ON_VIEWER_SELECTED, this, screenData);
+            BB.comBroker.fire(BB.EVENTS.CAMPAIGN_TIMELINE_CHANNEL_SELECTED, this, null, self.m_selectedChannel);
         }
     });
 

@@ -35,15 +35,15 @@ function Pepper() {
 Pepper.SCENE_CREATED = 'SCENE_CREATED';
 
 /**
- Custom event fired when scene changed
- @event Pepper.SCENE_CHANGED
+ Custom event fired when a block is removed from a timeline channel
+ @event Pepper.REMOVE_TIMELINE_CHANNEL_BLOCK
  @param {This} caller
  @param {Event}
  @static
  @final
-
- Pepper.SCENE_CHANGED = 'SCENE_CHANGED';
  **/
+ Pepper.REMOVE_TIMELINE_CHANNEL_BLOCK = 'REMOVE_TIMELINE_CHANNEL_BLOCK';
+
 
 
 /**
@@ -1500,6 +1500,7 @@ Pepper.prototype = {
     removeBlockFromTimelineChannel: function (i_block_id) {
         var self = this;
         var status = self.m_msdb.table_campaign_timeline_chanel_players().openForDelete(i_block_id);
+        pepper.fire(Pepper['REMOVE_TIMELINE_CHANNEL_BLOCK'], self, null, i_block_id);
     },
 
     /**

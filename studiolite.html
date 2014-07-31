@@ -365,10 +365,21 @@
                 </div>
                 <div id="storylineContainerCollapse" class="panel-collapse collapse">
 
+                    <div id="storylineContextMenu">
+                        <ul id="storylineMenuContex" class="dropdown-menu" role="menu">
+                            <li><a tabindex="-1" name="nextChannel" data-localize="nextChannel">next channel</a></li>
+                            <li><a tabindex="-1" name="addContent" data-localize="addContent">add content</a></li>
+                            <li><a tabindex="-1" name="removeContent" data-localize="removeContent">remove content</a></li>
+                            <li><a tabindex="-1" name="first" data-localize="moveFirst">move to first</a></li>
+                            <li><a tabindex="-1" name="last" data-localize="moveLast">move to last</a>
+                            </li>
+                        </ul>
+                    </div>
+
                     <div class="panel-body">
                         <aside>
                             <aside>
-                                <div id="storyLine">
+                                <div id="storyLine" class="context"  data-toggle="context" data-target="#storylineContextMenu">
                                 </div>
                             </aside>
                         </aside>
@@ -1266,7 +1277,7 @@
 </div>
 </div>
 <div id="footer"><br>
-    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.146 </span>
+    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.149 </span>
 </div>
 
 

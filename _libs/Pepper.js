@@ -373,7 +373,7 @@ Pepper.prototype = {
 
         var recPlayerData = pepper.getScenePlayerRecord(i_scene_id);
         var player_data = recPlayerData['player_data_value'];
-        var domPlayerData = $.parseXML(player_data)
+        var domPlayerData = $.parseXML(player_data);
         var xSnippet = $(domPlayerData).find('Scene');
         var totalSeconds = parseInt(xSnippet.attr('defaultDuration'));
 

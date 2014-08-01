@@ -121,6 +121,25 @@ iframe {
     background-color: black;
 }
 
+#cloudStorageUsage {
+    position: relative;
+    top: -122px;
+    left: 20px;
+}
+
+#cloudStorage {
+    height: 150px;
+    width: 200px;
+    padding: 0;
+    margin: 0;
+}
+
+#cloudStoragePerc {
+    position: relative;
+    top: -100px;
+    left: 75px;
+}
+
 #livePreviewWrap {
     width: 100%;
     height: 60px;
@@ -718,6 +737,13 @@ iframe {
 
 .timelineBlock:hover {
     border-color: #737373;
+}
+
+.cloudStorageCapacity {
+    position: relative;
+    top: -111px;
+    left: 22px;
+    display: inline-block;
 }
 
 .basicBorder {
@@ -1616,7 +1642,16 @@ Software accelerated vertical
     margin-top: 8px;
     margin-bottom: 8px;
     color: #535353;
+}
+
+.hrThinDash {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    color: #535353;
     border-top: 1px solid #DDDDDD !important;
+    position: relative;
+    left: -10px;
+    width: 200px;
 }
 
 /************************************

@@ -17,25 +17,36 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
         initialize: function () {
             var self = this;
             BB.comBroker.setService(BB.SERVICES['DASHBOARD_VIEW'],self);
-            self.calcTotalCloudStorage();
-
+            self._calcTotalCloudStorage();
         },
 
         /**
          Calculate total storage used in cloud
-         @method cloudStoragePerc
+         @method _calcTotalCloudStorage
          **/
-        calcTotalCloudStorage: function(){
+        _calcTotalCloudStorage: function(){
+            var self = this;
+            var bytesTotal = 0;
+            var totalCapacity = pepper.getUserData().resellerID == 1 ? '1000' : '10000';
+            $(Elements.CLOUD_STORAGE_CAPACITY).text(totalCapacity / 1000 + 'GB');
+            var recResources = pepper.getResources();
+            $(recResources).each(function (i) {
+                if (recResources[i]['change_type'] == 3)
+                    return;
+                bytesTotal += parseInt(recResources[i]['resource_bytes_total']);
+            });
+            var mbTotalPercent = BB.lib.parseToFloatDouble((Math.ceil(bytesTotal / 1024) / totalCapacity) * 100);// * _.random(1,5);
+            var mbTotalPercentRounded = Math.round(mbTotalPercent);
+            if (String(mbTotalPercentRounded).length==1)
+                mbTotalPercentRounded = '0' + mbTotalPercentRounded;
+            $(Elements.CLOUD_STORAGE_PERC).text(mbTotalPercentRounded + '%');
 
             $(Elements.CLOUD_STORAGE).highcharts({
-
                 chart: {
                     type: 'solidgauge',
                     backgroundColor: 'transparent'
                 },
-
                 title: null,
-
                 pane: {
                     center: ['50%', '70%'],
                     size: '130%',
@@ -49,11 +60,9 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
                         borderColor: 'transparent'
                     }
                 },
-
                 tooltip: {
                     enabled: false
                 },
-
                 // the value axis
                 yAxis: {
                     min: 0,
@@ -77,11 +86,9 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
                         y: 16
                     }
                 },
-
                 credits: {
                     enabled: false
                 },
-
                 plotOptions: {
                     solidgauge: {
                         dataLabels: {
@@ -91,16 +98,14 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
                         }
                     }
                 },
-
                 series: [{
-                    data: [25],
+                    data: [mbTotalPercent],
                     dataLabels: {
                         format: '<span style="text-align:center;">12%</span>'
                     }
                 }]
             });
         }
-
     });
 
     return DashboardView;

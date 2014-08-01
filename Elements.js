@@ -17,6 +17,7 @@ Elements.LIVE_CHAT = '#liveChat';
 Elements.REMEMBER_ME = '#rememberMe';
 Elements.CLOUD_STORAGE = '#cloudStorage';
 Elements.CLOUD_STORAGE_PERC = '#cloudStoragePerc';
+Elements.CLOUD_STORAGE_CAPACITY = '#cloudStorageCapacity';
 Elements.APP_CONTENT = '#appContent';
 Elements.APP_NAVIGATOR = '#appNavigator';
 Elements.POP_MODAL = '#popModal';

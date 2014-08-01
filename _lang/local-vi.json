@@ -271,5 +271,7 @@
 "createAccount": "hoặc tạo một tài khoản mới",
 "noAutoPopup": "không tự động BLOCK popup",
 "firstChannel": "kênh đầu tiên",
+"refresh": "tải lại dữ liệu",
+"totalCloudStorage": "tổng lưu trữ đám mây",
 "final": ""
 }

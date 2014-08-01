@@ -6,7 +6,7 @@
  @param {String} i_container element that CompCampaignNavigator inserts itself into
  @return {Object} instantiated StationsListView
  **/
-define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function ($, Backbone, StationsCollection, AjaxJsonGetter) {
+define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, StationsCollection) {
 
     BB.SERVICES.STATIONS_LIST_VIEW = 'StationsListView';
 
@@ -30,10 +30,10 @@ define(['jquery', 'backbone', 'StationsCollection', 'AjaxJsonGetter'], function 
 
             self.m_stationCollection = new StationsCollection();
 
-            self.ajaxJsonGetter = new AjaxJsonGetter({
-                key: BB.globs['RC4KEY'],
-                url: 'https://secure.dynawebs.net/_php/msWSsec-debug.php?' + Date.now()
-            });
+            //self.ajaxJsonGetter = new AjaxJsonGetter({
+            //    key: BB.globs['RC4KEY'],
+            //    url: 'https://secure.dynawebs.net/_php/msWSsec-debug.php?' + Date.now()
+            //});
 
             self.listenTo(self.m_stationCollection, 'add', function (i_model) {
                 $(Elements.STATION_ALERT).hide();

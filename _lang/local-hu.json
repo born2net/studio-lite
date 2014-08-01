@@ -271,5 +271,7 @@
 "createAccount": "vagy hozzon létre egy új fiókot",
 "noAutoPopup": "nem automatikus előugró",
 "firstChannel": "első csatorna",
+"refresh": "reload adatok",
+"totalCloudStorage": "teljes cloud tárolási",
 "final": ""
 }

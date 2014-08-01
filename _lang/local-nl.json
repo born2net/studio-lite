@@ -271,5 +271,7 @@
 "createAccount": "of maak een nieuwe account",
 "noAutoPopup": "niet automatische pop-up",
 "firstChannel": "eerste kanaal",
+"totalCloudStorage": "totaal cloud storage",
+"refresh": "reload gegevens",
 "final": ""
 }

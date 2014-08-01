@@ -271,5 +271,7 @@
 "createAccount": "eller oprette en ny konto",
 "noAutoPopup": "ikke auto popup",
 "firstChannel": "første kanal",
+"refresh": "genindlæse data",
+"totalCloudStorage": "samlede cloud storage",
 "final": ""
 }

@@ -271,5 +271,7 @@
 "createAccount": "या एक नया खाता बनाने",
 "noAutoPopup": "नहीं ऑटो पॉपअप करना",
 "firstChannel": "पहला चैनल",
+"totalCloudStorage": "कुल बादल भंडारण",
+"refresh": "डेटा पुनः लोड",
 "final": ""
 }

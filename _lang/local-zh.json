@@ -271,5 +271,7 @@
 "createAccount": "或者创建新帐户",
 "noAutoPopup": "不自动弹出",
 "firstChannel": "第一个通道",
+"refresh": "重新加载数据",
+"totalCloudStorage": "总云存储",
 "final": ""
 }

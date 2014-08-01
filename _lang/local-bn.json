@@ -271,5 +271,7 @@
 "createAccount": "অথবা একটি নতুন অ্যাকাউন্ট তৈরি",
 "noAutoPopup": "না স্বয়ংক্রিয় পপআপ না",
 "firstChannel": "প্রথম চ্যানেল",
+"totalCloudStorage": "মোট মেঘ স্টোরেজ",
+"refresh": "তথ্য পুনরায় লোড",
 "final": ""
 }

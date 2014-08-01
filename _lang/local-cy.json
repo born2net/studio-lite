@@ -271,5 +271,7 @@
 "createAccount": "neu greu cyfrif newydd",
 "noAutoPopup": "peidiwch â popup auto",
 "firstChannel": "sianel gyntaf",
+"refresh": "ail-lwytho data",
+"totalCloudStorage": "cyfanswm storio cwmwl",
 "final": ""
 }

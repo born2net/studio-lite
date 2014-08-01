@@ -271,5 +271,7 @@
 "createAccount": "alebo vytvoriť nový účet",
 "noAutoPopup": "robiť nebudú vyskakovacie okno",
 "firstChannel": "Prvý kanál",
+"refresh": "načítať dáta,",
+"totalCloudStorage": "celková skladovacia cloud",
 "final": ""
 }

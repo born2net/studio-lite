@@ -271,5 +271,7 @@
 "createAccount": "veya yeni bir hesap oluşturun",
 "noAutoPopup": "yok Otomatik Açılan yapmak",
 "firstChannel": "birinci kanal",
+"totalCloudStorage": "toplam bulut depolama",
+"refresh": "verileri yeniden",
 "final": ""
 }

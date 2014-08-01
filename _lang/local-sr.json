@@ -271,5 +271,7 @@
 "createAccount": "или отворите нови налог",
 "noAutoPopup": "Немојте аутоматски попуп",
 "firstChannel": "Први канал",
+"refresh": "релоад податке",
+"totalCloudStorage": "Укупна облак складиштење",
 "final": ""
 }

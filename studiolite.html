@@ -280,17 +280,17 @@
                                 class="btn btn-default btn-sm"><span
                                 class="glyphicon glyphicon-plus"></span></button>
                         <button id="removeTimelineButton" type="button"
-                                title="remove the selected timeline"
+                                title="remove the selected timeline" data-localize="empty"
                                 data-localize-tooltip="removeTimelineButtonToolTip"
                                 class="btn btn-default btn-sm"><span
                                 class="glyphicon glyphicon-minus"></span></button>
                         <button id="editScreenLayout" type="button"
-                                title="edit screen layout"
+                                title="edit screen layout" data-localize="empty"
                                 data-localize-tooltip="editScreenLayout"
                                 class="btn btn-default btn-sm">
                             <i class="fa fa-trello  "></i></button>
                         <button id="campaignPreview" type="button"
-                                title="campaign preview"
+                                title="campaign preview" data-localize="empty"
                                 data-localize-tooltip="campaignPreviewTooltip"
                                 class="btn btn-default btn-sm">
                             <i class="fa fa-play-circle"></i></button>
@@ -415,7 +415,7 @@
 <div id="screenLayoutEditorView" class="page right">
     <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
             class="glyphicon glyphicon-chevron-left"></span></button>
-    <h3 data-localize="editScreenLayoutTitle">Edit screen layout</h3>
+    <h3 data-localize="empty" data-localize="editScreenLayoutTitle">Edit screen layout</h3>
 
     <div class="btn-group">
         <button id="layoutEditorAddNew" type="button" data-localize-tooltip="addButtonToolTip" title="add"
@@ -913,16 +913,25 @@
 <div id="propPanelWrap" class="hidden-xs col-sm-3 col-lg-3">
 <div id="propPanel">
 <div id="dashboardView" class="yScroll noXScroll">
-    <div style="height: 150px">
+    <button id="dashboardRefresh" style="float: right; margin-right: 15px" class="btn btn-default" title="refresh" data-localize="empty"
+            data-localize-tooltip="refresh" >
+        <span class="glyphicon glyphicon glyphicon-refresh"></span></button>
+    <div style="height: 150px; clear: both">
         <div id="cloudStorage">
         </div>
         <h2 id="cloudStoragePerc"></h2>
-        <h5 data-localize="totalCloudStorage" class="cloudStorageCapacity">total cloud storage </h5>&nbsp<h5 id="cloudStorageCapacity" class="cloudStorageCapacity"></h5>
-        <!-- <h4 id="cloudStorageUsage">cloud storage usage</h4> -->
+        <h4 data-localize="totalCloudStorage" class="cloudStorageCapacity">total cloud storage </h4>&nbsp<h4 id="cloudStorageCapacity" class="cloudStorageCapacity"></h4>
     </div>
     <div style="height: 150px">
         <hr class="hrThinDash"/>
+        <h4>remote SignagePlayers</h4>
+        <div style="float: left; border-right: solid #DDDDDD 1px; padding-right: 15px">
+            <span id="dashboardTotalStation" style="font-size: 60px; position: relative; top: 8px"></span>
+        </div>
+        <div id="donutStations" style="float: left; width: 100px; height: 100px; padding: 0; margin: 0">
+        </div>
     </div>
+    <hr class="hrThinDash"/>
     <ul class="alignTextLeft">
         <li><span data-localize="server"> Server: </span><span id="serverName"></span></li>
         <li><span data-localize="businessId"> Business id: </span><span id="buisinessID"></span></li>
@@ -1286,7 +1295,7 @@
 </div>
 </div>
 <div id="footer"><br>
-    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.149 </span>
+    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.150 </span>
 </div>
 
 

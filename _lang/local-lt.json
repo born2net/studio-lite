@@ -271,5 +271,7 @@
 "createAccount": "arba sukurti naują sąskaitą",
 "noAutoPopup": "Negalima Auto laikiną langą",
 "firstChannel": "Pirmasis kanalas",
+"totalCloudStorage": "Bendras debesys saugykla",
+"refresh": "Perkrauti duomenis",
 "final": ""
 }

@@ -271,5 +271,7 @@
 "createAccount": "eller opprett en ny konto",
 "noAutoPopup": "ikke auto popup",
 "firstChannel": "første kanal",
+"refresh": "reload data",
+"totalCloudStorage": "total sky lagring",
 "final": ""
 }

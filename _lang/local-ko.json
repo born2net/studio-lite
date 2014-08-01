@@ -271,5 +271,7 @@
 "createAccount": "또는 새 계정을 만들",
 "noAutoPopup": "하지 자동 팝업에게 할",
 "firstChannel": "첫 번째 채널",
+"totalCloudStorage": "총 클라우드 스토리지",
+"refresh": "데이터를 다시로드",
 "final": ""
 }

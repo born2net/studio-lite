@@ -271,5 +271,7 @@
 "createAccount": "หรือสร้างบัญชีใหม่",
 "noAutoPopup": "ไม่ป๊อปอัพอัตโนมัติ",
 "firstChannel": "ช่องแรก",
+"refresh": "โหลดข้อมูล",
+"totalCloudStorage": "การจัดเก็บเมฆรวม",
 "final": ""
 }

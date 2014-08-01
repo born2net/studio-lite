@@ -271,5 +271,7 @@
 "createAccount": "ou créer un nouveau compte",
 "noAutoPopup": "faire pas automatiquement le popup",
 "firstChannel": "premier canal",
+"refresh": "recharger données",
+"totalCloudStorage": "stockage en nuage totale",
 "final": ""
 }

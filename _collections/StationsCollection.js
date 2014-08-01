@@ -118,7 +118,6 @@ define(['jquery', 'backbone', 'StationModel', 'simplestorage'], function ($, Bac
             var self = this;
             var userData = pepper.getUserData();
             var url = 'https://' + userData.domain + '/WebService/getStatus.ashx?user=' + userData.userName + '&password=' + userData.userPass + '&callback=?';
-            // url = 'https://moon.signage.me/WebService/getStatus.ashx?user=moon1@ms.com&password=xxx&callback=?';
             $.getJSON(url,
                 function (data) {
                     var s64 = data['ret'];

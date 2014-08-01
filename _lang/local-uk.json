@@ -271,5 +271,7 @@
 "createAccount": "або створити новий обліковий запис",
 "noAutoPopup": "Чи не Автоокно",
 "firstChannel": "Перший канал",
+"refresh": "перезавантажити дані",
+"totalCloudStorage": "Загальна хмара зберігання",
 "final": ""
 }

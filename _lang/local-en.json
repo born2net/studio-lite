@@ -119,6 +119,7 @@
     "autoRewind": " Auto rewind",
     "rssNewsSource": "RSS news source",
     "rssRefreash": "RSS refresh timer (minutes)",
+    "refresh": "reload data",
     "rsscroll": "RSS scroll direction",
     "horizontalMode": "Horizontal mode",
     "verticalMode": "Vertical mode",

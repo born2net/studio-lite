@@ -271,5 +271,7 @@
 "createAccount": "または、新しいアカウントを作成する",
 "noAutoPopup": "自動ポップアップをしない",
 "firstChannel": "最初のチャンネル",
+"refresh": "データを再ロード",
+"totalCloudStorage": "トータルクラウドストレージ",
 "final": ""
 }

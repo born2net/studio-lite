@@ -271,5 +271,7 @@
 "createAccount": "tai luo uusi tili",
 "noAutoPopup": "ei auto ponnahdusikkuna",
 "firstChannel": "ensimmäinen kanava",
+"refresh": "reload tiedot",
+"totalCloudStorage": "yhteensä pilvi varastointi",
 "final": ""
 }

@@ -742,7 +742,7 @@ iframe {
 .cloudStorageCapacity {
     position: relative;
     top: -111px;
-    left: 22px;
+    left: 4px;
     display: inline-block;
 }
 
@@ -1650,8 +1650,8 @@ Software accelerated vertical
     color: #535353;
     border-top: 1px solid #DDDDDD !important;
     position: relative;
-    left: -10px;
-    width: 200px;
+    left: -50px;
+    width: 240px;
 }
 
 /************************************

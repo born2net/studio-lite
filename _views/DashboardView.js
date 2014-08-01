@@ -16,18 +16,180 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
          **/
         initialize: function () {
             var self = this;
-            BB.comBroker.setService(BB.SERVICES['DASHBOARD_VIEW'],self);
-            self._calcTotalCloudStorage();
+            BB.comBroker.setService(BB.SERVICES['DASHBOARD_VIEW'], self);
+            self._listenResourcesChanged();
+            self._listenRefresh();
+            self._refreshData();
         },
 
         /**
-         Calculate total storage used in cloud
-         @method _calcTotalCloudStorage
+         Listen to user refresh of dashboard
+         @method _listenRefresh
          **/
-        _calcTotalCloudStorage: function(){
+        _listenRefresh: function(){
+            var self = this;
+            $(Elements.DASHBOARD_REFRESH).on('click',function(e){
+                self._refreshData();
+            });
+        },
+
+        /**
+         Refresh dashboard data
+         @method _refreshData
+         **/
+        _refreshData: function(){
+            var self = this;
+            self._renderTotalCloudStorage();
+            self._getRemoteStations();
+        },
+
+        /**
+         Retrieve remote station list and status from remote mediaSERVER
+         @method _getRemoteStations
+         **/
+        _getRemoteStations: function () {
+            var self = this;
+            var userData = pepper.getUserData();
+            var url = 'https://' + userData.domain + '/WebService/getStatus.ashx?user=' + userData.userName + '&password=' + userData.userPass + '&callback=?';
+            $.getJSON(url,
+                function (data) {
+                    var s64 = data['ret'];
+                    var str = $.base64.decode(s64);
+                    var xml = $.parseXML(str);
+                    self._populateCollection(xml);
+                }
+            );
+        },
+
+        /**
+         Create the stations collection with data received from remote mediaSERVER, create corresponding Backbone.models
+         @method _populateCollection
+         @param {Object} i_xmlStations
+         **/
+        _populateCollection: function (i_xmlStations) {
+            var self = this;
+
+            // fresh account
+            if (_.isNull(i_xmlStations)){
+                $(Elements.DASHBOARD_TOTAL_STATION, self.$el).text('00');
+                self._renderStationsDonut(0, 1);
+                return;
+            }
+            var totalStation = 0;
+            var totalStationOnline = 0;
+            var totalStationOffline = 0;
+            $(i_xmlStations).find('Station').each(function (key, value) {
+                totalStation++;
+                var stationID = $(value).attr('id');
+                var stationData = {
+                    status: $(value).attr('status'),
+                    socket: $(value).attr('socket'),
+                    connection: $(value).attr('connection')
+                };
+                if (stationData.connection == '0'){
+                    totalStationOffline++;
+                } else {
+                    totalStationOnline++;
+                }
+                if (totalStation < 10)
+                    totalStation = '0' + '' + totalStation;
+                $(Elements.DASHBOARD_TOTAL_STATION, self.$el).text(totalStation);
+                self._renderStationsDonut(totalStationOnline, totalStationOffline);
+            });
+        },
+
+        /**
+         Listen to resource removed or added
+         @method _listenResourcesChanged
+         **/
+        _listenResourcesChanged: function () {
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS.REMOVED_RESOURCE, function (e) {
+                self._renderTotalCloudStorage();
+            });
+
+            BB.comBroker.listen(BB.EVENTS.ADDED_RESOURCE, function (e) {
+                self._renderTotalCloudStorage();
+            });
+        },
+
+        /**
+         Render the station donut chart
+         @method _renderStationsDonut
+         **/
+        _renderStationsDonut: function (i_totalStationOnline, i_totalStationOffline) {
+            var self = this;
+
+            $(Elements.DONUT_STATIONS).highcharts({
+                chart: {
+                    plotBackgroundColor: '#F4F4F4',
+                    renderTo: 'container',
+                    type: 'pie',
+                    margin: [0, 0, 0, 0],
+                    spacingTop: 0,
+                    spacingBottom: 0,
+                    spacingLeft: 0,
+                    spacingRight: 0
+                },
+                credits: {
+                    enabled: false
+                },
+                title: {
+                    text: '',
+                    style: {
+                        display: 'none'
+                    }
+                },
+                subtitle: {
+                    text: '',
+                    style: {
+                        display: 'none'
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: 'Total percent market share'
+                    }
+                },
+                plotOptions: {
+                    pie: {
+                        shadow: false,
+                        colors: ['green', 'red'],
+                        size: '50%'
+                    }
+                },
+                tooltip: {
+                    formatter: function () {
+                        return '<b>' + this.point.name;
+                    }
+                },
+                series: [
+                    {
+                        name: 'Browsers',
+                        data: [
+                            ["ONLINE", i_totalStationOnline],
+                            ["OFFLINE", i_totalStationOffline]
+                        ],
+                        size: '60%',
+                        innerSize: '50%',
+                        showInLegend: false,
+                        dataLabels: {
+                            enabled: false
+                        }
+                    }
+                ]
+            });
+
+        },
+
+        /**
+         Render the total storage used in cloud
+         @method _renderTotalCloudStorage
+         **/
+        _renderTotalCloudStorage: function () {
             var self = this;
             var bytesTotal = 0;
-            var totalCapacity = pepper.getUserData().resellerID == 1 ? '1000' : '10000';
+            var totalCapacity = pepper.getUserData().resellerID == 1 ? 1000 : 10000;
             $(Elements.CLOUD_STORAGE_CAPACITY).text(totalCapacity / 1000 + 'GB');
             var recResources = pepper.getResources();
             $(recResources).each(function (i) {
@@ -35,16 +197,21 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
                     return;
                 bytesTotal += parseInt(recResources[i]['resource_bytes_total']);
             });
-            var mbTotalPercent = BB.lib.parseToFloatDouble((Math.ceil(bytesTotal / 1024) / totalCapacity) * 100);// * _.random(1,5);
+            var mbTotalPercent = BB.lib.parseToFloatDouble((Math.ceil(bytesTotal / 10240) / totalCapacity) * 100);
             var mbTotalPercentRounded = Math.round(mbTotalPercent);
-            if (String(mbTotalPercentRounded).length==1)
+            if (String(mbTotalPercentRounded).length == 1)
                 mbTotalPercentRounded = '0' + mbTotalPercentRounded;
             $(Elements.CLOUD_STORAGE_PERC).text(mbTotalPercentRounded + '%');
 
             $(Elements.CLOUD_STORAGE).highcharts({
                 chart: {
                     type: 'solidgauge',
-                    backgroundColor: 'transparent'
+                    backgroundColor: 'transparent',
+                    margin: [0, 0, 0, 0],
+                    spacingTop: 0,
+                    spacingBottom: 0,
+                    spacingLeft: 0,
+                    spacingRight: 0
                 },
                 title: null,
                 pane: {
@@ -98,12 +265,14 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
                         }
                     }
                 },
-                series: [{
-                    data: [mbTotalPercent],
-                    dataLabels: {
-                        format: '<span style="text-align:center;">12%</span>'
+                series: [
+                    {
+                        data: [mbTotalPercent],
+                        dataLabels: {
+                            format: '<span style="text-align:center;">12%</span>'
+                        }
                     }
-                }]
+                ]
             });
         }
     });
@@ -111,7 +280,6 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
     return DashboardView;
 
 });
-
 
 
 /*

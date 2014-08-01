@@ -379,7 +379,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                     });
 
                     this.m_dashboardPropView = new DashboardView({
-                         el: Elements.DASHBOARD_PROPERTIES
+                        el: Elements.DASHBOARD_PROPERTIES
                     });
 
                     self.m_propertiesView.addView(this.m_dashboardPropView);
@@ -450,7 +450,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 $(Elements.PROP_PANEL_WRAP).height(h);
                 $(Elements.MAIN_PANEL_WRAP).height(h);
                 $(Elements.APP_NAVIGATOR).height(h);
-                $(Elements.RESOURCE_LIB_LIST_WRAP).height(h);
+                $(Elements.RESOURCE_LIB_LIST_WRAP).height(h - 40);
                 $(Elements.PRICING_TABLE_WRAP).height(h - 200);
                 $(Elements.BLOCK_SUBPROPERTIES).height(h - 200);
                 $(Elements.BLOCK_COMMON_PROPERTIES).height(h - 200);

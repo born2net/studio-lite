@@ -7,29 +7,6 @@
  **/
 define(['jquery', 'backbone', 'bootstrapfileinput'], function ($, Backbone, bootstrapfileinput) {
 
-    /**
-     Custom event fired when resource is removing from resources
-     @event REMOVING_RESOURCE
-     @param {This} caller
-     @param {Self} context caller
-     @param {Event} the removed resource_id
-     @static
-     @final
-     **/
-    BB.EVENTS.REMOVING_RESOURCE = 'REMOVING_RESOURCE';
-
-    /**
-     Custom event fired after a resource has been removed from resources
-     @event REMOVED_RESOURCE
-     @param {This} caller
-     @param {Self} context caller
-     @param {Event} the removed resource_id
-     @static
-     @final
-     **/
-    BB.EVENTS.REMOVED_RESOURCE = 'REMOVED_RESOURCE';
-
-
     var ResourceListView = BB.View.extend({
 
         /**

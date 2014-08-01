@@ -1,7 +1,7 @@
 {
   "name": "SignageLite",
   "description": "MediaSignage open source SignageStudio project",
-  "version": "1.0.149",
+  "version": "1.0.150",
   "url": "http://digitalsignage.com",
   "logo": "http://www.digitalsignage.com/_images/logo.png",
   "options": {    

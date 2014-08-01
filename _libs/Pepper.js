@@ -1825,6 +1825,7 @@ Pepper.prototype = {
     uploadResources: function (i_elementID) {
         var self = this;
         var resourceList = self.m_loaderManager.createResources(document.getElementById(i_elementID));
+        BB.comBroker.fire(BB.EVENTS.ADDED_RESOURCE);
         return resourceList;
     },
 

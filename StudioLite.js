@@ -33,7 +33,6 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             BB.lib.forceBrowserCompatability();
             BB.lib.promptOnExit();
 
-
             // internationalization
             require(['LanguageSelectorView', 'Elements'], function (LanguageSelectorView, Elements) {
                 self.m_languageSelectionLogin = new LanguageSelectorView({appendTo: Elements.LANGUAGE_SELECTION_LOGIN});

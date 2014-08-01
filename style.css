@@ -746,6 +746,11 @@ iframe {
     overflow: hidden;
 }
 
+.noXScroll {
+    overflow-x: hidden;
+}
+
+
 .noTopBorder {
     border-top: none;
 }
@@ -1610,6 +1615,8 @@ Software accelerated vertical
 .hrThin {
     margin-top: 8px;
     margin-bottom: 8px;
+    color: #535353;
+    border-top: 1px solid #DDDDDD !important;
 }
 
 /************************************

@@ -378,15 +378,12 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                         duration: 300
                     });
 
-                    this.m_emptyPropView = new DashboardView({
-                         el: Elements.EMPTY_PROPERTIES
+                    this.m_dashboardPropView = new DashboardView({
+                         el: Elements.DASHBOARD_PROPERTIES
                     });
 
-                    //this.m_emptyPropView = new BB.View({
-                    //    el: Elements.EMPTY_PROPERTIES
-                    //});
-                    self.m_propertiesView.addView(this.m_emptyPropView);
-                    self.m_propertiesView.selectView(this.m_emptyPropView);
+                    self.m_propertiesView.addView(this.m_dashboardPropView);
+                    self.m_propertiesView.selectView(this.m_dashboardPropView);
                     BB.comBroker.setService(BB.SERVICES.PROPERTIES_VIEW, this.m_propertiesView);
                 });
             },
@@ -459,6 +456,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 $(Elements.BLOCK_COMMON_PROPERTIES).height(h - 200);
                 $(Elements.CLASS_ADD_NEW_BLOCK_LIST_WRAP).height(h);
                 $(Elements.IFRAME_PREVIEW).height(h - 40);
+                $(Elements.DASHBOARD_PROPERTIES).height(h - 30);
 
 
                 BB.comBroker.fire(BB.EVENTS.APP_SIZED, this, null, {width: self._appWidth, height: self._appHeight});

@@ -912,18 +912,23 @@
 </div>
 <div id="propPanelWrap" class="hidden-xs col-sm-3 col-lg-3">
 <div id="propPanel">
-<div id="dashboardView">
-    <div>
-        <h2 data-localize="dashboard">Dashboard</h2>
-        <hr/>
-        <div id="subscribersPie" class="" style="height: 150px; width: 50; padding: 0; margin: 0"></div>
-        <ul class="alignTextLeft">
-            <li><span data-localize="server"> Server: </span><span id="serverName"></span></li>
-            <li><span data-localize="businessId"> Business id: </span><span id="buisinessID"></span></li>
-            <li><span data-localize="username"> User name: </span><span class="userName"></span></li>
-        </ul>
-        <hr/>
+<div id="dashboardView" class="yScroll noXScroll">
+    <div style="height: 150px">
+        <div id="cloudStorage" style="height: 150px; width: 200px; padding: 0; margin: 0">
+        </div>
+        <H2 id="cloudStoragePerc" style="position: relative; top: -100px; left: 75px">50%</H2>
+        <small style="position: relative; top: -111px; left: 80px">of 10GB</small>
+        <H4 style="position: relative; top: -122px; left: 20px">cloud storage usage</H4>
     </div>
+    <div style="height: 150px">
+        <hr width="200px" class="hrThin" style="position: relative; left: -20px"/>
+    </div>
+    <ul class="alignTextLeft">
+        <li><span data-localize="server"> Server: </span><span id="serverName"></span></li>
+        <li><span data-localize="businessId"> Business id: </span><span id="buisinessID"></span></li>
+        <li><span data-localize="username"> User name: </span><span class="userName"></span></li>
+    </ul>
+    <hr/>
 
 </div>
 <div id="campaignProperties" style="display: none">

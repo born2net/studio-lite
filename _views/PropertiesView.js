@@ -213,7 +213,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
          **/
         resetPropertiesView: function(){
             var self = this;
-            this.selectView(Elements.EMPTY_PROPERTIES);
+            this.selectView(Elements.DASHBOARD_PROPERTIES);
             return self;
         },
 

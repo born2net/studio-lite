@@ -912,15 +912,19 @@
 </div>
 <div id="propPanelWrap" class="hidden-xs col-sm-3 col-lg-3">
 <div id="propPanel">
-<div id="emptyProperties">
-    <h2 data-localize="dashboard">Dashboard</h2>
-    <hr/>
-    <ul class="alignTextLeft">
-        <li><span data-localize="server"> Server: </span><span id="serverName"></span></li>
-        <li><span data-localize="businessId"> Business id: </span><span id="buisinessID"></span></li>
-        <li><span data-localize="username"> User name: </span><span class="userName"></span></li>
-    </ul>
-    <hr/>
+<div id="dashboardView">
+    <div>
+        <h2 data-localize="dashboard">Dashboard</h2>
+        <hr/>
+        <div id="subscribersPie" class="" style="height: 150px; width: 50; padding: 0; margin: 0"></div>
+        <ul class="alignTextLeft">
+            <li><span data-localize="server"> Server: </span><span id="serverName"></span></li>
+            <li><span data-localize="businessId"> Business id: </span><span id="buisinessID"></span></li>
+            <li><span data-localize="username"> User name: </span><span class="userName"></span></li>
+        </ul>
+        <hr/>
+    </div>
+
 </div>
 <div id="campaignProperties" style="display: none">
     <input id="formCampaignName" type="text" data-localize="campaignName" class="form-control"

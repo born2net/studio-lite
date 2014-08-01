@@ -23,6 +23,7 @@ require.config({
         'gradient': '_common/_js/gradient/jquery.gradientPicker',
         'minicolors': '_common/_js/minicolors/jquery.minicolors',
         'colorpicker': '_common/_js/gradient/colorpicker',
+        'highcharts': '_common/_js/highcharts/highcharts',
         'flashdetect': '_common/_js/flashdetect/flashdetect',
         'RC4': '_common/_js/rc4/RC4',
         'RC4V2': '_common/_js/rc4/RC4V2',
@@ -58,6 +59,7 @@ require.config({
         'BlockLabel': '_controllers/_blocks/BlockLabel',
         'BlockMRSS': '_controllers/_blocks/BlockMRSS',
         'StackView': '_views/StackView',
+        'DashboardView': '_views/DashboardView',
         'NavigationView': '_views/NavigationView',
         'WaitView': '_views/WaitView',
         'SceneFaderView': '_views/_scenes/SceneFaderView',
@@ -129,6 +131,10 @@ require.config({
         },
         'sdk': {
             exports: 'sdk'
+        },
+        'highcharts': {
+            deps: ['jquery'],
+            exports: 'highcharts'
         },
         'underscore': {
             exports: '_'

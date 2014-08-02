@@ -22,9 +22,19 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
             self._listenRefresh();
             self._refreshData();
             self._listenSave();
+            self._listenThemeChange();
+        },
 
-            if (BB.CONSTS['THEME'] != 'light')
-                self.m_bgColor = '#535353';
+        /**
+         Listen theme changed
+         @method _listenThemeChange
+         @param {Number} i_playerData
+         **/
+        _listenThemeChange: function(){
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS.THEME_CHANGED, function(){
+                self._refreshData();
+            });
         },
 
         /**
@@ -56,6 +66,8 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
          **/
         _refreshData: function () {
             var self = this;
+            if (BB.CONSTS['THEME'] != 'light')
+                self.m_bgColor = '#535353';
             self._renderTotalCloudStorage();
             self._getRemoteStations();
             self._getServerResponseTime();

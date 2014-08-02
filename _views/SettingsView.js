@@ -17,6 +17,17 @@ define(['jquery', 'backbone'], function ($, Backbone) {
      **/
     BB.EVENTS.STATIONS_POLL_TIME_CHANGED = 'STATIONS_POLL_TIME_CHANGED';
 
+    /**
+     Theme changed
+     @event THEME_CHANGED
+     @param {This} caller
+     @param {Self} context caller
+     @param {Event}
+     @static
+     @final
+     **/
+    BB.EVENTS.THEME_CHANGED = 'THEME_CHANGED';
+
     var SettingsView = Backbone.View.extend({
 
         /**
@@ -106,6 +117,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 } else {
                     BB.lib.loadCss('style_' + BB.CONSTS['THEME'] + '.css');
                 }
+                BB.comBroker.fire(BB.EVENTS.THEME_CHANGED);
             });
         },
 

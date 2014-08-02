@@ -31,9 +31,9 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
          Listen to save
          @method _listenSave
          **/
-        _listenSave: function(){
+        _listenSave: function () {
             var self = this;
-            pepper.listen(Pepper.SAVE_TO_SERVER, function(){
+            pepper.listen(Pepper.SAVE_TO_SERVER, function () {
                 self.m_xdate = BB.comBroker.getService('XDATE');
                 $(Elements.LAST_SAVE).text('SAVED ON ' + self.m_xdate.setTime(new Date()).toString('HH:mm'));
             });
@@ -43,9 +43,9 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
          Listen to user refresh of dashboard
          @method _listenRefresh
          **/
-        _listenRefresh: function(){
+        _listenRefresh: function () {
             var self = this;
-            $(Elements.DASHBOARD_REFRESH).on('click',function(e){
+            $(Elements.DASHBOARD_REFRESH).on('click', function (e) {
                 self._refreshData();
             });
         },
@@ -54,7 +54,7 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
          Refresh dashboard data
          @method _refreshData
          **/
-        _refreshData: function(){
+        _refreshData: function () {
             var self = this;
             self._renderTotalCloudStorage();
             self._getRemoteStations();
@@ -65,7 +65,7 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
          Get server response time
          @method _getServerResponseTime
          **/
-        _getServerResponseTime: function(){
+        _getServerResponseTime: function () {
             var self = this;
 
             var url = 'https://' + pepper.getUserData().domain + '/WebService/sendCommand.ashx?';
@@ -74,18 +74,18 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
                 //type: "GET", //with response body
                 type: "HEAD", //only headers
                 url: url,
-                success: function(){
+                success: function () {
                     var receiveDate = (new Date()).getTime();
                     var responseTimeMs = receiveDate - sendDate;
                     var resColor = 'green';
-                    var rest = 1000;
-                    if (responseTimeMs>1000)
-                        responseTimeMs = 1000;
-                    if (responseTimeMs>200)
+                    var rest = 2000;
+                    if (responseTimeMs > 2000)
+                        responseTimeMs = rest;
+                    if (responseTimeMs > 600)
                         resColor = 'yellow';
-                    if (responseTimeMs>500)
+                    if (responseTimeMs > 1000)
                         resColor = 'orange';
-                    if (responseTimeMs>900)
+                    if (responseTimeMs > 1600)
                         resColor = 'red';
                     rest = rest - responseTimeMs;
 
@@ -100,12 +100,12 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
                             spacingLeft: 0,
                             spacingRight: 0
                         },
-                        colors: ['#BABABA',resColor],
+                        colors: ['#BABABA', resColor],
                         credits: {
                             enabled: false
                         },
                         tooltip: {
-                          enabled: false
+                            enabled: false
                         },
                         title: {
                             text: '',
@@ -130,13 +130,16 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
                                 stacking: 'normal'
                             }
                         },
-                        series: [{
-                            data: [rest],
-                            pointWidth: 20
-                        }, {
-                            data: [responseTimeMs],
-                            pointWidth: 20
-                        }]
+                        series: [
+                            {
+                                data: [rest],
+                                pointWidth: 20
+                            },
+                            {
+                                data: [responseTimeMs],
+                                pointWidth: 20
+                            }
+                        ]
                     });
 
                 }
@@ -172,7 +175,7 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
             var self = this;
 
             // fresh account
-            if (_.isNull(i_xmlStations)){
+            if (_.isNull(i_xmlStations)) {
                 $(Elements.DASHBOARD_TOTAL_STATION, self.$el).text('00');
                 self._renderStationsDonut(0, 1);
                 return;
@@ -188,7 +191,7 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
                     socket: $(value).attr('socket'),
                     connection: $(value).attr('connection')
                 };
-                if (stationData.connection == '0'){
+                if (stationData.connection == '0') {
                     totalStationOffline++;
                 } else {
                     totalStationOnline++;

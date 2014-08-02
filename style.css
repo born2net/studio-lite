@@ -507,6 +507,26 @@ iframe {
     /* opacity: 0.01; */
 }
 
+#dashboardStationTotal {
+    float: left;
+    border-right: solid #DDDDDD 1px;
+    padding-right: 15px;
+}
+
+#dashboardTotalStation {
+    font-size: 60px;
+    position: relative;
+    top: 8px;
+}
+
+#donutStations {
+    float: left;
+    width: 100px;
+    height: 100px;
+    padding: 0;
+    margin: 0;
+}
+
 #storylineCollapsible {
     padding-bottom: 0;
     margin-bottom: 0;
@@ -595,6 +615,10 @@ iframe {
 
 .shownElement {
     display: block;
+}
+
+.dashboardBullets {
+    font-size: 15px;
 }
 
 /************************************

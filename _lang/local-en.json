@@ -120,6 +120,7 @@
     "rssNewsSource": "RSS news source",
     "rssRefreash": "RSS refresh timer (minutes)",
     "refresh": "reload data",
+    "serverResponse": "server response time",
     "rsscroll": "RSS scroll direction",
     "horizontalMode": "Horizontal mode",
     "verticalMode": "Vertical mode",

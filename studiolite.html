@@ -913,9 +913,9 @@
 <div id="propPanelWrap" class="hidden-xs col-sm-3 col-lg-3">
 <div id="propPanel">
 <div id="dashboardView" class="yScroll noXScroll">
-    <button id="dashboardRefresh" style="float: right; margin-right: 15px" class="btn btn-default" title="refresh" data-localize="empty"
-            data-localize-tooltip="refresh" >
-        <span class="glyphicon glyphicon glyphicon-refresh"></span></button>
+    <button id="dashboardRefresh" style="float: right; margin-right: 15px" class="btn btn-default" title="refresh" data-localize="empty" data-localize-tooltip="refresh" >
+        <span class="glyphicon glyphicon glyphicon-refresh"></span>
+    </button>
     <div style="height: 150px; clear: both">
         <div id="cloudStorage">
         </div>
@@ -925,19 +925,29 @@
     <div style="height: 150px">
         <hr class="hrThinDash"/>
         <h4>remote SignagePlayers</h4>
-        <div style="float: left; border-right: solid #DDDDDD 1px; padding-right: 15px">
-            <span id="dashboardTotalStation" style="font-size: 60px; position: relative; top: 8px"></span>
+        <div id="dashboardStationTotal">
+            <span id="dashboardTotalStation"></span>
         </div>
-        <div id="donutStations" style="float: left; width: 100px; height: 100px; padding: 0; margin: 0">
+        <div id="donutStations">
         </div>
     </div>
-    <hr class="hrThinDash"/>
-    <ul class="alignTextLeft">
-        <li><span data-localize="server"> Server: </span><span id="serverName"></span></li>
-        <li><span data-localize="businessId"> Business id: </span><span id="buisinessID"></span></li>
-        <li><span data-localize="username"> User name: </span><span class="userName"></span></li>
-    </ul>
-    <hr/>
+    <div style="height: 70px">
+        <hr class="hrThinDash"/>
+        <h1 id="lastSave">SAVED: 00:00:00</h1>
+        <hr class="hrThinDash"/>
+    </div>
+    <div style="height: 50px">
+        <i style="font-size: 17px" class="fa fa-dashboard"></i>&nbsp;<h4 style="display: inline-block" data-localize="serverResponse"> server response time</h4>
+        <div style="height: 50px" id="serverResponseTime">
+        </div>
+    </div>
+    <div style="height: 150px; position: relative; top: 70px">
+        <hr class="hrThinDash" style="font-size: 30px"/>
+            <span class="dashboardBullets" data-localize="server"> Server: </span>
+            <span class="dashboardBullets" id="serverName"></span><br/>
+            <span class="dashboardBullets"  data-localize="businessId"> Business id: </span><span class="dashboardBullets" id="buisinessID"></span><br/>
+            <span class="dashboardBullets" data-localize="username"> User name: </span><span class="userName dashboardBullets"></span><br/>
+    </div>
 
 </div>
 <div id="campaignProperties" style="display: none">

@@ -20,6 +20,19 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
             self._listenResourcesChanged();
             self._listenRefresh();
             self._refreshData();
+            self._listenSave();
+        },
+
+        /**
+         Listen to save
+         @method _listenSave
+         **/
+        _listenSave: function(){
+            var self = this;
+            pepper.listen(Pepper.SAVE_TO_SERVER, function(){
+                self.m_xdate = BB.comBroker.getService('XDATE');
+                $(Elements.LAST_SAVE).text('SAVED ON ' + self.m_xdate.setTime(new Date()).toString('HH:mm'));
+            });
         },
 
         /**
@@ -41,6 +54,91 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
             var self = this;
             self._renderTotalCloudStorage();
             self._getRemoteStations();
+            self._getServerResponseTime();
+        },
+
+        /**
+         Get server response time
+         @method _getServerResponseTime
+         **/
+        _getServerResponseTime: function(){
+            var self = this;
+
+            var url = 'https://' + pepper.getUserData().domain + '/WebService/sendCommand.ashx?';
+            var sendDate = (new Date()).getTime();
+            $.ajax({
+                //type: "GET", //with response body
+                type: "HEAD", //only headers
+                url: url,
+                success: function(){
+                    var receiveDate = (new Date()).getTime();
+                    var responseTimeMs = receiveDate - sendDate;
+                    var resColor = 'green';
+                    var rest = 1000;
+                    if (responseTimeMs>1000)
+                        responseTimeMs = 1000;
+                    if (responseTimeMs>200)
+                        resColor = 'yellow';
+                    if (responseTimeMs>500)
+                        resColor = 'orange';
+                    if (responseTimeMs>900)
+                        resColor = 'red';
+                    rest = rest - responseTimeMs;
+
+                    $(Elements.SERVER_RESPONSETIME).highcharts({
+                        chart: {
+                            type: 'bar',
+                            plotBackgroundColor: '#F4F4F4',
+                            renderTo: 'container',
+                            margin: [0, 0, 0, 0],
+                            spacingTop: 0,
+                            spacingBottom: 0,
+                            spacingLeft: 0,
+                            spacingRight: 0
+                        },
+                        colors: ['#BABABA',resColor],
+                        credits: {
+                            enabled: false
+                        },
+                        tooltip: {
+                          enabled: false
+                        },
+                        title: {
+                            text: '',
+                            style: {
+                                display: 'none'
+                            }
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: ''
+                            }
+                        },
+                        legend: {
+                            enabled: false
+                        },
+                        plotOptions: {
+                            column: {
+                                colorByPoint: true
+                            },
+                            series: {
+                                stacking: 'normal'
+                            }
+                        },
+                        series: [{
+                            data: [rest],
+                            pointWidth: 20
+                        }, {
+                            data: [responseTimeMs],
+                            pointWidth: 20
+                        }]
+                    });
+
+                }
+            });
+
+
         },
 
         /**
@@ -283,20 +381,7 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
 
 
 /*
- var url = 'https://' + pepper.getUserData().domain + '/WebService/sendCommand.ashx?i_user=' + pepper.getUserData().userName + '&i_password=' + pepper.getUserData().userPass + '&i_stationId=' + 0 + '&i_command=' + 'captureScreen2' + '&i_param1=' + 'tt' + '&i_param2=' + '0' + '&callback=?';
- var sendDate = (new Date()).getTime();
- $.ajax({
- //type: "GET", //with response body
- type: "HEAD", //only headers
- url: url,
- success: function(){
 
- var receiveDate = (new Date()).getTime();
-
- var responseTimeMs = receiveDate - sendDate;
-
- }
- });
 
 
  $('#subscribersPie').highcharts({

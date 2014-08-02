@@ -44,6 +44,15 @@ Pepper.SCENE_CREATED = 'SCENE_CREATED';
  **/
  Pepper.REMOVE_TIMELINE_CHANNEL_BLOCK = 'REMOVE_TIMELINE_CHANNEL_BLOCK';
 
+/**
+ Custom event fired when saving to server
+ @event Pepper.SAVE_TO_SERVER
+ @param {This} caller
+ @param {Event}
+ @static
+ @final
+ **/
+Pepper.SAVE_TO_SERVER = 'SAVE_TO_SERVER';
 
 
 /**
@@ -218,6 +227,7 @@ Pepper.prototype = {
     save: function (i_callback) {
         var self = this;
         self.m_loaderManager.save(i_callback);
+        pepper.fire(Pepper.SAVE_TO_SERVER);
     },
 
     /**

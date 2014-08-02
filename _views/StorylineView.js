@@ -70,7 +70,6 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             self.m_render();
         },
 
-
         /**
          Listen to reset of when switching to different campaign so we forget current state
          @method _listenReset

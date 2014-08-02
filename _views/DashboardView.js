@@ -17,10 +17,14 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
         initialize: function () {
             var self = this;
             BB.comBroker.setService(BB.SERVICES['DASHBOARD_VIEW'], self);
+            self.m_bgColor = '#F4F4F4';
             self._listenResourcesChanged();
             self._listenRefresh();
             self._refreshData();
             self._listenSave();
+
+            if (BB.CONSTS['THEME'] != 'light')
+                self.m_bgColor = '#535353';
         },
 
         /**
@@ -88,7 +92,7 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
                     $(Elements.SERVER_RESPONSETIME).highcharts({
                         chart: {
                             type: 'bar',
-                            plotBackgroundColor: '#F4F4F4',
+                            plotBackgroundColor: self.m_bgColor,
                             renderTo: 'container',
                             margin: [0, 0, 0, 0],
                             spacingTop: 0,
@@ -220,7 +224,7 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
 
             $(Elements.DONUT_STATIONS).highcharts({
                 chart: {
-                    plotBackgroundColor: '#F4F4F4',
+                    plotBackgroundColor: self.m_bgColor,
                     renderTo: 'container',
                     type: 'pie',
                     margin: [0, 0, 0, 0],

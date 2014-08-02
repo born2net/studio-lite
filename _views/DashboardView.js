@@ -187,7 +187,7 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
             var self = this;
 
             // fresh account
-            if (_.isNull(i_xmlStations)) {
+            if (_.isNull(i_xmlStations) || $(i_xmlStations).find('Station').length == 0) {
                 $(Elements.DASHBOARD_TOTAL_STATION, self.$el).text('00');
                 self._renderStationsDonut(0, 1);
                 return;

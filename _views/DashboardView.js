@@ -310,11 +310,12 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
             $(Elements.CLOUD_STORAGE_CAPACITY).text(totalCapacity / 1000 + 'GB');
             var recResources = pepper.getResources();
             $(recResources).each(function (i) {
-                if (recResources[i]['change_type'] == 3)
-                    return;
-                bytesTotal += parseInt(recResources[i]['resource_bytes_total']);
+                if (recResources[i]['change_type'] != 3)
+                    bytesTotal = bytesTotal + parseInt(recResources[i]['resource_bytes_total']);
+                log(bytesTotal);
             });
-            var mbTotalPercent = BB.lib.parseToFloatDouble((Math.ceil(bytesTotal / 10240) / totalCapacity) * 100);
+            log(bytesTotal);
+            var mbTotalPercent = BB.lib.parseToFloatDouble((Math.ceil(bytesTotal / 1000000) / totalCapacity) * 100);
             var mbTotalPercentRounded = Math.round(mbTotalPercent);
             if (String(mbTotalPercentRounded).length == 1)
                 mbTotalPercentRounded = '0' + mbTotalPercentRounded;

@@ -270,6 +270,27 @@ Pepper.prototype = {
     },
 
     /**
+     Push a command to remote station
+     @method getLocalization
+     @param {String} i_command
+     @param {Number} i_stationId
+     @param {Function} i_callBack
+     **/
+    getLocalization: function (i_lang, i_callBack) {
+
+        $.getJSON('https://galaxy.signage.me/WebService/getLocalList.ashx?callback=?', function(data){
+            data = _.invert(data);
+            if (i_lang=='zh')
+                i_lang = 'zh-CN';
+            var local = data[i_lang];
+            var url = 'https://galaxy.signage.me/WebService/getResourceBundlesJson.ashx?local=' + local + '&bundleList=studiolite&callback=?';
+            $.getJSON(url, function(data){
+                i_callBack(data);
+            });
+        });
+    },
+
+    /**
      Push an event to remote station
      @method sendEvent
      @param {String} i_eventName

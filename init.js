@@ -42,8 +42,6 @@ require.config({
         'ScreenTemplateFactory': '_controllers/ScreenTemplateFactory',
         'BlockFactory': '_controllers/BlockFactory',
         'AppAuth': '_controllers/AppAuth',
-        'AjaxRPC': '_controllers/AjaxRPC',
-        'AjaxJsonGetter': '_controllers/AjaxJsonGetter',
         'Timeline': '_controllers/Timeline',
         'Channel': '_controllers/Channel',
         'Block': '_controllers/_blocks/Block',
@@ -107,6 +105,8 @@ require.config({
         'Pepper': '_libs/Pepper',
         'PepperHelper': '_libs/PepperHelper',
         'Fonts': '_libs/Fonts'
+        //'AjaxRPC': '_controllers/AjaxRPC',
+        //'AjaxJsonGetter': '_controllers/AjaxJsonGetter',
     },
 
     shim: {

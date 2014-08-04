@@ -33,12 +33,11 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             BB.lib.forceBrowserCompatability();
             BB.lib.promptOnExit();
 
-            // internationalization
+
+
+            // localization
             require(['LanguageSelectorView', 'Elements'], function (LanguageSelectorView, Elements) {
-                self.m_languageSelectionLogin = new LanguageSelectorView({appendTo: Elements.LANGUAGE_SELECTION_LOGIN});
-                var lang = self.m_languageSelectionLogin.getLanguage();
-                if (lang)
-                    self.m_languageSelectionLogin.setLanguage(lang);
+                new LanguageSelectorView({appendTo: Elements.LANGUAGE_SELECTION_LOGIN});
             });
 
             // theme

@@ -139,7 +139,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                         }
                     });
                     modal.modal("show");
-                    self.m_languageSelectionPrompt = new LanguageSelectorView({appendTo: '#' + uniqueID});
+                    new LanguageSelectorView({appendTo: '#' + uniqueID});
                 });
             });
         },

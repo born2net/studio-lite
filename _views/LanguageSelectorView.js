@@ -22,6 +22,7 @@ define(['jquery', 'backbone', 'simplestorage', 'bootbox', 'localizer'], function
             var currID = self.$el.attr('id');
             self.$el.attr('id', _.uniqueId(currID));
             self._render();
+            self._loadLang();
         },
 
         /**
@@ -44,6 +45,17 @@ define(['jquery', 'backbone', 'simplestorage', 'bootbox', 'localizer'], function
         },
 
         /**
+         Load language
+         @method _loadLang
+         **/
+        _loadLang: function(){
+            var self = this;
+            var lang = self.getLanguage();
+            if (lang)
+                self.setLanguage(lang);
+        },
+
+        /**
          Set specified language and reload the application to apply selection
          @method setLanguage
          @param {String} i_language
@@ -56,6 +68,12 @@ define(['jquery', 'backbone', 'simplestorage', 'bootbox', 'localizer'], function
             $("[data-localize]").localize("local", opts);
         },
 
+        /**
+         Clean up non compliant language characters
+         @method _cleanTags
+         @param {String} i_language
+         @return {String} language code
+         **/
         _cleanTags: function(i_language){
             if (_.isUndefined(i_language))
                 return 'en';
@@ -69,8 +87,6 @@ define(['jquery', 'backbone', 'simplestorage', 'bootbox', 'localizer'], function
             } catch (e){
                 return 'en';
             }
-
-
         },
 
         /**

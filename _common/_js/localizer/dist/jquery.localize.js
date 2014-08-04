@@ -54,34 +54,52 @@
             }
         };
         jsonCall = function(file, pkg, lang, level) {
-            var ajaxOptions, errorFunc, successFunc;
-            if (options.pathPrefix != null) {
-                file = "" + options.pathPrefix + "/" + file;
-            }
-            successFunc = function(d) {
-                $.extend(intermediateLangData, d);
-                notifyDelegateLanguageLoaded(intermediateLangData);
-                return loadLanguage(pkg, lang, level + 1);
-            };
-            errorFunc = function() {
-                if (options.fallback && options.fallback !== lang) {
-                    return loadLanguage(pkg, options.fallback);
+
+            // in distribution mode load through web service
+            if (window.location.href.indexOf('dist') > -1) {
+                pepper.getLocalization(lang, function(e){
+                    var d = e['studiolite'];
+                    $.extend(intermediateLangData, d);
+                    notifyDelegateLanguageLoaded(intermediateLangData);
+                    return loadLanguage(pkg, lang, level + 1);
+                });
+            } else {
+
+                // in development mode load through local file (english only supported)
+                lang = 'en';
+                file = 'local-en.json';
+                var ajaxOptions, errorFunc, successFunc;
+                if (options.pathPrefix != null) {
+                    file = "" + options.pathPrefix + "/" + file;
                 }
-            };
-            ajaxOptions = {
-                url: file,
-                dataType: "json",
-                async: false,
-                timeout: options.timeout != null ? options.timeout : 500,
-                success: successFunc,
-                error: errorFunc
-            };
-            if (window.location.protocol === "file:") {
-                ajaxOptions.error = function(xhr) {
-                    return successFunc($.parseJSON(xhr.responseText));
+                successFunc = function(d) {
+                    $.extend(intermediateLangData, d);
+                    notifyDelegateLanguageLoaded(intermediateLangData);
+                    return loadLanguage(pkg, lang, level + 1);
                 };
+                errorFunc = function() {
+                    if (options.fallback && options.fallback !== lang) {
+                        return loadLanguage(pkg, options.fallback);
+                    }
+                };
+                ajaxOptions = {
+                    url: file,
+                    dataType: "json",
+                    async: false,
+                    timeout: options.timeout != null ? options.timeout : 500,
+                    success: successFunc,
+                    error: errorFunc
+                };
+                if (window.location.protocol === "file:") {
+                    ajaxOptions.error = function(xhr) {
+                        return successFunc($.parseJSON(xhr.responseText));
+                    };
+                }
+                return $.ajax(ajaxOptions);
             }
-            return $.ajax(ajaxOptions);
+
+
+
         };
         notifyDelegateLanguageLoaded = function(data) {
             if (options.callback != null) {

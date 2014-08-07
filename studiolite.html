@@ -479,13 +479,28 @@
 </div>
 <div id="scenesPanel" class="xyScroll" style="display: none">
     <div id="sceneSelector" class="page center">
-        <h3>Scene selector</h3>
-        <button id="buttNext">scene</button>
+        <div class="yScroll">
+            <div id="sceneSelectionButtons" class="btn-group">
+                <button id="newScene" type="button" class="btn btn-default">
+                    <i style="font-size: 1em" class="fa fa-magic"></i>
+                    <span data-localize="newScene">new scene</span>
+                </button>
+                <button id="duplicateScene" type="button" class="btn btn-default"><i style="font-size: 1em" class="fa fa-trash-o"></i>
+                    <span data-localize="duplicateScene">duplicate scene</span>
+                </button>
+                <button id="removeSelectedScene" type="button" class="btn btn-default"><i style="font-size: 1em" class="fa fa-trash-o"></i>
+                    <span data-localize="removeScene">remove scene</span>
+                </button>
+            </div>
+            <div id="sceneSelectorList" class="appList list-group"></div>
+        </div>
+
+
     </div>
     <div id="sceneStackFaderView" style="display: none" class="page right">
         <div id="scenePanelWrap">
-            <button id="buttBack" type="button" class="openPropsButton btn btn-default btn-sm"><span class="glyphicon glyphicon-chevron-left"></span></button>
             <div id="sceneToolbar" style="opacity: 0.01; position: fixed; z-index: 100 ">
+                <button id="backSceneSelection" type="button" class="openPropsButton btn btn-default btn-sm"><span class="glyphicon glyphicon-chevron-left"></span></button>
                 <div id="sceneSelectionDropdown" class="input-group">
                     <div class="input-group-btn">
                         <button type="button" class="btn btn-default input-sm dropdown-toggle" data-toggle="dropdown">
@@ -959,6 +974,10 @@
 <div id="campaignProperties" style="display: none">
     <input id="formCampaignName" type="text" data-localize="campaignName" class="form-control"
            placeholder="Campaign name">
+</div>
+<div id="sceneSelectionProperties" style="display: none">
+    <input id="formSceneName" type="text" data-localize="sceneName" class="form-control"
+           placeholder="Scene name">
 </div>
 <div id="timelineProperties" style="display: none">
     <label>Length: </label>

@@ -55,6 +55,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_canvasScale = 1;
             self.SCALE_FACTOR = 1.2;
 
+            self._listenSceneSelection();
+            self._listenGoBackSceneSelection();
             self._initializeBlockFactory();
             self._listenAddBlockWizard();
             self._listenSceneToolbarSelected();
@@ -75,8 +77,28 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._listenAppResized();
             self._listenStackViewSelected();
             self._delegateSceneBlockModified();
+        },
 
-            $('#buttBack').on('click',function(){
+        /**
+         Listen to when a new scene is selected via Slider View
+         @method _listenSceneSelection
+         **/
+        _listenSceneSelection: function(){
+            var self = this;
+            self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
+                if (e == self) {
+                    log('load new scene');
+                }
+            });
+        },
+
+        /**
+         Listen go back to new scene selection
+         @method _listenGoBackSceneSelection
+         **/
+        _listenGoBackSceneSelection: function(){
+            var self = this;
+            $(Elements.BACK_SCENE_SELECTION).on('click',function(){
                 self.options.stackView.slideToPage(Elements.SCENE_SELECTOR, 'left');
             });
         },

@@ -314,7 +314,6 @@ iframe {
 }
 
 #campaignSelectionButtons {
-    margin-top: 10px;
     margin-bottom: 5px;
 }
 
@@ -480,6 +479,10 @@ iframe {
     margin-right: auto;
 }
 
+#sceneSelectionButtons {
+    padding-bottom: 5px;
+}
+
 #scenePanelWrap {
     width: 100%;
     margin-left: auto;
@@ -488,7 +491,8 @@ iframe {
 
 #sceneToolbar {
     padding-bottom: 20px;
-    padding-top: 20px;
+    padding-top: 10px;
+    position: relative;
 }
 
 #sceneToolbar .input-group {

@@ -192,8 +192,8 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
 
                 case BB.CONSTS.PLACEMENT_SCENE:
                 {
-                    self.m_sceneFaderView = BB.comBroker.getService(BB.SERVICES['SCENE_FADER_VIEW']);
-                    self.m_sceneFaderView.selectView(Elements.SCENE_PANEL_WRAP);
+                    self.m_sceneSliderView = BB.comBroker.getService(BB.SERVICES['SCENE_SLIDER_VIEW']);
+                    self.m_sceneSliderView.slideToPage(Elements.SCENE_SLIDER_VIEW, 'left');
                     break;
                 }
             }

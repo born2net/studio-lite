@@ -222,7 +222,7 @@ iframe {
     /*-webkit-box-shadow: 2px 0px 5px 0px rgba(50, 50, 50, 0.75);
     -moz-box-shadow: 2px 0px 5px 0px rgba(50, 50, 50, 0.75);
     box-shadow: 2px 0px 5px 0px rgba(50, 50, 50, 0.75);*/
-    z-index: 10;
+    z-index: 999;
 }
 
 #appNavigator li {
@@ -240,6 +240,8 @@ iframe {
 
 #propPanelWrap {
     background-color: #f5f5f5;
+    z-index: 999;
+    border-left: 2px #bdbdbd solid;
 }
 
 #waitScreenMainPanel span {

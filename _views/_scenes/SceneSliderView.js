@@ -1,24 +1,24 @@
 /**
  The Scene Fader view
- @class SceneFaderView
+ @class SceneSliderView
  @constructor
- @return {object} instantiated SceneFaderView
+ @return {object} instantiated SceneSliderView
  **/
 define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
 
-    BB.SERVICES['SCENE_FADER_VIEW'] = 'SceneFaderView';
+    BB.SERVICES.SCENE_SLIDER_VIEW = 'SceneSliderView';
 
-    var SceneFaderView = BB.StackView.Fader.extend({
+    var SceneSliderView = BB.StackView.Slider.extend({
 
         /**
          Constructor
          @method initialize
          **/
         initialize: function () {
-            BB.comBroker.setService(BB.SERVICES['SCENE_FADER_VIEW'], this);
+            BB.comBroker.setService(BB.SERVICES.SCENE_SLIDER_VIEW, this);
             BB.StackView.ViewPort.prototype.initialize.call(this);
         }
     });
 
-    return SceneFaderView;
+    return SceneSliderView;
 });

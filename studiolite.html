@@ -268,12 +268,13 @@
                            href="#screenSelectorContainerCollapse"> <span
                                 class="glyphicon glyphicon-chevron-down"></span> <span
                                 id="timelinesTotalLength"> 00:00:00</span></a>
-                        <button style="margin-left: 30px" id="backToCampaigns" type="button"
-                                title="back to campaigns" data-localize="empty"
+                        <button id="backToCampaigns" type="button"
+                                style="margin-left: 30px"
+                                title="add new timeline" data-localize="empty"
                                 data-localize-tooltip="backToCampaignsTooltip"
-                                class="btn btn-default btn-sm">
-                            <i class="fa fa-tasks "></i>
-                        </button>
+                                class="btn btn-default btn-sm"><span
+                                class="glyphicon glyphicon-chevron-left"></span></button>
+
                         <button id="addNewTimelineButton" type="button"
                                 title="add new timeline" data-localize="timelineLength"
                                 data-localize-tooltip="addNewTimelineButtonToolTip"
@@ -477,8 +478,13 @@
     </ul>
 </div>
 <div id="scenesPanel" class="xyScroll" style="display: none">
-    <div id="sceneStackFaderView">
+    <div id="sceneSelector" class="page center">
+        <h3>Scene selector</h3>
+        <button id="buttNext">scene</button>
+    </div>
+    <div id="sceneStackFaderView" style="display: none" class="page right">
         <div id="scenePanelWrap">
+            <button id="buttBack" type="button" class="openPropsButton btn btn-default btn-sm"><span class="glyphicon glyphicon-chevron-left"></span></button>
             <div id="sceneToolbar" style="opacity: 0.01; position: fixed; z-index: 100 ">
                 <div id="sceneSelectionDropdown" class="input-group">
                     <div class="input-group-btn">
@@ -567,8 +573,8 @@
                 </ul>
             </div>
         </div>
-        <div id="sceneAddNewBlock" style="display: none">
-        </div>
+    </div>
+    <div id="sceneAddNewBlock" style="display: none" class="page right">
     </div>
 </div>
 <div id="settingsPanel" style="display: none">
@@ -1467,8 +1473,7 @@
 
 <!-- Add Block Template -->
 <div id="addBlockTemplate" style="display: none">
-    <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
-            class="glyphicon glyphicon-chevron-left"></span></button>
+    <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span class="glyphicon glyphicon-chevron-left"></span></button>
     <h3 data-localize="contentToAdd">Select new content to add</h3>
 
     <div class="addNewBlockListWrap yScroll">

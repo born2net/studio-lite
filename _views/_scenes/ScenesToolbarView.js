@@ -24,14 +24,14 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         initialize: function () {
             var self = this;
             BB.comBroker.setService(BB.SERVICES['SCENE_TOOLBAR_VIEW'], self);
-            self.m_stackFaderView = BB.comBroker.getService(BB.SERVICES['SCENE_FADER_VIEW']);
+            self.m_stackFaderView = BB.comBroker.getService(BB.SERVICES['SCENE_SLIDER_VIEW']);
             self.m_selectedSceneID = undefined;
             self._render();
             self._listenSceneSelection();
             self._listenSceneItemSelection();
             self._listenSceneDimensionsChanged();
             self._listenSceneRenamed();
-            self._listenAddNewScene();
+            self._listenAddNewItem();
             self._listenAddedNewScene();
             self._listenSceneRemoved();
             self._listenRemoves();
@@ -205,8 +205,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         /**
-         Listen to user selection of existing scene
-         @method _listenAddNewScene
+         Listen to removal of scene blocks
+         @method _listenRemoves
          **/
         _listenRemoves: function () {
             var self = this;
@@ -228,9 +228,9 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
         /**
          Listen to user selection of existing scene
-         @method _listenAddNewScene
+         @method _listenAddNewItem
          **/
-        _listenAddNewScene: function () {
+        _listenAddNewItem: function () {
             var self = this;
             $(Elements.CLASS_SCENE_ADD_NEW, self.el).on('click', function (e) {
                 switch ($(e.target).attr('name')) {
@@ -243,7 +243,9 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                             });
                             return;
                         }
-                        self.m_stackFaderView.selectView(Elements.SCENE_ADD_NEW_BLOCK);
+                        self.options.stackView.slideToPage(Elements.SCENE_ADD_NEW_BLOCK, 'right');
+                        //self.m_stackFaderView.slideToPage('#sceneAddNewBlock', 'right');
+                        //self.m_stackFaderView.selectView(Elements.SCENE_ADD_NEW_BLOCK);
                         break;
                     }
                     case 'addScene':

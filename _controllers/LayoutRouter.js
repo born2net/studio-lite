@@ -5,8 +5,8 @@
  @constructor
  @return {Object} instantiated AppRouter
  **/
-define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEntryFaderView', 'LoginView', 'AppContentFaderView', 'WaitView', 'LivePreView', 'bootbox', 'CampaignManagerView', 'ResourcesLoaderView', 'ResourcesLoaderView', 'StationsViewLoader', 'SettingsView', 'ProStudioView', 'HelpView', 'InstallView', 'LogoutView', 'CampaignSliderStackView', 'ScreenLayoutSelectorView', 'X2JS', 'XDate', 'LanguageSelectorView', 'ScenesLoaderView', 'DashboardView'],
-    function (_, $, Backbone, AppAuth, NavigationView, AppEntryFaderView, LoginView, AppContentFaderView, WaitView, LivePreView, Bootbox, CampaignManagerView, ResourcesLoaderView, ResourcesLoaderView, StationsViewLoader, SettingsView, ProStudioView, HelpView, InstallView, LogoutView, CampaignSliderStackView, ScreenLayoutSelectorView, X2JS, XDate, LanguageSelectorView, ScenesLoaderView, DashboardView) {
+define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEntryFaderView', 'LoginView', 'AppContentFaderView', 'WaitView', 'LivePreView', 'bootbox', 'CampaignManagerView', 'ResourcesLoaderView', 'ResourcesLoaderView', 'StationsViewLoader', 'SettingsView', 'ProStudioView', 'HelpView', 'InstallView', 'LogoutView', 'CampaignSliderStackView', 'ScreenLayoutSelectorView', 'X2JS', 'XDate', 'LanguageSelectorView', 'SceneLoaderView', 'DashboardView'],
+    function (_, $, Backbone, AppAuth, NavigationView, AppEntryFaderView, LoginView, AppContentFaderView, WaitView, LivePreView, Bootbox, CampaignManagerView, ResourcesLoaderView, ResourcesLoaderView, StationsViewLoader, SettingsView, ProStudioView, HelpView, InstallView, LogoutView, CampaignSliderStackView, ScreenLayoutSelectorView, X2JS, XDate, LanguageSelectorView, SceneLoaderView, DashboardView) {
 
         BB.SERVICES.LAYOUT_ROUTER = 'LayoutRouter';
 
@@ -232,7 +232,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                     stackView: self.m_appContentFaderView
                 });
 
-                self.m_scenesLoaderView = new ScenesLoaderView({
+                self.m_sceneLoaderView = new SceneLoaderView({
                     el: Elements.SCENES_PANEL,
                     stackView: self.m_appContentFaderView
                 });
@@ -265,13 +265,13 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 self.m_appContentFaderView.addView(self.m_campaignManagerView);
                 self.m_appContentFaderView.addView(self.m_ResourcesLoaderView);
                 self.m_appContentFaderView.addView(self.m_stationsViewLoader);
-                self.m_appContentFaderView.addView(self.m_scenesLoaderView);
+                self.m_appContentFaderView.addView(self.m_sceneLoaderView);
                 self.m_appContentFaderView.addView(self.m_settingsView);
                 self.m_appContentFaderView.addView(self.m_proStudioView);
                 self.m_appContentFaderView.addView(self.m_helpView);
                 self.m_appContentFaderView.addView(self.m_installView);
                 self.m_appContentFaderView.addView(self.m_logoutView);
-                // self.m_appContentFaderView.selectView(self.m_scenesLoaderView); // debug mode
+                // self.m_appContentFaderView.selectView(self.m_sceneLoaderView); // debug mode
                 self.m_appContentFaderView.selectView(self.m_campaignManagerView);
 
                 BB.comBroker.setService(BB.SERVICES['NAVIGATION_VIEW'], self.m_navigationView);

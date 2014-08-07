@@ -46,7 +46,11 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_dimensionProps = undefined;
             self.m_canvas = undefined;
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
-            new ScenesToolbarView({el: Elements.SCENE_TOOLBAR});
+
+            new ScenesToolbarView({
+                stackView:  self.options.stackView,
+                el: Elements.SCENE_TOOLBAR
+            });
 
             self.m_canvasScale = 1;
             self.SCALE_FACTOR = 1.2;
@@ -71,6 +75,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._listenAppResized();
             self._listenStackViewSelected();
             self._delegateSceneBlockModified();
+
+            $('#buttBack').on('click',function(){
+                self.options.stackView.slideToPage(Elements.SCENE_SELECTOR, 'left');
+            });
         },
 
         /**
@@ -597,6 +605,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 setTimeout(function () {
                     self._loadScene();
                 }, 10);
+                setTimeout(function () {
+                    if (self.m_canvas)
+                        self.m_canvas.calcOffset();
+                }, 500);
             });
         },
 
@@ -891,7 +903,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_canvas.renderAll();
             self._blockCountChanged();
             self._renderContinue();
-
 
             if (_.isUndefined(selectedBlockID))
                 return;

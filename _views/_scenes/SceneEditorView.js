@@ -48,7 +48,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
 
             new ScenesToolbarView({
-                stackView:  self.options.stackView,
+                stackView: self.options.stackView,
                 el: Elements.SCENE_TOOLBAR
             });
 
@@ -71,7 +71,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._listenSceneBlockRemove();
             self._listenSceneNew();
             self._listenMemento();
-            self._listenDuplicateScene();
             self._listenGridMagnet();
             self._listenCanvasSelectionsFromToolbar();
             self._listenAppResized();
@@ -83,7 +82,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          Listen to when a new scene is selected via Slider View
          @method _listenSceneSelection
          **/
-        _listenSceneSelection: function(){
+        _listenSceneSelection: function () {
             var self = this;
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self) {
@@ -96,9 +95,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          Listen go back to new scene selection
          @method _listenGoBackSceneSelection
          **/
-        _listenGoBackSceneSelection: function(){
+        _listenGoBackSceneSelection: function () {
             var self = this;
-            $(Elements.BACK_SCENE_SELECTION).on('click',function(){
+            $(Elements.BACK_SCENE_SELECTION).on('click', function () {
                 self.options.stackView.slideToPage(Elements.SCENE_SELECTOR, 'left');
             });
         },
@@ -325,33 +324,25 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _listenSceneRemove: function () {
             var self = this;
-            BB.comBroker.listen(BB.EVENTS.SCENE_EDITOR_REMOVE, function () {
-                if (_.isUndefined(self.m_selectedSceneID))
-                    return;
+            BB.comBroker.listen(BB.EVENTS.SCENE_EDITOR_REMOVE, function (e) {
+                if (self.m_canvas)
+                    self.m_canvas.setBackgroundColor('#ffffff', function () {
+                    }).renderAll();
 
-                bootbox.confirm($(Elements.MSG_BOOTBOX_SCENE_REMOVE).text(), function (result) {
-                    if (result == true) {
-
-                        if (self.m_canvas)
-                            self.m_canvas.setBackgroundColor('#ffffff', function () {
-                            }).renderAll();
-
-                        // remove a scene and notify before so channel instances
-                        // can remove corresponding blocks and after so channelList can refresh UI
-                        var sceneID = pepper.getSceneIdFromPseudoId(self.m_selectedSceneID);
-                        BB.comBroker.fire(BB.EVENTS.REMOVING_SCENE, this, null, sceneID);
-                        pepper.removeBlocksWithSceneID(sceneID);
-                        pepper.removeScene(self.m_selectedSceneID);
-                        BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this, null);
-                        self._disposeScene();
-                        self._zoomReset();
-                        self.m_property.resetPropertiesView();
-                        self.m_selectedSceneID = undefined;
-                        $(Elements.SCENE_CANVAS).removeClass('basicBorder');
-                        self._blockCountChanged();
-                        BB.comBroker.fire(BB.EVENTS.REMOVED_SCENE, this, null, self.m_selected_resource_id);
-                    }
-                });
+                // remove a scene and notify before so channel instances
+                // can remove corresponding blocks and after so channelList can refresh UI
+                var sceneID = pepper.getSceneIdFromPseudoId(e.edata);
+                BB.comBroker.fire(BB.EVENTS.REMOVING_SCENE, this, null, sceneID);
+                pepper.removeBlocksWithSceneID(sceneID);
+                pepper.removeScene(sceneID);
+                BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this, null);
+                self._disposeScene();
+                self._zoomReset();
+                self.m_property.resetPropertiesView();
+                self.m_selectedSceneID = undefined;
+                $(Elements.SCENE_CANVAS).removeClass('basicBorder');
+                self._blockCountChanged();
+                BB.comBroker.fire(BB.EVENTS.REMOVED_SCENE, this, null, self.m_selected_resource_id);
             });
         },
 
@@ -407,7 +398,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             BB.comBroker.listen(BB.EVENTS.NEW_SCENE_ADD, function (e) {
                 var player_data = BB.PepperHelper.getBlockBoilerplate('3510').getDefaultPlayerData(BB.CONSTS.PLACEMENT_IS_SCENE);
-                self._createScene(player_data, false);
+                self.createScene(player_data, false, true);
                 //self.m_selectedSceneID = pepper.createScene(player_data);
                 //BB.comBroker.fire(BB.EVENTS.NEW_SCENE_ADDED, this, null, self.m_selectedSceneID);
                 //self._loadScene();
@@ -723,58 +714,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 self.m_blocks.blockSelected = undefined;
                 self._discardSelections();
                 self._mementoLoadState('redo');
-            });
-        },
-
-        /**
-         Create a new scene based on player_data and strip injected IDs if arged
-         @method _createScene
-         @param {String} i_scenePlayerData
-         @param {Boolean} i_stripIDs
-         **/
-        _createScene: function (i_scenePlayerData, i_stripIDs) {
-            var self = this;
-            if (i_stripIDs)
-                i_scenePlayerData = pepper.stripPlayersID(i_scenePlayerData);
-            self.m_selectedSceneID = pepper.createScene(i_scenePlayerData);
-            BB.comBroker.fire(BB.EVENTS.NEW_SCENE_ADDED, this, null, self.m_selectedSceneID);
-            self._loadScene();
-            BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this, null);
-        },
-
-        /**
-         Listen to duplicate scene
-         @method _listenDuplicateScene
-         **/
-        _listenDuplicateScene: function () {
-            var self = this;
-            $(Elements.DUPLICATE_SCENE).on('click', function () {
-                if (_.isUndefined(self.m_canvas))
-                    return;
-                var duplicateScene = function () {
-                    var scenePlayerData = pepper.getScenePlayerdata(self.m_selectedSceneID);
-                    self._createScene(scenePlayerData, true)
-                };
-
-                bootbox.dialog({
-                    message: $(Elements.MSG_BOOTBOX_DUPLICATE_SCENE).text(),
-                    buttons: {
-                        success: {
-                            label: $(Elements.MSG_BOOTBOX_OK).text(),
-                            className: "btn-success",
-                            callback: function () {
-                                duplicateScene()
-                            }
-                        },
-                        main: {
-                            label: $(Elements.MSG_BOOTBOX_CANCEL).text(),
-                            callback: function () {
-                                return;
-                            }
-                        }
-                    }
-                });
-
             });
         },
 
@@ -1583,6 +1522,24 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 }
             }
             self.m_canvasScale = 1;
+        },
+
+        /**
+         Create a new scene based on player_data and strip injected IDs if arged
+         @method createScene
+         @param {String} i_scenePlayerData
+         @param {Boolean} i_stripIDs
+         @param {Boolean} i_loadScene
+         **/
+        createScene: function (i_scenePlayerData, i_stripIDs, i_loadScene) {
+            var self = this;
+            if (i_stripIDs)
+                i_scenePlayerData = pepper.stripPlayersID(i_scenePlayerData);
+            self.m_selectedSceneID = pepper.createScene(i_scenePlayerData);
+            // BB.comBroker.fire(BB.EVENTS.NEW_SCENE_ADDED, this, null, self.m_selectedSceneID);
+            if (i_loadScene)
+                self._loadScene();
+            BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this, null);
         },
 
         /**

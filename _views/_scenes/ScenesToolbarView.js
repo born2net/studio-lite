@@ -263,9 +263,9 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         _listenAddedNewScene: function(){
             var self = this;
-            BB.comBroker.listen(BB.EVENTS['NEW_SCENE_ADDED'], function (e) {
-                self.m_selectedSceneID = e.edata;
-            });
+            //BB.comBroker.listen(BB.EVENTS['NEW_SCENE_ADDED'], function (e) {
+            //    self.m_selectedSceneID = e.edata;
+            //});
         },
 
         /**

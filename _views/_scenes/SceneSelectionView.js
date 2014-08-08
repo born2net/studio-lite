@@ -16,7 +16,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         initialize: function () {
             var self = this;
-            self.m_selectedSceneID = undefined;
+            self.m_selectedSceneID = -1;
             self.m_sceneProperties = new BB.View({
                 el: Elements.SCENE_SELECTION_PROPERTIES
             });
@@ -27,6 +27,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
             self._render();
             self._listenAddRemoveScene();
+            self._listenSceneRemoved();
+            self._listenDuplicateScene();
         },
 
         /**
@@ -54,6 +56,23 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             this._listenOpenProps();
             this._listenSelectScene();
             this._listenInputChange();
+        },
+
+        /**
+         Listen to duplicate scene
+         @method _listenDuplicateScene
+         **/
+        _listenDuplicateScene: function () {
+            var self = this;
+            $(Elements.DUPLICATE_SCENE).on('click', function () {
+                if (self.m_selectedSceneID == -1) {
+                    bootbox.alert($(Elements.MSG_BOOTBOX_SELECT_SCENE_FIRST).text());
+                    return;
+                }
+                var scenePlayerData = pepper.getScenePlayerdata(self.m_selectedSceneID);
+                BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']).createScene(scenePlayerData, true, false);
+                self._render();
+            });
         },
 
         /**
@@ -105,7 +124,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 var text = $(e.target).val();
                 var sceneID = pepper.getSceneIdFromPseudoId(self.m_selectedSceneID);
                 var domSceneData = pepper.getScenePlayerdataDom(sceneID);
-                 $(domSceneData).find('Player').attr('label',text);
+                $(domSceneData).find('Player').attr('label', text);
                 pepper.setScenePlayerData(sceneID, (new XMLSerializer()).serializeToString(domSceneData));
                 self.$el.find('[data-sceneid="' + self.m_selectedSceneID + '"]').find('h4').text(text);
             }, 333, false);
@@ -118,7 +137,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         _listenAddRemoveScene: function () {
             var self = this;
-
             $(Elements.NEW_SCENE).on('click', function (e) {
                 self.m_selectedSceneID = -1;
                 BB.comBroker.fire(BB.EVENTS.NEW_SCENE_ADD, this, null);
@@ -127,25 +145,30 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             });
 
             $(Elements.REMOVE_SELECTED_SCENE).on('click', function (e) {
-                return;
                 if (self.m_selectedSceneID != -1) {
-                    var selectedElement = self.$el.find('[data-campaignid="' + self.m_selectedCampaignID + '"]');
-                    var allCampaignIDs = pepper.getStationCampaignIDs();
-                    if (_.indexOf(allCampaignIDs, self.m_selectedCampaignID) == -1) {
-                        bootbox.confirm($(Elements.MSG_BOOTBOX_SURE_DELETE_CAMPAIGN).text(), function (result) {
-                            if (result == true) {
-                                selectedElement.remove();
-                                self._removeCampaignFromMSDB(self.m_selectedCampaignID);
-                            }
-                        });
-                    } else {
-                        bootbox.alert($(Elements.MSG_BOOTBOX_CANT_DELETE_COMP).text());
-                        return false;
-                    }
+                    bootbox.confirm($(Elements.MSG_BOOTBOX_SURE_DELETE_SCENE).text(), function (result) {
+                        if (result == true) {
+                            var selectedElement = self.$el.find('[data-sceneid="' + self.m_selectedSceneID + '"]');
+                            selectedElement.remove();
+                            BB.comBroker.fire(BB.EVENTS.SCENE_EDITOR_REMOVE, self, this, self.m_selectedSceneID);
+                        }
+                    });
                 } else {
-                    bootbox.alert($(Elements.MSG_BOOTBOX_SELECT_COMP_FIRST).text());
+                    bootbox.alert($(Elements.MSG_BOOTBOX_SELECT_SCENE_FIRST).text());
                     return false;
                 }
+            });
+        },
+
+        /**
+         Listen after a scene has been removed so we can update the list
+         @method _listenSceneRemoved
+         **/
+        _listenSceneRemoved: function () {
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS.REMOVED_SCENE, function (e) {
+                self.m_selectedSceneID = -1;
+                self._render();
             });
         }
     });

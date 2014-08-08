@@ -240,7 +240,7 @@ iframe {
 
 #propPanelWrap {
     background-color: #f5f5f5;
-    z-index: 999;
+    z-index: 200;
     border-left: 2px #bdbdbd solid;
 }
 

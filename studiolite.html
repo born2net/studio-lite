@@ -71,10 +71,10 @@
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a data-localize="saveConfig" id="saveConfig" href="#">Save</a></li>
-            <li><a class="reshid" data-localize="liveChat" id="liveChat" href="#">Live chat</a></li>
-            <li><a id="languagePrompt" href="#">Language &nbsp;</a></li>
-            <li><a data-localize="dashboard" id="dashboard" href="#">Dashboard &nbsp;</a></li>
+            <li><a id="saveConfig" href="#"><i class="faHeader fa fa-save"></i></a></li>
+            <li><a class="reshid" id="liveChat" href="#"><i class="faHeader fa fa-comments-o"></i></a></li>
+            <li><a id="languagePrompt" href="#"><i class="faHeader fa fa-language"></i></a></li>
+            <li style="padding-right: 20px"><a id="dashboard" href="#"><i class="faHeader fa fa-dashboard"></i></a></li>
         </ul>
     </div>
     <!-- /.navbar-collapse -->
@@ -481,8 +481,7 @@
     <div id="sceneSelector" class="page center">
         <div>
             <div id="sceneSelectionButtons" class="btn-group">
-                <button id="newScene" type="button" class="btn btn-default">
-                    <i style="font-size: 1em" class="fa fa-magic"></i>
+                <button id="newScene" type="button" class="btn btn-default"><i style="font-size: 1em" class="fa fa-magic"></i>
                     <span data-localize="newScene">new scene</span>
                 </button>
                 <button id="duplicateScene" type="button" class="btn btn-default"><i style="font-size: 1em" class="fa fa-files-o"></i>
@@ -507,12 +506,12 @@
                         <span class="glyphicon glyphicon-chevron-left"></span>
                     </button>
                     <button type="button" data-localize="empty"
-                            data-localize-tooltip="playPreview"
-                            title="play preview"  class="sceneAddNew btn btn-default btn-sm"><i
+                            data-localize-tooltip="addItem"
+                            title="add item"  class="sceneAddNew btn btn-default btn-sm"><i
                             style="font-size: 1em" class="fa fa-plus"> </i></button>
                     <button type="button" data-localize="empty"
-                            data-localize-tooltip="playPreview"
-                            title="play preview" class="sceneRemoves btn btn-default btn-sm"><i
+                            data-localize-tooltip="removeItem"
+                            title="remove item" class="sceneRemoves btn btn-default btn-sm"><i
                             style="font-size: 1em" class="fa fa-minus"> </i></button>
                     <button id="scenePlayPreview" type="button" data-localize="empty"
                             data-localize-tooltip="playPreview"

@@ -961,7 +961,6 @@ iframe {
 
 .whiteFont {
     color: white;
-
 }
 
 .pricingContainer {
@@ -971,6 +970,15 @@ iframe {
 .price {
     font-size: 25px;
     float: left;
+}
+
+.faHeader {
+    font-size: 1.9em !important;
+    color: #bababa;
+}
+
+.faHeader:hover {
+    color: white;
 }
 
 .pricing_header1 {

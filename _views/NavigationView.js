@@ -33,12 +33,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
 
             /*$(function() {
-                $('.navbar-nav').on('click', function(){
-                    if($('.navbar-header .navbar-toggle').css('display') !='none'){
-                        $(".navbar-header .navbar-toggle").trigger( "click" );
-                    }
-                });
-            });*/
+             $('.navbar-nav').on('click', function(){
+             if($('.navbar-header .navbar-toggle').css('display') !='none'){
+             $(".navbar-header .navbar-toggle").trigger( "click" );
+             }
+             });
+             });*/
 
             var appContentFaderView = BB.comBroker.getService(BB.SERVICES['APP_CONTENT_FADER_VIEW']);
             var appEntryFaderView = BB.comBroker.getService(BB.SERVICES['APP_ENTRY_FADER_VIEW']);
@@ -47,6 +47,13 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self._toggleIcons(appWidth);
 
             BB.comBroker.listen(BB.EVENTS.APP_SIZED, $.proxy(self._onAppResized, self));
+
+            $(Elements.CLASS_NAV_SELECTION).on('click', function (e) {
+                $(Elements.CLASS_NAV_SELECTION).removeClass(BB.lib.unclass(Elements.CLASS_NAV_ACTIVESEL));
+                if ($(e.target.localName == 'span'))
+                    e.target = $(e.target).closest('li');
+                e.target.addClass(BB.lib.unclass(Elements.CLASS_NAV_ACTIVESEL));
+            });
 
             $(Elements.CLASS_CAMPAIG_NMANAGER_VIEW).on('click', function () {
                 self._checkLimitedAccess();
@@ -144,9 +151,9 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             });
         },
 
-        _closeMobileNavigation: function(){
-            if($('.navbar-header .navbar-toggle').css('display') !='none'){
-                $(".navbar-header .navbar-toggle").trigger( "click" );
+        _closeMobileNavigation: function () {
+            if ($('.navbar-header .navbar-toggle').css('display') != 'none') {
+                $(".navbar-header .navbar-toggle").trigger("click");
             }
         },
 

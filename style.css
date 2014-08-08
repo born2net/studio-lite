@@ -77,7 +77,7 @@ aside > aside > div > ul > li {
 /* Wrapper to push down from header */
 #headerPad {
     background-color: #428bca;
-    min-height: 55px;
+    min-height: 58px;
 }
 
 #logoContainer {
@@ -1009,6 +1009,10 @@ iframe {
 .list-group-item:first-child {
     border-top-right-radius: 0px;
     border-top-left-radius: 0px;
+}
+
+.navActiveSel {
+    background-color: #2f3039 !important;
 }
 
 .btnPrice {

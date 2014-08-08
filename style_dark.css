@@ -19,6 +19,11 @@ hr
 {
     border-top			: 1px solid #6a6a6a;
 }
+
+#fileMenu {
+    background-color: #151515;
+}
+
 #headerPad
 {
     background-color	: #ec7c66;
@@ -28,16 +33,20 @@ hr
     background-color	: #535353;
     border-color		: #535353;
 }
+
 #appNavigator
 {
     background-color	: #535353;
     border-right		: 1px solid #6a6a6a;
 }
+
 #appNavigator li
 {
     background-color	: #535353;
     border-color		: #595959;
 }
+
+
 #appNavigator li:hover
 {
     background-color	: #4c4c4c;
@@ -83,7 +92,7 @@ a:hover, a:focus
 }
 #footer
 {
-    background-color	: #535353;
+    background-color	: #151515;
     border-top			: 1px solid #6a6a6a;
     padding				: 21px 10px;
 }
@@ -193,6 +202,9 @@ input {
     border-color: #dcdcdc !important;
 }
 
+.navActiveSel {
+    background-color: #454545 !important;
+}
 
 #videoModalHeader {
     color: #eb7c66 !important;

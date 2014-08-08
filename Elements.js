@@ -335,6 +335,10 @@ Elements.CLASS_CHANNEL_HEAD_SELECTED = '.channelHeadSelected';
 Elements.CLASS_USER_NAME = '.userName'
 Elements.CLASS_RES_HID = '.reshid';
 Elements.CLASS_VIDEOS = '.videos';
+Elements.CLASS_NAV_SELECTION = '.navSelection';
+Elements.CLASS_NAV_ACTIVESEL = '.navActiveSel';
+
+
 
 /**
  List of all Elements / Classes of elements used in the DOM

@@ -149,25 +149,25 @@
 <div id="appRow " class="row">
 <div id="appNavigator" class="hidden-xs hidden-sm hidden-md col-lg-1">
     <ul class="list-group">
-        <li class="campaignManagerView list-group-item"><i class="navicons fa fa-tasks"></i><span
+        <li class="navSelection campaignManagerView list-group-item"><i class="navicons fa fa-tasks"></i><span
                 data-localize="navCampaign">Campaigns</span></li>
-        <li class="resourcesPanel list-group-item"><i class="navicons fa fa-certificate"></i><span
+        <li class="navSelection resourcesPanel list-group-item"><i class="navicons fa fa-certificate"></i><span
                 data-localize="navResources">Resources</span></li>
-        <li class="stationsPanel list-group-item"><i class="navicons fa fa-desktop"></i><span
+        <li class="navSelection stationsPanel list-group-item"><i class="navicons fa fa-desktop"></i><span
                 data-localize="navStation">Stations</span></li>
-        <li class="scenesPanel list-group-item"><i class="navicons fa fa-pencil-square-o"></i><span
+        <li class="navSelection scenesPanel list-group-item"><i class="navicons fa fa-pencil-square-o"></i><span
                 data-localize="navScenes">Scenes</span></li>
-        <li class="settingsPanel list-group-item"><i class="navicons fa fa-gears"></i><span data-localize="navSettings">Settings</span>
+        <li class="navSelection settingsPanel list-group-item"><i class="navicons fa fa-gears"></i><span data-localize="navSettings">Settings</span>
         </li>
-        <li class="proStudioPanel list-group-item"><i class="navicons fa fa-cloud-upload"></i><span
+        <li class="navSelection proStudioPanel list-group-item"><i class="navicons fa fa-cloud-upload"></i><span
                 data-localize="navStudioPanel">Pro </span><span class="reshid"
                                                                 data-localize="freeBrackets"> (FREE)</span></li>
-        <li class="reshid helpPanel list-group-item"><i class="navicons fa fa-life-ring"></i><span data-localize="navHelpPanel">Help</span>
+        <li class="navSelection reshid helpPanel list-group-item"><i class="navicons fa fa-life-ring"></i><span data-localize="navHelpPanel">Help</span>
         </li>
-        <li class="reshid installPanel list-group-item"><i class="navicons fa fa-laptop"></i><span class="reshid"
+        <li class="navSelection reshid installPanel list-group-item"><i class="navicons fa fa-laptop"></i><span class="reshid"
                                                                                                    data-localize="navInstallPanel">Install</span>
         </li>
-        <li class="logoutPanel list-group-item"><i class="navicons fa fa-power-off"></i><span data-localize="navLogout">Logout</span>
+        <li class="navSelection logoutPanel list-group-item"><i class="navicons fa fa-power-off"></i><span data-localize="navLogout">Logout</span>
         </li>
     </ul>
 </div>
@@ -731,8 +731,8 @@
 </div>
 <div id="helpPanel" style="display: none">
     <h3 data-localize="videoTutorial">Video tutorial - learn how to use StudioLite</h3>
-    <button class="videos btn btn-primary btn-lg" name="StudioLite.mp4" data-localize="basicIntroduction">basic introduction</button>
-    <button class="videos btn btn-primary btn-lg" name="StudioLiteAdv.mp4" data-localize="advancedConfiguration">advanced configuration</button>
+    <button class="videos btn btn-primary btn-lg" name="StudioLite.mp4"><span data-localize="basicIntroduction">basic introduction</span></button>
+    <button class="videos btn btn-primary btn-lg" name="StudioLiteAdv.mp4"><span data-localize="advancedConfiguration">advanced configuration</span></button>
     <hr/>
     <div class="reshid">
         <h3 data-localize="additionalLinks">Additional links</h3>
@@ -961,7 +961,7 @@
            placeholder="Scene name">
 </div>
 <div id="timelineProperties" style="display: none">
-    <label>Length: </label>
+    <label data-localize="length">Length: </label>
     <label id="timelineLength" style="text-align: right"><span data-localize="lenght">Length</span>: 00:00:00</label>
     <hr/>
     <div data-role="fieldcontain" data-inset="true" style="width:99%;">
@@ -1311,7 +1311,7 @@
 </div>
 </div>
 <div id="footer"><br>
-    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.157 </span>
+    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.158 </span>
 </div>
 
 

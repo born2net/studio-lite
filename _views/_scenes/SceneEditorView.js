@@ -540,7 +540,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 }
             };
 
-
             // no canvas
             if (_.isUndefined(self.m_canvas)) {
                 return;
@@ -569,7 +568,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             blocks.push(block);
             contextCmd(blocks);
             return true;
-
         },
 
         /**

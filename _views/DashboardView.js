@@ -313,7 +313,7 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
                 if (recResources[i]['change_type'] != 3)
                     bytesTotal = bytesTotal + parseInt(recResources[i]['resource_bytes_total']);
             });
-            log(bytesTotal);
+            // log(bytesTotal);
             var mbTotalPercent = BB.lib.parseToFloatDouble((Math.ceil(bytesTotal / 1000000) / totalCapacity) * 100);
             var mbTotalPercentRounded = Math.round(mbTotalPercent);
             if (String(mbTotalPercentRounded).length == 1)

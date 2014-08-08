@@ -31,7 +31,7 @@ define(['jquery', 'backbone', 'simplestorage', 'video'], function ($, Backbone, 
                     $(Elements.AUTO_POPUP_LABEL).show();
                 }
                 simplestorage.set('autopopup',2);
-                $(Elements.WATCH_INTRO).trigger('click');
+                $(Elements.VIDEO_1).trigger('click');
             }, 8000);
 
         },
@@ -58,8 +58,10 @@ define(['jquery', 'backbone', 'simplestorage', 'video'], function ($, Backbone, 
          **/
         _listenWatchIntro: function(){
             var self = this;
-            $(Elements.WATCH_INTRO).click(function (e) {
+            $(Elements.CLASS_VIDEOS).click(function (e) {
                 bootbox.hideAll()
+                var videoName = $(e.target).attr('name');
+                $("video:nth-child(1)").attr("src",videoName);
                 var autopopup = simplestorage.get('autopopup');
                 if (autopopup < 3){
                     $(Elements.AUTO_POPUP ).prop('checked', false);

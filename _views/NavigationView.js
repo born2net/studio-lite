@@ -262,7 +262,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 title: $(Elements.MSG_BOOTBOX_SAVE_REMOTE_SRV).text(),
                 buttons: {
                     success: {
-                        label: $(Elements.MSG_BOOTBOX_SAVE).text(),
+                        label: $(Elements.MSG_BOOTBOX_OK).text(),
                         className: "btn-success",
                         callback: function () {
                             self.save(function () {

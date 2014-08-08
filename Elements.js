@@ -9,7 +9,6 @@ Elements.LIVE_PREVIEW = '#livePreview'
 Elements.APP_LOGIN = '#appLogin';
 Elements.APP_LOGOUT = '#appLogout';
 Elements.FILE_MENU = '#fileMenu';
-Elements.WATCH_INTRO = '#watchIntro';
 Elements.VIDEO_INTRO = '#videoIntro';
 Elements.CLOSE_MODAL = '#closeModal';
 Elements.SAVE_CONFIG = '#saveConfig';
@@ -256,7 +255,6 @@ Elements.MSG_BOOTBOX_DUPLICATE_SCENE = '#bootBoxDuplicateScene';
 Elements.MSG_BOOTBOX_STUDIO_LITE_ACC = '#bootBoxStudioLiteAcc';
 Elements.MSG_BOOTBOX_LOGIN_WRONG_CRED = '#bootBoxLoginWrongCred';
 Elements.MSG_BOOTBOX_SAVE_REMOTE_SRV = '#bootBoxSaveRemoteSrv';
-Elements.MSG_BOOTBOX_SAVE = '#bootBoxSave';
 Elements.MSG_BOOTBOX_SAVE_RESTART = '#bootBoxSaveAndRestart';
 Elements.MSG_BOOTBOX_CANCEL = '#bootBoxCancel';
 Elements.MSG_BOOTBOX_OK = '#bootBoxOk';
@@ -336,6 +334,7 @@ Elements.CLASS_CHANNEL_HEAD = '.channelHead';
 Elements.CLASS_CHANNEL_HEAD_SELECTED = '.channelHeadSelected';
 Elements.CLASS_USER_NAME = '.userName'
 Elements.CLASS_RES_HID = '.reshid';
+Elements.CLASS_VIDEOS = '.videos';
 
 /**
  List of all Elements / Classes of elements used in the DOM

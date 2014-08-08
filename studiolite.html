@@ -162,7 +162,7 @@
         <li class="proStudioPanel list-group-item"><i class="navicons fa fa-cloud-upload"></i><span
                 data-localize="navStudioPanel">Pro </span><span class="reshid"
                                                                 data-localize="freeBrackets"> (FREE)</span></li>
-        <li class="reshid helpPanel list-group-item"><i class="navicons fa fa-comments"></i><span data-localize="navHelpPanel">Help</span>
+        <li class="reshid helpPanel list-group-item"><i class="navicons fa fa-life-ring"></i><span data-localize="navHelpPanel">Help</span>
         </li>
         <li class="reshid installPanel list-group-item"><i class="navicons fa fa-laptop"></i><span class="reshid"
                                                                                                    data-localize="navInstallPanel">Install</span>
@@ -179,14 +179,13 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
                         class="sr-only">Close</span></button>
-                <span data-localize="quickIntro" class="modal-title" id="videoModalHeader">quick intro to </span><span
+                <span data-localize="basicIntroduction" class="modal-title" id="videoModalHeader">quick intro to </span><span
                     id="videoModalHeaderLite">StudioLite</span>
             </div>
             <div class="modal-body">
                 <video id="videoIntro" class="centerElement vjs-big-play-centered video-js vjs-default-skin" controls
                        preload="auto" poster="videoIntro.png"
                        data-setup="{}">
-                       <!-- <source src="StudioLite.mp4" type='video/mp4'> -->
                 </video>
             </div>
             <div class="modal-footer">
@@ -602,11 +601,9 @@
             <option value="dark" data-localize="dark">dark</option>
         </select>
     </div>
-
-
 </div>
 <div id="proStudioPanel" style="display: none">
-    <h3 data-localize="rightPackage">Choose the package that's right for you</h3>
+    <h3 data-localize="theRightPackage">Choose the package that's right for you</h3>
     <!-- price & service -->
     <div class="pricingContainer">
         <div class="row"></div>
@@ -734,7 +731,8 @@
 </div>
 <div id="helpPanel" style="display: none">
     <h3 data-localize="videoTutorial">Video tutorial - learn how to use StudioLite</h3>
-    <button id="watchIntro" class="btn btn-primary btn-lg" data-localize="watchNow">Watch it now</button>
+    <button class="videos btn btn-primary btn-lg" name="StudioLite.mp4" data-localize="basicIntroduction">basic introduction</button>
+    <button class="videos btn btn-primary btn-lg" name="StudioLiteAdv.mp4" data-localize="advancedConfiguration">advanced configuration</button>
     <hr/>
     <div class="reshid">
         <h3 data-localize="additionalLinks">Additional links</h3>
@@ -1313,7 +1311,7 @@
 </div>
 </div>
 <div id="footer"><br>
-    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.156 </span>
+    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.157 </span>
 </div>
 
 

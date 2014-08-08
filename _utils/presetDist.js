@@ -13,5 +13,5 @@ var studiolite = ms.fs.readFileSync('../../_studiolite-dist/studiolite.html','ut
 studiolite = studiolite.replace(/-dev/gi, '-dist');
 
 // add video links on dist
-studiolite = studiolite.replace(/<!-- <source src="StudioLite.mp4" type='video\/mp4'> -->/gi, '<source src="StudioLite.mp4" type="video/mp4">');
-ms.fs.writeFileSync('../../_studiolite-dist/studiolite.html', studiolite, 'utf8');
+//studiolite = studiolite.replace(/<!-- <source src="StudioLite.mp4" type='video\/mp4'> -->/gi, '<source src="StudioLite.mp4" type="video/mp4">');
+//ms.fs.writeFileSync('../../_studiolite-dist/studiolite.html', studiolite, 'utf8');

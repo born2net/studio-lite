@@ -56,7 +56,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.SCALE_FACTOR = 1.2;
 
             self._listenSceneSelection();
-            self._listenGoBackSceneSelection();
             self._initializeBlockFactory();
             self._listenAddBlockWizard();
             self._listenSceneToolbarSelected();
@@ -88,21 +87,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 if (e == self) {
                     log('load new scene');
                 }
-            });
-        },
-
-        /**
-         Listen go back to new scene selection
-         @method _listenGoBackSceneSelection
-         **/
-        _listenGoBackSceneSelection: function () {
-            var self = this;
-            $(Elements.BACK_SCENE_SELECTION).on('click', function () {
-                self.options.stackView.slideToPage(Elements.SCENE_SELECTOR, 'left');
-                // hack to fix FF bug not rendering out of the scene toolbar due it's fixed position
-                setTimeout(function(){
-                    $(window).trigger('resize');
-                },200);
             });
         },
 
@@ -595,13 +579,13 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         _listenToCanvasScroll: function () {
             var self = this;
             var sceneScrolling = _.debounce(function () {
-                $(Elements.SCENES_PANEL).scroll(function (e) {
+                $(Elements.SCENE_CANVAS_CONTAINER).scroll(function (e) {
                     self.m_sceneScrollTop = $('#scenesPanel').scrollTop();
                     self.m_sceneScrollLeft = $('#scenesPanel').scrollLeft();
                     self.m_canvas.calcOffset();
                 });
             }, 500);
-            $('#scenesPanel').scroll(sceneScrolling);
+            $(Elements.SCENE_CANVAS_CONTAINER).scroll(sceneScrolling);
         },
 
         /**

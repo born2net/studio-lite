@@ -25,6 +25,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             BB.comBroker.setService(BB.SERVICES['SCENE_TOOLBAR_VIEW'], self);
             self.m_selectedSceneID = undefined;
+            self._listenGoBackSceneSelection();
             self._listenSceneSelection();
             self._listenSceneItemSelection();
             self._listenSceneDimensionsChanged();
@@ -192,6 +193,17 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 self.options.stackView.slideToPage(Elements.SCENE_ADD_NEW_BLOCK, 'right');
                 //self.m_stackFaderView.slideToPage('#sceneAddNewBlock', 'right');
                 //self.m_stackFaderView.selectView(Elements.SCENE_ADD_NEW_BLOCK);
+            });
+        },
+
+        /**
+         Listen go back to new scene selection
+         @method _listenGoBackSceneSelection
+         **/
+        _listenGoBackSceneSelection: function () {
+            var self = this;
+            $(Elements.BACK_SCENE_SELECTION).on('click', function () {
+                self.options.stackView.slideToPage(Elements.SCENE_SELECTOR, 'left');
             });
         },
 

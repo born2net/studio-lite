@@ -490,8 +490,12 @@ iframe {
 }
 
 #sceneToolbar {
-    padding-bottom: 20px;
-    padding-top: 10px;
+    opacity: 0.01;
+    position: fixed;
+    z-index: 100;
+    padding: 0;
+    margin: 0;
+    /* added dual as a hack for FF to update UI */
     position: relative;
 }
 

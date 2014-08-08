@@ -114,7 +114,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     '<h4>' + recCampaign['campaign_name'] + '</h4>' +
                     '<p class="list-group-item-text">play list mode:' + playListMode + '</p>' +
                     '<div class="openProps">' +
-                    '<button type="button" class="' + BB.lib.unclass(Elements.CLASS_OPEN_PROPS_BUTTON) + ' btn btn-default btn-sm"><i style="font-size: 1.5em" class="fa fa-tasks"></i></button>' +
+                    '<button type="button" class="' + BB.lib.unclass(Elements.CLASS_OPEN_PROPS_BUTTON) + ' btn btn-default btn-sm"><i style="font-size: 1.5em" class="fa fa-gear"></i></button>' +
                     '</div>' +
                     '</a>';
                 $(Elements.CAMPAIGN_SELECTOR_LIST).append($(snippet));

@@ -250,6 +250,7 @@
     "appSettings": "app settings",
     "timelinePreview": "Preview timeline",
     "duplicateScene": "duplicate scene",
+    "back": "back",
     "backToCampaignsTooltip": "back to campaigns",
     "bootBoxDuplicateScene": "are you sure you want to make a copy of this scene?",
     "navInstallPanel": "Install",

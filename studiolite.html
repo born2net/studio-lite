@@ -500,32 +500,21 @@
     <div id="sceneStackFaderView" style="display: none" class="page right">
         <div id="scenePanelWrap">
             <div id="sceneToolbar" style="opacity: 0.01; position: fixed; z-index: 100 ">
-                <button id="backSceneSelection" type="button" class="openPropsButton btn btn-default btn-sm"><span class="glyphicon glyphicon-chevron-left"></span></button>
-                <div id="sceneSelectionDropdown" class="input-group">
-                    <div class="input-group-btn">
-                        <button type="button" class="btn btn-default input-sm dropdown-toggle" data-toggle="dropdown">
-                            <span data-localize="selectScene">Scene</span> <span class="caret"></span></button>
-                        <ul id="sceneSelectList" class="selectSceneDropDown dropdown-menu">
-                        </ul>
-                    </div>
-                </div>
                 <div class="btn-group">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default input-sm dropdown-toggle" data-toggle="dropdown"><i
-                                style="font-size: 1em" class="fa fa-plus"> </i> <span class="caret"></span></button>
-                        <ul class="sceneAddNew dropdown-menu" role="menu">
-                            <li><a href="#" data-localize="addScene" name="addScene">Add scene</a></li>
-                            <li><a href="#" data-localize="addItem" name="addItem">Add component</a></li>
-                        </ul>
-                    </div>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default input-sm dropdown-toggle" data-toggle="dropdown"><i
-                                style="font-size: 1em" class="fa fa-minus"> </i> <span class="caret"></span></button>
-                        <ul class="sceneRemoves dropdown-menu" role="menu">
-                            <li><a href="#" data-localize="removeScene" name="removeScene">Remove scene</a></li>
-                            <li><a href="#" data-localize="removeItem" name="removeItem">Remove item</a></li>
-                        </ul>
-                    </div>
+                    <button id="backSceneSelection" type="button"
+                            data-localize-tooltip="back"
+                            data-localize="empty"
+                            title="back" class="openPropsButton btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </button>
+                    <button type="button" data-localize="empty"
+                            data-localize-tooltip="playPreview"
+                            title="play preview"  class="sceneAddNew btn btn-default btn-sm"><i
+                            style="font-size: 1em" class="fa fa-plus"> </i></button>
+                    <button type="button" data-localize="empty"
+                            data-localize-tooltip="playPreview"
+                            title="play preview" class="sceneRemoves btn btn-default btn-sm"><i
+                            style="font-size: 1em" class="fa fa-minus"> </i></button>
                     <button id="scenePlayPreview" type="button" data-localize="empty"
                             data-localize-tooltip="playPreview"
                             title="play preview"  class="btn btn-default btn-sm"><i

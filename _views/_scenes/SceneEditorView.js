@@ -260,7 +260,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             if (_.isUndefined(self.m_selectedSceneID))
                 return;
             self._disposeBlocks();
-            self._disposeScene();
+            self.disposeScene();
             self._zoomReset();
             self.m_property.resetPropertiesView();
             var domPlayerData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
@@ -317,7 +317,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             });
         },
 
-
         /**
          Listen to when a user selects to delete a scene
          @method _listenSceneRemove
@@ -336,7 +335,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 pepper.removeBlocksWithSceneID(sceneID);
                 pepper.removeScene(sceneID);
                 BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this, null);
-                self._disposeScene();
+                self.disposeScene();
                 self._zoomReset();
                 self.m_property.resetPropertiesView();
                 self.m_selectedSceneID = undefined;
@@ -1249,22 +1248,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         },
 
         /**
-         Remove a Scene and cleanup after
-         @method _disposeScene
-         **/
-        _disposeScene: function () {
-            var self = this;
-            if (_.isUndefined(self.m_canvas))
-                return;
-            self.m_canvas.off('mouse:up');
-            self.m_canvas.dispose();
-            self.m_blocks.blocksPost = {};
-            self._disposeBlocks();
-            self.m_sceneBlock.deleteBlock();
-            self.m_canvas = undefined;
-        },
-
-        /**
          Remove all block instances
          @method _disposeBlocks
          **/
@@ -1524,6 +1507,22 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_canvasScale = 1;
         },
 
+        /**
+         Remove a Scene and cleanup after
+         @method disposeScene
+         **/
+        disposeScene: function () {
+            var self = this;
+            if (_.isUndefined(self.m_canvas))
+                return;
+            self.m_canvas.off('mouse:up');
+            self.m_canvas.dispose();
+            self.m_blocks.blocksPost = {};
+            self._disposeBlocks();
+            self.m_sceneBlock.deleteBlock();
+            self.m_canvas = undefined;
+        },
+        
         /**
          Create a new scene based on player_data and strip injected IDs if arged
          @method createScene

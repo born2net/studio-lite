@@ -47,7 +47,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     '<h4>' + i_name + '</h4>' +
                     '<p class="list-group-item-text">' + '&nbsp;' + '</p>' +
                     '<div class="openProps">' +
-                    '<button type="button" class="' + BB.lib.unclass(Elements.CLASS_OPEN_PROPS_BUTTON) + ' btn btn-default btn-sm"><i style="font-size: 1.5em" class="fa fa-tasks"></i></button>' +
+                    '<button type="button" class="' + BB.lib.unclass(Elements.CLASS_OPEN_PROPS_BUTTON) + ' btn btn-default btn-sm"><i style="font-size: 1.5em" class="fa fa-gear"></i></button>' +
                     '</div>' +
                     '</a>';
                 $(Elements.SCENE_SELECTOR_LIST).append($(snippet));
@@ -107,8 +107,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 $(Elements.CLASS_CAMPIGN_LIST_ITEM, self.el).removeClass('active');
                 $(this).addClass('active');
                 self.m_selectedSceneID = $(this).data('sceneid');
-                self.options.stackView.slideToPage(Elements.SCENE_SLIDER_VIEW, 'right');
+                BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']).disposeScene();
                 self.m_propertiesPanel.resetPropertiesView();
+                self.options.stackView.slideToPage(Elements.SCENE_SLIDER_VIEW, 'right');
+                setTimeout(function(){
+                    BB.comBroker.fire(BB.EVENTS.LOAD_SCENE, this, null, self.m_selectedSceneID);
+                },250);
                 return false;
             });
         },

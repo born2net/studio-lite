@@ -477,9 +477,9 @@
     <ul class="list-group" id="stationListView">
     </ul>
 </div>
-<div id="scenesPanel" class="xyScroll" style="display: none">
+<div id="scenesPanel" style="display: none">
     <div id="sceneSelector" class="page center">
-        <div class="yScroll">
+        <div>
             <div id="sceneSelectionButtons" class="btn-group">
                 <button id="newScene" type="button" class="btn btn-default">
                     <i style="font-size: 1em" class="fa fa-magic"></i>
@@ -492,10 +492,9 @@
                     <span data-localize="removeScene">remove scene</span>
                 </button>
             </div>
-            <div id="sceneSelectorList" class="appList list-group"></div>
+            <div id="sceneSelectorList" class="appList yScroll list-group">
+            </div>
         </div>
-
-
     </div>
     <div id="sceneStackFaderView" style="display: none" class="page right">
         <div id="scenePanelWrap">
@@ -563,7 +562,7 @@
                 </div>
             </div>
             <div id="sceneCanvasContainer" data-toggle="context" data-target="#sceneContextMenu"
-                 class="context sceneElements" align="center"></div>
+                 class="yScroll context sceneElements" style=" overflow-x: visible" align="center"></div>
             <div id="sceneContextMenu">
                 <ul id="sceneContext" class="dropdown-menu" role="menu">
                     <li><a tabindex="-1" class="blocksOnly" name="cut" data-localize="cut">cut</a></li>

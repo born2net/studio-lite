@@ -24,15 +24,11 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         initialize: function () {
             var self = this;
             BB.comBroker.setService(BB.SERVICES['SCENE_TOOLBAR_VIEW'], self);
-            // self.m_stackFaderView = BB.comBroker.getService(BB.SERVICES['SCENE_SLIDER_VIEW']);
             self.m_selectedSceneID = undefined;
-            // self._render();
             self._listenSceneSelection();
             self._listenSceneItemSelection();
             self._listenSceneDimensionsChanged();
-            // self._listenSceneRenamed();
             self._listenAddNewItem();
-            // self._listenAddedNewScene();
             self._listenSceneRemoved();
             self._listenRemoves();
             self._listenZoom();
@@ -42,15 +38,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self._listenSceneBlockList();
             self._listenMemento();
         },
-
-        /**
-         Draw UI
-         @method _render
-        _render: function () {
-            var self = this;
-            // self._populateSceneSelection();
-        },
-         **/
 
         /**
          Listen to changes in the block list within a scene (canvas) and update the dropdown selection dialog
@@ -123,35 +110,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 BB.comBroker.fire(BB.EVENTS.SCENE_ZOOM_RESET);
             });
         },
-
-        /**
-         Listen to changes in the scene name
-         @method _listenSceneRenamed
-
-        _listenSceneRenamed: function () {
-            var self = this;
-            BB.comBroker.listen(BB.EVENTS.SCENE_LIST_UPDATED, function (e) {
-                // self._populateSceneSelection();
-            });
-        },
-         **/
-
-        /**
-         Populate dropdown UI of all available scenes
-         @method _populateSceneSelection
-
-        _populateSceneSelection: function () {
-            $(Elements.SCENE_SELECT_LIST).empty();
-            var scenenames = BB.Pepper.getSceneNames();
-            if (_.size(scenenames) == 0)
-                return;
-            _.forEach(scenenames, function (i_name, i_id) {
-                var pseudoID = pepper.getPseudoIdFromSceneId(i_id);
-                var snippet = '<li><a data-scene_player_data_id="' + pseudoID + '" href="#">' + i_name + '</a></li>';
-                $(Elements.SCENE_SELECT_LIST).append(snippet);
-            });
-        },
-         **/
 
         /**
          Listen to user selection of existing scene
@@ -236,17 +194,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 //self.m_stackFaderView.selectView(Elements.SCENE_ADD_NEW_BLOCK);
             });
         },
-
-        /**
-         Newly added scene completed
-         @method _listenAddedNewScene
-        _listenAddedNewScene: function(){
-            var self = this;
-            //BB.comBroker.listen(BB.EVENTS['NEW_SCENE_ADDED'], function (e) {
-            //    self.m_selectedSceneID = e.edata;
-            //});
-        },
-         **/
 
         /**
          Listen to scene removed

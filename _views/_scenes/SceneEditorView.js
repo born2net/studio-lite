@@ -99,6 +99,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             $(Elements.BACK_SCENE_SELECTION).on('click', function () {
                 self.options.stackView.slideToPage(Elements.SCENE_SELECTOR, 'left');
+                // hack to fix FF bug not rendering out of the scene toolbar due it's fixed position
+                setTimeout(function(){
+                    $(window).trigger('resize');
+                },200);
             });
         },
 

@@ -152,7 +152,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             i_toView.el.className = "page " + i_direction;
             // Position the new page and the current page at the ending position of their
             // animation with a transition class indicating the duration of the animation
-            // and force reflow of page
+            // and force reflow of page so it renders
             i_toView.$el.parent().parent()[0].offsetWidth;
             i_toView.el.className = "page transition center";
             self.m_selectedView.el.className = "page transition " + (i_direction === "left" ? "right" : "left");

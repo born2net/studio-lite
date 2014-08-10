@@ -61,6 +61,8 @@ define(['jquery', 'backbone', 'simplestorage', 'video'], function ($, Backbone, 
             $(Elements.CLASS_VIDEOS).click(function (e) {
                 bootbox.hideAll()
                 var videoName = $(e.target).attr('name');
+                if (_.isUndefined(videoName))
+                    videoName = $(e.target).closest('button').attr('name');
                 $("video:nth-child(1)").attr("src",videoName);
                 var autopopup = simplestorage.get('autopopup');
                 if (autopopup < 3){

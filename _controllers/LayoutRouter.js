@@ -460,7 +460,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 $(Elements.SCENE_SELECTOR_LIST).height(h - 40);
                 $(Elements.SCENE_CANVAS_CONTAINER).height(h - 150);
                 $(Elements.CAMPAIGN_SELECTOR_LIST).height(h - 150);
-
+                $(Elements.STATION_LIST_VIEW).height(h - 150);
 
                 BB.comBroker.fire(BB.EVENTS.APP_SIZED, this, null, {width: self._appWidth, height: self._appHeight});
             },

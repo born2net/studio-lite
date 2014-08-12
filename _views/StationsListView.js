@@ -30,11 +30,6 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
 
             self.m_stationCollection = new StationsCollection();
 
-            //self.ajaxJsonGetter = new AjaxJsonGetter({
-            //    key: BB.globs['RC4KEY'],
-            //    url: 'https://secure.dynawebs.net/_php/msWSsec-debug.php?' + Date.now()
-            //});
-
             self.listenTo(self.m_stationCollection, 'add', function (i_model) {
                 $(Elements.STATION_ALERT).hide();
                 self._onAddStation(i_model);
@@ -45,12 +40,16 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
                 self._onUpdateStation(i_model);
             });
 
+            BB.comBroker.listen(BB.EVENTS.STATION_NAME_CHANGED, function (e) {
+                var stationID = e.edata.stationID;
+                var stationName = e.edata.stationName;
+                var a = $(Elements.STATION_LIST_VIEW).find('[data-station_id="' + stationID + '"]');
+                $(Elements.STATION_LIST_VIEW).find('[data-station_id="' + stationID + '"]').find(Elements.CLASS_STAION_NAME).text(stationName);
+            });
+
             self._wireUI();
             self._wireSnapshot();
             self._populateStationCampaignDropDown(-1);
-
-            // BB.comBroker.listen(BB.EVENTS.APP_SIZED, self._reconfigSnapLocation);
-            // self._reconfigSnapLocation();
         },
 
         /**
@@ -63,7 +62,6 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             self.m_stationCollection.resumeGetRemoteStations();
             self.getTotalActiveStation();
             // log('in view');
-
         },
 
         /**
@@ -188,7 +186,7 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
                 '<span id="stationIcon' + i_stationModel.get('id') + '">' +
                 '<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg"><g><circle stroke="black" id="svg_1" fill="' + i_stationModel.get('stationColor') + '" stroke-width="2" r="16" cy="20" cx="20"/></g></svg>' +
                 '</span>' +
-                '<span style="font-size: 1.5em; position: relative; top: -23px">' + i_stationModel.get('stationName') + '</span>' +
+                '<span class="' + BB.lib.unclass(Elements.CLASS_STAION_NAME) + '" style="font-size: 1.5em; position: relative; top: -23px">' + i_stationModel.get('stationName') + '</span>' +
                 '</a>' +
                 '</li>';
             $(Elements.STATION_LIST_VIEW).append(snippet)
@@ -207,6 +205,13 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
                     // log('cmd done'+command);
                 });
                 return false;
+            });
+
+            $(Elements.STATION_REFRESH).on('click', function (e) {
+                $(Elements.STATION_LIST_VIEW).fadeOut('fast', function() {
+                    self.render();
+                    $(this).fadeIn('fast');
+                });
             });
 
             $(Elements.STATION_RELOAD_COMMAND).on('click', function (e) {
@@ -279,9 +284,11 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
                     pepper.removeStation(self.m_selected_station_id);
                     navigationView.save(function () {
                     });
-                    pepper.sync();
-                    self._removeStationFromLI(self.m_selected_station_id);
-                    navigationView.resetPropertiesView();
+                    pepper.sync(function(){
+                        self._removeStationFromLI(self.m_selected_station_id);
+                        navigationView.resetPropertiesView();
+                    });
+
                 }
             });
         },

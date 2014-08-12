@@ -217,6 +217,7 @@ Elements.STATION_STOP_COMMAND = '#stationStopCommand';
 Elements.STATION_RELOAD_COMMAND = '#stationReloadCommand';
 Elements.STATION_SNAPSHOT_COMMAND = '#stationSnapshotCommand';
 Elements.STATION_SELECTION_CAMPAIGN = '#stationSelectionCampaign'
+Elements.STATION_REFRESH = '#stationRefresh';
 Elements.STATION_REMOVE = '#stationRemove';
 Elements.STATION_EVENT_SEND_COMMAND = '#stationEventSendCommand';
 Elements.STATION_SEND_EVENT_VALUE = '#stationSendEventValue';
@@ -337,6 +338,7 @@ Elements.CLASS_RES_HID = '.reshid';
 Elements.CLASS_VIDEOS = '.videos';
 Elements.CLASS_NAV_SELECTION = '.navSelection';
 Elements.CLASS_NAV_ACTIVESEL = '.navActiveSel';
+Elements.CLASS_STAION_NAME = '.stationName';
 
 
 

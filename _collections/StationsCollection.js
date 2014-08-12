@@ -6,6 +6,17 @@
  **/
 define(['jquery', 'backbone', 'StationModel', 'simplestorage'], function ($, Backbone, StationModel, simpleStorage) {
 
+    /**
+     Custom event fired when station name changed
+     @event STATION_NAME_CHANGED
+     @param {This} caller
+     @param {Self} context caller
+     @param {Event} rss link
+     @static
+     @final
+     **/
+    BB.EVENTS.STATION_NAME_CHANGED = 'STATION_NAME_CHANGED';
+
     var StationsCollection = Backbone.Collection.extend({
 
         model: StationModel,
@@ -18,12 +29,12 @@ define(['jquery', 'backbone', 'StationModel', 'simplestorage'], function ($, Bac
             var self = this;
 
             self.m_simpleStorage = simpleStorage;
+            // self.m_blankNameStations = {};
             self.m_pollTimer = self.m_simpleStorage.get('pollStationsTime');
             if (_.isUndefined(self.m_pollTimer)) {
                 self.m_pollTimer = 120;
                 self.m_simpleStorage.set('pollStationsTime', self.m_pollTimer);
             }
-
             self.m_refreshHandle = undefined;
             self.resumeGetRemoteStations();
             // _.bind(self._onStationPollTimeChanged,self);
@@ -49,6 +60,7 @@ define(['jquery', 'backbone', 'StationModel', 'simplestorage'], function ($, Bac
          **/
         _populateCollection: function (i_xmlStations) {
             var self = this;
+            var addedNewStations = false;
             $(i_xmlStations).find('Station').each(function (key, value) {
                 var stationID = $(value).attr('id');
                 var stationData = {
@@ -71,17 +83,40 @@ define(['jquery', 'backbone', 'StationModel', 'simplestorage'], function ($, Bac
                     stationColor: self._getStationIconColor($(value).attr('connection'))
                 };
 
+                if (_.isEmpty(stationData.stationName))
+                    self._getUpdatedStationName(stationData.stationID);
+
                 var stationModel = self.findWhere({'stationID': stationID});
                 if (_.isUndefined(stationModel)) {
                     // new station added
                     stationModel = new StationModel(stationData);
                     self.add(stationModel);
+                    addedNewStations = true;
                 } else {
                     // update existing station
                     if (stationModel.get('connection') != stationData.connection)
                         stationData.connectionStatusChanged = true;
                     stationModel.set(stationData);
                 }
+            });
+            if (addedNewStations)
+                pepper.sync(function(){});
+        },
+
+        /**
+         Name is empty, so we pepper.sync to get updated station name
+         @method setPlayerData
+         @param {Number} i_playerData
+         @return {Number} Unique clientId.
+         **/
+        _getUpdatedStationName: function (i_stationID) {
+            var self = this;
+            pepper.getStationName(i_stationID, function(i_stationName){
+                BB.comBroker.fire(BB.EVENTS.STATION_NAME_CHANGED, this, self,
+                    {
+                        stationID: i_stationID,
+                        stationName: i_stationName
+                    });
             });
         },
 
@@ -147,10 +182,10 @@ define(['jquery', 'backbone', 'StationModel', 'simplestorage'], function ($, Bac
             self.m_pollTimer = parseInt(self.m_pollTimer);
             log('polling on ' + self.m_pollTimer);
             if (_.isNaN(self.m_pollTimer) || _.isUndefined(self.m_pollTimer))
-                self.m_pollTimer = 30;
+                self.m_pollTimer = 120;
             self.m_refreshHandle = setInterval(function () {
                 self._getRemoteStations();
-                log('getting station ' + Date.now() + ' ' +  self.m_pollTimer);
+                log('getting station ' + Date.now() + ' ' + self.m_pollTimer);
             }, self.m_pollTimer * 1000);
         }
     });

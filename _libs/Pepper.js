@@ -237,8 +237,7 @@ Pepper.prototype = {
      **/
     sync: function (i_callBack) {
         var self = this;
-        self.m_loaderManager.requestData(function (i_callBack) {
-        });
+        self.m_loaderManager.requestData(i_callBack);
     },
 
     /**
@@ -1790,6 +1789,23 @@ Pepper.prototype = {
             campaignIDs.push(self.getCampaignIdFromCampaignBoardId(campaign_board_id));
         });
         return campaignIDs;
+    },
+
+    /**
+     Sync to pepper and get station name for station id, callback on server sync return
+     @method recBranchStation['station_id']
+     @param {Number} i_stationID
+     @param {Number} i_callBack
+     **/
+    getStationName: function(i_stationID, i_callBack){
+        pepper.sync(function () {
+            $(pepper.m_msdb.table_branch_stations().getAllPrimaryKeys()).each(function (k, branch_station_id) {
+                var recBranchStation = pepper.m_msdb.table_branch_stations().getRec(branch_station_id);
+                if (recBranchStation['native_id'] == i_stationID) {
+                    i_callBack(recBranchStation['station_name'])
+                }
+            });
+        });
     },
 
     /**

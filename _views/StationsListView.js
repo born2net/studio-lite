@@ -20,7 +20,6 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             var self = this;
 
             BB.comBroker.setService(BB.SERVICES['STATIONS_LIST_VIEW'], self);
-
             self.m_snapshotInProgress = undefined;
             self.m_imageReloadCount = 0;
             self.m_imagePath = '';
@@ -61,7 +60,7 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             var self = this;
             self.m_stationCollection.resumeGetRemoteStations();
             self.getTotalActiveStation();
-            // log('in view');
+            log('in view');
         },
 
         /**
@@ -72,7 +71,7 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
         unrender: function () {
             var self = this;
             self.m_stationCollection.pauseGetRemoteStations();
-            // log('out of view');
+            log('out of view');
         },
 
         /**
@@ -209,7 +208,7 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
 
             $(Elements.STATION_REFRESH).on('click', function (e) {
                 $(Elements.STATION_LIST_VIEW).fadeOut('fast', function() {
-                    self.render();
+                    self.m_stationCollection.getRemoteStations();
                     $(this).fadeIn('fast');
                 });
             });

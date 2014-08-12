@@ -146,24 +146,6 @@ define(['jquery', 'backbone', 'StationModel', 'simplestorage'], function ($, Bac
         },
 
         /**
-         Retrieve remote station list and status from remote mediaSERVER
-         @method _getRemoteStations
-         **/
-        _getRemoteStations: function () {
-            var self = this;
-            var userData = pepper.getUserData();
-            var url = 'https://' + userData.domain + '/WebService/getStatus.ashx?user=' + userData.userName + '&password=' + userData.userPass + '&callback=?';
-            $.getJSON(url,
-                function (data) {
-                    var s64 = data['ret'];
-                    var str = $.base64.decode(s64);
-                    var xml = $.parseXML(str);
-                    self._populateCollection(xml);
-                }
-            );
-        },
-
-        /**
          Pause retrieval of remote mediaSERVER station list and stats
          @method pauseGetRemoteStations
          **/
@@ -178,15 +160,33 @@ define(['jquery', 'backbone', 'StationModel', 'simplestorage'], function ($, Bac
          **/
         resumeGetRemoteStations: function () {
             var self = this;
-            self._getRemoteStations();
+            self.getRemoteStations();
             self.m_pollTimer = parseInt(self.m_pollTimer);
             log('polling on ' + self.m_pollTimer);
             if (_.isNaN(self.m_pollTimer) || _.isUndefined(self.m_pollTimer))
                 self.m_pollTimer = 120;
             self.m_refreshHandle = setInterval(function () {
-                self._getRemoteStations();
+                self.getRemoteStations();
                 log('getting station ' + Date.now() + ' ' + self.m_pollTimer);
             }, self.m_pollTimer * 1000);
+        },
+
+        /**
+         Retrieve remote station list and status from remote mediaSERVER
+         @method getRemoteStations
+         **/
+        getRemoteStations: function () {
+            var self = this;
+            var userData = pepper.getUserData();
+            var url = 'https://' + userData.domain + '/WebService/getStatus.ashx?user=' + userData.userName + '&password=' + userData.userPass + '&callback=?';
+            $.getJSON(url,
+                function (data) {
+                    var s64 = data['ret'];
+                    var str = $.base64.decode(s64);
+                    var xml = $.parseXML(str);
+                    self._populateCollection(xml);
+                }
+            );
         }
     });
 

@@ -294,7 +294,6 @@ Elements.ADD_BLOCK_TEMPLATE = '#addBlockTemplate';
 
 // classes
 Elements.CLASS_ADD_NEW_BLOCK_LIST_WRAP = '.addNewBlockListWrap';
-Elements.CLASS_SELECT_SCENE_DROPDOWN = '.selectSceneDropDown';
 Elements.CLASS_SELECT_SCENE_ITEM_DROPDOWN = '.selectSceneItemDropDown';
 Elements.CLASS_SCENE_ADD_NEW = '.sceneAddNew';
 Elements.CLASS_SCENE_REMOVES = '.sceneRemoves';

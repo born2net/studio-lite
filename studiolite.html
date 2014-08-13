@@ -43,8 +43,8 @@
                 </div>
             </div>
         </div>
-
-        <a id="appName" class="navbar-brand" href="#" style="font-family: Lobster Two; font-size: 3em">StudioLite</a></div>
+        <a id="appName" class="navbar-brand" href="#" style="font-family: Lobster Two; font-size: 3em">StudioLite</a>
+    </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
             <li class="hidden-lg" dropdown><a href="#" class="dropdown-toggle" data-toggle="dropdown">Navigator<b
@@ -118,7 +118,7 @@
         <div id="livePreviewButtons" class="alignTextCenter">
 
             <button id="playerPreviewReplay" title="launch player"
-                    data-localize-tooltip="playPreview"  type="button"
+                    data-localize-tooltip="playPreview" type="button"
                     class="btn btn-default">
                 <i style="font-size: 1em" class="fa fa-youtube-play"></i>
                 <span data-localize="launch"> launch </span>
@@ -126,14 +126,14 @@
 
             <!-- removed data-toggle="tooltip" so we can support localized tooltips-->
             <button id="playerPreviewStop" title="stop playback"
-                    data-localize-tooltip="stopPreview"  type="button"
+                    data-localize-tooltip="stopPreview" type="button"
                     class="btn btn-default">
                 <i style="font-size: 1em" class="fa fa-stop"></i>
                 <span data-localize="stop"> stop </span>
             </button>
 
             <button id="playerPreviewExit" title="exit preview"
-                    data-localize-tooltip="exitPreview"  type="button"
+                    data-localize-tooltip="exitPreview" type="button"
                     class="btn btn-default">
                 <i style="font-size: 1em" class="fa fa-sign-out"></i>
                 <span data-localize="exit"> exit </span>
@@ -157,17 +157,21 @@
                 data-localize="navStation">Stations</span></li>
         <li class="navSelection scenesPanel list-group-item"><i class="navicons fa fa-pencil-square-o"></i><span
                 data-localize="navScenes">Scenes</span></li>
-        <li class="navSelection settingsPanel list-group-item"><i class="navicons fa fa-gears"></i><span data-localize="navSettings">Settings</span>
+        <li class="navSelection settingsPanel list-group-item"><i class="navicons fa fa-gears"></i><span
+                data-localize="navSettings">Settings</span>
         </li>
         <li class="navSelection proStudioPanel list-group-item"><i class="navicons fa fa-cloud-upload"></i><span
                 data-localize="navStudioPanel">Pro </span><span class="reshid"
                                                                 data-localize="freeBrackets"> (FREE)</span></li>
-        <li class="navSelection reshid helpPanel list-group-item"><i class="navicons fa fa-life-ring"></i><span data-localize="navHelpPanel">Help</span>
+        <li class="navSelection reshid helpPanel list-group-item"><i class="navicons fa fa-life-ring"></i><span
+                data-localize="navHelpPanel">Help</span>
         </li>
-        <li class="navSelection reshid installPanel list-group-item"><i class="navicons fa fa-laptop"></i><span class="reshid"
-                                                                                                   data-localize="navInstallPanel">Install</span>
+        <li class="navSelection reshid installPanel list-group-item"><i class="navicons fa fa-laptop"></i><span
+                class="reshid"
+                data-localize="navInstallPanel">Install</span>
         </li>
-        <li class="navSelection logoutPanel list-group-item"><i class="navicons fa fa-power-off"></i><span data-localize="navLogout">Logout</span>
+        <li class="navSelection logoutPanel list-group-item"><i class="navicons fa fa-power-off"></i><span
+                data-localize="navLogout">Logout</span>
         </li>
     </ul>
 </div>
@@ -306,11 +310,14 @@
                                      data-toggle="context" data-target="#sequencerContextMenu">
                                     <div id="sequencerContextMenu">
                                         <ul id="sequencerMenuContext" class="dropdown-menu" role="menu">
-                                            <li><a tabindex="-1" name="editLayout" data-localize="editLayout">edit layout</a></li>
+                                            <li><a tabindex="-1" name="editLayout" data-localize="editLayout">edit
+                                                layout</a></li>
                                             <li><a tabindex="-1" name="remove" data-localize="remove">remove</a></li>
-                                            <li><a tabindex="-1" name="first" data-localize="moveFirst">move to first</a></li>
+                                            <li><a tabindex="-1" name="first" data-localize="moveFirst">move to
+                                                first</a></li>
                                             <li><a tabindex="-1" name="last" data-localize="moveLast">move to last</a>
-                                            <li><a tabindex="-1" name="firstChannel" data-localize="firstChannel">first channel</a></li>
+                                            <li><a tabindex="-1" name="firstChannel" data-localize="firstChannel">first
+                                                channel</a></li>
                                             </li>
                                         </ul>
                                     </div>
@@ -353,7 +360,7 @@
                                 title="remove content" data-localize="empty"
                                 data-localize-tooltip="removeContent"
                                 class="btn btn-default btn-sm">
-                                <i class="fa fa-minus"></i>
+                            <i class="fa fa-minus"></i>
                         </button>
                         <button id="timelinePreview" type="button"
                                 title="campaign preview" data-localize="empty"
@@ -369,7 +376,8 @@
                         <ul id="storylineMenuContex" class="dropdown-menu" role="menu">
                             <li><a tabindex="-1" name="nextChannel" data-localize="nextChannel">next channel</a></li>
                             <li><a tabindex="-1" name="addContent" data-localize="addContent">add content</a></li>
-                            <li><a tabindex="-1" name="removeContent" data-localize="removeContent">remove content</a></li>
+                            <li><a tabindex="-1" name="removeContent" data-localize="removeContent">remove content</a>
+                            </li>
                             <li><a tabindex="-1" name="first" data-localize="moveFirst">move to first</a></li>
                             <li><a tabindex="-1" name="last" data-localize="moveLast">move to last</a>
                             </li>
@@ -379,7 +387,8 @@
                     <div class="panel-body">
                         <aside>
                             <aside>
-                                <div id="storyLine" class="context"  data-toggle="context" data-target="#storylineContextMenu">
+                                <div id="storyLine" class="context" data-toggle="context"
+                                     data-target="#storylineContextMenu">
                                 </div>
                             </aside>
                         </aside>
@@ -404,7 +413,8 @@
                         </li>
                     </ul>
                 </div>
-                <ul id="sortable" class="list-group context"  style="padding:20px" data-toggle="context" data-target="#channelListContextMenu">
+                <ul id="sortable" class="list-group context" style="padding:20px" data-toggle="context"
+                    data-target="#channelListContextMenu">
                 </ul>
             </div>
         </div>
@@ -419,19 +429,19 @@
 
     <div class="btn-group">
         <button id="layoutEditorAddNew" type="button" data-localize-tooltip="addButtonToolTip" title="add"
-                 class="btn btn-default btn-sm"><i style="font-size: 1em"
-                                                                        class="fa fa-plus"> </i></button>
+                class="btn btn-default btn-sm"><i style="font-size: 1em"
+                                                  class="fa fa-plus"> </i></button>
         <button id="layoutEditorRemove" type="button" data-localize-tooltip="removeButtonToolTip"
-                title="remove division"  class="btn btn-default btn-sm"><i
+                title="remove division" class="btn btn-default btn-sm"><i
                 style="font-size: 1em" class="fa fa-minus"> </i></button>
         <button id="layoutEditorPushTop" type="button" data-localize-tooltip="pushDivToTopButtonToolTip"
-                title="push division to top"  class="btn btn-default btn-sm"><i
+                title="push division to top" class="btn btn-default btn-sm"><i
                 style="font-size: 1em" class="fa fa-angle-double-up"> </i></button>
         <button id="layoutEditorPushBottom" type="button" data-localize-tooltip="pushDivToBottomButtonToolTip"
-                title="push division to bottom"  class="btn btn-default btn-sm"><i
+                title="push division to bottom" class="btn btn-default btn-sm"><i
                 style="font-size: 1em" class="fa fa-angle-double-down"> </i></button>
         <button id="layoutEditorNext" type="button" data-localize-tooltip="getNextDivButtonToolTip"
-                title="get next division"  class="btn btn-default btn-sm"><i
+                title="get next division" class="btn btn-default btn-sm"><i
                 style="font-size: 1em" class="fa fa-external-link"> </i></button>
     </div>
     <div id="screenLayoutEditorCanvasWrap" align="center"
@@ -468,13 +478,13 @@
 <div id="stationsPanel" style="display: none">
     <button id="stationRemove" title="unregisters a remote station"
             data-localize="empty"
-            data-localize-tooltip="unregRemoteStationButtonToolTip"  type="button"
+            data-localize-tooltip="unregRemoteStationButtonToolTip" type="button"
             class="btn btn-default"><span
             class="glyphicon glyphicon-remove-circle"></span><span data-localize="removeStation"> remove station </span>
     </button>
     <button id="stationRefresh" title="refresh"
             data-localize="empty"
-            data-localize-tooltip="refresh"  type="button"
+            data-localize-tooltip="refresh" type="button"
             class="btn btn-default"><span
             class="glyphicon glyphicon-refresh">&nbsp;</span><span data-localize="refresh"> refresh </span>
     </button>
@@ -487,13 +497,16 @@
     <div id="sceneSelector" class="page center">
         <div>
             <div id="sceneSelectionButtons" class="btn-group">
-                <button id="newScene" type="button" class="btn btn-default"><i style="font-size: 1em" class="fa fa-magic"></i>
+                <button id="newScene" type="button" class="btn btn-default"><i style="font-size: 1em"
+                                                                               class="fa fa-magic"></i>
                     <span data-localize="newScene">new scene</span>
                 </button>
-                <button id="duplicateScene" type="button" class="btn btn-default"><i style="font-size: 1em" class="fa fa-files-o"></i>
+                <button id="duplicateScene" type="button" class="btn btn-default"><i style="font-size: 1em"
+                                                                                     class="fa fa-files-o"></i>
                     <span data-localize="duplicateScene">duplicate scene</span>
                 </button>
-                <button id="removeSelectedScene" type="button" class="btn btn-default"><i style="font-size: 1em" class="fa fa-trash-o"></i>
+                <button id="removeSelectedScene" type="button" class="btn btn-default"><i style="font-size: 1em"
+                                                                                          class="fa fa-trash-o"></i>
                     <span data-localize="removeScene">remove scene</span>
                 </button>
             </div>
@@ -513,7 +526,7 @@
                     </button>
                     <button type="button" data-localize="empty"
                             data-localize-tooltip="addItem"
-                            title="add item"  class="sceneAddNew btn btn-default btn-sm"><i
+                            title="add item" class="sceneAddNew btn btn-default btn-sm"><i
                             style="font-size: 1em" class="fa fa-plus"> </i></button>
                     <button type="button" data-localize="empty"
                             data-localize-tooltip="removeItem"
@@ -521,39 +534,39 @@
                             style="font-size: 1em" class="fa fa-minus"> </i></button>
                     <button id="scenePlayPreview" type="button" data-localize="empty"
                             data-localize-tooltip="playPreview"
-                            title="play preview"  class="btn btn-default btn-sm"><i
+                            title="play preview" class="btn btn-default btn-sm"><i
                             style="font-size: 1em" class="fa fa-play"> </i></button>
                     <button id="sceneEditorPushTop" type="button" data-localize="empty"
                             data-localize-tooltip="pushItemToTopButtonToolTip"
-                            title="push item to top"  class="btn btn-default btn-sm"><i
+                            title="push item to top" class="btn btn-default btn-sm"><i
                             style="font-size: 1em" class="fa fa-angle-double-up"> </i></button>
                     <button id="sceneEditorPushBottom" type="button" data-localize="empty"
                             data-localize-tooltip="pushItemToBottomButtonToolTip"
-                            title="push item to bottom"  class="btn btn-default btn-sm"><i
+                            title="push item to bottom" class="btn btn-default btn-sm"><i
                             style="font-size: 1em" class="fa fa-angle-double-down"> </i></button>
                     <button id="sceneZoomIn" type="button" data-localize="empty"
                             data-localize-tooltip="sceneZoomIn"
-                            title="zoom in"  class="btn btn-default btn-sm"><i
+                            title="zoom in" class="btn btn-default btn-sm"><i
                             style="font-size: 1.3em" class="fa fa-search-plus"> </i></button>
                     <button id="sceneZoomOut" type="button" data-localize="empty"
                             data-localize-tooltip="sceneZoomOut"
-                            title="zoom out"  class="btn btn-default btn-sm"><i
+                            title="zoom out" class="btn btn-default btn-sm"><i
                             style="font-size: 1.3em" class="fa fa-search-minus"> </i></button>
                     <button id="sceneZoomReset" type="button" data-localize="empty"
                             data-localize-tooltip="sceneZoomReset"
-                            title="zoom reset"  class="btn btn-default btn-sm"><i
+                            title="zoom reset" class="btn btn-default btn-sm"><i
                             style="font-size: 1.3em" class="fa fa-search"> </i></button>
                     <button id="sceneUndo" type="button" data-localize="empty"
                             data-localize-tooltip="undo"
-                            title="undo"  class="btn btn-default btn-sm"><i
+                            title="undo" class="btn btn-default btn-sm"><i
                             style="font-size: 1.3em" class="fa fa-reply"> </i></button>
                     <button id="sceneRedo" type="button" data-localize="empty"
                             data-localize-tooltip="redo"
-                            title="redo"  class="btn btn-default btn-sm"><i
+                            title="redo" class="btn btn-default btn-sm"><i
                             style="font-size: 1.3em" class="fa fa-share"> </i></button>
                     <button id="sceneGridMagnet" type="button" data-localize="empty"
                             data-localize-tooltip="magneticGrid"
-                            title="magnetic grid"  class="btn btn-default btn-sm"><i
+                            title="magnetic grid" class="btn btn-default btn-sm"><i
                             style="font-size: 1.3em" class="fa fa-th-large"> </i></button>
                     <div class="input-group" style="margin-left: 0px">
                         <div class="input-group-btn">
@@ -738,8 +751,10 @@
 </div>
 <div id="helpPanel" style="display: none">
     <h3 data-localize="videoTutorial">Video tutorial</h3>
-    <button class="videos btn btn-primary btn-lg" name="StudioLite.mp4"><span data-localize="basicIntroductionVideo">basic introduction</span></button>
-    <button class="videos btn btn-primary btn-lg" name="StudioLiteAdv.mp4"><span data-localize="advancedConfigurationVideo">advanced configuration</span></button>
+    <button class="videos btn btn-primary btn-lg" name="StudioLite.mp4"><span data-localize="basicIntroductionVideo">basic introduction</span>
+    </button>
+    <button class="videos btn btn-primary btn-lg" name="StudioLiteAdv.mp4"><span
+            data-localize="advancedConfigurationVideo">advanced configuration</span></button>
     <hr/>
     <div class="reshid">
         <h3 data-localize="additionalLinks">Additional links</h3>
@@ -922,18 +937,21 @@
 <div id="propPanelWrap" class="hidden-xs col-sm-3 col-lg-3">
 <div id="propPanel">
 <div id="dashboardView" class="yScroll noXScroll">
-    <button id="dashboardRefresh" style="float: right; margin-right: 15px" class="btn btn-default" title="refresh" data-localize="empty" data-localize-tooltip="refresh" >
+    <button id="dashboardRefresh" style="float: right; margin-right: 15px" class="btn btn-default" title="refresh"
+            data-localize="empty" data-localize-tooltip="refresh">
         <span class="glyphicon glyphicon glyphicon-refresh"></span>
     </button>
     <div style="height: 150px; clear: both">
         <div id="cloudStorage">
         </div>
         <h2 id="cloudStoragePerc"></h2>
-        <h4 data-localize="totalCloudStorage" class="cloudStorageCapacity">total cloud storage </h4>&nbsp<h4 id="cloudStorageCapacity" class="cloudStorageCapacity"></h4>
+        <h4 data-localize="totalCloudStorage" class="cloudStorageCapacity">total cloud storage </h4>&nbsp<h4
+            id="cloudStorageCapacity" class="cloudStorageCapacity"></h4>
     </div>
     <div style="height: 150px">
         <hr class="hrThinDash"/>
         <h4>remote SignagePlayers</h4>
+
         <div id="dashboardStationTotal">
             <span id="dashboardTotalStation"></span>
         </div>
@@ -946,16 +964,21 @@
         <hr class="hrThinDash"/>
     </div>
     <div style="height: 50px">
-        <i style="font-size: 17px" class="fa fa-dashboard"></i>&nbsp;<h4 style="display: inline-block" data-localize="serverResponse"> server response time</h4>
+        <i style="font-size: 17px" class="fa fa-dashboard"></i>&nbsp;<h4 style="display: inline-block"
+                                                                         data-localize="serverResponse"> server response
+        time</h4>
+
         <div style="height: 50px" id="serverResponseTime">
         </div>
     </div>
     <div style="height: 150px; position: relative; top: 70px">
         <hr class="hrThinDash" style="font-size: 30px"/>
-            <span class="dashboardBullets" data-localize="server"> Server: </span>
-            <span class="dashboardBullets" id="serverName"></span><br/>
-            <span class="dashboardBullets"  data-localize="businessId"> Business id: </span><span class="dashboardBullets" id="buisinessID"></span><br/>
-            <span class="dashboardBullets" data-localize="username"> User name: </span><span class="userName dashboardBullets"></span><br/>
+        <span class="dashboardBullets" data-localize="server"> Server: </span>
+        <span class="dashboardBullets" id="serverName"></span><br/>
+        <span class="dashboardBullets" data-localize="businessId"> Business id: </span><span class="dashboardBullets"
+                                                                                             id="buisinessID"></span><br/>
+        <span class="dashboardBullets" data-localize="username"> User name: </span><span
+            class="userName dashboardBullets"></span><br/>
     </div>
 
 </div>
@@ -986,7 +1009,7 @@
     </select>
     <hr/>
     <label for="repeatToFit" data-localize="repeatToFit"> repeat to fit</label>
-    <select id="repeatToFit"  data-role="slider">
+    <select id="repeatToFit" data-role="slider">
         <option value="off" data-localize="off">Off</option>
         <option value="on" data-localize="on">On</option>
     </select>
@@ -1325,7 +1348,7 @@
 </div>
 </div>
 <div id="footer"><br>
-    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.164 </span>
+    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.165 </span>
 </div>
 
 
@@ -1354,49 +1377,91 @@
     <dt><a href="#"><span>Select language</span></a></dt>
     <dd>
         <ul>
-            <li><a href="#"><img class="flag" src="_assets/flags/en.png" alt=""/>English<span class="value">en</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/en.png" alt=""/>English<span
+                    class="value">en</span></a></li>
             <hr/>
-            <li><a href="#"><img class="flag" src="_assets/flags/ar.png" alt=""/>Arabic<span class="value">ar</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/bg.png" alt=""/>Bulgarian<span class="value">bg</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/sq.png" alt=""/>Albanian<span class="value">sq</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/ca.png" alt=""/>Catalan<span class="value">ca</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/zh.png" alt=""/>Chinese Simplified<span class="value">zh</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/hr.png" alt=""/>Croatian<span class="value">hr</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/cs.png" alt=""/>Czech<span class="value">cs</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/da.png" alt=""/>Danish<span class="value">da</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/nl.png" alt=""/>Dutch<span class="value">nl</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/en.png" alt=""/>English<span class="value">en</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/et.png" alt=""/>Estonian<span class="value">et</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/tl.png" alt=""/>Filipino<span class="value">tl</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/fi.png" alt=""/>Finnish<span class="value">fi</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/fr.png" alt=""/>French<span class="value">fr</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/gl.png" alt=""/>Galician<span class="value">gl</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/de.png" alt=""/>German<span class="value">de</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/el.png" alt=""/>Greek<span class="value">el</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/iw.png" alt=""/>Hebrew<span class="value">iw</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/hi.png" alt=""/>Hindi<span class="value">hi</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/hu.png" alt=""/>Hungarian<span class="value">hu</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/id.png" alt=""/>Indonesian<span class="value">id</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/it.png" alt=""/>Italian<span class="value">it</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/ja.png" alt=""/>Japanese<span class="value">ja</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/ko.png" alt=""/>Korean<span class="value">ko</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/lv.png" alt=""/>Latvian<span class="value">lv</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/lt.png" alt=""/>Lithuanian<span class="value">lt</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/mt.png" alt=""/>Maltese<span class="value">mt</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/no.png" alt=""/>Norwegian<span class="value">no</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/pl.png" alt=""/>Polish<span class="value">pl</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/pt.png" alt=""/>Portuguese<span class="value">pt</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/ro.png" alt=""/>Romanian<span class="value">ro</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/ru.png" alt=""/>Russian<span class="value">ru</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/sr.png" alt=""/>Serbian<span class="value">sr</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/sk.png" alt=""/>Slovak<span class="value">sk</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/sl.png" alt=""/>Slovenian<span class="value">sl</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/es.png" alt=""/>Spanish<span class="value">es</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/sv.png" alt=""/>Swedish<span class="value">sv</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/th.png" alt=""/>Thai<span class="value">th</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/tr.png" alt=""/>Turkish<span class="value">tr</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/uk.png" alt=""/>Ukrainian<span class="value">uk</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/vi.png" alt=""/>Vietnamese<span class="value">vi</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/ar.png" alt=""/>Arabic<span class="value">ar</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/bg.png" alt=""/>Bulgarian<span class="value">bg</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/sq.png" alt=""/>Albanian<span
+                    class="value">sq</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/ca.png" alt=""/>Catalan<span
+                    class="value">ca</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/zh.png" alt=""/>Chinese Simplified<span class="value">zh</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/hr.png" alt=""/>Croatian<span
+                    class="value">hr</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/cs.png" alt=""/>Czech<span class="value">cs</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/da.png" alt=""/>Danish<span class="value">da</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/nl.png" alt=""/>Dutch<span class="value">nl</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/en.png" alt=""/>English<span
+                    class="value">en</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/et.png" alt=""/>Estonian<span
+                    class="value">et</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/tl.png" alt=""/>Filipino<span
+                    class="value">tl</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/fi.png" alt=""/>Finnish<span
+                    class="value">fi</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/fr.png" alt=""/>French<span class="value">fr</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/gl.png" alt=""/>Galician<span
+                    class="value">gl</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/de.png" alt=""/>German<span class="value">de</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/el.png" alt=""/>Greek<span class="value">el</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/iw.png" alt=""/>Hebrew<span class="value">iw</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/hi.png" alt=""/>Hindi<span class="value">hi</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/hu.png" alt=""/>Hungarian<span class="value">hu</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/id.png" alt=""/>Indonesian<span class="value">id</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/it.png" alt=""/>Italian<span
+                    class="value">it</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/ja.png" alt=""/>Japanese<span
+                    class="value">ja</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/ko.png" alt=""/>Korean<span class="value">ko</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/lv.png" alt=""/>Latvian<span
+                    class="value">lv</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/lt.png" alt=""/>Lithuanian<span class="value">lt</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/mt.png" alt=""/>Maltese<span
+                    class="value">mt</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/no.png" alt=""/>Norwegian<span class="value">no</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/pl.png" alt=""/>Polish<span class="value">pl</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/pt.png" alt=""/>Portuguese<span class="value">pt</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/ro.png" alt=""/>Romanian<span
+                    class="value">ro</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/ru.png" alt=""/>Russian<span
+                    class="value">ru</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/sr.png" alt=""/>Serbian<span
+                    class="value">sr</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/sk.png" alt=""/>Slovak<span class="value">sk</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/sl.png" alt=""/>Slovenian<span class="value">sl</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/es.png" alt=""/>Spanish<span
+                    class="value">es</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/sv.png" alt=""/>Swedish<span
+                    class="value">sv</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/th.png" alt=""/>Thai<span class="value">th</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/tr.png" alt=""/>Turkish<span
+                    class="value">tr</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/uk.png" alt=""/>Ukrainian<span class="value">uk</span></a>
+            </li>
+            <li><a href="#"><img class="flag" src="_assets/flags/vi.png" alt=""/>Vietnamese<span class="value">vi</span></a>
+            </li>
         </ul>
     </dd>
 </div>
@@ -1487,7 +1552,8 @@
 
 <!-- Add Block Template -->
 <div id="addBlockTemplate" style="display: none">
-    <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span class="glyphicon glyphicon-chevron-left"></span></button>
+    <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
+            class="glyphicon glyphicon-chevron-left"></span></button>
     <h3 data-localize="contentToAdd">Select new content to add</h3>
 
     <div class="addNewBlockListWrap yScroll">

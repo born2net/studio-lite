@@ -25,8 +25,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             BB.comBroker.setService(BB.SERVICES['SCENE_TOOLBAR_VIEW'], self);
             self.m_selectedSceneID = undefined;
-            self._listenGoBackSceneSelection();
             self._listenSceneSelection();
+            self._listenGoBackSceneSelection();
             self._listenSceneItemSelection();
             self._listenSceneDimensionsChanged();
             self._listenAddNewItem();
@@ -38,6 +38,17 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self._listenPushToBottom();
             self._listenSceneBlockList();
             self._listenMemento();
+        },
+
+        /**
+         Listen to changes in a new scene selection
+         @method _listenSceneSelection
+         **/
+        _listenSceneSelection: function () {
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS.LOAD_SCENE, function (e) {
+                self.m_selectedSceneID = e.edata;
+            });
         },
 
         /**
@@ -109,18 +120,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             });
             $(Elements.SCENE_ZOOM_RESET).on('click', function (e) {
                 BB.comBroker.fire(BB.EVENTS.SCENE_ZOOM_RESET);
-            });
-        },
-
-        /**
-         Listen to user selection of existing scene
-         @method _listenSceneSelection
-         **/
-        _listenSceneSelection: function () {
-            var self = this;
-            $(Elements.CLASS_SELECT_SCENE_DROPDOWN, self.el).on('click', function (e) {
-                self.m_selectedSceneID = $(e.target).data('scene_player_data_id');
-                // self._loadScene(self.m_selectedSceneID);
             });
         },
 

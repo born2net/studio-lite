@@ -55,10 +55,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_canvasScale = 1;
             self.SCALE_FACTOR = 1.2;
 
+            self._listenSceneViewStackSelected();
             self._listenSceneSelection();
             self._initializeBlockFactory();
             self._listenAddBlockWizard();
-            self._listenSceneToolbarSelected();
             self._listenZoom();
             self._listenToCanvasScroll();
             self._listenPushToTop();
@@ -79,14 +79,30 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
         /**
          Listen to when a new scene is selected via Slider View
-         @method _listenSceneSelection
+         @method _listenSceneViewStackSelected
          **/
-        _listenSceneSelection: function () {
+        _listenSceneViewStackSelected: function () {
             var self = this;
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self) {
                     log('load new scene');
                 }
+            });
+        },
+
+        /**
+         Listen to changes in a new scene selection
+         @method _listenSceneSelection
+         **/
+        _listenSceneSelection: function () {
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS.LOAD_SCENE, function (e) {
+                self.m_selectedSceneID = e.edata;
+                self._loadScene();
+                self._sceneCanvasSelected();
+                BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
+                if (self._mementoInit())
+                    self._mementoAddState();
             });
         },
 
@@ -201,22 +217,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_sceneBlock = self.m_blockFactory.createBlock(self.m_selectedSceneID, scene_player_data, BB.CONSTS.PLACEMENT_IS_SCENE);
             self.m_sceneBlock.setCanvas(self.m_canvas, self.m_gridMagneticMode);
             //_.extend(self.m_canvas, self.m_sceneBlock);
-        },
-
-        /**
-         Listen to changes in a new scene selection
-         @method _listenSceneToolbarSelected
-         **/
-        _listenSceneToolbarSelected: function () {
-            var self = this;
-            BB.comBroker.listen(BB.EVENTS.LOAD_SCENE, function (e) {
-                self.m_selectedSceneID = e.edata;
-                self._loadScene();
-                self._sceneCanvasSelected();
-                BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
-                if (self._mementoInit())
-                    self._mementoAddState();
-            });
         },
 
         /**

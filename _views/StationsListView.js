@@ -198,6 +198,12 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
          **/
         _wireUI: function () {
             var self = this;
+
+            $(Elements.STATION_RENAME).on('click', function (e) {
+                $(Elements.STATION_RENAME_INPUT).show();
+                $(Elements.STATION_NAME).hide();
+            });
+
             $(Elements.STATION_PLAY_COMMAND + ' , ' + Elements.STATION_STOP_COMMAND).on('click', function (e) {
                 var command = BB.lib.unhash(Elements.STATION_PLAY_COMMAND) == e.currentTarget.id ? 'start' : 'stop';
                 pepper.sendCommand(command, self.m_selected_station_id, function () {

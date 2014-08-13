@@ -89,6 +89,28 @@ aside > aside > div > ul > li {
     margin: 0;
 }
 
+#stationProperties {
+    display: none;
+}
+
+#stationName {
+    display: inline-block;
+}
+
+#stationRename {
+    display: inline-block;
+    float: left;
+    cursor: pointer;
+    margin-right: 4px;
+    margin-top: 11px;
+}
+
+#stationRenameInput {
+    display: none;
+    margin-top: 7px;
+    margin-bottom: 9px;
+}
+
 #channelProperties select {
     float: right;
     margin-right: 50px;

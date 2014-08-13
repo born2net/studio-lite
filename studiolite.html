@@ -1022,12 +1022,12 @@
 </div>
 <div id="viewerEditProperties" style="display: none">
     <h5 data-localize="screenDivision">screen division</h5>
-
     <div id="viewerDimensions"></div>
 </div>
-<div id="stationProperties" style="display: none">
+<div id="stationProperties">
     <h4 id="stationName"></h4>
-
+    <a id="stationRename"><i style="color: gray" class="fa fa-gear"></i></a>
+    <input id="stationRenameInput" type="text" data-localize="stationRename" placeholder="station name" value="">
     <div id="snapShotWrap">
         <svg id="snapShotSVG" xmlns="http://www.w3.org/2000/svg">
             <g>
@@ -1050,6 +1050,7 @@
         <select id="stationSelectionCampaign" class="form-control">
         </select>
     </div>
+
     <div id="stationInfo">
         <ul>
             <li><span data-localize="os">OS </span>: <span id="stationOS"></span></li>
@@ -1062,8 +1063,7 @@
             <li><span data-localize="lastUpd">Last upd </span>: <span id="stationLastUpdate"></span></li>
         </ul>
     </div>
-    <input type="text" name="eventName" data-localize="eventName" placeholder="event name" id="stationSendEventValue"
-           value="">
+    <input type="text" name="eventName" data-localize="eventName" placeholder="event name" id="stationSendEventValue" value="">
 
     <p></p>
     <button id="stationEventSendCommand" class="btn btn-primary" data-localize="sendStationEvent">Send station event

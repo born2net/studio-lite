@@ -133,18 +133,15 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_inputChangeHandler = _.debounce(function (e) {
                 if (!self.m_selected)
                     return;
-
                 var domPlayerData = self._getBlockPlayerData();
                 var w1 = parseFloat($(Elements.SCENE_WIDTH_INPUT).val());
                 var h1 = parseFloat($(Elements.SCENE_HEIGHT_INPUT).val());
                 var w2 = parseFloat($(domPlayerData).find('Layout').eq(0).attr('width'));
                 var h2 = parseFloat($(domPlayerData).find('Layout').eq(0).attr('height'));
-
                 if (w1 < 100 || h1 < 100 || _.isNaN(w1) || _.isNaN(h1))
                     return;
                 if (w1 == w2 && h1 == h2)
                     return;
-
                 $(domPlayerData).find('Layout').eq(0).attr('width', w1);
                 $(domPlayerData).find('Layout').eq(0).attr('height', h1);
                 self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);

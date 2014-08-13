@@ -29,6 +29,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self._listenAddRemoveScene();
             self._listenSceneRemoved();
             self._listenDuplicateScene();
+            self._listenSceneRename();
         },
 
         /**
@@ -56,6 +57,17 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             this._listenOpenProps();
             this._listenSelectScene();
             this._listenInputChange();
+        },
+
+        /**
+         Listen to renaming of scene so we can render the updated scene list
+         @method _listenSceneRename
+         **/
+        _listenSceneRename: function(){
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS['SCENE_LIST_UPDATED'], function(e){
+                self._render();
+            });
         },
 
         /**

@@ -60,6 +60,7 @@ define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockVideo', 'BlockScene'],
             var self = this;
             self._onTimelineChannelSelected();
             self._listenRandomPlayback();
+            self._listenRepeatToFit();
             self._propLoadChannel();
             self._listenResourceRemoving();
             self._listenSceneRemoving();
@@ -85,6 +86,7 @@ define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockVideo', 'BlockScene'],
         _reset: function () {
             var self = this;
             $(Elements.RANDOM_PLAYBACK).off('change', self.m_randomPlaybackHandler);
+            $(Elements.REPEAT_TO_FIT).off('change', self.m_repeatToFitPlaybackHandler);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.CAMPAIGN_RESET, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.REMOVING_RESOURCE, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.REMOVING_SCENE, self);
@@ -109,6 +111,21 @@ define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockVideo', 'BlockScene'],
         },
 
         /**
+         Wire UI and listen to change in related UI (random playback on channel)
+         @method _listenRandomPlayback
+         @return none
+         **/
+        _listenRepeatToFit: function () {
+            var self = this;
+            self.m_repeatToFitPlaybackHandler = $(Elements.REPEAT_TO_FIT).on('change', function (e) {
+                if (!self.m_selected)
+                    return;
+                self._onChangeRepeatToFit(e);
+            });
+        },
+
+
+        /**
          On change in random playback value update msdb with new value.
          @method _onChangeRandomPlayback
          @param {Event} e
@@ -118,6 +135,18 @@ define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockVideo', 'BlockScene'],
             var self = this;
             var state = $(Elements.RANDOM_PLAYBACK + ' option:selected').val() == "on" ? 'True' : 'False';
             pepper.setCampaignTimelineChannelRecord(self.m_campaign_timeline_chanel_id, 'random_order', state)
+        },
+
+        /**
+         On change in repeat to fit value update msdb with new value.
+         @method _onChangeRepeatToFit
+         @param {Event} e
+         @return none
+         **/
+        _onChangeRepeatToFit: function (e) {
+            var self = this;
+            var state = $(Elements.REPEAT_TO_FIT + ' option:selected').val() == "on" ? 'True' : 'False';
+            pepper.setCampaignTimelineChannelRecord(self.m_campaign_timeline_chanel_id, 'repeat_to_fit', state)
         },
 
         /**
@@ -168,9 +197,10 @@ define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockVideo', 'BlockScene'],
             var self = this;
 
             var recChannel = pepper.getCampaignTimelineChannelRecord(self.m_campaign_timeline_chanel_id);
-            var state = recChannel['random_order'] == 'True' ? 'on' : 'off';
-
-            $(Elements.RANDOM_PLAYBACK + ' option[value=' + state + ']').attr("selected", "selected");
+            var stateRandom = recChannel['random_order'] == 'True' ? 'on' : 'off';
+            var stateRepeat = recChannel['repeat_to_fit'] == 'True' ? 'on' : 'off';
+            $(Elements.RANDOM_PLAYBACK + ' option[value=' + stateRandom + ']').attr("selected", "selected");
+            $(Elements.REPEAT_TO_FIT + ' option[value=' + stateRepeat + ']').attr("selected", "selected");
             self.m_property.selectView(Elements.CHANNEL_PROPERTIES);
         },
 

@@ -89,6 +89,11 @@ aside > aside > div > ul > li {
     margin: 0;
 }
 
+#channelProperties select {
+    float: right;
+    margin-right: 80px;
+}
+
 #logoContainer img {
     width: 39px;
     height: 25px;

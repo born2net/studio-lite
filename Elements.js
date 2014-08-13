@@ -104,6 +104,7 @@ Elements.VIDEO_VOLUME_LABEL = '#videoVolumeLabel';
 Elements.BLOCK_ALPHA_LABEL = '#blockAlphaLabel';
 Elements.RSS_FONT_SETTINGS = '#rssFontSettings';
 Elements.RANDOM_PLAYBACK = '#randomPlayback';
+Elements.REPEAT_TO_FIT = '#repeatToFit';
 Elements.CHANNEL_PROPERTIES = '#channelProperties';
 Elements.TIMELINE_PROPERTIES = '#timelineProperties';
 Elements.RESOURCE_LIST_PROPERTIES = '#resourceListProperties';

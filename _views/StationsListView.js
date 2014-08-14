@@ -26,7 +26,7 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             self.m_selected_station_id = undefined;
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
             self.m_property.initPanel(Elements.STATION_PROPERTIES);
-
+            self.m_faIcon = $(Elements.STATION_RENAME).find('i');
             self.m_stationCollection = new StationsCollection();
 
             self.listenTo(self.m_stationCollection, 'add', function (i_model) {
@@ -47,6 +47,7 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             });
 
             self._wireUI();
+            self._listenEditName();
             self._wireSnapshot();
             self._populateStationCampaignDropDown(-1);
         },
@@ -72,6 +73,42 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             var self = this;
             self.m_stationCollection.pauseGetRemoteStations();
             log('out of view');
+        },
+
+        /**
+         Listen to station rename
+         @method _listenEditName
+         **/
+        _listenEditName: function () {
+            var self = this;
+
+            $(Elements.STATION_RENAME).on('mousedown', function (e) {
+
+                // if in edit more, return since blur event will handle saving
+                if (!$(self.m_faIcon).hasClass('fa-gear'))
+                    return;
+
+                // entering edit mode
+                $(Elements.STATION_RENAME_INPUT).toggle();
+                $(Elements.STATION_NAME).toggle();
+                $(self.m_faIcon).removeClass('fa-gear').addClass('fa-check');
+                var stationName = $(Elements.STATION_NAME).text();
+                $(Elements.STATION_RENAME_INPUT).prop('value', stationName);
+
+                $(Elements.STATION_RENAME_INPUT).one('blur', function (e) {
+                    var stationInput = $(Elements.STATION_RENAME_INPUT).prop('value');
+                    pepper.setStationName(self.m_selected_station_id, stationInput);
+                    var stationLI = $(Elements.STATION_LIST_VIEW).find('[data-station_id="' + self.m_selected_station_id + '"]');
+                    $(stationLI).find(Elements.CLASS_STAION_NAME).text(stationInput);
+
+                    // entering view mode
+                    $(self.m_faIcon).removeClass('fa-check').addClass('fa-gear');
+                    var stationInput = $(Elements.STATION_RENAME_INPUT).prop('value');
+                    $(Elements.STATION_NAME).text(stationInput);
+                    $(Elements.STATION_RENAME_INPUT).toggle();
+                    $(Elements.STATION_NAME).toggle();
+                });
+            });
         },
 
         /**
@@ -120,7 +157,8 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
          @param {Object} i_model
          **/
         _updatePropStats: function (i_model) {
-            $(Elements.STATION_NAME).text(i_model.get('stationName'));
+            var self = this;
+            $(Elements.STATION_NAME).text(pepper.getStationNameSync(self.m_selected_station_id));
             $(Elements.STATION_WATCHDOG).text(i_model.get('watchDogConnection'));
             $(Elements.STATION_TOTAL_MEMORY).text(i_model.get('totalMemory'));
             $(Elements.STATION_PEAK_MEMORY).text(i_model.get('peakMemory'));
@@ -135,7 +173,7 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
          Reconfigure the location (offset) of the screen snapshot UI depending on current property with
          @method _reconfigSnapLocation
 
-        _reconfigSnapLocation: function () {
+         _reconfigSnapLocation: function () {
             var offset = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).getPropWidth();
             if (offset < 240)
                 offset = 240;
@@ -199,10 +237,6 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
         _wireUI: function () {
             var self = this;
 
-            $(Elements.STATION_RENAME).on('click', function (e) {
-                $(Elements.STATION_RENAME_INPUT).show();
-                $(Elements.STATION_NAME).hide();
-            });
 
             $(Elements.STATION_PLAY_COMMAND + ' , ' + Elements.STATION_STOP_COMMAND).on('click', function (e) {
                 var command = BB.lib.unhash(Elements.STATION_PLAY_COMMAND) == e.currentTarget.id ? 'start' : 'stop';
@@ -213,7 +247,7 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             });
 
             $(Elements.STATION_REFRESH).on('click', function (e) {
-                $(Elements.STATION_LIST_VIEW).fadeOut('fast', function() {
+                $(Elements.STATION_LIST_VIEW).fadeOut('fast', function () {
                     self.m_stationCollection.getRemoteStations();
                     $(this).fadeIn('fast');
                 });
@@ -259,7 +293,7 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
          @param {String} i_eventName
          @param {String} i_eventValue
          @return none
-        _sendStationEvent: function (i_eventName, i_eventValue) {
+         _sendStationEvent: function (i_eventName, i_eventValue) {
             var self = this;
             model.sendStationEvent(model.getDataByID(self.m_selected_resource_id)['id'], i_eventName, i_eventValue);
             $(Elements.EVENT_SEND_BUTTON).button('disable');
@@ -289,7 +323,7 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
                     pepper.removeStation(self.m_selected_station_id);
                     navigationView.save(function () {
                     });
-                    pepper.sync(function(){
+                    pepper.sync(function () {
                         self._removeStationFromLI(self.m_selected_station_id);
                         navigationView.resetPropertiesView();
                     });
@@ -355,29 +389,30 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
          **/
         _sendSnapshotCommand: function (i_station) {
             var self = this;
-            var d =  new Date().getTime();
-            var path = pepper.sendSnapshot(d,0.2,i_station,function(e){});
-            setTimeout(function(){
+            var d = new Date().getTime();
+            var path = pepper.sendSnapshot(d, 0.2, i_station, function (e) {
+            });
+            setTimeout(function () {
                 self.m_imagePath = path;
-            },3000);
+            }, 3000);
 
             /*
-            var data = {
-                '@functionName': 'f_captureScreen',
-                '@stationID': i_station,
-                '@quality': 1,
-                '@time': Date.now()
-            };
-            self.ajaxJsonGetter.getData(data, onSnapshotReply);
-            function onSnapshotReply(e) {
-                if (e.responce['status'] == 'pass') {
-                    log('getting image from ' + e.responce['path']);
-                    self.m_imagePath = e.responce['path'];
-                }
-            }
+             var data = {
+             '@functionName': 'f_captureScreen',
+             '@stationID': i_station,
+             '@quality': 1,
+             '@time': Date.now()
+             };
+             self.ajaxJsonGetter.getData(data, onSnapshotReply);
+             function onSnapshotReply(e) {
+             if (e.responce['status'] == 'pass') {
+             log('getting image from ' + e.responce['path']);
+             self.m_imagePath = e.responce['path'];
+             }
+             }
              // self.m_imagePath = 'https://pluto.signage.me/Snapshots/business355181/station12/1397689062944.jpg';
              // return;
-            */
+             */
 
         },
 

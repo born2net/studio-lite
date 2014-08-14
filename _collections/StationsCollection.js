@@ -111,7 +111,7 @@ define(['jquery', 'backbone', 'StationModel', 'simplestorage'], function ($, Bac
          **/
         _getUpdatedStationName: function (i_stationID) {
             var self = this;
-            pepper.getStationName(i_stationID, function(i_stationName){
+            pepper.getStationNameAsync(i_stationID, function(i_stationName){
                 BB.comBroker.fire(BB.EVENTS.STATION_NAME_CHANGED, this, self,
                     {
                         stationID: i_stationID,

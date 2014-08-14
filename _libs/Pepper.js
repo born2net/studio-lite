@@ -42,7 +42,7 @@ Pepper.SCENE_CREATED = 'SCENE_CREATED';
  @static
  @final
  **/
- Pepper.REMOVE_TIMELINE_CHANNEL_BLOCK = 'REMOVE_TIMELINE_CHANNEL_BLOCK';
+Pepper.REMOVE_TIMELINE_CHANNEL_BLOCK = 'REMOVE_TIMELINE_CHANNEL_BLOCK';
 
 /**
  Custom event fired when saving to server
@@ -277,13 +277,13 @@ Pepper.prototype = {
      **/
     getLocalization: function (i_lang, i_callBack) {
 
-        $.getJSON('https://galaxy.signage.me/WebService/getLocalList.ashx?callback=?', function(data){
+        $.getJSON('https://galaxy.signage.me/WebService/getLocalList.ashx?callback=?', function (data) {
             data = _.invert(data);
-            if (i_lang=='zh')
+            if (i_lang == 'zh')
                 i_lang = 'zh-CN';
             var local = data[i_lang];
             var url = 'https://galaxy.signage.me/WebService/getResourceBundlesJson.ashx?local=' + local + '&bundleList=studiolite&callback=?';
-            $.getJSON(url, function(data){
+            $.getJSON(url, function (data) {
                 i_callBack(data);
             });
         });
@@ -1793,11 +1793,11 @@ Pepper.prototype = {
 
     /**
      Sync to pepper and get station name for station id, callback on server sync return
-     @method recBranchStation['station_id']
+     @method getStationNameAsync
      @param {Number} i_stationID
      @param {Number} i_callBack
      **/
-    getStationName: function(i_stationID, i_callBack){
+    getStationNameAsync: function (i_stationID, i_callBack) {
         pepper.sync(function () {
             $(pepper.m_msdb.table_branch_stations().getAllPrimaryKeys()).each(function (k, branch_station_id) {
                 var recBranchStation = pepper.m_msdb.table_branch_stations().getRec(branch_station_id);
@@ -1805,6 +1805,43 @@ Pepper.prototype = {
                     i_callBack(recBranchStation['station_name'])
                 }
             });
+        });
+    },
+
+    /**
+     Get station name from msdb (no remote server async)
+     @method getStationNameSync
+     @param {Number} i_stationID
+     @return {String} stationName
+     **/
+    getStationNameSync: function (i_stationID) {
+        var self = this;
+        var stationName = '';
+        $(pepper.m_msdb.table_branch_stations().getAllPrimaryKeys()).each(function (k, branch_station_id) {
+            var recBranchStation = pepper.m_msdb.table_branch_stations().getRec(branch_station_id);
+            if (recBranchStation['native_id'] == i_stationID) {
+                var recBranch = self.m_msdb.table_branch_stations().getRec(branch_station_id);
+                stationName = recBranch['station_name'];
+            }
+        });
+        return stationName;
+    },
+
+    /**
+     save new station name
+     @method setStationName
+     @param {Number} branch_station_id
+     @param {String} i_callBack
+     **/
+    setStationName: function (i_stationID, i_name) {
+        var self = this;
+        $(pepper.m_msdb.table_branch_stations().getAllPrimaryKeys()).each(function (k, branch_station_id) {
+            var recBranchStation = pepper.m_msdb.table_branch_stations().getRec(branch_station_id);
+            if (recBranchStation['native_id'] == i_stationID) {
+                self.m_msdb.table_branch_stations().openForEdit(branch_station_id);
+                var recBranch = self.m_msdb.table_branch_stations().getRec(branch_station_id);
+                recBranch['station_name'] = i_name;
+            }
         });
     },
 

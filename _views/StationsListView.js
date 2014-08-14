@@ -90,13 +90,13 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
                     return;
                 }
                 // already in edit mode, return since blur will kick next
-                if (!$(self.m_faIcon).hasClass('fa-gear'))
+                if (!$(self.m_faIcon).hasClass('fa-pencil'))
                     return;
 
                 // on entering edit mode
                 $(Elements.STATION_RENAME_INPUT).toggle();
                 $(Elements.STATION_NAME).toggle();
-                $(self.m_faIcon).removeClass('fa-gear').addClass('fa-check');
+                $(self.m_faIcon).removeClass('fa-pencil').addClass('fa-check');
                 var stationName = $(Elements.STATION_NAME).text();
                 $(Elements.STATION_RENAME_INPUT).prop('value', stationName);
 
@@ -106,7 +106,7 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
                     pepper.setStationName(self.m_selected_station_id, stationInput);
                     var stationLI = $(Elements.STATION_LIST_VIEW).find('[data-station_id="' + self.m_selected_station_id + '"]');
                     $(stationLI).find(Elements.CLASS_STAION_NAME).text(stationInput);
-                    $(self.m_faIcon).removeClass('fa-check').addClass('fa-gear');
+                    $(self.m_faIcon).removeClass('fa-check').addClass('fa-pencil');
                     var stationInput = $(Elements.STATION_RENAME_INPUT).prop('value');
                     $(Elements.STATION_NAME).text(stationInput);
                     $(Elements.STATION_RENAME_INPUT).toggle();

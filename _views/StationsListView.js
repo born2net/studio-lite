@@ -82,26 +82,30 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
         _listenEditName: function () {
             var self = this;
 
-            $(Elements.STATION_RENAME).on('mousedown', function (e) {
+            $(Elements.STATION_RENAME).on('mousedown mouseup', function (e) {
 
-                // if in edit more, return since blur event will handle saving
+                // if mouse up, just give focus to control
+                if (e.type == "mouseup"){
+                    $(Elements.STATION_RENAME_INPUT).focus();
+                    return;
+                }
+                // already in edit mode, return since blur will kick next
                 if (!$(self.m_faIcon).hasClass('fa-gear'))
                     return;
 
-                // entering edit mode
+                // on entering edit mode
                 $(Elements.STATION_RENAME_INPUT).toggle();
                 $(Elements.STATION_NAME).toggle();
                 $(self.m_faIcon).removeClass('fa-gear').addClass('fa-check');
                 var stationName = $(Elements.STATION_NAME).text();
                 $(Elements.STATION_RENAME_INPUT).prop('value', stationName);
 
+                // on entering view mode
                 $(Elements.STATION_RENAME_INPUT).one('blur', function (e) {
                     var stationInput = $(Elements.STATION_RENAME_INPUT).prop('value');
                     pepper.setStationName(self.m_selected_station_id, stationInput);
                     var stationLI = $(Elements.STATION_LIST_VIEW).find('[data-station_id="' + self.m_selected_station_id + '"]');
                     $(stationLI).find(Elements.CLASS_STAION_NAME).text(stationInput);
-
-                    // entering view mode
                     $(self.m_faIcon).removeClass('fa-check').addClass('fa-gear');
                     var stationInput = $(Elements.STATION_RENAME_INPUT).prop('value');
                     $(Elements.STATION_NAME).text(stationInput);

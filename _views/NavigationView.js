@@ -312,8 +312,14 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 appEntryFaderView.selectView(Elements.APP_CONTENT);
                 pepper.restoreScenesWithPlayersIDs();
                 if (!i_status.status) {
+                    var msg;
+                    if (i_status.error.indexOf('There is no row')>-1) {
+                        msg = $(Elements.MSG_BOOTBOX_NEED_VERIFY_EMAIL).text()
+                    } else {
+                        msg = i_status.error;
+                    }
                     bootbox.dialog({
-                        message: i_status.error,
+                        message: msg,
                         title: $(Elements.MSG_BOOTBOX_PROBLEM_SAVING).text(),
                         buttons: {
                             danger: {

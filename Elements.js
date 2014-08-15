@@ -264,6 +264,7 @@ Elements.MSG_BOOTBOX_CANCEL = '#bootBoxCancel';
 Elements.MSG_BOOTBOX_OK = '#bootBoxOk';
 Elements.MSG_BOOTBOX_NO_STATION_SELECTED = '#bootBoxNoStationSelected';
 Elements.MSG_BOOTBOX_PROBLEM_SAVING = '#bootBoxProblemSaving';
+Elements.MSG_BOOTBOX_NEED_VERIFY_EMAIL = '#bootBoxNeedVerifyEmail';
 Elements.MSG_BOOTBOX_LOGIN_PRO_CRED = '#bootBoxLoginWithProCred';
 Elements.MSG_BOOTBOX_PROBLEM = '#bootBoxProblem';
 Elements.MSG_BOOTBOX_WRONG_USER_PASS = '#bootBoxWrongUserOrPass';

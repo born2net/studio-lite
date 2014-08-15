@@ -178,6 +178,7 @@
     "bootBoxOk": "OK",
     "bootBoxNoStationSelected": "No station selected",
     "bootBoxProblemSaving": "Problem saving",
+    "bootBoxNeedVerifyEmail": "You must first verify your email and then reload the StudioLite",
     "bootBoxLoginWithProCred": "Login in with Pro credentials..",
     "bootBoxProblem": "Problem",
     "bootBoxWrongUserOrPass": "Sorry but the user or password did not match?!?!",

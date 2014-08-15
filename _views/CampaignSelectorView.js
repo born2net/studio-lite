@@ -44,7 +44,9 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             });
             self.m_propertiesPanel = BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW);
             self.m_propertiesPanel.addView(this.m_campainProperties);
+
             this._loadCampaignList();
+            this._listenAddRemoveCampaign();
         },
 
         /**
@@ -123,7 +125,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             this._listenOpenProps();
             this._listenSelectCampaign();
             this._listenInputChange();
-            this._listenAddRemoveCampaign();
             this._listenLoadCampaignList();
         },
 

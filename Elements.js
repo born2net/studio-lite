@@ -278,6 +278,9 @@ Elements.MSG_CANT_DELETE_TIMELINE ='#bootBoxCantDeleteTimeline';
 Elements.MSG_BOOTBOX_SELECT_RESOURCE ='#bootBoxSelectResource';
 Elements.MSG_BOOTBOX_SELECT_CHANNEL ='#bootBoxSelectChannel';
 Elements.MSG_BOOTBOX_AT_LEAST_ONE_DIV ='#bootBoxAtLeastOneDiv';
+Elements.MSG_BOOTBOX_PRIME_UPGRADE ='#bootBoxPrimeUpgrade';
+Elements.MSG_BOOTBOX_ENTERPRISE_UPGRADE ='#bootBoxEnterpriseUpgrade';
+Elements.MSG_BOOTBOX_ENTERPRISE_UPGRADE_TEXT ='#bootBoxEnterpriseUpgradeText';
 Elements.MSG_BOOTBOX_SCREEN_DIV_POS_RESET ='#bootBoxScreenDivPosReset';
 Elements.MSG_BOOTBOX_COSTUME_TITLE ='#bootBoxCostumeTitle';
 Elements.MSG_BOOTBOX_CONTINUE ='#bootBoxContinue';
@@ -342,6 +345,7 @@ Elements.CLASS_VIDEOS = '.videos';
 Elements.CLASS_NAV_SELECTION = '.navSelection';
 Elements.CLASS_NAV_ACTIVESEL = '.navActiveSel';
 Elements.CLASS_STAION_NAME = '.stationName';
+Elements.CLASS_PRIME_COMPONENT = '.primeComponent';
 
 
 

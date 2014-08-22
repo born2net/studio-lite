@@ -31,15 +31,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
             this._render();
 
-
-            /*$(function() {
-             $('.navbar-nav').on('click', function(){
-             if($('.navbar-header .navbar-toggle').css('display') !='none'){
-             $(".navbar-header .navbar-toggle").trigger( "click" );
-             }
-             });
-             });*/
-
             var appContentFaderView = BB.comBroker.getService(BB.SERVICES['APP_CONTENT_FADER_VIEW']);
             var appEntryFaderView = BB.comBroker.getService(BB.SERVICES['APP_ENTRY_FADER_VIEW']);
 
@@ -198,15 +189,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         /**
-         Select one of the navigation UI buttons by triggering a user click event thus allowing for soft navigation
-         @method _selectNavigation
-         @param {String} elementID
-         **/
-        _selectNavigation: function (elementID) {
-            $(elementID).trigger('click');
-        },
-
-        /**
          Set the navigation as limited access since user authenticated with Pro credentials and not Lite credentials
          which allows access only to Stations module
          @method applyLimitedAccess
@@ -230,7 +212,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                         label: $(Elements.MSG_BOOTBOX_OK).text(),
                         className: "btn-primary",
                         callback: function () {
-                            self._selectNavigation(Elements.CLASS_STATIONS_PANEL);
+                            self.selectNavigation(Elements.CLASS_STATIONS_PANEL);
                         }
                     }
                 }
@@ -334,6 +316,15 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 BB.comBroker.fire(BB.EVENTS['SCENE_LIST_UPDATED'], self);
                 i_callBack(i_status);
             });
+        },
+
+        /**
+         Select one of the navigation UI buttons by triggering a user click event thus allowing for soft navigation
+         @method selectNavigation
+         @param {String} elementID
+         **/
+        selectNavigation: function (elementID) {
+            $(elementID).trigger('click');
         }
     });
 

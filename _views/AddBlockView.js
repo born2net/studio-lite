@@ -5,7 +5,7 @@
  @constructor
  @return {object} instantiated AddBlockView
  **/
-define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($, Backbone, StackView, ScreenTemplateFactory) {
+define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], function ($, Backbone, StackView, ScreenTemplateFactory, Bootbox) {
 
     /**
      Custom event fired when a new block is added to timeline_channel
@@ -80,20 +80,52 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             // show component selection list
             /////////////////////////////////////////////////////////
             var components = BB.PepperHelper.getBlocks();
+            var primeUpgradeText = $(Elements.MSG_BOOTBOX_ENTERPRISE_UPGRADE).text();
+            var bufferFreeComp = '';
+            var bufferPrimeComp = '';
             for (var componentID in components) {
+                var primeSnippet = '';
+                var faOpacity = 1;
+                var bufferSwitch = 0;
                 // don't show image or video component in component list
                 if (componentID == 3130 || componentID == 3100 || componentID == 3510)
                     continue;
-                if (!self._checkAllowedComponent(componentID))
-                    continue;
-                var snippet = '<li class="list-group-item ' + BB.lib.unclass(Elements.CLASS_ADD_BLOCK_LIST_ITEMS, self.el) + '" data-component_id="' + componentID + '" data-component_name="' + components[componentID].name + '">' +
-                    //'<img class="img-responsive" src="' + components[componentID].icon + '">' +
-                    '<i class="fa ' + components[componentID].fontAwesome + '"></i>'+
-                    '<span>' + components[componentID].name + '</span>' +
-                    '<h6>' + components[componentID].description + '</h6>' +
-                    '</li>';
-                $(Elements.ADD_COMPONENT_BLOCK_LIST, self.el).append(snippet);
+
+                switch (self._checkAllowedComponent(componentID)) {
+                    case 0:
+                    {
+                        continue;
+                        break;
+                    }
+
+                    case 1:
+                    {
+                        bufferSwitch = 1;
+                        primeSnippet = '';
+                        faOpacity = 1;
+                        break;
+                    }
+
+                    case 2:
+                    {
+                        bufferSwitch = 2;
+                        primeSnippet = '<button type="button" class="primeComponent btn btn-primary btn-xs">' + primeUpgradeText + '</button>'
+                        faOpacity = 0.7;
+                        break;
+                    }
+                }
+
+                var snippet = ' <li class="list-group-item ' + BB.lib.unclass(Elements.CLASS_ADD_BLOCK_LIST_ITEMS, self.el) + '" data-component_id="' + componentID + '" data-component_name="' + components[componentID].name + '">';
+                snippet += '        <i style="opacity: ' + faOpacity + '" class="fa ' + components[componentID].fontAwesome + '"></i>';
+                snippet += '        <span style="opacity: ' + faOpacity + '"> ' + components[componentID].name + '</span>';
+                snippet += '        <h6 style="opacity: ' + faOpacity + '"> ' + components[componentID].description + '</h6>' + primeSnippet;
+                snippet += '    </li>';
+
+                bufferSwitch == 1 ? bufferFreeComp += snippet : bufferPrimeComp += snippet;
             }
+
+            $(Elements.ADD_COMPONENT_BLOCK_LIST, self.el).append(bufferFreeComp);
+            $(Elements.ADD_COMPONENT_BLOCK_LIST, self.el).append(bufferPrimeComp);
 
             /////////////////////////////////////////////////////////
             // show resource selection list
@@ -109,7 +141,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 var size = (parseInt(recResources[i]['resource_bytes_total']) / 1000).toFixed(2);
                 var resourceDescription = 'size: ' + size + 'K dimension: ' + recResources[i]['resource_pixel_width'] + 'x' + recResources[i]['resource_pixel_height'];
                 var snippet = '<li class="list-group-item ' + BB.lib.unclass(Elements.CLASS_ADD_BLOCK_LIST_ITEMS, self.el) + '" data-resource_id="' + recResources[i]['resource_id'] + '" data-resource_name="' + recResources[i]['resource_name'] + '">' +
-                    '<i class="fa ' + BB.PepperHelper.getFontAwesome(recResources[i]['resource_type']) + '"></i>'+
+                    '<i class="fa ' + BB.PepperHelper.getFontAwesome(recResources[i]['resource_type']) + '"></i>' +
                     '<span>' + recResources[i]['resource_name'] + '</span>' +
                     '<br/><small>' + resourceDescription + '</small>' +
                     '</li>';
@@ -127,7 +159,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                     var sceneID = $(scene).find('Player').eq(0).attr('id');
                     sceneID = pepper.sterilizePseudoId(sceneID);
                     var snippet = '<li class="list-group-item ' + BB.lib.unclass(Elements.CLASS_ADD_BLOCK_LIST_ITEMS, self.el) + '" data-scene_id="' + sceneID + '">' +
-                        '<i class="fa ' + BB.PepperHelper.getFontAwesome('scene') + '"></i>'+
+                        '<i class="fa ' + BB.PepperHelper.getFontAwesome('scene') + '"></i>' +
                         '<span>' + label + '</span>' +
                         '<br/><small></small>' +
                         '</li>';
@@ -143,7 +175,29 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 var component_id = $(e.target).closest('li').data('component_id');
                 var resource_id = $(e.target).closest('li').data('resource_id');
                 var scene_id = $(e.target).closest('li').data('scene_id');
+                var primeComp = $(e.target).closest('li').find(Elements.CLASS_PRIME_COMPONENT);
                 var blockCode = -1;
+
+                if (primeComp.length > 0) {
+                    Bootbox.dialog({
+                        message: $(Elements.MSG_BOOTBOX_ENTERPRISE_UPGRADE_TEXT).text(),
+                        title: $(Elements.MSG_BOOTBOX_ENTERPRISE_UPGRADE).text(),
+                        buttons: {
+                            success: {
+                                label: $(Elements.MSG_BOOTBOX_ENTERPRISE_UPGRADE).text(),
+                                className: "btn-success",
+                                callback: function() {
+                                    BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW).selectNavigation(Elements.CLASSS_PRO_STUDIO_PANEL);
+                                }
+                            },
+                            main: {
+                                label: $(Elements.MSG_BOOTBOX_OK).text(),
+                                className: "btn-primary"
+                            }
+                        }
+                    });
+                    return;
+                }
 
                 if (!_.isUndefined(component_id)) {
                     blockCode = component_id;
@@ -167,19 +221,24 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
          Check if component is allowed under enterprise / prime membership
          @method _checkAllowedComponent
          @param {Number} i_componentID
-         @return {Boolean} truthy if enterprise components is allowed
+         @return {Number} 0 = hide, 1 = show, 2 = upgradable
          **/
-        _checkAllowedComponent: function(i_componentID){
-            var self = this;
-            // if undefined, component is non prime so allow it
-            var enterpriseID = BB.PepperHelper.getBlockBoilerplate(i_componentID).enterprise_id;
-            if (_.isUndefined(enterpriseID))
-                return true;
-            // if true, component is prime and activated, so allow it
-            var allowedComponent = pepper.getUserData().components[enterpriseID];
-            if (allowedComponent)
-                return true;
-            return false;
+        _checkAllowedComponent: function (i_componentID) {
+            // free component so show it
+            var appID = BB.PepperHelper.getBlockBoilerplate(i_componentID).app_id;
+            if (_.isUndefined(appID))
+                return 1;
+
+            // component is prime, account is free type, upgradable
+            if (pepper.getUserData().resellerID == 1)
+                return 2;
+
+            // account is under a reseller and component not available, hide it
+            if (pepper.getUserData().resellerID != 1 && _.isUndefined(pepper.getUserData().components[appID]))
+                return 0;
+
+            // account is under a reseller and component is available, show it
+            return 1;
         },
 
         /**

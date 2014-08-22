@@ -694,16 +694,20 @@ iframe {
 }
 */
 
-/* todo: added */
 .topDrag {
     z-index: 2;
     position: relative
 }
 
-/* todo: added */
 .bottomDrag {
     z-index: 1;
     position: relative
+}
+
+.primeComponent {
+    float: right;
+    position: relative;
+    top: -50px;
 }
 
 .channelHead {

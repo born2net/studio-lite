@@ -6,6 +6,17 @@
  **/
 define(['jquery', 'backbone', 'flashdetect'], function ($, Backbone, flashdetect) {
 
+    /**
+     Custom event fired when exiting preview mode
+     @event PREVIEW_EXIT
+     @param {This} caller
+     @param {Self} context caller
+     @param {Event} rss link
+     @static
+     @final
+     **/
+    BB.EVENTS.PREVIEW_EXIT= 'PREVIEW_EXIT';
+
     BB.SERVICES.LIVEPREVIEW = 'LivePreView';
 
     var LivePreView = Backbone.View.extend({
@@ -58,6 +69,7 @@ define(['jquery', 'backbone', 'flashdetect'], function ($, Backbone, flashdetect
                 $(Elements.IFRAME_EMBEDDED).attr('src', '');
                 var appEntryFaderView = BB.comBroker.getService(BB.SERVICES['APP_ENTRY_FADER_VIEW']);
                 appEntryFaderView.selectView(Elements.APP_CONTENT);
+                BB.comBroker.fire(BB.EVENTS.PREVIEW_EXIT);
             });
         },
 

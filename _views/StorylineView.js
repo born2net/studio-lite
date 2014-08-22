@@ -45,6 +45,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             self._listenToggleStorylineCollapsible();
             self._listenAppResized();
             self._listenContextMenu();
+            self._listenExitPreview();
             self._updateWidth();
         },
 
@@ -96,18 +97,12 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
 
             campaignSliderStackView.on(BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == BB.comBroker.getService(BB.SERVICES['CAMPAIGN_VIEW'])) {
-                    setTimeout(function () {
-                        self._updateWidth();
-                        self._render();
-                    }, 500);
+                    self._delayedRender();
                 }
             });
             appContentFaderView.on(BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == BB.comBroker.getService(BB.SERVICES['CAMPAIGN_MANAGER_VIEW'])) {
-                    setTimeout(function () {
-                        self._updateWidth();
-                        self._render();
-                    }, 500);
+                    self._delayedRender();
                 }
             });
         },
@@ -133,8 +128,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
         _listenAppResized: function () {
             var self = this;
             BB.comBroker.listen(BB.EVENTS.APP_SIZED, function (e) {
-                self._updateWidth();
-                self._render();
+                self._delayedRender();
             });
         },
 
@@ -247,7 +241,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             self._updateWidth();
             setTimeout(function () {
                 self._updateWidth();
-            }, 5)
+            }, 5);
         },
 
         /**
@@ -451,9 +445,9 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                 } else {
                     $(toggle).removeClass('glyphicon-chevron-right').addClass('glyphicon-chevron-down')
                 }
-                $(Elements.STORYLINE).fadeIn(500).queue(function(){
+                $(Elements.STORYLINE).fadeIn(500).queue(function () {
                     self._render();
-                }).dequeue().delay(500).queue(function(){
+                }).dequeue().delay(500).queue(function () {
                     self._render();
                 }).dequeue();
             });
@@ -482,6 +476,29 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
         },
 
         /**
+         Re-render the storyboard upon live preview exit
+         @method _listenExitPreview
+         **/
+        _listenExitPreview: function () {
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS.PREVIEW_EXIT, function (e) {
+                self._delayedRender();
+            });
+        },
+
+        /**
+         Delayed render of stoeyboard
+         @method _delayedRender
+         **/
+        _delayedRender: function () {
+            var self = this;
+            setTimeout(function () {
+                self._updateWidth();
+                self._render();
+            }, 500);
+        },
+
+        /**
          On Scene right click context menu selection command
          @method _onContentMenuSelection
          @param {String} i_command
@@ -492,24 +509,29 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             if (campaign_timeline_id == -1 || _.isUndefined(campaign_timeline_id))
                 return;
 
-            switch (i_command){
-                case 'nextChannel': {
+            switch (i_command) {
+                case 'nextChannel':
+                {
                     self.selectNextChannel();
                     break;
                 }
-                case 'addContent': {
+                case 'addContent':
+                {
                     $(Elements.ADD_BLOCK_BUTTON).trigger('click');
                     break;
                 }
-                case 'removeContent': {
+                case 'removeContent':
+                {
                     $(Elements.REMOVE_BLOCK_BUTTON).trigger('click');
                     break;
                 }
-                case 'first': {
+                case 'first':
+                {
                     BB.comBroker.getService(BB.SERVICES.CHANNEL_LIST_VIEW).moveBlockFirst();
                     break;
                 }
-                case 'last': {
+                case 'last':
+                {
                     BB.comBroker.getService(BB.SERVICES.CHANNEL_LIST_VIEW).moveBlockLast();
                     break;
                 }
@@ -522,9 +544,9 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
          @method _listenTimelineBlockRemoved
          @param {Object} e
          **/
-        _listenTimelineBlockRemoved: function(){
+        _listenTimelineBlockRemoved: function () {
             var self = this;
-            pepper.listen(Pepper.REMOVE_TIMELINE_CHANNEL_BLOCK, function(e){
+            pepper.listen(Pepper.REMOVE_TIMELINE_CHANNEL_BLOCK, function (e) {
                 self.m_selectedBlockID = undefined;
                 self._removeBlockSelection();
             });

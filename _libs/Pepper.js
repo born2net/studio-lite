@@ -184,6 +184,14 @@ Pepper.prototype = {
                 self.m_businessID = self.m_loaderManager['m_businessId'];
                 self.m_eri = self.m_loaderManager['m_eri'];
                 self.m_authTime = Date.now();
+                self.m_components = {};
+
+                // build list of allowed prime components
+                var components = $(resellerInfo).find('InstalledApps').find('App');
+                _.each(components, function (component) {
+                    if ($(component).attr('installed') == 1)
+                        self.m_components[$(component).attr('id')] = 1;
+                });
             }
             i_callBack(i_result);
         });
@@ -205,7 +213,8 @@ Pepper.prototype = {
             authTime: self.m_authTime,
             whiteLabel: self.m_whiteLabel,
             resellerName: self.m_resellerName,
-            resellerID: self.m_resellerId
+            resellerID: self.m_resellerId,
+            components: self.m_components
         };
     },
 

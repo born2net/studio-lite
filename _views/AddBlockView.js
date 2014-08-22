@@ -84,6 +84,8 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 // don't show image or video component in component list
                 if (componentID == 3130 || componentID == 3100 || componentID == 3510)
                     continue;
+                if (!self._checkAllowedComponent(componentID))
+                    continue;
                 var snippet = '<li class="list-group-item ' + BB.lib.unclass(Elements.CLASS_ADD_BLOCK_LIST_ITEMS, self.el) + '" data-component_id="' + componentID + '" data-component_name="' + components[componentID].name + '">' +
                     //'<img class="img-responsive" src="' + components[componentID].icon + '">' +
                     '<i class="fa ' + components[componentID].fontAwesome + '"></i>'+
@@ -159,6 +161,25 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 self.deSelectView();
             });
 
+        },
+
+        /**
+         Check if component is allowed under enterprise / prime membership
+         @method _checkAllowedComponent
+         @param {Number} i_componentID
+         @return {Boolean} truthy if enterprise components is allowed
+         **/
+        _checkAllowedComponent: function(i_componentID){
+            var self = this;
+            // if undefined, component is non prime so allow it
+            var enterpriseID = BB.PepperHelper.getBlockBoilerplate(i_componentID).enterprise_id;
+            if (_.isUndefined(enterpriseID))
+                return true;
+            // if true, component is prime and activated, so allow it
+            var allowedComponent = pepper.getUserData().components[enterpriseID];
+            if (allowedComponent)
+                return true;
+            return false;
         },
 
         /**

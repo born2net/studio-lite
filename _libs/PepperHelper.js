@@ -155,7 +155,7 @@ PepperHelper.prototype = {
             },
             3430: {
                 name: 'QR',
-                //color: '#659EF1',
+                enterprise_id: '10160',
                 color: '#E5E5E5',
                 acronym: 'qr',
                 description: 'QR code for mobile device integration',

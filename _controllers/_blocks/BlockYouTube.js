@@ -1,6 +1,6 @@
 /**
- * BlockHTML block resides inside a scene or timeline
- * @class BlockHTML
+ * BlockYouTube block resides inside a scene or timeline
+ * @class BlockYouTube
  * @extends Block
  * @constructor
  * @param {string} i_placement location where objects resides which can be scene or timeline
@@ -9,7 +9,7 @@
  */
 define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
-    var BlockHTML = Block.extend({
+    var BlockYouTube = Block.extend({
 
         /**
          Constructor
@@ -17,10 +17,10 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         constructor: function (options) {
             var self = this;
-            self.m_blockType = 3235;
+            self.m_blockType = 3430;
             _.extend(options, {blockType: self.m_blockType})
             Block.prototype.constructor.call(this, options);
-            self._initSubPanel(Elements.BLOCK_HTML_COMMON_PROPERTIES);
+            self._initSubPanel(Elements.BLOCK_QR_COMMON_PROPERTIES);
             self._listenInputChange();
         },
 
@@ -35,14 +35,13 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 if (!self.m_selected)
                     return;
                 var text = $(e.target).val();
-                if (!text.match('http://') && !text.match('https://'))
-                    text = 'http://' + text;
                 var domPlayerData = self._getBlockPlayerData();
-                var xSnippet = $(domPlayerData).find('HTML');
-                xSnippet.attr('src', text);
+                var xSnippet = $(domPlayerData).find('Text');
+                $(xSnippet).text(text);
                 self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
+                // log(xSnippet[0].outerHTML);
             }, 150);
-            $(Elements.HTML_TEXT).on("input", self.m_inputChangeHandler);
+            $(Elements.QR_TEXT).on("input", self.m_inputChangeHandler);
         },
 
         /**
@@ -53,9 +52,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _populate: function () {
             var self = this;
             var domPlayerData = self._getBlockPlayerData();
-            var xSnippet = $(domPlayerData).find('HTML');
-            var src = xSnippet.attr('src');
-            $(Elements.HTML_TEXT).val(src);
+            var xSnippet = $(domPlayerData).find('Text');
+            $(Elements.QR_TEXT).val(xSnippet.text());
         },
 
         /**
@@ -66,7 +64,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _loadBlockSpecificProps: function () {
             var self = this;
             self._populate();
-            this._viewSubPanel(Elements.BLOCK_HTML_COMMON_PROPERTIES);
+            this._viewSubPanel(Elements.BLOCK_QR_COMMON_PROPERTIES);
         },
 
         /**
@@ -76,10 +74,10 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         deleteBlock: function () {
             var self = this;
-            $(Elements.HTML_TEXT).off("input", self.m_inputChangeHandler);
+            $(Elements.QR_TEXT).off("input", self.m_inputChangeHandler);
             self._deleteBlock();
         }
     });
 
-    return BlockHTML;
+    return BlockYouTube;
 });

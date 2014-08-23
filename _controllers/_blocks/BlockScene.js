@@ -1,5 +1,5 @@
 /**
- * BlockScene block resided inside a Scenes or Channel
+ * BlockScene represents the Scene which resided inside a channel
  * @class BlockScene
  * @extends Block
  * @constructor

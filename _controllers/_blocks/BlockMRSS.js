@@ -1,5 +1,5 @@
 /**
- * BlockMRSS block resided inside a Scenes or timeline
+ * BlockMRSS block resides inside a scene or timeline
  * @class BlockMRSS
  * @extends Block
  * @constructor

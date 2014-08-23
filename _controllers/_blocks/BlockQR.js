@@ -1,5 +1,5 @@
 /**
- * Block QR block resided inside a Scenes or timeline
+ * BlockQR block resides inside a scene or timeline
  * @class BlockQR
  * @extends Block
  * @constructor

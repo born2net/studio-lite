@@ -1,5 +1,5 @@
 /**
- * BlockClock time block resided inside a Scenes or timeline
+ * BlockClock block resides inside a scene or timeline
  * @class BlockClock
  * @extends Block
  * @constructor

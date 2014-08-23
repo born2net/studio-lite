@@ -1,5 +1,5 @@
 /**
- * BlockExtVideo block resided inside a Scenes or timeline
+ * BlockExtVideo block resides inside a scene or timeline
  * @class BlockExtVideo
  * @extends Block
  * @constructor

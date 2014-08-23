@@ -1,5 +1,5 @@
 /**
- * BlockExtImage block resided inside a Scenes or timeline
+ * BlockExtImage block resides inside a scene or timeline
  * @class BlockExtImage
  * @extends Block
  * @constructor

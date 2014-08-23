@@ -1,5 +1,5 @@
 /**
- * BlockLabel block resided inside a Scenes or timeline
+ * BlockLabel block resides inside a scene or timeline
  * @class BlockLabel
  * @extends Block
  * @constructor

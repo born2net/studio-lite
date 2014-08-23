@@ -1,5 +1,5 @@
 /**
- * BlockRSS block resided inside a Scenes or timeline
+ * BlockRSS block resides inside a scene or timeline
  * @class BlockRSS
  * @extends Block
  * @constructor

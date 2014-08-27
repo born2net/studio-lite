@@ -1022,12 +1022,14 @@
 </div>
 <div id="viewerEditProperties" style="display: none">
     <h5 data-localize="screenDivision">screen division</h5>
+
     <div id="viewerDimensions"></div>
 </div>
 <div id="stationProperties">
     <h4 id="stationName"></h4>
     <a id="stationRename"><i style="color: gray" class="fa fa-pencil"></i></a>
     <input id="stationRenameInput" type="text" data-localize="stationRename" placeholder="station name" value="">
+
     <div id="snapShotWrap">
         <svg id="snapShotSVG" xmlns="http://www.w3.org/2000/svg">
             <g>
@@ -1063,7 +1065,8 @@
             <li><span data-localize="lastUpd">Last upd </span>: <span id="stationLastUpdate"></span></li>
         </ul>
     </div>
-    <input type="text" name="eventName" data-localize="eventName" placeholder="event name" id="stationSendEventValue" value="">
+    <input type="text" name="eventName" data-localize="eventName" placeholder="event name" id="stationSendEventValue"
+           value="">
 
     <p></p>
     <button id="stationEventSendCommand" class="btn btn-primary" data-localize="sendStationEvent">Send station event
@@ -1203,6 +1206,10 @@
                 <input type="text" name="name" id="qrText" value=""
                        placeholder="Enter QR Text" data-localize="enterQRText">
             </div>
+        </div>
+        <div id="blockYouTubeCommonProperties" style="display: none"><span>video quality</span>
+            <div id="youtubeQualityMeter"></div>
+            <hr class="propControlWidth"/>
         </div>
         <div id="blockHTMLCommonProperties" style="display: none"><span
                 data-localize="webAddr">Web address</span>
@@ -1694,7 +1701,8 @@
 
 <p style="display: none" id="bootBoxProblemSaving" data-localize="bootBoxProblemSaving">Problem saving</p>
 
-<p style="display: none" id="bootBoxNeedVerifyEmail" data-localize="bootBoxNeedVerifyEmail">You must first verify your email and then reload the StudioLite</p>
+<p style="display: none" id="bootBoxNeedVerifyEmail" data-localize="bootBoxNeedVerifyEmail">You must first verify your
+    email and then reload the StudioLite</p>
 
 <p style="display: none" id="bootBoxLoginWithProCred" data-localize="bootBoxLoginWithProCred">Login in with Pro
     credentials..</p>
@@ -1736,9 +1744,11 @@
 
 <p style="display: none" id="bootBoxPrimeUpgrade" data-localize="bootBoxPrimeUpgrade">Prime / Upgrade</p>
 
-<p style="display: none" id="bootBoxEnterpriseUpgrade" data-localize="bootBoxEnterpriseUpgrade">upgrade to enterprise</p>
+<p style="display: none" id="bootBoxEnterpriseUpgrade" data-localize="bootBoxEnterpriseUpgrade">upgrade to
+    enterprise</p>
 
-<p style="display: none" id="bootBoxEnterpriseUpgradeText" data-localize="bootBoxEnterpriseUpgradeText">Upgrade to an enterprise account and get all the benefits of the SignageStudio Pro account plus a lot more…</p>
+<p style="display: none" id="bootBoxEnterpriseUpgradeText" data-localize="bootBoxEnterpriseUpgradeText">Upgrade to an
+    enterprise account and get all the benefits of the SignageStudio Pro account plus a lot more…</p>
 
 <p style="display: none" id="bootBoxScreenDivPosReset" data-localize="bootBoxScreenDivPosReset">screen division position
     reset</p>

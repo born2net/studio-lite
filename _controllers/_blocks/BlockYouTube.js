@@ -17,31 +17,52 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         constructor: function (options) {
             var self = this;
-            self.m_blockType = 3430;
+            self.m_blockType = 4600;
             _.extend(options, {blockType: self.m_blockType})
             Block.prototype.constructor.call(this, options);
-            self._initSubPanel(Elements.BLOCK_QR_COMMON_PROPERTIES);
-            self._listenInputChange();
+            self._initSubPanel(Elements.BLOCK_YOUTUBE_COMMON_PROPERTIES);
+            self.m_youtubeQualityMeter = self.m_blockProperty.getYouTubeQualityMeter();
+            self._listenQualityChange();
         },
 
         /**
-         When user changes a URL link for the feed, update the msdb
-         @method _listenInputChange
-         @return none
+         Listen to changes in youtube quality bar meter module
+         @method _listenQualityChange
          **/
-        _listenInputChange: function () {
+        _listenQualityChange: function () {
             var self = this;
-            self.m_inputChangeHandler = _.debounce(function (e) {
-                if (!self.m_selected)
+            BB.comBroker.listenWithNamespace(BB.EVENTS.BAR_METER_CHANGED, self, function (e) {
+                if (!self.m_selected || e.caller !== self.m_youtubeQualityMeter)
                     return;
-                var text = $(e.target).val();
+                var value = e.edata;
+                log(value);
+
+                switch(value){
+                    case 1: {
+                        value = 'small';
+                        break;
+                    }
+                    case 2: {
+                        value = 'medium';
+                        break;
+                    }
+                    case 3: {
+                        value = 'default';
+                        break;
+                    }
+                    case 4: {
+                        value = 'large';
+                        break;
+                    }
+                    case 5: {
+                        value = 'hd720';
+                        break;
+                    }
+                }
                 var domPlayerData = self._getBlockPlayerData();
-                var xSnippet = $(domPlayerData).find('Text');
-                $(xSnippet).text(text);
-                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
-                // log(xSnippet[0].outerHTML);
-            }, 150);
-            $(Elements.QR_TEXT).on("input", self.m_inputChangeHandler);
+                $(domPlayerData).find('YouTube').attr('quality',value);
+                self._setBlockPlayerData(domPlayerData);
+            });
         },
 
         /**
@@ -52,8 +73,30 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _populate: function () {
             var self = this;
             var domPlayerData = self._getBlockPlayerData();
-            var xSnippet = $(domPlayerData).find('Text');
-            $(Elements.QR_TEXT).val(xSnippet.text());
+            var value = $(domPlayerData).find('YouTube').attr('quality');
+            switch(value){
+                case 'small': {
+                    value = 1;
+                    break;
+                }
+                case 'medium': {
+                    value = 2;
+                    break;
+                }
+                case 'default': {
+                    value = 3;
+                    break;
+                }
+                case 'large': {
+                    value = 4;
+                    break;
+                }
+                case 'hd720': {
+                    value = 5;
+                    break;
+                }
+            }
+            self.m_youtubeQualityMeter.setMeter(value);
         },
 
         /**
@@ -64,7 +107,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _loadBlockSpecificProps: function () {
             var self = this;
             self._populate();
-            this._viewSubPanel(Elements.BLOCK_QR_COMMON_PROPERTIES);
+            this._viewSubPanel(Elements.BLOCK_YOUTUBE_COMMON_PROPERTIES);
         },
 
         /**
@@ -74,7 +117,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         deleteBlock: function () {
             var self = this;
-            $(Elements.QR_TEXT).off("input", self.m_inputChangeHandler);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.BAR_METER_CHANGED, self);
             self._deleteBlock();
         }
     });

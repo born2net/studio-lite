@@ -28,7 +28,7 @@ define(['jquery', 'backbone', 'bootstrapfileinput'], function ($, Backbone, boot
         },
 
         /**
-         When user changes QR text update msdb, we use xSavePlayerData
+         When user changes text update msdb, we use xSavePlayerData
          as a json boilerplate that we append values to and save it in msdb as player_data
          @method _listenInputChange
          @return none

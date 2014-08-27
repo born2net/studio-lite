@@ -65,7 +65,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
          **/
         loadBlockModules: function () {
             var self = this;
-            require(['BlockProperties', 'Block', 'BlockScene', 'BlockRSS', 'BlockQR', 'BlockVideo', 'BlockImage', 'BlockExtImage', 'BlockExtVideo', 'BlockMRSS', 'BlockHTML', 'BlockLabel', 'BlockClock'  ], function (BlockProperties, Block, BlockScene, BlockRSS, BlockQR, BlockVideo, BlockImage, BlockExtImage, BlockExtVideo, BlockMRSS, BlockHTML, BlockLabel, BlockClock) {
+            require(['BlockProperties', 'Block', 'BlockScene', 'BlockRSS', 'BlockQR', 'BlockYouTube', 'BlockVideo', 'BlockImage', 'BlockExtImage', 'BlockExtVideo', 'BlockMRSS', 'BlockHTML', 'BlockLabel', 'BlockClock'  ], function (BlockProperties, Block, BlockScene, BlockRSS, BlockQR, BlockYouTube, BlockVideo, BlockImage, BlockExtImage, BlockExtVideo, BlockMRSS, BlockHTML, BlockLabel, BlockClock) {
                 if (!self.m_blockProperties)
                     self.m_blockProperties = new BlockProperties({el: Elements.BLOCK_PROPERTIES});
 
@@ -73,6 +73,7 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
                 self.m_blockScene = BlockScene;
                 self.m_blockRSS = BlockRSS;
                 self.m_blockQR = BlockQR;
+                self.m_blockYouTube = BlockYouTube;
                 self.m_blockVideo = BlockVideo;
                 self.m_blockImage = BlockImage;
                 self.m_blockExtImage = BlockExtImage;
@@ -134,7 +135,17 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
                 }
                 case 3430:
                 {
+                    // qr block
                     block = new self.m_blockQR({
+                        i_placement: i_placement,
+                        i_block_id: block_id,
+                        i_scene_player_data_id: i_scene_id
+                    });
+                    break;
+                }
+                case 4600:
+                {
+                    block = new self.m_blockYouTube({
                         i_placement: i_placement,
                         i_block_id: block_id,
                         i_scene_player_data_id: i_scene_id

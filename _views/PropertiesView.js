@@ -1,6 +1,6 @@
 /**
  Property manager is a singleton class that manages all of the StackView element properties.
- If you select a block such as the QR component, the property manager is responsible
+ If you select a block such as the Clock component, the property manager is responsible
  for loading the proper view stack for the selected element. Note that it is the job of the caller
  to populate the view stack with the appropriate data.
  The property manager is also capable of managing common properties which are used for blocks.
@@ -136,21 +136,6 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
         },
 
         /**
-         Init the properties sub-panel and add it to the view stack.
-         @method initSubPanel
-         @param {String} i_panelID  the html element id to be inserted into sub properties panel
-         @return {Boolean} returns true if panel created, or false if it already existed so nothing was done
-         **/
-        initSubPanel: function (i_panelID) {
-            var self = this;
-            if (self.m_subViewStack.getViewByID(i_panelID) != undefined)
-                return false;
-            var view = new BB.View({el: i_panelID});
-            self.m_subViewStack.addView(view);
-            return true;
-        },
-
-        /**
          Load the requested panel into the current viewstack (i.e.: hide all other panels).
          @method viewPanel
          @param {String} i_panelID html element id of panel to load into current viewstack.
@@ -185,6 +170,21 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
                 return false;
             var view = new BB.View({el: i_panelID});
             self.addView(view);
+            return true;
+        },
+
+        /**
+         Init the properties sub-panel and add it to the view stack.
+         @method initSubPanel
+         @param {String} i_panelID  the html element id to be inserted into sub properties panel
+         @return {Boolean} returns true if panel created, or false if it already existed so nothing was done
+         **/
+        initSubPanel: function (i_panelID) {
+            var self = this;
+            if (self.m_subViewStack.getViewByID(i_panelID) != undefined)
+                return false;
+            var view = new BB.View({el: i_panelID});
+            self.m_subViewStack.addView(view);
             return true;
         },
 

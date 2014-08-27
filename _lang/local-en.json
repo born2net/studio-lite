@@ -291,7 +291,12 @@
     "editLayout": "edit layout",
     "createAccount": "or create a new account",
     "noAutoPopup": "do not auto popup",
-    "firstChannel": "first channel"
+    "firstChannel": "first channel",
+    "default": "Default",
+    "small": "Small",
+    "large": "Large",
+    "highDefinition": "High Definition"
+
 }
 
 

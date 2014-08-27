@@ -5,7 +5,7 @@
  @constructor
  @return {object} instantiated BlockProperties
  **/
-define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'FontSelector', 'RSSLinks', 'MRSSLinks'], function ($, Backbone, Knob, nouislider, gradient, spinner, FontSelector, RSSLinks, MRSSLinks) {
+define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'FontSelector', 'RSSLinks', 'MRSSLinks', 'BarMeterView'], function ($, Backbone, Knob, nouislider, gradient, spinner, FontSelector, RSSLinks, MRSSLinks, BarMeterView) {
 
     /**
      Custom event fired when a gradient color picked
@@ -83,6 +83,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
             self._rssSourceSelectorInit();
             self._mrssSourceSelectorInit();
             self._rssPollTimeInit();
+            self._youtubeInit();
             self._labelFontSelectorInit();
             self._labelClockFontSelectorInit();
         },
@@ -361,6 +362,15 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         },
 
         /**
+         Init the youtube properties
+         @method _youtubeInit
+         **/
+        _youtubeInit: function(){
+            var self = this;
+            self.m_youtubeQualityMeter = new BarMeterView({el: Elements.YOUTUBE_QUALITY_METER});
+        },
+
+        /**
          Create instance of FontSelector used in font property settings
          @method _labelFontSelectorInit
          **/
@@ -457,6 +467,16 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         getLabelFontSelector: function () {
             var self = this;
             return self.m_labelFontSelector;
+        },
+
+        /**
+         Returns the instance of youtube quality meter
+         @method getYouTubeQualityMeter
+         @return {Object} m_youtubeQualityMeter instance
+         **/
+        getYouTubeQualityMeter: function () {
+            var self = this;
+            return self.m_youtubeQualityMeter;
         },
 
         /**

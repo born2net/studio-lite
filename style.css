@@ -710,6 +710,66 @@ iframe {
     top: -50px;
 }
 
+#youtubeQualityMeter {
+    float: right;
+    width: 80px;
+    display: inline-block;
+
+}
+
+.barMeter {
+    width: 5px;
+    margin: 2px;
+    float: left;
+    height: 25px;
+    background-color: #d8d8d8;
+}
+
+.barMeterUp, .barMeterDown {
+    color: gray;
+    opacity: 0.6;
+    cursor: pointer;
+    display: block;
+    font-size: 2.5em !important;
+    position: relative;
+}
+.barMeterUp {
+    top: -7px;
+    left: 7px;
+}
+
+.barMeterDown {
+    top: -17px;
+    left: 7px;
+}
+
+.barMeterUp:hover, .barMeterDown:hover {
+    opacity: 1;
+}
+
+.barMeter:nth-child(1) {
+    height: 10px;
+}
+
+.barMeter:nth-child(2) {
+    height: 15px;
+}
+
+.barMeter:nth-child(3) {
+    height: 20px;
+}
+
+.barMeter:nth-child(4) {
+    height: 25px;
+}
+
+.barMeter:nth-child(5) {
+    height: 30px;
+}
+
+
+
+
 .channelHead {
     width: 20px;
     height: 30px;

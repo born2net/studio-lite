@@ -53,12 +53,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          Get current selection color depnding on theme of light / daek
          @method _getColor
          @params {String} color
-         **/
         _getColor: function(){
             if (BB.CONSTS['THEME']=='light')
                 return '#428ac9 ';
             return '#eb7c66';
         },
+         **/
 
         /**
          Method is called when an entire screen frame of the UI is clicked, in contrast to when a single viewer is selected.
@@ -208,7 +208,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             var applyToSelected = function (e) {
                 $('#' + self.m_myElementID).parent().parent().parent().find('rect').css({'stroke-width': '2', 'stroke': 'rgb(72,72,72)'});
-                $('#' + self.m_myElementID).find('rect').css({'stroke-width': '2', 'stroke': self._getColor()});
+                $('#' + self.m_myElementID).find('rect').css({'stroke-width': '2', 'stroke': BB.lib.getThemeColor()});
                 self._onViewSelected(e, self);
             }
             // listen one
@@ -243,7 +243,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             self._deselectViewers();
             var selectedElement = $('#' + self.m_myElementID).find('[data-campaign_timeline_board_viewer_id="' + i_campaign_timeline_board_viewer_id + '"]');
-            $(selectedElement).css({'fill': self._getColor()});
+            $(selectedElement).css({'fill': BB.lib.getThemeColor()});
         },
 
         /**

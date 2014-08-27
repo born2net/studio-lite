@@ -1096,9 +1096,8 @@
                 <option value="on" data-localize="on">On</option>
             </select>
         </div>
-        <div id="blockVideoCommonProperties" style="display: none"><span
-                data-localize="volumeLevel">Volume level</span> <span
-                id="videoVolumeLabel">100</span>
+        <div id="blockVideoCommonProperties" style="display: none">
+            <span data-localize="volumeLevel">Volume level</span> <span id="videoVolumeLabel">100</span>
 
             <div id="videoVolumeWrap" class="propControlWidth">
                 <div id="videoVolumeWrapSlider"
@@ -1201,15 +1200,21 @@
             </div>
         </div>
         <div id="blockQRCommonProperties" style="display: none"><span>QR</span>
-
             <div data-role="fieldcontain" data-inset="true">
                 <input type="text" name="name" id="qrText" value=""
                        placeholder="Enter QR Text" data-localize="enterQRText">
             </div>
         </div>
-        <div id="blockYouTubeCommonProperties" style="display: none"><span>video quality</span>
+        <div id="blockYouTubeCommonProperties" style="display: none">
+            <span data-localize="volumeLevel">Volume level</span> <span id="youtubeVolumeLabel">100</span>
+            <div id="youtubeVolumeWrap" class="propControlWidth">
+                <div id="youtubeVolumeWrapSlider" class="noUi-target noUi-ltr noUi-horizontal noUi-background"></div>
+            </div>
+            <hr class="propControlWidth"/>
+            <span>video quality</span>
             <div id="youtubeQualityMeter"></div>
             <hr class="propControlWidth"/>
+
         </div>
         <div id="blockHTMLCommonProperties" style="display: none"><span
                 data-localize="webAddr">Web address</span>
@@ -1355,7 +1360,7 @@
 </div>
 </div>
 <div id="footer"><br>
-    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.171 </span>
+    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.172 </span>
 </div>
 
 

@@ -23,6 +23,25 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self._initSubPanel(Elements.BLOCK_YOUTUBE_COMMON_PROPERTIES);
             self.m_youtubeQualityMeter = self.m_blockProperty.getYouTubeQualityMeter();
             self._listenQualityChange();
+            self._listenVolumeChange();
+        },
+
+        /**
+         Listen to changes in volume control
+         @method _listenVolumeChange
+         **/
+        _listenVolumeChange: function(){
+            var self = this;
+            self.m_inputVolumeHandler = function (e) {
+                if (!self.m_selected)
+                    return;
+                var volume = e.edata;
+                var domPlayerData = self._getBlockPlayerData();
+                var xSnippet = $(domPlayerData).find('YouTube');
+                $(xSnippet).attr('volume', volume);
+                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
+            };
+            BB.comBroker.listen(BB.EVENTS.YOUTUBE_VOLUME_CHANGED, self.m_inputVolumeHandler);
         },
 
         /**
@@ -35,7 +54,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 if (!self.m_selected || e.caller !== self.m_youtubeQualityMeter)
                     return;
                 var value = e.edata;
-                log(value);
 
                 switch(value){
                     case 1: {
@@ -73,6 +91,9 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _populate: function () {
             var self = this;
             var domPlayerData = self._getBlockPlayerData();
+            var xSnippetYouTube = $(domPlayerData).find('YouTube');
+            var volume = parseFloat(xSnippetYouTube.attr('volume')) * 100;
+            $(Elements.YOUTUBE_VOLUME_WRAP_SLIDER).val(volume);
             var value = $(domPlayerData).find('YouTube').attr('quality');
             switch(value){
                 case 'small': {
@@ -118,6 +139,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         deleteBlock: function () {
             var self = this;
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BAR_METER_CHANGED, self);
+            BB.comBroker.stopListen(BB.EVENTS.YOUTUBE_VOLUME_CHANGED, self.m_inputVolumeHandler);
             self._deleteBlock();
         }
     });

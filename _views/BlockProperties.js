@@ -56,6 +56,15 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
      **/
     BB.EVENTS.VIDEO_VOLUME_CHANGED = 'VIDEO_VOLUME_CHANGED';
 
+    /**
+     event fires when youtube volume changed
+     @event YOUTUBE_VOLUME_CHANGED
+     @param {Object} this
+     @param {Object} caller the firing element
+     @param {Number} alpha value
+     **/
+    BB.EVENTS.YOUTUBE_VOLUME_CHANGED = 'YOUTUBE_VOLUME_CHANGED';
+
     BB.SERVICES.BLOCK_PROPERTIES = 'BlockProperties';
 
     var BlockProperties = BB.View.extend({
@@ -79,6 +88,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
             self._borderSceneColorInit();
             self._propLengthKnobsInit();
             self._videoVolumeSliderInit()
+            self._youtubeVolumeSliderInit();
             self._rssFontSelectorInit();
             self._rssSourceSelectorInit();
             self._mrssSourceSelectorInit();
@@ -308,6 +318,28 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
             self.m_videoVolumeHandler = $(Elements.VIDEO_VOLUME_WRAP_SLIDER).on('change', function (e) {
                 var volume = parseFloat($(Elements.VIDEO_VOLUME_WRAP_SLIDER).val()) / 100;
                 BB.comBroker.fire(BB.EVENTS.VIDEO_VOLUME_CHANGED, this, self, volume);
+                return false;
+            });
+        },
+
+        /**
+         Init youtube volume slider in properties
+         @method _videoVolumeSliderInit
+         **/
+        _youtubeVolumeSliderInit: function () {
+            var self = this;
+            $(Elements.YOUTUBE_VOLUME_WRAP_SLIDER).noUiSlider({
+                handles: 1,
+                start: 100,
+                step: 1,
+                range: [0, 100],
+                serialization: {
+                    to: [ $(Elements.YOUTUBE_VOLUME_LABEL), 'text' ]
+                }
+            });
+            self.m_youtuneVolumeHandler = $(Elements.YOUTUBE_VOLUME_WRAP_SLIDER).on('change', function (e) {
+                var volume = parseFloat($(Elements.YOUTUBE_VOLUME_WRAP_SLIDER).val()) / 100;
+                BB.comBroker.fire(BB.EVENTS.YOUTUBE_VOLUME_CHANGED, this, self, volume);
                 return false;
             });
         },

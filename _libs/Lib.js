@@ -716,6 +716,22 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             return i_string;
         },
 
+        /**
+         Get current selection theme color
+         @method getThemeColor
+         @params {String} color
+         **/
+        getThemeColor: function(){
+            if (BB.CONSTS['THEME']=='light')
+                return '#428ac9 ';
+            return '#eb7c66';
+        },
+
+        /**
+         Enable selection switcher via jquery plugin
+         usage: $('#element').disableSelection() or$('#element').enableSelection()
+         @method selectionSwitcher
+         **/
         selectionSwitcher: function(){
             (function($){
                 $.fn.disableSelection = function() {

@@ -29,13 +29,13 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self.CHANGED_METER_BAR = 'CHANGED_METER_BAR';
 
             var snippet = '<div>';
+            snippet += '        <i class="barMeterDown fa fa-caret-left"/>';
             snippet += '        <div class="barMeter"></div>';
             snippet += '        <div class="barMeter"></div>';
             snippet += '        <div class="barMeter"></div>';
             snippet += '        <div class="barMeter"></div>';
             snippet += '        <div class="barMeter"></div>';
-            snippet += '        <i class="barMeterUp fa fa-caret-up"/>';
-            snippet += '        <i class="barMeterDown fa fa-caret-down"/>';
+            snippet += '        <i class="barMeterUp fa fa-caret-right"/>';
             snippet += '   </div>'
 
             self.$el.append(snippet);
@@ -86,7 +86,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 return;
             }
             if (self.m_value == 5) {
-                $('.barMeter').css({'background-color': 'green'});
+                $('.barMeter').css({'background-color': BB.lib.getThemeColor()});
                 return;
             }
             var c = 0;
@@ -94,7 +94,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self.$el.find('.barMeter').each(function () {
                 c++;
                 if (c <= self.m_value)
-                    $(this).css({'background-color': 'green'});
+                    $(this).css({'background-color': BB.lib.getThemeColor()});
             });
         },
 

@@ -15,7 +15,7 @@ define(['jquery', 'backbone', 'simplestorage', 'bootbox', 'localizer'], function
         initialize: function () {
             var self = this;
             self.m_simpleStorage = simplestorage;
-            self.$el = $(Elements.LANGUAGE_SELECTOR_TEMPLATE).clone();
+            self.$el = $(Elements.TEMPLATE_LANGUAGE_SELECTOR).clone();
             self.el = self.$el[0];
             $(self.options.appendTo).append(self.el).fadeIn();
             self.$el.show();

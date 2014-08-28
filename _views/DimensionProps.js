@@ -24,7 +24,7 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
             self.m_showAngle = self.options.showAngle || false;
             self.m_showLock = self.options.showLock || false;
 
-            self.$el = $(Elements.DIMENSION_PROPS_TEMPLATE).clone();
+            self.$el = $(Elements.TEMPLATE_DIMENSION_PROPS).clone();
             self.el = self.$el[0];
             $(self.options.appendTo).append(self.el).fadeIn();
             self.$el.show();

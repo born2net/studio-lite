@@ -64,7 +64,7 @@ define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Ba
             };
 
             _.extend(self.m_colorSettings, self.options['colorSettings']);
-            self.$el = $(Elements.FONT_SELECTOR_TEMPLATE).clone()
+            self.$el = $(Elements.TEMPLATE_FONT_SELECTOR).clone()
             self.el = self.$el[0];
             $(self.options.appendTo).append(self.el).fadeIn('fast');
             self.$el.show();

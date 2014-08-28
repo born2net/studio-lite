@@ -610,10 +610,24 @@ iframe {
     position: relative;
     left: 5px;
 }
- 
 
-/* todo: added */
 
+#youtubeQualityMeter {
+    float: right;
+    width: 80px;
+    display: inline-block;
+    position: relative;
+    top: -4px;
+
+}
+
+#youtubeMostViewedList button {
+    width: 105px;
+}
+
+.selectedYouTubeFlag {
+    background-color: #454545;
+}
 .checkers {
     background-image: url(data:image/gif;base64,R0lGODlhCgAKAIAAAOLi4v///yH5BAAHAP8ALAAAAAAKAAoAAAIRhB2ZhxoM3GMSykqd1VltzxQAOw==);
     display: inline-block;
@@ -710,15 +724,6 @@ iframe {
     top: -50px;
 }
 
-#youtubeQualityMeter {
-    float: right;
-    width: 80px;
-    display: inline-block;
-    position: relative;
-    top: -4px;
-
-}
-
 .barMeter {
     width: 5px;
     margin: 2px;
@@ -765,19 +770,16 @@ iframe {
     background-color: #428ac9 !important;
 }
 
-/* todo: added */
 #installPanel i {
     font-size: 50px;
     color: #428ac9;
     opacity: 0.5;
     cursor: pointer;
 }
-/* todo: added */
 #installPanel i:hover {
     opacity: 1;
 }
 
-/* todo: added */
 .storylineChannel {
     margin-bottom: 1px;
     border-bottom: 1px solid #d0d0d0;

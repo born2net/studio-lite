@@ -1211,9 +1211,55 @@
                 <div id="youtubeVolumeWrapSlider" class="noUi-target noUi-ltr noUi-horizontal noUi-background"></div>
             </div>
             <hr class="propControlWidth"/>
-            <span>video quality</span>
+            <span data-localize="videoQuality">video quality</span>
             <div id="youtubeQualityMeter"></div>
             <hr class="propControlWidth"/>
+
+            <div id="youtubeList">
+                <span data-localize="YouTubePlaylist">YouTube playlist</span>
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                        <span id="youtubeMostViewed" data-localize="mostViewed">Most viewed</span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul id="youtubeListDropDown" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                        <li><a name="most_viewed" data-localize="mostViewed" role="menuitem" tabindex="-1" href="#">Most viewed</a></li>
+                        <li><a name="manually" data-localize="customList" role="menuitem" tabindex="-1" href="#">Custom list</a></li>
+                    </ul>
+                    <button id="youtubeListAdd" type="button"
+                            title="add new timeline" data-localize="empty"
+                            data-localize-tooltip="backToCampaignsTooltip"
+                            class="btn btn-default btn-sm"><span
+                            class="glyphicon glyphicon-plus"></span></button>
+                    <button id="youtubeListRemove" type="button"
+                            title="add new timeline" data-localize="timelineLength"
+                            data-localize-tooltip="addNewTimelineButtonToolTip"
+                            class="btn btn-default btn-sm"><span
+                            class="glyphicon glyphicon-minus"></span></button>
+                </div>
+
+                <br/>
+                <div id="youtubeListType">
+                    <div id="youtubeMostViewedList">
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button"  data-toggle="dropdown">
+                                <span id="youtubeCountry" data-localize="worldRegion">World region</span>
+                                <span class="caret"></span>
+                            </button>
+                            <ul id="youtubeCountryListDropDown" class="dropdown-menu" style="min-width: 30px" role="menu" aria-labelledby="dropdownMenu1">
+                                <li class="youtubeFlag" name="US"><a href="#"><img src="_assets/flags/en.png" alt=""/></a></li>
+                                <li class="youtubeFlag" name="BR"><a href="#"><img src="_assets/flags/br.png" alt=""/></a></li>
+                                <li class="youtubeFlag" name="AR"><a href="#"><img src="_assets/flags/ar.png" alt=""/></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="youtubeCustomList"  style="display: none">
+                        <span data-localize="customVideoList">Custom video list</span>
+                        <div id="youttubeVideoIDs">
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
         <div id="blockHTMLCommonProperties" style="display: none"><span
@@ -1360,7 +1406,7 @@
 </div>
 </div>
 <div id="footer"><br>
-    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.173 </span>
+    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.174 </span>
 </div>
 
 
@@ -1767,6 +1813,8 @@
 <p style="display: none" id="bootBoxThemeReload" data-localize="bootBoxThemeReload">You may need to restart StudioLite
     for changes to take effect</p>
 
+<p style="display: none" id="bootBoxMostViewed" data-localize="mostViewed">Most viewed</p>
+<p style="display: none" id="bootBoxCustomList" data-localize="customList">Custom list</p>
 
 </body>
 </html>

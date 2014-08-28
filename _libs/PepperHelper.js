@@ -184,7 +184,7 @@ PepperHelper.prototype = {
                         '<Data>' +
                         self.getCommonDefaultXML() +
                         self.getCommonSceneLayout(i_placement) +
-                        '<YouTube quality="default" listType="most_viewed" listRegion="US" volume="82"/>'+
+                        '<YouTube quality="default" listType="most_viewed" listRegion="US" volume="100"/>'+
                         '</Data>' +
                         '</Player>'
                 },

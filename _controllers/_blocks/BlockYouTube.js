@@ -36,9 +36,14 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _listenVideoIdChange: function () {
             var self = this;
+            // remove previous listeners and create fresh one,
+            // have to run before we override self.m_inputVideoIdChangeHandler
+            if (self.m_inputVideoIdChangeHandler)
+                $(Elements.CLASS_YOUTUBE_VIDEO_ID).off("input", self.m_inputVideoIdChangeHandler);
             self.m_inputVideoIdChangeHandler = _.debounce(function (e) {
                 if (!self.m_selected)
                     return;
+                log('aaaaa');
                 var videoList = [];
                 var domPlayerData = self._getBlockPlayerData();
                 $(domPlayerData).find('VideoIdList').remove();
@@ -50,7 +55,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 $(xSnippetYouTubeManualList).append('<VideoIdList>' + videoList + '</VideoIdList>');
                 self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
             }, 250, false);
-            $(Elements.CLASS_YOUTUBE_VIDEO_ID).off("input", self.m_inputVideoIdChangeHandler).on("input", self.m_inputVideoIdChangeHandler);
+            $(Elements.CLASS_YOUTUBE_VIDEO_ID).on("input", self.m_inputVideoIdChangeHandler);
         },
 
         /**
@@ -59,6 +64,10 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _listenRemoveVideoId: function () {
             var self = this;
+            // remove previous listeners and create fresh one,
+            // have to run before we override self.m_removeVideoID
+            if (self.m_removeVideoID)
+                $(Elements.CLASS_YOUTUBE_VIDEO_ID_REMOVE).off('click', self.m_removeVideoID);
             self.m_removeVideoID = function (e) {
                 if (!self.m_selected)
                     return;
@@ -77,7 +86,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 $(xYouTubeSnippet).append('<VideoIdList>' + videoIDs + '</VideoIdList>');
                 self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
             };
-            $(Elements.CLASS_YOUTUBE_VIDEO_ID_REMOVE).off('click', self.m_removeVideoID).on('click', self.m_removeVideoID);
+            $(Elements.CLASS_YOUTUBE_VIDEO_ID_REMOVE).on('click', self.m_removeVideoID);
         },
 
         /**

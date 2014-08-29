@@ -43,7 +43,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_inputVideoIdChangeHandler = _.debounce(function (e) {
                 if (!self.m_selected)
                     return;
-                log('aaaaa');
                 var videoList = [];
                 var domPlayerData = self._getBlockPlayerData();
                 $(domPlayerData).find('VideoIdList').remove();

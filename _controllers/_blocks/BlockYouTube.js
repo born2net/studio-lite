@@ -27,13 +27,14 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self._listenPlaylistDropDownChange();
             self._listenCountryChange();
             self._listenVideoIdChange();
+            self._listenAddVideoId();
         },
 
         /**
          Listen to when a video id change in input box
          @method _listenVideoIdChange
          **/
-        _listenVideoIdChange: function(){
+        _listenVideoIdChange: function () {
             var self = this;
             self.m_inputVideoIdChangeHandler = _.debounce(function (e) {
                 if (!self.m_selected)
@@ -42,18 +43,57 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var domPlayerData = self._getBlockPlayerData();
                 $(domPlayerData).find('VideoIdList').remove();
                 var xSnippetYouTubeManualList = $(domPlayerData).find('YouTube');
-                $(Elements.YOUTTUBE_VIDEOIDS).find('input').each(function(i,elem){
+                $(Elements.YOUTTUBE_VIDEOIDS).find('input').each(function (i, elem) {
                     videoList.push($(elem).val());
                 });
                 videoList = videoList.join(',');
                 $(xSnippetYouTubeManualList).append('<VideoIdList>' + videoList + '</VideoIdList>');
                 self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
             }, 250, false);
+            $(Elements.CLASS_YOUTUBE_VIDEO_ID).off("input", self.m_inputVideoIdChangeHandler).on("input", self.m_inputVideoIdChangeHandler);
+        },
 
-            // remove any previous listeners to prevent leaks and create fresh ones
-            // since this is called every time we we create new dynamic inputs
-            $(Elements.CLASS_YOUTUBEVIDEOID).off("input", self.m_inputVideoIdChangeHandler);
-            $(Elements.CLASS_YOUTUBEVIDEOID).on("input", self.m_inputVideoIdChangeHandler);
+        /**
+         Listen to removal of video id from list
+         @method self._listenVideoIdChange();
+         **/
+        _listenRemoveVideoId: function () {
+            var self = this;
+            self.m_removeVideoID = function (e) {
+                if (!self.m_selected)
+                    return;
+                var videoID = $(e.target).siblings('input').val();
+                $(e.target).siblings('input').remove();
+                $(e.target).remove();
+                var domPlayerData = self._getBlockPlayerData();
+                var xYouTubeSnippet = $(domPlayerData).find('YouTube');
+                var xVideoListSnippet = $(domPlayerData).find('VideoIdList');
+                var videoIDs = $(xVideoListSnippet).text();
+                videoIDs = videoIDs.split(',');
+                $(xVideoListSnippet).remove();
+                var index = _.indexOf(videoIDs, videoID);
+                videoIDs.splice(index, 1);
+                videoIDs = videoIDs.join(',')
+                $(xYouTubeSnippet).append('<VideoIdList>' + videoIDs + '</VideoIdList>');
+                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
+            };
+            $(Elements.CLASS_YOUTUBE_VIDEO_ID_REMOVE).off('click', self.m_removeVideoID).on('click', self.m_removeVideoID);
+        },
+
+        /**
+         Listen to addition of video id to list
+         @method _listenAddVideoId
+         **/
+        _listenAddVideoId: function () {
+            var self = this;
+            self.m_addVideoID = function (e) {
+                if (!self.m_selected)
+                    return;
+                self._appendVideoIdInput('');
+                self._listenRemoveVideoId();
+                self._listenVideoIdChange();
+            };
+            $(Elements.YOUTUBE_LIST_ADD).on('click', self.m_addVideoID);
         },
 
         /**
@@ -246,10 +286,21 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var videoIDs = $(i_xSnippetYouTubeManualList).text();
             videoIDs = videoIDs.split(',');
             _.each(videoIDs, function (videoID) {
-                var snippet = '<input class="' + BB.lib.unclass(Elements.CLASS_YOUTUBEVIDEOID) + ' form-control" value="' + videoID + '">';
-                $(Elements.YOUTTUBE_VIDEOIDS).append(snippet);
+                self._appendVideoIdInput(videoID);
             });
             self._listenVideoIdChange();
+            self._listenRemoveVideoId();
+        },
+
+        /**
+         Append a video id to the input list
+         @method _appendVideoIdInput
+         @param {String} i_videoId
+         **/
+        _appendVideoIdInput: function (i_videoId) {
+            var self = this;
+            var snippet = '<span><input class="' + BB.lib.unclass(Elements.CLASS_YOUTUBE_VIDEO_ID) + ' form-control" value="' + i_videoId + '"><i class="' + BB.lib.unclass(Elements.CLASS_YOUTUBE_VIDEO_ID_REMOVE) + ' fa fa-times"/></span>';
+            $(Elements.YOUTTUBE_VIDEOIDS).append(snippet);
         },
 
         /**
@@ -310,9 +361,11 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         deleteBlock: function () {
             var self = this;
-            $(Elements.CLASS_YOUTUBEVIDEOID).off("input", self.m_inputVideoIdChangeHandler);
+            $(Elements.CLASS_YOUTUBE_VIDEO_ID).off("input", self.m_inputVideoIdChangeHandler);
             $(Elements.YOUTUBE_LIST_DROPDOWN).off('click', self.m_playlistChange);
             $(Elements.YOUTUBE_COUNTRY_LIST_DROPDOWN).off('click', self.m_countryListChange);
+            $(Elements.YOUTUBE_LIST_ADD).off('click', self.m_addVideoID);
+            $(Elements.CLASS_YOUTUBE_VIDEO_ID_REMOVE).off('click', self.m_removeVideoID);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BAR_METER_CHANGED, self);
             BB.comBroker.stopListen(BB.EVENTS.YOUTUBE_VOLUME_CHANGED, self.m_inputVolumeHandler);
             self._deleteBlock();

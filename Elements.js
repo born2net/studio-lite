@@ -1,5 +1,3 @@
-// sort via: http://alphabetizer.flap.tv/index.php
-
 Elements.ABOUT_US = '#aboutUS';
 Elements.ADD_BLOCK_BUTTON = '#addBlockButton';
 Elements.ADD_BLOCK_TEMPLATE = '#addBlockTemplate';
@@ -108,7 +106,8 @@ Elements.CLASS_TIMELINE_BLOCK_SELECTED = '.timelineBlockSelected';
 Elements.CLASS_USER_NAME = '.userName'
 Elements.CLASS_VIDEOS = '.videos';
 Elements.CLASS_YOUTUBE_FLAG = '.youtubeFlag';
-Elements.CLASS_YOUTUBEVIDEOID = '.youtubeVideoID';
+Elements.CLASS_YOUTUBE_VIDEO_ID = '.youtubeVideoID';
+Elements.CLASS_YOUTUBE_VIDEO_ID_REMOVE = '.youtubeVideoIDRemove';
 Elements.CLASSS_PRO_STUDIO_PANEL = '.proStudioPanel';
 Elements.CLOCK_FONT_SETTINGS = '#clockFontSettings';
 Elements.CLOSE_MODAL = '#closeModal';

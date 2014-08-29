@@ -628,6 +628,24 @@ iframe {
 .selectedYouTubeFlag {
     background-color: #454545;
 }
+
+.youtubeVideoID {
+    float: left;
+    width: 140px;
+}
+
+.youtubeVideoIDRemove {
+    float: left;
+    position: relative;
+    cursor: pointer;
+    left: -20px;
+    top: 10px;
+}
+
+.youtubeVideoIDRemove:hover {
+    opacity: 0.7;
+}
+
 .checkers {
     background-image: url(data:image/gif;base64,R0lGODlhCgAKAIAAAOLi4v///yH5BAAHAP8ALAAAAAAKAAoAAAIRhB2ZhxoM3GMSykqd1VltzxQAOw==);
     display: inline-block;

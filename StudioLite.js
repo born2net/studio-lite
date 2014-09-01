@@ -11,6 +11,9 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
         // app init
         initialize: function () {
             var self = this;
+
+            Bugsense.initAndStartSession( { apiKey: "fc064f8c" } );
+
             window.BB = Backbone;
             window.bootbox = bootbox;
             BB.globs = {};

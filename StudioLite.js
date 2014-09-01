@@ -12,8 +12,6 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
         initialize: function () {
             var self = this;
 
-            Bugsense.initAndStartSession( { apiKey: "fc064f8c" } );
-
             window.BB = Backbone;
             window.bootbox = bootbox;
             BB.globs = {};
@@ -36,6 +34,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             window.log = BB.lib.log;
             BB.lib.forceBrowserCompatability();
             BB.lib.promptOnExit();
+            BB.lib.logErrors();
 
             // localization
             require(['LanguageSelectorView', 'Elements'], function (LanguageSelectorView, Elements) {

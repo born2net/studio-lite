@@ -61,6 +61,16 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         /**
+         log errors in distribution mode
+         @method logErrors
+         **/
+        logErrors: function () {
+            if (window.location.href.indexOf('dist') > -1) {
+                Bugsense.initAndStartSession( { apiKey: "fc064f8c" } );
+            }
+        },
+
+        /**
          Load non primary CSS
          @method loadCss
          @param {String} i_url

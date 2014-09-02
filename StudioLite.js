@@ -34,7 +34,6 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             window.log = BB.lib.log;
             BB.lib.forceBrowserCompatability();
             BB.lib.promptOnExit();
-            BB.lib.logErrors();
 
             // localization
             require(['LanguageSelectorView', 'Elements'], function (LanguageSelectorView, Elements) {

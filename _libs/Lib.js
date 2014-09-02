@@ -64,9 +64,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          log errors in distribution mode
          @method logErrors
          **/
-        logErrors: function () {
+        logErrors: function (i_businessID) {
             if (window.location.href.indexOf('dist') > -1) {
                 Bugsense.initAndStartSession( { apiKey: "fc064f8c" } );
+                Bugsense.addExtraData( 'business_id',i_businessID);
             }
         },
 

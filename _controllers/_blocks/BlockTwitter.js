@@ -1,6 +1,6 @@
 /**
- * BlockYouTube block resides inside a scene or timeline
- * @class BlockYouTube
+ * BlockTwitter block resides inside a scene or timeline
+ * @class BlockTwitter
  * @extends Block
  * @constructor
  * @param {string} i_placement location where objects resides which can be scene or timeline
@@ -9,7 +9,7 @@
  */
 define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
-    var BlockYouTube = Block.extend({
+    var BlockTwitter = Block.extend({
 
         /**
          Constructor
@@ -17,7 +17,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         constructor: function (options) {
             var self = this;
-            self.m_blockType = 4600;
+            self.m_blockType = 4500;
             _.extend(options, {blockType: self.m_blockType})
             Block.prototype.constructor.call(this, options);
             self._initSubPanel(Elements.BLOCK_YOUTUBE_COMMON_PROPERTIES);
@@ -58,7 +58,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         },
 
         /**
-         Listen to removal of a video id from list
+         Listen to removal of video id from list
          @method self._listenVideoIdChange();
          **/
         _listenRemoveVideoId: function () {
@@ -266,7 +266,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         /**
          Toggle the view of proper list selection (most viewed / custom list)
          @method _populateToggleListType
-         @params {String} i_listType
+         @params {Object} i_xSnippetYouTube
          **/
         _populateToggleListType: function (i_listType) {
             var self = this;
@@ -380,5 +380,5 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         }
     });
 
-    return BlockYouTube;
+    return BlockTwitter;
 });

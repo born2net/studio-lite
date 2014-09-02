@@ -95,6 +95,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
             self._rssPollTimeInit();
             self._youtubeInit();
             self._labelFontSelectorInit();
+            self._twitterFontSelectorInit();
             self._labelClockFontSelectorInit();
         },
 
@@ -403,13 +404,25 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         },
 
         /**
-         Create instance of FontSelector used in font property settings
+         Create instance of FontSelector used in font property settings for label block
          @method _labelFontSelectorInit
          **/
         _labelFontSelectorInit: function () {
             var self = this;
             self.m_labelFontSelector = new FontSelector({
                 appendTo: Elements.LABEL_FONT_SETTINGS,
+                colorSettings: {animationSpeed: 100}
+            });
+        },
+
+        /**
+         Create instance of FontSelector used in font property settings for twitter item block
+         @method _twitterFontSelectorInit
+         **/
+        _twitterFontSelectorInit: function () {
+            var self = this;
+            self.m_twitterFontSelector = new FontSelector({
+                appendTo: Elements.TWITTER_FONT_SETTINGS,
                 colorSettings: {animationSpeed: 100}
             });
         },
@@ -494,11 +507,21 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         /**
          Returns the instance of label font selector
          @method getLabelFontSelector
-         @return {Object} m_rssFontSelector instance
+         @return {Object} font selector instance
          **/
         getLabelFontSelector: function () {
             var self = this;
             return self.m_labelFontSelector;
+        },
+
+        /**
+         Returns the instance of twitter item font selector
+         @method getTwitterItemFontSelector
+         @return {Object} font selector instance
+         **/
+        getTwitterItemFontSelector: function () {
+            var self = this;
+            return self.m_twitterFontSelector;
         },
 
         /**

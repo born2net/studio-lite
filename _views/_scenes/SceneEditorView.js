@@ -901,7 +901,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 self._render();
                 return;
             }
-            var block = self.m_blockFactory.createBlock(block.blockID, block.player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_selectedSceneID);
+            block = self.m_blockFactory.createBlock(block.blockID, block.player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_selectedSceneID);
             var blockID = block.getBlockData().blockID;
             block.fabricateBlock(self.m_canvasScale, function () {
                 self.m_blocks.blocksPost[blockID] = block;

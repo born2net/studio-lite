@@ -153,6 +153,8 @@
     "webAddr": "Web address",
     "urlAddr": "URL address",
     "labelText": "Label text",
+    "profileImage": "Profile Image",
+    "twitterItem": "Twitter item",
     "chooseFormat": "Choose format",
     "showBgColor": " background color",
     "ModalTitle": "Modal title",

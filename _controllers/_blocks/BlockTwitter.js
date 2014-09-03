@@ -20,109 +20,54 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_blockType = 4500;
             _.extend(options, {blockType: self.m_blockType})
             Block.prototype.constructor.call(this, options);
-            self._initSubPanel(Elements.BLOCK_YOUTUBE_COMMON_PROPERTIES);
-            self.m_youtubeQualityMeter = self.m_blockProperty.getYouTubeQualityMeter();
-            self._listenQualityChange();
-            self._listenVolumeChange();
-            self._listenPlaylistDropDownChange();
-            self._listenCountryChange();
-            self._listenVideoIdChange();
-            self._listenAddVideoId();
+            self._initSubPanel(Elements.BLOCK_TWITTER_COMMON_PROPERTIES);
+            self._listenSceneListChange();
+            self._listenScreenNameChange();
         },
 
         /**
-         Listen to when a video id change in input box
-         @method _listenVideoIdChange
+         Populate the LI with all available scenes from msdb
+         @method _render
          **/
-        _listenVideoIdChange: function () {
+        _render: function () {
             var self = this;
-            // remove previous listeners and create fresh one,
-            // have to run before we override self.m_inputVideoIdChangeHandler
-            if (self.m_inputVideoIdChangeHandler)
-                $(Elements.CLASS_YOUTUBE_VIDEO_ID).off("input", self.m_inputVideoIdChangeHandler);
-            self.m_inputVideoIdChangeHandler = _.debounce(function (e) {
+            $(Elements.TWITTER_DROPDOWN).empty();
+            var scenenames = BB.Pepper.getSceneNames();
+            if (_.size(scenenames) == 0)
+                return;
+            _.forEach(scenenames, function (i_name, i_id) {
+                // var pseudoID = pepper.getPseudoIdFromSceneId(i_id);
+                var snippet = '<li><a name="resource" data-localize="profileImage" role="menuitem" tabindex="-1" href="#" data-scene_id="' + i_id + '">' + i_name + '</a></li>';
+                $(Elements.TWITTER_DROPDOWN).append($(snippet));
+            });
+        },
+
+        /**
+         Wire changing of campaign name through scene properties
+         @method _listenScreenNameChange
+         @return none
+         **/
+        _listenScreenNameChange: function () {
+            var self = this;
+            self.m_screenNameChange = _.debounce(function (e) {
                 if (!self.m_selected)
                     return;
-                var videoList = [];
+                var screenName = $(e.target).val();
                 var domPlayerData = self._getBlockPlayerData();
-                $(domPlayerData).find('VideoIdList').remove();
-                var xSnippetYouTubeManualList = $(domPlayerData).find('YouTube');
-                $(Elements.YOUTTUBE_VIDEOIDS).find('input').each(function (i, elem) {
-                    videoList.push($(elem).val());
-                });
-                videoList = videoList.join(',');
-                $(xSnippetYouTubeManualList).append('<VideoIdList>' + videoList + '</VideoIdList>');
+                var xSnippet = $(domPlayerData).find('Twitter');
+                $(xSnippet).attr('screenName', screenName);
                 self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
-            }, 250, false);
-            $(Elements.CLASS_YOUTUBE_VIDEO_ID).on("input", self.m_inputVideoIdChangeHandler);
+            }, 333, false);
+            $(Elements.TWITTER_SCREEN_INPUT).on("input", self.m_screenNameChange);
         },
 
-        /**
-         Listen to removal of video id from list
-         @method self._listenVideoIdChange();
-         **/
-        _listenRemoveVideoId: function () {
+        _listenSceneListChange: function(){
             var self = this;
-            // remove previous listeners and create fresh one,
-            // have to run before we override self.m_removeVideoID
-            if (self.m_removeVideoID)
-                $(Elements.CLASS_YOUTUBE_VIDEO_ID_REMOVE).off('click', self.m_removeVideoID);
-            self.m_removeVideoID = function (e) {
+            BB.comBroker.listenWithNamespace(BB.EVENTS.SCENE_LIST_UPDATED,self, function(e){
                 if (!self.m_selected)
                     return;
-                var videoID = $(e.target).siblings('input').val();
-                $(e.target).siblings('input').remove();
-                $(e.target).remove();
-                var domPlayerData = self._getBlockPlayerData();
-                var xYouTubeSnippet = $(domPlayerData).find('YouTube');
-                var xVideoListSnippet = $(domPlayerData).find('VideoIdList');
-                var videoIDs = $(xVideoListSnippet).text();
-                videoIDs = videoIDs.split(',');
-                $(xVideoListSnippet).remove();
-                var index = _.indexOf(videoIDs, videoID);
-                videoIDs.splice(index, 1);
-                videoIDs = videoIDs.join(',')
-                $(xYouTubeSnippet).append('<VideoIdList>' + videoIDs + '</VideoIdList>');
-                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
-            };
-            $(Elements.CLASS_YOUTUBE_VIDEO_ID_REMOVE).on('click', self.m_removeVideoID);
-        },
-
-        /**
-         Listen to addition of video id to list
-         @method _listenAddVideoId
-         **/
-        _listenAddVideoId: function () {
-            var self = this;
-            self.m_addVideoID = function (e) {
-                if (!self.m_selected)
-                    return;
-                self._appendVideoIdInput('');
-                self._listenRemoveVideoId();
-                self._listenVideoIdChange();
-            };
-            $(Elements.YOUTUBE_LIST_ADD).on('click', self.m_addVideoID);
-        },
-
-        /**
-         Listen to playlist changes dropdown
-         @method _listenPlaylistDropDownChange
-         **/
-        _listenCountryChange: function () {
-            var self = this;
-            self.m_countryListChange = function (e) {
-                if (!self.m_selected)
-                    return;
-                var listRegion = $(e.target).closest('li').attr('name');
-                if (_.isUndefined(listRegion))
-                    return;
-                self._populatePlaylistCountryFlag(listRegion);
-                var domPlayerData = self._getBlockPlayerData();
-                var xSnippet = $(domPlayerData).find('YouTube');
-                $(xSnippet).attr('listRegion', listRegion);
-                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
-            };
-            $(Elements.YOUTUBE_COUNTRY_LIST_DROPDOWN).on('click', self.m_countryListChange);
+                self._render();
+            })
         },
 
         /**
@@ -138,7 +83,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 if (_.isUndefined(listType))
                     return;
                 var listLabel = $(e.target).text();
-                self._populatePlaylistLabel(listLabel);
                 self._populateToggleListType(listType)
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('YouTube');
@@ -158,68 +102,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         },
 
         /**
-         Listen to changes in volume control
-         @method _listenVolumeChange
-         **/
-        _listenVolumeChange: function () {
-            var self = this;
-            self.m_inputVolumeHandler = function (e) {
-                if (!self.m_selected)
-                    return;
-                var volume = e.edata;
-                var domPlayerData = self._getBlockPlayerData();
-                var xSnippet = $(domPlayerData).find('YouTube');
-                $(xSnippet).attr('volume', volume);
-                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
-            };
-            BB.comBroker.listen(BB.EVENTS.YOUTUBE_VOLUME_CHANGED, self.m_inputVolumeHandler);
-        },
-
-        /**
-         Listen to changes in youtube quality bar meter module
-         @method _listenQualityChange
-         **/
-        _listenQualityChange: function () {
-            var self = this;
-            BB.comBroker.listenWithNamespace(BB.EVENTS.BAR_METER_CHANGED, self, function (e) {
-                if (!self.m_selected || e.caller !== self.m_youtubeQualityMeter)
-                    return;
-                var value = e.edata;
-
-                switch (value) {
-                    case 1:
-                    {
-                        value = 'small';
-                        break;
-                    }
-                    case 2:
-                    {
-                        value = 'medium';
-                        break;
-                    }
-                    case 3:
-                    {
-                        value = 'default';
-                        break;
-                    }
-                    case 4:
-                    {
-                        value = 'large';
-                        break;
-                    }
-                    case 5:
-                    {
-                        value = 'hd720';
-                        break;
-                    }
-                }
-                var domPlayerData = self._getBlockPlayerData();
-                $(domPlayerData).find('YouTube').attr('quality', value);
-                self._setBlockPlayerData(domPlayerData);
-            });
-        },
-
-        /**
          Load up property values in the common panel
          @method _populate
          @return none
@@ -227,128 +109,10 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _populate: function () {
             var self = this;
             var domPlayerData = self._getBlockPlayerData();
-            var xSnippetYouTube = $(domPlayerData).find('YouTube');
-            var xSnippetYouTubeManualList = $(domPlayerData).find('VideoIdList');
-            var listType = $(xSnippetYouTube).attr('listType');
-            var listRegion = $(xSnippetYouTube).attr('listRegion');
-            var label = listType == 'manually' ? $(Elements.BOOTBOX_CUSTOM_LIST).text() : $(Elements.BOOTBOX_MOST_VIEWED).text();
-            self._populateQuality(xSnippetYouTube);
-            self._populatePlaylistLabel(label);
-            self._populateToggleListType(listType);
-            self._populatePlaylistCountryFlag(listRegion);
-            self._populateManualList(xSnippetYouTubeManualList);
-        },
-
-        /**
-         Populate the youtube country flag
-         @method _populatePlaylistCountryFlag
-         @params {String} i_listRegion
-         **/
-        _populatePlaylistCountryFlag: function (i_listRegion) {
-            var self = this;
-            $(Elements.CLASS_YOUTUBE_FLAG).removeClass(BB.lib.unclass(Elements.CLASS_SELECTED_YOUTUBE_FLAG));
-            $(Elements.CLASS_YOUTUBE_FLAG).each(function (e) {
-                if ($(this).attr('name') == i_listRegion)
-                    $(this).addClass(BB.lib.unclass(Elements.CLASS_SELECTED_YOUTUBE_FLAG));
-            });
-        },
-
-        /**
-         Populate the youtube playlist label (most viewed / custom list)
-         @method _populatePlaylistLabel
-         @params {String} i_label
-         **/
-        _populatePlaylistLabel: function (i_label) {
-            var self = this;
-            $(Elements.YOUTUBE_MOST_VIEWED).text(i_label);
-        },
-
-        /**
-         Toggle the view of proper list selection (most viewed / custom list)
-         @method _populateToggleListType
-         @params {Object} i_xSnippetYouTube
-         **/
-        _populateToggleListType: function (i_listType) {
-            var self = this;
-            if (i_listType == 'manually') {
-                $(Elements.YOUTUBE_CUSTOM_LIST).show();
-                $(Elements.YOUTUBE_MOST_VIEWED_LIST).hide();
-                $(Elements.YOUTUBE_LIST_ADD).show();
-                $(Elements.YOUTUBE_LIST_REMOVE).show();
-            } else {
-                $(Elements.YOUTUBE_CUSTOM_LIST).hide();
-                $(Elements.YOUTUBE_MOST_VIEWED_LIST).show();
-                $(Elements.YOUTUBE_LIST_ADD).hide();
-                $(Elements.YOUTUBE_LIST_REMOVE).hide();
-            }
-        },
-
-        /**
-         Update the UI with list of youtube videos inserted by user
-         @method _populateManualList
-         @params {Object} i_xSnippetYouTube
-         **/
-        _populateManualList: function (i_xSnippetYouTubeManualList) {
-            var self = this;
-            $(Elements.YOUTTUBE_VIDEOIDS).empty();
-            var videoIDs = $(i_xSnippetYouTubeManualList).text();
-            videoIDs = videoIDs.split(',');
-            _.each(videoIDs, function (videoID) {
-                self._appendVideoIdInput(videoID);
-            });
-            self._listenVideoIdChange();
-            self._listenRemoveVideoId();
-        },
-
-        /**
-         Append a video id to the input list
-         @method _appendVideoIdInput
-         @param {String} i_videoId
-         **/
-        _appendVideoIdInput: function (i_videoId) {
-            var self = this;
-            var snippet = '<span><input class="' + BB.lib.unclass(Elements.CLASS_YOUTUBE_VIDEO_ID) + ' form-control" value="' + i_videoId + '"><i class="' + BB.lib.unclass(Elements.CLASS_YOUTUBE_VIDEO_ID_REMOVE) + ' fa fa-times"/></span>';
-            $(Elements.YOUTTUBE_VIDEOIDS).append(snippet);
-        },
-
-        /**
-         Populate the youtube video quality meter
-         @method _populateQuality
-         @param {Object} i_xSnippetYouTube
-         **/
-        _populateQuality: function (i_xSnippetYouTube) {
-            var self = this;
-            var volume = parseFloat(i_xSnippetYouTube.attr('volume')) * 100;
-            $(Elements.YOUTUBE_VOLUME_WRAP_SLIDER).val(volume);
-            var value = $(i_xSnippetYouTube).attr('quality');
-            switch (value) {
-                case 'small':
-                {
-                    value = 1;
-                    break;
-                }
-                case 'medium':
-                {
-                    value = 2;
-                    break;
-                }
-                case 'default':
-                {
-                    value = 3;
-                    break;
-                }
-                case 'large':
-                {
-                    value = 4;
-                    break;
-                }
-                case 'hd720':
-                {
-                    value = 5;
-                    break;
-                }
-            }
-            self.m_youtubeQualityMeter.setMeter(value);
+            var xSnippet = $(domPlayerData).find('Twitter');
+            var screenName = $(xSnippet).attr('screenName');
+            $(Elements.TWITTER_SCREEN_INPUT).val(screenName);
+            self._render();
         },
 
         /**
@@ -359,7 +123,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _loadBlockSpecificProps: function () {
             var self = this;
             self._populate();
-            this._viewSubPanel(Elements.BLOCK_YOUTUBE_COMMON_PROPERTIES);
+            this._viewSubPanel(Elements.BLOCK_TWITTER_COMMON_PROPERTIES);
         },
 
         /**
@@ -369,13 +133,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         deleteBlock: function () {
             var self = this;
-            $(Elements.CLASS_YOUTUBE_VIDEO_ID).off("input", self.m_inputVideoIdChangeHandler);
-            $(Elements.YOUTUBE_LIST_DROPDOWN).off('click', self.m_playlistChange);
-            $(Elements.YOUTUBE_COUNTRY_LIST_DROPDOWN).off('click', self.m_countryListChange);
-            $(Elements.YOUTUBE_LIST_ADD).off('click', self.m_addVideoID);
-            $(Elements.CLASS_YOUTUBE_VIDEO_ID_REMOVE).off('click', self.m_removeVideoID);
-            BB.comBroker.stopListenWithNamespace(BB.EVENTS.BAR_METER_CHANGED, self);
-            BB.comBroker.stopListen(BB.EVENTS.YOUTUBE_VOLUME_CHANGED, self.m_inputVolumeHandler);
+            $(Elements.TWITTER_SCREEN_INPUT).off("input", self.m_screenNameChange);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.SCENE_LIST_UPDATED,self);
             self._deleteBlock();
         }
     });

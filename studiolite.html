@@ -1281,7 +1281,6 @@
                                 <li class="youtubeFlag" name="TW"><a href="#"><img src="_assets/flags/ar.png" alt=""/></a></li>
                                 <li class="youtubeFlag" name="AE"><a href="#"><img src="_assets/flags/br.png" alt=""/></a></li>
                                 <li class="youtubeFlag" name="US"><a href="#"><img src="_assets/flags/en.png" alt=""/></a></li>
-
                             </ul>
                         </div>
                     </div>
@@ -1294,6 +1293,38 @@
             </div>
         </div>
         <div id="blockTwitterCommonProperties" style="display: none">
+            <span data-localize="twitterScreenName">Twitter screen name</span>
+            <input type="text" name="name" id="twitterScreenInput" value="" placeholder="like CNN...">
+            <div>
+                <br/>
+                <span data-localize="loadWithScene">Load with scene</span>
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                        <span id="twitterSceneList" data-localize="selectSceneName">select scene</span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul id="twitterDropDown" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                    </ul>
+                </div>
+                <br/>
+                <span data-localize="Interval" style="float: left; display: block">Interval</span><br/>
+                <div style="float: left; position: relative; left: -4px" class="spinner spinnerDimHeight">
+                    <input type="text" style="width: 60px" class="fontFormatter input-mini spinner-input">
+                    <div name="height" class="spinner-buttons btn-group btn-group-vertical">
+                        <button type="button" name="fontSizeUp" class="squareButton btn spinner-up"><i
+                                class="fa fa-chevron-up"></i></button>
+                        <button type="button" name="fontSizeDown" class="squareButton btn spinner-down"><i
+                                class="fa fa-chevron-down"></i></button>
+                    </div>
+                    <div>
+                        <label style="margin-top: 10px">
+                            <input id="twitterSlideShow" type="checkbox" style="float: left; width: 20px; margin: 0">
+                            <span style="float: left; position: relative; top: -3px" data-localize="twitterSlideShow"> slideshow</span>
+                        </label>
+                    </div>
+
+                </div>
+            </div>
         </div>
 
         <div id="blockTwitterItemCommonProperties" style="display: none">

@@ -88,8 +88,13 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
                 var faOpacity = 1;
                 var bufferSwitch = 0;
                 // don't show image or video component in component list
-                if (componentID == 3130 || componentID == 3100 || componentID == 3510)
+                if (componentID == '3130' ||
+                    componentID == '3100' ||
+                    componentID == '3510' ||
+                    (self.m_placement == BB.CONSTS.PLACEMENT_CHANNEL && componentID == '4505') ||
+                    (self.m_placement == BB.CONSTS.PLACEMENT_SCENE && componentID == '4500')) {
                     continue;
+                }
 
                 switch (self._checkAllowedComponent(componentID)) {
                     case 0:
@@ -186,7 +191,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
                             success: {
                                 label: $(Elements.MSG_BOOTBOX_ENTERPRISE_UPGRADE).text(),
                                 className: "btn-success",
-                                callback: function() {
+                                callback: function () {
                                     BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW).selectNavigation(Elements.CLASSS_PRO_STUDIO_PANEL);
                                 }
                             },

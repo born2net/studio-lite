@@ -8,17 +8,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
     BB.SERVICES.NAVIGATION_VIEW = 'NavigationView';
 
-    /**
-     Custom event fired when scene list should be refreshed
-     @event SCENE_LIST_UPDATED
-     @param {This} caller
-     @param {Self} context caller
-     @param {Event} event
-     @static
-     @final
-     **/
-    BB.EVENTS.SCENE_LIST_UPDATED = 'SCENE_LIST_UPDATED';
-
     var NavigationView = BB.View.extend({
 
         /**

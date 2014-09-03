@@ -143,6 +143,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 $(domSceneData).find('Player').attr('label', text);
                 pepper.setScenePlayerData(sceneID, (new XMLSerializer()).serializeToString(domSceneData));
                 self.$el.find('[data-sceneid="' + self.m_selectedSceneID + '"]').find('h4').text(text);
+                BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this);
             }, 333, false);
             $(Elements.FORM_SCENE_NAME).on("input", onChange);
         },
@@ -156,7 +157,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             $(Elements.NEW_SCENE).on('click', function (e) {
                 self.m_selectedSceneID = -1;
                 BB.comBroker.fire(BB.EVENTS.NEW_SCENE_ADD, this, null);
-                self._render();
+                BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this);
                 return false;
             });
 
@@ -164,9 +165,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 if (self.m_selectedSceneID != -1) {
                     bootbox.confirm($(Elements.MSG_BOOTBOX_SURE_DELETE_SCENE).text(), function (result) {
                         if (result == true) {
-                            var selectedElement = self.$el.find('[data-sceneid="' + self.m_selectedSceneID + '"]');
-                            selectedElement.remove();
+                            // var selectedElement = self.$el.find('[data-sceneid="' + self.m_selectedSceneID + '"]');
+                            // selectedElement.remove();
                             BB.comBroker.fire(BB.EVENTS.SCENE_EDITOR_REMOVE, self, this, self.m_selectedSceneID);
+                            BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this);
                         }
                     });
                 } else {

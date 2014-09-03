@@ -125,8 +125,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var domPlayerData = self._getBlockPlayerData();
                 $(domPlayerData).find('Player').eq(0).attr('label', text);
                 self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
-                if (BB.EVENTS['SCENE_LIST_UPDATED'])
-                    BB.comBroker.fire(BB.EVENTS['SCENE_LIST_UPDATED'], this);
+                BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this);
             }, 200);
             $(Elements.SCENE_NAME_INPUT).on("input", self.m_inputNameChangeHandler);
 

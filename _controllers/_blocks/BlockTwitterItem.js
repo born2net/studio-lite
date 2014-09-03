@@ -22,6 +22,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             Block.prototype.constructor.call(this, options);
             self._initSubPanel(Elements.BLOCK_TWITTER_ITEM_COMMON_PROPERTIES);
             self._listenItemSelectDropDownChange();
+            self._listenFontSelectionChange();
             self.m_twitterFontSelector = self.m_blockProperty.getTwitterItemFontSelector();
         },
 
@@ -38,6 +39,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var label = fieldType == 'resource' ? $(Elements.BOOTBOX_PROFILE_IMAGE).text() : $(Elements.BOOTBOX_LABEL_TEXT).text();
             self._populatePlayItemLabel(label);
             self._populateToggleItemType(fieldType);
+            self._populateLabel();
         },
 
         /**
@@ -109,6 +111,49 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         },
 
         /**
+         Load up property values in the common panel
+         @method _populate
+         @return none
+         **/
+        _populateLabel: function () {
+            var self = this;
+            var domPlayerData = self._getBlockPlayerData();
+            var xSnippetFont = $(domPlayerData).find('Font');
+            self.m_twitterFontSelector.setConfig({
+                bold: xSnippetFont.attr('fontWeight') == 'bold' ? true : false,
+                italic: xSnippetFont.attr('fontStyle') == 'italic' ? true : false,
+                underline: xSnippetFont.attr('textDecoration') == 'underline' ? true : false,
+                alignment: xSnippetFont.attr('textAlign'),
+                font: xSnippetFont.attr('fontFamily'),
+                color: BB.lib.colorToHex(BB.lib.decimalToHex(xSnippetFont.attr('fontColor'))),
+                size: xSnippetFont.attr('fontSize')
+            });
+        },
+
+        /**
+         Listen to changes in font UI selection from Block property and take action on changes
+         @method _listenFontSelectionChange
+         **/
+        _listenFontSelectionChange: function () {
+            var self = this;
+            BB.comBroker.listenWithNamespace(BB.EVENTS.FONT_SELECTION_CHANGED, self, function (e) {
+                if (!self.m_selected || e.caller !== self.m_twitterFontSelector)
+                    return;
+                var config = e.edata;
+                var domPlayerData = self._getBlockPlayerData();
+                var xSnippetFont = $(domPlayerData).find('Font');
+                config.bold == true ? xSnippetFont.attr('fontWeight', 'bold') : xSnippetFont.attr('fontWeight', 'normal');
+                config.italic == true ? xSnippetFont.attr('fontStyle', 'italic') : xSnippetFont.attr('fontStyle', 'normal');
+                config.underline == true ? xSnippetFont.attr('textDecoration', 'underline') : xSnippetFont.attr('textDecoration', 'none');
+                xSnippetFont.attr('fontColor', BB.lib.colorToDecimal(config.color));
+                xSnippetFont.attr('fontSize', config.size);
+                xSnippetFont.attr('fontFamily', config.font);
+                xSnippetFont.attr('textAlign', config.alignment);
+                self._setBlockPlayerData(domPlayerData);
+            });
+        },
+
+        /**
          Populate the common block properties panel, called from base class if exists
          @method _loadBlockSpecificProps
          @return none
@@ -127,6 +172,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         deleteBlock: function () {
             var self = this;
             $(Elements.TWITTER_ITEM_DROPDOWN).off('click', self.m_itemTypeSelect);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.FONT_SELECTION_CHANGED, self);
             self._deleteBlock();
         }
     });

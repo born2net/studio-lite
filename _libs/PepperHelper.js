@@ -197,11 +197,13 @@ PepperHelper.prototype = {
                 getDefaultPlayerData: function (i_placement) {
                     return  '<Player player="4505" label="Twitter" interactive="0">' +
                         '<Data>' +
-                        self.getCommonDefaultXML() +
-                        self.getCommonSceneLayout(i_placement) +
-                        '<XmlItem fieldName="text" fieldType="text">'+
-                            '<Font fontSize="12" fontColor="0" fontFamily="Astron Boy Video" fontWeight="normal" fontStyle="normal" textDecoration="underline" textAlign="center"/>'+
-                        '</XmlItem>'
+                            self.getCommonDefaultXML() +
+                            self.getCommonSceneLayout(i_placement) +
+                            '<XmlItem fieldName="text" fieldType="text">'+
+                                '<Font fontSize="12" fontColor="0" fontFamily="Astron Boy Video" fontWeight="normal" fontStyle="normal" textDecoration="underline" textAlign="center"/>' +
+                            '</XmlItem>'+
+                        '</Data>' +
+                    '</Player>'
                 },
                 fontAwesome: self.getFontAwesome('twitteritem')
             },

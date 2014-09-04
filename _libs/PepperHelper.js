@@ -181,7 +181,7 @@ PepperHelper.prototype = {
                         '<Data>' +
                             self.getCommonDefaultXML() +
                              self.getCommonSceneLayout(i_placement) +
-                                '<Twitter screenName="Madonna" slideShow="1" itemInterval="2">' +
+                                '<Twitter screenName="CNN" slideShow="1" itemInterval="4">' +
                                      '<Player src="" hDataSrc=""/>'+
                                  '</Twitter>' +
                              '</Data>' +

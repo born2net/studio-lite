@@ -1308,21 +1308,14 @@
                 </div>
                 <br/>
                 <span data-localize="Interval" style="float: left; display: block">Interval</span><br/>
-                <div style="float: left; position: relative; left: -4px" class="spinner spinnerDimHeight">
-                    <input type="text" style="width: 60px" class="fontFormatter input-mini spinner-input">
+                <div class="spinner spinnerDimHeight">
+                    <input id="twitterIntervalInput" type="text" style="width: 60px" class="input-mini spinner-input">
                     <div name="height" class="spinner-buttons btn-group btn-group-vertical">
                         <button type="button" name="fontSizeUp" class="squareButton btn spinner-up"><i
                                 class="fa fa-chevron-up"></i></button>
                         <button type="button" name="fontSizeDown" class="squareButton btn spinner-down"><i
                                 class="fa fa-chevron-down"></i></button>
                     </div>
-                    <div>
-                        <label style="margin-top: 10px">
-                            <input id="twitterSlideShow" type="checkbox" style="float: left; width: 20px; margin: 0">
-                            <span style="float: left; position: relative; top: -3px" data-localize="twitterSlideShow"> slideshow</span>
-                        </label>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -1492,7 +1485,7 @@
 </div>
 </div>
 <div id="footer"><br>
-    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.176 </span>
+    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.177 </span>
 </div>
 
 
@@ -1903,6 +1896,8 @@
 
 <p style="display: none" id="bootBoxLabelText" data-localize="labelText">Label text</p>
 <p style="display: none" id="bootBoxProfileImage" data-localize="profileImage">Profile image</p>
+
+<p style="display: none" id="bootBoxSelectScene" data-localize="selectSceneName">Select scene</p>
 
 </body>
 </html>

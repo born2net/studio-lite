@@ -27,7 +27,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self._initResourcesData();
         },
 
-
         /**
          Listen to changes in volume control
          @method _listenVolumeChange
@@ -56,7 +55,12 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var domPlayerData = self._getBlockPlayerData();
             var xSnippet = $(domPlayerData).find('Resource');
             self.m_resourceID = $(xSnippet).attr('hResource');
-            self.m_blockName = pepper.getResourceRecord(self.m_resourceID).resource_name;
+            var resRec = self.m_blockName = pepper.getResourceRecord(self.m_resourceID);
+            if (_.isNull(resRec)){
+                self._selfDestruct();
+                return;
+            }
+            self.m_blockName = resRec['resource_name'];
             self.m_blockDescription = pepper.getResourceName(self.m_resourceID);
             var fileFormat = pepper.getResourceType(self.m_resourceID);
             self.m_blockFontAwesome = BB.PepperHelper.getFontAwesome(fileFormat);

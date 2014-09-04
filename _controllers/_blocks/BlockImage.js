@@ -36,7 +36,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var xSnippet = $(domPlayerData).find('Resource');
             self.m_resourceID = $(xSnippet).attr('hResource');
             self.m_nativeID = pepper.getResourceNativeID(self.m_resourceID);
-            if (self.m_nativeID == -1){
+            if (_.isNull(self.m_nativeID)){
                 self._selfDestruct();
                 return;
             }
@@ -44,20 +44,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_blockDescription = pepper.getResourceName(self.m_resourceID);
             self.m_fileFormat = pepper.getResourceType(self.m_resourceID);
             self.m_blockFontAwesome = BB.PepperHelper.getFontAwesome(self.m_fileFormat);
-        },
-
-        /**
-         bug fix: backward comparability with player_data that includes deleted resources
-         this was already fixed but we live _selfDestruct for backwards compatability
-         @method _selfDestruct
-         **/
-        _selfDestruct: function(){
-            var self = this;
-            setTimeout(function(){
-                var selectedSceneID = BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']).getSelectedSceneID();
-                pepper.removeScenePlayer(selectedSceneID, self.m_block_id);
-                BB.comBroker.fire(BB.EVENTS.LOAD_SCENE, this, null, selectedSceneID);
-            },2000);
         },
 
         /**

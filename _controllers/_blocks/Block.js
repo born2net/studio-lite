@@ -731,6 +731,20 @@ define(['jquery', 'backbone'], function ($) {
         },
 
         /**
+         bug fix: backward comparability with player_data that includes deleted resources
+         this was already fixed but we live _selfDestruct for backwards compatability
+         @method _selfDestruct
+         **/
+        _selfDestruct: function(){
+            var self = this;
+            setTimeout(function(){
+                var selectedSceneID = BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']).getSelectedSceneID();
+                pepper.removeScenePlayer(selectedSceneID, self.m_block_id);
+                BB.comBroker.fire(BB.EVENTS.LOAD_SCENE, this, null, selectedSceneID);
+            },2000);
+        },
+
+        /**
          Delete block is a private method that is always called regardless if instance has
          been inherited or not. Used for releasing memory for garbage collector.
          @method _deleteBlock

@@ -36,10 +36,28 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var xSnippet = $(domPlayerData).find('Resource');
             self.m_resourceID = $(xSnippet).attr('hResource');
             self.m_nativeID = pepper.getResourceNativeID(self.m_resourceID);
+            if (self.m_nativeID == -1){
+                self._selfDestruct();
+                return;
+            }
             self.m_blockName = pepper.getResourceRecord(self.m_resourceID).resource_name;
             self.m_blockDescription = pepper.getResourceName(self.m_resourceID);
             self.m_fileFormat = pepper.getResourceType(self.m_resourceID);
             self.m_blockFontAwesome = BB.PepperHelper.getFontAwesome(self.m_fileFormat);
+        },
+
+        /**
+         bug fix: backward comparability with player_data that includes deleted resources
+         this was already fixed but we live _selfDestruct for backwards compatability
+         @method _selfDestruct
+         **/
+        _selfDestruct: function(){
+            var self = this;
+            setTimeout(function(){
+                var selectedSceneID = BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']).getSelectedSceneID();
+                pepper.removeScenePlayer(selectedSceneID, self.m_block_id);
+                BB.comBroker.fire(BB.EVENTS.LOAD_SCENE, this, null, selectedSceneID);
+            },2000);
         },
 
         /**
@@ -100,7 +118,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          @Override
          @method fabricateBlock
          **/
-        fabricateBlock: function(i_canvasScale, i_callback){
+        fabricateBlock: function (i_canvasScale, i_callback) {
             var self = this;
 
             var domPlayerData = self._getBlockPlayerData();
@@ -109,13 +127,13 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var elemID = _.uniqueId('imgElemrand')
             var imgPath;
 
-            if (self.m_fileFormat == 'swf'){
+            if (self.m_fileFormat == 'swf') {
                 imgPath = 'https://s3-us-west-2.amazonaws.com/oregon-signage-resources/business363510/resources/14.png';
             } else {
                 imgPath = 'https://s3-us-west-2.amazonaws.com/oregon-signage-resources/business' + businessID + '/resources/' + self.m_nativeID + '.' + self.m_fileFormat;
             }
 
-            $('<img src="'+ imgPath +'" style="display: none" >').load(function() {
+            $('<img src="' + imgPath + '" style="display: none" >').load(function () {
                 $(this).width(1000).height(800).appendTo('body');
                 var options = self._fabricateOptions(parseInt(layout.attr('y')), parseInt(layout.attr('x')), parseInt(layout.attr('width')), parseInt(layout.attr('height')), parseInt(layout.attr('rotation')));
                 var img = new fabric.Image(this, options);

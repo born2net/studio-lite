@@ -1459,6 +1459,8 @@ Pepper.prototype = {
     getResourceNativeID: function (i_resource_id) {
         var self = this;
         var recResource = self.m_msdb.table_resources().getRec(i_resource_id);
+        if (_.isNull(recResource))
+            return -1;
         return recResource['native_id'];
     },
 

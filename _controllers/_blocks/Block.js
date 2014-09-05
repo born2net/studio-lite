@@ -738,9 +738,12 @@ define(['jquery', 'backbone'], function ($) {
         _selfDestruct: function(){
             var self = this;
             setTimeout(function(){
-                var selectedSceneID = BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']).getSelectedSceneID();
-                pepper.removeScenePlayer(selectedSceneID, self.m_block_id);
-                BB.comBroker.fire(BB.EVENTS.LOAD_SCENE, this, null, selectedSceneID);
+                var sceneEditView = BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']);
+                if (!_.isUndefined(sceneEditView)){
+                    var selectedSceneID = sceneEditView.getSelectedSceneID();
+                    pepper.removeScenePlayer(selectedSceneID, self.m_block_id);
+                    BB.comBroker.fire(BB.EVENTS.LOAD_SCENE, this, null, selectedSceneID);
+                }
             },2000);
         },
 

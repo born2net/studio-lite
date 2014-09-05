@@ -725,6 +725,29 @@ Pepper.prototype = {
     },
 
     /**
+     Remove all scene players that use resources (3100 & 3130) and that include the specified resource id
+     @method removeAllScenePlayersWithResource
+     @param {Number} i_resource_id
+     **/
+    removeAllScenePlayersWithResource: function (i_resource_id) {
+        var self = this;
+        $(self.m_msdb.table_player_data().getAllPrimaryKeys()).each(function (k, player_data_id) {
+            var recPlayerData = self.m_msdb.table_player_data().getRec(player_data_id);
+            var domSceneData = $.parseXML(recPlayerData['player_data_value']);
+            var sceneID = $(domSceneData).find('Player').eq(0).attr('id');
+            $(domSceneData).find('Player').each(function (i, playerData) {
+                $(playerData).find('[player="3100"],[player="3130"]').each(function (i, playeResourceData) {
+                    var playerDataID = $(this).attr('id');
+                    var hResource = $(playeResourceData).find('Resource').attr('hResource');
+                    if (hResource == i_resource_id) {
+                        pepper.removeScenePlayer(sceneID, playerDataID);
+                    }
+                });
+            });
+        });
+    },
+
+    /**
      Remove a scene
      @method removeScene
      **/

@@ -16,11 +16,27 @@ define(['jquery', 'backbone', 'SceneSelectionView'], function ($, Backbone, Scen
          **/
         initialize: function () {
             var self = this;
-            // $(Elements.SCENE_CANVAS).fadeTo(1,0.01)
+            self._listenResourceRemoved();
             BB.comBroker.setService(BB.SERVICES['SCENES_LOADER_VIEW'], self);
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self && !self.m_sceneEditorView) {
                     self._render();
+                }
+            });
+        },
+
+        /**
+         Listen to when a resource is removed, and delete it from matching scenes
+         @method _listenResourceRemoved
+         **/
+        _listenResourceRemoved: function(){
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS.REMOVED_RESOURCE, function(e){
+                pepper.removeAllScenePlayersWithResource(e.edata);
+                var sceneEditView = BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']);
+                if (!_.isUndefined(sceneEditView)){
+                    var selectedSceneID = sceneEditView.getSelectedSceneID();
+                    BB.comBroker.fire(BB.EVENTS.LOAD_SCENE, this, null, selectedSceneID);
                 }
             });
         },

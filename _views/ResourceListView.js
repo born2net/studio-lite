@@ -54,8 +54,7 @@ define(['jquery', 'backbone', 'bootstrapfileinput'], function ($, Backbone, boot
             $(Elements.FILE_REMOVE).on('click', function (e) {
                 if (self.m_selected_resource_id == undefined)
                     return;
-                // remove a resource from resources, notify before so channel instances
-                // can remove corresponding blocks and after so channelList can refresh UI
+                // notify before so channel instances can remove blocks & after so channelList refresh UI
                 BB.comBroker.fire(BB.EVENTS.REMOVING_RESOURCE, this, null, self.m_selected_resource_id);
                 pepper.removeResource(self.m_selected_resource_id);
                 pepper.removeBlocksWithResourceID(self.m_selected_resource_id);

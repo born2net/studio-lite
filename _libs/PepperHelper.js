@@ -7,11 +7,9 @@
  @return none
  **/
 function PepperHelper() {
-
     this.self = this;
     this.m_components = {};
     this.m_fontAwesome = {};
-
     this._initComponents();
 };
 

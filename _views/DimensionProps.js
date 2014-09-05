@@ -23,6 +23,7 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
             self.m_cachedValues = {};
             self.m_showAngle = self.options.showAngle || false;
             self.m_showLock = self.options.showLock || false;
+            self.m_hideSpinners = self.options.hideSpinners || false;
 
             self.$el = $(Elements.TEMPLATE_DIMENSION_PROPS).clone();
             self.el = self.$el[0];
@@ -36,6 +37,9 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
 
             if (self.m_showLock == false)
                 $('.lockPosition', self.el).hide();
+
+            if (self.m_hideSpinners)
+                self._hideSpinners();
 
             var currID = self.$el.attr('id');
             self.$el.attr('id', _.uniqueId(currID));
@@ -105,6 +109,15 @@ define(['jquery', 'backbone', 'spinner'], function ($, Backbone, spinner) {
             log('push to top layer')
         },
          **/
+
+        /**
+         Hide the numeric spinner buttons
+         @method self.m_hideSpinners
+         **/
+        _hideSpinners: function(){
+            var self = this;
+            $('.spinner-buttons',self.$el).hide();
+        },
 
         /**
          Set the status of UI for lock status

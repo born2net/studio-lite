@@ -161,8 +161,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 self.m_dimensionProps = new DimensionProps({
                     appendTo: Elements.SCENE_BLOCK_PROPS,
                     showAngle: true,
-                    showLock: true
+                    showLock: true,
+                    hideSpinners: true
                 });
+                // self.m_dimensionProps.hideSpinners();
                 BB.comBroker.setService(BB.SERVICES['DIMENSION_PROPS_LAYOUT'], self.m_dimensionProps);
                 $(self.m_dimensionProps).on('changed', function (e) {
                     var block = self.m_canvas.getActiveObject();

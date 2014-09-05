@@ -1094,14 +1094,14 @@ Pepper.prototype = {
     /**
      Change a viewer's (aka screen division) order (layer) z-order
      @method updateTemplateViewerOrder
-     @param {number} board_template_viewer_id
-     @param {number} i_playerData
+     @param {number} i_board_template_viewer_id
+     @param {number} i_view_order
      **/
-    updateTemplateViewerOrder: function (i_board_template_viewer_id, i_zorder) {
+    updateTemplateViewerOrder: function (i_board_template_viewer_id, i_view_order) {
         var self = this;
         self.m_msdb.table_board_template_viewers().openForEdit(i_board_template_viewer_id);
         var recEditBoardTemplateViewer = self.m_msdb.table_board_template_viewers().getRec(i_board_template_viewer_id);
-        recEditBoardTemplateViewer['viewer_order'] = i_zorder;
+        recEditBoardTemplateViewer['viewer_order'] = i_view_order;
     },
 
     /**
@@ -2215,13 +2215,14 @@ Pepper.prototype = {
         var self = this;
         var counter = -1;
         var screenProps = {};
-
+        var viewOrder;
+        var viewOrderIndexes = {};
         $(pepper.m_msdb.table_campaign_timeline_board_viewer_chanels().getAllPrimaryKeys()).each(function (k, campaign_timeline_board_viewer_chanel_id) {
 
             var recCampaignTimelineBoardViewerChanel = self.m_msdb.table_campaign_timeline_board_viewer_chanels().getRec(campaign_timeline_board_viewer_chanel_id);
             if (recCampaignTimelineBoardViewerChanel['campaign_timeline_board_template_id'] == i_campaign_timeline_board_template_id) {
                 var recBoardTemplateViewer = self.m_msdb.table_board_template_viewers().getRec(recCampaignTimelineBoardViewerChanel['board_template_viewer_id']);
-                // log(i_campaign_timeline_board_template_id + ' ' + recBoardTemplateViewer['board_template_viewer_id']);
+                log(i_campaign_timeline_board_template_id + ' ' + recBoardTemplateViewer['board_template_viewer_id']);
                 counter++;
                 screenProps['sd' + counter] = {};
                 screenProps['sd' + counter]['campaign_timeline_board_viewer_id'] = recBoardTemplateViewer['board_template_viewer_id'];
@@ -2230,6 +2231,19 @@ Pepper.prototype = {
                 screenProps['sd' + counter]['y'] = recBoardTemplateViewer['pixel_y'];
                 screenProps['sd' + counter]['w'] = recBoardTemplateViewer['pixel_width'];
                 screenProps['sd' + counter]['h'] = recBoardTemplateViewer['pixel_height'];
+
+                // make sure that every view_order we assign is unique and sequential
+                var viewOrder = recBoardTemplateViewer['viewer_order'];
+                if (!_.isUndefined(viewOrderIndexes[viewOrder])){
+                    for (var i = 0; i < 100 ;i++){
+                        if (_.isUndefined(viewOrderIndexes[i])){
+                            viewOrder = i;
+                            break;
+                        }
+                    }
+                }
+                viewOrderIndexes[viewOrder] = true;
+                screenProps['sd' + counter]['view_order'] = viewOrder;
             }
         });
 

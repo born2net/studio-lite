@@ -225,13 +225,13 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
          **/
         _updateZorder: function () {
             var self = this;
-            var totalViews = self.m_canvas.getObjects().length;
-            var i = 0;
-            self.m_canvas.forEachObject(function (obj) {
-                i++;
-                // log((totalViews - i) + ' ' + obj.get('id'))
-                pepper.updateTemplateViewerOrder(obj.get('id'), (totalViews - i));
-            });
+            var viewers = self.m_canvas.getObjects();
+            for (var i in viewers){
+                // log(viewers[i].get('id') + ' ' + i);
+                pepper.updateTemplateViewerOrder(viewers[i].get('id'), i);
+            }
+            var active = self.m_canvas.getActiveObject();
+            self.m_canvas.setActiveObject(active);
         },
 
         /**

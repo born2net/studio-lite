@@ -159,11 +159,21 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             var screensDivisons = '';
             var screenLabels = '';
-            var i = 0;
 
+            // sort for proper z-order creating the viewers
+            var orderedScreenValues = [], i = 0;
             for (var screenValues in self.m_screenProps) {
+                var viewOrder = self.m_screenProps[screenValues]['view_order'];
+                viewOrder = _.isUndefined(viewOrder) ? i : viewOrder;
+                orderedScreenValues[viewOrder] = self.m_screenProps[screenValues];
                 i++;
-                var screenValue = self.m_screenProps[screenValues];
+            }
+
+            // create the viewers
+            i = 0;
+            for (var ordered in orderedScreenValues) {
+                i++;
+                var screenValue = orderedScreenValues[ordered];
                 var x = screenValue['x'] == 0 ? 0 : screenValue['x'] / self.m_scale;
                 var y = screenValue['y'] == 0 ? 0 : screenValue['y'] / self.m_scale;
                 var w = screenValue['w'] == 0 ? 0 : screenValue['w'] / self.m_scale;
@@ -173,10 +183,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 var sd = screenValues;
 
                 var uniqueID = 'rectSD' + '_' + _.uniqueId();
-
                 if (self.m_useLabels == true)
                     screenLabels += '<text class="screenDivisionClass"' + '" data-for="' + uniqueID + '" x="' + (x + (w / 2)) + '" y="' + (y + (h / 2)) + '" font-family="sans-serif" font-size="12px" text-anchor="middle" alignment-baseline="middle" fill="#666">' + i + '</text>';
-
 
                 screensDivisons += '<rect id="' + uniqueID +
                     '" data-campaign_timeline_board_viewer_id="' + campaign_timeline_board_viewer_id +
@@ -189,7 +197,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     '" class="screenDivisionClass"' +
                     '  style="fill:rgb(230,230,230);stroke-width:2;stroke:rgb(72,72,72)"/>';
             }
-
             return ($('<svg style="padding: 0px; margin: 15px" id="' + self.m_myElementID + '" width="' + self.m_svgWidth + '" height="' + self.m_svgHeight + '" xmlns="http://www.w3.org/2000/svg">  ' +
                 '<g>' +
                 screensDivisons +

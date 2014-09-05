@@ -2215,7 +2215,6 @@ Pepper.prototype = {
         var self = this;
         var counter = -1;
         var screenProps = {};
-        var viewOrder;
         var viewOrderIndexes = {};
         $(pepper.m_msdb.table_campaign_timeline_board_viewer_chanels().getAllPrimaryKeys()).each(function (k, campaign_timeline_board_viewer_chanel_id) {
 

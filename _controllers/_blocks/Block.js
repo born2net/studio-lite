@@ -676,9 +676,9 @@ define(['jquery', 'backbone'], function ($) {
         /**
          Update the msdb for the block with new values inside its player_data
          @method _setBlockPlayerData
-         @param {Object} i_xmlDoc
-         @param {String} [i_noNotify]
-         @param {Boolean} [i_xmlIsString]
+         @param {Object} i_xmlDoc the dom object to save to local msdb
+         @param {String} [i_noNotify] if set, fire event announcing data saved
+         @param {Boolean} [i_xmlIsString] is set, by pass serializeToString since already in string format
          **/
         _setBlockPlayerData: function (i_xmlDoc, i_noNotify, i_xmlIsString) {
             var self = this;

@@ -341,7 +341,7 @@ Pepper.prototype = {
         var domain = pepper.getUserData().domain;
         var eri = pepper.getUserData().eri;
         var url = 'https://' + domain + '/WebService/SignagePlayerApp.html?eri=' + eri + '&playerParams=' + playerParams + '&banner=' + i_bannerMode;
-        log(url);
+        // log(playerParams);
         return url;
     },
 
@@ -358,6 +358,7 @@ Pepper.prototype = {
         var recCampaignBoard = self.m_msdb.table_campaign_boards().getRec(campaignBoardId);
         var campaignNativeID = recCampaignBoard['native_id'];
         var playerParams = pepper.getUserData().businessID + ',1,' + campaignNativeID;
+        log(playerParams);
         return pepper._livePreviewGetLink(playerParams, i_bannerMode);
     },
 

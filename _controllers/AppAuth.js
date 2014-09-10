@@ -62,6 +62,9 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _loadCredentials: function (i_user, i_pass) {
             var self = this;
 
+            var user = i_user == '_' ? '_' : $.base64.decode(i_user);
+            var pass = i_pass == '_' ? '_' : $.base64.decode(i_pass);
+
             var passedCredentials = self._loadPassedCredentials();
             var cookieCredentials = $.cookie('signagestudioweblite') == undefined ? undefined : $.cookie('signagestudioweblite').split(' ')[0];
 
@@ -72,8 +75,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 var credentials = self._breakCookie(cookieCredentials);
                 self._authServer(credentials.user, credentials.pass, self.AUTH_COOKIE);
 
-            } else if (i_user.length > 2 && i_pass.length > 2) {
-                self._authServer(i_user, i_pass, self.AUTH_USER_PASS);
+            } else if (user.length > 2 && pass.length > 2) {
+                self._authServer(user, pass, self.AUTH_USER_PASS);
 
             } else {
                 BB.comBroker.getService(BB.SERVICES['LAYOUT_ROUTER']).navigate('unauthenticated', {trigger: true});

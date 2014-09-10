@@ -517,22 +517,21 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
          **/
         _destroy: function () {
             var self = this;
-
-            self.m_canvas.off('selection:cleared', self.m_bgSelectedHandler);
-            self.m_canvas.off({
-                'object:moving': self.m_objectMovingHandler,
-                'object:scaling': self.m_objectMovingHandler,
-                'object:selected': self.m_objectMovingHandler,
-                'object:modified': self.m_objectMovingHandler
-            });
-
-            self.m_canvas.off({
-                'object:moving': self.m_onOverlap,
-                'object:scaling': self.m_onOverlap,
-                'object:rotating': self.m_onOverlap
-            });
-
-            self.m_canvas.clear().renderAll();
+            if (!_.isUndefined(self.m_canvas)){
+                self.m_canvas.off('selection:cleared', self.m_bgSelectedHandler);
+                self.m_canvas.off({
+                    'object:moving': self.m_objectMovingHandler,
+                    'object:scaling': self.m_objectMovingHandler,
+                    'object:selected': self.m_objectMovingHandler,
+                    'object:modified': self.m_objectMovingHandler
+                });
+                self.m_canvas.off({
+                    'object:moving': self.m_onOverlap,
+                    'object:scaling': self.m_onOverlap,
+                    'object:rotating': self.m_onOverlap
+                });
+                self.m_canvas.clear().renderAll();
+            }
             $('#screenLayoutEditorCanvasWrap').empty()
             self.m_canvasID = undefined;
             self.m_canvas = undefined;

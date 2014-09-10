@@ -58,7 +58,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
             $(Elements.NEW_CAMPAIGN).on('click', function (e) {
                 self.m_selectedCampaignID = -1;
-                BB.comBroker.fire(BB.EVENTS.CAMPAIGN_SELECTED, this, this,self.m_selectedCampaignID);
+                BB.comBroker.fire(BB.EVENTS.CAMPAIGN_SELECTED, this, this, self.m_selectedCampaignID);
                 self.options.stackView.slideToPage(self.options.to, 'right');
                 return false;
             });
@@ -216,6 +216,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _listenInputChange: function () {
             var self = this;
             var onChange = _.debounce(function (e) {
+                if (self.m_selectedCampaignID == -1)
+                    return;
                 var text = $(e.target).val();
                 pepper.setCampaignRecord(self.m_selectedCampaignID, 'campaign_name', text);
                 self.$el.find('[data-campaignid="' + self.m_selectedCampaignID + '"]').find('h4').text(text);

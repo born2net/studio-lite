@@ -16,8 +16,8 @@ define(['jquery', 'backbone', 'bootbox'], function ($, Backbone, Bootbox) {
 
             $(Elements.LOGIN_BUTTON).on('click', function () {
                 if ($(Elements.USER_NAME).val().length > 1 && $(Elements.USER_PASS).val().length > 1) {
-                    var user = $(Elements.USER_NAME).val();
-                    var pass = $(Elements.USER_PASS).val();
+                    var user = $.base64.encode($(Elements.USER_NAME).val());
+                    var pass = $.base64.encode($(Elements.USER_PASS).val());
                     Backbone.comBroker.getService(Backbone.SERVICES.LAYOUT_ROUTER).navigate('authenticate/' + user + '/' + pass, {trigger: true});
                 }
                 return false;

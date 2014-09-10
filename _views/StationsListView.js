@@ -258,8 +258,8 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             });
 
             $(Elements.STATION_RELOAD_COMMAND).on('click', function (e) {
-                pepper.sendCommand('rebootPlayer', self.m_selected_station_id, function () {
-                });
+                // pepper.sendCommand('rebootStation', self.m_selected_station_id, function () {});
+                pepper.sendCommand('rebootPlayer', self.m_selected_station_id, function () {});
                 return false;
             });
 
@@ -322,8 +322,8 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             bootbox.confirm($(Elements.MSG_BOOTBOX_STEPS).text(), function (result) {
                 if (result == true) {
                     var navigationView = BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW);
-                    pepper.sendCommand('rebootPlayer', self.m_selected_station_id, function () {
-                    });
+                    // pepper.sendCommand('rebootStation', self.m_selected_station_id, function () {});
+                    pepper.sendCommand('rebootPlayer', self.m_selected_station_id, function () {});
                     pepper.removeStation(self.m_selected_station_id);
                     navigationView.save(function () {
                     });
@@ -510,16 +510,6 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
                 return stationsModel.get('connection') != '0'
             });
             return connected.length;
-        },
-
-        /**
-         Restart station
-         @method restartStation
-         **/
-        restartStation: function () {
-            pepper.sendCommand('rebootPlayer', -1, function () {
-            });
-            return false;
         }
     });
 

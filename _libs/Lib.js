@@ -66,7 +66,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         logErrors: function (i_businessID) {
             if (window.location.href.indexOf('dist') > -1) {
-                Bugsense.initAndStartSession( { apiKey: "fc064f8c" } );
+                Bugsense.initAndStartSession( { apiKey: "32eabe70" } );
                 Bugsense.addExtraData( 'business_id',i_businessID);
             }
         },
@@ -89,13 +89,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @method foreceBrowserCompatability
          **/
         forceBrowserCompatability: function () {
-
-
-
             $.getJSON('https://galaxy.signage.me/WebService/getBrowserInfo.ashx?a=2&callback=?',
                 function (data) {
 
-                    //alert(data.version + ' ' + data.platform + ' ' + data.type + ' ' + data.name);
+                    // alert('version ' + data.version + ' platform ' + data.platform + ' type ' + data.type + ' name ' + data.name);
 
                     // animated loader
                     if (data.name.toLowerCase() == 'ie') {
@@ -108,7 +105,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     require(['bootbox'], function (bootbox) {
                         if (data.name.toLowerCase() == 'safari' && data.platform.toLowerCase() == 'winnt')
                             failLevel = 2;
-                        if (data.name.toLowerCase() == 'ie' && parseInt(data.version) < 10)
+                        if (data.name.toLowerCase() == 'ie' && parseInt(data.version) < 11)
                             failLevel = 1;
 
                         switch (failLevel) {

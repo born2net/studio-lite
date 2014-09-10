@@ -252,6 +252,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                         className: "btn-success",
                         callback: function () {
                             self.save(function () {
+                                // pepper.sendCommand('rebootStation', -1, function () {});
                                 pepper.sendCommand('rebootPlayer', -1, function () {
                                 });
 
@@ -284,7 +285,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 pepper.restoreScenesWithPlayersIDs();
                 if (!i_status.status) {
                     var msg;
-                    if (i_status.error.indexOf('There is no row')>-1) {
+                    if (i_status.error.indexOf('There is no row') > -1) {
                         msg = $(Elements.MSG_BOOTBOX_NEED_VERIFY_EMAIL).text()
                     } else {
                         msg = i_status.error;

@@ -18,7 +18,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         constructor: function (options) {
             var self = this;
             self.m_blockType = 4600;
-            _.extend(options, {blockType: self.m_blockType})
+            _.extend(options, {blockType: self.m_blockType});
             Block.prototype.constructor.call(this, options);
             self._initSubPanel(Elements.BLOCK_YOUTUBE_COMMON_PROPERTIES);
             self.m_youtubeQualityMeter = self.m_blockProperty.getYouTubeQualityMeter();
@@ -51,8 +51,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                     videoList.push($(elem).val());
                 });
                 videoList = videoList.join(',');
-                $(xSnippetYouTubeManualList).append('<VideoIdList>' + videoList + '</VideoIdList>');
-                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
+                $(xSnippetYouTubeManualList).append($('<VideoIdList>' + videoList + '</VideoIdList>'));
+                self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
             }, 250, false);
             $(Elements.CLASS_YOUTUBE_VIDEO_ID).on("input", self.m_inputVideoIdChangeHandler);
         },
@@ -82,8 +82,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var index = _.indexOf(videoIDs, videoID);
                 videoIDs.splice(index, 1);
                 videoIDs = videoIDs.join(',')
-                $(xYouTubeSnippet).append('<VideoIdList>' + videoIDs + '</VideoIdList>');
-                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
+                $(xYouTubeSnippet).append($('<VideoIdList>' + videoIDs + '</VideoIdList>'));
+                self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
             };
             $(Elements.CLASS_YOUTUBE_VIDEO_ID_REMOVE).on('click', self.m_removeVideoID);
         },
@@ -120,7 +120,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('YouTube');
                 $(xSnippet).attr('listRegion', listRegion);
-                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
+                self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
             };
             $(Elements.YOUTUBE_COUNTRY_LIST_DROPDOWN).on('click', self.m_countryListChange);
         },
@@ -145,13 +145,14 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 $(xSnippet).attr('listType', listType);
                 $(xSnippet).find('VideoIdList').remove();
                 if (listType == 'manually') {
-                    $(xSnippet).append('<VideoIdList>9bZkp7q19f0</VideoIdList>');
-                    var xSnippetYouTubeManualList = $(domPlayerData).find('VideoIdList');
+                    $(xSnippet).append($('<VideoIdList>9bZkp7q19f0</VideoIdList>'));
+                    // have to look for videoislist as lower case due to .append $(x) inject case change
+                    var xSnippetYouTubeManualList = $(domPlayerData).find('videoidlist');
                     self._populateManualList(xSnippetYouTubeManualList);
                 } else {
                     $(xSnippet).find('VideoIdList').remove();
                 }
-                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
+                self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
 
             };
             $(Elements.YOUTUBE_LIST_DROPDOWN).on('click', self.m_playlistChange);
@@ -170,7 +171,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('YouTube');
                 $(xSnippet).attr('volume', volume);
-                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
+                self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
             };
             BB.comBroker.listen(BB.EVENTS.YOUTUBE_VOLUME_CHANGED, self.m_inputVolumeHandler);
         },
@@ -308,7 +309,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _appendVideoIdInput: function (i_videoId) {
             var self = this;
             var snippet = '<span><input class="' + BB.lib.unclass(Elements.CLASS_YOUTUBE_VIDEO_ID) + ' form-control" value="' + i_videoId + '"><i class="' + BB.lib.unclass(Elements.CLASS_YOUTUBE_VIDEO_ID_REMOVE) + ' fa fa-times"/></span>';
-            $(Elements.YOUTTUBE_VIDEOIDS).append(snippet);
+            $(Elements.YOUTTUBE_VIDEOIDS).append($(snippet));
         },
 
         /**

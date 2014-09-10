@@ -161,13 +161,13 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
         _listenRemoveDivision: function () {
             var self = this;
             $(Elements.LAYOUT_EDITOR_REMOVE, self.$el).on('click', function () {
-
+                if(_.isUndefined(self.m_canvas))
+                    return;
                 var totalViews = self.m_canvas.getObjects().length;
                 if (totalViews < 2) {
                     bootbox.alert($(Elements.MSG_BOOTBOX_AT_LEAST_ONE_DIV).text());
                     return;
                 }
-
                 var campaign_timeline_chanel_id = pepper.removeTimelineBoardViewerChannel(self.m_selectedViewerID);
                 pepper.removeBoardTemplateViewer(self.m_campaign_timeline_board_template_id, self.m_selectedViewerID);
                 pepper.removeChannelFromTimeline(campaign_timeline_chanel_id);

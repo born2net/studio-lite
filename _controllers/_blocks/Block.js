@@ -677,10 +677,18 @@ define(['jquery', 'backbone'], function ($) {
          Update the msdb for the block with new values inside its player_data
          @method _setBlockPlayerData
          @param {Object} i_xmlDoc
+         @param {String} [i_noNotify]
+         @param {Boolean} [i_xmlIsString]
          **/
-        _setBlockPlayerData: function (i_xmlDoc, i_noNotify) {
+        _setBlockPlayerData: function (i_xmlDoc, i_noNotify, i_xmlIsString) {
             var self = this;
-            var player_data = (new XMLSerializer()).serializeToString(i_xmlDoc);
+            var player_data;
+            if (i_xmlIsString == true){
+                player_data = i_xmlDoc;
+            } else {
+                player_data = (new XMLSerializer()).serializeToString(i_xmlDoc);
+            }
+
             switch (self.m_placement) {
                 case BB.CONSTS.PLACEMENT_CHANNEL:
                 {
@@ -703,6 +711,7 @@ define(['jquery', 'backbone'], function ($) {
                 }
             }
         },
+
 
         /**
          Get the XML player data of a block, depending where its placed

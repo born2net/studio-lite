@@ -555,6 +555,7 @@ Pepper.prototype = {
             replace(/clockformat/gi, 'clockFormat').
             replace(/clockmask/gi, 'clockMask').
             replace(/hresource/gi, 'hResource').
+            replace(/videoidlist/gi, 'VideoIdList').
             replace(/maintainaspectratio/gi, 'maintainAspectRatio').
             replace(/<resource/gi, '<Resource').replace(/resource>/g, 'Resource>').
             // replace(/<htdata/gi, '<htData').replace(/htdata>/gi, 'htData>').

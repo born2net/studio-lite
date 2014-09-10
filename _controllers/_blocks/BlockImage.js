@@ -36,10 +36,10 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var xSnippet = $(domPlayerData).find('Resource');
             self.m_resourceID = $(xSnippet).attr('hResource');
             self.m_nativeID = pepper.getResourceNativeID(self.m_resourceID);
-            if (_.isNull(self.m_nativeID)){
-                self._selfDestruct();
-                return;
-            }
+            //if (_.isNull(self.m_nativeID)){
+            //    self._selfDestruct();
+            //    return;
+            //}
             self.m_blockName = pepper.getResourceRecord(self.m_resourceID).resource_name;
             self.m_blockDescription = pepper.getResourceName(self.m_resourceID);
             self.m_fileFormat = pepper.getResourceType(self.m_resourceID);

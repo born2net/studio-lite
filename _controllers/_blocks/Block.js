@@ -743,7 +743,6 @@ define(['jquery', 'backbone'], function ($) {
          bug fix: backward comparability with player_data that includes deleted resources
          this was already fixed but we live _selfDestruct for backwards compatability
          @method _selfDestruct
-         **/
         _selfDestruct: function(){
             var self = this;
             setTimeout(function(){
@@ -755,6 +754,7 @@ define(['jquery', 'backbone'], function ($) {
                 }
             },2000);
         },
+         **/
 
         /**
          Delete block is a private method that is always called regardless if instance has

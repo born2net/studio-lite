@@ -104,7 +104,6 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
             var block = undefined;
             var playerData = this.x2js.xml_str2json(i_player_data);
             var blockCode;
-            var g = new fabric.Group([]);
 
             if (playerData['Player']['_player']) {
                 // Standard block
@@ -112,7 +111,7 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
             } else {
                 // Scene
                 blockCode = 3510;
-                if (_.isUndefined(i_scene_id)){
+                if (_.isUndefined(i_scene_id)) {
                     var domPlayerData = $.parseXML(i_player_data);
                     i_scene_id = $(domPlayerData).find('Player').attr('hDataSrc');
                 }
@@ -245,8 +244,13 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
                     break;
                 }
             }
-            _.extend(block, g);
-            g = undefined;
+
+            // subclass our block from fabric.Group if resides inside scene
+            if (i_placement == BB.CONSTS.PLACEMENT_SCENE) {
+                var g = new fabric.Group([]);
+                _.extend(block, g);
+                g = undefined;
+            }
             return block;
         },
 
@@ -254,7 +258,7 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
          Get the status of modules, i.e.: loaded yet?
          @method blocksLoaded
          **/
-        blocksLoaded: function(){
+        blocksLoaded: function () {
             var self = this;
             if (self.m_block)
                 return true;

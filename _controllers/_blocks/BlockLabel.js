@@ -162,15 +162,23 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             });
 
             // calculate block so it can always contain the text it holds and doesn't bleed
-            self.m_minSize.w = t.currentWidth < 50 ? 50 : t.currentWidth * 1.2;
-            self.m_minSize.h = t.currentHeight < 50 ? 50 : t.currentHeight * 1.2;
+            self.m_minSize.w = t.width < 50 ? 50 : t.width * 1.2;
+            self.m_minSize.h = t.height < 50 ? 50 : t.height * 1.2;
             var w = parseInt(layout.attr('width')) < self.m_minSize.w ? self.m_minSize.w : parseInt(layout.attr('width'));
             var h = parseInt(layout.attr('height')) < self.m_minSize.h ? self.m_minSize.h : parseInt(layout.attr('height'));
 
             var rec = self._fabricRect(w,h, domPlayerData);
-            var options = self._fabricateOptions(parseInt(layout.attr('y')), parseInt(layout.attr('x')), w, h, parseInt(layout.attr('rotation')));
-            var group = new fabric.Group([ rec, t ], options);
-            _.extend(self, group);
+            var o = self._fabricateOptions(parseInt(layout.attr('y')), parseInt(layout.attr('x')), w, h, parseInt(layout.attr('rotation')));
+            //var group = new fabric.Group([ rec, t ], o);
+            //_.extend(self, group);
+
+            rec.originX = 'center';
+            rec.originY = 'center';
+            t.top = 0 - (rec.height / 2);
+            t.left = 0 - (rec.width / 2);
+            _.extend(self, o);
+            self.add(rec);
+            self.add(t);
             self._fabricAlpha(domPlayerData);
             self._fabricLock();
             self['canvasScale'] = i_canvasScale;

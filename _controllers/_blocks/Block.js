@@ -904,7 +904,12 @@ define(['jquery', 'backbone'], function ($) {
 
             fabric.loadSVGFromString(self.m_blockSvg, function (objects, options) {
                 var groupSvg = fabric.util.groupSVGElements(objects, options);
+                rec.originX = 'center';
+                rec.originY = 'center';
+                groupSvg.originX = 'center';
+                groupSvg.originY = 'center';
 
+                /*
                 var group = new fabric.Group([rec, groupSvg], {
                     left: parseInt(layout.attr('x')),
                     top: parseInt(layout.attr('y')),
@@ -918,12 +923,24 @@ define(['jquery', 'backbone'], function ($) {
                     lockRotation: true,
                     transparentCorners: false
                 });
+                */
 
-                _.extend(self, group);
-                // push to garbage collector
-                group = undefined;
-                groupSvg = undefined;
-                rec = undefined;
+                var o = {
+                    left: parseInt(layout.attr('x')),
+                    top: parseInt(layout.attr('y')),
+                    width: parseInt(layout.attr('width')),
+                    height: parseInt(layout.attr('height')),
+                    angle: parseInt(layout.attr('rotation')),
+                    hasRotatingPoint: false,
+                    stroke: 'transparent',
+                    cornerColor: 'black',
+                    cornerSize: 5,
+                    lockRotation: true,
+                    transparentCorners: false
+                };
+                _.extend(self, o);
+                self.add(rec);
+                self.add(groupSvg);
                 self._fabricAlpha(domPlayerData);
                 self._fabricLock();
                 self['canvasScale'] = i_canvasScale;

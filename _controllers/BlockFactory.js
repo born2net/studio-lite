@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated BlockFactory
  **/
-define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
+define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fabric) {
 
     /**
      All blocks and related property modules loaded by require.js
@@ -104,6 +104,8 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
             var block = undefined;
             var playerData = this.x2js.xml_str2json(i_player_data);
             var blockCode;
+            var g = new fabric.Group([]);
+
             if (playerData['Player']['_player']) {
                 // Standard block
                 blockCode = playerData['Player']['_player'];
@@ -115,8 +117,6 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
                     i_scene_id = $(domPlayerData).find('Player').attr('hDataSrc');
                 }
             }
-
-
             switch (parseInt(blockCode)) {
                 case 3510:
                 {
@@ -245,6 +245,8 @@ define(['jquery', 'backbone', 'X2JS'], function ($, Backbone, X2JS) {
                     break;
                 }
             }
+            _.extend(block, g);
+            g = undefined;
             return block;
         },
 

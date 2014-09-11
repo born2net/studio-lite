@@ -909,22 +909,6 @@ define(['jquery', 'backbone'], function ($) {
                 groupSvg.originX = 'center';
                 groupSvg.originY = 'center';
 
-                /*
-                var group = new fabric.Group([rec, groupSvg], {
-                    left: parseInt(layout.attr('x')),
-                    top: parseInt(layout.attr('y')),
-                    width: parseInt(layout.attr('width')),
-                    height: parseInt(layout.attr('height')),
-                    angle: parseInt(layout.attr('rotation')),
-                    hasRotatingPoint: false,
-                    stroke: 'transparent',
-                    cornerColor: 'black',
-                    cornerSize: 5,
-                    lockRotation: true,
-                    transparentCorners: false
-                });
-                */
-
                 var o = {
                     left: parseInt(layout.attr('x')),
                     top: parseInt(layout.attr('y')),

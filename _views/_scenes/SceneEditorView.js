@@ -843,7 +843,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._zoomReset();
             _.forEach(self.m_blocks.blocksPost, function (i_block) {
                 self.m_canvas.add(i_block);
-                // i_block._fabricLock();
             });
             self._zoomTo(nZooms);
             self._scrollTo(self.m_sceneScrollTop, self.m_sceneScrollLeft);
@@ -855,14 +854,13 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             if (_.isUndefined(selectedBlockID))
                 return;
 
-            // BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, selectedBlockID);
+            // reselect previous selection
             for (var i = 0; i < self.m_canvas.getObjects().length; i++) {
                 if (selectedBlockID == self.m_canvas.item(i).getBlockData().blockID) {
                     self._sceneBlockSelected(self.m_canvas.item(i));
                     break;
                 }
             }
-            // self._drawGrid();
         },
 
         /**

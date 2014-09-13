@@ -162,7 +162,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     appendTo: Elements.SCENE_BLOCK_PROPS,
                     showAngle: true,
                     showLock: true,
-                    hideSpinners: true
+                    hideSpinners: false
                 });
                 // self.m_dimensionProps.hideSpinners();
                 BB.comBroker.setService(BB.SERVICES['DIMENSION_PROPS_LAYOUT'], self.m_dimensionProps);
@@ -420,7 +420,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 log('block edited ' + blockID);
                 var domPlayerData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
                 self.m_blocks.blockSelected = blockID;
-                self._preRender(domPlayerData);
+                self._preRender(domPlayerData, blockID);
                 self._mementoAddState();
             });
         },
@@ -813,22 +813,38 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          already been instantiated and ready to be added to canvas
          @method _preRender
          @param {Object} i_domPlayerData
+         @param {Object} [i_blockID] optionally render only a single block
          **/
-        _preRender: function (i_domPlayerData) {
+        _preRender: function (i_domPlayerData, i_blockID) {
             var self = this;
             log('pre-rendering new blocks');
             self._renderPause();
             self.m_blocks.blocksPre = [];
             self.m_blocks.blocksPost = {};
-            $(i_domPlayerData).find('Players').find('Player').each(function (i, player) {
-                var block = {
-                    blockID: $(player).attr('id'),
-                    blockType: $(player).attr('player'),
-                    player_data: (new XMLSerializer()).serializeToString(player)
-                };
-                self.m_blocks.blocksPre.push(block);
-            });
-            self._createSceneBlock();
+
+            if (i_blockID) {
+                $(i_domPlayerData).find('Players').find('Player').each(function (i, player) {
+                    var blockID = $(player).attr('id');
+                    if (blockID == i_blockID) {
+                        var block = {
+                            blockID: blockID,
+                            blockType: $(player).attr('player'),
+                            player_data: (new XMLSerializer()).serializeToString(player)
+                        };
+                        self.m_blocks.blocksPre.push(block);
+                    }
+                });
+            } else {
+                $(i_domPlayerData).find('Players').find('Player').each(function (i, player) {
+                    var block = {
+                        blockID: $(player).attr('id'),
+                        blockType: $(player).attr('player'),
+                        player_data: (new XMLSerializer()).serializeToString(player)
+                    };
+                    self.m_blocks.blocksPre.push(block);
+                });
+            }
+            self._createSceneBlock(i_blockID);
         },
 
         /**
@@ -851,16 +867,40 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._blockCountChanged();
             self._renderContinue();
 
+            // reselect previous selection
             if (_.isUndefined(selectedBlockID))
                 return;
-
-            // reselect previous selection
             for (var i = 0; i < self.m_canvas.getObjects().length; i++) {
                 if (selectedBlockID == self.m_canvas.item(i).getBlockData().blockID) {
                     self._sceneBlockSelected(self.m_canvas.item(i));
                     break;
                 }
             }
+        },
+
+        /**
+         Render the pre created blocks (via _preRender) and add all blocks to fabric canvas
+         @method _renderSingle
+         **/
+        _renderSingle: function () {
+            var self = this;
+            var block = self.m_blocks.blocksPost[Object.keys(self.m_blocks.blocksPost)[0]];
+            var selectedBlockID = self.m_blocks.blockSelected;
+            self._disposeBlock(selectedBlockID);
+            self.m_canvas.add(block);
+            self.m_canvas.setActiveObject(block);
+            var nZooms = Math.round(Math.log(1 / self.m_canvasScale) / Math.log(1.2));
+            self._zoomToBlock(nZooms, block);
+            self._resetObjectScale(block);
+            //self._zoomOutBlock(block);
+            self.m_canvas.renderAll();
+            // free up cpu so previous render can update UI
+            setTimeout(function () {
+                // self._blockCountChanged();
+                self._renderContinue();
+                self._sceneBlockSelected(block);
+            }, 10)
+
         },
 
         /**
@@ -885,7 +925,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             if (_.isUndefined(self.m_canvas))
                 return;
             self.m_canvas._initEventListeners();
-            self.m_canvas.renderAll();
+            // self.m_canvas.renderAll();
         },
 
         /**
@@ -894,18 +934,24 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          more blocks are to be created (m_blocks.blocksPre queue is empty) we _render the canvas
          @method _createSceneBlock
          **/
-        _createSceneBlock: function () {
+        _createSceneBlock: function (i_blockID) {
             var self = this;
             var block = self.m_blocks.blocksPre.shift();
             if (block == undefined) {
-                self._render();
+                // single block change only
+                if (i_blockID) {
+                    log(Date.now() + 'createScene');
+                    self._renderSingle(i_blockID);
+                } else {
+                    self._render();
+                }
                 return;
             }
             block = self.m_blockFactory.createBlock(block.blockID, block.player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_selectedSceneID);
             var blockID = block.getBlockData().blockID;
             block.fabricateBlock(self.m_canvasScale, function () {
                 self.m_blocks.blocksPost[blockID] = block;
-                self._createSceneBlock();
+                self._createSceneBlock(i_blockID);
             });
         },
 
@@ -971,9 +1017,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 setTimeout(function () {
                     block.off('modified');
                     var blockID = block.getBlockData().blockID;
-                    self.m_canvas.forEachObject(function (obj) {
-                        obj.selectable = false;
-                    }, self);
+                    /*self.m_canvas.forEachObject(function (obj) {
+                     obj.selectable = false;
+                     }, self);*/
                     BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, blockID);
                     self.m_objectScaling = 0;
                 }, 15);
@@ -1237,6 +1283,32 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          Remove all block instances
          @method _disposeBlocks
          **/
+        _disposeBlock: function (i_blockID) {
+            var self = this, i;
+            if (_.isUndefined(self.m_canvas))
+                return;
+            log(Date.now() + 'dp1');
+            var totalObjects = self.m_canvas.getObjects().length;
+            var c = -1;
+            for (i = 0; i < totalObjects; i++) {
+                c++;
+                var block = self.m_canvas.item(c);
+                if (block.getBlockData().blockID == i_blockID) {
+                    block.selectable = false; // fix fabric scale block bug
+                    self.m_canvas.remove(block);
+                    if (block) {
+                        block.deleteBlock();
+                        log(Date.now() + 'dp2');
+                        break;
+                    }
+                }
+            }
+        },
+
+        /**
+         Remove all block instances
+         @method _disposeBlocks
+         **/
         _disposeBlocks: function () {
             var self = this, i;
             if (_.isUndefined(self.m_canvas))
@@ -1317,6 +1389,23 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         },
 
         /**
+         Zoom to scale size
+         @method _zoomTo
+         @param {Number} nZooms
+         **/
+        _zoomToBlock: function (nZooms, block) {
+            var self = this, i;
+            if (nZooms > 0) {
+                for (i = 0; i < nZooms; i++)
+                    self._zoomOutBlock(block);
+            } else {
+                for (i = 0; i > nZooms; nZooms++)
+                    self._zoomInBlock(block);
+            }
+
+        },
+
+        /**
          Scroll canvas to set position
          @method _scrollTo
          @param {Number} i_top
@@ -1379,6 +1468,100 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         obj.setCoords();
                     });
                 }
+            }
+        },
+
+        /**
+         Zoom scene in
+         @method _zoomIn
+         **/
+        _zoomInBlock: function (i_block) {
+            var self = this;
+            self._discardSelections();
+            var i = 0;
+            var objects = [];
+            objects[i] = i_block;
+
+            var scaleX = objects[i].scaleX;
+            var scaleY = objects[i].scaleY;
+            var left = objects[i].left;
+            var top = objects[i].top;
+            var tempScaleX = scaleX * self.SCALE_FACTOR;
+            var tempScaleY = scaleY * self.SCALE_FACTOR;
+            var tempLeft = left * self.SCALE_FACTOR;
+            var tempTop = top * self.SCALE_FACTOR;
+
+            objects[i]['canvasScale'] = self.m_canvasScale;
+            objects[i].scaleX = tempScaleX;
+            objects[i].scaleY = tempScaleY;
+            objects[i].left = tempLeft;
+            objects[i].top = tempTop;
+            objects[i].setCoords();
+
+            if (objects[i].forEachObject != undefined) {
+                objects[i].forEachObject(function (obj) {
+                    var scaleX = obj.scaleX;
+                    var scaleY = obj.scaleY;
+                    var left = obj.left;
+                    var top = obj.top;
+                    var tempScaleX = scaleX * self.SCALE_FACTOR;
+                    var tempScaleY = scaleY * self.SCALE_FACTOR;
+                    var tempLeft = left * self.SCALE_FACTOR;
+                    var tempTop = top * self.SCALE_FACTOR;
+                    obj['canvasScale'] = self.m_canvasScale;
+                    obj.scaleX = tempScaleX;
+                    obj.scaleY = tempScaleY;
+                    obj.left = tempLeft;
+                    obj.top = tempTop;
+                    obj.setCoords();
+                });
+            }
+        },
+
+        /**
+         Zoom scene out
+         @method _zoomOut
+         **/
+        _zoomOutBlock: function (i_block) {
+            var self = this;
+            self._discardSelections();
+            var i = 0;
+            var objects = [];
+            objects[i] = i_block;
+
+            var scaleX = objects[i].scaleX;
+            var scaleY = objects[i].scaleY;
+            var left = objects[i].left;
+            var top = objects[i].top;
+            var tempScaleX = scaleX * (1 / self.SCALE_FACTOR);
+            var tempScaleY = scaleY * (1 / self.SCALE_FACTOR);
+            var tempLeft = left * (1 / self.SCALE_FACTOR);
+            var tempTop = top * (1 / self.SCALE_FACTOR);
+            objects[i]['canvasScale'] = self.m_canvasScale;
+            objects[i].scaleX = tempScaleX;
+            objects[i].scaleY = tempScaleY;
+            objects[i].left = tempLeft;
+            objects[i].top = tempTop;
+            objects[i].setCoords();
+            self.m_canvas.renderAll();
+
+            if (objects[i].forEachObject != undefined) {
+                objects[i].forEachObject(function (obj) {
+                    var scaleX = obj.scaleX;
+                    var scaleY = obj.scaleY;
+                    var left = obj.left;
+                    var top = obj.top;
+                    var tempScaleX = scaleX * (1 / self.SCALE_FACTOR);
+                    var tempScaleY = scaleY * (1 / self.SCALE_FACTOR);
+                    var tempLeft = left * (1 / self.SCALE_FACTOR);
+                    var tempTop = top * (1 / self.SCALE_FACTOR);
+                    obj['canvasScale'] = self.m_canvasScale;
+                    obj.scaleX = tempScaleX;
+                    obj.scaleY = tempScaleY;
+                    obj.left = tempLeft;
+                    obj.top = tempTop;
+                    obj.setCoords();
+                });
             }
         },
 
@@ -1508,7 +1691,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_sceneBlock.deleteBlock();
             self.m_canvas = undefined;
         },
-        
+
         /**
          Create a new scene based on player_data and strip injected IDs if arged
          @method createScene

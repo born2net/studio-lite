@@ -171,11 +171,18 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 case BB.CONSTS.PLACEMENT_IS_SCENE:
                 {
                     pepper.setScenePlayerData(self.m_block_id, player_data);
-                    if (!i_noNotify)
-                        self._announceBlockChanged();
+                    //if (!i_noNotify)
+                    //    self._announceBlockChanged();
                     break;
                 }
             }
+        },
+
+        /**
+         Override the base method so we never announce any changes on Scene block
+         @method _announceBlockChanged
+         **/
+        _announceBlockChanged: function () {
         },
 
         /**

@@ -171,13 +171,13 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                 control: 'hue',
                 value: '#ffffff',
                 defaultValue: '#428bca',
-                hide: null,
+                show: $.proxy(self._onSceneColorToggle, self),
+                hide: $.proxy(self._onSceneColorToggle, self),
                 hideSpeed: 100,
                 inline: false,
                 letterCase: 'lowercase',
                 opacity: false,
                 position: 'bottom left',
-                show: null,
                 showSpeed: 100,
                 theme: 'bootstrap'
             };
@@ -198,13 +198,13 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                 control: 'hue',
                 value: '#ffffff',
                 defaultValue: '#428bca',
-                hide: null,
+                show: $.proxy(self._onSceneColorToggle, self),
+                hide: $.proxy(self._onSceneColorToggle, self),
                 hideSpeed: 100,
                 inline: false,
                 letterCase: 'lowercase',
                 opacity: false,
                 position: 'bottom left',
-                show: null,
                 showSpeed: 100,
                 theme: 'bootstrap'
             };
@@ -218,7 +218,18 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
          **/
         _onSceneBorderColorSelected: function (i_color) {
             var self = this;
-            BB.comBroker.fire(BB.EVENTS.BLOCK_BORDER_CHANGE, self, self, i_color);
+            if (self.m_showBorderOn)
+                BB.comBroker.fire(BB.EVENTS.BLOCK_BORDER_CHANGE, self, self, i_color);
+        },
+
+        _onSceneColorToggle: function (e) {
+            var self = this;
+            if (self.m_showBorderOn){
+                self.m_showBorderOn = undefined;
+            } else {
+                self.m_showBorderOn = 1;
+            }
+
         },
 
         /**

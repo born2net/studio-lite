@@ -233,7 +233,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 return;
             }
             // cpu breather
-            setTimeout(function(){
+            setTimeout(function () {
                 for (var i = 0; i < self.m_canvas.getObjects().length; i++) {
                     blocks.push({
                         id: self.m_canvas.item(i).getBlockData().blockID,
@@ -241,7 +241,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     });
                 }
                 BB.comBroker.fire(BB.EVENTS.SCENE_BLOCK_LIST_UPDATED, this, null, blocks);
-            },25);
+            }, 25);
 
         },
 
@@ -298,18 +298,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         _listenSceneBlockRemove: function () {
             var self = this;
             BB.comBroker.listen(BB.EVENTS.SCENE_ITEM_REMOVE, function () {
-                self.m_property.resetPropertiesView();
-                if (_.isUndefined(self.m_selectedSceneID))
-                    return;
-                var block = self.m_canvas.getActiveObject();
-                if (block == null)
-                    return;
-                var blockID = block.getBlockData().blockID;
-                self._discardSelections();
-                pepper.removeScenePlayer(self.m_selectedSceneID, blockID);
-                self._disposeBlocks(blockID);
-                //self._blockCountChanged();
-                BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, self, blockID);
+                self._onContentMenuSelection('remove');
             });
         },
 
@@ -494,6 +483,37 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         });
                         break;
                     }
+
+                    case 'cut':
+                    {
+                        self.m_copiesObjects = [];
+                        _.each(i_blocks, function (selectedObject) {
+                            var blockData = selectedObject.getBlockData();
+                            var blockPlayerData = blockData.blockData;
+                            self._discardSelections();
+                            pepper.removeScenePlayer(self.m_selectedSceneID, blockData.blockID);
+                            self._disposeBlocks(blockData.blockID);
+                            blockPlayerData = pepper.stripPlayersID(blockPlayerData);
+                            self.m_copiesObjects.push(blockPlayerData);
+                        });
+                        self.m_canvas.renderAll();
+                        self._blockCountChanged();
+                        break;
+                    }
+
+                    case 'remove':
+                    {
+                        _.each(i_blocks, function (selectedObject) {
+                            var blockData = selectedObject.getBlockData();
+                            self._discardSelections();
+                            pepper.removeScenePlayer(self.m_selectedSceneID, blockData.blockID);
+                            self._disposeBlocks(blockData.blockID);
+                        });
+                        self.m_canvas.renderAll();
+                        self._blockCountChanged();
+                        break;
+                    }
+
                     /*
                      case 'cut':
                      {
@@ -506,41 +526,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                      blockPlayerData = pepper.stripPlayersID(blockPlayerData);
                      self.m_copiesObjects.push(blockPlayerData);
                      });
-                     BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, null);
+                     BB.comBroker.fire(BB.EVENTS['ZZZCENE_BLOCK_CHANGE'], self, null, null);
                      break;
-
                      }
                      */
-                    case 'remove':
-                    {
-                        _.each(i_blocks, function (selectedObject) {
-                            var blockData = selectedObject.getBlockData();
-                            self._discardSelections();
-                            pepper.removeScenePlayer(self.m_selectedSceneID, blockData.blockID);
-                            self._disposeBlocks(blockData.blockID);
-                        });
-                        self.m_canvas.renderAll();
-                        self._blockCountChanged();
-                        // BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, null);
-                        break;
-
-                    }
-
-                    case 'cut':
-                    {
-                        self.m_copiesObjects = [];
-                        _.each(i_blocks, function (selectedObject) {
-                            var blockData = selectedObject.getBlockData();
-                            var blockPlayerData = blockData.blockData;
-                            self._discardSelections();
-                            pepper.removeScenePlayer(self.m_selectedSceneID, blockData.blockID);
-                            blockPlayerData = pepper.stripPlayersID(blockPlayerData);
-                            self.m_copiesObjects.push(blockPlayerData);
-                        });
-                        BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, null);
-                        break;
-
-                    }
 
                     // original
                     /*
@@ -551,7 +540,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                      self._discardSelections();
                      pepper.removeScenePlayer(self.m_selectedSceneID, blockData.blockID);
                      });
-                     BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, null);
+                     BB.comBroker.fire(BB.EVENTS['ZZCENE_BLOCK_CHANGE'], self, null, null);
                      break;
 
                      }

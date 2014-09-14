@@ -38,6 +38,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_rendering = false;
             self.m_memento = {};
             self.m_copiesObjects = [];
+            self.PUSH_TOP = 1;
+            self.PUSH_BOTTOM = 0;
             self.m_blocks = {
                 blocksPre: [],
                 blocksPost: {},
@@ -659,7 +661,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     return;
                 }
                 self.m_canvas.bringToFront(block);
-                self._updateZorder();
+                self._updateZorder(self.PUSH_TOP, block);
                 self._mementoAddState();
             });
         },
@@ -679,7 +681,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     return;
                 }
                 self.m_canvas.sendToBack(block);
-                self._updateZorder();
+                self._updateZorder(self.PUSH_BOTTOM, block);
                 self._mementoAddState();
             });
         },
@@ -816,27 +818,32 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         },
 
         /**
-         Change the z-order of objects in pepper
+         Update the z-order index of an object
          @method _updateZorder
+         @param {String} i_pushDirection
+         @param {Object} i_block
          **/
-        _updateZorder: function () {
+        _updateZorder: function (i_pushDirection, i_block) {
             var self = this;
             if (_.isUndefined(self.m_selectedSceneID))
                 return;
             var active = self.m_canvas.getActiveGroup();
             if (active)
                 return;
-            // var totalViews = self.m_canvas.getObjects().length; var i = 0; log('--------------------');
-            var domSceneData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
-            self.m_canvas.forEachObject(function (obj) {
-                if (_.isNull(obj))
-                    return;
-                var blockID = obj.getBlockData().blockID;
-                // i++; log((totalViews - i) + ' ' + blockID);
-                var o = $(domSceneData).find('[id="' + blockID + '"]');
-                $(domSceneData).find('Players').prepend(o);
-            });
-            pepper.setScenePlayerData(self.m_selectedSceneID, (new XMLSerializer()).serializeToString(domSceneData));
+            var blockID = i_block.getBlockData().blockID;
+            var sceneDomPlayerData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
+            var domBlockData = $(sceneDomPlayerData).find('[id="' + blockID + '"]');
+            switch (i_pushDirection){
+                case self.PUSH_TOP: {
+                    $(sceneDomPlayerData).find('Players').append($(domBlockData));
+                    break;
+                }
+                case self.PUSH_BOTTOM: {
+                    $(sceneDomPlayerData).find('Players').prepend($(domBlockData));
+                    break;
+                }
+            }
+            pepper.setScenePlayerData(self.m_selectedSceneID, (new XMLSerializer()).serializeToString(sceneDomPlayerData));
         },
 
         /**
@@ -904,7 +911,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 return;
             for (var i = 0; i < self.m_canvas.getObjects().length; i++) {
                 if (selectedBlockID == self.m_canvas.item(i).getBlockData().blockID) {
-                    self._sceneBlockSelected(self.m_canvas.item(i));
+                    self._blockSelected(self.m_canvas.item(i));
                     break;
                 }
             }
@@ -926,7 +933,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self._resetObjectScale(block);
             self.m_canvas.renderAll();
             self._renderContinue();
-            self._sceneBlockSelected(block);
+            self._blockSelected(block);
         },
 
         /**
@@ -1144,7 +1151,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         var blockID = selectedObject.getBlockData().blockID;
                         log('object: ' + selectedObject.m_blockType + ' ' + blockID);
                         self._updateBlockCords(selectedObject, true, objectPos.x, objectPos.y, selectedObject.currentWidth, selectedObject.currentHeight, selectedObject.angle);
-                        self._updateZorder();
+                        // self._updateZorder();
                     });
                     self._mementoAddState();
                     selectedGroup.hasControls = false;
@@ -1156,8 +1163,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 //// Object
                 if (options.target || active) {
                     var block = options.target || active;
-                    self._sceneBlockSelected(block);
-                    // self._mementoAddState();
+                    self._blockSelected(block);
                     return;
                 }
 
@@ -1171,17 +1177,21 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
         /**
          Select a block object on the canvas
-         @method _sceneBlockSelected
+         @method _blockSelected
          @param {Object} i_block
          **/
-        _sceneBlockSelected: function (i_block) {
+        _blockSelected: function (i_block) {
             var self = this;
             self.m_canvas.setActiveObject(i_block);
             var blockID = i_block.getBlockData().blockID;
             log('object: ' + i_block.m_blockType + ' ' + blockID);
             self._updateBlockCords(i_block, true, i_block.left, i_block.top, i_block.currentWidth, i_block.currentHeight, i_block.angle);
             BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, blockID);
-            self._updateZorder();
+            // self._updateZorder();
+            //setTimeout(function(){
+            //    self._updateZorder();
+            //},500);
+
         },
 
         /**
@@ -1224,7 +1234,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 // block selected
                 for (var i = 0; i < self.m_canvas.getObjects().length; i++) {
                     if (self.m_canvas.item(i).getBlockData().blockID == blockID) {
-                        self._sceneBlockSelected(self.m_canvas.item(i));
+                        self._blockSelected(self.m_canvas.item(i));
                         break;
                     }
                 }

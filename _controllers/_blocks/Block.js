@@ -75,6 +75,7 @@ define(['jquery', 'backbone'], function ($) {
             self.m_sceneID = options.i_scene_player_data_id;
             self.m_blockType = options.blockType;
             self.m_selected = false;
+            self.m_zIndex = -1;
             self.m_minSize = {w: 50, h: 50};
             self.m_blockName = BB.PepperHelper.getBlockBoilerplate(self.m_blockType).name;
             self.m_blockAcronym = BB.PepperHelper.getBlockBoilerplate(self.m_blockType).acronym;
@@ -953,6 +954,27 @@ define(['jquery', 'backbone'], function ($) {
                 blockData: self._getBlockPlayerData()
             };
             return data;
+        },
+
+        /**
+         Set a block's z-index in case we know it (i.e.: it is going to be a re-render of a previous block that
+         was removed from the canvas)
+         @method setZindex
+         @param {Number} i_index
+         **/
+        setZindex: function(i_zIndex){
+            var self = this;
+            self.m_zIndex = i_zIndex;
+        },
+
+        /**
+         Get a block's z-index
+         @method getZindex
+         @param {Number} i_index
+         **/
+        getZindex: function(i_zIndex){
+            var self = this;
+            return self.m_zIndex;
         },
 
         /**

@@ -833,12 +833,14 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var blockID = i_block.getBlockData().blockID;
             var sceneDomPlayerData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
             var domBlockData = $(sceneDomPlayerData).find('[id="' + blockID + '"]');
-            switch (i_pushDirection){
-                case self.PUSH_TOP: {
+            switch (i_pushDirection) {
+                case self.PUSH_TOP:
+                {
                     $(sceneDomPlayerData).find('Players').append($(domBlockData));
                     break;
                 }
-                case self.PUSH_BOTTOM: {
+                case self.PUSH_BOTTOM:
+                {
                     $(sceneDomPlayerData).find('Players').prepend($(domBlockData));
                     break;
                 }
@@ -861,13 +863,16 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             self.m_blocks.blocksPre = [];
             self.m_blocks.blocksPost = {};
 
+            var zIndex = -1;
             if (i_blockID) {
                 $(i_domPlayerData).find('Players').find('Player').each(function (i, player) {
+                    zIndex++;
                     var blockID = $(player).attr('id');
                     if (blockID == i_blockID) {
                         var block = {
                             blockID: blockID,
                             blockType: $(player).attr('player'),
+                            zIndex: zIndex,
                             player_data: (new XMLSerializer()).serializeToString(player)
                         };
                         self.m_blocks.blocksPre.push(block);
@@ -878,7 +883,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     var block = {
                         blockID: $(player).attr('id'),
                         blockType: $(player).attr('player'),
+                        zIndex: -1,
                         player_data: (new XMLSerializer()).serializeToString(player)
+
                     };
                     self.m_blocks.blocksPre.push(block);
                 });
@@ -927,6 +934,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var selectedBlockID = self.m_blocks.blockSelected;
             self._disposeBlocks(selectedBlockID);
             self.m_canvas.add(block);
+            var zIndex = block.getZindex();
+            if (zIndex > -1)
+                block.moveTo(zIndex);
             self.m_canvas.setActiveObject(block);
             var nZooms = Math.round(Math.log(1 / self.m_canvasScale) / Math.log(1.2));
             self._zoomToBlock(nZooms, block);
@@ -966,23 +976,24 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          is created created the next block; thus creating blocks sequentially due to fabric bug. When no
          more blocks are to be created (m_blocks.blocksPre queue is empty) we _render the canvas
          @method _createBlock
+         @param {Number} i_blockID the block id we are creating
          **/
         _createBlock: function (i_blockID) {
             var self = this;
-            var block = self.m_blocks.blocksPre.shift();
-            if (block == undefined) {
+            var blockExtra = self.m_blocks.blocksPre.shift();
+            if (blockExtra == undefined) {
                 if (i_blockID) {
-                    log(Date.now() + 'createScene');
-                    self._renderSingle(i_blockID);
+                    self._renderSingle();
                 } else {
                     self._render();
                 }
                 return;
             }
-            block = self.m_blockFactory.createBlock(block.blockID, block.player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_selectedSceneID);
-            var blockID = block.getBlockData().blockID;
-            block.fabricateBlock(self.m_canvasScale, function () {
-                self.m_blocks.blocksPost[blockID] = block;
+            var newBlock = self.m_blockFactory.createBlock(blockExtra.blockID, blockExtra.player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_selectedSceneID);
+            newBlock.setZindex(blockExtra.zIndex);
+            var blockID = newBlock.getBlockData().blockID;
+            newBlock.fabricateBlock(self.m_canvasScale, function () {
+                self.m_blocks.blocksPost[blockID] = newBlock;
                 self._createBlock(i_blockID);
             });
         },

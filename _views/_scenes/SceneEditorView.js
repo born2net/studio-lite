@@ -424,7 +424,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _listenContextMenu: function () {
             var self = this;
-
             $(Elements.SCENE_CANVAS_CONTAINER).contextmenu({
                 target: Elements.SCENE_CONTEXT_MENU,
                 before: function (e, element, target) {
@@ -514,10 +513,11 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
                     case 'paste':
                     {
-                        var x, y, blockID, origX, origY;
+                        var x, y, blockID, origX, origY, blockIDs = [];
                         _.each(self.m_copiesObjects, function (domPlayerData, i) {
                             blockID = pepper.generateSceneId();
                             $(domPlayerData).attr('id', blockID);
+                            blockIDs.push(blockID);
                             var layout = $(domPlayerData).find('Layout');
                             if (i == 0) {
                                 origX = parseInt(layout.attr('x'));
@@ -534,7 +534,12 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                             pepper.appendScenePlayerBlock(self.m_selectedSceneID, player_data);
                         });
                         self._discardSelections();
-                        BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, null);
+                        if (self.m_copiesObjects.length==1){
+                            BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, blockID);
+                        } else {
+                            BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, null);
+                        }
+
                         break;
                     }
                 }
@@ -600,6 +605,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 $(domPlayerData).find('Player').attr('id', blockID);
                 player_data = (new XMLSerializer()).serializeToString(domPlayerData);
                 pepper.appendScenePlayerBlock(self.m_selectedSceneID, player_data);
+                BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, blockID);
+
+                /* var blockID = block.getBlockData().blockID;
                 setTimeout(function () {
                     self._loadScene();
                 }, 10);
@@ -607,6 +615,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     if (self.m_canvas)
                         self.m_canvas.calcOffset();
                 }, 500);
+                */
             });
         },
 
@@ -1124,10 +1133,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         self._updateBlockCords(selectedObject, true, objectPos.x, objectPos.y, selectedObject.currentWidth, selectedObject.currentHeight, selectedObject.angle);
                         // self._updateZorder();
                     });
-                    self._mementoAddState();
+                    // self._mementoAddState();
                     selectedGroup.hasControls = false;
                     self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
-                    self.m_canvas.renderAll();
                     return;
                 }
 
@@ -1260,6 +1268,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             _.each(self.m_canvas.getObjects(), function (obj) {
                 self._resetObjectScale(obj);
             });
+            self.m_canvas.renderAll();
         },
 
         /**
@@ -1275,7 +1284,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 i_target.height = i_target.currentHeight;
                 i_target.scaleX = 1;
                 i_target.scaleY = 1;
-                self.m_canvas.renderAll();
             }
         },
 
@@ -1484,7 +1492,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             i_block.left = tempLeft;
             i_block.top = tempTop;
             i_block.setCoords();
-            self.m_canvas.renderAll();
 
             if (i_block.forEachObject != undefined) {
                 i_block.forEachObject(function (obj) {

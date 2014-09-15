@@ -606,16 +606,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 player_data = (new XMLSerializer()).serializeToString(domPlayerData);
                 pepper.appendScenePlayerBlock(self.m_selectedSceneID, player_data);
                 BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, blockID);
-
-                /* var blockID = block.getBlockData().blockID;
-                setTimeout(function () {
-                    self._loadScene();
-                }, 10);
-                setTimeout(function () {
-                    if (self.m_canvas)
-                        self.m_canvas.calcOffset();
-                }, 500);
-                */
             });
         },
 

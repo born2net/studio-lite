@@ -671,7 +671,7 @@ define(['jquery', 'backbone'], function ($) {
          **/
         _announceBlockChanged: function () {
             var self = this;
-            BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, self.m_block_id);
+            BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, [self.m_block_id]);
         },
 
         /**

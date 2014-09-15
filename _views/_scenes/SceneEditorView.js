@@ -175,7 +175,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     var props = e.target.getValues();
                     var block_id = block.getBlockData().blockID;
                     self._updateBlockCords(block, false, props.x, props.y, props.w, props.h, props.a);
-                    BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, block_id);
+                    BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, [block_id]);
                 });
                 self._sceneActive();
             })
@@ -409,11 +409,11 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             BB.comBroker.listen(BB.EVENTS['SCENE_BLOCK_CHANGE'], function (e) {
                 if (self.m_rendering)
                     return;
-                var blockID = e.edata;
-                log('block edited ' + blockID);
+                var blockIDs = e.edata;
+                log('block(s) edited ' + blockIDs);
                 var domPlayerData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
-                self.m_blocks.blockSelected = blockID;
-                self._preRender(domPlayerData, blockID);
+                self.m_blocks.blockSelected = blockIDs[0];
+                self._preRender(domPlayerData, blockIDs);
                 self._mementoAddState();
             });
         },
@@ -433,7 +433,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         this.closemenu();
                         return false;
                     }
-                    // remember right click position for paste
+                    // remember right click position for pasting
                     self.m_mouseX = e.offsetX;
                     self.m_mouseY = e.offsetY;
 
@@ -534,10 +534,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                             pepper.appendScenePlayerBlock(self.m_selectedSceneID, player_data);
                         });
                         self._discardSelections();
-                        if (self.m_copiesObjects.length==1){
-                            BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, blockID);
+                        if (self.m_copiesObjects.length == 1) {
+                            BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, [blockID]);
                         } else {
-                            BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, null);
+                            BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, blockIDs);
                         }
 
                         break;
@@ -605,7 +605,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 $(domPlayerData).find('Player').attr('id', blockID);
                 player_data = (new XMLSerializer()).serializeToString(domPlayerData);
                 pepper.appendScenePlayerBlock(self.m_selectedSceneID, player_data);
-                BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, blockID);
+                BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, [blockID]);
             });
         },
 
@@ -817,21 +817,22 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          already been instantiated and ready to be added to canvas
          @method _preRender
          @param {Object} i_domPlayerData
-         @param {Object} [i_blockID] optionally render only a single block
+         @param {Object} [i_blockIDs] optionally render only a single block
          **/
-        _preRender: function (i_domPlayerData, i_blockID) {
+        _preRender: function (i_domPlayerData, i_blockIDs) {
             var self = this;
-            log('pre-rendering new blocks');
+            var zIndex = -1;
             self._renderPause();
             self.m_blocks.blocksPre = [];
             self.m_blocks.blocksPost = {};
+            log('pre-rendering new blocks');
 
-            var zIndex = -1;
-            if (i_blockID) {
+            // if rendering specific blocks instead of entire canvas
+            if (i_blockIDs) {
                 $(i_domPlayerData).find('Players').find('Player').each(function (i, player) {
                     zIndex++;
                     var blockID = $(player).attr('id');
-                    if (blockID == i_blockID) {
+                    if (_.indexOf(i_blockIDs, blockID) > -1) {
                         var block = {
                             blockID: blockID,
                             blockType: $(player).attr('player'),
@@ -853,60 +854,67 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     self.m_blocks.blocksPre.push(block);
                 });
             }
-            self._createBlock(i_blockID);
+            self._createBlock(i_blockIDs);
         },
 
         /**
          Render the pre created blocks (via _preRender) and add all blocks to fabric canvas
          @method _render
          **/
-        _render: function () {
+        _render: function (i_blockIDs) {
             var self = this;
             var nZooms = Math.round(Math.log(1 / self.m_canvasScale) / Math.log(1.2));
             var selectedBlockID = self.m_blocks.blockSelected;
-            self._disposeBlocks();
-            self._zoomReset();
+
+            // if to re-render entire canvas
+            if (i_blockIDs[0] == undefined) {
+                self._disposeBlocks();
+                self._zoomReset();
+            } else {
+                // if to re-render only changed blocks
+                for (var i = 0; i < i_blockIDs.length; i++)
+                    self._disposeBlocks(i_blockIDs[i]);
+            }
+
             _.forEach(self.m_blocks.blocksPost, function (i_block) {
                 self.m_canvas.add(i_block);
             });
-            self._zoomTo(nZooms);
+
+            // if to re-render entire canvas
+            if (i_blockIDs[0] == undefined) {
+                self._resetAllObjectScale();
+                self._zoomTo(nZooms);
+            } else {
+                // if to re-render only changed blocks
+                _.forEach(self.m_blocks.blocksPost, function (i_block) {
+                    var zIndex = i_block.getZindex();
+                    if (zIndex > -1)
+                        i_block.moveTo(zIndex);
+                    self.m_canvas.setActiveObject(i_block);
+                    self._zoomToBlock(nZooms, i_block);
+                    self._resetObjectScale(i_block);
+                });
+            }
             self._scrollTo(self.m_sceneScrollTop, self.m_sceneScrollLeft);
-            self._resetAllObjectScale();
             self.m_canvas.renderAll();
-            self._blockCountChanged();
             self._renderContinue();
 
-            // reselect previous selection
+            // self._blockCountChanged();
+
+            // select previous selection
             if (_.isUndefined(selectedBlockID))
                 return;
-            for (var i = 0; i < self.m_canvas.getObjects().length; i++) {
-                if (selectedBlockID == self.m_canvas.item(i).getBlockData().blockID) {
-                    self._blockSelected(self.m_canvas.item(i));
-                    break;
+            if (i_blockIDs[0] == undefined) {
+                for (var i = 0; i < self.m_canvas.getObjects().length; i++) {
+                    if (selectedBlockID == self.m_canvas.item(i).getBlockData().blockID) {
+                        self._blockSelected(self.m_canvas.item(i));
+                        break;
+                    }
                 }
+            } else {
+                var block = self.m_blocks.blocksPost[Object.keys(self.m_blocks.blocksPost)[0]];
+                self._blockSelected(block);
             }
-        },
-
-        /**
-         Render the pre created blocks (via _preRender) and add all blocks to fabric canvas
-         @method _renderSingle
-         **/
-        _renderSingle: function () {
-            var self = this;
-            var block = self.m_blocks.blocksPost[Object.keys(self.m_blocks.blocksPost)[0]];
-            var selectedBlockID = self.m_blocks.blockSelected;
-            self._disposeBlocks(selectedBlockID);
-            self.m_canvas.add(block);
-            var zIndex = block.getZindex();
-            if (zIndex > -1)
-                block.moveTo(zIndex);
-            self.m_canvas.setActiveObject(block);
-            var nZooms = Math.round(Math.log(1 / self.m_canvasScale) / Math.log(1.2));
-            self._zoomToBlock(nZooms, block);
-            self._resetObjectScale(block);
-            self.m_canvas.renderAll();
-            self._renderContinue();
-            self._blockSelected(block);
         },
 
         /**
@@ -938,25 +946,21 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          is created created the next block; thus creating blocks sequentially due to fabric bug. When no
          more blocks are to be created (m_blocks.blocksPre queue is empty) we _render the canvas
          @method _createBlock
-         @param {Number} i_blockID the block id we are creating
+         @param {Array} [i_blockIDs] optional array of block ids to render, or non if we render the entire canvas
          **/
-        _createBlock: function (i_blockID) {
+        _createBlock: function (i_blockIDs) {
             var self = this;
-            var blockExtra = self.m_blocks.blocksPre.shift();
-            if (blockExtra == undefined) {
-                if (i_blockID) {
-                    self._renderSingle();
-                } else {
-                    self._render();
-                }
+            var blockData = self.m_blocks.blocksPre.shift();
+            if (blockData == undefined) {
+                self._render([i_blockIDs]);
                 return;
             }
-            var newBlock = self.m_blockFactory.createBlock(blockExtra.blockID, blockExtra.player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_selectedSceneID);
-            newBlock.setZindex(blockExtra.zIndex);
+            var newBlock = self.m_blockFactory.createBlock(blockData.blockID, blockData.player_data, BB.CONSTS.PLACEMENT_SCENE, self.m_selectedSceneID);
+            newBlock.setZindex(blockData.zIndex);
             var blockID = newBlock.getBlockData().blockID;
             newBlock.fabricateBlock(self.m_canvasScale, function () {
                 self.m_blocks.blocksPost[blockID] = newBlock;
-                self._createBlock(i_blockID);
+                self._createBlock(i_blockIDs);
             });
         },
 
@@ -1022,7 +1026,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 setTimeout(function () {
                     block.off('modified');
                     var blockID = block.getBlockData().blockID;
-                    BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, blockID);
+                    BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, [blockID]);
                     self.m_objectScaling = 0;
                 }, 15);
             });
@@ -1258,7 +1262,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             _.each(self.m_canvas.getObjects(), function (obj) {
                 self._resetObjectScale(obj);
             });
-            self.m_canvas.renderAll();
+            // self.m_canvas.renderAll();
         },
 
         /**
@@ -1342,17 +1346,20 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 self._zoomIn();
                 self._discardSelections();
                 self._resetAllObjectScale();
+                self.m_canvas.renderAll();
             });
             BB.comBroker.listen(BB.EVENTS.SCENE_ZOOM_OUT, function (e) {
                 self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
                 self._zoomOut();
                 self._discardSelections();
                 self._resetAllObjectScale();
+                self.m_canvas.renderAll();
             });
             BB.comBroker.listen(BB.EVENTS.SCENE_ZOOM_RESET, function (e) {
                 self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
                 self._zoomReset();
                 self._resetAllObjectScale();
+                self.m_canvas.renderAll();
             });
         },
 

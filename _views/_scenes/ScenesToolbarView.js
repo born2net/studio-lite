@@ -202,6 +202,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _listenGoBackSceneSelection: function () {
             var self = this;
             $(Elements.BACK_SCENE_SELECTION).on('click', function () {
+                var sceneEditorView = BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']);
+                sceneEditorView.disposeScene();
                 self.options.stackView.slideToPage(Elements.SCENE_SELECTOR, 'left');
             });
         },

@@ -27,6 +27,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self.m_selectedSceneID = undefined;
             self._listenSceneSelection();
             self._listenGoBackSceneSelection();
+            self._listenResourceRemoved();
             self._listenSceneItemSelection();
             self._listenSceneDimensionsChanged();
             self._listenAddNewItem();
@@ -202,10 +203,30 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _listenGoBackSceneSelection: function () {
             var self = this;
             $(Elements.BACK_SCENE_SELECTION).on('click', function () {
-                var sceneEditorView = BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']);
-                sceneEditorView.disposeScene();
-                self.options.stackView.slideToPage(Elements.SCENE_SELECTOR, 'left');
+                self._goBackToSceneSelection();
             });
+        },
+
+        /**
+         Listen to when a resource is removed
+         @method _listenResourceRemoved
+         **/
+        _listenResourceRemoved: function () {
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS.REMOVED_RESOURCE, function(e){
+                self._goBackToSceneSelection();
+            });
+        },
+
+        /**
+         Go back to the main scene selection screen
+         @method _goBackToSceneSelection
+         **/
+        _goBackToSceneSelection: function(){
+            var self = this;
+            var sceneEditorView = BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']);
+            sceneEditorView.disposeScene();
+            self.options.stackView.slideToPage(Elements.SCENE_SELECTOR, 'left');
         },
 
         /**

@@ -237,18 +237,14 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             }
             // cpu breather
             setTimeout(function () {
-                log('1 ' + Date.now());
                 var objects = self.m_canvas.getObjects().length;
-                log('2 ' + Date.now());
                 for (var i = 0; i < objects; i++) {
                     blocks.push({
                         id: self.m_canvas.item(i).m_block_id,
                         name: self.m_canvas.item(i).m_blockName
                     });
                 }
-                log('3 ' + Date.now());
                 BB.comBroker.fire(BB.EVENTS.SCENE_BLOCK_LIST_UPDATED, this, null, blocks);
-                log('4 ' + Date.now());
             }, 500);
 
         },
@@ -549,7 +545,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                         } else {
                             BB.comBroker.fire(BB.EVENTS['SCENE_BLOCK_CHANGE'], self, null, blockIDs);
                         }
-
+                        self._updateBlockCount();
                         break;
                     }
                 }
@@ -877,7 +873,6 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var selectedBlockID = self.m_blocks.blockSelected;
             var renderAll = i_blockIDs[0] == undefined ? true : false; // if to re-render entire canvas
 
-
             if (renderAll) {
                 self._disposeBlocks();
                 self._zoomReset();
@@ -917,7 +912,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             // select previous selection
             if (_.isUndefined(selectedBlockID))
                 return;
-            if (i_blockIDs[0] == undefined) {
+            if (renderAll) {
                 for (var i = 0; i < self.m_canvas.getObjects().length; i++) {
                     if (selectedBlockID == self.m_canvas.item(i).getBlockData().blockID) {
                         self._blockSelected(self.m_canvas.item(i));

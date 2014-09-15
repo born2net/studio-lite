@@ -36,7 +36,7 @@ define(['jquery', 'backbone', 'SceneSelectionView'], function ($, Backbone, Scen
                 var sceneEditView = BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']);
                 if (!_.isUndefined(sceneEditView)){
                     var selectedSceneID = sceneEditView.getSelectedSceneID();
-                    BB.comBroker.fire(BB.EVENTS.LOAD_SCENE, this, null, selectedSceneID);
+                    // BB.comBroker.fire(BB.EVENTS.LOAD_SCENE, this, null, selectedSceneID);
                 }
             });
         },

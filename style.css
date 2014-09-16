@@ -556,6 +556,14 @@ iframe {
     top: 8px;
 }
 
+#videoPreview {
+    max-width: 150x;
+    max-height: 150px;
+    position: relative;
+    top: 20px;
+    left: -40px;
+}
+
 #donutStations {
     float: left;
     width: 100px;

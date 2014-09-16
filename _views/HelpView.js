@@ -63,7 +63,8 @@ define(['jquery', 'backbone', 'simplestorage', 'video'], function ($, Backbone, 
                 var videoName = $(e.target).attr('name');
                 if (_.isUndefined(videoName))
                     videoName = $(e.target).closest('button').attr('name');
-                $("video:nth-child(1)").attr("src",videoName);
+
+                $(Elements.VIDEO_INTRO).find('video:nth-child(1)').attr("src",videoName);
                 var autopopup = simplestorage.get('autopopup');
                 if (autopopup < 3){
                     $(Elements.AUTO_POPUP ).prop('checked', false);
@@ -73,7 +74,7 @@ define(['jquery', 'backbone', 'simplestorage', 'video'], function ($, Backbone, 
                 $(Elements.VIDEO_MODAL).modal('show');
                 var w = BB.comBroker.getService(BB.SERVICES.LAYOUT_ROUTER).getAppWidth() - 100;
                 var h = BB.comBroker.getService(BB.SERVICES.LAYOUT_ROUTER).getAppHeight() - 200;;
-                $('.video-js').width(w).height(h);
+                $(Elements.VIDEO_INTRO).width(w).height(h);
             });
         },
 
@@ -89,14 +90,14 @@ define(['jquery', 'backbone', 'simplestorage', 'video'], function ($, Backbone, 
                 //var h = $(Elements.VIDEO_MODAL).height() - 100;
                 var w = BB.comBroker.getService(BB.SERVICES.LAYOUT_ROUTER).getAppWidth() - 100;
                 var h = BB.comBroker.getService(BB.SERVICES.LAYOUT_ROUTER).getAppHeight() - 200;;
-                $('.video-js').width(w).height(h);
+                $(Elements.VIDEO_INTRO).width(w).height(h);
                 self.m_videoPlayer.load();
                 //self.m_videoPlayer.play();
 
                 BB.comBroker.listen(BB.EVENTS.APP_SIZED, function(){
                     var w = BB.comBroker.getService(BB.SERVICES.LAYOUT_ROUTER).getAppWidth() - 100;
                     var h = BB.comBroker.getService(BB.SERVICES.LAYOUT_ROUTER).getAppHeight() - 200;;
-                    $('.video-js').width(w).height(h);
+                    $(Elements.VIDEO_INTRO).width(w).height(h);
                 });
             });
         },

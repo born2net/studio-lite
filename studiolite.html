@@ -1023,10 +1023,14 @@
     <input id="selectedLibResourceName" type="text" name="name" value="" data-localize="enterResName"  placeholder="Enter resource name">
     <div>
         <div id="resourcePreviewImage" style="display: none">
-            <img src=""/>
+            <img src="" style="padding-top: 50px; max-width: 150x; max-height: 150px"/>
         </div>
         <div id="resourcePreviewVideo" style="display: none">
-
+            <!-- poster="videoIntro.png" -->
+            <video id="videoPreview" class="centerElement vjs-big-play-centered video-js vjs-default-skin" controls
+                   preload="auto"
+                   data-setup="{}">
+            </video>
         </div>
         <div id="resourcePreviewSwf" style="display: none">
 
@@ -1499,7 +1503,7 @@
 </div>
 </div>
 <div id="footer"><br>
-    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.192 </span>
+    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.193 </span>
 </div>
 
 

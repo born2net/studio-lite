@@ -5,7 +5,7 @@
  @constructor
  @return {Object} instantiated CompResourcesList
  **/
-define(['jquery', 'backbone', 'bootstrapfileinput'], function ($, Backbone, bootstrapfileinput) {
+define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backbone, bootstrapfileinput, videojs) {
 
     var ResourceListView = BB.View.extend({
 
@@ -18,7 +18,9 @@ define(['jquery', 'backbone', 'bootstrapfileinput'], function ($, Backbone, boot
             var self = this;
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
             self.m_property.initPanel(Elements.RESOURCE_LIST_PROPERTIES);
+            self.m_videoPlayer = undefined;
             self._listenInputChange();
+            self._initVideo();
             $('input[type=file]').bootstrapFileInput();
             self._listenRemoveResource();
             $(Elements.FILE_SELECTION).change(function (e) {
@@ -80,7 +82,62 @@ define(['jquery', 'backbone', 'bootstrapfileinput'], function ($, Backbone, boot
                 var recResource = pepper.getResourceRecord(self.m_selected_resource_id);
                 $(Elements.SELECTED_LIB_RESOURCE_NAME).val(recResource['resource_name']);
                 self.m_property.viewPanel(Elements.RESOURCE_LIST_PROPERTIES);
+                self._populateResourcePreview(recResource);
                 return false;
+            });
+        },
+
+        /**
+         Populate the resource preview with loaded resource file
+         @method _populateResourcePreview
+         @param {Object} i_recResource
+         **/
+        _populateResourcePreview: function (i_recResource) {
+            var self = this;
+
+            if (self.m_videoPlayer){
+                self.m_videoPlayer.pause();
+                self.m_videoPlayer.load();
+            }
+
+            switch (i_recResource['resource_type']){
+                case 'png': {
+                    var path = 'https://s3-us-west-2.amazonaws.com/oregon-signage-resources/business' + pepper.getUserData().businessID + '/resources/' + pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + 'png';
+                    $(Elements.RESOURCE_PREVIEW_VIDEO).hide();
+                    $(Elements.RESOURCE_PREVIEW_IMAGE).fadeIn();
+                    var $img = $(Elements.RESOURCE_PREVIEW_IMAGE).find('img');
+                    $img.attr('src',path);
+                }
+                case 'jpg': {
+                    break
+                }
+                case 'mp4': {
+                    var ext = 'mp4';
+                }
+                case 'flv': {
+                    if (!ext)
+                        ext = 'flv';
+                    $(Elements.RESOURCE_PREVIEW_IMAGE).hide();
+                    $(Elements.RESOURCE_PREVIEW_VIDEO).fadeIn();
+                    var path = 'https://s3-us-west-2.amazonaws.com/oregon-signage-resources/business' + pepper.getUserData().businessID + '/resources/' + pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + ext;
+                    $(Elements.VIDEO_PREVIEW).find('video:nth-child(1)').attr("src",path);
+                    break
+                }
+                case 'swf': {
+                    break
+                }
+
+            }
+        },
+
+        /**
+         init HTML5 video.js component
+         @method _listenAutoPopup
+         **/
+        _initVideo: function(){
+            var self = this;
+            videojs(BB.lib.unhash(Elements.VIDEO_PREVIEW)).ready(function () {
+                self.m_videoPlayer = this;
             });
         },
 

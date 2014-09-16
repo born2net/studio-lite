@@ -338,7 +338,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         },
 
         /**
-         Listen to keyboard eventd
+         Listen to keyboard events
          @method _listenKeyboard
          **/
         _listenKeyboard: function () {

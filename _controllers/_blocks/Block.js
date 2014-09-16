@@ -684,7 +684,7 @@ define(['jquery', 'backbone'], function ($) {
         _setBlockPlayerData: function (i_xmlDoc, i_noNotify, i_xmlIsString) {
             var self = this;
             var player_data;
-            if (i_xmlIsString == true){
+            if (i_xmlIsString == true) {
                 player_data = i_xmlDoc;
             } else {
                 player_data = (new XMLSerializer()).serializeToString(i_xmlDoc);
@@ -744,18 +744,19 @@ define(['jquery', 'backbone'], function ($) {
          bug fix: backward comparability with player_data that includes deleted resources
          this was already fixed but we live _selfDestruct for backwards compatability
          @method _selfDestruct
-        _selfDestruct: function(){
+         **/
+        _selfDestruct: function () {
             var self = this;
-            setTimeout(function(){
+            setTimeout(function () {
                 var sceneEditView = BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']);
-                if (!_.isUndefined(sceneEditView)){
+                if (!_.isUndefined(sceneEditView)) {
                     var selectedSceneID = sceneEditView.getSelectedSceneID();
                     pepper.removeScenePlayer(selectedSceneID, self.m_block_id);
                     BB.comBroker.fire(BB.EVENTS.LOAD_SCENE, this, null, selectedSceneID);
                 }
-            },2000);
+            }, 2000);
         },
-         **/
+
 
         /**
          Delete block is a private method that is always called regardless if instance has
@@ -962,7 +963,7 @@ define(['jquery', 'backbone'], function ($) {
          @method setZindex
          @param {Number} i_index
          **/
-        setZindex: function(i_zIndex){
+        setZindex: function (i_zIndex) {
             var self = this;
             self.m_zIndex = i_zIndex;
         },
@@ -972,7 +973,7 @@ define(['jquery', 'backbone'], function ($) {
          @method getZindex
          @param {Number} i_index
          **/
-        getZindex: function(i_zIndex){
+        getZindex: function (i_zIndex) {
             var self = this;
             return self.m_zIndex;
         },

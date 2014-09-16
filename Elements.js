@@ -257,6 +257,7 @@ Elements.SCENE_GRID_MAGNET = '#sceneGridMagnet';
 Elements.SCENE_HEIGHT_INPUT  = '#sceneHeightInput';
 Elements.SCENE_NAME_INPUT = '#sceneNameInput';
 Elements.SCENE_PANEL_WRAP = '#scenePanelWrap';
+Elements.SCENE_PROCESSING = '#sceneProcessing';
 Elements.SCENE_PLAY_PREVIEW = '#scenePlayPreview';
 Elements.SCENE_REDO = '#sceneRedo';
 Elements.SCENE_SELECT_LIST = '#sceneSelectList';

@@ -625,6 +625,21 @@ iframe {
     width: 105px;
 }
 
+#sceneProcessing {
+    display: none;
+    position: fixed;
+    background-color: white;
+    float: right;
+    z-index: 150;
+}
+
+#loading {
+    color: gray;
+    font-size: 30px;
+    position: relative;
+    top: 250px;
+}
+
 .selectedYouTubeFlag {
     background-color: #454545;
 }

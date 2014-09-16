@@ -33,11 +33,12 @@ define(['jquery', 'backbone', 'SceneSelectionView'], function ($, Backbone, Scen
             var self = this;
             BB.comBroker.listen(BB.EVENTS.REMOVED_RESOURCE, function(e){
                 pepper.removeAllScenePlayersWithResource(e.edata);
-                var sceneEditView = BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']);
+                /*var sceneEditView = BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']);
                 if (!_.isUndefined(sceneEditView)){
                     var selectedSceneID = sceneEditView.getSelectedSceneID();
-                    // BB.comBroker.fire(BB.EVENTS.LOAD_SCENE, this, null, selectedSceneID);
+                    BB.comBroker.fire(BB.EVENTS.LOAD_SCENE, this, null, selectedSceneID);
                 }
+                */
             });
         },
 

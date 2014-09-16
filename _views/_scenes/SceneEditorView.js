@@ -256,18 +256,21 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
         _loadScene: function () {
             var self = this;
             if (_.isUndefined(self.m_selectedSceneID))
-                return;
-            self._disposeBlocks();
-            self.disposeScene();
-            self._zoomReset();
-            self.m_property.resetPropertiesView();
-            var domPlayerData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
-            var l = $(domPlayerData).find('Layout').eq(0);
-            var w = $(l).attr('width');
-            var h = $(l).attr('height');
-            self._initializeCanvas(w, h);
-            self._initializeScene(self.m_selectedSceneID);
-            self._preRender(domPlayerData);
+                return -1;
+            self._sceneProcessing(true, $.proxy(function () {
+                self._disposeBlocks();
+                self.disposeScene();
+                self._zoomReset();
+                self.m_property.resetPropertiesView();
+                var domPlayerData = pepper.getScenePlayerdataDom(self.m_selectedSceneID);
+                var l = $(domPlayerData).find('Layout').eq(0);
+                var w = $(l).attr('width');
+                var h = $(l).attr('height');
+                self._initializeCanvas(w, h);
+                self._initializeScene(self.m_selectedSceneID);
+                self._preRender(domPlayerData);
+            }), self);
+
         },
 
         /**
@@ -685,6 +688,19 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             });
         },
 
+        _sceneProcessing: function (i_status, i_callBack) {
+            var self = this;
+            if (i_status) {
+                $(Elements.SCENE_PROCESSING).css({
+                    width: $('#scenePanelWrap').width(),
+                    height: $('#scenePanelWrap').height()
+                })
+                $(Elements.SCENE_PROCESSING).fadeTo('fast', 0.7, i_callBack);
+            } else {
+                $(Elements.SCENE_PROCESSING).fadeOut('slow', i_callBack);
+            }
+        },
+
         /**
          Listen to undo and redo
          @method _listenMemento
@@ -869,11 +885,13 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _render: function (i_blockIDs) {
             var self = this;
+            if (!self.m_canvas)
+                return;
             var nZooms = Math.round(Math.log(1 / self.m_canvasScale) / Math.log(1.2));
             var selectedBlockID = self.m_blocks.blockSelected;
-            var renderAll = i_blockIDs[0] == undefined ? true : false; // if to re-render entire canvas
+            var createAll = i_blockIDs[0] == undefined ? true : false; // if to re-render entire canvas
 
-            if (renderAll) {
+            if (createAll) {
                 self._disposeBlocks();
                 self._zoomReset();
             } else {
@@ -881,13 +899,10 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 for (var i = 0; i < i_blockIDs.length; i++)
                     self._disposeBlocks(i_blockIDs[i]);
             }
-
             _.forEach(self.m_blocks.blocksPost, function (i_block) {
                 self.m_canvas.add(i_block);
             });
-
-            // if to re-render entire canvas
-            if (renderAll) {
+            if (createAll) {
                 self._resetAllObjectScale();
                 self._zoomTo(nZooms);
             } else {
@@ -901,18 +916,18 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     self._resetObjectScale(i_block);
                 });
             }
-
             self._scrollTo(self.m_sceneScrollTop, self.m_sceneScrollLeft);
             self.m_canvas.renderAll();
+            self._sceneProcessing(false, function () {
+            });
             self._renderContinue();
-
-            if (renderAll)
+            if (createAll)
                 self._updateBlockCount();
 
             // select previous selection
             if (_.isUndefined(selectedBlockID))
                 return;
-            if (renderAll) {
+            if (createAll) {
                 for (var i = 0; i < self.m_canvas.getObjects().length; i++) {
                     if (selectedBlockID == self.m_canvas.item(i).getBlockData().blockID) {
                         self._blockSelected(self.m_canvas.item(i));
@@ -1181,6 +1196,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          **/
         _discardSelections: function () {
             var self = this;
+            if (!self.m_canvas)
+                return;
             self.m_canvas.discardActiveGroup();
             self.m_canvas.discardActiveObject();
         },

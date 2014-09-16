@@ -515,6 +515,11 @@
     </div>
     <div id="sceneStackFaderView" style="display: none" class="page right">
         <div id="scenePanelWrap">
+            <div align="center" id="sceneProcessing">
+                <div class="centerElement">
+                    <span id="loading" data-localize="loading">loading...</span>
+                </div>
+            </div>
             <div id="sceneToolbar">
                 <div class="btn-group">
                     <button id="backSceneSelection" type="button"
@@ -578,8 +583,7 @@
                     </div>
                 </div>
             </div>
-            <div id="sceneCanvasContainer" data-toggle="context" data-target="#sceneContextMenu"
-                 class="yScroll context sceneElements" style=" overflow-x: visible" align="center"></div>
+            <div id="sceneCanvasContainer" data-toggle="context" data-target="#sceneContextMenu" class="yScroll context sceneElements" style=" overflow-x: visible" align="center"></div>
             <div id="sceneContextMenu">
                 <ul id="sceneContext" class="dropdown-menu" role="menu">
                     <li><a tabindex="-1" class="blocksOnly" name="cut" data-localize="cut">cut</a></li>
@@ -1485,7 +1489,7 @@
 </div>
 </div>
 <div id="footer"><br>
-    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.190 </span>
+    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.191 </span>
 </div>
 
 

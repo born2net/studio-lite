@@ -160,6 +160,13 @@ define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backb
             self.render();
             self._listenResourceSelected();
             self._listenRemoveResource();
+            var navigationView = BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW);
+            bootbox.alert($(Elements.MSG_BOOTBOX_WAIT_UPLOAD_RESOURCE).text());
+            navigationView.save(function(){
+            })
+            setTimeout(function() {
+                bootbox.hideAll();
+            }, 3000);
         },
 
 

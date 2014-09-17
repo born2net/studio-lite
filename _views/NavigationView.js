@@ -269,7 +269,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             });
         },
 
-
         /**
          Save config to remote mediaSERVER
          @method save

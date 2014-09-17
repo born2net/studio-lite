@@ -201,6 +201,7 @@ Elements.MSG_BOOTBOX_SURE_DELETE_CAMPAIGN ='#bootBoxSureDeleteCampaign';
 Elements.MSG_BOOTBOX_SURE_DELETE_SCENE ='#bootBoxSureDeleteScene';
 Elements.MSG_BOOTBOX_SURE_REMOVE_TIMELINE ='#bootBoxSureRemoveTimeline';
 Elements.MSG_BOOTBOX_WRONG_USER_PASS = '#bootBoxWrongUserOrPass';
+Elements.MSG_BOOTBOX_WAIT_UPLOAD_RESOURCE = '#bootBoxWaitUploadResource';
 Elements.MSG_CANT_DELETE_TIMELINE ='#bootBoxCantDeleteTimeline';
 Elements.NEW_CAMPAIGN = '#newCampaign';
 Elements.NEW_CAMPAIGN_NAME = '#newCampaignName';

@@ -287,6 +287,13 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
 
                 require(['CampaignSelectorView', 'OrientationSelectorView', 'ResolutionSelectorView', 'CampaignView', 'CampaignNameSelectorView', 'AddBlockView', 'ScreenLayoutEditorView'], function (CampaignSelectorView, OrientationSelectorView, ResolutionSelectorView, CampaignView, CampaignNameSelectorView, AddBlockView, ScreenLayoutEditorView) {
 
+                    // require 'TimelineMax', 'TweenMax'
+                    // var tl = new TimelineMax({repeatDelay:1, 'yoyo':true});
+                    // tl.to($('#logoContainer'),1,{left: '800px', ease:'Circ.easeIn', 'yoyo': true});
+                    // tl.play();
+                    // TweenMax.to($('#logoContainer'), 0.2, {left: "300px", opacity: 1, repeat: 1, yoyo: true, ease: 'Circ.easeIn'});
+                    // TweenMax.to($('#logoContainer'),1,{left: '800px', repeat:3, ease:'Circ.easeIn'});
+
                     self.m_campaignSelectorView = new CampaignSelectorView({
                         stackView: self.m_campaignSliderStackView,
                         from: Elements.CAMPAIGN,

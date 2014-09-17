@@ -25,6 +25,9 @@ require.config({
         'colorpicker': '_common/_js/gradient/colorpicker',
         'highcharts': '_common/_js/highcharts/highcharts',
         'flashdetect': '_common/_js/flashdetect/flashdetect',
+        'TimelineMax': '_common/_js/gsap/TimelineMax',
+        'TweenMax': '_common/_js/gsap/TweenMax',
+        'TweenLite': '_common/_js/gsap/TweenLite',
         'RC4': '_common/_js/rc4/RC4',
         'RC4V2': '_common/_js/rc4/RC4V2',
         'localizer': '_common/_js/localizer/dist/jquery.localize',
@@ -143,6 +146,16 @@ require.config({
         },
         'underscore': {
             exports: '_'
+        },
+        'TweenMax': {
+            exports: 'TweenMax'
+        },
+        'TweenLite': {
+            exports: 'TweenLite'
+        },
+        'TimelineMax': {
+            dep: ['TweenLite'],
+            exports: 'TimelineMax'
         },
         'bootstrap': {
             deps: ['jquery']

@@ -101,15 +101,18 @@ define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backb
             }
 
             switch (i_recResource['resource_type']){
+                case 'jpg': {
+                    var ext = 'jpg';
+                }
                 case 'png': {
-                    var path = 'https://s3-us-west-2.amazonaws.com/oregon-signage-resources/business' + pepper.getUserData().businessID + '/resources/' + pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + 'png';
+                    if (!ext)
+                        ext = 'png';
+                    var path = 'https://s3-us-west-2.amazonaws.com/oregon-signage-resources/business' + pepper.getUserData().businessID + '/resources/' + pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + ext;
                     $(Elements.RESOURCE_PREVIEW_VIDEO).hide();
                     $(Elements.RESOURCE_PREVIEW_IMAGE).fadeIn();
                     var $img = $(Elements.RESOURCE_PREVIEW_IMAGE).find('img');
                     $img.attr('src',path);
-                }
-                case 'jpg': {
-                    break
+                    break;
                 }
                 case 'mp4': {
                     var ext = 'mp4';
@@ -124,6 +127,11 @@ define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backb
                     break
                 }
                 case 'swf': {
+                    var path = 'https://s3-us-west-2.amazonaws.com/oregon-signage-resources/business363510/resources/14.png';
+                    $(Elements.RESOURCE_PREVIEW_VIDEO).hide();
+                    $(Elements.RESOURCE_PREVIEW_IMAGE).fadeIn();
+                    var $img = $(Elements.RESOURCE_PREVIEW_IMAGE).find('img');
+                    $img.attr('src',path);
                     break
                 }
 

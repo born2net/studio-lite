@@ -175,6 +175,27 @@ iframe {
     background-color: black;
 }
 
+#selectedLibResourceName {
+    width: 200px;
+}
+
+#resourcePreviewImage {
+    width: 200px;
+    margin-top: 30px;
+    background-color: #e3e3e3;
+    height: 500px;
+    border: 1px solid #a8a8a8;
+}
+
+#imgPreview {
+    padding-top: 20px;
+    display: block;
+    max-width:130px;
+    max-height:130px;
+    width: auto;
+    height: auto;
+}
+
 #livePreviewButtons {
     padding-bottom: 10px;
 }

@@ -17,6 +17,7 @@ require.config({
         'video': '_common/_js/video/video.dev',
         'bootstrapfileinput': '_common/_js/bootstrapfileinput/bootstrapfileinput',
         'bootstrap': '_common/_js/bootstrap/js/bootstrap',
+        'platform': '_common/_js/platform/platform',
         'fabric': '_common/_js/fabric/fabric.require',
         'bootbox': '_common/_js/bootbox/bootbox',
         'Cookie': '_common/_js/cookie/jquery.cookie',

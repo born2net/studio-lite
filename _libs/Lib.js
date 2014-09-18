@@ -67,8 +67,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         logErrors: function (i_businessID) {
             if (window.location.href.indexOf('dist') > -1) {
                 //Bugsense.initAndStartSession( { apiKey: "32eabe70" } );
-                Bugsense.initAndStartSession( { apiKey: "fc064f8c" } );
-                Bugsense.addExtraData( 'business_id',i_businessID);
+                Bugsense.initAndStartSession({ apiKey: "fc064f8c" });
+                Bugsense.addExtraData('business_id', i_businessID);
             }
         },
 
@@ -90,66 +90,64 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @method foreceBrowserCompatability
          **/
         forceBrowserCompatability: function () {
-            $.getJSON('https://galaxy.signage.me/WebService/getBrowserInfo.ashx?a=2&callback=?',
-                function (data) {
 
-                    // alert('version ' + data.version + ' platform ' + data.platform + ' type ' + data.type + ' name ' + data.name);
+            var version = parseInt(BB.platform.version);
+            var os = BB.platform.os.family;
+            var browser = BB.platform.name;
+            var failLevel = 0;
 
-                    // animated loader
-                    if (data.name.toLowerCase() == 'ie') {
-                        $(Elements.WAITS_SCREEN_ENTRY_APP).find('img').eq(1).remove();
-                    } else {
-                        $(Elements.WAITS_SCREEN_ENTRY_APP).find('img').eq(0).remove();
+            // alert(browser + ' ' + os + ' ' + version);;
+
+            if (browser == 'IE') {
+                $(Elements.WAITS_SCREEN_ENTRY_APP).find('img').eq(1).remove();
+            } else {
+                $(Elements.WAITS_SCREEN_ENTRY_APP).find('img').eq(0).remove();
+            }
+
+            require(['bootbox'], function (bootbox) {
+                if (browser == 'Safari' && os == 'Windows')
+                    failLevel = 2;
+                if (browser == 'IE' && version < 11)
+                    failLevel = 1;
+
+                switch (failLevel) {
+                    case 0:
+                    {
+                        break
                     }
-
-                    var failLevel = 0;
-                    require(['bootbox'], function (bootbox) {
-                        if (data.name.toLowerCase() == 'safari' && data.platform.toLowerCase() == 'winnt')
-                            failLevel = 2;
-                        if (data.name.toLowerCase() == 'ie' && parseInt(data.version) < 11)
-                            failLevel = 1;
-
-                        switch (failLevel) {
-                            case 0:
-                            {
-                                break
-                            }
-                            case 1:
-                            {
-                                bootbox.dialog({
-                                    message: $(Elements.MSG_BOOTBOX_OLD_BROWSER).text(),
-                                    buttons: {
-                                        danger: {
-                                            label: $(Elements.MSG_BOOTBOX_OK).text(),
-                                            className: "btn-danger",
-                                            callback: function () {
-                                            }
-                                        }
+                    case 1:
+                    {
+                        bootbox.dialog({
+                            message: $(Elements.MSG_BOOTBOX_OLD_BROWSER).text(),
+                            buttons: {
+                                danger: {
+                                    label: $(Elements.MSG_BOOTBOX_OK).text(),
+                                    className: "btn-danger",
+                                    callback: function () {
                                     }
-                                });
-                                break
+                                }
                             }
-                            case 2:
-                            {
-                                bootbox.dialog({
-                                    message: $(Elements.MSG_BOOTBOX_OLD_BROWSER).text(),
-                                    buttons: {
-                                        danger: {
-                                            label: $(Elements.MSG_BOOTBOX_OK).text(),
-                                            className: "btn-danger",
-                                            callback: function () {
-                                                $('body').empty();
-                                                // window.location.replace("http://www.digitalsignage.com");
-                                            }
-                                        }
+                        });
+                        break
+                    }
+                    case 2:
+                    {
+                        bootbox.dialog({
+                            message: $(Elements.MSG_BOOTBOX_OLD_BROWSER).text(),
+                            buttons: {
+                                danger: {
+                                    label: $(Elements.MSG_BOOTBOX_OK).text(),
+                                    className: "btn-danger",
+                                    callback: function () {
+                                        $('body').empty();
                                     }
-                                });
-                                break
+                                }
                             }
-                        }
-                    });
+                        });
+                        break
+                    }
                 }
-            );
+            });
         },
 
         /**
@@ -730,8 +728,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @method getThemeColor
          @params {String} color
          **/
-        getThemeColor: function(){
-            if (BB.CONSTS['THEME']=='light')
+        getThemeColor: function () {
+            if (BB.CONSTS['THEME'] == 'light')
                 return '#428ac9 ';
             return '#eb7c66';
         },
@@ -741,9 +739,9 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          usage: $('#element').disableSelection() or$('#element').enableSelection()
          @method selectionSwitcher
          **/
-        selectionSwitcher: function(){
-            (function($){
-                $.fn.disableSelection = function() {
+        selectionSwitcher: function () {
+            (function ($) {
+                $.fn.disableSelection = function () {
                     return this
                         .attr('unselectable', 'on')
                         .css('user-select', 'none')
@@ -756,7 +754,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                         .on('mousedown', false);
                 };
 
-                $.fn.enableSelection = function() {
+                $.fn.enableSelection = function () {
                     return this
                         .attr('unselectable', '')
                         .css('user-select', '')

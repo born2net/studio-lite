@@ -99,6 +99,19 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         /**
+         Returns this model's attributes as...
+         @method isEmpty
+         @param {String} i_string
+         @return {Boolean}
+         **/
+        isEmpty: function (i_string) {
+            if (!i_string.trim()){
+                return true;
+            }
+            return false;
+        },
+
+        /**
          Force browser compatability
          @method foreceBrowserCompatability
          **/
@@ -726,14 +739,28 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         /**
          Remove characters that a problemtaic to app / js
          @method cleanProbCharacters
-         @param {String} string
+         @param {String} i_string
+         @param {Number} i_restriction
          @return {String} string
          **/
-        cleanProbCharacters: function (i_string) {
-            i_string = i_string.replace(/'/ig, "`");
-            i_string = i_string.replace(/&/ig, "and");
-            i_string = i_string.replace(/</ig, "(");
-            i_string = i_string.replace(/>/ig, ")");
+        cleanProbCharacters: function (i_string, i_restriction) {
+            switch (i_restriction){
+                case 1: {
+                    i_string = i_string.replace(/{/ig, "(");
+                    i_string = i_string.replace(/}/ig, ")");
+                }
+                case 2: {
+                    i_string = i_string.replace(/</ig, "(");
+                    i_string = i_string.replace(/>/ig, ")");
+                }
+                case 3: {
+                    i_string = i_string.replace(/&/ig, "and");
+                }
+                case 4: {
+                    i_string = i_string.replace(/"/ig, "`");
+                    i_string = i_string.replace(/'/ig, "`");
+                }
+            }
             return i_string;
         },
 

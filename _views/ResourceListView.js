@@ -39,6 +39,9 @@ define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backb
             var self = this;
             var onChange = _.debounce(function (e) {
                 var text = $(e.target).val();
+                if (BB.lib.isEmpty(text))
+                    return;
+                text = BB.lib.cleanProbCharacters(text,1);
                 pepper.setResourceRecord(self.m_selected_resource_id, 'resource_name', text);
                 var elem = self.$el.find('[data-resource_id="' + self.m_selected_resource_id + '"]');
                 elem.find('span').text(text);

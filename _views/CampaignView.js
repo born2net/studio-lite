@@ -81,6 +81,8 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             self._listenToggleTimelinesCollapsible();
             self._listenScreenTemplateEdit();
             self._listenTimelineLengthChanged();
+
+            // pepper.getCampaignsSchedules();
         },
 
         /**

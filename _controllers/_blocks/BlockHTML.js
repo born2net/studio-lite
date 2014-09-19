@@ -37,6 +37,12 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var text = $(e.target).val();
                 if (!text.match('http://') && !text.match('https://'))
                     text = 'http://' + text;
+                if (BB.lib.isEmpty(text))
+                    return;
+                var t2 = text;
+                text = BB.lib.cleanProbCharacters(text,1);
+                if (t2!=text)
+                    bootbox.alert($(Elements.MSG_BOOTBOX_NON_ALLOWED_CHARACTERS).text());
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('HTML');
                 xSnippet.attr('src', text);

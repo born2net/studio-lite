@@ -38,7 +38,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 if (!self.m_selected)
                     return;
                 var text = $(Elements.LABEL_TEXT).val();
-                text = BB.lib.cleanProbCharacters(text);
+                text = BB.lib.cleanProbCharacters(text, 1);
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Label');
                 var xSnippetText = $(xSnippet).find('Text');

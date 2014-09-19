@@ -219,6 +219,9 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 if (self.m_selectedCampaignID == -1)
                     return;
                 var text = $(e.target).val();
+                if (BB.lib.isEmpty(text))
+                    return;
+                text = BB.lib.cleanProbCharacters(text,1);
                 pepper.setCampaignRecord(self.m_selectedCampaignID, 'campaign_name', text);
                 self.$el.find('[data-campaignid="' + self.m_selectedCampaignID + '"]').find('h4').text(text);
             }, 333, false);

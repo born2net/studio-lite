@@ -104,7 +104,11 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             self.m_inputChangeHandler = _.debounce(function (e) {
                 if (!self.m_selected)
                     return;
-                pepper.setCampaignTimelineRecord(self.m_campaign_timeline_id, 'timeline_name', $(Elements.TIME_LINE_PROP_TITLE_ID).val());
+                var text = $(Elements.TIME_LINE_PROP_TITLE_ID).val();
+                if (BB.lib.isEmpty(text))
+                    return;
+                text = BB.lib.cleanProbCharacters(text,1);
+                pepper.setCampaignTimelineRecord(self.m_campaign_timeline_id, 'timeline_name', text);
             }, 150, false);
             $(Elements.TIME_LINE_PROP_TITLE_ID).on("input", self.m_inputChangeHandler);
         },

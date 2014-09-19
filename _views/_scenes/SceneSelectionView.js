@@ -140,6 +140,9 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 var text = $(e.target).val();
                 var sceneID = pepper.getSceneIdFromPseudoId(self.m_selectedSceneID);
                 var domSceneData = pepper.getScenePlayerdataDom(sceneID);
+                if (BB.lib.isEmpty(text))
+                    return;
+                text = BB.lib.cleanProbCharacters(text,1);
                 $(domSceneData).find('Player').attr('label', text);
                 pepper.setScenePlayerData(sceneID, (new XMLSerializer()).serializeToString(domSceneData));
                 self.$el.find('[data-sceneid="' + self.m_selectedSceneID + '"]').find('h4').text(text);

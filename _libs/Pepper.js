@@ -1361,6 +1361,18 @@ Pepper.prototype = {
     },
 
     /**
+     Get all campaign schedules
+     @method getCampaignsSchedules
+     @param {Number} i_playerData
+     @return {Number} Unique clientId.
+     **/
+    getCampaignsSchedules: function(){
+        $(self.m_msdb.table_campaign_timeline_schedules().getAllPrimaryKeys()).each(function (k, campaign_timeline_schedule_id) {
+            log(k + ' ' + campaign_timeline_schedule_id);
+        });
+    },
+
+    /**
      Set the sequence index of a timeline in campaign. If timeline is not found in sequencer, we insert it with the supplied i_sequenceIndex
      @method setCampaignTimelineSequencerIndex
      @param {Number} i_campaign_id

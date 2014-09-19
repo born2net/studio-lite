@@ -86,17 +86,29 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         /**
+         Is running platform a mobile device
+         @method isMobile
+         @return {Boolean}
+         **/
+        isMobile: function () {
+            if (BB.platform.os.family == 'Android' || BB.platform.os.family == 'iOS')
+                return true;
+            return false;
+        },
+
+        /**
          Force browser compatability
          @method foreceBrowserCompatability
          **/
-        forceBrowserCompatability: function () {
-
+        forceBrowserCompatibility: function () {
+            // BB.lib.isMobile();
             var version = parseInt(BB.platform.version);
-            var os = BB.platform.os.family;
+            var os = BB.platform.os;
+            var family = BB.platform.os.family;
             var browser = BB.platform.name;
             var failLevel = 0;
 
-            // alert(browser + ' ' + os + ' ' + version);;
+            // alert('|browser:' + browser + '|family: ' + family + '|version: ' + version + '|os: ' + os);
 
             if (browser == 'IE') {
                 $(Elements.WAITS_SCREEN_ENTRY_APP).find('img').eq(1).remove();
@@ -105,7 +117,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             }
 
             require(['bootbox'], function (bootbox) {
-                if (browser == 'Safari' && os == 'Windows')
+                if (browser == 'Safari' && family == 'Windows')
                     failLevel = 2;
                 if (browser == 'IE' && version < 11)
                     failLevel = 1;

@@ -439,8 +439,18 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
              **/
             _listenSizeChanges: function () {
                 var self = this;
-                var lazyLayout = _.debounce(self._updateLayout, 150);
-                $(window).resize(lazyLayout);
+                if (BB.lib.isMobile()) {
+                    $(window).one('resize', self._updateLayout);
+                    $(window).bind('orientationchange', function (e) {
+                        // log(window.orientation); // 0 = portrait; 90 = landscape left; -90 = landscape right
+                        setTimeout(function () {
+                            self._updateLayout();
+                        }, 1500);
+                    });
+                } else {
+                    var lazyLayout = _.debounce(self._updateLayout, 150);
+                    $(window).resize(lazyLayout);
+                }
             },
 
             /**

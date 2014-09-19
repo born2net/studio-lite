@@ -33,7 +33,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             window.pepper = BB.Pepper;
             window.log = BB.lib.log;
             BB.platform = platform;
-            BB.lib.forceBrowserCompatability();
+            BB.lib.forceBrowserCompatibility();
             BB.lib.promptOnExit();
 
 

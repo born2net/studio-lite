@@ -17,6 +17,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @param {String} msg
          **/
         log: function (msg) {
+            if (window.location.href.indexOf('dist') > -1)
+                return;
             if (!$.browser == undefined && $.browser.msie && $.browser.version <= 8) {
                 if (globs['debug']) {
                     console = {};

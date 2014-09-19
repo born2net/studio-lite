@@ -52,10 +52,10 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self._labelEnterKey = _.debounce(function (e) {
                 if (!self.m_selected)
                     return;
-                if (e.which == 13)
-                    self.m_inputChangeHandler(e);
+                //if (e.which == 13)
+                self.m_inputChangeHandler(e);
                 e.preventDefault();
-            }, 50);
+            }, 750);
             $(Elements.LABEL_TEXT).on("keydown", self._labelEnterKey);
         },
 

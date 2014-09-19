@@ -48,7 +48,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 self._setBlockPlayerData(domPlayerData);
             };
             $(Elements.LABEL_TEXT).on("mousemove", self.m_inputChangeHandler);
-
             self._labelEnterKey = _.debounce(function (e) {
                 if (!self.m_selected)
                     return;

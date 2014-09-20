@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated FileMenu
  **/
-define(['jquery', 'backbone'], function ($, Backbone) {
+define(['jquery', 'backbone', 'TutorialView'], function ($, Backbone, TutorialView) {
 
     BB.SERVICES.NAVIGATION_VIEW = 'NavigationView';
 
@@ -17,6 +17,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         initialize: function () {
             var self = this;
             self.m_limitedAccess = false;
+            self.m_tutorialView = new TutorialView({el: Elements.LIVE_TUTORIAL});
 
             this._render();
 

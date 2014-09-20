@@ -187,6 +187,25 @@ iframe {
     border: 1px solid #a8a8a8;
 }
 
+#appTutorial {
+    display: none;
+    opacity: 0.6;
+    background-color: black;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+}
+/*
+#appTutorialArrow {
+    display: none;
+    position: absolute;
+    left: -5000px;
+    top: -500px;
+} */
+
 #imgPreview {
     padding-top: 20px;
     display: block;
@@ -400,6 +419,10 @@ iframe {
 #eventSendButton {
     padding-left: 40px;
     padding-right: 40px;
+}
+
+#appTutorialArrow {
+    display: none;
 }
 
 #dimensionApplyScene {
@@ -1151,6 +1174,16 @@ iframe {
     float: right;
     font-family: "Quicksand", sans-serif;
     font-weight: 500;
+}
+
+.tutorialArrow {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 0;
+    left: 5000px;
+    z-index: 999999;
+    display: inline;
 }
 
 .off {

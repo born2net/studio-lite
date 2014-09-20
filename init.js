@@ -67,6 +67,7 @@ require.config({
         'DashboardView': '_views/DashboardView',
         'NavigationView': '_views/NavigationView',
         'WaitView': '_views/WaitView',
+        'TutorialView': '_views/TutorialView',
         'BarMeterView': '_views/BarMeterView',
         'SceneSliderView': '_views/_scenes/SceneSliderView',
         'SceneLoaderView': '_views/_scenes/SceneLoaderView',

@@ -75,7 +75,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
          **/
         selectView: function (i_view) {
             this.m_selectedView = this._parseView(i_view);
-            this._notifySubsribers(i_view);
+            this._notifySubscribers(i_view);
         },
 
         /**
@@ -90,9 +90,12 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             return i_view;
         },
 
-        _notifySubsribers: function(i_view){
+        _notifySubscribers: function(i_view){
             var view = this._parseView(i_view);
+            // log('view: '+ view.el.id);
             this.trigger(BB.EVENTS.SELECTED_STACK_VIEW, view);
+            if (BB.comBroker)
+                BB.comBroker.fire(BB.EVENTS.SELECTED_STACK_VIEW, view);
         }
 
     });
@@ -145,7 +148,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             i_toView = self._parseView(i_toView);
             if (i_toView==self.m_selectedView)
                 return;
-            self._notifySubsribers(i_toView);
+            self._notifySubscribers(i_toView);
             i_toView.$el.show();
             // toView.el.offsetWidth;
             // Position the new page at the starting position of the animation

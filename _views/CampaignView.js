@@ -19,6 +19,16 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
     BB.EVENTS.CAMPAIGN_TIMELINE_CHANGED = 'CAMPAIGN_TIMELINE_CHANGED';
 
     /**
+     Custom event fired when a requesing an expanded view of the timelines and storyboard
+     @event CAMPAIGN_EXPANDED_VIEW
+     @param {This} caller
+     @param {Self} context caller
+     @static
+     @final
+     **/
+    BB.EVENTS.CAMPAIGN_EXPANDED_VIEW = 'CAMPAIGN_EXPANDED_VIEW';
+
+    /**
      Custom event fired before changing to a new campaign
      @event CAMPAIGN_SELECTED
      @param {This} caller
@@ -81,6 +91,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             self._listenToggleTimelinesCollapsible();
             self._listenScreenTemplateEdit();
             self._listenTimelineLengthChanged();
+            self._listenCampaignExpandedView();
 
             // pepper.getCampaignsSchedules();
         },
@@ -390,6 +401,21 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
         _listenTimelineLengthChanged: function () {
             var self = this;
             pepper.listen(Pepper.TIMELINE_LENGTH_CHANGED, $.proxy(self._updatedTimelinesLengthUI, self));
+        },
+
+        /**
+         Listen to when we should expand the view of all collapsible bootstrap widgets in our campaign view moduke
+         @method _listenCampaignExpandedView
+         **/
+        _listenCampaignExpandedView: function(){
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS.CAMPAIGN_EXPANDED_VIEW,function(e){
+                if (!$(Elements.SCREEN_SELECTOR_CONTAINER_COLLAPSE).hasClass('in'))
+                    $(Elements.TOGGLE_TIMELINES_COLLAPSIBLE).trigger('click');
+                if (!$(Elements.STORYLINE_CONTAINER_COLLAPSE).hasClass('in'))
+                    $(Elements.TOGGLE_STORYLINE_COLLAPSIBLE).trigger('click');
+                $(Elements.SELECT_NEXT_CHANNEL).trigger('click');
+            })
         },
 
         /**

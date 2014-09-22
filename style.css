@@ -35,6 +35,12 @@ i.fa {
     src: local('Lobster Two'), local('LobsterTwo'), url(https://themes.googleusercontent.com/static/fonts/lobstertwo/v5/Law3VVulBOoxyKPkrNsAaIbN6UDyHWBl620a-IRfuBk.woff) format('woff');
 }
 
+
+#appName {
+    font-size: 3em;
+    font-family: Lobster Two
+}
+
 a {
     text-decoration: none !important;
 }
@@ -1174,6 +1180,18 @@ iframe {
     float: right;
     font-family: "Quicksand", sans-serif;
     font-weight: 500;
+}
+
+.tutorialText {
+    text-shadow: 3px 1px 4px rgba(0, 0, 0, 1);
+    position: absolute;
+    font-family: 'Indie Flower', cursive;
+    color: #ffffff;
+    font-size: 2em;
+    top: 0;
+    left: 5000px;
+    z-index: 999999;
+    display: inline;
 }
 
 .tutorialArrow {

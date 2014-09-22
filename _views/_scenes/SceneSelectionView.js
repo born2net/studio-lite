@@ -194,6 +194,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             });
         },
 
+        /**
+         Stop listening to scene li events
+         @method _stopEventListening
+         **/
         _stopEventListening: function(){
             var self = this;
             $(Elements.CLASS_OPEN_PROPS_BUTTON, self.el).off('click');

@@ -10,6 +10,7 @@
     <link rel="shortcut icon" href="favicon.ico">
     <title>SignageStudio Lite</title>
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css" rel="stylesheet">
     <link href="_common/_js/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="_common/_js/video/video-js.css" rel="stylesheet">
@@ -44,7 +45,7 @@
                 </div>
             </div>
         </div>
-        <a id="appName" class="navbar-brand" href="#" style="font-family: Lobster Two; font-size: 3em">StudioLite</a>
+        <a id="appName" class="navbar-brand" href="#">StudioLite</a>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
@@ -74,6 +75,7 @@
         <ul class="nav navbar-nav navbar-right">
             <li><a id="saveConfig" href="#"><i class="faHeader fa fa-save"></i></a></li>
             <li><a class="reshid" id="liveChat" href="#"><i class="faHeader fa fa-comments-o"></i></a></li>
+            <li><a class="reshid hidden-xs hidden-sm hidden-md" id="liveTutorial" href="#"><i class="faHeader fa fa-question-circle "></i></a></li>
             <li><a id="languagePrompt" href="#"><i class="faHeader fa fa-globe"></i></a></li>
             <li style="padding-right: 20px"><a id="dashboard" href="#"><i class="faHeader fa fa-dashboard"></i></a></li>
         </ul>
@@ -81,6 +83,13 @@
     <!-- /.navbar-collapse -->
 </nav>
 <div id="appTutorial">
+    <img src="_assets/arrowLeft.png" style="display: none; width: 156px; height: 46px">
+    <img src="_assets/arrowUp.png" style="display: none; width: 59px; height: 122px">
+    <img src="_assets/baloon1.png" style="display: none; width: 136px; height: 104px">
+    <img src="_assets/arrowUpSide.png" style="display: none; width: 97px; height: 235px">
+    <img src="_assets/arrowRight90.png" style="display: none; width: 70px; height: 72px">
+    <img src="_assets/baloon2.png" style="display: none; width: 237px; height: 152px">
+    <!--
     <div id="appTutorialArrow">
         <svg xmlns="http://www.w3.org/2000/svg"  width="50px" height="50px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
         <rect fill="none" width="50" height="50"/>
@@ -89,6 +98,7 @@
         </g>
     </svg>
     </div>
+    -->
 </div>
 <div id="appEntry">
 <div id="appLogin" style="display: none">
@@ -1513,7 +1523,7 @@
 </div>
 </div>
 <div id="footer"><br>
-    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.199 </span>
+    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.200 </span>
 </div>
 
 
@@ -1930,6 +1940,18 @@
 <p style="display: none" id="bootBoxSelectScene" data-localize="selectSceneName">Select scene</p>
 
 <p style="display: none" id="bootBoxWaitUploadResource" data-localize="waitUploadResource">Please wait while resources are uploaded to the cloud...</p>
+
+<p style="display: none" id="tutorialCampaignList1" data-localize="tutorialCampaignList1"></p>
+<p style="display: none" id="tutorialCampaignList2" data-localize="tutorialCampaignList2"></p>
+<p style="display: none" id="tutorialTimeline1" data-localize="tutorialTimeline1"></p>
+<p style="display: none" id="tutorialTimeline2" data-localize="tutorialTimeline2"></p>
+<p style="display: none" id="tutorialTimeline3" data-localize="tutorialTimeline3"></p>
+<p style="display: none" id="tutorialEditCampaignSett" data-localize="tutorialEditCampaignSett"></p>
+<p style="display: none" id="tutorialNewCampaign" data-localize="tutorialNewCampaign"></p>
+<p style="display: none" id="tutorialStoryboard1" data-localize="tutorialStoryboard1"></p>
+<p style="display: none" id="tutorialStoryboard2" data-localize="tutorialStoryboard2"></p>
+<p style="display: none" id="tutorialContent" data-localize="tutorialContent"></p>
+
 
 </body>
 </html>

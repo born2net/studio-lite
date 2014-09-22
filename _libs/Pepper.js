@@ -1367,6 +1367,9 @@ Pepper.prototype = {
      @return {Number} Unique clientId.
      **/
     getCampaignsSchedules: function(){
+        var self = this;
+        var a = self.m_msdb.table_campaign_timeline_schedules();
+        log(a);
         $(self.m_msdb.table_campaign_timeline_schedules().getAllPrimaryKeys()).each(function (k, campaign_timeline_schedule_id) {
             log(k + ' ' + campaign_timeline_schedule_id);
         });

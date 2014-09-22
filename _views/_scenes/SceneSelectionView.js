@@ -37,6 +37,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @method _render
          **/
         _render: function () {
+            log('aaaaaaaaa');
             var self = this;
             $(Elements.SCENE_SELECTOR_LIST).empty();
             var scenenames = BB.Pepper.getSceneNames();
@@ -53,10 +54,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     '</a>';
                 $(Elements.SCENE_SELECTOR_LIST).append($(snippet));
             });
-
-            this._listenOpenProps();
-            this._listenSelectScene();
-            this._listenInputChange();
+            self._stopEventListening();
+            self._listenOpenProps();
+            self._listenSelectScene();
+            self._listenInputChange();
         },
 
         /**
@@ -83,7 +84,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 }
                 var scenePlayerData = pepper.getScenePlayerdata(self.m_selectedSceneID);
                 BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']).createScene(scenePlayerData, true, false);
-                self._render();
+                // self._render();
             });
         },
 
@@ -136,7 +137,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         _listenInputChange: function () {
             var self = this;
-            var onChange = _.debounce(function (e) {
+            self.m_onChange = _.debounce(function (e) {
                 var text = $(e.target).val();
                 var sceneID = pepper.getSceneIdFromPseudoId(self.m_selectedSceneID);
                 var domSceneData = pepper.getScenePlayerdataDom(sceneID);
@@ -148,7 +149,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 self.$el.find('[data-sceneid="' + self.m_selectedSceneID + '"]').find('h4').text(text);
                 BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this);
             }, 333, false);
-            $(Elements.FORM_SCENE_NAME).on("input", onChange);
+            $(Elements.FORM_SCENE_NAME).on("input", self.m_onChange);
         },
 
         /**
@@ -191,6 +192,13 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 self.m_selectedSceneID = -1;
                 self._render();
             });
+        },
+
+        _stopEventListening: function(){
+            var self = this;
+            $(Elements.CLASS_OPEN_PROPS_BUTTON, self.el).off('click');
+            $(Elements.CLASS_CAMPIGN_LIST_ITEM, self.el).off('click');
+            $(Elements.FORM_SCENE_NAME).off("input", self.m_onChange);
         }
     });
 

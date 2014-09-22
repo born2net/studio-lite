@@ -237,6 +237,8 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             }
             // cpu breather
             setTimeout(function () {
+                if (_.isUndefined(self.m_canvas))
+                    return;
                 var objects = self.m_canvas.getObjects().length;
                 for (var i = 0; i < objects; i++) {
                     blocks.push({

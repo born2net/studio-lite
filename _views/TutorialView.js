@@ -26,8 +26,8 @@ define(['jquery', 'backbone', 'TimelineMax', 'TweenMax'], function ($, Backbone,
          Remove live tutorial on app resize
          @method _listenAppSized
          **/
-        _listenAppSized: function(){
-            BB.comBroker.listen(BB.EVENTS.APP_SIZED, function(){
+        _listenAppSized: function () {
+            BB.comBroker.listen(BB.EVENTS.APP_SIZED, function () {
                 $('.tutorialArrow').remove();
                 $('.tutorialText').remove();
                 $(Elements.APP_TUTORIAL).fadeOut();
@@ -66,15 +66,15 @@ define(['jquery', 'backbone', 'TimelineMax', 'TweenMax'], function ($, Backbone,
             var self = this;
             var offset, arrow, t1, t2, t3;
 
-            BB.comBroker.fire(BB.EVENTS.CAMPAIGN_EXPANDED_VIEW,this);
-            setTimeout(function(){
+            BB.comBroker.fire(BB.EVENTS.CAMPAIGN_EXPANDED_VIEW, this);
+            setTimeout(function () {
                 offset = $(Elements.SCREEN_LAYOUTS_UL).offset();
                 arrow = $(Elements.APP_TUTORIAL).children().eq(0).clone();
                 t1 = $(Elements.TUTORIAL_TIMELINE1).text();
                 t2 = $(Elements.TUTORIAL_TIMELINE2).text();
                 t3 = $(Elements.TUTORIAL_TIMELINE3).text();
-                self._animateArrow(arrow, offset.top + 35, offset.left + 175, undefined, 10, undefined);
-                self._animateText(t1 + '<br/>' + t2 + '<br/>' + t3 + '<br/>', offset.top + 98, offset.left + 200, undefined, 3);
+                self._animateArrow(arrow, offset.top + 25, offset.left + 175, undefined, 10, undefined);
+                self._animateText(t1 + '<br/>' + t2 + '<br/>' + t3 + '<br/>', offset.top + 98, offset.left + 300, undefined, 3);
 
                 offset = $(Elements.CLASS_STORYLINE_CHANNEL).children().eq(0).offset();
                 arrow = $(Elements.APP_TUTORIAL).children().eq(4).clone();
@@ -83,15 +83,22 @@ define(['jquery', 'backbone', 'TimelineMax', 'TweenMax'], function ($, Backbone,
                 self._animateArrow(arrow, offset.top + -10, offset.left + -60, undefined, undefined, undefined);
                 self._animateText(t1 + '<br/>' + t2, offset.top + 70, offset.left + -100, undefined, undefined);
 
-                setTimeout(function(){
-                    offset = $('#sortable').offset();
+                setTimeout(function () {
+                    offset = $(Elements.SORTABLE).offset();
                     var w = $(Elements.CLASS_CHANNEL_LIST_ITEMS).width();
                     arrow = $(Elements.APP_TUTORIAL).children().eq(5).clone();
                     t1 = $(Elements.TUTORIAL_CONTENT).text();
                     self._animateArrow(arrow, offset.top + -100, offset.left + w, undefined, 10, undefined);
                     self._animateText(t1, offset.top - 70, offset.left + w + 45, undefined, 3);
-                },500);
-            },500);
+
+                    offset = $(Elements.SELECT_NEXT_CHANNEL).offset();
+                    arrow = $(Elements.APP_TUTORIAL).children().eq(6).clone();
+                    t1 = $(Elements.TUTORIAL_NEXT_CHANNEL).text();
+                    self._animateArrow(arrow, offset.top - 15, offset.left - 25, undefined, 3, undefined);
+                    self._animateText(t1, offset.top + 50, offset.left - 10, undefined, 3);
+
+                }, 500);
+            }, 500);
         },
 
         /**
@@ -128,8 +135,11 @@ define(['jquery', 'backbone', 'TimelineMax', 'TweenMax'], function ($, Backbone,
          **/
         _tutorialStations: function () {
             var self = this;
-            var offset, arrow, t1, t2, t3;
-            log('welcome to stations...');
+            var arrow, t1;
+            arrow = $(Elements.APP_TUTORIAL).children().eq(8).clone();
+            t1 = $(Elements.TUTORIAL_STATIONS).text();
+            self._animateArrow(arrow, 200, 200, undefined, undefined, undefined);
+            self._animateText(t1, 170, 290, undefined, 0);
         },
 
         /**
@@ -139,7 +149,32 @@ define(['jquery', 'backbone', 'TimelineMax', 'TweenMax'], function ($, Backbone,
         _tutorialResourcePanel: function () {
             var self = this;
             var offset, arrow, t1, t2, t3;
-            log('welcome to resource panel...');
+            offset = $(Elements.FILE_REMOVE).offset();
+            arrow = $(Elements.APP_TUTORIAL).children().eq(0).clone();
+            t1 = $(Elements.TUTORIAL_RESOUCRES1).text();
+            t2 = $(Elements.TUTORIAL_RESOUCRES2).text();
+            t3 = $(Elements.TUTORIAL_RESOUCRES3).text();
+            self._animateArrow(arrow, offset.top + 75, offset.left + 185, undefined, 10, undefined);
+            self._animateText(t1 + '<br/>' + t2 + '<br/>' + t3, offset.top + 140, offset.left + 200, undefined, 3);
+
+            offset = $(Elements.FILE_SELECTION).offset();
+            arrow = $(Elements.APP_TUTORIAL).children().eq(6).clone();
+            t1 = $(Elements.TUTORIAL_RESOURCE_UPLOAD).text();
+            self._animateArrow(arrow, offset.top - 15, offset.left - 35, undefined, 3, undefined);
+            self._animateText(t1, offset.top + 5, offset.left + 130, undefined, undefined);
+        },
+
+        /**
+         Animation install tutorial
+         @method _tutorialCampaign
+         **/
+        _tutorialInstallPanel: function () {
+            var self = this;
+            var offset, arrow, t1, t2, t3;
+            arrow = $(Elements.APP_TUTORIAL).children().eq(7).clone();
+            t1 = $(Elements.TUTORIAL_INSTALL).text();
+            self._animateArrow(arrow, 200, 200, undefined, undefined, undefined);
+            self._animateText(t1, 260, 330, undefined, 0);
         },
 
         /**
@@ -148,8 +183,11 @@ define(['jquery', 'backbone', 'TimelineMax', 'TweenMax'], function ($, Backbone,
          **/
         _tutorialScreenLayout: function () {
             var self = this;
-            var offset, arrow, t1, t2, t3;
-            log('welcome screen layout...');
+            var arrow, t1;
+            arrow = $(Elements.APP_TUTORIAL).children().eq(7).clone();
+            t1 = $(Elements.TUTORIAL_ADD_SCREEN_LAYOUT).text();
+            self._animateArrow(arrow, 200, 200, undefined, undefined, undefined);
+            self._animateText(t1, 260, 330, undefined, 0);
         },
 
         /**
@@ -158,8 +196,11 @@ define(['jquery', 'backbone', 'TimelineMax', 'TweenMax'], function ($, Backbone,
          **/
         _tutorialScenes: function () {
             var self = this;
-            var offset, arrow, t1, t2, t3;
-            log('scenes...');
+            var arrow, t1;
+            arrow = $(Elements.APP_TUTORIAL).children().eq(7).clone();
+            t1 = $(Elements.TUTORIAL_SCENE).text();
+            self._animateArrow(arrow, 200, 150, undefined, undefined, undefined);
+            self._animateText(t1, 260, 280, undefined, 0);
         },
 
         /**
@@ -169,7 +210,26 @@ define(['jquery', 'backbone', 'TimelineMax', 'TweenMax'], function ($, Backbone,
         _tutorialScenesSelector: function () {
             var self = this;
             var offset, arrow, t1, t2, t3;
-            log('scenes selector...');
+
+            offset = $(Elements.NEW_SCENE).offset();
+            arrow = $(Elements.APP_TUTORIAL).children().eq(0).clone();
+            t1 = $(Elements.TUTORIAL_SCENE_LIST1).text();
+            t2 = $(Elements.TUTORIAL_SCENE_LIST2).text();
+            t3 = $(Elements.TUTORIAL_SCENE_LIST3).text();
+            self._animateArrow(arrow, offset.top + 45, offset.left + 185, undefined, 10, undefined);
+            self._animateText(t1 + '<br/>' + t2 + '<br/>' + t3, offset.top + 110, offset.left + 200, undefined, 3);
+
+            offset = $(Elements.CLASS_OPEN_PROPS_BUTTON + ':visible').eq(0).offset();
+            arrow = $(Elements.APP_TUTORIAL).children().eq(2).clone();
+            t1 = $(Elements.TUTORIAL_EDIT_SCENE_SETT).text();
+            self._animateArrow(arrow, offset.top + -30, offset.left + -30, undefined, undefined, undefined);
+            self._animateText(t1, offset.top + 76, offset.left + -20, undefined, 3);
+
+            offset = $(Elements.NEW_SCENE).eq(0).offset();
+            arrow = $(Elements.APP_TUTORIAL).children().eq(3).clone();
+            t1 = $(Elements.TUTORIAL_NEW_SCENE).text();
+            self._animateArrow(arrow, offset.top + 20, offset.left + -80, undefined, undefined, undefined);
+            self._animateText(t1, offset.top + 267, offset.left + -90, undefined, 3);
         },
 
         /**
@@ -178,8 +238,24 @@ define(['jquery', 'backbone', 'TimelineMax', 'TweenMax'], function ($, Backbone,
          **/
         _tutorialScreenLayoutEditor: function () {
             var self = this;
-            var offset, arrow, t1, t2, t3;
-            log('screen layout editor...');
+            var arrow, t1;
+            arrow = $(Elements.APP_TUTORIAL).children().eq(7).clone();
+            t1 = $(Elements.TUTORIAL_EDIT_SCREEN_LAYOUT).text();
+            self._animateArrow(arrow, 200, 150, undefined, undefined, undefined);
+            self._animateText(t1, 260, 280, undefined, 0);
+        },
+
+        /**
+         Animation help tutorial
+         @method _tutorialHelp
+         **/
+        _tutorialHelp: function () {
+            var self = this;
+            var arrow, t1;
+            arrow = $(Elements.APP_TUTORIAL).children().eq(9).clone();
+            t1 = $(Elements.TUTORIAL_HELP).text();
+            self._animateArrow(arrow, 230, 180, undefined, undefined, undefined);
+            self._animateText(t1, 260, 330, undefined, 0);
         },
 
         /**
@@ -188,8 +264,11 @@ define(['jquery', 'backbone', 'TimelineMax', 'TweenMax'], function ($, Backbone,
          **/
         _tutorialAddBlock: function () {
             var self = this;
-            var offset, arrow, t1, t2, t3;
-            log('add block...');
+            var arrow, t1;
+            arrow = $(Elements.APP_TUTORIAL).children().eq(7).clone();
+            t1 = $(Elements.TUTORIAL_ADD_BLOCK).text();
+            self._animateArrow(arrow, 200, 150, undefined, undefined, undefined);
+            self._animateText(t1, 260, 280, undefined, 0);
         },
 
         /**
@@ -198,8 +277,11 @@ define(['jquery', 'backbone', 'TimelineMax', 'TweenMax'], function ($, Backbone,
          **/
         _tutorialDefault: function () {
             var self = this;
-            var offset, arrow, t1, t2, t3;
-            log('default...');
+            var arrow, t1;
+            arrow = $(Elements.APP_TUTORIAL).children().eq(10).clone();
+            t1 = $(Elements.TUTORIAL_DEFAULT).text();
+            self._animateArrow(arrow, 225, 130, undefined, undefined, undefined);
+            self._animateText(t1, 260, 280, undefined, 0);
         },
 
         /**
@@ -263,13 +345,17 @@ define(['jquery', 'backbone', 'TimelineMax', 'TweenMax'], function ($, Backbone,
                         self.m_appSectionFunction = self._tutorialAddBlock;
                         break;
                     }
-                    case Elements.SETTINGS_PANEL:
+                    case Elements.HELP_PANEL:
                     {
+                        self.m_appSectionFunction = self._tutorialHelp;
+                        break;
                     }
                     case Elements.INSTALL_PANEL:
                     {
+                        self.m_appSectionFunction = self._tutorialInstallPanel;
+                        break;
                     }
-                    case Elements.HELP_PANEL:
+                    case Elements.SETTINGS_PANEL:
                     {
                     }
                     case Elements.LOGOUT_PANEL:
@@ -307,13 +393,13 @@ define(['jquery', 'backbone', 'TimelineMax', 'TweenMax'], function ($, Backbone,
             $('body').append(i_el);
             $(i_el).show();
             $(i_el).addClass('tutorialArrow');
-            if (_.random(0,1)){
+            if (_.random(0, 1)) {
                 $(i_el).addClass('tutorialEnterLeft');
             } else {
                 $(i_el).addClass('tutorialEnterRight');
             }
             self.m_delay = self.m_delay + 0.1;
-            TweenMax.to($(i_el), 2, {delay: self.m_delay , top: i_top, left: i_left, rotation: i_rotation, scale: i_scale, skewX: i_skewX, ease: 'Power4.easeOut'});
+            TweenMax.to($(i_el), 2, {delay: self.m_delay, top: i_top, left: i_left, rotation: i_rotation, scale: i_scale, skewX: i_skewX, ease: 'Power4.easeOut'});
         },
 
         /**
@@ -329,18 +415,18 @@ define(['jquery', 'backbone', 'TimelineMax', 'TweenMax'], function ($, Backbone,
         _animateText: function (i_text, i_top, i_left, i_scale, i_rotation, i_skewX) {
             var self = this;
             var txtID = _.uniqueId('tutText');
-            var txt = '<span id="' + txtID + '"> ' + i_text+ '</span>';
+            var txt = '<span id="' + txtID + '"> ' + i_text + '</span>';
             $('body').append(txt);
-            var i_el = $('#'+txtID);
+            var i_el = $('#' + txtID);
             $(i_el).show();
             $(i_el).addClass('tutorialText');
-            if (_.random(0,1)){
+            if (_.random(0, 1)) {
                 $(i_el).addClass('tutorialEnterLeft');
             } else {
                 $(i_el).addClass('tutorialEnterRight');
             }
             self.m_delay = self.m_delay + 0.2;
-            TweenMax.to($(i_el), 2, {delay: self.m_delay , top: i_top, left: i_left, rotation: i_rotation, scale: i_scale, skewX: i_skewX, ease: 'Power4.easeOut'});
+            TweenMax.to($(i_el), 2, {delay: self.m_delay, top: i_top, left: i_left, rotation: i_rotation, scale: i_scale, skewX: i_skewX, ease: 'Power4.easeOut'});
         },
 
         /**

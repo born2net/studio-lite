@@ -1189,7 +1189,7 @@ iframe {
     color: #ffffff;
     font-size: 2em;
     top: 0;
-    left: 5000px;
+    /* left: -5000px; */
     z-index: 999999;
     display: inline;
 }
@@ -1199,9 +1199,17 @@ iframe {
     height: 100px;
     position: absolute;
     top: 0;
-    left: 5000px;
+    /* left: -5000px; */
     z-index: 999999;
     display: inline;
+}
+
+.tutorialEnterLeft {
+    left: -1000px;
+}
+
+.tutorialEnterRight {
+    left: 3000px;
 }
 
 .off {

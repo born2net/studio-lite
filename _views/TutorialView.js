@@ -22,6 +22,10 @@ define(['jquery', 'backbone', 'TimelineMax', 'TweenMax'], function ($, Backbone,
             self._listenAppSized();
         },
 
+        /**
+         Remove live tutorial on app resize
+         @method _listenAppSized
+         **/
         _listenAppSized: function(){
             BB.comBroker.listen(BB.EVENTS.APP_SIZED, function(){
                 $('.tutorialArrow').remove();
@@ -30,6 +34,23 @@ define(['jquery', 'backbone', 'TimelineMax', 'TweenMax'], function ($, Backbone,
             });
         },
 
+        /**
+         Close live tuorial
+         @method _listenCloseTutorial
+         **/
+        _listenCloseTutorial: function () {
+            var self = this;
+            $(Elements.APP_TUTORIAL).one('click', function () {
+                $('.tutorialArrow').remove();
+                $('.tutorialText').remove();
+                $(Elements.APP_TUTORIAL).fadeOut();
+            });
+        },
+
+        /**
+         Load up live tutorial
+         @method _listenTutorialSelected
+         **/
         _listenTutorialSelected: function () {
             var self = this;
             $(self.el).on('click', function () {
@@ -37,6 +58,10 @@ define(['jquery', 'backbone', 'TimelineMax', 'TweenMax'], function ($, Backbone,
             });
         },
 
+        /**
+         Animation campaign tutorial
+         @method _tutorialCampaign
+         **/
         _tutorialCampaign: function () {
             var self = this;
             var offset, arrow, t1, t2, t3;
@@ -69,15 +94,10 @@ define(['jquery', 'backbone', 'TimelineMax', 'TweenMax'], function ($, Backbone,
             },500);
         },
 
-        _listenCloseTutorial: function () {
-            var self = this;
-            $(Elements.APP_TUTORIAL).one('click', function () {
-                $('.tutorialArrow').remove();
-                $('.tutorialText').remove();
-                $(Elements.APP_TUTORIAL).fadeOut();
-            });
-        },
-
+        /**
+         Animation campaign selector tutorial
+         @method _tutorialCampaign
+         **/
         _tutorialCampaignSelector: function () {
             var self = this;
             var offset, arrow, t1, t2;
@@ -102,46 +122,90 @@ define(['jquery', 'backbone', 'TimelineMax', 'TweenMax'], function ($, Backbone,
             self._animateText(t1, offset.top + 267, offset.left + -90, undefined, 3);
         },
 
+        /**
+         Animation stations tutorial
+         @method _tutorialCampaign
+         **/
         _tutorialStations: function () {
             var self = this;
+            var offset, arrow, t1, t2, t3;
             log('welcome to stations...');
         },
 
+        /**
+         Animation resource tutorial
+         @method _tutorialCampaign
+         **/
         _tutorialResourcePanel: function () {
             var self = this;
+            var offset, arrow, t1, t2, t3;
             log('welcome to resource panel...');
         },
 
+        /**
+         Animation screen layout tutorial
+         @method _tutorialCampaign
+         **/
         _tutorialScreenLayout: function () {
             var self = this;
+            var offset, arrow, t1, t2, t3;
             log('welcome screen layout...');
         },
 
+        /**
+         Animation scenes tutorial
+         @method _tutorialCampaign
+         **/
         _tutorialScenes: function () {
             var self = this;
+            var offset, arrow, t1, t2, t3;
             log('scenes...');
         },
 
+        /**
+         Animation scene selector tutorial
+         @method _tutorialCampaign
+         **/
         _tutorialScenesSelector: function () {
             var self = this;
+            var offset, arrow, t1, t2, t3;
             log('scenes selector...');
         },
 
+        /**
+         Animation screen layout editor tutorial
+         @method _tutorialCampaign
+         **/
         _tutorialScreenLayoutEditor: function () {
             var self = this;
+            var offset, arrow, t1, t2, t3;
             log('screen layout editor...');
         },
 
+        /**
+         Animation add new block tutorial
+         @method _tutorialCampaign
+         **/
         _tutorialAddBlock: function () {
             var self = this;
+            var offset, arrow, t1, t2, t3;
             log('add block...');
         },
 
+        /**
+         Animation tutorial when no specific exists
+         @method _tutorialCampaign
+         **/
         _tutorialDefault: function () {
             var self = this;
+            var offset, arrow, t1, t2, t3;
             log('default...');
         },
 
+        /**
+         Listen to changes in StackView selection so we can bind to appropriate tutorial per current StackView selection
+         @method _tutorialCampaign
+         **/
         _listenViewStacks: function () {
             var self = this;
             BB.comBroker.listen(BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
@@ -228,15 +292,40 @@ define(['jquery', 'backbone', 'TimelineMax', 'TweenMax'], function ($, Backbone,
             });
         },
 
+        /**
+         Animate arrow movement to x y offset
+         @method _animateArrow
+         @param {Object} i_el
+         @param {Number} i_top
+         @param {Number} i_left
+         @param {Number} i_scale
+         @param {Number} i_rotation
+         @param {Number} i_skewX
+         **/
         _animateArrow: function (i_el, i_top, i_left, i_scale, i_rotation, i_skewX) {
             var self = this;
             $('body').append(i_el);
             $(i_el).show();
             $(i_el).addClass('tutorialArrow');
+            if (_.random(0,1)){
+                $(i_el).addClass('tutorialEnterLeft');
+            } else {
+                $(i_el).addClass('tutorialEnterRight');
+            }
             self.m_delay = self.m_delay + 0.1;
             TweenMax.to($(i_el), 2, {delay: self.m_delay , top: i_top, left: i_left, rotation: i_rotation, scale: i_scale, skewX: i_skewX, ease: 'Power4.easeOut'});
         },
 
+        /**
+         Animate text movement to x y offset
+         @method _animateArrow
+         @param {String} i_el
+         @param {Number} i_top
+         @param {Number} i_left
+         @param {Number} i_scale
+         @param {Number} i_rotation
+         @param {Number} i_skewX
+         **/
         _animateText: function (i_text, i_top, i_left, i_scale, i_rotation, i_skewX) {
             var self = this;
             var txtID = _.uniqueId('tutText');
@@ -245,10 +334,19 @@ define(['jquery', 'backbone', 'TimelineMax', 'TweenMax'], function ($, Backbone,
             var i_el = $('#'+txtID);
             $(i_el).show();
             $(i_el).addClass('tutorialText');
+            if (_.random(0,1)){
+                $(i_el).addClass('tutorialEnterLeft');
+            } else {
+                $(i_el).addClass('tutorialEnterRight');
+            }
             self.m_delay = self.m_delay + 0.2;
             TweenMax.to($(i_el), 2, {delay: self.m_delay , top: i_top, left: i_left, rotation: i_rotation, scale: i_scale, skewX: i_skewX, ease: 'Power4.easeOut'});
         },
 
+        /**
+         Load currently selected tutorial per StackView selection
+         @method _loadTutorial
+         **/
         _loadTutorial: function () {
             var self = this;
             $(Elements.APP_TUTORIAL).fadeTo('slow', 0.7);

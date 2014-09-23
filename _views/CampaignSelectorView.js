@@ -244,6 +244,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         setSelectedCampaign: function (i_campaign_id) {
             var self = this;
             self.m_selectedCampaignID = i_campaign_id;
+            self._loadCampaignList();
         }
     });
 

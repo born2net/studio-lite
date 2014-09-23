@@ -37,7 +37,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @method _render
          **/
         _render: function () {
-            log('aaaaaaaaa');
             var self = this;
             $(Elements.SCENE_SELECTOR_LIST).empty();
             var scenenames = BB.Pepper.getSceneNames();

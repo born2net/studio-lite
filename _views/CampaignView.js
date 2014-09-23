@@ -271,6 +271,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
         _listenBackToCampaigns: function () {
             var self = this;
             $(Elements.BACK_TO_CAMPAIGNS).on('click', function () {
+                BB.comBroker.getService(BB.SERVICES.CAMPAIGN_SELECTOR).setSelectedCampaign(-1);
                 BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
                 self.options.stackView.slideToPage(Elements.CAMPAIGN_SELECTOR, 'left');
             });

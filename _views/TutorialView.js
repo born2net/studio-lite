@@ -86,6 +86,8 @@ define(['jquery', 'backbone', 'TimelineMax', 'TweenMax'], function ($, Backbone,
                 setTimeout(function () {
                     offset = $(Elements.SORTABLE).offset();
                     var w = $(Elements.CLASS_CHANNEL_LIST_ITEMS).width();
+                    if (_.isNull(w))
+                        return;
                     arrow = $(Elements.APP_TUTORIAL).children().eq(5).clone();
                     t1 = $(Elements.TUTORIAL_CONTENT).text();
                     self._animateArrow(arrow, offset.top + -100, offset.left + w, undefined, 10, undefined);
@@ -299,7 +301,13 @@ define(['jquery', 'backbone', 'TimelineMax', 'TweenMax'], function ($, Backbone,
                     }
                     case Elements.CAMPAIGN_MANAGER_VIEW:
                     {
-                        self.m_appSectionFunction = self._tutorialCampaignSelector;
+                        if (!BB.SERVICES.CAMPAIGN_SELECTOR)
+                            return;
+                        if (BB.comBroker.getService(BB.SERVICES.CAMPAIGN_SELECTOR).getSelectedCampaign() == -1) {
+                            self.m_appSectionFunction = self._tutorialCampaignSelector;
+                        } else {
+                            self.m_appSectionFunction = self._tutorialCampaign;
+                        }
                         break;
                     }
                     case Elements.RESOURCES_PANEL:

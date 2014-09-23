@@ -11,9 +11,9 @@ cp -r -f ../../_studiolite-dev/ ../../_studiolite-bk/
 /var/www/sites/dynasite/htdocs/_msportal/_js/_node/localization/importLite_en.js
 
 ### minify ###
-# r.js -o app.build.js
+r.js -o app.build.js
 ### non minify ###
-cp -r -f ../../_studiolite-dev/ ../../_studiolite-dist/
+# cp -r -f ../../_studiolite-dev/ ../../_studiolite-dist/
 
 ### final source file changes ###
 ./presetDist.js

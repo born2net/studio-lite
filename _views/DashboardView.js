@@ -306,7 +306,7 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
         _renderTotalCloudStorage: function () {
             var self = this;
             var bytesTotal = 0;
-            var totalCapacity = pepper.getUserData().resellerID == 1 ? 1000 : 10000;
+            var totalCapacity = pepper.getUserData().resellerID == 1 ? 1000 : 25000;
             $(Elements.CLOUD_STORAGE_CAPACITY).text(totalCapacity / 1000 + 'GB');
             var recResources = pepper.getResources();
             $(recResources).each(function (i) {

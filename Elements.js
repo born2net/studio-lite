@@ -50,6 +50,7 @@ Elements.BOOTBOX_LABEL_TEXT = '#bootBoxLabelText';
 Elements.BOOTBOX_PROFILE_IMAGE = '#bootBoxProfileImage';
 Elements.BOOTBOX_MOST_VIEWED = '#bootBoxMostViewed';
 Elements.BOOTBOX_SELECT_SCENE = '#bootBoxSelectScene';
+Elements.BOOTBOX_SUPPORTED_EXTENSIONS = '#booxboxSupportedExtensions';
 Elements.BS_MODAL = '#bsModal';
 Elements.BUISINESS_ID = '#buisinessID';
 Elements.CAMPAIGN = '#campaign';

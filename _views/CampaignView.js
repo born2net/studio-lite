@@ -93,7 +93,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             self._listenTimelineLengthChanged();
             self._listenCampaignExpandedView();
 
-            // pepper.getCampaignsSchedules();
+            pepper.getCampaignsSchedules();
         },
 
         /**

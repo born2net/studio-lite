@@ -1368,10 +1368,8 @@ Pepper.prototype = {
      **/
     getCampaignsSchedules: function(){
         var self = this;
-        var a = self.m_msdb.table_campaign_timeline_schedules();
-        log(a);
         $(self.m_msdb.table_campaign_timeline_schedules().getAllPrimaryKeys()).each(function (k, campaign_timeline_schedule_id) {
-            log(k + ' ' + campaign_timeline_schedule_id);
+            var recCampaignTimelineSchedule = self.m_msdb.table_campaign_timeline_schedules().getRec(campaign_timeline_schedule_id);
         });
     },
 
@@ -1954,10 +1952,20 @@ Pepper.prototype = {
      The element id is of an HTML id of a multi-part upload element.
      @method uploadResources
      @param {String} i_elementID
-     @return {Array} list of resources created from newly attached files
+     @return {Array} list of resources created from newly attached files or empty array if not valid resource loaded
      **/
     uploadResources: function (i_elementID) {
         var self = this;
+        var i_uploadFileElement = document.getElementById(i_elementID);
+        var count = i_uploadFileElement.files.length;
+        for(var iFile=0; iFile<count; iFile++)
+        {
+            var fileName = i_uploadFileElement.files[iFile];
+            var fileExtension = fileName.name.split('.')[1];
+            var block = BB.PepperHelper.getBlockCodeFromFileExt(fileExtension);
+            if (block == -1)
+                return [];
+        }
         var resourceList = self.m_loaderManager.createResources(document.getElementById(i_elementID));
         BB.comBroker.fire(BB.EVENTS.ADDED_RESOURCE);
         return resourceList;

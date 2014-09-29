@@ -155,11 +155,16 @@ define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backb
         /**
          On selecting new resources through multi-upload from local machine.
          @method _onFileSelected
-         @return none
+         @return {number} -1 on fail or 1 on pass
          **/
         _onFileSelected: function (e) {
             var self = this;
-            pepper.uploadResources('file');
+            var status = pepper.uploadResources('file');
+            if (status.length==0){
+                bootbox.alert($(Elements.BOOTBOX_SUPPORTED_EXTENSIONS).text());
+                return -1;
+            }
+
             self.render();
             self._listenResourceSelected();
             self._listenRemoveResource();
@@ -170,6 +175,7 @@ define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backb
             setTimeout(function() {
                 bootbox.hideAll();
             }, 3000);
+            return 1;
         },
 
 

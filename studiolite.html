@@ -15,10 +15,25 @@
     <link href="_common/_js/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="_common/_js/video/video-js.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
+    <!--SDK_START-->
     <script src="https://js.signage.me/SignageSDK.js" type="text/javascript"></script>
+    <!--SDK_END-->
+
+    <!--SERVER_START
+    <script type="text/javascript">
+        var origin = window.location.origin;
+        var re = new RegExp(/^(https|http):\/\/(.*)/);
+        var protocol = origin.match(re)[1];
+        var server = origin.match(re)[2];
+        window.g_protocol = protocol + "://";
+        window.g_sdkDomain = "js.signage.me";
+        window.g_masterDomain = server;
+        document.write('<script type="text/javascript" src="' + window.g_protocol + window.g_sdkDomain + '/SignageSDK.js"></scr' + 'ipt>');
+    </script>
+    SERVER_END-->
+
     <script data-main="init" src="_common/_js/requirejs/require.js" type="text/javascript"></script>
     <script src="_utils/bugsense.min.js" type="text/javascript"></script>
-
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
@@ -75,7 +90,8 @@
         <ul class="nav navbar-nav navbar-right">
             <li><a id="saveConfig" href="#"><i class="faHeader fa fa-save"></i></a></li>
             <li><a class="reshid" id="liveChat" href="#"><i class="faHeader fa fa-comments-o"></i></a></li>
-            <li><a class="hidden-xs hidden-sm hidden-md" id="liveTutorial" href="#"><i class="faHeader fa fa-question-circle "></i></a></li>
+            <li><a class="hidden-xs hidden-sm hidden-md" id="liveTutorial" href="#"><i
+                    class="faHeader fa fa-question-circle "></i></a></li>
             <li><a id="languagePrompt" href="#"><i class="faHeader fa fa-globe"></i></a></li>
             <li style="padding-right: 20px"><a id="dashboard" href="#"><i class="faHeader fa fa-dashboard"></i></a></li>
         </ul>
@@ -342,7 +358,8 @@
                                             <li><a tabindex="-1" name="first" data-localize="moveFirst">move to
                                                 first</a></li>
                                             <li><a tabindex="-1" name="last" data-localize="moveLast">move to last</a>
-                                            <li><a tabindex="-1" name="firstChannel" data-localize="firstChannel">first channel</a></li>
+                                            <li><a tabindex="-1" name="firstChannel" data-localize="firstChannel">first
+                                                channel</a></li>
                                         </ul>
                                     </div>
                                     <hr class="dottedHR">
@@ -608,7 +625,8 @@
                     </div>
                 </div>
             </div>
-            <div id="sceneCanvasContainer" data-toggle="context" data-target="#sceneContextMenu" class="yScroll context sceneElements" style=" overflow-x: visible" align="center"></div>
+            <div id="sceneCanvasContainer" data-toggle="context" data-target="#sceneContextMenu"
+                 class="yScroll context sceneElements" style=" overflow-x: visible" align="center"></div>
             <div id="sceneContextMenu">
                 <ul id="sceneContext" class="dropdown-menu" role="menu">
                     <li><a tabindex="-1" class="blocksOnly" name="cut" data-localize="cut">cut</a></li>
@@ -1011,8 +1029,10 @@
 
 </div>
 <div id="campaignProperties" style="display: none">
-    <input id="formCampaignName" type="text" data-localize="campaignName" class="form-control" placeholder="Campaign name">
+    <input id="formCampaignName" type="text" data-localize="campaignName" class="form-control"
+           placeholder="Campaign name">
     <hr class="hrThin"/>
+    <!-- todo
     <label id="campaignModeLabel" data-localize="campaignModeLabel">Campaign playback mode:</label>
     <button id="campaignModeSequencer" name="campaignModeSequencer" data-localize="campaignModeScheduler" type="button" class="campaignPlayMode btn btn-default"><span class="fa fa-repeat"></span></button>
     <button id="campaignModeScheduler" name="campaignModeScheduler" data-localize="campaignModeSequencer" type="button" class="campaignPlayMode btn btn-default"><span class="fa fa-calendar"></span></button>
@@ -1021,6 +1041,7 @@
     <br/>
     <br/>
     <p id="campaignModeDescription" data-localize="campaignModeDescription"></p>
+    -->
 </div>
 <div id="sceneSelectionProperties" style="display: none">
     <input id="formSceneName" type="text" data-localize="sceneName" class="form-control"
@@ -1031,8 +1052,10 @@
     <label id="timelineLength" style="text-align: right"><span data-localize="lenght">Length</span>: 00:00:00</label>
     <hr/>
     <div data-role="fieldcontain" data-inset="true" style="width:99%;">
-        <input type="text" name="name" id="timeLinePropTitleID" value="" placeholder="Timeline Title" data-localize="timelineTitle">
+        <input type="text" name="name" id="timeLinePropTitleID" value="" placeholder="Timeline Title"
+               data-localize="timelineTitle">
         <hr class="hrThin"/>
+        <!--  todo
         <div>
             <aside>
                 <i style="color: gray" class="fa fa-repeat"></i>
@@ -1044,6 +1067,7 @@
             </aside>
         </div>
         <input style="margin-top: 20px" type="text" name="start_time" class="timepickerDayDuration" placeholder="hh:mm:ss" data-default-time="false">
+        -->
     </div>
     <hr/>
 </div>
@@ -1064,7 +1088,9 @@
 </div>
 <div id="resourceListProperties" style="display: none">
     <h5 data-localize="resProps">resource properties</h5>
-    <input id="selectedLibResourceName" type="text" name="name" value="" data-localize="enterResName"  placeholder="Enter resource name">
+    <input id="selectedLibResourceName" type="text" name="name" value="" data-localize="enterResName"
+           placeholder="Enter resource name">
+
     <div>
         <div id="resourcePreviewImage" style="display: none">
             <img id="imgPreview" src="" class="centerElement"/>
@@ -1149,324 +1175,340 @@
 <div class="tab-content">
 <div id="blockSubProperties" class="noTopBorder tab-pane active panel panel-default yScroll"
      style="height: 100px;">
-    <div class="panel-body">
-        <div id="blockImageCommonProperties" style="display: none">
-            <label for="imageAspectRatio" data-localize="aspectRatio">Aspect ratio</label>
-            <select id="imageAspectRatio" name="Aspect ratio" data-role="slider">
-                <option value="off" data-localize="off">Off</option>
-                <option value="on" data-localize="on">On</option>
-            </select>
-        </div>
-        <div id="blockVideoCommonProperties" style="display: none">
-            <span data-localize="volumeLevel">Volume level</span> <span id="videoVolumeLabel">100</span>
+<div class="panel-body">
+<div id="blockImageCommonProperties" style="display: none">
+    <label for="imageAspectRatio" data-localize="aspectRatio">Aspect ratio</label>
+    <select id="imageAspectRatio" name="Aspect ratio" data-role="slider">
+        <option value="off" data-localize="off">Off</option>
+        <option value="on" data-localize="on">On</option>
+    </select>
+</div>
+<div id="blockVideoCommonProperties" style="display: none">
+    <span data-localize="volumeLevel">Volume level</span> <span id="videoVolumeLabel">100</span>
 
-            <div id="videoVolumeWrap" class="propControlWidth">
-                <div id="videoVolumeWrapSlider"
-                     class="noUi-target noUi-ltr noUi-horizontal noUi-background"></div>
-            </div>
-            <div class="checkbox">
-                <label>
-                    <input id="videoAutoRewind" type="checkbox">
-                    <span data-localize="autoRewind"> Auto rewind</span> </label>
-            </div>
-            <div class="checkbox">
-                <label>
-                    <input id="videoAspectRatio" type="checkbox">
-                    <span data-localize="aspectRatio"> Aspect ratio</span> </label>
-            </div>
-        </div>
-        <div id="blockRSSCommonProperties" style="display: none">
-            <hr class="hrThin"/>
-            <span data-localize="rssNewsSource">RSS news source</span>
-            <select id="rssSource" class="propControlWidth form-control">
-            </select>
+    <div id="videoVolumeWrap" class="propControlWidth">
+        <div id="videoVolumeWrapSlider"
+             class="noUi-target noUi-ltr noUi-horizontal noUi-background"></div>
+    </div>
+    <div class="checkbox">
+        <label>
+            <input id="videoAutoRewind" type="checkbox">
+            <span data-localize="autoRewind"> Auto rewind</span> </label>
+    </div>
+    <div class="checkbox">
+        <label>
+            <input id="videoAspectRatio" type="checkbox">
+            <span data-localize="aspectRatio"> Aspect ratio</span> </label>
+    </div>
+</div>
+<div id="blockRSSCommonProperties" style="display: none">
+    <hr class="hrThin"/>
+    <span data-localize="rssNewsSource">RSS news source</span>
+    <select id="rssSource" class="propControlWidth form-control">
+    </select>
 
-            <div>
-                <div data-role="fieldcontain" data-inset="true">
-                    <input id="rssLink" type="text" name="name" class="propControlWidth" value=""
-                           placeholder="Enter RSS Link Text" data-localize="EnterRSSLink" style="display: none">
-                </div>
-            </div>
-            <hr class="hrThin"/>
-            <span data-localize="rssRefreash">RSS refresh timer (minutes)</span>
-
-            <div id="rssPollSpinner" class="spinner">
-                <input id="rssMinRefreshTime" type="text" class="input-mini spinner-input">
-
-                <div class="spinner-buttons	btn-group btn-group-vertical">
-                    <button type="button" class="squareButton btn spinner-up"><i class="fa fa-chevron-up"></i>
-                    </button>
-                    <button type="button" class="squareButton btn spinner-down"><i
-                            class="fa fa-chevron-down"></i></button>
-                </div>
-            </div>
-            <div style="clear: both"></div>
-            <hr class="hrThin"/>
-            <span data-localize="rsscroll">RSS scroll direction</span>
-            <select id="rssModeSelect" class="propControlWidth form-control">
-                <option data-localize="horizontalMode">Horizontal mode</option>
-                <option data-localize="verticalMode">Vertical mode</option>
-            </select>
-            <hr class="hrThin"/>
-            <span data-localize="scrollSpeed">Scroll speed</span>
-            <select id="rssScrollSpeed" class="propControlWidth form-control">
-                <option data-localize="slow">Slow</option>
-                <option data-localize="medium">Medium</option>
-                <option data-localize="fast">Fast</option>
-            </select>
-            <hr class="hrThin"/>
-            <span data-localize="font">Font</span>
-
-            <div id="rssFontSettings"></div>
-            <hr class="hrThin"/>
-        </div>
-        <div id="blockMRSSCommonProperties" style="display: none">
-            <hr class="hrThin"/>
-            <span data-localize="rssNewsSource">RSS news source</span>
-            <select id="mrssSource" class="propControlWidth form-control">
-            </select>
-
-            <div>
-                <div data-role="fieldcontain" data-inset="true">
-                    <input id="mrssLink" type="text" name="name" class="propControlWidth" value=""
-                           placeholder="Enter RSS Link Text" data-localize="EnterRSSLink" style="display: none">
-                </div>
-                <div class="checkbox">
-                    <label>
-                        <input id="mrssAspectRatio" type="checkbox">
-                        <span data-localize="maintainAR"> Maintain aspect ratio</span> </label>
-                </div>
-            </div>
-        </div>
-        <div id="blockSceneCommonProperties" style="display: none"><span>Scene properties</span>
-
-            <div data-role="fieldcontain" data-inset="true">
-                <input id="sceneNameInput" type="text" name="name" value="" placeholder="Scene name"
-                       data-localize="enterSceneText">
-            </div>
-            <div data-role="fieldcontain" data-inset="true">
-                <input id="sceneWidthInput" type="text" name="name" value="" placeholder="Scene width"
-                       data-localize="enterSceneWidth">
-            </div>
-            <div data-role="fieldcontain" data-inset="true">
-                <input id="sceneHeightInput" type="text" name="name" value="" placeholder="Scene height"
-                       data-localize="enterSceneHeight">
-            </div>
-
-            <div>
-                <a id="dimensionApplyScene" class="btnPrice btn-primary btn btn-default" href="#" type="button"
-                   data-localize="applyChanges">
-                    apply changes
-                </a>
-            </div>
-        </div>
-        <div id="blockQRCommonProperties" style="display: none"><span>QR</span>
-            <div data-role="fieldcontain" data-inset="true">
-                <input type="text" name="name" id="qrText" value=""
-                       placeholder="Enter QR Text" data-localize="enterQRText">
-            </div>
-        </div>
-        <div id="blockYouTubeCommonProperties" style="display: none">
-            <span data-localize="volumeLevel">Volume level</span> <span id="youtubeVolumeLabel">100</span>
-            <div id="youtubeVolumeWrap" class="propControlWidth">
-                <div id="youtubeVolumeWrapSlider" class="noUi-target noUi-ltr noUi-horizontal noUi-background"></div>
-            </div>
-            <hr class="propControlWidth"/>
-            <span data-localize="videoQuality">video quality</span>
-            <div id="youtubeQualityMeter"></div>
-            <hr class="propControlWidth"/>
-
-            <div id="youtubeList">
-                <span data-localize="YouTubePlaylist">YouTube playlist</span>
-                <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                        <span id="youtubeMostViewed" data-localize="mostViewed">Most viewed</span>
-                        <span class="caret"></span>
-                    </button>
-                    <ul id="youtubeListDropDown" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                        <li><a name="most_viewed" data-localize="mostViewed" role="menuitem" tabindex="-1" href="#">Most viewed</a></li>
-                        <li><a name="manually" data-localize="customList" role="menuitem" tabindex="-1" href="#">Custom list</a></li>
-                    </ul>
-                    <button id="youtubeListAdd" type="button"
-                            title="add video id" data-localize="empty"
-                            data-localize-tooltip="addVideoId"
-                            class="btn btn-default btn-sm"><span
-                            class="glyphicon glyphicon-plus"></span></button>
-                </div>
-
-                <br/>
-                <div id="youtubeListType">
-                    <div id="youtubeMostViewedList">
-                        <div class="dropdown">
-                            <button class="btn btn-default dropdown-toggle" type="button"  data-toggle="dropdown">
-                                <span id="youtubeCountry" data-localize="worldRegion">World region</span>
-                                <span class="caret"></span>
-                            </button>
-                            <ul id="youtubeCountryListDropDown" class="dropdown-menu" style="min-width: 30px" role="menu" aria-labelledby="dropdownMenu1">
-                                <li class="youtubeFlag" name="US"><a href="#"><img src="_assets/flags/us.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="AR"><a href="#"><img src="_assets/flags/ar.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="AU"><a href="#"><img src="_assets/flags/au.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="AT"><a href="#"><img src="_assets/flags/at.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="BE"><a href="#"><img src="_assets/flags/be.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="BR"><a href="#"><img src="_assets/flags/br.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="CA"><a href="#"><img src="_assets/flags/ca.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="CL"><a href="#"><img src="_assets/flags/cl.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="CO"><a href="#"><img src="_assets/flags/co.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="CZ"><a href="#"><img src="_assets/flags/cz.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="EG"><a href="#"><img src="_assets/flags/eg.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="FR"><a href="#"><img src="_assets/flags/fr.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="DE"><a href="#"><img src="_assets/flags/de.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="GB"><a href="#"><img src="_assets/flags/gb.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="HK"><a href="#"><img src="_assets/flags/hk.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="HU"><a href="#"><img src="_assets/flags/hu.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="IN"><a href="#"><img src="_assets/flags/in.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="IE"><a href="#"><img src="_assets/flags/ie.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="IL"><a href="#"><img src="_assets/flags/il.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="IT"><a href="#"><img src="_assets/flags/it.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="JP"><a href="#"><img src="_assets/flags/jp.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="JO"><a href="#"><img src="_assets/flags/jo.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="MY"><a href="#"><img src="_assets/flags/my.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="MX"><a href="#"><img src="_assets/flags/mx.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="MA"><a href="#"><img src="_assets/flags/ma.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="NL"><a href="#"><img src="_assets/flags/nl.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="NZ"><a href="#"><img src="_assets/flags/nz.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="PE"><a href="#"><img src="_assets/flags/pe.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="PH"><a href="#"><img src="_assets/flags/ph.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="PL"><a href="#"><img src="_assets/flags/pl.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="RU"><a href="#"><img src="_assets/flags/ru.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="SA"><a href="#"><img src="_assets/flags/sa.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="SG"><a href="#"><img src="_assets/flags/sg.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="ZA"><a href="#"><img src="_assets/flags/za.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="KR"><a href="#"><img src="_assets/flags/kr.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="ES"><a href="#"><img src="_assets/flags/es.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="SE"><a href="#"><img src="_assets/flags/se.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="CH"><a href="#"><img src="_assets/flags/ch.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="TW"><a href="#"><img src="_assets/flags/tw.png" alt=""/></a></li>
-                                <li class="youtubeFlag" name="AE"><a href="#"><img src="_assets/flags/ae.png" alt=""/></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div id="youtubeCustomList"  style="display: none">
-                        <span data-localize="customVideoList">Custom video list</span>
-                        <div id="youttubeVideoIDs">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="blockTwitterCommonProperties" style="display: none">
-            <span data-localize="twitterScreenName">Twitter screen name</span>
-            <input type="text" name="name" id="twitterScreenInput" value="" placeholder="like CNN...">
-            <div>
-                <br/>
-                <span data-localize="loadWithScene">Load with scene</span>
-                <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                        <span id="twitterSceneList" data-localize="selectSceneName">select scene</span>
-                        <span class="caret"></span>
-                    </button>
-                    <ul id="twitterDropDown" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                    </ul>
-                </div>
-                <br/>
-                <span data-localize="Interval" style="float: left; display: block">Interval</span><br/>
-                <div class="spinner spinnerDimHeight">
-                    <input id="twitterIntervalInput" type="text" style="width: 60px" class="input-mini spinner-input">
-                    <div name="height" class="spinner-buttons btn-group btn-group-vertical">
-                        <button type="button" name="fontSizeUp" class="squareButton btn spinner-up"><i
-                                class="fa fa-chevron-up"></i></button>
-                        <button type="button" name="fontSizeDown" class="squareButton btn spinner-down"><i
-                                class="fa fa-chevron-down"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="blockTwitterItemCommonProperties" style="display: none">
-            <div>
-                <span data-localize="twitterItem">Twitter item</span>
-                <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                        <span id="twitterItemTypeSelect" data-localize="labelText">Label text</span>
-                        <span class="caret"></span>
-                    </button>
-                    <ul id="twitterItemDropDown" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                        <li><a name="text" data-localize="labelText" role="menuitem" tabindex="-1" href="#">Label text</a></li>
-                        <li><a name="resource" data-localize="profileImage" role="menuitem" tabindex="-1" href="#">Profile Image</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div id="twitterItemLabel" style="display: none">
-                <br/>
-                <span data-localize="font">Font</span>
-                <div id="twitterFontSettings">
-                </div>
-            </div>
-        </div>
-        <div id="blockHTMLCommonProperties" style="display: none"><span
-                data-localize="webAddr">Web address</span>
-
-            <div data-role="fieldcontain" data-inset="true">
-                <input type="text" name="name" id="htmlText" value="" placeholder="http://...">
-            </div>
-        </div>
-        <div id="blockExtImageCommonProperties" style="display: none"><span
-                data-localize="urlAddr">URL address</span>
-
-            <div data-role="fieldcontain" data-inset="true">
-                <input type="text" name="name" id="extImageText" value="" placeholder="http://...">
-            </div>
-        </div>
-        <div id="blockExtVideoCommonProperties" style="display: none"><span
-                data-localize="urlAddr">URL address</span>
-
-            <div data-role="fieldcontain" data-inset="true">
-                <input type="text" name="name" id="extVideoText" value="" placeholder="http://...">
-            </div>
-        </div>
-        <div id="blockLabelCommonProperties" style="display: none"><span data-localize="labelText">Label text</span>
-
-            <div data-role="fieldcontain" data-inset="true">
-                <textarea id="labelText" class="span8 propControlWidth" rows="3" placeholder="enter text here"
-                          data-localize="enterText">
-                </textarea>
-            </div>
-
-            <hr class="propControlWidth"/>
-            <div id="labelFontSettings"></div>
-        </div>
-        <div id="blockClockCommonProperties" style="display: none"><span
-                data-localize="chooseFormat">Choose format</span>
-
-            <div class="radio">
-                <label>
-                    <input type="radio" name="clockRadioOpts" value="longDateAndTime" checked>
-                    <span><small>Friday, Mar 21 2014 at 8:59AM</small></span> </label>
-            </div>
-            <div class="radio">
-                <label>
-                    <input type="radio" name="clockRadioOpts" value="longDate" checked>
-                    <span><small>Friday, Mar 21 2014</small></span> </label>
-            </div>
-            <div class="radio">
-                <label>
-                    <input type="radio" name="clockRadioOpts" value="shortDayTime" checked>
-                    <span><small>Friday 9:10 AM</small></span> </label>
-            </div>
-            <div class="radio">
-                <label>
-                    <input type="radio" name="clockRadioOpts" value="date" checked>
-                    <span><small>3/21/14</small></span> </label>
-            </div>
-            <div class="radio">
-                <label>
-                    <input type="radio" name="clockRadioOpts" value="time" checked>
-                    <span><small>9:00:39 AM</small></span> </label>
-            </div>
-            <hr class="propControlWidth"/>
-            <div id="clockFontSettings"></div>
+    <div>
+        <div data-role="fieldcontain" data-inset="true">
+            <input id="rssLink" type="text" name="name" class="propControlWidth" value=""
+                   placeholder="Enter RSS Link Text" data-localize="EnterRSSLink" style="display: none">
         </div>
     </div>
+    <hr class="hrThin"/>
+    <span data-localize="rssRefreash">RSS refresh timer (minutes)</span>
+
+    <div id="rssPollSpinner" class="spinner">
+        <input id="rssMinRefreshTime" type="text" class="input-mini spinner-input">
+
+        <div class="spinner-buttons	btn-group btn-group-vertical">
+            <button type="button" class="squareButton btn spinner-up"><i class="fa fa-chevron-up"></i>
+            </button>
+            <button type="button" class="squareButton btn spinner-down"><i
+                    class="fa fa-chevron-down"></i></button>
+        </div>
+    </div>
+    <div style="clear: both"></div>
+    <hr class="hrThin"/>
+    <span data-localize="rsscroll">RSS scroll direction</span>
+    <select id="rssModeSelect" class="propControlWidth form-control">
+        <option data-localize="horizontalMode">Horizontal mode</option>
+        <option data-localize="verticalMode">Vertical mode</option>
+    </select>
+    <hr class="hrThin"/>
+    <span data-localize="scrollSpeed">Scroll speed</span>
+    <select id="rssScrollSpeed" class="propControlWidth form-control">
+        <option data-localize="slow">Slow</option>
+        <option data-localize="medium">Medium</option>
+        <option data-localize="fast">Fast</option>
+    </select>
+    <hr class="hrThin"/>
+    <span data-localize="font">Font</span>
+
+    <div id="rssFontSettings"></div>
+    <hr class="hrThin"/>
+</div>
+<div id="blockMRSSCommonProperties" style="display: none">
+    <hr class="hrThin"/>
+    <span data-localize="rssNewsSource">RSS news source</span>
+    <select id="mrssSource" class="propControlWidth form-control">
+    </select>
+
+    <div>
+        <div data-role="fieldcontain" data-inset="true">
+            <input id="mrssLink" type="text" name="name" class="propControlWidth" value=""
+                   placeholder="Enter RSS Link Text" data-localize="EnterRSSLink" style="display: none">
+        </div>
+        <div class="checkbox">
+            <label>
+                <input id="mrssAspectRatio" type="checkbox">
+                <span data-localize="maintainAR"> Maintain aspect ratio</span> </label>
+        </div>
+    </div>
+</div>
+<div id="blockSceneCommonProperties" style="display: none"><span>Scene properties</span>
+
+    <div data-role="fieldcontain" data-inset="true">
+        <input id="sceneNameInput" type="text" name="name" value="" placeholder="Scene name"
+               data-localize="enterSceneText">
+    </div>
+    <div data-role="fieldcontain" data-inset="true">
+        <input id="sceneWidthInput" type="text" name="name" value="" placeholder="Scene width"
+               data-localize="enterSceneWidth">
+    </div>
+    <div data-role="fieldcontain" data-inset="true">
+        <input id="sceneHeightInput" type="text" name="name" value="" placeholder="Scene height"
+               data-localize="enterSceneHeight">
+    </div>
+
+    <div>
+        <a id="dimensionApplyScene" class="btnPrice btn-primary btn btn-default" href="#" type="button"
+           data-localize="applyChanges">
+            apply changes
+        </a>
+    </div>
+</div>
+<div id="blockQRCommonProperties" style="display: none"><span>QR</span>
+
+    <div data-role="fieldcontain" data-inset="true">
+        <input type="text" name="name" id="qrText" value=""
+               placeholder="Enter QR Text" data-localize="enterQRText">
+    </div>
+</div>
+<div id="blockYouTubeCommonProperties" style="display: none">
+    <span data-localize="volumeLevel">Volume level</span> <span id="youtubeVolumeLabel">100</span>
+
+    <div id="youtubeVolumeWrap" class="propControlWidth">
+        <div id="youtubeVolumeWrapSlider" class="noUi-target noUi-ltr noUi-horizontal noUi-background"></div>
+    </div>
+    <hr class="propControlWidth"/>
+    <span data-localize="videoQuality">video quality</span>
+
+    <div id="youtubeQualityMeter"></div>
+    <hr class="propControlWidth"/>
+
+    <div id="youtubeList">
+        <span data-localize="YouTubePlaylist">YouTube playlist</span>
+
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                <span id="youtubeMostViewed" data-localize="mostViewed">Most viewed</span>
+                <span class="caret"></span>
+            </button>
+            <ul id="youtubeListDropDown" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li><a name="most_viewed" data-localize="mostViewed" role="menuitem" tabindex="-1" href="#">Most
+                    viewed</a></li>
+                <li><a name="manually" data-localize="customList" role="menuitem" tabindex="-1" href="#">Custom list</a>
+                </li>
+            </ul>
+            <button id="youtubeListAdd" type="button"
+                    title="add video id" data-localize="empty"
+                    data-localize-tooltip="addVideoId"
+                    class="btn btn-default btn-sm"><span
+                    class="glyphicon glyphicon-plus"></span></button>
+        </div>
+
+        <br/>
+
+        <div id="youtubeListType">
+            <div id="youtubeMostViewedList">
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                        <span id="youtubeCountry" data-localize="worldRegion">World region</span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul id="youtubeCountryListDropDown" class="dropdown-menu" style="min-width: 30px" role="menu"
+                        aria-labelledby="dropdownMenu1">
+                        <li class="youtubeFlag" name="US"><a href="#"><img src="_assets/flags/us.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="AR"><a href="#"><img src="_assets/flags/ar.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="AU"><a href="#"><img src="_assets/flags/au.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="AT"><a href="#"><img src="_assets/flags/at.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="BE"><a href="#"><img src="_assets/flags/be.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="BR"><a href="#"><img src="_assets/flags/br.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="CA"><a href="#"><img src="_assets/flags/ca.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="CL"><a href="#"><img src="_assets/flags/cl.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="CO"><a href="#"><img src="_assets/flags/co.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="CZ"><a href="#"><img src="_assets/flags/cz.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="EG"><a href="#"><img src="_assets/flags/eg.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="FR"><a href="#"><img src="_assets/flags/fr.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="DE"><a href="#"><img src="_assets/flags/de.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="GB"><a href="#"><img src="_assets/flags/gb.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="HK"><a href="#"><img src="_assets/flags/hk.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="HU"><a href="#"><img src="_assets/flags/hu.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="IN"><a href="#"><img src="_assets/flags/in.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="IE"><a href="#"><img src="_assets/flags/ie.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="IL"><a href="#"><img src="_assets/flags/il.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="IT"><a href="#"><img src="_assets/flags/it.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="JP"><a href="#"><img src="_assets/flags/jp.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="JO"><a href="#"><img src="_assets/flags/jo.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="MY"><a href="#"><img src="_assets/flags/my.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="MX"><a href="#"><img src="_assets/flags/mx.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="MA"><a href="#"><img src="_assets/flags/ma.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="NL"><a href="#"><img src="_assets/flags/nl.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="NZ"><a href="#"><img src="_assets/flags/nz.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="PE"><a href="#"><img src="_assets/flags/pe.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="PH"><a href="#"><img src="_assets/flags/ph.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="PL"><a href="#"><img src="_assets/flags/pl.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="RU"><a href="#"><img src="_assets/flags/ru.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="SA"><a href="#"><img src="_assets/flags/sa.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="SG"><a href="#"><img src="_assets/flags/sg.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="ZA"><a href="#"><img src="_assets/flags/za.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="KR"><a href="#"><img src="_assets/flags/kr.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="ES"><a href="#"><img src="_assets/flags/es.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="SE"><a href="#"><img src="_assets/flags/se.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="CH"><a href="#"><img src="_assets/flags/ch.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="TW"><a href="#"><img src="_assets/flags/tw.png" alt=""/></a></li>
+                        <li class="youtubeFlag" name="AE"><a href="#"><img src="_assets/flags/ae.png" alt=""/></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div id="youtubeCustomList" style="display: none">
+                <span data-localize="customVideoList">Custom video list</span>
+
+                <div id="youttubeVideoIDs">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="blockTwitterCommonProperties" style="display: none">
+    <span data-localize="twitterScreenName">Twitter screen name</span>
+    <input type="text" name="name" id="twitterScreenInput" value="" placeholder="like CNN...">
+
+    <div>
+        <br/>
+        <span data-localize="loadWithScene">Load with scene</span>
+
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                <span id="twitterSceneList" data-localize="selectSceneName">select scene</span>
+                <span class="caret"></span>
+            </button>
+            <ul id="twitterDropDown" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+            </ul>
+        </div>
+        <br/>
+        <span data-localize="Interval" style="float: left; display: block">Interval</span><br/>
+
+        <div class="spinner spinnerDimHeight">
+            <input id="twitterIntervalInput" type="text" style="width: 60px" class="input-mini spinner-input">
+
+            <div name="height" class="spinner-buttons btn-group btn-group-vertical">
+                <button type="button" name="fontSizeUp" class="squareButton btn spinner-up"><i
+                        class="fa fa-chevron-up"></i></button>
+                <button type="button" name="fontSizeDown" class="squareButton btn spinner-down"><i
+                        class="fa fa-chevron-down"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="blockTwitterItemCommonProperties" style="display: none">
+    <div>
+        <span data-localize="twitterItem">Twitter item</span>
+
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                <span id="twitterItemTypeSelect" data-localize="labelText">Label text</span>
+                <span class="caret"></span>
+            </button>
+            <ul id="twitterItemDropDown" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li><a name="text" data-localize="labelText" role="menuitem" tabindex="-1" href="#">Label text</a></li>
+                <li><a name="resource" data-localize="profileImage" role="menuitem" tabindex="-1" href="#">Profile
+                    Image</a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="twitterItemLabel" style="display: none">
+        <br/>
+        <span data-localize="font">Font</span>
+
+        <div id="twitterFontSettings">
+        </div>
+    </div>
+</div>
+<div id="blockHTMLCommonProperties" style="display: none"><span
+        data-localize="webAddr">Web address</span>
+
+    <div data-role="fieldcontain" data-inset="true">
+        <input type="text" name="name" id="htmlText" value="" placeholder="http://...">
+    </div>
+</div>
+<div id="blockExtImageCommonProperties" style="display: none"><span
+        data-localize="urlAddr">URL address</span>
+
+    <div data-role="fieldcontain" data-inset="true">
+        <input type="text" name="name" id="extImageText" value="" placeholder="http://...">
+    </div>
+</div>
+<div id="blockExtVideoCommonProperties" style="display: none"><span
+        data-localize="urlAddr">URL address</span>
+
+    <div data-role="fieldcontain" data-inset="true">
+        <input type="text" name="name" id="extVideoText" value="" placeholder="http://...">
+    </div>
+</div>
+<div id="blockLabelCommonProperties" style="display: none"><span data-localize="labelText">Label text</span>
+
+    <div data-role="fieldcontain" data-inset="true">
+        <textarea id="labelText" class="span8 propControlWidth" rows="3" placeholder="enter text here"
+                  data-localize="enterText">
+        </textarea>
+    </div>
+
+    <hr class="propControlWidth"/>
+    <div id="labelFontSettings"></div>
+</div>
+<div id="blockClockCommonProperties" style="display: none"><span
+        data-localize="chooseFormat">Choose format</span>
+
+    <div class="radio">
+        <label>
+            <input type="radio" name="clockRadioOpts" value="longDateAndTime" checked>
+            <span><small>Friday, Mar 21 2014 at 8:59AM</small></span> </label>
+    </div>
+    <div class="radio">
+        <label>
+            <input type="radio" name="clockRadioOpts" value="longDate" checked>
+            <span><small>Friday, Mar 21 2014</small></span> </label>
+    </div>
+    <div class="radio">
+        <label>
+            <input type="radio" name="clockRadioOpts" value="shortDayTime" checked>
+            <span><small>Friday 9:10 AM</small></span> </label>
+    </div>
+    <div class="radio">
+        <label>
+            <input type="radio" name="clockRadioOpts" value="date" checked>
+            <span><small>3/21/14</small></span> </label>
+    </div>
+    <div class="radio">
+        <label>
+            <input type="radio" name="clockRadioOpts" value="time" checked>
+            <span><small>9:00:39 AM</small></span> </label>
+    </div>
+    <hr class="propControlWidth"/>
+    <div id="clockFontSettings"></div>
+</div>
+</div>
 </div>
 <div id="blockCommonProperties" class="noTopBorder tab-pane panel panel-default yScroll"
      style="height: 100px;">
@@ -1651,7 +1693,8 @@
             </li>
             <li><a href="#"><img class="flag" src="_assets/flags/es.png" alt=""/>Spanish<span
                     class="value">es</span></a></li>
-            <li><a href="#"><img class="flag" src="_assets/flags/sv.png" alt=""/>Swedish<span class="value">sv</span></a></li>
+            <li><a href="#"><img class="flag" src="_assets/flags/sv.png" alt=""/>Swedish<span
+                    class="value">sv</span></a></li>
             <li><a href="#"><img class="flag" src="_assets/flags/th.png" alt=""/>Thai<span class="value">th</span></a>
             </li>
             <li><a href="#"><img class="flag" src="_assets/flags/tr.png" alt=""/>Turkish<span
@@ -1924,7 +1967,8 @@
 <p style="display: none" id="bootBoxCantDeleteTimeline" data-localize="bootBoxCantDeleteTimeline">Cannot delete the last
     timeline, please create a new timeline before deleting this one</p>
 
-<p style="display: none" id="bootBoxNonAllowedCharacters" data-localize="bootBoxNonAllowedCharacters">Some of the characters entered are not allowed, consider using shortening URL maker like google at: https://goo.gl</p>
+<p style="display: none" id="bootBoxNonAllowedCharacters" data-localize="bootBoxNonAllowedCharacters">Some of the
+    characters entered are not allowed, consider using shortening URL maker like google at: https://goo.gl</p>
 
 <p style="display: none" id="bootBoxSelectResource" data-localize="bootBoxSelectResource">Please select a resource first
     and try again</p>
@@ -1956,51 +2000,84 @@
     for changes to take effect</p>
 
 <p style="display: none" id="bootBoxMostViewed" data-localize="mostViewed">Most viewed</p>
+
 <p style="display: none" id="bootBoxCustomList" data-localize="customList">Custom list</p>
 
 <p style="display: none" id="bootBoxLabelText" data-localize="labelText">Label text</p>
+
 <p style="display: none" id="bootBoxProfileImage" data-localize="profileImage">Profile image</p>
 
 <p style="display: none" id="bootBoxSelectScene" data-localize="selectSceneName">Select scene</p>
 
-<p style="display: none" id="bootBoxWaitUploadResource" data-localize="waitUploadResource">Please wait while resources are uploaded to the cloud...</p>
-<p style="display: none" id="booxboxSupportedExtensions" data-localize="booxboxSupportedExtensions">supported files: flv, mp4, jpg, png and swf</p>
+<p style="display: none" id="bootBoxWaitUploadResource" data-localize="waitUploadResource">Please wait while resources
+    are uploaded to the cloud...</p>
+
+<p style="display: none" id="booxboxSupportedExtensions" data-localize="booxboxSupportedExtensions">supported files:
+    flv, mp4, jpg, png and swf</p>
 
 <p style="display: none" id="campaignModeHeaderSeq" data-localize="campaignModeHeaderSeq"></p>
+
 <p style="display: none" id="campaignModeHeaderSched" data-localize="campaignModeHeaderSched"></p>
+
 <p style="display: none" id="campaignModeSeq" data-localize="campaignModeSeq"></p>
+
 <p style="display: none" id="campaignModeSched" data-localize="campaignModeSched"></p>
 
 
-
-
 <p style="display: none" id="tutorialCampaignList1" data-localize="tutorialCampaignList1"></p>
-<p style="display: none" id="tutorialCampaignList2" data-localize="tutorialCampaignList2"></p>
+
+<p style="display: none" id="tutorialCampaignList3" data-localize="tutorialCampaignList3"></p>
+
 <p style="display: none" id="tutorialTimeline1" data-localize="tutorialTimeline1"></p>
+
 <p style="display: none" id="tutorialTimeline2" data-localize="tutorialTimeline2"></p>
+
 <p style="display: none" id="tutorialTimeline3" data-localize="tutorialTimeline3"></p>
+
 <p style="display: none" id="tutorialEditCampaignSett" data-localize="tutorialEditCampaignSett"></p>
+
 <p style="display: none" id="tutorialEditSceneSett" data-localize="tutorialEditSceneSett"></p>
+
 <p style="display: none" id="tutorialNewScene" data-localize="tutorialNewScene"></p>
+
 <p style="display: none" id="tutorialNewCampaign" data-localize="tutorialNewCampaign"></p>
+
 <p style="display: none" id="tutorialStoryboard1" data-localize="tutorialStoryboard1"></p>
+
 <p style="display: none" id="tutorialStoryboard2" data-localize="tutorialStoryboard2"></p>
+
 <p style="display: none" id="tutorialContent" data-localize="tutorialContent"></p>
+
 <p style="display: none" id="tutorialNextChannel" data-localize="tutorialNextChannel"></p>
+
 <p style="display: none" id="tutorialAddScreenLayout" data-localize="tutorialAddScreenLayout"></p>
+
 <p style="display: none" id="tutorialEditScreenLayout" data-localize="tutorialEditScreenLayout"></p>
+
 <p style="display: none" id="tutorialSceneList1" data-localize="tutorialSceneList1"></p>
+
 <p style="display: none" id="tutorialSceneList2" data-localize="tutorialSceneList2"></p>
+
 <p style="display: none" id="tutorialSceneList3" data-localize="tutorialSceneList3"></p>
+
 <p style="display: none" id="tutorialScene" data-localize="tutorialScene"></p>
+
 <p style="display: none" id="tutorialStations" data-localize="tutorialStations"></p>
+
 <p style="display: none" id="tutorialHelp" data-localize="tutorialHelp"></p>
+
 <p style="display: none" id="tutorialAddBlock" data-localize="tutorialAddBlock"></p>
+
 <p style="display: none" id="tutorialDefault" data-localize="tutorialDefault"></p>
+
 <p style="display: none" id="tutorialInstall" data-localize="tutorialInstall"></p>
+
 <p style="display: none" id="tutorialResources1" data-localize="tutorialResources1"></p>
+
 <p style="display: none" id="tutorialResources2" data-localize="tutorialResources2"></p>
+
 <p style="display: none" id="tutorialResources3" data-localize="tutorialResources3"></p>
+
 <p style="display: none" id="tutorialResourceUpload" data-localize="tutorialResourceUpload"></p>
 
 

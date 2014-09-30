@@ -11,7 +11,7 @@ cp -r -f ../../_studiolite-dev/ ../../_studiolite-bk/
 /var/www/sites/dynasite/htdocs/_msportal/_js/_node/localization/importLite_en.js
 
 ### set domain ###
-./presetDist.js SET_DOMAIN
+# ./presetDist.js SET_DOMAIN
 
 ### minify ###
 r.js -o app.build.js
@@ -19,7 +19,8 @@ r.js -o app.build.js
 # cp -r -f ../../_studiolite-dev/ ../../_studiolite-dist/
 
 ### final source file changes ###
-./presetDist.js RELEASE
+# ./presetDist.js RELEASE
+./presetDist.js
 
 ### create backup ###
 tar -pczf /tmp/studiolite-dist.tar.gz ../../_studiolite-dist/

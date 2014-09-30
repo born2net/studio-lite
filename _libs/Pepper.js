@@ -172,7 +172,6 @@ Pepper.prototype = {
         self.m_user = i_user;
         self.m_pass = i_pass;
         self.m_loaderManager = new LoaderManager();
-        //RELEASE_MODE_INJECT_MASTER_DOMAIN_HOLDER//
         self.m_msdb = self.m_loaderManager['m_dataBaseManager'];
         self.m_loaderManager.create(self.m_user, self.m_pass, function (i_result) {
             if (i_result.status) {
@@ -196,23 +195,6 @@ Pepper.prototype = {
             }
             i_callBack(i_result);
         });
-    },
-
-    /**
-     Set domain prefix is used to set the server from which we download the low level SDK
-     Used only in private mediaSERVERs as we replace the tag RELEASE_MODE_INJECT_MASTER_DOMAIN_HOLDER with set domain prefix function
-     @method setDomainPrefix
-     **/
-    setDomainPrefix: function () {
-        var self = this, origin;
-        origin = window.location.origin;
-        var re = new RegExp(/^(https|http):\/\/(.*)/);
-        origin = origin.match(re)[2];
-        if (origin == 'galaxy.signage.me' || origin == 'secure.digitalsignage.com') {
-            self.m_loaderManager.setMasterDomain('galaxy.signage.me');
-            return;
-        }
-        self.m_loaderManager.setMasterDomain(origin);
     },
 
     /**

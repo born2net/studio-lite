@@ -24,6 +24,7 @@ require.config({
         'gradient': '_common/_js/gradient/jquery.gradientPicker',
         'minicolors': '_common/_js/minicolors/jquery.minicolors',
         'colorpicker': '_common/_js/gradient/colorpicker',
+        'timepicker': '_common/_js/timepicker/bootstrap-timepicker',
         'highcharts': '_common/_js/highcharts/highcharts',
         'flashdetect': '_common/_js/flashdetect/flashdetect',
         'TimelineMax': '_common/_js/gsap/TimelineMax',
@@ -165,6 +166,9 @@ require.config({
         'bootbox': {
             deps: ['jquery'],
             exports: 'bootbox'
+        },
+        'timepicker': {
+            exports: 'timepicker'
         },
         'AppAuth': {
             deps: ['RC4', 'Cookie']

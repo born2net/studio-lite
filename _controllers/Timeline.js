@@ -148,6 +148,26 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             var recTimeline = pepper.getCampaignTimelineRecord(self.m_campaign_timeline_id);
             $(Elements.TIME_LINE_PROP_TITLE_ID).val(recTimeline['timeline_name']);
             self._populateTimelineLength();
+            self._populateTimelinePlayMode(recTimeline);
+        },
+
+        /**
+         Populate the timeline length in its properties box
+         @method _populateTimelinePlayMode
+         **/
+        _populateTimelinePlayMode: function (i_recTimeline) {
+            var self = this;
+            var campaign_id = i_recTimeline.campaign_id;
+            var recCampaign = pepper.getCampaignRecord(campaign_id);
+            var campaignMode = String(recCampaign['campaign_playlist_mode']);
+            switch (campaignMode){
+                case '0': {
+                    break;
+                }
+                case '1': {
+                    break;
+                }
+            }
         },
 
         /**

@@ -45,12 +45,63 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self.m_propertiesPanel = BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW);
             self.m_propertiesPanel.addView(this.m_campainProperties);
 
-            this._loadCampaignList();
-            this._listenAddRemoveCampaign();
+            self._loadCampaignList();
+            self._listenAddRemoveCampaign();
+            self._listenCampaignModeSelect();
         },
 
         /**
-         Wire the UI including new campaing creation and delete existing campaign
+         Listen to changes in campaign playback mode
+         @method _listenCampaignModeSelect
+         **/
+        _listenCampaignModeSelect: function(){
+            var self = this;
+            $(Elements.CLASS_CAMPAIGN_PLAY_MODE).on('click',function(e){
+                if ($(e.target).is('span'))
+                    e.target = $(e.target).closest('button');
+
+                switch ($(e.target).attr('name')){
+                    case 'campaignModeSequencer': {
+                        self._populateCampaignMode(0);
+                        pepper.setCampaignRecord(self.m_selectedCampaignID, 'campaign_playlist_mode','0');
+                        break;
+                    }
+                    case 'campaignModeScheduler': {
+                        self._populateCampaignMode(1);
+                        pepper.setCampaignRecord(self.m_selectedCampaignID, 'campaign_playlist_mode','1');
+                        break;
+                    }
+                }
+            });
+        },
+
+        /**
+         Load the campaign's play mode (scheduler /sequencer)
+         @method _populateCampaignMode();
+         **/
+        _populateCampaignMode: function(i_mode){
+            var self = this;
+            var mode = String(i_mode);
+            switch (mode){
+                case '0': {
+                    $(Elements.CAMPAIGN_MODE_SCHEDULER).fadeTo('fast',0.4);
+                    $(Elements.CAMPAIGN_MODE_SEQUENCER).fadeTo('fast',1);
+                    $(Elements.CAMPAIGN_MODE_HEADER).text($(Elements.CAMPAIGN_MODE_HEADER_SEQ).text());
+                    $(Elements.CAMPAIGN_MODE_DESCRIPTION).text($(Elements.CAMPAIGN_MODE_SEQ).text());
+                    break;
+                }
+                case '1': {
+                    $(Elements.CAMPAIGN_MODE_SCHEDULER).fadeTo('fast',1);
+                    $(Elements.CAMPAIGN_MODE_SEQUENCER).fadeTo('fast',0.4);
+                    $(Elements.CAMPAIGN_MODE_HEADER).text($(Elements.CAMPAIGN_MODE_HEADER_SCHED).text());
+                    $(Elements.CAMPAIGN_MODE_DESCRIPTION).text($(Elements.CAMPAIGN_MODE_SCHED).text());
+                    break;
+                }
+            }
+        },
+
+        /**
+         Wire the UI including new campaign creation and delete existing campaign
          @method _listenAddRemoveCampaign
          **/
         _listenAddRemoveCampaign: function () {
@@ -157,6 +208,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 var elem = $(e.target).closest('a').addClass('active');
                 self.m_selectedCampaignID = $(elem).data('campaignid');
                 var recCampaign = pepper.getCampaignRecord(self.m_selectedCampaignID);
+                self._populateCampaignMode(recCampaign.campaign_playlist_mode);
                 $(Elements.FORM_CAMPAIGN_NAME).val(recCampaign['campaign_name']);
                 self.m_propertiesPanel.selectView(self.m_campainProperties);
                 self.m_propertiesPanel.openPropertiesPanel();

@@ -346,6 +346,11 @@
     "default": "Default",
     "small": "Small",
     "large": "Large",
+    "campaignModeLabel" : "Campaign playback mode:",
+    "campaignModeHeaderSeq" : "Sequencer (simple mode):",
+    "campaignModeHeaderSched" : "Scheduler (advanced mode):",
+    "campaignModeSeq" : "Play timelines for this campaign in a continuous loop. It`s easy to setup and simple to use",
+    "campaignModeSched" : "Play timelines for this campaign only on specific times. For example, play Timeline A in the morning and Timeline B at night.",
     "highDefinition": "High Definition"
 
 }

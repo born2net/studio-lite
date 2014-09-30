@@ -172,6 +172,7 @@ Pepper.prototype = {
         self.m_user = i_user;
         self.m_pass = i_pass;
         self.m_loaderManager = new LoaderManager();
+        //RELEASE_MODE_INJECT_MASTER_DOMAIN_HOLDER//
         self.m_msdb = self.m_loaderManager['m_dataBaseManager'];
         self.m_loaderManager.create(self.m_user, self.m_pass, function (i_result) {
             if (i_result.status) {
@@ -195,6 +196,23 @@ Pepper.prototype = {
             }
             i_callBack(i_result);
         });
+    },
+
+    /**
+     Set domain prefix is used to set the server from which we download the low level SDK
+     Used only in private mediaSERVERs as we replace the tag RELEASE_MODE_INJECT_MASTER_DOMAIN_HOLDER with setDomainPrefix
+     @method setDomainPrefix
+     **/
+    setDomainPrefix: function () {
+        var self = this, origin;
+        origin = window.location.origin;
+        var re = new RegExp(/^(https|http):\/\/(.*)/);
+        origin = origin.match(re)[2];
+        if (origin == 'galaxy.signage.me' || origin == 'secure.digitalsignage.com') {
+            self.m_loaderManager.setMasterDomain('galaxy.signage.me');
+            return;
+        }
+        self.m_loaderManager.setMasterDomain(origin);
     },
 
     /**
@@ -1366,12 +1384,24 @@ Pepper.prototype = {
      @param {Number} i_playerData
      @return {Number} Unique clientId.
      **/
-    getCampaignsSchedules: function(){
+    getCampaignsSchedules: function () {
         var self = this;
         $(self.m_msdb.table_campaign_timeline_schedules().getAllPrimaryKeys()).each(function (k, campaign_timeline_schedule_id) {
             var recCampaignTimelineSchedule = self.m_msdb.table_campaign_timeline_schedules().getRec(campaign_timeline_schedule_id);
         });
     },
+
+    /**
+     Get a campaign playback mode, i.e.: sequence or scheduler
+     @method getCampaignMode
+     @param {Number} i_campaignMode
+     @return {Number} 0 = sequencer 1 = scheduler.
+
+     getCampaignMode: function(i_campaign_id){
+        var self = this;
+        var a =  self.m_msdb.table_campaigns().getRec(i_campaign_id);
+    },
+     **/
 
     /**
      Set the sequence index of a timeline in campaign. If timeline is not found in sequencer, we insert it with the supplied i_sequenceIndex
@@ -1958,8 +1988,7 @@ Pepper.prototype = {
         var self = this;
         var i_uploadFileElement = document.getElementById(i_elementID);
         var count = i_uploadFileElement.files.length;
-        for(var iFile=0; iFile<count; iFile++)
-        {
+        for (var iFile = 0; iFile < count; iFile++) {
             var fileName = i_uploadFileElement.files[iFile];
             var fileExtension = fileName.name.split('.')[1];
             var block = BB.PepperHelper.getBlockCodeFromFileExt(fileExtension);
@@ -2257,9 +2286,9 @@ Pepper.prototype = {
 
                 // make sure that every view_order we assign is unique and sequential
                 var viewOrder = recBoardTemplateViewer['viewer_order'];
-                if (!_.isUndefined(viewOrderIndexes[viewOrder])){
-                    for (var i = 0; i < 100 ;i++){
-                        if (_.isUndefined(viewOrderIndexes[i])){
+                if (!_.isUndefined(viewOrderIndexes[viewOrder])) {
+                    for (var i = 0; i < 100; i++) {
+                        if (_.isUndefined(viewOrderIndexes[i])) {
                             viewOrder = i;
                             break;
                         }

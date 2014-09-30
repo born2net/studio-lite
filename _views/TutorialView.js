@@ -294,7 +294,7 @@ define(['jquery', 'backbone', 'TimelineMax', 'TweenMax'], function ($, Backbone,
             var self = this;
             BB.comBroker.listen(BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 self.m_selectedView = '#' + e.context.el.id;
-                log('view: ' + self.m_selectedView);
+                // log('view: ' + self.m_selectedView);
                 switch (self.m_selectedView) {
                     case Elements.CAMPAIGN_SELECTOR:
                     {

@@ -200,7 +200,7 @@ Pepper.prototype = {
 
     /**
      Set domain prefix is used to set the server from which we download the low level SDK
-     Used only in private mediaSERVERs as we replace the tag RELEASE_MODE_INJECT_MASTER_DOMAIN_HOLDER with setDomainPrefix
+     Used only in private mediaSERVERs as we replace the tag RELEASE_MODE_INJECT_MASTER_DOMAIN_HOLDER with set domain prefix function
      @method setDomainPrefix
      **/
     setDomainPrefix: function () {

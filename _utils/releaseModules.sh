@@ -26,5 +26,5 @@ tar -pczf /tmp/studiolite-dist.tar.gz ../../_studiolite-dist/
 
 ### upload to remote server ###
 echo 'uploading...'
-#########################./copyRemote.js
+./copyRemote.js
 # cp ../redirect.html ../../_studiolite-dist/studiolite.html

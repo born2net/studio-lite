@@ -114,7 +114,7 @@ define(['jquery', 'backbone', 'TimelineMax', 'TweenMax'], function ($, Backbone,
             offset = $(Elements.NEW_CAMPAIGN).offset();
             arrow = $(Elements.APP_TUTORIAL).children().eq(0).clone();
             t1 = $(Elements.TUTORIAL_CAMPAIGN_LIST1).text();
-            t2 = $(Elements.TUTORIAL_CAMPAIGN_LIST2).text();
+            t2 = $(Elements.TUTORIAL_CAMPAIGN_LIST3).text();
             self._animateArrow(arrow, offset.top + 45, offset.left + 185, undefined, 10, undefined);
             self._animateText(t1 + '<br/>' + t2, offset.top + 98, offset.left + 200, undefined, 3);
 

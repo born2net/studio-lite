@@ -398,7 +398,15 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
          **/
         _timepickerDayDurationInit: function(){
             var self = this;
-            $(Elements.CLASS_TIME_PICKER_DAY_DURATION).timepicker({
+            $(Elements.TIME_PICKER_TIME_INPUT).timepicker({
+                showSeconds: true,
+                showMeridian: false,
+                defaultTime: false,
+                minuteStep: 1,
+                secondStep: 1
+            });
+
+            $(Elements.TIME_PICKER_DURATION_INPUT).timepicker({
                 showSeconds: true,
                 showMeridian: false,
                 defaultTime: false,
@@ -413,7 +421,6 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
          **/
         _datepickerDayDurationInit: function(){
             var self = this;
-            var a = $(Elements.CLASS_TIME_PICKER_SCHEDULER);
             $(Elements.CLASS_TIME_PICKER_SCHEDULER).datepicker({
                 autoclose: true,
                 todayHighlight: true

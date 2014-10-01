@@ -1361,29 +1361,21 @@ Pepper.prototype = {
     },
 
     /**
-     Get all campaign schedules
+     Get campaign schedule for timeline
      @method getCampaignsSchedules
-     @param {Number} i_playerData
-     @return {Number} Unique clientId.
+     @param {Number} i_campaign_timeline_id
+     @return {Object} schedule record
      **/
-    getCampaignsSchedules: function () {
+    getCampaignsSchedule: function (i_campaign_timeline_id) {
         var self = this;
+        var found = -1;
         $(self.m_msdb.table_campaign_timeline_schedules().getAllPrimaryKeys()).each(function (k, campaign_timeline_schedule_id) {
             var recCampaignTimelineSchedule = self.m_msdb.table_campaign_timeline_schedules().getRec(campaign_timeline_schedule_id);
+            if (recCampaignTimelineSchedule.campaign_timeline_id == i_campaign_timeline_id)
+                found = recCampaignTimelineSchedule;
         });
+        return found;
     },
-
-    /**
-     Get a campaign playback mode, i.e.: sequence or scheduler
-     @method getCampaignMode
-     @param {Number} i_campaignMode
-     @return {Number} 0 = sequencer 1 = scheduler.
-
-     getCampaignMode: function(i_campaign_id){
-        var self = this;
-        var a =  self.m_msdb.table_campaigns().getRec(i_campaign_id);
-    },
-     **/
 
     /**
      Set the sequence index of a timeline in campaign. If timeline is not found in sequencer, we insert it with the supplied i_sequenceIndex
@@ -2082,8 +2074,8 @@ Pepper.prototype = {
     setBlockTimelineChannelBlockLength: function (i_campaign_timeline_chanel_player_id, i_hours, i_minutes, i_seconds) {
         var self = this;
 
-        var totalSecInMin = 60
-        var totalSecInHour = totalSecInMin * 60
+        var totalSecInMin = 60;
+        var totalSecInHour = totalSecInMin * 60;
         var totalSeconds = parseInt(i_seconds) + (parseInt(i_minutes) * totalSecInMin) + (parseInt(i_hours) * totalSecInHour)
 
         $(self.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
@@ -2128,30 +2120,50 @@ Pepper.prototype = {
      **/
     getBlockTimelineChannelBlockLength: function (i_campaign_timeline_chanel_player_id) {
         var self = this;
+        var recCampaignTimelineChannelPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(i_campaign_timeline_chanel_player_id);
+        var totalSeconds = recCampaignTimelineChannelPlayer['player_duration'];
+        return self.formatSecondsToObject(totalSeconds);
+    },
+
+    /**
+     Format a seconds value into an object broken into hours / minutes / seconds
+     @method formatSecondsToObject
+     @param {Number} i_totalSeconds
+     @return {Object}
+     **/
+    formatSecondsToObject: function (i_totalSeconds) {
         var seconds = 0;
         var minutes = 0;
         var hours = 0;
-        var totalInSeconds = 0;
-
-        var recCampaignTimelineChannelPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(i_campaign_timeline_chanel_player_id);
-        var totalSeconds = recCampaignTimelineChannelPlayer['player_duration'];
-        totalInSeconds = totalSeconds;
-        if (totalSeconds >= 3600) {
-            hours = Math.floor(totalSeconds / 3600);
-            totalSeconds = totalSeconds - (hours * 3600);
+        var totalInSeconds = i_totalSeconds;
+        if (i_totalSeconds >= 3600) {
+            hours = Math.floor(i_totalSeconds / 3600);
+            i_totalSeconds = i_totalSeconds - (hours * 3600);
         }
-        if (totalSeconds >= 60) {
-            minutes = Math.floor(totalSeconds / 60);
-            seconds = totalSeconds - (minutes * 60);
+        if (i_totalSeconds >= 60) {
+            minutes = Math.floor(i_totalSeconds / 60);
+            seconds = i_totalSeconds - (minutes * 60);
         }
         if (hours == 0 && minutes == 0)
-            seconds = totalSeconds;
+            seconds = i_totalSeconds;
         var playbackLength = {
             hours: hours,
             minutes: minutes,
             seconds: seconds,
             totalInSeconds: totalInSeconds
         }
+        playbackLength.getMonth = function(){
+            return null;
+        };
+        playbackLength.getHours = function(){
+            return this.hours;
+        };
+        playbackLength.getMinutes = function(){
+            return this.minutes;
+        };
+        playbackLength.getSeconds = function(){
+            return this.seconds;
+        };
         return playbackLength;
     },
 

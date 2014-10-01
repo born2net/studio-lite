@@ -7,7 +7,7 @@
  @constructor
  @return {Object} instantiated Timeline
  **/
-define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, Backbone, Channel, ScreenTemplateFactory) {
+define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'XDate'], function ($, Backbone, Channel, ScreenTemplateFactory, XDate) {
 
     /**
      Custom event fired when a timeline is selected. If a timeline is not of the one selected,
@@ -29,6 +29,9 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
          **/
         initialize: function () {
             var self = this;
+            self.m_ONCE = '0';
+            self.m_DAILY = '1';
+            self.m_WEEKLY = '2';
             self.m_channels = {}; // hold references to all created channel instances
             self.m_screenTemplate = undefined;
             self.m_campaign_timeline_id = self.options.campaignTimelineID;
@@ -152,6 +155,55 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
         },
 
         /**
+         Populate the Scheduler UI
+         @method _populateScheduler
+         @params {Number} i_timeline_id
+         **/
+        _populateScheduler: function (i_timeline_id) {
+            var self = this;
+            if ($(Elements.TIME_PICKER_DURATION_INPUT).timepicker== undefined)
+                return;
+            var recSchedule = pepper.getCampaignsSchedule(i_timeline_id);
+            $(Elements.SCHEDULER_REPEAT_MODE).carousel(Number(recSchedule.repeat_type));
+            var duration = pepper.formatSecondsToObject(recSchedule.duration);
+            var startTime = pepper.formatSecondsToObject(recSchedule.start_time);
+            $(Elements.TIME_PICKER_DURATION_INPUT).timepicker('setTime',duration.hours + ':' + duration.minutes + ':' + duration.seconds);
+            $(Elements.TIME_PICKER_TIME_INPUT).timepicker('setTime',startTime.hours + ':' + startTime.minutes + ':' + startTime.seconds);
+
+            switch (String(recSchedule.repeat_type)){
+                case self.m_ONCE: {
+                    var date = recSchedule.start_date.split(' ')[0];
+                    $(Elements.DATE_PICKER_SCHEDULER_ONCE).datepicker('setDate', date);
+                    break;
+                }
+                case self.m_DAILY: {
+                    var startDate = recSchedule.start_date.split(' ')[0];
+                    var endDate = recSchedule.end_date.split(' ')[0];
+                    $(Elements.DATE_PICKER_SCHEDULER_DAILY_START).datepicker('setDate', startDate);
+                    $(Elements.DATE_PICKER_SCHEDULER_DAILY_END).datepicker('setDate', endDate);
+                    break;
+                }
+                case self.m_WEEKLY: {
+                    var startDate = recSchedule.start_date.split(' ')[0];
+                    var endDate = recSchedule.end_date.split(' ')[0];
+                    var weekDays = recSchedule.week_days;
+                    var elDays = $(Elements.SCHEDUALED_DAYS);
+                    [1,2,4,8,16,32,64].forEach(function(v,i){
+                        var n = weekDays & v;
+                        if (n==v) {
+                            $(elDays).find('input').eq(i).prop('checked',true);
+                        } else {
+                            $(elDays).find('input').eq(i).prop('checked',false);
+                        }
+                    });
+                    $(Elements.DATE_PICKER_SCHEDULER_WEEK_START).datepicker('setDate', startDate);
+                    $(Elements.DATE_PICKER_SCHEDULER_WEEK_END).datepicker('setDate', endDate);
+                    break;
+                }
+            }
+        },
+
+        /**
          Populate the timeline depending if running with sequencer or scheduler
          @method _populateTimelinePlayMode
          **/
@@ -164,13 +216,16 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
                 case BB.CONSTS.SEQUENCER_MODE: {
                     $(Elements.TIMELINE_WRAP).show();
                     $(Elements.TIMELINE_PLAYMODE_LABEL).find('aside').eq(0).show().end().eq(1).hide();
-                    $(Elements.SCHEDULER_CONTAINER).hide();
+                    $(Elements.CLASS_SCHEDULER_CLASS).hide();
+                    $(Elements.CLASS_SEQUENCE_CLASS).show();
                     break;
                 }
                 case BB.CONSTS.SCHEDULER_MODE: {
                     $(Elements.TIMELINE_WRAP).hide();
                     $(Elements.TIMELINE_PLAYMODE_LABEL).find('aside').eq(1).show().end().eq(0).hide();
-                    $(Elements.SCHEDULER_CONTAINER).show();
+                    $(Elements.CLASS_SCHEDULER_CLASS).show();
+                    $(Elements.CLASS_SEQUENCE_CLASS).hide();
+                    self._populateScheduler(i_recTimeline.campaign_timeline_id);
                     break;
                 }
             }

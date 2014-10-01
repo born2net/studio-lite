@@ -6,6 +6,8 @@
  **/
 define(['jquery', 'backbone'], function ($, Backbone) {
 
+    BB.CONSTS.SEQUENCER_MODE = '0';
+    BB.CONSTS.SCHEDULER_MODE = '1';
     /**
      Custom event fired when we need to refresh the campaign list
      @event LOAD_CAMPAIGN_LIST
@@ -83,14 +85,14 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             var mode = String(i_mode);
             switch (mode){
-                case '0': {
+                case BB.CONSTS.SEQUENCER_MODE: {
                     $(Elements.CAMPAIGN_MODE_SCHEDULER).fadeTo('fast',0.4);
                     $(Elements.CAMPAIGN_MODE_SEQUENCER).fadeTo('fast',1);
                     $(Elements.CAMPAIGN_MODE_HEADER).text($(Elements.CAMPAIGN_MODE_HEADER_SEQ).text());
                     $(Elements.CAMPAIGN_MODE_DESCRIPTION).text($(Elements.CAMPAIGN_MODE_SEQ).text());
                     break;
                 }
-                case '1': {
+                case BB.CONSTS.SCHEDULER_MODE: {
                     $(Elements.CAMPAIGN_MODE_SCHEDULER).fadeTo('fast',1);
                     $(Elements.CAMPAIGN_MODE_SEQUENCER).fadeTo('fast',0.4);
                     $(Elements.CAMPAIGN_MODE_HEADER).text($(Elements.CAMPAIGN_MODE_HEADER_SCHED).text());

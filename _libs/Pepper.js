@@ -160,7 +160,7 @@ Pepper.prototype = {
     constructor: Pepper,
 
     /**
-     Authenticate against a mediaSERVER
+     Authenticate through mediaSERVER
      @method dbConnect
      @param {String} i_user
      @param {String} i_pass

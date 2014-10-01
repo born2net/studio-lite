@@ -178,7 +178,7 @@ define(['jquery', 'backbone', 'StationModel', 'simplestorage'], function ($, Bac
         getRemoteStations: function () {
             var self = this;
             var userData = pepper.getUserData();
-            var url = 'https://' + userData.domain + '/WebService/getStatus.ashx?user=' + userData.userName + '&password=' + userData.userPass + '&callback=?';
+            var url = window.g_protocol + userData.domain + '/WebService/getStatus.ashx?user=' + userData.userName + '&password=' + userData.userPass + '&callback=?';
             $.getJSON(url,
                 function (data) {
                     var s64 = data['ret'];

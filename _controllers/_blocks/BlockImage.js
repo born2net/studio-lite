@@ -114,9 +114,9 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var imgPath;
 
             if (self.m_fileFormat == 'swf') {
-                imgPath = 'https://s3-us-west-2.amazonaws.com/oregon-signage-resources/business363510/resources/14.png';
+                imgPath = './_assets/flash.png';
             } else {
-                imgPath = 'https://s3-us-west-2.amazonaws.com/oregon-signage-resources/business' + businessID + '/resources/' + self.m_nativeID + '.' + self.m_fileFormat;
+                imgPath = window.g_protocol + pepper.getUserData().domain + '/Resources/business' +  pepper.getUserData().businessID + '/resources/' + self.m_nativeID + '.' + self.m_fileFormat;
             }
 
             $('<img src="' + imgPath + '" style="display: none" >').load(function () {

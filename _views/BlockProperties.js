@@ -5,7 +5,7 @@
  @constructor
  @return {object} instantiated BlockProperties
  **/
-define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'FontSelector', 'RSSLinks', 'MRSSLinks', 'BarMeterView', 'timepicker'], function ($, Backbone, Knob, nouislider, gradient, spinner, FontSelector, RSSLinks, MRSSLinks, BarMeterView, timepicker) {
+define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'FontSelector', 'RSSLinks', 'MRSSLinks', 'BarMeterView', 'timepicker', 'datepicker'], function ($, Backbone, Knob, nouislider, gradient, spinner, FontSelector, RSSLinks, MRSSLinks, BarMeterView, timepicker, datepicker) {
 
     /**
      Custom event fired when a gradient color picked
@@ -93,6 +93,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
             self._rssSourceSelectorInit();
             self._mrssSourceSelectorInit();
             self._timepickerDayDurationInit();
+            self._datepickerDayDurationInit();
             self._rssPollTimeInit();
             self._youtubeInit();
             self._labelFontSelectorInit();
@@ -403,6 +404,19 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                 defaultTime: false,
                 minuteStep: 1,
                 secondStep: 1
+            });
+        },
+
+        /**
+         Init the date picker duration bootstrap widget
+         @method _datepickerDayDurationInit
+         **/
+        _datepickerDayDurationInit: function(){
+            var self = this;
+            var a = $(Elements.CLASS_TIME_PICKER_SCHEDULER);
+            $(Elements.CLASS_TIME_PICKER_SCHEDULER).datepicker({
+                autoclose: true,
+                todayHighlight: true
             });
         },
 

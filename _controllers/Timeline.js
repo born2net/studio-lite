@@ -29,20 +29,20 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
          **/
         initialize: function () {
             var self = this;
-            this.m_channels = {}; // hold references to all created channel instances
-            this.m_screenTemplate = undefined;
-            this.m_campaign_timeline_id = self.options.campaignTimelineID;
-            this.m_timing = 'sequencer';
-            this.m_stackViewID = undefined;
-            this.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
-            this.m_sequences = BB.comBroker.getService(BB.SERVICES['SEQUENCER_VIEW']);
-            this.m_selected = false;
+            self.m_channels = {}; // hold references to all created channel instances
+            self.m_screenTemplate = undefined;
+            self.m_campaign_timeline_id = self.options.campaignTimelineID;
+            self.m_timing = 'sequencer';
+            self.m_stackViewID = undefined;
+            self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
+            self.m_sequences = BB.comBroker.getService(BB.SERVICES['SEQUENCER_VIEW']);
+            self.m_selected = false;
             self._populateChannels();
             self._populateTimeline();
             self._listenInputChange();
             self._listenReset();
             self._listenViewerRemoved();
-            this._onTimelineSelected();
+            self._onTimelineSelected();
             pepper.listenWithNamespace(Pepper.TEMPLATE_VIEWER_EDITED, self, $.proxy(self._templateViewerEdited, self));
             pepper.listenWithNamespace(Pepper.NEW_CHANNEL_ADDED, self, $.proxy(self._channelAdded, self));
         },
@@ -152,7 +152,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
         },
 
         /**
-         Populate the timeline length in its properties box
+         Populate the timeline depending if running with sequencer or scheduler
          @method _populateTimelinePlayMode
          **/
         _populateTimelinePlayMode: function (i_recTimeline) {
@@ -161,10 +161,16 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory'], function ($, 
             var recCampaign = pepper.getCampaignRecord(campaign_id);
             var campaignMode = String(recCampaign['campaign_playlist_mode']);
             switch (campaignMode){
-                case '0': {
+                case BB.CONSTS.SEQUENCER_MODE: {
+                    $(Elements.TIMELINE_WRAP).show();
+                    $(Elements.TIMELINE_PLAYMODE_LABEL).find('aside').eq(0).show().end().eq(1).hide();
+                    $(Elements.SCHEDULER_CONTAINER).hide();
                     break;
                 }
-                case '1': {
+                case BB.CONSTS.SCHEDULER_MODE: {
+                    $(Elements.TIMELINE_WRAP).hide();
+                    $(Elements.TIMELINE_PLAYMODE_LABEL).find('aside').eq(1).show().end().eq(0).hide();
+                    $(Elements.SCHEDULER_CONTAINER).show();
                     break;
                 }
             }

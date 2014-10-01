@@ -10,16 +10,12 @@ cp -r -f ../../_studiolite-dev/ ../../_studiolite-bk/
 ### inject new localizations ##
 /var/www/sites/dynasite/htdocs/_msportal/_js/_node/localization/importLite_en.js
 
-### set domain ###
-# ./presetDist.js SET_DOMAIN
-
-### minify ###
+### minified ###
 r.js -o app.build.js
-### non minify ###
+### non minified ###
 # cp -r -f ../../_studiolite-dev/ ../../_studiolite-dist/
 
 ### final source file changes ###
-# ./presetDist.js RELEASE
 ./presetDist.js
 
 ### create backup ###

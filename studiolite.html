@@ -321,7 +321,7 @@
                                 class="glyphicon glyphicon-chevron-left"></span></button>
 
                         <button id="addNewTimelineButton" type="button"
-                                title="add new timeline" data-localize="timelineLength"
+                                title="add new timeline" data-localize="empty"
                                 data-localize-tooltip="addNewTimelineButtonToolTip"
                                 class="btn btn-default btn-sm"><span
                                 class="glyphicon glyphicon-plus"></span></button>
@@ -1032,6 +1032,7 @@
     <input id="formCampaignName" type="text" data-localize="campaignName" class="form-control"
            placeholder="Campaign name">
     <hr class="hrThin"/>
+    <!--
     <label id="campaignModeLabel" data-localize="campaignModeLabel">Campaign playback mode:</label>
     <button id="campaignModeSequencer" name="campaignModeSequencer" data-localize="campaignModeScheduler" type="button" class="campaignPlayMode btn btn-default"><span class="fa fa-repeat"></span></button>
     <button id="campaignModeScheduler" name="campaignModeScheduler" data-localize="campaignModeSequencer" type="button" class="campaignPlayMode btn btn-default"><span class="fa fa-calendar"></span></button>
@@ -1040,30 +1041,129 @@
     <br/>
     <br/>
     <p id="campaignModeDescription" data-localize="campaignModeDescription"></p>
+    -->
 </div>
 <div id="sceneSelectionProperties" style="display: none">
     <input id="formSceneName" type="text" data-localize="sceneName" class="form-control"
            placeholder="Scene name">
 </div>
 <div id="timelineProperties" style="display: none">
-    <label data-localize="length">Length: </label>
-    <label id="timelineLength" style="text-align: right"><span data-localize="lenght">Length</span>: 00:00:00</label>
-    <hr/>
+
+    <div id="timelinePlayModeLabel">
+        <aside>
+            <i class="fa fa-repeat"></i>
+            <span>repeat mode</span>
+        </aside>
+        <aside>
+            <i class="fa fa-calendar"></i>
+            <span>scheduler mode</span>
+        </aside>
+    </div>
+    <hr class="hrThin"/>
+    <div id="timelineWrap">
+        <span data-localize="timelineLength">timeline length: </span>
+        <span id="timelineLength" style="text-align: right">00:00:00</span>
+    </div>
     <div data-role="fieldcontain" data-inset="true" style="width:99%;">
-        <input type="text" name="name" id="timeLinePropTitleID" value="" placeholder="Timeline Title"
-               data-localize="timelineTitle">
+        <input type="text" name="name" id="timeLinePropTitleID" value="" placeholder="Timeline Title"  data-localize="timelineTitle">
         <hr class="hrThin"/>
-        <div>
-            <aside>
-                <i style="color: gray" class="fa fa-repeat"></i>
-                <span>play in repeat mode</span>
-            </aside>
-            <aside>
-                <i style="color: gray" class="fa fa-calendar"></i>
-                <span>play in scheduler mode</span>
-            </aside>
+
+        <div id="schedulerContainer">
+            <div class="bs-example">
+                <div style="width: 150px; height: 200px" id="myCarousel" class="carousel slide" data-interval="false" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="active item">
+                            <div align="center" >
+                                <h4>play once</h4>
+                            </div>
+                            <span>Duration:</span>
+                            <input type="text" name="start_time" class="timepickerDayDuration" placeholder="hh:mm:ss" data-default-time="false">
+                            <br/>
+                            <br/>
+                            <span>Time:</span>
+                            <input type="text" name="start_time" class="timepickerDayDuration" placeholder="hh:mm:ss" data-default-time="false">
+                            <br/>
+                            <br/>
+                            <span>Date:</span>
+                            <input class="datepickerScheduler" type="text" type="text">
+                        </div>
+                        <div class="item">
+                            <div align="center" >
+                                <h4>play daily</h4>
+                            </div>
+                            <span>Duration:</span>
+                            <input type="text" name="start_time" class="timepickerDayDuration" placeholder="hh:mm:ss" data-default-time="false">
+                            <br/>
+                            <br/>
+                            <span>Time:</span>
+                            <input type="text" name="start_time" class="timepickerDayDuration" placeholder="hh:mm:ss" data-default-time="false">
+                            <br/>
+                            <br/>
+                            <span>from</span>
+                            <input class="datepickerScheduler" type="text" type="text">
+                            <span>to</span>
+                            <input class="datepickerScheduler" type="text" type="text">
+                        </div>
+                        <div class="item">
+                            <div align="center" >
+                                <h4>play weekly</h4>
+                            </div>
+                            <span>Duration:</span>
+                            <input type="text" name="start_time" class="timepickerDayDuration" placeholder="hh:mm:ss" data-default-time="false">
+                            <br/>
+                            <br/>
+                            <span>Time:</span>
+                            <input type="text" name="start_time" class="timepickerDayDuration" placeholder="hh:mm:ss" data-default-time="false">
+                            <br/>
+                            <br/>
+                            <span>from:</span>
+                            <input class="datepickerScheduler" type="text" type="text">
+                            <span>to:</span>
+                            <input class="datepickerScheduler" type="text" type="text">
+                            <div>
+                                <br/>
+                                <span>Select the days:</span>
+                                <table border="0" width="100%" cellspacing="0" cellpadding="0" align="left">
+                                    <td class="data"><input type="checkbox" value="1">Monday</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="data"><input type="checkbox" value="2">Tuesday
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="data"><input type="checkbox" value="3">Wednesday
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="data"><input type="checkbox" value="4">Thursday
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="data"><input type="checkbox" value="5">Friday
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="data"><input type="checkbox" value="6">Saturday
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="data"><input type="checkbox"  value="7"> Sunday</td></tr>
+                                    </table>
+
+                            </div>
+                        </div>
+                    </div>
+                    <a class="carousel-control left" href="#myCarousel" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <a class="carousel-control right" href="#myCarousel" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </div>
+            </div>
+
         </div>
-        <input style="margin-top: 20px" type="text" name="start_time" class="timepickerDayDuration" placeholder="hh:mm:ss" data-default-time="false">
+
     </div>
     <hr/>
 </div>

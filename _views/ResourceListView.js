@@ -110,7 +110,7 @@ define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backb
                 case 'png': {
                     if (!ext)
                         ext = 'png';
-                    var path = 'https://s3-us-west-2.amazonaws.com/oregon-signage-resources/business' + pepper.getUserData().businessID + '/resources/' + pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + ext;
+                    var path = window.g_protocol + pepper.getUserData().domain + '/Resources/business' +  pepper.getUserData().businessID + '/resources/' + pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + ext;
                     $(Elements.RESOURCE_PREVIEW_VIDEO).hide();
                     $(Elements.RESOURCE_PREVIEW_IMAGE).fadeIn();
                     var $img = $(Elements.RESOURCE_PREVIEW_IMAGE).find('img');
@@ -125,12 +125,12 @@ define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backb
                         ext = 'flv';
                     $(Elements.RESOURCE_PREVIEW_IMAGE).hide();
                     $(Elements.RESOURCE_PREVIEW_VIDEO).fadeIn();
-                    var path = 'https://s3-us-west-2.amazonaws.com/oregon-signage-resources/business' + pepper.getUserData().businessID + '/resources/' + pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + ext;
+                    var path = window.g_protocol + pepper.getUserData().domain + '/Resources/business' +  pepper.getUserData().businessID + '/resources/' + pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + ext;
                     $(Elements.VIDEO_PREVIEW).find('video:nth-child(1)').attr("src",path);
                     break
                 }
                 case 'swf': {
-                    var path = 'https://s3-us-west-2.amazonaws.com/oregon-signage-resources/business363510/resources/14.png';
+                    var path = './_assets/flash.png';
                     $(Elements.RESOURCE_PREVIEW_VIDEO).hide();
                     $(Elements.RESOURCE_PREVIEW_IMAGE).fadeIn();
                     var $img = $(Elements.RESOURCE_PREVIEW_IMAGE).find('img');

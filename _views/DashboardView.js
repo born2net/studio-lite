@@ -80,7 +80,7 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
         _getServerResponseTime: function () {
             var self = this;
 
-            var url = 'https://' + pepper.getUserData().domain + '/WebService/sendCommand.ashx?';
+            var url = window.g_protocol + pepper.getUserData().domain + '/WebService/sendCommand.ashx?';
             var sendDate = (new Date()).getTime();
             $.ajax({
                 //type: "GET", //with response body
@@ -167,7 +167,7 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
         _getRemoteStations: function () {
             var self = this;
             var userData = pepper.getUserData();
-            var url = 'https://' + userData.domain + '/WebService/getStatus.ashx?user=' + userData.userName + '&password=' + userData.userPass + '&callback=?';
+            var url = window.g_protocol + userData.domain + '/WebService/getStatus.ashx?user=' + userData.userName + '&password=' + userData.userPass + '&callback=?';
             $.getJSON(url,
                 function (data) {
                     var s64 = data['ret'];

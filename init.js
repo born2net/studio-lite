@@ -25,6 +25,7 @@ require.config({
         'minicolors': '_common/_js/minicolors/jquery.minicolors',
         'colorpicker': '_common/_js/gradient/colorpicker',
         'timepicker': '_common/_js/timepicker/bootstrap-timepicker',
+        'datepicker': '_common/_js/datepicker/bootstrap-datepicker',
         'highcharts': '_common/_js/highcharts/highcharts',
         'flashdetect': '_common/_js/flashdetect/flashdetect',
         'TimelineMax': '_common/_js/gsap/TimelineMax',
@@ -169,6 +170,9 @@ require.config({
         },
         'timepicker': {
             exports: 'timepicker'
+        },
+        'datepicker': {
+            exports: 'datepicker'
         },
         'AppAuth': {
             deps: ['RC4', 'Cookie']

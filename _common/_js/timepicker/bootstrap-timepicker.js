@@ -3,6 +3,7 @@
  *
  * Copyright 2013 Joris de Wit
  *
+ * http://jdewit.github.io/bootstrap-timepicker/
  * Contributors https://github.com/jdewit/bootstrap-timepicker/graphs/contributors
  *
  * For the full copyright and license information, please view the LICENSE
@@ -1056,7 +1057,7 @@
         }
     };
 
-    //TIMEPICKER PLUGIN DEFINITION
+    //TIMEPICKER PLUGIN DEFINITIONS
     $.fn.timepicker = function(option) {
         var args = Array.apply(null, arguments);
         args.shift();

@@ -58,6 +58,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'datepicker', 
                 self._listenSchedDurationChange();
                 self._listenSchedPriorityChange();
                 self._listenSchedStartTimeChange();
+                self._listenSchedRepeatChange();
                 self._listenDatePicker();
                 self._listenWeekdayChange();
             }
@@ -172,6 +173,22 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'datepicker', 
                 pepper.setCampaignsSchedule(self.m_campaign_timeline_id, 'duration', totalSeconds);
             };
             $(Elements.TIME_PICKER_DURATION_INPUT).on("hide.timepicker", self.m_schedChangeDurationHandler);
+        },
+
+        /**
+         Listen to when sched repeat on the carousel changed
+         @method _listenSchedRepeatChange
+         **/
+        _listenSchedRepeatChange: function(){
+            var self = this;
+            self.m_schedChangeRepeatHandler = _.debounce(function (e) {
+                if (!self.m_selected)
+                    return;
+                var carouselIndex = $(Elements.SCHEDULER_REPEAT_MODE + ' .active').index(Elements.SCHEDULER_REPEAT_MODE + ' .item');
+                //log(carouselIndex + ' ' + self.m_campaign_timeline_id);
+                pepper.setCampaignsSchedule(self.m_campaign_timeline_id, 'repeat_type', carouselIndex);
+            },500, false);
+            $(Elements.SCHEDULER_REPEAT_MODE).on('slid.bs.carousel', self.m_schedChangeRepeatHandler);
         },
 
         /**
@@ -516,6 +533,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'datepicker', 
             $(Elements.TIME_PICKER_TIME_INPUT).off('hide.timepicker', self.m_schedChangeStartTimeHandler);
             $(Elements.CLASS_SCHEDULE_PRIORITIES).off('click', self.m_schedChangePriorityHandler);
             $(Elements.CLASS_SCEDULE_DAY).off("change", self.m_schedWeekdayHandler);
+            $(Elements.SCHEDULER_REPEAT_MODE).off('slid.bs.carousel', self.m_schedChangeRepeatHandler);
             $(Elements.CLASS_TIME_PICKER_SCHEDULER).datepicker().off("hide", self.m_listenDatePickerHandler);
 
             $.each(self, function (k) {

@@ -798,6 +798,13 @@ iframe {
     font-size: 15px;
 }
 
+.carousel-inner > .item {
+    -webkit-transition: 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) left;
+    -moz-transition: 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) left;
+    -o-transition: 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) left;
+    transition: 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) left
+}
+
 /************************************
  StudioLite class styling
  ************************************/

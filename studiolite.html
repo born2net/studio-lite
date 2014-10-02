@@ -1087,8 +1087,8 @@
             <img class="schedulePriorities" name="1" src="_assets/trip2.png"/>
             <img class="schedulePriorities" name="3" src="_assets/trip3.png"/>
         </div>
-        <hr class="hrThin"/>
-        <span>Start time:</span>
+        <hr class="hrThin schedulerClass"/>
+        <span class="schedulerClass">Start time:</span>
         <br/>
         <input type="text" id="timepickerTimeInput" class="schedulerClass" name="start_time" placeholder="hh:mm:ss" data-default-time="false">
         <br/>
@@ -1101,27 +1101,26 @@
                             <div align="center" >
                                 <h4>play once</h4>
                             </div>
-
-                            <span>On date:</span>
-                            <input id="datepickerSchedulerOnce" class="datepickerScheduler" type="text" type="text">
+                            <span>Start date:</span>
+                            <input id="datepickerSchedulerOnce" name="start_date" class="datepickerScheduler" type="text" type="text">
                         </div>
                         <div class="item">
                             <div align="center" >
                                 <h4>play daily</h4>
                             </div>
-                            <span>from start date:</span>
-                            <input id="datepickerSchedulerDailyStart" class="datepickerScheduler" type="text" type="text">
-                            <span>until end end date:</span>
-                            <input id="datepickerSchedulerDailyEnd" class="datepickerScheduler" type="text" type="text">
+                            <span>Start date:</span>
+                            <input id="datepickerSchedulerDailyStart" name="start_date" class="datepickerScheduler" type="text" type="text">
+                            <span>End date:</span>
+                            <input id="datepickerSchedulerDailyEnd" name="end_date" class="datepickerScheduler" type="text" type="text">
                         </div>
                         <div class="item">
                             <div align="center" >
                                 <h4>play weekly</h4>
                             </div>
-                            <span>from start date:</span>
-                            <input id="datepickerSchedulerWeekStart" class="datepickerScheduler" type="text" type="text">
-                            <span>until end end date:</span>
-                            <input id="datepickerSchedulerWeekEnd" class="datepickerScheduler" type="text" type="text">
+                            <span>Start date:</span>
+                            <input id="datepickerSchedulerWeekStart" name="start_date" class="datepickerScheduler" type="text" type="text">
+                            <span>End date:</span>
+                            <input id="datepickerSchedulerWeekEnd" name="end_date" class="datepickerScheduler" type="text" type="text">
                             <div>
                                 <br/>
                                 <span>Select the days:</span>
@@ -1689,7 +1688,7 @@
 </div>
 </div>
 <div id="footer"><br>
-    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.0.204 </span>
+    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.1.6 </span>
 </div>
 
 

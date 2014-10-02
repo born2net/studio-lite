@@ -273,7 +273,7 @@ Pepper.prototype = {
      @param {Function} i_callBack
      **/
     sendCommand: function (i_command, i_stationId, i_callBack) {
-        var url = 'https://' + pepper.getUserData().domain + '/WebService/sendCommand.ashx?i_user=' + pepper.getUserData().userName + '&i_password=' + pepper.getUserData().userPass + '&i_stationId=' + i_stationId + '&i_command=' + i_command + '&i_param1=' + 'SignageStudioLite' + '&i_param2=' + '&callback=?';
+        var url = window.g_protocol + pepper.getUserData().domain + '/WebService/sendCommand.ashx?i_user=' + pepper.getUserData().userName + '&i_password=' + pepper.getUserData().userPass + '&i_stationId=' + i_stationId + '&i_command=' + i_command + '&i_param1=' + 'SignageStudioLite' + '&i_param2=' + '&callback=?';
         $.getJSON(url, i_callBack);
     },
 
@@ -285,13 +285,12 @@ Pepper.prototype = {
      @param {Function} i_callBack
      **/
     getLocalization: function (i_lang, i_callBack) {
-
-        $.getJSON('https://galaxy.signage.me/WebService/getLocalList.ashx?callback=?', function (data) {
+        $.getJSON(window.g_protocol + window.g_masterDomain + '/WebService/getLocalList.ashx?callback=?', function (data) {
             data = _.invert(data);
             if (i_lang == 'zh')
                 i_lang = 'zh-CN';
             var local = data[i_lang];
-            var url = 'https://galaxy.signage.me/WebService/getResourceBundlesJson.ashx?local=' + local + '&bundleList=studiolite&callback=?';
+            var url = window.g_protocol + window.g_masterDomain + '/WebService/getResourceBundlesJson.ashx?local=' + local + '&bundleList=studiolite&callback=?';
             $.getJSON(url, function (data) {
                 i_callBack(data);
             });
@@ -306,7 +305,7 @@ Pepper.prototype = {
      @param {Function} i_callBack
      **/
     sendEvent: function (i_eventName, i_stationId, i_callBack) {
-        var url = 'https://' + pepper.getUserData().domain + '/WebService/sendCommand.ashx?i_user=' + pepper.getUserData().userName + '&i_password=' + pepper.getUserData().userPass + '&i_stationId=' + i_stationId + '&i_command=event&i_param1=' + i_eventName + '&i_param2=' + '&callback=?';
+        var url = window.g_protocol + pepper.getUserData().domain + '/WebService/sendCommand.ashx?i_user=' + pepper.getUserData().userName + '&i_password=' + pepper.getUserData().userPass + '&i_stationId=' + i_stationId + '&i_command=event&i_param1=' + i_eventName + '&i_param2=' + '&callback=?';
         $.getJSON(url, i_callBack);
     },
 
@@ -320,9 +319,9 @@ Pepper.prototype = {
      @return {String} image path url
      **/
     sendSnapshot: function (i_fileName, i_quality, i_stationId, i_callBack) {
-        var url = 'https://' + pepper.getUserData().domain + '/WebService/sendCommand.ashx?i_user=' + pepper.getUserData().userName + '&i_password=' + pepper.getUserData().userPass + '&i_stationId=' + i_stationId + '&i_command=' + 'captureScreen2' + '&i_param1=' + i_fileName + '&i_param2=' + i_quality + '&callback=?';
+        var url = window.g_protocol + pepper.getUserData().domain + '/WebService/sendCommand.ashx?i_user=' + pepper.getUserData().userName + '&i_password=' + pepper.getUserData().userPass + '&i_stationId=' + i_stationId + '&i_command=' + 'captureScreen2' + '&i_param1=' + i_fileName + '&i_param2=' + i_quality + '&callback=?';
         $.getJSON(url, i_callBack);
-        var path = 'https://' + pepper.getUserData().domain + '/Snapshots/business' + pepper.getUserData().businessID + "/station" + i_stationId + '/' + i_fileName + '.jpg';
+        var path = window.g_protocol + pepper.getUserData().domain + '/Snapshots/business' + pepper.getUserData().businessID + "/station" + i_stationId + '/' + i_fileName + '.jpg';
         log(path);
         return path;
     },
@@ -340,7 +339,7 @@ Pepper.prototype = {
         var playerParams = rc4v2.encrypt(i_playerParams, '8547963624824263');
         var domain = pepper.getUserData().domain;
         var eri = pepper.getUserData().eri;
-        var url = 'https://' + domain + '/WebService/SignagePlayerApp.html?eri=' + eri + '&playerParams=' + playerParams + '&banner=' + i_bannerMode;
+        var url = window.g_protocol + domain + '/WebService/SignagePlayerApp.html?eri=' + eri + '&playerParams=' + playerParams + '&banner=' + i_bannerMode;
         log(playerParams);
         return url;
     },
@@ -967,6 +966,19 @@ Pepper.prototype = {
         var self = this;
         var recCampaignBoard = self.m_msdb.table_campaign_boards().getRec(i_campaign_board_id);
         return recCampaignBoard.campaign_id;
+    },
+
+    /**
+     get a Campaign's play mode (sceduler / sequencer) from timeline id
+     @method getCampaignPlayModeFromTimeline
+     @param {Number} i_campaign_timeline_id
+     @return {Number} play mode
+     **/
+    getCampaignPlayModeFromTimeline: function(i_campaign_timeline_id){
+        var recTimeline = pepper.getCampaignTimelineRecord(i_campaign_timeline_id);
+        var campaign_id = recTimeline.campaign_id;
+        var recCampaign = pepper.getCampaignRecord(campaign_id);
+        return String(recCampaign['campaign_playlist_mode']);
     },
 
     /**

@@ -7,7 +7,7 @@
  @constructor
  @return {Object} instantiated Timeline
  **/
-define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'XDate'], function ($, Backbone, Channel, ScreenTemplateFactory, XDate) {
+define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'datepicker', 'XDate'], function ($, Backbone, Channel, ScreenTemplateFactory, datepicker, Xdate) {
 
     /**
      Custom event fired when a timeline is selected. If a timeline is not of the one selected,
@@ -46,14 +46,19 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'XDate'], func
             self._populateChannels();
             self._populateTimeline();
             self._listenInputChange();
-            self._listenSchedDurationChange();
-            self._listenSchedPriorityChange();
-            self._listenSchedStartTimeChange();
             self._listenReset();
             self._listenViewerRemoved();
             self._onTimelineSelected();
             pepper.listenWithNamespace(Pepper.TEMPLATE_VIEWER_EDITED, self, $.proxy(self._templateViewerEdited, self));
             pepper.listenWithNamespace(Pepper.NEW_CHANNEL_ADDED, self, $.proxy(self._channelAdded, self));
+
+            var campaignPlayMode = pepper.getCampaignPlayModeFromTimeline(self.m_campaign_timeline_id);
+            if (campaignPlayMode == BB.CONSTS.SCHEDULER_MODE){
+                self._listenSchedDurationChange();
+                self._listenSchedPriorityChange();
+                self._listenSchedStartTimeChange();
+                self._listenDatePicker();
+            }
         },
 
         /**
@@ -106,6 +111,27 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'XDate'], func
             $(Elements.TIME_LINE_PROP_TITLE_ID).on("input", self.m_inputChangeHandler);
         },
 
+
+        /**
+         Listen to changes in timeline duration changes with respect to the scheduler
+         @method _listenDatePicker
+         @return none
+         **/
+        _listenDatePicker: function () {
+            var self = this;
+            self.m_listenDatePickerHandler = function (e) {
+                if (!self.m_selected)
+                    return;
+                var field = $(e.target).attr('name');
+                log(e.date + ' ' + e.timeStamp);
+                var xd = new XDate(e.date);
+                var date = xd.toString('MM/dd/yyyy');
+                pepper.setCampaignsSchedule(self.m_campaign_timeline_id, field, date);
+            };
+            $(Elements.CLASS_TIME_PICKER_SCHEDULER).datepicker().on("hide", self.m_listenDatePickerHandler);
+
+        },
+
         /**
          Listen to changes in timeline duration changes with respect to the scheduler
          @method _listenSchedDurationChange
@@ -127,10 +153,29 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'XDate'], func
         },
 
         /**
+         Listen to changes in scheduler start time playback values
+         @method _listenSchedStartTimeChange
+         **/
+        _listenSchedStartTimeChange: function () {
+            var self = this;
+            self.m_schedChangeStartTimeHandler = function (e) {
+                if (!self.m_selected)
+                    return;
+                var totalSeconds = pepper.formatObjectToSeconds({
+                    hours: e.time.hours,
+                    minutes: e.time.minutes,
+                    seconds: e.time.seconds
+                });
+                pepper.setCampaignsSchedule(self.m_campaign_timeline_id, 'start_time', totalSeconds);
+            };
+            $(Elements.TIME_PICKER_TIME_INPUT).on('hide.timepicker', self.m_schedChangeStartTimeHandler);
+        },
+
+        /**
          Listen to changes in scheduler priority values
          @method _listenSchedPriorityChange
          **/
-        _listenSchedPriorityChange: function(){
+        _listenSchedPriorityChange: function () {
             var self = this;
             self.m_schedChangePriorityHandler = function (e) {
                 if (!self.m_selected)
@@ -146,19 +191,6 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'XDate'], func
                 }
             };
             $(Elements.CLASS_SCHEDULE_PRIORITIES).on('click', self.m_schedChangePriorityHandler);
-        },
-
-        /**
-         Listen to changes in scheduler start time playback values
-         @method _listenSchedStartTimeChange
-         **/
-        _listenSchedStartTimeChange: function(){
-            var self = this;
-            self.m_schedChangeStartTimeHandler = function (e) {
-                if (!self.m_selected)
-                    return;
-            };
-            $(Elements.TIME_PICKER_TIME_INPUT).on('click', self.m_schedChangeStartTimeHandler);
         },
 
         /**
@@ -196,7 +228,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'XDate'], func
             var recTimeline = pepper.getCampaignTimelineRecord(self.m_campaign_timeline_id);
             $(Elements.TIME_LINE_PROP_TITLE_ID).val(recTimeline['timeline_name']);
             self._populateTimelineLength();
-            self._populateTimelinePlayMode(recTimeline);
+            self._populateTimelinePlayMode();
         },
 
         /**
@@ -204,11 +236,11 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'XDate'], func
          @method _populateScheduler
          @params {Number} i_timeline_id
          **/
-        _populateScheduler: function (i_timeline_id) {
+        _populateScheduler: function () {
             var self = this;
             if ($(Elements.TIME_PICKER_DURATION_INPUT).timepicker == undefined)
                 return;
-            var recSchedule = pepper.getCampaignsSchedule(i_timeline_id);
+            var recSchedule = pepper.getCampaignsSchedule(self.m_campaign_timeline_id);
             $(Elements.SCHEDULER_REPEAT_MODE).carousel(Number(recSchedule.repeat_type));
             var duration = pepper.formatSecondsToObject(recSchedule.duration);
             var startTime = pepper.formatSecondsToObject(recSchedule.start_time);
@@ -264,11 +296,9 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'XDate'], func
          Populate the timeline depending if running with sequencer or scheduler
          @method _populateTimelinePlayMode
          **/
-        _populateTimelinePlayMode: function (i_recTimeline) {
+        _populateTimelinePlayMode: function () {
             var self = this;
-            var campaign_id = i_recTimeline.campaign_id;
-            var recCampaign = pepper.getCampaignRecord(campaign_id);
-            var campaignMode = String(recCampaign['campaign_playlist_mode']);
+            var campaignMode = pepper.getCampaignPlayModeFromTimeline(self.m_campaign_timeline_id);
             switch (campaignMode) {
                 case BB.CONSTS.SEQUENCER_MODE:
                 {
@@ -284,7 +314,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'XDate'], func
                     $(Elements.TIMELINE_PLAYMODE_LABEL).find('aside').eq(1).show().end().eq(0).hide();
                     $(Elements.CLASS_SCHEDULER_CLASS).show();
                     $(Elements.CLASS_SEQUENCE_CLASS).hide();
-                    self._populateScheduler(i_recTimeline.campaign_timeline_id);
+                    self._populateScheduler();
                     break;
                 }
             }
@@ -461,8 +491,10 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'XDate'], func
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED, self);
             $(Elements.TIME_LINE_PROP_TITLE_ID).off("input", self.m_inputChangeHandler);
             $(Elements.TIME_PICKER_DURATION_INPUT).off("hide.timepicker", self.m_schedChangeDurationHandler);
-            $(Elements.TIME_PICKER_TIME_INPUT).off('click', self.m_schedChangeStartTimeHandler);
+            $(Elements.TIME_PICKER_TIME_INPUT).off('hide.timepicker', self.m_schedChangeStartTimeHandler);
             $(Elements.CLASS_SCHEDULE_PRIORITIES).off('click', self.m_schedChangePriorityHandler);
+            $(Elements.CLASS_TIME_PICKER_SCHEDULER).datepicker().off("hide", self.m_listenDatePickerHandler);
+
             $.each(self, function (k) {
                 self[k] = undefined;
             });

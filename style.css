@@ -706,7 +706,7 @@ iframe {
 
 #schedulePriority img:first-child {
     position: relative;
-    top: 5px; left: 2px;
+    top: 5px; left: 1px;
 }
 
 #schedulePriority img:last-child {

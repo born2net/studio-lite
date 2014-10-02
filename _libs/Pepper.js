@@ -1378,6 +1378,25 @@ Pepper.prototype = {
     },
 
     /**
+     Get campaign schedule for timeline
+     @method setCampaignsSchedule
+     @param {Number} i_campaign_timeline_id
+     @param {Object} i_key
+     @param {Object} i_value
+     **/
+    setCampaignsSchedule: function (i_campaign_timeline_id, i_key, i_value) {
+        var self = this;
+        $(self.m_msdb.table_campaign_timeline_schedules().getAllPrimaryKeys()).each(function (k, campaign_timeline_schedule_id) {
+            var recCampaignTimelineSchedule = self.m_msdb.table_campaign_timeline_schedules().getRec(campaign_timeline_schedule_id);
+            if (recCampaignTimelineSchedule.campaign_timeline_id == i_campaign_timeline_id){
+                self.m_msdb.table_campaign_timeline_schedules().openForEdit(campaign_timeline_schedule_id);
+                var recScheduler = self.m_msdb.table_campaign_timeline_schedules().getRec(campaign_timeline_schedule_id);
+                recScheduler[i_key] = i_value;
+            }
+        });
+    },
+
+    /**
      Set the sequence index of a timeline in campaign. If timeline is not found in sequencer, we insert it with the supplied i_sequenceIndex
      @method setCampaignTimelineSequencerIndex
      @param {Number} i_campaign_id
@@ -2126,6 +2145,21 @@ Pepper.prototype = {
     },
 
     /**
+     Format an object to seconds
+     @method formatObjectToSeconds
+     @param {Object} i_object with hours minutes and seconds key / values
+     @return {Number}
+     **/
+    formatObjectToSeconds: function (i_object) {
+        var seconds = i_object.seconds;
+        var minutes = i_object.minutes;
+        var hours = i_object.hours;
+        hours = hours * 3600;
+        minutes = minutes * 60;
+        return seconds + minutes + hours;
+    },
+
+    /**
      Format a seconds value into an object broken into hours / minutes / seconds
      @method formatSecondsToObject
      @param {Number} i_totalSeconds
@@ -2151,18 +2185,6 @@ Pepper.prototype = {
             minutes: minutes,
             seconds: seconds,
             totalInSeconds: totalInSeconds
-        }
-        playbackLength.getMonth = function(){
-            return null;
-        };
-        playbackLength.getHours = function(){
-            return this.hours;
-        };
-        playbackLength.getMinutes = function(){
-            return this.minutes;
-        };
-        playbackLength.getSeconds = function(){
-            return this.seconds;
         };
         return playbackLength;
     },

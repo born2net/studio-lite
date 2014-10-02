@@ -704,6 +704,20 @@ iframe {
     width: 105px;
 }
 
+#schedulePriority img:first-child {
+    position: relative;
+    top: 5px; left: 2px;
+}
+
+#schedulePriority img:last-child {
+    position: relative;
+    top: -4px; left: -2px;
+}
+
+#schedulePriority img:hover{
+    cursor: pointer;
+}
+
 #sceneProcessing {
     display: none;
     position: fixed;

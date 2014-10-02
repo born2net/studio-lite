@@ -32,6 +32,9 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'XDate'], func
             self.m_ONCE = '0';
             self.m_DAILY = '1';
             self.m_WEEKLY = '2';
+            self.m_PRIORITY_LOW = 2;
+            self.m_PRIORITY_MEDIUM = 1;
+            self.m_PRIORITY_HIGH = 3;
             self.m_channels = {}; // hold references to all created channel instances
             self.m_screenTemplate = undefined;
             self.m_campaign_timeline_id = self.options.campaignTimelineID;
@@ -43,6 +46,9 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'XDate'], func
             self._populateChannels();
             self._populateTimeline();
             self._listenInputChange();
+            self._listenSchedDurationChange();
+            self._listenSchedPriorityChange();
+            self._listenSchedStartTimeChange();
             self._listenReset();
             self._listenViewerRemoved();
             self._onTimelineSelected();
@@ -56,24 +62,8 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'XDate'], func
          **/
         _listenReset: function () {
             var self = this;
-            BB.comBroker.listenWithNamespace(BB.EVENTS.CAMPAIGN_RESET, self, function(){
+            BB.comBroker.listenWithNamespace(BB.EVENTS.CAMPAIGN_RESET, self, function () {
                 self._reset();
-            });
-        },
-
-        /**
-         Reset current state
-         @method _reset
-         **/
-        _reset: function(){
-            var self = this;
-            pepper.stopListenWithNamespace(Pepper.TEMPLATE_VIEWER_EDITED, self);
-            pepper.stopListenWithNamespace(Pepper.NEW_CHANNEL_ADDED, self);
-            BB.comBroker.stopListenWithNamespace(BB.EVENTS.CAMPAIGN_RESET, self);
-            BB.comBroker.stopListenWithNamespace(BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED, self);
-            $(Elements.TIME_LINE_PROP_TITLE_ID).off("input", self.m_inputChangeHandler);
-            $.each(self, function (k) {
-                self[k] = undefined;
             });
         },
 
@@ -110,10 +100,65 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'XDate'], func
                 var text = $(Elements.TIME_LINE_PROP_TITLE_ID).val();
                 if (BB.lib.isEmpty(text))
                     return;
-                text = BB.lib.cleanProbCharacters(text,1);
+                text = BB.lib.cleanProbCharacters(text, 1);
                 pepper.setCampaignTimelineRecord(self.m_campaign_timeline_id, 'timeline_name', text);
             }, 150, false);
             $(Elements.TIME_LINE_PROP_TITLE_ID).on("input", self.m_inputChangeHandler);
+        },
+
+        /**
+         Listen to changes in timeline duration changes with respect to the scheduler
+         @method _listenSchedDurationChange
+         @return none
+         **/
+        _listenSchedDurationChange: function () {
+            var self = this;
+            self.m_schedChangeDurationHandler = function (e) {
+                if (!self.m_selected)
+                    return;
+                var totalSeconds = pepper.formatObjectToSeconds({
+                    hours: e.time.hours,
+                    minutes: e.time.minutes,
+                    seconds: e.time.seconds
+                });
+                pepper.setCampaignsSchedule(self.m_campaign_timeline_id, 'duration', totalSeconds);
+            };
+            $(Elements.TIME_PICKER_DURATION_INPUT).on("hide.timepicker", self.m_schedChangeDurationHandler);
+        },
+
+        /**
+         Listen to changes in scheduler priority values
+         @method _listenSchedPriorityChange
+         **/
+        _listenSchedPriorityChange: function(){
+            var self = this;
+            self.m_schedChangePriorityHandler = function (e) {
+                if (!self.m_selected)
+                    return;
+                var priority = $(e.target).attr('name');
+                pepper.setCampaignsSchedule(self.m_campaign_timeline_id, 'priorty', priority);
+                if (Number(priority) == self.m_PRIORITY_LOW) {
+                    $(Elements.SCHEDULE_PRIORITY).find('img').eq(1).fadeTo('fast', 0.5).end().eq(2).fadeTo('fast', 0.5);
+                } else if (Number(priority) == self.m_PRIORITY_MEDIUM) {
+                    $(Elements.SCHEDULE_PRIORITY).find('img').eq(1).fadeTo('fast', 1).end().eq(2).fadeTo('fast', 0.5);
+                } else {
+                    $(Elements.SCHEDULE_PRIORITY).find('img').eq(1).fadeTo('fast', 1).end().eq(2).fadeTo('fast', 1);
+                }
+            };
+            $(Elements.CLASS_SCHEDULE_PRIORITIES).on('click', self.m_schedChangePriorityHandler);
+        },
+
+        /**
+         Listen to changes in scheduler start time playback values
+         @method _listenSchedStartTimeChange
+         **/
+        _listenSchedStartTimeChange: function(){
+            var self = this;
+            self.m_schedChangeStartTimeHandler = function (e) {
+                if (!self.m_selected)
+                    return;
+            };
+            $(Elements.TIME_PICKER_TIME_INPUT).on('click', self.m_schedChangeStartTimeHandler);
         },
 
         /**
@@ -161,39 +206,51 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'XDate'], func
          **/
         _populateScheduler: function (i_timeline_id) {
             var self = this;
-            if ($(Elements.TIME_PICKER_DURATION_INPUT).timepicker== undefined)
+            if ($(Elements.TIME_PICKER_DURATION_INPUT).timepicker == undefined)
                 return;
             var recSchedule = pepper.getCampaignsSchedule(i_timeline_id);
             $(Elements.SCHEDULER_REPEAT_MODE).carousel(Number(recSchedule.repeat_type));
             var duration = pepper.formatSecondsToObject(recSchedule.duration);
             var startTime = pepper.formatSecondsToObject(recSchedule.start_time);
-            $(Elements.TIME_PICKER_DURATION_INPUT).timepicker('setTime',duration.hours + ':' + duration.minutes + ':' + duration.seconds);
-            $(Elements.TIME_PICKER_TIME_INPUT).timepicker('setTime',startTime.hours + ':' + startTime.minutes + ':' + startTime.seconds);
+            $(Elements.TIME_PICKER_DURATION_INPUT).timepicker('setTime', duration.hours + ':' + duration.minutes + ':' + duration.seconds);
+            $(Elements.TIME_PICKER_TIME_INPUT).timepicker('setTime', startTime.hours + ':' + startTime.minutes + ':' + startTime.seconds);
 
-            switch (String(recSchedule.repeat_type)){
-                case self.m_ONCE: {
+            if (recSchedule.priorty == self.m_PRIORITY_LOW) {
+                $(Elements.SCHEDULE_PRIORITY).find('img').eq(1).fadeTo('fast', 0.5).end().eq(2).fadeTo('fast', 0.5);
+            } else if (recSchedule.priorty == self.m_PRIORITY_MEDIUM) {
+                $(Elements.SCHEDULE_PRIORITY).find('img').eq(1).fadeTo('fast', 1).end().eq(2).fadeTo('fast', 0.5);
+            } else {
+                $(Elements.SCHEDULE_PRIORITY).find('img').eq(1).fadeTo('fast', 1).end().eq(2).fadeTo('fast', 1);
+            }
+
+            $(Elements.SCHEDULE_PRIORITY)
+            switch (String(recSchedule.repeat_type)) {
+                case self.m_ONCE:
+                {
                     var date = recSchedule.start_date.split(' ')[0];
                     $(Elements.DATE_PICKER_SCHEDULER_ONCE).datepicker('setDate', date);
                     break;
                 }
-                case self.m_DAILY: {
+                case self.m_DAILY:
+                {
                     var startDate = recSchedule.start_date.split(' ')[0];
                     var endDate = recSchedule.end_date.split(' ')[0];
                     $(Elements.DATE_PICKER_SCHEDULER_DAILY_START).datepicker('setDate', startDate);
                     $(Elements.DATE_PICKER_SCHEDULER_DAILY_END).datepicker('setDate', endDate);
                     break;
                 }
-                case self.m_WEEKLY: {
+                case self.m_WEEKLY:
+                {
                     var startDate = recSchedule.start_date.split(' ')[0];
                     var endDate = recSchedule.end_date.split(' ')[0];
                     var weekDays = recSchedule.week_days;
                     var elDays = $(Elements.SCHEDUALED_DAYS);
-                    [1,2,4,8,16,32,64].forEach(function(v,i){
+                    [1, 2, 4, 8, 16, 32, 64].forEach(function (v, i) {
                         var n = weekDays & v;
-                        if (n==v) {
-                            $(elDays).find('input').eq(i).prop('checked',true);
+                        if (n == v) {
+                            $(elDays).find('input').eq(i).prop('checked', true);
                         } else {
-                            $(elDays).find('input').eq(i).prop('checked',false);
+                            $(elDays).find('input').eq(i).prop('checked', false);
                         }
                     });
                     $(Elements.DATE_PICKER_SCHEDULER_WEEK_START).datepicker('setDate', startDate);
@@ -212,15 +269,17 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'XDate'], func
             var campaign_id = i_recTimeline.campaign_id;
             var recCampaign = pepper.getCampaignRecord(campaign_id);
             var campaignMode = String(recCampaign['campaign_playlist_mode']);
-            switch (campaignMode){
-                case BB.CONSTS.SEQUENCER_MODE: {
+            switch (campaignMode) {
+                case BB.CONSTS.SEQUENCER_MODE:
+                {
                     $(Elements.TIMELINE_WRAP).show();
                     $(Elements.TIMELINE_PLAYMODE_LABEL).find('aside').eq(0).show().end().eq(1).hide();
                     $(Elements.CLASS_SCHEDULER_CLASS).hide();
                     $(Elements.CLASS_SEQUENCE_CLASS).show();
                     break;
                 }
-                case BB.CONSTS.SCHEDULER_MODE: {
+                case BB.CONSTS.SCHEDULER_MODE:
+                {
                     $(Elements.TIMELINE_WRAP).hide();
                     $(Elements.TIMELINE_PLAYMODE_LABEL).find('aside').eq(1).show().end().eq(0).hide();
                     $(Elements.CLASS_SCHEDULER_CLASS).show();
@@ -315,9 +374,9 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'XDate'], func
          **/
         _listenViewerRemoved: function () {
             var self = this;
-            BB.comBroker.listenWithNamespace(BB.EVENTS.VIEWER_REMOVED, self, function(e){
+            BB.comBroker.listenWithNamespace(BB.EVENTS.VIEWER_REMOVED, self, function (e) {
                 for (var channel in self.m_channels) {
-                    if (e.edata.campaign_timeline_chanel_id == channel){
+                    if (e.edata.campaign_timeline_chanel_id == channel) {
                         self.m_channels[channel].deleteChannel();
                         delete self.m_channels[channel];
                         break;
@@ -332,7 +391,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'XDate'], func
          @method _createTimelineUI
          @param {Object} i_screenProps template properties object
          @return none
-        _createTimelineUI: function (i_screenProps) {
+         _createTimelineUI: function (i_screenProps) {
             var self = this;
 
             var screenTemplateData = {
@@ -384,11 +443,30 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'XDate'], func
          Return the view stack index this timeline occupies in the timelineViewStack manager.
          @method getStackViewID
          @return {Number} m_stackViewID
-        getStackViewID: function () {
+         getStackViewID: function () {
             var self = this;
             return self.m_stackViewID;
         },
          **/
+
+        /**
+         Reset current state
+         @method _reset
+         **/
+        _reset: function () {
+            var self = this;
+            pepper.stopListenWithNamespace(Pepper.TEMPLATE_VIEWER_EDITED, self);
+            pepper.stopListenWithNamespace(Pepper.NEW_CHANNEL_ADDED, self);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.CAMPAIGN_RESET, self);
+            BB.comBroker.stopListenWithNamespace(BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED, self);
+            $(Elements.TIME_LINE_PROP_TITLE_ID).off("input", self.m_inputChangeHandler);
+            $(Elements.TIME_PICKER_DURATION_INPUT).off("hide.timepicker", self.m_schedChangeDurationHandler);
+            $(Elements.TIME_PICKER_TIME_INPUT).off('click', self.m_schedChangeStartTimeHandler);
+            $(Elements.CLASS_SCHEDULE_PRIORITIES).off('click', self.m_schedChangePriorityHandler);
+            $.each(self, function (k) {
+                self[k] = undefined;
+            });
+        },
 
         /**
          The timeline hold references to all of the channels it creates that exist within it.
@@ -420,7 +498,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'XDate'], func
                 self.m_channels[channel].deleteChannel();
                 delete self.m_channels[channel];
             }
-           self._reset();
+            self._reset();
         }
     });
 

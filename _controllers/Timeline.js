@@ -34,6 +34,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'datepicker', 
             self.m_WEEKLY = '2';
             self.m_PRIORITY_LOW = 2;
             self.m_PRIORITY_MEDIUM = 1;
+            self.m_WEEKDAYS = [1, 2, 4, 8, 16, 32, 64];
             self.m_PRIORITY_HIGH = 3;
             self.m_channels = {}; // hold references to all created channel instances
             self.m_screenTemplate = undefined;
@@ -53,11 +54,12 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'datepicker', 
             pepper.listenWithNamespace(Pepper.NEW_CHANNEL_ADDED, self, $.proxy(self._channelAdded, self));
 
             var campaignPlayMode = pepper.getCampaignPlayModeFromTimeline(self.m_campaign_timeline_id);
-            if (campaignPlayMode == BB.CONSTS.SCHEDULER_MODE){
+            if (campaignPlayMode == BB.CONSTS.SCHEDULER_MODE) {
                 self._listenSchedDurationChange();
                 self._listenSchedPriorityChange();
                 self._listenSchedStartTimeChange();
                 self._listenDatePicker();
+                self._listenWeekdayChange();
             }
         },
 
@@ -123,13 +125,33 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'datepicker', 
                 if (!self.m_selected)
                     return;
                 var field = $(e.target).attr('name');
-                log(e.date + ' ' + e.timeStamp);
                 var xd = new XDate(e.date);
                 var date = xd.toString('MM/dd/yyyy');
                 pepper.setCampaignsSchedule(self.m_campaign_timeline_id, field, date);
             };
             $(Elements.CLASS_TIME_PICKER_SCHEDULER).datepicker().on("hide", self.m_listenDatePickerHandler);
 
+        },
+
+        /**
+         Listen weekdays change in scheduler
+         @method _listenWeekdayChange
+         @param {Number} i_playerData
+         @return {Number} Unique clientId.
+         **/
+        _listenWeekdayChange: function () {
+            var self = this;
+            self.m_schedWeekdayHandler = function (e) {
+                if (!self.m_selected)
+                    return;
+                var weekBits = 0;
+                $(Elements.SCHEDUALED_DAYS).find('input').each(function (i, el) {
+                    if ($(el).prop('checked'))
+                        weekBits = weekBits + self.m_WEEKDAYS[i];
+                });
+                pepper.setCampaignsSchedule(self.m_campaign_timeline_id, 'week_days', weekBits);
+            };
+            $(Elements.CLASS_SCEDULE_DAY).on("change", self.m_schedWeekdayHandler);
         },
 
         /**
@@ -277,7 +299,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'datepicker', 
                     var endDate = recSchedule.end_date.split(' ')[0];
                     var weekDays = recSchedule.week_days;
                     var elDays = $(Elements.SCHEDUALED_DAYS);
-                    [1, 2, 4, 8, 16, 32, 64].forEach(function (v, i) {
+                    self.m_WEEKDAYS.forEach(function (v, i) {
                         var n = weekDays & v;
                         if (n == v) {
                             $(elDays).find('input').eq(i).prop('checked', true);
@@ -493,6 +515,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'datepicker', 
             $(Elements.TIME_PICKER_DURATION_INPUT).off("hide.timepicker", self.m_schedChangeDurationHandler);
             $(Elements.TIME_PICKER_TIME_INPUT).off('hide.timepicker', self.m_schedChangeStartTimeHandler);
             $(Elements.CLASS_SCHEDULE_PRIORITIES).off('click', self.m_schedChangePriorityHandler);
+            $(Elements.CLASS_SCEDULE_DAY).off("change", self.m_schedWeekdayHandler);
             $(Elements.CLASS_TIME_PICKER_SCHEDULER).datepicker().off("hide", self.m_listenDatePickerHandler);
 
             $.each(self, function (k) {

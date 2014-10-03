@@ -263,7 +263,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var campaignIDs = pepper.getCampaignIDs();
             if (campaignIDs.length == 0)
                 pepper.removeAllBoards();
-
             self.m_selectedCampaignID = -1;
             self.m_propertiesPanel.selectView(Elements.DASHBOARD_PROPERTIES);
         },

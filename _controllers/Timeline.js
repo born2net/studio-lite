@@ -185,7 +185,6 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'datepicker', 
                 if (!self.m_selected)
                     return;
                 var carouselIndex = $(Elements.SCHEDULER_REPEAT_MODE + ' .active').index(Elements.SCHEDULER_REPEAT_MODE + ' .item');
-                //log(carouselIndex + ' ' + self.m_campaign_timeline_id);
                 pepper.setCampaignsSchedule(self.m_campaign_timeline_id, 'repeat_type', carouselIndex);
             },500, false);
             $(Elements.SCHEDULER_REPEAT_MODE).on('slid.bs.carousel', self.m_schedChangeRepeatHandler);
@@ -562,6 +561,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'datepicker', 
             var self = this;
             var boardTemplateID = pepper.getGlobalTemplateIdOfTimeline(self.m_campaign_timeline_id);
             pepper.removeTimelineFromCampaign(self.m_campaign_timeline_id);
+            pepper.removeSchedulerFromTime(self.m_campaign_timeline_id);
             var campaignTimelineBoardTemplateID = pepper.removeBoardTemplateFromTimeline(self.m_campaign_timeline_id);
             pepper.removeBoardTemplate(boardTemplateID);
             pepper.removeTimelineBoardViewerChannels(campaignTimelineBoardTemplateID);

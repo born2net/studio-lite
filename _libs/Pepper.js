@@ -86,6 +86,16 @@ Pepper.TEMPLATE_VIEWER_EDITED = 'TEMPLATE_VIEWER_EDITED';
 Pepper.TIMELINE_DELETED = 'TIMELINE_DELETED';
 
 /**
+ Custom event fired when a scheduale removed from timeline
+ @event Pepper.TIMELINE_SCHEDULE_DELETED
+ @param {This} caller
+ @param {Event}
+ @static
+ @final
+ **/
+Pepper.TIMELINE_SCHEDULE_DELETED = 'TIMELINE_SCHEDULE_DELETED';
+
+/**
  Custom event fired when a new player (aka block) was created
  @event Pepper.NEW_PLAYER_CREATED
  @param {This} caller
@@ -974,7 +984,7 @@ Pepper.prototype = {
      @param {Number} i_campaign_timeline_id
      @return {Number} play mode
      **/
-    getCampaignPlayModeFromTimeline: function(i_campaign_timeline_id){
+    getCampaignPlayModeFromTimeline: function (i_campaign_timeline_id) {
         var recTimeline = pepper.getCampaignTimelineRecord(i_campaign_timeline_id);
         var campaign_id = recTimeline.campaign_id;
         var recCampaign = pepper.getCampaignRecord(campaign_id);
@@ -1400,7 +1410,7 @@ Pepper.prototype = {
         var self = this;
         $(self.m_msdb.table_campaign_timeline_schedules().getAllPrimaryKeys()).each(function (k, campaign_timeline_schedule_id) {
             var recCampaignTimelineSchedule = self.m_msdb.table_campaign_timeline_schedules().getRec(campaign_timeline_schedule_id);
-            if (recCampaignTimelineSchedule.campaign_timeline_id == i_campaign_timeline_id){
+            if (recCampaignTimelineSchedule.campaign_timeline_id == i_campaign_timeline_id) {
                 self.m_msdb.table_campaign_timeline_schedules().openForEdit(campaign_timeline_schedule_id);
                 var recScheduler = self.m_msdb.table_campaign_timeline_schedules().getRec(campaign_timeline_schedule_id);
                 recScheduler[i_key] = i_value;
@@ -1440,6 +1450,33 @@ Pepper.prototype = {
             recCampaignTimelineSequence.campaign_id = i_campaign_id;
             table_campaign_timeline_sequences.addRecord(recCampaignTimelineSequence);
         }
+    },
+
+    /**
+     Create a campaign timelime scheduler record for new timeline
+     @method createCampaignTimelineScheduler
+     @param {Number} i_campaign_id
+     @param {Number} i_campaign_timeline_id
+     @return none
+     **/
+    createCampaignTimelineScheduler: function (i_campaign_id, i_campaign_timeline_id) {
+        var self = this;
+        var date = new Date();
+        var dateStart = date.getMonth() + 1 + '/' + date.getDate() + '/' +  date.getFullYear() + ' 12:00 AM';
+        var dateEnd = date.getMonth() + 2 + '/' + date.getDate() + '/' +  date.getFullYear() + ' 12:00 AM';
+        var table_campaign_timeline_schedules = self.m_msdb.table_campaign_timeline_schedules();
+        var recCampaignTimelineSchedules = table_campaign_timeline_schedules.createRecord();
+        recCampaignTimelineSchedules.campaign_timeline_id = i_campaign_timeline_id;
+        recCampaignTimelineSchedules.custom_duration = 'True';
+        recCampaignTimelineSchedules.duration = 3600;
+        recCampaignTimelineSchedules.repeat_type = 1;
+        recCampaignTimelineSchedules.week_days = 127;
+        recCampaignTimelineSchedules.conflict = false;
+        recCampaignTimelineSchedules.pattern_name = 'pattern';
+        recCampaignTimelineSchedules.priority = 1;
+        recCampaignTimelineSchedules.start_date = dateStart;
+        recCampaignTimelineSchedules.end_date = dateEnd;
+        table_campaign_timeline_schedules.addRecord(recCampaignTimelineSchedules);
     },
 
     /**
@@ -1804,6 +1841,23 @@ Pepper.prototype = {
         var self = this;
         self.m_msdb.table_campaign_timelines().openForDelete(i_campaign_timeline_id);
         pepper.fire(Pepper['TIMELINE_DELETED'], self, null, i_campaign_timeline_id);
+    },
+
+    /**
+     Remove a schedule from timeline
+     @method removeSchedulerFromTime
+     @param {Number} i_campaign_timeline_id
+     @return none
+     **/
+    removeSchedulerFromTime: function (i_campaign_timeline_id) {
+        var self = this;
+        $(self.m_msdb.table_campaign_timeline_schedules().getAllPrimaryKeys()).each(function (k, campaign_timeline_schedule_id) {
+            var recCampaignTimelineSchedule = self.m_msdb.table_campaign_timeline_schedules().getRec(campaign_timeline_schedule_id);
+            if (recCampaignTimelineSchedule.campaign_timeline_id == i_campaign_timeline_id) {
+                self.m_msdb.table_campaign_timeline_schedules().openForDelete(campaign_timeline_schedule_id);
+                pepper.fire(Pepper['TIMELINE_SCHEDULE_DELETED'], self, null, i_campaign_timeline_id);
+            }
+        });
     },
 
     /**

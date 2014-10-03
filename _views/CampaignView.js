@@ -245,6 +245,7 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
                     campaign_timeline_id = pepper.createNewTimeline(self.m_selected_campaign_id);
                     pepper.setCampaignTimelineSequencerIndex(self.m_selected_campaign_id, campaign_timeline_id, 0);
                     pepper.setTimelineTotalDuration(campaign_timeline_id, '0');
+                    pepper.createCampaignTimelineScheduler(self.m_selected_campaign_id, campaign_timeline_id);
 
                     var campaign_timeline_board_template_id = pepper.assignTemplateToTimeline(campaign_timeline_id, board_template_id, campaign_board_id);
                     var channels = pepper.createTimelineChannels(campaign_timeline_id, viewers);

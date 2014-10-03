@@ -242,6 +242,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 pepper.removeBoardTemplate(boardTemplateID);
                 pepper.removeBoardTemplateViewers(boardTemplateID);
                 pepper.removeTimelineFromSequences(timelineID);
+                pepper.removeSchedulerFromTime(timelineID);
 
                 var channelsIDs = pepper.getChannelsOfTimeline(timelineID);
                 for (var n = 0; n < channelsIDs.length; n++) {

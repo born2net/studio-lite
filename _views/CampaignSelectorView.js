@@ -56,21 +56,24 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          Listen to changes in campaign playback mode
          @method _listenCampaignModeSelect
          **/
-        _listenCampaignModeSelect: function(){
+        _listenCampaignModeSelect: function () {
             var self = this;
-            $(Elements.CLASS_CAMPAIGN_PLAY_MODE).on('click',function(e){
+            $(Elements.CLASS_CAMPAIGN_PLAY_MODE).on('click', function (e) {
                 if ($(e.target).is('span'))
                     e.target = $(e.target).closest('button');
 
-                switch ($(e.target).attr('name')){
-                    case 'campaignModeSequencer': {
+                switch ($(e.target).attr('name')) {
+                    case 'campaignModeSequencer':
+                    {
                         self._populateCampaignMode(0);
-                        pepper.setCampaignRecord(self.m_selectedCampaignID, 'campaign_playlist_mode','0');
+                        pepper.setCampaignRecord(self.m_selectedCampaignID, 'campaign_playlist_mode', '0');
                         break;
                     }
-                    case 'campaignModeScheduler': {
+                    case 'campaignModeScheduler':
+                    {
                         self._populateCampaignMode(1);
-                        pepper.setCampaignRecord(self.m_selectedCampaignID, 'campaign_playlist_mode','1');
+                        pepper.setCampaignRecord(self.m_selectedCampaignID, 'campaign_playlist_mode', '1');
+                        pepper.checkAndCreateCampaignTimelineScheduler(self.m_selectedCampaignID);
                         break;
                     }
                 }
@@ -81,20 +84,22 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          Load the campaign's play mode (scheduler /sequencer)
          @method _populateCampaignMode();
          **/
-        _populateCampaignMode: function(i_mode){
+        _populateCampaignMode: function (i_mode) {
             var self = this;
             var mode = String(i_mode);
-            switch (mode){
-                case BB.CONSTS.SEQUENCER_MODE: {
-                    $(Elements.CAMPAIGN_MODE_SCHEDULER).fadeTo('fast',0.4);
-                    $(Elements.CAMPAIGN_MODE_SEQUENCER).fadeTo('fast',1);
+            switch (mode) {
+                case BB.CONSTS.SEQUENCER_MODE:
+                {
+                    $(Elements.CAMPAIGN_MODE_SCHEDULER).fadeTo('fast', 0.4);
+                    $(Elements.CAMPAIGN_MODE_SEQUENCER).fadeTo('fast', 1);
                     $(Elements.CAMPAIGN_MODE_HEADER).text($(Elements.CAMPAIGN_MODE_HEADER_SEQ).text());
                     $(Elements.CAMPAIGN_MODE_DESCRIPTION).text($(Elements.CAMPAIGN_MODE_SEQ).text());
                     break;
                 }
-                case BB.CONSTS.SCHEDULER_MODE: {
-                    $(Elements.CAMPAIGN_MODE_SCHEDULER).fadeTo('fast',1);
-                    $(Elements.CAMPAIGN_MODE_SEQUENCER).fadeTo('fast',0.4);
+                case BB.CONSTS.SCHEDULER_MODE:
+                {
+                    $(Elements.CAMPAIGN_MODE_SCHEDULER).fadeTo('fast', 1);
+                    $(Elements.CAMPAIGN_MODE_SEQUENCER).fadeTo('fast', 0.4);
                     $(Elements.CAMPAIGN_MODE_HEADER).text($(Elements.CAMPAIGN_MODE_HEADER_SCHED).text());
                     $(Elements.CAMPAIGN_MODE_DESCRIPTION).text($(Elements.CAMPAIGN_MODE_SCHED).text());
                     break;
@@ -275,7 +280,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 var text = $(e.target).val();
                 if (BB.lib.isEmpty(text))
                     return;
-                text = BB.lib.cleanProbCharacters(text,1);
+                text = BB.lib.cleanProbCharacters(text, 1);
                 pepper.setCampaignRecord(self.m_selectedCampaignID, 'campaign_name', text);
                 self.$el.find('[data-campaignid="' + self.m_selectedCampaignID + '"]').find('h4').text(text);
             }, 333, false);

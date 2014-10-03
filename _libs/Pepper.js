@@ -1453,6 +1453,31 @@ Pepper.prototype = {
     },
 
     /**
+     Check that every timeline within a campaign has a scheduler table entry, if not, create one with default values
+     @method checkAndCreateCampaignTimelineScheduler
+     @param {Number} i_campaign_id
+     @return none
+     **/
+    checkAndCreateCampaignTimelineScheduler: function (i_campaign_id) {
+        var self = this;
+        $(self.m_msdb.table_campaign_timelines().getAllPrimaryKeys()).each(function (k, campaign_timeline_id) {
+            var recCampaignTimeline = self.m_msdb.table_campaign_timelines().getRec(campaign_timeline_id);
+
+            // if found a one timeline that belongs to i_campaign_id
+            if (recCampaignTimeline['campaign_id'] == i_campaign_id) {
+                var schedulerFound = 0;
+                $(self.m_msdb.table_campaign_timeline_schedules().getAllPrimaryKeys()).each(function (k, campaign_timeline_schedule_id) {
+                    var recCampaignTimelineSchedule = self.m_msdb.table_campaign_timeline_schedules().getRec(campaign_timeline_schedule_id);
+                    if (recCampaignTimelineSchedule.campaign_timeline_id == campaign_timeline_id)
+                        schedulerFound = 1;
+                });
+                if (!schedulerFound)
+                    pepper.createCampaignTimelineScheduler(i_campaign_id, campaign_timeline_id);
+            }
+        });
+    },
+
+    /**
      Create a campaign timelime scheduler record for new timeline
      @method createCampaignTimelineScheduler
      @param {Number} i_campaign_id
@@ -1462,8 +1487,8 @@ Pepper.prototype = {
     createCampaignTimelineScheduler: function (i_campaign_id, i_campaign_timeline_id) {
         var self = this;
         var date = new Date();
-        var dateStart = date.getMonth() + 1 + '/' + date.getDate() + '/' +  date.getFullYear() + ' 12:00 AM';
-        var dateEnd = date.getMonth() + 2 + '/' + date.getDate() + '/' +  date.getFullYear() + ' 12:00 AM';
+        var dateStart = date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear() + ' 12:00 AM';
+        var dateEnd = date.getMonth() + 2 + '/' + date.getDate() + '/' + date.getFullYear() + ' 12:00 AM';
         var table_campaign_timeline_schedules = self.m_msdb.table_campaign_timeline_schedules();
         var recCampaignTimelineSchedules = table_campaign_timeline_schedules.createRecord();
         recCampaignTimelineSchedules.campaign_timeline_id = i_campaign_timeline_id;
@@ -2328,7 +2353,6 @@ Pepper.prototype = {
      **/
     getCampaignTimelines: function (i_campaign_id) {
         var self = this;
-
         var timelineIDs = [];
         $(self.m_msdb.table_campaign_timelines().getAllPrimaryKeys()).each(function (k, campaign_timeline_id) {
             var recCampaignTimeline = self.m_msdb.table_campaign_timelines().getRec(campaign_timeline_id);

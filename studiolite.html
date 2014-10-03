@@ -342,7 +342,7 @@
                         </button>
 
                         <div class="sequenceClass" style="float: right; margin-right: 35px; position: relative; top: 6px">
-                        <span style="font-size: 1em">campaign length:</span>
+                        <span style="font-size: 1em" data-localize="campaignLength">campaign length:</span>
                         <span id="timelinesTotalLength" style="font-size: 1em"> 00:00:00</span>
                         </div>
 
@@ -387,9 +387,8 @@
                     <h4 class="panel-title">
                         <a id="toggleStorylineCollapsible" data-toggle="collapse"
                            data-parent="#storylineCollapsible"
-                           href="#storylineContainerCollapse"> <span
-                                class="collapsed glyphicon glyphicon-chevron-right"></span>
-                            Timeline
+                           href="#storylineContainerCollapse"> <span class="collapsed glyphicon glyphicon-chevron-right"></span>
+                            <span data-localize="timeline">Timeline</span>
                         </a>
                         <button style="margin-left: 30px" id="selectNextChannel" type="button"
                                 class="btn btn-default btn-sm">
@@ -1054,33 +1053,33 @@
     <div id="timelinePlayModeLabel">
         <aside>
             <i class="fa fa-repeat"></i>
-            <span>repeat mode</span>
+            <span data-localize="repeatMode">repeat mode</span>
         </aside>
         <aside>
             <i class="fa fa-calendar"></i>
-            <span>scheduler mode</span>
+            <span data-localize="schedulerMode">scheduler mode</span>
         </aside>
     </div>
     <hr class="hrThin"/>
     <div id="timelineWrap">
-        <span data-localize="timelineLength">Timeline length: </span>
+        <span data-localize="duration">Duration: </span>
         <br/>
         <span id="timelineLength" style="text-align: right; font-size: 1.8em">00:00:00</span>
         <br/>
         <br/>
     </div>
     <div data-role="fieldcontain" data-inset="true" style="width:99%;">
-        <span>Timeline name</span>
+        <span data-localize="timelineName">Timeline name</span>
         <br/>
         <input type="text" name="name" id="timeLinePropTitleID" value="" placeholder="Timeline Title"  data-localize="timelineTitle">
         <br/>
         <br/>
-        <span class="schedulerClass">Timeline length:</span>
+        <span data-localize="duration" class="schedulerClass">Timeline length:</span>
         <br/>
         <input type="text" id="timepickerDurationInput" class="schedulerClass" name="start_time" placeholder="hh:mm:ss" data-default-time="false">
         <br/>
         <br/>
-        <span class="schedulerClass">Conflict priority:</span>
+        <span data-localize="conflictPriority" class="schedulerClass">Conflict priority:</span>
         <br/>
         <div id="schedulePriority" class="schedulerClass">
             <img class="schedulePriorities" name="2" src="_assets/trip1.png"/>
@@ -1088,7 +1087,7 @@
             <img class="schedulePriorities" name="3" src="_assets/trip3.png"/>
         </div>
         <hr class="hrThin schedulerClass"/>
-        <span class="schedulerClass">Start time:</span>
+        <span data-localize="startTime" class="schedulerClass">Start time:</span>
         <br/>
         <input type="text" id="timepickerTimeInput" class="schedulerClass" name="start_time" placeholder="hh:mm:ss" data-default-time="false">
         <br/>
@@ -1099,57 +1098,57 @@
                     <div class="carousel-inner">
                         <div class="active item">
                             <div align="center" >
-                                <h4>play once</h4>
+                                <h4 data-localize="playOnce">play once</h4>
                             </div>
-                            <span>Start date:</span>
+                            <span data-localize="startDate">Start date:</span>
                             <input id="datepickerSchedulerOnce" name="start_date" class="datepickerScheduler" type="text" type="text">
                         </div>
                         <div class="item">
                             <div align="center" >
-                                <h4>play daily</h4>
+                                <h4 data-localize="playDaily">play daily</h4>
                             </div>
-                            <span>Start date:</span>
+                            <span data-localize="startDate">Start date:</span>
                             <input id="datepickerSchedulerDailyStart" name="start_date" class="datepickerScheduler" type="text" type="text">
-                            <span>End date:</span>
+                            <span data-localize="endDate">End date:</span>
                             <input id="datepickerSchedulerDailyEnd" name="end_date" class="datepickerScheduler" type="text" type="text">
                         </div>
                         <div class="item">
                             <div align="center" >
-                                <h4>play weekly</h4>
+                                <h4 data-localize="playWeekly">play weekly</h4>
                             </div>
-                            <span>Start date:</span>
+                            <span data-target="startDate">Start date:</span>
                             <input id="datepickerSchedulerWeekStart" name="start_date" class="datepickerScheduler" type="text" type="text">
-                            <span>End date:</span>
+                            <span data-localize="endDate">End date:</span>
                             <input id="datepickerSchedulerWeekEnd" name="end_date" class="datepickerScheduler" type="text" type="text">
                             <div>
                                 <br/>
-                                <span>Select the days:</span>
+                                <span data-localize="selectDays">Select the days:</span>
                                 <div style="padding-left: 10px">
                                     <table id="scheduledDays" border="0" width="100%" cellspacing="0" cellpadding="0" align="left">
-                                        <td ><input class="scheduleDay" type="checkbox" value="1">Sunday</td>
+                                        <td ><input class="scheduleDay" type="checkbox" value="1"><span data-localize="sundayDay"></span></td>
                                         </tr>
                                         <tr>
-                                            <td ><input class="scheduleDay" type="checkbox" value="2">Monday
+                                            <td ><input class="scheduleDay" type="checkbox" value="2"><span data-localize="mondayDay"></span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td ><input class="scheduleDay" type="checkbox" value="3">Tuesday
+                                            <td ><input class="scheduleDay" type="checkbox" value="3"><span data-localize="tuesdayDay"></span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td ><input class="scheduleDay" type="checkbox" value="4">Wednesday
+                                            <td ><input class="scheduleDay" type="checkbox" value="4"><span data-localize="wednesdayDay"></span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td ><input class="scheduleDay" type="checkbox" value="5">Thursday
+                                            <td ><input class="scheduleDay" type="checkbox" value="5"><span data-localize="thursdayDay"></span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td ><input class="scheduleDay" type="checkbox" value="6">Friday
+                                            <td ><input class="scheduleDay" type="checkbox" value="6"><span data-localize="fridayDay"></span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td ><input class="scheduleDay" type="checkbox" value="7">Saturday</td>
+                                            <td ><input class="scheduleDay" type="checkbox" value="7"><span data-localize="saturdayDay"></span></td>
                                         </tr>
                                     </table>
                                 </div>

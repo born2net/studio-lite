@@ -69,7 +69,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         logErrors: function (i_businessID) {
             if (window.location.href.indexOf('dist') > -1) {
                 //Bugsense.initAndStartSession( { apiKey: "32eabe70" } );
-                Bugsense.initAndStartSession({ apiKey: "fc064f8c" });
+                Bugsense.initAndStartSession( { apiKey: "f09b1967" } );
                 Bugsense.addExtraData('business_id', i_businessID);
             }
         },

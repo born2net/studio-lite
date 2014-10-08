@@ -1051,7 +1051,7 @@
         },
 
         widgetKeyup: function(e) {
-            if ((e.keyCode === 65) || (e.keyCode === 77) || (e.keyCode === 80) || (e.keyCode === 46) || (e.keyCode === 8) || (e.keyCode >= 46 && e.keyCode <= 57)) {
+            if ((e.keyCode === 9) ||(e.keyCode === 65) || (e.keyCode === 77) || (e.keyCode === 80) || (e.keyCode === 46) || (e.keyCode === 8) || (e.keyCode >= 46 && e.keyCode <= 57)) {
                 this.updateFromWidgetInputs();
             }
         }

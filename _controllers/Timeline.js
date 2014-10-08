@@ -34,8 +34,8 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'datepicker', 
             self.m_WEEKLY = '2';
             self.m_PRIORITY_LOW = 2;
             self.m_PRIORITY_MEDIUM = 1;
+            self.m_PRIORITY_HIGH = 0;
             self.m_WEEKDAYS = [1, 2, 4, 8, 16, 32, 64];
-            self.m_PRIORITY_HIGH = 3;
             self.m_channels = {}; // hold references to all created channel instances
             self.m_screenTemplate = undefined;
             self.m_campaign_timeline_id = self.options.campaignTimelineID;
@@ -124,6 +124,8 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'datepicker', 
             var self = this;
             self.m_listenDatePickerHandler = function (e) {
                 if (!self.m_selected)
+                    return;
+                if (_.isUndefined(e.date))
                     return;
                 var field = $(e.target).attr('name');
                 var xd = new XDate(e.date);

@@ -303,6 +303,8 @@ define(['jquery', 'backbone', 'TimelineMax', 'TweenMax'], function ($, Backbone,
                     {
                         if (!BB.SERVICES.CAMPAIGN_SELECTOR)
                             return;
+                        if (_.isUndefined(BB.comBroker.getService(BB.SERVICES.CAMPAIGN_SELECTOR)))
+                            return;
                         if (BB.comBroker.getService(BB.SERVICES.CAMPAIGN_SELECTOR).getSelectedCampaign() == -1) {
                             self.m_appSectionFunction = self._tutorialCampaignSelector;
                         } else {

@@ -860,9 +860,8 @@
             $(document).on('mousedown.timepicker, touchend.timepicker', function (e) {
                 // This condition was inspired by bootstrap-datepicker.
                 // The element the timepicker is invoked on is the input but it has a sibling for addon/button.
-                if (!(self.$element.parent().find(e.target).length ||
-                    self.$widget.is(e.target) ||
-                    self.$widget.find(e.target).length)) {
+                var a = self.$element.parent().find(e.target).length;
+                if (!(self.$element.parent().find(e.target).length || self.$widget.is(e.target) || self.$widget.find(e.target).length)) {
                     self.hideWidget();
                 }
             });

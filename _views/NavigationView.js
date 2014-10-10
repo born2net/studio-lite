@@ -57,6 +57,7 @@ define(['jquery', 'backbone', 'TutorialView'], function ($, Backbone, TutorialVi
             });
 
             $(Elements.CLASS_SCENES_PANEL).on('click', function () {
+                self._checkLimitedAccess();
                 appContentFaderView.selectView(Elements.SCENES_PANEL);
                 self.resetPropertiesView();
                 self._closeMobileNavigation();

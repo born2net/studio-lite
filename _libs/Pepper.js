@@ -2272,10 +2272,10 @@ Pepper.prototype = {
         if (hours == 0 && minutes == 0)
             seconds = i_totalSeconds;
         var playbackLength = {
-            hours: hours,
-            minutes: minutes,
-            seconds: seconds,
-            totalInSeconds: totalInSeconds
+            hours: parseInt(hours),
+            minutes: parseInt(minutes),
+            seconds: parseInt(seconds),
+            totalInSeconds: parseInt(totalInSeconds)
         };
         return playbackLength;
     },

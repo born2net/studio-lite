@@ -1,0 +1,39 @@
+{
+  "name": "StudioLite",
+  "version": "1.1.9",
+  "author": {
+    "name": "MediaSignage",
+    "email": "mstech@mediasignage.com",
+    "url": "http://digitalsignage.com"
+  },
+  "maintainers": [
+    {
+      "name": "born2net"
+    }
+  ],
+  "description": "the world’s most popular FREE Digital Signage platform",
+  "keywords": [
+    "FREE Digital Signage",
+    "MediaSignage",
+    "digitalsignage.com",
+    "digital signage"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/born2net/signagestudio_web-lite"
+  },
+  "engines": {
+    "node": ">=0.9.0"
+  },
+  "dependencies": {
+    "underscore": ">=1.4.4"
+  },
+  "devDependencies": {},
+  "scripts": {},
+  "readme": "StudioLite\n=========\n\for full info visit http://www.digitalsignage.com or http://lite.digitalsignage.com.\n",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "http://forum.digitalsignage.com"
+  },
+  "homepage": "http://www.digitalsignage.com"
+}

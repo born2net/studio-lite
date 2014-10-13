@@ -41,14 +41,33 @@ Technical data:
 
 Installation:
 ------------------------------------------------------------------------
+
+StudioLite can be downloaded directly from GitHub, or (recommended) is to install it through node.js and npm.
+With node.js and npm you will be able to easily update to the latest version of StudioLite as well as take advantage of the the built in Express server that is included with StudioLite.
+
+Option 1 (recommended):
+- Download node.js (all major operating systems supported): http://nodejs.org/
+- Install node.js 
+- open a terminal (Mac / Linux) or command prompt (windows)
+- switch to node.js directory and run: ```npm install studiolite```
+- change directory to: ```[your node.js directory]\node_modules\studiolite``` 
+- run the command, for example in windows ```node.exe server.js```
+- open browser and point it to ```[YOUR_IP]:8080/_studiolite-dev/studiolite.html```
+
+ Option 2:
 - Download the zip from GitHub
-- On your web server create a root directory and name it: _studiolite-dev
+- On your web server (i.e.: apache, IIS) create a root directory and name it: _studiolite-dev
 - Unzip all files into _studiolite-dev directory
 - Point browser to: [YOUR_SERVER]/_studiolite-dev/studiolite.html (IMPORTANT: make sure _studiolite-dev is in the root of web server)
 
+Updates:
+------------------------------------------------------------------------
+If you used ```npm install studiolite``` updating is as easy as switching to your node directory and typing ```node update studiolite``` to get the latest release
+If you downloaded directly from GitHub, you will need to re-download the zip file and expand over your existing installation. 
+
 Customization:
 ------------------------------------------------------------------------
-Keep in mind the SignageStudio lite as well as its related SDK Pepper are undergoing daily development and so you will lose any changes you make to your code if you overwrite it with our release builds.
+Keep in mind the SignageStudio lite as well as its related SDK Pepper are often released with new updates, so you will lose any changes you make to your code if you overwrite it with our release builds.
 
 To overcome this you can follow these guidelines:
 

@@ -273,6 +273,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
                     //'<img  class="img-responsive" src="' + blockData.blockIcon + '"/>' +
                     '<i class="fa ' + blockData.blockFontAwesome + '"></i>' +
                     '<span>' + blockData.blockName + '</span>' +
+                    '<i style="padding: 0; margin: 0" class="dragch fa fa-arrows-v"></i>' +
                     '<span class="' + BB.lib.unclass(Elements.CLASS_BLOCK_LENGTH_TIMER) + '">' + durationFormatted + '</span>' +
                     '</a>' +
                     '</li>'));
@@ -292,8 +293,8 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
         _listenBlockSelected: function () {
             var self = this;
             // clear previous listeners
-            $(Elements.CLASS_CHANNEL_LIST_ITEMS).off('click');
-            $(Elements.CLASS_CHANNEL_LIST_ITEMS).on('click contextmenu', function (e) {
+            $(Elements.CLASS_CHANNEL_LIST_ITEMS).off('mousedown');
+            $(Elements.CLASS_CHANNEL_LIST_ITEMS).on('mousedown contextmenu', function (e) {
                 $.proxy(self._listenChannelBlockSelected(e), self);
             });
 
@@ -520,6 +521,10 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             });
         },
 
+        /**
+         Sortable channel list on press
+         @method _sortablePress
+         **/
         _sortablePress: function () {
             var t = this.target,
                 i = 0,
@@ -531,10 +536,18 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             t.kids = [].slice.call(t.parentNode.children); // convert to array
         },
 
+        /**
+         Sortable drag channel list on press
+         @method _sortableDragStart
+         **/
         _sortableDragStart: function () {
             TweenLite.set(this.target, { color: "#88CE02" });
         },
 
+        /**
+         Sortable drag channel list
+         @method _sortableDrag
+         **/
         _sortableDrag: function () {
             var t = this.target,
                 elements = t.kids.slice(), // clone
@@ -553,13 +566,13 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             }
         },
 
+        /**
+         snap channels to set rounder values
+         @method _sortableSnap
+         **/
         _sortableSnap: function (y) {
             var h = this.target.currentHeight;
             return Math.round(y / h) * h;
-        },
-
-        _sortableDragEnd: function () {
-
         },
 
         /**

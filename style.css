@@ -798,9 +798,17 @@ iframe {
     font-size: 15px;
 }
 
-.dropIndicator {
-    border-bottom: red 3px solid;
+.dragch {
+    float: right;
+    font-size: 1.5em !important;
+    padding: 0;
+    margin: 0;
+    position:relative;
+    top: 5px;
+    left: 10px;
+
 }
+
 
 .carousel-inner > .item {
     -webkit-transition: 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) left;
@@ -1127,7 +1135,8 @@ iframe {
 
 .blockLengthTimer {
     float: right;
-    padding-top: 10px;
+    padding-top: 14px;
+    font-size: 0.1em;
 }
 
 .alignTextLeft {

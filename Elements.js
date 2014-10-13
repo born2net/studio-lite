@@ -77,6 +77,7 @@ Elements.CHANNEL_PROPERTIES = '#channelProperties';
 Elements.CLASS_ADD_BLOCK_LIST_ITEMS = '.addBlockListItems';
 Elements.CLASS_ADD_NEW_BLOCK_LIST_WRAP = '.addNewBlockListWrap';
 Elements.CLASS_BLOCK_LENGTH_TIMER = '.blockLengthTimer';
+Elements.CLAS_DRAGCH = '.dragch';
 Elements.CLASS_CAMPAIG_NMANAGER_VIEW = '.campaignManagerView';
 Elements.CLASS_CAMPIGN_LIST_ITEM = '.selectCampaignListItem';
 Elements.CLASS_CHANNEL_BODY  = '.channelBody';

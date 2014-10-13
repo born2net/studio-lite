@@ -55,7 +55,7 @@ With node.js and npm you will be able to easily update to the latest version of 
 - you may also host it directly on your own web server if you like, such as apache or IIS
 - open browser and point it to ```[YOUR_IP]:8080/_studiolite-dev/studiolite.html```
 
- <h4>Option 2:</h4>
+<h4>Option 2:</h4>
 - Download the zip from GitHub
 - On your web server (i.e.: apache, IIS) create a root directory and name it: _studiolite-dev
 - Unzip all files into _studiolite-dev directory

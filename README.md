@@ -1,4 +1,4 @@
-StudioLite 
+<h3>by digitalsignage.com</h3> 
 ==========
 
 <pre>

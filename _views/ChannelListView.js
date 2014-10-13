@@ -488,6 +488,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
         // trigger: '.blockLengthTimer',
         _createSortable: function (selector) {
             var self = this;
+            if ($(selector).children().length==0) return;
             var sortable = document.querySelector(selector);
             self.m_draggables = Draggable.create(sortable.children, {
                 type: "y",

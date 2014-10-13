@@ -1,5 +1,6 @@
 // var $ = require('jquery').create();
 // exports.$ = $;
+
 var fs = require('fs');
 var path = require('path');
 
@@ -26,8 +27,14 @@ var studiolite = fs.readFileSync('../studiolite.html','utf8');
 studiolite = studiolite.replace(/<span class="reshid hiddenElement" id="footerText">(.*)<\/span>/gi, footer);
 fs.writeFileSync('../studiolite.html', studiolite, 'utf8');
 
-// add build number to github
+// add build number to npm
 var git = fs.readFileSync('../README.md', 'utf8');
 var gitver = 'current version: ' + fullBuild + ' dev-build';
 git = git.replace(/current version: (.*) dev-build/gi, gitver);
 fs.writeFileSync('../README.md', git, 'utf8');
+
+// add build number to github
+var git = fs.readFileSync('../package.json', 'utf8');
+var npmVer = '"version": "' + fullBuild + '",';
+git = git.replace(/"version": ".*",/gi, npmVer);
+fs.writeFileSync('../package.json', git, 'utf8');

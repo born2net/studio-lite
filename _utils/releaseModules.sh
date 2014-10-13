@@ -1,4 +1,7 @@
 #!/bin/sh
+cd /var/www/sites/dynasite/htdocs/_studiolite-dev
+npm publish .
+
 cd /var/www/sites/dynasite/htdocs/_studiolite-dev/_utils
 dos2unix *
 

@@ -76,7 +76,9 @@ With node.js and npm you will be able to easily update to the latest version of 
 Updates:
 ------------------------------------------------------------------------
 If you used ```npm install studiolite``` updating is as easy as switching to your node directory and typing ```node update studiolite``` to get the latest release
-If you downloaded directly from GitHub, you will need to re-download the zip file and expand over your existing installation. 
+If you downloaded directly from GitHub, you will need to re-download the zip file and expand over your existing installation.
+ 
+npm registry: https://www.npmjs.org/package/studiolite 
 
 Customization:
 ------------------------------------------------------------------------

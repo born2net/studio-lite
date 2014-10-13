@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated CompCampaignNavigator
  **/
-define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerView', 'ResourceListView', 'StorylineView'], function ($, Backbone, jqueryui, TouchPunch, Timeline, SequencerView, ResourceListView, StorylineView) {
+define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerView', 'ResourceListView', 'StorylineView', 'Draggable'], function ($, Backbone, jqueryui, TouchPunch, Timeline, SequencerView, ResourceListView, StorylineView, Draggable) {
 
     BB.SERVICES.CHANNEL_LIST_VIEW = 'ChannelListView';
 
@@ -17,18 +17,19 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
         initialize: function () {
             var self = this;
 
-            this.m_property = BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW);
-            this.selected_block_id = undefined;
-            this.selected_campaign_timeline_chanel_id = undefined;
-            this.selected_campaign_timeline_id = undefined;
-            this.selected_campaign_timeline_board_viewer_id = undefined;
+            self.m_property = BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW);
+            self.m_liDraggables = undefined;
+            self.selected_block_id = undefined;
+            self.selected_campaign_timeline_chanel_id = undefined;
+            self.selected_campaign_timeline_id = undefined;
+            self.selected_campaign_timeline_board_viewer_id = undefined;
 
-            $(Elements.SORTABLE).sortable();
-            $(Elements.SORTABLE).disableSelection();
-            $(Elements.SORTABLE).bind("sortstop", function (event, ui) {
-                self._reOrderChannelBlocks();
-            });
-
+            /* $(Elements.SORTABLE).sortable();
+             $(Elements.SORTABLE).disableSelection();
+             $(Elements.SORTABLE).bind("sortstop", function (event, ui) {
+             self._reOrderChannelBlocks();
+             });
+             */
             self._listenAddRemoveBlocks();
             self._listenTimelineSelected();
             self._listenResourceRemoved();
@@ -48,7 +49,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
          **/
         _listenReset: function () {
             var self = this;
-            BB.comBroker.listen(BB.EVENTS.CAMPAIGN_RESET, function(){
+            BB.comBroker.listen(BB.EVENTS.CAMPAIGN_RESET, function () {
                 self.selected_block_id = undefined;
                 self.selected_campaign_timeline_chanel_id = undefined;
                 self.selected_campaign_timeline_id = undefined;
@@ -270,13 +271,14 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
                 $(Elements.SORTABLE).append($('<li class="' + BB.lib.unclass(Elements.CLASS_CHANNEL_LIST_ITEMS) + '  list-group-item" data-block_id="' + blockData.blockID + '">' +
                     '<a href="#">' +
                     //'<img  class="img-responsive" src="' + blockData.blockIcon + '"/>' +
-                    '<i class="fa ' + blockData.blockFontAwesome + '"></i>'+
+                    '<i class="fa ' + blockData.blockFontAwesome + '"></i>' +
                     '<span>' + blockData.blockName + '</span>' +
                     '<span class="' + BB.lib.unclass(Elements.CLASS_BLOCK_LENGTH_TIMER) + '">' + durationFormatted + '</span>' +
                     '</a>' +
                     '</li>'));
             }
             self._listenBlockSelected();
+            self._createSortable('#sortable');
         },
 
         /**
@@ -294,6 +296,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             $(Elements.CLASS_CHANNEL_LIST_ITEMS).on('click contextmenu', function (e) {
                 $.proxy(self._listenChannelBlockSelected(e), self);
             });
+
         },
 
         /**
@@ -316,9 +319,9 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
          Listen to when a channel is selected, but through the storyline so we can re-select appropriate block in channel list
          @method _listenStorylineChannelSelected
          **/
-        _listenStorylineChannelSelected: function(){
+        _listenStorylineChannelSelected: function () {
             var self = this;
-            BB.comBroker.listen(BB.EVENTS['STORYLINE_CHANNEL_SELECTED'], function(e){
+            BB.comBroker.listen(BB.EVENTS['STORYLINE_CHANNEL_SELECTED'], function (e) {
                 self.selected_block_id = e.edata;
                 var resourceElem = $(Elements.CHANNEL_LIST_VIEW).find('[data-block_id="' + self.selected_block_id + '"]');
                 BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.selected_block_id);
@@ -335,7 +338,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
          **/
         _listenStorylineBlockSelected: function (e) {
             var self = this;
-            BB.comBroker.listen(BB.EVENTS['STORYLINE_BLOCK_SELECTED'], function(e){
+            BB.comBroker.listen(BB.EVENTS['STORYLINE_BLOCK_SELECTED'], function (e) {
                 self.selected_block_id = e.edata;
                 var resourceElem = $(Elements.CHANNEL_LIST_VIEW).find('[data-block_id="' + self.selected_block_id + '"]');
                 BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.selected_block_id);
@@ -433,7 +436,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
          **/
         _listenContextMenu: function () {
             var self = this;
-            $(Elements.SORTABLE ).contextmenu({
+            $(Elements.SORTABLE).contextmenu({
                 target: Elements.CHANNEL_LIST_CONTEXT_MENU,
                 before: function (e, element, target) {
                     e.preventDefault();
@@ -460,16 +463,19 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             if (campaign_timeline_id == -1 || _.isUndefined(campaign_timeline_id))
                 return;
 
-            switch (i_command){
-                case 'remove': {
+            switch (i_command) {
+                case 'remove':
+                {
                     $(Elements.REMOVE_BLOCK_BUTTON).trigger('click');
                     break;
                 }
-                case 'first': {
+                case 'first':
+                {
                     self.moveBlockFirst();
                     break;
                 }
-                case 'last': {
+                case 'last':
+                {
                     self.moveBlockLast();
                     break;
                 }
@@ -477,13 +483,92 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             return true;
         },
 
+
+        // trigger: '.blockLengthTimer',
+        _createSortable: function (selector) {
+            var self = this;
+            var sortable = document.querySelector(selector);
+            self.m_draggables = Draggable.create(sortable.children, {
+                type: "y",
+                bounds: sortable,
+                dragClickables: true,
+                edgeResistance: 1,
+                onPress: self._sortablePress,
+                onDragStart: self._sortableDragStart,
+                onDrag: self._sortableDrag,
+                liveSnap: self._sortableSnap,
+                onDragEnd: function () {
+                    var t = this.target,
+                        max = t.kids.length - 1,
+                        newIndex = Math.round(this.y / t.currentHeight);
+                    newIndex += (newIndex < 0 ? -1 : 0) + t.currentIndex;
+                    if (newIndex === max) {
+                        t.parentNode.appendChild(t);
+                    } else {
+                        t.parentNode.insertBefore(t, t.kids[newIndex + 1]);
+                    }
+                    TweenLite.set(t.kids, { yPercent: 0, overwrite: "all" });
+                    TweenLite.set(t, { y: 0, color: "" });
+                    self._reOrderChannelBlocks();
+
+                    //_.each(self.m_draggables, function(i){
+                    //    this.enabled(false);
+                    //});
+                    // $(Elements.SORTABLE).empty();
+                    // self._loadChannelBlocks(self.selected_campaign_timeline_id, self.selected_campaign_timeline_chanel_id);
+                }
+            });
+        },
+
+        _sortablePress: function () {
+            var t = this.target,
+                i = 0,
+                child = t;
+            while (child = child.previousSibling)
+                if (child.nodeType === 1) i++;
+            t.currentIndex = i;
+            t.currentHeight = t.offsetHeight;
+            t.kids = [].slice.call(t.parentNode.children); // convert to array
+        },
+
+        _sortableDragStart: function () {
+            TweenLite.set(this.target, { color: "#88CE02" });
+        },
+
+        _sortableDrag: function () {
+            var t = this.target,
+                elements = t.kids.slice(), // clone
+                indexChange = Math.round(this.y / t.currentHeight),
+                bound1 = t.currentIndex,
+                bound2 = bound1 + indexChange;
+            if (bound1 < bound2) { // moved down
+                TweenLite.to(elements.splice(bound1 + 1, bound2 - bound1), 0.15, { yPercent: -100 });
+                TweenLite.to(elements, 0.15, { yPercent: 0 });
+            } else if (bound1 === bound2) {
+                elements.splice(bound1, 1);
+                TweenLite.to(elements, 0.15, { yPercent: 0 });
+            } else { // moved up
+                TweenLite.to(elements.splice(bound2, bound1 - bound2), 0.15, { yPercent: 100 });
+                TweenLite.to(elements, 0.15, { yPercent: 0 });
+            }
+        },
+
+        _sortableSnap: function (y) {
+            var h = this.target.currentHeight;
+            return Math.round(y / h) * h;
+        },
+
+        _sortableDragEnd: function () {
+
+        },
+
         /**
          Move current selected block to be the first to play within the channel
          @method moveBlockFirst
          **/
-        moveBlockFirst: function(){
+        moveBlockFirst: function () {
             var self = this;
-            var resourceElem = $('.activated',self.$el);
+            var resourceElem = $('.activated', self.$el);
             $(Elements.SORTABLE).prepend($(resourceElem));
             self._reOrderChannelBlocks();
         },
@@ -492,9 +577,9 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
          Move current selected block to be the last to play within the channel
          @method moveBlockLast
          **/
-        moveBlockLast: function(){
+        moveBlockLast: function () {
             var self = this;
-            var resourceElem = $('.activated',self.$el);
+            var resourceElem = $('.activated', self.$el);
             $(Elements.SORTABLE).append($(resourceElem));
             self._reOrderChannelBlocks();
         }

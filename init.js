@@ -31,6 +31,7 @@ require.config({
         'TimelineMax': '_common/_js/gsap/TimelineMax',
         'TweenMax': '_common/_js/gsap/TweenMax',
         'TweenLite': '_common/_js/gsap/TweenLite',
+        'Draggable': '_common/_js/gsap/utils/Draggable',
         'RC4': '_common/_js/rc4/RC4',
         'RC4V2': '_common/_js/rc4/RC4V2',
         'localizer': '_common/_js/localizer/dist/jquery.localize',
@@ -160,6 +161,9 @@ require.config({
         'TimelineMax': {
             dep: ['TweenLite'],
             exports: 'TimelineMax'
+        },
+        'Draggable': {
+            exports: 'Draggable'
         },
         'bootstrap': {
             deps: ['jquery']

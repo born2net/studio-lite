@@ -12,7 +12,7 @@
                                                                                                                             
 </pre>
 
-Digital Signage for the rest of us
+StudioLite, Digital Signage for the rest of us
 ---------------------------------------
 
 current version: 1.1.10 dev-build

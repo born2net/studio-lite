@@ -51,7 +51,8 @@ Option 1 (recommended):
 - open a terminal (Mac / Linux) or command prompt (windows)
 - switch to node.js directory and run: ```npm install studiolite```
 - change directory to: ```./node_modules/studiolite``` 
-- run the command ```node server.js``` if you wish to use the bundled express server, or host on your favorite web server
+- run the command ```node server.js``` if you wish to use the bundled express server
+- you may also host it directly on on your own web server if you like, such as apache or IIS
 - open browser and point it to ```[YOUR_IP]:8080/_studiolite-dev/studiolite.html```
 
  Option 2:

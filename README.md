@@ -1,4 +1,4 @@
-<h3>by digitalsignage.com</h3> 
+<h5>by digitalsignage.com</h5> 
 ==========
 
 <pre>

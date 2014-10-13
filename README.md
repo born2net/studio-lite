@@ -45,7 +45,7 @@ Installation:
 StudioLite can be downloaded directly from GitHub, or (recommended) is to install it through node.js and npm.
 With node.js and npm you will be able to easily update to the latest version of StudioLite as well as take advantage of the the built in Express server that is included with StudioLite.
 
-Option 1 (recommended):
+<h4>Option 1 (recommended):</h4>
 - Download node.js (all major operating systems supported): http://nodejs.org/
 - Install node.js 
 - open a terminal (Mac / Linux) or command prompt (windows)
@@ -55,7 +55,7 @@ Option 1 (recommended):
 - you may also host it directly on your own web server if you like, such as apache or IIS
 - open browser and point it to ```[YOUR_IP]:8080/_studiolite-dev/studiolite.html```
 
- Option 2:
+ <h4>Option 2:</h4>
 - Download the zip from GitHub
 - On your web server (i.e.: apache, IIS) create a root directory and name it: _studiolite-dev
 - Unzip all files into _studiolite-dev directory

@@ -379,6 +379,8 @@ iframe {
 
 #screenLayoutsUL {
     width: 1500px;
+    padding-left: 0;
+    margin-left: 0;
 }
 
 #screenMainSelector {
@@ -1137,6 +1139,10 @@ iframe {
     float: right;
     padding-top: 14px;
     font-size: 0.1em;
+}
+
+.svgSD {
+    margin: 10px;
 }
 
 .alignTextLeft {

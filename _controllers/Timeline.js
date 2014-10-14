@@ -45,7 +45,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'datepicker', 
             self.m_sequences = BB.comBroker.getService(BB.SERVICES['SEQUENCER_VIEW']);
             self.m_selected = false;
             self._populateChannels();
-            self._populateTimeline();
+            self.populateTimeline();
             self._listenInputChange();
             self._listenReset();
             self._listenViewerRemoved();
@@ -373,19 +373,6 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'datepicker', 
         },
 
         /**
-         Create the timeline and load up its template (screen divisions) UI
-         @method _populateTimeline
-         @return none
-         **/
-        _populateTimeline: function () {
-            var self = this;
-            var boardTemplateIDs = pepper.getTemplatesOfTimeline(self.m_campaign_timeline_id);
-            for (var i = 0; i < boardTemplateIDs.length; i++) {
-                self._populateBoardTemplate(boardTemplateIDs[i]);
-            }
-        },
-
-        /**
          Create a channel instance for every channel this timeline hosts
          @method _populateChannels
          @return none
@@ -409,7 +396,6 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'datepicker', 
          **/
         _populateBoardTemplate: function (i_campaign_timeline_board_template_id) {
             var self = this;
-
             var recBoard = pepper.getGlobalBoardRecFromTemplate(i_campaign_timeline_board_template_id);
             var width = parseInt(recBoard['board_pixel_width']);
             var height = parseInt(recBoard['board_pixel_height']);
@@ -421,20 +407,7 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'datepicker', 
                 BB.comBroker.getService(BB.SERVICES.ORIENTATION_SELECTOR_VIEW).setOrientation(BB.CONSTS.VERTICAL);
             }
             var screenProps = pepper.getTemplateViewersScreenProps(self.m_campaign_timeline_id, i_campaign_timeline_board_template_id)
-
-            // Future support for scheduler
-            switch (self.m_timing) {
-                case 'sequencer':
-                {
-                    self.m_sequences.createTimelineThumbnailUI(screenProps);
-                    break;
-                }
-
-                case 'scheduler':
-                {
-                    break;
-                }
-            }
+            self.m_sequences.createTimelineThumbnailUI(screenProps);
         },
 
         /**
@@ -540,6 +513,19 @@ define(['jquery', 'backbone', 'Channel', 'ScreenTemplateFactory', 'datepicker', 
             $.each(self, function (k) {
                 self[k] = undefined;
             });
+        },
+
+        /**
+         Create the timeline and load up its template (screen divisions) UI
+         @method populateTimeline
+         @return none
+         **/
+        populateTimeline: function () {
+            var self = this;
+            var boardTemplateIDs = pepper.getTemplatesOfTimeline(self.m_campaign_timeline_id);
+            for (var i = 0; i < boardTemplateIDs.length; i++) {
+                self._populateBoardTemplate(boardTemplateIDs[i]);
+            }
         },
 
         /**

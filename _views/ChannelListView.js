@@ -18,18 +18,11 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             var self = this;
 
             self.m_property = BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW);
-            self.m_liDraggables = undefined;
             self.selected_block_id = undefined;
             self.selected_campaign_timeline_chanel_id = undefined;
             self.selected_campaign_timeline_id = undefined;
             self.selected_campaign_timeline_board_viewer_id = undefined;
 
-            /* $(Elements.SORTABLE).sortable();
-             $(Elements.SORTABLE).disableSelection();
-             $(Elements.SORTABLE).bind("sortstop", function (event, ui) {
-             self._reOrderChannelBlocks();
-             });
-             */
             self._listenAddRemoveBlocks();
             self._listenTimelineSelected();
             self._listenResourceRemoved();
@@ -279,7 +272,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
                     '</li>'));
             }
             self._listenBlockSelected();
-            self._createSortable('#sortable');
+            self._createSortable(Elements.SORTABLE);
         },
 
         /**
@@ -484,12 +477,15 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             return true;
         },
 
-
-        // trigger: '.blockLengthTimer',
-        _createSortable: function (selector) {
+        /**
+         Create a sortable channel list
+         @method _createSortable
+         @param {String} i_selector
+         **/
+        _createSortable: function (i_selector) {
             var self = this;
-            if ($(selector).children().length==0) return;
-            var sortable = document.querySelector(selector);
+            if ($(i_selector).children().length==0) return;
+            var sortable = document.querySelector(i_selector);
             self.m_draggables = Draggable.create(sortable.children, {
                 type: "y",
                 bounds: sortable,
@@ -516,8 +512,6 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
                     //_.each(self.m_draggables, function(i){
                     //    this.enabled(false);
                     //});
-                    // $(Elements.SORTABLE).empty();
-                    // self._loadChannelBlocks(self.selected_campaign_timeline_id, self.selected_campaign_timeline_chanel_id);
                 }
             });
         },
@@ -572,8 +566,10 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
          @method _sortableSnap
          **/
         _sortableSnap: function (y) {
-            var h = this.target.currentHeight;
-            return Math.round(y / h) * h;
+            return y;
+            // enable code below to enable snapinnes on dragging
+            // var h = this.target.currentHeight;
+            // return Math.round(y / h) * h;
         },
 
         /**

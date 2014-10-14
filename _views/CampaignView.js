@@ -409,9 +409,9 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
          Listen to when we should expand the view of all collapsible bootstrap widgets in our campaign view moduke
          @method _listenCampaignExpandedView
          **/
-        _listenCampaignExpandedView: function(){
+        _listenCampaignExpandedView: function () {
             var self = this;
-            BB.comBroker.listen(BB.EVENTS.CAMPAIGN_EXPANDED_VIEW,function(e){
+            BB.comBroker.listen(BB.EVENTS.CAMPAIGN_EXPANDED_VIEW, function (e) {
                 if (!$(Elements.SCREEN_SELECTOR_CONTAINER_COLLAPSE).hasClass('in'))
                     $(Elements.TOGGLE_TIMELINES_COLLAPSIBLE).trigger('click');
                 if (!$(Elements.STORYLINE_CONTAINER_COLLAPSE).hasClass('in'))
@@ -486,6 +486,18 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
         getTimelineViewStack: function () {
             var self = this;
             return self.m_timelineViewStack;
+        },
+
+        /**
+         recreate the UI for all timelines in the timelined sequence supplied
+         @method populateTimelines
+         @params {Array} order of timelines to create
+         **/
+        populateTimelines: function (i_ordered_timelines_ids) {
+            var self = this;
+            _.each(i_ordered_timelines_ids, function (timelineID) {
+                self.m_timelines[timelineID].populateTimeline();
+            });
         },
 
         /**

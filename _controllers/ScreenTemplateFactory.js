@@ -197,7 +197,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     '" class="screenDivisionClass"' +
                     '  style="fill:rgb(230,230,230);stroke-width:2;stroke:rgb(72,72,72)"/>';
             }
-            return ($('<svg style="padding: 0px; margin: 15px" id="' + self.m_myElementID + '" width="' + self.m_svgWidth + '" height="' + self.m_svgHeight + '" xmlns="http://www.w3.org/2000/svg">  ' +
+            return ($('<svg class="svgSD" id="' + self.m_myElementID + '" width="' + self.m_svgWidth + '" height="' + self.m_svgHeight + '" xmlns="http://www.w3.org/2000/svg">  ' +
                 '<g>' +
                 screensDivisons +
                 screenLabels +

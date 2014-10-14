@@ -1,11 +1,11 @@
 /**
- The sequencer module is responsible for management and order of playback of each timeline within each campaign
+ The sequencer module is responsible for management and order of playback of each timeline within the campaign
  @class SequencerView
  @constructor
  @param {String} i_container element that CompCampaignNavigator inserts itself into
  @return {Object} instantiated CompCampaignNavigator
  **/
-define(['jquery', 'backbone', 'ScreenTemplateFactory', 'contextmenu'], function ($, Backbone, ScreenTemplateFactory, contextmenu) {
+define(['jquery', 'backbone', 'jqueryui', 'ScreenTemplateFactory', 'contextmenu'], function ($, Backbone, jqueryui, ScreenTemplateFactory, contextmenu) {
 
     BB.SERVICES.SEQUENCER_VIEW = 'SequencerView';
 
@@ -23,9 +23,64 @@ define(['jquery', 'backbone', 'ScreenTemplateFactory', 'contextmenu'], function 
             this.m_timelines = {};
             this.m_screenTemplates = {};
 
+            self._initLayoutSelectorDragDrop();
             self._listenContextMenu();
             self._listenReset();
+            setTimeout(function () {
+                $(Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).trigger('click');
+            }, 3000);
             pepper.listen(Pepper.TIMELINE_DELETED, $.proxy(self._deleteSequencedTimeline, self));
+        },
+
+        /**
+         Enable drag and drop operations on the thumbnail timelines within the Sequencer UI.
+         @method _initLayoutSelectorDragDrop
+         @return none
+         **/
+        _initLayoutSelectorDragDrop: function () {
+            var self = this;
+
+            // Regular popup
+            // $("#popupUndismissible").popup( "open", {x: 90, y: 90, width: '400', height: '400'});
+
+            $(Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).on('click', function () {
+
+                var h = $(Elements.SCREEN_LAYOUTS_UL).height();
+                var t = h * 10 / 100;
+                $('.draggableScreenPlaceHolder').css({height: h, top: '-' + h + 'px'});
+
+                self.m_thumbsContainer.sortable({
+                    revert: 200,
+                    axis: 'x',
+                    opacity: 1.0,
+                    placeholder: 'draggableScreenPlaceHolder',
+                    start: function (e, ui) {
+                        // $(ui.placeholder).slideUp();
+                        $(ui.placeholder).hide();
+                    },
+
+                    stop: function () {
+                        $(Elements.DETTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).trigger('click');
+                        $(Elements.ATTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).trigger('click');
+                        self.reSequenceTimelines();
+                    },
+
+                    change: function (e, ui) {
+                        $(ui.placeholder).stop(true).animate({width: '0px'}, 100).css({width: '0px'}).slideDown({duration: 0.5}).animate({width: '100px'});
+                        // $(ui.placeholder).stop(true).animate({width: '0px'},100).css({width: '0px'}).slideDown({duration: 0.2}).animate({width: '8px'},0.300);
+                    },
+                    scrollSpeed: 120,
+                    containment: self.m_thumbsContainer,
+                    delay: 200,
+                    scroll: true
+                }).disableSelection();
+
+            });
+
+            $(Elements.DETTACH_DRAG_DROP_MAIN_SCREEN_SELECTION).on('click', function () {
+                $(self.m_thumbsContainer).disableSelection();
+                self.m_thumbsContainer.sortable('destroy');
+            });
         },
 
         /**
@@ -134,102 +189,6 @@ define(['jquery', 'backbone', 'ScreenTemplateFactory', 'contextmenu'], function 
         },
 
         /**
-         Create a sortable channel list
-         @method _createSortable
-         @param {Element} i_selector
-         **/
-        _createSortable: function (i_selector) {
-            var self = this;
-            if ($(i_selector).children().length==0) return;
-            var sortable = document.querySelector(i_selector);
-            self.m_draggables = Draggable.create(sortable.children, {
-                type: "x",
-                bounds: sortable,
-                dragClickables: true,
-                edgeResistance: 1,
-                onPress: self._sortablePress,
-                onDragStart: self._sortableDragStart,
-                onDrag: self._sortableDrag,
-                liveSnap: self._sortableSnap,
-                onDragEnd: function () {
-                    var t = this.target,
-                        max = t.kids.length - 1,
-                        newIndex = Math.round(this.x / t.currentWidth);
-                    newIndex += (newIndex < 0 ? -1 : 0) + t.currentIndex;
-                    if (newIndex === max) {
-                        t.parentNode.appendChild(t);
-                    } else {
-                        t.parentNode.insertBefore(t, t.kids[newIndex + 1]);
-                    }
-                    TweenLite.set(t.kids, { xPercent: 0, overwrite: "all" });
-                    TweenLite.set(t, { y: 0, color: "" });
-                    var orderedTimelines = self.reSequenceTimelines();
-                    $(self.m_thumbsContainer).empty();
-                    BB.comBroker.getService(BB.SERVICES.CAMPAIGN_VIEW).populateTimelines(orderedTimelines);
-                }
-            });
-        },
-
-        /**
-         Sortable channel list on press
-         @method _sortablePress
-         **/
-        _sortablePress: function () {
-            var t = this.target,
-                i = 0,
-                child = t;
-            while (child = child.previousSibling)
-                if (child.nodeType === 1) i++;
-            t.currentIndex = i;
-            t.currentWidth = t.offsetWidth;
-            t.kids = [].slice.call(t.parentNode.children); // convert to array
-        },
-
-        /**
-         Sortable drag channel list on press
-         @method _sortableDragStart
-         **/
-        _sortableDragStart: function () {
-            TweenLite.set(this.target, { color: "#88CE02" });
-        },
-
-        /**
-         Sortable drag channel list
-         @method _sortableDrag
-         **/
-        _sortableDrag: function () {
-            var t = this.target,
-                elements = t.kids.slice(), // clone
-                indexChange = Math.round(this.x / t.currentWidth),
-                bound1 = t.currentIndex,
-                bound2 = bound1 + indexChange;
-            if (bound1 < bound2) { // moved down
-                TweenLite.to(elements.splice(bound1 + 1, bound2 - bound1), 0.15, { xPercent: -100 });
-                TweenLite.to(elements, 0.15, { xPercent: 0 });
-                log('1');
-            } else if (bound1 === bound2) {
-                elements.splice(bound1, 1);
-                TweenLite.to(elements, 0.15, { xPercent: 0 });
-                log('2');
-            } else { // moved up
-                TweenLite.to(elements.splice(bound2, bound1 - bound2), 0.15, { xPercent: 80 });
-                TweenLite.to(elements, 0.15, { xPercent: -10 });
-                log('3');
-            }
-        },
-
-        /**
-         snap channels to set rounder values
-         @method _sortableSnap
-         **/
-        _sortableSnap: function (y) {
-            return y;
-            /* enable code below to use live drag snapping */
-            // var h = this.target.currentHeight;
-            // return Math.round(y / h) * h;
-        },
-
-        /**
          Select the first timeline in the Sequencer
          @method selectFirstTimeline
          **/
@@ -333,25 +292,23 @@ define(['jquery', 'backbone', 'ScreenTemplateFactory', 'contextmenu'], function 
                 }
             }
 
-            self._createSortable(Elements.SCREEN_LAYOUTS_UL);
+            //self.selectTimeline(campaign_timeline_id);
+            // self.selectFirstTimeline();
         },
 
         /**
          Reorder the timeline in the local msdb to match the UI order of the timeline thumbnails in the Sequencer
          @method reSequenceTimelines
-         @return {Array} order of timelines ids
+         @return none
          **/
         reSequenceTimelines: function () {
             var self = this;
-            var order = [];
             var timelines = $(self.m_thumbsContainer).children().each(function (sequenceIndex) {
                 var element = $(this).find('[data-campaign_timeline_id]').eq(0);
                 var campaign_timeline_id = $(element).data('campaign_timeline_id');
-                order.push(campaign_timeline_id);
                 var selectedCampaign = BB.comBroker.getService(BB.SERVICES.CAMPAIGN_VIEW).getSelectedCampaign();
                 pepper.setCampaignTimelineSequencerIndex(selectedCampaign, campaign_timeline_id, sequenceIndex);
             });
-            return order;
         },
 
         /**

@@ -383,6 +383,10 @@ iframe {
     margin-left: 0;
 }
 
+#screenLayoutsUL > svg {
+    float: left;
+}
+
 #screenMainSelector {
     width: 100%;
 }
@@ -1170,6 +1174,7 @@ iframe {
 .dottedHR {
     height: 6px;
     width: 1500px;
+    opacity: 0.6;
     position: relative;
     border-top: 12px dotted #c1c1c1;
     padding-bottom: 7px;

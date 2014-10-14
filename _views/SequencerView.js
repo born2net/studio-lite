@@ -59,31 +59,37 @@ define(['jquery', 'backbone', 'ScreenTemplateFactory', 'contextmenu'], function 
             if (campaign_timeline_id == -1 || _.isUndefined(campaign_timeline_id))
                 return;
 
-            switch (i_command){
-                case 'firstChannel': {
+            switch (i_command) {
+                case 'firstChannel':
+                {
                     $(Elements.SELECT_NEXT_CHANNEL).trigger('click');
                     break;
                 }
-                case 'editLayout': {
+                case 'editLayout':
+                {
                     $(Elements.EDIT_SCREEN_LAYOUT).trigger('click');
                     break;
                 }
-                case 'duplicate': {
+                case 'duplicate':
+                {
                     BB.comBroker.getService(BB.SERVICES.CAMPAIGN_VIEW).duplicateTimeline(campaign_timeline_id, {});
                     break;
                 }
-                case 'remove': {
+                case 'remove':
+                {
                     $(Elements.REMOVE_TIMELINE_BUTTON).trigger('click');
                     break;
                 }
-                case 'first': {
-                    var elem =  $(self.m_thumbsContainer).find('[data-campaign_timeline_id="' + campaign_timeline_id + '"]').eq(0).closest('svg');
+                case 'first':
+                {
+                    var elem = $(self.m_thumbsContainer).find('[data-campaign_timeline_id="' + campaign_timeline_id + '"]').eq(0).closest('svg');
                     $(self.m_thumbsContainer).prepend(elem);
                     self.reSequenceTimelines();
                     break;
                 }
-                case 'last': {
-                    var elem =  $(self.m_thumbsContainer).find('[data-campaign_timeline_id="' + campaign_timeline_id + '"]').eq(0).closest('svg');
+                case 'last':
+                {
+                    var elem = $(self.m_thumbsContainer).find('[data-campaign_timeline_id="' + campaign_timeline_id + '"]').eq(0).closest('svg');
                     $(self.m_thumbsContainer).append(elem);
                     self.reSequenceTimelines();
                     break;
@@ -140,12 +146,11 @@ define(['jquery', 'backbone', 'ScreenTemplateFactory', 'contextmenu'], function 
          **/
         _createSortable: function (i_selector) {
             var self = this;
-            if ($(i_selector).children().length==0) return;
+            if ($(i_selector).children().length == 0) return;
             var sortable = document.querySelector(i_selector);
             self.m_draggables = Draggable.create(sortable.children, {
                 type: "x",
                 bounds: sortable,
-                dragClickables: true,
                 edgeResistance: 1,
                 onPress: self._sortablePress,
                 onDragStart: self._sortableDragStart,
@@ -154,7 +159,8 @@ define(['jquery', 'backbone', 'ScreenTemplateFactory', 'contextmenu'], function 
                 onDragEnd: function () {
                     var t = this.target,
                         max = t.kids.length - 1,
-                        newIndex = Math.round(this.x / t.currentWidth);
+                    //newIndex = Math.round(this.x / t.currentWidth);
+                        newIndex = Math.ceil(this.x / t.currentWidth);
                     newIndex += (newIndex < 0 ? -1 : 0) + t.currentIndex;
                     if (newIndex === max) {
                         t.parentNode.appendChild(t);
@@ -181,7 +187,7 @@ define(['jquery', 'backbone', 'ScreenTemplateFactory', 'contextmenu'], function 
             while (child = child.previousSibling)
                 if (child.nodeType === 1) i++;
             t.currentIndex = i;
-            t.currentWidth = t.offsetWidth;
+            t.currentWidth = $(t).outerWidth();
             t.kids = [].slice.call(t.parentNode.children); // convert to array
         },
 
@@ -200,21 +206,22 @@ define(['jquery', 'backbone', 'ScreenTemplateFactory', 'contextmenu'], function 
         _sortableDrag: function () {
             var t = this.target,
                 elements = t.kids.slice(), // clone
-                indexChange = Math.round(this.x / t.currentWidth),
-                bound1 = t.currentIndex,
-                bound2 = bound1 + indexChange;
-            if (bound1 < bound2) { // moved down
-                TweenLite.to(elements.splice(bound1 + 1, bound2 - bound1), 0.15, { xPercent: -100 });
+            // indexChange = Math.round(this.x / t.currentWidth), // round flawed on large values
+                indexChange = Math.ceil(this.x / t.currentWidth),
+                srcIndex = t.currentIndex,
+                bound2 = srcIndex + indexChange;
+
+            // console.log('s:' + srcIndex + ' d:' + indexChange + ' t:' + (bound2 - srcIndex));
+
+            if (srcIndex < bound2) { // moved right
+                TweenLite.to(elements.splice(srcIndex + 1, bound2 - srcIndex), 0.15, { x: '-100%' });  // 140 = width of screen layout widget
                 TweenLite.to(elements, 0.15, { xPercent: 0 });
-                log('1');
-            } else if (bound1 === bound2) {
-                elements.splice(bound1, 1);
+            } else if (srcIndex === bound2) {
+                elements.splice(srcIndex, 1);
                 TweenLite.to(elements, 0.15, { xPercent: 0 });
-                log('2');
-            } else { // moved up
-                TweenLite.to(elements.splice(bound2, bound1 - bound2), 0.15, { xPercent: 80 });
+            } else { // moved left
+                TweenLite.to(elements.splice(bound2, srcIndex - bound2), 0.15, { x: '90%' }); // 140 = width of screen layout widget
                 TweenLite.to(elements, 0.15, { xPercent: -10 });
-                log('3');
             }
         },
 

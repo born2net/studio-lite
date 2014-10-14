@@ -220,13 +220,13 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             }
             // listen one
             if (self.m_selfDestruct) {
-                $(Elements.CLASS_SCREEN_DIVISION, '#' + self.m_myElementID).one('click contextmenu', function (e) {
+                $(Elements.CLASS_SCREEN_DIVISION, '#' + self.m_myElementID).one('mouseup contextmenu', function (e) {
                     applyToSelected(e);
                 });
 
             } else {
                 // listen on
-                $(Elements.CLASS_SCREEN_DIVISION, '#' + self.m_myElementID).on('click contextmenu', function (e) {
+                $(Elements.CLASS_SCREEN_DIVISION, '#' + self.m_myElementID).on('mouseup contextmenu', function (e) {
                     applyToSelected(e);
                 });
             }

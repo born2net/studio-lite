@@ -59,9 +59,11 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             if (layoutRouter.getAppWidth() < 768) {
                 $(Elements.TOGGLE_PANEL + ' > span').removeClass('glyphicon-resize-horizontal');
                 $(Elements.TOGGLE_PANEL + ' > span').addClass('glyphicon-cog');
+                $(Elements.TOGGLE_PANEL).addClass('headerPropIcon');
             } else {
                 $(Elements.TOGGLE_PANEL + ' > span').removeClass('glyphicon-cog');
                 $(Elements.TOGGLE_PANEL + ' > span').addClass('glyphicon-resize-horizontal');
+                $(Elements.TOGGLE_PANEL).removeClass('headerPropIcon');
             }
         },
 

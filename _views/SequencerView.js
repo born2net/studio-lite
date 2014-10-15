@@ -152,16 +152,18 @@ define(['jquery', 'backbone', 'ScreenTemplateFactory', 'contextmenu'], function 
                 type: "x",
                 bounds: sortable,
                 edgeResistance: 1,
+                dragResistance: 0,
                 onPress: self._sortablePress,
                 onDragStart: self._sortableDragStart,
                 onDrag: self._sortableDrag,
                 liveSnap: self._sortableSnap,
+                zIndexBoost: true,
                 onDragEnd: function () {
                     var t = this.target,
                         max = t.kids.length - 1,
                     //newIndex = Math.round(this.x / t.currentWidth);
                         newIndex = Math.ceil(this.x / t.currentWidth);
-                    newIndex += (newIndex < 0 ? -1 : 0) + t.currentIndex;
+                    newIndex += (newIndex < 0 ? -1 : 0) + t.originalIndex;
                     if (newIndex === max) {
                         t.parentNode.appendChild(t);
                     } else {
@@ -186,7 +188,7 @@ define(['jquery', 'backbone', 'ScreenTemplateFactory', 'contextmenu'], function 
                 child = t;
             while (child = child.previousSibling)
                 if (child.nodeType === 1) i++;
-            t.currentIndex = i;
+            t.originalIndex = i;
             t.currentWidth = $(t).outerWidth();
             t.kids = [].slice.call(t.parentNode.children); // convert to array
         },
@@ -206,21 +208,24 @@ define(['jquery', 'backbone', 'ScreenTemplateFactory', 'contextmenu'], function 
         _sortableDrag: function () {
             var t = this.target,
                 elements = t.kids.slice(), // clone
-            // indexChange = Math.round(this.x / t.currentWidth), // round flawed on large values
+                // indexChange = Math.round(this.x / t.currentWidth), // round flawed on large values
                 indexChange = Math.ceil(this.x / t.currentWidth),
-                srcIndex = t.currentIndex,
-                bound2 = srcIndex + indexChange;
+                srcIndex = t.originalIndex,
+                dstIndex = srcIndex + indexChange;
 
-            // console.log('s:' + srcIndex + ' d:' + indexChange + ' t:' + (bound2 - srcIndex));
+            // console.log('k ' + t.kids.length + ' s:' + srcIndex + ' d:' + indexChange + ' t:' + (dstIndex - srcIndex));
 
-            if (srcIndex < bound2) { // moved right
-                TweenLite.to(elements.splice(srcIndex + 1, bound2 - srcIndex), 0.15, { x: '-100%' });  // 140 = width of screen layout widget
+            if (srcIndex < dstIndex) { // moved right
+                TweenLite.to(elements.splice(srcIndex + 1, dstIndex - srcIndex), 0.15, { xPercent: -140 });  // 140 = width of screen layout widget
                 TweenLite.to(elements, 0.15, { xPercent: 0 });
-            } else if (srcIndex === bound2) {
+            } else if (srcIndex === dstIndex) {
                 elements.splice(srcIndex, 1);
                 TweenLite.to(elements, 0.15, { xPercent: 0 });
             } else { // moved left
-                TweenLite.to(elements.splice(bound2, srcIndex - bound2), 0.15, { x: '90%' }); // 140 = width of screen layout widget
+                // ignore if destination > source index
+                if ( (indexChange < 0 ? indexChange * -1 : indexChange) > srcIndex)
+                    return;
+                TweenLite.to(elements.splice(dstIndex, srcIndex - dstIndex), 0.15, { xPercent: 140 }); // 140 = width of screen layout widget
                 TweenLite.to(elements, 0.15, { xPercent: -10 });
             }
         },

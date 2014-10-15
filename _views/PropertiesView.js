@@ -110,7 +110,7 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
         },
 
         /**
-         Move properties panel between side panel or full screen popup panel depending on screen size
+         Move properties panel between side panel or full screen popup panel depending on the screen size
          @method _reconfigPropPanelLocation
          **/
         _reconfigPropPanelLocation: function () {

@@ -267,7 +267,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
                     '<i class="fa ' + blockData.blockFontAwesome + '"></i>' +
                     '<span>' + blockData.blockName + '</span>' +
                     '<i style="padding: 0; margin: 0" class="dragch fa fa-arrows-v"></i>' +
-                    '<span class="' + BB.lib.unclass(Elements.CLASS_BLOCK_LENGTH_TIMER) + '">' + durationFormatted + '</span>' +
+                    '<span class="' + BB.lib.unclass(Elements.CLASS_BLOCK_LENGTH_TIMER) + ' hidden-xs">' + durationFormatted + '</span>' +
                     '</a>' +
                     '</li>'));
             }

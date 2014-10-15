@@ -77,7 +77,9 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
              @method authenticating
              **/
             _routeAuthenticated: function () {
+                var self = this;
                 this.navigate('app', {trigger: true});
+                self._updateLayoutDelay();
             },
 
             /**
@@ -436,14 +438,20 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                     $(window).one('resize', self._updateLayout);
                     $(window).bind('orientationchange', function (e) {
                         // log(window.orientation); // 0 = portrait; 90 = landscape left; -90 = landscape right
-                        setTimeout(function () {
-                            self._updateLayout();
-                        }, 1500);
+                        self._updateLayoutDelay();
                     });
                 } else {
                     var lazyLayout = _.debounce(self._updateLayout, 150);
                     $(window).resize(lazyLayout);
+                    self._updateLayoutDelay();
                 }
+            },
+
+            _updateLayoutDelay: function(){
+                var self = this;
+                setTimeout(function () {
+                    self._updateLayout();
+                }, 1500);
             },
 
             /**

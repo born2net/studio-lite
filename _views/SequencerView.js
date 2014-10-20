@@ -174,6 +174,9 @@ define(['jquery', 'backbone', 'ScreenTemplateFactory', 'contextmenu'], function 
                     var orderedTimelines = self.reSequenceTimelines();
                     $(self.m_thumbsContainer).empty();
                     BB.comBroker.getService(BB.SERVICES.CAMPAIGN_VIEW).populateTimelines(orderedTimelines);
+                    var campaign_timeline_id = BB.comBroker.getService(BB.SERVICES.CAMPAIGN_VIEW).getSelectedTimeline();
+                    self.selectTimeline(campaign_timeline_id);
+
                 }
             });
         },
@@ -384,7 +387,7 @@ define(['jquery', 'backbone', 'ScreenTemplateFactory', 'contextmenu'], function 
         selectTimeline: function (i_campaign_timeline_id) {
             var self = this;
             BB.comBroker.fire(BB.EVENTS.CAMPAIGN_TIMELINE_SELECTED, this, null, i_campaign_timeline_id);
-            var total = $(self.m_thumbsContainer).find('[data-campaign_timeline_id="' + i_campaign_timeline_id + '"]').eq(0).trigger('click');
+            var total = $(self.m_thumbsContainer).find('[data-campaign_timeline_id="' + i_campaign_timeline_id + '"]').eq(0).mouseup();;
             if (total.length == 0)
                 return -1;
             return i_campaign_timeline_id;

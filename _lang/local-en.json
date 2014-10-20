@@ -236,6 +236,7 @@
     "bootBoxEnterpriseUpgrade": "upgrade to enterprise",
     "bootBoxEnterpriseUpgradeText": "When you upgrade to an enterprise account you get all the benefits of the SignageStudio Pro account plus a lot more...",
     "bootBoxNonAllowedCharacters": "Some of the characters entered are not allowed, consider using shortening URL maker like google at: https://goo.gl",
+    "bootBoxNoTimelineSelected": "No timeline selected",
     "tutorialCampaignList1": "here is a list of your campaigns",
     "tutorialCampaignList3": "A remote player, runs a campaigns",
     "tutorialSceneList1": "here is a list of your scenes",

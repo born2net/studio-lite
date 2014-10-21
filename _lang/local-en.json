@@ -242,6 +242,7 @@
     "tutorialSceneList1": "here is a list of your scenes",
     "tutorialSceneList2": "a scene is an area where you can mix content",
     "tutorialSceneList3": "inside a canvas and later assign it to a channel",
+    "seqVsSchedVideo": "Sequencer vs Schedule",
     "tutorialScene": "mix content, like videos, images, RSS and other  components inside this scene canvas. Later you can assign it to any channel inside any timeline, as a single play list item, cool ha?",
     "tutorialStoryboard1": "these are your individual channels which are assigned to the timeline",
     "tutorialStoryboard2": "each one has content on it and displayed over time duration",

@@ -574,6 +574,9 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                 }
             }
             campaign_timeline_board_viewer_id = pepper.getAssignedViewerIdFromChannelId(timeline_channel_id);
+            // todo: workaround for when viewer is unassigned, need to investigate
+            if (_.isUndefined(campaign_timeline_board_viewer_id))
+                return;
             var screenData = {
                 m_owner: self,
                 campaign_timeline_id: self.m_selectedTimelineID,

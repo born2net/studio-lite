@@ -179,6 +179,7 @@ define(['jquery', 'backbone', 'StationModel', 'simplestorage'], function ($, Bac
             var self = this;
             var userData = pepper.getUserData();
             var url = window.g_protocol + userData.domain + '/WebService/getStatus.ashx?user=' + userData.userName + '&password=' + userData.userPass + '&callback=?';
+            log(url);
             $.getJSON(url,
                 function (data) {
                     var s64 = data['ret'];

@@ -265,6 +265,12 @@ define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockVideo', 'BlockScene'],
             var blocksSorted = [];
             for (var block_id in self.m_blocks) {
                 var recBlock = pepper.getBlockRecord(block_id);
+                var player_data = pepper.getBlockRecord(block_id)['player_data'];
+                var domPlayerData = $.parseXML(player_data);
+                var sceneHandle = $(domPlayerData).find('Player').attr('player');
+                // workaround to remove scenes listed inside table campaign_timeline_chanel_players
+                if (sceneHandle=='3510')
+                    continue;
                 var offsetTime = parseInt(recBlock['player_offset_time']);
                 blocksSorted[offsetTime] = self.m_blocks[block_id];
             }

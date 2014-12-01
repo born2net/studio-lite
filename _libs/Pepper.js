@@ -1486,9 +1486,11 @@ Pepper.prototype = {
      **/
     createCampaignTimelineScheduler: function (i_campaign_id, i_campaign_timeline_id) {
         var self = this;
-        var date = new Date();
-        var dateStart = date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear() + ' 12:00 AM';
-        var dateEnd = date.getMonth() + 2 + '/' + (date.getDate() - 3) + '/' + date.getFullYear() + ' 12:00 AM';
+        var startDate = new Date();
+        var endDate = new Date();
+        endDate.setDate(endDate.getDate() + 30);
+        var dateStart = startDate.getMonth() + 1 + '/' + startDate.getDate() + '/' + startDate.getFullYear() + ' 12:00 AM';
+        var dateEnd = endDate.getMonth() + 1 + '/' + endDate.getDate() + '/' + endDate.getFullYear() + ' 12:00 AM';
         var table_campaign_timeline_schedules = self.m_msdb.table_campaign_timeline_schedules();
         var recCampaignTimelineSchedules = table_campaign_timeline_schedules.createRecord();
         recCampaignTimelineSchedules.campaign_timeline_id = i_campaign_timeline_id;

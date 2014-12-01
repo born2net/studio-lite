@@ -360,6 +360,7 @@
     "signageWindows": "SignagePlayer for Windows",
     "downloadAIR": "download Adobe AIR runtime: ",
     "downloadSignagePlayer": " download the SignagePlayer AIR app: ",
+    "downloadSignagePlayerExe": " download the SignagePlayer EXE app: ",
     "downloadIOS": " download player from the App store:",
     "signageIOS": "SignagePlayer for iOS",
     "signageMac": "SignagePlayer for Mac",

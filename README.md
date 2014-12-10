@@ -36,7 +36,8 @@ Links:
 - Docs: http://www.digitalsignage.com/msdocs/
 - Support: http://script.digitalsignage.com/forum/index.php/board,9.0.html
 - Developer video tutorial: http://goo.gl/nkx7wr
-- StudioLite intro video: http://www.digitalsignage.com/_html/signage_video.html?videoNumber=StudioLite
+- StudioLite intro video: http://lite.digitalsignage.com/video1.html
+- StudioLite advanced  video: http://lite.digitalsignage.com/video2.html
 - Developers page: http://www.digitalsignage.com/_html/open_source_digital_signage.html
 
 Technical data:

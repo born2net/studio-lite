@@ -276,6 +276,19 @@ Pepper.prototype = {
     },
 
     /**
+     Get list of all create account samples, both lite and pro
+     @method getSampleList
+     @param {Function} i_callBack
+     **/
+    getSampleList: function (i_callBack) {
+        window.g_masterDomain = 'galaxy.signage.me';
+        var url = window.g_protocol + window.g_masterDomain + '/WebService/getResellerTemplates.ashx?callback=?';
+        $.getJSON(url, function (data) {
+            i_callBack(data);
+        });
+    },
+
+    /**
      Push a command to remote station
      @method sendCommand
      @param {String} i_command

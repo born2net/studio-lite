@@ -276,16 +276,6 @@ Pepper.prototype = {
     },
 
     /**
-     Create a new mediaCLOUD account
-     @method createAccount
-     @param {Function} i_callBack
-     **/
-    createAccount: function (i_callBack) {
-        var url = window.g_protocol + window.g_masterDomain + '/WebService/createNewAccount.ashx?command=CreateCustomerAccount&businessName=MediaSignage&userName=x1482@ms.com&password=123123&templateBusinessId=1021&resellerId=1&firstName=Sean&lastName=Levy&contactEmail=x147@ms.com&workPhone=5551212&cellPhone=818555454&address=loma&city=wh&state=ca&contry=USA&zipcode=91301&callback=?';
-        $.getJSON(url, i_callBack);
-    },
-
-    /**
      Get list of all create account samples, both lite and pro
      @method getSampleList
      @param {Function} i_callBack
@@ -326,6 +316,118 @@ Pepper.prototype = {
             $.getJSON(url, function (data) {
                 i_callBack(data);
             });
+        });
+    },
+
+
+    /**
+     Return the url address of StudioLite
+     @method getStudioLiteURL
+     @return {String} url address
+     **/
+    getStudioLiteURL: function () {
+        var protocol =  window.g_protocol;
+        if (window.g_masterDomain == 'galaxy.signage.me')
+            protocol = 'https://';
+        return protocol + window.g_masterDomain + '/_studiolite-dist/studiolite.html';
+    },
+
+    /**
+     Return the url address of StudioPro
+     @method getStudioProURL
+     @return {String} url address
+     **/
+    getStudioProURL: function () {
+        var protocol =  window.g_protocol;
+        return window.g_protocol + window.g_masterDomain + '/WebService/signagestudio_d.aspx';
+    },
+
+    /**
+     Create a new mediaCLOUD account
+     @method createAccount
+     @param {Function} i_callBack
+     **/
+    createAccount: function (i_businessName, i_userName, i_password, i_templateBusinessId, i_resellerId, i_firstName, i_lastName, i_contactEmail, i_workPhone, i_cellPhone, i_address, i_city, i_state, i_contry, i_zipcode, i_callback) {
+        var url = window.g_protocol + window.g_masterDomain + '/WebService/createNewAccount.ashx?command=CreateCustomerAccount'
+        url += '&businessName=' + i_businessName;
+        url += '&userName=' + i_userName;
+        url += '&password=' + i_password;
+        url += '&templateBusinessId=' + i_templateBusinessId;
+        url += '&resellerId=' + i_resellerId;
+        url += '&firstName=' + i_firstName;
+        url += '&lastName=' + i_lastName;
+        url += '&contactEmail=' + i_contactEmail;
+        url += '&workPhone=' + i_workPhone;
+        url += '&cellPhone=' + i_cellPhone;
+        url += '&address=' + i_address;
+        url += '&city=' + i_city;
+        url += '&state=' + i_state;
+        url += '&contry=' + i_contry;
+        url += '&zipcode=' + i_zipcode;
+        url += '&callback=?';
+        log(url);
+        $.getJSON(url, i_callback);
+    },
+
+    /**
+     Get business user info
+     @method GetBusinessUserInfo
+     @param {Function} i_callBack
+     **/
+    getAccountStatus: function (i_businessId, i_callBack) {
+        var url = window.g_protocol + window.g_masterDomain + '/WebService/createNewAccount.ashx?command=GetAccountStatus&businessId=' + i_businessId + '&callback=?';
+        $.getJSON(url, i_callBack);
+    },
+
+    /**
+     Get business user info
+     @method GetBusinessUserInfo
+     @param {Function} i_callBack
+     **/
+    resetPassword: function (i_email, i_callBack) {
+        var url = window.g_protocol + window.g_masterDomain + '/WebService/createNewAccount.ashx?command=ResetPassword&userName=' + i_email + '&callback=?';
+        $.getJSON(url, i_callBack);
+    },
+
+    /**
+     Get business user info
+     @method ChangePassword
+     @param {Function} i_callBack
+     **/
+    changePassword: function (i_email, i_oldPassword, i_newPassword, i_callBack) {
+        var url = window.g_protocol + window.g_masterDomain + '/WebService/createNewAccount.ashx?command=ChangePassword&userName=' + i_email + '&oldPassword=' + i_oldPassword + '&newPassword=' + i_newPassword + '&callback=?';
+        $.getJSON(url, i_callBack);
+    },
+
+    /**
+     Get business user info
+     @method ChangeBusinessName
+     @param {Function} i_callBack
+     **/
+    changeBusinessName: function (i_email, i_password, i_businessName, i_callBack) {
+        var url = window.g_protocol + window.g_masterDomain + '/WebService/createNewAccount.ashx?command=ChangeBusinessName&userName=' + i_email + '&password=' + i_password + '&busnessName=' + i_businessName + '&callback=?';
+        $.getJSON(url, i_callBack);
+    },
+
+    /**
+     Get business user info
+     @method GetBusinessUserInfo
+     @param {Function} i_callBack
+     **/
+    getBusinessUserInfo: function (i_user, i_pass, i_callBack) {
+        var url = window.g_protocol + window.g_masterDomain + '/WebService/createNewAccount.ashx?command=GetBusinessUserInfo&userName=' + i_user + '&password=' + i_pass + '&callback=?';
+        $.getJSON(url, i_callBack);
+    },
+
+    /**
+     Get list of all create account samples, both lite and pro
+     @method getSampleList
+     @param {Function} i_callBack
+     **/
+    getSampleList: function (i_callBack) {
+        var url = window.g_protocol + window.g_masterDomain + '/WebService/getResellerTemplates.ashx?callback=?';
+        $.getJSON(url, function (data) {
+            i_callBack(data);
         });
     },
 

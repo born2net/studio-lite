@@ -68,7 +68,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var passedCredentials = self._loadPassedCredentials();
             var cookieCredentials = $.cookie('signagestudioweblite') == undefined ? undefined : $.cookie('signagestudioweblite').split(' ')[0];
 
-            if (passedCredentials){
+            if (passedCredentials) {
                 self._authServer(passedCredentials.user, passedCredentials.pass, self.AUTH_PARAMS);
 
             } else if (cookieCredentials) {
@@ -115,8 +115,9 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
             self.authenticated = true;
             // create cookie
+            BB.globs['CREDENTIALS'] = self._encryptUserPass(i_user, i_pass);
             if (i_authMode == self.AUTH_USER_PASS && $(Elements.REMEMBER_ME).prop('checked'))
-                self._bakeCookie(i_user, i_pass);
+                self._bakeCookie(BB.globs['CREDENTIALS']);
 
             if (i_status['warning'].length > 0) {
                 // Pro Account (not a Lite account) so limited access
@@ -150,10 +151,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
             // if cookie exists, delete it because obviously it didn't do the job
             if (i_authMode == self.AUTH_COOKIE) {
-                $.removeCookie('signagestudioweblite', { path: '/' });
-                $.removeCookie('signagestudioweblite', { path: '/_studiolite' });
-                $.removeCookie('signagestudioweblite', { path: '/_studiolite-dev' });
-                $.removeCookie('signagestudioweblite', { path: '/_studiolite-dist' });
+                $.removeCookie('signagestudioweblite', {path: '/'});
+                $.removeCookie('signagestudioweblite', {path: '/_studiolite'});
+                $.removeCookie('signagestudioweblite', {path: '/_studiolite-dev'});
+                $.removeCookie('signagestudioweblite', {path: '/_studiolite-dist'});
             }
 
             // let user know authentication failed
@@ -184,16 +185,25 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         /**
-         Create RC4 local encrypted cookie
+         Create cookie
          @method _bakeCookie
+         @param {String} i_crumb
+         **/
+        _bakeCookie: function (i_crumb) {
+            var self = this;
+            $.cookie('signagestudioweblite', i_crumb, {expires: 300});
+        },
+
+        /**
+         Create RC4 local encrypted cookie
+         @method _encryptUserPass
          @param {String} i_user
          @param {String} i_pass
          **/
-        _bakeCookie: function (i_user, i_pass) {
+        _encryptUserPass: function (i_user, i_pass) {
             var rc4 = new RC4(BB.globs['RC4KEY']);
             var crumb = i_user + ':SignageStudioLite:' + i_pass + ':' + ' USER'
-            crumb = rc4.doEncrypt(crumb);
-            $.cookie('signagestudioweblite', crumb, { expires: 300 });
+            return rc4.doEncrypt(crumb);
         },
 
         /**
@@ -218,7 +228,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         logout: function () {
             $.removeCookie('signagestudioweblite', {path: '/'});
-            $.cookie('signagestudioweblite', '', { expires: -300 });
+            $.cookie('signagestudioweblite', '', {expires: -300});
         }
     });
 

@@ -69,6 +69,12 @@ define(['jquery', 'backbone', 'TutorialView'], function ($, Backbone, TutorialVi
                 self._closeMobileNavigation();
             });
 
+            $(Elements.CLASS_FATSERQ_PANEL).on('click', function () {
+                appContentFaderView.selectView(Elements.FASTERQ_PANEL);
+                self.resetPropertiesView();
+                self._closeMobileNavigation();
+            });
+
             $(Elements.CLASSS_PRO_STUDIO_PANEL).on('click', function () {
                 appContentFaderView.selectView(Elements.PRO_STUDIO_PANEL);
                 self.resetPropertiesView();

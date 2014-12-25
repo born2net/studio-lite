@@ -15,6 +15,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             window.BB = Backbone;
             window.bootbox = bootbox;
             BB.globs = {};
+            BB.globs['CREDENTIALS'] = '';
             BB.SERVICES = {};
             BB.EVENTS = {};
             BB.CONSTS = {};
@@ -35,6 +36,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             BB.platform = platform;
             BB.lib.forceBrowserCompatibility();
             BB.lib.promptOnExit();
+            $.ajaxSetup({cache: false});
 
             // localization
             require(['LanguageSelectorView', 'Elements'], function (LanguageSelectorView, Elements) {

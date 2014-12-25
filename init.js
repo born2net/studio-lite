@@ -117,6 +117,10 @@ require.config({
         'ScreenTemplate': '_libs/ScreenTemplate',
         'Pepper': '_libs/Pepper',
         'PepperHelper': '_libs/PepperHelper',
+        'FasterQView': '_views/_fasterQ/FasterQView',
+        'FasterQNavigationView': '_views/_fasterQ/FasterQNavigationView',
+        'FasterQManagerView': '_views/_fasterQ/FasterQManagerView',
+        'FasterQCreatorView': '_views/_fasterQ/FasterQCreatorView',
         'Fonts': '_libs/Fonts'
         //'AjaxRPC': '_controllers/AjaxRPC',
         //'AjaxJsonGetter': '_controllers/AjaxJsonGetter',

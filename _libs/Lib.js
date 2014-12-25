@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated Lib
  **/
-define(['jquery', 'backbone'], function ($, Backbone) {
+define(['jquery', 'backbone', 'platform'], function ($, Backbone, platform) {
     var Lib = function (type) {
         this.type = type;
     };
@@ -17,22 +17,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @param {String} msg
          **/
         log: function (msg) {
-            if (window.location.href.indexOf('dist') > -1)
-                return;
-            if (!$.browser == undefined && $.browser.msie && $.browser.version <= 8) {
-                if (globs['debug']) {
-                    console = {};
-                    console.log = function (m) {
-                        alert('msg:' + m)
-                    };
-                } else {
-                    console = {};
-                    console.log = function () {
-                    };
-                }
-            }
-            console.log(new Date().toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1") + ': ' + msg);
-
+            if (platform.name == 'Chrome')
+                console.log(new Date().toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1") + ': ' + msg);
         },
 
         /**

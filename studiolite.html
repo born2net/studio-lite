@@ -75,6 +75,8 @@
                     <li class="divider"></li>
                     <li><a data-localize="navScenes" class="scenesPanel" href="#">Scenes</a></li>
                     <li class="divider"></li>
+                    <li><a data-localize="navfasterQ" class="fasterQPanel" href="#">FasterQ</a></li>
+                    <li class="divider"></li>
                     <li><a data-localize="navSettings" class="settingsPanel" href="#">Settings</a></li>
                     <li class="divider"></li>
                     <li><a data-localize="navGoPro" class="proStudioPanel" href="#">Go Pro</a></li>
@@ -199,6 +201,8 @@
                 data-localize="navStation">Stations</span></li>
         <li class="navSelection scenesPanel list-group-item"><i class="navicons fa fa-pencil-square-o"></i><span
                 data-localize="navScenes">Scenes</span></li>
+        <li class="navSelection fasterQPanel list-group-item"><i class="navicons fa fa-male"></i><span
+                data-localize="navfasterQ">FasterQ</span></li>
         <li class="navSelection settingsPanel list-group-item"><i class="navicons fa fa-gears"></i><span
                 data-localize="navSettings">Settings</span>
         </li>
@@ -641,6 +645,51 @@
     </div>
     <div id="sceneAddNewBlock" style="display: none" class="page right">
     </div>
+</div>
+<div id="fasterQPanel" style="display: none">
+
+    <div id="fasterQNavigationContainer" style="display: none;">
+        <div align="center" style="padding-top: 100px">
+            <button id="fasterQManageNavButton" type="button" name="mailWasp" class="btn btn-default" style="width: 200px; height: 100px">
+                <div style="position: relative; left: -110px">
+                    <i style="margin: 0px; padding: 0px; font-size: 5em; width: 120px; position: relative; left: 105px; color: #a8a8a8" class="fa fa-male"></i>
+                    <i style="margin: 0px; padding: 0px; font-size: 5em; width: 120px; position: relative; left: 0px; color: #8c8c8c" class="fa fa-male"></i>
+                    <i style="margin: 0px; padding: 0px; font-size: 5em; width: 120px; position: relative; left: -105px; color: #616161" class="fa fa-male"></i>
+                    <i style="margin: 0px; padding: 0px; font-size: 5em; width: 120px; position: relative; left: -210px; color: #1e1e1e" class="fa fa-male"></i>
+                </div>
+
+            <span
+                    data-localize="none"></span>
+                <span style="display: block">Manage Lines</span>
+            </button>
+            <h1>Coming soon...</h1>
+            <!--<button id="fasterQCreateNavButton" type="button" name="mailWasp" class="btn btn-default" style="width: 200px; height: 100px">
+
+
+                <i style="margin: 20px; padding: 20px ; font-size: 4em; width: 120px; position: relative; top: -25px" class="fa fa-cogs"></i> <span
+                    data-localize="none"></span>
+                <span style="display: block; position: relative; top: -65px">Create Lines</span>
+            </button>
+            -->
+        </div>
+    </div>
+
+    <div id="fasterQManagerContainer" style="display: none">
+        <h1>coming soon...</h1>
+    </div>
+
+    <div id="fasterQCreatorContainer" style="display: none; width: 100%; height: 100%">
+        <button style="float: left;" class="btnPrice btn btn-default" href="#" type="button" data-localize="zzz">create line</button>
+        <br/>
+        <hr style="clear: both"/>
+        <span>Customer lines</span>
+        <ul id="customerLines">
+            <li>sasa</li>
+
+        </ul>
+    </div>
+
+
 </div>
 <div id="settingsPanel" style="display: none">
     <h3 data-localize="appSettings">app settings</h3>
@@ -1689,7 +1738,7 @@
 </div>
 </div>
 <div id="footer"><br>
-    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.1.56 </span>
+    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.1.58 </span>
 </div>
 
 

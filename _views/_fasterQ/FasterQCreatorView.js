@@ -14,7 +14,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         initialize: function () {
             var self = this;
-
+            self._populateLines();
             return;
 
             var mod = Backbone.Model.extend({
@@ -93,8 +93,21 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     }
                 });
             }, 6000)
-        }
+        },
 
+        _populateLines: function () {
+            var self = this;
+            require(['LinesCollection', 'LineModel'], function (LinesCollection, LineModel) {
+                self.m_linesCollection = new LinesCollection();
+                self.m_linesCollection.fetch({
+                    success: function (models) {
+                        log('model deleted 2');
+                    }, error: function (err) {
+                        log('error getting server data' + err);
+                    }
+                });
+            });
+        }
     });
 
     return FasterQCreatorView;

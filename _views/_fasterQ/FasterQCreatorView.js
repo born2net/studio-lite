@@ -99,11 +99,20 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             require(['LinesCollection', 'LineModel'], function (LinesCollection, LineModel) {
                 self.m_linesCollection = new LinesCollection();
+
                 self.m_linesCollection.fetch({
-                    success: function (models) {
-                        log('model deleted 2');
-                    }, error: function (err) {
-                        log('error getting server data' + err);
+                    data: {
+                        auth: BB.globs['CREDENTIALS'],
+                        busImportName: 'test business',
+                        busImportCID: '12345',
+                        busImportBID: '1234567890'
+                    },
+                    success: function(models) {
+                        log(models);
+                        // url console.log's fine just no params
+                    },
+                    error: function() {
+                        log('error loading collection data');
                     }
                 });
             });

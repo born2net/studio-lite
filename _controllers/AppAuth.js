@@ -115,7 +115,13 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
             self.authenticated = true;
             // create cookie
+
+
             BB.globs['CREDENTIALS'] = self._encryptUserPass(i_user, i_pass);
+            $.ajaxSetup({
+                headers: {'Authorization': BB.globs['CREDENTIALS']}
+            });
+
             if (i_authMode == self.AUTH_USER_PASS && $(Elements.REMEMBER_ME).prop('checked'))
                 self._bakeCookie(BB.globs['CREDENTIALS']);
 

@@ -660,12 +660,12 @@
 
             <span
                     data-localize="none"></span>
-                <span style="display: block">Manage Lines</span>
+                <span data-localize="manageLines" style="display: block">Manage Lines</span>
             </button>
             <button id="fasterQCreateNavButton" type="button" name="mailWasp" class="btn btn-default" style="width: 200px; height: 100px">
                 <i style="margin: 20px; padding: 20px ; font-size: 4em; width: 120px; position: relative; top: -25px" class="fa fa-cogs"></i> <span
                     data-localize="none"></span>
-                <span style="display: block; position: relative; top: -65px">Create Lines</span>
+                <span data-localize="createLines" style="display: block; position: relative; top: -65px">Create Lines</span>
             </button>
         </div>
     </div>
@@ -675,14 +675,14 @@
     </div>
 
     <div id="fasterQCreatorContainer" style="display: none; width: 100%; height: 100%">
-        <button style="float: left;" class="btnPrice btn btn-default" href="#" type="button" data-localize="zzz">create line</button>
+        <h3 data-localize="customerQueueLines">Customer lines</h3>
+        <hr/>
+
+        <button id="fasterQAddNewLine" type="button" class="btn btn-default"><i font-size: 1em"
+            class="fa fa-plus"></i> <span data-localize="addNewLine">Add new line</span></button>
         <br/>
         <hr style="clear: both"/>
-        <span>Customer lines</span>
-        <ul id="customerLines">
-            <li>sasa</li>
-
-        </ul>
+        <div id="fasterQCustomerLines"></div>
     </div>
 
 

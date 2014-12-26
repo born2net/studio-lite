@@ -13,7 +13,9 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @method initialize
          **/
         initialize: function () {
-        }
+        },
+        url: '/Line',
+        idAttribute: 'line_id'
     });
 
     return LineModel;

@@ -23,6 +23,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             BB.globs['RC4KEY'] = '226a3a42f34ddd778ed2c3ba56644315';
             BB.lib = new Lib();
             BB.lib.addBackboneViewOptions();
+            BB.lib.addBackboneCollectionSave();
             BB.lib.selectionSwitcher();
             BB.comBroker = new ComBroker();
             BB.comBroker.name = 'AppBroker';
@@ -37,6 +38,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             BB.lib.forceBrowserCompatibility();
             BB.lib.promptOnExit();
             $.ajaxSetup({cache: false});
+
 
             // localization
             require(['LanguageSelectorView', 'Elements'], function (LanguageSelectorView, Elements) {

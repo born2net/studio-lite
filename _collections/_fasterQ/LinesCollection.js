@@ -19,7 +19,7 @@ define(['jquery', 'backbone', 'LineModel'], function ($, Backbone, LineModel) {
             BB.comBroker.setService(BB.SERVICES.COLLECTION_LINES, self);
         },
         model: LineModel,
-        url: '/getLines'
+        url: '/Lines'
     });
 
     return LineCollection;

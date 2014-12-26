@@ -24,15 +24,18 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel'], function ($, Back
             $(Elements.FASTERQ_CUSTOMER_LINES).empty();
             self.m_linesCollection.fetch({
                 success: function (data) {
-                    _.each(data.models, function (i_model) {
-                        var snippet = '<a class="list-group-item">' + i_model.get('name') + '</a>'
-                        $(Elements.FASTERQ_CUSTOMER_LINES).append(snippet);
-                    })
+                    _.each(data.models, self._appendNewLine);
                 },
                 error: function () {
                     log('error loading collection data');
                 }
             });
+        },
+
+        _appendNewLine: function(i_model){
+            var self = this;
+            var snippet = '<a data-line_model_id="' + i_model.get('line_id') + ' " class="list-group-item">' + i_model.get('name') + '</a>';
+            $(Elements.FASTERQ_CUSTOMER_LINES).append(snippet);
         },
 
         _listenAddNewLine: function () {
@@ -45,10 +48,7 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel'], function ($, Back
                 model.save({}, {
                     success: function (model) {
                         self.m_linesCollection.add(model);
-                        //self._populateLines();
-                        var snippet = '<a class="list-group-item">' + model.get('name') + '</a>'
-                        $(Elements.FASTERQ_CUSTOMER_LINES).append(snippet);
-
+                        self._appendNewLine(model);
                     },
                     error: function () {
                         log('error loading collection data');

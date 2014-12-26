@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated FasterQCreatorView
  **/
-define(['jquery', 'backbone', 'LinesCollection', 'LineModel'], function ($, Backbone, LinesCollection, LineModel) {
+define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'text!_templates/_fasterQLineItem.html'], function ($, Backbone, LinesCollection, LineModel, fasterQLineItemTemplate) {
 
     var FasterQCreatorView = Backbone.View.extend({
 
@@ -14,6 +14,7 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel'], function ($, Back
          **/
         initialize: function () {
             var self = this;
+            self.m_fasterQLineItemTemplate = _.template(fasterQLineItemTemplate);
             self.m_linesCollection = new LinesCollection();
             self._populateLines();
             self._listenAddNewLine();
@@ -24,7 +25,7 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel'], function ($, Back
             $(Elements.FASTERQ_CUSTOMER_LINES).empty();
             self.m_linesCollection.fetch({
                 success: function (data) {
-                    _.each(data.models, self._appendNewLine);
+                    _.each(data.models, $.proxy(self._appendNewLine,self));
                 },
                 error: function () {
                     log('error loading collection data');
@@ -34,8 +35,7 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel'], function ($, Back
 
         _appendNewLine: function(i_model){
             var self = this;
-            var snippet = '<a data-line_model_id="' + i_model.get('line_id') + ' " class="list-group-item">' + i_model.get('name') + '</a>';
-            $(Elements.FASTERQ_CUSTOMER_LINES).append(snippet);
+            $(Elements.FASTERQ_CUSTOMER_LINES).append(self.m_fasterQLineItemTemplate(i_model.toJSON()));
         },
 
         _listenAddNewLine: function () {

@@ -327,6 +327,7 @@ Elements.FASTERQ_NAVIGATION_CONTAINER = '#fasterQNavigationContainer';
 Elements.FASTERQ_MANAGER_CONTAINER = '#fasterQManagerContainer';
 Elements.FASTERQ_CREATOR_CONTAINER = '#fasterQCreatorContainer';
 Elements.FASTERQ_CUSTOMER_LINES = '#fasterQCustomerLines';
+Elements.FASTERQ_LINES_CONTAINER = '#fasterQLinesContainer';
 Elements.SHOW_BACKGROUND = '#showBackground';
 Elements.SHOW_BORDER = '#showBorder';
 Elements.SNAP_SHOT_IMAGE = '#snapShotImage';

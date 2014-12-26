@@ -39,6 +39,9 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             BB.lib.promptOnExit();
             $.ajaxSetup({cache: false});
 
+            _.templateSettings = {
+                interpolate: /\{\{(.+?)\}\}/g
+            };
 
             // localization
             require(['LanguageSelectorView', 'Elements'], function (LanguageSelectorView, Elements) {

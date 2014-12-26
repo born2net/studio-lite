@@ -1066,6 +1066,36 @@ iframe {
     top: -45px;
 }
 
+.fasterQlineItem {
+    margin: 1px;
+}
+.fasterQlineItem h4 {
+    display: inline;
+}
+
+.fasterQlineItem i {
+    ont-size: 1.5em;
+}
+
+.fasterQlineItem a:first-child {
+    height: 60px;
+}
+.openLineProps {
+    float: right;
+    position: relative;
+    top: 2px;
+}
+
+.openLineProps button {
+    border: none;
+    background-color: transparent;
+}
+
+.openLineProps button:hover {
+    border: none;
+    background-color: #dcdcdc;
+}
+
 .form-signin {
     max-width: 330px;
     padding: 15px;

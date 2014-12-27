@@ -14,6 +14,7 @@ require.config({
         'backbone.controller': '_common/_js/backbone-controller/backbone.controller',
         'underscore': '_common/_js/underscore/underscore',
         'text': '_common/_js/requirejs/text',
+        'backbone.stickit': '_common/_js/backbone-stickit/backbone.stickit',
         'video': '_common/_js/video/video.dev',
         'bootstrapfileinput': '_common/_js/bootstrapfileinput/bootstrapfileinput',
         'bootstrap': '_common/_js/bootstrap/js/bootstrap',

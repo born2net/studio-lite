@@ -21,7 +21,8 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'text!_templates/_
             self.m_linesCollection = new LinesCollection();
             self._populateLines();
             self._listenAddNewLine();
-            self._listenRemoveLine()
+            self._listenRemoveLine();
+            self._listenInputNameChange();
 
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self && !self.m_rendered) {
@@ -57,13 +58,14 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'text!_templates/_
         _populateLines: function () {
             var self = this;
             $(Elements.FASTERQ_CUSTOMER_LINES).empty();
+            self.m_linesCollection.sort();
             self.m_linesCollection.fetch({
                 success: function (data) {
                     _.each(data.models, $.proxy(self._appendNewLine, self));
                     self._listenLineSelected();
                 },
                 error: function () {
-                    log('error loading collection data');
+                    log('error loading collection data....................');
                 }
             });
         },
@@ -115,6 +117,34 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'text!_templates/_
                 self._populateLines();
                 self.m_selectedLineID = undefined;
             });
+        },
+
+        /**
+         When Line name changed
+         @method _listenInputNameChange
+         @return none
+         **/
+        _listenInputNameChange: function () {
+            var self = this;
+
+            // Text input change
+            var onChange = _.debounce(function (e) {
+                var text = $(e.target).val();
+                if (_.isUndefined(self.m_selectedLineID))
+                    return;
+                var model = self.m_linesCollection.get(self.m_selectedLineID);
+                model.set('name',text);
+                model.save({},{
+                    success: function (model, response) {
+                        self._populateLines();
+                        log('model deleted');
+                    }, error: function () {
+                        log('error delete failed');
+                    }
+                });
+
+            }, 100);
+            self.m_inputChangeHandler = $(Elements.SELECTED_LINE_NAME).on("input", onChange);
         }
     });
 

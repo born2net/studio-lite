@@ -18,6 +18,9 @@ define(['jquery', 'backbone', 'LineModel'], function ($, Backbone, LineModel) {
             var self = this;
             BB.comBroker.setService(BB.SERVICES.COLLECTION_LINES, self);
         },
+        comparator: function( collection ){
+            return( collection.get( 'name' ) );
+        },
         model: LineModel,
         url: '/Lines'
     });

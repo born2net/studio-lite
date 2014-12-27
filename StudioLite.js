@@ -37,7 +37,10 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             BB.platform = platform;
             BB.lib.forceBrowserCompatibility();
             BB.lib.promptOnExit();
-            $.ajaxSetup({cache: false});
+            $.ajaxSetup({
+                cache: false,
+                timeout: 3000
+            });
 
             _.templateSettings = {
                 interpolate: /\{\{(.+?)\}\}/g

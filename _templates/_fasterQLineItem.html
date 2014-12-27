@@ -1,14 +1,17 @@
-<div class="fasterQlineItem appList list-group">
-    <a href="#" class="list-group-item">
-        <h4> {{ name }} </h4>
-        <!-- <input value="111" style="width: 50%; display: inline; font-size: 1.5em"/> -->
-        <div class="openLineProps">
-            <button type="button" class="openPropsButton btn btn-default btn-sm">
-                <i class="fa fa-pencil"></i>
-            </button>
-            <button type="button" class="openPropsButton btn btn-default btn-sm">
-                <i class="fa fa-times"></i>
-            </button>
+<li class="lineListItems list-group-item" data-line_id="{{ line_id }}">
+    <a href="#">
+        <div class="peopleInGroup">
+            <i class="peopleInLine fa fa-male"></i>
+            <i class="peopleInLine fa fa-male"></i>
+            <i class="peopleInLine fa fa-male"></i>
+            <i class="peopleInLine fa fa-male"></i>
         </div>
+        <span>{{ name }}</span>
+        <p></p>
+        <!--
+        <button type="button" class="openPropsButton btn btn-default btn-sm">
+            <i class="fa fa-times"></i>
+        </button>
+        -->
     </a>
-</div>
+</li>

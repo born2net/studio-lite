@@ -112,6 +112,8 @@
     "off": "off",
     "on": "on",
     "resProps": "resource properties",
+    "lineProps": "line properties",
+    "enterLineName": "enter line name",
     "screenDivision": "screen division",
     "os": "OS",
     "airVersion": "AIR version",

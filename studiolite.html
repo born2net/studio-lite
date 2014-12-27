@@ -680,11 +680,13 @@
 
         <button id="fasterQAddNewLine" type="button" class="btn btn-default"><i font-size: 1em"
             class="fa fa-plus"></i> <span data-localize="addNewLine">Add new line</span></button>
+        <button id="fasterQremoveLine" type="button" class="btn btn-default"><i font-size: 1em"
+            class="fa fa-times"></i> <span data-localize="remove">remove</span></button>
         <br/>
         <hr style="clear: both"/>
-        <div id="fasterQLinesContainer">
-            <div id="fasterQCustomerLines" class="yScroll">
-            </div>
+        <div id="fasterQLinesContainer" class="yScroll">
+            <ul id="fasterQCustomerLines" class=" list-group">
+            </ul>
         </div>
     </div>
 </div>
@@ -1252,6 +1254,12 @@
 
         </div>
     </div>
+</div>
+<div id="fasterQlineProperties" style="display: none">
+    <h5 data-localize="lineProps">Line properties</h5>
+    <input id="selectedLineName" type="text" name="name" value="" data-localize="enterLineName"
+           placeholder="Enter Line name">
+
 </div>
 <div id="viewerEditProperties" style="display: none">
     <h5 data-localize="screenDivision">screen division</h5>

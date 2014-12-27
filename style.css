@@ -1056,6 +1056,45 @@ iframe {
     width: 150px;
 }
 
+.peopleInGroup {
+    width: 10px !important;
+    overflow: hidden;
+    padding-left: 18px;
+    padding-right: 15px;
+    display: inline;
+    margin: 0;
+}
+
+.peopleInLine:nth-child(1){
+    color: #969696;
+    padding: 0;
+    margin: 0;
+}
+
+.peopleInLine:nth-child(2){
+    position: relative;
+    left: -35px;
+    color: #717171;
+    padding: 0;
+    margin: 0;
+}
+
+.peopleInLine:nth-child(3){
+    position: relative;
+    left: -70px;
+    color: #4c4c4c;
+    padding: 0;
+    margin: 0;
+}
+
+.peopleInLine:nth-child(4){
+    position: relative;
+    left: -105px;
+    color: #2f2f2f;
+    padding: 0;
+    margin: 0;
+}
+
 .appList {
     padding-right: 10px;
 }
@@ -1066,20 +1105,10 @@ iframe {
     top: -45px;
 }
 
-.fasterQlineItem {
-    margin: 1px;
+.fasterQSelectedLine {
+    background-color: red !important;
 }
-.fasterQlineItem h4 {
-    display: inline;
-}
-
-.fasterQlineItem i {
-    ont-size: 1.5em;
-}
-
-.fasterQlineItem a:first-child {
-    height: 60px;
-}
+/*
 .openLineProps {
     float: right;
     position: relative;
@@ -1095,6 +1124,7 @@ iframe {
     border: none;
     background-color: #dcdcdc;
 }
+*/
 
 .form-signin {
     max-width: 330px;
@@ -1370,6 +1400,24 @@ iframe {
     font-size: 1.5em;
     position: relative;
     top: -12px;
+}
+
+.lineListItems {
+    cursor: pointer;
+}
+
+.lineListItems a i {
+    display: inline;
+    font-size: 40px;
+    padding-right: 20px;
+}
+
+.lineListItems span {
+    display: inline;
+    font-size: 1.5em;
+    position: relative;
+    top: -8px;
+    left: -70px
 }
 
 .addBlockListItems {

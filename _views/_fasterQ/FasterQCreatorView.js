@@ -14,10 +14,42 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'text!_templates/_
          **/
         initialize: function () {
             var self = this;
+            self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
+            self.m_property.initPanel(Elements.FASTERQ_LINE_PROPERTIES);
             self.m_fasterQLineItemTemplate = _.template(fasterQLineItemTemplate);
             self.m_linesCollection = new LinesCollection();
             self._populateLines();
             self._listenAddNewLine();
+
+            self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
+                if (e == self && !self.m_rendered) {
+                    self.m_rendered = true;
+                    self._render();
+                }
+            });
+        },
+
+        _render: function () {
+            var self = this;
+        },
+
+        /**
+         Listen to resource selection, populate the properties panel and open it if needed.
+         @method _listenResourceSelected
+         **/
+        _listenLineSelected: function () {
+            var self = this;
+
+            $(Elements.CLASS_LINE_LIST_ITEMS).off('click');
+            $(Elements.CLASS_LINE_LIST_ITEMS).on('click', function (e) {
+                var lineElem = $(e.target).closest('li');
+                var selectedLineID = $(lineElem).data('line_id');
+                $(Elements.CLASS_LINE_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
+                $(lineElem).addClass('activated').find('a').addClass('whiteFont');
+                $(Elements.SELECTED_LINE_NAME).val(self.m_linesCollection.get(selectedLineID).get('name'));
+                self.m_property.viewPanel(Elements.FASTERQ_LINE_PROPERTIES);
+                return false;
+            });
         },
 
         _populateLines: function () {
@@ -25,7 +57,8 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'text!_templates/_
             $(Elements.FASTERQ_CUSTOMER_LINES).empty();
             self.m_linesCollection.fetch({
                 success: function (data) {
-                    _.each(data.models, $.proxy(self._appendNewLine,self));
+                    _.each(data.models, $.proxy(self._appendNewLine, self));
+                    self._listenLineSelected();
                 },
                 error: function () {
                     log('error loading collection data');
@@ -33,7 +66,7 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'text!_templates/_
             });
         },
 
-        _appendNewLine: function(i_model){
+        _appendNewLine: function (i_model) {
             var self = this;
             $(Elements.FASTERQ_CUSTOMER_LINES).append(self.m_fasterQLineItemTemplate(i_model.toJSON()));
         },
@@ -49,6 +82,7 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'text!_templates/_
                     success: function (model) {
                         self.m_linesCollection.add(model);
                         self._appendNewLine(model);
+                        self._listenLineSelected();
                     },
                     error: function () {
                         log('error loading collection data');

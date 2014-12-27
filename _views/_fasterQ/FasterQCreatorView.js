@@ -14,12 +14,14 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'text!_templates/_
          **/
         initialize: function () {
             var self = this;
+            self.m_selectedLineID = undefined;
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
             self.m_property.initPanel(Elements.FASTERQ_LINE_PROPERTIES);
             self.m_fasterQLineItemTemplate = _.template(fasterQLineItemTemplate);
             self.m_linesCollection = new LinesCollection();
             self._populateLines();
             self._listenAddNewLine();
+            self._listenRemoveLine()
 
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self && !self.m_rendered) {
@@ -43,10 +45,10 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'text!_templates/_
             $(Elements.CLASS_LINE_LIST_ITEMS).off('click');
             $(Elements.CLASS_LINE_LIST_ITEMS).on('click', function (e) {
                 var lineElem = $(e.target).closest('li');
-                var selectedLineID = $(lineElem).data('line_id');
+                self.m_selectedLineID = $(lineElem).data('line_id');
                 $(Elements.CLASS_LINE_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
                 $(lineElem).addClass('activated').find('a').addClass('whiteFont');
-                $(Elements.SELECTED_LINE_NAME).val(self.m_linesCollection.get(selectedLineID).get('name'));
+                $(Elements.SELECTED_LINE_NAME).val(self.m_linesCollection.get(self.m_selectedLineID).get('name'));
                 self.m_property.viewPanel(Elements.FASTERQ_LINE_PROPERTIES);
                 return false;
             });
@@ -88,6 +90,30 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'text!_templates/_
                         log('error loading collection data');
                     }
                 });
+            });
+        },
+
+        _listenRemoveLine: function(){
+            var self = this;
+            $(Elements.FASTERQ_REMOVE_LINE).on('click',function(){
+                //self.m_linesCollection.sync();
+                //return;
+                if (_.isUndefined(self.m_selectedLineID)){
+                    alert('not selected');
+                    return;
+                }
+                var model = self.m_linesCollection.get(self.m_selectedLineID);
+
+                model.destroy({
+                    success: function (model, response) {
+                        //log('model deleted');
+                    }, error: function () {
+                        log('error delete failed');
+                    }
+                });
+
+                self._populateLines();
+                self.m_selectedLineID = undefined;
             });
         }
     });

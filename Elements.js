@@ -269,6 +269,7 @@ Elements.FASTERQ_LINE_PROPERTIES = '#fasterQlineProperties';
 Elements.RESOURCES_LIST_VIEW = '#resourcesListView';
 Elements.SELECTED_LINE_NAME = '#selectedLineName';
 Elements.RESOURCES_PANEL = '#resourcesPanel';
+Elements.FASTERQ_REMOVE_LINE = '#fasterQremoveLine';
 Elements.RESOURCE_PREVIEW_IMAGE = '#resourcePreviewImage';
 Elements.RESOURCE_PREVIEW_VIDEO = '#resourcePreviewVideo';
 Elements.RESOURCE_PREVIEW_SWF = '#resourcePreviewSwf';

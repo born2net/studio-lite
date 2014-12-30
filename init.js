@@ -87,6 +87,7 @@ require.config({
         'AppContentFaderView': '_views/AppContentFaderView',
         'AppEntryFaderView': '_views/AppEntryFaderView',
         'LoginView': '_views/LoginView',
+        'FasterQTermRegistration': '_views/_fasterQ/FasterQTermRegistration',
         'LivePreView': '_views/LivePreView',
         'StorylineView': '_views/StorylineView',
         'StationsViewLoader': '_views/StationsViewLoader',

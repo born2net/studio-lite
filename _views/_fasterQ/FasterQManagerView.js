@@ -14,6 +14,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         initialize: function () {
             var self = this;
+
+            $(Elements.FASTERQ_MANAGER_BACK).on('click',function(){
+                self.options.stackView.selectView(Elements.FASTERQ_NAVIGATION_CONTAINER);
+            });
         }
 
     });

@@ -24,6 +24,10 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'text!_templates/_
             self._listenRemoveLine();
             self._listenInputNameChange();
 
+            $(Elements.FASTERQ_LINE_BACK).on('click',function(){
+                self.options.stackView.selectView(Elements.FASTERQ_NAVIGATION_CONTAINER);
+            });
+
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self && !self.m_rendered) {
                     self.m_rendered = true;
@@ -68,7 +72,7 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'text!_templates/_
                     self._selectLine();
                 },
                 error: function () {
-                    log('error loading collection data....................');
+                    log('error loading collection data');
                 }
             });
         },
@@ -161,7 +165,7 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'text!_templates/_
                 model.save({},{
                     success: function (model, response) {
                         self._populateLines();
-                        log('model updated');
+                        // log('model updated');
                     }, error: function () {
                         log('error delete failed');
                     }

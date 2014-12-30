@@ -59,12 +59,28 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
                 BB.CONSTS['THEME'] = _.isUndefined(theme) ? 'light' : theme;
             });
 
-            // router init
+            var mode = window.location.href.match(RegExp("(mode=)(.*)(&param=)(.*)"));
+
+            // Customer Terminal
+            if (!_.isNull(mode) && mode[2] == 'customerTerminal') {
+                require(['FasterQTerminalRouter', 'Events'], function (FasterQTerminalRouter) {
+                    var fasterQTerminalRouter = new FasterQTerminalRouter({
+                        param: mode[4]
+                    });
+                    //BB.history.start();
+                    //LayoutRouter.navigate('authenticate/_/_', {trigger: true});
+                });
+                return;
+            }
+
+            // StudioLite
             require(['LayoutRouter', 'Events'], function (LayoutRouter) {
                 var LayoutRouter = new LayoutRouter();
                 BB.history.start();
                 LayoutRouter.navigate('authenticate/_/_', {trigger: true});
             });
+
+
         }
     });
 

@@ -1177,6 +1177,19 @@ iframe {
     margin: 0 auto;
 }
 
+#terminalCarousel .item {
+    height: 300px;
+}
+
+#terminalCarousel i  {
+    font-size: 2.9em;
+}
+
+.fasterQCarouselButtons{
+    padding: 15px;
+    font-size: 2em;
+}
+
 .navbar-nav {
     display: none;
 }

@@ -19,6 +19,7 @@ require.config({
         'bootstrapfileinput': '_common/_js/bootstrapfileinput/bootstrapfileinput',
         'bootstrap': '_common/_js/bootstrap/js/bootstrap',
         'platform': '_common/_js/platform/platform',
+        'qrcode': '_common/_js/qrcode/qrcode',
         'fabric': '_common/_js/fabric/fabric.require',
         'bootbox': '_common/_js/bootbox/bootbox',
         'Cookie': '_common/_js/cookie/jquery.cookie',
@@ -46,6 +47,7 @@ require.config({
         'TouchPunch': '_common/_js/touchpunch/TouchPunch',
         'X2JS': '_common/_js/x2js/xml2json',
         'LayoutRouter': '_controllers/LayoutRouter',
+        'FasterQTerminalRouter': '_controllers/FasterQTerminalRouter',
         'ComBroker': '_controllers/ComBroker',
         'ScreenTemplateFactory': '_controllers/ScreenTemplateFactory',
         'BlockFactory': '_controllers/BlockFactory',
@@ -87,7 +89,7 @@ require.config({
         'AppContentFaderView': '_views/AppContentFaderView',
         'AppEntryFaderView': '_views/AppEntryFaderView',
         'LoginView': '_views/LoginView',
-        'FasterQTermRegistration': '_views/_fasterQ/FasterQTermRegistration',
+        'FasterQCustomerTerminal': '_views/_fasterQ/FasterQCustomerTerminal',
         'LivePreView': '_views/LivePreView',
         'StorylineView': '_views/StorylineView',
         'StationsViewLoader': '_views/StationsViewLoader',
@@ -156,6 +158,9 @@ require.config({
         'highcharts': {
             deps: ['jquery'],
             exports: 'highcharts'
+        },
+        'qrcode': {
+            exports: 'qrcode'
         },
         'underscore': {
             exports: '_'

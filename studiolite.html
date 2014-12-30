@@ -126,6 +126,104 @@
         -->
     </div>
     <div id="appEntry">
+
+
+        <div id="fasterqCustomerTerminal" style="display: none">
+            <div style="width: 100%">
+                <h1 style="font-size: 10em; text-align: center" class="centerElement">TAKE A NUMBER</h1>
+            </div>
+
+            <hr/>
+            <h2 style="text-align: center">Line: XXXXXX</h2>
+            <hr/>
+
+
+            <div id="terminalCarousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+
+                    <div class="item active">
+                        <div style="width: 100%; text-align: center">
+                            <i class="carouselLargeHeader fa fa-print"></i>
+                            <span class="carouselLargeHeader" style="font-size: 3em">Print your queue number</span>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <a style="padding-left: 40px; padding-right: 40px; padding-top: 20px; padding-bottom: 20px" class="btn btn-large btn-danger" type="button" href="http://galaxy.signage.me/Code/install/exe/CloudSignagePlayerSetup.exe">
+                                <span style="font-size: 2em" class="carouselLargeHeader2 fa fa-download"></span>
+                                <span style="font-size: 2em">PRINT IT</span>
+                            </a>
+                            <br/>
+                            <br/>
+                            <br/>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div style="width: 100%; text-align: center">
+                            <i class="carouselLargeHeader fa fa-qrcode"></i>
+                            <span class="carouselLargeHeader" style="font-size: 3em">Scan with your mobile device</span>
+                            <br/>
+                                <div class="centerElement" id="qrcode" style="text-align: center; width: 200px; height: 200px; margin-top:15px;"></div>
+                            <br/>
+                            <br/>
+                            <br/>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div style="width: 100%; text-align: center">
+                            <i class="carouselLargeHeader fa fa-paper-plane"></i>
+                            <span class="carouselLargeHeader" style="font-size: 3em">Notify via email</span>
+                            <br/>
+                            <br/>
+                            <input style="font-size: 3em" value="yourmail@example.com"/>
+                            <br/>
+                            <br/>
+                            <a style="padding-left: 40px; padding-right: 40px; padding-top: 20px; padding-bottom: 20px" class="btn btn-large btn-danger" type="button" href="http://galaxy.signage.me/Code/install/exe/CloudSignagePlayerSetup.exe">
+                                <span style="font-size: 2em" class="carouselLargeHeader2 fa fa-download"></span>
+                                <span style="font-size: 2em">SEND IT</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div style="width: 100%; text-align: center">
+                            <i class="carouselLargeHeader fa fa-phone"></i>
+                            <span class="carouselLargeHeader" style="font-size: 3em">Notify via SMS</span>
+                            <br/>
+                            <br/>
+                            <input style="font-size: 3em; width: 250px" value="(818) 555-1212"/>
+                            <br/>
+                            <br/>
+                            <a style="padding-left: 40px; padding-right: 40px; padding-top: 20px; padding-bottom: 20px" class="btn btn-large btn-danger" type="button" href="http://galaxy.signage.me/Code/install/exe/CloudSignagePlayerSetup.exe">
+                                <span style="font-size: 2em" class="carouselLargeHeader2 fa fa-download"></span>
+                                <span style="font-size: 2em">CALL IT</span>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+                <ul id="carouselItems" class="nav nav-pills nav-justified"
+                    style="border: 1px solid #9c9c9c">
+                    <li data-target="#terminalCarousel" data-slide-to="0" ><a
+                            href="#"><i class="fa fa-print"></i><span class="fasterQCarouselButtons">PRINT</span>
+                    </a></li>
+                    <li data-target="#terminalCarousel" data-slide-to="1" ><a
+                            href="#"><i class="fa fa-qrcode"></i><span class="fasterQCarouselButtons">SCAN</span>
+                    </a></li>
+                    <li data-target="#terminalCarousel" data-slide-to="2" ><a
+                            href="#"><i class="fa fa-paper-plane"></i><span class="fasterQCarouselButtons">E-MAIL</span>
+                    </a></li>
+                    <li data-target="#terminalCarousel" data-slide-to="3" ><a
+                            href="#"><i class="fa fa-phone"></i><span class="fasterQCarouselButtons">SMS</span>
+                    </a></li>
+                </ul>
+            </div>
+
+
+        </div>
+
+
         <div id="appLogin" style="display: none">
             <form class="form-signin" role="form">
                 <span style="font-size: 2em; color: #428bca" class="glyphicon glyphicon-cloud"></span> <span
@@ -157,9 +255,6 @@
                 <img src="_assets/preload5.gif">
                 <img src="_assets/loaders/loading-bubbles.svg" width="165" height="165"/>
             </span>
-        </div>
-        <div id="fasterqTerminalRegistration" style="display: none">
-            <h1>Get a number</h1>
         </div>
         <div id="appLogout" style="display: none">
       <span style="position: absolute; left: 40%; top: 20%">
@@ -771,10 +866,10 @@
                             <div style="clear: both"></div>
                             <br/>
 
-                            <button id="fasterQAddNewLine" type="button" class="btn btn-default"><i font-size: 1em"
-                                class="fa fa-plus"></i> <span data-localize="addNewLine">Add new line</span></button>
-                            <button id="fasterQremoveLine" type="button" class="btn btn-default"><i font-size: 1em"
-                                class="fa fa-times"></i> <span data-localize="remove">remove</span></button>
+                            <button id="fasterQAddNewLine" type="button" class="btn btn-default">
+                                <i style="font-size: 1em" class="fa fa-plus"></i> <span data-localize="addNewLine">Add new line</span></button>
+                            <button id="fasterQremoveLine" type="button" class="btn btn-default">
+                                <i style="font-size: 1em" class="fa fa-times"></i> <span data-localize="remove">remove</span></button>
                             <br/>
                             <hr style="clear: both"/>
                             <div id="fasterQLinesContainer" class="yScroll">
@@ -829,21 +924,27 @@
                                         <div class="space"></div>
                                     </div>
                                     <ul class="list-group">
-                                        <li class="reshid list-group-item"><span
-                                                class="glyphicon glyphicon-ok"></span><span
-                                                data-localize="onehundredFree"> 100% FREE</span></li>
+                                        <li class="reshid list-group-item"><span class="glyphicon glyphicon-ok"></span>
+                                            <span data-localize="onehundredFree"> 100% FREE</span>
+                                        </li>
+                                        <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>
+                                            <span data-localize="simpleInterface"> simple to use interface</span>
+                                        </li>
                                         <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
-                                                data-localize="simpleInterface"> simple to use interface</span></li>
+                                                data-localize="campaignManager"> Campaign manager</span>
+                                        </li>
                                         <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
-                                                data-localize="campaignManager"> Campaign manager</span></li>
+                                                data-localize="timelineManagement"> Timeline management</span>
+                                        </li>
                                         <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
-                                                data-localize="timelineManagement"> Timeline management</span></li>
+                                                data-localize="screenTemplates"> Screen templates</span>
+                                        </li>
                                         <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
-                                                data-localize="screenTemplates"> Screen templates</span></li>
+                                                data-localize="screenEditor"> Screen editor</span>
+                                        </li>
                                         <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
-                                                data-localize="screenEditor"> Screen editor</span></li>
-                                        <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
-                                                data-localize="StationManager"> Station Manager</span></li>
+                                                data-localize="StationManager"> Station Manager</span>
+                                        </li>
                                         <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
                                                 data-localize="supportComponents"> Support 10 components</span></li>
                                         <li class="list-group-item"><span class="glyphicon glyphicon-ok"></span><span
@@ -1442,9 +1543,10 @@
                         </div>
                         <div id="fasterQlineProperties" style="display: none">
                             <h5 data-localize="lineProps">Line properties</h5>
-                            <input id="selectedLineName" type="text" name="name" value="" data-localize="enterLineName"
-                                   placeholder="Enter Line name">
-
+                            <input id="selectedLineName" type="text" name="name" value="" data-localize="enterLineName" placeholder="Enter Line name">
+                            <hr/>
+                            <button id="openFasterQCustomerTerminal" class="btn btn-primary">Open Customer Terminal</button>
+                            <br/>
                         </div>
                         <div id="viewerEditProperties" style="display: none">
                             <h5 data-localize="screenDivision">screen division</h5>
@@ -1485,20 +1587,13 @@
                             <div id="stationInfo">
                                 <ul>
                                     <li><span data-localize="os">OS </span>: <span id="stationOS"></span></li>
-                                    <li><span data-localize="airVersion">AIR version </span>: <span
-                                            id="stationAirVersion"></span></li>
-                                    <li><span data-localize="playerVersion">Player version </span>: <span
-                                            id="stationAppVersion"></span></li>
-                                    <li><span data-localize="peakMemory">Peak memory </span>: <span
-                                            id="stationPeakMemory"></span></li>
-                                    <li><span data-localize="totalMemory">Total memory </span>: <span
-                                            id="stationTotalMemory"></span></li>
-                                    <li><span data-localize="running">Running </span>: <span
-                                            id="stationRunningTime"></span></li>
-                                    <li><span data-localize="watchdog">Watchdog </span>: <span
-                                            id="stationWatchdog"></span></li>
-                                    <li><span data-localize="lastUpd">Last upd </span>: <span
-                                            id="stationLastUpdate"></span></li>
+                                    <li><span data-localize="airVersion">AIR version </span>: <span id="stationAirVersion"></span></li>
+                                    <li><span data-localize="playerVersion">Player version </span>: <span id="stationAppVersion"></span></li>
+                                    <li><span data-localize="peakMemory">Peak memory </span>: <span id="stationPeakMemory"></span></li>
+                                    <li><span data-localize="totalMemory">Total memory </span>: <span id="stationTotalMemory"></span></li>
+                                    <li><span data-localize="running">Running </span>: <span id="stationRunningTime"></span></li>
+                                    <li><span data-localize="watchdog">Watchdog </span>: <span id="stationWatchdog"></span></li>
+                                    <li><span data-localize="lastUpd">Last upd </span>: <span id="stationLastUpdate"></span></li>
                                 </ul>
                             </div>
                             <input type="text" name="eventName" data-localize="eventName" placeholder="event name"
@@ -1506,9 +1601,7 @@
                                    value="">
 
                             <p></p>
-                            <button id="stationEventSendCommand" class="btn btn-primary"
-                                    data-localize="sendStationEvent">Send station event
-                            </button>
+                            <button id="stationEventSendCommand" class="btn btn-primary" data-localize="sendStationEvent">Send station event</button>
                         </div>
                         <div id="blockProperties" class="" style="display: none">
                             <div id="channelBlockProps" style="display: none">

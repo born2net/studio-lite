@@ -16,6 +16,7 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'text!_templates/_
             var self = this;
             self.m_selectedLineID = undefined;
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
+            //todo: break properties to different BB view
             self.m_property.initPanel(Elements.FASTERQ_LINE_PROPERTIES);
             self.m_fasterQLineItemTemplate = _.template(fasterQLineItemTemplate);
             self.m_linesCollection = new LinesCollection();
@@ -23,6 +24,7 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'text!_templates/_
             self._listenAddNewLine();
             self._listenRemoveLine();
             self._listenInputNameChange();
+            self._listenOpenCustomerTerminal();
 
             $(Elements.FASTERQ_LINE_BACK).on('click',function(){
                 self.options.stackView.selectView(Elements.FASTERQ_NAVIGATION_CONTAINER);
@@ -54,6 +56,21 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'text!_templates/_
                 $(Elements.SELECTED_LINE_NAME).val(self.m_linesCollection.get(self.m_selectedLineID).get('name'));
                 self.m_property.viewPanel(Elements.FASTERQ_LINE_PROPERTIES);
                 return false;
+            });
+        },
+
+        /**
+         Listen to open customer terminal
+         @method _listenOpenCustomerTerminal
+         **/
+        _listenOpenCustomerTerminal: function () {
+            var self = this;
+            $(Elements.OPEN_FASTERQ_CUSTOMER_TERMINAL).on('click', function (e) {
+                //todo: build URL dynamically
+                var param = BB.Pepper.getUserData().businessID + ':' + self.m_selectedLineID;
+                param = $.base64.encode(param);
+                var url = 'https://secure.digitalsignage.com:442/_studiolite-dev/studiolite.html?mode=customerTerminal&param=' + param;
+                window.open(url, '_blank');
             });
         },
 

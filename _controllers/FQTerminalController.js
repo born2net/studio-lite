@@ -1,11 +1,11 @@
 /**
- Application router for FasterQ terminal applications
+ Application router for FQ terminal applications
  well as management for sizing events
  @class fasterQTerminalController
  @constructor
  @return {Object} instantiated AppRouter
  **/
-define(['underscore', 'jquery', 'backbone', 'XDate', 'StackView', 'FasterQCustomerTerminal', 'LineModel'], function (_, $, Backbone, XDate, StackView, FasterQCustomerTerminal, LineModel) {
+define(['underscore', 'jquery', 'backbone', 'XDate', 'StackView', 'FQCustomerTerminal', 'LineModel'], function (_, $, Backbone, XDate, StackView, FQCustomerTerminal, LineModel) {
 
     BB.SERVICES.FASTERQ_TERMINAL_ROUTER = 'FASTERQ_TERMINAL_ROUTER';
 
@@ -50,7 +50,7 @@ define(['underscore', 'jquery', 'backbone', 'XDate', 'StackView', 'FasterQCustom
                     businessID: i_businessID
                 },
                 success: (function (model, data) {
-                    self.m_fasterQCustomerTerminalView = new FasterQCustomerTerminal({
+                    self.m_fasterQCustomerTerminalView = new FQCustomerTerminal({
                         el: Elements.FASTERQ_CUSTOMER_TERMINAL,
                         model: self.m_terminalModel
                     });

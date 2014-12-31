@@ -5,8 +5,8 @@
  @constructor
  @return {Object} instantiated AppRouter
  **/
-define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEntryFaderView', 'LoginView', 'AppContentFaderView', 'WaitView', 'LivePreView', 'bootbox', 'CampaignManagerView', 'ResourcesLoaderView', 'ResourcesLoaderView', 'StationsViewLoader', 'SettingsView', 'FasterQView', 'ProStudioView', 'HelpView', 'InstallView', 'LogoutView', 'CampaignSliderStackView', 'ScreenLayoutSelectorView', 'X2JS', 'XDate', 'LanguageSelectorView', 'SceneLoaderView', 'DashboardView'],
-    function (_, $, Backbone, AppAuth, NavigationView, AppEntryFaderView, LoginView, AppContentFaderView, WaitView, LivePreView, Bootbox, CampaignManagerView, ResourcesLoaderView, ResourcesLoaderView, StationsViewLoader, SettingsView, FasterQView, ProStudioView, HelpView, InstallView, LogoutView, CampaignSliderStackView, ScreenLayoutSelectorView, X2JS, XDate, LanguageSelectorView, SceneLoaderView, DashboardView) {
+define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEntryFaderView', 'LoginView', 'AppContentFaderView', 'WaitView', 'LivePreView', 'bootbox', 'CampaignManagerView', 'ResourcesLoaderView', 'ResourcesLoaderView', 'StationsViewLoader', 'SettingsView', 'FQLoaderView', 'ProStudioView', 'HelpView', 'InstallView', 'LogoutView', 'CampaignSliderStackView', 'ScreenLayoutSelectorView', 'X2JS', 'XDate', 'LanguageSelectorView', 'SceneLoaderView', 'DashboardView'],
+    function (_, $, Backbone, AppAuth, NavigationView, AppEntryFaderView, LoginView, AppContentFaderView, WaitView, LivePreView, Bootbox, CampaignManagerView, ResourcesLoaderView, ResourcesLoaderView, StationsViewLoader, SettingsView, FQLoaderView, ProStudioView, HelpView, InstallView, LogoutView, CampaignSliderStackView, ScreenLayoutSelectorView, X2JS, XDate, LanguageSelectorView, SceneLoaderView, DashboardView) {
 
         BB.SERVICES.LAYOUT_ROUTER = 'LayoutRouter';
 
@@ -249,7 +249,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                     stackView: self.m_appContentFaderView
                 });
 
-                self.m_fasterQView = new FasterQView({
+                self.m_fasterQLoaderView = new FQLoaderView({
                     el: Elements.FASTERQ_PANEL,
                     stackView: self.m_appContentFaderView
                 });
@@ -279,12 +279,12 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 self.m_appContentFaderView.addView(self.m_stationsViewLoader);
                 self.m_appContentFaderView.addView(self.m_sceneLoaderView);
                 self.m_appContentFaderView.addView(self.m_settingsView);
-                self.m_appContentFaderView.addView(self.m_fasterQView);
+                self.m_appContentFaderView.addView(self.m_fasterQLoaderView);
                 self.m_appContentFaderView.addView(self.m_proStudioView);
                 self.m_appContentFaderView.addView(self.m_helpView);
                 self.m_appContentFaderView.addView(self.m_installView);
                 self.m_appContentFaderView.addView(self.m_logoutView);
-                self.m_appContentFaderView.selectView(self.m_fasterQView); // debug mode
+                self.m_appContentFaderView.selectView(self.m_fasterQLoaderView); // debug mode
                 // self.m_appContentFaderView.selectView(self.m_campaignManagerView);
 
                 BB.comBroker.setService(BB.SERVICES['NAVIGATION_VIEW'], self.m_navigationView);

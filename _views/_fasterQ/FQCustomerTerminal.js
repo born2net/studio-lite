@@ -1,12 +1,12 @@
     /**
  A public terminal for users to collect queue numbers
- @class FasterQCustomerTerminal
+ @class FQCustomerTerminal
  @constructor
- @return {Object} instantiated FasterQCustomerTerminal
+ @return {Object} instantiated FQCustomerTerminal
  **/
 define(['jquery', 'backbone', 'bootbox', 'qrcode'], function ($, Backbone, Bootbox, qrcode) {
 
-    var FasterQCustomerTerminal = Backbone.View.extend({
+    var FQCustomerTerminal = Backbone.View.extend({
 
         /**
          Constructor
@@ -30,7 +30,7 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode'], function ($, Backbone, Bootb
         }
     });
 
-    return FasterQCustomerTerminal;
+    return FQCustomerTerminal;
 
 });
 

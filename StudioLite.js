@@ -61,14 +61,12 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
 
             var mode = window.location.href.match(RegExp("(mode=)(.*)(&param=)(.*)"));
 
-            // Customer Terminal
+            // FQ Customer Terminal
             if (!_.isNull(mode) && mode[2] == 'customerTerminal') {
-                require(['FasterQTerminalController', 'Events'], function (FasterQTerminalController) {
-                    new FasterQTerminalController({
+                require(['FQTerminalController', 'Events'], function (FQTerminalController) {
+                    new FQTerminalController({
                         param: mode[4]
                     });
-                    //BB.history.start();
-                    //LayoutRouter.navigate('authenticate/_/_', {trigger: true});
                 });
                 return;
             }

@@ -1,12 +1,12 @@
 /**
  A public terminal for users to collect queue numbers
- @class FasterQTermRegistration
+ @class FQTermRegistration
  @constructor
- @return {Object} instantiated FasterQTermRegistration
+ @return {Object} instantiated FQTermRegistration
  **/
 define(['jquery', 'backbone', 'bootbox'], function ($, Backbone, Bootbox) {
 
-    var FasterQTermRegistration = Backbone.View.extend({
+    var FQTermRegistration = Backbone.View.extend({
 
         /**
          Constructor
@@ -16,7 +16,7 @@ define(['jquery', 'backbone', 'bootbox'], function ($, Backbone, Bootbox) {
         }
     });
 
-    return FasterQTermRegistration;
+    return FQTermRegistration;
 
 });
 

@@ -1,12 +1,12 @@
 /**
  Settings Backbone > View
- @class FasterQCreatorView
+ @class FQCreatorView
  @constructor
- @return {Object} instantiated FasterQCreatorView
+ @return {Object} instantiated FQCreatorView
  **/
-define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'text!_templates/_fasterQLineItem.html'], function ($, Backbone, LinesCollection, LineModel, fasterQLineItemTemplate) {
+define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 'text!_templates/_fasterQLineItem.html'], function ($, Backbone, LinesCollection, LineModel, FQLinePropView, FQLineItemTemplate) {
 
-    var FasterQCreatorView = Backbone.View.extend({
+    var FQCreatorView = Backbone.View.extend({
 
         /**
          Constructor
@@ -16,15 +16,15 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'text!_templates/_
             var self = this;
             self.m_selectedLineID = undefined;
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
-            //todo: break properties to different BB view
             self.m_property.initPanel(Elements.FASTERQ_LINE_PROPERTIES);
-            self.m_fasterQLineItemTemplate = _.template(fasterQLineItemTemplate);
+            self.m_fasterQLineItemTemplate = _.template(FQLineItemTemplate);
             self.m_linesCollection = new LinesCollection();
             self._populateLines();
             self._listenAddNewLine();
             self._listenRemoveLine();
             self._listenInputNameChange();
             self._listenOpenCustomerTerminal();
+            self._initLinePropView = new FQLinePropView();
 
             $(Elements.FASTERQ_LINE_BACK).on('click',function(){
                 self.options.stackView.selectView(Elements.FASTERQ_NAVIGATION_CONTAINER);
@@ -193,5 +193,5 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'text!_templates/_
         }
     });
 
-    return FasterQCreatorView;
+    return FQCreatorView;
 });

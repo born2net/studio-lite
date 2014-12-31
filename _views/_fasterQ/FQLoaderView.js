@@ -1,12 +1,12 @@
 /**
  Settings Backbone > View
- @class FasterQView
+ @class FQLoaderView
  @constructor
- @return {Object} instantiated FasterQView
+ @return {Object} instantiated FQLoaderView
  **/
 define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
 
-    var FasterQView = Backbone.View.extend({
+    var FQLoaderView = Backbone.View.extend({
 
         /**
          Constructor
@@ -26,18 +26,18 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
 
         _render: function () {
             var self = this;
-            require(['FasterQNavigationView', 'FasterQManagerView', 'FasterQCreatorView'], function (FasterQNavigationView, FasterQManagerView, FasterQCreatorView) {
+            require(['FQNavigationView', 'FQManagerView', 'FQCreatorView'], function (FQNavigationView, FQManagerView, FQCreatorView) {
 
                 self.m_stackView = new StackView.Fader({duration: 333});
 
-                self.m_fasterQNavigationView = new FasterQNavigationView({el: Elements.FASTERQ_NAVIGATION_CONTAINER, stackView: self.m_stackView});
+                self.m_fasterQNavigationView = new FQNavigationView({el: Elements.FASTERQ_NAVIGATION_CONTAINER, stackView: self.m_stackView});
 
-                self.m_fasterQManagerView = new FasterQManagerView({
+                self.m_fasterQManagerView = new FQManagerView({
                     el: Elements.FASTERQ_MANAGER_CONTAINER,
                     stackView: self.m_stackView
                 });
 
-                self.m_fasterQCreatorView = new FasterQCreatorView({
+                self.m_fasterQCreatorView = new FQCreatorView({
                     el: Elements.FASTERQ_CREATOR_CONTAINER,
                     stackView: self.m_stackView
                 });
@@ -52,6 +52,6 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
         }
     });
 
-    return FasterQView;
+    return FQLoaderView;
 });
 

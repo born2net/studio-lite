@@ -1,12 +1,12 @@
 /**
  Settings Backbone > View
- @class FasterQNavigationView
+ @class FQNavigationView
  @constructor
- @return {Object} instantiated FasterQNavigationView
+ @return {Object} instantiated FQNavigationView
  **/
 define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
 
-    var FasterQNavigationView = Backbone.View.extend({
+    var FQNavigationView = Backbone.View.extend({
 
         /**
          Constructor
@@ -28,6 +28,6 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
         }
     });
 
-    return FasterQNavigationView;
+    return FQNavigationView;
 });
 

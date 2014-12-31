@@ -1,12 +1,12 @@
 /**
  Settings Backbone > View
- @class FasterQManagerView
+ @class FQManagerView
  @constructor
- @return {Object} instantiated FasterQManagerView
+ @return {Object} instantiated FQManagerView
  **/
 define(['jquery', 'backbone'], function ($, Backbone) {
 
-    var FasterQManagerView = Backbone.View.extend({
+    var FQManagerView = Backbone.View.extend({
 
         /**
          Constructor
@@ -22,6 +22,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
     });
 
-    return FasterQManagerView;
+    return FQManagerView;
 });
 

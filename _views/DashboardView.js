@@ -79,7 +79,8 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
          **/
         _getServerResponseTime: function () {
             var self = this;
-
+            if (window.location.href.indexOf('dev') > -1)
+                return;
             var url = window.g_protocol + pepper.getUserData().domain + '/WebService/sendCommand.ashx?';
             var sendDate = (new Date()).getTime();
             $.ajax({
@@ -156,8 +157,6 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
 
                 }
             });
-
-
         },
 
         /**

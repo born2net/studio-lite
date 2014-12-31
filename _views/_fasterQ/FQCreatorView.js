@@ -15,16 +15,17 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
         initialize: function () {
             var self = this;
             self.m_selectedLineID = undefined;
-            self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
-            self.m_property.initPanel(Elements.FASTERQ_LINE_PROPERTIES);
             self.m_fasterQLineItemTemplate = _.template(FQLineItemTemplate);
             self.m_linesCollection = new LinesCollection();
             self._populateLines();
             self._listenAddNewLine();
             self._listenRemoveLine();
-            self._listenInputNameChange();
-            self._listenOpenCustomerTerminal();
-            self._initLinePropView = new FQLinePropView();
+            self._listenCollectionChanged();
+
+            self._initLinePropView = new FQLinePropView({
+                el: Elements.FASTERQ_LINE_PROPERTIES,
+                collection: self.m_linesCollection
+            });
 
             $(Elements.FASTERQ_LINE_BACK).on('click',function(){
                 self.options.stackView.selectView(Elements.FASTERQ_NAVIGATION_CONTAINER);
@@ -52,27 +53,13 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
             $(Elements.CLASS_LINE_LIST_ITEMS).on('click', function (e) {
                 var lineElem = $(e.target).closest('li');
                 self.m_selectedLineID = $(lineElem).data('line_id');
-                self._selectLine();
-                $(Elements.SELECTED_LINE_NAME).val(self.m_linesCollection.get(self.m_selectedLineID).get('name'));
-                self.m_property.viewPanel(Elements.FASTERQ_LINE_PROPERTIES);
+                self._highlightLine();
+                self._initLinePropView.lineSelected((self.m_selectedLineID));
                 return false;
             });
         },
 
-        /**
-         Listen to open customer terminal
-         @method _listenOpenCustomerTerminal
-         **/
-        _listenOpenCustomerTerminal: function () {
-            var self = this;
-            $(Elements.OPEN_FASTERQ_CUSTOMER_TERMINAL).on('click', function (e) {
-                //todo: build URL dynamically
-                var param = BB.Pepper.getUserData().businessID + ':' + self.m_selectedLineID;
-                param = $.base64.encode(param);
-                var url = 'https://secure.digitalsignage.com:442/_studiolite-dev/studiolite.html?mode=customerTerminal&param=' + param;
-                window.open(url, '_blank');
-            });
-        },
+
 
         /**
          Popular the list Line items from server
@@ -86,7 +73,7 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
                     $(Elements.FASTERQ_CUSTOMER_LINES).empty();
                     _.each(data.models, $.proxy(self._appendNewLine, self));
                     self._listenLineSelected();
-                    self._selectLine();
+                    self._highlightLine();
                 },
                 error: function () {
                     log('error loading collection data');
@@ -96,9 +83,9 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
 
         /**
          Set the selected line background color properties
-         @method _selectLine
+         @method _highlightLine
          **/
-        _selectLine: function(){
+        _highlightLine: function(){
             var self = this;
             if (_.isUndefined(self.m_selectedLineID))
                 return;
@@ -165,31 +152,11 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
             });
         },
 
-        /**
-         Listen to changes in Line item rename through properties
-         @method _listenInputNameChange
-         @return none
-         **/
-        _listenInputNameChange: function () {
+        _listenCollectionChanged: function(){
             var self = this;
-            var onChange = _.debounce(function (e) {
-                var text = $(e.target).val();
-
-                if (_.isUndefined(self.m_selectedLineID))
-                    return;
-                var model = self.m_linesCollection.get(self.m_selectedLineID);
-                model.set('name',text);
-                model.save({},{
-                    success: function (model, response) {
-                        self._populateLines();
-                        // log('model updated');
-                    }, error: function () {
-                        log('error delete failed');
-                    }
-                });
-
-            }, 400);
-            self.m_inputChangeHandler = $(Elements.SELECTED_LINE_NAME).on("input", onChange);
+            self.m_linesCollection.on('change',function(e){
+               self._populateLines();
+            });
         }
     });
 

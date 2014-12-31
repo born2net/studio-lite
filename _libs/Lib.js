@@ -291,7 +291,6 @@ define(['jquery', 'backbone', 'platform'], function ($, Backbone, platform) {
             return value.replace(/\#/g, '');
         },
 
-
         /**
          Get DOM comment string
          @method getComment

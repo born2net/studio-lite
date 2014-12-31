@@ -63,8 +63,8 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
 
             // Customer Terminal
             if (!_.isNull(mode) && mode[2] == 'customerTerminal') {
-                require(['FasterQTerminalRouter', 'Events'], function (FasterQTerminalRouter) {
-                    var fasterQTerminalRouter = new FasterQTerminalRouter({
+                require(['FasterQTerminalController', 'Events'], function (FasterQTerminalController) {
+                    new FasterQTerminalController({
                         param: mode[4]
                     });
                     //BB.history.start();

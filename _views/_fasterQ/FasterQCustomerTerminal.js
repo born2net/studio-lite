@@ -1,4 +1,4 @@
-/**
+    /**
  A public terminal for users to collect queue numbers
  @class FasterQCustomerTerminal
  @constructor
@@ -13,7 +13,13 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode'], function ($, Backbone, Bootb
          @method initialize
          **/
         initialize: function () {
+            var self = this;
+            $(Elements.FASTERQ_LINE_NAME).text(self.model.get('name'));
+            self._initQR();
+        },
 
+        _initQR: function(){
+            var self = this;
             var q = $("#qrcode");
             q = q[0];
             var qrcode = new QRCode(q, {

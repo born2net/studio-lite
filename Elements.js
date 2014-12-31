@@ -333,6 +333,7 @@ Elements.FASTERQ_LINE_BACK = '#fasterqLineBack';
 Elements.FASTERQ_MANAGER_BACK = '#fasterqManagerBack';
 Elements.FASTERQ_CUSTOMER_TERMINAL= '#fasterqCustomerTerminal';
 Elements.OPEN_FASTERQ_CUSTOMER_TERMINAL = '#openFasterQCustomerTerminal';
+Elements.FASTERQ_LINE_NAME = '#fasterQLineName';
 Elements.FASTERQ_NAVIGATION_CONTAINER = '#fasterQNavigationContainer';
 Elements.FASTERQ_MANAGER_CONTAINER = '#fasterQManagerContainer';
 Elements.FASTERQ_CREATOR_CONTAINER = '#fasterQCreatorContainer';

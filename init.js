@@ -47,7 +47,7 @@ require.config({
         'TouchPunch': '_common/_js/touchpunch/TouchPunch',
         'X2JS': '_common/_js/x2js/xml2json',
         'LayoutRouter': '_controllers/LayoutRouter',
-        'FasterQTerminalRouter': '_controllers/FasterQTerminalRouter',
+        'FasterQTerminalController': '_controllers/FasterQTerminalController',
         'ComBroker': '_controllers/ComBroker',
         'ScreenTemplateFactory': '_controllers/ScreenTemplateFactory',
         'BlockFactory': '_controllers/BlockFactory',

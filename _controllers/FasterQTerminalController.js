@@ -25,19 +25,19 @@ define(['underscore', 'jquery', 'backbone', 'XDate', 'StackView', 'FasterQCustom
 
         _initUserTerminal: function () {
             var self = this;
-
             var param = $.base64.decode(self.options.param).split(':');
-            var businessID = param[0];
-            var lineID = param[1];
+            self._fetchLineModel(param[0], param[1]);
+        },
 
+        _fetchLineModel: function(i_businessID, i_lineID){
+            var self = this;
             self.m_terminalModel = new LineModel({
-                line_id: lineID
+                line_id: i_lineID
             });
-
 
             self.m_terminalModel.fetch({
                 data: {
-                    businessID: businessID
+                    businessID: i_businessID
                 },
                 success: (function (model, data) {
                     self.m_fasterQCustomerTerminalView = new FasterQCustomerTerminal({
@@ -50,7 +50,7 @@ define(['underscore', 'jquery', 'backbone', 'XDate', 'StackView', 'FasterQCustom
 
                 }),
                 error: (function (e) {
-                   log('Service request failure: ' + e);
+                    log('Service request failure: ' + e);
                 }),
                 complete: (function (e) {
                 })

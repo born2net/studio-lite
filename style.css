@@ -16,7 +16,6 @@ body {
     font-size: 12px;
 }
 
-/* todo: added */
 i.fa {
     font-size: 14px;
 }
@@ -1184,6 +1183,13 @@ iframe {
 #terminalCarousel i  {
     font-size: 2.9em;
 }
+
+#fasterQLineName {
+    text-align: center;
+    color: red;
+    font-size: 3em;
+}
+
 
 .fasterQCarouselButtons{
     padding: 15px;

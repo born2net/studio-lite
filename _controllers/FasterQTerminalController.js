@@ -23,12 +23,22 @@ define(['underscore', 'jquery', 'backbone', 'XDate', 'StackView', 'FasterQCustom
             self._initUserTerminal();
         },
 
+        /**
+         Init user terminal view
+         @method _initUserTerminal
+         **/
         _initUserTerminal: function () {
             var self = this;
             var param = $.base64.decode(self.options.param).split(':');
             self._fetchLineModel(param[0], param[1]);
         },
 
+        /**
+         Fetch Line model from server and instantiate Terminal view on success
+         @method _fetchLineModel
+         @param {Number} i_businessID
+         @param {Number} i_lineID
+         **/
         _fetchLineModel: function(i_businessID, i_lineID){
             var self = this;
             self.m_terminalModel = new LineModel({

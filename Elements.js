@@ -310,6 +310,7 @@ Elements.SCENE_TOOLBAR = '#sceneToolbar';
 Elements.FQ_PRINT_NUMBER = '#fqPrintNumber';
 Elements.FQ_DISPLAY_PRINT_NUMBER = '#fqDisplayPrintNumber';
 Elements.FQ_DISPLAY_QR_NUMBER = '#fqDisplayQRNumber';
+Elements.FQ_CURRENTLY_SERVING = '#fqCurrentlyServing';
 Elements.SCENE_UNDO = '#sceneUndo';
 Elements.SCENE_WIDTH_INPUT  = '#sceneWidthInput';
 Elements.SCENE_ZOOM_IN = '#sceneZoomIn';

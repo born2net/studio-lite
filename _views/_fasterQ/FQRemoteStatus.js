@@ -17,9 +17,8 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel'], function ($, Backbone, B
             self._getServiceID();
         },
 
-        _getServiceID: function(){
+        _getServiceID: function () {
             var self = this;
-            // fetch with extra parameters
             self.m_model = new QueueModel();
             self.m_model.save({
                 businessID: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('business_id'),
@@ -27,7 +26,7 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel'], function ($, Backbone, B
             }, {
                 success: (function (model, data) {
                     $(Elements.FQ_DISPLAY_QR_NUMBER).text(model.get('service_id'));
-                    self._pollStatus();
+                    self._pollQueueStatus();
                 }),
                 error: (function (e) {
                     log('Service request failure: ' + e);
@@ -37,12 +36,28 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel'], function ($, Backbone, B
             });
         },
 
-        _pollStatus: function(){
+        _pollQueueStatus: function () {
             var self = this;
-            self.m_statusHandler = setInterval(function(){
-                // fetch with extra parameters
-                // var model = new QueueModel();
-            },5000);
+            var getServiceID = function(){
+                $.ajax({
+                    url: '/LastCalledQueue',
+                    data: {
+                        businessID: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('business_id'),
+                        lineID: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id')
+                    },
+                    success: function (e) {
+                        $(Elements.FQ_CURRENTLY_SERVING).text(e.service_id);
+                    },
+                    error: function (e) {
+                        log('error ajax ' + e);
+                    },
+                    dataType: 'json'
+                });
+            }
+            self.m_statusHandler = setInterval(function () {
+                getServiceID();
+            }, 5000);
+            getServiceID();
         }
     });
 

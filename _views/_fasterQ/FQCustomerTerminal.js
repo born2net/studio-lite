@@ -31,7 +31,7 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel'], function ($, B
 
         _getServiceID: function(){
             var self = this;
-            // fetch with extra parameters
+            // save with extra parameters
 
             self.m_model = new QueueModel();
             self.m_model.save({

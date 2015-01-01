@@ -119,6 +119,7 @@ require.config({
         'LinesCollection': '_collections/_fasterQ/LinesCollection',
         'StationModel': '_models/StationModel',
         'LineModel': '_models/_fasterQ/LineModel',
+        'QueueModel': '_models/_fasterQ/QueueModel',
         'Lib': '_libs/Lib',
         'ScreenTemplate': '_libs/ScreenTemplate',
         'Pepper': '_libs/Pepper',

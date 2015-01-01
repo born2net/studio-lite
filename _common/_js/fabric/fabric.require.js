@@ -8997,7 +8997,8 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
      * @constructor
      */
     fabric.Element = fabric.Canvas;
-})();
+})()
+;
 
 
 (function() {

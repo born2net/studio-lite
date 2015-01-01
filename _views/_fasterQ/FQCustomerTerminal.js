@@ -21,8 +21,8 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel'], function ($, B
 
         _listenPrint: function () {
             var self = this;
-            $(Elements.FQ_PRINT_NUMBER).on('click', function (e) {
 
+            $(Elements.FQ_PRINT_NUMBER).on('click', function (e) {
                 e.preventDefault();
                 e.stopImmediatePropagation();
 

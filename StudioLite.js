@@ -19,6 +19,9 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             BB.SERVICES = {};
             BB.EVENTS = {};
             BB.CONSTS = {};
+            BB.CONSTS.APP_STUDIO_LITE = '0';
+            BB.CONSTS.APP_CUSTOMER_TERMINAL = '1';
+            BB.CONSTS.APP_REMOTE_STATUS = '2';
             BB.globs['UNIQUE_COUNTER'] = 0;
             BB.globs['RC4KEY'] = '226a3a42f34ddd778ed2c3ba56644315';
             BB.lib = new Lib();
@@ -60,12 +63,24 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             });
 
             var mode = window.location.href.match(RegExp("(mode=)(.*)(&param=)(.*)"));
+            var app;
 
             // FQ Customer Terminal
-            if (!_.isNull(mode) && mode[2] == 'customerTerminal') {
+            if (!_.isNull(mode) && (mode[2] == 'customerTerminal' || mode[2] == 'remoteStatus')) {
+                switch (mode[2]){
+                    case 'customerTerminal': {
+                        app = BB.CONSTS.APP_CUSTOMER_TERMINAL;
+                        break;
+                    }
+                    case 'remoteStatus': {
+                        app = BB.CONSTS.APP_REMOTE_STATUS;
+                        break;
+                    }
+                }
                 require(['FQTerminalController', 'Events'], function (FQTerminalController) {
                     new FQTerminalController({
-                        param: mode[4]
+                        param: mode[4],
+                        app: app
                     });
                 });
                 return;
@@ -73,12 +88,10 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
 
             // StudioLite
             require(['LayoutRouter', 'Events'], function (LayoutRouter) {
-                var LayoutRouter = new LayoutRouter();
+                var LayoutRouter = new LayoutRouter({app: BB.CONSTS.APP_STUDIO_LITE});
                 BB.history.start();
                 LayoutRouter.navigate('authenticate/_/_', {trigger: true});
             });
-
-
         }
     });
 

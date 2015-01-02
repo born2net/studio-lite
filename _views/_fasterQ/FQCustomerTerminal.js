@@ -34,7 +34,7 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel'], function ($, B
                     $(Elements.FQ_DISPLAY_EMAIL_SENT).text('email sent').fadeOut();
                     $(Elements.FQ_ENTER_EMAIL).val('');
                 }, 5000);
-                self._sendEmail(email, url);
+                self._sendQueueEmail(email, url);
                 setTimeout(function () {
                     $(Elements.FQ_DISPLAY_EMAIL_SENT).text('email sent').fadeOut();
                 }, 4000);
@@ -42,13 +42,19 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel'], function ($, B
             return false;
         },
 
-        _sendEmail: function (i_email, i_url) {
+        /**
+         Send customer email with link to create queue
+         @method _sendQueueEmail server:sendQueueEmail
+         @param {String} i_email
+         @param {String} i_url
+         **/
+        _sendQueueEmail: function (i_email, i_url) {
             var self = this;
             $.ajax({
                 url: '/SendQueueEmail',
                 data: {
-                    businessID: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('business_id'),
-                    lineID: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id'),
+                    business_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('business_id'),
+                    line_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id'),
                     email: i_email,
                     url: i_url
                 },
@@ -72,14 +78,18 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel'], function ($, B
             });
         },
 
+        /**
+         Get the next service id from remote server
+         @method _getServiceID server:setQueue
+         **/
         _getServiceID: function () {
             var self = this;
             // save with extra parameters
 
             var model = new QueueModel();
             model.save({
-                businessID: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('business_id'),
-                lineID: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id')
+                business_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('business_id'),
+                line_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id')
             }, {
                 success: (function (model, data) {
                     $(Elements.FQ_DISPLAY_PRINT_NUMBER).text(model.get('service_id'))

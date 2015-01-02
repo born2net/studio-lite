@@ -38,7 +38,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
         /**
          Listen to changes in Line item rename through properties
-         @method _listenInputNameChange
+         @method _listenInputNameChange server:updateLine
          @return none
          **/
         _listenInputNameChange: function () {

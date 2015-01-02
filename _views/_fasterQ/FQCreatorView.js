@@ -68,6 +68,17 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
         _populateLines: function () {
             var self = this;
             self.m_linesCollection.sort();
+            self._getLines();
+        },
+
+        /**
+         Returns this model's attributes as...
+         @method _getLines server:getLines
+         @param {Number} i_playerData
+         @return {Number} Unique clientId.
+         **/
+        _getLines: function(){
+            var self = this;
             self.m_linesCollection.fetch({
                 success: function (data) {
                     $(Elements.FASTERQ_CUSTOMER_LINES).empty();
@@ -106,14 +117,14 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
 
         /**
          Listen to new Line item button
-         @method _listenAddNewLine
+         @method _listenAddNewLine server:setLine
          **/
         _listenAddNewLine: function () {
             var self = this;
             $(Elements.FATSERQ_ADD_NEW_LINE).on('click', function (e) {
                 var model = new LineModel({
                     name: 'New line',
-                    business_id: BB.Pepper.getUserData().businessID
+                    business_id: BB.Pepper.getUserData().business_id
                 });
                 model.save({}, {
                     success: function (model) {
@@ -130,7 +141,7 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
 
         /**
          Listen to remove existing Line item button
-         @method _listenRemoveLine
+         @method _listenRemoveLine server:destroyLine
          **/
         _listenRemoveLine: function(){
             var self = this;

@@ -45,7 +45,7 @@ define(['underscore', 'jquery', 'backbone', 'XDate', 'StackView', 'FQCustomerTer
                     break;
                 }
                 case BB.CONSTS.APP_REMOTE_STATUS: {
-                    self._loadRemoteStatusApp();
+                    self._getLine();
                     break;
                 }
             }
@@ -53,15 +53,15 @@ define(['underscore', 'jquery', 'backbone', 'XDate', 'StackView', 'FQCustomerTer
         },
         /**
          Fetch Line model from server and instantiate Remote Status view on success
-         @method _loadRemoteStatus
+         @method _loadRemoteStatus server:getLine
          **/
-        _loadRemoteStatusApp: function () {
+        _getLine: function () {
             var self = this;
 
             // fetch with extra parameters
             self.m_lineModel.fetch({
                 data: {
-                    businessID: self.m_lineModel.get('business_id')
+                    business_id: self.m_lineModel.get('business_id')
                 },
                 success: (function (model, data) {
                     //self.m_lineModel.set('business_id', self.m_lineModel.get('business_id'));
@@ -83,7 +83,7 @@ define(['underscore', 'jquery', 'backbone', 'XDate', 'StackView', 'FQCustomerTer
 
         /**
          Fetch Line model from server and instantiate Terminal view on success
-         @method _loadCustomerTerminalApp
+         @method _loadCustomerTerminalApp server:getLine
          **/
         _loadCustomerTerminalApp: function () {
             var self = this;
@@ -91,7 +91,7 @@ define(['underscore', 'jquery', 'backbone', 'XDate', 'StackView', 'FQCustomerTer
             // fetch with extra parameters
             self.m_lineModel.fetch({
                 data: {
-                    businessID: self.m_lineModel.get('business_id')
+                    business_id: self.m_lineModel.get('business_id')
                 },
                 success: (function (model, data) {
                     self.m_fasterQCustomerTerminalView = new FQCustomerTerminal({

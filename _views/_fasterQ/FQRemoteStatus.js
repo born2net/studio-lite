@@ -14,15 +14,19 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel'], function ($, Backbone, B
          **/
         initialize: function () {
             var self = this;
-            self._getServiceID();
+            self._setQueue();
         },
 
-        _getServiceID: function () {
+        /**
+         Create queue in table as well as matching data in analytics
+         @method _setQueue server:setQueue
+         **/
+        _setQueue: function () {
             var self = this;
             self.m_model = new QueueModel();
             self.m_model.save({
-                businessID: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('business_id'),
-                lineID: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id'),
+                business_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('business_id'),
+                line_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id'),
                 type: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('type'),
                 email: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('email')
             }, {
@@ -38,14 +42,18 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel'], function ($, Backbone, B
             });
         },
 
+        /**
+         Get the last called service_id for line
+         @method _pollQueueStatus server:LastCalledQueue
+         **/
         _pollQueueStatus: function () {
             var self = this;
-            var getServiceID = function(){
+            var lastCalledQueue = function(){
                 $.ajax({
                     url: '/LastCalledQueue',
                     data: {
-                        businessID: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('business_id'),
-                        lineID: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id')
+                        business_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('business_id'),
+                        line_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id')
                     },
                     success: function (e) {
                         $(Elements.FQ_CURRENTLY_SERVING).text(e.service_id);
@@ -57,9 +65,9 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel'], function ($, Backbone, B
                 });
             }
             self.m_statusHandler = setInterval(function () {
-                getServiceID();
+                lastCalledQueue();
             }, 5000);
-            getServiceID();
+            lastCalledQueue();
         }
     });
 

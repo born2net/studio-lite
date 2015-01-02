@@ -22,7 +22,9 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel'], function ($, Backbone, B
             self.m_model = new QueueModel();
             self.m_model.save({
                 businessID: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('business_id'),
-                lineID: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id')
+                lineID: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id'),
+                type: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('type'),
+                email: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('email')
             }, {
                 success: (function (model, data) {
                     $(Elements.FQ_DISPLAY_QR_NUMBER).text(model.get('service_id'));

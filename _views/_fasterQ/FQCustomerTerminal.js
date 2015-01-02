@@ -15,8 +15,51 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel'], function ($, B
         initialize: function () {
             var self = this;
             $(Elements.FASTERQ_LINE_NAME).text(self.model.get('name'));
-            self._initQR();
+            self._listenQRScan();
             self._listenPrintButton();
+            self._listenEmailButton();
+        },
+
+        _listenEmailButton: function () {
+            var self = this;
+            $(Elements.FQ_SENDIT_BUTTON).on('click', function (e) {
+                var email = $(Elements.FQ_ENTER_EMAIL).val();
+                if (!BB.lib.validateEmail(email)) {
+                    bootbox.alert('the emailed entered is invalid');
+                    return false;
+                }
+                var url = self._buildURL('email', email);
+                $(Elements.FQ_DISPLAY_EMAIL_SENT).text('email sent').fadeIn();
+                setTimeout(function () {
+                    $(Elements.FQ_DISPLAY_EMAIL_SENT).text('email sent').fadeOut();
+                    $(Elements.FQ_ENTER_EMAIL).val('');
+                }, 5000);
+                self._sendEmail(email, url);
+                setTimeout(function () {
+                    $(Elements.FQ_DISPLAY_EMAIL_SENT).text('email sent').fadeOut();
+                }, 4000);
+            });
+            return false;
+        },
+
+        _sendEmail: function (i_email, i_url) {
+            var self = this;
+            $.ajax({
+                url: '/SendQueueEmail',
+                data: {
+                    businessID: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('business_id'),
+                    lineID: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id'),
+                    email: i_email,
+                    url: i_url
+                },
+                success: function (e) {
+                },
+                error: function (e) {
+                    log('error ajax ' + e);
+                },
+                dataType: 'json'
+            });
+
         },
 
         _listenPrintButton: function () {
@@ -29,12 +72,12 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel'], function ($, B
             });
         },
 
-        _getServiceID: function(){
+        _getServiceID: function () {
             var self = this;
             // save with extra parameters
 
-            self.m_model = new QueueModel();
-            self.m_model.save({
+            var model = new QueueModel();
+            model.save({
                 businessID: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('business_id'),
                 lineID: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id')
             }, {
@@ -49,7 +92,7 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel'], function ($, B
             });
         },
 
-        _initQR: function () {
+        _listenQRScan: function () {
             var self = this;
             var q = $("#qrcode");
             q = q[0];
@@ -57,7 +100,33 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel'], function ($, B
                 width: 200,
                 height: 200
             });
-            qrcode.makeCode('mediasignage.com');
+            var url = self._buildURL('qr');
+            qrcode.makeCode(url);
+        },
+
+        _buildURL: function (i_type, i_data) {
+            var self = this;
+            var param = '';
+            switch (i_type) {
+                case 'qr':
+                {
+                    param = BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('business_id');
+                    param += ':' + BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id');
+                    param += ':QR';
+                    break;
+                }
+                case 'email':
+                {
+                    param = BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('business_id');
+                    param += ':' + BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id');
+                    param += ':EMAIL';
+                    param += ':' + i_data;
+                    break;
+                }
+            }
+            //todo: build URL dynamically
+            param = $.base64.encode(param);
+            return 'https://secure.digitalsignage.com:442/_studiolite-dev/studiolite.html?mode=remoteStatus&param=' + param;
         }
     });
 

@@ -127,7 +127,7 @@
     </div>
     <div id="appEntry">
 
-        <div id="fqRemoteStatus" style="display: none; font-size: 3em; text-align: center">
+        <div id="fqRemoteStatus" style="display: none; font-size: 2em; text-align: center">
             <h1>your number: <span id="fqDisplayQRNumber"></span></h1>
             <h1>now serving: <span id="fqCurrentlyServing"></span></h1>
         </div>
@@ -142,7 +142,7 @@
             <hr/>
 
 
-            <div id="terminalCarousel" class="carousel slide" data-ride="carousel">
+            <div id="terminalCarousel" class="carousel slide" data-interval="false" data-ride="carousel">
                 <div class="carousel-inner">
 
                     <div class="item active">
@@ -154,7 +154,7 @@
                             <br/>
                             <a id="fqPrintNumber" style="padding-left: 40px; padding-right: 40px; padding-top: 20px; padding-bottom: 20px" class="btn btn-large btn-danger" type="button" href="#">
                                 <span style="font-size: 2em" class="carouselLargeHeader2 fa fa-download"></span>
-                                <span style="font-size: 2em">PRINT IT</span>
+                                <span data-localize="printIt" style="font-size: 2em">PRINT IT</span>
                             </a>
                             <h1 id="fqDisplayPrintNumber"></h1>
                             <br/>
@@ -181,13 +181,18 @@
                             <span class="carouselLargeHeader" data-localize="notifyEmail" style="font-size: 3em">Notify via email</span>
                             <br/>
                             <br/>
-                            <input style="font-size: 3em" value="yourmail@example.com"/>
+                            <div style="text-align: center; width: 500px" class="centerElement">
+                                <input id="fqEnterEmail" type="text" style="font-size: 3em; height: 2em; text-align: center" class="form-control" data-localize="enterEmail" placeholder="enter email">
+                            </div>
                             <br/>
-                            <br/>
-                            <a style="padding-left: 40px; padding-right: 40px; padding-top: 20px; padding-bottom: 20px" class="btn btn-large btn-danger" type="button" href="http://galaxy.signage.me/Code/install/exe/CloudSignagePlayerSetup.exe">
+
+                            <a id="fqSenditButton" style="padding-left: 40px; padding-right: 40px; padding-top: 20px; padding-bottom: 20px" class="btn btn-large btn-danger" type="button" href="#">
                                 <span style="font-size: 2em" class="carouselLargeHeader2 fa fa-download"></span>
-                                <span style="font-size: 2em">SEND IT</span>
+                                <span data-localize="sendIt" style="font-size: 2em">SEND IT</span>
                             </a>
+                            <br/>
+                            <h1 id="fqDisplayEmailSent"></h1>
+                            <br/>
                         </div>
                     </div>
 
@@ -197,10 +202,12 @@
                             <span class="carouselLargeHeader" data-localize="notifySMS" style="font-size: 3em">Notify via SMS</span>
                             <br/>
                             <br/>
-                            <input style="font-size: 3em; width: 250px" value="(818) 555-1212"/>
+                            <div style="text-align: center; width: 500px" class="centerElement">
+                                <input id="fqEnterSMS" type="text" style="font-size: 3em; height: 3em; text-align: center" class="form-control" data-localize="enterSMS" placeholder="enter your phone number">
+                            </div>
                             <br/>
                             <br/>
-                            <a style="padding-left: 40px; padding-right: 40px; padding-top: 20px; padding-bottom: 20px" class="btn btn-large btn-danger" type="button" href="http://galaxy.signage.me/Code/install/exe/CloudSignagePlayerSetup.exe">
+                            <a id="fqCallIt" style="padding-left: 40px; padding-right: 40px; padding-top: 20px; padding-bottom: 20px" class="btn btn-large btn-danger" type="button" href="#">
                                 <span style="font-size: 2em" class="carouselLargeHeader2 fa fa-download"></span>
                                 <span style="font-size: 2em">CALL IT</span>
                             </a>

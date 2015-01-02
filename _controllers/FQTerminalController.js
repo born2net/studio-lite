@@ -33,7 +33,9 @@ define(['underscore', 'jquery', 'backbone', 'XDate', 'StackView', 'FQCustomerTer
             var param = $.base64.decode(self.options.param).split(':');
             self.m_lineModel = new LineModel({
                 business_id: param[0],
-                line_id: param[1]
+                line_id: param[1],
+                type: param[2],
+                email: param[3]
             });
             BB.comBroker.setService(BB.SERVICES.FQ_LINE_MODEL, self.m_lineModel);
 

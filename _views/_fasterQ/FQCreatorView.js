@@ -27,7 +27,7 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
                 collection: self.m_linesCollection
             });
 
-            $(Elements.FASTERQ_LINE_BACK).on('click',function(){
+            $(Elements.FASTERQ_LINE_BACK).on('click', function () {
                 self.options.stackView.selectView(Elements.FASTERQ_NAVIGATION_CONTAINER);
             });
 
@@ -60,7 +60,6 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
         },
 
 
-
         /**
          Popular the list Line items from server
          @method _populateLines
@@ -77,11 +76,13 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
          @param {Number} i_playerData
          @return {Number} Unique clientId.
          **/
-        _getLines: function(){
+        _getLines: function () {
             var self = this;
             self.m_linesCollection.fetch({
                 success: function (data) {
                     $(Elements.FASTERQ_CUSTOMER_LINES).empty();
+                    if (_.size(data.models["0"].attributes) == 0)
+                        return;
                     _.each(data.models, $.proxy(self._appendNewLine, self));
                     self._listenLineSelected();
                     self._highlightLine();
@@ -96,7 +97,7 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
          Set the selected line background color properties
          @method _highlightLine
          **/
-        _highlightLine: function(){
+        _highlightLine: function () {
             var self = this;
             if (_.isUndefined(self.m_selectedLineID))
                 return;
@@ -143,30 +144,34 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
          Listen to remove existing Line item button
          @method _listenRemoveLine server:destroyLine
          **/
-        _listenRemoveLine: function(){
+        _listenRemoveLine: function () {
             var self = this;
-            $(Elements.FASTERQ_REMOVE_LINE).on('click',function(){
-                if (_.isUndefined(self.m_selectedLineID)){
-                    alert('not selected');
+            $(Elements.FASTERQ_REMOVE_LINE).on('click', function () {
+                if (_.isUndefined(self.m_selectedLineID)) {
+                    bootbox.alert('no line selected');
                     return;
                 }
-                var model = self.m_linesCollection.get(self.m_selectedLineID);
-                model.destroy({
-                    success: function (model, response) {
-                        log('model deleted');
-                        self._populateLines();
-                        self.m_selectedLineID = undefined;
-                    }, error: function () {
-                        log('error delete failed');
-                    }
+                bootbox.confirm("Are you sure you want to delete the Line and associated queues?", function(result) {
+                    if (!result)
+                        return;
+                    var model = self.m_linesCollection.get(self.m_selectedLineID);
+                    model.destroy({
+                        success: function (model, response) {
+                            log('model deleted');
+                            self._populateLines();
+                            self.m_selectedLineID = undefined;
+                        }, error: function () {
+                            log('error delete failed');
+                        }
+                    });
                 });
             });
         },
 
-        _listenCollectionChanged: function(){
+        _listenCollectionChanged: function () {
             var self = this;
-            self.m_linesCollection.on('change',function(e){
-               self._populateLines();
+            self.m_linesCollection.on('change', function (e) {
+                self._populateLines();
             });
         }
     });

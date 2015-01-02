@@ -18,6 +18,7 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel'], function ($, B
             self._listenQRScan();
             self._listenPrintButton();
             self._listenEmailButton();
+            self._listenSMSButton();
         },
 
         _listenEmailButton: function () {
@@ -29,15 +30,31 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel'], function ($, B
                     return false;
                 }
                 var url = self._buildURL('email', email);
-                $(Elements.FQ_DISPLAY_EMAIL_SENT).text('email sent').fadeIn();
+                $(Elements.FQ_DISPLAY_EMAIL_SENT).text('check your email').fadeIn();
                 setTimeout(function () {
-                    $(Elements.FQ_DISPLAY_EMAIL_SENT).text('email sent').fadeOut();
+                    $(Elements.FQ_DISPLAY_EMAIL_SENT).fadeOut();
                     $(Elements.FQ_ENTER_EMAIL).val('');
                 }, 5000);
                 self._sendQueueEmail(email, url);
+            });
+            return false;
+        },
+
+        _listenSMSButton: function () {
+            var self = this;
+            $(Elements.FQ_CALL_IT).on('click', function (e) {
+                var sms = $(Elements.FQ_ENTER_SMS).val();
+                if (sms.length < 6) {
+                    bootbox.alert('the phone number entered is invalid');
+                    return false;
+                }
+                var url = self._buildURL('sms', sms);
+                $(Elements.FQ_DISPLAY_SMS_SENT).text('we will call you').fadeIn();
                 setTimeout(function () {
-                    $(Elements.FQ_DISPLAY_EMAIL_SENT).text('email sent').fadeOut();
-                }, 4000);
+                    $(Elements.FQ_DISPLAY_SMS_SENT).fadeOut();
+                    $(Elements.FQ_ENTER_SMS).val('');
+                }, 5000);
+                self._sendQueueSMS(sms, url);
             });
             return false;
         },
@@ -65,7 +82,32 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel'], function ($, B
                 },
                 dataType: 'json'
             });
+        },
 
+        /**
+         Send customer SMS / call when service id is up
+         @method _sendQueueSMS server:sendQueueSMS
+         @param {String} i_email
+         @param {String} i_url
+         **/
+        _sendQueueSMS: function (i_sms, i_url) {
+            var self = this;
+            $.ajax({
+                url: '/SendQueueSMS',
+                data: {
+                    business_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('business_id'),
+                    line_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id'),
+                    sms: i_sms,
+                    url: i_url
+                },
+                success: function (e) {
+                    log('aa');
+                },
+                error: function (e) {
+                    log('error ajax ' + e);
+                },
+                dataType: 'json'
+            });
         },
 
         _listenPrintButton: function () {
@@ -130,6 +172,14 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel'], function ($, B
                     param = BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('business_id');
                     param += ':' + BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id');
                     param += ':EMAIL';
+                    param += ':' + i_data;
+                    break;
+                }
+                case 'sms':
+                {
+                    param = BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('business_id');
+                    param += ':' + BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id');
+                    param += ':SMS';
                     param += ':' + i_data;
                     break;
                 }

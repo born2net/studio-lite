@@ -314,6 +314,7 @@ Elements.FQ_CURRENTLY_SERVING = '#fqCurrentlyServing';
 Elements.FQ_ENTER_EMAIL = '#fqEnterEmail';
 Elements.FQ_DISPLAY_EMAIL_SENT = '#fqDisplayEmailSent';
 Elements.FQ_SENDIT_BUTTON = '#fqSenditButton';
+Elements.FQ_DISPLAY_SMS_SENT = '#fqDisplaySMSSent';
 Elements.FQ_ENTER_SMS = '#fqEnterSMS';
 Elements.FQ_CALL_IT = '#fqCallIt';
 Elements.SCENE_UNDO = '#sceneUndo';

@@ -81,7 +81,7 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
             self.m_linesCollection.fetch({
                 success: function (data) {
                     $(Elements.FASTERQ_CUSTOMER_LINES).empty();
-                    if (_.size(data.models["0"].attributes) == 0)
+                    if (data.models.length==0)
                         return;
                     _.each(data.models, $.proxy(self._appendNewLine, self));
                     self._listenLineSelected();

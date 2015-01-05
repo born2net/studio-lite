@@ -1431,6 +1431,19 @@ iframe {
     padding-right: 20px;
 }
 
+.lineListItems button {
+    float: right;
+    position: relative;
+    top: -42px;
+    border: none;
+    width: 42px;
+}
+
+
+.lineListItems button i {
+    font-size: 2em;
+}
+
 .lineListItems span {
     display: inline;
     font-size: 1.5em;

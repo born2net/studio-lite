@@ -6,6 +6,8 @@
  **/
 define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 'text!_templates/_fasterQLineItem.html'], function ($, Backbone, LinesCollection, LineModel, FQLinePropView, FQLineItemTemplate) {
 
+    BB.SERVICES.FQCREATORVIEW = 'FQCreatorView';
+
     var FQCreatorView = Backbone.View.extend({
 
         /**
@@ -14,6 +16,7 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
          **/
         initialize: function () {
             var self = this;
+            BB.comBroker.setService(BB.SERVICES.FQCREATORVIEW, self);
             self.m_selectedLineID = undefined;
             self.m_fasterQLineItemTemplate = _.template(FQLineItemTemplate);
             self.m_linesCollection = new LinesCollection();
@@ -49,12 +52,19 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
          **/
         _listenLineSelected: function () {
             var self = this;
+
             $(Elements.CLASS_LINE_LIST_ITEMS).off('click');
             $(Elements.CLASS_LINE_LIST_ITEMS).on('click', function (e) {
                 var lineElem = $(e.target).closest('li');
                 self.m_selectedLineID = $(lineElem).data('line_id');
                 self._highlightLine();
                 self._initLinePropView.lineSelected((self.m_selectedLineID));
+
+                if (!$(e.target).hasClass('prop')) {
+                    setTimeout(function(){
+                        self.options.stackView.selectView(Elements.FASTERQ_MANAGER_CONTAINER);
+                    },250);
+                }
                 return false;
             });
         },
@@ -81,7 +91,7 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
             self.m_linesCollection.fetch({
                 success: function (data) {
                     $(Elements.FASTERQ_CUSTOMER_LINES).empty();
-                    if (data.models.length==0)
+                    if (data.models.length == 0)
                         return;
                     _.each(data.models, $.proxy(self._appendNewLine, self));
                     self._listenLineSelected();
@@ -151,7 +161,7 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
                     bootbox.alert('no line selected');
                     return;
                 }
-                bootbox.confirm("Are you sure you want to delete the Line and associated queues?", function(result) {
+                bootbox.confirm("Are you sure you want to delete the Line and associated queues?", function (result) {
                     if (!result)
                         return;
                     var model = self.m_linesCollection.get(self.m_selectedLineID);
@@ -173,6 +183,11 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
             self.m_linesCollection.on('change', function (e) {
                 self._populateLines();
             });
+        },
+
+        getSelectedLine: function(){
+            var self = this;
+            return self.m_selectedLineID;
         }
     });
 

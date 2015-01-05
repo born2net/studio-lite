@@ -32,20 +32,21 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
 
                 self.m_fasterQNavigationView = new FQNavigationView({el: Elements.FASTERQ_NAVIGATION_CONTAINER, stackView: self.m_stackView});
 
-                self.m_fasterQManagerView = new FQManagerView({
-                    el: Elements.FASTERQ_MANAGER_CONTAINER,
+                self.m_fasterQCreatorView = new FQCreatorView({
+                    el: Elements.FASTERQ_CREATOR_CONTAINER,
                     stackView: self.m_stackView
                 });
 
-                self.m_fasterQCreatorView = new FQCreatorView({
-                    el: Elements.FASTERQ_CREATOR_CONTAINER,
+                self.m_fasterQManagerView = new FQManagerView({
+                    el: Elements.FASTERQ_MANAGER_CONTAINER,
                     stackView: self.m_stackView
                 });
 
                 self.m_stackView.addView(self.m_fasterQNavigationView);
                 self.m_stackView.addView(self.m_fasterQManagerView);
                 self.m_stackView.addView(self.m_fasterQCreatorView);
-                self.m_stackView.selectView(self.m_fasterQNavigationView);
+                self.m_stackView.selectView(self.m_fasterQCreatorView);
+                // self.m_stackView.selectView(self.m_fasterQNavigationView);
 
 
             });

@@ -33,6 +33,7 @@ require.config({
         'TimelineMax': '_common/_js/gsap/TimelineMax',
         'TweenMax': '_common/_js/gsap/TweenMax',
         'TweenLite': '_common/_js/gsap/TweenLite',
+        'ScrollToPlugin': '_common/_js/gsap/plugins/ScrollToPlugin',
         'Draggable': '_common/_js/gsap/utils/Draggable',
         'RC4': '_common/_js/rc4/RC4',
         'RC4V2': '_common/_js/rc4/RC4V2',
@@ -180,6 +181,9 @@ require.config({
         },
         'Draggable': {
             exports: 'Draggable'
+        },
+        'ScrollToPlugin': {
+            exports: 'ScrollToPlugin'
         },
         'bootstrap': {
             deps: ['jquery']

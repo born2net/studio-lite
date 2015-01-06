@@ -129,6 +129,7 @@
 
         <div id="fqRemoteStatus" style="display: none; font-size: 2em; text-align: center">
             <h1>your number: <span id="fqDisplayQRNumber"></span></h1>
+
             <h1>now serving: <span id="fqCurrentlyServing"></span></h1>
         </div>
 
@@ -156,6 +157,7 @@
                                 <span style="font-size: 2em" class="carouselLargeHeader2 fa fa-download"></span>
                                 <span data-localize="printIt" style="font-size: 2em">PRINT IT</span>
                             </a>
+
                             <h1 id="fqDisplayPrintNumber"></h1>
                             <br/>
                             <br/>
@@ -168,7 +170,8 @@
                             <i class="carouselLargeHeader fa fa-qrcode"></i>
                             <span class="carouselLargeHeader" data-localize="scanMobile" style="font-size: 3em">Scan with your mobile device</span>
                             <br/>
-                                <div class="centerElement" id="qrcode" style="text-align: center; width: 200px; height: 200px; margin-top:15px;"></div>
+
+                            <div class="centerElement" id="qrcode" style="text-align: center; width: 200px; height: 200px; margin-top:15px;"></div>
                             <br/>
                             <br/>
                             <br/>
@@ -181,6 +184,7 @@
                             <span class="carouselLargeHeader" data-localize="notifyEmail" style="font-size: 3em">Notify via email</span>
                             <br/>
                             <br/>
+
                             <div style="text-align: center; width: 500px" class="centerElement">
                                 <input id="fqEnterEmail" type="text" style="font-size: 3em; height: 2em; text-align: center" class="form-control" data-localize="enterEmail" placeholder="enter email">
                             </div>
@@ -191,6 +195,7 @@
                                 <span data-localize="sendIt" style="font-size: 2em">SEND IT</span>
                             </a>
                             <br/>
+
                             <h1 id="fqDisplayEmailSent"></h1>
                             <br/>
                         </div>
@@ -202,6 +207,7 @@
                             <span class="carouselLargeHeader" data-localize="notifySMS" style="font-size: 3em">Notify via SMS</span>
                             <br/>
                             <br/>
+
                             <div style="text-align: center; width: 500px" class="centerElement">
                                 <input id="fqEnterSMS" type="text" style="font-size: 3em; height: 2em; text-align: center" class="form-control" data-localize="enterSMS" placeholder="enter your phone number">
                             </div>
@@ -211,6 +217,7 @@
                                 <span style="font-size: 2em" class="carouselLargeHeader2 fa fa-download"></span>
                                 <span style="font-size: 2em">CALL IT</span>
                             </a>
+
                             <h1 id="fqDisplaySMSSent"></h1>
                             <br/>
                         </div>
@@ -219,16 +226,16 @@
                 </div>
                 <ul id="carouselItems" class="nav nav-pills nav-justified"
                     style="border: 1px solid #9c9c9c">
-                    <li data-target="#terminalCarousel" data-slide-to="0" ><a
+                    <li data-target="#terminalCarousel" data-slide-to="0"><a
                             href="#"><i class="fa fa-print"></i><span class="fasterQCarouselButtons">PRINT</span>
                     </a></li>
-                    <li data-target="#terminalCarousel" data-slide-to="1" ><a
+                    <li data-target="#terminalCarousel" data-slide-to="1"><a
                             href="#"><i class="fa fa-qrcode"></i><span class="fasterQCarouselButtons">SCAN</span>
                     </a></li>
-                    <li data-target="#terminalCarousel" data-slide-to="2" ><a
+                    <li data-target="#terminalCarousel" data-slide-to="2"><a
                             href="#"><i class="fa fa-paper-plane"></i><span class="fasterQCarouselButtons">E-MAIL</span>
                     </a></li>
-                    <li data-target="#terminalCarousel" data-slide-to="3" ><a
+                    <li data-target="#terminalCarousel" data-slide-to="3"><a
                             href="#"><i class="fa fa-phone"></i><span class="fasterQCarouselButtons">SMS</span>
                     </a></li>
                 </ul>
@@ -841,8 +848,7 @@
                                            class="fa fa-male"></i>
                                     </div>
 
-            <span
-                    data-localize="none"></span>
+                                <span data-localize="none"></span>
                                     <span data-localize="manageLines" style="display: block">Manage Lines</span>
                                 </button>
                                 <button id="fasterQCreateNavButton" type="button" name="mailWasp"
@@ -864,6 +870,45 @@
                                     title="back" class="openPropsButton btn btn-default btn-sm">
                                 <span class="glyphicon glyphicon-chevron-left"></span>
                             </button>
+
+                            <div>
+
+                            </div>
+
+                            <div id="fqLineQueueComponentWrap">
+                                <div id="fqSelectedCustomer">
+                                </div>
+                                <div id="fqLineQueueComponentContainer">
+                                    <div id="fqLineQueueComponent">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div style="text-align: center; width: 100%; background-color: red" class="centerElement" >
+                                            <button id="fqLineCompPrev" type="button" data-localize-tooltip="back" data-localize="empty" title="back" class="lineComponentButtons btn btn-default btn-sm">
+                                                <span class="glyphicon glyphicon-chevron-left"></span>
+                                                Previous
+                                            </button>
+                                            <button id="fqLineCompCall" type="button" data-localize-tooltip="back" data-localize="empty" title="back" class="lineComponentButtons btn btn-default btn-sm">
+                                                <span class="fa fa-bullhorn"></span>
+                                                Call
+                                            </button>
+                                            <button id="fqLineCompServiced" type="button" data-localize-tooltip="back" data-localize="empty" title="back" class="lineComponentButtons btn btn-default btn-sm">
+                                                <span class="fa fa-thumbs-up"></span>
+                                                Serviced
+                                            </button>
+                                            <button id="fqLineCompNext" type="button" data-localize-tooltip="back" data-localize="empty" title="back" class="lineComponentButtons btn btn-default btn-sm">
+                                                Next
+                                                <span class="glyphicon glyphicon-chevron-right"></span>
+                                            </button>
+
+                                            <input id="aaa"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div id="fasterQCreatorContainer" style="display: none; width: 100%; height: 100%">

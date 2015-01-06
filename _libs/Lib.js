@@ -719,7 +719,7 @@ define(['jquery', 'backbone', 'platform'], function ($, Backbone, platform) {
 
 
         /**
-         Returns this model's attributes as...
+         Pad zeros
          @method padZeros
          @param {Number} n value
          @param {Number} width pre-pad width

@@ -871,14 +871,40 @@
                                     title="back" class="openPropsButton btn btn-default btn-sm">
                                 <span class="glyphicon glyphicon-chevron-left"></span>
                             </button>
-
                             <div>
+                                <br/>
+                                <br/>
+                                <br/>
 
-                            </div>
 
-                            <div >
-                                <div id="" class="row">
+                                <div class="row fqStats">
+                                    <div class="col-xs-6 col-sm-3" style="margin-top: 0; padding: 0;" >
+                                        <div class="fakeVerticalLineDivL" style="height: 58px; width: 100%; float: left">
+                                            <span><strong>time with customer: </strong></span><br/>
+                                            <span id="totalSalesMonth">00:00:00</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-6 col-sm-3" style="margin-top: 0; padding: 0" >
+                                        <div class="fakeVerticalLineDivL" style="height: 58px; width: 100%; float: left">
+                                            <span><strong>you serviced</strong></span><br/>
+                                            <span id="before2014">0</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-3" style="margin-top: 0; padding: 0" >
+                                        <div class="fakeVerticalLineDivL" style="height: 58px; width: 100%; float: left">
+                                            <span><strong>you called</strong></span><br/>
+                                            <span id="payingAfter">0</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-3" style="margin-top: 0; padding: 0;" >
+                                        <div class="fakeVerticalLineDivL" style="height: 58px; width: 100%; float: left">
+                                            <span><strong>total to be serviced</strong></span><br/>
+                                            <span id="oldUpgrades">0</span>
+                                        </div>
+                                    </div>
                                 </div>
+                                <br/>
                                 <div id="fqLineQueueComponentWrap">
                                     <div id="fqSelectedCustomer">
                                     </div>
@@ -887,7 +913,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div style="text-align: center; width: 100%; background-color: red" class="centerElement" >
+                                <div style="text-align: center; width: 100%;" class="centerElement" >
                                     <button id="fqLineCompPrev" type="button" data-localize-tooltip="back" data-localize="empty" title="back" class="lineComponentButtons btn btn-default btn-sm">
                                         <span class="glyphicon glyphicon-chevron-left"></span>
                                         Previous
@@ -900,12 +926,18 @@
                                         <span class="fa fa-thumbs-up"></span>
                                         Serviced
                                     </button>
+                                    <span>
+                                        <button id="fqLineGoTo" type="button" data-localize-tooltip="goTo" data-localize="empty" title="go to" class="lineComponentButtons btn btn-default btn-sm">
+                                            Go to &nbsp
+                                            <input id="fqGoToLineInput"/>
+                                        </button>
+
+                                    </span>
                                     <button id="fqLineCompNext" type="button" data-localize-tooltip="back" data-localize="empty" title="back" class="lineComponentButtons btn btn-default btn-sm">
                                         Next
                                         <span class="glyphicon glyphicon-chevron-right"></span>
                                     </button>
 
-                                    <input id="aaa"/>
                                 </div>
                             </div>
                         </div>
@@ -1603,8 +1635,11 @@
                             <h5 data-localize="lineProps">Line properties</h5>
                             <input id="selectedLineName" type="text" name="name" value="" data-localize="enterLineName" placeholder="Enter Line name">
                             <hr/>
-                            <button id="openFasterQCustomerTerminal" data-localize="openCustomerTerm" class="btn btn-primary">Open Customer Terminal</button>
+                            <button id="fqOpenCustomerTerminal" data-localize="openCustomerTerm" class="btn btn-primary">Open Customer Terminal</button>
                             <br/>
+                        </div>
+                        <div id="fasterQqueueProperties" style="display: none">
+                            <h5>Customer properties</h5>
                         </div>
                         <div id="viewerEditProperties" style="display: none">
                             <h5 data-localize="screenDivision">screen division</h5>

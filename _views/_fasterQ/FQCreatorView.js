@@ -25,7 +25,7 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
             self._listenRemoveLine();
             self._listenCollectionChanged();
 
-            self._initLinePropView = new FQLinePropView({
+            self.m_fqLinePropView = new FQLinePropView({
                 el: Elements.FASTERQ_LINE_PROPERTIES,
                 collection: self.m_linesCollection
             });
@@ -58,7 +58,7 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
                 var lineElem = $(e.target).closest('li');
                 self.m_selectedLineID = $(lineElem).data('line_id');
                 self._highlightLine();
-                self._initLinePropView.lineSelected((self.m_selectedLineID));
+                self.m_fqLinePropView.lineSelected((self.m_selectedLineID));
 
                 if (!$(e.target).hasClass('prop')) {
                     setTimeout(function(){

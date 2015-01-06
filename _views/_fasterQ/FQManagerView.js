@@ -60,9 +60,9 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax'], function ($, Backbo
             TweenLite.to(Elements.FQ_LINE_QUEUE_COMPONENT_CONTAINER, 2, {
                 scrollTo: {x: final, y: 0},
                 ease: Power4.easeOut
-            })
-            log($('#fqLineQueueComponent').width());
-            log($('#fqLineQueueComponentWrap').width());
+            });
+            //log($('#fqLineQueueComponent').width());
+            //log($('#fqLineQueueComponentWrap').width());
         },
 
         _listenContButtons: function () {
@@ -75,8 +75,8 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax'], function ($, Backbo
                 self._scrollTo(elem);
             });
 
-            $(Elements.FQ_LINE_COMP_CALL).on('click', function () {
-                var value = $('#aaa').val();
+            $(Elements.FQ_LINE_GOTO).on('click', function () {
+                var value = $(Elements.FQ_GOTO_LINE_INPUT).val();
                 if (!$.isNumeric(value) || value < 1 || value > 99)
                     return;
                 self.m_selectedQueue = value;

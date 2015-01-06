@@ -130,7 +130,8 @@ require.config({
         'FQManagerView': '_views/_fasterQ/FQManagerView',
         'FQCreatorView': '_views/_fasterQ/FQCreatorView',
         'FQLinePropView': '_views/_fasterQ/FQLinePropView',
-        'FQRemoteStatus': '_views/_fasterQ/FQRemoteStatus',
+        'FQQueuePropView': '_views/_fasterQ/FQLinePropView',
+        'FQRemoteStatus': '_views/_fasterQ/FQQueuePropView',
         'Fonts': '_libs/Fonts'
         //'AjaxRPC': '_controllers/AjaxRPC',
         //'AjaxJsonGetter': '_controllers/AjaxJsonGetter',

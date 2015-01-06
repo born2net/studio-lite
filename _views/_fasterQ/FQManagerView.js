@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated FQManagerView
  **/
-define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax'], function ($, Backbone, ScrollToPlugin, TweenMax) {
+define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView'], function ($, Backbone, ScrollToPlugin, TweenMax, FQQueuePropView) {
 
     var FQManagerView = Backbone.View.extend({
 

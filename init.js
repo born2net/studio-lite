@@ -118,6 +118,7 @@ require.config({
         'MRSSLinks': '_views/MRSSLinks',
         'StationsCollection': '_collections/StationsCollection',
         'LinesCollection': '_collections/_fasterQ/LinesCollection',
+        'QueuesCollection': '_collections/_fasterQ/QueuesCollection',
         'StationModel': '_models/StationModel',
         'LineModel': '_models/_fasterQ/LineModel',
         'QueueModel': '_models/_fasterQ/QueueModel',

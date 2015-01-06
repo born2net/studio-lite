@@ -6,7 +6,7 @@
  **/
 define(['jquery', 'backbone', 'LineModel'], function ($, Backbone, LineModel) {
 
-    BB.SERVICES.COLLECTION_LINES = 'CollectionLines';
+    BB.SERVICES.COLLECTION_LINES = 'COLLECTION_LINES';
 
     var LineCollection = Backbone.Collection.extend({
 

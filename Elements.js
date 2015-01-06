@@ -310,6 +310,7 @@ Elements.SCENE_SELECTOR_LIST = '#sceneSelectorList';
 Elements.SCENE_SLIDER_VIEW = '#sceneStackFaderView';
 Elements.SCENE_TOOLBAR = '#sceneToolbar';
 Elements.FQ_PRINT_NUMBER = '#fqPrintNumber';
+Elements.FQ_SELECTED_QUEUE = '#fqSelectedQueue';
 Elements.FQ_LINE_QUEUE_COMPONENT = '#fqLineQueueComponent';
 Elements.FQ_LINE_QUEUE_COMPONENT_CONTAINER = '#fqLineQueueComponentContainer';
 Elements.FQ_LINE_COMP_PREV = '#fqLineCompPrev';

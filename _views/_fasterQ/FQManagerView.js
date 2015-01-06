@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated FQManagerView
  **/
-define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView'], function ($, Backbone, ScrollToPlugin, TweenMax, FQQueuePropView) {
+define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', 'QueuesCollection'], function ($, Backbone, ScrollToPlugin, TweenMax, FQQueuePropView, QueuesCollection) {
 
     var FQManagerView = Backbone.View.extend({
 
@@ -16,49 +16,73 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView'], 
             var self = this;
             self.m_offsetPosition = 0;
             self.m_fqCreatorView = BB.comBroker.getService(BB.SERVICES.FQCREATORVIEW);
-            self.m_selectedLine = undefined;
             self.m_selectedQueue = 1;
             $(Elements.FASTERQ_MANAGER_BACK).on('click', function () {
                 self.options.stackView.selectView(Elements.FASTERQ_CREATOR_CONTAINER);
                 self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
             });
-            self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
-                if (e == self)
-                    self._render();
-            });
+
             self.m_fqQueuePropView = new FQQueuePropView({
                 el: Elements.FASTERQ_QUEUE_PROPERTIES
             });
-            self._listenContButtons();
-            self._scrollTo($(Elements.FQ_LINE_QUEUE_COMPONENT + ':first-child'));
+            self._listenButtons();
+
+            self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
+                if (e == self)
+                    self._getQueues();
+            });
+
+            // self._scrollTo($(Elements.FQ_LINE_QUEUE_COMPONENT + ':first-child'));
+        },
+
+        /**
+         Returns the entire queue list of selected line
+         @method _getLines server:getQueues
+         **/
+        _getQueues: function () {
+            var self = this;
+            self.m_queuesCollection = new QueuesCollection();
+
+            self.m_queuesCollection.fetch({
+                data: {line_id: self.m_fqCreatorView.getSelectedLine()},
+                success: function (models) {
+                    self._render();
+                },
+                error: function () {
+                    log('error fetch')
+                },
+                processData: true
+
+            });
         },
 
         _render: function () {
             var self = this;
-            self.m_selectedLine = self.m_fqCreatorView.getSelectedLine();
             self.m_fqQueuePropView.showProp();
             var snippet;
+
             $(Elements.FQ_LINE_QUEUE_COMPONENT).empty();
             for (var i = -8; i < 0; i++) {
-                snippet = '<div data-queue_id="' + i + '" class="' + BB.lib.unclass(Elements.CLASS_PERSON_IN_LINE) + '">';
+                snippet = '<div data-service_id="' + i + '" class="' + BB.lib.unclass(Elements.CLASS_PERSON_IN_LINE) + '">';
                 $(Elements.FQ_LINE_QUEUE_COMPONENT).append(snippet);
             }
 
-            for (var i = 1; i < 100; i++) {
-                var val = BB.lib.padZeros(i, 3, 0);
-                snippet = '<div data-queue_id="' + i + '" class="' + BB.lib.unclass(Elements.CLASS_PERSON_IN_LINE) + '">';
+            self.m_queuesCollection.each(function (model) {
+                var serviceID = model.get('service_id');
+                var val = BB.lib.padZeros(serviceID, 3, 0);
+                snippet = '<div data-service_id="' + serviceID + '" class="' + BB.lib.unclass(Elements.CLASS_PERSON_IN_LINE) + '">';
                 snippet += '<i style="font-size: 90px" class="fa fa-male">';
                 snippet += '</i><h3 style="position: relative; left: 6px">' + val + '</h3></div>';
                 $(Elements.FQ_LINE_QUEUE_COMPONENT).append(snippet);
-            }
-
+            });
             self._listenToPersonSelected();
         },
 
-        _listenToPersonSelected: function(){
+        _listenToPersonSelected: function () {
             var self = this;
-            $(Elements.CLASS_PERSON_IN_LINE).off().on('click',function(e){
-                var person = $(this).closest('[data-queue_id]');
+            $(Elements.CLASS_PERSON_IN_LINE).off().on('click', function (e) {
+                var person = $(this).closest('[data-service_id]');
+                self.m_selectedQueue = $(person).data('service_id');
                 self._scrollTo(person);
             })
         },
@@ -66,8 +90,7 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView'], 
         _scrollTo: function (i_element) {
             var self = this;
             var scrollXPos = $(i_element).position().left;
-            console.log('current offset ' + scrollXPos);
-            console.log('going to ' + $(i_element).index());
+            console.log('current offset ' + scrollXPos + ' ' + 'going to index ' + $(i_element).index() + ' service_id ' + $(i_element).data('service_id'));
             self.m_offsetPosition = $(Elements.FQ_LINE_QUEUE_COMPONENT_CONTAINER).scrollLeft();
             scrollXPos += self.m_offsetPosition;
             var final = scrollXPos - 480;
@@ -75,24 +98,30 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView'], 
                 scrollTo: {x: final, y: 0},
                 ease: Power4.easeOut
             });
+            self._populatePropsQueue();
         },
 
-        _listenContButtons: function () {
+        _populatePropsQueue: function () {
+            var self = this;
+            $(Elements.FQ_SELECTED_QUEUE).text(self.m_selectedQueue);
+        },
+
+        _listenButtons: function () {
             var self = this;
             $(Elements.FQ_LINE_COMP_PREV).on('click', function () {
                 if (self.m_selectedQueue == 1)
                     return;
                 self.m_selectedQueue--;
-                var elem = self.$('[data-queue_id="' + self.m_selectedQueue + '"]');
+                var elem = self.$('[data-service_id="' + self.m_selectedQueue + '"]');
                 self._scrollTo(elem);
             });
 
             $(Elements.FQ_LINE_GOTO).on('click', function () {
                 var value = $(Elements.FQ_GOTO_LINE_INPUT).val();
-                if (!$.isNumeric(value) || value < 1 || value > 99)
+                if (!$.isNumeric(value) || value < 1 || value > self.m_queuesCollection.length)
                     return;
                 self.m_selectedQueue = value;
-                var elem = self.$('[data-queue_id="' + self.m_selectedQueue + '"]');
+                var elem = self.$('[data-service_id="' + self.m_selectedQueue + '"]');
                 self._scrollTo(elem);
             });
 
@@ -101,14 +130,13 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView'], 
             });
 
             $(Elements.FQ_LINE_COMP_NEXT).on('click', function () {
-                if (self.m_selectedQueue == 99)
+                if (self.m_selectedQueue == self.m_queuesCollection.length)
                     return;
                 self.m_selectedQueue++;
-                var elem = self.$('[data-queue_id="' + self.m_selectedQueue + '"]');
+                var elem = self.$('[data-service_id="' + self.m_selectedQueue + '"]');
                 self._scrollTo(elem);
             });
         }
-
     });
 
     return FQManagerView;

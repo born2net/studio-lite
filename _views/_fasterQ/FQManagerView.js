@@ -20,11 +20,16 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView'], 
             self.m_selectedQueue = 1;
             $(Elements.FASTERQ_MANAGER_BACK).on('click', function () {
                 self.options.stackView.selectView(Elements.FASTERQ_CREATOR_CONTAINER);
+                self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
             });
 
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self)
                     self._render();
+            });
+
+            self.m_fqQueuePropView = new FQQueuePropView({
+                el: Elements.FASTERQ_QUEUE_PROPERTIES
             });
 
             self._listenContButtons();
@@ -34,17 +39,17 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView'], 
         _render: function () {
             var self = this;
             self.m_selectedLine = self.m_fqCreatorView.getSelectedLine();
-
+            self.m_fqQueuePropView.showProp();
+            var snippet;
+            $(Elements.FQ_LINE_QUEUE_COMPONENT).empty();
             for (var i = -8; i < 0; i++) {
-                var val = BB.lib.padZeros(i, 3, 0);
-                var snippet = '<div data-queue_id="' + i + '" class="personInLine"></div>';
+                snippet = '<div data-queue_id="' + i + '" class="personInLine"></div>';
                 $(Elements.FQ_LINE_QUEUE_COMPONENT).append(snippet);
             }
 
-
             for (var i = 0; i < 100; i++) {
                 var val = BB.lib.padZeros(i, 3, 0);
-                var snippet = '<div data-queue_id="' + i + '" class="personInLine"><i style="font-size: 90px" class="fa fa-male"></i><h3 style="position: relative; left: 6px">' + val + '</h3></div>';
+                snippet = '<div data-queue_id="' + i + '" class="personInLine"><i style="font-size: 90px" class="fa fa-male"></i><h3 style="position: relative; left: 6px">' + val + '</h3></div>';
                 $(Elements.FQ_LINE_QUEUE_COMPONENT).append(snippet);
             }
         },
@@ -61,8 +66,6 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView'], 
                 scrollTo: {x: final, y: 0},
                 ease: Power4.easeOut
             });
-            //log($('#fqLineQueueComponent').width());
-            //log($('#fqLineQueueComponentWrap').width());
         },
 
         _listenContButtons: function () {

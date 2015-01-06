@@ -36,14 +36,14 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax'], function ($, Backbo
             self.m_selectedLine = self.m_fqCreatorView.getSelectedLine();
 
             for (var i = -8; i < 0; i++) {
-                var val = BB.lib.padZeros(i,3,0);
+                var val = BB.lib.padZeros(i, 3, 0);
                 var snippet = '<div data-queue_id="' + i + '" class="personInLine"></div>';
                 $(Elements.FQ_LINE_QUEUE_COMPONENT).append(snippet);
             }
 
 
             for (var i = 0; i < 100; i++) {
-                var val = BB.lib.padZeros(i,3,0);
+                var val = BB.lib.padZeros(i, 3, 0);
                 var snippet = '<div data-queue_id="' + i + '" class="personInLine"><i style="font-size: 90px" class="fa fa-male"></i><h3 style="position: relative; left: 6px">' + val + '</h3></div>';
                 $(Elements.FQ_LINE_QUEUE_COMPONENT).append(snippet);
             }
@@ -58,33 +58,42 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax'], function ($, Backbo
             scrollXPos += self.m_offsetPosition;
             var final = scrollXPos - 480;
             event.preventDefault();
-            TweenLite.to(Elements.FQ_LINE_QUEUE_COMPONENT_CONTAINER, 2, {scrollTo: {x: final, y: 0}, ease: Power4.easeOut})
+            TweenLite.to(Elements.FQ_LINE_QUEUE_COMPONENT_CONTAINER, 2, {
+                scrollTo: {x: final, y: 0},
+                ease: Power4.easeOut
+            })
             log($('#fqLineQueueComponent').width());
             log($('#fqLineQueueComponentWrap').width());
         },
 
-        _listenContButtons: function(){
+        _listenContButtons: function () {
             var self = this;
-
-            $(Elements.FQ_LINE_COMP_PREV).on('click',function(){
-                //self.m_selectedQueue++;
-                var serviceID = $('#aaa').val();
-                var elem = self.$('[data-queue_id="' + serviceID + '"]');
+            $(Elements.FQ_LINE_COMP_PREV).on('click', function () {
+                if (self.m_selectedQueue == 1)
+                    return;
+                self.m_selectedQueue--;
+                var elem = self.$('[data-queue_id="' + self.m_selectedQueue + '"]');
                 self._scrollTo(elem);
             });
 
-            $(Elements.FQ_LINE_COMP_CALL).on('click',function(){
+            $(Elements.FQ_LINE_COMP_CALL).on('click', function () {
+                var value = $('#aaa').val();
+                if (!$.isNumeric(value) || value < 1 || value > 99)
+                    return;
+                self.m_selectedQueue = value;
+                var elem = self.$('[data-queue_id="' + self.m_selectedQueue + '"]');
+                self._scrollTo(elem);
+            });
+
+            $(Elements.FQ_LINE_COMP_SERVICED).on('click', function () {
 
             });
 
-            $(Elements.FQ_LINE_COMP_SERVICED).on('click',function(){
-
-            });
-
-            $(Elements.FQ_LINE_COMP_NEXT).on('click',function(){
-                //self.m_selectedQueue++;
-                var serviceID = $('#aaa').val();
-                var elem = self.$('[data-queue_id="' + serviceID + '"]');
+            $(Elements.FQ_LINE_COMP_NEXT).on('click', function () {
+                if (self.m_selectedQueue == 99)
+                    return;
+                self.m_selectedQueue++;
+                var elem = self.$('[data-queue_id="' + self.m_selectedQueue + '"]');
                 self._scrollTo(elem);
             });
         }

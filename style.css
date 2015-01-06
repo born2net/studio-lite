@@ -722,6 +722,7 @@ iframe {
 
 #fqSelectedCustomer {
     border: 2px dashed red;
+    cursor: pointer;
     background-color:transparent;
     width: 60px;
     height: 110px;
@@ -729,6 +730,12 @@ iframe {
     position: absolute;
     left: 486px;
 }
+
+#fqSelectedCustomer:hover {
+    opacity: 0.3;
+    background-color: gray;
+}
+
 
 #youtubeQualityMeter {
     float: right;
@@ -1537,6 +1544,11 @@ iframe {
     float: left;
     width: 40px;
     height: 100px;
+    cursor: pointer;
+}
+
+.personInLine:hover {
+    opacity: 0.6;
 }
 
 .campaignPlayMode {

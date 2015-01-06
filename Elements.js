@@ -75,6 +75,7 @@ Elements.CHANNEL_LIST_CONTEXT_MENU = '#channelListContextMenu';
 Elements.CHANNEL_LIST_VIEW = '#channelListView';
 Elements.CHANNEL_PROPERTIES = '#channelProperties';
 Elements.CLASS_ADD_BLOCK_LIST_ITEMS = '.addBlockListItems';
+Elements.CLASS_PERSON_IN_LINE = '.personInLine';
 Elements.CLASS_ADD_NEW_BLOCK_LIST_WRAP = '.addNewBlockListWrap';
 Elements.CLASS_BLOCK_LENGTH_TIMER = '.blockLengthTimer';
 Elements.CLAS_DRAGCH = '.dragch';

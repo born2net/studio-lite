@@ -22,16 +22,13 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView'], 
                 self.options.stackView.selectView(Elements.FASTERQ_CREATOR_CONTAINER);
                 self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
             });
-
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self)
                     self._render();
             });
-
             self.m_fqQueuePropView = new FQQueuePropView({
                 el: Elements.FASTERQ_QUEUE_PROPERTIES
             });
-
             self._listenContButtons();
             self._scrollTo($(Elements.FQ_LINE_QUEUE_COMPONENT + ':first-child'));
         },
@@ -43,15 +40,27 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView'], 
             var snippet;
             $(Elements.FQ_LINE_QUEUE_COMPONENT).empty();
             for (var i = -8; i < 0; i++) {
-                snippet = '<div data-queue_id="' + i + '" class="personInLine"></div>';
+                snippet = '<div data-queue_id="' + i + '" class="' + BB.lib.unclass(Elements.CLASS_PERSON_IN_LINE) + '">';
                 $(Elements.FQ_LINE_QUEUE_COMPONENT).append(snippet);
             }
 
-            for (var i = 0; i < 100; i++) {
+            for (var i = 1; i < 100; i++) {
                 var val = BB.lib.padZeros(i, 3, 0);
-                snippet = '<div data-queue_id="' + i + '" class="personInLine"><i style="font-size: 90px" class="fa fa-male"></i><h3 style="position: relative; left: 6px">' + val + '</h3></div>';
+                snippet = '<div data-queue_id="' + i + '" class="' + BB.lib.unclass(Elements.CLASS_PERSON_IN_LINE) + '">';
+                snippet += '<i style="font-size: 90px" class="fa fa-male">';
+                snippet += '</i><h3 style="position: relative; left: 6px">' + val + '</h3></div>';
                 $(Elements.FQ_LINE_QUEUE_COMPONENT).append(snippet);
             }
+
+            self._listenToPersonSelected();
+        },
+
+        _listenToPersonSelected: function(){
+            var self = this;
+            $(Elements.CLASS_PERSON_IN_LINE).off().on('click',function(e){
+                var person = $(this).closest('[data-queue_id]');
+                self._scrollTo(person);
+            })
         },
 
         _scrollTo: function (i_element) {

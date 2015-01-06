@@ -57,7 +57,6 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax'], function ($, Backbo
             self.m_offsetPosition = $(Elements.FQ_LINE_QUEUE_COMPONENT_CONTAINER).scrollLeft();
             scrollXPos += self.m_offsetPosition;
             var final = scrollXPos - 480;
-            event.preventDefault();
             TweenLite.to(Elements.FQ_LINE_QUEUE_COMPONENT_CONTAINER, 2, {
                 scrollTo: {x: final, y: 0},
                 ease: Power4.easeOut

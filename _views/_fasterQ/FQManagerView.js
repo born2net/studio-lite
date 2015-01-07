@@ -22,7 +22,9 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
                 el: Elements.FASTERQ_QUEUE_PROPERTIES
             });
 
-            self._listenButtons();
+            self._listenNextPrev();
+            self._listenCalled();
+            self._listenServiced();
             self._listenGoBack();
 
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
@@ -30,6 +32,9 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
                     self._getQueues();
             });
 
+            setInterval(function () {
+                self._getQueues();
+            }, 4000);
             // self._scrollTo($(Elements.FQ_LINE_QUEUE_COMPONENT + ':first-child'));
         },
 
@@ -64,15 +69,15 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
             });
         },
 
-        _startStopWatch: function () {
+        _watchStart: function () {
             var self = this;
-            self.m_stopWatchHandle.setListener(function(e){
+            self.m_stopWatchHandle.setListener(function (e) {
                 $(Elements.FQ_TIME_WITH_CUSTOMER).text(self.m_stopWatchHandle.toString());
             });
             self.m_stopWatchHandle.start();
         },
 
-        _stopStopWatch: function () {
+        _watchStop: function () {
             var self = this;
             self.m_stopWatchHandle.stop();
             self.m_stopWatchHandle.reset();
@@ -84,6 +89,7 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
          @method _render
          **/
         _render: function () {
+            log('rendering')
             var self = this;
             var firstNotServiced = undefined;
             self.m_fqQueuePropView.showProp();
@@ -125,7 +131,8 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
                 return;
             firstNotServiced = firstNotServiced ? firstNotServiced : self.m_queuesCollection.at(0).get('service_id');
             var elem = self.$('[data-service_id="' + firstNotServiced + '"]');
-            self._scrollTo(elem);
+
+            // self._scrollTo(elem);
         },
 
         /**
@@ -148,14 +155,14 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
          **/
         _scrollTo: function (i_element) {
             var self = this;
+            self._watchStop();
             if (i_element.length == 0)
                 return;
-
             self.m_selectedServiceID = $(i_element).data('service_id');
             self._populatePropsQueue(self.m_selectedServiceID);
 
             var scrollXPos = $(i_element).position().left;
-            console.log('current offset ' + scrollXPos + ' ' + 'going to index ' + $(i_element).index() + ' service_id ' + $(i_element).data('service_id'));
+            // console.log('current offset ' + scrollXPos + ' ' + 'going to index ' + $(i_element).index() + ' service_id ' + $(i_element).data('service_id'));
             self.m_offsetPosition = $(Elements.FQ_LINE_QUEUE_COMPONENT_CONTAINER).scrollLeft();
             scrollXPos += self.m_offsetPosition;
             var final = scrollXPos - 480;
@@ -176,30 +183,31 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
         },
 
         /**
-         Listen to person navigation button selection to scroll to selected queue index
-         @method _listenButtons
+         Listen to queue being called, mark on UI and post to server
+         @method _listenCalled
          **/
-        _listenButtons: function () {
+        _listenCalled: function () {
             var self = this;
-
             $(Elements.FQ_LINE_COMP_CALL).on('click', function () {
                 var model = self.m_queuesCollection.where({'service_id': self.m_selectedServiceID})[0];
                 if (_.isUndefined(model))
                     return;
-                if (!_.isNull(model.get('serviced'))){
+                if (!_.isNull(model.get('serviced'))) {
                     bootbox.alert('customer has already been serviced');
                     return;
                 }
-                self._startStopWatch();
+                self._watchStart();
                 var elem = self.$('[data-service_id="' + (self.m_selectedServiceID) + '"]');
-                $(elem).find('i').fadeOut(function(){
+                $(elem).find('i').fadeOut(function () {
                     $(this).css({color: '#BE6734'}).fadeIn();
                 });
                 var d = new XDate();
+                var ran = _.random(1, 100000);
+                model.set('random', ran);
                 model.set('called', d.toString('M/d/yyyy hh:mm:ss TT'));
+                log('called ' + model.get('called ') + ran);
                 model.save({
                     success: (function (model, data) {
-                        log('aa');
                     }),
                     error: (function (e) {
                         log('Service request failure: ' + e);
@@ -208,9 +216,55 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
                     })
                 });
             });
+        },
+
+        /**
+         Listen to queue being serviced, mark on UI and post to server
+         @method _listenServiced
+         **/
+        _listenServiced: function () {
+            var self = this;
+            $(Elements.FQ_LINE_COMP_SERVICED).on('click', function () {
+                var model = self.m_queuesCollection.where({'service_id': self.m_selectedServiceID})[0];
+                if (_.isUndefined(model))
+                    return;
+                var aaa = model.get('called');
+                if (_.isNull(model.get('called'))) {
+                    bootbox.alert('customer has not been called yet');
+                    return;
+                }
+                if (!_.isNull(model.get('serviced'))) {
+                    bootbox.alert('customer has already been serviced');
+                    return;
+                }
+                var elem = self.$('[data-service_id="' + (self.m_selectedServiceID) + '"]');
+                $(elem).find('i').fadeOut(function () {
+                    $(this).css({color: '#ACFD89'}).fadeIn();
+                });
+                var d = new XDate();
+                model.set('serviced', d.toString('M/d/yyyy hh:mm:ss TT'));
+                log('service ' + model.get('serviced'));
+                model.save({
+                    success: (function (model, data) {
+                        log(model);
+                    }),
+                    error: (function (e) {
+                        log('Service request failure: ' + e);
+                    }),
+                    complete: (function (e) {
+                    })
+                });
+            });
+        },
+
+        /**
+         Listen to person navigation button selection to scroll to selected queue index
+         @method _listenNextPrev
+         **/
+        _listenNextPrev: function () {
+            var self = this;
 
             $(Elements.FQ_LINE_COMP_PREV).on('click', function () {
-                self._stopStopWatch();
                 if (self.m_selectedServiceID == 1)
                     return;
                 var elem = self.$('[data-service_id="' + (self.m_selectedServiceID - 1) + '"]');
@@ -218,25 +272,20 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
             });
 
             $(Elements.FQ_LINE_GOTO).on('click', function () {
-                self._stopStopWatch();
                 var value = $(Elements.FQ_GOTO_LINE_INPUT).val();
-                if (!$.isNumeric(value) || value < 1 || value > self.m_queuesCollection.length)
-                    return;
+                //if (!$.isNumeric(value) || value < 1 || value > self.m_queuesCollection.length)
+                //    return;
                 var elem = self.$('[data-service_id="' + value + '"]');
                 self._scrollTo(elem);
             });
 
-            $(Elements.FQ_LINE_COMP_SERVICED).on('click', function () {
-                self._stopStopWatch();
-            });
-
             $(Elements.FQ_LINE_COMP_NEXT).on('click', function () {
-                self._stopStopWatch();
                 if (self.m_selectedServiceID == self.m_queuesCollection.length)
                     return;
                 var elem = self.$('[data-service_id="' + (self.m_selectedServiceID + 1) + '"]');
                 self._scrollTo(elem);
             });
+
         }
     });
 

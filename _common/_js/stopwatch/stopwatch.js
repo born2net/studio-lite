@@ -1,6 +1,7 @@
 /*
  * Javascript Stopwatch class
  * http://www.seph.dk
+ * http://www.seph.dk/blog/projects/javascript-stopwatch-class/
  *
  * Copyright 2009 Seph soliman
  * Released under the MIT license (do whatever you want - just leave my name on it)

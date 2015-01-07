@@ -880,8 +880,8 @@
                                 <div class="row fqStats">
                                     <div class="col-xs-6 col-sm-3" style="margin-top: 0; padding: 0;" >
                                         <div class="fakeVerticalLineDivL" style="height: 58px; width: 100%; float: left">
-                                            <span><strong>time with customer: </strong></span><br/>
-                                            <span id="totalSalesMonth">00:00:00</span>
+                                            <span><strong>called customer: </strong></span><br/>
+                                            <span id="fqTimeWithCustomer">00:00:00</span>
                                         </div>
                                     </div>
 
@@ -914,10 +914,6 @@
                                     </div>
                                 </div>
                                 <div style="text-align: center; width: 100%;" class="centerElement" >
-                                    <button id="fqLineCompPrev" type="button" data-localize-tooltip="back" data-localize="empty" title="back" class="lineComponentButtons btn btn-default btn-sm">
-                                        <span class="glyphicon glyphicon-chevron-left"></span>
-                                        Previous
-                                    </button>
                                     <button id="fqLineCompCall" type="button" data-localize-tooltip="back" data-localize="empty" title="back" class="lineComponentButtons btn btn-default btn-sm">
                                         <span class="fa fa-bullhorn"></span>
                                         Call
@@ -926,12 +922,16 @@
                                         <span class="fa fa-thumbs-up"></span>
                                         Serviced
                                     </button>
+
+                                    <button id="fqLineCompPrev" type="button" data-localize-tooltip="back" data-localize="empty" title="back" class="lineComponentButtons btn btn-default btn-sm">
+                                        <span class="glyphicon glyphicon-chevron-left"></span>
+                                        Previous
+                                    </button>
                                     <span>
                                         <button id="fqLineGoTo" type="button" data-localize-tooltip="goTo" data-localize="empty" title="go to" class="lineComponentButtons btn btn-default btn-sm">
                                             Go to &nbsp
                                             <input id="fqGoToLineInput"/>
                                         </button>
-
                                     </span>
                                     <button id="fqLineCompNext" type="button" data-localize-tooltip="back" data-localize="empty" title="back" class="lineComponentButtons btn btn-default btn-sm">
                                         Next

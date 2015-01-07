@@ -1513,19 +1513,23 @@ iframe {
     width: 60px;
 }
 
+#fqLineCompCall {
+    background-color: #BE6734;
+}
+
 .lineComponentButtons:nth-child(1) {
     height: 40px;
 }
 
 .lineComponentButtons:nth-child(2) {
     height: 40px;
-    background-color: #BE6734;
+    background-color: #ACFD89;
 }
 
 .lineComponentButtons:nth-child(3) {
     height: 40px;
-    background-color: #ACFD89;
 }
+
 .lineComponentButtons:nth-child(5) {
     height: 40px;
 }

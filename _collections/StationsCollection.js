@@ -100,7 +100,8 @@ define(['jquery', 'backbone', 'StationModel', 'simplestorage'], function ($, Bac
                 }
             });
             if (addedNewStations)
-                pepper.sync(function(){});
+                pepper.sync(function () {
+                });
         },
 
         /**
@@ -111,7 +112,7 @@ define(['jquery', 'backbone', 'StationModel', 'simplestorage'], function ($, Bac
          **/
         _getUpdatedStationName: function (i_stationID) {
             var self = this;
-            pepper.getStationNameAsync(i_stationID, function(i_stationName){
+            pepper.getStationNameAsync(i_stationID, function (i_stationName) {
                 BB.comBroker.fire(BB.EVENTS.STATION_NAME_CHANGED, this, self,
                     {
                         stationID: i_stationID,
@@ -180,8 +181,7 @@ define(['jquery', 'backbone', 'StationModel', 'simplestorage'], function ($, Bac
             var userData = pepper.getUserData();
             var url = window.g_protocol + userData.domain + '/WebService/getStatus.ashx?user=' + userData.userName + '&password=' + userData.userPass + '&callback=?';
             log(url);
-            $.getJSON(url,
-                function (data) {
+            $.getJSON(url, function (data) {
                     var s64 = data['ret'];
                     var str = $.base64.decode(s64);
                     var xml = $.parseXML(str);

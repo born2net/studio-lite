@@ -39,6 +39,7 @@ require.config({
         'RC4V2': '_common/_js/rc4/RC4V2',
         'localizer': '_common/_js/localizer/dist/jquery.localize',
         'spinner': '_common/_js/fuelux/src/spinner',
+        'stopwatch': '_common/_js/stopwatch/stopwatch',
         'contextmenu': '_common/_js/contextmenu/bootstrap-contextmenu',
         'simplestorage': '_common/_js/simplestorage/simpleStorage',
         'nouislider': '_common/_js/nouislider/jquery.nouislider',
@@ -214,6 +215,9 @@ require.config({
         },
         'nouislider': {
             exports: 'nouislider'
+        },
+        'stopwatch': {
+            exports: 'stopwatch'
         },
         'Knob': {
             exports: 'knob'

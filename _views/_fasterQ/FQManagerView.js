@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated FQManagerView
  **/
-define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', 'QueuesCollection'], function ($, Backbone, ScrollToPlugin, TweenMax, FQQueuePropView, QueuesCollection) {
+define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', 'QueuesCollection', 'stopwatch', 'XDate'], function ($, Backbone, ScrollToPlugin, TweenMax, FQQueuePropView, QueuesCollection, stopwatch, XDate) {
 
     var FQManagerView = Backbone.View.extend({
 
@@ -17,7 +17,7 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
             self.m_offsetPosition = 0;
             self.m_selectedServiceID = -1;
             self.m_fqCreatorView = BB.comBroker.getService(BB.SERVICES.FQCREATORVIEW);
-
+            self.m_stopWatchHandle = new Stopwatch();
             self.m_fqQueuePropView = new FQQueuePropView({
                 el: Elements.FASTERQ_QUEUE_PROPERTIES
             });
@@ -64,6 +64,21 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
             });
         },
 
+        _startStopWatch: function () {
+            var self = this;
+            self.m_stopWatchHandle.setListener(function(e){
+                $(Elements.FQ_TIME_WITH_CUSTOMER).text(self.m_stopWatchHandle.toString());
+            });
+            self.m_stopWatchHandle.start();
+        },
+
+        _stopStopWatch: function () {
+            var self = this;
+            self.m_stopWatchHandle.stop();
+            self.m_stopWatchHandle.reset();
+            $(Elements.FQ_TIME_WITH_CUSTOMER).text('00:00:00');
+        },
+
         /**
          Render the UI queues list from returned server data
          @method _render
@@ -74,18 +89,6 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
             self.m_fqQueuePropView.showProp();
             var snippet;
 
-            /*
-            setInterval(function () {
-                var today = new Date();
-                var h = today.getHours();
-                var m = today.getMinutes();
-                var s = today.getSeconds();
-                if (s < 10) {
-                    s = "0" + s;
-                }
-                log(h + " : " + m + " : " + s);
-            }, 750);
-            */
 
             $(Elements.FQ_LINE_QUEUE_COMPONENT).empty();
             for (var i = -8; i < 0; i++) {
@@ -179,7 +182,35 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
         _listenButtons: function () {
             var self = this;
 
+            $(Elements.FQ_LINE_COMP_CALL).on('click', function () {
+                var model = self.m_queuesCollection.where({'service_id': self.m_selectedServiceID})[0];
+                if (_.isUndefined(model))
+                    return;
+                if (!_.isNull(model.get('serviced'))){
+                    bootbox.alert('customer has already been serviced');
+                    return;
+                }
+                self._startStopWatch();
+                var elem = self.$('[data-service_id="' + (self.m_selectedServiceID) + '"]');
+                $(elem).find('i').fadeOut(function(){
+                    $(this).css({color: '#BE6734'}).fadeIn();
+                });
+                var d = new XDate();
+                model.set('called', d.toString('M/d/yyyy hh:mm:ss TT'));
+                model.save({
+                    success: (function (model, data) {
+                        log('aa');
+                    }),
+                    error: (function (e) {
+                        log('Service request failure: ' + e);
+                    }),
+                    complete: (function (e) {
+                    })
+                });
+            });
+
             $(Elements.FQ_LINE_COMP_PREV).on('click', function () {
+                self._stopStopWatch();
                 if (self.m_selectedServiceID == 1)
                     return;
                 var elem = self.$('[data-service_id="' + (self.m_selectedServiceID - 1) + '"]');
@@ -187,6 +218,7 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
             });
 
             $(Elements.FQ_LINE_GOTO).on('click', function () {
+                self._stopStopWatch();
                 var value = $(Elements.FQ_GOTO_LINE_INPUT).val();
                 if (!$.isNumeric(value) || value < 1 || value > self.m_queuesCollection.length)
                     return;
@@ -195,10 +227,11 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
             });
 
             $(Elements.FQ_LINE_COMP_SERVICED).on('click', function () {
-
+                self._stopStopWatch();
             });
 
             $(Elements.FQ_LINE_COMP_NEXT).on('click', function () {
+                self._stopStopWatch();
                 if (self.m_selectedServiceID == self.m_queuesCollection.length)
                     return;
                 var elem = self.$('[data-service_id="' + (self.m_selectedServiceID + 1) + '"]');

@@ -17,6 +17,10 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             self._listenNavigation();
         },
 
+        /**
+         Transition into selected fasterQ module
+         @method _listenNavigation
+         **/
         _listenNavigation: function(){
             var self = this;
             $(Elements.FASTERQ_MANAGE_NAV_BUTTON).on('click',function(){

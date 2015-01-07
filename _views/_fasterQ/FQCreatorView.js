@@ -178,6 +178,10 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
             });
         },
 
+        /**
+         Listen to changes in Line collection and re-populate Line list
+         @method _listenCollectionChanged
+         **/
         _listenCollectionChanged: function () {
             var self = this;
             self.m_linesCollection.on('change', function (e) {
@@ -185,6 +189,10 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
             });
         },
 
+        /**
+         Expose private member selectedLineID
+         @method getSelectedLine
+         **/
         getSelectedLine: function(){
             var self = this;
             return self.m_selectedLineID;

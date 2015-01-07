@@ -21,6 +21,40 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel'], function ($, B
             self._listenSMSButton();
         },
 
+        /**
+         Listen to custom selection on queue id creator via Print button
+         @method _listenPrintButton
+         **/
+        _listenPrintButton: function () {
+            var self = this;
+            $(Elements.FQ_PRINT_NUMBER).on('click', function (e) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                self._getServiceID();
+                return false;
+            });
+        },
+
+        /**
+         Listen to custom selection on queue id creator via QR scan
+         @method _listenQRScan
+         **/
+        _listenQRScan: function () {
+            var self = this;
+            var q = $("#qrcode");
+            q = q[0];
+            var qrcode = new QRCode(q, {
+                width: 200,
+                height: 200
+            });
+            var url = self._buildURL('qr');
+            qrcode.makeCode(url);
+        },
+
+        /**
+         Listen to custom selection on queue id creator via email
+         @method _listenEmailButton
+         **/
         _listenEmailButton: function () {
             var self = this;
             $(Elements.FQ_SENDIT_BUTTON).on('click', function (e) {
@@ -40,6 +74,10 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel'], function ($, B
             return false;
         },
 
+        /**
+         Listen to custom selection on queue id creator via SMS
+         @method _listenEmailButton
+         **/
         _listenSMSButton: function () {
             var self = this;
             $(Elements.FQ_CALL_IT).on('click', function (e) {
@@ -110,16 +148,6 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel'], function ($, B
             });
         },
 
-        _listenPrintButton: function () {
-            var self = this;
-            $(Elements.FQ_PRINT_NUMBER).on('click', function (e) {
-                e.preventDefault();
-                e.stopImmediatePropagation();
-                self._getServiceID();
-                return false;
-            });
-        },
-
         /**
          Get the next service id from remote server
          @method _getServiceID server:setQueue
@@ -144,18 +172,13 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel'], function ($, B
             });
         },
 
-        _listenQRScan: function () {
-            var self = this;
-            var q = $("#qrcode");
-            q = q[0];
-            var qrcode = new QRCode(q, {
-                width: 200,
-                height: 200
-            });
-            var url = self._buildURL('qr');
-            qrcode.makeCode(url);
-        },
-
+        /**
+         Create URL string to load customer terminal UI for FasterQ queue generation
+         @method _buildURL
+         @param {String} i_type
+         @param {String} i_data
+         @return {String} created URL
+         **/
         _buildURL: function (i_type, i_data) {
             var self = this;
             var param = '';

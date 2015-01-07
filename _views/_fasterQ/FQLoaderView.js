@@ -24,6 +24,10 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             });
         },
 
+        /**
+         Instantiate FasterQ related components and inject them into StackView
+         @method _render
+         **/
         _render: function () {
             var self = this;
             require(['FQNavigationView', 'FQManagerView', 'FQCreatorView'], function (FQNavigationView, FQManagerView, FQCreatorView) {

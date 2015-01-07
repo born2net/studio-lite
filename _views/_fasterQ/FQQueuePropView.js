@@ -18,6 +18,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self.m_property.initPanel('#' + self.el.id);
         },
 
+        /**
+         Load the properties panel via StackView
+         @method showProp
+         **/
         showProp: function(){
             var self = this;
             self.m_property.selectView(Elements.FASTERQ_QUEUE_PROPERTIES);

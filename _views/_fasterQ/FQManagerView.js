@@ -17,15 +17,13 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
             self.m_offsetPosition = 0;
             self.m_fqCreatorView = BB.comBroker.getService(BB.SERVICES.FQCREATORVIEW);
             self.m_selectedQueue = 1;
-            $(Elements.FASTERQ_MANAGER_BACK).on('click', function () {
-                self.options.stackView.selectView(Elements.FASTERQ_CREATOR_CONTAINER);
-                self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
-            });
 
             self.m_fqQueuePropView = new FQQueuePropView({
                 el: Elements.FASTERQ_QUEUE_PROPERTIES
             });
+
             self._listenButtons();
+            self._listenGoBack();
 
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self)
@@ -36,7 +34,19 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
         },
 
         /**
-         Returns the entire queue list of selected line
+         Listen to go back to Line selection
+         @method _listenGoBack
+         **/
+        _listenGoBack: function(){
+            var self = this;
+            $(Elements.FASTERQ_MANAGER_BACK).on('click', function () {
+                self.options.stackView.selectView(Elements.FASTERQ_CREATOR_CONTAINER);
+                self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']).resetPropertiesView();
+            });
+        },
+
+        /**
+         Get Queues collection from server and render UI
          @method _getLines server:getQueues
          **/
         _getQueues: function () {
@@ -49,13 +59,15 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
                     self._render();
                 },
                 error: function () {
-                    log('error fetch')
-                },
-                processData: true
-
+                    log('error fetch /Queues collection');
+                }
             });
         },
 
+        /**
+         Render the UI queues list from returned server data
+         @method _render
+         **/
         _render: function () {
             var self = this;
             self.m_fqQueuePropView.showProp();
@@ -78,6 +90,10 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
             self._listenToPersonSelected();
         },
 
+        /**
+         Listen to UI person / queue click to load selected properties and scroll to selection
+         @method _listenToPersonSelected
+         **/
         _listenToPersonSelected: function () {
             var self = this;
             $(Elements.CLASS_PERSON_IN_LINE).off().on('click', function (e) {
@@ -87,6 +103,11 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
             })
         },
 
+        /**
+         Scroll to position of selected queue / UI person
+         @method _scrollTo
+         @param {Element} i_element
+         **/
         _scrollTo: function (i_element) {
             var self = this;
             var scrollXPos = $(i_element).position().left;
@@ -101,13 +122,22 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
             self._populatePropsQueue();
         },
 
+        /**
+         Populate the selected queue's properties UI
+         @method _populatePropsQueue
+         **/
         _populatePropsQueue: function () {
             var self = this;
             $(Elements.FQ_SELECTED_QUEUE).text(self.m_selectedQueue);
         },
 
+        /**
+         Listen to person navigation button selection to scroll to selected queue index
+         @method _listenButtons
+         **/
         _listenButtons: function () {
             var self = this;
+
             $(Elements.FQ_LINE_COMP_PREV).on('click', function () {
                 if (self.m_selectedQueue == 1)
                     return;

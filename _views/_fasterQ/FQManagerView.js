@@ -69,6 +69,7 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
             self.m_queuesCollection.fetch({
                 data: {line_id: self.m_fqCreatorView.getSelectedLine()},
                 success: function (models) {
+                    self._updateTotalToBeServiced();
                     self._render();
                     if (i_scrollTo)
                         self._scrollToFirstNotServiced();
@@ -77,6 +78,23 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
                     log('error fetch /Queues collection');
                 }
             });
+        },
+
+        /**
+         Update the total number of queues left to be serviced
+         @method _updateTotalToBeServiced
+         **/
+        _updateTotalToBeServiced: function () {
+            var self = this;
+            if (_.isUndefined(self.m_queuesCollection))
+                return;
+            var total = 0;
+            self.m_queuesCollection.each(function (model) {
+                if (_.isNull(model.get('serviced')))
+                    total++;
+                $(Elements.FQ_TOTAL_TO_BE_SERVICED).text(total);
+            });
+
         },
 
         _watchStart: function () {
@@ -138,7 +156,7 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
          Scroll to first queue that has not been serviced yet, if non exist, scroll to first queue
          @method _scrollToFirstNotServiced
          **/
-        _scrollToFirstNotServiced: function(){
+        _scrollToFirstNotServiced: function () {
             var self = this;
             var found = false;
             if (self.m_queuesCollection.length == 0)
@@ -148,7 +166,7 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
                     return;
                 var service_id = model.get('service_id');
                 var serviced = model.get('serviced');
-                if (_.isNull(serviced)){
+                if (_.isNull(serviced)) {
                     var elem = self.$('[data-service_id="' + service_id + '"]');
                     self._scrollTo(elem);
                     found = true;
@@ -222,6 +240,7 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
                 $(elem).find('i').fadeOut(function () {
                     $(this).css({color: '#BE6734'}).fadeIn();
                 });
+                $(Elements.FQ_LAST_CALLED).text(self.m_selectedServiceID);
                 var d = new XDate();
                 model.set('called', d.toString('M/d/yyyy hh:mm:ss TT'));
                 model.save({
@@ -246,7 +265,6 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
                 var model = self.m_queuesCollection.where({'service_id': self.m_selectedServiceID})[0];
                 if (_.isUndefined(model))
                     return;
-                var aaa = model.get('called');
                 if (_.isNull(model.get('called'))) {
                     bootbox.alert('customer has not been called yet');
                     return;
@@ -259,6 +277,7 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
                 $(elem).find('i').fadeOut(function () {
                     $(this).css({color: '#ACFD89'}).fadeIn();
                 });
+                $(Elements.FQ_LAST_SERVICED).text(self.m_selectedServiceID);
                 var d = new XDate();
                 model.set('serviced', d.toString('M/d/yyyy hh:mm:ss TT'));
                 log('service ' + model.get('serviced'));
@@ -314,9 +333,9 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
          Open remote status terminal for selected queue
          @method _listenOpenRemoteStatus
          **/
-        _listenOpenRemoteStatus: function(){
+        _listenOpenRemoteStatus: function () {
             var self = this;
-            $(Elements.FQ_OPEN_CUSTOMER_REMOTE_STATUS).on('click',function(e){
+            $(Elements.FQ_OPEN_CUSTOMER_REMOTE_STATUS).on('click', function (e) {
                 var param = BB.Pepper.getUserData()['businessID'];
                 param += ':' + self.m_fqCreatorView.getSelectedLine();
                 param += ':QR';

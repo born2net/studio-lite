@@ -17,6 +17,7 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage'], functio
             self.m_model = new QueueModel();
             self._checkServiceIdExists();
             self._listenForgetSpot();
+            self._listenGetNewNumber();
         },
 
         /**
@@ -25,13 +26,12 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage'], functio
          **/
         _listenForgetSpot: function(){
             var self = this;
-            $(Elements.FQ_RELESE_SPOT).on('click', function () {
+            $(Elements.FQ_RELEASE_SPOT).on('click', function () {
                 bootbox.prompt('are you sure you want to let go of your spot (type yes or no)?', function (i_answer) {
                     if (i_answer){
                         if (i_answer.toLowerCase()=='yes'){
-                            self.$('h1').remove();
+                            $(Elements.APP_ENTRY).html('<h1 style="text-align: center; padding: 200px">have a nice day</h1>');
                             simplestorage.deleteKey('service_id');
-                            $('button').text('have a nice day');
                             window.clearInterval(self.m_statusHandler);
                         }
                     }
@@ -39,6 +39,24 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage'], functio
             });
         },
 
+        /**
+         Forget spot in line
+         @method _listenGetNewNumber
+         **/
+        _listenGetNewNumber: function(){
+            var self = this;
+            $(Elements.FQ_GET_NEW_NUMBER).on('click', function () {
+                bootbox.prompt('are you sure you want to get a new number (type yes or no)?', function (i_answer) {
+                    if (i_answer){
+                        if (i_answer.toLowerCase()=='yes'){
+                            simplestorage.deleteKey('service_id');
+                            window.clearInterval(self.m_statusHandler);
+                            location.reload()
+                        }
+                    }
+                })
+            });
+        },
 
         /**
          Check if service id exists in local storage, if not get one from server

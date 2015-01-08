@@ -262,6 +262,7 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
         _listenServiced: function () {
             var self = this;
             $(Elements.FQ_LINE_COMP_SERVICED).on('click', function () {
+                self._watchStop();
                 var model = self.m_queuesCollection.where({'service_id': self.m_selectedServiceID})[0];
                 if (_.isUndefined(model))
                     return;

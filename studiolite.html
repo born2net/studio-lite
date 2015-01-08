@@ -131,6 +131,8 @@
             <h1>your number: <span id="fqDisplayQRNumber"></span></h1>
 
             <h1>now serving: <span id="fqCurrentlyServing"></span></h1>
+
+            <button id="fqReleseSpot" style="padding: 30px 95px;" class="tn btn-lg btn-primary btn-block">release my spot in line</button>
         </div>
 
         <div id="fasterqCustomerTerminal" style="display: none">
@@ -871,6 +873,10 @@
                                     title="back" class="openPropsButton btn btn-default btn-sm">
                                 <span class="glyphicon glyphicon-chevron-left"></span>
                             </button>
+                            <button id="fqOpenCustomerRemoteStatus" style="float: left; margin-left: 10px; height: 30px"
+                                    data-localize="fqOpenCustomerRemoteStatus"
+                                    class="btn btn-default">Open Remote Status
+                            </button>
                             <div>
                                 <br/>
                                 <br/>
@@ -887,13 +893,13 @@
 
                                     <div class="col-xs-6 col-sm-3" style="margin-top: 0; padding: 0" >
                                         <div class="fakeVerticalLineDivL" style="height: 58px; width: 100%; float: left">
-                                            <span><strong>you serviced</strong></span><br/>
+                                            <span><strong>last you serviced</strong></span><br/>
                                             <span id="before2014">0</span>
                                         </div>
                                     </div>
                                     <div class="col-xs-6 col-sm-3" style="margin-top: 0; padding: 0" >
                                         <div class="fakeVerticalLineDivL" style="height: 58px; width: 100%; float: left">
-                                            <span><strong>you called</strong></span><br/>
+                                            <span><strong>last you called</strong></span><br/>
                                             <span id="payingAfter">0</span>
                                         </div>
                                     </div>
@@ -1640,6 +1646,8 @@
                         </div>
                         <div id="fasterQqueueProperties" style="display: none">
                             <h4>selected customer <span id="fqSelectedQueue"></span></h4>
+                            <hr/>
+                            <br/>
                         </div>
                         <div id="viewerEditProperties" style="display: none">
                             <h5 data-localize="screenDivision">screen division</h5>

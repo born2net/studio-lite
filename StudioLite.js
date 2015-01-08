@@ -11,7 +11,6 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
         // app init
         initialize: function () {
             var self = this;
-
             window.BB = Backbone;
             window.bootbox = bootbox;
             BB.globs = {};

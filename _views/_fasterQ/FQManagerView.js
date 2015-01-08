@@ -27,6 +27,7 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
             self._listenCalled();
             self._listenServiced();
             self._listenGoBack();
+            self._listenOpenRemoteStatus();
 
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self) {
@@ -179,7 +180,6 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
             if (i_element.length == 0)
                 return;
             self.m_selectedServiceID = $(i_element).data('service_id');
-            log('selected service id ' + self.m_selectedServiceID);
             self._populatePropsQueue(self.m_selectedServiceID);
 
             var scrollXPos = $(i_element).position().left;
@@ -308,6 +308,24 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
                 self._scrollTo(elem);
             });
 
+        },
+
+        /**
+         Open remote status terminal for selected queue
+         @method _listenOpenRemoteStatus
+         **/
+        _listenOpenRemoteStatus: function(){
+            var self = this;
+            $(Elements.FQ_OPEN_CUSTOMER_REMOTE_STATUS).on('click',function(e){
+                var param = BB.Pepper.getUserData()['businessID'];
+                param += ':' + self.m_fqCreatorView.getSelectedLine();
+                param += ':QR';
+
+                //todo: build URL dynamically
+                var param = $.base64.encode(param);
+                var url = 'https://secure.digitalsignage.com:442/_studiolite-dev/studiolite.html?mode=remoteStatus&param=' + param;
+                window.open(url, "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=500, left=500, width=400, height=400");
+            })
         }
     });
 

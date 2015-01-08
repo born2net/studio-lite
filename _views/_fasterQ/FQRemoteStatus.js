@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated FQRemoteStatus
  **/
-define(['jquery', 'backbone', 'bootbox', 'QueueModel'], function ($, Backbone, Bootbox, QueueModel) {
+define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage'], function ($, Backbone, Bootbox, QueueModel, simplestorage) {
 
     var FQRemoteStatus = Backbone.View.extend({
 
@@ -14,16 +14,53 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel'], function ($, Backbone, B
          **/
         initialize: function () {
             var self = this;
-            self._setQueue();
+            self.m_model = new QueueModel();
+            self._checkServiceIdExists();
+            self._listenForgetSpot();
+        },
+
+        /**
+         Forget spot in line
+         @method _listenForgetSpot
+         **/
+        _listenForgetSpot: function(){
+            var self = this;
+            $(Elements.FQ_RELESE_SPOT).on('click', function () {
+                bootbox.prompt('are you sure you want to let go of your spot (type yes or no)?', function (i_answer) {
+                    if (i_answer){
+                        if (i_answer.toLowerCase()=='yes'){
+                            self.$('h1').remove();
+                            simplestorage.deleteKey('service_id');
+                            $('button').text('have a nice day');
+                            window.clearInterval(self.m_statusHandler);
+                        }
+                    }
+                })
+            });
+        },
+
+
+        /**
+         Check if service id exists in local storage, if not get one from server
+         @method _checkServiceIdExists
+         **/
+        _checkServiceIdExists: function () {
+            var self = this;
+            var service_id = simplestorage.get('service_id');
+            if (_.isUndefined(service_id)) {
+                self._getServiceID();
+            } else {
+                self.m_model.set('service_id', service_id);
+                self._pollQueueStatus();
+            }
         },
 
         /**
          Create queue in table as well as matching data in analytics
-         @method _setQueue server:setQueue
+         @method _getServiceID server:setQueue
          **/
-        _setQueue: function () {
+        _getServiceID: function () {
             var self = this;
-            self.m_model = new QueueModel();
             self.m_model.save({
                 business_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('business_id'),
                 line_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id'),
@@ -31,7 +68,7 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel'], function ($, Backbone, B
                 email: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('email')
             }, {
                 success: (function (model, data) {
-                    $(Elements.FQ_DISPLAY_QR_NUMBER).text(model.get('service_id'));
+                    simplestorage.set('service_id', self.m_model.get('service_id'));
                     self._pollQueueStatus();
                 }),
                 error: (function (e) {
@@ -48,7 +85,7 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel'], function ($, Backbone, B
          **/
         _pollQueueStatus: function () {
             var self = this;
-            var lastCalledQueue = function(){
+            var lastCalledQueue = function () {
                 $.ajax({
                     url: '/LastCalledQueue',
                     data: {
@@ -57,13 +94,14 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel'], function ($, Backbone, B
                     },
                     success: function (e) {
                         $(Elements.FQ_CURRENTLY_SERVING).text(e.service_id);
+                        $(Elements.FQ_DISPLAY_QR_NUMBER).text(self.m_model.get('service_id'));
                     },
                     error: function (e) {
                         log('error ajax ' + e);
                     },
                     dataType: 'json'
                 });
-            }
+            };
             self.m_statusHandler = setInterval(function () {
                 lastCalledQueue();
             }, 5000);

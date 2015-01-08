@@ -106,7 +106,7 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
 
             $(Elements.FQ_LINE_QUEUE_COMPONENT).empty();
             for (var i = -8; i < 0; i++) {
-                snippet = '<div data-service_id="' + i + '" class="' + BB.lib.unclass(Elements.CLASS_PERSON_IN_LINE) + '">';
+                snippet = '<div class="' + BB.lib.unclass(Elements.CLASS_PERSON_IN_LINE) + '">';
                 $(Elements.FQ_LINE_QUEUE_COMPONENT).append(snippet);
             }
 
@@ -179,6 +179,7 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
             if (i_element.length == 0)
                 return;
             self.m_selectedServiceID = $(i_element).data('service_id');
+            log('selected service id ' + self.m_selectedServiceID);
             self._populatePropsQueue(self.m_selectedServiceID);
 
             var scrollXPos = $(i_element).position().left;
@@ -282,6 +283,8 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
             var self = this;
 
             $(Elements.FQ_LINE_COMP_PREV).on('click', function () {
+                if (_.isUndefined(self.m_queuesCollection))
+                    return;
                 if (self.m_selectedServiceID == 1)
                     return;
                 var elem = self.$('[data-service_id="' + (self.m_selectedServiceID - 1) + '"]');
@@ -290,14 +293,16 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
 
             $(Elements.FQ_LINE_GOTO).on('click', function () {
                 var value = $(Elements.FQ_GOTO_LINE_INPUT).val();
-                //if (!$.isNumeric(value) || value < 1 || value > self.m_queuesCollection.length)
-                //    return;
+                if (_.isUndefined(self.m_queuesCollection))
+                    return;
                 var elem = self.$('[data-service_id="' + value + '"]');
                 self._scrollTo(elem);
             });
 
             $(Elements.FQ_LINE_COMP_NEXT).on('click', function () {
-                if (self.m_selectedServiceID == self.m_queuesCollection.length)
+                if (_.isUndefined(self.m_queuesCollection))
+                    return;
+                if (self.$('[data-service_id]').children().length == self.m_queuesCollection.length)
                     return;
                 var elem = self.$('[data-service_id="' + (self.m_selectedServiceID + 1) + '"]');
                 self._scrollTo(elem);

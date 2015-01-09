@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated FQRemoteStatus
  **/
-define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage'], function ($, Backbone, Bootbox, QueueModel, simplestorage) {
+define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage', 'moment'], function ($, Backbone, Bootbox, QueueModel, simplestorage, moment) {
 
     var FQRemoteStatus = Backbone.View.extend({
 
@@ -14,6 +14,7 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage'], functio
          **/
         initialize: function () {
             var self = this;
+            self.m_today = moment().format("MM-DD-YYYY");
             self.m_model = new QueueModel();
             self._checkServiceIdExists();
             self._listenForgetSpot();
@@ -24,14 +25,14 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage'], functio
          Forget spot in line
          @method _listenForgetSpot
          **/
-        _listenForgetSpot: function(){
+        _listenForgetSpot: function () {
             var self = this;
             $(Elements.FQ_RELEASE_SPOT).on('click', function () {
                 bootbox.prompt('are you sure you want to let go of your spot (type yes or no)?', function (i_answer) {
-                    if (i_answer){
-                        if (i_answer.toLowerCase()=='yes'){
+                    if (i_answer) {
+                        if (i_answer.toLowerCase() == 'yes') {
                             $(Elements.APP_ENTRY).html('<h1 style="text-align: center; padding: 100px">have a nice day</h1>');
-                            simplestorage.deleteKey('service_id');
+                            simplestorage.deleteKey('data');
                             window.clearInterval(self.m_statusHandler);
                         }
                     }
@@ -43,13 +44,13 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage'], functio
          Forget spot in line
          @method _listenGetNewNumber
          **/
-        _listenGetNewNumber: function(){
+        _listenGetNewNumber: function () {
             var self = this;
             $(Elements.FQ_GET_NEW_NUMBER).on('click', function () {
                 bootbox.prompt('are you sure you want to get a new number (type yes or no)?', function (i_answer) {
-                    if (i_answer){
-                        if (i_answer.toLowerCase()=='yes'){
-                            simplestorage.deleteKey('service_id');
+                    if (i_answer) {
+                        if (i_answer.toLowerCase() == 'yes') {
+                            simplestorage.deleteKey('data');
                             window.clearInterval(self.m_statusHandler);
                             location.reload()
                         }
@@ -64,11 +65,18 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage'], functio
          **/
         _checkServiceIdExists: function () {
             var self = this;
-            var service_id = simplestorage.get('service_id');
-            if (_.isUndefined(service_id)) {
+            var storage = simplestorage.get('data');
+            if (_.isUndefined(storage)) {
                 self._getServiceID();
             } else {
-                self.m_model.set('service_id', service_id);
+                var storedDate = storage.date;
+                if (storedDate != self.m_today){
+                    simplestorage.deleteKey('data');
+                    self._getServiceID();
+                    return
+                }
+
+                self.m_model.set('service_id', storage.service_id);
                 self._pollQueueStatus();
             }
         },
@@ -86,7 +94,11 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage'], functio
                 email: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('email')
             }, {
                 success: (function (model, data) {
-                    simplestorage.set('service_id', self.m_model.get('service_id'));
+                    simplestorage.set('data', {
+                        service_id: self.m_model.get('service_id'),
+                        date: self.m_today
+                    });
+                    self.m_model.set('service_id', self.m_model.get('service_id'));
                     self._pollQueueStatus();
                 }),
                 error: (function (e) {

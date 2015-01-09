@@ -42,6 +42,7 @@ require.config({
         'stopwatch': '_common/_js/stopwatch/stopwatch',
         'contextmenu': '_common/_js/contextmenu/bootstrap-contextmenu',
         'simplestorage': '_common/_js/simplestorage/simpleStorage',
+        'moment': '_common/_js/moment/moment',
         'nouislider': '_common/_js/nouislider/jquery.nouislider',
         'XDate': '_common/_js/xdate/xdate',
         'Base64': '_common/_js/base64/jquery.base64',

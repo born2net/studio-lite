@@ -30,7 +30,7 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage'], functio
                 bootbox.prompt('are you sure you want to let go of your spot (type yes or no)?', function (i_answer) {
                     if (i_answer){
                         if (i_answer.toLowerCase()=='yes'){
-                            $(Elements.APP_ENTRY).html('<h1 style="text-align: center; padding: 200px">have a nice day</h1>');
+                            $(Elements.APP_ENTRY).html('<h1 style="text-align: center; padding: 100px">have a nice day</h1>');
                             simplestorage.deleteKey('service_id');
                             window.clearInterval(self.m_statusHandler);
                         }

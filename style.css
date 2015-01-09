@@ -653,6 +653,16 @@ iframe {
     margin: 0;
 }
 
+#fqGoToLineInput{
+    padding: 0;
+    margin: 0;
+    width: 60px;
+}
+
+#fqLineCompCall {
+    background-color: #BE6734;
+}
+
 #storylineCollapsible {
     padding-bottom: 0;
     margin-bottom: 0;
@@ -1418,6 +1428,10 @@ iframe {
     background-color: #75b1ae;
 }
 
+.fqPropButton {
+    width: 170px;
+}
+
 .tooltip-inner {
     min-width: 150px;
 }
@@ -1505,16 +1519,6 @@ iframe {
 
 .addBlockListItems:hover {
     background-color: #f5f5f5;
-}
-
-#fqGoToLineInput{
-    padding: 0;
-    margin: 0;
-    width: 60px;
-}
-
-#fqLineCompCall {
-    background-color: #BE6734;
 }
 
 .lineComponentButtons:nth-child(1) {

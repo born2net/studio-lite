@@ -132,8 +132,8 @@
 
             <h1>now serving: <span id="fqCurrentlyServing"></span></h1>
 
-            <button id="fqReleaseSpot" style="padding: 30px 95px; float: right; width: 50%" class="tn btn-lg btn-primary">release my spot in line</button>
-            <button id="fqGetNewNumber" style="padding: 30px 95px; float: right; width: 50%;" class="tn btn-lg btn-primary" >get a new number</button>
+            <button id="fqReleaseSpot" style="float: right; width: 50%" class="tn btn-lg btn-primary">release my spot</button>
+            <button id="fqGetNewNumber" style="float: right; width: 50%;" class="tn btn-lg btn-primary" >get a new number</button>
         </div>
 
         <div id="fasterqCustomerTerminal" style="display: none">
@@ -1642,7 +1642,9 @@
                             <h5 data-localize="lineProps">Line properties</h5>
                             <input id="selectedLineName" type="text" name="name" value="" data-localize="enterLineName" placeholder="Enter Line name">
                             <hr/>
-                            <button id="fqOpenCustomerTerminal" data-localize="openCustomerTerm" class="btn btn-primary">Open Customer Terminal</button>
+                            <button id="fqOpenCustomerTerminal" data-localize="openCustomerTerm" class="fqPropButton btn btn-primary">Open Customer Terminal</button>
+                            <hr/>
+                            <button id="fqResetQueueCounter" data-localize="fqResetQueueCounter" class="fqPropButton btn btn-primary">Reset queue counter</button>
                             <br/>
                         </div>
                         <div id="fasterQqueueProperties" style="display: none">

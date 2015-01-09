@@ -310,6 +310,7 @@ Elements.SCENE_SELECTOR_LIST = '#sceneSelectorList';
 Elements.SCENE_SLIDER_VIEW = '#sceneStackFaderView';
 Elements.SCENE_TOOLBAR = '#sceneToolbar';
 Elements.FQ_PRINT_NUMBER = '#fqPrintNumber';
+Elements.FQ_RESET_QUEUE_COUNTER = '#fqResetQueueCounter';
 Elements.FQ_OPEN_CUSTOMER_REMOTE_STATUS = '#fqOpenCustomerRemoteStatus';
 Elements.FQ_TIME_WITH_CUSTOMER= '#fqTimeWithCustomer';
 Elements.FQ_SELECTED_QUEUE = '#fqSelectedQueue';

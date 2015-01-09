@@ -23,6 +23,7 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
             self._populateLines();
             self._listenAddNewLine();
             self._listenRemoveLine();
+            self._listenResetQueueCounter();
             self._listenCollectionChanged();
 
             self.m_fqLinePropView = new FQLinePropView({
@@ -190,6 +191,31 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
         },
 
         /**
+         Reset queue counter
+         @method _listenResetQueueCounter server:ResetQueueCounter
+         **/
+        _listenResetQueueCounter: function(){
+            var self = this;
+            $(Elements.FQ_RESET_QUEUE_COUNTER).on('click',function(){
+                $.ajax({
+                    url: '/ResetQueueCounter',
+                    data: {
+                        business_id: BB.Pepper.getUserData().businessID,
+                        line_id: self.m_selectedLineID,
+                        counter: 1
+                    },
+                    success: function (e) {
+                        bootbox.alert('counter was reset successfully');
+                    },
+                    error: function (e) {
+                        log('error ajax ResetQueueCounter ' + e);
+                    },
+                    dataType: 'json'
+                });
+            });
+        },
+
+        /**
          Expose private member selectedLineID
          @method getSelectedLine
          **/
@@ -201,3 +227,5 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
 
     return FQCreatorView;
 });
+
+

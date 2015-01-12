@@ -15,7 +15,7 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel'], function ($, B
         initialize: function () {
             var self = this;
             $(Elements.FASTERQ_LINE_NAME).text(self.model.get('name'));
-            self._listenQRScan();
+            self._createQRcode();
             self._listenPrintButton();
             self._listenEmailButton();
             self._listenSMSButton();
@@ -37,9 +37,9 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel'], function ($, B
 
         /**
          Listen to custom selection on queue id creator via QR scan
-         @method _listenQRScan
+         @method _createQRcode
          **/
-        _listenQRScan: function () {
+        _createQRcode: function () {
             var self = this;
             var q = $("#qrcode");
             q = q[0];
@@ -159,7 +159,8 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel'], function ($, B
             var model = new QueueModel();
             model.save({
                 business_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('business_id'),
-                line_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id')
+                line_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id'),
+                type: 'PRINT'
             }, {
                 success: (function (model, data) {
                     $(Elements.FQ_DISPLAY_PRINT_NUMBER).text(model.get('service_id'))

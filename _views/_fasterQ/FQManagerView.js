@@ -198,7 +198,8 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
             if (i_element.length == 0)
                 return;
             self.m_selectedServiceID = $(i_element).data('service_id');
-            self._populatePropsQueue(self.m_selectedServiceID);
+            var model = self.m_queuesCollection.where({'service_id': self.m_selectedServiceID})[0];
+            self._populatePropsQueue(model);
 
             var scrollXPos = $(i_element).position().left;
             // console.log('current offset ' + scrollXPos + ' ' + 'going to index ' + $(i_element).index() + ' service_id ' + $(i_element).data('service_id'));
@@ -216,9 +217,12 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
          @method _populatePropsQueue
          @params {Number} i_value
          **/
-        _populatePropsQueue: function (i_value) {
+        _populatePropsQueue: function (i_model) {
             var self = this;
-            $(Elements.FQ_SELECTED_QUEUE).text(i_value);
+            if (_.isUndefined(i_model))
+                return;
+            $(Elements.FQ_SELECTED_QUEUE).text(i_model.get('service_id'));
+            $(Elements.FQ_VERIFICATION).text(i_model.get('verification') == -1 ? 'print out'  : i_model.get('verification'));
         },
 
         /**

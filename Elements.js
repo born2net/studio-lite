@@ -314,6 +314,7 @@ Elements.FQ_RESET_QUEUE_COUNTER = '#fqResetQueueCounter';
 Elements.FQ_OPEN_CUSTOMER_REMOTE_STATUS = '#fqOpenCustomerRemoteStatus';
 Elements.FQ_TIME_WITH_CUSTOMER= '#fqTimeWithCustomer';
 Elements.FQ_SELECTED_QUEUE = '#fqSelectedQueue';
+Elements.FQ_VERIFICATION = '#fqVerification'
 Elements.FQ_LINE_QUEUE_COMPONENT = '#fqLineQueueComponent';
 Elements.FQ_LINE_QUEUE_COMPONENT_CONTAINER = '#fqLineQueueComponentContainer';
 Elements.FQ_LINE_COMP_PREV = '#fqLineCompPrev';

@@ -197,20 +197,23 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
         _listenResetQueueCounter: function(){
             var self = this;
             $(Elements.FQ_RESET_QUEUE_COUNTER).on('click',function(){
-                $.ajax({
-                    url: '/ResetQueueCounter',
-                    data: {
-                        business_id: BB.Pepper.getUserData().businessID,
-                        line_id: self.m_selectedLineID,
-                        counter: 1
-                    },
-                    success: function (e) {
-                        bootbox.alert('counter was reset successfully');
-                    },
-                    error: function (e) {
-                        log('error ajax ResetQueueCounter ' + e);
-                    },
-                    dataType: 'json'
+                bootbox.prompt('are you sure you want to reset the counter? (enter password)',function(i_password){
+                    if (i_password != '123') return;
+                    $.ajax({
+                        url: '/ResetQueueCounter',
+                        data: {
+                            business_id: BB.Pepper.getUserData().businessID,
+                            line_id: self.m_selectedLineID,
+                            counter: 1
+                        },
+                        success: function (e) {
+                            bootbox.alert('counter was reset successfully');
+                        },
+                        error: function (e) {
+                            log('error ajax ResetQueueCounter ' + e);
+                        },
+                        dataType: 'json'
+                    });
                 });
             });
         },

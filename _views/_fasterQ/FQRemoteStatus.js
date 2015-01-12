@@ -75,8 +75,8 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage', 'moment'
                     self._getServiceID();
                     return
                 }
-
                 self.m_model.set('service_id', storage.service_id);
+                self.m_model.set('verification', storage.verification);
                 self._pollQueueStatus();
             }
         },
@@ -96,9 +96,10 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage', 'moment'
                 success: (function (model, data) {
                     simplestorage.set('data', {
                         service_id: self.m_model.get('service_id'),
-                        date: self.m_today
+                        date: self.m_today,
+                        verification: self.m_model.get('verification')
                     });
-                    self.m_model.set('service_id', self.m_model.get('service_id'));
+                    // self.m_model.set('service_id', self.m_model.get('service_id'));
                     self._pollQueueStatus();
                 }),
                 error: (function (e) {
@@ -122,9 +123,11 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage', 'moment'
                         business_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('business_id'),
                         line_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id')
                     },
-                    success: function (e) {
-                        $(Elements.FQ_CURRENTLY_SERVING).text(e.service_id);
+                    success: function (i_model) {
+                        var a = self.m_model.get('verification');
+                        $(Elements.FQ_CURRENTLY_SERVING).text(i_model.service_id);
                         $(Elements.FQ_DISPLAY_QR_NUMBER).text(self.m_model.get('service_id'));
+                        $(Elements.FQ_DISPLAY_VERIFICATION).text(self.m_model.get('verification'));
                     },
                     error: function (e) {
                         log('error ajax ' + e);

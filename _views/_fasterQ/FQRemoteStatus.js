@@ -178,7 +178,7 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage', 'moment'
 
         /**
          Get current server date / time
-         @method _getServerDateTime
+         @method _getServerDateTime server:getDateTime
          @param {Function} i_cb
          **/
         _getServerDateTime: function (i_cb) {

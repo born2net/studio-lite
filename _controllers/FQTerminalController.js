@@ -28,14 +28,19 @@ define(['underscore', 'jquery', 'backbone', 'XDate', 'StackView', 'FQCustomerTer
          Init user terminal view
          @method _initUserTerminal
          **/
+
         _initTerminal: function (i_app) {
             var self = this;
-            var param = $.base64.decode(self.options.param).split(':');
+            var data = $.base64.decode(self.options.param);
+            data = JSON.parse(data);
             self.m_lineModel = new LineModel({
-                business_id: param[0],
-                line_id: param[1],
-                type: param[2],
-                email: param[3]
+                call_type: data.call_type,
+                business_id: data.business_id,
+                line_id: data.line_id,
+                email: data.email,
+                service_id: data.service_id,
+                verification: data.verification,
+                date: data.date
             });
             BB.comBroker.setService(BB.SERVICES.FQ_LINE_MODEL, self.m_lineModel);
 
@@ -64,7 +69,6 @@ define(['underscore', 'jquery', 'backbone', 'XDate', 'StackView', 'FQCustomerTer
                     business_id: self.m_lineModel.get('business_id')
                 },
                 success: (function (model, data) {
-                    //self.m_lineModel.set('business_id', self.m_lineModel.get('business_id'));
                     self.m_fqRemoteStatusView = new FQRemoteStatus({
                         el: Elements.FQ_REMOTE_STATUS,
                         model: self.m_lineModel

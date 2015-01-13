@@ -14,11 +14,57 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage', 'moment'
          **/
         initialize: function () {
             var self = this;
-            self.m_today = moment().format("MM-DD-YYYY");
-            self.m_model = new QueueModel();
-            self._checkServiceIdExists();
+            self.m_queueModel = new QueueModel();
+            self.m_lineModel = BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL);
+            self._getServerDateTime(self._initServices);
             self._listenForgetSpot();
             self._listenGetNewNumber();
+        },
+
+        /**
+         Check if service id exists in local storage, if not get one from server
+         @method _initServices
+         **/
+        _initServices: function (i_dateTime) {
+            var self = this;
+
+            // STORAGE FIRST
+            var storage = simplestorage.get('data');
+            if (!_.isUndefined(storage)) {
+                var storedDate = storage.date;
+                if (storedDate != i_dateTime.date) {
+                    simplestorage.deleteKey('data');
+
+                } else {
+                    self.m_queueModel.set('service_id', storage.service_id);
+                    self.m_queueModel.set('verification', storage.verification);
+                    self._populateCustomerInfo();
+                    self._pollNowServicing();
+                    return;
+                }
+            }
+
+            // EMAIL OR SMS
+            var call_type = self.m_lineModel.get('call_type');
+
+            if (call_type == 'SMS' || call_type == 'EMAIL')  {
+                // xxx if (i_dateTime != self.m_lineModel.get('date')) {
+                if (i_dateTime.date != self.m_lineModel.get('date')) {
+                    bootbox.alert('your number expired on ' + self.m_lineModel.get('date') + ', so we generated a new number for you...');
+                    self._getServiceID();
+                    return;
+                }
+                $(Elements.FQ_DISPLAY_QR_NUMBER).text(self.model.get('service_id'));
+                $(Elements.FQ_DISPLAY_VERIFICATION).text(self.model.get('verification'));
+
+                self._createStorage(self.model.get('service_id'), self.model.get('verification'), self.model.get('date'));
+                self._pollNowServicing();
+            }
+
+            // QR
+            if (call_type == 'QR'){
+                self._getServiceID();
+            }
         },
 
         /**
@@ -59,26 +105,13 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage', 'moment'
             });
         },
 
-        /**
-         Check if service id exists in local storage, if not get one from server
-         @method _checkServiceIdExists
-         **/
-        _checkServiceIdExists: function () {
+        _createStorage: function (i_service_id, i_verification, i_date) {
             var self = this;
-            var storage = simplestorage.get('data');
-            if (_.isUndefined(storage)) {
-                self._getServiceID();
-            } else {
-                var storedDate = storage.date;
-                if (storedDate != self.m_today){
-                    simplestorage.deleteKey('data');
-                    self._getServiceID();
-                    return
-                }
-                self.m_model.set('service_id', storage.service_id);
-                self.m_model.set('verification', storage.verification);
-                self._pollQueueStatus();
-            }
+            simplestorage.set('data', {
+                service_id: i_service_id,
+                date: i_date,
+                verification: i_verification
+            });
         },
 
         /**
@@ -87,20 +120,16 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage', 'moment'
          **/
         _getServiceID: function () {
             var self = this;
-            self.m_model.save({
-                business_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('business_id'),
-                line_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id'),
-                type: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('type'),
-                email: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('email')
+            self.m_queueModel.save({
+                business_id: self.m_lineModel.get('business_id'),
+                line_id: self.m_lineModel.get('line_id'),
+                call_type: self.m_lineModel.get('call_type'),
+                email: self.m_lineModel.get('email')
             }, {
                 success: (function (model, data) {
-                    simplestorage.set('data', {
-                        service_id: self.m_model.get('service_id'),
-                        date: self.m_today,
-                        verification: self.m_model.get('verification')
-                    });
-                    // self.m_model.set('service_id', self.m_model.get('service_id'));
-                    self._pollQueueStatus();
+                    self._createStorage(self.m_queueModel.get('service_id'), self.m_queueModel.get('verification'), self.m_queueModel.get('date'));
+                    self._populateCustomerInfo();
+                    self._pollNowServicing();
                 }),
                 error: (function (e) {
                     log('Service request failure: ' + e);
@@ -110,24 +139,28 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage', 'moment'
             });
         },
 
+        _populateCustomerInfo: function () {
+            var self = this;
+            $(Elements.FQ_DISPLAY_QR_NUMBER).text(self.m_queueModel.get('service_id'));
+            $(Elements.FQ_DISPLAY_VERIFICATION).text(self.m_queueModel.get('verification'));
+        },
+
         /**
          Get the last called service_id for line
-         @method _pollQueueStatus server:LastCalledQueue
+         @method _pollNowServicing server:LastCalledQueue
          **/
-        _pollQueueStatus: function () {
+        _pollNowServicing: function () {
             var self = this;
             var lastCalledQueue = function () {
                 $.ajax({
                     url: '/LastCalledQueue',
                     data: {
-                        business_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('business_id'),
-                        line_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id')
+                        business_id: self.m_lineModel.get('business_id'),
+                        line_id: self.m_lineModel.get('line_id')
                     },
                     success: function (i_model) {
-                        var a = self.m_model.get('verification');
                         $(Elements.FQ_CURRENTLY_SERVING).text(i_model.service_id);
-                        $(Elements.FQ_DISPLAY_QR_NUMBER).text(self.m_model.get('service_id'));
-                        $(Elements.FQ_DISPLAY_VERIFICATION).text(self.m_model.get('verification'));
+
                     },
                     error: function (e) {
                         log('error ajax ' + e);
@@ -139,7 +172,27 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage', 'moment'
                 lastCalledQueue();
             }, 5000);
             lastCalledQueue();
-        }
+        },
+
+        /**
+         Get current server date / time
+         @method _getServerDateTime
+         @param {Function} i_cb
+         **/
+        _getServerDateTime: function (i_cb) {
+            var self = this;
+            $.ajax({
+                url: '/GetDateTime',
+                success: function (dateTime) {
+                    $.proxy(i_cb, self)(dateTime);
+                },
+                error: function (e) {
+                    log('error ajax ' + e);
+                },
+                dataType: 'json'
+            });
+        },
+
     });
 
     return FQRemoteStatus;

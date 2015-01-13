@@ -341,14 +341,14 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
         _listenOpenRemoteStatus: function () {
             var self = this;
             $(Elements.FQ_OPEN_CUSTOMER_REMOTE_STATUS).on('click', function (e) {
-                var param = BB.Pepper.getUserData()['businessID'];
-                param += ':' + self.m_fqCreatorView.getSelectedLine();
-                param += ':QR';
-
-                //todo: build URL dynamically
-                var param = $.base64.encode(param);
-                var url = 'https://secure.digitalsignage.com:442/_studiolite-dev/studiolite.html?mode=remoteStatus&param=' + param;
-                window.open(url, "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=500, left=500, width=400, height=400");
+                var data = {
+                    call_type: 'REMOTE_STATUS',
+                    business_id: BB.Pepper.getUserData()['businessID'],
+                    line_id: self.m_fqCreatorView.getSelectedLine()
+                };
+                data = $.base64.encode(param);
+                var url = BB.CONSTS.BASE_URL + '?mode=remoteStatus&param=' + data;
+                window.open(url, "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=10, left=10, width=400, height=400");
             })
         }
     });

@@ -28,10 +28,13 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _listenOpenCustomerTerminal: function () {
             var self = this;
             $(Elements.OPEN_FASTERQ_CUSTOMER_TERMINAL).on('click', function (e) {
-                //todo: build URL dynamically
-                var param = BB.Pepper.getUserData().businessID + ':' + self.m_selectedLineID;
-                param = $.base64.encode(param);
-                var url = 'https://secure.digitalsignage.com:442/_studiolite-dev/studiolite.html?mode=customerTerminal&param=' + param;
+                var data = {
+                    call_type: 'CUSTOMER_TERMINAL',
+                    business_id: BB.Pepper.getUserData().businessID,
+                    line_id: self.m_selectedLineID
+                };
+                data = $.base64.encode(JSON.stringify(data));
+                var url = BB.CONSTS.BASE_URL + '?mode=customerTerminal&param=' + data;
                 window.open(url, '_blank');
             });
         },

@@ -48,7 +48,7 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel'], function ($, B
                 width: 200,
                 height: 200
             });
-            var url = self._buildQRurl();
+            var url = self._buildURL();
             log(url);
             qrcode.makeCode(url);
         },
@@ -174,10 +174,10 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel'], function ($, B
 
         /**
          Create URL string to load customer terminal UI for FasterQ queue generation
-         @method _buildQRurl
+         @method _buildURL
          @return {String} URL
          **/
-        _buildQRurl: function () {
+        _buildURL: function () {
             var self = this;
             var data = {
                 line_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id'),

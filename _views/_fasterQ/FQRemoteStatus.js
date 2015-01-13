@@ -14,6 +14,7 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage', 'moment'
          **/
         initialize: function () {
             var self = this;
+            self.m_base_url = BB.CONSTS.BASE_URL + '?mode=remoteStatus&param=';
             self.m_queueModel = new QueueModel();
             self.m_lineModel = BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL);
             self._getServerDateTime(self._initServices);
@@ -98,7 +99,8 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage', 'moment'
                         if (i_answer.toLowerCase() == 'yes') {
                             simplestorage.deleteKey('data');
                             window.clearInterval(self.m_statusHandler);
-                            location.reload()
+                            var url = self._buildURL();
+                            $(location).attr('href',url);
                         }
                     }
                 })
@@ -192,6 +194,22 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage', 'moment'
                 dataType: 'json'
             });
         },
+
+        /**
+         Create URL string to load customer terminal UI for FasterQ queue generation
+         @method _buildURL
+         @return {String} URL
+         **/
+        _buildURL: function () {
+            var self = this;
+            var data = {
+                line_id: self.m_lineModel.get('line_id'),
+                business_id: self.m_lineModel.get('business_id'),
+                call_type: 'QR'
+            };
+            data = $.base64.encode(JSON.stringify(data));
+            return self.m_base_url + data;
+        }
 
     });
 

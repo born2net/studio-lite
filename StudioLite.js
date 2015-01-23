@@ -78,10 +78,10 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
                     }
                 }
                 require(['FQTerminalController', 'Events'], function (FQTerminalController) {
-                    new FQTerminalController({
-                        param: mode[4],
-                        app: app
-                    });
+                        new FQTerminalController({
+                            param: mode[4],
+                            app: app
+                        });
                 });
                 return;
             }

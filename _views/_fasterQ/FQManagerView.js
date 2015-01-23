@@ -346,7 +346,7 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
                     business_id: BB.Pepper.getUserData()['businessID'],
                     line_id: self.m_fqCreatorView.getSelectedLine()
                 };
-                data = $.base64.encode(param);
+                data = $.base64.encode(JSON.stringify(data));
                 var url = BB.CONSTS.BASE_URL + '?mode=remoteStatus&param=' + data;
                 window.open(url, "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=10, left=10, width=400, height=400");
             })

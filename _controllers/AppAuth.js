@@ -20,6 +20,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             this.AUTH_USER_PASS = 0;
             this.AUTH_COOKIE = 1;
             this.AUTH_PARAMS = 2;
+
         },
 
         /**
@@ -95,7 +96,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             BB.Pepper.dbConnect(i_user, i_pass, function (i_status) {
                 if (i_status.status) {
                     self._authPassed(i_user, i_pass, i_status, i_authMode);
-                    BB.lib.logErrors(pepper.getUserData().businessID);
+                    // BB.lib.logErrors(pepper.getUserData().businessID);
                 } else {
                     self._authFailed(i_authMode, i_status);
                 }

@@ -4,6 +4,7 @@
  **/
 require.config({
     waitSeconds: 45,
+    // baseUrl: './', // for node-webkit change to ./
     baseUrl: '/_studiolite-dev/',
     paths: {
         'Elements': 'Elements',
@@ -40,6 +41,7 @@ require.config({
         'localizer': '_common/_js/localizer/dist/jquery.localize',
         'spinner': '_common/_js/fuelux/src/spinner',
         'stopwatch': '_common/_js/stopwatch/stopwatch',
+        'jsencrypt': '_common/_js/jsencrypt/jsencrypt',
         'contextmenu': '_common/_js/contextmenu/bootstrap-contextmenu',
         'simplestorage': '_common/_js/simplestorage/simpleStorage',
         'moment': '_common/_js/moment/moment',
@@ -198,6 +200,9 @@ require.config({
         },
         'timepicker': {
             exports: 'timepicker'
+        },
+        'jsencrypt': {
+            exports: 'jsencrypt'
         },
         'datepicker': {
             exports: 'datepicker'

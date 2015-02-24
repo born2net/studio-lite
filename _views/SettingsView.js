@@ -73,6 +73,13 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 }
                 $(Elements.PREVIEW_FULL_OPTION + ' option[value=' + bannerMode + ']').attr("selected", "selected");
 
+                var fqSwitchMode = self.m_simpleStorage.get('fqSwitchMode');
+                if (_.isUndefined(fqSwitchMode)) {
+                    fqSwitchMode = 1;
+                    self.m_simpleStorage.set('fqSwitchMode', fqSwitchMode);
+                }
+                $(Elements.FQ_SWITCH_OPTION + ' option[value=' + fqSwitchMode + ']').attr("selected", "selected");
+
                 self.m_stationsPollingSlider = $(Elements.STATION_POLL_SLIDER).noUiSlider({
                     handles: 1,
                     start: [pollStationsTime],
@@ -85,8 +92,26 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
                 self._listenStationsPollingSlider();
                 self._listenBannerPreviewChange();
+                self._listenFasterQueueSwitchChange();
                 self._listenThemeChange();
 
+            });
+        },
+
+        /**
+         Listen changes in FasterQueue settings options
+         @method _listenFasterQueueSwitchChange
+         **/
+        _listenFasterQueueSwitchChange: function () {
+            var self = this;
+            $(Elements.FQ_SWITCH_OPTION).on('change', function (e) {
+                var state = $(Elements.FQ_SWITCH_OPTION + ' option:selected').val();
+                self.m_simpleStorage.set('fqSwitchMode', state);
+                if (state=="1"){
+                    $(Elements.CLASS_FASTERQ_PANEL).fadeIn();
+                } else {
+                    $(Elements.CLASS_FASTERQ_PANEL).fadeOut();
+                }
             });
         },
 

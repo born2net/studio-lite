@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated FQLoaderView
  **/
-define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
+define(['jquery', 'backbone', 'StackView', 'simplestorage'], function ($, Backbone, StackView, simpleStorage) {
 
     var FQLoaderView = Backbone.View.extend({
 
@@ -14,14 +14,29 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
          **/
         initialize: function () {
             var self = this;
+            self.m_simpleStorage = simpleStorage;
             BB.comBroker.setService(BB.SERVICES['SETTINGS_VIEW'], self);
-            self.m_simpleStorage = undefined;
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self && !self.m_rendered) {
                     self.m_rendered = true;
                     self._render();
                 }
             });
+            self._fasterQueueSwitchMode();
+        },
+
+        /**
+         Enable / Disable FasterQueue App mode
+         @method _fasterQueueSwitchMode
+         **/
+        _fasterQueueSwitchMode: function () {
+            var self = this;
+            var fqSwitchMode = self.m_simpleStorage.get('fqSwitchMode');
+            if (_.isUndefined(fqSwitchMode) || fqSwitchMode == '0') {
+                $(Elements.CLASS_FASTERQ_PANEL).fadeOut();
+            } else {
+                $(Elements.CLASS_FASTERQ_PANEL).fadeIn();
+            }
         },
 
         /**
@@ -34,7 +49,10 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
 
                 self.m_stackView = new StackView.Fader({duration: 333});
 
-                self.m_fasterQNavigationView = new FQNavigationView({el: Elements.FASTERQ_NAVIGATION_CONTAINER, stackView: self.m_stackView});
+                self.m_fasterQNavigationView = new FQNavigationView({
+                    el: Elements.FASTERQ_NAVIGATION_CONTAINER,
+                    stackView: self.m_stackView
+                });
 
                 self.m_fasterQCreatorView = new FQCreatorView({
                     el: Elements.FASTERQ_CREATOR_CONTAINER,

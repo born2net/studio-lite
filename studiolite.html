@@ -75,7 +75,7 @@
                         <li class="divider"></li>
                         <li><a data-localize="navScenes" class="scenesPanel" href="#">Scenes</a></li>
                         <li class="divider"></li>
-                        <li><a data-localize="navfasterQ" class="fasterQPanel" href="#">FasterQ</a></li>
+                        <li><a style="display: none" data-localize="navfasterQ" class="fasterQPanel" href="#">FasterQ</a></li>
                         <li class="divider"></li>
                         <li><a data-localize="navSettings" class="settingsPanel" href="#">Settings</a></li>
                         <li class="divider"></li>
@@ -333,7 +333,7 @@
                         <li class="navSelection scenesPanel list-group-item"><i
                                 class="navicons fa fa-pencil-square-o"></i><span
                                 data-localize="navScenes">Scenes</span></li>
-                        <li class="navSelection fasterQPanel list-group-item"><i class="navicons fa fa-male"></i><span
+                        <li style="display: none" class="navSelection fasterQPanel list-group-item"><i class="navicons fa fa-male"></i><span
                                 data-localize="navfasterQ">FasterQ</span></li>
                         <li class="navSelection settingsPanel list-group-item"><i class="navicons fa fa-gears"></i><span
                                 data-localize="navSettings">Settings</span>
@@ -990,19 +990,26 @@
                         </div>
 
                         <div class="settingsItem">
-                            <label style="padding-right: 78px" for="previewFullOption"
+                            <hr/>
+                            <label style="padding-right: 78px; width: 200px" for="previewFullOption"
                                    data-localize="fullScreenPreview">Full screen
                                 preview</label>
                             <select id="previewFullOption" name="preview full screen" data-role="slider">
                                 <option value="1" data-localize="off">Off</option>
                                 <option value="0" data-localize="on">On</option>
                             </select>
-
-                            <p></p>
-                            <label style="padding-right: 144px" for="themeOption" data-localize="theme">theme</label>
+                            <hr/>
+                            <label style="padding-right: 144px; width: 200px" for="themeOption" data-localize="themeSwitch">Theme</label>
                             <select id="themeOption" name="preview full screen" data-role="slider">
                                 <option value="light" data-localize="light">light</option>
                                 <option value="dark" data-localize="dark">dark</option>
+                            </select>
+                            <br/>
+                            <hr/>
+                            <label style="padding-right: 144px; width: 200px" for="fqSwitchOption" data-localize="fqSwitch">FasterQueue</label>
+                            <select id="fqSwitchOption" name="preview full screen" data-role="slider">
+                                <option value="0" data-localize="off">Off</option>
+                                <option value="1" data-localize="on">On</option>
                             </select>
                         </div>
                     </div>
@@ -2222,7 +2229,7 @@
     </div>
 </div>
 <div id="footer"><br>
-    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.1.59 </span>
+    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.1.60 </span>
 </div>
 
 

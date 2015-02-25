@@ -327,6 +327,7 @@ Elements.FQ_LINE_COMP_NEXT = '#fqLineCompNext';
 Elements.FQ_DISPLAY_PRINT_NUMBER = '#fqDisplayPrintNumber';
 Elements.FQ_DISPLAY_QR_NUMBER = '#fqDisplayQRNumber';
 Elements.FQ_DISPLAY_VERIFICATION = '#fqDisplayVerification';
+Elements.FQ_DISPLAY_LINE_NAME = '#fqDisplayLineName';
 Elements.FQ_RELEASE_SPOT = '#fqReleaseSpot';
 Elements.FQ_GET_NEW_NUMBER = '#fqGetNewNumber';
 Elements.FQ_LAST_SERVICED = '#fqLastServiced';

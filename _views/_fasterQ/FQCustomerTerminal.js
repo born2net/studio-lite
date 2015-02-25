@@ -109,6 +109,7 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel'], function ($, B
                 data: {
                     business_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('business_id'),
                     line_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id'),
+                    line_name: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_name'),
                     email: i_email,
                     call_type: 'EMAIL',
                     url: self.m_base_url
@@ -134,6 +135,7 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel'], function ($, B
                 data: {
                     business_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('business_id'),
                     line_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id'),
+                    line_name: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_name'),
                     sms: i_sms,
                     call_type: 'SMS',
                     url: self.m_base_url

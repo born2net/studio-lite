@@ -29,7 +29,7 @@ define(['jquery', 'backbone', 'LineModel'], function ($, Backbone, LineModel) {
             return( collection.get( 'name' ) );
         },
         model: LineModel,
-        url: '/Lines'
+        url: BB.CONSTS.ROOT_URL + '/Lines'
     });
 
     return LineCollection;

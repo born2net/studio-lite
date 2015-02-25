@@ -40,7 +40,8 @@ define(['underscore', 'jquery', 'backbone', 'XDate', 'StackView', 'FQCustomerTer
                 email: data.email,
                 service_id: data.service_id,
                 verification: data.verification,
-                date: data.date
+                date: data.date,
+                line_name: data.line_name
             });
             BB.comBroker.setService(BB.SERVICES.FQ_LINE_MODEL, self.m_lineModel);
 

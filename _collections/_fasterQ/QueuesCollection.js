@@ -22,7 +22,7 @@ define(['jquery', 'backbone', 'QueueModel'], function ($, Backbone, QueueModel) 
             return( collection.get( 'name' ) );
         },
         model: QueueModel,
-        url: '/Queues'
+        url: BB.CONSTS.ROOT_URL + '/Queues'
     });
 
     return QueuesCollection;

@@ -31,7 +31,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 var data = {
                     call_type: 'CUSTOMER_TERMINAL',
                     business_id: BB.Pepper.getUserData().businessID,
-                    line_id: self.m_selectedLineID
+                    line_id: self.m_selectedLineID,
+                    line_name: self.collection.get(self.m_selectedLineID).get('name')
                 };
                 data = $.base64.encode(JSON.stringify(data));
                 var url = BB.CONSTS.BASE_URL + '?mode=customerTerminal&param=' + data;

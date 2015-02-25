@@ -14,7 +14,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         initialize: function () {
         },
-        urlRoot: '/Queue',
+        urlRoot: BB.CONSTS.ROOT_URL + '/Queue',
         idAttribute: 'queue_id'
     });
 

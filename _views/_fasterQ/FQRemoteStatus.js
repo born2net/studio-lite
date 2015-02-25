@@ -57,6 +57,7 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage', 'moment'
                 }
                 $(Elements.FQ_DISPLAY_QR_NUMBER).text(self.model.get('service_id'));
                 $(Elements.FQ_DISPLAY_VERIFICATION).text(self.model.get('verification'));
+                $(Elements.FQ_DISPLAY_LINE_NAME).text(self.model.get('line_name'));
 
                 self._createStorage(self.model.get('service_id'), self.model.get('verification'), self.model.get('date'));
                 self._pollNowServicing();
@@ -145,6 +146,7 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage', 'moment'
             var self = this;
             $(Elements.FQ_DISPLAY_QR_NUMBER).text(self.m_queueModel.get('service_id'));
             $(Elements.FQ_DISPLAY_VERIFICATION).text(self.m_queueModel.get('verification'));
+            $(Elements.FQ_DISPLAY_LINE_NAME).text(self.m_lineModel.get('line_name'));
         },
 
         /**
@@ -205,6 +207,7 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage', 'moment'
             var data = {
                 line_id: self.m_lineModel.get('line_id'),
                 business_id: self.m_lineModel.get('business_id'),
+                line_name: self.model.get('line_name'),
                 call_type: 'QR'
             };
             data = $.base64.encode(JSON.stringify(data));

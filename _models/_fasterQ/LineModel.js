@@ -14,7 +14,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         initialize: function () {
         },
-        urlRoot: '/Line',
+        urlRoot: BB.CONSTS.ROOT_URL + '/Line',
         idAttribute: 'line_id'
     });
 

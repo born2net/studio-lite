@@ -129,11 +129,13 @@
 
         <div id="fqRemoteStatus" style="display: none; font-size: 2em; text-align: center">
             <h1>now serving <span id="fqCurrentlyServing"></span></h1>
+
             <h3>you are <span id="fqDisplayQRNumber"></span><span> in line</span></h3>
+
             <h3>your verification number is <span id="fqDisplayVerification"></span></h3>
 
             <button id="fqReleaseSpot" style="float: right; width: 50%" class="tn btn-lg btn-primary">release my spot</button>
-            <button id="fqGetNewNumber" style="float: right; width: 50%;" class="tn btn-lg btn-primary" >get a new number</button>
+            <button id="fqGetNewNumber" style="float: right; width: 50%;" class="tn btn-lg btn-primary">get a new number</button>
         </div>
 
         <div id="fasterqCustomerTerminal" style="display: none">
@@ -885,33 +887,34 @@
 
 
                                 <div class="row fqStats">
-                                    <div class="col-xs-6 col-sm-3" style="margin-top: 0; padding: 0;" >
+                                    <div class="col-xs-6 col-sm-3" style="margin-top: 0; padding: 0;">
                                         <div class="fakeVerticalLineDivL" style="height: 58px; width: 100%; float: left">
                                             <span><strong>called customer: </strong></span><br/>
                                             <span id="fqTimeWithCustomer">00:00:00</span>
                                         </div>
                                     </div>
 
-                                    <div class="col-xs-6 col-sm-3" style="margin-top: 0; padding: 0" >
+                                    <div class="col-xs-6 col-sm-3" style="margin-top: 0; padding: 0">
                                         <div class="fakeVerticalLineDivL" style="height: 58px; width: 100%; float: left">
                                             <span><strong>last you serviced</strong></span><br/>
                                             <span id="fqLastServiced">0</span>
                                         </div>
                                     </div>
-                                    <div class="col-xs-6 col-sm-3" style="margin-top: 0; padding: 0" >
+                                    <div class="col-xs-6 col-sm-3" style="margin-top: 0; padding: 0">
                                         <div class="fakeVerticalLineDivL" style="height: 58px; width: 100%; float: left">
                                             <span><strong>last you called</strong></span><br/>
                                             <span id="fqLastCalled">0</span>
                                         </div>
                                     </div>
-                                    <div class="col-xs-6 col-sm-3" style="margin-top: 0; padding: 0;" >
+                                    <div class="col-xs-6 col-sm-3" style="margin-top: 0; padding: 0;">
                                         <div class="fakeVerticalLineDivL" style="height: 58px; width: 100%; float: left">
-                                            <span ><strong>total to be serviced</strong></span><br/>
+                                            <span><strong>total to be serviced</strong></span><br/>
                                             <span id="fqTotalToBeServiced">0</span>
                                         </div>
                                     </div>
                                 </div>
                                 <br/>
+
                                 <div id="fqLineQueueComponentWrap">
                                     <div id="fqSelectedCustomer">
                                     </div>
@@ -920,7 +923,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div style="text-align: center; width: 100%;" class="centerElement" >
+                                <div style="text-align: center; width: 100%;" class="centerElement">
                                     <button id="fqLineCompCall" type="button" data-localize-tooltip="back" data-localize="empty" title="back" class="lineComponentButtons btn btn-default btn-sm">
                                         <span class="fa fa-bullhorn"></span>
                                         Call
@@ -1006,11 +1009,14 @@
                             </select>
                             <br/>
                             <hr/>
-                            <label style="padding-right: 144px; width: 200px" for="fqSwitchOption" data-localize="fqSwitch">FasterQueue</label>
-                            <select id="fqSwitchOption" name="preview full screen" data-role="slider">
-                                <option value="0" data-localize="off">Off</option>
-                                <option value="1" data-localize="on">On</option>
-                            </select>
+                            <!-- alpha mode FQ -->
+                            <div style="display: none">
+                                <label style="padding-right: 144px; width: 200px" for="fqSwitchOption" data-localize="fqSwitch">FasterQueue</label>
+                                <select id="fqSwitchOption" name="preview full screen" data-role="slider">
+                                    <option value="0" data-localize="off">Off</option>
+                                    <option value="1" data-localize="on">On</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div id="proStudioPanel" style="display: none">

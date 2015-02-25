@@ -131,7 +131,9 @@
             <h1>now serving <span id="fqCurrentlyServing"></span></h1>
 
             <h3>you are <span id="fqDisplayQRNumber"></span><span> in line</span></h3>
+
             <h3>line name: <span id="fqDisplayLineName"></span></h3>
+
             <h3>your verification number is <span id="fqDisplayVerification"></span></h3>
 
             <button id="fqReleaseSpot" style="float: right; width: 50%" class="tn btn-lg btn-primary">release my spot</button>
@@ -853,8 +855,7 @@
                                            class="fa fa-male"></i>
                                     </div>
 
-            <span
-                    data-localize="none"></span>
+                                    <span data-localize="none"></span>
                                     <span data-localize="manageLines" style="display: block">Manage Lines</span>
                                 </button>
                                 <button id="fasterQCreateNavButton" type="button" name="mailWasp"
@@ -885,7 +886,6 @@
                                 <br/>
                                 <br/>
 
-
                                 <div class="row fqStats">
                                     <div class="col-xs-6 col-sm-3" style="margin-top: 0; padding: 0;">
                                         <div class="fakeVerticalLineDivL" style="height: 58px; width: 100%; float: left">
@@ -910,6 +910,22 @@
                                         <div class="fakeVerticalLineDivL" style="height: 58px; width: 100%; float: left">
                                             <span><strong>total to be serviced</strong></span><br/>
                                             <span id="fqTotalToBeServiced">0</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row fqStats">
+                                    <div class="col-xs-6" style="margin-top: 0; padding: 0;">
+                                        <div class="fakeVerticalLineDivL" style="width: 100%; float: left">
+                                            <span><strong>avg customer service time (minutes): </strong></span><br/>
+                                            <h1 id="fqAvgCustomerService">00:00:00</h1>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-6" style="margin-top: 0; padding: 0">
+                                        <div class="fakeVerticalLineDivL" style="width: 100%; float: left">
+                                            <span><strong>avg customer wait time (minutes):</strong></span><br/>
+                                            <h1 id="fqAvgCustomerWait">00:00:00</h1>
                                         </div>
                                     </div>
                                 </div>

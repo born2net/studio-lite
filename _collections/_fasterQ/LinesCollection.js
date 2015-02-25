@@ -25,8 +25,8 @@ define(['jquery', 'backbone', 'LineModel'], function ($, Backbone, LineModel) {
          @param {Object} collection
          @return {Object} collection
          **/
-        comparator: function( collection ){
-            return( collection.get( 'name' ) );
+        comparator: function (collection) {
+            return ( collection.get('name') );
         },
         model: LineModel,
         url: BB.CONSTS.ROOT_URL + '/Lines'

@@ -123,6 +123,7 @@ require.config({
         'StationsCollection': '_collections/StationsCollection',
         'LinesCollection': '_collections/_fasterQ/LinesCollection',
         'QueuesCollection': '_collections/_fasterQ/QueuesCollection',
+        'AnalyticsCollection': '_collections/_fasterQ/AnalyticsCollection',
         'StationModel': '_models/StationModel',
         'LineModel': '_models/_fasterQ/LineModel',
         'QueueModel': '_models/_fasterQ/QueueModel',

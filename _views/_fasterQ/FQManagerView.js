@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated FQManagerView
  **/
-define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', 'QueuesCollection', 'stopwatch', 'XDate'], function ($, Backbone, ScrollToPlugin, TweenMax, FQQueuePropView, QueuesCollection, stopwatch, XDate) {
+define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', 'QueuesCollection', 'AnalyticsCollection', 'stopwatch', 'XDate', 'moment'], function ($, Backbone, ScrollToPlugin, TweenMax, FQQueuePropView, QueuesCollection, AnalyticsCollection, stopwatch, XDate, moment) {
 
     var FQManagerView = Backbone.View.extend({
 
@@ -150,6 +150,76 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
                 $(Elements.FQ_LINE_QUEUE_COMPONENT).append(snippet);
             });
             self._listenToPersonSelected();
+            self._getAnalytics();
+        },
+
+        /**
+         Get line analytics / stats
+         @method _getAnalytics server:lineAnalytics
+         **/
+        _getAnalytics: function () {
+            var self = this;
+            self.m_analyticsCollection = new AnalyticsCollection();
+
+            self.m_analyticsCollection.fetch({
+                data: {line_id: self.m_fqCreatorView.getSelectedLine()},
+                success: function (models) {
+                    log(models);
+                    self._calcAverages();
+                },
+                error: function () {
+                    log('error fetch /Queues collection');
+                }
+            });
+        },
+
+        /**
+         Calculate average respond and service customer times
+         @method _calcAverages
+         **/
+        _calcAverages: function () {
+            var self = this;
+
+            var avgServiceTime = [];
+            var avgCalledTime = [];
+
+            self.m_analyticsCollection.forEach(function (i_model) {
+                var entered = i_model.get('entered');
+                var serviced = i_model.get('serviced');
+                var called = i_model.get('called');
+
+                if (_.isNull(called)) {
+                    // customer not called, do nothing
+                } else if (!_.isNull(serviced)) {
+
+                    // customer called & serviced
+                    var xEntered = new XDate(entered);
+                    var minFromEnteredToCalled = xEntered.diffMinutes(called);
+                    avgCalledTime.push(minFromEnteredToCalled);
+
+                    var xCalled = new XDate(called);
+                    var minFromCalledToServiced = xCalled.diffMinutes(serviced);
+                    avgServiceTime.push(minFromCalledToServiced);
+
+                } else {
+
+                    // customer called not serviced
+                    var xEntered = new XDate(entered);
+                    var minFromEnteredToCalled = xEntered.diffMinutes(called);
+                    avgCalledTime.push(minFromEnteredToCalled);
+                }
+            });
+
+            var avgServiceTimeCalc = _.reduce(avgServiceTime, function (memo, num) {
+                    return memo + num;
+                }, 0) / (avgServiceTime.length === 0 ? 1 : avgServiceTime.length);
+
+            var avgCalledTimeCalc = _.reduce(avgCalledTime, function (memo, num) {
+                    return memo + num;
+                }, 0) / (avgCalledTime.length === 0 ? 1 : avgCalledTime.length);
+
+            $(Elements.FQ_AVG_CUSTOMER_SERVICE).text(BB.lib.parseToFloatDouble(avgServiceTimeCalc))
+            $(Elements.FQ_AVG_CUSTOMER_WAIT).text(BB.lib.parseToFloatDouble(avgCalledTimeCalc));
         },
 
         /**
@@ -222,7 +292,7 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
             if (_.isUndefined(i_model))
                 return;
             $(Elements.FQ_SELECTED_QUEUE).text(i_model.get('service_id'));
-            $(Elements.FQ_VERIFICATION).text(i_model.get('verification') == -1 ? 'print out'  : i_model.get('verification'));
+            $(Elements.FQ_VERIFICATION).text(i_model.get('verification') == -1 ? 'print out' : i_model.get('verification'));
         },
 
         /**

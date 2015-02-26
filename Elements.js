@@ -473,6 +473,7 @@ Elements.TWITTER_SCENE_LIST = '#twitterSceneList';
 Elements.TWITTER_INTERVAL_INPUT = '#twitterIntervalInput';
 Elements.USER_NAME = '#userName';
 Elements.USER_PASS = '#userPass';
+Elements.PRINT_DIAG = '#printDiag';
 Elements.VIDEO_ASPECT_RATIO = '#videoAspectRatio';
 Elements.VIDEO_AUTO_REWIND = '#videoAutoRewind';
 Elements.VIDEO_INTRO = '#videoIntro';

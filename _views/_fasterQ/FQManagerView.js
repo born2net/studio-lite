@@ -29,11 +29,13 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
             self._listenGoBack();
             self._listenOpenRemoteStatus();
 
+
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self) {
 
                     self.m_liveUpdatehandler = setInterval(function () {
                         self._getQueues(false);
+                        self._pollNowServicing();
                     }, 10000);
 
                     self._getQueues(true);
@@ -41,6 +43,7 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
 
                 } else {
                     window.clearInterval(self.m_liveUpdatehandler);
+                    window.clearInterval(self.m_statusHandler);
                 }
             });
         },
@@ -65,7 +68,6 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
         _getQueues: function (i_scrollTo) {
             var self = this;
             self.m_queuesCollection = new QueuesCollection();
-
             self.m_queuesCollection.fetch({
                 data: {line_id: self.m_fqCreatorView.getSelectedLine()},
                 success: function (models) {
@@ -77,6 +79,28 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
                 error: function () {
                     log('error fetch /Queues collection');
                 }
+            });
+        },
+
+        /**
+         Get the last called service_id for line
+         @method _pollNowServicing server:LastCalledQueue
+         **/
+        _pollNowServicing: function () {
+            var self = this;
+            $.ajax({
+                url: '/LastCalledQueue',
+                data: {
+                    business_id: BB.Pepper.getUserData()['businessID'],
+                    line_id: self.m_fqCreatorView.getSelectedLine()
+                },
+                success: function (i_model) {
+                    $(Elements.FQ_NOW_SERVICING).text(i_model.service_id);
+                },
+                error: function (e) {
+                    log('error ajax ' + e);
+                },
+                dataType: 'json'
             });
         },
 

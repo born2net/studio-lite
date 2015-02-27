@@ -251,6 +251,7 @@ Elements.POP_MODAL = '#popModal';
 Elements.POPUP_PROPERTIES = '#popupProperties';
 Elements.PREVIEW_FULL_OPTION = '#previewFullOption';
 Elements.FQ_SWITCH_OPTION = '#fqSwitchOption';
+Elements.FQ_NOW_SERVICING = '#fqNowServicing';
 Elements.PREVIOUS = '#prev';
 Elements.PRICING_TABLE_WRAP = '#pricingTableWrap';
 Elements.PRO_STUDIO_PANEL = '#proStudioPanel';

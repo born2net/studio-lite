@@ -207,6 +207,7 @@
     "EnterRSSLink": "Enter RSS link text",
     "enterText": "Enter Text Here",
     "removeTimelineButtonToolTip": "remove the selected timeline (one must exist)",
+    "reminder": "Reminder (minutes)",
     "addButtonToolTip": "add3",
     "removeButtonToolTip": "remove division",
     "pushDivToTopButtonToolTip": "push division to top",

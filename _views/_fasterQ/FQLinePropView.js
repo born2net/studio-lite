@@ -19,6 +19,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self.m_property.initPanel('#' + self.el.id);
             self._listenOpenCustomerTerminal();
             self._listenInputNameChange();
+            self._listenInputReminderChange();
         },
 
         /**
@@ -41,7 +42,32 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         },
 
         /**
-         Listen to changes in Line item rename through properties
+         Listen to changes in Line item reminder minutes value
+         @method _listenInputReminderChange server:updateLine
+         @return none
+         **/
+        _listenInputReminderChange: function () {
+            var self = this;
+            var onChange = _.debounce(function (e) {
+                var text = $(e.target).val();
+                if (_.isUndefined(self.m_selectedLineID))
+                    return;
+                var model = self.collection.get(self.m_selectedLineID);
+                model.set('reminder', text);
+                model.save({}, {
+                    success: function (model, response) {
+                    },
+                    error: function () {
+                        log('error delete failed');
+                    }
+                });
+
+            }, 400);
+            $(Elements.FQ_REMINDER_LINE).on("input", onChange);
+        },
+
+        /**
+         Listen to changes in Line item rename value
          @method _listenInputNameChange server:updateLine
          @return none
          **/
@@ -49,29 +75,33 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             var onChange = _.debounce(function (e) {
                 var text = $(e.target).val();
-
                 if (_.isUndefined(self.m_selectedLineID))
                     return;
                 var model = self.collection.get(self.m_selectedLineID);
                 model.set('name', text);
                 model.save({}, {
                     success: function (model, response) {
-                        // self._populateLines();
-                        // log('model updated');
-                    }, error: function () {
+                    },
+                    error: function () {
                         log('error delete failed');
                     }
                 });
 
             }, 400);
-            self.m_inputChangeHandler = $(Elements.SELECTED_LINE_NAME).on("input", onChange);
+            $(Elements.SELECTED_LINE_NAME).on("input", onChange);
         },
 
-        lineSelected: function(i_lineID) {
+        /**
+         Populate the properties UI on line selected
+         @method lineSelected
+         @param {Number} i_lineID
+         **/
+        lineSelected: function (i_lineID) {
             var self = this;
             self.m_selectedLineID = i_lineID;
             self.m_property.viewPanel(Elements.FASTERQ_LINE_PROPERTIES);
             $(Elements.SELECTED_LINE_NAME).val(self.collection.get(self.m_selectedLineID).get('name'));
+            $(Elements.FQ_REMINDER_LINE).val(self.collection.get(self.m_selectedLineID).get('reminder'));
         }
     });
 

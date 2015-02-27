@@ -19,6 +19,7 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
             self.m_fqCreatorView = BB.comBroker.getService(BB.SERVICES.FQCREATORVIEW);
             self.m_stopWatchHandle = new Stopwatch();
             self.m_liveUpdatehandler = undefined;
+            self.m_inView = false;
             self.m_fqQueuePropView = new FQQueuePropView({
                 el: Elements.FASTERQ_QUEUE_PROPERTIES
             });
@@ -30,9 +31,10 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
             self._listenOpenRemoteStatus();
 
 
+
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self) {
-
+                    self.m_inView = true;
                     self.m_liveUpdatehandler = setInterval(function () {
                         self._getQueues(false);
                         self._pollNowServicing();
@@ -42,6 +44,7 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
                     // self._scrollTo($(Elements.FQ_LINE_QUEUE_COMPONENT + ':first-child'));
 
                 } else {
+                    self.m_inView = false;
                     window.clearInterval(self.m_liveUpdatehandler);
                     window.clearInterval(self.m_statusHandler);
                 }
@@ -149,8 +152,9 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
          @method _render
          **/
         _render: function () {
-            log('rendering')
             var self = this;
+            if (!self.m_inView)
+                return;
             self.m_fqQueuePropView.showProp();
             var snippet;
 
@@ -324,6 +328,7 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
                 return;
             $(Elements.FQ_SELECTED_QUEUE).text(i_model.get('service_id'));
             $(Elements.FQ_VERIFICATION).text(i_model.get('verification') == -1 ? 'print out' : i_model.get('verification'));
+            $(Elements.FQ_CALLED_BY).text(_.isNull(i_model.get('called_by')) ? 'none' : i_model.get('called_by'));
         },
 
         /**
@@ -351,11 +356,12 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
                 model.set('called_by', pepper.getUserData().userName);
                 model.set('called_by_override', false);
 
+                self._populatePropsQueue(model);
+
                 model.save(null,{
                     success: (function (model, data) {
                         if (data.updated == 'alreadyCalled'){
                             bootbox.confirm('Customer already called by user' + data.called_by + ' <br/><br/>Would you like to call the customer again?', function(result) {
-                                log(result);
                                 if (result){
                                     model.set('called_by_override', true);
                                     model.save();

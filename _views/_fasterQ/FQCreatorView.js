@@ -225,6 +225,11 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
         getSelectedLine: function(){
             var self = this;
             return self.m_selectedLineID;
+        },
+
+        getSelectedLineName: function(i_lineID){
+            var self = this;
+            return self.m_linesCollection.get(i_lineID).get('name');
         }
     });
 

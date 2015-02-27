@@ -97,6 +97,10 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
 
         },
 
+        /**
+         Start the stop watch UI
+         @method _watchStart
+         **/
         _watchStart: function () {
             var self = this;
             self.m_stopWatchHandle.setListener(function (e) {
@@ -105,6 +109,10 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
             self.m_stopWatchHandle.start();
         },
 
+        /**
+         Stop the stop watch UI
+         @method _watchStop
+         **/
         _watchStop: function () {
             var self = this;
             self.m_stopWatchHandle.stop();
@@ -164,7 +172,6 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
             self.m_analyticsCollection.fetch({
                 data: {line_id: self.m_fqCreatorView.getSelectedLine()},
                 success: function (models) {
-                    log(models);
                     self._calcAverages();
                 },
                 error: function () {
@@ -317,11 +324,23 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
                 $(Elements.FQ_LAST_CALLED).text(self.m_selectedServiceID);
                 var d = new XDate();
                 model.set('called', d.toString('M/d/yyyy hh:mm:ss TT'));
-                model.save({
+                model.set('called_by', pepper.getUserData().userName);
+                model.set('called_by_override', false);
+
+                model.save(null,{
                     success: (function (model, data) {
+                        if (data.updated == 'alreadyCalled'){
+                            bootbox.confirm('Customer already called by user' + data.called_by + ' <br/><br/>Would you like to call the customer again?', function(result) {
+                                log(result);
+                                if (result){
+                                    model.set('called_by_override', true);
+                                    model.save();
+                                }
+                            });
+                        }
                     }),
                     error: (function (e) {
-                        log('Service request failure: ' + e);
+                        bootbox.alert('Service request failure: ' + e);
                     }),
                     complete: (function (e) {
                     })
@@ -411,10 +430,12 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
         _listenOpenRemoteStatus: function () {
             var self = this;
             $(Elements.FQ_OPEN_CUSTOMER_REMOTE_STATUS).on('click', function (e) {
+                var line_id = self.m_fqCreatorView.getSelectedLine()
                 var data = {
                     call_type: 'REMOTE_STATUS',
                     business_id: BB.Pepper.getUserData()['businessID'],
-                    line_id: self.m_fqCreatorView.getSelectedLine()
+                    line_id: line_id,
+                    line_name: self.m_fqCreatorView.getSelectedLineName(line_id)
                 };
                 data = $.base64.encode(JSON.stringify(data));
                 var url = BB.CONSTS.BASE_URL + '?mode=remoteStatus&param=' + data;

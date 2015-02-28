@@ -209,7 +209,7 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
         },
 
         /**
-         Calculate average respond and service customer times
+         Calculate average respond and service line times
          @method _calcAverages
          **/
         _calcAverages: function () {

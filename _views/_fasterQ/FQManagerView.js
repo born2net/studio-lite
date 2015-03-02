@@ -230,6 +230,8 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
                     // customer called & serviced
                     var xEntered = new XDate(entered);
                     var minFromEnteredToCalled = xEntered.diffMinutes(called);
+                    if (minFromEnteredToCalled < 0)
+                        minFromEnteredToCalled = 1;
                     avgCalledTime.push(minFromEnteredToCalled);
 
                     var xCalled = new XDate(called);
@@ -241,6 +243,8 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
                     // customer called not serviced
                     var xEntered = new XDate(entered);
                     var minFromEnteredToCalled = xEntered.diffMinutes(called);
+                    if (minFromEnteredToCalled < 0)
+                        minFromEnteredToCalled = 1;
                     avgCalledTime.push(minFromEnteredToCalled);
                 }
             });

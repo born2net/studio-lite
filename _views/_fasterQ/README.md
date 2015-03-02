@@ -3,7 +3,7 @@ FasterQueue, custom line management
 
 Features:
 ------------------------------------------------------------------------
-- powered by StudioLite
+- powered by StudioLite https://github.com/born2net/signagestudio_web-lite
 - Customers can join the line over the web, through QR, email or physical on location
 - Verification id ensures each customer can be verified before being served
 - Unlimited customer lines and real time Line control for your business

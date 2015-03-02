@@ -51,7 +51,7 @@ define(['jquery', 'backbone', 'platform'], function ($, Backbone, platform) {
          @method promptOnExit
          **/
         promptOnExit: function () {
-            if (this.inDevMode()){
+            if (!this.inDevMode()){
                 $(window).on('beforeunload', function () {
                     return 'Did you save your work?'
                 });

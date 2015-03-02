@@ -51,10 +51,22 @@ define(['jquery', 'backbone', 'platform'], function ($, Backbone, platform) {
          @method promptOnExit
          **/
         promptOnExit: function () {
-            if (window.location.href.indexOf('dist') > -1) {
+            if (this.inDevMode()){
                 $(window).on('beforeunload', function () {
                     return 'Did you save your work?'
                 });
+            }
+        },
+
+        /**
+         Prompt on application exit
+         @method inDevMode
+         **/
+        inDevMode: function () {
+            if (window.location.href.indexOf('dist') > -1) {
+                return false;
+            } else {
+                return true;
             }
         },
 

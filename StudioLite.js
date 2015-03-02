@@ -21,7 +21,6 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             BB.CONSTS.APP_STUDIO_LITE = '0';
             BB.CONSTS.APP_CUSTOMER_TERMINAL = '1';
             BB.CONSTS.APP_REMOTE_STATUS = '2';
-            BB.CONSTS.ROOT_URL = 'https://secure.digitalsignage.com:442';
             BB.CONSTS.BASE_URL =  BB.CONSTS.ROOT_URL + '/_studiolite-dev/studiolite.html';
             BB.globs['UNIQUE_COUNTER'] = 0;
             BB.globs['RC4KEY'] = '226a3a42f34ddd778ed2c3ba56644315';
@@ -41,6 +40,8 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             BB.platform = platform;
             BB.lib.forceBrowserCompatibility();
             BB.lib.promptOnExit();
+            BB.CONSTS.ROOT_URL = 'https://secure.digitalsignage.com' + (BB.lib.inDevMode() ? ':442' : '');
+
             $.ajaxSetup({
                 cache: false,
                 timeout: 3000

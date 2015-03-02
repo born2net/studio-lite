@@ -61,12 +61,13 @@ define(['jquery', 'backbone', 'platform'], function ($, Backbone, platform) {
         /**
          Prompt on application exit
          @method inDevMode
+         @return {Boolean}
          **/
         inDevMode: function () {
-            if (window.location.href.indexOf('dist') > -1) {
-                return false;
-            } else {
+            if (window.location.href.indexOf('dev') > -1) {
                 return true;
+            } else {
+                return false;
             }
         },
 

@@ -1,6 +1,6 @@
 FasterQueue, custom line management
 ---------------------------------------
-In this release we are proud to introduce FasterQueue, a 100% FREE solution for customer line management that integrates with your digital signage presentation. With FasterQueue your customers can enter a virtual queue over the web or at your place of businesses, through a touch screen or kiosks.
+FasterQueue is an open source, free solution for customer line management that integrates with your http://www.digitalsignage.com. With FasterQueue your customers can enter a virtual queue over the web or at your place of businesses, through a touch screen or kiosks.
 
 The Queue Manager allows your employees full control on who to serve next and retrieve analytics on current progress and service times. Best of all, your customers can receive live status via SMS, email, web and a mobile app so they can stay informed on their current position in line.
 

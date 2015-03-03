@@ -6,7 +6,7 @@ FasterQueue is integrated as part of the open source project StudioLite: https:/
 
 The Queue Manager allows your employees full control on who to serve next and retrieve analytics on current progress and service times. Best of all, your customers can receive live status via SMS, email, web and a mobile app so they can stay informed on their current position in line.
 
-Enterprise users will also enjoy multi terminal support to manage multiple lines at the same physical location. FasterQueue is easy to setup and because it integrates with our Digital Signage solution, it means you can mix engaging contents with your customer queue manager.
+Enterprise users will also enjoy multi terminal support to manage multiple lines at the same physical location. FasterQueue is easy to setup and because it integrates with DigitalSignage.com, you can mix engaging content with your customer queue manager.
 
 To learn more about FasterQueue customer line management visit: http://fq.digitalsignage.com
 

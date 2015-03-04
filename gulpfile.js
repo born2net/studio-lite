@@ -73,8 +73,8 @@ gulp.task('_genDocs', function () {
                 "version": version,
                 "url": "http://digitalsignage.com",
                 "logo": "http://www.digitalsignage.com/_images/logo.png",
-                "themedir": "c:/msweb/signagestudio_web-lite/_doctheme/",
-                "helpers": ["c:/msweb/signagestudio_web-lite/_doctheme/helpers/helpers.js"],
+                "themedir": "_doctheme/",
+                "helpers": ["_doctheme/helpers/helpers.js"],
                 "options": {
                     "linkNatives": "true",
                     "attributesEmit": "true",

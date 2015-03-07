@@ -75,7 +75,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
                 var fqSwitchMode = self.m_simpleStorage.get('fqSwitchMode');
                 if (_.isUndefined(fqSwitchMode)) {
-                    fqSwitchMode = 1;
+                    fqSwitchMode = 0;
                     self.m_simpleStorage.set('fqSwitchMode', fqSwitchMode);
                 }
                 $(Elements.FQ_SWITCH_OPTION + ' option[value=' + fqSwitchMode + ']').attr("selected", "selected");

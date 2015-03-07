@@ -1019,8 +1019,8 @@
                             </div>
                             <span id="stationPollLabel">120</span>
                         </div>
-
                         <div class="settingsItem">
+                            <p data-localize="pollingDesc">Set how often (in seconds) remote stations should polled for status</p>
                             <hr/>
                             <label style="padding-right: 78px; width: 200px" for="previewFullOption"
                                    data-localize="fullScreenPreview">Full screen
@@ -1029,21 +1029,24 @@
                                 <option value="1" data-localize="off">Off</option>
                                 <option value="0" data-localize="on">On</option>
                             </select>
+                            <p data-localize="fqFullScreen">Allow to preview campaigns, timlines and scenes in full screen</p>
                             <hr/>
                             <label style="padding-right: 144px; width: 200px" for="themeOption" data-localize="themeSwitch">Theme</label>
                             <select id="themeOption" name="preview full screen" data-role="slider">
                                 <option value="light" data-localize="light">light</option>
                                 <option value="dark" data-localize="dark">dark</option>
                             </select>
+                            <p data-localize="fqThemeDesc">Choose between a dark and a light theme for StudioLite</p>
                             <br/>
                             <hr/>
                             <!-- debug alpha mode FQ -->
                             <div>
                                 <label style="padding-right: 144px; width: 200px" for="fqSwitchOption" data-localize="fqSwitch">FasterQueue</label>
                                 <select id="fqSwitchOption" name="preview full screen" data-role="slider">
-                                    <option selected value="0" data-localize="off">Off</option>
+                                    <option value="0" data-localize="off">Off</option>
                                     <option value="1" data-localize="on">On</option>
                                 </select>
+                                <p data-localize="fqDesc">FasterQueue allows you to manage customer lines using a 'now serving' queue with remote notification</p>
                             </div>
                         </div>
                     </div>

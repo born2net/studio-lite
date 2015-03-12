@@ -1,0 +1,9 @@
+set ssl-allow true
+set ssl:verify-certificate no
+set passive-mode yes
+open galaxy.signage.me
+set ftp:ssl-protect-data true
+user some_user some_pass
+mput digg.zip
+# ls
+close

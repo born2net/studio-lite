@@ -236,7 +236,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         logout: function () {
             $.removeCookie('signagestudioweblite', {path: '/'});
             $.cookie('signagestudioweblite', '', {expires: -300});
-            window.location.href = 'http://www.digitalsignage.com/msgetstarted/msgetstarted.html#logout';
+            if (BB.Pepper.getUserData().resellerID == 1)
+                window.location.href = 'http://www.digitalsignage.com';
         }
     });
 

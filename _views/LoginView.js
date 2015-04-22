@@ -13,7 +13,6 @@ define(['jquery', 'backbone', 'bootbox'], function ($, Backbone, Bootbox) {
          @method initialize
          **/
         initialize: function () {
-
             $(Elements.LOGIN_BUTTON).on('click', function () {
                 if ($(Elements.USER_NAME).val().length > 1 && $(Elements.USER_PASS).val().length > 1) {
                     var user = $.base64.encode($(Elements.USER_NAME).val());
@@ -24,7 +23,9 @@ define(['jquery', 'backbone', 'bootbox'], function ($, Backbone, Bootbox) {
             });
 
             $(Elements.CREATE_ACCOUNT_BUTTON).on('click', function () {
-                window.open('http://galaxy.mediasignage.com/WebService/signagestudio.aspx', '_self');
+                $(window).off('beforeunload');
+                window.open('http://www.digitalsignage.com/msgetstarted/msgetstarted.html#studioSelectView/3', '_self');
+                //window.open('http://galaxy.mediasignage.com/WebService/signagestudio.aspx', '_self');
                 return false;
             })
         }

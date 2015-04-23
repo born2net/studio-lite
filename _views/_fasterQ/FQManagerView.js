@@ -330,6 +330,8 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
             var self = this;
             if (_.isUndefined(i_model))
                 return;
+            if (!self.m_inView)
+                return;
             $(Elements.FQ_SELECTED_QUEUE).text(i_model.get('service_id'));
             $(Elements.FQ_VERIFICATION).text(i_model.get('verification') == -1 ? 'print out' : i_model.get('verification'));
             $(Elements.FQ_CALLED_BY).text(_.isNull(i_model.get('called_by')) ? 'none' : i_model.get('called_by'));

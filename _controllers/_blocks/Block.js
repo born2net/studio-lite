@@ -35,6 +35,14 @@ define(['jquery', 'backbone'], function ($) {
     BB.EVENTS.BLOCK_BORDER_CHANGE = 'BLOCK_BORDER_CHANGE';
 
     /**
+     event fires when fasterq background color changed
+     @event Block.FASTERQ_BG_COLOR_CHANGE
+     @param {this} caller
+     @param {String} selected block_id
+     **/
+    BB.EVENTS.FASTERQ_BG_COLOR_CHANGE = 'FASTERQ_BG_COLOR_CHANGE';
+
+    /**
      event fires when scene blocks freshly re-rendered onto the scene canvas so we need to update the UI of ALL blocks
      normally occurs after a Block.SCENE_BLOCK_CHANGE event
      @event Block.SCENE_BLOCKS_RENDERED

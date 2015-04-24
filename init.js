@@ -64,6 +64,7 @@ require.config({
         'BlockRSS': '_controllers/_blocks/BlockRSS',
         'BlockQR': '_controllers/_blocks/BlockQR',
         'BlockYouTube': '_controllers/_blocks/BlockYouTube',
+        'BlockFasterQ': '_controllers/_blocks/BlockFasterQ',
         'BlockTwitter': '_controllers/_blocks/BlockTwitter',
         'BlockTwitterItem': '_controllers/_blocks/BlockTwitterItem',
         'BlockVideo': '_controllers/_blocks/BlockVideo',

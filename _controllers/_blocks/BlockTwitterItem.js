@@ -80,7 +80,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         },
 
         /**
-         Populate the youtube playlist label (most viewed / custom list)
+         Populate the twitter label (most viewed / custom list)
          @method _populatePlayItemLabel
          @params {String} i_label
          **/

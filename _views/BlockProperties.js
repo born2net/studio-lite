@@ -85,6 +85,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
             self._alphaSliderInit();
             self._bgGradientInit();
             self._bgSceneInit();
+            self._bgFasterQColorInit();
             self._borderSceneColorInit();
             self._propLengthKnobsInit();
             self._videoVolumeSliderInit()
@@ -96,6 +97,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
             self._datepickerDayDurationInit();
             self._rssPollTimeInit();
             self._youtubeInit();
+            self._fasterQInit();
             self._labelFontSelectorInit();
             self._twitterFontSelectorInit();
             self._labelClockFontSelectorInit();
@@ -160,7 +162,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         },
 
         /**
-         Init the scene backgroud selector
+         Init the scene background selector
          @method _bgSceneInit
          **/
         _bgSceneInit: function () {
@@ -184,6 +186,34 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                 theme: 'bootstrap'
             };
             $(Elements.SCENE_BACKGROUND_SELECTOR).minicolors(colorSettings);
+        },
+
+        /**
+         Init the fasterq background color selector
+         @method _bgFasterQColorInit
+         **/
+        _bgFasterQColorInit: function () {
+            var self = this;
+
+            // show: $.proxy(self._onSceneColorToggle, self),
+            // hide: $.proxy(self._onSceneColorToggle, self),
+            var colorSettings = {
+                animationSpeed: 50,
+                animationEasing: 'swing',
+                change: $.proxy(self._onFasterQBgColorSelected, self),
+                changeDelay: 100,
+                control: 'hue',
+                value: '#ffffff',
+                defaultValue: '#428bca',
+                hideSpeed: 100,
+                inline: false,
+                letterCase: 'lowercase',
+                opacity: false,
+                position: 'bottom left',
+                showSpeed: 100,
+                theme: 'bootstrap'
+            };
+            $(Elements.FASTERQ_BLOCK_COLOR_SELECTOR).minicolors(colorSettings);
         },
 
         /**
@@ -211,6 +241,15 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                 theme: 'bootstrap'
             };
             $(Elements.SCENE_BORDER_COLOR_SELECTOR).minicolors(colorSettings);
+        },
+        /**
+         On fasterQ background color selected by minicolors
+         @method _onFasterQBgColorSelected
+         @param {String} i_color
+         **/
+        _onFasterQBgColorSelected: function(i_color){
+            var self = this;
+            BB.comBroker.fire(BB.EVENTS.FASTERQ_BG_COLOR_CHANGE, self, self, i_color);
         },
 
         /**
@@ -449,6 +488,14 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         _youtubeInit: function(){
             var self = this;
             self.m_youtubeQualityMeter = new BarMeterView({el: Elements.YOUTUBE_QUALITY_METER});
+        },
+
+        /**
+         Init the fasterq properties
+         @method _fasterQInit
+         **/
+        _fasterQInit: function(){
+            var self = this;
         },
 
         /**

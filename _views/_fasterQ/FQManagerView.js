@@ -20,6 +20,7 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
             self.m_stopWatchHandle = new Stopwatch();
             self.m_liveUpdatehandler = undefined;
             self.m_inView = false;
+            self.m_masterPanelInView = true;
             self.m_fqQueuePropView = new FQQueuePropView({
                 el: Elements.FASTERQ_QUEUE_PROPERTIES
             });
@@ -30,12 +31,20 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
             self._listenGoBack();
             self._listenOpenRemoteStatus();
 
-
+            self.listenTo(self.options.stackViewMaster, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
+                if (e.$el.selector == Elements.FASTERQ_PANEL) {
+                    self.m_masterPanelInView = true;
+                } else {
+                    self.m_masterPanelInView = false;
+                }
+            });
 
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self) {
                     self.m_inView = true;
                     self.m_liveUpdatehandler = setInterval(function () {
+                        if (!self.m_masterPanelInView)
+                            return;
                         self._getQueues(false);
                         self._pollNowServicing();
                     }, 10000);

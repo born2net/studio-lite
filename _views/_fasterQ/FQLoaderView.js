@@ -61,7 +61,8 @@ define(['jquery', 'backbone', 'StackView', 'simplestorage'], function ($, Backbo
 
                 self.m_fasterQManagerView = new FQManagerView({
                     el: Elements.FASTERQ_MANAGER_CONTAINER,
-                    stackView: self.m_stackView
+                    stackView: self.m_stackView,
+                    stackViewMaster: self.options.stackView
                 });
 
                 self.m_stackView.addView(self.m_fasterQNavigationView);

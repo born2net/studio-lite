@@ -101,7 +101,7 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
         _pollNowServicing: function () {
             var self = this;
             $.ajax({
-                url: '/LastCalledQueue',
+                url: BB.CONSTS.ROOT_URL + '/LastCalledQueue',
                 data: {
                     business_id: BB.Pepper.getUserData()['businessID'],
                     line_id: self.m_fqCreatorView.getSelectedLine()

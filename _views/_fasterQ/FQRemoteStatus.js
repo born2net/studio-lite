@@ -157,7 +157,7 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage', 'moment'
             var self = this;
             var lastCalledQueue = function () {
                 $.ajax({
-                    url: '/LastCalledQueue',
+                    url: BB.CONSTS.ROOT_URL + '/LastCalledQueue',
                     data: {
                         business_id: self.m_lineModel.get('business_id'),
                         line_id: self.m_lineModel.get('line_id')
@@ -186,7 +186,7 @@ define(['jquery', 'backbone', 'bootbox', 'QueueModel', 'simplestorage', 'moment'
         _getServerDateTime: function (i_cb) {
             var self = this;
             $.ajax({
-                url: '/GetDateTime',
+                url: BB.CONSTS.ROOT_URL + '/GetDateTime',
                 success: function (dateTime) {
                     $.proxy(i_cb, self)(dateTime);
                 },

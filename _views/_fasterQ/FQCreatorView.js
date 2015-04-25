@@ -200,7 +200,7 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
                 bootbox.prompt('are you sure you want to reset the counter? (enter password)',function(i_password){
                     if (i_password != '123') return;
                     $.ajax({
-                        url: '/ResetQueueCounter',
+                        url: BB.CONSTS.ROOT_URL + '/ResetQueueCounter',
                         data: {
                             business_id: BB.Pepper.getUserData().businessID,
                             line_id: self.m_selectedLineID,

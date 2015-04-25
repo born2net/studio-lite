@@ -105,7 +105,7 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel', 'moment'], func
         _sendQueueEmail: function (i_email) {
             var self = this;
             $.ajax({
-                url: '/SendQueueSMSEmail',
+                url: BB.CONSTS.ROOT_URL + '/SendQueueSMSEmail',
                 data: {
                     business_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('business_id'),
                     line_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id'),
@@ -131,7 +131,7 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel', 'moment'], func
         _sendQueueSMS: function (i_sms) {
             var self = this;
             $.ajax({
-                url: '/SendQueueSMSEmail',
+                url: BB.CONSTS.ROOT_URL + '/SendQueueSMSEmail',
                 data: {
                     business_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('business_id'),
                     line_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id'),

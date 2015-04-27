@@ -42,7 +42,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
 
             self.m_placement = options.placement;
 
-            // Clone AddBlockTemplate
+            // Clone the AddBlockTemplate
             var e = $(Elements.ADD_BLOCK_TEMPLATE).clone();
             $(self.options.el).append(e).fadeIn();
             $(e).show();
@@ -230,6 +230,11 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
          **/
         _checkAllowedComponent: function (i_componentID) {
             // free component so show it
+
+            // FasterQ, open to all
+            if (i_componentID==6100){
+                return 1;
+            }
             var appID = BB.PepperHelper.getBlockBoilerplate(i_componentID).app_id;
             if (_.isUndefined(appID))
                 return 1;
@@ -252,7 +257,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
          **/
         _buildBSAccordion: function () {
             var self = this;
-            var uniqueID = _.uniqueId('addBlockAccord')
+            var uniqueID = _.uniqueId('addBlockAccord');
             self.$el.find('#addNewBlockListPanel').attr('id', uniqueID);
             self.$el.find('a').attr('data-parent', '#' + uniqueID).eq(0);
             for (var i = 0; i < 3; i++) {

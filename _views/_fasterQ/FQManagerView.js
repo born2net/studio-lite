@@ -1,5 +1,5 @@
 /**
- Settings Backbone View
+ Settings Backbone -> View
  @class FQManagerView
  @constructor
  @return {Object} instantiated FQManagerView

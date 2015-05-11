@@ -55,7 +55,15 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
         initialize: function () {
             var self = this;
             BB.comBroker.setService(BB.SERVICES['BLOCK_FACTORY'], self);
-            self.x2js = new X2JS({escapeMode: true, attributePrefix: "_", arrayAccessForm: "none", emptyNodeForm: "text", enableToStringFunc: true, arrayAccessFormPaths: [], skipEmptyTextNodesForObj: true});
+            self.x2js = new X2JS({
+                escapeMode: true,
+                attributePrefix: "_",
+                arrayAccessForm: "none",
+                emptyNodeForm: "text",
+                enableToStringFunc: true,
+                arrayAccessFormPaths: [],
+                skipEmptyTextNodesForObj: true
+            });
             BB.comBroker.setService('compX2JS', this.x2js);
         },
 
@@ -65,7 +73,7 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
          **/
         loadBlockModules: function () {
             var self = this;
-            require(['BlockProperties', 'Block', 'BlockScene', 'BlockRSS', 'BlockQR', 'BlockYouTube', 'BlockFasterQ', 'BlockTwitter', 'BlockTwitterItem', 'BlockVideo', 'BlockImage', 'BlockExtImage', 'BlockExtVideo', 'BlockMRSS', 'BlockHTML', 'BlockLabel', 'BlockClock'  ], function (BlockProperties, Block, BlockScene, BlockRSS, BlockQR, BlockYouTube, BlockFasterQ, BlockTwitter, BlockTwitterItem, BlockVideo, BlockImage, BlockExtImage, BlockExtVideo, BlockMRSS, BlockHTML, BlockLabel, BlockClock) {
+            require(['BlockProperties', 'Block', 'BlockScene', 'BlockRSS', 'BlockQR', 'BlockYouTube', 'BlockFasterQ', 'BlockTwitter', 'BlockTwitterItem', 'BlockVideo', 'BlockImage', 'BlockExtImage', 'BlockExtVideo', 'BlockMRSS', 'BlockHTML', 'BlockLabel', 'BlockClock'], function (BlockProperties, Block, BlockScene, BlockRSS, BlockQR, BlockYouTube, BlockFasterQ, BlockTwitter, BlockTwitterItem, BlockVideo, BlockImage, BlockExtImage, BlockExtVideo, BlockMRSS, BlockHTML, BlockLabel, BlockClock) {
                 if (self.m_blockProperties)
                     return;
                 self.m_blockProperties = new BlockProperties({el: Elements.BLOCK_PROPERTIES});
@@ -86,9 +94,7 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
                 self.m_blockLabel = BlockLabel;
                 self.m_blockClock = BlockClock;
 
-                setTimeout(function(){
-                    BB.comBroker.fire(BB.EVENTS.BLOCKS_LOADED);
-                },2000)
+                BB.comBroker.fire(BB.EVENTS.BLOCKS_LOADED);
 
             });
         },

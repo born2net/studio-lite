@@ -79,8 +79,8 @@ define(['jquery', 'backbone', 'platform'], function ($, Backbone, platform) {
             if (window.location.href.indexOf('dist') > -1) {
                 //Bugsense.initAndStartSession( { apiKey: "32eabe70" } );
                 //Bugsense.initAndStartSession( { apiKey: "f09b1967" } );
-                Bugsense.initAndStartSession( { apiKey: "fc064f8c" } );
-                Bugsense.addExtraData('business_id', i_businessID);
+                //Bugsense.initAndStartSession( { apiKey: "fc064f8c" } );
+                //Bugsense.addExtraData('business_id', i_businessID);
             }
         },
 

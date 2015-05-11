@@ -32,7 +32,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 window.x2js = new X2JS({escapeMode: true, attributePrefix: "_", arrayAccessForm: "none", emptyNodeForm: "text", enableToStringFunc: true, arrayAccessFormPaths: [], skipEmptyTextNodesForObj: true});
                 BB.comBroker.setService('compX2JS', window.x2js);
                 BB.comBroker.setService('XDATE', new XDate());
-
+                self._routed = false;
                 self._initLoginPage();
                 self._listenLogoHover();
                 self._listenSizeChanges();
@@ -116,16 +116,20 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
              **/
             _routeApp: function () {
                 if (this.m_appAuth.authenticated) {
-                    this._disableBack();
-                    this._initContentPage();
-                    this._initProperties();
-                    this._initCampaignWizardPage();
-                    this._initModal();
-                    this._initDashBoard();
-                    this._initCustomer();
+                    if (!self._routed){
+                        self._routed = true;
+                        this._disableBack();
+                        this._initContentPage();
+                        this._initProperties();
+                        this._initCampaignWizardPage();
+                        this._initModal();
+                        this._initDashBoard();
+                        this._initCustomer();
 
-                    // inject pseudo scene / player IDs
-                    pepper.injectPseudoScenePlayersIDs();
+                        // inject pseudo scene / player IDs
+                        pepper.injectPseudoScenePlayersIDs();
+                    }
+
                 } else {
                     this.navigate('unauthenticated', {trigger: true});
                 }

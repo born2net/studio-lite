@@ -80,6 +80,13 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 }
                 $(Elements.FQ_SWITCH_OPTION + ' option[value=' + fqSwitchMode + ']').attr("selected", "selected");
 
+                var adStatsSwitchMode = self.m_simpleStorage.get('adStatsMode');
+                if (_.isUndefined(adStatsSwitchMode)) {
+                    adStatsSwitchMode = 0;
+                    self.m_simpleStorage.set('adStatsMode', adStatsSwitchMode);
+                }
+                $(Elements.AD_STATS_SWITCH_OPTION + ' option[value=' + adStatsSwitchMode + ']').attr("selected", "selected");
+
                 self.m_stationsPollingSlider = $(Elements.STATION_POLL_SLIDER).noUiSlider({
                     handles: 1,
                     start: [pollStationsTime],
@@ -93,6 +100,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 self._listenStationsPollingSlider();
                 self._listenBannerPreviewChange();
                 self._listenFasterQueueSwitchChange();
+                self._listenAdStatsSwitchChange();
                 self._listenThemeChange();
 
             });
@@ -111,6 +119,23 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     $(Elements.CLASS_FASTERQ_PANEL).fadeIn();
                 } else {
                     $(Elements.CLASS_FASTERQ_PANEL).fadeOut();
+                }
+            });
+        },
+
+        /**
+         Listen changes in FasterQueue settings options
+         @method _listenAdStatsSwitchChange
+         **/
+        _listenAdStatsSwitchChange: function () {
+            var self = this;
+            $(Elements.AD_STATS_SWITCH_OPTION).on('change', function (e) {
+                var state = $(Elements.AD_STATS_SWITCH_OPTION + ' option:selected').val();
+                self.m_simpleStorage.set('adStatsMode', state);
+                if (state=="1"){
+                    $(Elements.CLASS_ADSTATS_PANEL).fadeIn();
+                } else {
+                    $(Elements.CLASS_ADSTATS_PANEL).fadeOut();
                 }
             });
         },

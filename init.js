@@ -26,6 +26,8 @@ require.config({
         'Cookie': '_common/_js/cookie/jquery.cookie',
         'gradient': '_common/_js/gradient/jquery.gradientPicker',
         'minicolors': '_common/_js/minicolors/jquery.minicolors',
+        'datatables': '_common/_js/datatables/media/js/jquery.dataTables',
+        'datatablestools': '_common/_js/datatables/extensions/TableTools/js/dataTables.tableTools',
         'colorpicker': '_common/_js/gradient/colorpicker',
         'timepicker': '_common/_js/timepicker/bootstrap-timepicker',
         'datepicker': '_common/_js/datepicker/bootstrap-datepicker',
@@ -103,6 +105,8 @@ require.config({
         'SettingsView': '_views/SettingsView',
         'ProStudioView': '_views/ProStudioView',
         'HelpView': '_views/HelpView',
+        'AdStatsView': '_views/AdStatsView',
+        'AdStatsLoaderView': '_views/AdStatsLoaderView',
         'InstallView': '_views/InstallView',
         'LogoutView': '_views/LogoutView',
         'PropertiesView': '_views/PropertiesView',
@@ -173,6 +177,13 @@ require.config({
         },
         'qrcode': {
             exports: 'qrcode'
+        },
+        'datatables': {
+            exports: 'datatables'
+        },
+        'datatablestools': {
+            dep: ['datatables'],
+            exports: 'datatablestools'
         },
         'underscore': {
             exports: '_'

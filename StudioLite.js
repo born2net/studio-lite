@@ -40,7 +40,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             BB.lib.forceBrowserCompatibility();
             BB.lib.promptOnExit();
             BB.CONSTS.ROOT_URL = 'https://secure.digitalsignage.com' + (BB.lib.inDevMode() ? ':442' : '');
-            BB.CONSTS.BASE_URL =  BB.CONSTS.ROOT_URL + (BB.lib.inDevMode() ? '/_studiolite-dev/studiolite.html' : '/_studiolite-dist/studiolite.html') ;
+            BB.CONSTS.BASE_URL = BB.CONSTS.ROOT_URL + (BB.lib.inDevMode() ? '/_studiolite-dev/studiolite.html' : '/_studiolite-dist/studiolite.html');
 
             $.ajaxSetup({
                 cache: false,
@@ -69,21 +69,23 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
 
             // FQ Customer Terminal
             if (!_.isNull(mode) && (mode[2] == 'customerTerminal' || mode[2] == 'remoteStatus')) {
-                switch (mode[2]){
-                    case 'customerTerminal': {
+                switch (mode[2]) {
+                    case 'customerTerminal':
+                    {
                         app = BB.CONSTS.APP_CUSTOMER_TERMINAL;
                         break;
                     }
-                    case 'remoteStatus': {
+                    case 'remoteStatus':
+                    {
                         app = BB.CONSTS.APP_REMOTE_STATUS;
                         break;
                     }
                 }
                 require(['FQTerminalController', 'Events'], function (FQTerminalController) {
-                        new FQTerminalController({
-                            param: mode[4],
-                            app: app
-                        });
+                    new FQTerminalController({
+                        param: mode[4],
+                        app: app
+                    });
                 });
                 return;
             }
@@ -94,6 +96,16 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
                 BB.history.start();
                 LayoutRouter.navigate('authenticate/_/_', {trigger: true});
             });
+
+            /*
+            var token64 = 'eyJhY2Nlc3NfdG9rZW4iOiJ5YTI5LmhRSG5oR19McFhZOHhXeHRaN0hGbFBJUzlCdWpJVlpJX3pOUVc0dGRWLXVEN2FYMjd1dXVZZmtLQ2ZFbVh5d0NuZHQtNk1CV25iaGVQUSIsInRva2VuX3R5cGUiOiJCZWFyZXIiLCJpZF90b2tlbiI6ImV5SmhiR2NpT2lKU1V6STFOaUlzSW10cFpDSTZJbVEyWm1NNE1qRXdaREEwWmpka016bGpOamczT0RNeFpUZGxOelF4T0dVNE1tWmhaVGt5TURRaWZRLmV5SnBjM01pT2lKaFkyTnZkVzUwY3k1bmIyOW5iR1V1WTI5dElpd2ljM1ZpSWpvaU1URTBNVEEzTlRrd056VXpOemM1TnpZNU9EUXhJaXdpWVhwd0lqb2lPVGd4T1RNMU56WTVNRE10T0dad2JHcGljM1EyTjJkMk1HSmljemhvWTI1MGEyWTJOVEJuWXpKMk5qVXVZWEJ3Y3k1bmIyOW5iR1YxYzJWeVkyOXVkR1Z1ZEM1amIyMGlMQ0poZEY5b1lYTm9Jam9pVjFsbE5VWkNSa0pGTkRSNE15MTRUbTVFWTFCTVFTSXNJbUYxWkNJNklqazRNVGt6TlRjMk9UQXpMVGhtY0d4cVluTjBOamRuZGpCaVluTTRhR051ZEd0bU5qVXdaMk15ZGpZMUxtRndjSE11WjI5dloyeGxkWE5sY21OdmJuUmxiblF1WTI5dElpd2lhV0YwSWpveE5ETXpNVGd4TWpFeExDSmxlSEFpT2pFME16TXhPRFE0TVRGOS5abjYzYXFtLW83WmZsQ3VNN1Rvc1I5MHh3VHdzYjlvajdiLWZ6QlQ5dzNfYVk4N3NpeG9UTUoxU0N1VER1NktCNURmaUF4blc3QjRBMjBBTGZ0UzlzakJfNUxxeXJZelNsUUF1MUN4aVB0bjN4czg4akUwWGgwbnlJQ2tBSTBTYmQ0MmstTEFMTkJzelRJMjZTVWhCUWlIdXdFNTBubXd3UkJJMFBPLXh3ZkUiLCJyZWZyZXNoX3Rva2VuIjoiMS9qa0RlLWdSdTNBODhFd05jX3BBQWxEX3FjR3NhUjMtZ2wyM0hRZWk2QzZrIiwiZXhwaXJ5X2RhdGUiOjE0MzMxODQ5ODU1MjN9';
+            var fileid = '0B8cIoiRdLq3JNGd4RjZDckJWMVE';
+            var url = 'https://secure.digitalsignage.com:442/GoogleAjaxFileLink/' + token64 + '/' + fileid;
+            $.get(url, function (res) {
+                window.location.href = res.url;
+                console.log(res.url)
+            });
+            */
         }
     });
 

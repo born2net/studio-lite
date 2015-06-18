@@ -258,7 +258,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                     stackView: self.m_appContentFaderView
                 });
 
-                self.m_fasterQLoaderView = new AdStatsLoaderView({
+                self.m_adStatsLoaderView = new AdStatsLoaderView({
                     el: Elements.AD_STATS_PANEL,
                     stackView: self.m_appContentFaderView
                 });
@@ -289,6 +289,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 self.m_appContentFaderView.addView(self.m_sceneLoaderView);
                 self.m_appContentFaderView.addView(self.m_settingsView);
                 self.m_appContentFaderView.addView(self.m_fasterQLoaderView);
+                self.m_appContentFaderView.addView(self.m_adStatsLoaderView);
                 self.m_appContentFaderView.addView(self.m_proStudioView);
                 self.m_appContentFaderView.addView(self.m_helpView);
                 self.m_appContentFaderView.addView(self.m_installView);

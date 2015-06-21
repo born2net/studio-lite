@@ -267,7 +267,7 @@ Pepper.prototype = {
      @param {Number} i_playerData
      @return {Number} i_month clientId.
      **/
-    getProofOfPlayStats: function (i_callBack, i_year, i_month) {
+    getProofOfPlayStats: function (i_year, i_month, i_callBack) {
         var self = this;
         self.m_loaderManager.requestAdsReport(function (data) {
             log(data);

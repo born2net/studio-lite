@@ -145,7 +145,7 @@
   "firstChannel": "first channel",
   "firstName": "First name",
   "font": "Font",
-  "fqDesc": "FasterQueue allows you to manage customer lines using a 'now serving' queue with remote notification",
+  "fqDesc": "FasterQueue allows you to manage customer lines using a serving queue with remote notification",
   "fqFullScreen": "Allow to preview campaigns, timlines and scenes in full screen",
   "showLiveAdStats": "Show live Advertsing statistics",
   "fqOpenCustomerRemoteStatus": "Open Remote Status",

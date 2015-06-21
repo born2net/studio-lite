@@ -15,12 +15,39 @@ define(['jquery', 'backbone', 'datatables', 'datatablestools'], function ($, Bac
         initialize: function () {
             var self = this;
             self._listenNavigation();
-            $(Elements.AD_STATS_DATATABLE).DataTable({
+
+            var data = [
+                [
+                    "Tiger Nixon",
+                    "System Architect",
+                    "Edinburgh",
+                    "5421",
+                    "2011/04/25",
+                    "$3,120"
+                ],
+                [
+                    "Garrett Winters",
+                    "Director",
+                    "Edinburgh",
+                    "8422",
+                    "2011/07/25",
+                    "$5,300"
+                ]
+            ];
+
+            var dt = $(Elements.AD_STATS_DATATABLE).dataTable({
+                data: data,
                 dom: 'T<"clear">lfrtip',
                 tableTools: {
                     "sSwfPath": "_common/_js/datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf"
                 }
             });
+
+            dt.fnClearTable();
+            BB.Pepper.getProofOfPlayStats('2015', '06', function (data) {
+                dt.fnAddData(data);
+            });
+
         },
 
         /**

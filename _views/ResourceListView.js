@@ -151,7 +151,7 @@ define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backb
 
                     // load svg and force w/h
                     $.get(srvPath, function(svg) {
-                        var hh, ww, svgHeight, svgWidth, re;
+                        var svgHeight, svgWidth, re;
 
                         svgHeight = svg.match(/(height=")([^\"]*)/)[2];
                         re = new RegExp('height="' + svgHeight + '"', "ig");

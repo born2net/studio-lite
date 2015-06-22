@@ -149,6 +149,7 @@ define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backb
                     var urlPath = $.base64.encode(path);
                     var srvPath = 'https://secure.digitalsignage.com/proxyRequest/' + urlPath;
 
+                    // load svg and force w/h
                     $.get(srvPath, function(svg) {
                         var hh, ww, svgHeight, svgWidth, re;
 
@@ -159,15 +160,13 @@ define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backb
                         svgWidth = svg.match(/(width=")([^\"]*)/)[2];
                         re = new RegExp('width="' + svgWidth + '"', "ig");
                         svg = svg.replace(re, 'width="100"');
+
                         $('#resourcePreviewSVG').empty();
                         var s = new String(svg);
                         $('#resourcePreviewSVG').append(svg).wrap('<center>');
-
                     });
-
                     break
                 }
-
             }
         },
 

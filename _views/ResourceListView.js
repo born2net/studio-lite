@@ -137,6 +137,16 @@ define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backb
                     $img.attr('src',path);
                     break
                 }
+                case 'svg': {
+                    //todo: add support
+                    return;
+                    var path = './_assets/flash.png';
+                    $(Elements.RESOURCE_PREVIEW_VIDEO).hide();
+                    $(Elements.RESOURCE_PREVIEW_IMAGE).fadeIn();
+                    var $img = $(Elements.RESOURCE_PREVIEW_IMAGE).find('img');
+                    $img.attr('src',path);
+                    break
+                }
 
             }
         },

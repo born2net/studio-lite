@@ -71,6 +71,7 @@ require.config({
         'BlockTwitterItem': '_controllers/_blocks/BlockTwitterItem',
         'BlockVideo': '_controllers/_blocks/BlockVideo',
         'BlockImage': '_controllers/_blocks/BlockImage',
+        'BlockSVG': '_controllers/_blocks/BlockSVG',
         'BlockExtImage': '_controllers/_blocks/BlockExtImage',
         'BlockExtVideo': '_controllers/_blocks/BlockExtVideo',
         'BlockClock': '_controllers/_blocks/BlockClock',

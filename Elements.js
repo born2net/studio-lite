@@ -29,6 +29,7 @@ Elements.BLOCK_COMMON_PROPERTIES = '#blockCommonProperties';
 Elements.BLOCK_EXT_IMAGE_COMMON_PROPERTIES = '#blockExtImageCommonProperties';
 Elements.BLOCK_EXT_VIDEO_COMMON_PROPERTIES = '#blockExtVideoCommonProperties';
 Elements.BLOCK_HTML_COMMON_PROPERTIES = '#blockHTMLCommonProperties';
+Elements.BLOCK_SVG_COMMON_PROPERTIES = '#blockSVGCommonProperties';
 Elements.BLOCK_IMAGE_COMMON_PROPERTIES = '#blockImageCommonProperties';
 Elements.BLOCK_LABEL_COMMON_PROPERTIES = '#blockLabelCommonProperties';
 Elements.BLOCK_LENGTH_HOURS = '#blockLengthHours';

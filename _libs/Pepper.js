@@ -870,7 +870,7 @@ Pepper.prototype = {
             var domSceneData = $.parseXML(recPlayerData['player_data_value']);
             var sceneID = $(domSceneData).find('Player').eq(0).attr('id');
             $(domSceneData).find('Player').each(function (i, playerData) {
-                $(playerData).find('[player="3100"],[player="3130"]').each(function (i, playeResourceData) {
+                $(playerData).find('[player="3100"],[player="3130"],[player="3140"]').each(function (i, playeResourceData) {
                     var playerDataID = $(this).attr('id');
                     var hResource = $(playeResourceData).find('Resource').attr('hResource');
                     if (hResource == i_resource_id) {

@@ -87,8 +87,9 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
                 var primeSnippet = '';
                 var faOpacity = 1;
                 var bufferSwitch = 0;
-                // don't show image or video component in component list
+                // don't show image, svg or video component in component list
                 if (componentID == '3130' ||
+                    componentID == '3140' ||
                     componentID == '3100' ||
                     componentID == '3510' ||
                     (self.m_placement == BB.CONSTS.PLACEMENT_CHANNEL && componentID == '4505') ||

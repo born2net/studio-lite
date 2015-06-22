@@ -1,6 +1,6 @@
 /**
  * Image block resides inside a scene or timeline
- * @class BlockImage
+ * @class BlockSVG
  * @extends Block
  * @constructor
  * @param {string} i_placement location where objects resides which can be scene or timeline
@@ -9,7 +9,7 @@
  */
 define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
-    var BlockImage = Block.extend({
+    var BlockSVG = Block.extend({
 
         /**
          Constructor
@@ -17,10 +17,10 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         constructor: function (options) {
             var self = this;
-            self.m_blockType = 3130;
+            self.m_blockType = 3140;
             _.extend(options, {blockType: self.m_blockType})
             Block.prototype.constructor.call(this, options);
-            self._initSubPanel(Elements.BLOCK_IMAGE_COMMON_PROPERTIES);
+            self._initSubPanel(Elements.BLOCK_SVG_COMMON_PROPERTIES);
             self._listenInputChange();
             self._initResourcesData();
         },
@@ -54,7 +54,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _loadBlockSpecificProps: function () {
             var self = this;
             self._populate();
-            this._viewSubPanel(Elements.BLOCK_IMAGE_COMMON_PROPERTIES);
+            this._viewSubPanel(Elements.BLOCK_SVG_COMMON_PROPERTIES);
         },
 
         /**
@@ -99,11 +99,89 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             $(Elements.IMAGE_ASPECT_RATIO + ' option[value="' + aspectRatio + '"]').prop("selected", "selected");
         },
 
+        // /var/www/sites/dynasite/htdocs/_msportal/_js/_node/public/assets/14.svg
+        /**
+         Convert the block into a fabric js compatible object, called externally on creation of block
+         @Override
+         @method fabricateBlock
+         **/
+        fabricateBlock: function (i_canvasScale, i_callback) {
+            var self = this;
+
+            var domPlayerData = self._getBlockPlayerData();
+            var layout = $(domPlayerData).find('Layout');
+
+            var w = parseInt(layout.attr('width'));
+            var h = parseInt(layout.attr('height'));
+            var rec = self._fabricRect(w, h, domPlayerData);
+
+            var svgPath = window.g_protocol + pepper.getUserData().domain + '/Resources/business' +  pepper.getUserData().businessID + '/resources/' + self.m_nativeID + '.' + self.m_fileFormat;
+            svgPath = 'https://secure.digitalsignage.com/_public/assets/15.svg';
+            // svgPath = 'https://ida.signage.me/Test/14.svg';
+            //svgPath = 'https://ida.signage.me/code/14.svg';
+            // svgPath = "https://s3-us-west-2.amazonaws.com/oregon-signage-resources/business372844/resources/14.svg";
+
+            $.get(svgPath, function(svg){
+                var hh,ww,svgHeight,svgWidth,re;
+
+                // set new height in SVG per current selection box height
+                hh = layout.attr('height');
+                svgHeight = svg.match(/(height=")([^\"]*)/)[2];
+                re = new RegExp('height="' + svgHeight + '"', "ig");
+                svg = svg.replace(re, 'height="' + hh + '"');
+
+                // set new width in SVG per current selection box width
+                ww = layout.attr('width');
+                svgWidth = svg.match(/(width=")([^\"]*)/)[2];
+                re = new RegExp('width="' + svgWidth + '"', "ig");
+                svg = svg.replace(re, 'width="' + ww + '"');
+
+                fabric.loadSVGFromString(svg, function (objects, options) {
+                    objects[0].heightAttr = hh;
+                    objects[0].widthAttr = ww;
+                    objects[0].height = hh;
+                    objects[0].width = ww;
+
+                    var groupSvg = fabric.util.groupSVGElements(objects, options);
+
+                    rec.originX = 'center';
+                    rec.originY = 'center';
+                    groupSvg.originX = 'center';
+                    groupSvg.originY = 'center';
+                    var o = {
+                        left: parseInt(layout.attr('x')),
+                        top: parseInt(layout.attr('y')),
+                        width: parseInt(layout.attr('width')),
+                        height: parseInt(layout.attr('height')),
+                        angle: parseInt(layout.attr('rotation')),
+                        hasRotatingPoint: false,
+                        stroke: 'transparent',
+                        cornerColor: 'black',
+                        cornerSize: 5,
+                        lockRotation: true,
+                        transparentCorners: false
+                    };
+                    _.extend(self, o);
+                    self.add(rec);
+                    self.add(groupSvg);
+                    self._fabricAlpha(domPlayerData);
+                    self._fabricLock();
+                    self['canvasScale'] = i_canvasScale;
+                    i_callback();
+                });
+
+            }, 'text');
+
+
+
+        },
+
+
         /**
          Convert the block into a fabric js compatible object
          @Override
          @method fabricateBlock
-         **/
+
         fabricateBlock: function (i_canvasScale, i_callback) {
             var self = this;
 
@@ -113,10 +191,9 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var elemID = _.uniqueId('imgElemrand')
             var imgPath;
 
-            if (self.m_fileFormat == 'swf') {
+            if (self.m_fileFormat == 'swf' || self.m_fileFormat == 'ssvg') {
                 imgPath = './_assets/flash.png';
             } else {
-                // imgPath = 'https://s3-us-west-2.amazonaws.com/oregon-signage-resources/business372844/resources/384.jpg';
                 imgPath = window.g_protocol + pepper.getUserData().domain + '/Resources/business' +  pepper.getUserData().businessID + '/resources/' + self.m_nativeID + '.' + self.m_fileFormat;
             }
 
@@ -131,7 +208,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 i_callback();
             })
         },
-
+         **/
         /**
          Get the resource id of the embedded resource
          @method getResourceID
@@ -154,5 +231,5 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         }
     });
 
-    return BlockImage;
+    return BlockSVG;
 });

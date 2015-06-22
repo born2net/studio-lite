@@ -7,7 +7,7 @@
  @param {string} i_campaign_timeline_chanel_id
  @return {object} Channel instantiated
  **/
-define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockVideo', 'BlockScene'], function ($, Backbone, X2JS, BlockImage, BlockVideo, BlockScene) {
+define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockSVG', 'BlockVideo', 'BlockScene'], function ($, Backbone, X2JS, BlockImage, BlockSVG, BlockVideo, BlockScene) {
 
     /**
      Event fires when a channel is selected on a timeline. The event includes the channel id that was selected.
@@ -159,7 +159,7 @@ define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockVideo', 'BlockScene'],
             BB.comBroker.listenWithNamespace(BB.EVENTS.REMOVING_RESOURCE, self, function (e) {
                 var removingResourceID = e.edata;
                 for (var blockID in self.m_blocks) {
-                    if (self.m_blocks[blockID] instanceof BlockImage || self.m_blocks[blockID] instanceof BlockVideo) {
+                    if (self.m_blocks[blockID] instanceof BlockImage || self.m_blocks[blockID] instanceof BlockSVG || self.m_blocks[blockID] instanceof BlockVideo) {
                         if (removingResourceID == self.m_blocks[blockID].getResourceID()) {
                             self.deleteBlock(blockID);
                         }

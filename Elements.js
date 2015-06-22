@@ -283,6 +283,7 @@ Elements.RESOURCES_PANEL = '#resourcesPanel';
 Elements.FASTERQ_REMOVE_LINE = '#fasterQremoveLine';
 Elements.RESOURCE_PREVIEW_IMAGE = '#resourcePreviewImage';
 Elements.RESOURCE_PREVIEW_VIDEO = '#resourcePreviewVideo';
+Elements.RESOURCE_PREVIEW_SVG = '#resourcePreviewSVG';
 Elements.RESOURCE_PREVIEW_SWF = '#resourcePreviewSwf';
 Elements.RSS_FONT_SETTINGS = '#rssFontSettings';
 Elements.RSS_LINK = '#rssLink';

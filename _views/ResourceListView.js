@@ -1,6 +1,6 @@
 /**
  ResourceListView is responsible for managing the UI of selecting, adding and deleting resources (i.e.: video, images and swfs)
- as well as property management for resources, such as renaming a resource.
+ as well as property management of resources, such as renaming a resource.
  @class CompResourcesList
  @constructor
  @return {Object} instantiated CompResourcesList
@@ -113,6 +113,7 @@ define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backb
                     var path = window.g_protocol + pepper.getUserData().domain + '/Resources/business' +  pepper.getUserData().businessID + '/resources/' + pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + ext;
                     $(Elements.RESOURCE_PREVIEW_VIDEO).hide();
                     $(Elements.RESOURCE_PREVIEW_IMAGE).fadeIn();
+                    $(Elements.RESOURCE_PREVIEW_SVG).hide();
                     var $img = $(Elements.RESOURCE_PREVIEW_IMAGE).find('img');
                     $img.attr('src',path);
                     break;
@@ -124,6 +125,7 @@ define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backb
                     if (!ext)
                         ext = 'flv';
                     $(Elements.RESOURCE_PREVIEW_IMAGE).hide();
+                    $(Elements.RESOURCE_PREVIEW_SVG).hide();
                     $(Elements.RESOURCE_PREVIEW_VIDEO).fadeIn();
                     var path = window.g_protocol + pepper.getUserData().domain + '/Resources/business' +  pepper.getUserData().businessID + '/resources/' + pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + ext;
                     $(Elements.VIDEO_PREVIEW).find('video:nth-child(1)').attr("src",path);
@@ -132,19 +134,37 @@ define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backb
                 case 'swf': {
                     var path = './_assets/flash.png';
                     $(Elements.RESOURCE_PREVIEW_VIDEO).hide();
+                    $(Elements.RESOURCE_PREVIEW_SVG).hide();
                     $(Elements.RESOURCE_PREVIEW_IMAGE).fadeIn();
                     var $img = $(Elements.RESOURCE_PREVIEW_IMAGE).find('img');
                     $img.attr('src',path);
                     break
                 }
                 case 'svg': {
-                    //todo: add support
-                    return;
-                    var path = './_assets/flash.png';
+                    var path = window.g_protocol + pepper.getUserData().domain + '/Resources/business' +  pepper.getUserData().businessID + '/resources/' + pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + 'svg';
                     $(Elements.RESOURCE_PREVIEW_VIDEO).hide();
-                    $(Elements.RESOURCE_PREVIEW_IMAGE).fadeIn();
-                    var $img = $(Elements.RESOURCE_PREVIEW_IMAGE).find('img');
-                    $img.attr('src',path);
+                    $(Elements.RESOURCE_PREVIEW_IMAGE).hide();
+                    $(Elements.RESOURCE_PREVIEW_SVG).fadeIn();
+                    var $img = $(Elements.RESOURCE_PREVIEW_SVG).find('object');
+                    var urlPath = $.base64.encode(path);
+                    var srvPath = 'https://secure.digitalsignage.com/proxyRequest/' + urlPath;
+
+                    $.get(srvPath, function(svg) {
+                        var hh, ww, svgHeight, svgWidth, re;
+
+                        svgHeight = svg.match(/(height=")([^\"]*)/)[2];
+                        re = new RegExp('height="' + svgHeight + '"', "ig");
+                        svg = svg.replace(re, 'height="100"');
+
+                        svgWidth = svg.match(/(width=")([^\"]*)/)[2];
+                        re = new RegExp('width="' + svgWidth + '"', "ig");
+                        svg = svg.replace(re, 'width="100"');
+                        $('#resourcePreviewSVG').empty();
+                        var s = new String(svg);
+                        $('#resourcePreviewSVG').append(svg).wrap('<center>');
+
+                    });
+
                     break
                 }
 

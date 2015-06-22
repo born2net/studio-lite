@@ -116,12 +116,16 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var rec = self._fabricRect(w, h, domPlayerData);
 
             var svgPath = window.g_protocol + pepper.getUserData().domain + '/Resources/business' +  pepper.getUserData().businessID + '/resources/' + self.m_nativeID + '.' + self.m_fileFormat;
-            svgPath = 'https://secure.digitalsignage.com/_public/assets/15.svg';
-            // svgPath = 'https://ida.signage.me/Test/14.svg';
-            //svgPath = 'https://ida.signage.me/code/14.svg';
-            // svgPath = "https://s3-us-west-2.amazonaws.com/oregon-signage-resources/business372844/resources/14.svg";
+            var urlPath = $.base64.encode(svgPath);
+            var srvPath = 'https://secure.digitalsignage.com/proxyRequest/' + urlPath;
 
-            $.get(svgPath, function(svg){
+            //svgPath = 'https://secure.digitalsignage.com/_public/assets/15.svg';
+            //svgPath = 'https://ida.signage.me/Test/14.svg';
+            //svgPath = 'https://ida.signage.me/code/14.svg';
+            //svgPath = "https://s3-us-west-2.amazonaws.com/oregon-signage-resources/business372844/resources/14.svg";
+            //svgPath = 'https://ida2.signage.me/14.svg';
+
+            $.get(srvPath, function(svg){
                 var hh,ww,svgHeight,svgWidth,re;
 
                 // set new height in SVG per current selection box height

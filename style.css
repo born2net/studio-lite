@@ -192,7 +192,7 @@ iframe {
     width: 200px;
 }
 
-#resourcePreviewImage {
+.resourcePreview {
     width: 200px;
     margin-top: 30px;
     background-color: #e3e3e3;

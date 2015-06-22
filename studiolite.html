@@ -200,18 +200,15 @@
                             <span class="carouselLargeHeader" data-localize="notifyEmail" style="font-size: 3em">Notify via email</span>
                             <br/>
                             <br/>
-
                             <div style="text-align: center; width: 500px" class="centerElement">
                                 <input id="fqEnterEmail" type="text" style="font-size: 3em; height: 2em; text-align: center" class="form-control" data-localize="enterEmail" placeholder="enter email">
                             </div>
                             <br/>
-
                             <a id="fqSenditButton" style="padding-left: 40px; padding-right: 40px; padding-top: 20px; padding-bottom: 20px" class="btn btn-large btn-danger" type="button" href="#">
                                 <span style="font-size: 2em" class="carouselLargeHeader2 fa fa-download"></span>
                                 <span data-localize="sendIt" style="font-size: 2em">SEND IT</span>
                             </a>
                             <br/>
-
                             <h1 id="fqDisplayEmailSent"></h1>
                             <br/>
                         </div>
@@ -701,7 +698,7 @@
                             <div id="files">
                                 <div align="left">
                                     <label data-role="button" align="left" class="file-upload">
-                                        <input id="file" name="file" type="file" accept=".flv,.mp4,.jpg,.png,.swf"
+                                        <input id="file" name="file" type="file" accept=".flv,.mp4,.jpg,.png,.swf,.svg"
                                                class="btn-primary"
                                                title="add files" data-filename-placement="inside" multiple
                                                data-role="none">
@@ -709,7 +706,7 @@
                                     <button id="fileRemove" type="button" class="btn btn-default"><span
                                             class="glyphicon glyphicon-remove"></span><span data-localize="remove"> remove </span>
                                     </button>
-                                    <span data-localize="supportedFiles"> (supported files: flv, mp4, jpg, png and swf)</span>
+                                    <span data-localize="supportedFiles"> (supported files: flv, mp4, jpg, png, swf and svg)</span>
                                 </div>
                                 <br/>
 
@@ -1722,8 +1719,10 @@
                                    placeholder="Enter resource name">
 
                             <div>
-                                <div id="resourcePreviewImage" style="display: none">
+                                <div id="resourcePreviewImage" class="resourcePreview" style="display: none">
                                     <img id="imgPreview" src="" class="centerElement"/>
+                                </div>
+                                <div id="resourcePreviewSVG" class="resourcePreview" style="display: none">
                                 </div>
                                 <div id="resourcePreviewVideo" style="display: none">
                                     <!-- poster="videoIntro.png" -->
@@ -2755,7 +2754,7 @@
     reset</p>
 
 <p style="display: none" id="bootBoxFileFormatInvalid" data-localize="bootBoxFileFormatInvalid">the file format is
-    invalid, supported formats include flv,mp4,png,jpg,swf</p>
+    invalid, supported formats include flv,mp4,png,jpg,swf,svg</p>
 
 <p style="display: none" id="bootBoxSteps" data-localize="bootBoxSteps">Station will be deleted, your work will be saved
     to the server and your remote station (SignagePlayer) de-registered...</p>
@@ -2777,7 +2776,7 @@
     are uploaded to the cloud...</p>
 
 <p style="display: none" id="booxboxSupportedExtensions" data-localize="booxboxSupportedExtensions">supported files:
-    flv, mp4, jpg, png and swf</p>
+    flv, mp4, jpg, png, swf and svg</p>
 
 <p style="display: none" id="campaignModeHeaderSeq" data-localize="campaignModeHeaderSeq"></p>
 

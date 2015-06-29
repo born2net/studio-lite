@@ -608,6 +608,10 @@ define(['jquery', 'backbone'], function ($) {
         _updateBlockDimensions: function () {
             var self = this;
             var dimensionProps = BB.comBroker.getService(BB.SERVICES['DIMENSION_PROPS_LAYOUT']);
+
+            //var cW = self['canvasScale'] == 1 ? self.canvas.getWidth() : self.canvas.getWidth() * (1 / self['canvasScale']);
+            //var cH = self['canvasScale'] == 1 ? self.canvas.getHeight() : self.canvas.getHeight() * (1 / self['canvasScale']);
+
             var values = {
                 y: self['canvasScale'] == 1 ? self.top : self.top * (1 / self['canvasScale']),
                 x: self['canvasScale'] == 1 ? self.left : self.left * (1 / self['canvasScale']),

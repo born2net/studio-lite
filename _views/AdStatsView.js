@@ -16,6 +16,7 @@ define(['jquery', 'backbone', 'datatables', 'datatablestools'], function ($, Bac
             var self = this;
             self._listenNavigation();
 
+            /*
             var data = [
                 [
                     "Tiger Nixon",
@@ -34,9 +35,9 @@ define(['jquery', 'backbone', 'datatables', 'datatablestools'], function ($, Bac
                     "$5,300"
                 ]
             ];
+            */
 
             var dt = $(Elements.AD_STATS_DATATABLE).dataTable({
-                data: data,
                 dom: 'T<"clear">lfrtip',
                 tableTools: {
                     "sSwfPath": "_common/_js/datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf"
@@ -44,7 +45,16 @@ define(['jquery', 'backbone', 'datatables', 'datatablestools'], function ($, Bac
             });
 
             dt.fnClearTable();
-            BB.Pepper.getProofOfPlayStats('2015', '06', function (data) {
+            BB.Pepper.getProofOfPlayStats('2015', '06', function (report) {
+                var ads = $(report).find('LocalStat');
+                var data = [];
+                _.each(ads,function(k,v){
+                    if (v!=0){
+                        var stats = $(k).text().split(',');
+                        data.push([stats[0],stats[1],stats[2],stats[3],stats[4],stats[5],stats[6],stats[7]])
+                        console.log([stats[0],stats[1],stats[2],stats[3],stats[4],stats[5],stats[6],stats[7]]);
+                    }
+                });
                 dt.fnAddData(data);
             });
 

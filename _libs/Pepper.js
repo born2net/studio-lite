@@ -270,8 +270,8 @@ Pepper.prototype = {
     getProofOfPlayStats: function (i_year, i_month, i_callBack) {
         var self = this;
         self.m_loaderManager.requestAdsReport(function (data) {
-            log(data);
-            i_callBack(data);
+            var report = $(data.report).find('Report');
+            i_callBack(report);
         }, i_year, i_month)
     },
 

@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated AdStatsView
  **/
-define(['jquery', 'backbone', 'datatables', 'datatablestools'], function ($, Backbone, datatables, datatablestools) {
+define(['jquery', 'backbone', 'datatables', 'datatablestools', 'moment'], function ($, Backbone, datatables, datatablestools, moment) {
 
     var AdStatsView = Backbone.View.extend({
 
@@ -14,68 +14,90 @@ define(['jquery', 'backbone', 'datatables', 'datatablestools'], function ($, Bac
          **/
         initialize: function () {
             var self = this;
-            self._listenNavigation();
 
-            /*
-            var data = [
-                [
-                    "Tiger Nixon",
-                    "System Architect",
-                    "Edinburgh",
-                    "5421",
-                    "2011/04/25",
-                    "$3,120"
-                ],
-                [
-                    "Garrett Winters",
-                    "Director",
-                    "Edinburgh",
-                    "8422",
-                    "2011/07/25",
-                    "$5,300"
-                ]
-            ];
-            */
+            var now = moment();
+            self.m_month = now.format('MM');
+            self.m_year = now.format('YYYY');
+            var thisMonth = now.format('MM/YYYY');
+            var lastMonth = now.subtract(1, 'months').format('MM/YYYY');
+            var beforeLastMonth = now.subtract(1, 'months').format('MM/YYYY');
 
-            var dt = $(Elements.AD_STATS_DATATABLE).dataTable({
+            self._initDatatable();
+            self._populateDateSelection(thisMonth, lastMonth, beforeLastMonth);
+            self._listenDateSelection();
+            self._loadReport(self.m_month, self.m_year);
+        },
+
+        _initDatatable: function () {
+            var self = this;
+            self.m_dt = $(Elements.AD_STATS_DATATABLE).dataTable({
                 dom: 'T<"clear">lfrtip',
                 tableTools: {
                     "sSwfPath": "_common/_js/datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf"
                 }
             });
-
-            dt.fnClearTable();
-            BB.Pepper.getProofOfPlayStats('2015', '06', function (report) {
-                var ads = $(report).find('LocalStat');
-                var data = [];
-                _.each(ads,function(k,v){
-                    if (v!=0){
-                        var stats = $(k).text().split(',');
-                        data.push([stats[0],stats[1],stats[2],stats[3],stats[4],stats[5],stats[6],stats[7]])
-                        console.log([stats[0],stats[1],stats[2],stats[3],stats[4],stats[5],stats[6],stats[7]]);
-                    }
-                });
-                dt.fnAddData(data);
-            });
-
         },
 
         /**
-         Transition into selected fasterQ module
-         @method _listenNavigation
+         Load ad stats report
+         @method _loadReport
+         @param {Number} i_year
+         @param {Number} i_month
          **/
-        _listenNavigation: function(){
+        _loadReport: function (i_month, i_year) {
             var self = this;
-            return;
-            $(Elements.FASTERQ_MANAGE_NAV_BUTTON).on('click',function(){
-                self.options.stackView.selectView(Elements.FASTERQ_MANAGER_CONTAINER);
+            self.m_dt.fnClearTable();
+            BB.Pepper.getProofOfPlayStats(i_year, i_month, function (report) {
+                var ads = $(report).find('LocalStat');
+                var data = [];
+                _.each(ads, function (k, v) {
+                    if (v != 0) {
+                        var stats = $(k).text().split(',');
+                        var stationID = stats[0];
+                        var stationName = BB.Pepper.getStationNameSync(stationID);
+                        var adNames = BB.Pepper.getAdPackContNames(stats[2]);
+                        data.push([
+                            stationName,
+                            adNames.contentName,
+                            adNames.packageName,
+                            self.m_month + '/' + stats[2] + '/' + self.m_year,
+                            stats[3],
+                            stats[4],
+                            stats[5],
+                            stats[6],
+                            stats[7]
+                        ]);
+                    }
+                });
+                self.m_dt.fnAddData(data);
             });
-            $(Elements.FASTERQ_CREATE_NAV_BUTTON).on('click',function(){
-                self.options.stackView.selectView(Elements.FASTERQ_CREATOR_CONTAINER);
+        },
+
+        /**
+         Populate the date range selection for Ad report
+         @method populateDateSelection
+         **/
+        _populateDateSelection: function (i_thisMonth, i_lastMonth, i_beforeLastMonth) {
+            var self = this;
+            $(Elements.SELECT_AD_REPORT_MONTH).append('<option>' + i_thisMonth + '</option>');
+            $(Elements.SELECT_AD_REPORT_MONTH).append('<option>' + i_lastMonth + '</option>');
+            $(Elements.SELECT_AD_REPORT_MONTH).append('<option>' + i_beforeLastMonth + '</option>');
+        },
+
+        /**
+         Listen to change in date selection to run report
+         @method _listenDateSelection
+         **/
+        _listenDateSelection: function () {
+            var self = this;
+            $(Elements.SELECT_AD_REPORT_MONTH).on('change', function (e) {
+                var date = $(Elements.SELECT_AD_REPORT_MONTH + ' option:selected').val();
+                self.m_month = date.split('/')[0];
+                self.m_year = date.split('/')[1];
+                self._loadReport(self.m_month, self.m_year);
             });
         }
     });
 
     return AdStatsView;
 });
-

@@ -2116,6 +2116,22 @@ Pepper.prototype = {
     },
 
     /**
+     Get station name from msdb (no remote server async)
+     @method getAdPackContNames
+     @param {Number} i_ad_local_content_id
+     @return {Object}
+     **/
+    getAdPackContNames: function(i_ad_local_content_id) {
+        var self = this;
+        var rec1 = pepper.m_msdb.table_ad_local_contents().getRec(i_ad_local_content_id);
+        var rec2 = pepper.m_msdb.table_ad_local_packages().getRec(rec1.ad_local_package_id);
+        return {
+            contentName: rec1.content_name,
+            packageName: rec2.package_name,
+        }
+    },
+
+    /**
      save new station name
      @method setStationName
      @param {Number} branch_station_id

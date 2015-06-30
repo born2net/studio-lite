@@ -364,6 +364,7 @@ Elements.SCHEDULER_CONTAINER = '#schedulerContainer';
 Elements.SCHEDULE_PRIORITY = '#schedulePriority';
 Elements.SELECT_NEXT_CHANNEL = '#selectNextChannel';
 Elements.SELECTED_CHANNEL_RESOURCE_NAME = '#selectedChannelResourceName';
+Elements.SELECT_AD_REPORT_MONTH = '#selectAdReportMonth';
 Elements.SELECTED_LIB_RESOURCE_NAME = '#selectedLibResourceName';
 Elements.SELECTED_TIMELINE = '#selectedTimeline';
 Elements.SEQUENCER_CONTEXT_MENU = '#sequencerContextMenu';

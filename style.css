@@ -211,6 +211,11 @@ iframe {
     height: 100%;
     z-index: 9999;
 }
+
+#adStatsDataTable_length {
+    display: none;
+}
+
 /*
 #appTutorialArrow {
     display: none;
@@ -2182,6 +2187,11 @@ Software accelerated vertical
 .floatLeftWidth {
     float: left;
     width: 60px;
+}
+
+.floatLeftWidthAdDrops {
+    float: left;
+    margin-left: 10px;
 }
 
 .hrThin {

@@ -28,6 +28,10 @@ define(['jquery', 'backbone', 'datatables', 'datatablestools', 'moment'], functi
             self._loadReport(self.m_month, self.m_year);
         },
 
+        /**
+         Init the dt widget
+         @method _initDatatable
+         **/
         _initDatatable: function () {
             var self = this;
             self.m_dt = $(Elements.AD_STATS_DATATABLE).dataTable({

@@ -54,6 +54,8 @@ define(['jquery', 'backbone', 'datatables', 'datatablestools', 'moment'], functi
             BB.Pepper.getProofOfPlayStats(i_year, i_month, function (report) {
                 var ads = $(report).find('LocalStat');
                 var data = [];
+                if (ads.length<2)
+                    return;
                 _.each(ads, function (k, v) {
                     if (v != 0) {
                         var stats = $(k).text().split(',');

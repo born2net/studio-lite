@@ -53,7 +53,6 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
          **/
         _listenLineSelected: function () {
             var self = this;
-
             $(Elements.CLASS_LINE_LIST_ITEMS).off('click');
             $(Elements.CLASS_LINE_LIST_ITEMS).on('click', function (e) {
                 var lineElem = $(e.target).closest('li');
@@ -69,7 +68,6 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
                 return false;
             });
         },
-
 
         /**
          Popular the list Line items from server
@@ -98,8 +96,8 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
                     self._listenLineSelected();
                     self._highlightLine();
                 },
-                error: function () {
-                    log('error loading collection data');
+                error: function (e) {
+                    log('error loading collection data ' + e);
                 }
             });
         },

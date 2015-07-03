@@ -2123,12 +2123,21 @@ Pepper.prototype = {
      **/
     getAdPackContNames: function(i_ad_local_content_id) {
         var self = this;
-        var rec1 = pepper.m_msdb.table_ad_local_contents().getRec(i_ad_local_content_id);
-        var rec2 = pepper.m_msdb.table_ad_local_packages().getRec(rec1.ad_local_package_id);
-        return {
-            contentName: rec1.content_name,
-            packageName: rec2.package_name,
-        }
+        var result =  {
+            contentName: '',
+            packageName: ''
+        };
+        $(pepper.m_msdb.table_ad_local_contents().getAllPrimaryKeys()).each(function (k, ad_local_content_id) {
+            var recAdLocalContent = pepper.m_msdb.table_ad_local_contents().getRec(ad_local_content_id);
+            if (recAdLocalContent.native_id== i_ad_local_content_id){
+                var recAdLocalPackage = pepper.m_msdb.table_ad_local_packages().getRec(recAdLocalContent.ad_local_package_id);
+                result =  {
+                    contentName: recAdLocalContent.content_name,
+                    packageName: recAdLocalPackage.package_name
+                };
+            }
+        });
+        return result;
     },
 
     /**

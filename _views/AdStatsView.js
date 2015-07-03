@@ -54,14 +54,18 @@ define(['jquery', 'backbone', 'datatables', 'datatablestools', 'moment'], functi
             BB.Pepper.getProofOfPlayStats(i_year, i_month, function (report) {
                 var ads = $(report).find('LocalStat');
                 var data = [];
-                if (ads.length<2)
+                if (ads.length < 2)
                     return;
                 _.each(ads, function (k, v) {
                     if (v != 0) {
                         var stats = $(k).text().split(',');
                         var stationID = stats[0];
                         var stationName = BB.Pepper.getStationNameSync(stationID);
-                        var adNames = BB.Pepper.getAdPackContNames(stats[2]);
+                        if (stationName.indexOf('Raj') > -1) {
+                            console.log('found  ' + stats);
+                        }
+                        console.log(stationName);
+                        var adNames = BB.Pepper.getAdPackContNames(stats[1]);
                         data.push([
                             stationName,
                             adNames.contentName,

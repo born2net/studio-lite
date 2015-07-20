@@ -147,10 +147,18 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var text = $(label).find('Text').text();
             var font = $(label).find('Font');
 
+            var url = ('https:' === document.location.protocol ? 'https' : 'http') + '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+
+            //$.getScript(src, function (data) {
+            //    console.log(data);
+            //});
+
             var t = new fabric.IText(text, {
                 fontSize: $(font).attr('fontSize'),
+                //fontFamily: 'Graduate',
                 //fontFamily: 'Jolly Lodger',
-                fontFamily: 'Arial',
+                //fontFamily: 'Arial',
+                fontFamily: $(font).attr('fontFamily'),
                 fill: '#' + BB.lib.decimalToHex($(font).attr('fontColor')),
                 textDecoration: $(font).attr('textDecoration'),
                 fontWeight: $(font).attr('fontWeight'),
@@ -166,7 +174,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var w = parseInt(layout.attr('width')) < self.m_minSize.w ? self.m_minSize.w : parseInt(layout.attr('width'));
             var h = parseInt(layout.attr('height')) < self.m_minSize.h ? self.m_minSize.h : parseInt(layout.attr('height'));
 
-            var rec = self._fabricRect(w,h, domPlayerData);
+            var rec = self._fabricRect(w, h, domPlayerData);
             var o = self._fabricateOptions(parseInt(layout.attr('y')), parseInt(layout.attr('x')), w, h, parseInt(layout.attr('rotation')));
             //var group = new fabric.Group([ rec, t ], o);
             //_.extend(self, group);
@@ -181,7 +189,16 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self._fabricAlpha(domPlayerData);
             self._fabricLock();
             self['canvasScale'] = i_canvasScale;
-            i_callback();
+
+            $.ajax({
+                url: url,
+                async: false,
+                dataType: "script",
+                complete: function(e){
+                    setTimeout(i_callback,1)
+                }
+            });
+
         },
 
         /**

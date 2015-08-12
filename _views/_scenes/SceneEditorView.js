@@ -7,7 +7,7 @@
 define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbarView', 'BlockFactory', 'contextmenu'], function ($, Backbone, fabric, BlockScene, BlockRSS, ScenesToolbarView, BlockFactory, contextmenu) {
 
     /**
-     Custom event fired when a mouse hovers over canvas
+     Custom events fired when a mouse hovers over canvas
      @event MOUSE_ENTERS_CANVAS
      @param {This} caller
      @param {Self} context caller

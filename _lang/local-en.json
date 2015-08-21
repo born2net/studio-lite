@@ -44,6 +44,7 @@
   "bootBoxLoginWrongCred": "You are logged with FREE SignageStudio Pro credentials and not FREE StudioLite credentials so only the Stations module is available. Be sure to create a new FREE StudioLite account to get the full experience",
   "bootBoxNeedVerifyEmail": "You must first verify your email and then reload the StudioLite",
   "bootBoxNoFlash": "Adobe Flash must be installed so you can live preview",
+  "bootBoxNoFlashv2": "Adobe Flash plug-in not installed so either install it, or use the free SignagePlayer to preview the presentation",
   "bootBoxNoStationSelected": "No station selected",
   "bootBoxNoTimelineSelected": "No timeline selected",
   "bootBoxNonAllowedCharacters": "Some of the characters entered are not allowed, consider using shortening URL maker like google at: https://goo.gl",

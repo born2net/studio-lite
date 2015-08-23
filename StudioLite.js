@@ -1,5 +1,5 @@
 /**
- StudioLite MediaSignage Inc (c) open source digital signage project.
+ StudioLite MediaSignage Inc (c) open source digital signage project
  Visit Github for licenses and docs: http://git.digitalsignage.com
  @class StudioLite
  @constructor

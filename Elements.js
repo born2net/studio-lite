@@ -180,6 +180,7 @@ Elements.IMG_VERTICAL = '#imgVertical';
 Elements.INSTALL_PANEL = '#installPanel';
 Elements.SCENE_IMPORT_MODAL = '#sceneImportModal';
 Elements.IMPORT_SCENE = "#importScene";
+Elements.IMPORT_SCENEL_DIALOG_CONTAINER = '#importScenelDialogContainer';
 Elements.LABEL_FONT_SETTINGS = '#labelFontSettings';
 Elements.LABEL_TEXT = '#labelText';
 Elements.FASTERQ_MANAGE_NAV_BUTTON = '#fasterQManageNavButton';

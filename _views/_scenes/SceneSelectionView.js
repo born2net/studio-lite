@@ -18,7 +18,8 @@ define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesload
         initialize: function () {
             var self = this;
             self.m_counter = 1;
-            self.m_counter_max = 99;
+            self.m_counter_max = 100;
+            self.m_count_set = 25;
             self.m_selectedSceneID = -1;
             self.m_sceneProperties = new BB.View({
                 el: Elements.SCENE_SELECTION_PROPERTIES
@@ -165,6 +166,9 @@ define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesload
 
                 $(Elements.SCENE_IMPORT_MODAL).modal('show');
 
+                if (self.m_counter > self.m_counter_max)
+                    return;
+
                 var $progress, $status;
                 var supportsProgress;
                 var loadedImageCount, imageCount;
@@ -178,7 +182,7 @@ define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesload
                         // IE does not support progress
                     $progress[0].toString().indexOf('Unknown') === -1;
 
-                $('#add').click(function () {
+                function populateScenes() {
                     // add new images
                     var items = getItems();
                     //console.log(items);
@@ -189,22 +193,24 @@ define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesload
                         .always(function(){
                             onAlways();
                             setTimeout(function(){
-                                if (self.m_counter > self.m_counter_max)
+                                if (self.m_counter > self.m_counter_max){
+                                    $(Elements.IMPORT_SCENEL_DIALOG_CONTAINER).find('button').fadeIn();
                                     return;
-                                $('#add').trigger('click');
+                                }
+                                populateScenes();
                             },500)
                         })
                         .fail(function(e){
-                            console.log('some fail ' + e)
+                            //console.log('some fail ' + e)
                         })
                         .done(function(){
-                           console.log('completed...')
+                           //console.log('completed...')
                         });
                     // reset progress counter
                     imageCount = $container.find('img').length;
                     resetProgress();
                     updateProgress(0);
-                });
+                };
 
                 // reset container
                 $('#reset').click(function () {
@@ -216,7 +222,7 @@ define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesload
                 // return doc fragment with
                 function getItems() {
                     var items = '';
-                    for (var i = 0; i < 10; i++) {
+                    for (var i = 0; i < self.m_count_set; i++) {
                         var z = self.m_counter++;
                         items += getImageItem(z);
                     }
@@ -226,7 +232,7 @@ define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesload
                 // return an <li> with a <img> in it
                 function getImageItem(index) {
                     var item = '<li class="is-loading">';
-                    item += '<img style="width: 140px; height: 100px" src="https://secure.digitalsignage.com:442/_studiolite-dev/_assets/scenes/Template' + index + '.png"/></li>';
+                    item += '<img style="width: 140px; height: 100px" src="_assets/scenes/Template' + index + '.jpg"/></li>';
                     return item;
                 }
 
@@ -264,7 +270,9 @@ define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesload
                 function onAlways() {
                     $status.css({opacity: 0});
                 }
+                populateScenes();
             });
+
         },
 
         /**

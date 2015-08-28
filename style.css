@@ -3756,10 +3756,19 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 .imgLoaderList #status {
     opacity: 0;
     position: fixed;
-    right: 20px;
+    left: 20px;
     top: 20px;
     background: hsla( 0, 0%, 0%, 0.8);
     padding: 20px;
     border-radius: 10px;
     z-index: 2; /* over other stuff */
+}
+
+#importSceneList img {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+#importSceneList img:hover {
+    opacity: 1;
 }

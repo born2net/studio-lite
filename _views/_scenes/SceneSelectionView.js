@@ -4,7 +4,8 @@
  @constructor
  @return {Object} instantiated SceneSelectionView
  **/
-define(['jquery', 'backbone'], function ($, Backbone) {
+define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesloaded) {
+//define(['jquery', 'backbone'], function ($, Backbone) {
 
     BB.SERVICES.SCENES_SELECTION_VIEW = 'SceneSelectionView';
 
@@ -16,6 +17,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         initialize: function () {
             var self = this;
+            self.m_counter = 1;
+            self.m_counter_max = 99;
             self.m_selectedSceneID = -1;
             self.m_sceneProperties = new BB.View({
                 el: Elements.SCENE_SELECTION_PROPERTIES
@@ -30,6 +33,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self._listenSceneRemoved();
             self._listenDuplicateScene();
             self._listenSceneRename();
+            self._listenImportSceneModal();
         },
 
         /**
@@ -63,9 +67,9 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          Listen to renaming of scene so we can render the updated scene list
          @method _listenSceneRename
          **/
-        _listenSceneRename: function(){
+        _listenSceneRename: function () {
             var self = this;
-            BB.comBroker.listen(BB.EVENTS['SCENE_LIST_UPDATED'], function(e){
+            BB.comBroker.listen(BB.EVENTS['SCENE_LIST_UPDATED'], function (e) {
                 self._render();
             });
         },
@@ -122,9 +126,9 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']).disposeScene();
                 self.m_propertiesPanel.resetPropertiesView();
                 self.options.stackView.slideToPage(Elements.SCENE_SLIDER_VIEW, 'right');
-                setTimeout(function(){
+                setTimeout(function () {
                     BB.comBroker.fire(BB.EVENTS.LOAD_SCENE, this, null, self.m_selectedSceneID);
-                },250);
+                }, 555);
                 return false;
             });
         },
@@ -142,13 +146,125 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 var domSceneData = pepper.getScenePlayerdataDom(sceneID);
                 if (BB.lib.isEmpty(text))
                     return;
-                text = BB.lib.cleanProbCharacters(text,1);
+                text = BB.lib.cleanProbCharacters(text, 1);
                 $(domSceneData).find('Player').attr('label', text);
                 pepper.setScenePlayerData(sceneID, (new XMLSerializer()).serializeToString(domSceneData));
                 self.$el.find('[data-sceneid="' + self.m_selectedSceneID + '"]').find('h4').text(text);
                 BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this);
             }, 333, false);
             $(Elements.FORM_SCENE_NAME).on("input", self.m_onChange);
+        },
+
+        /**
+         Open modal dialog for scene import and render all images via imageLoaded
+         @method _listenImportSceneModal
+         **/
+        _listenImportSceneModal: function () {
+            var self = this;
+            $(Elements.IMPORT_SCENE).on('click', function (e) {
+
+                $(Elements.SCENE_IMPORT_MODAL).modal('show');
+
+                var $progress, $status;
+                var supportsProgress;
+                var loadedImageCount, imageCount;
+
+                var $demo = $('#sceneImportWrapper');
+                var $container = $demo.find('#image-container');
+                $status = $demo.find('#status');
+                $progress = $demo.find('progress');
+
+                supportsProgress = $progress[0] &&
+                        // IE does not support progress
+                    $progress[0].toString().indexOf('Unknown') === -1;
+
+                $('#add').click(function () {
+                    // add new images
+                    var items = getItems();
+                    //console.log(items);
+                    $container.prepend($(items));
+                    // use ImagesLoaded
+                    $container.imagesLoaded()
+                        .progress(onProgress)
+                        .always(function(){
+                            onAlways();
+                            setTimeout(function(){
+                                if (self.m_counter > self.m_counter_max)
+                                    return;
+                                $('#add').trigger('click');
+                            },500)
+                        })
+                        .fail(function(e){
+                            console.log('some fail ' + e)
+                        })
+                        .done(function(){
+                           console.log('completed...')
+                        });
+                    // reset progress counter
+                    imageCount = $container.find('img').length;
+                    resetProgress();
+                    updateProgress(0);
+                });
+
+                // reset container
+                $('#reset').click(function () {
+                    $container.empty();
+                    self.m_counter = 0;
+                });
+
+
+                // return doc fragment with
+                function getItems() {
+                    var items = '';
+                    for (var i = 0; i < 10; i++) {
+                        var z = self.m_counter++;
+                        items += getImageItem(z);
+                    }
+                    return items;
+                }
+
+                // return an <li> with a <img> in it
+                function getImageItem(index) {
+                    var item = '<li class="is-loading">';
+                    item += '<img style="width: 140px; height: 100px" src="https://secure.digitalsignage.com:442/_studiolite-dev/_assets/scenes/Template' + index + '.png"/></li>';
+                    return item;
+                }
+
+                function resetProgress() {
+                    $status.css({opacity: 1});
+                    loadedImageCount = 0;
+                    if (supportsProgress) {
+                        $progress.attr('max', imageCount);
+                    }
+                }
+
+                function updateProgress(value) {
+                    if (supportsProgress) {
+                        $progress.attr('value', value);
+                    } else {
+                        // if you don't support progress elem
+                        $status.text(value + ' / ' + imageCount);
+                    }
+                }
+
+                // triggered after each item is loaded
+                function onProgress(imgLoad, image) {
+                    // change class if the image is loaded or broken
+                    var $item = $(image.img).parent();
+                    $item.removeClass('is-loading');
+                    if (!image.isLoaded) {
+                        $item.addClass('is-broken');
+                    }
+                    // update progress element
+                    loadedImageCount++;
+                    updateProgress(loadedImageCount);
+                }
+
+                // hide status when done
+                function onAlways() {
+                    $status.css({opacity: 0});
+                }
+            });
         },
 
         /**
@@ -197,7 +313,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          Stop listening to scene li events
          @method _stopEventListening
          **/
-        _stopEventListening: function(){
+        _stopEventListening: function () {
             var self = this;
             $(Elements.CLASS_OPEN_PROPS_BUTTON, self.el).off('click');
             $(Elements.CLASS_CAMPIGN_LIST_ITEM, self.el).off('click');

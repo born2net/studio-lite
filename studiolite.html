@@ -11,7 +11,7 @@
     <title>SignageStudio Lite</title>
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css" rel="stylesheet">
     <link href="_common/_js/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="_common/_js/datatables/media/css/jquery.dataTables.css" rel="stylesheet">
     <link href="_common/_js/datatables/extensions/TableTools/css/dataTables.tableTools.css" rel="stylesheet">
@@ -501,7 +501,7 @@
                                                             title="edit screen layout" data-localize="empty"
                                                             data-localize-tooltip="editScreenLayout"
                                                             class="btn btn-default btn-sm">
-                                                        <i class="fa fa-trello  "></i></button>
+                                                        <i class="fa fa-object-group"></i></button>
                                                     <button id="campaignPreview" type="button"
                                                             title="campaign preview" data-localize="empty"
                                                             data-localize-tooltip="campaignPreviewTooltip"
@@ -740,6 +740,11 @@
                         <div id="sceneSelector" class="page center">
                             <div>
                                 <div id="sceneSelectionButtons" class="btn-group">
+                                    <button id="importScene" type="button" class="btn btn-default"><i
+                                            style="font-size: 1em"
+                                            class="fa fa-plus"></i>
+                                        <span data-localize="importScene">import scene</span>
+                                    </button>
                                     <button id="newScene" type="button" class="btn btn-default"><i
                                             style="font-size: 1em"
                                             class="fa fa-magic"></i>
@@ -757,6 +762,33 @@
                                     </button>
                                 </div>
                                 <div id="sceneSelectorList" class="appList yScroll list-group">
+                                </div>
+                                <div class="modal fade" id="sceneImportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                                     aria-hidden="true">
+                                    <div id="importScenelDialogContainer" class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span>x</span></button>
+                                                <span data-localize="importScene" class="modal-title">import scene</span>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div id="importSceneList" class="imgLoaderList">
+                                                    <div id="sceneImportWrapper">
+                                                        <div class="buttons">
+                                                            <button id="add">Add images</button>
+                                                            <button id="reset">Reset</button>
+                                                        </div>
+                                                        <div id="status">
+                                                            <progress max="7" value="0"></progress>
+                                                        </div>
+                                                        <div id="image-container"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

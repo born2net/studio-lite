@@ -38,6 +38,7 @@ require.config({
         'TweenLite': '_common/_js/gsap/TweenLite',
         'ScrollToPlugin': '_common/_js/gsap/plugins/ScrollToPlugin',
         'Draggable': '_common/_js/gsap/utils/Draggable',
+        'imagesloaded': '_common/_js/imagesloaded/imagesloaded.pkgd',
         'RC4': '_common/_js/rc4/RC4',
         'RC4V2': '_common/_js/rc4/RC4V2',
         'localizer': '_common/_js/localizer/dist/jquery.localize',

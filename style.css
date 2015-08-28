@@ -704,6 +704,11 @@ iframe {
     margin: 0;
 }
 
+#importScenelDialogContainer {
+    width: 80%;
+    height: 80%;
+}
+
 #videoModalContent {
     height: 100%;
     border-radius: 0;
@@ -3695,4 +3700,66 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
     padding-top: 5px;
     margin-top: 5px;
     background-color: white;
+}
+
+
+
+
+
+
+
+
+/* image loaded */
+
+
+.imgLoaderList li {
+    min-width: 140px;
+    display: block;
+    float: left;
+    list-style: none;
+    margin: 0 5px 5px 0;
+    background-color: black;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.imgLoaderList li img,#status {
+    -webkit-transition: opacity 0.4s;
+    -moz-transition: opacity 0.4s;
+    -ms-transition: opacity 0.4s;
+    transition: opacity 0.4s;
+}
+
+.imgLoaderList li.is-loading {
+    background-color: black;
+    background-image: url('http://desandro.github.io/imagesloaded/assets/loading.gif');
+}
+
+.imgLoaderList li.is-broken {
+    background-image: url('http://desandro.github.io/imagesloaded/assets/broken.png');
+    background-color: #be3730;
+    width: 140px;
+}
+
+.imgLoaderList li.is-loading img, li.is-broken img {
+    opacity: 0;
+}
+
+.imgLoaderList .buttons { margin-bottom: 1.0em; }
+
+.imgLoaderList button {
+    font-size: 18px;
+    padding: 0.4em 0.8em;
+    font-family: sans-serif;
+}
+
+.imgLoaderList #status {
+    opacity: 0;
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    background: hsla( 0, 0%, 0%, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 2; /* over other stuff */
 }

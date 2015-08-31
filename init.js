@@ -1,5 +1,5 @@
 /**
- Require js init module definition file for StudioLite app
+ Require js init module definitions file for StudioLite app
  @class Require init js
  **/
 require.config({

@@ -23,7 +23,6 @@ define(['jquery', 'backbone', 'Block', 'datatables'], function ($, Backbone, Blo
             self._initSubPanel(Elements.BLOCK_COLLECTION_COMMON_PROPERTIES);
             self._initDatatable();
 
-
             return;
             self.m_youtubeQualityMeter = self.m_blockProperty.getYouTubeQualityMeter();
             self._listenQualityChange();

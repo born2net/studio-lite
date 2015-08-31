@@ -4,7 +4,7 @@
  **/
 require.config({
     waitSeconds: 45,
-    // baseUrl: './', // for node-webkit change to ./
+    // baseUrl: './', // for node-webkit change to ./ local dir
     baseUrl: '/_studiolite-dev/',
     paths: {
         'Elements': 'Elements',

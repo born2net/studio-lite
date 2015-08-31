@@ -35,7 +35,7 @@ define(['jquery', 'backbone', 'TimelineMax', 'TweenMax'], function ($, Backbone,
         },
 
         /**
-         Close live tuorial
+         Close live tutorial
          @method _listenCloseTutorial
          **/
         _listenCloseTutorial: function () {

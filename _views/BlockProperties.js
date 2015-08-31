@@ -1,5 +1,5 @@
 /**
- Block property is a singleton Backbone view that represents a shared UI view for all Blocks (Channels and Scenes blocks).
+ Block property is a singleton Backbone view that represents shared UI view for all Blocks (Channels and Scenes blocks).
  It lives inside PropertiesViews
  @class BlockProperties
  @constructor

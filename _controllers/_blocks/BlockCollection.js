@@ -7,7 +7,7 @@
  * @param {string} i_campaign_timeline_chanel_player_id required and set as block id when block is inserted onto timeline_channel
  * @return {Object} Block instance
  */
-define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
+define(['jquery', 'backbone', 'Block', 'datatables'], function ($, Backbone, Block, datatables) {
 
     var BlockCollection = Block.extend({
 
@@ -21,8 +21,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             _.extend(options, {blockType: self.m_blockType});
             Block.prototype.constructor.call(this, options);
             self._initSubPanel(Elements.BLOCK_COLLECTION_COMMON_PROPERTIES);
-
-
+            self._initDatatable();
 
 
             return;
@@ -33,6 +32,41 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self._listenCountryChange();
             self._listenVideoIdChange();
             self._listenAddVideoId();
+        },
+
+        /**
+         Init the dt widget
+         @method _initDatatable
+         **/
+        _initDatatable: function () {
+            var self = this;
+            self.m_dt = $(Elements.COLLECTION_DATATABLE).dataTable({
+                dom: 'T<"clear">lfrtip'
+            });
+
+            self.m_dt.fnAddData(['aaa', 'bbbb', 'cccc']);
+            self.m_dt.fnAddData(['33', 'bbbb', 'cccc']);
+            self.m_dt.fnAddData(['ff', 'bbbb', 'cccc']);
+            self.m_dt.fnAddData(['aaa', 'bbbb', 'cccc']);
+            self.m_dt.fnAddData(['33', 'bbbb', 'cccc']);
+            self.m_dt.fnAddData(['ff', 'bbbb', 'cccc']);
+            self.m_dt.fnAddData(['aaa', 'bbbb', 'cccc']);
+            self.m_dt.fnAddData(['33', 'bbbb', 'cccc']);
+            self.m_dt.fnAddData(['ff', 'bbbb', 'cccc']);
+            self.m_dt.fnAddData(['aaa', 'bbbb', 'cccc']);
+            self.m_dt.fnAddData(['33', 'bbbb', 'cccc']);
+            self.m_dt.fnAddData(['ff', 'bbbb', 'cccc']);
+
+
+            $(Elements.COLLECTION_DATATABLE + ' tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    $('tr.selected', Elements.COLLECTION_DATATABLE).removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
         },
 
         /**
@@ -234,7 +268,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var self = this;
             var domPlayerData = self._getBlockPlayerData();
             var xSnippetYouTube = $(domPlayerData).find('Collection');
-
 
 
             return;

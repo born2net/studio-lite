@@ -375,6 +375,7 @@ Elements.SERVER_NAME = '#serverName';
 Elements.SERVER_RESPONSETIME = '#serverResponseTime';
 Elements.SETTINGS_PANEL = '#settingsPanel';
 Elements.AD_STATS_DATATABLE = '#adStatsDataTable';
+Elements.COLLECTION_DATATABLE = '#collectionDataTable';
 Elements.FASTERQ_PANEL = '#fasterQPanel';
 Elements.AD_STATS_PANEL = '#adStatsPanel';
 Elements.FASTERQ_BLOCK_COLOR_SELECTOR = '#fasterQBlockColorSelector';

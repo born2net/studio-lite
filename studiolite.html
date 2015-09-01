@@ -13,9 +13,10 @@
     <link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css" rel="stylesheet">
     <link href="_common/_js/bootstrap/css/bootstrap.css" rel="stylesheet">
+
     <link href="_common/_js/dt/datatable/media/css/jquery.dataTables.css" rel="stylesheet">
     <link href="_common/_js/dt/datatable/extensions/TableTools/css/dataTables.tableTools.css" rel="stylesheet">
-    <!-- <link href="_common/_js/DataTables/media/css/dataTables.bootstrap.css" rel="stylesheet"> -->
+
 
     <link href="_common/_js/video/video-js.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
@@ -2026,15 +2027,30 @@
                                         </div>
                                         <div id="blockCollectionCommonProperties" style="display: none">
 
-                                            <table id="collectionDataTable" class="display" cellspacing="0" width="100%">
-                                                <thead>
-                                                <tr>
-                                                    <th>Type</th>
-                                                    <th>Name</th>
-                                                    <th>Duration</th>
-                                                </tr>
-                                                </thead>
+                                            <table id="collectionDataTable" class="table table-bordered table-striped" style="clear: both">
                                                 <tbody>
+                                                <tr>
+                                                    <td width="35%">Simple text field</td>
+                                                    <td width="65%"><a href="#" class="xedit" id="username22" data-type="text" data-pk="1" data-title="Enter username">superuser</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Empty text field, required</td>
+                                                    <td><a href="#" id="firstname" class="xedit" data-type="text" data-pk="1" data-placeholder="Required" data-title="Enter your firstname"></a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Select, local array, custom display</td>
+                                                    <td><a href="#" id="sex" class="xedit" data-type="select" data-pk="1" data-value="" data-title="Select sex"></a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Select, remote array, no buttons</td>
+                                                    <td><a href="#" id="group" class="xedit" data-type="select" data-pk="1" data-value="5" data-source="/groups" data-title="Select group">Admin</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Select, error while loading</td>
+                                                    <td><a href="#" id="status" class="xedit" data-type="select" data-pk="1" data-value="0" data-source="/status" data-title="Select status">Active</a></td>
+                                                </tr>
+
+
                                                 </tbody>
                                             </table>
 

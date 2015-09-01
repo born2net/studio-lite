@@ -7,7 +7,7 @@
  * @param {string} i_campaign_timeline_chanel_player_id required and set as block id when block is inserted onto timeline_channel
  * @return {Object} Block instance
  */
-define(['jquery', 'backbone', 'Block', 'datatables'], function ($, Backbone, Block, datatables) {
+define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
     var BlockCollection = Block.extend({
 
@@ -39,6 +39,31 @@ define(['jquery', 'backbone', 'Block', 'datatables'], function ($, Backbone, Blo
          **/
         _initDatatable: function () {
             var self = this;
+
+            return;
+
+            //$(Elements.COLLECTION_DATATABLE).editable({mode: 'inline'});
+            //$(Elements.COLLECTION_DATATABLE).editable({
+            $('.xedit').editable({
+                mode: 'popup',
+                type: 'select',
+                title: 'Select status',
+                placement: 'left',
+                value: 2,
+                source: [
+                    {value: 1, text: 'status 1'},
+                    {value: 2, text: 'status 2'},
+                    {value: 3, text: 'status 3'}
+                ]
+                /*
+                 //uncomment these lines to send data on server
+                 ,pk: 1
+                 ,url: '/post'
+                 */
+            });
+
+            return;
+
             self.m_dt = $(Elements.COLLECTION_DATATABLE).dataTable({
                 dom: 'T<"clear">lfrtip'
             });

@@ -60,32 +60,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable'], function ($,
             }];
 
             $.fn.editable.defaults.mode = 'inline';
-            var a = $('#table').bootstrapTable({
-                data: data,
-                editable: true,
-                type: 'select',
-                title: 'Select status',
-                placement: 'right',
-                onEditableInit: function (response, newValue) {
-                    console.log(newValue);
-                },
-                onEditableShown: function (response, newValue) {
-                    console.log(newValue);
-                },
-                onEditableHidden: function (response, newValue) {
-                    console.log(newValue);
-                },
-                onEditableSave: function (response, newValue) {
-                    console.log(newValue);
-                },
-                success: function (response, newValue) {
-                    if (response.status == 'error') {
-                        return response.msg;
-                    } //msg will be shown in editable form
-                }
-            });
-
-            var a = $('#table2').bootstrapTable({
+            $('#table').bootstrapTable({
                 data: data,
                 editable: true,
                 type: 'select',

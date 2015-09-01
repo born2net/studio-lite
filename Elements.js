@@ -521,7 +521,7 @@ Elements.YOUTUBE_LIST_REMOVE = '#youtubeListRemove';
 
 
 /**
- List of all Elements / Classes of elements used in the DOM
+ List all Elements / Classes of elements used in the DOM
  @class Elements
  @constructor
  **/

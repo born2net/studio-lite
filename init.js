@@ -28,6 +28,9 @@ require.config({
         'minicolors': '_common/_js/minicolors/jquery.minicolors',
         'datatables': '_common/_js/dt/datatable/media/js/jquery.dataTables',
         'datatablestools': '_common/_js/dt/datatable/extensions/TableTools/js/dataTables.tableTools',
+        'bootstrap-table': '_common/_js/bootstrap-table/dist/bootstrap-table',
+        'bootstrap-table-editable': '_common/_js/bootstrap-table/dist/extensions/editable/bootstrap-table-editable',
+        'bootstrap-table-editable-plugin': '_common/_js/bootstrap-table/dist/extensions/editable/xedit-editable',
         'colorpicker': '_common/_js/gradient/colorpicker',
         'timepicker': '_common/_js/timepicker/bootstrap-timepicker',
         'datepicker': '_common/_js/datepicker/bootstrap-datepicker',
@@ -213,6 +216,13 @@ require.config({
         'bootbox': {
             deps: ['jquery'],
             exports: 'bootbox'
+        },
+        'bootstrap-table-editable': {
+            deps: ['bootstrap-table', 'bootstrap-table-editable-plugin']
+        },
+        'bootstrap-table-editable-plugin': {
+            deps: ['bootstrap-table'],
+            export: 'bootstrap-table-editable-plugin'
         },
         'timepicker': {
             exports: 'timepicker'

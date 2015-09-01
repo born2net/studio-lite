@@ -7,7 +7,7 @@
  * @param {string} i_campaign_timeline_chanel_player_id required and set as block id when block is inserted onto timeline_channel
  * @return {Object} Block instance
  */
-define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
+define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable'], function ($, Backbone, Block, bootstraptableeditable) {
 
     var BlockCollection = Block.extend({
 
@@ -40,57 +40,110 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _initDatatable: function () {
             var self = this;
 
-            return;
 
-            //$(Elements.COLLECTION_DATATABLE).editable({mode: 'inline'});
-            //$(Elements.COLLECTION_DATATABLE).editable({
-            $('.xedit').editable({
-                mode: 'popup',
+            var data = [{
+                "name": "bootstrap-table",
+                "stargazers_count": "10"
+            }, {
+                "name": "bootstrap-table",
+                "stargazers_count": "10"
+            }, {
+                "name": "bootstrap-table",
+                "sss": "bootstrap-table",
+                "stargazers_count": "10"
+            }, {
+                "name": "bootstrap-table",
+                "stargazers_count": "10"
+            }, {
+                "name": "bootstrap-table",
+                "stargazers_count": "10"
+            }];
+
+            $.fn.editable.defaults.mode = 'inline';
+            var a = $('#table').bootstrapTable({
+                data: data,
+                editable: true,
                 type: 'select',
                 title: 'Select status',
-                placement: 'left',
-                value: 2,
-                source: [
-                    {value: 1, text: 'status 1'},
-                    {value: 2, text: 'status 2'},
-                    {value: 3, text: 'status 3'}
-                ]
-                /*
-                 //uncomment these lines to send data on server
-                 ,pk: 1
-                 ,url: '/post'
-                 */
-            });
-
-            return;
-
-            self.m_dt = $(Elements.COLLECTION_DATATABLE).dataTable({
-                dom: 'T<"clear">lfrtip'
-            });
-
-            self.m_dt.fnAddData(['aaa', 'bbbb', 'cccc']);
-            self.m_dt.fnAddData(['33', 'bbbb', 'cccc']);
-            self.m_dt.fnAddData(['ff', 'bbbb', 'cccc']);
-            self.m_dt.fnAddData(['aaa', 'bbbb', 'cccc']);
-            self.m_dt.fnAddData(['33', 'bbbb', 'cccc']);
-            self.m_dt.fnAddData(['ff', 'bbbb', 'cccc']);
-            self.m_dt.fnAddData(['aaa', 'bbbb', 'cccc']);
-            self.m_dt.fnAddData(['33', 'bbbb', 'cccc']);
-            self.m_dt.fnAddData(['ff', 'bbbb', 'cccc']);
-            self.m_dt.fnAddData(['aaa', 'bbbb', 'cccc']);
-            self.m_dt.fnAddData(['33', 'bbbb', 'cccc']);
-            self.m_dt.fnAddData(['ff', 'bbbb', 'cccc']);
-
-
-            $(Elements.COLLECTION_DATATABLE + ' tbody').on('click', 'tr', function () {
-                if ($(this).hasClass('selected')) {
-                    $(this).removeClass('selected');
-                }
-                else {
-                    $('tr.selected', Elements.COLLECTION_DATATABLE).removeClass('selected');
-                    $(this).addClass('selected');
+                placement: 'right',
+                onEditableInit: function (response, newValue) {
+                    console.log(newValue);
+                },
+                onEditableShown: function (response, newValue) {
+                    console.log(newValue);
+                },
+                onEditableHidden: function (response, newValue) {
+                    console.log(newValue);
+                },
+                onEditableSave: function (response, newValue) {
+                    console.log(newValue);
+                },
+                success: function (response, newValue) {
+                    if (response.status == 'error') {
+                        return response.msg;
+                    } //msg will be shown in editable form
                 }
             });
+
+            var a = $('#table2').bootstrapTable({
+                data: data,
+                editable: true,
+                type: 'select',
+                title: 'Select status',
+                placement: 'right',
+                onEditableInit: function (response, newValue) {
+                    console.log(newValue);
+                },
+                onEditableShown: function (response, newValue) {
+                    console.log(newValue);
+                },
+                onEditableHidden: function (response, newValue) {
+                    console.log(newValue);
+                },
+                onEditableSave: function (response, newValue) {
+                    console.log(newValue);
+                },
+                success: function (response, newValue) {
+                    if (response.status == 'error') {
+                        return response.msg;
+                    } //msg will be shown in editable form
+                }
+            });
+
+
+            //$(Elements.COLLECTION_DATATABLE).bootstrapTable({});
+            /*
+             setTimeout(function(){
+             var a = $('a','#table');
+             var td = $('td','#table');
+             $('a','#table').editable({
+             type: 'text',
+             pk: 1,
+             name: 'parket',
+             title: 'Enter username',
+             success: function(response, newValue) {
+             if(response.status == 'error') {
+             return response.msg;
+             } //msg will be shown in editable form
+             }
+             });
+             $('td','#table').editable({
+             success: function(response, newValue) {
+             $(this).hide();
+             return false;
+             //if(response.status == 'error') {
+             //    return response.msg;
+             //} //msg will be shown in editable form
+             },
+             type: 'text',
+             pk: 1,
+             name: 'parket',
+             title: 'Enter username'
+             });
+             },250);
+             */
+
+
         },
 
         /**

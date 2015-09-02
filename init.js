@@ -31,6 +31,8 @@ require.config({
         'bootstrap-table': '_common/_js/bootstrap-table/dist/bootstrap-table',
         'bootstrap-table-editable': '_common/_js/bootstrap-table/dist/extensions/editable/bootstrap-table-editable',
         'bootstrap-table-editable-plugin': '_common/_js/bootstrap-table/dist/extensions/editable/xedit-editable',
+        'bootstrap-table-sort-rows': '_common/_js/bootstrap-table/dist/extensions/reorder-rows/bootstrap-table-reorder-rows',
+        'table-dnd': '_common/_js/bootstrap-table/dist/extensions/reorder-rows/jquery.tablednd',
         'colorpicker': '_common/_js/gradient/colorpicker',
         'timepicker': '_common/_js/timepicker/bootstrap-timepicker',
         'datepicker': '_common/_js/datepicker/bootstrap-datepicker',
@@ -223,6 +225,13 @@ require.config({
         'bootstrap-table-editable-plugin': {
             deps: ['bootstrap-table'],
             export: 'bootstrap-table-editable-plugin'
+        },
+        'bootstrap-table-sort-rows': {
+            deps: ['bootstrap-table', 'table-dnd'],
+            export: 'bootstrap-table-sort-rows'
+        },
+        'table-dnd': {
+            export: 'table-dnd'
         },
         'timepicker': {
             exports: 'timepicker'

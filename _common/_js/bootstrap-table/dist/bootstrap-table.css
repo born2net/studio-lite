@@ -295,3 +295,8 @@ div.fixed-table-scroll-outer {
     height: 150px;
     overflow: hidden;
 }
+
+.popover-content {
+    z-index: 9999;
+    position: relative;
+}

@@ -980,6 +980,8 @@ iframe {
     background-color: #428ac9 !important;
 }
 
+
+
 #installPanel i {
     font-size: 50px;
     color: #428ac9;
@@ -1286,6 +1288,12 @@ iframe {
 
 .svgSD {
     margin: 10px;
+}
+
+.draggIconTable {
+    color: #428ac9;
+    opacity: 0.6;
+    cursor: pointer;
 }
 
 .alignTextLeft {
@@ -3771,4 +3779,38 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 
 #importSceneList img:hover {
     opacity: 1;
+}
+
+/*
+#collectionTable tr,
+#collectionTable th,
+#collectionTable td {
+    overflow: visible !important;
+    background-color: white;
+    border-color: white;
+
+}
+*/
+
+#collectionTable .editable-buttons {
+    text-align: left;
+}
+
+#collectionTable .input-sm {
+    width: 100px !important;;
+}
+
+.reorder_rows_onDragClass td  {
+    background-color: #e5e5e5;
+    /*-webkit-box-shadow: 11px 5px 12px 2px #333, 0 1px 0 #ccc inset, 0 -1px 0 #ccc inset;
+    -webkit-box-shadow: 6px 3px 5px #555, 0 1px 0 #ccc inset, 0 -1px 0 #ccc inset;
+    -moz-box-shadow: 6px 4px 5px 1px #555, 0 1px 0 #ccc inset, 0 -1px 0 #ccc inset;
+    -box-shadow: 6px 4px 5px 1px #555, 0 1px 0 #ccc inset, 0 -1px 0 #ccc inset;*/
+}
+
+.reorder_rows_onDragClass td:last-child {
+    /*-webkit-box-shadow: 8px 7px 12px 0 #333, 0 1px 0 #ccc inset, 0 -1px 0 #ccc inset;
+    -webkit-box-shadow: 1px 8px 6px -4px #555, 0 1px 0 #ccc inset, 0 -1px 0 #ccc inset;
+    -moz-box-shadow: 0 9px 4px -4px #555, 0 1px 0 #ccc inset, 0 -1px 0 #ccc inset, -1px 0 0 #ccc inset;
+    -box-shadow: 0 9px 4px -4px #555, 0 1px 0 #ccc inset, 0 -1px 0 #ccc inset, -1px 0 0 #ccc inset;*/
 }

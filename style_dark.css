@@ -266,3 +266,12 @@ input {
 .noUi-background {
     background: #eb7c66 !important;
 }
+
+#collectionTable tr,
+#collectionTable th,
+#collectionTable td {
+    background-color: #535353;
+    border-color: #535353;
+}
+
+

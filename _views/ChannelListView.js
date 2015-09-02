@@ -478,7 +478,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
         },
 
         /**
-         Create a sortable channel list
+         Create a draggable sortable channel list
          @method _createSortable
          @param {String} i_selector
          **/

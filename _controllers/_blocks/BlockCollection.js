@@ -7,7 +7,8 @@
  * @param {string} i_campaign_timeline_chanel_player_id required and set as block id when block is inserted onto timeline_channel
  * @return {Object} Block instance
  */
-define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable'], function ($, Backbone, Block, bootstraptableeditable) {
+define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-table-sort-rows'], function ($, Backbone, Block, bootstraptableeditable, bootstraptablesortrows)
+{
 
     var BlockCollection = Block.extend({
 
@@ -22,15 +23,11 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable'], function ($,
             Block.prototype.constructor.call(this, options);
             self._initSubPanel(Elements.BLOCK_COLLECTION_COMMON_PROPERTIES);
             self._initDatatable();
+            var sorts = $('tbody', Elements.COLLECTION_TABLE);
+            //self._createSortableCollectionItems(sorts[0]);
 
-            return;
-            self.m_youtubeQualityMeter = self.m_blockProperty.getYouTubeQualityMeter();
-            self._listenQualityChange();
-            self._listenVolumeChange();
-            self._listenPlaylistDropDownChange();
-            self._listenCountryChange();
-            self._listenVideoIdChange();
-            self._listenAddVideoId();
+            //$.fn.editable.defaults.mode = 'inline';
+
         },
 
         /**
@@ -40,43 +37,68 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable'], function ($,
         _initDatatable: function () {
             var self = this;
 
+            // add draggable icons
+            $(Elements.COLLECTION_TABLEI_CON_FORMATTER).attr('data-formatter', function () {
+                return '<div class="draggIconTable">' + '<i class="fa fa-arrows-v"></i></div>';
+            });
+
+            // register a function tp validate checkbox state
+            BB.lib.validateCollectionBlockCheckBox = function (value, row, index) {
+                return {
+                    checked: false,
+                    disabled: false
+                }
+            };
+
 
             var data = [{
-                "name": "bootstrap-table",
-                "stargazers_count": "10"
+                "checkbox": "true",
+                "name": "ev1",
+                "duration": "10"
             }, {
-                "name": "bootstrap-table",
-                "stargazers_count": "10"
+                "checkbox": "true",
+                "name": "event is 3",
+                "duration": "4"
             }, {
-                "name": "bootstrap-table",
-                "sss": "bootstrap-table",
-                "stargazers_count": "10"
+                "checkbox": "true",
+                "name": "event is 4",
+                "duration": "324"
             }, {
-                "name": "bootstrap-table",
-                "stargazers_count": "10"
-            }, {
-                "name": "bootstrap-table",
-                "stargazers_count": "10"
+                "checkbox": "true",
+                "name": "event is 5",
+                "duration": "41"
             }];
 
-            $.fn.editable.defaults.mode = 'inline';
-            $('#table').bootstrapTable({
+            //$.fn.editable.defaults.mode = 'inline';
+
+            var $table = $(Elements.COLLECTION_TABLE);
+
+
+            $(Elements.COLLECTION_TABLE).bootstrapTable({
                 data: data,
                 editable: true,
                 type: 'select',
                 title: 'Select status',
-                placement: 'right',
+                placement: 'left',
                 onEditableInit: function (response, newValue) {
                     console.log(newValue);
+                },
+                onReorderRowsDrag:function(a){
+                    console.log(a);
+                },
+                onReorderRowsDrop: function(a){
+                  console.log(a);
                 },
                 onEditableShown: function (response, newValue) {
                     console.log(newValue);
                 },
                 onEditableHidden: function (response, newValue) {
                     console.log(newValue);
+                    //console.log('getSelections: ' + JSON.stringify($table.bootstrapTable('getSelections')));
+                    //$table.bootstrapTable('refresh');
                 },
                 onEditableSave: function (response, newValue) {
-                    console.log(newValue);
+                    console.log('saving');
                 },
                 success: function (response, newValue) {
                     if (response.status == 'error') {
@@ -84,40 +106,6 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable'], function ($,
                     } //msg will be shown in editable form
                 }
             });
-
-
-            //$(Elements.COLLECTION_DATATABLE).bootstrapTable({});
-            /*
-             setTimeout(function(){
-             var a = $('a','#table');
-             var td = $('td','#table');
-             $('a','#table').editable({
-             type: 'text',
-             pk: 1,
-             name: 'parket',
-             title: 'Enter username',
-             success: function(response, newValue) {
-             if(response.status == 'error') {
-             return response.msg;
-             } //msg will be shown in editable form
-             }
-             });
-             $('td','#table').editable({
-             success: function(response, newValue) {
-             $(this).hide();
-             return false;
-             //if(response.status == 'error') {
-             //    return response.msg;
-             //} //msg will be shown in editable form
-             },
-             type: 'text',
-             pk: 1,
-             name: 'parket',
-             title: 'Enter username'
-             });
-             },250);
-             */
-
 
         },
 
@@ -476,4 +464,6 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable'], function ($,
     });
 
     return BlockCollection;
-});
+}
+)
+;

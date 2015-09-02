@@ -44,7 +44,6 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
-
 </head>
 <body>
 <div id="domRoot">
@@ -651,8 +650,7 @@
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <ul id="sortable" class="list-group context" style="padding:20px"
-                                                data-toggle="context" data-target="#channelListContextMenu">
+                                            <ul id="sortable" class="list-group context" style="padding:20px" data-toggle="context" data-target="#channelListContextMenu">
                                             </ul>
                                         </div>
                                     </div>
@@ -2027,32 +2025,19 @@
                                             <input type="text" name="name" class="fasterQLineNumber" value="" placeholder="Line" data-localize="Line"><br/>
                                         </div>
                                         <div id="blockCollectionCommonProperties" style="display: none">
-                                            <!--
-                                            <div class="form-inline">
-                                                <button type="button"
-                                                        class="btn btn-default mybtn-top">
-                                                    Scroll to top
-                                                </button>
-                                                <button type="button"
-                                                        class="btn btn-default mybtn-row">
-                                                    Scroll to row index:
-                                                </button>
-                                                <input type="number"
-                                                       class="form-control row-index"
-                                                       value="3" min="0">
-                                                <button type="button"
-                                                        class="btn btn-default mybtn-btm">
-                                                    Scroll to bottom
-                                                </button>
-                                            </div>
-                                             -->
                                             <div style="padding: 1px; ">
                                                 <br>
-                                                <table id="table" data-click-to-select="true" data-search="false" data-mode="popup" data-show-columns="true" data-pagination="true" data-height="250">
+                                                <table id="collectionTable" class="table table-no-bordered"
+                                                       data-search="false" data-mode="inline" data-show-columns="false" data-pagination="true"
+                                                       data-use-row-attr-func="true"
+                                                       data-reorderable-rows="true"
+                                                       data-height="400">
                                                     <thead>
                                                     <tr>
-                                                        <th  data-checkbox="true" data-field="stargazers_count" data-editable="false" data-sortable="true">Stars</th>
-                                                        <th data-field="name" data-editable="true" data-sortable="true" width="200">Name</th>
+                                                        <th data-field="state" data-checkbox="true" data-formatter="BB.lib.validateCollectionBlockCheckBox" data-sortable="false" data-width="40px"></th>
+                                                        <th data-field="name" data-editable="true" data-sortable="false" data-width="400px">name</th>
+                                                        <th data-field="duration" data-type="number" data-halign="right" data-align="right" data-editable="true" data-sortable="false" data-width="60px">duration</th>
+                                                        <th id="collectionTableIconFormatter" data-field="dragIcon" data-editable="false" data-align="left" data-halign="left" data-sortable="false" data-width="10x" data-formatter="aaaa"></th>
                                                     </tr>
                                                     </thead>
                                                 </table>

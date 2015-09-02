@@ -1142,11 +1142,13 @@
          **/
         hide: function (reason) {
             if (!this.tip() || !this.tip().is(':visible') || !this.$element.hasClass('editable-open')) {
-                return;
+                //todo: commented return so we always hide, per Sean Levy (9-2-2015)
+                //return;
             }
 
             //if form is saving value, schedule hide
-            if (this.$form.data('editableform').isSaving) {
+            //todo: also added check for editableform != undefined due to change on top, per Sean Levy (9-2-2015)
+            if (this.$form.data('editableform') != undefined && this.$form.data('editableform').isSaving) {
                 this.delayedHide = {reason: reason};
                 return;
             } else {

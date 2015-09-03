@@ -1290,7 +1290,7 @@ iframe {
     margin: 10px;
 }
 
-.draggIconTable {
+.dragIconTable {
     color: #428ac9;
     opacity: 0.6;
     cursor: pointer;
@@ -3781,23 +3781,17 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
     opacity: 1;
 }
 
-/*
-#collectionTable tr,
-#collectionTable th,
-#collectionTable td {
-    overflow: visible !important;
-    background-color: white;
-    border-color: white;
-
-}
-*/
-
 #collectionTable .editable-buttons {
     text-align: left;
 }
 
 #collectionTable .input-sm {
     width: 100px !important;;
+}
+
+
+#blockCollectionCommonProperties .fixed-table-body {
+    max-height: 157px;
 }
 
 .reorder_rows_onDragClass td  {
@@ -3814,3 +3808,60 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
     -moz-box-shadow: 0 9px 4px -4px #555, 0 1px 0 #ccc inset, 0 -1px 0 #ccc inset, -1px 0 0 #ccc inset;
     -box-shadow: 0 9px 4px -4px #555, 0 1px 0 #ccc inset, 0 -1px 0 #ccc inset, -1px 0 0 #ccc inset;*/
 }
+
+
+/* material switches */
+
+.material-switch > input[type="checkbox"] {
+    display: none;
+}
+
+.material-switch > label {
+    cursor: pointer;
+    height: 0px;
+    position: relative;
+    width: 40px;
+}
+
+.material-switch > label::before {
+    background: rgb(0, 0, 0);
+    border-radius: 8px;
+    content: '';
+    height: 16px;
+    margin-top: -8px;
+    position:absolute;
+    opacity: 0.3;
+    transition: all 0.4s ease-in-out;
+    width: 40px;
+}
+.material-switch > label::after {
+    background: rgb(255, 255, 255);
+    border-radius: 16px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    content: '';
+    height: 24px;
+    left: -4px;
+    margin-top: -8px;
+    position: absolute;
+    top: -4px;
+    transition: all 0.3s ease-in-out;
+    width: 24px;
+}
+.material-switch > input[type="checkbox"]:checked + label::before {
+    background: inherit;
+    opacity: 0.5;
+}
+.material-switch > input[type="checkbox"]:checked + label::after {
+    background: inherit;
+    left: 20px;
+}
+
+
+
+
+select.btn-mini {
+    height: auto;
+    line-height: 10px;
+    padding-right: 10px;
+}
+

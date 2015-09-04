@@ -2038,11 +2038,11 @@
                                                             data-localize-tooltip="removeTimelineButtonToolTip"
                                                             class="btn btn-default btn-sm"><span
                                                             class="glyphicon glyphicon-minus"></span></button>
-                                                    <label style="font-size: 10px" class="pull-right">with events</label>
+                                                    <label style="font-size: 10px" class="pull-right">kiosk mode</label>
                                                     <div class="clearfix"></div>
                                                     <div style="position: relative; top: -12px" class="material-switch pull-right">
-                                                        <input id="someSwitchOptionPrimary" name="someSwitchOption001" type="checkbox"/>
-                                                        <label for="someSwitchOptionPrimary" class="label-primary"></label>
+                                                        <input id="collectionKioskMode" name="someSwitchOption001" type="checkbox"/>
+                                                        <label for="collectionKioskMode" class="label-primary"></label>
                                                         <!--
                                                         to style class= ... one of label-default label-primary label-success label-info label-warning label-dange
                                                         -->
@@ -2050,7 +2050,7 @@
 
                                                 </h4>
 
-                                                <label>Playlist of collection items</label>
+                                                <label>Play list in sequential order</label>
                                                 <table id="collectionTable"
                                                        class="table table-no-bordered"
                                                        data-search="false" data-mode="inline"
@@ -2063,31 +2063,33 @@
                                                     <tr>
                                                         <th data-field="state" data-checkbox="true" data-formatter="BB.lib.validateCollectionBlockCheckBox" data-sortable="false" data-width="40px"></th>
                                                         <th data-field="name" data-editable="true" data-sortable="false">name</th>
-                                                        <th data-field="duration" data-type="number" data-halign="right" data-align="right" data-editable="true" data-sortable="false" data-width="60px">duration</th>
-                                                        <th data-field="dragIcon" data-editable="false" data-align="left" data-halign="left" data-sortable="false" data-width="10x" class="collectionTableIconFormatter"></th>
+                                                        <th data-field="duration" data-type="number" data-halign="center" data-align="center" data-editable="true" data-sortable="false" data-width="60px">duration</th>
+                                                        <th data-field="dragIcon" data-editable="false" data-align="center" data-halign="center" data-sortable="false" data-width="10x" class="collectionTableIconFormatter"></th>
                                                     </tr>
                                                     </thead>
                                                 </table>
                                                 <hr/>
-                                                <label>Bind each events to a collection item</label>
-                                                <table id="collectionEventsTable"
-                                                       class="table table-no-bordered"
-                                                       data-search="false" data-mode="inline"
-                                                       data-show-columns="false"
-                                                       data-pagination="false"
-                                                       data-use-row-attr-func="true"
-                                                       data-reorderable-rows="true"
-                                                       data-height="200">
-                                                    <thead>
-                                                    <tr>
-                                                        <th data-field="state" data-checkbox="true" data-formatter="BB.lib.validateCollectionBlockCheckBox" data-sortable="false" data-width="40px"></th>
-                                                        <th data-field="name" data-editable="true" data-sortable="false">name</th>
-                                                        <th data-field="duration" data-type="number" data-halign="right" data-align="right" data-editable="true" data-sortable="false" data-width="60px">duration</th>
-                                                        <th data-field="dragIcon" data-editable="false" data-align="left" data-halign="left" data-sortable="false" data-width="10x" class="collectionTableIconFormatter"></th>
-                                                    </tr>
-                                                    </thead>
-                                                </table>
-
+                                                <div id="kioskEventsContainer">
+                                                    <label>On event take action</label>
+                                                    <table id="collectionEventsTable"
+                                                           class="table table-no-bordered"
+                                                           data-search="false" data-mode="inline"
+                                                           data-show-columns="false"
+                                                           data-pagination="false"
+                                                           data-use-row-attr-func="true"
+                                                           data-reorderable-rows="true"
+                                                           data-height="200">
+                                                        <thead>
+                                                        <tr>
+                                                            <th data-field="state" data-checkbox="true" data-formatter="BB.lib.collectionChecks" data-sortable="false" data-width="40px"></th>
+                                                            <th data-field="event" data-editable="true" data-sortable="false">event</th>
+                                                            <th data-field="action" data-type="number" data-formatter="BB.lib.collectionEventAction" data-halign="center" data-align="center" data-sortable="false" data-width="60px">action</th>
+                                                            <th data-field="selectedPage" data-formatter="BB.lib.collectionEventActionExec" class="collectionSelectedItem" data-type="number" data-halign="center" data-align="center" data-sortable="false" data-width="60px">to item</th>
+                                                            <th data-field="dragIcon" data-editable="false" data-align="center" data-halign="center" data-sortable="false" data-width="10px" class="collectionTableIconFormatter"></th>
+                                                        </tr>
+                                                        </thead>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                         <div id="blockYouTubeCommonProperties" style="display: none">

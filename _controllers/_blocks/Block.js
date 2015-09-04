@@ -728,6 +728,7 @@ define(['jquery', 'backbone'], function ($) {
 
         /**
          Get the XML player data of a block, depending where its placed
+         If you like to view XML raw data, be sure to debug domPlayerData.children[0].outerHTML
          @method _getBlockPlayerData
          @return {Object} player data of block (aka player) parsed as DOM
          **/
@@ -741,12 +742,14 @@ define(['jquery', 'backbone'], function ($) {
                 {
                     recBlock = pepper.getCampaignTimelineChannelPlayerRecord(self.m_block_id);
                     return $.parseXML(recBlock['player_data']);
+                    // to view data debug domPlayerData.children[0].outerHTML
                     break;
                 }
 
                 case BB.CONSTS.PLACEMENT_SCENE:
                 {
                     return pepper.getScenePlayerdataBlock(self.m_sceneID, self.m_block_id);
+                    // to view data debug domPlayerData.children[0].outerHTML
                     break;
                 }
             }

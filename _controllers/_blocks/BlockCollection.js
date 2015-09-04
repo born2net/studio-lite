@@ -20,11 +20,76 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 self.m_blockType = 4100;
                 _.extend(options, {blockType: self.m_blockType});
                 Block.prototype.constructor.call(this, options);
+
+                self.m_collectionTable = $(Elements.COLLECTION_TABLE);
+                self.m_collectionEventTable = $(Elements.COLLECTION_EVENTS_TABLE);
+
                 self._initSubPanel(Elements.BLOCK_COLLECTION_COMMON_PROPERTIES);
+                self._registerGlobalValidators();
                 self._initDatatable();
 
-                // can set global mode if we wish
+
+                /* can set global mode if we wish */
                 //$.fn.editable.defaults.mode = 'inline';
+
+                self.m_actions = {
+                    firstPage: 'beginning',
+                    nextPage: 'next',
+                    prevPage: 'previous',
+                    lastPage: 'last',
+                    selectPage: 'selected'
+                }
+            },
+
+            /**
+             Register Global Validators for bootstrap-table to format data
+             This function has to run everytime we populate the UI since it is a shared global function
+             and we have to override it so 'this' refers to correct BlockCollection instance
+             @method _registerGlobalValidators
+             **/
+            _registerGlobalValidators: function () {
+                var self = this;
+
+                // add draggable icons
+                $(Elements.CLASS_COLLECTION_TABLE_FORMATTER).attr('data-formatter', function () {
+                    return '<div class="dragIconTable"><i class="fa fa-arrows-v"></i></div>';
+
+                });
+
+                // register a global shared function to validate checkbox state
+                BB.lib.collectionChecks = function (value, row, index) {
+                    return {
+                        checked: false,
+                        disabled: false
+                    }
+                };
+
+                // build selection dropdown for even "action", if row.action == name, set it as selected in dropdown
+                BB.lib.collectionEventAction = function (value, row, index) {
+                    var buffer = '<select class="btn">';
+                    _.forEach(self.m_actions, function (name, value) {
+                        if (row.action == name) {
+                            buffer += '<option selected>' + name + '</option>';
+                        } else {
+                            buffer += '<option>' + name + '</option>';
+                        }
+                    });
+                    return buffer + '</select>';
+                };
+
+                // build selection dropdown for even "to item" and if row.action is selected
+                // we un-hide the dropdown in "to item" events and select the proper <option>
+                BB.lib.collectionEventActionExec = function (value, row, index) {
+                    var buffer = '';
+                    var collectionPageNames = self._getCollectionPageNames();
+                    var visibilityClass = row.action == 'selected' ? '' : 'hidden'
+                    buffer = '<select class="' + visibilityClass + ' btn">';
+                    collectionPageNames.forEach(function (k, v) {
+                        var selected = row.pageName == k ? 'selected' : '';
+                        buffer += '<option ' + selected + '>' + k + '</option>';
+                    });
+                    return buffer;
+                };
             },
 
             /**
@@ -34,68 +99,8 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             _initDatatable: function () {
                 var self = this;
 
-                // add draggable icons
-                $(Elements.CLASS_COLLECTION_TABLE_FORMATTER).attr('data-formatter', function () {
-                    return '<div class="dragIconTable"><i class="fa fa-arrows-v"></i></div>';
-                    //return '<select class="btn btn-mini"><option>Select</option><option>Option 1</option><option>Option 2</option></select>'
-                });
-
-                // register a global shared function to validate checkbox state
-                BB.lib.validateCollectionBlockCheckBox = function (value, row, index) {
-                    return {
-                        checked: false,
-                        disabled: false
-                    }
-                };
-
-                var data = [{
-                    "checkbox": "true",
-                    "name": "ev1",
-                    "duration": "10"
-                }, {
-                    "checkbox": "true",
-                    "name": "event is 3",
-                    "duration": "4"
-                }, {
-                    "checkbox": "true",
-                    "name": "YYevent is 4",
-                    "duration": "324"
-                }, {
-                    "checkbox": "true",
-                    "name": "event is 4",
-                    "duration": "324"
-                }, {
-                    "checkbox": "true",
-                    "name": "Zevent is 4",
-                    "duration": "324"
-                }, {
-                    "checkbox": "true",
-                    "name": "Zevent is 4",
-                    "duration": "324"
-                }, {
-                    "checkbox": "true",
-                    "name": "Zevent is 4",
-                    "duration": "324"
-                }, {
-                    "checkbox": "true",
-                    "name": "Zevent is 4",
-                    "duration": "324"
-                }, {
-                    "checkbox": "true",
-                    "name": "Zevent is 4",
-                    "duration": "324"
-                }, {
-                    "checkbox": "true",
-                    "name": "Zevent is 4",
-                    "duration": "324"
-                }, {
-                    "checkbox": "true",
-                    "name": "Xevent is 5",
-                    "duration": "41"
-                }];
-
-                $(Elements.COLLECTION_TABLE).bootstrapTable({
-                    data: data,
+                self.m_collectionTable.bootstrapTable({
+                    data: [],
                     editable: true,
                     type: 'select',
                     title: 'Select status',
@@ -127,8 +132,8 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     }
                 });
 
-                $(Elements.COLLECTION_EVENTS_TABLE).bootstrapTable({
-                    data: data,
+                self.m_collectionEventTable.bootstrapTable({
+                    data: [],
                     editable: true,
                     type: 'select',
                     title: 'Select status',
@@ -169,8 +174,83 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
              **/
             _populate: function () {
                 var self = this;
+                self._registerGlobalValidators();
                 var domPlayerData = self._getBlockPlayerData();
-                var xSnippetYouTube = $(domPlayerData).find('Collection');
+                var xSnippetCollection = $(domPlayerData).find('Collection');
+                var mode = $(xSnippetCollection).attr('mode');
+                self._populateCollectionList(domPlayerData);
+                self._populateEventList(mode, domPlayerData);
+            },
+
+            /**
+             Load event list to the UI
+             @method _populateCollectionList
+             @param {Object} i_domPlayerData
+             **/
+            _populateCollectionList: function (i_domPlayerData) {
+                var self = this;
+                self.m_collectionTable.bootstrapTable('removeAll');
+                var data = [];
+                $(i_domPlayerData).find('Collection').children().each(function (k, page) {
+                    data.push({
+                        checkbox: true,
+                        name: $(page).attr('page'),
+                        duration: $(page).attr('duration')
+                    })
+                });
+                self.m_collectionTable.bootstrapTable('load', data);
+            },
+
+            /**
+             Set mode of Kiosk (enable / disabled)
+             @method _populateEventList
+             @param {String} i_mode
+             @param {Object} i_domPlayerData
+             **/
+            _populateEventList: function (i_mode, i_domPlayerData) {
+                var self = this;
+                if (i_mode == "kiosk") {
+                    self.m_collectionEventTable.bootstrapTable('removeAll');
+                    $(Elements.COLLECTION_KIOSK_MODE).prop('checked', true);
+                    $(Elements.KIOS_KEVENTS_CONTAINER).show();
+                    self._populateEvents(i_domPlayerData)
+                } else {
+                    $(Elements.COLLECTION_KIOSK_MODE).prop('checked', false);
+                    $(Elements.KIOS_KEVENTS_CONTAINER).hide();
+                }
+            },
+
+            /**
+             Load event list to the UI
+             @method _populateEvents
+             @param {Object} i_domPlayerData
+             **/
+            _populateEvents: function (i_domPlayerData) {
+                var self = this;
+                var data = [];
+                $(i_domPlayerData).find('EventCommands').children().each(function (k, eventCommand) {
+                    var pageName = '';
+                    if ($(eventCommand).attr('command') =='selectPage')
+                        pageName = $(eventCommand).find('Page').attr('name');
+                    data.push({
+                        checkbox: true,
+                        event: $(eventCommand).attr('from'),
+                        pageName: pageName,
+                        action: self.m_actions[$(eventCommand).attr('command')]
+                    })
+                });
+                self.m_collectionEventTable.bootstrapTable('load', data);
+            },
+
+            _getCollectionPageNames: function () {
+                var self = this;
+                var data = [];
+                var domPlayerData = self._getBlockPlayerData();
+                $(domPlayerData).find('Collection').children().each(function (k, page) {
+                    data.push($(page).attr('page'));
+                });
+                return data;
+
             },
 
             /**

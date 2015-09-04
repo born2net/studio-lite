@@ -3777,15 +3777,20 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
     opacity: 0.8;
 }
 
+#collectionEventsTable select {
+    padding: 0;
+    margin: 0;
+}
+
 #importSceneList img:hover {
     opacity: 1;
 }
 
-#collectionTable .editable-buttons {
+#blockCollectionCommonProperties .editable-buttons {
     text-align: left;
 }
 
-#collectionTable .input-sm {
+#blockCollectionCommonProperties .input-sm {
     width: 100px !important;;
 }
 
@@ -3858,10 +3863,4 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 
 
 
-
-select.btn-mini {
-    height: auto;
-    line-height: 10px;
-    padding-right: 10px;
-}
 

@@ -499,6 +499,11 @@ jQuery.tableDnD = {
         return null;
     },
     processMouseup: function() {
+
+        //todo: fixed bug in checking a null per Sean Levy 9-4-2015
+        if (this.currentTable==null)
+            return null;
+
         var config      = this.currentTable.tableDnDConfig,
             droppedRow  = this.dragObject,
             parentLevel = 0,

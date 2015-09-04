@@ -28,9 +28,10 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 self._registerGlobalValidators();
                 self._initDatatable();
 
-
                 /* can set global mode if we wish */
                 //$.fn.editable.defaults.mode = 'inline';
+
+                ///////// todo: add listen to event COLLECTION_SLIDESHOW_CHANGED
 
                 self.m_actions = {
                     firstPage: 'beginning',
@@ -213,11 +214,27 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     self.m_collectionEventTable.bootstrapTable('removeAll');
                     $(Elements.COLLECTION_KIOSK_MODE).prop('checked', true);
                     $(Elements.KIOS_KEVENTS_CONTAINER).show();
+                    $(Elements.COLLECTION_SLIDESHOW_DURATION_CONTAINER).hide();
                     self._populateEvents(i_domPlayerData)
                 } else {
                     $(Elements.COLLECTION_KIOSK_MODE).prop('checked', false);
                     $(Elements.KIOS_KEVENTS_CONTAINER).hide();
+                    $(Elements.COLLECTION_SLIDESHOW_DURATION_CONTAINER).show();
+                    self._populateSlideshowDuration(i_domPlayerData);
                 }
+            },
+
+
+            /**
+             Load up the duration for how long to play slide shows (when not in kiosk mode);
+             @method _populateSlideshowDuration
+             @param {Number} i_domPlayerData
+             @return {Number} Unique clientId.
+             **/
+            _populateSlideshowDuration: function(i_domPlayerData){
+                var self = this;
+                var duration = $(i_domPlayerData).find('Collection').attr('duration');
+                $(Elements.COLLECTION_SLIDESHOW_DURATION).val(duration);
             },
 
             /**
@@ -242,6 +259,10 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 self.m_collectionEventTable.bootstrapTable('load', data);
             },
 
+            /**
+             Get all the collection pages names for current collection block
+             @method _getCollectionPageNames
+             **/
             _getCollectionPageNames: function () {
                 var self = this;
                 var data = [];

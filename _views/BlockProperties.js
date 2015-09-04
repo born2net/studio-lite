@@ -48,6 +48,15 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
     BB.EVENTS.ALPHA_CHANGED = 'ALPHA_CHANGED';
 
     /**
+     event fires when collection block slideshow value has changed
+     @event COLLECTION_SLIDESHOW_CHANGED
+     @param {Object} this
+     @param {Object} caller the firing element
+     @param {Number} slideshow value
+     **/
+    BB.EVENTS.COLLECTION_SLIDESHOW_CHANGED = 'COLLECTION_SLIDESHOW_CHANGED';
+
+    /**
      event fires when video volume changed
      @event VIDEO_VOLUME_CHANGED
      @param {Object} this
@@ -90,6 +99,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
             self._propLengthKnobsInit();
             self._videoVolumeSliderInit()
             self._youtubeVolumeSliderInit();
+            self._collectionSlideshowInit();
             self._rssFontSelectorInit();
             self._rssSourceSelectorInit();
             self._mrssSourceSelectorInit();
@@ -109,7 +119,6 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
          **/
         _alphaSliderInit: function () {
             var self = this;
-
             $(Elements.BLOCK_ALPHA_SLIDER).noUiSlider({
                 handles: 1,
                 start: 100,
@@ -119,10 +128,31 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                     to: [ $(Elements.BLOCK_ALPHA_LABEL), 'text' ]
                 }
             });
-
             self.m_blockAlphaHandler = $(Elements.BLOCK_ALPHA_SLIDER).on('change', function (e) {
                 var alpha = parseFloat($(Elements.BLOCK_ALPHA_SLIDER).val()) / 100;
                 BB.comBroker.fire(BB.EVENTS.ALPHA_CHANGED, this, self, alpha)
+                return false;
+            });
+        },
+
+        /**
+         Init collection slide show UI for its properties
+         @method _collectionSlideshowInit
+         **/
+        _collectionSlideshowInit: function () {
+            var self = this;
+            $(Elements.COLLECTION_SLIDESHOW_DURATION).noUiSlider({
+                handles: 1,
+                start: 5,
+                step: 2,
+                range: [0, 60],
+                serialization: {
+                    to: [ $(Elements.COLLECTION_SLIDESHOW_DURATION_LABEL), 'text' ]
+                }
+            });
+            self.m_blockCollectionSlideshowHandler = $(Elements.COLLECTION_SLIDESHOW_DURATION).on('change', function (e) {
+                var value = parseFloat($(Elements.COLLECTION_SLIDESHOW_DURATION).val());
+                BB.comBroker.fire(BB.EVENTS.COLLECTION_SLIDESHOW_CHANGED, this, self, value)
                 return false;
             });
         },

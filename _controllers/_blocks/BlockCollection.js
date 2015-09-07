@@ -281,9 +281,9 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     if (!self.m_selected)
                         return;
                     var addBlockView;
-                    if (self.m_placement == BB.CONSTS.PLACEMENT_CHANNEL){
+                    if (self.m_placement == BB.CONSTS.PLACEMENT_CHANNEL) {
                         addBlockView = BB.comBroker.getService(BB.SERVICES.ADD_BLOCK_VIEW);
-                    } else if (self.m_placement = BB.CONSTS.PLACEMENT_SCENE){
+                    } else if (self.m_placement = BB.CONSTS.PLACEMENT_SCENE) {
                         addBlockView = BB.comBroker.getService(BB.SERVICES.ADD_SCENE_BLOCK_VIEW);
                     }
                     addBlockView.setPlacement(BB.CONSTS.PLACEMENT_LISTS);
@@ -305,7 +305,32 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
              **/
             _addCollectionNewListItem: function (e) {
                 var self = this;
-                //self._createNewChannelBlock(e.edata.blockCode, e.edata.resourceID, e.edata.sceneID);
+                //var resourceRec = pepper.getResourceRecord(e.edata.resourceID)
+                var domPlayerData = self._getBlockPlayerData();
+                var xSnippetCollection = $(domPlayerData).find('Collection');//.find('Page:last-child');
+                var buff = '';
+
+                // Add resource to collection
+                if (e.edata.blockCode=="3130"){
+                    var nativeID = pepper.getResourceNativeID(e.edata.resourceID);
+                    buff = '<Page page="resource" type="resource" duration="5">' +
+                                '<Player player="3130">' +
+                                        '<Data>' +
+                                            '<Resource resource="' + e.edata.resourceID + '" hResource="' + nativeID + '" />' +
+                                        '</Data>' +
+                                    '</Player>' +
+                                '</page>';
+                } else {
+                    // add scene to collection
+                    var recPlayerData = pepper.getScenePlayerRecord(e.edata.sceneID);
+                    var nativeID = recPlayerData['native_id'];
+                    buff = '<Page page="scene" type="scene" duration="5">' +
+                                '<Player src="' + nativeID + '" hDataSrc="' + e.edata.sceneID + '" />'+
+                            '</page>';
+                }
+                $(xSnippetCollection).append($(buff));
+                self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                log(e.edata.blockCode, e.edata.resourceID, e.edata.sceneID);
 
             },
 

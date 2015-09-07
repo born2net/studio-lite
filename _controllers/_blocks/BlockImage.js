@@ -32,7 +32,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _initResourcesData: function () {
             var self = this;
-            var domPlayerData = self._getBlockPlayerData();
+            var domPlayerData = self._getBlockPlayerData(   );
             var xSnippet = $(domPlayerData).find('Resource');
             self.m_resourceID = $(xSnippet).attr('hResource');
             self.m_nativeID = pepper.getResourceNativeID(self.m_resourceID);

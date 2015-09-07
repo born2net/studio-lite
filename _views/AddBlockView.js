@@ -29,7 +29,21 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
      **/
     BB.EVENTS.ADD_NEW_BLOCK_SCENE = 'ADD_NEW_BLOCK_SCENE';
 
+    /**
+     Custom event fired when a new block is added to scene
+     @event ADD_NEW_BLOCK_SCENE
+     @param {this} caller
+     @param {self} context caller
+     @param {event} player_code which represents a specific code assigned for each block type
+     @static
+     @final
+     **/
+    BB.EVENTS.ADD_NEW_BLOCK_LIST = 'ADD_NEW_BLOCK_LIST';
+
+
+    /** SERVICES **/
     BB.SERVICES.ADD_BLOCK_VIEW = 'AddBlockView';
+    BB.SERVICES.ADD_SCENE_BLOCK_VIEW = 'AddSceneBlockView';
 
     var AddBlockView = BB.View.extend({
 
@@ -57,13 +71,12 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
                 if (e == self)
                     self._render();
             });
-
             self._buildBSAccordion();
         },
 
         /**
-         Build two lists, components and resources allowing for item selection.
-         Once an LI is selected AddBlockWizard.ADD_NEW_BLOCK_CHANNEL is fired to announce block is added.
+         Build lists of components, resources and scenes (respectively showing what's needed per placement mode)
+         Once an LI is selected proper event fired to announce block is added.
          @method _render
          @return none
          **/
@@ -155,10 +168,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
             });
 
             /////////////////////////////////////////////////////////
-            // show scene selection list
+            // show scene selection list in Scene or block list modes
             /////////////////////////////////////////////////////////
 
-            if (self.m_placement == BB.CONSTS.PLACEMENT_CHANNEL) {
+            if (self.m_placement == BB.CONSTS.PLACEMENT_CHANNEL || self.m_placement == BB.CONSTS.PLACEMENT_LISTS) {
                 var scenes = pepper.getScenes();
                 _.each(scenes, function (scene, i) {
                     var label = $(scene).find('Player').eq(0).attr('label');
@@ -173,8 +186,23 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
                 });
             }
 
-            if (self.m_placement == BB.CONSTS.PLACEMENT_SCENE)
-                $(Elements.ADD_SCENE_BLOCK_LIST_CONTAINER, self.el).remove();
+            if (self.m_placement == BB.CONSTS.PLACEMENT_SCENE){
+                $(Elements.ADD_COMPONENTS_BLOCK_LIST_CONTAINER, self.el).show();
+                $(Elements.ADD_SCENE_BLOCK_LIST_CONTAINER, self.el).hide();
+            }
+
+
+            if (self.m_placement == BB.CONSTS.PLACEMENT_LISTS) {
+                $(Elements.ADD_COMPONENTS_BLOCK_LIST_CONTAINER, self.el).hide();
+                $(Elements.ADD_SCENE_BLOCK_LIST_CONTAINER, self.el).show();
+            }
+
+
+            if (self.m_placement == BB.CONSTS.PLACEMENT_CHANNEL) {
+                $(Elements.ADD_COMPONENTS_BLOCK_LIST_CONTAINER, self.el).show();
+                $(Elements.ADD_SCENE_BLOCK_LIST_CONTAINER, self.el).show();
+            }
+
 
 
             $(Elements.CLASS_ADD_BLOCK_LIST_ITEMS, self.el).on('click', function (e) {
@@ -212,7 +240,23 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
                 } else if (!_.isUndefined(scene_id)) {
                     blockCode = 3510;
                 }
-                var eventName = self.options.placement == BB.CONSTS.PLACEMENT_CHANNEL ? BB.EVENTS.ADD_NEW_BLOCK_CHANNEL : BB.EVENTS.ADD_NEW_BLOCK_SCENE;
+
+                var eventName;
+                switch(self.options.placement){
+                    case BB.CONSTS.PLACEMENT_CHANNEL: {
+                        eventName = BB.EVENTS.ADD_NEW_BLOCK_CHANNEL;
+                        break;
+                    }
+                    case BB.CONSTS.PLACEMENT_SCENE: {
+                        eventName = BB.EVENTS.ADD_NEW_BLOCK_SCENE;
+                        break;
+                    }
+                    case BB.CONSTS.PLACEMENT_LISTS: {
+                        eventName = BB.EVENTS.ADD_NEW_BLOCK_LIST;
+                        break;
+                    }
+                }
+
                 BB.comBroker.fire(eventName, this, self.options.placement, {
                     blockCode: blockCode,
                     resourceID: resource_id,
@@ -220,7 +264,6 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
                 });
                 self.deSelectView();
             });
-
         },
 
         /**
@@ -280,11 +323,15 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
                     self.options.stackView.slideToPage(self.options.from, 'left');
                     break;
                 }
-
                 case BB.CONSTS.PLACEMENT_SCENE:
                 {
                     self.m_sceneSliderView = BB.comBroker.getService(BB.SERVICES['SCENE_SLIDER_VIEW']);
                     self.m_sceneSliderView.slideToPage(Elements.SCENE_SLIDER_VIEW, 'left');
+                    break;
+                }
+                case BB.CONSTS.PLACEMENT_LISTS:
+                {
+                    self.options.stackView.slideToPage(self.options.from, 'left');
                     break;
                 }
             }
@@ -306,6 +353,19 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
         deSelectView: function () {
             var self = this;
             self._goBack();
+        },
+
+        /**
+         Allow us to control the current placement of the module so the behaviour can be according
+         to where the instance resides (i.e.: current launch is from Block collection list of from Channel list
+         for example)
+         @method setPlayerData
+         @param {Number} i_playerData
+         @return {Number} Unique clientId.
+         **/
+        setPlacement: function(i_placement){
+            var self = this;
+            self.m_placement = self.options.placement = i_placement;
         }
     });
 

@@ -190,6 +190,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     });
                     return;
                 }
+                var addBlockView = BB.comBroker.getService(BB.SERVICES.ADD_SCENE_BLOCK_VIEW);
+                addBlockView.setPlacement(BB.CONSTS.PLACEMENT_SCENE);
                 self.options.stackView.slideToPage(Elements.SCENE_ADD_NEW_BLOCK, 'right');
                 //self.m_stackFaderView.slideToPage('#sceneAddNewBlock', 'right');
                 //self.m_stackFaderView.selectView(Elements.SCENE_ADD_NEW_BLOCK);

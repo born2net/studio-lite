@@ -42,6 +42,16 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
      */
     BB.CONSTS.PLACEMENT_IS_SCENE = 'PLACEMENT_IS_SCENE';
 
+    /**
+     block.PLACEMENT_LISTS indicates the insertion is inside a collection list such
+     as the Collection Block or the Location based block. This event is used for example
+     when building the list of available blocks in AddBlockView
+     @property Block.PLACEMENT_LISTS
+     @static
+     @final
+     @type String
+     */
+    BB.CONSTS.PLACEMENT_LISTS = 'PLACEMENT_LISTS';
 
     BB.SERVICES.BLOCK_FACTORY = 'BlockFactory';
 

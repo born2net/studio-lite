@@ -384,6 +384,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                     self.m_campaignSliderStackView.addView(self.m_screenLayoutSelectorView);
                     self.m_campaignSliderStackView.addView(self.m_campaignView);
                     self.m_campaignSliderStackView.addView(self.m_addBlockView);
+                    //self.m_campaignSliderStackView.addView(self.m_addBlockListsView);
                     self.m_campaignSliderStackView.selectView(self.m_campaignSelectorView);
                 });
 

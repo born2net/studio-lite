@@ -29,16 +29,16 @@ define(['jquery', 'backbone', 'SceneSelectionView'], function ($, Backbone, Scen
          Listen to when a resource is removed, and delete it from matching scenes
          @method _listenResourceRemoved
          **/
-        _listenResourceRemoved: function(){
+        _listenResourceRemoved: function () {
             var self = this;
-            BB.comBroker.listen(BB.EVENTS.REMOVED_RESOURCE, function(e){
+            BB.comBroker.listen(BB.EVENTS.REMOVED_RESOURCE, function (e) {
                 pepper.removeAllScenePlayersWithResource(e.edata);
                 /*var sceneEditView = BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']);
-                if (!_.isUndefined(sceneEditView)){
-                    var selectedSceneID = sceneEditView.getSelectedSceneID();
-                    BB.comBroker.fire(BB.EVENTS.LOAD_SCENE, this, null, selectedSceneID);
-                }
-                */
+                 if (!_.isUndefined(sceneEditView)){
+                 var selectedSceneID = sceneEditView.getSelectedSceneID();
+                 BB.comBroker.fire(BB.EVENTS.LOAD_SCENE, this, null, selectedSceneID);
+                 }
+                 */
             });
         },
 
@@ -60,13 +60,13 @@ define(['jquery', 'backbone', 'SceneSelectionView'], function ($, Backbone, Scen
                     to: Elements.SCENE_ADD_NEW_BLOCK
                 });
 
-
                 self.m_sceneAddBlockView = new AddBlockView({
                     stackView: self.m_sceneSliderView,
                     from: Elements.SCENE_SLIDER_VIEW,
                     el: Elements.SCENE_ADD_NEW_BLOCK,
                     placement: BB.CONSTS.PLACEMENT_SCENE
                 });
+                BB.comBroker.setService(BB.SERVICES.ADD_SCENE_BLOCK_VIEW, self.m_sceneAddBlockView);
 
                 self.m_sceneEditorView = new SceneEditorView({
                     stackView: self.m_sceneSliderView,

@@ -278,6 +278,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 var self = this;
                 self.m_addNewCollectionListItem = function () {
                     BB.comBroker.stopListenWithNamespace(BB.EVENTS.ADD_NEW_BLOCK_LIST, self);
+
                     if (!self.m_selected)
                         return;
                     var addBlockView;
@@ -310,24 +311,23 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 var xSnippetCollection = $(domPlayerData).find('Collection');//.find('Page:last-child');
                 var buff = '';
 
-                // Add resource to collection
-                if (e.edata.blockCode=="3130"){
-                    // var nativeID = pepper.getResourceNativeID(e.edata.resourceID);
-                    //'<Resource hResource="' + i_resourceID + '">' +
-                    buff = '<Page page="resource" type="resource" duration="5">' +
-                                '<Player player="3130">' +
-                                        '<Data>' +
-                                            '<Resource hResource="' + e.edata.resourceID + '" />' +
-                                        '</Data>' +
-                                    '</Player>' +
-                                '</page>';
-                } else {
+
+                if (e.edata.blockCode == "3510") {
                     // add scene to collection
                     var recPlayerData = pepper.getScenePlayerRecord(e.edata.sceneID);
                     var nativeID = recPlayerData['native_id'];
                     buff = '<Page page="scene" type="scene" duration="5">' +
-                                '<Player src="' + nativeID + '" hDataSrc="' + e.edata.sceneID + '" />'+
-                            '</page>';
+                        '<Player src="' + nativeID + '" hDataSrc="' + e.edata.sceneID + '" />' +
+                        '</page>';
+                } else {
+                    // Add resources to collection
+                    buff = '<Page page="resource" type="resource" duration="5">' +
+                        '<Player player="' + e.edata.blockCode + '">' +
+                        '<Data>' +
+                        '<Resource hResource="' + e.edata.resourceID + '" />' +
+                        '</Data>' +
+                        '</Player>' +
+                        '</page>';
                 }
                 $(xSnippetCollection).append($(buff));
                 var x = pepper.xmlToStringIEfix(domPlayerData);
@@ -354,6 +354,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             deleteBlock: function () {
                 var self = this;
                 $(Elements.ADD_RESOURCE_TO_COLLECTION).off('click', self.m_addNewCollectionListItem);
+                BB.comBroker.stopListen(BB.EVENTS.ADD_NEW_BLOCK_LIST);
                 self._deleteBlock();
                 return;
 

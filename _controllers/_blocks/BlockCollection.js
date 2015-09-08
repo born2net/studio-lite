@@ -28,12 +28,10 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 self._registerBootstrapTableGlobalValidators();
                 self._initBootstrapTable();
                 self._listenAddResource();
+                self._listenSlideshowDurationChange();
 
                 /* can set global mode if we wish */
                 //$.fn.editable.defaults.mode = 'inline';
-
-
-                ///////// todo: add listen to event COLLECTION_SLIDESHOW_CHANGED
 
                 self.m_actions = {
                     firstPage: 'beginning',
@@ -300,6 +298,25 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             },
 
             /**
+             Listen slideshow duration change
+             @method _listenVolumeChange
+             **/
+            _listenSlideshowDurationChange: function () {
+                var self = this;
+                self.m_inputSliderhandler = function (e) {
+                    if (!self.m_selected)
+                        return;
+                    var duration = e.edata;
+                    duration = duration < 3 ? 3 : duration;
+                    var domPlayerData = self._getBlockPlayerData();
+                    var xSnippet = $(domPlayerData).find('Collection');
+                    $(xSnippet).attr('duration', duration);
+                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                };
+                BB.comBroker.listen(BB.EVENTS.COLLECTION_SLIDESHOW_CHANGED, self.m_inputSliderhandler);
+            },
+
+            /**
              Add a new collection item which can include a Scene or a resource (not a component)
              @method _addCollectionNewListItem
              @param {Event} e
@@ -350,6 +367,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             deleteBlock: function () {
                 var self = this;
                 $(Elements.ADD_RESOURCE_TO_COLLECTION).off('click', self.m_addNewCollectionListItem);
+                BB.comBroker.stopListen(BB.EVENTS.COLLECTION_SLIDESHOW_CHANGED, self.m_inputSliderhandler);
                 BB.comBroker.stopListen(BB.EVENTS.ADD_NEW_BLOCK_LIST);
                 self._deleteBlock();
                 return;

@@ -81,7 +81,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 $(xVideoListSnippet).remove();
                 var index = _.indexOf(videoIDs, videoID);
                 videoIDs.splice(index, 1);
-                videoIDs = videoIDs.join(',')
+                videoIDs = videoIDs.join(',');
                 $(xYouTubeSnippet).append($('<VideoIdList>' + videoIDs + '</VideoIdList>'));
                 self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
             };

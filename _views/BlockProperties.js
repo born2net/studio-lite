@@ -145,7 +145,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                 handles: 1,
                 start: 5,
                 step: 2,
-                range: [0, 60],
+                range: [0, 5000],
                 serialization: {
                     to: [ $(Elements.COLLECTION_SLIDESHOW_DURATION_LABEL), 'text' ]
                 }

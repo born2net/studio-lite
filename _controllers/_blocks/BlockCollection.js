@@ -330,7 +330,8 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                             '</page>';
                 }
                 $(xSnippetCollection).append($(buff));
-                self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                var x = pepper.xmlToStringIEfix(domPlayerData);
+                self._setBlockPlayerData(x, BB.CONSTS.NO_NOTIFICATION, true);
                 log(e.edata.blockCode, e.edata.resourceID, e.edata.sceneID);
 
             },

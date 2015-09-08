@@ -313,10 +313,11 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 // Add resource to collection
                 if (e.edata.blockCode=="3130"){
                     var nativeID = pepper.getResourceNativeID(e.edata.resourceID);
+                    //'<Resource hResource="' + i_resourceID + '">' +
                     buff = '<Page page="resource" type="resource" duration="5">' +
                                 '<Player player="3130">' +
                                         '<Data>' +
-                                            '<Resource resource="' + e.edata.resourceID + '" hResource="' + nativeID + '" />' +
+                                            '<Resource hResource="' + e.edata.resourceID + '" />' +
                                         '</Data>' +
                                     '</Player>' +
                                 '</page>';

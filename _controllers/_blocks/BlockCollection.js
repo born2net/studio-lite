@@ -306,12 +306,10 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
              **/
             _addCollectionNewListItem: function (e) {
                 var self = this;
-                //var resourceRec = pepper.getResourceRecord(e.edata.resourceID)
                 var domPlayerData = self._getBlockPlayerData();
-                var xSnippetCollection = $(domPlayerData).find('Collection');//.find('Page:last-child');
+                var xSnippetCollection = $(domPlayerData).find('Collection');
                 var buff = '';
-
-
+                // log(e.edata.blockCode, e.edata.resourceID, e.edata.sceneID);
                 if (e.edata.blockCode == "3510") {
                     // add scene to collection
                     var recPlayerData = pepper.getScenePlayerRecord(e.edata.sceneID);
@@ -332,8 +330,6 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 $(xSnippetCollection).append($(buff));
                 var x = pepper.xmlToStringIEfix(domPlayerData);
                 self._setBlockPlayerData(x, BB.CONSTS.NO_NOTIFICATION, true);
-                log(e.edata.blockCode, e.edata.resourceID, e.edata.sceneID);
-
             },
 
             /**

@@ -693,7 +693,6 @@ Pepper.prototype = {
             replace(/<resource/gi, '<Resource').replace(/resource>/g, 'Resource>').
             // replace(/<htdata/gi, '<htData').replace(/htdata>/gi, 'htData>').
             replace(/<link/gi, '<LINK').replace(/link>/g, 'LINK>');
-
     },
 
     /**

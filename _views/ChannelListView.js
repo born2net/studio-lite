@@ -424,7 +424,6 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             self._reOrderChannelBlocks();
         },
 
-
         /**
          Listen to any canvas right click
          @method _listenContextMenu

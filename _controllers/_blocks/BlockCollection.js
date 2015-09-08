@@ -312,7 +312,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
 
                 // Add resource to collection
                 if (e.edata.blockCode=="3130"){
-                    var nativeID = pepper.getResourceNativeID(e.edata.resourceID);
+                    // var nativeID = pepper.getResourceNativeID(e.edata.resourceID);
                     //'<Resource hResource="' + i_resourceID + '">' +
                     buff = '<Page page="resource" type="resource" duration="5">' +
                                 '<Player player="3130">' +
@@ -345,7 +345,6 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 var self = this;
                 self._populate();
                 this._viewSubPanel(Elements.BLOCK_COLLECTION_COMMON_PROPERTIES);
-
             },
 
             /**

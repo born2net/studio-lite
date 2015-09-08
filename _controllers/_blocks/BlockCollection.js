@@ -355,6 +355,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             deleteBlock: function () {
                 var self = this;
                 $(Elements.ADD_RESOURCE_TO_COLLECTION).off('click', self.m_addNewCollectionListItem);
+                self._deleteBlock();
                 return;
 
 
@@ -365,7 +366,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 $(Elements.CLASS_YOUTUBE_VIDEO_ID_REMOVE).off('click', self.m_removeVideoID);
                 BB.comBroker.stopListenWithNamespace(BB.EVENTS.BAR_METER_CHANGED, self);
                 BB.comBroker.stopListen(BB.EVENTS.YOUTUBE_VOLUME_CHANGED, self.m_inputVolumeHandler);
-                self._deleteBlock();
+
             }
         });
         return BlockCollection;

@@ -85,7 +85,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         getService: function (i_name) {
             if (i_name == undefined) {
-                log('cant get set undefined service ' + i_name);
+                //log('cant get set undefined service ' + i_name);
                 return undefined;
             }
             if (this.m_services[i_name]) {

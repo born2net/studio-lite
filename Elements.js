@@ -244,6 +244,7 @@ Elements.MSG_BOOTBOX_SCENE_REMOVE ='#bootBoxSceneRemove';
 Elements.MSG_BOOTBOX_SCREEN_DIV_POS_RESET ='#bootBoxScreenDivPosReset';
 Elements.MSG_BOOTBOX_SELECT_CHANNEL ='#bootBoxSelectChannel';
 Elements.MSG_BOOTBOX_SELECT_COMP_FIRST ='#bootBoxSelectCompFirst';
+Elements.MSG_BOOTBOX_SCENE_REFER_ITSELF ='#bootBoxSceneReferItself';
 Elements.MSG_BOOTBOX_NON_ALLOWED_CHARACTERS ='#bootBoxNonAllowedCharacters';
 Elements.MSG_BOOTBOX_SELECT_RESOURCE ='#bootBoxSelectResource';
 Elements.MSG_BOOTBOX_SELECT_SCENE_FIRST ='#bootBoxSelectSceneFirst';

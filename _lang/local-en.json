@@ -64,6 +64,7 @@
   "bootBoxSelectCompFirst": "You must first select a campaign by clicking on the properties icon.",
   "bootBoxSelectResource": "Please select a resource first and try again",
   "bootBoxSelectSceneFirst": "You must first select a scene by clicking on the properties icon.",
+  "bootBoxSceneReferItself": "You cannot display a scene in a collection that refers to its own scene, that is just weird",
   "bootBoxSteps": "Station will be deleted, your work will be saved to the server and your remote station (SignagePlayer) de-registered",
   "bootBoxStudioLiteAcc": "You must login with StudioLite account and not a Pro account",
   "bootBoxSureDeleteCampaign": "Are you sure you want to delete the campaign?",

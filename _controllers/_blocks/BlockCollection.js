@@ -309,6 +309,20 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 // log(e.edata.blockCode, e.edata.resourceID, e.edata.sceneID);
                 if (e.edata.blockCode == "3510") {
                     // add scene to collection
+
+                    // if block resides in scene don't allow cyclic reference to collection scene inside current scene
+                    if (self.m_placement ==  BB.CONSTS.PLACEMENT_SCENE ){
+                        var sceneEditView = BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']);
+                        if (!_.isUndefined(sceneEditView)) {
+                            var selectedSceneID = sceneEditView.getSelectedSceneID();
+                            selectedSceneID = pepper.getSceneIdFromPseudoId(selectedSceneID);
+                            if (selectedSceneID == e.edata.sceneID){
+                                bootbox.alert($(Elements.MSG_BOOTBOX_SCENE_REFER_ITSELF).text());
+                                return;
+                            }
+                        }
+                    }
+
                     var recPlayerData = pepper.getScenePlayerRecord(e.edata.sceneID);
                     var nativeID = recPlayerData['native_id'];
                     buff = '<Page page="scene" type="scene" duration="5">' +

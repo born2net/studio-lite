@@ -217,6 +217,7 @@ Elements.MRSS_ASPECT_RATIO = '#mrssAspectRatio';
 Elements.MRSS_LINK = '#mrssLink';
 Elements.MRSS_SOURCE = '#mrssSource';
 Elements.MSG_BOOTBOX_AT_LEAST_ONE_DIV ='#bootBoxAtLeastOneDiv';
+Elements.MSG_BOOTBOX_NO_ITEM_SELECTED ='#bootBoxNoItemSelected';
 Elements.MSG_BOOTBOX_CANCEL = '#bootBoxCancel';
 Elements.MSG_BOOTBOX_CANT_DELETE_COMP ='#bootBoxCantDeleteComp';
 Elements.MSG_BOOTBOX_CONTINUE ='#bootBoxContinue';

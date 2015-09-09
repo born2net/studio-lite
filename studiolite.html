@@ -2047,10 +2047,9 @@
                                                         to style class= ... one of label-default label-primary label-success label-info label-warning label-dange
                                                         -->
                                                     </div>
-
                                                 </h4>
 
-                                                <label>Play list in sequential order</label>
+                                                <label>Play this list in a sequential order</label>
                                                 <table id="collectionTable"
                                                        class="table table-no-bordered"
                                                        data-search="false" data-mode="inline"
@@ -2061,7 +2060,7 @@
                                                        data-height="200">
                                                     <thead>
                                                     <tr>
-                                                        <th data-field="state" data-checkbox="true" data-formatter="BB.lib.validateCollectionBlockCheckBox" data-sortable="false" data-width="40px"></th>
+                                                        <th data-field="state" data-radio="true" data-formatter="BB.lib.validateCollectionBlockCheckBox" data-sortable="false" data-width="40px"></th>
                                                         <th data-field="name" data-editable="true" data-sortable="false">name</th>
                                                         <th data-field="duration" data-type="number" data-halign="center" data-align="center" data-editable="true" data-sortable="false" data-width="60px">duration</th>
                                                         <th data-field="dragIcon" data-editable="false" data-align="center" data-halign="center" data-sortable="false" data-width="10x" class="collectionTableIconFormatter"></th>
@@ -2070,7 +2069,21 @@
                                                 </table>
                                                 <hr/>
                                                 <div id="kioskEventsContainer">
-                                                    <label>On event take action</label>
+
+                                                    <h4 class="panel-title" style="padding-bottom: 15px">
+                                                        <button id="addResourceToCollectionEvents" type="button"
+                                                                title="add new timeline" data-localize="empty"
+                                                                data-localize-tooltip="addNewTimelineButtonToolTip"
+                                                                class="btn btn-default btn-sm"><span
+                                                                class="glyphicon glyphicon-plus"></span></button>
+                                                        <button id="removeResourceForCollectionEvents" type="button"
+                                                                title="remove the selected timeline" data-localize="empty"
+                                                                data-localize-tooltip="removeTimelineButtonToolTip"
+                                                                class="btn btn-default btn-sm"><span
+                                                                class="glyphicon glyphicon-minus"></span></button>
+                                                    </h4>
+
+                                                    <label>On event take the following action</label>
                                                     <table id="collectionEventsTable"
                                                            class="table table-no-bordered"
                                                            data-search="false" data-mode="inline"
@@ -2081,7 +2094,7 @@
                                                            data-height="200">
                                                         <thead>
                                                         <tr>
-                                                            <th data-field="state" data-checkbox="true" data-formatter="BB.lib.collectionChecks" data-sortable="false" data-width="40px"></th>
+                                                            <th data-field="state" data-radio="true" data-formatter="BB.lib.collectionChecks" data-sortable="false" data-width="40px"></th>
                                                             <th data-field="event" data-editable="true" data-sortable="false">event</th>
                                                             <th data-field="action" data-type="number" data-formatter="BB.lib.collectionEventAction" data-halign="center" data-align="center" data-sortable="false" data-width="60px">action</th>
                                                             <th data-field="selectedPage" data-formatter="BB.lib.collectionEventActionGoToItem" class="collectionSelectedItem" data-type="number" data-halign="center" data-align="center" data-sortable="false" data-width="60px">go to item</th>
@@ -2847,6 +2860,8 @@
     viewable screen division</p>
 
 <p style="display: none" id="bootBoxPrimeUpgrade" data-localize="bootBoxPrimeUpgrade">Prime / Upgrade</p>
+
+<p style="display: none" id="bootBoxNoItemSelected" data-localize="bootBoxNoItemSelected">No item selected</p>
 
 <p style="display: none" id="bootBoxEnterpriseUpgrade" data-localize="bootBoxEnterpriseUpgrade">upgrade to
     enterprise</p>

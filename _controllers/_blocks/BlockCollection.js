@@ -23,11 +23,13 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
 
                 self.m_collectionTable = $(Elements.COLLECTION_TABLE);
                 self.m_collectionEventTable = $(Elements.COLLECTION_EVENTS_TABLE);
-
+                self.m_selectRowIndex = -1;
                 self._initSubPanel(Elements.BLOCK_COLLECTION_COMMON_PROPERTIES);
                 self._registerBootstrapTableGlobalValidators();
                 self._initBootstrapTable();
                 self._listenAddResource();
+                self._listenRemoveResource();
+                self._listenModeChange();
 
                 /* can set global mode if we wish */
                 //$.fn.editable.defaults.mode = 'inline';
@@ -104,12 +106,16 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     onEditableInit: function (response, newValue) {
                         console.log(newValue);
                     },
-                    onReorderRowsDrag: function (a) {
-                        console.log(a);
+                    onReorderRowsDrag: function (table, row) {
+                        self.m_selectRowIndex = $(row).attr('data-index');
                     },
-                    onReorderRowsDrop: function (a) {
-                        console.log(a);
+                    onReorderRowsDrop: function (table, row) {
+                        console.log(self);
+                        if (!self.m_selected)
+                            return;
+                        console.log('aaa');
                     },
+                    //onReorderRowsDrop2: $.proxy(self._onReorderDrop, self),
                     onEditableShown: function (response, newValue) {
                         console.log(newValue);
                     },
@@ -162,6 +168,42 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 });
             },
 
+            _onReorderDrop: function(table, row){
+                var self = this;
+                if (!self.m_selected)
+                    return;
+                if (self.m_selectRowIndex < 0)
+                    return;
+                var dropRowIndex = $(row).attr('data-index');
+                log('from ' + self.m_selectRowIndex + ' ' + dropRowIndex);
+
+                var domPlayerData = self._getBlockPlayerData();
+                var a = $(domPlayerData).find('Collection').children();
+                var b = $(domPlayerData).find('Collection').children().get(dropRowIndex);
+
+
+                var target = $(domPlayerData).find('Collection').children().get(parseInt(dropRowIndex));
+                var source = $(domPlayerData).find('Collection').children().get(self.m_selectRowIndex);
+                $(target).prepend(source);
+                //$(domPlayerData).find('Collection').children().get(self.m_selectRowInde).prepend(dropBefore);
+                self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                self._populateTableCollection(domPlayerData);
+                return;
+                items = _.sortBy(items, function (obj) {
+                    return parseInt(obj.rowIndex, 10)
+                });
+                var domPlayerData = self._getBlockPlayerData();
+                for (var item in items) {
+                    var rowIndex = -1;
+                    $(domPlayerData).find('Collection').children().each(function (k, page) {
+                        rowIndex++;
+                        if (rowIndex == selectedItem[0].rowIndex) {
+
+                        }
+                    });
+                }
+            },
+
             /**
              Load up property values in the common panel
              @method _populate
@@ -185,13 +227,25 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             _populateTableCollection: function (i_domPlayerData) {
                 var self = this;
                 self.m_collectionTable.bootstrapTable('removeAll');
-                var data = [];
+                var data = [], rowIndex = 0;
                 $(i_domPlayerData).find('Collection').children().each(function (k, page) {
+                    var resource_hResource, scene_hDataSrc;
+                    var type = $(page).attr('type');
+                    if (type == 'resource') {
+                        resource_hResource = $(page).find('Resource').attr('hResource');
+                    } else {
+                        scene_hDataSrc = $(page).find('Player').attr('hDataSrc');
+                    }
                     data.push({
+                        rowIndex: rowIndex,
                         checkbox: true,
                         name: $(page).attr('page'),
-                        duration: $(page).attr('duration')
-                    })
+                        duration: $(page).attr('duration'),
+                        type: type,
+                        resource_hResource: resource_hResource,
+                        scene_hDataSrc: scene_hDataSrc
+                    });
+                    rowIndex++;
                 });
                 self.m_collectionTable.bootstrapTable('load', data);
             },
@@ -205,16 +259,48 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             _checkKioskMode: function (i_mode, i_domPlayerData) {
                 var self = this;
                 if (i_mode == "kiosk") {
+                    self._populateKioskModeSlider(true);
+                    self._populateTableEvents(i_domPlayerData);
+                } else {
+                    self._populateKioskModeSlider(false);
+                    self._populateSlideshowDuration(i_domPlayerData);
+                }
+            },
+
+            /**
+             Listen to mode change between Kiosk and Slideshow modes
+             @method _listenModeChange
+             **/
+            _listenModeChange: function () {
+                var self = this;
+                self.sliderInput = function () {
+                    if (!self.m_selected)
+                        return;
+                    var mode = $(Elements.COLLECTION_KIOSK_MODE).prop('checked');
+                    self._populateKioskModeSlider(mode);
+                    var domPlayerData = self._getBlockPlayerData();
+                    $(domPlayerData).find('Collection').attr('mode', mode ? 'kiosk' : 'slideshow');
+                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                };
+                $(Elements.COLLECTION_KIOSK_MODE).on('change', self.sliderInput);
+            },
+
+            /**
+             Render the checkbox slider according to current Kiosk mode for block
+             @method _populateKioskModeSlider
+             @param {Boolean} i_status
+             **/
+            _populateKioskModeSlider: function (i_status) {
+                var self = this;
+                if (i_status) {
                     self.m_collectionEventTable.bootstrapTable('removeAll');
                     $(Elements.COLLECTION_KIOSK_MODE).prop('checked', true);
                     $(Elements.KIOSK_KEVENTS_CONTAINER).show();
                     $(Elements.COLLECTION_SLIDESHOW_DURATION_CONTAINER).hide();
-                    self._populateTableEvents(i_domPlayerData);
                 } else {
                     $(Elements.COLLECTION_KIOSK_MODE).prop('checked', false);
                     $(Elements.KIOSK_KEVENTS_CONTAINER).hide();
                     $(Elements.COLLECTION_SLIDESHOW_DURATION_CONTAINER).show();
-                    self._populateSlideshowDuration(i_domPlayerData);
                 }
             },
 
@@ -297,6 +383,31 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             },
 
             /**
+             Listen to when removing a resource from collection list
+             The algorithm will uses our bootstrap-table own inject rowIndex value
+             and counts up to match with the order of <Pages/> in msdb collection, once matched against same value
+             we delete the proper ordered collection item from msdb and refresh the entire table
+             @method _listenRemoveResource
+             **/
+            _listenRemoveResource: function () {
+                var self = this;
+                self.m_removeCollectionListItem = function () {
+                    if (!self.m_selected)
+                        return;
+                    if (self.m_collectionTable.bootstrapTable('getSelections').length == 0) {
+                        bootbox.alert($(Elements.MSG_BOOTBOX_NO_ITEM_SELECTED).text());
+                        return;
+                    }
+                    var rowIndex = $('input[name=btSelectItem]:checked', Elements.COLLECTION_TABLE).closest('tr').attr('data-index');
+                    var domPlayerData = self._getBlockPlayerData();
+                    $(domPlayerData).find('Collection').children().get(rowIndex).remove();
+                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                    self._populateTableCollection(domPlayerData);
+                };
+                $(Elements.REMOVE_RESOURCE_FOR_COLLECTION).on('click', self.m_removeCollectionListItem);
+            },
+
+            /**
              Add a new collection item which can include a Scene or a resource (not a component)
              @method _addCollectionNewListItem
              @param {Event} e
@@ -307,22 +418,21 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 var xSnippetCollection = $(domPlayerData).find('Collection');
                 var buff = '';
                 // log(e.edata.blockCode, e.edata.resourceID, e.edata.sceneID);
-                if (e.edata.blockCode == "3510") {
+                if (e.edata.blockCode == BB.CONSTS.BLOCKCODE_SCENE) {
                     // add scene to collection
 
                     // if block resides in scene don't allow cyclic reference to collection scene inside current scene
-                    if (self.m_placement ==  BB.CONSTS.PLACEMENT_SCENE ){
+                    if (self.m_placement == BB.CONSTS.PLACEMENT_SCENE) {
                         var sceneEditView = BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']);
                         if (!_.isUndefined(sceneEditView)) {
                             var selectedSceneID = sceneEditView.getSelectedSceneID();
                             selectedSceneID = pepper.getSceneIdFromPseudoId(selectedSceneID);
-                            if (selectedSceneID == e.edata.sceneID){
+                            if (selectedSceneID == e.edata.sceneID) {
                                 bootbox.alert($(Elements.MSG_BOOTBOX_SCENE_REFER_ITSELF).text());
                                 return;
                             }
                         }
                     }
-
                     var recPlayerData = pepper.getScenePlayerRecord(e.edata.sceneID);
                     var nativeID = recPlayerData['native_id'];
                     buff = '<Page page="scene" type="scene" duration="5">' +
@@ -361,21 +471,43 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             deleteBlock: function () {
                 var self = this;
                 $(Elements.ADD_RESOURCE_TO_COLLECTION).off('click', self.m_addNewCollectionListItem);
+                $(Elements.COLLECTION_KIOSK_MODE).off('change', self.sliderInput);
+                $(Elements.REMOVE_RESOURCE_FOR_COLLECTION).off('click', self.m_removeCollectionListItem);
                 BB.comBroker.stopListen(BB.EVENTS.ADD_NEW_BLOCK_LIST);
                 self._deleteBlock();
-                return;
-
-
-                $(Elements.CLASS_YOUTUBE_VIDEO_ID).off("input", self.m_inputVideoIdChangeHandler);
-                $(Elements.YOUTUBE_LIST_DROPDOWN).off('click', self.m_playlistChange);
-                $(Elements.YOUTUBE_COUNTRY_LIST_DROPDOWN).off('click', self.m_countryListChange);
-                $(Elements.YOUTUBE_LIST_ADD).off('click', self.m_addVideoID);
-                $(Elements.CLASS_YOUTUBE_VIDEO_ID_REMOVE).off('click', self.m_removeVideoID);
-                BB.comBroker.stopListenWithNamespace(BB.EVENTS.BAR_METER_CHANGED, self);
-                BB.comBroker.stopListen(BB.EVENTS.YOUTUBE_VOLUME_CHANGED, self.m_inputVolumeHandler);
-
             }
         });
         return BlockCollection;
     }
 );
+
+
+/*
+ return;
+ var rowIndex = -1;
+ var domPlayerData = self._getBlockPlayerData();
+ $(domPlayerData).find('Collection').children().each(function (k, page) {
+ rowIndex++;
+ if (rowIndex == selectedItem[0].rowIndex) {
+ var type = $(page).attr('type');
+ switch (type) {
+ case 'resource':
+ {
+ var resource_hResource = $(page).find('Resource').attr('hResource');
+ if (resource_hResource == selectedItem[0].resource_hResource)
+ $(page).remove();
+ break;
+ }
+ case 'scene':
+ {
+ var scene_hDataSrc = $(page).find('Player').attr('hDataSrc');
+ if (scene_hDataSrc == selectedItem[0].scene_hDataSrc)
+ $(page).remove();
+ break;
+ }
+ }
+ }
+ });
+ self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+ self._populateTableCollection(domPlayerData);
+ */

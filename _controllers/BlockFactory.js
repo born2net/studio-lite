@@ -53,6 +53,8 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
      */
     BB.CONSTS.PLACEMENT_LISTS = 'PLACEMENT_LISTS';
 
+    BB.CONSTS.BLOCKCODE_SCENE = '3510';
+
     BB.SERVICES.BLOCK_FACTORY = 'BlockFactory';
 
     var BlockFactory = BB.Controller.extend({
@@ -134,7 +136,7 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
                 blockCode = playerData['Player']['_player'];
             } else {
                 // Scene
-                blockCode = 3510;
+                blockCode = BB.CONSTS.BLOCKCODE_SCENE;
                 if (_.isUndefined(i_scene_id)) {
                     var domPlayerData = $.parseXML(i_player_data);
                     i_scene_id = $(domPlayerData).find('Player').attr('hDataSrc');

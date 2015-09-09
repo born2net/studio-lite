@@ -29,13 +29,21 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 BB.comBroker.setService(BB.SERVICES['LAYOUT_ROUTER'], self);
 
                 // global x2j required by pepper
-                window.x2js = new X2JS({escapeMode: true, attributePrefix: "_", arrayAccessForm: "none", emptyNodeForm: "text", enableToStringFunc: true, arrayAccessFormPaths: [], skipEmptyTextNodesForObj: true});
+                window.x2js = new X2JS({
+                    escapeMode: true,
+                    attributePrefix: "_",
+                    arrayAccessForm: "none",
+                    emptyNodeForm: "text",
+                    enableToStringFunc: true,
+                    arrayAccessFormPaths: [],
+                    skipEmptyTextNodesForObj: true
+                });
                 BB.comBroker.setService('compX2JS', window.x2js);
                 BB.comBroker.setService('XDATE', new XDate());
-                self._routed = false;
                 self._initLoginPage();
                 self._listenLogoHover();
                 self._listenSizeChanges();
+                self.m_authenticating = false;
 
                 $(window).trigger('resize');
                 $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom', 'delay': 1000});
@@ -61,6 +69,9 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
              @param {String} i_pass
              **/
             _routeAuthenticate: function (i_user, i_pass) {
+                var self = this;
+                if (self.m_authenticating)
+                    return;
                 this.m_appAuth.authenticate(i_user, i_pass);
             },
 
@@ -69,6 +80,8 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
              @method authenticating
              **/
             _routeAuthenticating: function () {
+                var self = this;
+                self.m_authenticating = true;
                 this.m_appEntryFaderView.selectView(this.m_mainAppWaitView);
             },
 
@@ -78,6 +91,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
              **/
             _routeAuthenticated: function () {
                 var self = this;
+                self.m_authenticating = false;
                 this.navigate('app', {trigger: true});
                 self._updateLayoutDelay();
             },
@@ -87,6 +101,8 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
              @method authenticating
              **/
             _routeUnauthenticated: function () {
+                var self = this;
+                self.m_authenticating = false;
                 this.m_appEntryFaderView.selectView(this.m_loginView);
             },
 
@@ -95,6 +111,8 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
              @method authenticationFailed
              **/
             _routeAuthenticationFailed: function () {
+                var self = this;
+                self.m_authenticating = false;
                 Bootbox.dialog({
                     message: $(Elements.MSG_BOOTBOX_WRONG_USER_PASS).text(),
                     title: $(Elements.MSG_BOOTBOX_PROBLEM).text(),
@@ -115,21 +133,16 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
              @method app
              **/
             _routeApp: function () {
+                var self = this;
                 if (this.m_appAuth.authenticated) {
-                    if (!self._routed){
-                        self._routed = true;
-                        this._disableBack();
-                        this._initContentPage();
-                        this._initProperties();
-                        this._initCampaignWizardPage();
-                        this._initModal();
-                        this._initDashBoard();
-                        this._initCustomer();
-
-                        // inject pseudo scene / player IDs
-                        pepper.injectPseudoScenePlayersIDs();
-                    }
-
+                    this._disableBack();
+                    this._initContentPage();
+                    this._initProperties();
+                    this._initCampaignWizardPage();
+                    this._initModal();
+                    this._initDashBoard();
+                    this._initCustomer();
+                    pepper.injectPseudoScenePlayersIDs();
                 } else {
                     this.navigate('unauthenticated', {trigger: true});
                 }
@@ -469,7 +482,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 }
             },
 
-            _updateLayoutDelay: function(){
+            _updateLayoutDelay: function () {
                 var self = this;
                 setTimeout(function () {
                     self._updateLayout();

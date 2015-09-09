@@ -853,7 +853,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
 
             // if rendering specific blocks instead of entire canvas
             if (i_blockIDs) {
-                $(i_domPlayerData).find('Players').find('Player').each(function (i, player) {
+                $(i_domPlayerData).find('Players').children('Player').each(function (i, player) {
                     zIndex++;
                     var blockID = $(player).attr('id');
                     if (_.indexOf(i_blockIDs, blockID) > -1) {
@@ -867,7 +867,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                     }
                 });
             } else {
-                $(i_domPlayerData).find('Players').find('Player').each(function (i, player) {
+                $(i_domPlayerData).find('Players').children('Player').each(function (i, player) {
                     var block = {
                         blockID: $(player).attr('id'),
                         blockType: $(player).attr('player'),

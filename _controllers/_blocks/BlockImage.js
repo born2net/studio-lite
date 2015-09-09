@@ -116,7 +116,6 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             if (self.m_fileFormat == 'swf') {
                 imgPath = './_assets/flash.png';
             } else {
-                // imgPath = 'https://s3-us-west-2.amazonaws.com/oregon-signage-resources/business372844/resources/384.jpg';
                 imgPath = window.g_protocol + pepper.getUserData().domain + '/Resources/business' +  pepper.getUserData().businessID + '/resources/' + self.m_nativeID + '.' + self.m_fileFormat;
             }
 

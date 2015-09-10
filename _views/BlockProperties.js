@@ -161,7 +161,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                 step: 1,
                 range: [0, 100],
                 serialization: {
-                    to: [ $(Elements.BLOCK_ALPHA_LABEL), 'text' ]
+                    to: [$(Elements.BLOCK_ALPHA_LABEL), 'text']
                 }
             });
             self.m_blockAlphaHandler = $(Elements.BLOCK_ALPHA_SLIDER).on('change', function (e) {
@@ -260,7 +260,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                         BB.comBroker.fire(BB.EVENTS.COLLECTION_ROW_DROP, this, self, $(row).attr('data-index'));
                     },
                     onEditableShown: function (response, newValue) {
-                         console.log(newValue);
+                        console.log(newValue);
                     },
                     onEditableHidden: function (response, newValue) {
                         console.log(newValue);
@@ -358,7 +358,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
          @method _onFasterQBgColorSelected
          @param {String} i_color
          **/
-        _onFasterQBgColorSelected: function(i_color){
+        _onFasterQBgColorSelected: function (i_color) {
             var self = this;
             BB.comBroker.fire(BB.EVENTS.FASTERQ_BG_COLOR_CHANGE, self, self, i_color);
         },
@@ -376,7 +376,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
 
         _onSceneColorToggle: function (e) {
             var self = this;
-            if (self.m_showBorderOn){
+            if (self.m_showBorderOn) {
                 self.m_showBorderOn = undefined;
             } else {
                 self.m_showBorderOn = 1;
@@ -476,7 +476,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                 step: 1,
                 range: [0, 100],
                 serialization: {
-                    to: [ $(Elements.VIDEO_VOLUME_LABEL), 'text' ]
+                    to: [$(Elements.VIDEO_VOLUME_LABEL), 'text']
                 }
             });
             self.m_videoVolumeHandler = $(Elements.VIDEO_VOLUME_WRAP_SLIDER).on('change', function (e) {
@@ -498,7 +498,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                 step: 1,
                 range: [0, 100],
                 serialization: {
-                    to: [ $(Elements.YOUTUBE_VOLUME_LABEL), 'text' ]
+                    to: [$(Elements.YOUTUBE_VOLUME_LABEL), 'text']
                 }
             });
             self.m_youtuneVolumeHandler = $(Elements.YOUTUBE_VOLUME_WRAP_SLIDER).on('change', function (e) {
@@ -546,7 +546,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
          Init the time picker duration bootstrap widget
          @method _timepickerDayDurationInit
          **/
-        _timepickerDayDurationInit: function(){
+        _timepickerDayDurationInit: function () {
             var self = this;
             $(Elements.TIME_PICKER_TIME_INPUT).timepicker({
                 showSeconds: true,
@@ -569,7 +569,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
          Init the date picker duration bootstrap widget
          @method _datepickerDayDurationInit
          **/
-        _datepickerDayDurationInit: function(){
+        _datepickerDayDurationInit: function () {
             var self = this;
             $(Elements.CLASS_TIME_PICKER_SCHEDULER).datepicker({
                 autoclose: true,
@@ -596,7 +596,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
          Init the youtube properties
          @method _youtubeInit
          **/
-        _youtubeInit: function(){
+        _youtubeInit: function () {
             var self = this;
             self.m_youtubeQualityMeter = new BarMeterView({el: Elements.YOUTUBE_QUALITY_METER});
         },
@@ -605,7 +605,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
          Init the fasterq properties
          @method _fasterQInit
          **/
-        _fasterQInit: function(){
+        _fasterQInit: function () {
             var self = this;
         },
 

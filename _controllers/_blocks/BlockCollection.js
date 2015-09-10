@@ -147,7 +147,13 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 var xSnippetCollection = $(domPlayerData).find('Collection');
                 var mode = $(xSnippetCollection).attr('mode');
                 self._populateTableCollection(domPlayerData);
-                self._checkKioskMode(mode, domPlayerData);
+
+                if (mode == "kiosk") {
+                    self._populateModeSliderUI(true);
+                    self._populateTableEvents(domPlayerData);
+                } else {
+                    self._populateModeSliderUI(false);
+                }
             },
 
             /**
@@ -189,6 +195,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             _populateTableEvents: function (i_domPlayerData) {
                 var self = this;
                 var data = [], rowIndex = 0;
+                self.m_collectionEventTable.bootstrapTable('removeAll');
                 $(i_domPlayerData).find('EventCommands').children().each(function (k, eventCommand) {
                     var pageName = '';
                     if ($(eventCommand).attr('command') == 'selectPage')
@@ -203,24 +210,13 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     rowIndex++;
                 });
                 self.m_collectionEventTable.bootstrapTable('load', data);
-            },
 
-
-            /**
-             Set mode of Kiosk (enable / disabled)
-             @method _checkKioskMode
-             @param {String} i_mode
-             @param {Object} i_domPlayerData
-             **/
-            _checkKioskMode: function (i_mode, i_domPlayerData) {
-                var self = this;
-                if (i_mode == "kiosk") {
-                    self._populateKioskModeSlider(true);
-                    self._populateTableEvents(i_domPlayerData);
-                } else {
-                    self._populateKioskModeSlider(false);
-                    self._populateSlideshowDuration(i_domPlayerData);
-                }
+                // disable drag cursor due to bug in bootstrap-table lib (can't disable dragging, yach...)
+                setTimeout(function(){
+                    $('tr',Elements.KIOSK_EVENTS_CONTAINER).css({
+                        cursor: 'pointer'
+                    });
+                },500);
             },
 
             /**
@@ -233,43 +229,31 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     if (!self.m_selected)
                         return;
                     var mode = $(Elements.COLLECTION_KIOSK_MODE).prop('checked');
-                    self._populateKioskModeSlider(mode);
+                    self._populateModeSliderUI(mode);
                     var domPlayerData = self._getBlockPlayerData();
                     $(domPlayerData).find('Collection').attr('mode', mode ? 'kiosk' : 'slideshow');
                     self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                    self._populateTableEvents(domPlayerData);
                 };
                 $(Elements.COLLECTION_KIOSK_MODE).on('change', self.sliderInput);
             },
 
             /**
              Render the checkbox slider according to current Kiosk mode for block
-             @method _populateKioskModeSlider
+             @method _populateModeSliderUI
              @param {Boolean} i_status
              **/
-            _populateKioskModeSlider: function (i_status) {
+            _populateModeSliderUI: function (i_status) {
                 var self = this;
                 if (i_status) {
-                    self.m_collectionEventTable.bootstrapTable('removeAll');
                     $(Elements.COLLECTION_KIOSK_MODE).prop('checked', true);
-                    $(Elements.KIOSK_KEVENTS_CONTAINER).show();
+                    $(Elements.KIOSK_EVENTS_CONTAINER).show();
                     $(Elements.COLLECTION_SLIDESHOW_DURATION_CONTAINER).hide();
                 } else {
                     $(Elements.COLLECTION_KIOSK_MODE).prop('checked', false);
-                    $(Elements.KIOSK_KEVENTS_CONTAINER).hide();
+                    $(Elements.KIOSK_EVENTS_CONTAINER).hide();
                     $(Elements.COLLECTION_SLIDESHOW_DURATION_CONTAINER).show();
                 }
-            },
-
-            /**
-             Load up the duration for how long to play slide shows (when not in kiosk mode);
-             @method _populateSlideshowDuration
-             @param {Number} i_domPlayerData
-             @return {Number} Unique clientId.
-             **/
-            _populateSlideshowDuration: function (i_domPlayerData) {
-                var self = this;
-                var duration = $(i_domPlayerData).find('Collection').attr('duration');
-                $(Elements.COLLECTION_SLIDESHOW_DURATION).val(duration);
             },
 
             /**

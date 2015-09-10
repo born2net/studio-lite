@@ -219,6 +219,7 @@ Elements.MRSS_SOURCE = '#mrssSource';
 Elements.MSG_BOOTBOX_AT_LEAST_ONE_DIV ='#bootBoxAtLeastOneDiv';
 Elements.MSG_BOOTBOX_NO_ITEM_SELECTED ='#bootBoxNoItemSelected';
 Elements.MSG_BOOTBOX_CANCEL = '#bootBoxCancel';
+Elements.MSG_BOOTBOX_ENTRY_IS_INVALID = '#bootBoxEntryInValid';
 Elements.MSG_BOOTBOX_CANT_DELETE_COMP ='#bootBoxCantDeleteComp';
 Elements.MSG_BOOTBOX_CONTINUE ='#bootBoxContinue';
 Elements.MSG_BOOTBOX_COSTUME_TITLE ='#bootBoxCostumeTitle';

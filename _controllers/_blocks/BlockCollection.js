@@ -25,11 +25,14 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 self.m_collectionEventTable = $(Elements.COLLECTION_EVENTS_TABLE);
                 self.m_selectRowIndex = -1;
                 self._initSubPanel(Elements.BLOCK_COLLECTION_COMMON_PROPERTIES);
-                self._registerBootstrapTableGlobalValidators();
-                self._initBootstrapTable();
+                self._listenCollectionRowDragged();
+                self._listenCollectionRowDropped();
                 self._listenAddResource();
                 self._listenRemoveResource();
                 self._listenModeChange();
+                self._listenCollectionRowChanged();
+
+                self.m_blockProperty._collectionDatatableInit();
 
                 /* can set global mode if we wish */
                 //$.fn.editable.defaults.mode = 'inline';
@@ -44,164 +47,71 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             },
 
             /**
-             Register Global Validators for bootstrap-table to format data
-             This function has to run everytime we populate the UI since it is a shared global function
-             and we have to override it so 'this' refers to correct BlockCollection instance
-             @method _registerBootstrapTableGlobalValidators
+             Listen to changes in volume control
+             @method _listenVolumeChange
              **/
-            _registerBootstrapTableGlobalValidators: function () {
+            _listenCollectionRowDragged: function () {
                 var self = this;
-
-                // add draggable icons
-                $(Elements.CLASS_COLLECTION_TABLE_FORMATTER).attr('data-formatter', function () {
-                    return '<div class="dragIconTable"><i class="fa fa-arrows-v"></i></div>';
-
-                });
-                // register a global shared function to validate checkbox state
-                BB.lib.collectionChecks = function (value, row, index) {
-                    return {
-                        checked: false,
-                        disabled: false
-                    }
+                self.m_collectionRowDraggedHandler = function (e) {
+                    if (!self.m_selected)
+                        return;
+                    self.m_selectRowIndex = e.edata;
+                    var domPlayerData = self._getBlockPlayerData();
+                    return;
+                    var xSnippet = $(domPlayerData).find('YouTube');
+                    $(xSnippet).attr('volume', volume);
+                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
                 };
-                // build selection dropdown for even "action", if row.action == name, set it as selected in dropdown
-                BB.lib.collectionEventAction = function (value, row, index) {
-                    var buffer = '<select class="btn">';
-                    _.forEach(self.m_actions, function (name, value) {
-                        if (row.action == name) {
-                            buffer += '<option selected>' + name + '</option>';
-                        } else {
-                            buffer += '<option>' + name + '</option>';
-                        }
-                    });
-                    return buffer + '</select>';
-                };
-                // build selection dropdown for event "to item" and if row.action is selected un-hide the dropdown in "to item" events and select the proper <option>
-                BB.lib.collectionEventActionGoToItem = function (value, row, index) {
-                    var buffer = '';
-                    var collectionPageNames = self._getCollectionPageNames();
-                    var visibilityClass = row.action == 'selected' ? '' : 'hidden';
-                    buffer = '<select class="' + visibilityClass + ' btn">';
-                    collectionPageNames.forEach(function (k, v) {
-                        var selected = row.pageName == k ? 'selected' : '';
-                        buffer += '<option ' + selected + '>' + k + '</option>';
-                    });
-                    return buffer;
-                };
+                BB.comBroker.listen(BB.EVENTS.COLLECTION_ROW_DRAG, self.m_collectionRowDraggedHandler);
             },
 
             /**
-             Init the dt widget
-             @method _initBootstrapTable
+             Listen to when removing a resource from collection list
+             The algorithm will uses our bootstrap-table own inject rowIndex value
+             and counts up to match with the order of <Pages/> in msdb collection, once matched against same value
+             we delete the proper ordered collection item from msdb and refresh the entire table
+             @method _listenRemoveResource
              **/
-            _initBootstrapTable: function () {
+            _listenCollectionRowChanged: function () {
                 var self = this;
-
-                self.m_collectionTable.bootstrapTable({
-                    data: [],
-                    editable: true,
-                    type: 'select',
-                    title: 'Select status',
-                    placement: 'left',
-                    onEditableInit: function (response, newValue) {
-                        console.log(newValue);
-                    },
-                    onReorderRowsDrag: function (table, row) {
-                        self.m_selectRowIndex = $(row).attr('data-index');
-                    },
-                    onReorderRowsDrop: function (table, row) {
-                        console.log(self);
-                        if (!self.m_selected)
-                            return;
-                        console.log('aaa');
-                    },
-                    //onReorderRowsDrop2: $.proxy(self._onReorderDrop, self),
-                    onEditableShown: function (response, newValue) {
-                        console.log(newValue);
-                    },
-                    onEditableHidden: function (response, newValue) {
-                        console.log(newValue);
-                        //console.log('getSelections: ' + JSON.stringify($table.bootstrapTable('getSelections')));
-                        //$table.bootstrapTable('refresh');
-                    },
-                    onEditableSave: function (response, newValue) {
-                        console.log('saving');
-                    },
-                    success: function (response, newValue) {
-                        if (response.status == 'error') {
-                            return response.msg;
-                        } //msg will be shown in editable form
+                self.m_collectionRowChangedHandler = function (e) {
+                    if (!self.m_selected)
+                        return;
+                    var domPlayerData = self._getBlockPlayerData();
+                    var rowIndex = e.edata.rowIndex;
+                    var newName = e.edata.name;
+                    var newDuration = parseInt(e.edata.duration);
+                    if (_.isNaN(newDuration)) {
+                        bootbox.alert($(Elements.MSG_BOOTBOX_ENTRY_IS_INVALID).text());
+                        self._populateTableCollection(domPlayerData);
+                        return;
                     }
-                });
-
-                self.m_collectionEventTable.bootstrapTable({
-                    data: [],
-                    editable: true,
-                    type: 'select',
-                    title: 'Select status',
-                    placement: 'left',
-                    onEditableInit: function (response, newValue) {
-                        console.log(newValue);
-                    },
-                    onReorderRowsDrag: function (a) {
-                        console.log(a);
-                    },
-                    onReorderRowsDrop: function (a) {
-                        console.log(a);
-                    },
-                    onEditableShown: function (response, newValue) {
-                        console.log(newValue);
-                    },
-                    onEditableHidden: function (response, newValue) {
-                        console.log(newValue);
-                        //console.log('getSelections: ' + JSON.stringify($table.bootstrapTable('getSelections')));
-                        //$table.bootstrapTable('refresh');
-                    },
-                    onEditableSave: function (response, newValue) {
-                        console.log('saving');
-                    },
-                    success: function (response, newValue) {
-                        if (response.status == 'error') {
-                            return response.msg;
-                        } //msg will be shown in editable form
-                    }
-                });
+                    var item = $(domPlayerData).find('Collection').children().get(rowIndex);
+                    $(item).attr('page', newName).attr('duration', newDuration);
+                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                    self._populateTableCollection(domPlayerData);
+                };
+                BB.comBroker.listen(BB.EVENTS.COLLECTION_ROW_CHANGED, self.m_collectionRowChangedHandler);
             },
 
-            _onReorderDrop: function(table, row){
+            /**
+             Listen to changes in volume control
+             @method _listenVolumeChange
+             **/
+            _listenCollectionRowDropped: function () {
                 var self = this;
-                if (!self.m_selected)
-                    return;
-                if (self.m_selectRowIndex < 0)
-                    return;
-                var dropRowIndex = $(row).attr('data-index');
-                log('from ' + self.m_selectRowIndex + ' ' + dropRowIndex);
-
-                var domPlayerData = self._getBlockPlayerData();
-                var a = $(domPlayerData).find('Collection').children();
-                var b = $(domPlayerData).find('Collection').children().get(dropRowIndex);
-
-
-                var target = $(domPlayerData).find('Collection').children().get(parseInt(dropRowIndex));
-                var source = $(domPlayerData).find('Collection').children().get(self.m_selectRowIndex);
-                $(target).prepend(source);
-                //$(domPlayerData).find('Collection').children().get(self.m_selectRowInde).prepend(dropBefore);
-                self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
-                self._populateTableCollection(domPlayerData);
-                return;
-                items = _.sortBy(items, function (obj) {
-                    return parseInt(obj.rowIndex, 10)
-                });
-                var domPlayerData = self._getBlockPlayerData();
-                for (var item in items) {
-                    var rowIndex = -1;
-                    $(domPlayerData).find('Collection').children().each(function (k, page) {
-                        rowIndex++;
-                        if (rowIndex == selectedItem[0].rowIndex) {
-
-                        }
-                    });
-                }
+                self.m_collectionRowDroppedHandler = function (e) {
+                    if (!self.m_selected)
+                        return;
+                    var droppedRowIndex = e.edata;
+                    var domPlayerData = self._getBlockPlayerData();
+                    var target = $(domPlayerData).find('Collection').children().get(parseInt(droppedRowIndex));
+                    var source = $(domPlayerData).find('Collection').children().get(self.m_selectRowIndex);
+                    droppedRowIndex > self.m_selectRowIndex ? $(target).after(source) : $(target).before(source);
+                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                    self._populateTableCollection(domPlayerData);
+                };
+                BB.comBroker.listen(BB.EVENTS.COLLECTION_ROW_DROP, self.m_collectionRowDroppedHandler);
             },
 
             /**
@@ -211,7 +121,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
              **/
             _populate: function () {
                 var self = this;
-                self._registerBootstrapTableGlobalValidators();
+                self._setCollectionBlockGlobalValidationOwner(self);
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippetCollection = $(domPlayerData).find('Collection');
                 var mode = $(xSnippetCollection).attr('mode');
@@ -327,20 +237,6 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             },
 
             /**
-             Get all the collection pages names for current collection block
-             @method _getCollectionPageNames
-             **/
-            _getCollectionPageNames: function () {
-                var self = this;
-                var data = [];
-                var domPlayerData = self._getBlockPlayerData();
-                $(domPlayerData).find('Collection').children().each(function (k, page) {
-                    data.push($(page).attr('page'));
-                });
-                return data;
-            },
-
-            /**
              Load up the duration for how long to play slide shows (when not in kiosk mode);
              @method _populateSlideshowDuration
              @param {Number} i_domPlayerData
@@ -433,14 +329,16 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                             }
                         }
                     }
-                    var recPlayerData = pepper.getScenePlayerRecord(e.edata.sceneID);
-                    var nativeID = recPlayerData['native_id'];
-                    buff = '<Page page="scene" type="scene" duration="5">' +
+                    var sceneRecord = pepper.getScenePlayerRecord(e.edata.sceneID);
+                    var sceneName = $(sceneRecord.player_data_value).attr('label');
+                    var nativeID = sceneRecord['native_id'];
+                    buff = '<Page page="' + sceneName + '" type="scene" duration="5">' +
                         '<Player src="' + nativeID + '" hDataSrc="' + e.edata.sceneID + '" />' +
                         '</page>';
                 } else {
                     // Add resources to collection
-                    buff = '<Page page="resource" type="resource" duration="5">' +
+                    var resourceName = pepper.getResourceRecord(e.edata.resourceID).resource_name;
+                    buff = '<Page page="' + resourceName + '" type="resource" duration="5">' +
                         '<Player player="' + e.edata.blockCode + '">' +
                         '<Data>' +
                         '<Resource hResource="' + e.edata.resourceID + '" />' +
@@ -465,6 +363,69 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             },
 
             /**
+             re-take ownership for a caller block instance and register global Validators for bootstrap-table to format data
+             This function has to run everytime we populate the UI since it is a shared global function
+             and we have to override it so 'this' refers to correct BlockCollection instance
+             @method _setCollectionBlockGlobalValidationOwner
+             **/
+            _setCollectionBlockGlobalValidationOwner: function (i_this) {
+                // add draggable icons
+                BB.lib.collectionDragIcons = function () {
+                    return '<div class="dragIconTable"><i class="fa fa-arrows-v"></i></div>';
+                };
+
+                // register a global shared function to validate checkbox state
+                BB.lib.collectionChecks = function (value, row, index) {
+                    return {
+                        checked: false,
+                        disabled: false
+                    }
+                };
+
+                // build selection dropdown for even "action", if row.action == name, set it as selected in dropdown
+                BB.lib.collectionEventAction = function (value, row, index) {
+                    var buffer = '<select class="btn">';
+                    _.forEach(i_this.m_actions, function (name, value) {
+                        if (row.action == name) {
+                            buffer += '<option selected>' + name + '</option>';
+                        } else {
+                            buffer += '<option>' + name + '</option>';
+                        }
+                    });
+                    return buffer + '</select>';
+                };
+
+                // build selection dropdown for event "to item" and if row.action is selected un-hide the dropdown in "to item" events and select the proper <option>
+                BB.lib.collectionEventActionGoToItem = function (value, row, index) {
+                    var buffer = '';
+                    var collectionPageNames = i_this._getCollectionPageNames();
+                    var visibilityClass = row.action == 'selected' ? '' : 'hidden';
+                    buffer = '<select class="' + visibilityClass + ' btn">';
+                    collectionPageNames.forEach(function (k, v) {
+                        var selected = row.pageName == k ? 'selected' : '';
+                        buffer += '<option ' + selected + '>' + k + '</option>';
+                    });
+                    return buffer;
+                };
+            },
+
+            /**
+             Get all the collection pages names for current collection block
+             this is called against the last block instance that registered the global function of
+             setCollectionBlockGlobalValidationOwner
+             @method _getCollectionPageNames
+             **/
+            _getCollectionPageNames: function () {
+                var self = this;
+                var data = [];
+                var domPlayerData = self._getBlockPlayerData();
+                $(domPlayerData).find('Collection').children().each(function (k, page) {
+                    data.push($(page).attr('page'));
+                });
+                return data;
+            },
+
+            /**
              Delete this block
              @method deleteBlock
              **/
@@ -473,41 +434,13 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 $(Elements.ADD_RESOURCE_TO_COLLECTION).off('click', self.m_addNewCollectionListItem);
                 $(Elements.COLLECTION_KIOSK_MODE).off('change', self.sliderInput);
                 $(Elements.REMOVE_RESOURCE_FOR_COLLECTION).off('click', self.m_removeCollectionListItem);
-                BB.comBroker.stopListen(BB.EVENTS.ADD_NEW_BLOCK_LIST);
+                BB.comBroker.stopListen(BB.EVENTS.ADD_NEW_BLOCK_LIST); // removing for everyone which is ok, since gets added in real time
+                BB.comBroker.stopListen(BB.EVENTS.COLLECTION_ROW_DROP, self.m_collectionRowDroppedHandler);
+                BB.comBroker.stopListen(BB.EVENTS.COLLECTION_ROW_DRAG, self.m_collectionRowDraggedHandler);
+                BB.comBroker.stopListen(BB.EVENTS.COLLECTION_ROW_CHANGED, self.m_collectionRowChangedHandler);
                 self._deleteBlock();
             }
         });
         return BlockCollection;
     }
 );
-
-
-/*
- return;
- var rowIndex = -1;
- var domPlayerData = self._getBlockPlayerData();
- $(domPlayerData).find('Collection').children().each(function (k, page) {
- rowIndex++;
- if (rowIndex == selectedItem[0].rowIndex) {
- var type = $(page).attr('type');
- switch (type) {
- case 'resource':
- {
- var resource_hResource = $(page).find('Resource').attr('hResource');
- if (resource_hResource == selectedItem[0].resource_hResource)
- $(page).remove();
- break;
- }
- case 'scene':
- {
- var scene_hDataSrc = $(page).find('Player').attr('hDataSrc');
- if (scene_hDataSrc == selectedItem[0].scene_hDataSrc)
- $(page).remove();
- break;
- }
- }
- }
- });
- self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
- self._populateTableCollection(domPlayerData);
- */

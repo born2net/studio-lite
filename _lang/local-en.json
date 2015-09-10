@@ -72,6 +72,7 @@
   "bootBoxSureRemoveTimeline": "Are you sure you want to remove the timeline?",
   "bootBoxThemeReload": "You may need to restart StudioLite for changes to take effect",
   "bootBoxWrongUserOrPass": "Sorry but the user or password did not match?!?!",
+  "bootBoxEntryInValid": "Invalid entry, please change the value and try again",
   "booxboxSupportedExtensions": " The only supported files are flv, mp4, jpg, png and swf. Also, make sure that the file extension is lower case such as .jpg and not .JPG",
   "borderColor": "border color",
   "borderProperties": "border properties",

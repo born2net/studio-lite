@@ -5,7 +5,7 @@
  @constructor
  @return {object} instantiated BlockProperties
  **/
-define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'FontSelector', 'RSSLinks', 'MRSSLinks', 'BarMeterView', 'timepicker', 'datepicker'], function ($, Backbone, Knob, nouislider, gradient, spinner, FontSelector, RSSLinks, MRSSLinks, BarMeterView, timepicker, datepicker) {
+define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'FontSelector', 'RSSLinks', 'MRSSLinks', 'BarMeterView', 'timepicker', 'datepicker', 'bootstrap-table-editable', 'bootstrap-table-sort-rows'], function ($, Backbone, Knob, nouislider, gradient, spinner, FontSelector, RSSLinks, MRSSLinks, BarMeterView, timepicker, datepicker, bootstraptableeditable, bootstraptablesortrows) {
 
     /**
      Custom event fired when a gradient color picked
@@ -28,6 +28,14 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
      @final
      **/
     BB.EVENTS.GRADIENT_COLOR_CLOSED = 'GRADIENT_COLOR_CLOSED';
+
+    /**
+     event fires when fasterq background color changed
+     @event Block.FASTERQ_BG_COLOR_CHANGE
+     @param {this} caller
+     @param {String} selected block_id
+     **/
+    BB.EVENTS.FASTERQ_BG_COLOR_CHANGE = 'FASTERQ_BG_COLOR_CHANGE';
 
     /**
      event fires when block length is changing (requesting a change), normally by a knob property widget
@@ -65,6 +73,33 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
      **/
     BB.EVENTS.YOUTUBE_VOLUME_CHANGED = 'YOUTUBE_VOLUME_CHANGED';
 
+    /**
+     event fires datagrid collection is dragged
+     @event COLLECTION_ROW_DRAG
+     @param {Object} this
+     @param {Object} caller the firing element
+     @param {Number} alpha value
+     **/
+    BB.EVENTS.COLLECTION_ROW_DRAG = 'COLLECTION_ROW_DRAG';
+
+    /**
+     event fires datagrid collection is dropped
+     @event COLLECTION_ROW_DROP
+     @param {Object} this
+     @param {Object} caller the firing element
+     @param {Number} alpha value
+     **/
+    BB.EVENTS.COLLECTION_ROW_DROP = 'COLLECTION_ROW_DROP';
+
+    /**
+     event fires datagrid collection data chnaged / saved
+     @event COLLECTION_ROW_CHANGED
+     @param {Object} this
+     @param {Object} caller the firing element
+     @param {Number} alpha value
+     **/
+    BB.EVENTS.COLLECTION_ROW_CHANGED = 'COLLECTION_ROW_CHANGED';
+
     BB.SERVICES.BLOCK_PROPERTIES = 'BlockProperties';
 
     var BlockProperties = BB.View.extend({
@@ -81,6 +116,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
             this.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
             self.m_property.initPanel(Elements.BLOCK_PROPERTIES);
             self.m_rssFontSelector = undefined;
+            self.m_loadedOnceCollectionDatagrid = false;
 
             self._alphaSliderInit();
             self._bgGradientInit();
@@ -88,7 +124,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
             self._bgFasterQColorInit();
             self._borderSceneColorInit();
             self._propLengthKnobsInit();
-            self._videoVolumeSliderInit()
+            self._videoVolumeSliderInit();
             self._youtubeVolumeSliderInit();
             self._rssFontSelectorInit();
             self._rssSourceSelectorInit();
@@ -187,12 +223,93 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         },
 
         /**
+         Init the collection bootstrap datatable
+         @method _collectionDatatableInit
+         **/
+        _collectionDatatableInit: function () {
+            var self = this;
+            // we used m_loadedOnceCollectionDatagrid so we can load bootstrap-table modules only when needed
+            if (self.m_loadedOnceCollectionDatagrid)
+                return;
+            self.m_loadedOnceCollectionDatagrid = true;
+            require(['bootstrap-table-editable', 'bootstrap-table-sort-rows'], function (bootstraptableeditable, bootstraptablesortrows) {
+                self.m_collectionTable = $(Elements.COLLECTION_TABLE);
+                self.m_collectionTable.bootstrapTable({
+                    data: [],
+                    editable: true,
+                    type: 'select',
+                    title: 'Select status',
+                    placement: 'left',
+                    onEditableInit: function (response, newValue) {
+                        console.log(newValue);
+                    },
+                    onReorderRowsDrag: function (table, row) {
+                        BB.comBroker.fire(BB.EVENTS.COLLECTION_ROW_DRAG, this, self, $(row).attr('data-index'));
+                    },
+                    onReorderRowsDrop: function (table, row) {
+                        BB.comBroker.fire(BB.EVENTS.COLLECTION_ROW_DROP, this, self, $(row).attr('data-index'));
+                    },
+                    onEditableShown: function (response, newValue) {
+                         console.log(newValue);
+                    },
+                    onEditableHidden: function (response, newValue) {
+                        console.log(newValue);
+                        //console.log('getSelections: ' + JSON.stringify($table.bootstrapTable('getSelections')));
+                        //$table.bootstrapTable('refresh');
+                    },
+                    onEditableSave: function (response, newValue) {
+                        BB.comBroker.fire(BB.EVENTS.COLLECTION_ROW_CHANGED, this, self, newValue);
+                    },
+                    success: function (response, newValue) {
+                        if (response.status == 'error') {
+                            return response.msg;
+                        } //msg will be shown in editable form
+                    }
+                });
+
+                self.m_collectionEventTable = $(Elements.COLLECTION_EVENTS_TABLE);
+                self.m_collectionEventTable.bootstrapTable({
+                    data: [],
+                    editable: true,
+                    type: 'select',
+                    title: 'Select status',
+                    placement: 'left',
+                    onEditableInit: function (response, newValue) {
+                        console.log(newValue);
+                    },
+                    onReorderRowsDrag: function (a) {
+                        console.log(a);
+                    },
+                    onReorderRowsDrop: function (a) {
+                        console.log(a);
+                    },
+                    onEditableShown: function (response, newValue) {
+                        console.log(newValue);
+                    },
+                    onEditableHidden: function (response, newValue) {
+                        console.log(newValue);
+                        //console.log('getSelections: ' + JSON.stringify($table.bootstrapTable('getSelections')));
+                        //$table.bootstrapTable('refresh');
+                    },
+                    onEditableSave: function (response, newValue) {
+                        console.log('saving');
+                    },
+                    success: function (response, newValue) {
+                        if (response.status == 'error') {
+                            return response.msg;
+                        } //msg will be shown in editable form
+                    }
+                });
+            });
+
+        },
+
+        /**
          Init the fasterq background color selector
          @method _bgFasterQColorInit
          **/
         _bgFasterQColorInit: function () {
             var self = this;
-
             // show: $.proxy(self._onSceneColorToggle, self),
             // hide: $.proxy(self._onSceneColorToggle, self),
             var colorSettings = {

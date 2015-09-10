@@ -206,8 +206,8 @@ PepperHelper.prototype = {
                                     self.getCommonDefaultXML() +
                                     self.getCommonSceneLayout(i_placement) +
                                     '<EventCommands></EventCommands>' +
-                                        '<Collection mode="slideshow" duration="10">'+
-                                        '</Collection>' +
+                                    '<Collection mode="slideshow" duration="10">'+
+                                    '</Collection>' +
                                 '</Data>' +
                             '</Player>'
                 },

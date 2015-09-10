@@ -28,6 +28,8 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 self._listenCollectionRowDragged();
                 self._listenCollectionRowDropped();
                 self._listenAddResource();
+                self._listenAddEvent();
+                self._listenRemoveEvent();
                 self._listenRemoveResource();
                 self._listenModeChange();
                 self._listenCollectionRowChanged();
@@ -279,6 +281,50 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             },
 
             /**
+             Listen to when user wants to add new events (i.e. when in Kiosk mode)
+             @method _listenAddEvent
+             **/
+            _listenAddEvent: function () {
+                var self = this;
+                self.m_addNewCollectionEvent = function () {
+                    if (!self.m_selected)
+                        return;
+                    var domPlayerData = self._getBlockPlayerData();
+                    var buff = '<EventCommand from="event" condition="" command="firstPage" />';
+                    $(domPlayerData).find('EventCommands').append(buff);
+                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                    self._populateTableEvents(domPlayerData);
+
+                };
+                $(Elements.ADD_COLLECTION_EVENTS).on('click', self.m_addNewCollectionEvent);
+            },
+
+            /**
+             Listen to when removing a resource from collection list
+             The algorithm will uses our bootstrap-table own inject rowIndex value
+             and counts up to match with the order of <Pages/> in msdb collection, once matched against same value
+             we delete the proper ordered collection item from msdb and refresh the entire table
+             @method _listenRemoveResource
+             **/
+            _listenRemoveEvent: function () {
+                var self = this;
+                self.m_removeCollectionEvent = function () {
+                    if (!self.m_selected)
+                        return;
+                    if (self.m_collectionEventTable.bootstrapTable('getSelections').length == 0) {
+                        bootbox.alert($(Elements.MSG_BOOTBOX_NO_ITEM_SELECTED).text());
+                        return;
+                    }
+                    var rowIndex = $('input[name=btSelectItem]:checked', Elements.COLLECTION_EVENTS_TABLE).closest('tr').attr('data-index');
+                    var domPlayerData = self._getBlockPlayerData();
+                    $(domPlayerData).find('EventCommands').children().get(rowIndex).remove();
+                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                    self._populateTableEvents(domPlayerData);
+                };
+                $(Elements.REMOVE_COLLECTION_EVENTS).on('click', self.m_removeCollectionEvent);
+            },
+
+            /**
              Listen to when removing a resource from collection list
              The algorithm will uses our bootstrap-table own inject rowIndex value
              and counts up to match with the order of <Pages/> in msdb collection, once matched against same value
@@ -316,7 +362,6 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 // log(e.edata.blockCode, e.edata.resourceID, e.edata.sceneID);
                 if (e.edata.blockCode == BB.CONSTS.BLOCKCODE_SCENE) {
                     // add scene to collection
-
                     // if block resides in scene don't allow cyclic reference to collection scene inside current scene
                     if (self.m_placement == BB.CONSTS.PLACEMENT_SCENE) {
                         var sceneEditView = BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']);
@@ -432,7 +477,9 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             deleteBlock: function () {
                 var self = this;
                 $(Elements.ADD_RESOURCE_TO_COLLECTION).off('click', self.m_addNewCollectionListItem);
+                $(Elements.ADD_COLLECTION_EVENTS).off('click', self.m_addNewCollectionEvent);
                 $(Elements.COLLECTION_KIOSK_MODE).off('change', self.sliderInput);
+                $(Elements.REMOVE_COLLECTION_EVENTS).off('click', self.m_removeCollectionEvent);
                 $(Elements.REMOVE_RESOURCE_FOR_COLLECTION).off('click', self.m_removeCollectionListItem);
                 BB.comBroker.stopListen(BB.EVENTS.ADD_NEW_BLOCK_LIST); // removing for everyone which is ok, since gets added in real time
                 BB.comBroker.stopListen(BB.EVENTS.COLLECTION_ROW_DROP, self.m_collectionRowDroppedHandler);

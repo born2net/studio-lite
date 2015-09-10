@@ -277,20 +277,6 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                     onEditableInit: function (response, newValue) {
                         console.log(newValue);
                     },
-                    onReorderRowsDrag: function (a) {
-                        console.log(a);
-                    },
-                    onReorderRowsDrop: function (a) {
-                        console.log(a);
-                    },
-                    onEditableShown: function (response, newValue) {
-                        console.log(newValue);
-                    },
-                    onEditableHidden: function (response, newValue) {
-                        console.log(newValue);
-                        //console.log('getSelections: ' + JSON.stringify($table.bootstrapTable('getSelections')));
-                        //$table.bootstrapTable('refresh');
-                    },
                     onEditableSave: function (response, newValue) {
                         console.log('saving');
                     },

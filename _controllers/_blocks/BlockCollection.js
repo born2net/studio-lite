@@ -33,6 +33,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 self._listenRemoveResource();
                 self._listenModeChange();
                 self._listenCollectionRowChanged();
+                self._listenCollectionRowEventChanged();
 
                 self.m_blockProperty._collectionDatatableInit();
 
@@ -68,11 +69,8 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             },
 
             /**
-             Listen to when removing a resource from collection list
-             The algorithm will uses our bootstrap-table own inject rowIndex value
-             and counts up to match with the order of <Pages/> in msdb collection, once matched against same value
-             we delete the proper ordered collection item from msdb and refresh the entire table
-             @method _listenRemoveResource
+             Listen to when collection row was edited
+             @method _listenCollectionRowChanged
              **/
             _listenCollectionRowChanged: function () {
                 var self = this;
@@ -94,6 +92,27 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     self._populateTableCollection(domPlayerData);
                 };
                 BB.comBroker.listen(BB.EVENTS.COLLECTION_ROW_CHANGED, self.m_collectionRowChangedHandler);
+            },
+
+            /**
+             Listen to when collection row was edited
+             @method _listenCollectionRowEventChanged
+             **/
+            _listenCollectionRowEventChanged: function () {
+                var self = this;
+                self.m_collectionRowEventChangedHandler = function (e) {
+                    if (!self.m_selected)
+                        return;
+                    var domPlayerData = self._getBlockPlayerData();
+                    var rowIndex = e.edata.rowIndex;
+                    var event = e.edata.event;
+                    var action = e.edata.action;
+                    var item = $(domPlayerData).find('EventCommands').children().get(rowIndex);
+                    $(item).attr('from', event);
+                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                    self._populateTableCollection(domPlayerData);
+                };
+                BB.comBroker.listen(BB.EVENTS.COLLECTION_EVENT_ROW_CHANGED, self.m_collectionRowEventChangedHandler);
             },
 
             /**
@@ -163,6 +182,31 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             },
 
             /**
+             Load event list to block props UI
+             @method _populateTableEvents
+             @param {Object} i_domPlayerData
+             **/
+            _populateTableEvents: function (i_domPlayerData) {
+                var self = this;
+                var data = [], rowIndex = 0;
+                $(i_domPlayerData).find('EventCommands').children().each(function (k, eventCommand) {
+                    var pageName = '';
+                    if ($(eventCommand).attr('command') == 'selectPage')
+                        pageName = $(eventCommand).find('Page').attr('name');
+                    data.push({
+                        rowIndex: rowIndex,
+                        checkbox: true,
+                        event: $(eventCommand).attr('from'),
+                        pageName: pageName,
+                        action: self.m_actions[$(eventCommand).attr('command')]
+                    });
+                    rowIndex++;
+                });
+                self.m_collectionEventTable.bootstrapTable('load', data);
+            },
+
+
+            /**
              Set mode of Kiosk (enable / disabled)
              @method _checkKioskMode
              @param {String} i_mode
@@ -217,28 +261,6 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             },
 
             /**
-             Load event list to block props UI
-             @method _populateTableEvents
-             @param {Object} i_domPlayerData
-             **/
-            _populateTableEvents: function (i_domPlayerData) {
-                var self = this;
-                var data = [];
-                $(i_domPlayerData).find('EventCommands').children().each(function (k, eventCommand) {
-                    var pageName = '';
-                    if ($(eventCommand).attr('command') == 'selectPage')
-                        pageName = $(eventCommand).find('Page').attr('name');
-                    data.push({
-                        checkbox: true,
-                        event: $(eventCommand).attr('from'),
-                        pageName: pageName,
-                        action: self.m_actions[$(eventCommand).attr('command')]
-                    })
-                });
-                self.m_collectionEventTable.bootstrapTable('load', data);
-            },
-
-            /**
              Load up the duration for how long to play slide shows (when not in kiosk mode);
              @method _populateSlideshowDuration
              @param {Number} i_domPlayerData
@@ -259,7 +281,6 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 var self = this;
                 self.m_addNewCollectionListItem = function () {
                     BB.comBroker.stopListenWithNamespace(BB.EVENTS.ADD_NEW_BLOCK_LIST, self);
-
                     if (!self.m_selected)
                         return;
                     var addBlockView;
@@ -294,7 +315,6 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     $(domPlayerData).find('EventCommands').append(buff);
                     self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
                     self._populateTableEvents(domPlayerData);
-
                 };
                 $(Elements.ADD_COLLECTION_EVENTS).on('click', self.m_addNewCollectionEvent);
             },
@@ -485,6 +505,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 BB.comBroker.stopListen(BB.EVENTS.COLLECTION_ROW_DROP, self.m_collectionRowDroppedHandler);
                 BB.comBroker.stopListen(BB.EVENTS.COLLECTION_ROW_DRAG, self.m_collectionRowDraggedHandler);
                 BB.comBroker.stopListen(BB.EVENTS.COLLECTION_ROW_CHANGED, self.m_collectionRowChangedHandler);
+                BB.comBroker.stopListen(BB.EVENTS.COLLECTION_EVENT_ROW_CHANGED, self.m_collectionRowEventChangedHandler);
                 self._deleteBlock();
             }
         });

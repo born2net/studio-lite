@@ -100,6 +100,16 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
      **/
     BB.EVENTS.COLLECTION_ROW_CHANGED = 'COLLECTION_ROW_CHANGED';
 
+    /**
+     event fires datagrid collection event data chnaged / saved
+     @event COLLECTION_EVENT_ROW_CHANGED
+     @param {Object} this
+     @param {Object} caller the firing element
+     @param {Number} alpha value
+     **/
+    BB.EVENTS.COLLECTION_EVENT_ROW_CHANGED = 'COLLECTION_EVENT_ROW_CHANGED';
+
+
     BB.SERVICES.BLOCK_PROPERTIES = 'BlockProperties';
 
     var BlockProperties = BB.View.extend({
@@ -275,10 +285,10 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                     title: 'Select status',
                     placement: 'left',
                     onEditableInit: function (response, newValue) {
-                        console.log(newValue);
+                        //console.log(newValue);
                     },
                     onEditableSave: function (response, newValue) {
-                        console.log('saving');
+                        BB.comBroker.fire(BB.EVENTS.COLLECTION_EVENT_ROW_CHANGED, this, self, newValue);
                     },
                     success: function (response, newValue) {
                         if (response.status == 'error') {

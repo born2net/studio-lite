@@ -3782,6 +3782,10 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
     margin: 0;
 }
 
+#collectionEventsTable tr {
+    cursor: pointer !important;
+}
+
 #importSceneList img:hover {
     opacity: 1;
 }

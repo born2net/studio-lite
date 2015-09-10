@@ -217,7 +217,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             },
 
             /**
-             Load event list to the UI
+             Load event list to block props UI
              @method _populateTableEvents
              @param {Object} i_domPlayerData
              **/

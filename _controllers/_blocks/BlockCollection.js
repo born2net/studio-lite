@@ -91,6 +91,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     $(item).attr('page', newName).attr('duration', newDuration);
                     self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
                     self._populateTableCollection(domPlayerData);
+                    self._populateTableEvents(domPlayerData);
                 };
                 BB.comBroker.listen(BB.EVENTS.COLLECTION_ROW_CHANGED, self.m_collectionRowChangedHandler);
             },
@@ -122,7 +123,6 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
              **/
             _listenDropdownEvenActionSelection: function () {
                 var self = this;
-                // remove previous if exists
                 if (self.m_onDropDownEventActionHandler)
                     $(Elements.CLASS_COLLECTION_EVENT_ACTION).off('change', self.m_onDropDownEventActionHandler);
                 self.m_onDropDownEventActionHandler = function (e) {
@@ -140,6 +140,30 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 };
                 $(Elements.CLASS_COLLECTION_EVENT_ACTION).on('change', self.m_onDropDownEventActionHandler);
             },
+
+            /**
+             Listen in Event Action go to dropdown selections
+             @method _listenDropdownEvenActionGoToSelection
+             **/
+            _listenDropdownEvenActionGoToSelection: function () {
+                var self = this;
+                if (self.m_onDropDownEventActionGoToHandler)
+                    $(Elements.CLASS_COLLECTION_EVENT_ACTION_GOTO).off('change', self.m_onDropDownEventActionGoToHandler);
+                self.m_onDropDownEventActionGoToHandler = function (e) {
+                    if (!self.m_selected)
+                        return;
+                    var selected = $("option:selected", this).val();
+                    var index = $(this).closest('[data-index]').attr('data-index');
+                    var domPlayerData = self._getBlockPlayerData();
+                    var target = $(domPlayerData).find('EventCommands').children().get(parseInt(index));
+                    $(target).find('Params').remove();
+                    $(target).append('<Params><Page name="' + selected + '"/></Params>');
+                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                    self._populateTableEvents(domPlayerData);
+                };
+                $(Elements.CLASS_COLLECTION_EVENT_ACTION_GOTO).on('change', self.m_onDropDownEventActionGoToHandler);
+            },
+
 
             /**
              Listen to changes in volume control
@@ -237,6 +261,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 });
                 self.m_collectionEventTable.bootstrapTable('load', data);
                 self._listenDropdownEvenActionSelection();
+                self._listenDropdownEvenActionGoToSelection();
 
                 // disable drag cursor due to bug in bootstrap-table lib (can't disable dragging, yach...)
                 setTimeout(function () {
@@ -376,6 +401,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     $(domPlayerData).find('Collection').children().get(rowIndex).remove();
                     self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
                     self._populateTableCollection(domPlayerData);
+                    self._populateTableEvents(domPlayerData);
                 };
                 $(Elements.REMOVE_RESOURCE_FOR_COLLECTION).on('click', self.m_removeCollectionListItem);
             },
@@ -423,8 +449,9 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                         '</page>';
                 }
                 $(xSnippetCollection).append($(buff));
-                var x = pepper.xmlToStringIEfix(domPlayerData);
-                self._setBlockPlayerData(x, BB.CONSTS.NO_NOTIFICATION, true);
+                domPlayerData = pepper.xmlToStringIEfix(domPlayerData);
+                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION, true);
+                self._populateTableEvents(domPlayerData);
             },
 
             /**
@@ -476,7 +503,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     var buffer = '';
                     var collectionPageNames = i_this._getCollectionPageNames();
                     var visibilityClass = row.action == 'selected' ? '' : 'hidden';
-                    buffer = '<select class="' + visibilityClass + ' btn">';
+                    buffer = '<select class="' + visibilityClass + ' ' + BB.lib.unclass(Elements.CLASS_COLLECTION_EVENT_ACTION_GOTO) + ' btn">';
                     collectionPageNames.forEach(function (k, v) {
                         var selected = row.pageName == k ? 'selected' : '';
                         buffer += '<option ' + selected + '>' + k + '</option>';
@@ -512,6 +539,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 $(Elements.COLLECTION_KIOSK_MODE).off('change', self.sliderInput);
                 $(Elements.REMOVE_COLLECTION_EVENTS).off('click', self.m_removeCollectionEvent);
                 $(Elements.CLASS_COLLECTION_EVENT_ACTION).off('change', self.m_onDropDownEventActionHandler);
+                $(Elements.CLASS_COLLECTION_EVENT_ACTION_GOTO).off('change', self.m_onDropDownEventActionGoToHandler);
                 $(Elements.REMOVE_RESOURCE_FOR_COLLECTION).off('click', self.m_removeCollectionListItem);
                 BB.comBroker.stopListen(BB.EVENTS.ADD_NEW_BLOCK_LIST); // removing for everyone which is ok, since gets added in real time
                 BB.comBroker.stopListen(BB.EVENTS.COLLECTION_ROW_DROP, self.m_collectionRowDroppedHandler);

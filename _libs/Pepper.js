@@ -689,6 +689,7 @@ Pepper.prototype = {
             replace(/hresource/gi, 'hResource').
             replace(/videoidlist/gi, 'VideoIdList').
             replace(/<page/gi, '<Page').replace(/page>/gi, 'Page>').
+            replace(/<params/gi, '<Params').replace(/params>/gi, 'Params>').
             replace(/maintainaspectratio/gi, 'maintainAspectRatio').
             replace(/<resource/gi, '<Resource').replace(/resource>/g, 'Resource>').
             // replace(/<htdata/gi, '<htData').replace(/htdata>/gi, 'htData>').

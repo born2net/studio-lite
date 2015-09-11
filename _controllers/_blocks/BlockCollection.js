@@ -35,6 +35,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 self._listenCollectionRowChanged();
                 self._listenCollectionRowEventChanged();
 
+
                 self.m_blockProperty._collectionDatatableInit();
 
                 /* can set global mode if we wish */
@@ -113,6 +114,31 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     self._populateTableCollection(domPlayerData);
                 };
                 BB.comBroker.listen(BB.EVENTS.COLLECTION_EVENT_ROW_CHANGED, self.m_collectionRowEventChangedHandler);
+            },
+
+            /**
+             Listen in Event Action dropdown selections
+             @method _listenDropdownEvenActionSelection
+             **/
+            _listenDropdownEvenActionSelection: function () {
+                var self = this;
+                // remove previous if exists
+                if (self.m_onDropDownEventActionHandler)
+                    $(Elements.CLASS_COLLECTION_EVENT_ACTION).off('change', self.m_onDropDownEventActionHandler);
+                self.m_onDropDownEventActionHandler = function (e) {
+                    if (!self.m_selected)
+                        return;
+                    var selected = $("option:selected", this).val();
+                    var actions = _.invert(self.m_actions);
+                    var action = actions[selected];
+                    var index = $(this).closest('[data-index]').attr('data-index');
+                    var domPlayerData = self._getBlockPlayerData();
+                    var target = $(domPlayerData).find('EventCommands').children().get(parseInt(index));
+                    $(target).attr('command',action);
+                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                    self._populateTableEvents(domPlayerData);
+                };
+                $(Elements.CLASS_COLLECTION_EVENT_ACTION).on('change', self.m_onDropDownEventActionHandler);
             },
 
             /**
@@ -210,13 +236,14 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     rowIndex++;
                 });
                 self.m_collectionEventTable.bootstrapTable('load', data);
+                self._listenDropdownEvenActionSelection();
 
                 // disable drag cursor due to bug in bootstrap-table lib (can't disable dragging, yach...)
-                setTimeout(function(){
-                    $('tr',Elements.KIOSK_EVENTS_CONTAINER).css({
+                setTimeout(function () {
+                    $('tr', Elements.KIOSK_EVENTS_CONTAINER).css({
                         cursor: 'pointer'
                     });
-                },500);
+                }, 500);
             },
 
             /**
@@ -433,7 +460,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
 
                 // build selection dropdown for even "action", if row.action == name, set it as selected in dropdown
                 BB.lib.collectionEventAction = function (value, row, index) {
-                    var buffer = '<select class="btn">';
+                    var buffer = '<select class="' + BB.lib.unclass(Elements.CLASS_COLLECTION_EVENT_ACTION) + ' btn">';
                     _.forEach(i_this.m_actions, function (name, value) {
                         if (row.action == name) {
                             buffer += '<option selected>' + name + '</option>';
@@ -484,6 +511,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 $(Elements.ADD_COLLECTION_EVENTS).off('click', self.m_addNewCollectionEvent);
                 $(Elements.COLLECTION_KIOSK_MODE).off('change', self.sliderInput);
                 $(Elements.REMOVE_COLLECTION_EVENTS).off('click', self.m_removeCollectionEvent);
+                $(Elements.CLASS_COLLECTION_EVENT_ACTION).off('change', self.m_onDropDownEventActionHandler);
                 $(Elements.REMOVE_RESOURCE_FOR_COLLECTION).off('click', self.m_removeCollectionListItem);
                 BB.comBroker.stopListen(BB.EVENTS.ADD_NEW_BLOCK_LIST); // removing for everyone which is ok, since gets added in real time
                 BB.comBroker.stopListen(BB.EVENTS.COLLECTION_ROW_DROP, self.m_collectionRowDroppedHandler);

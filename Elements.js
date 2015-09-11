@@ -99,6 +99,7 @@ Elements.CLAS_DRAGCH = '.dragch';
 Elements.CLASS_CAMPAIG_NMANAGER_VIEW = '.campaignManagerView';
 Elements.CLASS_CAMPIGN_LIST_ITEM = '.selectCampaignListItem';
 Elements.CLASS_CHANNEL_BODY  = '.channelBody';
+Elements.CLASS_COLLECTION_EVENT_ACTION  = '.collectionAction';
 Elements.CLASS_CHANNEL_BODY_CONTAINER  = '.channelBodyContainer';
 Elements.CLASS_CHANNEL_HEAD = '.channelHead';
 Elements.CLASS_CHANNEL_HEAD_SELECTED = '.channelHeadSelected';

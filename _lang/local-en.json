@@ -25,6 +25,7 @@
   "name": "name",
   "addNewTimelineButtonToolTip": "Add a new timeline",
   "addScene": "add scene",
+  "stationID": "station id",
   "addVideoId": "add video id",
   "Line": "Line",
   "customerLines": "customer lines",

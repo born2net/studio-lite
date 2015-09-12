@@ -171,6 +171,7 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             $(Elements.STATION_AIR_VERSION).text(i_model.get('airVersion'));
             $(Elements.STATION_APP_VERSION).text(i_model.get('appVersion'));
             $(Elements.STATION_OS).text(i_model.get('stationOS'));
+            $(Elements.STATION_ID).text(i_model.get('stationID'));
         },
 
         /**

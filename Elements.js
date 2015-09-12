@@ -428,6 +428,7 @@ Elements.STATION_LAST_UPDATE = '#stationLastUpdate';
 Elements.STATION_LIST_VIEW = '#stationListView';
 Elements.STATION_NAME = '#stationName';
 Elements.STATION_OS = '#stationOS';
+Elements.STATION_ID = '#stationID';
 Elements.STATION_PEAK_MEMORY = '#stationPeakMemory';
 Elements.STATION_PLAY_COMMAND = '#stationPlayCommand';
 Elements.FQ_CALLED_BY ='#fqCalledBy';

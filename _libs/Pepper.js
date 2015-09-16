@@ -681,6 +681,7 @@ Pepper.prototype = {
             replace(/cornerradius/gi, 'cornerRadius').
             replace(/textdecoration/gi, 'textDecoration').
             replace(/textalign/gi, 'textAlign').
+            replace(/hdatasrc/gi, 'hDataSrc').
             replace(/minrefreshtime/gi, 'minRefreshTime').
             replace(/gradienttype/gi, 'gradientType').
             replace(/autorewind/gi, 'autoRewind').
@@ -1972,7 +1973,6 @@ Pepper.prototype = {
      **/
     removeBlocksWithSceneID: function (i_scene_id) {
         var self = this;
-
         $(self.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
             var recCampaignTimelineChannelPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
             var playerData = recCampaignTimelineChannelPlayer['player_data'];
@@ -1980,6 +1980,37 @@ Pepper.prototype = {
             var scene_id = $(domPlayerData).find('Player').attr('hDataSrc');
             if (scene_id == i_scene_id)
                 pepper.removeBlockFromTimelineChannel(campaign_timeline_chanel_player_id);
+        });
+    },
+
+    /**
+     Remove the scene from any block collection who use it
+     @method removeSceneFromBlockCollections
+     @param {Number} i_scene_id
+     @return none
+     **/
+    removeSceneFromBlockCollections: function (i_scene_id) {
+        var self = this;
+        $(self.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
+            var recCampaignTimelineChannelPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
+            var playerData = recCampaignTimelineChannelPlayer['player_data'];
+            var domPlayerData = $.parseXML(playerData);
+            var blockType = $(domPlayerData).find('Player').attr('player');
+            if (blockType == BB.CONSTS.BLOCKCODE_COLLECTION){
+                $(domPlayerData).find('Collection').children().each(function (k, page) {
+                    var resource_hResource, scene_hDataSrc;
+                    var type = $(page).attr('type');
+                    if (type == 'scene') {
+                        scene_hDataSrc = $(page).find('Player').attr('hDataSrc');
+                        if (scene_hDataSrc == i_scene_id){
+                            $(page).remove();
+                            var player_data = pepper.xmlToStringIEfix(domPlayerData)
+                            pepper.m_msdb.table_campaign_timeline_chanel_players().openForEdit(campaign_timeline_chanel_player_id);
+                            pepper.setCampaignTimelineChannelPlayerRecord(campaign_timeline_chanel_player_id, 'player_data', player_data);
+                        }
+                    }
+                });
+            }
         });
     },
 

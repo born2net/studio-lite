@@ -1,5 +1,5 @@
 /**
- * BlockCollection block resides inside a scene or timeline
+ * BlockCollection block resides inside a scene or timeline and manages internal playback of scenes and resoucres
  * @class BlockCollection
  * @extends Block
  * @constructor

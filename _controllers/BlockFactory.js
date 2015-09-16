@@ -54,6 +54,8 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
     BB.CONSTS.PLACEMENT_LISTS = 'PLACEMENT_LISTS';
 
     BB.CONSTS.BLOCKCODE_SCENE = '3510';
+    BB.CONSTS.BLOCKCODE_COLLECTION = '4100';
+
 
     BB.SERVICES.BLOCK_FACTORY = 'BlockFactory';
 

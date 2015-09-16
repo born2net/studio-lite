@@ -327,6 +327,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
                 var sceneID = pepper.getSceneIdFromPseudoId(e.edata);
                 BB.comBroker.fire(BB.EVENTS.REMOVING_SCENE, this, null, sceneID);
                 pepper.removeBlocksWithSceneID(sceneID);
+                pepper.removeSceneFromBlockCollections(sceneID);
                 pepper.removeScene(sceneID);
                 BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this, null);
                 self.disposeScene();

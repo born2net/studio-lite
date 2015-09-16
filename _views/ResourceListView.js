@@ -63,6 +63,8 @@ define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backb
                 BB.comBroker.fire(BB.EVENTS.REMOVING_RESOURCE, this, null, self.m_selected_resource_id);
                 pepper.removeResource(self.m_selected_resource_id);
                 pepper.removeBlocksWithResourceID(self.m_selected_resource_id);
+                pepper.removeResourceFromBlockCollectionInScenes(self.m_selected_resource_id);
+                pepper.removeResourceFromBlockCollectionsInChannel(self.m_selected_resource_id);
                 self.render();
                 self._listenResourceSelected();
                 BB.comBroker.fire(BB.EVENTS.REMOVED_RESOURCE, this, null, self.m_selected_resource_id);

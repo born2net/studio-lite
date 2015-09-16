@@ -1966,7 +1966,7 @@ Pepper.prototype = {
     },
 
     /**
-     Remove blocks (a.k.a players) from all campaign that use the specified scene_id
+     Remove blocks (a.k.a players) from all campaign timeline  channels that use the specified scene_id
      @method removeBlocksWithSceneID
      @param {Number} i_scene_id
      @return none
@@ -1984,12 +1984,70 @@ Pepper.prototype = {
     },
 
     /**
-     Remove the scene from any block collection who use it
-     @method removeSceneFromBlockCollections
+     Remove all refernce to a resource id from within Scenes > BlockCollections that refer to that particulat resource id
+     In other words, check all scenes for existing block collections, and if they refer to resource id, remove that entry
+     @method removeResourceFromBlockCollectionInScenes
+     @param {Number} i_resource_id resource id to search for and remove in all scenes > BlockCollections
+     **/
+    removeResourceFromBlockCollectionInScenes: function (i_resource_id) {
+        var self = this;
+        $(self.m_msdb.table_player_data().getAllPrimaryKeys()).each(function (k, player_data_id) {
+            var recPlayerData = self.m_msdb.table_player_data().getRec(player_data_id);
+            var domSceneData = $.parseXML(recPlayerData['player_data_value']);
+            var currentSceneID = $(domSceneData).find('Player').eq(0).attr('id');
+            $(domSceneData).find('Player').each(function (i, playerData) {
+                $(playerData).find('[player="' + BB.CONSTS.BLOCKCODE_COLLECTION + '"]').each(function (i, playerDataBlockCollection) {
+                    $(playerDataBlockCollection).find('Collection').children().each(function (k, page) {
+                        var resource_id = $(page).find('Resource').attr('hResource');
+                        if (i_resource_id == resource_id){
+                            $(page).remove();
+                            currentSceneID = pepper.sterilizePseudoId(currentSceneID);
+                            self.m_msdb.table_player_data().openForEdit(currentSceneID);
+                            var player_data = pepper.xmlToStringIEfix(domSceneData);
+                            recPlayerData['player_data_value'] = player_data;
+                        }
+                    });
+                });
+            });
+        });
+    },
+
+    /**
+     Remove all refernce to a scene id from within Scenes > BlockCollections that refer to that particulat scene id
+     In other words, check all scenes for existing block collections, and if they refer to scene_id, remove that entry
+     @method removeSceneFromBlockCollectionWithSceneId
+     @param {Number} i_scene_id scene id to search for and remove in all scenes > BlockCollections
+     **/
+    removeSceneFromBlockCollectionInScenes: function (i_scene_id) {
+        var self = this;
+        $(self.m_msdb.table_player_data().getAllPrimaryKeys()).each(function (k, player_data_id) {
+            var recPlayerData = self.m_msdb.table_player_data().getRec(player_data_id);
+            var domSceneData = $.parseXML(recPlayerData['player_data_value']);
+            var currentSceneID = $(domSceneData).find('Player').eq(0).attr('id');
+            $(domSceneData).find('Player').each(function (i, playerData) {
+                $(playerData).find('[player="' + BB.CONSTS.BLOCKCODE_COLLECTION + '"]').each(function (i, playerDataBlockCollection) {
+                    $(playerDataBlockCollection).find('Collection').children().each(function (k, page) {
+                        var scene_id = $(page).find('Player').attr('hDataSrc');
+                        if (scene_id == i_scene_id){
+                            $(page).remove();
+                            currentSceneID = pepper.sterilizePseudoId(currentSceneID);
+                            self.m_msdb.table_player_data().openForEdit(currentSceneID);
+                            var player_data = pepper.xmlToStringIEfix(domSceneData);
+                            recPlayerData['player_data_value'] = player_data;
+                        }
+                    });
+                });
+            });
+        });
+    },
+
+    /**
+     Remove the scene from any block collection which resides in campaign timeline channels that uses that scene in its collection list
+     @method removeSceneFromBlockCollectionsInChannels
      @param {Number} i_scene_id
      @return none
      **/
-    removeSceneFromBlockCollections: function (i_scene_id) {
+    removeSceneFromBlockCollectionsInChannels: function (i_scene_id) {
         var self = this;
         $(self.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
             var recCampaignTimelineChannelPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
@@ -1998,11 +2056,42 @@ Pepper.prototype = {
             var blockType = $(domPlayerData).find('Player').attr('player');
             if (blockType == BB.CONSTS.BLOCKCODE_COLLECTION){
                 $(domPlayerData).find('Collection').children().each(function (k, page) {
-                    var resource_hResource, scene_hDataSrc;
+                    var scene_hDataSrc;
                     var type = $(page).attr('type');
                     if (type == 'scene') {
                         scene_hDataSrc = $(page).find('Player').attr('hDataSrc');
                         if (scene_hDataSrc == i_scene_id){
+                            $(page).remove();
+                            var player_data = pepper.xmlToStringIEfix(domPlayerData)
+                            pepper.m_msdb.table_campaign_timeline_chanel_players().openForEdit(campaign_timeline_chanel_player_id);
+                            pepper.setCampaignTimelineChannelPlayerRecord(campaign_timeline_chanel_player_id, 'player_data', player_data);
+                        }
+                    }
+                });
+            }
+        });
+    },
+
+    /**
+     Remove the resource from any block collection which resides in campaign timeline channels that uses that resource in its collection list
+     @method removeResourceFromBlockCollectionsInChannel
+     @param {Number} i_resource_id
+     @return none
+     **/
+    removeResourceFromBlockCollectionsInChannel: function (i_resource_id) {
+        var self = this;
+        $(self.m_msdb.table_campaign_timeline_chanel_players().getAllPrimaryKeys()).each(function (k, campaign_timeline_chanel_player_id) {
+            var recCampaignTimelineChannelPlayer = self.m_msdb.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
+            var playerData = recCampaignTimelineChannelPlayer['player_data'];
+            var domPlayerData = $.parseXML(playerData);
+            var blockType = $(domPlayerData).find('Player').attr('player');
+            if (blockType == BB.CONSTS.BLOCKCODE_COLLECTION){
+                $(domPlayerData).find('Collection').children().each(function (k, page) {
+                    var resource_hResource;
+                    var type = $(page).attr('type');
+                    if (type == 'resource') {
+                        resource_hResource = $(page).find('Resource').attr('hResource');
+                        if (resource_hResource == i_resource_id){
                             $(page).remove();
                             var player_data = pepper.xmlToStringIEfix(domPlayerData)
                             pepper.m_msdb.table_campaign_timeline_chanel_players().openForEdit(campaign_timeline_chanel_player_id);

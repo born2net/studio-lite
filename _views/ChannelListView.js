@@ -409,7 +409,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
         },
 
         /**
-         Delete the selected block from the channel.
+         Delete the selected block from the channel
          @method _deleteChannelBlock
          @return none
          **/

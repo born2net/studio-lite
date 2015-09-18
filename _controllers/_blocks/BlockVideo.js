@@ -156,14 +156,14 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         /**
          Delete this block
          @method deleteBlock
-         @return none
+         @params {Boolean} i_memoryOnly if true only remove from existance but not from msdb
          **/
-        deleteBlock: function () {
+        deleteBlock: function (i_memoryOnly) {
             var self = this;
             $(Elements.VIDEO_AUTO_REWIND).off('change', self.m_inputRewind);
             $(Elements.VIDEO_ASPECT_RATIO).off('change', self.m_inputAspectHandler);
             BB.comBroker.stopListen(BB.EVENTS.VIDEO_VOLUME_CHANGED, self.m_inputVolumeHandler);
-            self._deleteBlock();
+            self._deleteBlock(i_memoryOnly);
         }
     });
 

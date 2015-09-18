@@ -33,7 +33,7 @@ define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockSVG', 'BlockVideo', 'B
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
             self.m_blockFactory = BB.comBroker.getService(BB.SERVICES['BLOCK_FACTORY']);
             self._listenReset();
-            if (self.m_blockFactory.blocksLoaded()){
+            if (self.m_blockFactory.blocksLoaded()) {
                 self._onBlocksLoaded();
             } else {
                 BB.comBroker.listenOnce(BB.EVENTS['BLOCKS_LOADED'], $.proxy(self._onBlocksLoaded, self));
@@ -74,6 +74,9 @@ define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockSVG', 'BlockVideo', 'B
         _listenReset: function () {
             var self = this;
             BB.comBroker.listenWithNamespace(BB.EVENTS.CAMPAIGN_RESET, self, function () {
+                for (var blockID in self.m_blocks) {
+                    self.deleteBlock(blockID, true);
+                }
                 $(self.m_thumbsContainer).empty();
                 self._reset();
             });
@@ -269,7 +272,7 @@ define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockSVG', 'BlockVideo', 'B
                 var domPlayerData = $.parseXML(player_data);
                 var sceneHandle = $(domPlayerData).find('Player').attr('player');
                 // workaround to remove scenes listed inside table campaign_timeline_chanel_players
-                if (sceneHandle=='3510')
+                if (sceneHandle == '3510')
                     continue;
                 var offsetTime = parseInt(recBlock['player_offset_time']);
                 blocksSorted[offsetTime] = self.m_blocks[block_id];
@@ -306,11 +309,12 @@ define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockSVG', 'BlockVideo', 'B
          Delete a block from the channel
          @method deleteBlock
          @param {Number} i_block_id
+         @params {Boolean} i_memoryOnly if true only remove from existance but not from msdb
          @return none
          **/
-        deleteBlock: function (i_block_id) {
+        deleteBlock: function (i_block_id, i_memoryOnly) {
             var self = this;
-            self.m_blocks[i_block_id].deleteBlock();
+            self.m_blocks[i_block_id].deleteBlock(i_memoryOnly);
             delete self.m_blocks[i_block_id];
         }
     });

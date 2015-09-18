@@ -366,9 +366,9 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         /**
          Delete this block
          @method deleteBlock
-         @return none
+         @params {Boolean} i_memoryOnly if true only remove from existance but not from msdb
          **/
-        deleteBlock: function () {
+        deleteBlock: function (i_memoryOnly) {
             var self = this;
             $(Elements.CLASS_YOUTUBE_VIDEO_ID).off("input", self.m_inputVideoIdChangeHandler);
             $(Elements.YOUTUBE_LIST_DROPDOWN).off('click', self.m_playlistChange);
@@ -377,7 +377,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             $(Elements.CLASS_YOUTUBE_VIDEO_ID_REMOVE).off('click', self.m_removeVideoID);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BAR_METER_CHANGED, self);
             BB.comBroker.stopListen(BB.EVENTS.YOUTUBE_VOLUME_CHANGED, self.m_inputVolumeHandler);
-            self._deleteBlock();
+            self._deleteBlock(i_memoryOnly);
         }
     });
 

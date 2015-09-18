@@ -198,22 +198,21 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                     setTimeout(i_callback,1)
                 }
             });
-
         },
 
         /**
          Delete this block
          @method deleteBlock
-         @return none
+         @params {Boolean} i_memoryOnly if true only remove from existance but not from msdb
          **/
-        deleteBlock: function () {
+        deleteBlock: function (i_memoryOnly) {
             var self = this;
             $(Elements.LABEL_TEXT).off("mousemove", self.m_inputChangeHandler);
             $(Elements.LABEL_TEXT).off("keydown", self.m_inputChangeHandler);
             $(Elements.LABEL_TEXT).off("blur", self.m_inputChangeHandler);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.FONT_SELECTION_CHANGED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.MOUSE_ENTERS_CANVAS, self);
-            self._deleteBlock();
+            self._deleteBlock(i_memoryOnly);
         }
     });
 

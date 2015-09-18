@@ -91,14 +91,14 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         /**
          Delete this block
          @method deleteBlock
-         @return none
+         @params {Boolean} i_memoryOnly if true only remove from existance but not from msdb
          **/
-        deleteBlock: function () {
+        deleteBlock: function (i_memoryOnly) {
             var self = this;
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.RSSLINK_CHANGED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.FONT_SELECTION_CHANGED, self);
             $(Elements.MRSS_ASPECT_RATIO).off('change', self.m_aspectChange);
-            self._deleteBlock();
+            self._deleteBlock(i_memoryOnly);
         }
     });
 

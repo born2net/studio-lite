@@ -99,13 +99,13 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         /**
          Delete this block
          @method deleteBlock
-         @return none
+         @params {Boolean} i_memoryOnly if true only remove from existance but not from msdb
          **/
-        deleteBlock: function () {
+        deleteBlock: function (i_memoryOnly) {
             var self = this;
             $(Elements.CLASS_FASTERQ_LINE_NUMBER).off("input", self.m_inputNameChangeHandler);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.FASTERQ_BG_COLOR_CHANGE, self);
-            self._deleteBlock();
+            self._deleteBlock(i_memoryOnly);
         }
     });
 

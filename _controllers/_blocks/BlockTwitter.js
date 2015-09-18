@@ -188,15 +188,15 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         /**
          Delete this block
          @method deleteBlock
-         @return none
+         @params {Boolean} i_memoryOnly if true only remove from existance but not from msdb
          **/
-        deleteBlock: function () {
+        deleteBlock: function (i_memoryOnly) {
             var self = this;
             $('.spinner', Elements.BLOCK_TWITTER_COMMON_PROPERTIES).off('mouseup', self.m_intervalInput);
             $(Elements.TWITTER_DROPDOWN).off('click', self.m_bindScene);
             $(Elements.TWITTER_SCREEN_INPUT).off("input", self.m_screenNameChange);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.SCENE_LIST_UPDATED,self);
-            self._deleteBlock();
+            self._deleteBlock(i_memoryOnly);
         }
     });
 

@@ -401,9 +401,9 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         /**
          Delete this block
          @method deleteBlock
-         @return none
+         @params {Boolean} i_memoryOnly if true only remove from existance but not from msdb
          **/
-        deleteBlock: function () {
+        deleteBlock: function (i_memoryOnly) {
             var self = this;
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.SCENE_BG_COLOR_CHANGED, self);
             $(Elements.SCENE_NAME_INPUT).off("input", self.m_inputNameChangeHandler);
@@ -411,7 +411,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             $(Elements.SCENE_WIDTH_INPUT).off("blur", self.m_inputWidthChangeHandler);
             $(Elements.SCENE_HEIGHT_INPUT).off("blur", self.m_inputWidthChangeHandler);
             $(Elements.SCENE_HEIGHT_INPUT).off("input", self.m_inputHeightChangeHandler);
-            self._deleteBlock();
+            self._deleteBlock(i_memoryOnly);
         }
     });
 

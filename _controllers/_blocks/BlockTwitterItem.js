@@ -167,13 +167,13 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         /**
          Delete this block
          @method deleteBlock
-         @return none
+         @params {Boolean} i_memoryOnly if true only remove from existance but not from msdb
          **/
-        deleteBlock: function () {
+        deleteBlock: function (i_memoryOnly) {
             var self = this;
             $(Elements.TWITTER_ITEM_DROPDOWN).off('click', self.m_itemTypeSelect);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.FONT_SELECTION_CHANGED, self);
-            self._deleteBlock();
+            self._deleteBlock(i_memoryOnly);
         }
     });
 

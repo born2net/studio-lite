@@ -223,6 +223,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     } else {
                         scene_hDataSrc = $(page).find('Player').attr('hDataSrc');
                     }
+                    log('populating ' + resource_hResource);
                     data.push({
                         rowIndex: rowIndex,
                         checkbox: true,
@@ -440,6 +441,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 } else {
                     // Add resources to collection
                     var resourceName = pepper.getResourceRecord(e.edata.resourceID).resource_name;
+                    log('updating hResource ' + e.edata.resourceID);
                     buff = '<Page page="' + resourceName + '" type="resource" duration="5">' +
                         '<Player player="' + e.edata.blockCode + '">' +
                         '<Data>' +
@@ -531,8 +533,9 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             /**
              Delete this block
              @method deleteBlock
+             @params {Boolean} i_memoryOnly if true only remove from existance but not from msdb
              **/
-            deleteBlock: function () {
+            deleteBlock: function (i_memoryOnly) {
                 var self = this;
                 $(Elements.ADD_RESOURCE_TO_COLLECTION).off('click', self.m_addNewCollectionListItem);
                 $(Elements.ADD_COLLECTION_EVENTS).off('click', self.m_addNewCollectionEvent);
@@ -546,7 +549,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 BB.comBroker.stopListen(BB.EVENTS.COLLECTION_ROW_DRAG, self.m_collectionRowDraggedHandler);
                 BB.comBroker.stopListen(BB.EVENTS.COLLECTION_ROW_CHANGED, self.m_collectionRowChangedHandler);
                 BB.comBroker.stopListen(BB.EVENTS.COLLECTION_EVENT_ROW_CHANGED, self.m_collectionRowEventChangedHandler);
-                self._deleteBlock();
+                self._deleteBlock(i_memoryOnly);
             }
         });
         return BlockCollection;

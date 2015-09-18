@@ -769,11 +769,13 @@ define(['jquery', 'backbone'], function ($) {
          Delete block is a private method that is always called regardless if instance has
          been inherited or not. Used for releasing memory for garbage collector.
          @method _deleteBlock
+         @params {Boolean} i_memoryOnly if true only remove from existance but not from msdb
          @return none
          **/
-        _deleteBlock: function () {
+        _deleteBlock: function (i_memoryOnly) {
             var self = this;
-            pepper.removeBlockFromTimelineChannel(self.m_block_id);
+            if (!i_memoryOnly)
+                pepper.removeBlockFromTimelineChannel(self.m_block_id);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_SELECTED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.BLOCK_LENGTH_CHANGING, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.GRADIENT_COLOR_CHANGED, self);
@@ -989,12 +991,13 @@ define(['jquery', 'backbone'], function ($) {
          Delete block is a public method used as fall back method, if not overridden by inherited instance.
          It is also a semi abstract method, all implementations should go into _deleteBlock();
          @method deleteBlock
+         @params {Boolean} i_memoryOnly if true only remove from existance but not from msdb
          @return none
          **/
-        deleteBlock: function () {
+        deleteBlock: function (i_memoryOnly) {
             /* semi-abstract, overridden, do not modify */
             var self = this;
-            self._deleteBlock();
+            self._deleteBlock(i_memoryOnly);
         }
     });
 

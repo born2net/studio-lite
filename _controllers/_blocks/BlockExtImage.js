@@ -72,12 +72,12 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         /**
          Delete this block
          @method deleteBlock
-         @return none
+         @params {Boolean} i_memoryOnly if true only remove from existance but not from msdb
          **/
-        deleteBlock: function () {
+        deleteBlock: function (i_memoryOnly) {
             var self = this;
             $(Elements.EXT_IMAGE_TEXT).off("input", self.m_inputChangeHandler);
-            self._deleteBlock();
+            self._deleteBlock(i_memoryOnly);
         }
     });
 

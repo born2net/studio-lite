@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated CampaignSelectorView
  **/
-define(['jquery', 'backbone'], function ($, Backbone) {
+define(['jquery', 'backbone', 'kinetic', 'enjoy'], function ($, Backbone, kinetic, enjoy) {
 
     BB.CONSTS.SEQUENCER_MODE = '0';
     BB.CONSTS.SCHEDULER_MODE = '1';
@@ -50,6 +50,24 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self._loadCampaignList();
             self._listenAddRemoveCampaign();
             self._listenCampaignModeSelect();
+            self._listenTutorial();
+        },
+
+        _listenTutorial: function () {
+            var enjoyhint_script_steps = [
+                {
+                    "click #newCampaign": 'Hello, I\'d like to tell you about EnjoyHint.<br> Click "Next" to proceed.'
+                },
+                {
+                    "click #next": '2222<br>ZZ'
+                },
+                {
+                    "click #orientationView": 'Select orientation<br>ZZ'
+                }
+            ];
+            var enjoyhint_instance = new EnjoyHint({})
+            enjoyhint_instance.set(enjoyhint_script_steps);
+            enjoyhint_instance.run();
         },
 
         /**

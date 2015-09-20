@@ -57,6 +57,7 @@ require.config({
         'XDate': '_common/_js/xdate/xdate',
         'Base64': '_common/_js/base64/jquery.base64',
         'Knob': '_common/_js/knob/jquery.knob',
+        'enjoy': '_common/_js/enjoy/enjoyhint',
         'TouchPunch': '_common/_js/touchpunch/TouchPunch',
         'X2JS': '_common/_js/x2js/xml2json',
         'LayoutRouter': '_controllers/LayoutRouter',

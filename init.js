@@ -186,7 +186,11 @@ require.config({
             exports: 'highcharts'
         },
         'enjoy': {
+            deps: ['kinetic'],
             exports: 'enjoy'
+        },
+        'kinetic': {
+            exports: 'kinetic'
         },
         'qrcode': {
             exports: 'qrcode'

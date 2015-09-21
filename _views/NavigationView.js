@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated FileMenu
  **/
-define(['jquery', 'backbone', 'TutorialView'], function ($, Backbone, TutorialView) {
+define(['jquery', 'backbone','TimelineMax', 'TweenMax', 'TutorialView'], function ($, Backbone, TimelineMax, TweenMax, TutorialView) {
 
     BB.SERVICES.NAVIGATION_VIEW = 'NavigationView';
 

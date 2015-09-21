@@ -30,6 +30,7 @@
  * @namespace Kinetic
  */
 /*jshint -W079, -W020*/
+// alert('test loaded kinetic');
 var Kinetic = {};
 (function(root) {
     var PI_OVER_180 = Math.PI / 180;
@@ -589,7 +590,9 @@ var Kinetic = {};
 
 // if the module has no dependencies, the above pattern can be simplified to
 ( function(root, factory) {
-    if( typeof exports === 'object') {
+
+    //todo: Disabled node support for we can use require instead of define per Sean 9-21-2015
+    if( false) {
         var KineticJS = factory();
         // runtime-check for browserify
         if(global.window === global) {
@@ -611,8 +614,7 @@ var Kinetic = {};
         Kinetic.root = root;
         module.exports = KineticJS;
         return;
-    }
-    else if( typeof define === 'function' && define.amd) {
+    } else if( typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
         define(factory);
     }

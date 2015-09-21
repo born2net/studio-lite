@@ -1,3 +1,4 @@
+// alert('test loaded enjoyhint');
 var EnjoyHint = function (_options) {
     var that = this;
     // Some options

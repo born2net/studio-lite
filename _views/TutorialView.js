@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated TutorialViewView
  **/
-define(['jquery', 'backbone'], function ($, Backbone) {
+define(['jquery', 'backbone', 'simplestorage'], function ($, Backbone, simplestorage) {
 
     var TutorialViewView = Backbone.View.extend({
 
@@ -17,14 +17,29 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self.m_selectedView = undefined;
             self.m_appSectionFunction = undefined;
             self.m_delay = 0;
+            self.m_enjoyHint;
             self._listenViewStacks();
             self._listenTutorialSelected();
             self._listenAppSized();
+            self._listenCampaignListLoaded();
+        },
 
-            //setTimeout(function () {
-            //    self._tutorialCampaignSelector();
-            //}, 5000);
-
+        /**
+         When campaign list loaded, if first time user, suggest wizard
+         @method _listenCampaignListLoaded
+         **/
+        _listenCampaignListLoaded: function () {
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS.CAMPAIGN_LIST_LOADED, function (e) {
+                var firstwizard = simplestorage.get('firstwizard');
+                firstwizard = _.isUndefined(firstwizard) ? 1 : firstwizard;
+                if (firstwizard > 1)
+                    return;
+                simplestorage.set('firstwizard', 2);
+                setTimeout(function () {
+                    $(Elements.LIVE_TUTORIAL).trigger('click');
+                }, 1000);
+            });
         },
 
         /**
@@ -32,7 +47,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          @method _listenAppSized
          **/
         _listenAppSized: function () {
+            var self = this;
             BB.comBroker.listen(BB.EVENTS.APP_SIZED, function () {
+                if (self.m_enjoyHint) {
+                    self.m_enjoyHint.trigger('skip');
+                    self.m_enjoyHint = undefined;
+                }
             });
         },
 
@@ -72,18 +92,32 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             var enjoyhint_script_steps = [
                 {
-                    "click #newCampaign": 'Hello, I\'d like to tell you about EnjoyHint.<br> Click "Next" to proceed.'
+                    "click #newCampaign": $(Elements.WIZARD_CREATE_CAMPAIGN).html()
                 },
                 {
-                    "click #next": '2222<br>ZZ'
+                    "key #newCampaignName": $(Elements.WIZARD_NAME_CAMPAIGN).html(),
+                    keyCode: 13,
+                    skipButton: {
+                        className: "moveToSideSkip", text: "Skip"
+                    }
                 },
                 {
-                    "click #orientationView": 'Select orientation<br>ZZ'
+                    "click #orientationView": $(Elements.WIZARD_ORIENTAION).html(),
+                    timeout: 500
+                },
+                {
+                    "click #resolutionList": $(Elements.WIZARD_RESOLUTION).html(),
+                    timeout: 500
+                },
+                {
+                    "click #screenLayoutList": $(Elements.WIZARD_LAYOUT).html(),
+                    timeout: 500
                 }
             ];
-            var enjoyhint_instance = new EnjoyHint({})
-            enjoyhint_instance.set(enjoyhint_script_steps);
-            enjoyhint_instance.run();
+
+            self.m_enjoyHint = new EnjoyHint({})
+            self.m_enjoyHint.set(enjoyhint_script_steps);
+            self.m_enjoyHint.run();
         },
 
         /**
@@ -266,33 +300,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     }
                 }
             });
-        },
-
-        /**
-         Animate arrow movement to x y offset
-         @method _animateArrow
-         @param {Object} i_el
-         @param {Number} i_top
-         @param {Number} i_left
-         @param {Number} i_scale
-         @param {Number} i_rotation
-         @param {Number} i_skewX
-         **/
-        _animateArrow: function (i_el, i_top, i_left, i_scale, i_rotation, i_skewX) {
-
-        },
-
-        /**
-         Animate text movement to x y offset
-         @method _animateArrow
-         @param {String} i_el
-         @param {Number} i_top
-         @param {Number} i_left
-         @param {Number} i_scale
-         @param {Number} i_rotation
-         @param {Number} i_skewX
-         **/
-        _animateText: function (i_text, i_top, i_left, i_scale, i_rotation, i_skewX) {
         },
 
         /**

@@ -179,6 +179,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     '</a>';
                 $(Elements.CAMPAIGN_SELECTOR_LIST).append($(snippet));
             }
+            BB.comBroker.fire(BB.EVENTS.CAMPAIGN_LIST_LOADED, this, this);
 
             this._listenOpenProps();
             this._listenSelectCampaign();

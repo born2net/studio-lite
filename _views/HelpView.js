@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated Help
  **/
-define(['jquery', 'backbone', 'simplestorage', 'video'], function ($, Backbone, simplestorage, videojs) {
+define(['jquery', 'backbone', 'video'], function ($, Backbone, videojs) {
 
     var HelpView = Backbone.View.extend({
 
@@ -17,60 +17,22 @@ define(['jquery', 'backbone', 'simplestorage', 'video'], function ($, Backbone, 
             self._listenStopVideo();
             self._listenHelpLinks();
             self._listenWatchIntro();
-            self._listenAutoPopup();
             self._initVideo();
-
-            setTimeout(function () {
-                var autopopup = simplestorage.get('autopopup');
-                autopopup = _.isUndefined(autopopup) ? 1 : autopopup;
-                if (autopopup > 2)
-                    return;
-                if (autopopup == 1) {
-                    $(Elements.AUTO_POPUP_LABEL).hide();
-                } else {
-                    $(Elements.AUTO_POPUP_LABEL).show();
-                }
-                simplestorage.set('autopopup',2);
-                $(Elements.VIDEO_1).trigger('click');
-            }, 8000);
-
-        },
-
-        /**
-         Listen to auto popup enable and disable
-         @method _listenAutoPopup
-         **/
-        _listenAutoPopup: function(){
-            var self = this;
-            $(Elements.AUTO_POPUP).on('click',function(e){
-                var status = $(e.target).prop('checked');
-                if (status) {
-                    simplestorage.set('autopopup',3);
-                } else {
-                    simplestorage.set('autopopup',2);
-                }
-            });
         },
 
         /**
          Listen to watch intro button
-         @method _listenAutoPopup
+         @method _listenWatchIntro
          **/
         _listenWatchIntro: function(){
             var self = this;
             $(Elements.CLASS_VIDEOS).click(function (e) {
-                bootbox.hideAll()
+                bootbox.hideAll();
                 var videoName = $(e.target).attr('name');
                 if (_.isUndefined(videoName))
                     videoName = $(e.target).closest('button').attr('name');
 
                 $(Elements.VIDEO_INTRO).find('video:nth-child(1)').attr("src",videoName);
-                var autopopup = simplestorage.get('autopopup');
-                if (autopopup < 3){
-                    $(Elements.AUTO_POPUP ).prop('checked', false);
-                } else {
-                    $(Elements.AUTO_POPUP).prop('checked', true);
-                }
                 $(Elements.VIDEO_MODAL).modal('show');
                 var w = BB.comBroker.getService(BB.SERVICES.LAYOUT_ROUTER).getAppWidth() - 100;
                 var h = BB.comBroker.getService(BB.SERVICES.LAYOUT_ROUTER).getAppHeight() - 200;;
@@ -80,7 +42,7 @@ define(['jquery', 'backbone', 'simplestorage', 'video'], function ($, Backbone, 
 
         /**
          init HTML5 video.js component
-         @method _listenAutoPopup
+         @method _initVideo
          **/
         _initVideo: function(){
             var self = this;
@@ -104,7 +66,7 @@ define(['jquery', 'backbone', 'simplestorage', 'video'], function ($, Backbone, 
 
         /**
          Listen to help links clicks
-         @method _listenAutoPopup
+         @method _listenHelpLinks
          **/
         _listenHelpLinks: function(){
             var self = this;
@@ -117,7 +79,7 @@ define(['jquery', 'backbone', 'simplestorage', 'video'], function ($, Backbone, 
 
         /**
          Listen to stop video clicks
-         @method _listenAutoPopup
+         @method _listenStopVideo
          **/
         _listenStopVideo: function(){
             var self = this;

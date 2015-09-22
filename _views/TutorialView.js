@@ -32,28 +32,80 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             var enjoyhint_script_steps = [
                 {
-                    "click #newCampaign": $(Elements.WIZARD_CREATE_CAMPAIGN).html()
+                    "click #newCampaign": $(Elements.WSTEP0).html()
                 },
                 {
-                    "key #newCampaignName": $(Elements.WIZARD_NAME_CAMPAIGN).html(),
+                    "key #newCampaignName": $(Elements.WSTEP1).html(),
                     keyCode: 13
                 },
                 {
-                    "click #orientationView": $(Elements.WIZARD_ORIENTAION).html(),
+                    "click #orientationView": $(Elements.WSTEP2).html(),
                     timeout: 500,
                     bottom: -10
-
                 },
                 {
-                    "click #resolutionList": $(Elements.WIZARD_RESOLUTION).html(),
+                    "click #resolutionList": $(Elements.WSTEP3).html(),
                     timeout: 500,
                     bottom: 300
                 },
                 {
-                    "click #screenLayoutList": $(Elements.WIZARD_LAYOUT).html(),
+                    "click #screenLayoutList": $(Elements.WSTEP4).html(),
                     timeout: 500,
                     bottom: 200,
                     right: 100
+                },
+                {
+                    "next #screenSelectorContainer": $(Elements.WSTEP5).html(),
+                    timeout: 1500
+                },
+                {
+                    "click #toggleStorylineCollapsible": $(Elements.WSTEP6).html()
+                },
+                {
+                    "next #storylineContainerCollapse": $(Elements.WSTEP7).html()
+                },
+                {
+                    "click #selectNextChannel": $(Elements.WSTEP8).html()
+                },
+                {
+                    "click #addBlockButton": $(Elements.WSTEP9).html()
+                },
+                {
+                    "click #addResourcesBlockListContainer": $(Elements.WSTEP10).html(),
+                    timeout: 400
+                },
+                {
+                    "click #addResourceBlockList": $(Elements.WSTEP11).html(),
+                    bottom: 800,
+                },
+                {
+                    "click #timelinePreview": $(Elements.WSTEP12).html(),
+                }
+
+            ];
+
+            self.m_enjoyHint = new EnjoyHint({
+                onStart: function () {
+                    console.log('start');
+                },
+                onEnd: function () {
+                    console.log('end');
+                    //self._tutorialCampaignSelector2();
+                }
+            });
+            self.m_enjoyHint.set(enjoyhint_script_steps);
+            self.m_enjoyHint.run();
+        },
+
+        /**
+         Animation campaign selector tutorial
+         @method _tutorialCampaign
+         **/
+        _tutorialCampaignSelector2: function () {
+            var self = this;
+            var aa = [
+                {
+                    "click #addNewTimelineButton": $(Elements.WIZARD_CREATE_CAMPAIGN).html()
                 }
             ];
 
@@ -65,9 +117,13 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     console.log('end');
                 }
             });
-            self.m_enjoyHint.set(enjoyhint_script_steps);
-            self.m_enjoyHint.run();
+            setTimeout(function(){
+                self.m_enjoyHint.set(aa);
+                self.m_enjoyHint.run();
+            },1000);
+
         },
+
 
         /**
          When campaign list loaded, if first time user, suggest wizard
@@ -126,7 +182,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
         /**
          Animation stations tutorial
-         @method _tutorialCampaign
+         @method _tutorialStations
          **/
         _tutorialStations: function () {
             var self = this;
@@ -134,7 +190,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
         /**
          Animation resource tutorial
-         @method _tutorialCampaign
+         @method _tutorialResourcePanel
          **/
         _tutorialResourcePanel: function () {
             var self = this;
@@ -142,7 +198,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
         /**
          Animation install tutorial
-         @method _tutorialCampaign
+         @method _tutorialInstallPanel
          **/
         _tutorialInstallPanel: function () {
             var self = this;
@@ -150,7 +206,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
         /**
          Animation screen layout tutorial
-         @method _tutorialCampaign
+         @method _tutorialScreenLayout
          **/
         _tutorialScreenLayout: function () {
             var self = this;
@@ -158,7 +214,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
         /**
          Animation scenes tutorial
-         @method _tutorialCampaign
+         @method _tutorialScenes
          **/
         _tutorialScenes: function () {
             var self = this;
@@ -166,7 +222,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
         /**
          Animation scene selector tutorial
-         @method _tutorialCampaign
+         @method _tutorialScenesSelector
          **/
         _tutorialScenesSelector: function () {
             var self = this;
@@ -174,7 +230,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
         /**
          Animation screen layout editor tutorial
-         @method _tutorialCampaign
+         @method _tutorialScreenLayoutEditor
          **/
         _tutorialScreenLayoutEditor: function () {
             var self = this;
@@ -190,7 +246,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
         /**
          Animation add new block tutorial
-         @method _tutorialCampaign
+         @method _tutorialAddBlock
          **/
         _tutorialAddBlock: function () {
             var self = this;
@@ -198,7 +254,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
         /**
          Animation tutorial when no specific exists
-         @method _tutorialCampaign
+         @method _tutorialDefault
          **/
         _tutorialDefault: function () {
             var self = this;
@@ -206,7 +262,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
         /**
          Listen to changes in StackView selection so we can bind to appropriate tutorial per current StackView selection
-         @method _tutorialCampaign
+         @method _listenViewStacks
          **/
         _listenViewStacks: function () {
             var self = this;
@@ -318,8 +374,12 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
             require(['enjoy'], function (enjoy) {
                 self.m_appSectionFunction();
+                self._listenCloseTutorial();
             });
-            self._listenCloseTutorial();
+
+            //self.m_appSectionFunction();
+
+
         }
     });
 

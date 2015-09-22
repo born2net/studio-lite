@@ -451,11 +451,6 @@ Elements.STORYLINE = '#storyLine';
 Elements.STORYLINE_CONTAINER = '#storylineContainer';
 Elements.STORYLINE_CONTEXT_MENU = '#storylineContextMenu';
 Elements.SUBSCRIBE_ACCOUNT = '#subscribeAccount';
-Elements.WIZARD_CREATE_CAMPAIGN = '#wizardCreateCampaign';
-Elements.WIZARD_NAME_CAMPAIGN = '#wizardNameCampaign';
-Elements.WIZARD_ORIENTAION = '#wizardOrientation';
-Elements.WIZARD_RESOLUTION = '#wizardResolution';
-Elements.WIZARD_LAYOUT = '#wizardLayout';
 Elements.TEMPLATE_DIMENSION_PROPS = '#dimensionPropsTemplate';
 Elements.TEMPLATE_FONT_SELECTOR = '#fontSelectorTemplate';
 Elements.TEMPLATE_LANGUAGE_SELECTOR = '#languageSelector';
@@ -512,6 +507,26 @@ Elements.YOUTUBE_VOLUME_LABEL = '#youtubeVolumeLabel';
 Elements.YOUTUBE_VOLUME_WRAP_SLIDER = '#youtubeVolumeWrapSlider';
 Elements.YOUTUBE_LIST_ADD = '#youtubeListAdd';
 Elements.YOUTUBE_LIST_REMOVE = '#youtubeListRemove';
+
+/** Wizard **/
+Elements.WSTEP0 = '#wstep0';
+Elements.WSTEP1 = '#wstep1';
+Elements.WSTEP2 = '#wstep2';
+Elements.WSTEP3 = '#wstep3';
+Elements.WSTEP4 = '#wstep4';
+Elements.WSTEP5 = '#wstep5';
+Elements.WSTEP6 = '#wstep6';
+Elements.WSTEP7 = '#wstep7';
+Elements.WSTEP8 = '#wstep8';
+Elements.WSTEP9 = '#wstep9';
+Elements.WSTEP10 = '#wstep10';
+Elements.WSTEP11 = '#wstep11';
+Elements.WSTEP12 = '#wstep12';
+Elements.WSTEP13 = '#wstep13';
+Elements.WSTEP14 = '#wstep14';
+Elements.WSTEP15 = '#wstep15';
+Elements.WSTEP16 = '#wstep16';
+
 
 
 /**

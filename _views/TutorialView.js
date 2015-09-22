@@ -30,6 +30,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         _tutorialCampaignSelector: function () {
             var self = this;
+
+            var tt = function(){
+
+            };
             var enjoyhint_script_steps = [
                 {
                     "click #newCampaign": $(Elements.WSTEP0).html()
@@ -75,8 +79,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     timeout: 400
                 },
                 {
-                    "click #addResourceBlockList": $(Elements.WSTEP11).html(),
-                    bottom: 800,
+                    event: "click",
+                    selector: $('#addResourceBlockList'),
+                    description: $(Elements.WSTEP11).html(),
+                    timeout: 1000
                 },
                 {
                     "click #timelinePreview": $(Elements.WSTEP12).html(),

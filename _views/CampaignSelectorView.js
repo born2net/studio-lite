@@ -71,7 +71,7 @@ define(['jquery', 'backbone', 'simplestorage'], function ($, Backbone, simplesto
 
             var firstwizard = simplestorage.get('firstwizard');
             firstwizard = _.isUndefined(firstwizard) ? 1 : firstwizard;
-            if (firstwizard < 1) {
+            if (firstwizard > 1) {
                 enableSelectorView();
             } else {
                 setTimeout(function () {

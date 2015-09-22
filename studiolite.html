@@ -407,23 +407,23 @@
                         </div>
                     </div>
 
-                    <button id="togglePanel" class="propPanelIsOpen btn btn-default btn-sm hidden-lg"><span
-                            class="glyphicon glyphicon-resize-horizontal"></span></button>
+                    <button id="togglePanel" class="propPanelIsOpen btn btn-default btn-sm hidden-lg"><span class="glyphicon glyphicon-resize-horizontal"></span></button>
                     <div id="campaignManagerView">
                         <div class="campaignSlider noScroll">
-                            <div id="campaignSelector" class="page center">
+                            <div id="campaignSelector" class="page center" style="opacity: 0.5">
                                 <div>
                                     <div id="campaignSelectionButtons" class="btn-group">
-                                        <button id="newCampaign" type="button" class="btn btn-default"><i
+                                        <button id="newCampaign" disabled="true" type="button" class="btn btn-default"><i
                                                 style="font-size: 1em"
                                                 class="fa fa-magic"></i> <span
                                                 data-localize="campaign_wizard">new campaign wizard</span></button>
-                                        <button id="removeCampaign" type="button" class="btn btn-default"><i
+                                        <button id="removeCampaign" disabled="true" type="button" class="btn btn-default"><i
                                                 style="font-size: 1em"
                                                 class="fa fa-trash-o"></i>
                                             <span data-localize="campaign_remove">remove</span></button>
                                     </div>
-                                    <div id="campaignSelectorList" class="yScroll appList list-group"></div>
+                                    <div id="campaignSelectorList" class="yScroll appList list-group">
+                                    </div>
                                 </div>
                             </div>
                             <div id="campaignNameSelectorView" class="page right">

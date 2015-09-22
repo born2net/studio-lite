@@ -400,9 +400,9 @@
   "width": "width",
   "wizardCreateCampaign": "<text style='font-size: 30px; color: #D4D349'>Give us 5 minuets and we will teach you how to use StudioLite...</text><br/>Click New Campaign to create a new campaign<br/>",
   "wizardOrientation": "<text style='font-size: 30px; color: #D4D349'>Select your screen orientation, vertical or horizontal</text>",
-  "wizardResolution": "<text style='font-size: 30px; color: #6E6E6E'>Select your screen resolution</text>",
+  "wizardResolution": "<text style='font-size: 30px; color: #D4D349'>Select your screen resolution</text>",
   "wizardNameCampaign": "<text style='font-size: 30px; color: #D4D349'>Name your campaign, press [ENTER] when done</text><br/>this will become useful later<br/>when you assign your campaign to a remote screen<br/>(a screen is also referred to as a <u>station</u>)",
-  "wizardLayout": "<text style='font-size: 30px; color: #6E6E6E'>Select your screen layout</text><br/><text style='color: #6E6E6E'>Each division will run some different content</text>",
+  "wizardLayout": "<text style='font-size: 30px; color: #D4D349'>Select your screen layout</text><br/><text style=''>Each division will run some different content</text>",
   "worldRegion": "World region",
   "youAreHere": "you are here",
   "yourNumber": "your number: "

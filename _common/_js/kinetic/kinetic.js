@@ -30,7 +30,7 @@
  * @namespace Kinetic
  */
 /*jshint -W079, -W020*/
-// alert('test loaded kinetic');
+//alert('test loaded kinetic');
 var Kinetic = {};
 (function(root) {
     var PI_OVER_180 = Math.PI / 180;

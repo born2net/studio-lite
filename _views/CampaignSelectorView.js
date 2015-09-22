@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated CampaignSelectorView
  **/
-define(['jquery', 'backbone'], function ($, Backbone) {
+define(['jquery', 'backbone', 'simplestorage'], function ($, Backbone, simplestorage) {
 
     BB.CONSTS.SEQUENCER_MODE = '0';
     BB.CONSTS.SCHEDULER_MODE = '1';
@@ -41,6 +41,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         initialize: function () {
             var self = this;
             self.m_selectedCampaignID = -1;
+            self.m_disabled = true;
             self.m_campainProperties = new BB.View({
                 el: Elements.CAMPAIGN_PROPERTIES
             });
@@ -50,6 +51,36 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self._loadCampaignList();
             self._listenAddRemoveCampaign();
             self._listenCampaignModeSelect();
+            self._checkFirstTimeUser();
+
+        },
+
+        /**
+         For first time users launch wizard
+         @method _checkFirstTimeUser
+         **/
+        _checkFirstTimeUser: function(){
+            var self = this;
+
+            var enableSelectorView = function(){
+                simplestorage.set('firstwizard', 2);
+                $(Elements.CAMPAIGN_SELECTOR).animate({opacity: 1});
+                $('button',self.$el).attr('disabled',false);
+                self.m_disabled = false;
+            };
+
+            var firstwizard = simplestorage.get('firstwizard');
+            firstwizard = _.isUndefined(firstwizard) ? 1 : firstwizard;
+            if (firstwizard < 1) {
+                enableSelectorView();
+            } else {
+                setTimeout(function () {
+                    BB.comBroker.fire(BB.EVENTS.CAMPAIGN_LIST_LOADING, this, this);
+                }, 1000);
+                setTimeout(function () {
+                    enableSelectorView();
+                }, 3000);
+            }
         },
 
         /**
@@ -115,6 +146,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
 
             $(Elements.NEW_CAMPAIGN).on('click', function (e) {
+                if (self.m_disabled)
+                    return;
                 self.m_selectedCampaignID = -1;
                 BB.comBroker.fire(BB.EVENTS.CAMPAIGN_SELECTED, this, this, self.m_selectedCampaignID);
                 self.options.stackView.slideToPage(self.options.to, 'right');
@@ -122,6 +155,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             });
 
             $(Elements.REMOVE_CAMPAIGN).on('click', function (e) {
+                if (self.m_disabled)
+                    return;
                 if (self.m_selectedCampaignID != -1) {
                     var selectedElement = self.$el.find('[data-campaignid="' + self.m_selectedCampaignID + '"]');
                     var allCampaignIDs = pepper.getStationCampaignIDs();
@@ -179,7 +214,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     '</a>';
                 $(Elements.CAMPAIGN_SELECTOR_LIST).append($(snippet));
             }
-            BB.comBroker.fire(BB.EVENTS.CAMPAIGN_LIST_LOADED, this, this);
 
             this._listenOpenProps();
             this._listenSelectCampaign();
@@ -195,6 +229,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _listenSelectCampaign: function () {
             var self = this;
             $(Elements.CLASS_CAMPIGN_LIST_ITEM, self.el).on('click', function (e) {
+                if (self.m_disabled)
+                    return;
                 $(Elements.CLASS_CAMPIGN_LIST_ITEM, self.el).removeClass('active');
                 $(this).addClass('active');
                 self.m_selectedCampaignID = $(this).data('campaignid');
@@ -212,6 +248,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _listenOpenProps: function () {
             var self = this;
             $(Elements.CLASS_OPEN_PROPS_BUTTON, self.el).on('click', function (e) {
+                if (self.m_disabled)
+                    return;
                 $(Elements.CLASS_CAMPIGN_LIST_ITEM, self.el).removeClass('active');
                 var elem = $(e.target).closest('a').addClass('active');
                 self.m_selectedCampaignID = $(elem).data('campaignid');

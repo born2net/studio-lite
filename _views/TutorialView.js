@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated TutorialViewView
  **/
-define(['jquery', 'backbone', 'simplestorage'], function ($, Backbone, simplestorage) {
+define(['jquery', 'backbone'], function ($, Backbone) {
 
     var TutorialViewView = Backbone.View.extend({
 
@@ -25,20 +25,58 @@ define(['jquery', 'backbone', 'simplestorage'], function ($, Backbone, simplesto
         },
 
         /**
+         Animation campaign selector tutorial
+         @method _tutorialCampaign
+         **/
+        _tutorialCampaignSelector: function () {
+            var self = this;
+            var enjoyhint_script_steps = [
+                {
+                    "click #newCampaign": $(Elements.WIZARD_CREATE_CAMPAIGN).html()
+                },
+                {
+                    "key #newCampaignName": $(Elements.WIZARD_NAME_CAMPAIGN).html(),
+                    keyCode: 13
+                },
+                {
+                    "click #orientationView": $(Elements.WIZARD_ORIENTAION).html(),
+                    timeout: 500,
+                    bottom: -10
+
+                },
+                {
+                    "click #resolutionList": $(Elements.WIZARD_RESOLUTION).html(),
+                    timeout: 500,
+                    bottom: 300
+                },
+                {
+                    "click #screenLayoutList": $(Elements.WIZARD_LAYOUT).html(),
+                    timeout: 500,
+                    bottom: 200,
+                    right: 100
+                }
+            ];
+
+            self.m_enjoyHint = new EnjoyHint({
+                onStart: function () {
+                    console.log('start');
+                },
+                onEnd: function () {
+                    console.log('end');
+                }
+            });
+            self.m_enjoyHint.set(enjoyhint_script_steps);
+            self.m_enjoyHint.run();
+        },
+
+        /**
          When campaign list loaded, if first time user, suggest wizard
          @method _listenCampaignListLoaded
          **/
         _listenCampaignListLoaded: function () {
             var self = this;
-            BB.comBroker.listen(BB.EVENTS.CAMPAIGN_LIST_LOADED, function (e) {
-                var firstwizard = simplestorage.get('firstwizard');
-                firstwizard = _.isUndefined(firstwizard) ? 1 : firstwizard;
-                if (firstwizard > 1)
-                    return;
-                simplestorage.set('firstwizard', 2);
-                setTimeout(function () {
-                    $(Elements.LIVE_TUTORIAL).trigger('click');
-                }, 1000);
+            BB.comBroker.listen(BB.EVENTS.CAMPAIGN_LIST_LOADING, function (e) {
+                $(Elements.LIVE_TUTORIAL).trigger('click');
             });
         },
 
@@ -49,10 +87,12 @@ define(['jquery', 'backbone', 'simplestorage'], function ($, Backbone, simplesto
         _listenAppSized: function () {
             var self = this;
             BB.comBroker.listen(BB.EVENTS.APP_SIZED, function () {
-                if (self.m_enjoyHint) {
-                    self.m_enjoyHint.trigger('skip');
-                    self.m_enjoyHint = undefined;
+                try {
+                    if (self.m_enjoyHint)
+                        self.m_enjoyHint.trigger('skip');
+                } catch (e) {
                 }
+                self.m_enjoyHint = undefined;
             });
         },
 
@@ -82,42 +122,6 @@ define(['jquery', 'backbone', 'simplestorage'], function ($, Backbone, simplesto
         _tutorialCampaign: function () {
             var self = this;
             BB.comBroker.fire(BB.EVENTS.CAMPAIGN_EXPANDED_VIEW, this);
-        },
-
-        /**
-         Animation campaign selector tutorial
-         @method _tutorialCampaign
-         **/
-        _tutorialCampaignSelector: function () {
-            var self = this;
-            var enjoyhint_script_steps = [
-                {
-                    "click #newCampaign": $(Elements.WIZARD_CREATE_CAMPAIGN).html()
-                },
-                {
-                    "key #newCampaignName": $(Elements.WIZARD_NAME_CAMPAIGN).html(),
-                    keyCode: 13,
-                    skipButton: {
-                        className: "moveToSideSkip", text: "Skip"
-                    }
-                },
-                {
-                    "click #orientationView": $(Elements.WIZARD_ORIENTAION).html(),
-                    timeout: 500
-                },
-                {
-                    "click #resolutionList": $(Elements.WIZARD_RESOLUTION).html(),
-                    timeout: 500
-                },
-                {
-                    "click #screenLayoutList": $(Elements.WIZARD_LAYOUT).html(),
-                    timeout: 500
-                }
-            ];
-
-            self.m_enjoyHint = new EnjoyHint({})
-            self.m_enjoyHint.set(enjoyhint_script_steps);
-            self.m_enjoyHint.run();
         },
 
         /**

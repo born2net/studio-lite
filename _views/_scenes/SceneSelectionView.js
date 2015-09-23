@@ -35,6 +35,22 @@ define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesload
             self._listenDuplicateScene();
             self._listenSceneRename();
             self._listenImportSceneModal();
+            self._listenSceneSelectorWrap();
+        },
+
+        /**
+         Shoot down wrap div clicks to keep wizard inline
+         @method _listenSceneSelectorWrap
+         **/
+        _listenSceneSelectorWrap: function () {
+            var self = this;
+            $(Elements.SCENE_SELECTOR_LIST).on('click', function (e) {
+                if ((e.target.tagName).toLocaleLowerCase() == 'a')
+                    return true;
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                return false;
+            })
         },
 
         /**
@@ -130,7 +146,7 @@ define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesload
                 setTimeout(function () {
                     BB.comBroker.fire(BB.EVENTS.LOAD_SCENE, this, null, self.m_selectedSceneID);
                 }, 555);
-                return false;
+                //return false;
             });
         },
 
@@ -190,21 +206,21 @@ define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesload
                     // use ImagesLoaded
                     $container.imagesLoaded()
                         .progress(onProgress)
-                        .always(function(){
+                        .always(function () {
                             onAlways();
-                            setTimeout(function(){
-                                if (self.m_counter > self.m_counter_max){
+                            setTimeout(function () {
+                                if (self.m_counter > self.m_counter_max) {
                                     $(Elements.IMPORT_SCENEL_DIALOG_CONTAINER).find('button').fadeIn();
                                     return;
                                 }
                                 populateScenes();
-                            },500)
+                            }, 500)
                         })
-                        .fail(function(e){
+                        .fail(function (e) {
                             //console.log('some fail ' + e)
                         })
-                        .done(function(){
-                           //console.log('completed...')
+                        .done(function () {
+                            //console.log('completed...')
                         });
                     // reset progress counter
                     imageCount = $container.find('img').length;
@@ -270,6 +286,7 @@ define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesload
                 function onAlways() {
                     $status.css({opacity: 0});
                 }
+
                 populateScenes();
             });
 

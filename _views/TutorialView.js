@@ -4,7 +4,11 @@
  @constructor
  @return {Object} instantiated TutorialViewView
  **/
-define(['jquery', 'backbone'], function ($, Backbone) {
+
+
+/// TODO: Remove enjoy from define on release
+// debug
+define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
 
     var TutorialViewView = Backbone.View.extend({
 
@@ -23,6 +27,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self._listenAppSized();
             self._listenCampaignListLoaded();
             self._listenWizardError();
+
+            setTimeout(function(){
+                self._tutorialCampaignSelector();
+            },3000)
         },
 
         /**
@@ -63,12 +71,23 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _tutorialCampaignSelector: function () {
             var self = this;
             var enjoyhint_script_steps = [
+
+                 /*
+
+
+
                 {
-                    "click #newCampaign": $(Elements.WSTEP0).html()
+                    "click #newCampaign": $(Elements.WSTEP0).html(),
+                    onBeforeStart:function(){
+                        log('STEP 1');
+                    }
                 },
                 {
                     "key #newCampaignName": $(Elements.WSTEP1).html(),
-                    keyCode: 13
+                    keyCode: 13,
+                    onBeforeStart:function(){
+                        log('STEP 2');
+                    }
                 },
                 {
                     event: "click",
@@ -76,43 +95,58 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     description: $(Elements.WSTEP2).html(),
                     timeout: 500,
                     margin: 0,
-                    padding: 0
+                    padding: 0,
+                    onBeforeStart:function(){
+                        log('STEP 3');
+                    }
                 },
                 {
                     "click #resolutionList": $(Elements.WSTEP3).html(),
                     timeout: 500,
                     bottom: 300,
                     margin: 0,
-                    padding: 0
+                    padding: 0,
+                    onBeforeStart:function(){
+                        log('STEP 4');
+                    }
                 },
                 {
                     event: "click",
                     selector: $('#screenLayoutList'),
                     description: $(Elements.WSTEP4).html(),
                     timeout: 500,
-                    bottom: 200,
-                    top: 10,
-                    right: 50,
-                    left: 15,
-                    margin: 0,
-                    padding: 0
-
+                    bottom: 250,
+                    onBeforeStart:function(){
+                        log('STEP 5');
+                    }
                 },
                 {
                     "next #screenSelectorContainer": $(Elements.WSTEP5).html(),
                     timeout: 1500
                 },
                 {
-                    "click #toggleStorylineCollapsible": $(Elements.WSTEP6).html()
+                    "click #toggleStorylineCollapsible": $(Elements.WSTEP6).html(),
+                    onBeforeStart:function(){
+                        log('STEP 6');
+                    }
                 },
                 {
-                    "next #storylineContainerCollapse": $(Elements.WSTEP7).html()
+                    "next #storylineContainerCollapse": $(Elements.WSTEP7).html(),
+                    onBeforeStart:function(){
+                        log('STEP 7');
+                    }
                 },
                 {
-                    "click #selectNextChannel": $(Elements.WSTEP8).html()
+                    "click #selectNextChannel": $(Elements.WSTEP8).html(),
+                    onBeforeStart:function(){
+                        log('STEP 8');
+                    }
                 },
                 {
-                    "click #addBlockButton": $(Elements.WSTEP9).html()
+                    "click #addBlockButton": $(Elements.WSTEP9).html(),
+                    onBeforeStart:function(){
+                        log('STEP 9');
+                    }
                 },
                 {
                     event: "click",
@@ -120,7 +154,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     description: $(Elements.WSTEP10).html(),
                     timeout: 400,
                     padding: 15,
-                    margin: 15
+                    margin: 15,
+                    onBeforeStart:function(){
+                        log('STEP 10');
+                    }
                 },
                 {
                     event: "click",
@@ -130,12 +167,123 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     bottom: 400,
                     top: 20,
                     left: 25,
-                    right: 25
+                    right: 25,
+                    onBeforeStart:function(){
+                        log('STEP 11');
+                    }
+                },
+
+
+                {
+                    "click .channelListItems": $(Elements.WSTEP12).html(),
+                    onBeforeStart:function(){
+                        log('STEP 12');
+                    }
                 },
                 {
-                    "click #timelinePreview": $(Elements.WSTEP12).html(),
+                    "next #blockProperties": $(Elements.WSTEP13).html(),
+                    onBeforeStart:function(){
+                        log('STEP 13');
+                    }
+                },
+                {
+                    "next #channelBlockProps": $(Elements.WSTEP14).html(),
+                    onBeforeStart:function(){
+                        log('STEP 14');
+                    }
+                },
+                {
+                    "click #editScreenLayout": $(Elements.WSTEP15).html(),
+                    onBeforeStart:function(){
+                        log('STEP 15');
+                    }
+                },
+                {
+                    "click #layoutEditorAddNew": $(Elements.WSTEP16).html(),
+                    onBeforeStart:function(){
+                        log('STEP 16');
+                    }
+                },
+                {
+                    "next #screenLayoutEditorCanvasWrap": $(Elements.WSTEP17).html(),
+                    bottom: 400,
+                    right: 200,
+                    onBeforeStart:function(){
+                        log('STEP 17');
+                    }
+                },
+                {
+                    event: "click",
+                    selector: $('#prev',"#screenLayoutEditorView"),
+                    description: $(Elements.WSTEP18).html(),
+                    onBeforeStart:function(){
+                        log('STEP 18');
+                    }
+                },
+                {
+                    event: "click",
+                    selector: $('#screenLayoutList'),
+                    description: $(Elements.WSTEP19).html(),
+                    timeout: 500,
+                    bottom: 250,
+                    onBeforeStart:function(){
+                        log('STEP 19');
+                    }
+                },
+                */
+                {
+                    event: "click",
+                    selector: $('.scenesPanel','#appNavigator'),
+                    description: $(Elements.WSTEP20).html(),
+                    right: 10,
+                    onBeforeStart:function(){
+                        log('STEP 20');
+                    }
+                },
+                {
+                    event: "click",
+                    selector: $('#newScene'),
+                    description: $(Elements.WSTEP21).html(),
+                    left: 5,
+                    right: 5,
+                    top: 5,
+                    bottom: 5,
+                    onBeforeStart:function(){
+                        log('STEP 21');
+                    }
+                },
+                {
+                    event: "click",
+                    selector: $('#sceneSelectorList'),
+                    description: $(Elements.WSTEP22).html(),
+                    bottom: 500,
+                    onBeforeStart:function(){
+                        log('STEP 22');
+                    }
+                },
+                {
+                    event: "click",
+                    selector: $('.sceneAddNew'),
+                    description: $(Elements.WSTEP23).html(),
+                    timeout: 500,
+                    onBeforeStart:function(){
+                        log('STEP 23');
+                    }
+                },
+                {
+                    event: "click",
+                    selector: $('#addComponentsBlockListContainer'),
+                    description: $(Elements.WSTEP24).html(),
+                    timeout: 300,
+                    bottom: 20,
+                    top: 20,
+                    onBeforeStart:function(){
+                        log('STEP 24');
+                    }
                 }
+
             ];
+
 
             self.m_enjoyHint = new EnjoyHint({
                 onStart: function () {

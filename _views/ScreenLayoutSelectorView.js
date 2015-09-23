@@ -18,6 +18,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
             var self = this;
             self.m_screens = [];
             self.m_direction = 'left';
+            self._listenOutsideClick();
 
             self.listenTo(self.options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e == self) {
@@ -35,6 +36,22 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory'], function ($
                 }
 
                 return false;
+            });
+        },
+
+        /**
+         Listen to clicks outside the layout and shoot them down to assist
+         the Wizard in preventing false positive
+         @method _listenOutsideClick
+         **/
+        _listenOutsideClick: function(){
+            var self = this;
+            $(Elements.SCREEN_LAYOUT_LIST).on('click',function(e){
+                if (e.target.tagName != 'rect'){
+                    e.preventDefault();
+                    e.stopImmediatePropagation()
+                    return false;
+                }
             });
         },
 

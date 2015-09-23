@@ -22,6 +22,38 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self._listenTutorialSelected();
             self._listenAppSized();
             self._listenCampaignListLoaded();
+            self._listenWizardError();
+        },
+
+        /**
+         Listen to error in wizard and do clean exit
+         @method _listenWizardError
+         **/
+        _listenWizardError: function () {
+            var self = this;
+            BB.comBroker.listen(BB.EVENTS.WIZARD_EXIT, function () {
+                if (self.m_enjoyHint) {
+                    self._closeWizard();
+                }
+            });
+        },
+
+        /**
+         Close enjoyhint wizard
+         @method _closeWizard
+         **/
+        _closeWizard: function () {
+            var self = this;
+            try {
+                if (self.m_enjoyHint){
+                    self.m_enjoyHint.trigger('skip');
+                    $.each(self.m_enjoyHint, function (k) {
+                        self[k] = undefined;
+                    });
+                }
+            } catch (e) {
+            }
+            self.m_enjoyHint = undefined;
         },
 
         /**
@@ -30,10 +62,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         _tutorialCampaignSelector: function () {
             var self = this;
-
-            var tt = function(){
-
-            };
             var enjoyhint_script_steps = [
                 {
                     "click #newCampaign": $(Elements.WSTEP0).html()
@@ -43,20 +71,32 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     keyCode: 13
                 },
                 {
-                    "click #orientationView": $(Elements.WSTEP2).html(),
+                    event: "click",
+                    selector: $('#orientationView').find('img').eq(0),
+                    description: $(Elements.WSTEP2).html(),
                     timeout: 500,
-                    bottom: -10
+                    margin: 0,
+                    padding: 0
                 },
                 {
                     "click #resolutionList": $(Elements.WSTEP3).html(),
                     timeout: 500,
-                    bottom: 300
+                    bottom: 300,
+                    margin: 0,
+                    padding: 0
                 },
                 {
-                    "click #screenLayoutList": $(Elements.WSTEP4).html(),
+                    event: "click",
+                    selector: $('#screenLayoutList'),
+                    description: $(Elements.WSTEP4).html(),
                     timeout: 500,
                     bottom: 200,
-                    right: 100
+                    top: 10,
+                    right: 50,
+                    left: 15,
+                    margin: 0,
+                    padding: 0
+
                 },
                 {
                     "next #screenSelectorContainer": $(Elements.WSTEP5).html(),
@@ -75,61 +115,38 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     "click #addBlockButton": $(Elements.WSTEP9).html()
                 },
                 {
-                    "click #addResourcesBlockListContainer": $(Elements.WSTEP10).html(),
-                    timeout: 400
+                    event: "click",
+                    selector: $('#addResourcesBlockListContainer a'),
+                    description: $(Elements.WSTEP10).html(),
+                    timeout: 400,
+                    padding: 15,
+                    margin: 15
                 },
                 {
                     event: "click",
                     selector: $('#addResourceBlockList'),
                     description: $(Elements.WSTEP11).html(),
-                    timeout: 1000
+                    timeout: 1000,
+                    bottom: 400,
+                    top: 20,
+                    left: 25,
+                    right: 25
                 },
                 {
                     "click #timelinePreview": $(Elements.WSTEP12).html(),
                 }
-
             ];
 
             self.m_enjoyHint = new EnjoyHint({
                 onStart: function () {
-                    console.log('start');
                 },
                 onEnd: function () {
-                    console.log('end');
-                    //self._tutorialCampaignSelector2();
+                    self._closeWizard();
                 }
             });
             self.m_enjoyHint.set(enjoyhint_script_steps);
             self.m_enjoyHint.run();
         },
-
-        /**
-         Animation campaign selector tutorial
-         @method _tutorialCampaign
-         **/
-        _tutorialCampaignSelector2: function () {
-            var self = this;
-            var aa = [
-                {
-                    "click #addNewTimelineButton": $(Elements.WIZARD_CREATE_CAMPAIGN).html()
-                }
-            ];
-
-            self.m_enjoyHint = new EnjoyHint({
-                onStart: function () {
-                    console.log('start');
-                },
-                onEnd: function () {
-                    console.log('end');
-                }
-            });
-            setTimeout(function(){
-                self.m_enjoyHint.set(aa);
-                self.m_enjoyHint.run();
-            },1000);
-
-        },
-
 
         /**
          When campaign list loaded, if first time user, suggest wizard
@@ -149,12 +166,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _listenAppSized: function () {
             var self = this;
             BB.comBroker.listen(BB.EVENTS.APP_SIZED, function () {
-                try {
-                    if (self.m_enjoyHint)
-                        self.m_enjoyHint.trigger('skip');
-                } catch (e) {
-                }
-                self.m_enjoyHint = undefined;
+                self._closeWizard();
             });
         },
 

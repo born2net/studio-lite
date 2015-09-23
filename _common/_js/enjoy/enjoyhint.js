@@ -1,4 +1,5 @@
 //alert('test loaded enjoyhint');
+//https://github.com/xbsoftware/enjoyhint
 var EnjoyHint = function (_options) {
     var that = this;
     // Some options
@@ -286,6 +287,7 @@ var EnjoyHint = function (_options) {
 };
 ;
 CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
+    var self = this;
     try {
         if (w < 2 * r) r = w / 2;
         if (h < 2 * r) r = h / 2;
@@ -298,8 +300,9 @@ CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
         this.closePath();
         return this;
     } catch (e) {
+        //todo: catching errors if click is not accuarte and just announce to BB frame on exit, per Sean 9-22-2015
         console.log('error::::::::::::::::::::: enjoyhint' + e);
-        this.close();
+        BB.comBroker.fire(BB.EVENTS.WIZARD_EXIT, this, e);
     }
 
 };

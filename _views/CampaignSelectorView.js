@@ -51,8 +51,19 @@ define(['jquery', 'backbone', 'simplestorage'], function ($, Backbone, simplesto
             self._loadCampaignList();
             self._listenAddRemoveCampaign();
             self._listenCampaignModeSelect();
+            self._listenWizardStart();
             self._checkFirstTimeUser();
 
+        },
+
+        /**
+         Listen to kick off of wizard button
+         @method _listenWizardStart
+         **/
+        _listenWizardStart: function(){
+            $(Elements.GET_WIZARD_HELP).on('click',function(){
+                $(Elements.LIVE_TUTORIAL).trigger('click');
+            });
         },
 
         /**
@@ -71,7 +82,9 @@ define(['jquery', 'backbone', 'simplestorage'], function ($, Backbone, simplesto
 
             var firstwizard = simplestorage.get('firstwizard');
             firstwizard = _.isUndefined(firstwizard) ? 1 : firstwizard;
-            if (firstwizard > 1) {
+            // todo: debug
+            //if (firstwizard > 1) {
+            if (firstwizard < 1) {
                 enableSelectorView();
             } else {
                 setTimeout(function () {

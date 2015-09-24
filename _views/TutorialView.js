@@ -6,9 +6,8 @@
  **/
 
 
-/// TODO: Remove enjoy from define on release
-// debug
-define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
+// debug : define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
+define(['jquery', 'backbone'], function ($, Backbone) {
 
     var TutorialViewView = Backbone.View.extend({
 
@@ -30,9 +29,9 @@ define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
             self._listenWizardError();
 
             // debug
-            setTimeout(function () {
-                self._tutorialCampaignSelector();
-            }, 3000)
+            //setTimeout(function () {
+            //    self._tutorialCampaignSelector();
+            //}, 3000)
         },
 
         /**
@@ -80,6 +79,8 @@ define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
             var self = this;
 
             var enjoyhint_script_steps = [
+
+                        /*
                 {
                     "click #newCampaign": $(Elements.WSTEP0).html(),
                     "skipButton": {text: "quit"},
@@ -488,6 +489,7 @@ define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
                         log('STEP 37');
                     }
                 },
+                         */
                 {
                     event: "click",
                     selector: $('.stationsPanel', '#appNavigator'),
@@ -501,30 +503,66 @@ define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
                         log('STEP 38');
                     }
                 },
+
                 {
                     "next #stationsPanel": $(Elements.WSTEP39).html(),
                     timeout: 600,
                     "skipButton": {text: "quit"},
-                    bottom: 600,
+                    bottom: 400,
                     onBeforeStart: function () {
                         log('STEP 39');
                     }
                 },
                 {
-                    event: "next",
-                    timeout: 200,
-                    selector: $('#stationsPanel'),
+                    event: "click",
+                    selector: $('.helpPanel', '#appNavigator'),
                     "skipButton": {text: "quit"},
+                    timeout: 600,
                     description: $(Elements.WSTEP40).html(),
-                    bottom: 650,
+                    right: 10,
+                    top: 10,
+                    bottom: 10,
+                    hideInEnterprise: true,
                     onBeforeStart: function () {
                         log('STEP 40');
+                    }
+                },
+                {
+                    "next #helpPanel": $(Elements.WSTEP41).html(),
+                    timeout: 200,
+                    hideInEnterprise: true,
+                    "skipButton": {text: "quit"},
+                    onBeforeStart: function () {
+                        log('STEP 41');
+                    }
+                },
+                {
+                    event: "click",
+                    selector: $('.campaignManagerView', '#appNavigator'),
+                    "skipButton": {text: "quit"},
+                    description: $(Elements.WSTEP42).html(),
+                    right: 10,
+                    left: 6,
+                    top: 10,
+                    bottom: 10,
+                    onBeforeStart: function () {
+                        log('STEP 42');
+                    }
+                },
+                {
+                    event: "next",
+                    timeout: 200,
+                    selector: $('#campaignSelector'),
+                    "skipButton": {text: "quit"},
+                    description: $(Elements.WSTEP43).html(),
+                    bottom: 600,
+                    onBeforeStart: function () {
+                        log('STEP 43');
                         setTimeout(function () {
                             $('#enjoyhint_arrpw_line').fadeOut();
                         }, 1000);
                     }
                 }
-
             ];
 
             self.m_enjoyHint = new EnjoyHint({
@@ -800,10 +838,15 @@ define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
                 return;
             self.m_delay = 0;
 
-            require(['enjoy'], function (enjoy) {
-                self.m_appSectionFunction();
-                self._listenCloseTutorial();
-            });
+            if (self.m_appSectionFunction == self._tutorialCampaignSelector){
+                require(['enjoy'], function (enjoy) {
+                    self.m_appSectionFunction();
+                    self._listenCloseTutorial();
+                });
+            } else {
+                bootbox.alert($(Elements.MSG_BOOTBOX_WIARD_SWITCH_CAMPAIGN_LIST).text());
+            }
+
 
             //self.m_appSectionFunction();
 

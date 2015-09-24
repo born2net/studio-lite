@@ -5,6 +5,16 @@
  @return {Object} instantiated TutorialViewView
  **/
 
+/*
+todo:
+ read all text
+ run wizard 2nd time has issues, may need to allow only first load wizard run
+ overall testing including size of browser
+ maybe change fonts when text is over scene checks
+ when run to completion and run again, it exists on enter for campaign name input
+ */
+
+
 
 // debug : define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
 define(['jquery', 'backbone'], function ($, Backbone) {
@@ -20,7 +30,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self.m_selectedView = undefined;
             self.m_appSectionFunction = undefined;
             self.m_delay = 0;
-            self.m_ignoreResizeInStep = 36; // don't close wizard even on resize at this step (download files minor browser size change)
+            self.m_ignoreResizeInStep = [1,36]; // don't close wizard even on resize at this step (download files minor browser size change)
             self.m_enjoyHint;
             self._listenViewStacks();
             self._listenTutorialSelected();
@@ -80,7 +90,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
             var enjoyhint_script_steps = [
 
-                        /*
                 {
                     "click #newCampaign": $(Elements.WSTEP0).html(),
                     "skipButton": {text: "quit"},
@@ -489,7 +498,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                         log('STEP 37');
                     }
                 },
-                         */
                 {
                     event: "click",
                     selector: $('.stationsPanel', '#appNavigator'),
@@ -503,7 +511,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                         log('STEP 38');
                     }
                 },
-
                 {
                     "next #stationsPanel": $(Elements.WSTEP39).html(),
                     timeout: 600,
@@ -611,10 +618,11 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             BB.comBroker.listen(BB.EVENTS.APP_SIZED, function () {
                 if (!self.m_enjoyHint)
                     return;
-                if (self.m_enjoyHint.getCurrentStep() == self.m_ignoreResizeInStep)
+                var step = self.m_enjoyHint.getCurrentStep();
+                var exists = _.contains(self.m_ignoreResizeInStep, step);
+                if (exists)
                     return;
                 self.m_enjoyHint.trigger('skip');
-
             });
         },
 

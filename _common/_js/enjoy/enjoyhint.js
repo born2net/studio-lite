@@ -256,6 +256,8 @@ var EnjoyHint = function (_options) {
             case 'skip':
                 skipAll();
                 break
+            //default :
+            //    $body.trigger(makeEventName(event_name, true))
         }
     };
 

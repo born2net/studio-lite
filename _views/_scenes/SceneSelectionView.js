@@ -45,11 +45,11 @@ define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesload
         _listenSceneSelectorWrap: function () {
             var self = this;
             $(Elements.SCENE_SELECTOR_LIST).on('click', function (e) {
-                if ((e.target.tagName).toLocaleLowerCase() == 'a')
-                    return true;
-                e.preventDefault();
-                e.stopImmediatePropagation();
-                return false;
+                if ((e.target.tagName).toLocaleLowerCase() == 'div'){
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    return false
+                }
             })
         },
 

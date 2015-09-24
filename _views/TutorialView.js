@@ -28,9 +28,10 @@ define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
             self._listenCampaignListLoaded();
             self._listenWizardError();
 
+            // debug
             setTimeout(function(){
                 self._tutorialCampaignSelector();
-            },3000)
+            },4000)
         },
 
         /**
@@ -70,12 +71,15 @@ define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
          **/
         _tutorialCampaignSelector: function () {
             var self = this;
+
+            function restore(){
+                $('.primeComponent').closest('.addBlockListItems').show();
+                $('#addResourcesBlockListContainer','#sceneAddNewBlock').show();
+            }
+
             var enjoyhint_script_steps = [
 
                  /*
-
-
-
                 {
                     "click #newCampaign": $(Elements.WSTEP0).html(),
                     onBeforeStart:function(){
@@ -103,8 +107,9 @@ define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
                 {
                     "click #resolutionList": $(Elements.WSTEP3).html(),
                     timeout: 500,
-                    bottom: 300,
+                    bottom: 250,
                     margin: 0,
+                    right: 500,
                     padding: 0,
                     onBeforeStart:function(){
                         log('STEP 4');
@@ -206,8 +211,8 @@ define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
                 },
                 {
                     "next #screenLayoutEditorCanvasWrap": $(Elements.WSTEP17).html(),
-                    bottom: 400,
-                    right: 200,
+                    bottom: 200,
+                    right: 100,
                     onBeforeStart:function(){
                         log('STEP 17');
                     }
@@ -222,15 +227,14 @@ define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
                 },
                 {
                     event: "click",
-                    selector: $('#screenLayoutList'),
+                    selector: '#screenSelectorContainerCollapse',
                     description: $(Elements.WSTEP19).html(),
                     timeout: 500,
-                    bottom: 250,
                     onBeforeStart:function(){
                         log('STEP 19');
                     }
                 },
-                */
+
                 {
                     event: "click",
                     selector: $('.scenesPanel','#appNavigator'),
@@ -252,33 +256,54 @@ define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
                         log('STEP 21');
                     }
                 },
+                  */
                 {
                     event: "click",
-                    selector: $('#sceneSelectorList'),
+                    selector: '#sceneSelectorList',
                     description: $(Elements.WSTEP22).html(),
-                    bottom: 500,
+                    bottom: 250,
+                    timeout: 300,
                     onBeforeStart:function(){
                         log('STEP 22');
                     }
                 },
                 {
                     event: "click",
-                    selector: $('.sceneAddNew'),
+                    selector: '.sceneAddNew',
                     description: $(Elements.WSTEP23).html(),
-                    timeout: 500,
+                    right: 5,
+                    left: 5,
+                    top: 5,
+                    bottom: 5,
+                    timeout: 300,
                     onBeforeStart:function(){
                         log('STEP 23');
                     }
                 },
                 {
                     event: "click",
-                    selector: $('#addComponentsBlockListContainer'),
+                    selector: '#sceneAddNewBlock',
                     description: $(Elements.WSTEP24).html(),
-                    timeout: 300,
-                    bottom: 20,
-                    top: 20,
+                    timeout: 500,
+                    right: 300,
+                    left: 50,
+                    top: 175,
                     onBeforeStart:function(){
                         log('STEP 24');
+                        $('#sceneAddNewBlock').find('[data-toggle]').trigger('click');
+                        $('.primeComponent').closest('.addBlockListItems').hide();
+                        $('#addResourcesBlockListContainer','#sceneAddNewBlock').hide();
+                    }
+                },
+                {
+                    "next #sceneCanvasContainer": $(Elements.WSTEP25).html(),
+                    timeout: 250,
+                    left: 50,
+                    right: 50,
+                    top: 100,
+                    onBeforeStart:function(){
+                        log('STEP 25');
+                        restore();
                     }
                 }
 
@@ -289,6 +314,7 @@ define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
                 onStart: function () {
                 },
                 onEnd: function () {
+                    restore();
                     self._closeWizard();
                 }
             });

@@ -21,6 +21,7 @@ define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
             self.m_selectedView = undefined;
             self.m_appSectionFunction = undefined;
             self.m_delay = 0;
+            self.m_ignoreResizeInStep = 36; // don't close wizard even on resize at this step (download files minor browser size change)
             self.m_enjoyHint;
             self._listenViewStacks();
             self._listenTutorialSelected();
@@ -29,9 +30,9 @@ define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
             self._listenWizardError();
 
             // debug
-            setTimeout(function(){
+            setTimeout(function () {
                 self._tutorialCampaignSelector();
-            },4000)
+            }, 3000)
         },
 
         /**
@@ -57,10 +58,11 @@ define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
                 return;
             // restore all elements that were touch during enjoy wizard steps
             $('.primeComponent').closest('.addBlockListItems').show();
-            $('#addResourcesBlockListContainer','#sceneAddNewBlock').show();
+            $('#addResourcesBlockListContainer', '#sceneAddNewBlock').show();
+            $('#addComponentsBlockListContainer', '#sceneAddNewBlock').show();
             $('#sceneSelectorList').children().show();
             try {
-                if (self.m_enjoyHint){
+                if (self.m_enjoyHint) {
                     $.each(self.m_enjoyHint, function (k) {
                         self[k] = undefined;
                     });
@@ -78,105 +80,116 @@ define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
             var self = this;
 
             var enjoyhint_script_steps = [
-                        /*
                 {
                     "click #newCampaign": $(Elements.WSTEP0).html(),
-                    "skipButton" : {text: "quit"},
-                    onBeforeStart:function(){
+                    "skipButton": {text: "quit"},
+                    left: 6,
+                    right: 6,
+                    top: 6,
+                    bottom: 6,
+                    onBeforeStart: function () {
                         log('STEP 1');
                     }
                 },
                 {
                     "key #newCampaignName": $(Elements.WSTEP1).html(),
-                    "skipButton" : {text: "quit"},
+                    "skipButton": {text: "quit"},
                     keyCode: 13,
-                    onBeforeStart:function(){
+                    onBeforeStart: function () {
                         log('STEP 2');
                     }
                 },
                 {
                     event: "click",
                     selector: $('#orientationView').find('img').eq(0),
-                    "skipButton" : {text: "quit"},
+                    "skipButton": {text: "quit"},
                     description: $(Elements.WSTEP2).html(),
                     timeout: 500,
                     margin: 0,
                     padding: 0,
-                    onBeforeStart:function(){
+                    onBeforeStart: function () {
                         log('STEP 3');
                     }
                 },
                 {
                     "click #resolutionList": $(Elements.WSTEP3).html(),
-                    "skipButton" : {text: "quit"},
+                    "skipButton": {text: "quit"},
                     timeout: 500,
                     bottom: 250,
                     margin: 0,
                     right: 500,
                     padding: 0,
-                    onBeforeStart:function(){
+                    onBeforeStart: function () {
                         log('STEP 4');
                     }
                 },
                 {
                     event: "click",
-                    "skipButton" : {text: "quit"},
+                    "skipButton": {text: "quit"},
                     selector: $('#screenLayoutList'),
                     description: $(Elements.WSTEP4).html(),
                     timeout: 500,
                     bottom: 250,
-                    onBeforeStart:function(){
+                    onBeforeStart: function () {
                         log('STEP 5');
                     }
                 },
                 {
                     "next #screenSelectorContainer": $(Elements.WSTEP5).html(),
                     timeout: 1500,
-                    "skipButton" : {text: "quit"}
+                    "skipButton": {text: "quit"}
                 },
                 {
                     "click #toggleStorylineCollapsible": $(Elements.WSTEP6).html(),
-                    "skipButton" : {text: "quit"},
-                    onBeforeStart:function(){
+                    "skipButton": {text: "quit"},
+                    onBeforeStart: function () {
                         log('STEP 6');
                     }
                 },
                 {
                     "next #storylineContainerCollapse": $(Elements.WSTEP7).html(),
-                    "skipButton" : {text: "quit"},
-                    onBeforeStart:function(){
+                    "skipButton": {text: "quit"},
+                    onBeforeStart: function () {
                         log('STEP 7');
                     }
                 },
                 {
                     "click #selectNextChannel": $(Elements.WSTEP8).html(),
-                    "skipButton" : {text: "quit"},
-                    onBeforeStart:function(){
+                    "skipButton": {text: "quit"},
+                    left: 6,
+                    right: 6,
+                    top: 6,
+                    bottom: 6,
+                    onBeforeStart: function () {
                         log('STEP 8');
                     }
                 },
                 {
                     "click #addBlockButton": $(Elements.WSTEP9).html(),
-                    "skipButton" : {text: "quit"},
-                    onBeforeStart:function(){
+                    "skipButton": {text: "quit"},
+                    left: 6,
+                    right: 6,
+                    top: 6,
+                    bottom: 6,
+                    onBeforeStart: function () {
                         log('STEP 9');
                     }
                 },
                 {
                     event: "click",
-                    "skipButton" : {text: "quit"},
+                    "skipButton": {text: "quit"},
                     selector: $('#addResourcesBlockListContainer a'),
                     description: $(Elements.WSTEP10).html(),
                     timeout: 400,
                     padding: 15,
                     margin: 15,
-                    onBeforeStart:function(){
+                    onBeforeStart: function () {
                         log('STEP 10');
                     }
                 },
                 {
                     event: "click",
-                    "skipButton" : {text: "quit"},
+                    "skipButton": {text: "quit"},
                     selector: $('#addResourceBlockList'),
                     description: $(Elements.WSTEP11).html(),
                     timeout: 1000,
@@ -184,138 +197,329 @@ define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
                     top: 20,
                     left: 25,
                     right: 25,
-                    onBeforeStart:function(){
+                    onBeforeStart: function () {
                         log('STEP 11');
                     }
                 },
                 {
                     "click .channelListItems": $(Elements.WSTEP12).html(),
-                    "skipButton" : {text: "quit"},
-                    onBeforeStart:function(){
+                    "skipButton": {text: "quit"},
+                    onBeforeStart: function () {
                         log('STEP 12');
                     }
                 },
                 {
                     "next #blockProperties": $(Elements.WSTEP13).html(),
-                    "skipButton" : {text: "quit"},
-                    onBeforeStart:function(){
+                    "skipButton": {text: "quit"},
+                    onBeforeStart: function () {
                         log('STEP 13');
                     }
                 },
                 {
                     "next #channelBlockProps": $(Elements.WSTEP14).html(),
-                    "skipButton" : {text: "quit"},
-                    onBeforeStart:function(){
+                    "skipButton": {text: "quit"},
+                    onBeforeStart: function () {
                         log('STEP 14');
                     }
                 },
                 {
                     "click #editScreenLayout": $(Elements.WSTEP15).html(),
-                    "skipButton" : {text: "quit"},
-                    onBeforeStart:function(){
+                    "skipButton": {text: "quit"},
+                    left: 6,
+                    right: 6,
+                    top: 6,
+                    bottom: 6,
+                    onBeforeStart: function () {
                         log('STEP 15');
                     }
                 },
                 {
                     "click #layoutEditorAddNew": $(Elements.WSTEP16).html(),
-                    "skipButton" : {text: "quit"},
-                    onBeforeStart:function(){
+                    "skipButton": {text: "quit"},
+                    left: 6,
+                    right: 6,
+                    top: 6,
+                    bottom: 6,
+                    onBeforeStart: function () {
                         log('STEP 16');
                     }
                 },
                 {
                     "next #screenLayoutEditorCanvasWrap": $(Elements.WSTEP17).html(),
-                    "skipButton" : {text: "quit"},
+                    "skipButton": {text: "quit"},
                     bottom: 200,
                     right: 100,
-                    onBeforeStart:function(){
+                    onBeforeStart: function () {
                         log('STEP 17');
                     }
                 },
                 {
                     event: "click",
-                    selector: $('#prev',"#screenLayoutEditorView"),
-                    "skipButton" : {text: "quit"},
+                    selector: $('#prev', "#screenLayoutEditorView"),
+                    "skipButton": {text: "quit"},
                     description: $(Elements.WSTEP18).html(),
-                    onBeforeStart:function(){
+                    onBeforeStart: function () {
                         log('STEP 18');
                     }
                 },
                 {
                     event: "click",
                     selector: '#screenSelectorContainerCollapse',
-                    "skipButton" : {text: "quit"},
+                    "skipButton": {text: "quit"},
                     description: $(Elements.WSTEP19).html(),
                     timeout: 500,
-                    onBeforeStart:function(){
+                    bottom: 10,
+                    onBeforeStart: function () {
                         log('STEP 19');
                     }
                 },
                 {
                     event: "click",
-                    selector: $('.scenesPanel','#appNavigator'),
-                    "skipButton" : {text: "quit"},
+                    selector: $('.scenesPanel', '#appNavigator'),
+                    "skipButton": {text: "quit"},
                     description: $(Elements.WSTEP20).html(),
                     right: 10,
-                    onBeforeStart:function(){
+                    top: 6,
+                    bottom: 6,
+                    onBeforeStart: function () {
                         log('STEP 20');
                     }
                 },
-                         */
+
                 {
                     event: "click",
                     selector: $('#newScene'),
-                    "skipButton" : {text: "quit"},
+                    "skipButton": {text: "quit"},
                     description: $(Elements.WSTEP21).html(),
                     left: 5,
                     right: 5,
                     top: 5,
                     bottom: 5,
-                    onBeforeStart:function(){
+                    onBeforeStart: function () {
                         log('STEP 21');
                     }
                 },
                 {
                     event: "click",
                     selector: '#sceneSelectorList',
-                    "skipButton" : {text: "quit"},
+                    "skipButton": {text: "quit"},
                     description: $(Elements.WSTEP22).html(),
                     bottom: 400,
                     timeout: 300,
-                    onBeforeStart:function(){
+                    onBeforeStart: function () {
                         //$('#sceneSelectorList').children().:not(:last-child)')fadeOut();
-                        $('a:not(:last-child)','#sceneSelectorList').slideUp();
+                        $('a:not(:last-child)', '#sceneSelectorList').slideUp();
                         log('STEP 22');
                     }
                 },
                 {
                     event: "click",
                     selector: '.sceneAddNew',
-                    "skipButton" : {text: "quit"},
+                    "skipButton": {text: "quit"},
                     description: $(Elements.WSTEP23).html(),
                     right: 5,
                     left: 5,
                     top: 5,
                     bottom: 5,
                     timeout: 300,
-                    onBeforeStart:function(){
+                    onBeforeStart: function () {
                         log('STEP 23');
                     }
                 },
                 {
                     event: "click",
                     selector: '#sceneAddNewBlock',
-                    "skipButton" : {text: "quit"},
+                    "skipButton": {text: "quit"},
                     description: $(Elements.WSTEP24).html(),
                     timeout: 500,
                     right: 300,
                     left: 50,
                     top: 175,
-                    onBeforeStart:function(){
+                    onBeforeStart: function () {
                         log('STEP 24');
                         $('#sceneAddNewBlock').find('[data-toggle]').trigger('click');
                         $('.primeComponent').closest('.addBlockListItems').hide();
-                        $('#addResourcesBlockListContainer','#sceneAddNewBlock').hide();
+                        $('#addResourcesBlockListContainer', '#sceneAddNewBlock').hide();
+                    }
+                },
+                {
+                    "next #sceneCanvas": $(Elements.WSTEP25).html(),
+                    event: "next",
+                    timeout: 300,
+                    "skipButton": {text: "quit"},
+                    onBeforeStart: function () {
+                        log('STEP 25');
+                    }
+                },
+                {
+                    event: "click",
+                    selector: '.sceneAddNew',
+                    "skipButton": {text: "quit"},
+                    description: $(Elements.WSTEP26).html(),
+                    right: 5,
+                    left: 5,
+                    top: 5,
+                    bottom: 5,
+                    timeout: 300,
+                    onBeforeStart: function () {
+                        log('STEP 26');
+                    }
+                },
+                {
+                    event: "click",
+                    selector: '#sceneAddNewBlock',
+                    "skipButton": {text: "quit"},
+                    description: $(Elements.WSTEP24).html(),
+                    timeout: 500,
+                    right: 300,
+                    left: 50,
+                    top: 175,
+                    onBeforeStart: function () {
+                        log('STEP 27');
+                        $('#sceneAddNewBlock').find('[data-toggle]').trigger('click');
+                        $('#addResourcesBlockListContainer', '#sceneAddNewBlock').show();
+                        $('#addComponentsBlockListContainer', '#sceneAddNewBlock').hide();
+                        $('.primeComponent').closest('.addBlockListItems').hide();
+                    }
+                },
+                {
+                    "next #sceneCanvas": $(Elements.WSTEP28).html(),
+                    event: "next",
+                    timeout: 300,
+                    "skipButton": {text: "quit"},
+                    onBeforeStart: function () {
+                        log('STEP 28');
+                    }
+                },
+                {
+                    event: "click",
+                    selector: $('.campaignManagerView', '#appNavigator'),
+                    "skipButton": {text: "quit"},
+                    description: $(Elements.WSTEP29).html(),
+                    right: 10,
+                    left: 6,
+                    top: 6,
+                    bottom: 6,
+                    onBeforeStart: function () {
+                        log('STEP 29');
+                    }
+                },
+                {
+                    "click #toggleStorylineCollapsible": $(Elements.WSTEP30).html(),
+                    "skipButton": {text: "quit"},
+                    onBeforeStart: function () {
+                        log('STEP 30');
+                    }
+                },
+                {
+                    "click #selectNextChannel": $(Elements.WSTEP8).html(),
+                    "skipButton": {text: "quit"},
+                    onBeforeStart: function () {
+                        log('STEP 31');
+                    }
+                },
+                {
+                    "click #addBlockButton": $(Elements.WSTEP9).html(),
+                    left: 6,
+                    right: 6,
+                    top: 6,
+                    bottom: 6,
+                    "skipButton": {text: "quit"},
+                    onBeforeStart: function () {
+                        log('STEP 32');
+                        $('#addResourcesBlockListContainer').find('[data-toggle]').trigger('click');
+                    }
+                },
+                {
+                    event: "click",
+                    "skipButton": {text: "quit"},
+                    selector: $('#addSceneBlockListContainer a'),
+                    description: $(Elements.WSTEP33).html(),
+                    timeout: 400,
+                    padding: 15,
+                    margin: 15,
+                    onBeforeStart: function () {
+                        log('STEP 33');
+                    }
+                },
+                {
+                    event: "click",
+                    "skipButton": {text: "quit"},
+                    selector: $('#addSceneBlockList'),
+                    description: $(Elements.WSTEP34).html(),
+                    timeout: 700,
+                    left: 25,
+                    right: 25,
+                    bottom: 25,
+                    top: 25,
+                    onBeforeStart: function () {
+                        log('STEP 34');
+                    }
+                },
+                {
+                    event: "click",
+                    selector: $('.installPanel', '#appNavigator'),
+                    "skipButton": {text: "quit"},
+                    timeout: 600,
+                    description: $(Elements.WSTEP35).html(),
+                    right: 10,
+                    top: 10,
+                    bottom: 10,
+                    hideInEnterprise: true,
+                    onBeforeStart: function () {
+                        log('STEP 35');
+                    }
+                },
+                {
+                    "next #installPanel": $(Elements.WSTEP36).html(),
+                    hideInEnterprise: true,
+                    "skipButton": {text: "quit"},
+                    onBeforeStart: function () {
+                        log('STEP 36');
+                    }
+                },
+                {
+                    "next #installPanel": $(Elements.WSTEP37).html(),
+                    "skipButton": {text: "quit"},
+                    hideInEnterprise: true,
+                    onBeforeStart: function () {
+                        log('STEP 37');
+                    }
+                },
+                {
+                    event: "click",
+                    selector: $('.stationsPanel', '#appNavigator'),
+                    "skipButton": {text: "quit"},
+                    timeout: 600,
+                    top: 10,
+                    bottom: 10,
+                    description: $(Elements.WSTEP38).html(),
+                    right: 10,
+                    onBeforeStart: function () {
+                        log('STEP 38');
+                    }
+                },
+                {
+                    "next #stationsPanel": $(Elements.WSTEP39).html(),
+                    timeout: 600,
+                    "skipButton": {text: "quit"},
+                    bottom: 600,
+                    onBeforeStart: function () {
+                        log('STEP 39');
+                    }
+                },
+                {
+                    event: "next",
+                    timeout: 200,
+                    selector: $('#stationsPanel'),
+                    "skipButton": {text: "quit"},
+                    description: $(Elements.WSTEP40).html(),
+                    bottom: 650,
+                    onBeforeStart: function () {
+                        log('STEP 40');
+                        setTimeout(function () {
+                            $('#enjoyhint_arrpw_line').fadeOut();
+                        }, 1000);
                     }
                 }
 
@@ -333,6 +537,16 @@ define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
                 }
             });
 
+            // if enterprise mode, remove steps set to hideInEnterprise = true
+            if (pepper.getUserData().resellerID != 1){
+                _.forEach(enjoyhint_script_steps, function (item, index) {
+                    if (item.hideInEnterprise == true) {
+                        enjoyhint_script_steps = _.without(enjoyhint_script_steps,item);
+                    }
+                });
+            }
+
+            log(enjoyhint_script_steps.length);
             self.m_enjoyHint.set(enjoyhint_script_steps);
             self.m_enjoyHint.run();
         },
@@ -355,8 +569,12 @@ define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
         _listenAppSized: function () {
             var self = this;
             BB.comBroker.listen(BB.EVENTS.APP_SIZED, function () {
-                if (self.m_enjoyHint)
-                    self.m_enjoyHint.trigger('skip');
+                if (!self.m_enjoyHint)
+                    return;
+                if (self.m_enjoyHint.getCurrentStep() == self.m_ignoreResizeInStep)
+                    return;
+                self.m_enjoyHint.trigger('skip');
+
             });
         },
 

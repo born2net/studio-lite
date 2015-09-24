@@ -303,7 +303,7 @@ CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
         return this;
     } catch (e) {
         //todo: catching errors if click is not accuarte and just announce to BB frame on exit, per Sean 9-22-2015
-        console.log('error:::::: enjoyhint' + e);
+        console.log('error:::::::::: enjoyhint' + e);
         BB.comBroker.fire(BB.EVENTS.WIZARD_EXIT, this, e);
     }
 

@@ -540,6 +540,29 @@ Elements.WSTEP27 = '#wstep27';
 Elements.WSTEP28 = '#wstep28';
 Elements.WSTEP29 = '#wstep29';
 Elements.WSTEP30 = '#wstep30';
+Elements.WSTEP31 = '#wstep31';
+Elements.WSTEP32 = '#wstep32';
+Elements.WSTEP33 = '#wstep33';
+Elements.WSTEP34 = '#wstep34';
+Elements.WSTEP35 = '#wstep35';
+Elements.WSTEP36 = '#wstep36';
+Elements.WSTEP37 = '#wstep37';
+Elements.WSTEP38 = '#wstep38';
+Elements.WSTEP39 = '#wstep39';
+Elements.WSTEP40 = '#wstep40';
+Elements.WSTEP41 = '#wstep41';
+Elements.WSTEP42 = '#wstep42';
+Elements.WSTEP43 = '#wstep43';
+Elements.WSTEP44 = '#wstep44';
+Elements.WSTEP45 = '#wstep45';
+Elements.WSTEP46 = '#wstep46';
+Elements.WSTEP47 = '#wstep47';
+Elements.WSTEP48 = '#wstep48';
+Elements.WSTEP49 = '#wstep49';
+Elements.WSTEP50 = '#wstep50';
+
+
+
 
 
 

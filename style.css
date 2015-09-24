@@ -20,6 +20,11 @@ i.fa {
     font-size: 14px;
 }
 
+.enjoy_hint_label text:first-child {
+     color: #85e7d3 !important;
+ }
+
+
 @font-face {
     font-family: 'Jolly Lodger';
     font-style: normal;

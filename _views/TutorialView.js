@@ -12,6 +12,7 @@ todo:
  overall testing including size of browser
  maybe change fonts when text is over scene checks
  when run to completion and run again, it exists on enter for campaign name input
+ test under enterprise that help and signage install sections are not coming up
  */
 
 

@@ -83,8 +83,8 @@ define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
                 {
                     "click #newCampaign": $(Elements.WSTEP0).html(),
                     "skipButton": {text: "quit"},
-                    left: 6,
-                    right: 6,
+                    left: 10,
+                    right: 10,
                     top: 6,
                     bottom: 6,
                     onBeforeStart: function () {
@@ -236,8 +236,8 @@ define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
                 {
                     "click #layoutEditorAddNew": $(Elements.WSTEP16).html(),
                     "skipButton": {text: "quit"},
-                    left: 6,
-                    right: 6,
+                    left: 8,
+                    right: 8,
                     top: 6,
                     bottom: 6,
                     onBeforeStart: function () {
@@ -280,7 +280,7 @@ define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
                     description: $(Elements.WSTEP20).html(),
                     right: 10,
                     top: 6,
-                    bottom: 6,
+                    bottom: 10,
                     onBeforeStart: function () {
                         log('STEP 20');
                     }
@@ -291,8 +291,8 @@ define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
                     selector: $('#newScene'),
                     "skipButton": {text: "quit"},
                     description: $(Elements.WSTEP21).html(),
-                    left: 5,
-                    right: 5,
+                    left: 8,
+                    right: 8,
                     top: 5,
                     bottom: 5,
                     onBeforeStart: function () {
@@ -317,8 +317,8 @@ define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
                     selector: '.sceneAddNew',
                     "skipButton": {text: "quit"},
                     description: $(Elements.WSTEP23).html(),
-                    right: 5,
-                    left: 5,
+                    right: 8,
+                    left: 8,
                     top: 5,
                     bottom: 5,
                     timeout: 300,
@@ -356,8 +356,8 @@ define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
                     selector: '.sceneAddNew',
                     "skipButton": {text: "quit"},
                     description: $(Elements.WSTEP26).html(),
-                    right: 5,
-                    left: 5,
+                    right: 8,
+                    left: 8,
                     top: 5,
                     bottom: 5,
                     timeout: 300,
@@ -398,8 +398,8 @@ define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
                     description: $(Elements.WSTEP29).html(),
                     right: 10,
                     left: 6,
-                    top: 6,
-                    bottom: 6,
+                    top: 10,
+                    bottom: 10,
                     onBeforeStart: function () {
                         log('STEP 29');
                     }
@@ -412,6 +412,8 @@ define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
                     }
                 },
                 {
+                    left: 10,
+                    right: 10,
                     "click #selectNextChannel": $(Elements.WSTEP8).html(),
                     "skipButton": {text: "quit"},
                     onBeforeStart: function () {

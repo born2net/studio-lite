@@ -8,6 +8,7 @@
 /*
 todo:
  read all text
+ http://jsfiddle.net/KyleMit/f8ypa/
  run wizard 2nd time has issues, may need to allow only first load wizard run
  maybe change fonts when text is over scene checks
  when run to completion and run again, it exists on enter for campaign name input
@@ -156,6 +157,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     "click #toggleStorylineCollapsible": $(Elements.WSTEP6).html(),
                     "skipButton": {text: "quit"},
                     onBeforeStart: function () {
+                        BB.comBroker.getService(BB.SERVICES.STORYLINE).collapseStoryLine();
                         log('STEP 6');
                     }
                 },

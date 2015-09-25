@@ -47,6 +47,10 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             self._listenContextMenu();
             self._listenExitPreview();
             self._updateWidth();
+
+            //setTimeout(function(){
+            //    self.collapseStoryLine()
+            //},8000)
         },
 
         /**
@@ -431,7 +435,6 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             //return false;
         },
 
-
         /**
          Toggle the arrow of the collapsible storyline UI widget
          @method _listenToggleStorylineCollapsible
@@ -550,6 +553,22 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                 self.m_selectedBlockID = undefined;
                 self._removeBlockSelection();
             });
+        },
+
+        /**
+         Collapse the storyline bootstrap panel and title, another way of doing this is the way
+         _listenCampaignExpandedView triggers click if class 'in' exists
+         @method collapseStoryLine
+         **/
+        collapseStoryLine: function () {
+            var self = this;
+            if ($(Elements.STORYLINE_CONTAINER_COLLAPSE).hasClass('collapsed'))
+                return;
+            $('.panel-collapse', Elements.STORYLINE_COLLAPSIBLE).collapse('hide');
+            $('.panel-title', Elements.STORYLINE_COLLAPSIBLE).attr('data-toggle', 'collapse');
+            var coll = $(Elements.STORYLINE_COLLAPSIBLE);
+            var toggle = $(coll).find('span')[0];
+            $(toggle).removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-right')
         },
 
         /**

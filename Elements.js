@@ -472,6 +472,7 @@ Elements.TOGGLE_STORYLINE_COLLAPSIBLE = '#toggleStorylineCollapsible';
 Elements.TOGGLE_TIMELINES_COLLAPSIBLE = '#toggleTimelinesCollapsible';
 Elements.SCREEN_SELECTOR_CONTAINER_COLLAPSE = '#screenSelectorContainerCollapse';
 Elements.STORYLINE_CONTAINER_COLLAPSE = '#storylineContainerCollapse';
+Elements.STORYLINE_COLLAPSIBLE = '#storylineCollapsible';
 Elements.SCHEDULER_REPEAT_MODE = '#schedulerRepeatMode';
 Elements.TWITTER_ITEMTYPE_SELECT = '#twitterItemTypeSelect';
 Elements.TWITTER_FONT_SETTINGS = '#twitterFontSettings';

@@ -103,8 +103,8 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a id="saveConfig" href="#"><i class="faHeader fa fa-save"></i></a></li>
                 <li><a class="reshid" id="liveChat" href="#"><i class="faHeader fa fa-comments-o"></i></a></li>
-                <li><a class="hidden-xs hidden-sm hidden-md" id="liveTutorial" href="#"><i
-                        class="faHeader fa fa-magic"></i></a></li>
+                <!-- disabled menubar tutorial view -->
+                <div style="display: none"><li><a class="hidden-xs hidden-sm hidden-md" id="liveTutorial" href="#"><i class="faHeader fa fa-magic"></i></a></li></div>
                 <li><a id="languagePrompt" href="#"><i class="faHeader fa fa-globe"></i></a></li>
                 <li style="padding-right: 20px"><a id="dashboard" href="#"><i class="faHeader fa fa-dashboard"></i></a>
                 </li>
@@ -749,12 +749,12 @@
                                 <div id="sceneSelectionButtons" class="btn-group">
                                     <button id="importScene" type="button" class="btn btn-default"><i
                                             style="font-size: 1em"
-                                            class="fa fa-plus"></i>
+                                            class="fa fa-th"></i>
                                         <span data-localize="importScene">import scene</span>
                                     </button>
                                     <button id="newScene" type="button" class="btn btn-default"><i
                                             style="font-size: 1em"
-                                            class="fa fa-magic"></i>
+                                            class="fa fa-plus"></i>
                                         <span data-localize="newScene">new scene</span>
                                     </button>
                                     <button id="duplicateScene" type="button" class="btn btn-default"><i
@@ -2862,8 +2862,8 @@
 
 <!-- Messages -->
 
-<p style="display: none" id="bootBoxSceneMustSelectScene" data-localize="bootBoxSceneMustSelectScene">You must first
-    select a Scene</p>
+<p style="display: none" id="bootBoxSceneMustSelectScene" data-localize="bootBoxSceneMustSelectScene">You must first select a Scene</p>
+<p style="display: none" id="bootBoxBrowserTooSmall" data-localize="bootBoxBrowserTooSmall">your browser width or height is too small, please maximize its size and try again</p>
 
 <p style="display: none" id="bootBoxOldBrowser" data-localize="bootBoxOldBrowser">Geeesh… Your browser is a dinosaur,
     please use the latest version from Google chrome, Microsoft Internet Explorer or Mozilla Firefox, and we promise you

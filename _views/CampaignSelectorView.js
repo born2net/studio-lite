@@ -53,15 +53,33 @@ define(['jquery', 'backbone', 'simplestorage'], function ($, Backbone, simplesto
             self._listenCampaignModeSelect();
             self._listenWizardStart();
             self._checkFirstTimeUser();
+        },
 
+        /**
+         Enable this component, i.e.: allow clicking of campaign list selection and set
+         the storage firstwizard so it no longer auto pops up
+         @method _enableComponent
+         **/
+        _enableComponent: function(){
+            var self = this;
+            simplestorage.set('firstwizard', 2);
+            $(Elements.CAMPAIGN_SELECTOR).animate({opacity: 1});
+            $('button', self.$el).attr('disabled', false);
+            self.m_disabled = false;
         },
 
         /**
          Listen to kick off of wizard button
          @method _listenWizardStart
          **/
-        _listenWizardStart: function(){
-            $(Elements.GET_WIZARD_HELP).on('click',function(){
+        _listenWizardStart: function () {
+            $(Elements.GET_WIZARD_HELP).on('click', function () {
+                var w = BB.comBroker.getService(BB.SERVICES.LAYOUT_ROUTER).getAppWidth();
+                var h = BB.comBroker.getService(BB.SERVICES.LAYOUT_ROUTER).getAppHeight();
+                if (w < 1200 || h < 650) {
+                    bootbox.alert($(Elements.MSG_BOOTBOX_BROWSER_TOO_SMALL).text());
+                    return;
+                }
                 $(Elements.LIVE_TUTORIAL).trigger('click');
             });
         },
@@ -70,30 +88,41 @@ define(['jquery', 'backbone', 'simplestorage'], function ($, Backbone, simplesto
          For first time users launch wizard
          @method _checkFirstTimeUser
          **/
-        _checkFirstTimeUser: function(){
+        _checkFirstTimeUser: function () {
             var self = this;
 
-            var enableSelectorView = function(){
-                simplestorage.set('firstwizard', 2);
-                $(Elements.CAMPAIGN_SELECTOR).animate({opacity: 1});
-                $('button',self.$el).attr('disabled',false);
-                self.m_disabled = false;
-            };
 
             var firstwizard = simplestorage.get('firstwizard');
             firstwizard = _.isUndefined(firstwizard) ? 1 : firstwizard;
             // todo: debug
+            // not first login, skip wizard
             //if (firstwizard > 1) {
             if (firstwizard < 1) {
-                enableSelectorView();
+                self._enableComponent();
             } else {
-                setTimeout(function () {
-                    BB.comBroker.fire(BB.EVENTS.CAMPAIGN_LIST_LOADING, this, this);
-                }, 1000);
-                setTimeout(function () {
-                    enableSelectorView();
-                }, 3000);
+                self._autoStartWizard();
             }
+        },
+
+        /**
+         Auto kick start the Wizard, but only if app WxH is sufficient
+         @method _autoStartWizard
+         **/
+        _autoStartWizard: function () {
+            var self = this;
+            var w = BB.comBroker.getService(BB.SERVICES.LAYOUT_ROUTER).getAppWidth();
+            var h = BB.comBroker.getService(BB.SERVICES.LAYOUT_ROUTER).getAppHeight();
+            if (w < 1200 || h < 650) {
+                self._enableComponent();
+                return;
+            }
+            //$(Elements.GET_WIZARD_HELP).hide();
+            setTimeout(function () {
+                BB.comBroker.fire(BB.EVENTS.CAMPAIGN_LIST_LOADING, this, this);
+            }, 1000);
+            setTimeout(function () {
+                self._enableComponent();
+            }, 3000);
         },
 
         /**

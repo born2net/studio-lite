@@ -224,6 +224,7 @@ Elements.MSG_BOOTBOX_NO_ITEM_SELECTED ='#bootBoxNoItemSelected';
 Elements.MSG_BOOTBOX_CANCEL = '#bootBoxCancel';
 Elements.MSG_BOOTBOX_ENTRY_IS_INVALID = '#bootBoxEntryInValid';
 Elements.MSG_BOOTBOX_CANT_DELETE_COMP ='#bootBoxCantDeleteComp';
+Elements.MSG_BOOTBOX_BROWSER_TOO_SMALL ='#bootBoxBrowserTooSmall';
 Elements.MSG_BOOTBOX_WIARD_SWITCH_CAMPAIGN_LIST ='#bootBoxWizardSwitchCampaignList';
 Elements.MSG_BOOTBOX_CONTINUE ='#bootBoxContinue';
 Elements.MSG_BOOTBOX_COSTUME_TITLE ='#bootBoxCostumeTitle';

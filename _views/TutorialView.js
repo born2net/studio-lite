@@ -9,10 +9,12 @@
 todo:
  read all text
  run wizard 2nd time has issues, may need to allow only first load wizard run
- overall testing including size of browser
  maybe change fonts when text is over scene checks
  when run to completion and run again, it exists on enter for campaign name input
  test under enterprise that help and signage install sections are not coming up
+ on first load, hide the Get Wizard help button
+ if screen size is smaller < dont allow wizard
+
  */
 
 
@@ -545,27 +547,14 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     }
                 },
                 {
-                    event: "click",
-                    selector: $('.campaignManagerView', '#appNavigator'),
-                    "skipButton": {text: "quit"},
-                    description: $(Elements.WSTEP42).html(),
-                    right: 10,
-                    left: 6,
-                    top: 10,
-                    bottom: 10,
-                    onBeforeStart: function () {
-                        log('STEP 42');
-                    }
-                },
-                {
                     event: "next",
                     timeout: 200,
-                    selector: $('#campaignSelector'),
+                    selector: $('#appEntry'),
                     "skipButton": {text: "quit"},
-                    description: $(Elements.WSTEP43).html(),
+                    description: $(Elements.WSTEP42).html(),
                     bottom: 600,
                     onBeforeStart: function () {
-                        log('STEP 43');
+                        log('STEP 42');
                         setTimeout(function () {
                             $('#enjoyhint_arrpw_line').fadeOut();
                         }, 1000);

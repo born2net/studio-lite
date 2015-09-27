@@ -556,13 +556,12 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
         },
 
         /**
-         Collapse the storyline bootstrap panel and title, another way of doing this is the way
-         _listenCampaignExpandedView triggers click if class 'in' exists
+         Collapse the storyline bootstrap panel and title
          @method collapseStoryLine
          **/
         collapseStoryLine: function () {
             var self = this;
-            if ($(Elements.STORYLINE_CONTAINER_COLLAPSE).hasClass('collapsed'))
+            if (!$(Elements.STORYLINE_CONTAINER_COLLAPSE).hasClass('in'))
                 return;
             $('.panel-collapse', Elements.STORYLINE_COLLAPSIBLE).collapse('hide');
             $('.panel-title', Elements.STORYLINE_COLLAPSIBLE).attr('data-toggle', 'collapse');

@@ -5,21 +5,6 @@
  @return {Object} instantiated TutorialViewView
  **/
 
-/*
-todo:
- read all text
- http://jsfiddle.net/KyleMit/f8ypa/
- run wizard 2nd time has issues, may need to allow only first load wizard run
- maybe change fonts when text is over scene checks
- when run to completion and run again, it exists on enter for campaign name input
- test under enterprise that help and signage install sections are not coming up
- on first load, hide the Get Wizard help button
- if screen size is smaller < dont allow wizard
-
- */
-
-
-
 // debug : define(['jquery', 'backbone', 'enjoy'], function ($, Backbone, enjoy) {
 define(['jquery', 'backbone'], function ($, Backbone) {
 
@@ -361,6 +346,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     "next #sceneCanvas": $(Elements.WSTEP25).html(),
                     event: "next",
                     timeout: 300,
+                    bottom: 200,
                     "skipButton": {text: "quit"},
                     onBeforeStart: function () {
                         log('STEP 25');
@@ -401,6 +387,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     "next #sceneCanvas": $(Elements.WSTEP28).html(),
                     event: "next",
                     timeout: 300,
+                    bottom: 200,
                     "skipButton": {text: "quit"},
                     onBeforeStart: function () {
                         log('STEP 28');
@@ -423,20 +410,21 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     "click #toggleStorylineCollapsible": $(Elements.WSTEP30).html(),
                     "skipButton": {text: "quit"},
                     onBeforeStart: function () {
+                        BB.comBroker.getService(BB.SERVICES.STORYLINE).collapseStoryLine();
                         log('STEP 30');
                     }
                 },
                 {
                     left: 10,
                     right: 10,
-                    "click #selectNextChannel": $(Elements.WSTEP8).html(),
+                    "click #selectNextChannel": $(Elements.WSTEP31).html(),
                     "skipButton": {text: "quit"},
                     onBeforeStart: function () {
                         log('STEP 31');
                     }
                 },
                 {
-                    "click #addBlockButton": $(Elements.WSTEP9).html(),
+                    "click #addBlockButton": $(Elements.WSTEP32).html(),
                     left: 6,
                     right: 6,
                     top: 6,
@@ -568,8 +556,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 onStart: function () {
                 },
                 onEnd: function () {
-                    if (self.m_enjoyHint)
-                        self._closeWizard();
+                    self._closeWizard();
                 },
                 onSkip: function () {
                     self._closeWizard();

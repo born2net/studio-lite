@@ -47,7 +47,8 @@ define(['jquery', 'backbone', 'simplestorage'], function ($, Backbone, simplesto
             });
             self.m_propertiesPanel = BB.comBroker.getService(BB.SERVICES.PROPERTIES_VIEW);
             self.m_propertiesPanel.addView(this.m_campainProperties);
-
+            self.MIN_WIDTH_WIZARD = 1200;
+            self.MIN_HIGHT_WIZARD = 700;
             self._loadCampaignList();
             self._listenAddRemoveCampaign();
             self._listenCampaignModeSelect();
@@ -60,7 +61,7 @@ define(['jquery', 'backbone', 'simplestorage'], function ($, Backbone, simplesto
          the storage firstwizard so it no longer auto pops up
          @method _enableComponent
          **/
-        _enableComponent: function(){
+        _enableComponent: function () {
             var self = this;
             simplestorage.set('firstwizard', 2);
             $(Elements.CAMPAIGN_SELECTOR).animate({opacity: 1});
@@ -73,10 +74,12 @@ define(['jquery', 'backbone', 'simplestorage'], function ($, Backbone, simplesto
          @method _listenWizardStart
          **/
         _listenWizardStart: function () {
+            var self = this;
             $(Elements.GET_WIZARD_HELP).on('click', function () {
+                $(Elements.GET_WIZARD_HELP).fadeOut('slow');
                 var w = BB.comBroker.getService(BB.SERVICES.LAYOUT_ROUTER).getAppWidth();
                 var h = BB.comBroker.getService(BB.SERVICES.LAYOUT_ROUTER).getAppHeight();
-                if (w < 1200 || h < 650) {
+                if (w < self.MIN_WIDTH_WIZARD || h < self.MIN_HIGHT_WIZARD) {
                     bootbox.alert($(Elements.MSG_BOOTBOX_BROWSER_TOO_SMALL).text());
                     return;
                 }
@@ -94,10 +97,9 @@ define(['jquery', 'backbone', 'simplestorage'], function ($, Backbone, simplesto
 
             var firstwizard = simplestorage.get('firstwizard');
             firstwizard = _.isUndefined(firstwizard) ? 1 : firstwizard;
-            // todo: debug
-            // not first login, skip wizard
-            //if (firstwizard > 1) {
-            if (firstwizard < 1) {
+            //if (firstwizard < 1) {
+            if (firstwizard > 1) {
+
                 self._enableComponent();
             } else {
                 self._autoStartWizard();
@@ -112,11 +114,11 @@ define(['jquery', 'backbone', 'simplestorage'], function ($, Backbone, simplesto
             var self = this;
             var w = BB.comBroker.getService(BB.SERVICES.LAYOUT_ROUTER).getAppWidth();
             var h = BB.comBroker.getService(BB.SERVICES.LAYOUT_ROUTER).getAppHeight();
-            if (w < 1200 || h < 650) {
+            if (w < self.MIN_WIDTH_WIZARD || h < self.MIN_HIGHT_WIZARD) {
                 self._enableComponent();
                 return;
             }
-            //$(Elements.GET_WIZARD_HELP).hide();
+            $(Elements.GET_WIZARD_HELP).fadeOut('slow');
             setTimeout(function () {
                 BB.comBroker.fire(BB.EVENTS.CAMPAIGN_LIST_LOADING, this, this);
             }, 1000);

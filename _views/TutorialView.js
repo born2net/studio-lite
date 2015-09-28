@@ -26,11 +26,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self._listenAppSized();
             self._listenCampaignListLoaded();
             self._listenWizardError();
-
-            // debug
-            //setTimeout(function () {
-            //    self._tutorialCampaignSelector();
-            //}, 3000)
         },
 
         /**

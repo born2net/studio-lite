@@ -15,7 +15,7 @@
 StudioLite, Digital Signage for the rest of us
 ---------------------------------------
 
-current version: 1.1.142 dev-build
+current version: 1.1.149 dev-build
 
 ------------------------------------------------------------------------
 
@@ -61,8 +61,8 @@ With node.js and npm you will be able to easily update to the latest version of 
 - Download node.js (all major operating systems supported): http://nodejs.org/
 - Install node.js 
 - open a terminal (Mac / Linux) or command prompt (windows)
-- switch to node.js directory and run: ```npm install studiolite```
-- change directory to: ```./node_modules/studiolite``` 
+- switch to node.js directory and run: ```npm install studiolite -g --prefix ./```
+- change directory to: ```cd ./lib/node_modules/studiolite``` 
 - run the command ```node server.js``` if you wish to use the bundled express server
 - you may also host it directly on your own web server if you like, such as apache or IIS
 - open browser and point it to ```[YOUR_IP]:8080/_studiolite-dev/studiolite.html```

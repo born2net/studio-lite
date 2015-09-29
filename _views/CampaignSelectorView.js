@@ -94,12 +94,13 @@ define(['jquery', 'backbone', 'simplestorage'], function ($, Backbone, simplesto
         _checkFirstTimeUser: function () {
             var self = this;
 
+            // disable wizard
+            //self._enableComponent();
+            //return;
 
             var firstwizard = simplestorage.get('firstwizard');
             firstwizard = _.isUndefined(firstwizard) ? 1 : firstwizard;
-            //if (firstwizard < 1) {
             if (firstwizard > 1) {
-
                 self._enableComponent();
             } else {
                 self._autoStartWizard();

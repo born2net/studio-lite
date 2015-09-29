@@ -26,18 +26,19 @@
     <script src="https://js.signage.me/SignageSDK.js" type="text/javascript"></script>
     <!--SDK_END-->
 
+    <!-- https://galaxy.signage.me/_studiolite-dist/studiolite.html -->
     <!--SERVER_START
-    <script type="text/javascript">
-        var origin = window.location.origin;
-        var re = new RegExp(/^(https|http):\/\/(.*)/);
-        var protocol = origin.match(re)[1];
-        var server = origin.match(re)[2];
-        window.g_protocol = protocol + "://";
-        window.g_sdkDomain = "js.signage.me";
-        window.g_masterDomain = server;
-        document.write('<script type="text/javascript" src="' + window.g_protocol + window.g_sdkDomain + '/SignageSDK.js"></scr' + 'ipt>');
-    </script>
-    SERVER_END-->
+     <script type="text/javascript">
+         var origin = window.location.toString();
+         var re = new RegExp(/^(https|http)(:\/\/)(.*?)\//);
+         var protocol = origin.match(re)[1];
+         var server = origin.match(re)[3];
+         window.g_protocol = protocol + "://";
+         window.g_sdkDomain = "js.signage.me";
+         window.g_masterDomain = server;
+         document.write('<script type="text/javascript" src="' + window.g_protocol + window.g_sdkDomain + '/SignageSDK.js"></scr' + 'ipt>');
+     </script>
+     SERVER_END-->
 
     <script data-main="init" src="_common/_js/requirejs/require.js" type="text/javascript"></script>
     <!-- <script src="_utils/bugsense.min.js" type="text/javascript"></script> -->
@@ -1033,9 +1034,8 @@
                                     <span>
                                         <button id="fqLineGoTo" type="button" data-localize-tooltip="goTo"
                                                 data-localize="empty" title="go to"
-                                                class="lineComponentButtons btn btn-default btn-sm">
-                                            Go to &nbsp
-                                            <input id="fqGoToLineInput"/>
+                                                class="lineComponentButtons btn btn-default btn-sm">Go to &nbsp
+                                            <input id="fqGoToLineInput">
                                         </button>
                                     </span>
                                     <button id="fqLineCompNext" type="button" data-localize-tooltip="back"
@@ -1085,7 +1085,7 @@
                                 <span class="floatLeftWidthAdDrops">select date</span>
 
                                 <div class="bs-docs-example floatLeftWidthAdDrops">
-                                    <select id="selectAdReportMonth" class="selectpicker" data-style="btn-primary" ">
+                                    <select id="selectAdReportMonth" class="selectpicker" data-style="btn-primary">
                                     </select>
                                 </div>
                             </div>
@@ -1583,7 +1583,7 @@
                                     id="buisinessID"></span><br/>
                                 <span class="dashboardBullets" data-localize="username"> User name: </span><span
                                     class="userName dashboardBullets"></span><br/>
-                                <span class="dashboardBullets" data-localize="version"> Version 1.1.142 </span>
+                                <span class="dashboardBullets" data-localize="version"> Version 1.1.148 </span>
                                 <br/>
                             </div>
 
@@ -1710,9 +1710,11 @@
                                                         <div style="padding-left: 10px">
                                                             <table id="scheduledDays" border="0" width="100%"
                                                                    cellspacing="0" cellpadding="0" align="left">
-                                                                <td><input class="scheduleDay" type="checkbox"
-                                                                           value="1"><span
-                                                                        data-localize="sundayDay"></span></td>
+                                                                <tr>
+                                                                    <td>
+                                                                        <input class="scheduleDay" type="checkbox" value="1">
+                                                                        <span data-localize="sundayDay"></span>
+                                                                    </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td><input class="scheduleDay" type="checkbox"
@@ -2557,7 +2559,7 @@
     </div>
 </div>
 <div id="footer"><br>
-    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.1.142 </span>
+    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.1.148 </span>
 </div>
 
 <div id="popModal" style="display: none"></div>

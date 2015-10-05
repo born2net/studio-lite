@@ -185,6 +185,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             return data;
         },
 
+        /**
+         Clear entite map
+         @method _createMap
+         **/
         _createMap: function () {
             var self = this;
             google.maps.LatLng.prototype.destinationPoint = function (brng, dist) {

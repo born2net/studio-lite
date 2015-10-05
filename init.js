@@ -75,6 +75,7 @@ require.config({
         'BlockQR': '_controllers/_blocks/BlockQR',
         'BlockYouTube': '_controllers/_blocks/BlockYouTube',
         'BlockCollection': '_controllers/_blocks/BlockCollection',
+        'BlockLocation': '_controllers/_blocks/BlockLocation',
         'BlockFasterQ': '_controllers/_blocks/BlockFasterQ',
         'BlockTwitter': '_controllers/_blocks/BlockTwitter',
         'BlockTwitterItem': '_controllers/_blocks/BlockTwitterItem',

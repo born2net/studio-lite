@@ -690,6 +690,9 @@ Pepper.prototype = {
             replace(/hresource/gi, 'hResource').
             replace(/videoidlist/gi, 'VideoIdList').
             replace(/<page/gi, '<Page').replace(/page>/gi, 'Page>').
+            replace(/<gps/gi, '<GPS').replace(/gps>/gi, 'GPS>').
+            replace(/<fixed/gi, '<Fixed').replace(/fixed>/gi, 'Fixed>').
+            replace(/<locationbased/gi, '<LocationBased').replace(/locationbased>/gi, 'LocationBased>').
             replace(/<params/gi, '<Params').replace(/params>/gi, 'Params>').
             replace(/maintainaspectratio/gi, 'maintainAspectRatio').
             replace(/<resource/gi, '<Resource').replace(/resource>/g, 'Resource>').

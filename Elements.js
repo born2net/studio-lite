@@ -50,6 +50,7 @@ Elements.BLOCK_TWITTER_ITEM_COMMON_PROPERTIES = '#blockTwitterItemCommonProperti
 Elements.BLOCK_VIDEO_COMMON_PROPERTIES = '#blockVideoCommonProperties';
 Elements.BLOCK_YOUTUBE_COMMON_PROPERTIES = '#blockYouTubeCommonProperties';
 Elements.BLOCK_COLLECTION_COMMON_PROPERTIES = '#blockCollectionCommonProperties';
+Elements.BLOCK_LOCATION_COMMON_PROPERTIES = '#blockLocationCommonProperties';
 Elements.BLOCK_FASTERQ_COMMON_PROPERTIES = '#blockFasterQCommonProperties';
 Elements.BOOTBOX_CUSTOM_LIST = '#bootBoxCustomList';
 Elements.BOOTBOX_LABEL_TEXT = '#bootBoxLabelText';

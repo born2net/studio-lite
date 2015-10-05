@@ -19,7 +19,6 @@
     <link href="_common/_js/dt/datatable/extensions/TableTools/css/dataTables.tableTools.css" rel="stylesheet">
     <link href="_common/_js/bootstrap-table/dist/bootstrap-table.css" rel="stylesheet">
 
-
     <link href="_common/_js/video/video-js.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
     <!--SDK_START-->
@@ -663,6 +662,9 @@
                                 </div>
                             </div>
                             <div id="addBlockView" class="page right">
+                            </div>
+                            <div id="addBlockLocationView" class="page right">
+                                <h1>Location based Ads</h1>
                             </div>
                             <div id="screenLayoutEditorView" class="page right">
                                 <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm"><span
@@ -2767,6 +2769,59 @@
         <input class="lockPositionInput" type="checkbox" value="lock">
     </div>
     <div class="clearFloat"></div>
+</div>
+
+<!-- Add Block Location Template -->
+<div id="addBlockLocationTemplate" style="display: none">
+    <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm">
+        <span class="glyphicon glyphicon-chevron-left"></span></button>
+    <h3 data-localize="contentToAdd">Select new content to add</h3>
+    <div class="addNewBlockListWrap yScroll">
+
+        <div class="container">
+
+            <div class="tool">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <p>
+                                <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+                            </p>
+                            <p>
+                            <div id="map" style="width: 690px; height: 500px"></div>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <!--<button type="button" class="btn btn-lg btn-primary">Add Point</button><br />-->
+                        <ul id="map-points" class="list-unstyled map-points">
+                            <template id="map-point">
+                                <li>
+                                    <div>
+                                        Location <span class="p-center">Lat, Lng</span>
+                                    </div>
+                                    <div>
+                                        Radius
+                                    <span>
+                                        <input class="radius-slider" data-slider-id='ex1Slider' type="text" data-slider-min="1" data-slider-max="10000" data-slider-step="1" data-slider-value="1000"/>
+                                    </span>
+                                    </div>
+                                    <div>
+                                        <button class="remove">Delete</button>
+                                    </div>
+                                </li>
+                            </template>
+                        </ul>
+                        <div>
+                            <button class="log-data">Log JSON</button>
+                            <button class="clear-map">Clear Map</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 <!-- Add Block Template -->

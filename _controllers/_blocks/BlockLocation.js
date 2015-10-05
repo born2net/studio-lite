@@ -320,14 +320,14 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     BB.comBroker.stopListenWithNamespace(BB.EVENTS.ADD_NEW_BLOCK_LIST, self);
                     if (!self.m_selected)
                         return;
-                    var addBlockView;
+                    var addBlockLocationView;
                     if (self.m_placement == BB.CONSTS.PLACEMENT_CHANNEL) {
-                        addBlockView = BB.comBroker.getService(BB.SERVICES.ADD_BLOCK_VIEW);
+                        addBlockLocationView = BB.comBroker.getService(BB.SERVICES.ADD_BLOCK_LOCATION_VIEW);
                     } else if (self.m_placement = BB.CONSTS.PLACEMENT_SCENE) {
-                        addBlockView = BB.comBroker.getService(BB.SERVICES.ADD_SCENE_BLOCK_VIEW);
+                        addBlockLocationView = BB.comBroker.getService(BB.SERVICES.ADD_BLOCK_LOCATION_VIEW);
                     }
-                    addBlockView.setPlacement(BB.CONSTS.PLACEMENT_LISTS);
-                    addBlockView.selectView();
+                    addBlockLocationView.setPlacement(BB.CONSTS.PLACEMENT_LISTS);
+                    addBlockLocationView.selectView();
                     BB.comBroker.listenWithNamespace(BB.EVENTS.ADD_NEW_BLOCK_LIST, self, function (e) {
                         e.stopImmediatePropagation();
                         e.preventDefault();

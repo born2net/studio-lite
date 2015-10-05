@@ -1,7 +1,9 @@
 Elements.ABOUT_US = '#aboutUS';
 Elements.ADD_BLOCK_BUTTON = '#addBlockButton';
 Elements.ADD_BLOCK_TEMPLATE = '#addBlockTemplate';
+Elements.ADD_BLOCK_LOCATION_TEMPLATE = '#addBlockLocationTemplate';
 Elements.ADD_BLOCK_VIEW = '#addBlockView';
+Elements.ADD_BLOCK_LOCATION_VIEW = '#addBlockLocationView';
 Elements.ADD_COLLECTION_EVENTS = '#addCollectionEvents';
 Elements.REMOVE_COLLECTION_EVENTS = '#removeCollectionEvents';
 Elements.ADD_COMPONENT_BLOCK_LIST = '#addComponentBlockList';

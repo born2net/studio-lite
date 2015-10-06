@@ -2199,13 +2199,55 @@
                                             </div>
                                         </div>
 
-
-
                                         <div id="blockLocationCommonProperties" style="display: none">
                                             <div style="padding: 1px; ">
+
+                                                <h4 class="panel-title" style="padding-bottom: 15px">
+                                                    <button id="addResourceToLocation" type="button"
+                                                            title="add a new item" data-localize="empty"
+                                                            data-localize-tooltip="addNewItemToolTip"
+                                                            class="btn btn-default btn-sm"><span
+                                                            class="glyphicon glyphicon-plus"></span></button>
+                                                    <button id="removeResourceForLocation" type="button"
+                                                            title="remove item" data-localize="empty"
+                                                            data-localize-tooltip="removeItem"
+                                                            class="btn btn-default btn-sm"><span
+                                                            class="glyphicon glyphicon-minus"></span></button>
+
+                                                </h4>
+                                                <label data-localize="playSequential">Play this list in a sequential
+                                                    order</label>
+                                                <table id="locationTable"
+                                                       class="table table-no-bordered"
+                                                       data-search="false" data-mode="inline"
+                                                       data-show-columns="false"
+                                                       data-pagination="false"
+                                                       data-use-row-attr-func="true"
+                                                       data-reorderable-rows="true"
+                                                       data-height="200">
+                                                    <thead>
+                                                    <tr>
+                                                        <th data-field="state" data-radio="true"
+                                                            data-formatter="BB.lib.validateLocationBlockCheckBox"
+                                                            data-sortable="false" data-width="40px"></th>
+                                                        <th data-field="name" data-editable="true" data-sortable="false"
+                                                            data-localize="name">name
+                                                        </th>
+                                                        <th data-field="duration" data-type="number"
+                                                            data-halign="center" data-align="center"
+                                                            data-editable="true" data-sortable="false" data-width="60px"
+                                                            data-localize="seconds">seconds
+                                                        </th>
+                                                        <th data-field="dragIcon" data-editable="false"
+                                                            data-align="center" data-halign="center"
+                                                            data-sortable="false" data-width="10x"
+                                                            data-formatter="BB.lib.locationDragIcons"
+                                                            class="locationTableIconFormatter"></th>
+                                                    </tr>
+                                                    </thead>
+                                                </table>
                                             </div>
                                         </div>
-
 
                                         <div id="blockYouTubeCommonProperties" style="display: none">
                                             <span data-localize="volumeLevel">Volume level</span> <span

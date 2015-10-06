@@ -92,7 +92,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
     BB.EVENTS.COLLECTION_ROW_DROP = 'COLLECTION_ROW_DROP';
 
     /**
-     event fires datagrid collection data chnaged / saved
+     event fires datagrid collection data changed / saved
      @event COLLECTION_ROW_CHANGED
      @param {Object} this
      @param {Object} caller the firing element
@@ -109,6 +109,32 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
      **/
     BB.EVENTS.COLLECTION_EVENT_ROW_CHANGED = 'COLLECTION_EVENT_ROW_CHANGED';
 
+    /**
+     event fires datagrid location row is dragged
+     @event LOCATION_ROW_DRAG
+     @param {Object} this
+     @param {Object} caller the firing element
+     @param {Number} alpha value
+     **/
+    BB.EVENTS.LOCATION_ROW_DRAG = 'LOCATION_ROW_DRAG';
+
+    /**
+     event fires datagrid location row is dropped
+     @event LOCATION_ROW_DROP
+     @param {Object} this
+     @param {Object} caller the firing element
+     @param {Number} alpha value
+     **/
+    BB.EVENTS.LOCATION_ROW_DROP = 'LOCATION_ROW_DROP';
+
+    /**
+     event fires datagrid location row data changed / saved
+     @event LOCATION_ROW_CHANGED
+     @param {Object} this
+     @param {Object} caller the firing element
+     @param {Number} alpha value
+     **/
+    BB.EVENTS.LOCATION_ROW_CHANGED = 'LOCATION_ROW_CHANGED';
 
     BB.SERVICES.BLOCK_PROPERTIES = 'BlockProperties';
 
@@ -127,6 +153,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
             self.m_property.initPanel(Elements.BLOCK_PROPERTIES);
             self.m_rssFontSelector = undefined;
             self.m_loadedOnceCollectionDatagrid = false;
+            self.m_loadedOnceLocationDatagrid = false;
 
             self._alphaSliderInit();
             self._bgGradientInit();
@@ -230,74 +257,6 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                 theme: 'bootstrap'
             };
             $(Elements.SCENE_BACKGROUND_SELECTOR).minicolors(colorSettings);
-        },
-
-        /**
-         Init the collection bootstrap datatable
-         @method _collectionDatatableInit
-         **/
-        _collectionDatatableInit: function () {
-            var self = this;
-            // we used m_loadedOnceCollectionDatagrid so we can load bootstrap-table modules only when needed
-            if (self.m_loadedOnceCollectionDatagrid)
-                return;
-            self.m_loadedOnceCollectionDatagrid = true;
-            require(['bootstrap-table-editable', 'bootstrap-table-sort-rows'], function (bootstraptableeditable, bootstraptablesortrows) {
-                self.m_collectionTable = $(Elements.COLLECTION_TABLE);
-                self.m_collectionTable.bootstrapTable({
-                    data: [],
-                    editable: true,
-                    type: 'select',
-                    title: 'Select status',
-                    placement: 'left',
-                    onEditableInit: function (response, newValue) {
-                        console.log(newValue);
-                    },
-                    onReorderRowsDrag: function (table, row) {
-                        BB.comBroker.fire(BB.EVENTS.COLLECTION_ROW_DRAG, this, self, $(row).attr('data-index'));
-                    },
-                    onReorderRowsDrop: function (table, row) {
-                        BB.comBroker.fire(BB.EVENTS.COLLECTION_ROW_DROP, this, self, $(row).attr('data-index'));
-                    },
-                    onEditableShown: function (response, newValue) {
-                        console.log(newValue);
-                    },
-                    onEditableHidden: function (response, newValue) {
-                        console.log(newValue);
-                        //console.log('getSelections: ' + JSON.stringify($table.bootstrapTable('getSelections')));
-                        //$table.bootstrapTable('refresh');
-                    },
-                    onEditableSave: function (response, newValue) {
-                        BB.comBroker.fire(BB.EVENTS.COLLECTION_ROW_CHANGED, this, self, newValue);
-                    },
-                    success: function (response, newValue) {
-                        if (response.status == 'error') {
-                            return response.msg;
-                        } //msg will be shown in editable form
-                    }
-                });
-
-                self.m_collectionEventTable = $(Elements.COLLECTION_EVENTS_TABLE);
-                self.m_collectionEventTable.bootstrapTable({
-                    data: [],
-                    editable: true,
-                    type: 'select',
-                    title: 'Select status',
-                    placement: 'left',
-                    onEditableInit: function (response, newValue) {
-                        //console.log(newValue);
-                    },
-                    onEditableSave: function (response, newValue) {
-                        BB.comBroker.fire(BB.EVENTS.COLLECTION_EVENT_ROW_CHANGED, this, self, newValue);
-                    },
-                    success: function (response, newValue) {
-                        if (response.status == 'error') {
-                            return response.msg;
-                        } //msg will be shown in editable form
-                    }
-                });
-            });
-
         },
 
         /**
@@ -758,6 +717,118 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         getMRssLinkSelector: function () {
             var self = this;
             return self.m_mrssLinkSelector;
+        },
+
+        /**
+         Init the collection bootstrap datatable
+         @method collectionDatatableInit
+         **/
+        collectionDatatableInit: function () {
+            var self = this;
+            if (self.m_loadedOnceCollectionDatagrid)
+                return;
+            self.m_loadedOnceCollectionDatagrid = true;
+            require(['bootstrap-table-editable', 'bootstrap-table-sort-rows'], function (bootstraptableeditable, bootstraptablesortrows) {
+                self.m_collectionTable = $(Elements.COLLECTION_TABLE);
+                self.m_collectionTable.bootstrapTable({
+                    data: [],
+                    editable: true,
+                    type: 'select',
+                    title: 'Select status',
+                    placement: 'left',
+                    onEditableInit: function (response, newValue) {
+                        console.log(newValue);
+                    },
+                    onReorderRowsDrag: function (table, row) {
+                        BB.comBroker.fire(BB.EVENTS.COLLECTION_ROW_DRAG, this, self, $(row).attr('data-index'));
+                    },
+                    onReorderRowsDrop: function (table, row) {
+                        BB.comBroker.fire(BB.EVENTS.COLLECTION_ROW_DROP, this, self, $(row).attr('data-index'));
+                    },
+                    onEditableShown: function (response, newValue) {
+                        console.log(newValue);
+                    },
+                    onEditableHidden: function (response, newValue) {
+                        console.log(newValue);
+                        //console.log('getSelections: ' + JSON.stringify($table.bootstrapTable('getSelections')));
+                        //$table.bootstrapTable('refresh');
+                    },
+                    onEditableSave: function (response, newValue) {
+                        BB.comBroker.fire(BB.EVENTS.COLLECTION_ROW_CHANGED, this, self, newValue);
+                    },
+                    success: function (response, newValue) {
+                        if (response.status == 'error') {
+                            return response.msg;
+                        } //msg will be shown in editable form
+                    }
+                });
+
+                self.m_collectionEventTable = $(Elements.COLLECTION_EVENTS_TABLE);
+                self.m_collectionEventTable.bootstrapTable({
+                    data: [],
+                    editable: true,
+                    type: 'select',
+                    title: 'Select status',
+                    placement: 'left',
+                    onEditableInit: function (response, newValue) {
+                        //console.log(newValue);
+                    },
+                    onEditableSave: function (response, newValue) {
+                        BB.comBroker.fire(BB.EVENTS.COLLECTION_EVENT_ROW_CHANGED, this, self, newValue);
+                    },
+                    success: function (response, newValue) {
+                        if (response.status == 'error') {
+                            return response.msg;
+                        } //msg will be shown in editable form
+                    }
+                });
+            });
+        },
+
+        /**
+         Init the location base bootstrap datatable
+         @method locationDatatableInit
+         **/
+        locationDatatableInit: function () {
+            var self = this;
+            if (self.m_loadedOnceLocationDatagrid)
+                return;
+            self.m_loadedOnceLocationDatagrid = true;
+            require(['bootstrap-table-editable', 'bootstrap-table-sort-rows'], function (bootstraptableeditable, bootstraptablesortrows) {
+                self.m_locationTable = $(Elements.LOCATION_TABLE);
+                self.m_locationTable.bootstrapTable({
+                    data: [],
+                    editable: true,
+                    type: 'select',
+                    title: 'Select status',
+                    placement: 'left',
+                    onEditableInit: function (response, newValue) {
+                        console.log(newValue);
+                    },
+                    onReorderRowsDrag: function (table, row) {
+                        BB.comBroker.fire(BB.EVENTS.LOCATION_ROW_DRAG, this, self, $(row).attr('data-index'));
+                    },
+                    onReorderRowsDrop: function (table, row) {
+                        BB.comBroker.fire(BB.EVENTS.LOCATION_ROW_DROP, this, self, $(row).attr('data-index'));
+                    },
+                    onEditableShown: function (response, newValue) {
+                        console.log(newValue);
+                    },
+                    onEditableHidden: function (response, newValue) {
+                        console.log(newValue);
+                        //console.log('getSelections: ' + JSON.stringify($table.bootstrapTable('getSelections')));
+                        //$table.bootstrapTable('refresh');
+                    },
+                    onEditableSave: function (response, newValue) {
+                        BB.comBroker.fire(BB.EVENTS.LOCATION_ROW_CHANGED, this, self, newValue);
+                    },
+                    success: function (response, newValue) {
+                        if (response.status == 'error') {
+                            return response.msg;
+                        } //msg will be shown in editable form
+                    }
+                });
+            });
         }
     });
 

@@ -36,7 +36,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 self._listenCollectionRowEventChanged();
 
 
-                self.m_blockProperty._collectionDatatableInit();
+                self.m_blockProperty.collectionDatatableInit();
 
                 /* can set global mode if we wish */
                 //$.fn.editable.defaults.mode = 'inline';
@@ -328,7 +328,10 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     }
                     addBlockView.setPlacement(BB.CONSTS.PLACEMENT_LISTS);
                     addBlockView.selectView();
+
                     BB.comBroker.listenWithNamespace(BB.EVENTS.ADD_NEW_BLOCK_LIST, self, function (e) {
+                        if (!self.m_selected)
+                            return;
                         e.stopImmediatePropagation();
                         e.preventDefault();
                         self._addCollectionNewListItem(e);

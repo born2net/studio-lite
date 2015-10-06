@@ -129,12 +129,17 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
                 });
 
                 // radius slider
-                $('#map-points li:last .radius-slider').slider({
+                /*$('#map-points li:last .radius-slider').slider({
                     formatter: function (value) {
                         return 'Current value: ' + value;
                     }
                 }).on('change', function (event) {
                     self.circle.setRadius(event.value.newValue);
+                });*/
+
+                self.$el.find('.radius-slider').on('change', function (e) {
+                    var a = $(e.target).val();
+                    self.circle.setRadius(Number(a));
                 });
 
                 // pan to point
@@ -211,7 +216,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             };
 
             var pointA = new google.maps.LatLng(34.155260, -118.787163);   // Circle center
-            var radius = 1;                                      // 10km
+            var radius = 1; // 10km
 
             var mapOpt = {
                 mapTypeId: google.maps.MapTypeId.TERRAIN,

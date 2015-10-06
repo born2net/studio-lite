@@ -248,7 +248,7 @@ define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesload
                 // return an <li> with a <img> in it
                 function getImageItem(index) {
                     var item = '<li class="is-loading">';
-                    item += '<img style="width: 140px; height: 100px" src="_assets/scenes/Template' + index + '.jpg"/></li>';
+                    item += '<img style="width: 139px; height: 78px" src="_assets/scenes/Template' + index + '.jpg"/></li>';
                     return item;
                 }
 

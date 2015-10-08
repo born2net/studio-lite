@@ -663,7 +663,7 @@
                             </div>
                             <div id="addBlockView" class="page right">
                             </div>
-                            <div id="addBlockLocationView" class="page right">
+                            <div id="googleMapsLocation" class="page right">
                                 <h1>Location based Ads</h1>
                             </div>
                             <div id="screenLayoutEditorView" class="page right">
@@ -1852,8 +1852,7 @@
                         <div id="stationProperties">
                             <h4 id="stationName"></h4>
                             <a id="stationRename"><i style="color: gray" class="fa fa-pencil"></i></a>
-                            <input id="stationRenameInput" type="text" data-localize="stationRename"
-                                   placeholder="station name" value="">
+                            <input id="stationRenameInput" type="text" data-localize="stationRename" placeholder="station name" value="">
 
                             <div id="snapShotWrap">
                                 <svg id="snapShotSVG" xmlns="http://www.w3.org/2000/svg">
@@ -2203,10 +2202,10 @@
                                             <div style="padding: 1px; ">
 
                                                 <h4 class="panel-title" style="padding-bottom: 15px">
-                                                    <button id="addResourceToLocation" type="button"
+                                                    <button type="button" name="addDefault"
                                                             title="add a new item" data-localize="empty"
                                                             data-localize-tooltip="addNewItemToolTip"
-                                                            class="btn btn-default btn-sm"><span
+                                                            class="addResourceToLocation btn btn-default btn-sm"><span
                                                             class="glyphicon glyphicon-plus"></span></button>
                                                     <button id="removeResourceForLocation" type="button"
                                                             title="remove item" data-localize="empty"
@@ -2215,8 +2214,7 @@
                                                             class="glyphicon glyphicon-minus"></span></button>
 
                                                 </h4>
-                                                <label data-localize="playSequential">Play this list in a sequential
-                                                    order</label>
+                                                <label data-localize="defaultSeqPlaylist">Default sequential playlist</label>
                                                 <table id="locationTable"
                                                        class="table table-no-bordered"
                                                        data-search="false" data-mode="inline"
@@ -2247,6 +2245,61 @@
                                                     </thead>
                                                 </table>
                                             </div>
+                                            <hr class="propControlWidth"/>
+                                            <h4 class="panel-title">
+                                                <button type="button" name="addLocation"
+                                                        title="add a new item" data-localize="empty"
+                                                        data-localize-tooltip="addNewItemToolTip"
+                                                        class="addResourceToLocation btn btn-default btn-sm"><span
+                                                        class="glyphicon glyphicon-plus"></span></button>
+                                                <button id="removeResourceForLocationA" type="button"
+                                                        title="remove item" data-localize="empty"
+                                                        data-localize-tooltip="removeItem"
+                                                        class="btn btn-default btn-sm"><span
+                                                        class="glyphicon glyphicon-minus"></span></button>
+                                                <button id="removeResourceForLocationB" type="button"
+                                                        title="remove item" data-localize="empty"
+                                                        data-localize-tooltip="removeItem"
+                                                        class="btn btn-default btn-sm"><span
+                                                        class="glyphicon glyphicon-chevron-left"></span></button>
+                                                <button id="removeResourceForLocationC" type="button"
+                                                        title="remove item" data-localize="empty"
+                                                        data-localize-tooltip="removeItem"
+                                                        class="btn btn-default btn-sm"><span
+                                                        class="glyphicon glyphicon-chevron-right"></span></button>
+                                                <button id="openLocationMap" type="button"
+                                                        title="remove item" data-localize="empty"
+                                                        data-localize-tooltip="removeItem"
+                                                        class="btn btn-default btn-sm"><span
+                                                        class="glyphicon glyphicon glyphicon-map-marker"></span></button>
+                                            </h4>
+                                            <br/>
+                                            <label>
+                                                <span data-localize="locationBased">Location based: </span>
+                                                <span id="totalMapLocations">0</span>
+                                            </label>
+                                            <hr class="hrThin"/>
+                                            <h5 id="stationName">MyFile.mp4</h5>
+                                            <a id="stationRename"><i style="color: gray" class="fa fa-pencil"></i></a>
+                                            <h5 id="stationName">34.15585218402147</h5>
+                                            <a id="stationRename"><i style="color: gray" class="fa fa-pencil"></i></a>
+                                            <input class="locationInput" type="text" data-localize="stationRename" placeholder="station name" value="">
+                                            <h5 id="stationName">-118.80546569824219</h5>
+                                            <a id="stationRename"><i style="color: gray" class="fa fa-pencil"></i></a>
+                                            <input class="locationInput" type="text" data-localize="stationRename" placeholder="station name" value="">
+                                            <div style="padding-top: 16px">
+                                                <span data-localize="radiusRange">Radius range</span>
+                                                <span id="locationRadiusLabel">100</span>
+                                            </div>
+                                            <div id="locationRadiusWrap" class="propControlWidth">
+                                                <div id="locationRadiusWrapSlider" class="noUi-target noUi-ltr noUi-horizontal noUi-background">
+                                                </div>
+                                            </div>
+                                            <hr class="propControlWidth"/>
+                                            <span data-localize="priorityMeter">priority meter</span>
+                                            <div id="locationPriorityMeter"></div>
+
+
                                         </div>
 
                                         <div id="blockYouTubeCommonProperties" style="display: none">
@@ -2817,7 +2870,6 @@
 <div id="addBlockLocationTemplate" style="display: none">
     <button id="prev" type="button" class="openPropsButton btn btn-default btn-sm">
         <span class="glyphicon glyphicon-chevron-left"></span></button>
-    <h3 data-localize="contentToAdd">Select new content to add</h3>
     <div class="addNewBlockListWrap yScroll">
 
         <div class="container">

@@ -23,14 +23,17 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
 
                 self.m_locationTable = $(Elements.LOCATION_TABLE);
                 self.m_selectRowIndex = -1;
+                self.m_pendingAddNewLocation = -1;
                 self._initSubPanel(Elements.BLOCK_LOCATION_COMMON_PROPERTIES);
                 self._listenLocationRowDragged();
                 self._listenLocationRowDropped();
                 self._listenAddResource();
                 self._listenRemoveResource();
                 self._listenLocationRowChanged();
+                self._listenNewLocationMapCoordinates();
 
                 self.m_blockProperty.locationDatatableInit();
+                self.m_googleMapsLocationView = BB.comBroker.getService(BB.SERVICES.GOOGLE_MAPS_LOCATION_VIEW);
 
                 /* can set global mode if we wish */
                 //$.fn.editable.defaults.mode = 'inline';
@@ -45,7 +48,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             },
 
             /**
-             Listen to changes in volume control
+             Listen to changes in row due to drag
              @method _listenVolumeChange
              **/
             _listenLocationRowDragged: function () {
@@ -57,6 +60,26 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     var domPlayerData = self._getBlockPlayerData();
                 };
                 BB.comBroker.listen(BB.EVENTS.LOCATION_ROW_DRAG, self.m_locationRowDraggedHandler);
+            },
+
+            /**
+             Listen to when location GPS coords added
+             @method _listenNewLocationMapCoordinates
+             **/
+            _listenNewLocationMapCoordinates: function () {
+                var self = this;
+                self.m_addLocationPoint = function (e) {
+                    if (!self.m_selected)
+                        return;
+                    var domPlayerData = self._getBlockPlayerData();
+                    var latLng = e.edata;
+                    var item = $(domPlayerData).find('GPS').children().last();
+                    $(item).attr('lat', latLng.H).attr('lng', latLng.L);
+                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                    self._populateTableLocation(domPlayerData);
+                    self._populateTotalMapLocations(domPlayerData);
+                };
+                BB.comBroker.listen(BB.EVENTS.ADD_LOCATION_POINT, self.m_addLocationPoint);
             },
 
             /**
@@ -74,13 +97,13 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     var newDuration = parseInt(e.edata.duration);
                     if (_.isNaN(newDuration)) {
                         bootbox.alert($(Elements.MSG_BOOTBOX_ENTRY_IS_INVALID).text());
-                        self._populateTableLocation(domPlayerData);
+                        self._populateTableDefault(domPlayerData);
                         return;
                     }
                     var item = $(domPlayerData).find('Fixed').children().get(rowIndex);
                     $(item).attr('page', newName).attr('duration', newDuration);
                     self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
-                    self._populateTableLocation(domPlayerData);
+                    self._populateTableDefault(domPlayerData);
                 };
                 BB.comBroker.listen(BB.EVENTS.LOCATION_ROW_CHANGED, self.m_locationRowChangedHandler);
             },
@@ -100,7 +123,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     var source = $(domPlayerData).find('Fixed').children().get(self.m_selectRowIndex);
                     droppedRowIndex > self.m_selectRowIndex ? $(target).after(source) : $(target).before(source);
                     self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
-                    self._populateTableLocation(domPlayerData);
+                    self._populateTableDefault(domPlayerData);
                 };
                 BB.comBroker.listen(BB.EVENTS.LOCATION_ROW_DROP, self.m_locationRowDroppedHandler);
             },
@@ -116,15 +139,38 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippetLocation = $(domPlayerData).find('Fixed');
                 var mode = $(xSnippetLocation).attr('mode');
+                self._populateTableDefault(domPlayerData);
                 self._populateTableLocation(domPlayerData);
+                self._populateTotalMapLocations(domPlayerData);
             },
 
             /**
-             Load event list to the UI
+             Populate the total map locations set
+             @method _populateTotalMapLocations
+             @param {Object} domPlayerData
+             **/
+            _populateTotalMapLocations: function (domPlayerData) {
+                var self = this;
+                var total = $(domPlayerData).find('GPS').children().length;
+                $(Elements.TOTAL_MAP_LOCATIONS).text(total);
+            },
+
+            /**
+             Load list into the UI for location based content
              @method _populateTableLocation
              @param {Object} i_domPlayerData
              **/
             _populateTableLocation: function (i_domPlayerData) {
+                var self = this;
+                var rowIndex = 0;
+            },
+            
+            /**
+             Load list into the UI for default content
+             @method _populateTableDefault
+             @param {Object} i_domPlayerData
+             **/
+            _populateTableDefault: function (i_domPlayerData) {
                 var self = this;
                 self.m_locationTable.bootstrapTable('removeAll');
                 var data = [], rowIndex = 0;
@@ -152,19 +198,19 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             },
 
             /**
-             Listen to when AddBlockListView announced that a new resource or scene needs to be added
-             and if this location block is selected, go ahead and create one in Bootstrap-table and msdb
+             Listen to add new resource and when clicked, wait for announcement from AddBlockListView that
+             a new resource or scene needs to be added to either the default play list (aka Fixed) or
+             to the Location based play list (aka GPS)
              @method _listenAddResource
              **/
             _listenAddResource: function () {
                 var self = this;
-
-                //addBlockLocationView = BB.comBroker.getService(BB.SERVICES.ADD_BLOCK_LOCATION_VIEW);
-
-                self.m_addNewLocationListItem = function () {
+                self.m_addNewLocationListItem = function (e) {
                     BB.comBroker.stopListenWithNamespace(BB.EVENTS.ADD_NEW_BLOCK_LIST, self);
                     if (!self.m_selected)
                         return;
+                    self.m_listItemType = $(e.target).attr('name') != undefined ? $(e.target).prop('name') : $(e.target).closest('button').attr('name');
+
                     var addBlockLocationView;
                     if (self.m_placement == BB.CONSTS.PLACEMENT_CHANNEL) {
                         addBlockLocationView = BB.comBroker.getService(BB.SERVICES.ADD_BLOCK_VIEW);
@@ -179,11 +225,99 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                             return;
                         e.stopImmediatePropagation();
                         e.preventDefault();
-                        self._addLocationNewListItem(e);
-                        BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.m_block_id);
+                        self._addPlayListItem(e, self.m_listItemType);
+
                     });
                 };
-                $(Elements.ADD_RESOURCE_TO_LOCATION).on('click', self.m_addNewLocationListItem);
+                $(Elements.CLASS_ADD_RESOURCE_LOCATION).on('click', self.m_addNewLocationListItem);
+            },
+
+            /**
+             Add to our XML a list item item which can be of one of two types
+             addDefault: a default resource to play when not within radius of GPS coords
+             addLocation: a particular resource to play within specific GPS coords
+             @method _addPlayListItem
+             @param {Event} e
+             @param {String} type addDefault or addLocation
+             **/
+            _addPlayListItem: function (e, type) {
+                var self = this;
+                var domPlayerData = self._getBlockPlayerData();
+                var buff = '';
+                var locationBuff;
+                var xSnippetLocation;
+                switch (type){
+                    case 'addDefault': {
+                        xSnippetLocation = $(domPlayerData).find('Fixed');
+                        locationBuff = '>';
+                        break;
+                    }
+                    case 'addLocation': {
+                        locationBuff = 'lat="34.15585218402147" lng="-118.80546569824219" radios="1" priority="0">';
+                        xSnippetLocation = $(domPlayerData).find('GPS');
+                        self.m_pendingAddNewLocation = 1;
+                        BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.m_block_id);
+
+                        setTimeout(function () {
+                            self.m_googleMapsLocationView.setPlacement(BB.CONSTS.PLACEMENT_LISTS);
+                            self.m_googleMapsLocationView.selectView(true);
+
+                            /*
+                            setTimeout(function () {
+                                var latLng = {
+                                    H: 34.235825108847806,
+                                    L: -118.7678074836731
+                                };
+                                self.m_googleMapsLocationView.addPoint(latLng, 0.6, true);
+                            }, 1000);
+                            */
+
+                        }, 500);
+
+                        break;
+                    }
+                }
+
+
+                // log(e.edata.blockCode, e.edata.resourceID, e.edata.sceneID);
+                if (e.edata.blockCode == BB.CONSTS.BLOCKCODE_SCENE) {
+                    // add scene to location
+                    // if block resides in scene don't allow cyclic reference to location scene inside current scene
+                    if (self.m_placement == BB.CONSTS.PLACEMENT_SCENE) {
+                        var sceneEditView = BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']);
+                        if (!_.isUndefined(sceneEditView)) {
+                            var selectedSceneID = sceneEditView.getSelectedSceneID();
+                            selectedSceneID = pepper.getSceneIdFromPseudoId(selectedSceneID);
+                            if (selectedSceneID == e.edata.sceneID) {
+                                bootbox.alert($(Elements.MSG_BOOTBOX_SCENE_REFER_ITSELF).text());
+                                return;
+                            }
+                        }
+                    }
+                    var sceneRecord = pepper.getScenePlayerRecord(e.edata.sceneID);
+                    var sceneName = $(sceneRecord.player_data_value).attr('label');
+                    var nativeID = sceneRecord['native_id'];
+                    buff = '<Page page="' + sceneName + '" type="scene" duration="5" ' + locationBuff +
+                        '<Player src="' + nativeID + '" hDataSrc="' + e.edata.sceneID + '" />' +
+                        '</page>';
+                } else {
+                    // Add resources to location
+                    var resourceName = pepper.getResourceRecord(e.edata.resourceID).resource_name;
+                    log('updating hResource ' + e.edata.resourceID);
+                    buff = '<Page page="' + resourceName + '" type="resource" duration="5" ' + locationBuff +
+                        '<Player player="' + e.edata.blockCode + '">' +
+                        '<Data>' +
+                        '<Resource hResource="' + e.edata.resourceID + '" />' +
+                        '</Data>' +
+                        '</Player>' +
+                        '</page>';
+                }
+                $(xSnippetLocation).append($(buff));
+                domPlayerData = pepper.xmlToStringIEfix(domPlayerData);
+                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION, true);
+
+                if (type == 'addDefault')
+                    BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.m_block_id);
             },
 
             /**
@@ -206,57 +340,9 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     var domPlayerData = self._getBlockPlayerData();
                     $(domPlayerData).find('Fixed').children().get(rowIndex).remove();
                     self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
-                    self._populateTableLocation(domPlayerData);
+                    self._populateTableDefault(domPlayerData);
                 };
                 $(Elements.REMOVE_RESOURCE_FOR_LOCATION).on('click', self.m_removeLocationListItem);
-            },
-
-            /**
-             Add a new location item which can include a Scene or a resource (not a component)
-             @method _addLocationNewListItem
-             @param {Event} e
-             **/
-            _addLocationNewListItem: function (e) {
-                var self = this;
-                var domPlayerData = self._getBlockPlayerData();
-                var xSnippetLocation = $(domPlayerData).find('Fixed');
-                var buff = '';
-                // log(e.edata.blockCode, e.edata.resourceID, e.edata.sceneID);
-                if (e.edata.blockCode == BB.CONSTS.BLOCKCODE_SCENE) {
-                    // add scene to location
-                    // if block resides in scene don't allow cyclic reference to location scene inside current scene
-                    if (self.m_placement == BB.CONSTS.PLACEMENT_SCENE) {
-                        var sceneEditView = BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']);
-                        if (!_.isUndefined(sceneEditView)) {
-                            var selectedSceneID = sceneEditView.getSelectedSceneID();
-                            selectedSceneID = pepper.getSceneIdFromPseudoId(selectedSceneID);
-                            if (selectedSceneID == e.edata.sceneID) {
-                                bootbox.alert($(Elements.MSG_BOOTBOX_SCENE_REFER_ITSELF).text());
-                                return;
-                            }
-                        }
-                    }
-                    var sceneRecord = pepper.getScenePlayerRecord(e.edata.sceneID);
-                    var sceneName = $(sceneRecord.player_data_value).attr('label');
-                    var nativeID = sceneRecord['native_id'];
-                    buff = '<Page page="' + sceneName + '" type="scene" duration="5">' +
-                        '<Player src="' + nativeID + '" hDataSrc="' + e.edata.sceneID + '" />' +
-                        '</page>';
-                } else {
-                    // Add resources to location
-                    var resourceName = pepper.getResourceRecord(e.edata.resourceID).resource_name;
-                    log('updating hResource ' + e.edata.resourceID);
-                    buff = '<Page page="' + resourceName + '" type="resource" duration="5">' +
-                        '<Player player="' + e.edata.blockCode + '">' +
-                        '<Data>' +
-                        '<Resource hResource="' + e.edata.resourceID + '" />' +
-                        '</Data>' +
-                        '</Player>' +
-                        '</page>';
-                }
-                $(xSnippetLocation).append($(buff));
-                domPlayerData = pepper.xmlToStringIEfix(domPlayerData);
-                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION, true);
             },
 
             /**
@@ -314,12 +400,13 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
              **/
             deleteBlock: function (i_memoryOnly) {
                 var self = this;
-                $(Elements.ADD_RESOURCE_TO_LOCATION).off('click', self.m_addNewLocationListItem);
+                $(Elements.CLASS_ADD_RESOURCE_LOCATION).off('click', self.m_addNewLocationListItem);
                 $(Elements.REMOVE_RESOURCE_FOR_LOCATION).off('click', self.m_removeLocationListItem);
                 BB.comBroker.stopListen(BB.EVENTS.ADD_NEW_BLOCK_LIST); // removing for everyone which is ok, since gets added in real time
                 BB.comBroker.stopListen(BB.EVENTS.LOCATION_ROW_DROP, self.m_locationRowDroppedHandler);
                 BB.comBroker.stopListen(BB.EVENTS.LOCATION_ROW_DRAG, self.m_locationRowDraggedHandler);
                 BB.comBroker.stopListen(BB.EVENTS.LOCATION_ROW_CHANGED, self.m_locationRowChangedHandler);
+                BB.comBroker.stopListen(BB.EVENTS.ADD_LOCATION_POINT, self.m_addLocationPoint);
                 self._deleteBlock(i_memoryOnly);
             }
         });

@@ -6,43 +6,8 @@
  **/
 define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', 'async'], function ($, Backbone, StackView, ScreenTemplateFactory, Bootbox, async) {
 
-    /**
-     Custom event fired when a new block is added to timeline_channel
-     @event ADD_NEW_BLOCK_CHANNEL
-     @param {this} caller
-     @param {self} context caller
-     @param {event} player_code which represents a specific code assigned for each block type
-     @static
-     @final
-     **/
-    //BB.EVENTS.ADD_NEW_BLOCK_CHANNEL = 'ADD_NEW_BLOCK_CHANNEL';
-
-    /**
-     Custom event fired when a new block is added to scene
-     @event ADD_NEW_BLOCK_SCENE
-     @param {this} caller
-     @param {self} context caller
-     @param {event} player_code which represents a specific code assigned for each block type
-     @static
-     @final
-     **/
-    //BB.EVENTS.ADD_NEW_BLOCK_SCENE = 'ADD_NEW_BLOCK_SCENE';
-
-    /**
-     Custom event fired when a new block is added to scene
-     @event ADD_NEW_BLOCK_SCENE
-     @param {this} caller
-     @param {self} context caller
-     @param {event} player_code which represents a specific code assigned for each block type
-     @static
-     @final
-     **/
-    //BB.EVENTS.ADD_NEW_BLOCK_LIST = 'ADD_NEW_BLOCK_LIST';
-
-
     /** SERVICES **/
-    BB.SERVICES.ADD_BLOCK_LOCATION_VIEW = 'AddBlockLocationView';
-    BB.SERVICES.ADD_SCENE_BLOCK_LOCATION_VIEW = 'AddSceneBlockLocationView';
+    BB.SERVICES.GOOGLE_MAPS_LOCATION_VIEW = 'googleMapsLocationView';
 
     var AddBlockLocationView = BB.View.extend({
 
@@ -53,10 +18,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
         initialize: function (options) {
             var self = this;
             self.m_map;
-            self.m_circles = [];
             self.m_mapPoints = [];
             self.m_placement = options.placement;
             self.m_loadedMaps = false;
+            self.m_addNewMarkerMode = undefined;
 
             // Clone the AddBlockTemplate
             var e = $(Elements.ADD_BLOCK_LOCATION_TEMPLATE).clone();
@@ -91,6 +56,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
                 self.$el;
                 self.circle;
                 self.marker;
+                self.latLng = latLng;
 
                 self.remove = function () {
                     // remove circle
@@ -130,12 +96,12 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
 
                 // radius slider
                 /*$('#map-points li:last .radius-slider').slider({
-                    formatter: function (value) {
-                        return 'Current value: ' + value;
-                    }
-                }).on('change', function (event) {
-                    self.circle.setRadius(event.value.newValue);
-                });*/
+                 formatter: function (value) {
+                 return 'Current value: ' + value;
+                 }
+                 }).on('change', function (event) {
+                 self.circle.setRadius(event.value.newValue);
+                 });*/
 
                 self.$el.find('.radius-slider').on('change', function (e) {
                     var a = $(e.target).val();
@@ -163,15 +129,8 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
                 var center = new google.maps.LatLng(point.center.lat, point.center.lng);
                 var radius = point.radius;
 
-                self._addPoint(center, radius);
+                self.addPoint(center, radius);
             }
-        },
-
-        _addPoint: function (latLng, radius) {
-            var self = this;
-            radius = radius || 1;
-            var newPoint = new self._mapPoint(latLng, radius, self.m_mapPoints, self.m_map);
-            self.m_mapPoints.push(newPoint);
         },
 
         _pointData: function () {
@@ -284,7 +243,11 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             });
 
             google.maps.event.addListener(self.m_map, 'click', function (event) {
-                self._addPoint(event.latLng);
+                if (self.m_addNewMarkerMode){
+                    self.addPoint(event.latLng);
+                    self.m_addNewMarkerMode = false;
+                    BB.comBroker.fire(BB.EVENTS.ADD_LOCATION_POINT, self, null, event.latLng);
+                }
             });
         },
 
@@ -363,9 +326,11 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
         /**
          Select current view which will animate page loading
          @method selectView
+         @params {Boolean} i_addNewMarkerMode if true, we allow a single click to add a new marker in map
          **/
-        selectView: function () {
+        selectView: function (i_addNewMarkerMode) {
             var self = this;
+            self.m_addNewMarkerMode = i_addNewMarkerMode;
             self.options.stackView.slideToPage(self, 'right');
         },
 
@@ -389,6 +354,15 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
         setPlacement: function (i_placement) {
             var self = this;
             self.m_placement = self.options.placement = i_placement;
+        },
+
+        addPoint: function (latLng, radius, notCenter) {
+            var self = this;
+            if (notCenter)
+                latLng = new google.maps.LatLng(latLng.H, latLng.L);
+            radius = radius || 1;
+            var newPoint = new self._mapPoint(latLng, radius, self.m_mapPoints, self.m_map);
+            self.m_mapPoints.push(newPoint);
         }
     });
 

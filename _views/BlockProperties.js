@@ -74,6 +74,15 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
     BB.EVENTS.YOUTUBE_VOLUME_CHANGED = 'YOUTUBE_VOLUME_CHANGED';
 
     /**
+     event fires when radius of location changed
+     @event LOCATION_RADIUS_CHANGED
+     @param {Object} this
+     @param {Object} caller the firing element
+     @param {Number} alpha value
+     **/
+    BB.EVENTS.LOCATION_RADIUS_CHANGED = 'LOCATION_RADIUS_CHANGED';
+
+    /**
      event fires datagrid collection is dragged
      @event COLLECTION_ROW_DRAG
      @param {Object} this
@@ -136,6 +145,14 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
      **/
     BB.EVENTS.LOCATION_ROW_CHANGED = 'LOCATION_ROW_CHANGED';
 
+    /**
+     event fires when new location point adding to google maps
+     @event Block.ADD_LOCATION_POINT
+     @param {this} caller
+     @param {String} selected block_id
+     **/
+    BB.EVENTS.ADD_LOCATION_POINT = 'ADD_LOCATION_POINT';
+
     BB.SERVICES.BLOCK_PROPERTIES = 'BlockProperties';
 
     var BlockProperties = BB.View.extend({
@@ -163,13 +180,15 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
             self._propLengthKnobsInit();
             self._videoVolumeSliderInit();
             self._youtubeVolumeSliderInit();
+            self._youtubeInit();
+            self._locationRadiusSliderInit();
+            self._locationPriorityInit();
             self._rssFontSelectorInit();
             self._rssSourceSelectorInit();
             self._mrssSourceSelectorInit();
             self._timepickerDayDurationInit();
             self._datepickerDayDurationInit();
             self._rssPollTimeInit();
-            self._youtubeInit();
             self._fasterQInit();
             self._labelFontSelectorInit();
             self._twitterFontSelectorInit();
@@ -468,6 +487,37 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         },
 
         /**
+         Init the location priority widget
+         @method _locationPriorityInit
+         **/
+        _locationPriorityInit: function () {
+            var self = this;
+            self.m_locationPriorityMeter = new BarMeterView({el: Elements.LOCATION_PRIORITY_METER});
+        },
+
+        /**
+         Init location radius slider in properties
+         @method _locationRadiusSliderInit
+         **/
+        _locationRadiusSliderInit: function () {
+            var self = this;
+            $(Elements.LOCATION_RADIUS_WRAP_SLIDER).noUiSlider({
+                handles: 1,
+                start: 100,
+                step: 1,
+                range: [0, 100],
+                serialization: {
+                    to: [$(Elements.LOCATION_RADIUS_LABEL), 'text']
+                }
+            });
+            self.m_locationRadiusHandle = $(Elements.LOCATION_RADIUS_WRAP_SLIDER).on('change', function (e) {
+                var volume = parseFloat($(Elements.LOCATION_RADIUS_WRAP_SLIDER).val()) / 100;
+                BB.comBroker.fire(BB.EVENTS.LOCATION_RADIUS_CHANGED, this, self, volume);
+                return false;
+            });
+        },
+
+        /**
          Create instance of RSSLink used in select property settings
          @method _rssSourceSelectorInit
          **/
@@ -737,7 +787,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                     title: 'Select status',
                     placement: 'left',
                     onEditableInit: function (response, newValue) {
-                        console.log(newValue);
+                        //console.log(newValue);
                     },
                     onReorderRowsDrag: function (table, row) {
                         BB.comBroker.fire(BB.EVENTS.COLLECTION_ROW_DRAG, this, self, $(row).attr('data-index'));
@@ -746,10 +796,10 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                         BB.comBroker.fire(BB.EVENTS.COLLECTION_ROW_DROP, this, self, $(row).attr('data-index'));
                     },
                     onEditableShown: function (response, newValue) {
-                        console.log(newValue);
+                        //console.log(newValue);
                     },
                     onEditableHidden: function (response, newValue) {
-                        console.log(newValue);
+                        //console.log(newValue);
                         //console.log('getSelections: ' + JSON.stringify($table.bootstrapTable('getSelections')));
                         //$table.bootstrapTable('refresh');
                     },
@@ -803,7 +853,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                     title: 'Select status',
                     placement: 'left',
                     onEditableInit: function (response, newValue) {
-                        console.log(newValue);
+                        // console.log(newValue);
                     },
                     onReorderRowsDrag: function (table, row) {
                         BB.comBroker.fire(BB.EVENTS.LOCATION_ROW_DRAG, this, self, $(row).attr('data-index'));
@@ -812,10 +862,10 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                         BB.comBroker.fire(BB.EVENTS.LOCATION_ROW_DROP, this, self, $(row).attr('data-index'));
                     },
                     onEditableShown: function (response, newValue) {
-                        console.log(newValue);
+                        // console.log(newValue);
                     },
                     onEditableHidden: function (response, newValue) {
-                        console.log(newValue);
+                        // console.log(newValue);
                         //console.log('getSelections: ' + JSON.stringify($table.bootstrapTable('getSelections')));
                         //$table.bootstrapTable('refresh');
                     },

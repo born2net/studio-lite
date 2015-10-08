@@ -129,6 +129,13 @@ aside > aside > div > ul > li {
     margin-bottom: 9px;
 }
 
+.locationInput {
+    display: none;
+    margin-top: 7px;
+    margin-bottom: 9px;
+}
+
+
 #channelProperties select {
     float: right;
     margin-right: 50px;
@@ -761,6 +768,13 @@ iframe {
     background-color: gray;
 }
 
+#locationPriorityMeter {
+    float: right;
+    width: 80px;
+    display: inline-block;
+    position: relative;
+    top: -4px;
+}
 
 #youtubeQualityMeter {
     float: right;

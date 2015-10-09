@@ -6,7 +6,7 @@
  @param {String} i_container element that CompCampaignNavigator inserts itself into
  @return {Object} instantiated StationsListView
  **/
-define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, StationsCollection) {
+define(['jquery', 'backbone', 'StationsCollection', 'LiveInput'], function ($, Backbone, StationsCollection, LiveInput) {
 
     BB.SERVICES.STATIONS_LIST_VIEW = 'StationsListView';
 
@@ -26,7 +26,6 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             self.m_selected_station_id = undefined;
             self.m_property = BB.comBroker.getService(BB.SERVICES['PROPERTIES_VIEW']);
             self.m_property.initPanel(Elements.STATION_PROPERTIES);
-            self.m_faIcon = $(Elements.STATION_RENAME).find('i');
             self.m_stationCollection = new StationsCollection();
 
             self.listenTo(self.m_stationCollection, 'add', function (i_model) {
@@ -43,11 +42,11 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
                 var stationID = e.edata.stationID;
                 var stationName = e.edata.stationName;
                 var a = $(Elements.STATION_LIST_VIEW).find('[data-station_id="' + stationID + '"]');
-                $(Elements.STATION_LIST_VIEW).find('[data-station_id="' + stationID + '"]').find(Elements.CLASS_STAION_NAME).text(stationName);
+                $(Elements.STATION_LIST_VIEW).find('[data-station_id="' + stationID + '"]').find(Elements.CLASS_LIVE_RENAME).text(stationName);
             });
 
             self._wireUI();
-            self._listenEditName();
+            self._initStationRename();
             self._wireSnapshot();
             self._populateStationCampaignDropDown(-1);
         },
@@ -61,7 +60,7 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
             var self = this;
             self.m_stationCollection.resumeGetRemoteStations();
             self.getTotalActiveStation();
-            log('in view');
+            //log('in view');
         },
 
         /**
@@ -76,43 +75,22 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
         },
 
         /**
-         Listen to station rename
-         @method _listenEditName
+         Init station rename component
+         @method _initStationRename
          **/
-        _listenEditName: function () {
+        _initStationRename: function () {
             var self = this;
-
-            $(Elements.STATION_RENAME).on('mousedown mouseup', function (e) {
-
-                // if mouse up, just give focus to control
-                if (e.type == "mouseup"){
-                    $(Elements.STATION_RENAME_INPUT).focus();
-                    return;
-                }
-                // already in edit mode, return since blur will kick next
-                if (!$(self.m_faIcon).hasClass('fa-pencil'))
-                    return;
-
-                // on entering edit mode
-                $(Elements.STATION_RENAME_INPUT).toggle();
-                $(Elements.STATION_NAME).toggle();
-                $(self.m_faIcon).removeClass('fa-pencil').addClass('fa-check');
-                var stationName = $(Elements.STATION_NAME).text();
-                $(Elements.STATION_RENAME_INPUT).prop('value', stationName);
-
-                // on entering view mode
-                $(Elements.STATION_RENAME_INPUT).one('blur', function (e) {
-                    var stationInput = $(Elements.STATION_RENAME_INPUT).prop('value');
-                    pepper.setStationName(self.m_selected_station_id, stationInput);
+            self.m_liveRenameInput = new LiveInput({
+                el: Elements.STATION_RENAME,
+                dataLocalize: 'stationRename',
+                placeHolder: 'Station rename',
+                value: ''
+            }).on('LIVE_INPUT_CHANGED', function (e) {
                     var stationLI = $(Elements.STATION_LIST_VIEW).find('[data-station_id="' + self.m_selected_station_id + '"]');
-                    $(stationLI).find(Elements.CLASS_STAION_NAME).text(stationInput);
-                    $(self.m_faIcon).removeClass('fa-check').addClass('fa-pencil');
-                    var stationInput = $(Elements.STATION_RENAME_INPUT).prop('value');
-                    $(Elements.STATION_NAME).text(stationInput);
-                    $(Elements.STATION_RENAME_INPUT).toggle();
-                    $(Elements.STATION_NAME).toggle();
+                    $(stationLI).find(Elements.CLASS_LIVE_RENAME).text(e.value);
+                    pepper.setStationName(self.m_selected_station_id, e.value);
+                    self._getStationModel(self.m_selected_station_id).set('stationName', e.value);
                 });
-            });
         },
 
         /**
@@ -129,6 +107,7 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
                     self._stopSnapshot();
                 self.m_selected_station_id = stationID;
                 var stationModel = self._getStationModel(self.m_selected_station_id);
+                self.m_liveRenameInput.setValue(stationModel.get('stationName'), false);
                 $(Elements.CLASS_STATION_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
                 $(elem).addClass('activated').find('a').addClass('whiteFont');
                 self.m_property.viewPanel(Elements.STATION_PROPERTIES);
@@ -162,7 +141,7 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
          **/
         _updatePropStats: function (i_model) {
             var self = this;
-            $(Elements.STATION_NAME).text(pepper.getStationNameSync(self.m_selected_station_id));
+            //$(Elements.STATION_NAME).text(pepper.getStationNameSync(self.m_selected_station_id));
             $(Elements.STATION_WATCHDOG).text(i_model.get('watchDogConnection'));
             $(Elements.STATION_TOTAL_MEMORY).text(i_model.get('totalMemory'));
             $(Elements.STATION_PEAK_MEMORY).text(i_model.get('peakMemory'));
@@ -228,7 +207,7 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
                 '<span id="stationIcon' + i_stationModel.get('id') + '">' +
                 '<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg"><g><circle stroke="black" id="svg_1" fill="' + i_stationModel.get('stationColor') + '" stroke-width="2" r="16" cy="20" cx="20"/></g></svg>' +
                 '</span>' +
-                '<span class="' + BB.lib.unclass(Elements.CLASS_STAION_NAME) + '" style="font-size: 1.5em; position: relative; top: -23px">' + i_stationModel.get('stationName') + '</span>' +
+                '<span class="' + BB.lib.unclass(Elements.CLASS_LIVE_RENAME) + '" style="font-size: 1.5em; position: relative; top: -23px">' + i_stationModel.get('stationName') + '</span>' +
                 '</a>' +
                 '</li>';
             $(Elements.STATION_LIST_VIEW).append(snippet)
@@ -260,7 +239,8 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
 
             $(Elements.STATION_RELOAD_COMMAND).on('click', function (e) {
                 // pepper.sendCommand('rebootStation', self.m_selected_station_id, function () {});
-                pepper.sendCommand('rebootPlayer', self.m_selected_station_id, function () {});
+                pepper.sendCommand('rebootPlayer', self.m_selected_station_id, function () {
+                });
                 return false;
             });
 
@@ -324,7 +304,8 @@ define(['jquery', 'backbone', 'StationsCollection'], function ($, Backbone, Stat
                 if (result == true) {
                     var navigationView = BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW);
                     // pepper.sendCommand('rebootStation', self.m_selected_station_id, function () {});
-                    pepper.sendCommand('rebootPlayer', self.m_selected_station_id, function () {});
+                    pepper.sendCommand('rebootPlayer', self.m_selected_station_id, function () {
+                    });
                     pepper.removeStation(self.m_selected_station_id);
                     navigationView.save(function () {
                     });

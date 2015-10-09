@@ -5,7 +5,7 @@
  @constructor
  @return {object} instantiated BlockProperties
  **/
-define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'FontSelector', 'RSSLinks', 'MRSSLinks', 'BarMeterView', 'timepicker', 'datepicker', 'bootstrap-table-editable', 'bootstrap-table-sort-rows'], function ($, Backbone, Knob, nouislider, gradient, spinner, FontSelector, RSSLinks, MRSSLinks, BarMeterView, timepicker, datepicker, bootstraptableeditable, bootstraptablesortrows) {
+define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'FontSelector', 'RSSLinks', 'MRSSLinks', 'BarMeterView', 'timepicker', 'datepicker', 'bootstrap-table-editable', 'bootstrap-table-sort-rows', 'LiveInput'], function ($, Backbone, Knob, nouislider, gradient, spinner, FontSelector, RSSLinks, MRSSLinks, BarMeterView, timepicker, datepicker, bootstraptableeditable, bootstraptablesortrows, LiveInput) {
 
     /**
      Custom event fired when a gradient color picked
@@ -181,6 +181,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
             self._videoVolumeSliderInit();
             self._youtubeVolumeSliderInit();
             self._youtubeInit();
+            self._locationLiveInputs();
             self._locationRadiusSliderInit();
             self._locationPriorityInit();
             self._rssFontSelectorInit();
@@ -493,6 +494,36 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         _locationPriorityInit: function () {
             var self = this;
             self.m_locationPriorityMeter = new BarMeterView({el: Elements.LOCATION_PRIORITY_METER});
+        },
+
+        /**
+         Bind to location Live Inputs widgets
+         @method _locationLiveInputs
+         **/
+        _locationLiveInputs: function(){
+            var self = this;
+
+            self.m_locationResource = new LiveInput({
+                el: Elements.LOCATION_RESOURCE_NAME,
+                dataLocalize: 'aa',
+                placeHolder: 'aa',
+                value: 'aa'
+            });
+
+            self.m_locationResource = new LiveInput({
+                el: Elements.LOCATION_RESOURCE_LAT,
+                dataLocalize: 'bb',
+                placeHolder: 'bb',
+                value: 'bb'
+            });
+
+            self.m_locationResource = new LiveInput({
+                el: Elements.LOCATION_RESOURCE_LNG,
+                dataLocalize: 'cc',
+                placeHolder: 'cc',
+                value: 'cc'
+            });
+
         },
 
         /**

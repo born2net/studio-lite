@@ -1850,10 +1850,8 @@
                             <div id="viewerDimensions"></div>
                         </div>
                         <div id="stationProperties">
-                            <h4 id="stationName"></h4>
-                            <a id="stationRename"><i style="color: gray" class="fa fa-pencil"></i></a>
-                            <input id="stationRenameInput" type="text" data-localize="stationRename" placeholder="station name" value="">
-
+                            <div id="stationRename">
+                            </div>
                             <div id="snapShotWrap">
                                 <svg id="snapShotSVG" xmlns="http://www.w3.org/2000/svg">
                                     <g>
@@ -2279,14 +2277,22 @@
                                                 <span id="totalMapLocations">0</span>
                                             </label>
                                             <hr class="hrThin"/>
-                                            <h5 id="stationName">MyFile.mp4</h5>
-                                            <a id="stationRename"><i style="color: gray" class="fa fa-pencil"></i></a>
-                                            <h5 id="stationName">34.15585218402147</h5>
-                                            <a id="stationRename"><i style="color: gray" class="fa fa-pencil"></i></a>
-                                            <input class="locationInput" type="text" data-localize="stationRename" placeholder="station name" value="">
-                                            <h5 id="stationName">-118.80546569824219</h5>
-                                            <a id="stationRename"><i style="color: gray" class="fa fa-pencil"></i></a>
-                                            <input class="locationInput" type="text" data-localize="stationRename" placeholder="station name" value="">
+                                            <div id="locationResourceName"></div>
+                                            <div id="locationResourceLat"></div>
+                                            <div id="locationResourceLng"></div>
+                                            <!--
+                                            <h5  id="locationResourceName" class="liveRename">none</h5>
+                                            <a id="locationResourceRename" class="liveRenameLink"><i style="color: gray" class="fa fa-pencil"></i></a>
+                                            <input class="liveRenameInput" type="text" data-localize="resourceName" placeholder="resource name" value="">
+
+                                            <h5 id="locationsCoordsLanLat">0</h5>
+                                            <a id="locationsCoordsLanLatRename"><i style="color: gray" class="fa fa-pencil"></i></a>
+                                            <input class="locationInput" type="text" data-localize="latitude" placeholder="latitude" value="">
+
+                                            <h5 id="locationsCoordsLanLong">0</h5>
+                                            <a id="locationsCoordsLanLongRename"><i style="color: gray" class="fa fa-pencil"></i></a>
+                                            <input class="locationInput" type="text" data-localize="longitude" placeholder="longitude" value="">
+                                            -->
                                             <div style="padding-top: 16px">
                                                 <span data-localize="radiusRange">Radius range</span>
                                                 <span id="locationRadiusLabel">100</span>

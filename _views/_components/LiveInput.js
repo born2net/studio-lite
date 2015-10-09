@@ -1,21 +1,12 @@
 /**
  Widget to display live editor of label / input
+ Will fire LIVE_INPUT_CHANGED on data changed and also will fire a custom event
+ if one was give via options.customEvent
  @class LiveInput
  @constructor
  @return {object} instantiated LiveInput
  **/
 define(['jquery', 'backbone'], function ($, Backbone) {
-
-    /**
-     Custom event fired when input changed event
-     @event INPUT_CHANGED
-     @param {This} caller
-     @param {Self} context caller
-     @param {Event}
-     @static
-     @final
-     **/
-    BB.EVENTS.LIVE_INPUT_CHANGED = 'LIVE_INPUT_CHANGED';
 
     var LiveInput = Backbone.View.extend({
 
@@ -106,8 +97,9 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self.m_liveRename.text(i_value);
             if (!i_announce)
                 return;
-            BB.comBroker.fire(BB.EVENTS.LIVE_INPUT_CHANGED, self, self, edata);
-            self.trigger(self.LIVE_INPUT_CHANGED, edata)
+            self.trigger(self.LIVE_INPUT_CHANGED, edata);
+            if (self.m_options.customEvent)
+                BB.comBroker.fire(self.m_options.customEvent, self, self, edata);
         }
 
     });

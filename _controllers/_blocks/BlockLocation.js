@@ -31,6 +31,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 self._listenRemoveResource();
                 self._listenLocationRowChanged();
                 self._listenNewLocationMapCoordinates();
+                self._listenLiveInputs();
 
                 self.m_blockProperty.locationDatatableInit();
                 self.m_googleMapsLocationView = BB.comBroker.getService(BB.SERVICES.GOOGLE_MAPS_LOCATION_VIEW);
@@ -60,6 +61,45 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     var domPlayerData = self._getBlockPlayerData();
                 };
                 BB.comBroker.listen(BB.EVENTS.LOCATION_ROW_DRAG, self.m_locationRowDraggedHandler);
+            },
+
+            /**
+             Listen to changes in LiveInputs including resource names, long and lat values
+             @method _listenLiveInputs
+             **/
+            _listenLiveInputs: function () {
+                var self = this;
+
+                self.m_liveInputChanged = function (e) {
+                    if (!self.m_selected)
+                        return;
+                    var domPlayerData = self._getBlockPlayerData();
+                    switch (e.edata.el) {
+                        case Elements.LOCATION_RESOURCE_NAME:
+                        {
+                            break;
+                        }
+                        case Elements.LOCATION_RESOURCE_LAT:
+                        {
+                            break;
+                        }
+                        case Elements.LOCATION_RESOURCE_LNG:
+                        {
+                            break;
+                        }
+                    }
+                    log('do..');
+                    return;
+
+
+                    var item = $(domPlayerData).find('GPS').children().last();
+                    $(item).attr('lat', latLng.H).attr('lng', latLng.L);
+                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                    self._populateTableLocation(domPlayerData);
+                    self._populateTotalMapLocations(domPlayerData);
+                };
+                BB.comBroker.listen(BB.EVENTS.LOCATION_LIVE_INPUT_CHANGED, self.m_liveInputChanged);
+
             },
 
             /**
@@ -164,7 +204,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 var self = this;
                 var rowIndex = 0;
             },
-            
+
             /**
              Load list into the UI for default content
              @method _populateTableDefault
@@ -246,13 +286,15 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 var buff = '';
                 var locationBuff;
                 var xSnippetLocation;
-                switch (type){
-                    case 'addDefault': {
+                switch (type) {
+                    case 'addDefault':
+                    {
                         xSnippetLocation = $(domPlayerData).find('Fixed');
                         locationBuff = '>';
                         break;
                     }
-                    case 'addLocation': {
+                    case 'addLocation':
+                    {
                         locationBuff = 'lat="34.15585218402147" lng="-118.80546569824219" radios="1" priority="0">';
                         xSnippetLocation = $(domPlayerData).find('GPS');
                         self.m_pendingAddNewLocation = 1;
@@ -263,14 +305,14 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                             self.m_googleMapsLocationView.selectView(true);
 
                             /*
-                            setTimeout(function () {
-                                var latLng = {
-                                    H: 34.235825108847806,
-                                    L: -118.7678074836731
-                                };
-                                self.m_googleMapsLocationView.addPoint(latLng, 0.6, true);
-                            }, 1000);
-                            */
+                             setTimeout(function () {
+                             var latLng = {
+                             H: 34.235825108847806,
+                             L: -118.7678074836731
+                             };
+                             self.m_googleMapsLocationView.addPoint(latLng, 0.6, true);
+                             }, 1000);
+                             */
 
                         }, 500);
 
@@ -407,6 +449,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 BB.comBroker.stopListen(BB.EVENTS.LOCATION_ROW_DRAG, self.m_locationRowDraggedHandler);
                 BB.comBroker.stopListen(BB.EVENTS.LOCATION_ROW_CHANGED, self.m_locationRowChangedHandler);
                 BB.comBroker.stopListen(BB.EVENTS.ADD_LOCATION_POINT, self.m_addLocationPoint);
+                BB.comBroker.stopListen(BB.EVENTS.LOCATION_LIVE_INPUT_CHANGED, self.m_liveInputChanged);
                 self._deleteBlock(i_memoryOnly);
             }
         });

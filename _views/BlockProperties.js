@@ -146,6 +146,16 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
     BB.EVENTS.LOCATION_ROW_CHANGED = 'LOCATION_ROW_CHANGED';
 
     /**
+     event fires when location live input value chanegs such as LAT/LNG/resource names
+     @event LOCATION_LIVE_INPUT_CHANGED
+     @param {Object} this
+     @param {Object} caller the firing element
+     @param {Number} alpha value
+     **/
+    BB.EVENTS.LOCATION_LIVE_INPUT_CHANGED = 'LOCATION_LIVE_INPUT_CHANGED';
+
+
+    /**
      event fires when new location point adding to google maps
      @event Block.ADD_LOCATION_POINT
      @param {this} caller
@@ -505,23 +515,26 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
 
             self.m_locationResource = new LiveInput({
                 el: Elements.LOCATION_RESOURCE_NAME,
-                dataLocalize: 'aa',
-                placeHolder: 'aa',
-                value: 'aa'
+                dataLocalize: 'name',
+                placeHolder: 'name',
+                value: 'name',
+                customEvent: BB.EVENTS.LOCATION_LIVE_INPUT_CHANGED
             });
 
-            self.m_locationResource = new LiveInput({
+            self.m_locationLat = new LiveInput({
                 el: Elements.LOCATION_RESOURCE_LAT,
-                dataLocalize: 'bb',
-                placeHolder: 'bb',
-                value: 'bb'
+                dataLocalize: 'latitude',
+                placeHolder: 'latitude',
+                value: 'latitude',
+                customEvent: BB.EVENTS.LOCATION_LIVE_INPUT_CHANGED
             });
 
-            self.m_locationResource = new LiveInput({
+            self.m_locationLng = new LiveInput({
                 el: Elements.LOCATION_RESOURCE_LNG,
-                dataLocalize: 'cc',
-                placeHolder: 'cc',
-                value: 'cc'
+                dataLocalize: 'longitude',
+                placeHolder: 'longitude',
+                value: 'longitude',
+                customEvent: BB.EVENTS.LOCATION_LIVE_INPUT_CHANGED
             });
 
         },

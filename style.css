@@ -120,11 +120,6 @@ aside > aside > div > ul > li {
     margin-top: 11px;
 }
 
-.liveInputRename {
-    font-size: 1.4em;
-    width: 70%;
-}
-
 .liveInputLink .fa-pencil {
     opacity: 0.5;
 }
@@ -135,6 +130,8 @@ aside > aside > div > ul > li {
 }
 
 .liveInputRename {
+    font-size: 1.2em;
+    width: 70%;
     display: none;
     margin-top: 7px;
     margin-bottom: 9px;

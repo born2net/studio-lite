@@ -24,7 +24,7 @@
   "playSequential": "Play this list in a sequential order",
   "seconds": "seconds",
   "name": "name",
-  "locationBased": "Location based",
+  "totalLocationBased": "Total location based",
   "addNewTimelineButtonToolTip": "Add a new timeline",
   "addScene": "add scene",
   "stationID": "station id",

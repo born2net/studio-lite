@@ -77,9 +77,9 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     if (buttonType == 'removeLocation')
                         log(buttonType);
                     if (buttonType == 'previous')
-                        log(buttonType);
+                        self._populateTableLocation('prev');
                     if (buttonType == 'next')
-                        log(buttonType);
+                        self._populateTableLocation('next');
                     if (buttonType == 'openLocation')
                         self._openMap(false);
                 };
@@ -196,7 +196,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 var xSnippetLocation = $(domPlayerData).find('Fixed');
                 var mode = $(xSnippetLocation).attr('mode');
                 self._populateTableDefault(domPlayerData);
-                self._populateTableLocation('first');
+                //self._populateTableLocation('first');
                 self._populateTotalMapLocations(domPlayerData);
             },
 
@@ -271,7 +271,10 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     }
                 }
 
-                //$(item).attr('lat', latLng.H).attr('lng', latLng.L);
+                self.m_blockProperty.setLocationLiveInput(Elements.LOCATION_RESOURCE_NAME, $(item).attr('page'));
+                self.m_blockProperty.setLocationLiveInput(Elements.LOCATION_RESOURCE_LAT, $(item).attr('lat'));
+                self.m_blockProperty.setLocationLiveInput(Elements.LOCATION_RESOURCE_LNG, $(item).attr('lng'));
+                self.m_googleMapsLocationView.panToPoint($(item).attr('lat'), $(item).attr('lng'));
 
             },
 
@@ -371,7 +374,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     case 'addLocation':
                     {
                         //locationBuff = 'lat="34.15585218402147" lng="-118.80546569824219" radios="1" priority="0">';
-                        locationBuff = 'lat="0" lng="0" radios="1" priority="0">';
+                        locationBuff = 'lat="34" lng="-118" radios="1" priority="0">';
                         xSnippetLocation = $(domPlayerData).find('GPS');
                         BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.m_block_id);
 

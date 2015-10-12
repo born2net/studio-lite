@@ -21,7 +21,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self.m_prevValue = self.m_options.value;
 
             var snippet = '<div>';
-            snippet += '        <h4 class="liveInput">' + self.m_options.value + '</h4>';
+            snippet += '        <h5 class="liveInput">' + self.m_options.value + '</h5>';
             snippet += '        <a class="liveInputLink"><i style="color: gray" class="fa fa-pencil"></i></a>';
             snippet += '        <input class="liveInputRename" type="text" data-localize="' + self.m_options.dataLocalize + '" placeholder="' + self.m_options.placeHolder + '" value="">';
             snippet += '   </div>';
@@ -29,7 +29,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             self.$el.append(snippet);
             self.m_value = 0;
             self.m_liveRename = self.$('.liveInput');
-            self.m_liveRenameInput = self.$('.liveInputRename')
+            self.m_liveRenameInput = self.$('.liveInputRename');
             self._listenRename();
         },
 

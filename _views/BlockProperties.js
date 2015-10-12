@@ -512,31 +512,28 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
          **/
         _locationLiveInputs: function(){
             var self = this;
-
-            self.m_locationResource = new LiveInput({
+            self.m_liveLocation = {};
+            self.m_liveLocation[Elements.LOCATION_RESOURCE_NAME] = new LiveInput({
                 el: Elements.LOCATION_RESOURCE_NAME,
                 dataLocalize: 'name',
                 placeHolder: 'name',
                 value: 'name',
                 customEvent: BB.EVENTS.LOCATION_LIVE_INPUT_CHANGED
             });
-
-            self.m_locationLat = new LiveInput({
+            self.m_liveLocation[Elements.LOCATION_RESOURCE_LAT] = new LiveInput({
                 el: Elements.LOCATION_RESOURCE_LAT,
                 dataLocalize: 'latitude',
                 placeHolder: 'latitude',
                 value: 'latitude',
                 customEvent: BB.EVENTS.LOCATION_LIVE_INPUT_CHANGED
             });
-
-            self.m_locationLng = new LiveInput({
+            self.m_liveLocation[Elements.LOCATION_RESOURCE_LNG] = new LiveInput({
                 el: Elements.LOCATION_RESOURCE_LNG,
                 dataLocalize: 'longitude',
                 placeHolder: 'longitude',
                 value: 'longitude',
                 customEvent: BB.EVENTS.LOCATION_LIVE_INPUT_CHANGED
             });
-
         },
 
         /**
@@ -723,6 +720,17 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         viewSubPanel: function (i_panel) {
             var self = this;
             self.m_property.viewSubPanel(i_panel);
+        },
+
+        /**
+         Set the value for LAT/LNG/Name for Location fields using the LiveInput widget
+         @method setLocationLiveInput
+         @param {String} i_el
+         @param {String} i_value
+         **/
+        setLocationLiveInput: function (i_el, i_value) {
+            var self = this;
+            self.m_liveLocation[i_el].setValue(i_value);
         },
 
         /**

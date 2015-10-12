@@ -65,7 +65,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
                     // remove marker
                     self.marker.setMap(null);
                     // remove UI
-                    self.$el.remove();
+                    // self.$el.remove();
                 }
 
                 // Draw the circle
@@ -84,6 +84,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
                 });
 
                 // UI
+                /*
                 var tmpl = document.getElementById('map-point');
                 document.getElementById("map-points").appendChild(tmpl.content.cloneNode(true));
                 self.$el = $('#map-points li:last');
@@ -96,13 +97,13 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
                 });
 
                 // radius slider
-                /*$('#map-points li:last .radius-slider').slider({
-                 formatter: function (value) {
-                 return 'Current value: ' + value;
-                 }
-                 }).on('change', function (event) {
-                 self.circle.setRadius(event.value.newValue);
-                 });*/
+                $('#map-points li:last .radius-slider').slider({
+                    formatter: function (value) {
+                        return 'Current value: ' + value;
+                    }
+                }).on('change', function (event) {
+                    self.circle.setRadius(event.value.newValue);
+                });
 
                 self.$el.find('.radius-slider').on('change', function (e) {
                     var a = $(e.target).val();
@@ -116,6 +117,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
                     $('#map-points li').css('background-color', '#FFF');
                     $(this).css('background-color', '#ACF19A');
                 });
+                */
             };
             self._createMap();
         },
@@ -289,13 +291,14 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
                 return;
             });
 
+            /*
             $('.log-data').click(function () {
                 console.log(JSON.stringify(self._pointData()));
             });
-
             $('.clear-map').click(function () {
                 self._clearMap();
             });
+             */
         },
 
         _clearMap: function () {
@@ -378,6 +381,14 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             radius = radius || 1;
             var newPoint = new self._mapPoint(latLng, radius, self.m_mapPoints, self.m_map);
             self.m_mapPoints.push(newPoint);
+        },
+
+        panToPoint: function(lat, lng){
+            var self = this;
+            if (!self.m_map)
+                return;
+            var center = new google.maps.LatLng(lat, lng);
+            self.m_map.panTo(center);
         }
     });
 

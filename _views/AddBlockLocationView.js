@@ -1,5 +1,5 @@
 /**
- Add block view is a UI component which allows selection and insertion of a GPS location view
+ Add block view is a UI component which allows selection and insertion of a GPS location view coords
  @class AddBlockLocationView
  @constructor
  @return {object} instantiated AddBlockLocationView
@@ -21,7 +21,8 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             self.m_mapPoints = [];
             self.m_placement = options.placement;
             self.m_loadedMaps = false;
-            self.m_addNewMarkerMode = undefined;
+            self.m_markerOnClick = false;
+            self.m_mapData = {points: []};
 
             // Clone the AddBlockTemplate
             var e = $(Elements.ADD_BLOCK_LOCATION_TEMPLATE).clone();
@@ -116,19 +117,18 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
                     $(this).css('background-color', '#ACF19A');
                 });
             };
-
-
             self._createMap();
         },
 
-        _loadJson: function (str) {
-            var data = JSON.parse(str);
-            var points = data.points;
+        _loadJson: function () {
+            var self = this;
+            self._clearMap();
+            //var data = JSON.parse(str);
+            var points = self.m_mapData.points;
             for (var i = 0; i < points.length; ++i) {
                 var point = points[i];
                 var center = new google.maps.LatLng(point.center.lat, point.center.lng);
                 var radius = point.radius;
-
                 self.addPoint(center, radius);
             }
         },
@@ -243,25 +243,27 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             });
 
             google.maps.event.addListener(self.m_map, 'click', function (event) {
-                if (self.m_addNewMarkerMode){
+                if (self.m_markerOnClick) {
                     self.addPoint(event.latLng);
-                    self.m_addNewMarkerMode = false;
+                    self.m_markerOnClick = false;
                     BB.comBroker.fire(BB.EVENTS.ADD_LOCATION_POINT, self, null, event.latLng);
                 }
             });
         },
 
+
         /**
          Build lists of components, resources and scenes (respectively showing what's needed per placement mode)
          Once an LI is selected proper event fired to announce block is added.
          @method _render
-         @return none
+         @return undefined
          **/
         _render: function () {
             var self = this;
-            if (self.m_loadedMaps)
+            if (self.m_loadedMaps) {
+                self._loadJson();
                 return;
-            self.m_loadedMaps = true;
+            }
             require(['async!https://maps.googleapis.com/maps/api/js?libraries=places'], function (e) {
                 self._initMap();
                 google.maps.LatLng.prototype.destinationPoint = function (brng, dist) {
@@ -282,6 +284,9 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
 
                     return new google.maps.LatLng(lat2.toDeg(), lon2.toDeg());
                 };
+                self._loadJson();
+                self.m_loadedMaps = true;
+                return;
             });
 
             $('.log-data').click(function () {
@@ -289,12 +294,17 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             });
 
             $('.clear-map').click(function () {
-                for (var i = 0; i < self.m_mapPoints.length; ++i) {
-                    var point = self.m_mapPoints[i];
-                    point.remove();
-                }
-                self.m_mapPoints = [];
+                self._clearMap();
             });
+        },
+
+        _clearMap: function () {
+            var self = this;
+            for (var i = 0; i < self.m_mapPoints.length; ++i) {
+                var point = self.m_mapPoints[i];
+                point.remove();
+            }
+            self.m_mapPoints = [];
         },
 
         /**
@@ -321,18 +331,23 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
                     break;
                 }
             }
+            self.m_markerOnClick = false;
+            BB.comBroker.fire(BB.EVENTS.ADD_LOCATION_POINT, self);
         },
 
         /**
          Select current view which will animate page loading
          @method selectView
-         @params {Boolean} i_addNewMarkerMode if true, we allow a single click to add a new marker in map
+         @params {Object} i_mapData load map data
+         @params {Boolean} i_markerOnClick if true, we allow a single click to add a new marker in map
          **/
-        selectView: function (i_addNewMarkerMode) {
+        selectView: function (i_mapData, i_markerOnClick) {
             var self = this;
-            self.m_addNewMarkerMode = i_addNewMarkerMode;
+            self.m_mapData = i_mapData
+            self.m_markerOnClick = i_markerOnClick;
             self.options.stackView.slideToPage(self, 'right');
         },
+
 
         /**
          Deselect current view which will animate page unloading

@@ -23,15 +23,16 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
 
                 self.m_locationTable = $(Elements.LOCATION_TABLE);
                 self.m_selectRowIndex = -1;
-                self.m_pendingAddNewLocation = -1;
+                self.m_currentIndex = 0;
                 self._initSubPanel(Elements.BLOCK_LOCATION_COMMON_PROPERTIES);
                 self._listenLocationRowDragged();
                 self._listenLocationRowDropped();
                 self._listenAddResource();
                 self._listenRemoveResource();
                 self._listenLocationRowChanged();
-                self._listenNewLocationMapCoordinates();
                 self._listenLiveInputs();
+                self._listenMenuControls();
+                self._listenAddPoint();
 
                 self.m_blockProperty.locationDatatableInit();
                 self.m_googleMapsLocationView = BB.comBroker.getService(BB.SERVICES.GOOGLE_MAPS_LOCATION_VIEW);
@@ -39,13 +40,50 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 /* can set global mode if we wish */
                 //$.fn.editable.defaults.mode = 'inline';
 
-                self.m_actions = {
-                    firstPage: 'beginning',
-                    nextPage: 'next',
-                    prevPage: 'previous',
-                    lastPage: 'last',
-                    selectPage: 'selected'
-                }
+            },
+
+            /**
+             Listen to adding a new point from google maps, and if we pending for addition, take action
+             @method _listenAddPoint
+             @param {Number} i_playerData
+             @return {Number} Unique clientId.
+             **/
+            _listenAddPoint: function () {
+                var self = this;
+                self.m_onNewMapPointHandler = function (e) {
+                    if (!self.m_selected)
+                        return;
+                    var latLng = e.edata;
+                    if (!latLng)
+                        return;
+                    var domPlayerData = self._getBlockPlayerData();
+                    var item = $(domPlayerData).find('GPS').children().last();
+                    $(item).attr('lat', latLng.J).attr('lng', latLng.M);
+                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                    self._populate();
+                };
+                BB.comBroker.listen(BB.EVENTS.ADD_LOCATION_POINT, self.m_onNewMapPointHandler);
+            },
+            /**
+             Listen to location controls, add remove, next, add ...
+             @method _listenMenuControls
+             **/
+            _listenMenuControls: function () {
+                var self = this;
+                self.m_locationControls = function (e) {
+                    if (!self.m_selected)
+                        return;
+                    var buttonType = $(e.target).attr('name') != undefined ? $(e.target).prop('name') : $(e.target).closest('button').attr('name');
+                    if (buttonType == 'removeLocation')
+                        log(buttonType);
+                    if (buttonType == 'previous')
+                        log(buttonType);
+                    if (buttonType == 'next')
+                        log(buttonType);
+                    if (buttonType == 'openLocation')
+                        self._openMap(false);
+                };
+                $(Elements.LOCATION_CONTROLS + ' button').on('click', self.m_locationControls);
             },
 
             /**
@@ -88,38 +126,15 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                             break;
                         }
                     }
-                    log('do..');
-                    return;
 
-
-                    var item = $(domPlayerData).find('GPS').children().last();
-                    $(item).attr('lat', latLng.H).attr('lng', latLng.L);
-                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
-                    self._populateTableLocation(domPlayerData);
-                    self._populateTotalMapLocations(domPlayerData);
+                    //var item = $(domPlayerData).find('GPS').children().last();
+                    //$(item).attr('lat', latLng.H).attr('lng', latLng.L);
+                    //self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                    //self._populateTableLocation(domPlayerData);
+                    //self._populateTotalMapLocations(domPlayerData);
                 };
                 BB.comBroker.listen(BB.EVENTS.LOCATION_LIVE_INPUT_CHANGED, self.m_liveInputChanged);
 
-            },
-
-            /**
-             Listen to when location GPS coords added
-             @method _listenNewLocationMapCoordinates
-             **/
-            _listenNewLocationMapCoordinates: function () {
-                var self = this;
-                self.m_addLocationPoint = function (e) {
-                    if (!self.m_selected)
-                        return;
-                    var domPlayerData = self._getBlockPlayerData();
-                    var latLng = e.edata;
-                    var item = $(domPlayerData).find('GPS').children().last();
-                    $(item).attr('lat', latLng.H).attr('lng', latLng.L);
-                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
-                    self._populateTableLocation(domPlayerData);
-                    self._populateTotalMapLocations(domPlayerData);
-                };
-                BB.comBroker.listen(BB.EVENTS.ADD_LOCATION_POINT, self.m_addLocationPoint);
             },
 
             /**
@@ -169,7 +184,8 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             },
 
             /**
-             Load up property values in the common panel
+             The main functions which renders and loads up the entire property panel with both default resource list
+             as well as map location coordinates list
              @method _populate
              @return none
              **/
@@ -180,7 +196,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 var xSnippetLocation = $(domPlayerData).find('Fixed');
                 var mode = $(xSnippetLocation).attr('mode');
                 self._populateTableDefault(domPlayerData);
-                self._populateTableLocation(domPlayerData);
+                self._populateTableLocation('first');
                 self._populateTotalMapLocations(domPlayerData);
             },
 
@@ -192,17 +208,71 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             _populateTotalMapLocations: function (domPlayerData) {
                 var self = this;
                 var total = $(domPlayerData).find('GPS').children().length;
+                if (total == 0) {
+                    $(Elements.LOCATION_SELECTED).hide();
+                    self.m_currentIndex = 0;
+                } else {
+                    $(Elements.LOCATION_SELECTED).show();
+                }
                 $(Elements.TOTAL_MAP_LOCATIONS).text(total);
             },
 
             /**
-             Load list into the UI for location based content
+             Select specific location and populate both the UI as well scroll map to coordinates
              @method _populateTableLocation
-             @param {Object} i_domPlayerData
+             @param {String} i_index
              **/
-            _populateTableLocation: function (i_domPlayerData) {
+            _populateTableLocation: function (i_index) {
                 var self = this;
-                var rowIndex = 0;
+
+                var domPlayerData = self._getBlockPlayerData();
+                var total = $(domPlayerData).find('GPS').children().length;
+                var item;
+
+                // no locations, done!
+                if (total == 0) {
+                    self._populateTotalMapLocations(domPlayerData);
+                    return;
+                }
+
+                // load location
+                switch (i_index) {
+                    case 'first':
+                    {
+                        self.m_currentIndex = 0;
+                        item = $(domPlayerData).find('GPS').children().first();
+                        break;
+                    }
+                    case 'last':
+                    {
+                        self.m_currentIndex = total - 1;
+                        item = $(domPlayerData).find('GPS').children().last();
+                        break;
+                    }
+                    case 'next':
+                    {
+                        if (self.m_currentIndex == (total - 1)) {
+                            item = $(domPlayerData).find('GPS').children().last();
+                        } else {
+                            self.m_currentIndex++;
+                            item = $(domPlayerData).find('GPS').children().get(self.m_currentIndex);
+                        }
+                        break;
+                    }
+                    case 'prev':
+                    {
+                        if (self.m_currentIndex == 0) {
+                            item = $(domPlayerData).find('GPS').children().first();
+                        } else {
+                            self.m_currentIndex--;
+                            item = $(domPlayerData).find('GPS').children().get(self.m_currentIndex);
+                        }
+                        break;
+                    }
+                }
+
+                //$(item).attr('lat', latLng.H).attr('lng', latLng.L);
+
             },
 
             /**
@@ -246,11 +316,14 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             _listenAddResource: function () {
                 var self = this;
                 self.m_addNewLocationListItem = function (e) {
+
                     BB.comBroker.stopListenWithNamespace(BB.EVENTS.ADD_NEW_BLOCK_LIST, self);
                     if (!self.m_selected)
                         return;
+
                     self.m_listItemType = $(e.target).attr('name') != undefined ? $(e.target).prop('name') : $(e.target).closest('button').attr('name');
 
+                    // open the Add Block Slider
                     var addBlockLocationView;
                     if (self.m_placement == BB.CONSTS.PLACEMENT_CHANNEL) {
                         addBlockLocationView = BB.comBroker.getService(BB.SERVICES.ADD_BLOCK_VIEW);
@@ -260,6 +333,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     addBlockLocationView.setPlacement(BB.CONSTS.PLACEMENT_LISTS);
                     addBlockLocationView.selectView();
 
+                    // wait for a new resource to be added and once it has, open the Google maps for location insertion
                     BB.comBroker.listenWithNamespace(BB.EVENTS.ADD_NEW_BLOCK_LIST, self, function (e) {
                         if (!self.m_selected)
                             return;
@@ -286,6 +360,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 var buff = '';
                 var locationBuff;
                 var xSnippetLocation;
+
                 switch (type) {
                     case 'addDefault':
                     {
@@ -295,31 +370,18 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     }
                     case 'addLocation':
                     {
-                        locationBuff = 'lat="34.15585218402147" lng="-118.80546569824219" radios="1" priority="0">';
+                        //locationBuff = 'lat="34.15585218402147" lng="-118.80546569824219" radios="1" priority="0">';
+                        locationBuff = 'lat="0" lng="0" radios="1" priority="0">';
                         xSnippetLocation = $(domPlayerData).find('GPS');
-                        self.m_pendingAddNewLocation = 1;
                         BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.m_block_id);
 
                         setTimeout(function () {
-                            self.m_googleMapsLocationView.setPlacement(BB.CONSTS.PLACEMENT_LISTS);
-                            self.m_googleMapsLocationView.selectView(true);
-
-                            /*
-                             setTimeout(function () {
-                             var latLng = {
-                             H: 34.235825108847806,
-                             L: -118.7678074836731
-                             };
-                             self.m_googleMapsLocationView.addPoint(latLng, 0.6, true);
-                             }, 1000);
-                             */
-
+                            self._openMap(true);
+                            self._populate();
                         }, 500);
-
                         break;
                     }
                 }
-
 
                 // log(e.edata.blockCode, e.edata.resourceID, e.edata.sceneID);
                 if (e.edata.blockCode == BB.CONSTS.BLOCKCODE_SCENE) {
@@ -340,26 +402,55 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     var sceneName = $(sceneRecord.player_data_value).attr('label');
                     var nativeID = sceneRecord['native_id'];
                     buff = '<Page page="' + sceneName + '" type="scene" duration="5" ' + locationBuff +
-                        '<Player src="' + nativeID + '" hDataSrc="' + e.edata.sceneID + '" />' +
-                        '</page>';
+                        '       <Player src="' + nativeID + '" hDataSrc="' + e.edata.sceneID + '" />' +
+                        '   </page>';
                 } else {
                     // Add resources to location
                     var resourceName = pepper.getResourceRecord(e.edata.resourceID).resource_name;
                     log('updating hResource ' + e.edata.resourceID);
                     buff = '<Page page="' + resourceName + '" type="resource" duration="5" ' + locationBuff +
-                        '<Player player="' + e.edata.blockCode + '">' +
-                        '<Data>' +
-                        '<Resource hResource="' + e.edata.resourceID + '" />' +
-                        '</Data>' +
-                        '</Player>' +
-                        '</page>';
+                        '       <Player player="' + e.edata.blockCode + '">' +
+                        '           <Data>' +
+                        '               <Resource hResource="' + e.edata.resourceID + '" />' +
+                        '           </Data>' +
+                        '       </Player>' +
+                        '   </page>';
                 }
+
                 $(xSnippetLocation).append($(buff));
                 domPlayerData = pepper.xmlToStringIEfix(domPlayerData);
                 self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION, true);
 
                 if (type == 'addDefault')
                     BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.m_block_id);
+            },
+
+            /**
+             Open google maps and load it with all current locations
+             @method _openMap
+             @params {Boolean} i_markerOnClick set to true if we are going to expect user to add a new location
+             or false if we just want to open an existing map and not add any new locations
+             **/
+            _openMap: function (i_markerOnClick) {
+                var self = this;
+                var map = {
+                    points: []
+                };
+                var domPlayerData = self._getBlockPlayerData();
+                $(domPlayerData).find('GPS').children().each(function (k, v) {
+                    var point = {
+                        center: {
+                            lat: $(v).attr('lat'),
+                            lng: $(v).attr('lng')
+
+                        },
+                        radius: $(v).attr('radios')
+                    };
+                    map.points.push(point);
+
+                });
+                self.m_googleMapsLocationView.setPlacement(BB.CONSTS.PLACEMENT_LISTS);
+                self.m_googleMapsLocationView.selectView(map, i_markerOnClick);
             },
 
             /**
@@ -444,12 +535,13 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 var self = this;
                 $(Elements.CLASS_ADD_RESOURCE_LOCATION).off('click', self.m_addNewLocationListItem);
                 $(Elements.REMOVE_RESOURCE_FOR_LOCATION).off('click', self.m_removeLocationListItem);
+                $(Elements.LOCATION_CONTROLS + ' button').off('click', self.m_locationControls);
                 BB.comBroker.stopListen(BB.EVENTS.ADD_NEW_BLOCK_LIST); // removing for everyone which is ok, since gets added in real time
                 BB.comBroker.stopListen(BB.EVENTS.LOCATION_ROW_DROP, self.m_locationRowDroppedHandler);
                 BB.comBroker.stopListen(BB.EVENTS.LOCATION_ROW_DRAG, self.m_locationRowDraggedHandler);
                 BB.comBroker.stopListen(BB.EVENTS.LOCATION_ROW_CHANGED, self.m_locationRowChangedHandler);
-                BB.comBroker.stopListen(BB.EVENTS.ADD_LOCATION_POINT, self.m_addLocationPoint);
                 BB.comBroker.stopListen(BB.EVENTS.LOCATION_LIVE_INPUT_CHANGED, self.m_liveInputChanged);
+                BB.comBroker.stopListen(BB.EVENTS.ADD_LOCATION_POINT, self.m_onNewMapPointHandler);
                 self._deleteBlock(i_memoryOnly);
             }
         });

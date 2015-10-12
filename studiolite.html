@@ -2244,30 +2244,30 @@
                                                 </table>
                                             </div>
                                             <hr class="propControlWidth"/>
-                                            <h4 class="panel-title">
+                                            <h4 id="locationControls" class="panel-title">
                                                 <button type="button" name="addLocation"
                                                         title="add a new item" data-localize="empty"
                                                         data-localize-tooltip="addNewItemToolTip"
                                                         class="addResourceToLocation btn btn-default btn-sm"><span
                                                         class="glyphicon glyphicon-plus"></span></button>
-                                                <button id="removeResourceForLocationA" type="button"
+                                                <button type="button" name="removeLocation"
                                                         title="remove item" data-localize="empty"
                                                         data-localize-tooltip="removeItem"
                                                         class="btn btn-default btn-sm"><span
                                                         class="glyphicon glyphicon-minus"></span></button>
-                                                <button id="removeResourceForLocationB" type="button"
+                                                <button type="button" name="previous"
                                                         title="remove item" data-localize="empty"
                                                         data-localize-tooltip="removeItem"
                                                         class="btn btn-default btn-sm"><span
                                                         class="glyphicon glyphicon-chevron-left"></span></button>
-                                                <button id="removeResourceForLocationC" type="button"
+                                                <button type="button" name="next"
                                                         title="remove item" data-localize="empty"
                                                         data-localize-tooltip="removeItem"
                                                         class="btn btn-default btn-sm"><span
                                                         class="glyphicon glyphicon-chevron-right"></span></button>
-                                                <button id="openLocationMap" type="button"
-                                                        title="remove item" data-localize="empty"
-                                                        data-localize-tooltip="removeItem"
+                                                <button type="button" name="openLocation"
+                                                        title="openLocation item" data-localize="empty"
+                                                        data-localize-tooltip="openLocation"
                                                         class="btn btn-default btn-sm"><span
                                                         class="glyphicon glyphicon glyphicon-map-marker"></span></button>
                                             </h4>
@@ -2277,35 +2277,23 @@
                                                 <span id="totalMapLocations">0</span>
                                             </label>
                                             <hr class="hrThin"/>
-                                            <div id="locationResourceName"></div>
-                                            <div id="locationResourceLat"></div>
-                                            <div id="locationResourceLng"></div>
-                                            <!--
-                                            <h5  id="locationResourceName" class="liveRename">none</h5>
-                                            <a id="locationResourceRename" class="liveRenameLink"><i style="color: gray" class="fa fa-pencil"></i></a>
-                                            <input class="liveRenameInput" type="text" data-localize="resourceName" placeholder="resource name" value="">
+                                            <div id="locationSelected" style="display: none">
+                                                <div id="locationResourceName"></div>
+                                                <div id="locationResourceLat"></div>
+                                                <div id="locationResourceLng"></div>
 
-                                            <h5 id="locationsCoordsLanLat">0</h5>
-                                            <a id="locationsCoordsLanLatRename"><i style="color: gray" class="fa fa-pencil"></i></a>
-                                            <input class="locationInput" type="text" data-localize="latitude" placeholder="latitude" value="">
-
-                                            <h5 id="locationsCoordsLanLong">0</h5>
-                                            <a id="locationsCoordsLanLongRename"><i style="color: gray" class="fa fa-pencil"></i></a>
-                                            <input class="locationInput" type="text" data-localize="longitude" placeholder="longitude" value="">
-                                            -->
-                                            <div style="padding-top: 16px">
-                                                <span data-localize="radiusRange">Radius range</span>
-                                                <span id="locationRadiusLabel">100</span>
-                                            </div>
-                                            <div id="locationRadiusWrap" class="propControlWidth">
-                                                <div id="locationRadiusWrapSlider" class="noUi-target noUi-ltr noUi-horizontal noUi-background">
+                                                <div style="padding-top: 16px">
+                                                    <span data-localize="radiusRange">Radius range</span>
+                                                    <span id="locationRadiusLabel">100</span>
                                                 </div>
+                                                <div id="locationRadiusWrap" class="propControlWidth">
+                                                    <div id="locationRadiusWrapSlider" class="noUi-target noUi-ltr noUi-horizontal noUi-background">
+                                                    </div>
+                                                </div>
+                                                <hr class="propControlWidth"/>
+                                                <span data-localize="priorityMeter">priority meter</span>
+                                                <div id="locationPriorityMeter"></div>
                                             </div>
-                                            <hr class="propControlWidth"/>
-                                            <span data-localize="priorityMeter">priority meter</span>
-                                            <div id="locationPriorityMeter"></div>
-
-
                                         </div>
 
                                         <div id="blockYouTubeCommonProperties" style="display: none">

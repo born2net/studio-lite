@@ -122,8 +122,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             self._createMap();
         },
 
-        _loadJson: function () {
+        loadJson: function () {
             var self = this;
+            if (!self.m_loadedMaps)
+                return;
             self._clearMap();
             //var data = JSON.parse(str);
             var points = self.m_mapData.points;
@@ -255,7 +257,6 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             });
         },
 
-
         /**
          Build lists of components, resources and scenes (respectively showing what's needed per placement mode)
          Once an LI is selected proper event fired to announce block is added.
@@ -265,7 +266,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
         _render: function () {
             var self = this;
             if (self.m_loadedMaps) {
-                self._loadJson();
+                self.loadJson();
                 return;
             }
             require(['async!https://maps.googleapis.com/maps/api/js?libraries=places'], function (e) {
@@ -288,8 +289,8 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
 
                     return new google.maps.LatLng(lat2.toDeg(), lon2.toDeg());
                 };
-                self._loadJson();
                 self.m_loadedMaps = true;
+                self.loadJson();
                 return;
             });
 
@@ -348,7 +349,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
          **/
         selectView: function (i_mapData, i_markerOnClick) {
             var self = this;
-            self.m_mapData = i_mapData
+            self.m_mapData = i_mapData;
             self.m_markerOnClick = i_markerOnClick;
             self.options.stackView.slideToPage(self, 'right');
         },
@@ -380,7 +381,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             var self = this;
             if (notCenter)
                 latLng = new google.maps.LatLng(latLng.H, latLng.L);
-            radius = radius || 1;
+            radius = radius || 0.10;
             var newPoint = new self._mapPoint(latLng, radius, self.m_mapPoints, self.m_map);
             self.m_mapPoints.push(newPoint);
         },

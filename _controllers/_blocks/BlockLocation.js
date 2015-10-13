@@ -37,10 +37,8 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
 
                 self.m_blockProperty.locationDatatableInit();
                 self.m_googleMapsLocationView = BB.comBroker.getService(BB.SERVICES.GOOGLE_MAPS_LOCATION_VIEW);
-
                 /* can set global mode if we wish */
                 //$.fn.editable.defaults.mode = 'inline';
-
             },
 
             /**
@@ -55,8 +53,10 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     if (!self.m_selected)
                         return;
                     var latLng = e.edata;
-                    if (!latLng)
+                    if (!latLng){
+                        self.m_pendingAdditionXML = '';
                         return;
+                    }
                     var lat = e.edata.lat;
                     var lng = e.edata.lng;
                     var reLat = new RegExp(":LAT:","ig");
@@ -73,6 +73,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 };
                 BB.comBroker.listen(BB.EVENTS.ADD_LOCATION_POINT, self.m_onNewMapPointHandler);
             },
+
             /**
              Listen to location controls, add remove, next, add ...
              @method _listenMenuControls
@@ -84,7 +85,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                         return;
                     var buttonType = $(e.target).attr('name') != undefined ? $(e.target).prop('name') : $(e.target).closest('button').attr('name');
                     if (buttonType == 'removeLocation')
-                        log(buttonType);
+                        self._removeLocation();
                     if (buttonType == 'previous')
                         self._jumpToLocation('prev');
                     if (buttonType == 'next')
@@ -93,6 +94,23 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                         self._openMap(false);
                 };
                 $(Elements.LOCATION_CONTROLS + ' button').on('click', self.m_locationControls);
+            },
+
+            /**
+             Remove current selected location
+             @method _removeLocation
+             **/
+            _removeLocation: function(){
+                var self = this;
+                var domPlayerData = self._getBlockPlayerData();
+                var total = $(domPlayerData).find('GPS').children().length;
+                if (total==0)
+                    return;
+                $(domPlayerData).find('GPS').children().get(self.m_currentIndex).remove();
+                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION, false);
+                self._openMap(false,true);
+                self._jumpToLocation('first');
+                self._populateTotalMapLocations(domPlayerData);
             },
 
             /**
@@ -135,12 +153,6 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                             break;
                         }
                     }
-
-                    //var item = $(domPlayerData).find('GPS').children().last();
-                    //$(item).attr('lat', latLng.H).attr('lng', latLng.L);
-                    //self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
-                    //self._jumpToLocation(domPlayerData);
-                    //self._populateTotalMapLocations(domPlayerData);
                 };
                 BB.comBroker.listen(BB.EVENTS.LOCATION_LIVE_INPUT_CHANGED, self.m_liveInputChanged);
 
@@ -236,13 +248,11 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 var domPlayerData = self._getBlockPlayerData();
                 var total = $(domPlayerData).find('GPS').children().length;
                 var item;
-
                 // no locations, done!
                 if (total == 0) {
                     self._populateTotalMapLocations(domPlayerData);
                     return;
                 }
-
                 // load location
                 switch (i_index) {
                     case 'first':
@@ -282,7 +292,6 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 self.m_blockProperty.setLocationLiveInput(Elements.LOCATION_RESOURCE_LAT, $(item).attr('lat'));
                 self.m_blockProperty.setLocationLiveInput(Elements.LOCATION_RESOURCE_LNG, $(item).attr('lng'));
                 self.m_googleMapsLocationView.panToPoint($(item).attr('lat'), $(item).attr('lng'));
-
             },
 
             /**
@@ -450,10 +459,10 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             /**
              Open google maps and load it with all current locations
              @method _openMap
-             @params {Boolean} i_markerOnClick set to true if we are going to expect user to add a new location
-             or false if we just want to open an existing map and not add any new locations
+             @params {Boolean} i_markerOnClick set to true if we are going to expect user to add a new location or false if we just want to open an existing map and not add any new locations
+             @params {Boolean} i_reloadData reload the map with fresh data, used when we delete map items and want to force a refresh
              **/
-            _openMap: function (i_markerOnClick) {
+            _openMap: function (i_markerOnClick, i_reloadData) {
                 var self = this;
                 var map = {
                     points: []
@@ -473,6 +482,8 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 });
                 self.m_googleMapsLocationView.setPlacement(BB.CONSTS.PLACEMENT_LISTS);
                 self.m_googleMapsLocationView.selectView(map, i_markerOnClick);
+                if (i_reloadData)
+                    self.m_googleMapsLocationView.loadJson();
             },
 
             /**

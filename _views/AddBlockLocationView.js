@@ -246,9 +246,11 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
 
             google.maps.event.addListener(self.m_map, 'click', function (event) {
                 if (self.m_markerOnClick) {
-                    self.addPoint(event.latLng);
+                    self.addPoint(event.latLng, 0.10);
+                    var lat = event.latLng.lat()
+                    var lng = event.latLng.lng()
                     self.m_markerOnClick = false;
-                    BB.comBroker.fire(BB.EVENTS.ADD_LOCATION_POINT, self, null, event.latLng);
+                    BB.comBroker.fire(BB.EVENTS.ADD_LOCATION_POINT, self, null, {lat: lat, lng: lng});
                 }
             });
         },

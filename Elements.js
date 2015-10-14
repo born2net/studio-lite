@@ -265,6 +265,7 @@ Elements.MSG_BOOTBOX_SELECT_SCENE_FIRST = '#bootBoxSelectSceneFirst';
 Elements.MSG_BOOTBOX_STEPS = '#bootBoxSteps';
 Elements.MSG_BOOTBOX_STUDIO_LITE_ACC = '#bootBoxStudioLiteAcc';
 Elements.MSG_BOOTBOX_SURE_DELETE_CAMPAIGN = '#bootBoxSureDeleteCampaign';
+Elements.MSG_BOOTBOX_SURE_DELETE = '#bootBoxSureDelete';
 Elements.MSG_BOOTBOX_SURE_DELETE_SCENE = '#bootBoxSureDeleteScene';
 Elements.MSG_BOOTBOX_SURE_REMOVE_TIMELINE = '#bootBoxSureRemoveTimeline';
 Elements.MSG_BOOTBOX_WRONG_USER_PASS = '#bootBoxWrongUserOrPass';

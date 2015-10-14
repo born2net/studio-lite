@@ -1,5 +1,5 @@
 /**
- * BlockLocation block resides inside a scene or timeline and manages internal playback of scenes and resources
+ * BlockLocation resides inside a scene or timeline and manages internal playback of scenes and resources
  * @class BlockLocation
  * @extends Block
  * @constructor
@@ -34,6 +34,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 self._listenLiveInputs();
                 self._listenMenuControls();
                 self._listenAddPoint();
+                self._listenRadiusChange();
 
                 self.m_blockProperty.locationDatatableInit();
                 self.m_googleMapsLocationView = BB.comBroker.getService(BB.SERVICES.GOOGLE_MAPS_LOCATION_VIEW);
@@ -53,16 +54,16 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     if (!self.m_selected)
                         return;
                     var latLng = e.edata;
-                    if (!latLng){
+                    if (!latLng) {
                         self.m_pendingAdditionXML = '';
                         return;
                     }
                     var lat = e.edata.lat;
                     var lng = e.edata.lng;
-                    var reLat = new RegExp(":LAT:","ig");
-                    var reLng = new RegExp(":LNG:","ig");
-                    self.m_pendingAdditionXML = self.m_pendingAdditionXML.replace(reLat,lat);
-                    self.m_pendingAdditionXML = self.m_pendingAdditionXML.replace(reLng,lng);
+                    var reLat = new RegExp(":LAT:", "ig");
+                    var reLng = new RegExp(":LNG:", "ig");
+                    self.m_pendingAdditionXML = self.m_pendingAdditionXML.replace(reLat, lat);
+                    self.m_pendingAdditionXML = self.m_pendingAdditionXML.replace(reLng, lng);
                     var domPlayerData = self._getBlockPlayerData();
                     var xSnippetLocation = $(domPlayerData).find('GPS');
                     $(xSnippetLocation).append($(self.m_pendingAdditionXML));
@@ -72,6 +73,28 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     self._jumpToLocation('last');
                 };
                 BB.comBroker.listen(BB.EVENTS.ADD_LOCATION_POINT, self.m_onNewMapPointHandler);
+            },
+
+            /**
+             Listen to changes in radius per selected location
+             @method _listenRadiusChange
+             **/
+            _listenRadiusChange: function () {
+                var self = this;
+                self.m_onRadiusHandler = function (e) {
+                    if (!self.m_selected)
+                        return;
+                    var val = e.edata;
+                    var domPlayerData = self._getBlockPlayerData();
+                    var total = $(domPlayerData).find('GPS').children().length;
+                    if (total == 0)
+                        return;
+                    var item = $(domPlayerData).find('GPS').children().get(self.m_currentIndex);
+                    $(item).attr('radios', val);
+                    self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION, false);
+                    self._googleMap(false, true, false);
+                };
+                BB.comBroker.listen(BB.EVENTS.LOCATION_RADIUS_CHANGED, self.m_onRadiusHandler);
             },
 
             /**
@@ -91,7 +114,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     if (buttonType == 'next')
                         self._jumpToLocation('next');
                     if (buttonType == 'openLocation')
-                        self._openMap(false);
+                        self._googleMap(false, false, true);
                 };
                 $(Elements.LOCATION_CONTROLS + ' button').on('click', self.m_locationControls);
             },
@@ -100,17 +123,22 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
              Remove current selected location
              @method _removeLocation
              **/
-            _removeLocation: function(){
+            _removeLocation: function () {
                 var self = this;
                 var domPlayerData = self._getBlockPlayerData();
                 var total = $(domPlayerData).find('GPS').children().length;
-                if (total==0)
+                if (total == 0)
                     return;
-                $(domPlayerData).find('GPS').children().get(self.m_currentIndex).remove();
-                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION, false);
-                self._openMap(false,true);
-                self._jumpToLocation('first');
-                self._populateTotalMapLocations(domPlayerData);
+
+                bootbox.confirm($(Elements.MSG_BOOTBOX_SURE_DELETE).text(), function (result) {
+                    if (result == true) {
+                        $(domPlayerData).find('GPS').children().get(self.m_currentIndex).remove();
+                        self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION, false);
+                        self._googleMap(false, true, false);
+                        self._jumpToLocation('first');
+                        self._populateTotalMapLocations(domPlayerData);
+                    }
+                });
             },
 
             /**
@@ -138,21 +166,34 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 self.m_liveInputChanged = function (e) {
                     if (!self.m_selected)
                         return;
+                    var reloadMap = false;
                     var domPlayerData = self._getBlockPlayerData();
+                    var total = $(domPlayerData).find('GPS').children().length;
+                    if (total == 0)
+                        return;
+                    var item = $(domPlayerData).find('GPS').children().get(self.m_currentIndex);
                     switch (e.edata.el) {
                         case Elements.LOCATION_RESOURCE_NAME:
                         {
+                            $(item).attr('page', e.edata.value);
                             break;
                         }
                         case Elements.LOCATION_RESOURCE_LAT:
                         {
+                            $(item).attr('lat', e.edata.value);
+                            reloadMap = true;
                             break;
                         }
                         case Elements.LOCATION_RESOURCE_LNG:
                         {
+                            $(item).attr('lng', e.edata.value);
+                            reloadMap = true;
                             break;
                         }
                     }
+                    self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION, false);
+                    if (reloadMap)
+                        self._googleMap(false, true, false);
                 };
                 BB.comBroker.listen(BB.EVENTS.LOCATION_LIVE_INPUT_CHANGED, self.m_liveInputChanged);
 
@@ -222,6 +263,16 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             },
 
             /**
+             Populate the radius UI element
+             @method _populateRadius
+             @param {Object} i_value
+             **/
+            _populateRadius: function (i_value) {
+                var self = this;
+                $(Elements.LOCATION_RADIUS_WRAP_SLIDER).val(i_value);
+            },
+
+            /**
              Populate the total map locations set
              @method _populateTotalMapLocations
              @param {Object} domPlayerData
@@ -288,6 +339,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                         break;
                     }
                 }
+                self._populateRadius($(item).attr('radios'));
                 self.m_blockProperty.setLocationLiveInput(Elements.LOCATION_RESOURCE_NAME, $(item).attr('page'));
                 self.m_blockProperty.setLocationLiveInput(Elements.LOCATION_RESOURCE_LAT, $(item).attr('lat'));
                 self.m_blockProperty.setLocationLiveInput(Elements.LOCATION_RESOURCE_LNG, $(item).attr('lng'));
@@ -397,7 +449,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                         BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.m_block_id);
 
                         setTimeout(function () {
-                            self._openMap(true);
+                            self._googleMap(true, true, true);
                             self._populate();
                         }, 500);
                         break;
@@ -458,11 +510,12 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
 
             /**
              Open google maps and load it with all current locations
-             @method _openMap
+             @method _googleMap
              @params {Boolean} i_markerOnClick set to true if we are going to expect user to add a new location or false if we just want to open an existing map and not add any new locations
              @params {Boolean} i_reloadData reload the map with fresh data, used when we delete map items and want to force a refresh
+             @params {Boolean} i_loadStackView animate the slider StackView into position
              **/
-            _openMap: function (i_markerOnClick, i_reloadData) {
+            _googleMap: function (i_markerOnClick, i_reloadData, i_loadStackView) {
                 var self = this;
                 var map = {
                     points: []
@@ -480,8 +533,12 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     map.points.push(point);
 
                 });
+                self.m_googleMapsLocationView.setData(map);
                 self.m_googleMapsLocationView.setPlacement(BB.CONSTS.PLACEMENT_LISTS);
-                self.m_googleMapsLocationView.selectView(map, i_markerOnClick);
+
+                if (i_loadStackView) {
+                    self.m_googleMapsLocationView.selectView(i_markerOnClick);
+                }
                 if (i_reloadData)
                     self.m_googleMapsLocationView.loadJson();
             },
@@ -502,11 +559,16 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                         bootbox.alert($(Elements.MSG_BOOTBOX_NO_ITEM_SELECTED).text());
                         return;
                     }
-                    var rowIndex = $('input[name=btSelectItem]:checked', Elements.LOCATION_TABLE).closest('tr').attr('data-index');
-                    var domPlayerData = self._getBlockPlayerData();
-                    $(domPlayerData).find('Fixed').children().get(rowIndex).remove();
-                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
-                    self._populateTableDefault(domPlayerData);
+
+                    bootbox.confirm($(Elements.MSG_BOOTBOX_SURE_DELETE).text(), function (result) {
+                        if (result == true) {
+                            var rowIndex = $('input[name=btSelectItem]:checked', Elements.LOCATION_TABLE).closest('tr').attr('data-index');
+                            var domPlayerData = self._getBlockPlayerData();
+                            $(domPlayerData).find('Fixed').children().get(rowIndex).remove();
+                            self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                            self._populateTableDefault(domPlayerData);
+                        }
+                    });
                 };
                 $(Elements.REMOVE_RESOURCE_FOR_LOCATION).on('click', self.m_removeLocationListItem);
             },
@@ -575,6 +637,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 BB.comBroker.stopListen(BB.EVENTS.LOCATION_ROW_CHANGED, self.m_locationRowChangedHandler);
                 BB.comBroker.stopListen(BB.EVENTS.LOCATION_LIVE_INPUT_CHANGED, self.m_liveInputChanged);
                 BB.comBroker.stopListen(BB.EVENTS.ADD_LOCATION_POINT, self.m_onNewMapPointHandler);
+                BB.comBroker.stopListen(BB.EVENTS.LOCATION_RADIUS_CHANGED, self.m_onRadiusHandler);
                 self._deleteBlock(i_memoryOnly);
             }
         });

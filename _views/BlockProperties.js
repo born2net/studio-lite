@@ -544,16 +544,16 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
             var self = this;
             $(Elements.LOCATION_RADIUS_WRAP_SLIDER).noUiSlider({
                 handles: 1,
-                start: 100,
-                step: 1,
-                range: [0, 100],
+                start: 1,
+                step: 0.10,
+                range: [0.10, 10],
                 serialization: {
                     to: [$(Elements.LOCATION_RADIUS_LABEL), 'text']
                 }
             });
             self.m_locationRadiusHandle = $(Elements.LOCATION_RADIUS_WRAP_SLIDER).on('change', function (e) {
-                var volume = parseFloat($(Elements.LOCATION_RADIUS_WRAP_SLIDER).val()) / 100;
-                BB.comBroker.fire(BB.EVENTS.LOCATION_RADIUS_CHANGED, this, self, volume);
+                var val = $(Elements.LOCATION_RADIUS_WRAP_SLIDER).val();
+                BB.comBroker.fire(BB.EVENTS.LOCATION_RADIUS_CHANGED, this, self, val);
                 return false;
             });
         },

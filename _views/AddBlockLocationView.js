@@ -347,13 +347,21 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
          @params {Object} i_mapData load map data
          @params {Boolean} i_markerOnClick if true, we allow a single click to add a new marker in map
          **/
-        selectView: function (i_mapData, i_markerOnClick) {
+        selectView: function (i_markerOnClick) {
             var self = this;
-            self.m_mapData = i_mapData;
             self.m_markerOnClick = i_markerOnClick;
             self.options.stackView.slideToPage(self, 'right');
         },
 
+        /**
+         Set current map data (we dont actaully render it yet, just get it ready)
+         @method selectView
+         @params {Object} i_mapData load map data
+         **/
+        setData: function (i_mapData) {
+            var self = this;
+            self.m_mapData = i_mapData;
+        },
 
         /**
          Deselect current view which will animate page unloading

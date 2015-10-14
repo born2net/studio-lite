@@ -19,6 +19,30 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
     BB.EVENTS.GRADIENT_COLOR_CHANGED = 'GRADIENT_COLOR_CHANGED';
 
     /**
+     Custom YouTube event fired when bar meter changed event
+     @event YOUTUBE_METER_QUALITY_CHANGED
+     @param {This} caller
+     @param {Self} context caller
+     @param {Event}
+     @static
+     @final
+     **/
+    BB.EVENTS.YOUTUBE_METER_QUALITY_CHANGED = 'YOUTUBE_METER_QUALITY_CHANGED';
+
+
+    /**
+     Custom Location priority event fired when bar meter changed event
+     @event LOCATION_PRIORITY_METER_CHANGED
+     @param {This} caller
+     @param {Self} context caller
+     @param {Event}
+     @static
+     @final
+     **/
+    BB.EVENTS.LOCATION_PRIORITY_METER_CHANGED = 'LOCATION_PRIORITY_METER_CHANGED';
+
+
+    /**
      Custom event fired when gradient color selection picker closed
      @event GRADIENT_COLOR_CLOSED
      @param {this} caller
@@ -498,15 +522,6 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         },
 
         /**
-         Init the location priority widget
-         @method _locationPriorityInit
-         **/
-        _locationPriorityInit: function () {
-            var self = this;
-            self.m_locationPriorityMeter = new BarMeterView({el: Elements.LOCATION_PRIORITY_METER});
-        },
-
-        /**
          Bind to location Live Inputs widgets
          @method _locationLiveInputs
          **/
@@ -648,7 +663,22 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
          **/
         _youtubeInit: function () {
             var self = this;
-            self.m_youtubeQualityMeter = new BarMeterView({el: Elements.YOUTUBE_QUALITY_METER});
+            self.m_youtubeQualityMeter = new BarMeterView({
+                el: Elements.YOUTUBE_QUALITY_METER,
+                customEvent: BB.EVENTS.YOUTUBE_METER_QUALITY_CHANGED
+            });
+        },
+
+        /**
+         Init the location priority widget
+         @method _locationPriorityInit
+         **/
+        _locationPriorityInit: function () {
+            var self = this;
+            self.m_locationPriorityMeter = new BarMeterView({
+                el: Elements.LOCATION_PRIORITY_METER,
+                customEvent: BB.EVENTS.LOCATION_PRIORITY_METER_CHANGED
+            });
         },
 
         /**
@@ -799,6 +829,16 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         getYouTubeQualityMeter: function () {
             var self = this;
             return self.m_youtubeQualityMeter;
+        },
+
+        /**
+         Returns the instance of location priority meter
+         @method getLocationPriorityMeter
+         @return {Object} m_locationPriorityMeter instance
+         **/
+        getLocationPriorityMeter: function () {
+            var self = this;
+            return self.m_locationPriorityMeter;
         },
 
         /**

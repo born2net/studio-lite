@@ -35,11 +35,47 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 self._listenMenuControls();
                 self._listenAddPoint();
                 self._listenRadiusChange();
+                self._listenPriorityChange();
 
                 self.m_blockProperty.locationDatatableInit();
                 self.m_googleMapsLocationView = BB.comBroker.getService(BB.SERVICES.GOOGLE_MAPS_LOCATION_VIEW);
+                self.m_locationPriorityMeter = self.m_blockProperty.getLocationPriorityMeter();
+
                 /* can set global mode if we wish */
                 //$.fn.editable.defaults.mode = 'inline';
+            },
+
+            /**
+             Listen to changes in priority
+             @method _listenPriorityChange
+             **/
+            _listenPriorityChange: function () {
+                var self = this;
+                self.m_inputPriorityHandler = function (e) {
+                    if (!self.m_selected)
+                        return;
+                    var domPlayerData = self._getBlockPlayerData();
+                    var value = e.edata;
+                    console.log('get value ' + value);
+                    var total = $(domPlayerData).find('GPS').children().length;
+                    if (total == 0)
+                        return;
+                    var item = $(domPlayerData).find('GPS').children().get(self.m_currentIndex);
+                    $(item).attr('priority', value);
+                    self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION, false);
+                };
+                BB.comBroker.listen(BB.EVENTS.LOCATION_PRIORITY_METER_CHANGED, self.m_inputPriorityHandler);
+            },
+
+            /**
+             Populate the priority widget
+             @method _populatePriority
+             @param {Number} i_value
+             **/
+            _populatePriority: function (i_value) {
+                var self = this;
+                //$(Elements.YOUTUBE_VOLUME_WRAP_SLIDER).val(i_value);
+                self.m_locationPriorityMeter.setMeter(i_value);
             },
 
             /**
@@ -340,6 +376,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     }
                 }
                 self._populateRadius($(item).attr('radios'));
+                self._populatePriority($(item).attr('priority'));
                 self.m_blockProperty.setLocationLiveInput(Elements.LOCATION_RESOURCE_NAME, $(item).attr('page'));
                 self.m_blockProperty.setLocationLiveInput(Elements.LOCATION_RESOURCE_LAT, $(item).attr('lat'));
                 self.m_blockProperty.setLocationLiveInput(Elements.LOCATION_RESOURCE_LNG, $(item).attr('lng'));
@@ -443,11 +480,9 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     }
                     case 'addLocation':
                     {
-                        //locationBuff = 'lat="34.15585218402147" lng="-118.80546569824219" radios="1" priority="0">';
-                        locationBuff = 'lat=":LAT:" lng=":LNG:" radios="1" priority="0">';
+                        locationBuff = 'lat=":LAT:" lng=":LNG:" radios="1" priority="1">';
                         xSnippetLocation = $(domPlayerData).find('GPS');
                         BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.m_block_id);
-
                         setTimeout(function () {
                             self._googleMap(true, true, true);
                             self._populate();
@@ -638,6 +673,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 BB.comBroker.stopListen(BB.EVENTS.LOCATION_LIVE_INPUT_CHANGED, self.m_liveInputChanged);
                 BB.comBroker.stopListen(BB.EVENTS.ADD_LOCATION_POINT, self.m_onNewMapPointHandler);
                 BB.comBroker.stopListen(BB.EVENTS.LOCATION_RADIUS_CHANGED, self.m_onRadiusHandler);
+                BB.comBroker.stopListen(BB.EVENTS.LOCATION_PRIORITY_METER_CHANGED, self.m_inputPriorityHandler);
                 self._deleteBlock(i_memoryOnly);
             }
         });

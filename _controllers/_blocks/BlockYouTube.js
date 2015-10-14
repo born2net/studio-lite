@@ -177,16 +177,15 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         },
 
         /**
-         Listen to changes in youtube quality bar meter module
-         @method _listenQualityChange
+         Listen to changes in volume control
+         @method _listenVolumeChange
          **/
         _listenQualityChange: function () {
             var self = this;
-            BB.comBroker.listenWithNamespace(BB.EVENTS.BAR_METER_CHANGED, self, function (e) {
-                if (!self.m_selected || e.caller !== self.m_youtubeQualityMeter)
+            self.m_inputQualityHandler = function (e) {
+                if (!self.m_selected)
                     return;
                 var value = e.edata;
-
                 switch (value) {
                     case 1:
                     {
@@ -217,7 +216,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var domPlayerData = self._getBlockPlayerData();
                 $(domPlayerData).find('YouTube').attr('quality', value);
                 self._setBlockPlayerData(domPlayerData);
-            });
+            };
+            BB.comBroker.listen(BB.EVENTS.YOUTUBE_METER_QUALITY_CHANGED, self.m_inputQualityHandler);
         },
 
         /**
@@ -375,7 +375,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             $(Elements.YOUTUBE_COUNTRY_LIST_DROPDOWN).off('click', self.m_countryListChange);
             $(Elements.YOUTUBE_LIST_ADD).off('click', self.m_addVideoID);
             $(Elements.CLASS_YOUTUBE_VIDEO_ID_REMOVE).off('click', self.m_removeVideoID);
-            BB.comBroker.stopListenWithNamespace(BB.EVENTS.BAR_METER_CHANGED, self);
+            BB.comBroker.stopListen(BB.EVENTS.YOUTUBE_METER_QUALITY_CHANGED, self.m_inputQualityHandler);
             BB.comBroker.stopListen(BB.EVENTS.YOUTUBE_VOLUME_CHANGED, self.m_inputVolumeHandler);
             self._deleteBlock(i_memoryOnly);
         }

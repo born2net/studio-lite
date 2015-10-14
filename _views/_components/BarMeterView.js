@@ -6,27 +6,18 @@
  **/
 define(['jquery', 'backbone'], function ($, Backbone) {
 
-    /**
-     Custom event fired when bar meter changed event
-     @event BAR_METER_CHANGED
-     @param {This} caller
-     @param {Self} context caller
-     @param {Event}
-     @static
-     @final
-     **/
-    BB.EVENTS.BAR_METER_CHANGED = 'BAR_METER_CHANGED';
-
     var BarMeterView = Backbone.View.extend({
 
         /**
          Constructor
          @method initialize
          **/
-        initialize: function () {
+        initialize: function (options) {
             var self = this;
 
             self.CHANGED_METER_BAR = 'CHANGED_METER_BAR';
+
+            self.m_options = options;
 
             var snippet = '<div>';
             snippet += '        <i class="barMeterDown fa fa-caret-left"/>';
@@ -55,8 +46,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _listenUp: function () {
             var self = this;
             $(self.m_buttonUp).on('click', function (e) {
-                self.setMeter(self.m_value == 5 ? 5 : (self.m_value + 1));
-                BB.comBroker.fire(BB.EVENTS.BAR_METER_CHANGED, self, self, self.m_value);
+                self.setMeter(self.m_value == 5 ? 5 : (Number(self.m_value) + 1));
+                self.trigger(self.CHANGED_METER_BAR, self.m_value);
+                if (self.m_options.customEvent)
+                    BB.comBroker.fire(self.m_options.customEvent, self, self, self.m_value);
                 return false;
             })
         },
@@ -68,8 +61,10 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _listenDown: function () {
             var self = this;
             $(self.m_buttonDown).on('click', function (e) {
-                self.setMeter(self.m_value == 1 ? 1 : (self.m_value - 1));
-                BB.comBroker.fire(BB.EVENTS.BAR_METER_CHANGED, self, self, self.m_value);
+                self.setMeter(self.m_value == 1 ? 1 : (Number(self.m_value) - 1));
+                self.trigger(self.CHANGED_METER_BAR, self.m_value);
+                if (self.m_options.customEvent)
+                    BB.comBroker.fire(self.m_options.customEvent, self, self, self.m_value);
             })
         },
 

@@ -74,7 +74,15 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
                     radius: radius * 1000,       // Convert to meters
                     fillColor: '#FF0000',
                     fillOpacity: 0.2,
-                    map: map
+                    map: map,
+                    clickable: true,
+                    editable: false
+                });
+
+                google.maps.event.addListener(self.circle, 'click', function(event) {
+                    var lat = event.latLng.lat()
+                    var lng = event.latLng.lng()
+                    console.log('within range ' + lat + ' ' + lng);
                 });
 
                 // Show marker at circle center
@@ -247,10 +255,11 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             });
 
             google.maps.event.addListener(self.m_map, 'click', function (event) {
+                var lat = event.latLng.lat();
+                var lng = event.latLng.lng();
+                console.log('out of range ' + lat + ' ' + lng);
                 if (self.m_markerOnClick) {
                     self.addPoint(event.latLng, 0.10);
-                    var lat = event.latLng.lat()
-                    var lng = event.latLng.lng()
                     self.m_markerOnClick = false;
                     BB.comBroker.fire(BB.EVENTS.ADD_LOCATION_POINT, self, null, {lat: lat, lng: lng});
                 }

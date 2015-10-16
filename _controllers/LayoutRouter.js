@@ -390,7 +390,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                         to: Elements.CAMPAIGN_SELECTOR,
                         placement: BB.CONSTS.PLACEMENT_CHANNEL
                     });
-                    BB.comBroker.setService(BB.SERVICES.GOOGLE_MAPS_LOCATION_VIEW, self.m_addBlockLocationView);
+                    BB.comBroker.setService(BB.SERVICES.ADD_BLOCK_LOCATION_VIEW, self.m_addBlockLocationView);
 
                     self.m_screenLayoutEditorView = new ScreenLayoutEditorView({
                         stackView: self.m_campaignSliderStackView,

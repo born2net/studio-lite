@@ -3892,6 +3892,11 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
     z-index: 2; /* over other stuff */
 }
 
+
+#googleMapsLocation #prev {
+    position: relative;
+    top: -30px;
+}
 #importSceneList img {
     cursor: pointer;
     opacity: 0.8;

@@ -7,7 +7,7 @@
 define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', 'async'], function ($, Backbone, StackView, ScreenTemplateFactory, Bootbox, async) {
 
     /** SERVICES **/
-    BB.SERVICES.GOOGLE_MAPS_LOCATION_VIEW = 'googleMapsLocationView';
+    BB.SERVICES.ADD_BLOCK_LOCATION_VIEW = 'googleMapsLocationView';
 
     var AddBlockLocationView = BB.View.extend({
 
@@ -22,7 +22,9 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             self.m_placement = options.placement;
             self.m_loadedMaps = false;
             self.m_markerOnClick = false;
+            self.m_simulationMode = false;
             self.m_mapData = {points: []};
+            self._listenStationRefresh();
 
             // Clone the AddBlockTemplate
             var e = $(Elements.ADD_BLOCK_LOCATION_TEMPLATE).clone();
@@ -41,8 +43,15 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             });
         },
 
-        _initMap: function () {
+        _listenStationRefresh: function () {
             var self = this;
+            $('button', Elements.LOCATION_SIMULATION_PROPS).on('click', function () {
+                self._loadStationList();
+            });
+        },
+
+        _initMap: function () {
+            var self = addBlockLocationInstance = this;
 
             Number.prototype.toRad = function () {
                 return this * Math.PI / 180;
@@ -79,10 +88,14 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
                     editable: false
                 });
 
-                google.maps.event.addListener(self.circle, 'click', function(event) {
-                    var lat = event.latLng.lat()
-                    var lng = event.latLng.lng()
-                    console.log('within range ' + lat + ' ' + lng);
+                google.maps.event.addListener(self.circle, 'click', function (event) {
+                    var lat = event.latLng.lat();
+                    var lng = event.latLng.lng();
+                    if (addBlockLocationInstance.m_simulationMode) {
+                        console.log('within range ' + lat + ' ' + lng);
+                        addBlockLocationInstance._simulateEvent(lat, lng, true);
+                    }
+
                 });
 
                 // Show marker at circle center
@@ -93,56 +106,41 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
 
                 // UI
                 /*
-                var tmpl = document.getElementById('map-point');
-                document.getElementById("map-points").appendChild(tmpl.content.cloneNode(true));
-                self.$el = $('#map-points li:last');
+                 var tmpl = document.getElementById('map-point');
+                 document.getElementById("map-points").appendChild(tmpl.content.cloneNode(true));
+                 self.$el = $('#map-points li:last');
 
-                self.$el.find('.p-center').html(this.circle.getCenter().toUrlValue());
+                 self.$el.find('.p-center').html(this.circle.getCenter().toUrlValue());
 
-                self.$el.find('.remove').click(function () {
-                    self.remove();
-                    mapPoints.splice(mapPoints.indexOf(self), 1);
-                });
+                 self.$el.find('.remove').click(function () {
+                 self.remove();
+                 mapPoints.splice(mapPoints.indexOf(self), 1);
+                 });
 
-                // radius slider
-                $('#map-points li:last .radius-slider').slider({
-                    formatter: function (value) {
-                        return 'Current value: ' + value;
-                    }
-                }).on('change', function (event) {
-                    self.circle.setRadius(event.value.newValue);
-                });
+                 // radius slider
+                 $('#map-points li:last .radius-slider').slider({
+                 formatter: function (value) {
+                 return 'Current value: ' + value;
+                 }
+                 }).on('change', function (event) {
+                 self.circle.setRadius(event.value.newValue);
+                 });
 
-                self.$el.find('.radius-slider').on('change', function (e) {
-                    var a = $(e.target).val();
-                    self.circle.setRadius(Number(a));
-                });
+                 self.$el.find('.radius-slider').on('change', function (e) {
+                 var a = $(e.target).val();
+                 self.circle.setRadius(Number(a));
+                 });
 
-                // pan to point
-                self.$el.click(function () {
-                    map.panTo(self.circle.getCenter());
+                 // pan to point
+                 self.$el.click(function () {
+                 map.panTo(self.circle.getCenter());
 
-                    $('#map-points li').css('background-color', '#FFF');
-                    $(this).css('background-color', '#ACF19A');
-                });
-                */
+                 $('#map-points li').css('background-color', '#FFF');
+                 $(this).css('background-color', '#ACF19A');
+                 });
+                 */
             };
             self._createMap();
-        },
-
-        loadJson: function () {
-            var self = this;
-            if (!self.m_loadedMaps)
-                return;
-            self._clearMap();
-            //var data = JSON.parse(str);
-            var points = self.m_mapData.points;
-            for (var i = 0; i < points.length; ++i) {
-                var point = points[i];
-                var center = new google.maps.LatLng(point.center.lat, point.center.lng);
-                var radius = point.radius;
-                self.addPoint(center, radius);
-            }
         },
 
         _pointData: function () {
@@ -257,7 +255,11 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             google.maps.event.addListener(self.m_map, 'click', function (event) {
                 var lat = event.latLng.lat();
                 var lng = event.latLng.lng();
-                console.log('out of range ' + lat + ' ' + lng);
+                if (self.m_simulationMode) {
+                    console.log('out of range ' + lat + ' ' + lng);
+                    self._simulateEvent(lat, lng, false);
+                    return;
+                }
                 if (self.m_markerOnClick) {
                     self.addPoint(event.latLng, 0.10);
                     self.m_markerOnClick = false;
@@ -280,6 +282,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             }
             require(['async!https://maps.googleapis.com/maps/api/js?libraries=places'], function (e) {
                 self._initMap();
+                self._loadStationList();
                 google.maps.LatLng.prototype.destinationPoint = function (brng, dist) {
                     dist = dist / 6371;
                     brng = brng.toRad();
@@ -304,12 +307,12 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             });
 
             /*
-            $('.log-data').click(function () {
-                console.log(JSON.stringify(self._pointData()));
-            });
-            $('.clear-map').click(function () {
-                self._clearMap();
-            });
+             $('.log-data').click(function () {
+             console.log(JSON.stringify(self._pointData()));
+             });
+             $('.clear-map').click(function () {
+             self._clearMap();
+             });
              */
         },
 
@@ -320,6 +323,47 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
                 point.remove();
             }
             self.m_mapPoints = [];
+        },
+
+        _simulateEvent: function (lat, lng, inRange) {
+            var self = this;
+            var e = lat + '_' + lng;
+            var station_id = $('select', Elements.LOCATION_SIMULATION_PROPS).find('option:selected').attr('value');
+            $messages = $('h5', Elements.LOCATION_SIMULATION_PROPS);
+            if (inRange) {
+                $messages.css({color: 'green'});
+            } else {
+                $messages.css({color: 'red'});
+            }
+            $messages.eq(0).text('Sending...');
+            $messages.eq(1).text(lng);
+            $messages.eq(2).text(lat);
+            BB.Pepper.sendEvent(e, station_id, function (e) {
+                $messages.eq(0).text('Waiting...');
+                $messages.eq(1).text('none');
+                $messages.eq(2).text('none');
+                $messages.css({color: 'gray'});
+                if (e.ret != 'success') {
+                }
+            });
+        },
+
+        _loadStationList: function () {
+            var self = this;
+            var userData = pepper.getUserData();
+            var url = window.g_protocol + userData.domain + '/WebService/getStatus.ashx?user=' + userData.userName + '&password=' + userData.userPass + '&callback=?';
+            $('select', Elements.LOCATION_SIMULATION_PROPS).children().remove();
+            $.getJSON(url, function (data) {
+                var s64 = data['ret'];
+                var str = $.base64.decode(s64);
+                var xml = $.parseXML(str);
+                $(xml).find('Station').each(function (key, value) {
+                    var stationID = $(value).attr('id');
+                    var stationName = $(value).attr('name');
+                    var buff = '<option value="' + stationID + '">' + stationName + '</option>'
+                    $('SELECT', Elements.LOCATION_SIMULATION_PROPS).append(buff);
+                });
+            });
         },
 
         /**
@@ -348,6 +392,21 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             }
             self.m_markerOnClick = false;
             BB.comBroker.fire(BB.EVENTS.ADD_LOCATION_POINT, self);
+        },
+
+        loadJson: function () {
+            var self = this;
+            if (!self.m_loadedMaps)
+                return;
+            self._clearMap();
+            //var data = JSON.parse(str);
+            var points = self.m_mapData.points;
+            for (var i = 0; i < points.length; ++i) {
+                var point = points[i];
+                var center = new google.maps.LatLng(point.center.lat, point.center.lng);
+                var radius = point.radius;
+                self.addPoint(center, radius);
+            }
         },
 
         /**
@@ -394,6 +453,11 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             self.m_placement = self.options.placement = i_placement;
         },
 
+        simulationMode: function (i_mode) {
+            var self = this;
+            self.m_simulationMode = i_mode;
+        },
+
         addPoint: function (latLng, radius, notCenter) {
             var self = this;
             if (notCenter)
@@ -403,7 +467,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             self.m_mapPoints.push(newPoint);
         },
 
-        panToPoint: function(lat, lng){
+        panToPoint: function (lat, lng) {
             var self = this;
             if (!self.m_map)
                 return;

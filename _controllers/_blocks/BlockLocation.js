@@ -36,9 +36,10 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 self._listenAddPoint();
                 self._listenRadiusChange();
                 self._listenPriorityChange();
+                self._listenModeChange();
 
                 self.m_blockProperty.locationDatatableInit();
-                self.m_googleMapsLocationView = BB.comBroker.getService(BB.SERVICES.GOOGLE_MAPS_LOCATION_VIEW);
+                self.m_addBlockLocationView = BB.comBroker.getService(BB.SERVICES.ADD_BLOCK_LOCATION_VIEW);
                 self.m_locationPriorityMeter = self.m_blockProperty.getLocationPriorityMeter();
 
                 /* can set global mode if we wish */
@@ -380,7 +381,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 self.m_blockProperty.setLocationLiveInput(Elements.LOCATION_RESOURCE_NAME, $(item).attr('page'));
                 self.m_blockProperty.setLocationLiveInput(Elements.LOCATION_RESOURCE_LAT, $(item).attr('lat'));
                 self.m_blockProperty.setLocationLiveInput(Elements.LOCATION_RESOURCE_LNG, $(item).attr('lng'));
-                self.m_googleMapsLocationView.panToPoint($(item).attr('lat'), $(item).attr('lng'));
+                self.m_addBlockLocationView.panToPoint($(item).attr('lat'), $(item).attr('lng'));
             },
 
             /**
@@ -544,6 +545,32 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             },
 
             /**
+             Listen to mode change between simulation mode and real mode
+             @method _listenModeChange
+             **/
+            _listenModeChange: function () {
+                var self = this;
+                self.sliderInput = function () {
+                    if (!self.m_selected)
+                        return;
+                    var mode = $(Elements.LOCATION_SIMULATION_MODE).prop('checked');
+                    self.m_addBlockLocationView.simulationMode(mode);
+                    if (mode){
+                        $(Elements.LOCATION_SIMULATION_PROPS).slideDown();
+                    } else {
+                        $(Elements.LOCATION_SIMULATION_PROPS).slideUp();
+                    }
+                    return;
+                    self._populateModeSliderUI(mode);
+                    var domPlayerData = self._getBlockPlayerData();
+                    $(domPlayerData).find('Collection').attr('mode', mode ? 'kiosk' : 'slideshow');
+                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                    self._populateTableEvents(domPlayerData);
+                };
+                $(Elements.LOCATION_SIMULATION_MODE).on('change', self.sliderInput);
+            },
+
+            /**
              Open google maps and load it with all current locations
              @method _googleMap
              @params {Boolean} i_markerOnClick set to true if we are going to expect user to add a new location or false if we just want to open an existing map and not add any new locations
@@ -568,14 +595,14 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     map.points.push(point);
 
                 });
-                self.m_googleMapsLocationView.setData(map);
-                self.m_googleMapsLocationView.setPlacement(BB.CONSTS.PLACEMENT_LISTS);
+                self.m_addBlockLocationView.setData(map);
+                self.m_addBlockLocationView.setPlacement(BB.CONSTS.PLACEMENT_LISTS);
 
                 if (i_loadStackView) {
-                    self.m_googleMapsLocationView.selectView(i_markerOnClick);
+                    self.m_addBlockLocationView.selectView(i_markerOnClick);
                 }
                 if (i_reloadData)
-                    self.m_googleMapsLocationView.loadJson();
+                    self.m_addBlockLocationView.loadJson();
             },
 
             /**
@@ -666,6 +693,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 $(Elements.CLASS_ADD_RESOURCE_LOCATION).off('click', self.m_addNewLocationListItem);
                 $(Elements.REMOVE_RESOURCE_FOR_LOCATION).off('click', self.m_removeLocationListItem);
                 $(Elements.LOCATION_CONTROLS + ' button').off('click', self.m_locationControls);
+                $(Elements.LOCATION_SIMULATION_MODE).off('change', self.sliderInput);
                 BB.comBroker.stopListen(BB.EVENTS.ADD_NEW_BLOCK_LIST); // removing for everyone which is ok, since gets added in real time
                 BB.comBroker.stopListen(BB.EVENTS.LOCATION_ROW_DROP, self.m_locationRowDroppedHandler);
                 BB.comBroker.stopListen(BB.EVENTS.LOCATION_ROW_DRAG, self.m_locationRowDraggedHandler);

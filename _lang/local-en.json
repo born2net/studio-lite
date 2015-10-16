@@ -21,6 +21,7 @@
   "addNewItemToolTip": "add a new item",
   "removeItem": "remove item",
   "kioskMode": "kiosk mode",
+  "simulationMode": "simulation mode",
   "playSequential": "Play this list in a sequential order",
   "seconds": "seconds",
   "name": "name",

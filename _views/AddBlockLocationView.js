@@ -43,6 +43,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             });
         },
 
+        /**
+         Listen stations refresh so we rebuild list of available station in the drop down selection
+         @method _listenStationRefresh
+         **/
         _listenStationRefresh: function () {
             var self = this;
             $('button', Elements.LOCATION_SIMULATION_PROPS).on('click', function () {
@@ -50,17 +54,22 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             });
         },
 
+        /**
+         Init the google map module. We also create a class for _mapPoint which when it gets instantiated
+         internally holds a reference to it's own coordinates as well as Marker and Circle.
+         Once we do a new on _mapPoint we insert it into an array of m_mapPoints so we can hold
+         a reference to all points in a map (used for example when we want to clear the map so
+         we can cycle through the points and remove them).
+         @method _initMap
+         **/
         _initMap: function () {
             var self = addBlockLocationInstance = this;
-
             Number.prototype.toRad = function () {
                 return this * Math.PI / 180;
             };
-
             Number.prototype.toDeg = function () {
                 return this * 180 / Math.PI;
             };
-
             self._mapPoint = function (latLng, radius, mapPoints, map) {
                 var self = this;
                 self.$el;
@@ -75,7 +84,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
                     self.marker.setMap(null);
                     // remove UI
                     // self.$el.remove();
-                }
+                };
 
                 // Draw the circle
                 self.circle = new google.maps.Circle({
@@ -143,6 +152,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             self._createMap();
         },
 
+        /**
+         Get all pointData (deprecated)
+         @method _pointData
+         **/
         _pointData: function () {
             var self = this;
             var data = {
@@ -160,7 +173,8 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
         },
 
         /**
-         Clear entite map
+         Create the google map and listen to corresponding events such map clicks (not within a circle or marker)
+         as well as the Search box find input etc
          @method _createMap
          **/
         _createMap: function () {
@@ -192,10 +206,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
                 center: pointA,
                 zoom: 10
             };
-
-
             self.m_map = new google.maps.Map(document.getElementById("map"), mapOpt);
-
 
             // Create the search box and link it to the UI element.
             var input = document.getElementById('pac-input');
@@ -316,6 +327,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
              */
         },
 
+        /**
+         Clear the entire map of markers and circles by iterating over the m_mapPoints array
+         @method _clearMap
+         **/
         _clearMap: function () {
             var self = this;
             for (var i = 0; i < self.m_mapPoints.length; ++i) {
@@ -325,6 +340,13 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             self.m_mapPoints = [];
         },
 
+        /**
+         Simulate a trigger event of GPS coordinates by user clicks within the google map
+         @method _simulateEvent
+         @param {Number} lat
+         @param {Number} lng
+         @param {Boolean} inRange true if clicked within a marked circle radius
+         **/
         _simulateEvent: function (lat, lng, inRange) {
             var self = this;
             var e = lat + '_' + lng;
@@ -348,6 +370,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             });
         },
 
+        /**
+         Load and refresh the station list so we can pull station id for simulation
+         @method _loadStationList
+         **/
         _loadStationList: function () {
             var self = this;
             var userData = pepper.getUserData();
@@ -394,6 +420,10 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             BB.comBroker.fire(BB.EVENTS.ADD_LOCATION_POINT, self);
         },
 
+        /**
+         Load and populate the map fro json data, keep in mind data needs to be available from previous method call that fills up m_mapData
+         @method loadJson
+         **/
         loadJson: function () {
             var self = this;
             if (!self.m_loadedMaps)
@@ -453,11 +483,23 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             self.m_placement = self.options.placement = i_placement;
         },
 
+        /**
+         Set the mode for simulation on user clicks in map
+         @method simulationMode
+         @param {Boolean} i_mode
+         **/
         simulationMode: function (i_mode) {
             var self = this;
             self.m_simulationMode = i_mode;
         },
 
+        /**
+         Add a new point to the map (a point is constructed of marker and circle radius and inserted into m_mapPoints)
+         @method addPoint
+         @param {Number} latLng
+         @param {Number} radius
+         @param {Boolean} notCenter
+         **/
         addPoint: function (latLng, radius, notCenter) {
             var self = this;
             if (notCenter)
@@ -467,6 +509,12 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             self.m_mapPoints.push(newPoint);
         },
 
+        /**
+         Animate google maps to give position
+         @method panToPoint
+         @param {Number} lat
+         @param {Number} lng
+         **/
         panToPoint: function (lat, lng) {
             var self = this;
             if (!self.m_map)

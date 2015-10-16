@@ -1,5 +1,5 @@
 /**
- SceneLoaderView Backbone > View
+ SceneLoaderView Backbone View
  @class SceneLoaderView
  @constructor
  @return {Object} instantiated SceneLoaderView

@@ -48,7 +48,7 @@ define(['jquery', 'backbone', 'SceneSelectionView'], function ($, Backbone, Scen
          **/
         _render: function () {
             var self = this;
-            require(['SceneSliderView', 'SceneEditorView', 'ScenesToolbarView', 'StackView', 'AddBlockView'], function (SceneSliderView, SceneEditorView, ScenesToolbarView, StackView, AddBlockView) {
+            require(['SceneSliderView', 'SceneEditorView', 'ScenesToolbarView', 'StackView', 'AddBlockView', 'AddBlockLocationView'], function (SceneSliderView, SceneEditorView, ScenesToolbarView, StackView, AddBlockView, AddBlockLocationView) {
 
                 self.m_sceneSliderView = new SceneSliderView({
                     el: Elements.SCENES_PANEL
@@ -67,6 +67,14 @@ define(['jquery', 'backbone', 'SceneSelectionView'], function ($, Backbone, Scen
                     placement: BB.CONSTS.PLACEMENT_SCENE
                 });
                 BB.comBroker.setService(BB.SERVICES.ADD_SCENE_BLOCK_VIEW, self.m_sceneAddBlockView);
+
+                self.m_sceneAddBlockLocationView = new AddBlockLocationView({
+                    stackView: self.m_sceneSliderView,
+                    from: Elements.SCENE_SLIDER_VIEW,
+                    el: Elements.GOOGLE_MAPS_SCENE_LOCATION,
+                    placement: BB.CONSTS.PLACEMENT_SCENE
+                });
+                BB.comBroker.setService(BB.SERVICES.ADD_BLOCK_LOCATION_SCENE_VIEW, self.m_sceneAddBlockLocationView);
 
                 self.m_sceneEditorView = new SceneEditorView({
                     stackView: self.m_sceneSliderView,

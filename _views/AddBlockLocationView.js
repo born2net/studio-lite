@@ -8,6 +8,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
 
     /** SERVICES **/
     BB.SERVICES.ADD_BLOCK_LOCATION_VIEW = 'googleMapsLocationView';
+    BB.SERVICES.ADD_BLOCK_LOCATION_SCENE_VIEW = 'googleMapsLocationSceneView';
 
     var AddBlockLocationView = BB.View.extend({
 
@@ -22,13 +23,18 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             self.m_placement = options.placement;
             self.m_loadedMaps = false;
             self.m_markerOnClick = false;
-            self.m_simulationMode = false;
             self.m_mapData = {points: []};
-            self._listenStationRefresh();
+            self._setSimulationMode(false);
 
             // Clone the AddBlockTemplate
             var e = $(Elements.ADD_BLOCK_LOCATION_TEMPLATE).clone();
             $(self.options.el).append(e).fadeIn();
+
+            var id = _.uniqueId('slideLocSim');
+            $(Elements.CLASS_LOCATION_SIMULATION_MODE, self.el).attr('id', id);
+            $('label', self.el).attr('for', BB.lib.unhash(id));
+            self._listenModeChange('#' + id);
+
             $(e).show();
             self.el = self.$el[0];
 
@@ -41,6 +47,36 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
                 if (e == self)
                     self._render();
             });
+
+            self._listenStationRefresh();
+        },
+
+        /**
+         Listen to mode change between simulation mode and real mode
+         @method _listenModeChange
+         **/
+        _listenModeChange: function (i_id) {
+            var self = this;
+            self.sliderInput = function () {
+                var mode = $(i_id).prop('checked');
+                self._setSimulationMode(mode);
+                if (mode) {
+                    $(Elements.CLASS_LOCATION_SIMULATION_PROPS, self.el).slideDown();
+                } else {
+                    $(Elements.CLASS_LOCATION_SIMULATION_PROPS, self.el).slideUp();
+                }
+            };
+            $(i_id, self.el).on('change', self.sliderInput);
+        },
+
+        _setSimulationMode: function (i_mode) {
+            var self = this;
+            self.m_simulationMode = i_mode;
+        },
+
+        _getSimulationMode: function () {
+            var self = this;
+            return self.m_simulationMode;
         },
 
         /**
@@ -49,7 +85,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
          **/
         _listenStationRefresh: function () {
             var self = this;
-            $('button', Elements.LOCATION_SIMULATION_PROPS).on('click', function () {
+            $(Elements.CLASS_LOCATION_SIMULATION_PROPS, self.el).find('button').on('click', function () {
                 self._loadStationList();
             });
         },
@@ -63,7 +99,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
          @method _initMap
          **/
         _initMap: function () {
-            var self = addBlockLocationInstance = this;
+            var self = that = this;
             Number.prototype.toRad = function () {
                 return this * Math.PI / 180;
             };
@@ -100,9 +136,15 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
                 google.maps.event.addListener(self.circle, 'click', function (event) {
                     var lat = event.latLng.lat();
                     var lng = event.latLng.lng();
-                    if (addBlockLocationInstance.m_simulationMode) {
+                    var inst;
+                    if (that.options.placement == BB.CONSTS.PLACEMENT_SCENE) {
+                        inst = BB.comBroker.getService(BB.SERVICES.ADD_BLOCK_LOCATION_SCENE_VIEW);
+                    } else {
+                        inst = BB.comBroker.getService(BB.SERVICES.ADD_BLOCK_LOCATION_VIEW);
+                    }
+                    if (inst._getSimulationMode()) {
                         console.log('within range ' + lat + ' ' + lng);
-                        addBlockLocationInstance._simulateEvent(lat, lng, true);
+                        inst._simulateEvent(lat, lng, true);
                     }
 
                 });
@@ -206,10 +248,14 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
                 center: pointA,
                 zoom: 10
             };
-            self.m_map = new google.maps.Map(document.getElementById("map"), mapOpt);
+            var map = $('.map', self.el);
+            self.m_map = new google.maps.Map(map[0], mapOpt);
 
             // Create the search box and link it to the UI element.
-            var input = document.getElementById('pac-input');
+            //var input = $('#pac-input', self.el)[0];
+            var c = $('.inputPlacement', self.el);
+            $(c).append('<input class="pac-input" class="controls" type="text" placeholder="Search Box">');
+            var input = $(c).find('input')[0];
             var searchBox = new google.maps.places.SearchBox(input);
             self.m_map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
@@ -266,7 +312,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             google.maps.event.addListener(self.m_map, 'click', function (event) {
                 var lat = event.latLng.lat();
                 var lng = event.latLng.lng();
-                if (self.m_simulationMode) {
+                if (self._getSimulationMode()) {
                     console.log('out of range ' + lat + ' ' + lng);
                     self._simulateEvent(lat, lng, false);
                     return;
@@ -350,8 +396,8 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
         _simulateEvent: function (lat, lng, inRange) {
             var self = this;
             var e = lat + '_' + lng;
-            var station_id = $('select', Elements.LOCATION_SIMULATION_PROPS).find('option:selected').attr('value');
-            $messages = $('h5', Elements.LOCATION_SIMULATION_PROPS);
+            var station_id = $(Elements.CLASS_LOCATION_SIMULATION_PROPS, self.el).find('select').find('option:selected').attr('value');
+            $messages = $(Elements.CLASS_LOCATION_SIMULATION_PROPS, self.el).find('h5');
             if (inRange) {
                 $messages.css({color: 'green'});
             } else {
@@ -378,7 +424,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             var self = this;
             var userData = pepper.getUserData();
             var url = window.g_protocol + userData.domain + '/WebService/getStatus.ashx?user=' + userData.userName + '&password=' + userData.userPass + '&callback=?';
-            $('select', Elements.LOCATION_SIMULATION_PROPS).children().remove();
+            $(Elements.CLASS_LOCATION_SIMULATION_PROPS, self.el).find('select').children().remove();
             $.getJSON(url, function (data) {
                 var s64 = data['ret'];
                 var str = $.base64.decode(s64);
@@ -387,7 +433,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
                     var stationID = $(value).attr('id');
                     var stationName = $(value).attr('name');
                     var buff = '<option value="' + stationID + '">' + stationName + '</option>'
-                    $('SELECT', Elements.LOCATION_SIMULATION_PROPS).append(buff);
+                    $(Elements.CLASS_LOCATION_SIMULATION_PROPS, self.el).find('select').append(buff);
                 });
             });
         },
@@ -481,16 +527,6 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
         setPlacement: function (i_placement) {
             var self = this;
             self.m_placement = self.options.placement = i_placement;
-        },
-
-        /**
-         Set the mode for simulation on user clicks in map
-         @method simulationMode
-         @param {Boolean} i_mode
-         **/
-        simulationMode: function (i_mode) {
-            var self = this;
-            self.m_simulationMode = i_mode;
         },
 
         /**

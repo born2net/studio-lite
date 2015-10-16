@@ -36,11 +36,16 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 self._listenAddPoint();
                 self._listenRadiusChange();
                 self._listenPriorityChange();
-                self._listenModeChange();
+                ///self._listenModeChange();
 
                 self.m_blockProperty.locationDatatableInit();
-                self.m_addBlockLocationView = BB.comBroker.getService(BB.SERVICES.ADD_BLOCK_LOCATION_VIEW);
                 self.m_locationPriorityMeter = self.m_blockProperty.getLocationPriorityMeter();
+
+                if (self.m_placement == BB.CONSTS.PLACEMENT_CHANNEL) {
+                    self.m_addBlockLocationView = BB.comBroker.getService(BB.SERVICES.ADD_BLOCK_LOCATION_VIEW);
+                } else if (self.m_placement = BB.CONSTS.PLACEMENT_SCENE) {
+                    self.m_addBlockLocationView = BB.comBroker.getService(BB.SERVICES.ADD_BLOCK_LOCATION_SCENE_VIEW);
+                }
 
                 /* can set global mode if we wish */
                 //$.fn.editable.defaults.mode = 'inline';
@@ -433,14 +438,14 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     self.m_listItemType = $(e.target).attr('name') != undefined ? $(e.target).prop('name') : $(e.target).closest('button').attr('name');
 
                     // open the Add Block Slider
-                    var addBlockLocationView;
+                    var addBlockView;
                     if (self.m_placement == BB.CONSTS.PLACEMENT_CHANNEL) {
-                        addBlockLocationView = BB.comBroker.getService(BB.SERVICES.ADD_BLOCK_VIEW);
+                        addBlockView = BB.comBroker.getService(BB.SERVICES.ADD_BLOCK_VIEW);
                     } else if (self.m_placement = BB.CONSTS.PLACEMENT_SCENE) {
-                        addBlockLocationView = BB.comBroker.getService(BB.SERVICES.ADD_SCENE_BLOCK_VIEW);
+                        addBlockView = BB.comBroker.getService(BB.SERVICES.ADD_SCENE_BLOCK_VIEW);
                     }
-                    addBlockLocationView.setPlacement(BB.CONSTS.PLACEMENT_LISTS);
-                    addBlockLocationView.selectView();
+                    addBlockView.setPlacement(BB.CONSTS.PLACEMENT_LISTS);
+                    addBlockView.selectView();
 
                     // wait for a new resource to be added and once it has, open the Google maps for location insertion
                     BB.comBroker.listenWithNamespace(BB.EVENTS.ADD_NEW_BLOCK_LIST, self, function (e) {
@@ -547,28 +552,23 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             /**
              Listen to mode change between simulation mode and real mode
              @method _listenModeChange
-             **/
-            _listenModeChange: function () {
+
+            **/_listenModeChange: function () {
                 var self = this;
                 self.sliderInput = function () {
                     if (!self.m_selected)
                         return;
-                    var mode = $(Elements.LOCATION_SIMULATION_MODE).prop('checked');
+                    var mode = $(Elements.CLASS_LOCATION_SIMULATION_MODE).prop('checked');
                     self.m_addBlockLocationView.simulationMode(mode);
                     if (mode){
-                        $(Elements.LOCATION_SIMULATION_PROPS).slideDown();
+                        $(Elements.CLASS_LOCATION_SIMULATION_PROPS).slideDown();
                     } else {
-                        $(Elements.LOCATION_SIMULATION_PROPS).slideUp();
+                        $(Elements.CLASS_LOCATION_SIMULATION_PROPS).slideUp();
                     }
-                    return;
-                    self._populateModeSliderUI(mode);
-                    var domPlayerData = self._getBlockPlayerData();
-                    $(domPlayerData).find('Collection').attr('mode', mode ? 'kiosk' : 'slideshow');
-                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
-                    self._populateTableEvents(domPlayerData);
                 };
-                $(Elements.LOCATION_SIMULATION_MODE).on('change', self.sliderInput);
+                $(Elements.CLASS_LOCATION_SIMULATION_MODE).on('change', self.sliderInput);
             },
+
 
             /**
              Open google maps and load it with all current locations
@@ -693,7 +693,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 $(Elements.CLASS_ADD_RESOURCE_LOCATION).off('click', self.m_addNewLocationListItem);
                 $(Elements.REMOVE_RESOURCE_FOR_LOCATION).off('click', self.m_removeLocationListItem);
                 $(Elements.LOCATION_CONTROLS + ' button').off('click', self.m_locationControls);
-                $(Elements.LOCATION_SIMULATION_MODE).off('change', self.sliderInput);
+                $(Elements.CLASS_LOCATION_SIMULATION_MODE).off('change', self.sliderInput);
                 BB.comBroker.stopListen(BB.EVENTS.ADD_NEW_BLOCK_LIST); // removing for everyone which is ok, since gets added in real time
                 BB.comBroker.stopListen(BB.EVENTS.LOCATION_ROW_DROP, self.m_locationRowDroppedHandler);
                 BB.comBroker.stopListen(BB.EVENTS.LOCATION_ROW_DRAG, self.m_locationRowDraggedHandler);

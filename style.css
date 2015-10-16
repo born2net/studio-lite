@@ -81,7 +81,7 @@ aside > aside > div > ul > li {
     padding: 0 0 60px; /* respective of footer */
 }
 
-#pac-input {
+.pac-input {
     font-size: 1.5em;
     top: 10px !important;
 }

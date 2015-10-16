@@ -99,14 +99,14 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
          @method _initMap
          **/
         _initMap: function () {
-            var self = that = this;
+            var self = this;
             Number.prototype.toRad = function () {
                 return this * Math.PI / 180;
             };
             Number.prototype.toDeg = function () {
                 return this * 180 / Math.PI;
             };
-            self._mapPoint = function (latLng, radius, mapPoints, map) {
+            self._mapPoint = function (latLng, radius, mapPoints, map, that) {
                 var self = this;
                 self.$el;
                 self.circle;
@@ -137,6 +137,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
                     var lat = event.latLng.lat();
                     var lng = event.latLng.lng();
                     var inst;
+                    console.log('location map is in ' + that.options.placement);
                     if (that.options.placement == BB.CONSTS.PLACEMENT_SCENE) {
                         inst = BB.comBroker.getService(BB.SERVICES.ADD_BLOCK_LOCATION_SCENE_VIEW);
                     } else {
@@ -523,11 +524,11 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
          @method setPlayerData
          @param {Number} i_playerData
          @return {Number} Unique clientId.
-         **/
         setPlacement: function (i_placement) {
             var self = this;
             self.m_placement = self.options.placement = i_placement;
         },
+        **/
 
         /**
          Add a new point to the map (a point is constructed of marker and circle radius and inserted into m_mapPoints)
@@ -541,7 +542,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             if (notCenter)
                 latLng = new google.maps.LatLng(latLng.H, latLng.L);
             radius = radius || 0.10;
-            var newPoint = new self._mapPoint(latLng, radius, self.m_mapPoints, self.m_map);
+            var newPoint = new self._mapPoint(latLng, radius, self.m_mapPoints, self.m_map, self);
             self.m_mapPoints.push(newPoint);
         },
 

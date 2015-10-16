@@ -596,7 +596,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
 
                 });
                 self.m_addBlockLocationView.setData(map);
-                self.m_addBlockLocationView.setPlacement(BB.CONSTS.PLACEMENT_LISTS);
+                //self.m_addBlockLocationView.setPlacement(BB.CONSTS.PLACEMENT_LISTS);
 
                 if (i_loadStackView) {
                     self.m_addBlockLocationView.selectView(i_markerOnClick);

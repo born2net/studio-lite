@@ -1895,10 +1895,11 @@
                                             id="stationWatchdog"></span></li>
                                     <li><span data-localize="lastUpd">Last upd </span>: <span
                                             id="stationLastUpdate"></span></li>
-                                    <li><span data-localize="stationID">Station id</span>: <span id="stationID"></span>
-                                    </li>
+                                    <li><span data-localize="stationID">Station id</span>: <span id="stationID"></span></li>
                                 </ul>
                             </div>
+                            <hr/>
+                            <Label>Station events</Label>
                             <input type="text" name="eventName" data-localize="eventName" placeholder="event name"
                                    id="stationSendEventValue"
                                    value="">
@@ -1907,6 +1908,21 @@
                             <button id="stationEventSendCommand" class="btn btn-primary"
                                     data-localize="sendStationEvent">Send station event
                             </button>
+                            <hr class="hrthin"/>
+                            <div>
+                                <label class="pull-left" data-localize="serverMode">server mode (listen to local events)</label>
+                                <div class="clearfix" style="padding-bottom: 13px"></div>
+                                <div style="position: relative; top: -12px" class="material-switch pull-left">
+                                    <input id="stationServerMode" name="someSwitchOption001" type="checkbox"/>
+                                    <label for="stationServerMode" class="label-primary"></label>
+                                </div>
+                            </div>
+                            <div id="stationServerProps">
+                                <div class="clearfix"></div>
+                                <div id="stationServerIp" class="pull-left"></div>
+                                <div class="clearfix"></div>
+                                <div id="stationServerPort" class="pull-left"></div>
+                            </div>
                         </div>
                         <div id="blockProperties" class="" style="display: none">
                             <div id="channelBlockProps" style="display: none">
@@ -2279,10 +2295,12 @@
                                             </label>
                                             <hr class="hrThin"/>
                                             <div id="locationSelected" style="display: none">
-                                                <div id="locationResourceName"></div>
-                                                <div id="locationResourceLat"></div>
-                                                <div id="locationResourceLng"></div>
-
+                                                <div id="locationResourceName" class="pull-left"></div>
+                                                <div class="clearfix"></div>
+                                                <div id="locationResourceLat" class="pull-left"></div>
+                                                <div class="clearfix"></div>
+                                                <div id="locationResourceLng" class="pull-left"></div>
+                                                <div class="clearfix"></div>
                                                 <div style="padding-top: 16px">
                                                     <span data-localize="radiusRange">Radius range</span>
                                                     <span id="locationRadiusLabel">100</span>

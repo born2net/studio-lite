@@ -65,6 +65,8 @@ define(['jquery', 'backbone', 'StationModel', 'simplestorage'], function ($, Bac
                 var stationID = $(value).attr('id');
                 var stationData = {
                     stationID: stationID,
+                    localAddress: $(value).attr('localAddress'),
+                    localPort: $(value).attr('localPort'),
                     stationName: $(value).attr('name'),
                     watchDogConnection: $(value).attr('watchDogConnection') == 1 ? 'on' : 'off',
                     status: $(value).attr('status'),

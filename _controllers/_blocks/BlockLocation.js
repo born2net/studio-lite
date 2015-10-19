@@ -461,6 +461,27 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             },
 
             /**
+             Check if scene is pointing to itself to avoid cyclic reference
+             @method _isSceneCyclic
+             @param {Number} i_playerData
+             @return {Boolean} true if cyclic reference
+             **/
+            _isSceneCyclic: function(i_edata){
+                var self = this;
+                if (self.m_placement == BB.CONSTS.PLACEMENT_SCENE) {
+                    var sceneEditView = BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']);
+                    if (!_.isUndefined(sceneEditView)) {
+                        var selectedSceneID = sceneEditView.getSelectedSceneID();
+                        selectedSceneID = pepper.getSceneIdFromPseudoId(selectedSceneID);
+                        if (selectedSceneID == i_edata.sceneID) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            },
+
+            /**
              Add to our XML a list item item which can be of one of two types
              addDefault: a default resource to play when not within radius of GPS coords
              addLocation: a particular resource to play within specific GPS coords
@@ -476,6 +497,10 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 var xSnippetLocation;
 
                 // log(e.edata.blockCode, e.edata.resourceID, e.edata.sceneID);
+                if (self._isSceneCyclic(e.edata)){
+                    bootbox.alert($(Elements.MSG_BOOTBOX_SCENE_REFER_ITSELF).text());
+                    return;
+                }
 
                 switch (type) {
                     case 'addDefault':
@@ -486,7 +511,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     }
                     case 'addLocation':
                     {
-                        locationBuff = 'lat=":LAT:" lng=":LNG:" radios="1" priority="1">';
+                        locationBuff = 'lat=":LAT:" lng=":LNG:" radios="0.10" priority="1">';
                         xSnippetLocation = $(domPlayerData).find('GPS');
                         BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.m_block_id);
                         setTimeout(function () {
@@ -499,19 +524,6 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
 
                 // adding a scene and don't allow cyclic reference of scene
                 if (e.edata.blockCode == BB.CONSTS.BLOCKCODE_SCENE) {
-                    // add scene to location
-                    // if block resides in scene don't allow cyclic reference to location scene inside current scene
-                    if (self.m_placement == BB.CONSTS.PLACEMENT_SCENE) {
-                        var sceneEditView = BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']);
-                        if (!_.isUndefined(sceneEditView)) {
-                            var selectedSceneID = sceneEditView.getSelectedSceneID();
-                            selectedSceneID = pepper.getSceneIdFromPseudoId(selectedSceneID);
-                            if (selectedSceneID == e.edata.sceneID) {
-                                bootbox.alert($(Elements.MSG_BOOTBOX_SCENE_REFER_ITSELF).text());
-                                return;
-                            }
-                        }
-                    }
                     var sceneRecord = pepper.getScenePlayerRecord(e.edata.sceneID);
                     var sceneName = $(sceneRecord.player_data_value).attr('label');
                     var nativeID = sceneRecord['native_id'];

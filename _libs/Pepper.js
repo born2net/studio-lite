@@ -444,6 +444,21 @@ Pepper.prototype = {
     },
 
     /**
+     Push an event to a local station / server for Location based content
+     @method sendLocalEventGPS
+     @param {Number} i_stationId
+     @param {Number} i_lat
+     @param {Number} i_lng
+     @param {Function} i_callBack
+     **/
+    sendLocalEventGPS: function (i_stationId, i_lat, i_lng, i_callBack) {
+        // http://192.168.1.12:9999/sendLocalEvent?eventName=gps&eventParam=34,-118
+        var url = window.g_protocol + pepper.getUserData().domain + '/WebService/sendCommand.ashx?i_user=' + pepper.getUserData().userName + '&i_password=' + pepper.getUserData().userPass + '&i_stationId=' + i_stationId + '&i_command=event&i_param1=' + 'gps' + '&i_param2=' + i_lat + ',' + i_lng + '&callback=?';
+        log(url);
+        $.getJSON(url, i_callBack);
+    },
+
+    /**
      Send remote command to retrieve snapshot of a running station
      @method sendSnapshot
      @param {String} i_fileName
@@ -2302,6 +2317,43 @@ Pepper.prototype = {
     },
 
     /**
+     Returns the record for a station id
+     @method getStationRecord
+     @param {Number} i_native_station_id
+     @return {Object} recBranchStation
+     **/
+    getStationRecord: function (i_native_station_id) {
+        var self = this;
+        var record;
+        $(self.m_msdb.table_branch_stations().getAllPrimaryKeys()).each(function (k, branch_station_id) {
+            var recBranchStation = self.m_msdb.table_branch_stations().getRec(branch_station_id);
+            if (recBranchStation['native_id'] == i_native_station_id) {
+                record = recBranchStation;
+            }
+        });
+        return record;
+    },
+
+    /**
+     Set a station record via object arg into msdb table_branch_stations
+     @method getStationRecord
+     @param {Number} i_native_station_id
+     @param {Object} record
+     **/
+    setStationRecord: function (i_native_station_id, i_record) {
+        var self = this;
+        var record;
+        $(self.m_msdb.table_branch_stations().getAllPrimaryKeys()).each(function (k, branch_station_id) {
+            var recBranchStation = self.m_msdb.table_branch_stations().getRec(branch_station_id);
+            if (recBranchStation['native_id'] == i_native_station_id) {
+                self.m_msdb.table_branch_stations().openForEdit(branch_station_id);
+                var recBranchStationEdit = self.m_msdb.table_branch_stations().getRec(branch_station_id);
+                recBranchStationEdit = i_record;
+            }
+        });
+    },
+
+    /**
      Set a station so its bound to campaign_id
      @method SetStationCampaignID
      @param {Number} i_native_station_id
@@ -2316,6 +2368,27 @@ Pepper.prototype = {
                 var recBranchStationEdit = self.m_msdb.table_branch_stations().getRec(branch_station_id);
                 var campaign_board_id = self.getCampaignBoardIdFromCampaignId(i_campaign_id);
                 recBranchStationEdit.campaign_board_id = campaign_board_id;
+            }
+        });
+    },
+
+
+    /**
+     Set a station to server mode enable / disable
+     @method setStationServerMode
+     @param {Number} i_native_station_id
+     @param {Boolean} i_mode
+     **/
+    setStationServerMode: function (i_native_station_id, i_enabled, i_lan_server_ip, i_port) {
+        var self = this;
+        $(self.m_msdb.table_branch_stations().getAllPrimaryKeys()).each(function (k, branch_station_id) {
+            var recBranchStation = self.m_msdb.table_branch_stations().getRec(branch_station_id);
+            if (recBranchStation['native_id'] == i_native_station_id) {
+                self.m_msdb.table_branch_stations().openForEdit(branch_station_id);
+                var recBranchStationEdit = self.m_msdb.table_branch_stations().getRec(branch_station_id);
+                recBranchStationEdit.lan_server_enabled = i_enabled;
+                recBranchStationEdit.lan_server_port = i_port;
+                recBranchStationEdit.lan_server_ip = i_lan_server_ip;
             }
         });
     },

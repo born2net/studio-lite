@@ -266,8 +266,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             });
 
             var markers = [];
-            // Listen for the event fired when the user selects a prediction and retrieve
-            // more details for that place.
+            // Listen for the event fired when the user selects a prediction and retrieve details for location
             searchBox.addListener('places_changed', function () {
                 var places = searchBox.getPlaces();
 
@@ -396,7 +395,6 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
          **/
         _simulateEvent: function (lat, lng, inRange) {
             var self = this;
-            var e = lat + '_' + lng;
             var station_id = $(Elements.CLASS_LOCATION_SIMULATION_PROPS, self.el).find('select').find('option:selected').attr('value');
             $messages = $(Elements.CLASS_LOCATION_SIMULATION_PROPS, self.el).find('h5');
             if (inRange) {
@@ -407,7 +405,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             $messages.eq(0).text('Sending...');
             $messages.eq(1).text(lng);
             $messages.eq(2).text(lat);
-            BB.Pepper.sendEvent(e, station_id, function (e) {
+            BB.Pepper.sendLocalEventGPS(station_id, lat, lng, function (e) {
                 $messages.eq(0).text('Waiting...');
                 $messages.eq(1).text('none');
                 $messages.eq(2).text('none');
@@ -468,7 +466,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
         },
 
         /**
-         Load and populate the map fro json data, keep in mind data needs to be available from previous method call that fills up m_mapData
+         Load and populate the map fro json data, keep in mind data needs to be available from previous method call fills up m_mapData
          @method loadJson
          **/
         loadJson: function () {

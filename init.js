@@ -18,6 +18,7 @@ require.config({
         'async': '_common/_js/requirejs/async',
         'backbone.stickit': '_common/_js/backbone-stickit/backbone.stickit',
         'video': '_common/_js/video/video.dev',
+        'validator': '_common/_js/validator/validator',
         'bootstrapfileinput': '_common/_js/bootstrapfileinput/bootstrapfileinput',
         'bootstrap': '_common/_js/bootstrap/js/bootstrap',
         'platform': '_common/_js/platform/platform',

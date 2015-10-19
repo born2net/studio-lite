@@ -49,6 +49,29 @@ define(['jquery', 'backbone', 'StationsCollection', 'LiveInput'], function ($, B
             self._initStationRename();
             self._wireSnapshot();
             self._populateStationCampaignDropDown(-1);
+            self._listenEnableServerMode();
+        },
+
+        /**
+         _listenEnableServerMode
+         @method _listenEnableServerMode
+         @param {Number} i_playerData
+         @return {Number} Unique clientId.
+         **/
+        _listenEnableServerMode: function () {
+            var self = this;
+            $(Elements.STATION_SERVER_MODE).on('change', function (e) {
+                var stationRecord = BB.Pepper.getStationRecord(self.m_selected_station_id);
+                var mode = $(Elements.STATION_SERVER_MODE).prop('checked');
+                if (mode) {
+                    $(Elements.STATION_SERVER_PROPS).show();
+                    stationRecord.lan_server_enabled = 'True';
+                } else {
+                    stationRecord.lan_server_enabled = 'False';
+                    $(Elements.STATION_SERVER_PROPS).hide();
+                }
+                BB.Pepper.setStationRecord(self.m_selected_station_id, stationRecord);
+            });
         },
 
         /**
@@ -91,6 +114,13 @@ define(['jquery', 'backbone', 'StationsCollection', 'LiveInput'], function ($, B
                     pepper.setStationName(self.m_selected_station_id, e.value);
                     self._getStationModel(self.m_selected_station_id).set('stationName', e.value);
                 });
+
+            // Apply validation testing
+            self.m_liveRenameInput.valid({
+                1: [self.m_liveRenameInput.getValidator().isEmail, $(Elements.BOOTBOX_SUPPORTED_EXTENSIONS).text()],
+                2: [self.m_liveRenameInput.getValidator().isIP, 'not ip'],
+                3: [self.m_liveRenameInput.getValidator().noEmpty, 'cant be blank']
+            });
         },
 
         /**
@@ -107,7 +137,7 @@ define(['jquery', 'backbone', 'StationsCollection', 'LiveInput'], function ($, B
                     self._stopSnapshot();
                 self.m_selected_station_id = stationID;
                 var stationModel = self._getStationModel(self.m_selected_station_id);
-                self.m_liveRenameInput.setValue(stationModel.get('stationName'), false);
+                self.m_liveRenameInput.setValue(stationModel.get('stationName'), false, false);
                 $(Elements.CLASS_STATION_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
                 $(elem).addClass('activated').find('a').addClass('whiteFont');
                 self.m_property.viewPanel(Elements.STATION_PROPERTIES);
@@ -151,6 +181,18 @@ define(['jquery', 'backbone', 'StationsCollection', 'LiveInput'], function ($, B
             $(Elements.STATION_APP_VERSION).text(i_model.get('appVersion'));
             $(Elements.STATION_OS).text(i_model.get('stationOS'));
             $(Elements.STATION_ID).text(i_model.get('stationID'));
+
+            var stationRecord = BB.Pepper.getStationRecord(i_model.get('stationID'));
+
+            if (stationRecord.lan_server_enabled == 'True') {
+                $(Elements.STATION_SERVER_MODE).prop('checked', true);
+                $(Elements.STATION_SERVER_PROPS).show();
+            } else {
+                $(Elements.STATION_SERVER_MODE).prop('checked', false);
+                $(Elements.STATION_SERVER_PROPS).hide();
+            }
+            self.m_liveSationIpInput.setValue(i_model.get('localAddress'));
+            self.m_liveSationPortInput.setValue(stationRecord.lan_server_port);
         },
 
         /**
@@ -258,6 +300,24 @@ define(['jquery', 'backbone', 'StationsCollection', 'LiveInput'], function ($, B
                 pepper.sendEvent(eventValue, self.m_selected_station_id, function () {
                 });
             });
+
+            self.m_liveSationIpInput = new LiveInput({
+                el: Elements.STATION_SERVER_IP,
+                dataLocalize: 'stationServerIp',
+                placeHolder: 'Station IP',
+                value: ''
+            }).on('LIVE_INPUT_CHANGED', function (e) {
+
+                });
+
+            self.m_liveSationPortInput = new LiveInput({
+                el: Elements.STATION_SERVER_PORT,
+                dataLocalize: 'stationServerPort',
+                placeHolder: 'Station Port',
+                value: ''
+            }).on('LIVE_INPUT_CHANGED', function (e) {
+
+                });
         },
 
         /**

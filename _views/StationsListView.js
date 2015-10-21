@@ -50,10 +50,65 @@ define(['jquery', 'backbone', 'StationsCollection', 'LiveInput'], function ($, B
             self._wireSnapshot();
             self._populateStationCampaignDropDown(-1);
             self._listenEnableServerMode();
+            self._listenIpChange();
+            self._listenPortChange();
         },
 
         /**
-         _listenEnableServerMode
+         Listen to changes in IP selection to assign to station local server
+         @method _listenIpChange
+         **/
+        _listenIpChange: function () {
+            var self = this;
+            var input = self.m_liveSationIpInput = new LiveInput({
+                el: Elements.STATION_SERVER_IP,
+                dataLocalize: 'stationServerIp',
+                placeHolder: 'Station IP',
+                value: ''
+            }).on('LIVE_INPUT_CHANGED', function (e) {
+                    var stationRecord = BB.Pepper.getStationRecord(self.m_selected_station_id);
+                    stationRecord.lan_server_ip = e.value;
+                    BB.Pepper.setStationRecord(self.m_selected_station_id, stationRecord);
+                }
+            ).on('LIVE_INPUT_VALID_ERROR', function (e) {
+                }
+            );
+            input.rules({
+                1: [input.getValidator().noEmpty, $(Elements.MSG_LIVEINPUT_NOT_BLANK).text()],
+                2: [input.getValidator().isIP, $(Elements.MSG_LIVEINPUT_NO_IP).text()]
+            });
+        },
+
+        /**
+         Listen to changes in port selection to assign to station local server
+         @method _listenPortChange
+         **/
+        _listenPortChange: function () {
+            var self = this;
+            var input = self.m_liveSationPortInput = new LiveInput({
+                el: Elements.STATION_SERVER_PORT,
+                dataLocalize: 'stationServerPort',
+                placeHolder: 'Station Port',
+                value: '1024'
+            }).on('LIVE_INPUT_CHANGED', function (e) {
+                    var stationRecord = BB.Pepper.getStationRecord(self.m_selected_station_id);
+                    stationRecord.lan_server_port = e.value;
+                    BB.Pepper.setStationRecord(self.m_selected_station_id, stationRecord);
+                }
+            ).on('LIVE_INPUT_VALID_ERROR', function (e) {
+                }
+            );
+            input.rules({
+                1: [
+                    input.getValidator().isNumberInRange, $(Elements.MSG_LIVEINPUT_NOT_PORT).text(), {
+                    min: 1024,
+                    max: 65535
+                }]
+            });
+        },
+
+        /**
+         Listen to enable server mode
          @method _listenEnableServerMode
          @param {Number} i_playerData
          @return {Number} Unique clientId.
@@ -114,13 +169,6 @@ define(['jquery', 'backbone', 'StationsCollection', 'LiveInput'], function ($, B
                     pepper.setStationName(self.m_selected_station_id, e.value);
                     self._getStationModel(self.m_selected_station_id).set('stationName', e.value);
                 });
-
-            // Apply validation testing
-            self.m_liveRenameInput.valid({
-                1: [self.m_liveRenameInput.getValidator().isEmail, $(Elements.BOOTBOX_SUPPORTED_EXTENSIONS).text()],
-                2: [self.m_liveRenameInput.getValidator().isIP, 'not ip'],
-                3: [self.m_liveRenameInput.getValidator().noEmpty, 'cant be blank']
-            });
         },
 
         /**
@@ -263,7 +311,6 @@ define(['jquery', 'backbone', 'StationsCollection', 'LiveInput'], function ($, B
         _wireUI: function () {
             var self = this;
 
-
             $(Elements.STATION_PLAY_COMMAND + ' , ' + Elements.STATION_STOP_COMMAND).on('click', function (e) {
                 var command = BB.lib.unhash(Elements.STATION_PLAY_COMMAND) == e.currentTarget.id ? 'start' : 'stop';
                 pepper.sendCommand(command, self.m_selected_station_id, function () {
@@ -300,24 +347,6 @@ define(['jquery', 'backbone', 'StationsCollection', 'LiveInput'], function ($, B
                 pepper.sendEvent(eventValue, self.m_selected_station_id, function () {
                 });
             });
-
-            self.m_liveSationIpInput = new LiveInput({
-                el: Elements.STATION_SERVER_IP,
-                dataLocalize: 'stationServerIp',
-                placeHolder: 'Station IP',
-                value: ''
-            }).on('LIVE_INPUT_CHANGED', function (e) {
-
-                });
-
-            self.m_liveSationPortInput = new LiveInput({
-                el: Elements.STATION_SERVER_PORT,
-                dataLocalize: 'stationServerPort',
-                placeHolder: 'Station Port',
-                value: ''
-            }).on('LIVE_INPUT_CHANGED', function (e) {
-
-                });
         },
 
         /**

@@ -64,7 +64,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     return;
                     var xSnippet = $(domPlayerData).find('YouTube');
                     $(xSnippet).attr('volume', volume);
-                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                    self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
                 };
                 BB.comBroker.listen(BB.EVENTS.COLLECTION_ROW_DRAG, self.m_collectionRowDraggedHandler);
             },
@@ -89,9 +89,9 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     }
                     var item = $(domPlayerData).find('Collection').children().get(rowIndex);
                     $(item).attr('page', newName).attr('duration', newDuration);
-                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                    self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
                     self._populateTableCollection(domPlayerData);
-                    self._populateTableEvents(domPlayerData);
+                    self._populateTableEvents();
                 };
                 BB.comBroker.listen(BB.EVENTS.COLLECTION_ROW_CHANGED, self.m_collectionRowChangedHandler);
             },
@@ -111,7 +111,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     var action = e.edata.action;
                     var item = $(domPlayerData).find('EventCommands').children().get(rowIndex);
                     $(item).attr('from', event);
-                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                    self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
                     self._populateTableCollection(domPlayerData);
                 };
                 BB.comBroker.listen(BB.EVENTS.COLLECTION_EVENT_ROW_CHANGED, self.m_collectionRowEventChangedHandler);
@@ -135,8 +135,8 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     var domPlayerData = self._getBlockPlayerData();
                     var target = $(domPlayerData).find('EventCommands').children().get(parseInt(index));
                     $(target).attr('command',action);
-                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
-                    self._populateTableEvents(domPlayerData);
+                    self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
+                    self._populateTableEvents();
                 };
                 $(Elements.CLASS_COLLECTION_EVENT_ACTION).on('change', self.m_onDropDownEventActionHandler);
             },
@@ -159,7 +159,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     $(target).find('Params').remove();
                     $(target).append('<Params><Page name="' + selected + '"/></Params>');
                     self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
-                    self._populateTableEvents(domPlayerData);
+                    self._populateTableEvents();
                 };
                 $(Elements.CLASS_COLLECTION_EVENT_ACTION_GOTO).on('change', self.m_onDropDownEventActionGoToHandler);
             },
@@ -179,7 +179,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     var target = $(domPlayerData).find('Collection').children().get(parseInt(droppedRowIndex));
                     var source = $(domPlayerData).find('Collection').children().get(self.m_selectRowIndex);
                     droppedRowIndex > self.m_selectRowIndex ? $(target).after(source) : $(target).before(source);
-                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                    self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
                     self._populateTableCollection(domPlayerData);
                 };
                 BB.comBroker.listen(BB.EVENTS.COLLECTION_ROW_DROP, self.m_collectionRowDroppedHandler);
@@ -200,7 +200,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
 
                 if (mode == "kiosk") {
                     self._populateModeSliderUI(true);
-                    self._populateTableEvents(domPlayerData);
+                    self._populateTableEvents();
                 } else {
                     self._populateModeSliderUI(false);
                 }
@@ -241,13 +241,13 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
             /**
              Load event list to block props UI
              @method _populateTableEvents
-             @param {Object} i_domPlayerData
              **/
-            _populateTableEvents: function (i_domPlayerData) {
+            _populateTableEvents: function () {
                 var self = this;
                 var data = [], rowIndex = 0;
+                var domPlayerData = self._getBlockPlayerData();
                 self.m_collectionEventTable.bootstrapTable('removeAll');
-                $(i_domPlayerData).find('EventCommands').children().each(function (k, eventCommand) {
+                $(domPlayerData).find('EventCommands').children().each(function (k, eventCommand) {
                     var pageName = '';
                     if ($(eventCommand).attr('command') == 'selectPage')
                         pageName = $(eventCommand).find('Page').attr('name');
@@ -285,8 +285,8 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     self._populateModeSliderUI(mode);
                     var domPlayerData = self._getBlockPlayerData();
                     $(domPlayerData).find('Collection').attr('mode', mode ? 'kiosk' : 'slideshow');
-                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
-                    self._populateTableEvents(domPlayerData);
+                    self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
+                    self._populateTableEvents();
                 };
                 $(Elements.COLLECTION_KIOSK_MODE).on('change', self.sliderInput);
             },
@@ -352,9 +352,11 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                         return;
                     var domPlayerData = self._getBlockPlayerData();
                     var buff = '<EventCommand from="event" condition="" command="firstPage" />';
+                    //todo: debug IE
+                    var a = $(domPlayerData).find('EventCommands');
                     $(domPlayerData).find('EventCommands').append(buff);
                     self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
-                    self._populateTableEvents(domPlayerData);
+                    self._populateTableEvents();
                 };
                 $(Elements.ADD_COLLECTION_EVENTS).on('click', self.m_addNewCollectionEvent);
             },
@@ -377,9 +379,9 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     }
                     var rowIndex = $('input[name=btSelectItem]:checked', Elements.COLLECTION_EVENTS_TABLE).closest('tr').attr('data-index');
                     var domPlayerData = self._getBlockPlayerData();
-                    $(domPlayerData).find('EventCommands').children().get(rowIndex).remove();
-                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
-                    self._populateTableEvents(domPlayerData);
+                    $(domPlayerData).find('EventCommands').children().eq(rowIndex).remove();
+                    self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
+                    self._populateTableEvents();
                 };
                 $(Elements.REMOVE_COLLECTION_EVENTS).on('click', self.m_removeCollectionEvent);
             },
@@ -402,10 +404,10 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     }
                     var rowIndex = $('input[name=btSelectItem]:checked', Elements.COLLECTION_TABLE).closest('tr').attr('data-index');
                     var domPlayerData = self._getBlockPlayerData();
-                    $(domPlayerData).find('Collection').children().get(rowIndex).remove();
-                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                    $(domPlayerData).find('Collection').children().eq(rowIndex).remove();
+                    self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
                     self._populateTableCollection(domPlayerData);
-                    self._populateTableEvents(domPlayerData);
+                    self._populateTableEvents();
                 };
                 $(Elements.REMOVE_RESOURCE_FOR_COLLECTION).on('click', self.m_removeCollectionListItem);
             },
@@ -454,9 +456,8 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                         '</page>';
                 }
                 $(xSnippetCollection).append($(buff));
-                domPlayerData = pepper.xmlToStringIEfix(domPlayerData);
-                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION, true);
-                self._populateTableEvents(domPlayerData);
+                self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                self._populateTableEvents();
             },
 
             /**

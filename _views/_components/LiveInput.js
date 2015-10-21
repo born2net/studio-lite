@@ -20,10 +20,11 @@ define(['jquery', 'backbone', 'validator'], function ($, Backbone, validator) {
             self.m_validator = validator;
             self.m_validationRules = {};
             self.LIVE_INPUT_CHANGED = 'LIVE_INPUT_CHANGED';
+            self.LIVE_INPUT_VALID_ERROR = 'LIVE_INPUT_VALID_ERROR';
             self.m_options = options;
             self.m_prevValue = self.m_options.value;
             var snippet = '<div>';
-            snippet += '        <h5 class="liveInput">' + self.m_options.value + '</h5>';
+            snippet += '        <h5 class="liveInput" data-toggle="popover" data-placement="auto right" data-trigger="manual" data-content="">' + self.m_options.value + '</h5>';
             snippet += '        <a class="liveInputLink"><i style="color: gray" class="fa fa-pencil"></i></a>';
             snippet += '        <input class="liveInputRename" type="text" data-localize="' + self.m_options.dataLocalize + '" placeholder="' + self.m_options.placeHolder + '" value="">';
             snippet += '   </div>';
@@ -39,11 +40,20 @@ define(['jquery', 'backbone', 'validator'], function ($, Backbone, validator) {
         /**
          Adding our own validation rules
          @method _extendValidator
+         @return {Boolean} pass or fail
          **/
         _extendValidator: function () {
             var self = this;
             validator.extend('noEmpty', function (str) {
                 return !(_.isUndefined(str) || _.isNull(str) || str.trim().length === 0)
+            });
+            validator.extend('isNumberInRange', function (str, opts) {
+                str = Number(str);
+                if (_.isNaN(str))
+                    return false;
+                if (str < opts.min || str > opts.max)
+                    return false;
+                return true;
             });
         },
 
@@ -82,6 +92,59 @@ define(['jquery', 'backbone', 'validator'], function ($, Backbone, validator) {
                 });
             });
         },
+
+        /**
+         Validate against all the given rules per instance
+         @method _validated
+         @param {Number} i_value
+         @return {Array} status of array of error messages
+         **/
+        _validated: function (i_value) {
+            var self = this;
+            var errors = [];
+            _.forEach(self.m_validationRules, function (rule, v) {
+                var func = rule[0];
+                var err = rule[1];
+                var opts = rule[2];
+                var value = i_value;
+                if (func)
+                    if (func(value, opts) == false)
+                        errors.push(err);
+            });
+
+            if (errors.length > 0) {
+                self.trigger(self.LIVE_INPUT_VALID_ERROR, errors);
+                self.m_liveRename.attr('data-content', errors[0]);
+                //self.m_liveRename.attr('data-content', 'hello world');
+                self.m_liveRename.popover('show');
+                setTimeout(function () {
+                    self.m_liveRename.popover('hide');
+                }, 3000);
+            }
+            return errors;
+        },
+
+        /**
+         Return the validator object so caller can reference the isXXX functions as validation rules
+         @method getValidator
+         @return {Object} validator object
+         **/
+        getValidator: function () {
+            var self = this;
+            return self.m_validator;
+        },
+
+        /**
+         Enable validation via config object
+         @method rules
+         @param {Object} the config objects uses a AND rule and so ALL rules must match for no error message to display.
+         if any error we return it in the array of errors.
+         **/
+        rules: function (i_validationRules) {
+            var self = this;
+            self.m_validationRules = i_validationRules;
+        },
+
         /**
          Get current input value
          @method getValue
@@ -110,9 +173,9 @@ define(['jquery', 'backbone', 'validator'], function ($, Backbone, validator) {
             };
 
             // check for validation errors
-            if (i_validate){
+            if (i_validate) {
                 var errors = self._validated(i_value);
-                if (errors.length > 0){
+                if (errors.length > 0) {
                     self.m_liveRename.text(self.m_prevValue);
                     return errors;
                 }
@@ -126,51 +189,6 @@ define(['jquery', 'backbone', 'validator'], function ($, Backbone, validator) {
             self.trigger(self.LIVE_INPUT_CHANGED, edata);
             if (self.m_options.customEvent)
                 BB.comBroker.fire(self.m_options.customEvent, self, self, edata);
-        },
-
-        /**
-         Validate against all the given rules per instance
-         @method _validated
-         @param {Number} i_value
-         @return {Array} status of array of error messages
-         **/
-        _validated: function (i_value) {
-            var self = this;
-            var status = [];
-            _.forEach(self.m_validationRules, function (rule, v) {
-                if (rule[0](i_value) == 0)
-                    status.push(rule[1]);
-            });
-            return status;
-        },
-
-        /**
-         Return the validator object so caller can reference the isXXX functions as validation rules
-         @method getValidator
-         @return {Object} validator object
-         **/
-        getValidator: function () {
-            var self = this;
-            return self.m_validator;
-        },
-
-        /**
-         Enable validation via config object
-         @method validation
-         @param {Object} the config objects uses a AND rule and so ALL rules must match for no error message to display.
-         if any error we return it in the array of errors.
-         Example for i_validationRules:
-         -------------------------------
-         self.m_thisInstance.valid({
-                1: [self.m_liveRenameInput.getValidator().isEmail, $(Elements.BOOTBOX_LABEL_TEXT).text()],
-                2: [self.m_liveRenameInput.getValidator().isIP, 'not ip'],
-                3: [self.m_liveRenameInput.getValidator().noEmpty, 'cannot be blank']
-            });
-         -------------------------------
-         **/
-        valid: function (i_validationRules) {
-            var self = this;
-            self.m_validationRules = i_validationRules;
         }
     });
 

@@ -326,7 +326,7 @@ Pepper.prototype = {
      @return {String} url address
      **/
     getStudioLiteURL: function () {
-        var protocol =  window.g_protocol;
+        var protocol = window.g_protocol;
         if (window.g_masterDomain == 'galaxy.signage.me')
             protocol = 'https://';
         return protocol + window.g_masterDomain + '/_studiolite-dist/studiolite.html';
@@ -338,7 +338,7 @@ Pepper.prototype = {
      @return {String} url address
      **/
     getStudioProURL: function () {
-        var protocol =  window.g_protocol;
+        var protocol = window.g_protocol;
         return window.g_protocol + window.g_masterDomain + '/WebService/signagestudio_d.aspx';
     },
 
@@ -451,11 +451,30 @@ Pepper.prototype = {
      @param {Number} i_lng
      @param {Function} i_callBack
      **/
-    sendLocalEventGPS: function (i_stationId, i_lat, i_lng, i_callBack) {
-        // http://192.168.1.12:9999/sendLocalEvent?eventName=gps&eventParam=34,-118
-        var url = window.g_protocol + pepper.getUserData().domain + '/WebService/sendCommand.ashx?i_user=' + pepper.getUserData().userName + '&i_password=' + pepper.getUserData().userPass + '&i_stationId=' + i_stationId + '&i_command=event&i_param1=' + 'gps' + '&i_param2=' + i_lat + ',' + i_lng + '&callback=?';
-        log(url);
-        $.getJSON(url, i_callBack);
+    sendLocalEventGPS: function (i_id, i_ip, i_port, i_lat, i_lng, i_callBack) {
+
+        // curl "http://192.168.92.133:1024/sendLocalEvent?eventName=gps&eventParam=34.22447,-118.828"
+        // https://sun.signage.me/WebService/sendCommand.ashx?i_user=d39@ms.com&i_password=xxxx&i_stationId=44&i_command=event&i_param1=gps&i_param2=34.22447,-118.828&callback=
+
+        var localURL = 'http://' + i_ip + ':' + i_port + '/sendLocalEvent?eventName=gps&eventParam=' + i_lat + ',' + i_lng;
+        var remoteURL = window.g_protocol + pepper.getUserData().domain + '/WebService/sendCommand.ashx?i_user=' + pepper.getUserData().userName + '&i_password=' + pepper.getUserData().userPass + '&i_stationId=' + i_id + '&i_command=event&i_param1=' + 'gps' + '&i_param2=' + i_lat + ',' + i_lng + '&callback=?';
+        log(localURL);
+        log(remoteURL);
+        try {
+            $.ajax({
+                url: remoteURL,
+                dataType: "jsonp",
+                type: "post",
+                complete: function (response) {
+                    console.log(response.statusText);
+                },
+                error: function (jqXHR, exception) {
+                    console.log(jqXHR, exception);
+                },
+            });
+        } catch (e) {
+            consoloe.log('error on ajax');
+        }
     },
 
     /**
@@ -1165,7 +1184,10 @@ Pepper.prototype = {
         chanel.chanel_name = "CH";
         chanel.campaign_timeline_id = i_campaign_timeline_id;
         chanels.addRecord(chanel);
-        pepper.fire(Pepper['NEW_CHANNEL_ADDED'], self, null, {chanel: chanel['campaign_timeline_chanel_id'], campaign_timeline_id: i_campaign_timeline_id});
+        pepper.fire(Pepper['NEW_CHANNEL_ADDED'], self, null, {
+            chanel: chanel['campaign_timeline_chanel_id'],
+            campaign_timeline_id: i_campaign_timeline_id
+        });
         return chanel['campaign_timeline_chanel_id'];
     },
 
@@ -2017,7 +2039,7 @@ Pepper.prototype = {
                 $(playerData).find('[player="' + BB.CONSTS.BLOCKCODE_COLLECTION + '"]').each(function (i, playerDataBlockCollection) {
                     $(playerDataBlockCollection).find('Collection').children().each(function (k, page) {
                         var resource_id = $(page).find('Resource').attr('hResource');
-                        if (i_resource_id == resource_id){
+                        if (i_resource_id == resource_id) {
                             $(page).remove();
                             currentSceneID = pepper.sterilizePseudoId(currentSceneID);
                             self.m_msdb.table_player_data().openForEdit(currentSceneID);
@@ -2046,7 +2068,7 @@ Pepper.prototype = {
                 $(playerData).find('[player="' + BB.CONSTS.BLOCKCODE_COLLECTION + '"]').each(function (i, playerDataBlockCollection) {
                     $(playerDataBlockCollection).find('Collection').children().each(function (k, page) {
                         var scene_id = $(page).find('Player').attr('hDataSrc');
-                        if (scene_id == i_scene_id){
+                        if (scene_id == i_scene_id) {
                             $(page).remove();
                             currentSceneID = pepper.sterilizePseudoId(currentSceneID);
                             self.m_msdb.table_player_data().openForEdit(currentSceneID);
@@ -2072,13 +2094,13 @@ Pepper.prototype = {
             var playerData = recCampaignTimelineChannelPlayer['player_data'];
             var domPlayerData = $.parseXML(playerData);
             var blockType = $(domPlayerData).find('Player').attr('player');
-            if (blockType == BB.CONSTS.BLOCKCODE_COLLECTION){
+            if (blockType == BB.CONSTS.BLOCKCODE_COLLECTION) {
                 $(domPlayerData).find('Collection').children().each(function (k, page) {
                     var scene_hDataSrc;
                     var type = $(page).attr('type');
                     if (type == 'scene') {
                         scene_hDataSrc = $(page).find('Player').attr('hDataSrc');
-                        if (scene_hDataSrc == i_scene_id){
+                        if (scene_hDataSrc == i_scene_id) {
                             $(page).remove();
                             var player_data = pepper.xmlToStringIEfix(domPlayerData)
                             pepper.m_msdb.table_campaign_timeline_chanel_players().openForEdit(campaign_timeline_chanel_player_id);
@@ -2103,13 +2125,13 @@ Pepper.prototype = {
             var playerData = recCampaignTimelineChannelPlayer['player_data'];
             var domPlayerData = $.parseXML(playerData);
             var blockType = $(domPlayerData).find('Player').attr('player');
-            if (blockType == BB.CONSTS.BLOCKCODE_COLLECTION){
+            if (blockType == BB.CONSTS.BLOCKCODE_COLLECTION) {
                 $(domPlayerData).find('Collection').children().each(function (k, page) {
                     var resource_hResource;
                     var type = $(page).attr('type');
                     if (type == 'resource') {
                         resource_hResource = $(page).find('Resource').attr('hResource');
-                        if (resource_hResource == i_resource_id){
+                        if (resource_hResource == i_resource_id) {
                             $(page).remove();
                             var player_data = pepper.xmlToStringIEfix(domPlayerData)
                             pepper.m_msdb.table_campaign_timeline_chanel_players().openForEdit(campaign_timeline_chanel_player_id);
@@ -2260,17 +2282,17 @@ Pepper.prototype = {
      @param {Number} i_ad_local_content_id
      @return {Object}
      **/
-    getAdPackContNames: function(i_ad_local_content_id) {
+    getAdPackContNames: function (i_ad_local_content_id) {
         var self = this;
-        var result =  {
+        var result = {
             contentName: '',
             packageName: ''
         };
         $(pepper.m_msdb.table_ad_local_contents().getAllPrimaryKeys()).each(function (k, ad_local_content_id) {
             var recAdLocalContent = pepper.m_msdb.table_ad_local_contents().getRec(ad_local_content_id);
-            if (recAdLocalContent.native_id== i_ad_local_content_id){
+            if (recAdLocalContent.native_id == i_ad_local_content_id) {
                 var recAdLocalPackage = pepper.m_msdb.table_ad_local_packages().getRec(recAdLocalContent.ad_local_package_id);
-                result =  {
+                result = {
                     contentName: recAdLocalContent.content_name,
                     packageName: recAdLocalPackage.package_name
                 };

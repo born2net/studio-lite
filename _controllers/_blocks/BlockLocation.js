@@ -36,7 +36,6 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 self._listenAddPoint();
                 self._listenRadiusChange();
                 self._listenPriorityChange();
-                ///self._listenModeChange();
 
                 self.m_blockProperty.locationDatatableInit();
                 self.m_locationPriorityMeter = self.m_blockProperty.getLocationPriorityMeter();
@@ -68,7 +67,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                         return;
                     var item = $(domPlayerData).find('GPS').children().get(self.m_currentIndex);
                     $(item).attr('priority', value);
-                    self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION, false);
+                    self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
                 };
                 BB.comBroker.listen(BB.EVENTS.LOCATION_PRIORITY_METER_CHANGED, self.m_inputPriorityHandler);
             },
@@ -110,7 +109,8 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     var xSnippetLocation = $(domPlayerData).find('GPS');
                     $(xSnippetLocation).append($(self.m_pendingAdditionXML));
                     self.m_pendingAdditionXML = '';
-                    self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION, false);
+                    // since we used append, we have to cleanup for IE case bug
+                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
                     self._populate();
                     self._jumpToLocation('last');
                 };
@@ -133,7 +133,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                         return;
                     var item = $(domPlayerData).find('GPS').children().get(self.m_currentIndex);
                     $(item).attr('radios', val);
-                    self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION, false);
+                    self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
                     self._googleMap(false, true, false);
                 };
                 BB.comBroker.listen(BB.EVENTS.LOCATION_RADIUS_CHANGED, self.m_onRadiusHandler);
@@ -174,8 +174,8 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
 
                 bootbox.confirm($(Elements.MSG_BOOTBOX_SURE_DELETE).text(), function (result) {
                     if (result == true) {
-                        $(domPlayerData).find('GPS').children().get(self.m_currentIndex).remove();
-                        self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION, false);
+                        $(domPlayerData).find('GPS').children().eq(self.m_currentIndex).remove();
+                        self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
                         self._googleMap(false, true, false);
                         self._jumpToLocation('first');
                         self._populateTotalMapLocations(domPlayerData);
@@ -233,7 +233,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                             break;
                         }
                     }
-                    self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION, false);
+                    self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
                     if (reloadMap)
                         self._googleMap(false, true, false);
                 };
@@ -261,7 +261,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     }
                     var item = $(domPlayerData).find('Fixed').children().get(rowIndex);
                     $(item).attr('page', newName).attr('duration', newDuration);
-                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                    self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
                     self._populateTableDefault(domPlayerData);
                 };
                 BB.comBroker.listen(BB.EVENTS.LOCATION_ROW_CHANGED, self.m_locationRowChangedHandler);
@@ -281,7 +281,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     var target = $(domPlayerData).find('Fixed').children().get(parseInt(droppedRowIndex));
                     var source = $(domPlayerData).find('Fixed').children().get(self.m_selectRowIndex);
                     droppedRowIndex > self.m_selectRowIndex ? $(target).after(source) : $(target).before(source);
-                    self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                    self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
                     self._populateTableDefault(domPlayerData);
                 };
                 BB.comBroker.listen(BB.EVENTS.LOCATION_ROW_DROP, self.m_locationRowDroppedHandler);
@@ -549,8 +549,8 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     case 'addDefault':
                     {
                         $(xSnippetLocation).append($(buff));
-                        domPlayerData = pepper.xmlToStringIEfix(domPlayerData);
-                        self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION, true);
+                        // since we used append, we have to cleanup for IE case bug
+                        self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
                         BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.m_block_id);
                         break;
                     }
@@ -560,27 +560,6 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     }
                 }
             },
-
-            /**
-             Listen to mode change between simulation mode and real mode
-             @method _listenModeChange
-
-            **/_listenModeChange: function () {
-                var self = this;
-                self.sliderInput = function () {
-                    if (!self.m_selected)
-                        return;
-                    var mode = $(Elements.CLASS_LOCATION_SIMULATION_MODE).prop('checked');
-                    self.m_addBlockLocationView.simulationMode(mode);
-                    if (mode){
-                        $(Elements.CLASS_LOCATION_SIMULATION_PROPS).slideDown();
-                    } else {
-                        $(Elements.CLASS_LOCATION_SIMULATION_PROPS).slideUp();
-                    }
-                };
-                $(Elements.CLASS_LOCATION_SIMULATION_MODE).on('change', self.sliderInput);
-            },
-
 
             /**
              Open google maps and load it with all current locations
@@ -638,8 +617,8 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                         if (result == true) {
                             var rowIndex = $('input[name=btSelectItem]:checked', Elements.LOCATION_TABLE).closest('tr').attr('data-index');
                             var domPlayerData = self._getBlockPlayerData();
-                            $(domPlayerData).find('Fixed').children().get(rowIndex).remove();
-                            self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
+                            $(domPlayerData).find('Fixed').children().eq(rowIndex).remove();
+                            self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
                             self._populateTableDefault(domPlayerData);
                         }
                     });
@@ -705,7 +684,6 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 $(Elements.CLASS_ADD_RESOURCE_LOCATION).off('click', self.m_addNewLocationListItem);
                 $(Elements.REMOVE_RESOURCE_FOR_LOCATION).off('click', self.m_removeLocationListItem);
                 $(Elements.LOCATION_CONTROLS + ' button').off('click', self.m_locationControls);
-                $(Elements.CLASS_LOCATION_SIMULATION_MODE).off('change', self.sliderInput);
                 BB.comBroker.stopListen(BB.EVENTS.ADD_NEW_BLOCK_LIST); // removing for everyone which is ok, since gets added in real time
                 BB.comBroker.stopListen(BB.EVENTS.LOCATION_ROW_DROP, self.m_locationRowDroppedHandler);
                 BB.comBroker.stopListen(BB.EVENTS.LOCATION_ROW_DRAG, self.m_locationRowDraggedHandler);

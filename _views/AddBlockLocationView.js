@@ -395,7 +395,11 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
          **/
         _simulateEvent: function (lat, lng, inRange) {
             var self = this;
-            var station_id = $(Elements.CLASS_LOCATION_SIMULATION_PROPS, self.el).find('select').find('option:selected').attr('value');
+            var selected = $(Elements.CLASS_LOCATION_SIMULATION_PROPS, self.el).find('select').find('option:selected');
+            var id = $(selected).attr('data-stationid');
+            var ip = $(selected).attr('data-ip');
+            var stationRecord = BB.Pepper.getStationRecord(id);
+            var port = stationRecord.lan_server_port;
             $messages = $(Elements.CLASS_LOCATION_SIMULATION_PROPS, self.el).find('h5');
             if (inRange) {
                 $messages.css({color: 'green'});
@@ -405,13 +409,8 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             $messages.eq(0).text('Sending...');
             $messages.eq(1).text(lng);
             $messages.eq(2).text(lat);
-            BB.Pepper.sendLocalEventGPS(station_id, lat, lng, function (e) {
-                $messages.eq(0).text('Waiting...');
-                $messages.eq(1).text('none');
-                $messages.eq(2).text('none');
-                $messages.css({color: 'gray'});
-                if (e.ret != 'success') {
-                }
+            BB.Pepper.sendLocalEventGPS(id, ip, port, lat, lng, function(e){
+                console.log(e);
             });
         },
 
@@ -431,7 +430,9 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
                 $(xml).find('Station').each(function (key, value) {
                     var stationID = $(value).attr('id');
                     var stationName = $(value).attr('name');
-                    var buff = '<option value="' + stationID + '">' + stationName + '</option>'
+                    var stationPort = $(value).attr('localPort') || 9999;
+                    var stationIp = $(value).attr('localAddress');
+                    var buff = '<option data-ip="' + stationIp + '" data-stationid="' + stationID + '">' + stationName + '</option>'
                     $(Elements.CLASS_LOCATION_SIMULATION_PROPS, self.el).find('select').append(buff);
                 });
             });

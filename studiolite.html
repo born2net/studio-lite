@@ -1586,7 +1586,7 @@
                                     id="buisinessID"></span><br/>
                                 <span class="dashboardBullets" data-localize="username"> User name: </span><span
                                     class="userName dashboardBullets"></span><br/>
-                                <span class="dashboardBullets" data-localize="version"> Version 1.1.150 </span>
+                                <span class="dashboardBullets" data-localize="version"> Version 1.1.151 </span>
                                 <br/>
                             </div>
 
@@ -2678,7 +2678,7 @@
     </div>
 </div>
 <div id="footer"><br>
-    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.1.150 </span>
+    <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.1.151 </span>
 </div>
 
 <div id="popModal" style="display: none"></div>
@@ -2892,7 +2892,7 @@
             <label class="label-info"></label>
         </div>
         <div style="clear: both; padding-bottom: 10px"></div>
-        <div style="width:220px; height: 90px; display: none" class="locationlSimulationProps pull-right">
+        <div style="display: none" class="locationSimulationProps pull-right">
             <button title="refresh"
                     data-localize="empty"
                     data-localize-tooltip="refresh" type="button"
@@ -2900,10 +2900,16 @@
                     class="glyphicon glyphicon-refresh">&nbsp;</span><span
                     data-localize="refresh"> refresh </span>
             </button>
-            <select name="preview full screen" data-role="slider" style="height: 31px; width: 120px; border: solid #cbcbcb 1px"></select>
+            <select style="height: 31px; width: 180px; border: solid #cbcbcb 1px">
+            </select>
+            <select style="height: 31px; width: 110px; border: solid #cbcbcb 1px">
+                <option value="local">Local post</option>
+                <option value="remote">Remote post</option>
+            </select>
             <h5>status: waiting...</h5>
             <h5>longitude: none</h5>
             <h5>longitude: none</h5>
+            <h5 style="font-size: 7px; cursor: pointer"></h5>
         </div>
 
     </div>

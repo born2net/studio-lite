@@ -395,23 +395,32 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
          **/
         _simulateEvent: function (lat, lng, inRange) {
             var self = this;
-            var selected = $(Elements.CLASS_LOCATION_SIMULATION_PROPS, self.el).find('select').find('option:selected');
+            var selected = $(Elements.CLASS_LOCATION_SIMULATION_PROPS, self.el).find('select').eq(0).find('option:selected');
+            var postMode = $(Elements.CLASS_LOCATION_SIMULATION_PROPS, self.el).find('select').eq(1).find('option:selected').attr('value');
+            var msg = (postMode == 'local') ? 'click link to send post...' : 'sending post...';
             var id = $(selected).attr('data-stationid');
             var ip = $(selected).attr('data-ip');
             var stationRecord = BB.Pepper.getStationRecord(id);
             var port = stationRecord.lan_server_port;
-            $messages = $(Elements.CLASS_LOCATION_SIMULATION_PROPS, self.el).find('h5');
+            var $messages = $(Elements.CLASS_LOCATION_SIMULATION_PROPS, self.el).find('h5');
             if (inRange) {
                 $messages.css({color: 'green'});
             } else {
                 $messages.css({color: 'red'});
             }
-            $messages.eq(0).text('Sending...');
-            $messages.eq(1).text(lng);
-            $messages.eq(2).text(lat);
-            BB.Pepper.sendLocalEventGPS(id, ip, port, lat, lng, function(e){
+            var url = BB.Pepper.sendLocalEventGPS(postMode, lat, lng, id, ip, port, function (e) {
                 console.log(e);
             });
+            $messages.eq(0).text(msg);
+            $messages.eq(1).text(lng);
+            $messages.eq(2).text(lat);
+            $messages.eq(3).text(url);
+            $messages.eq(3).off('click');
+            if (postMode=="local"){
+                $messages.eq(3).on('click', function(){
+                    window.open(url, '_blank');
+                });
+            }
         },
 
         /**
@@ -422,7 +431,8 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
             var self = this;
             var userData = pepper.getUserData();
             var url = window.g_protocol + userData.domain + '/WebService/getStatus.ashx?user=' + userData.userName + '&password=' + userData.userPass + '&callback=?';
-            $(Elements.CLASS_LOCATION_SIMULATION_PROPS, self.el).find('select').children().remove();
+            var select = $(Elements.CLASS_LOCATION_SIMULATION_PROPS, self.el).find('select').eq(0);
+            $(select).children().remove();
             $.getJSON(url, function (data) {
                 var s64 = data['ret'];
                 var str = $.base64.decode(s64);
@@ -433,7 +443,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
                     var stationPort = $(value).attr('localPort') || 9999;
                     var stationIp = $(value).attr('localAddress');
                     var buff = '<option data-ip="' + stationIp + '" data-stationid="' + stationID + '">' + stationName + '</option>'
-                    $(Elements.CLASS_LOCATION_SIMULATION_PROPS, self.el).find('select').append(buff);
+                    $(select).append(buff);
                 });
             });
         },
@@ -523,11 +533,11 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
          @method setPlayerData
          @param {Number} i_playerData
          @return {Number} Unique clientId.
-        setPlacement: function (i_placement) {
+         setPlacement: function (i_placement) {
             var self = this;
             self.m_placement = self.options.placement = i_placement;
         },
-        **/
+         **/
 
         /**
          Add a new point to the map (a point is constructed of marker and circle radius and inserted into m_mapPoints)

@@ -300,6 +300,55 @@ Pepper.prototype = {
     },
 
     /**
+     Push an event to a local station / server for Location based content
+     @method sendLocalEventGPS
+     @param {String} i_mode local or remote
+     @param {Number} i_stationId
+     @param {Number} i_lat
+     @param {Number} i_lng
+     @param {Function} i_callBack
+     @return {String) short url
+     **/
+    sendLocalEventGPS: function (i_mode, i_lat, i_lng, i_id, i_ip, i_port, i_callBack) {
+        var self = this;
+        // example posts
+        // curl "http://192.168.92.133:1024/sendLocalEvent?eventName=gps&eventParam=34.22447,-118.828"
+        // https://sun.signage.me/WebService/sendCommand.ashx?i_user=d39@ms.com&i_password=xxxx&i_stationId=44&i_command=event&i_param1=gps&i_param2=34.22447,-118.828&callback=
+        var url;
+        var returnUrl;
+        if (i_mode == "local"){
+            url = 'http://' + i_ip + ':' + i_port + '/sendLocalEvent?eventName=gps&eventParam=' + i_lat + ',' + i_lng;
+            returnUrl= url;
+        } else {
+            url = window.g_protocol + pepper.getUserData().domain + '/WebService/sendCommand.ashx?i_user=' + pepper.getUserData().userName + '&i_password=' + pepper.getUserData().userPass + '&i_stationId=' + i_id + '&i_command=event&i_param1=' + 'gps' + '&i_param2=' + i_lat + ',' + i_lng + '&callback=?';
+            returnUrl = '//remoteServer' + '&i_stationId=' + i_id + '&i_command=event&i_param1=' + 'gps' + '&i_param2=' + i_lat + ',' + i_lng;
+        }
+        //log(url);
+        if (i_mode == 'local')
+            return returnUrl;
+
+        try {
+            $.ajax({
+                url: url,
+                dataType: "jsonp",
+                type: "post",
+                complete: function (response) {
+                    if (i_callBack)
+                        i_callBack(response.statusText);
+                },
+                error: function (jqXHR, exception) {
+                    log(jqXHR, exception);
+                    if (i_callBack)
+                        i_callBack(exception);
+                },
+            });
+        } catch (e) {
+           log('error on ajax' + e);
+        }
+        return returnUrl;
+    },
+
+    /**
      Push a command to remote station
      @method getLocalization
      @param {String} i_command
@@ -443,39 +492,6 @@ Pepper.prototype = {
         $.getJSON(url, i_callBack);
     },
 
-    /**
-     Push an event to a local station / server for Location based content
-     @method sendLocalEventGPS
-     @param {Number} i_stationId
-     @param {Number} i_lat
-     @param {Number} i_lng
-     @param {Function} i_callBack
-     **/
-    sendLocalEventGPS: function (i_id, i_ip, i_port, i_lat, i_lng, i_callBack) {
-
-        // curl "http://192.168.92.133:1024/sendLocalEvent?eventName=gps&eventParam=34.22447,-118.828"
-        // https://sun.signage.me/WebService/sendCommand.ashx?i_user=d39@ms.com&i_password=xxxx&i_stationId=44&i_command=event&i_param1=gps&i_param2=34.22447,-118.828&callback=
-
-        var localURL = 'http://' + i_ip + ':' + i_port + '/sendLocalEvent?eventName=gps&eventParam=' + i_lat + ',' + i_lng;
-        var remoteURL = window.g_protocol + pepper.getUserData().domain + '/WebService/sendCommand.ashx?i_user=' + pepper.getUserData().userName + '&i_password=' + pepper.getUserData().userPass + '&i_stationId=' + i_id + '&i_command=event&i_param1=' + 'gps' + '&i_param2=' + i_lat + ',' + i_lng + '&callback=?';
-        log(localURL);
-        log(remoteURL);
-        try {
-            $.ajax({
-                url: remoteURL,
-                dataType: "jsonp",
-                type: "post",
-                complete: function (response) {
-                    console.log(response.statusText);
-                },
-                error: function (jqXHR, exception) {
-                    console.log(jqXHR, exception);
-                },
-            });
-        } catch (e) {
-            consoloe.log('error on ajax');
-        }
-    },
 
     /**
      Send remote command to retrieve snapshot of a running station

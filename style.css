@@ -3930,6 +3930,13 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
     max-height: 157px;
 }
 
+.locationSimulationProps {
+    width: 420px;
+    height: 160px;
+    border: 1px dotted gray;
+    padding: 6px;
+}
+
 .reorder_rows_onDragClass td {
     background-color: #e5e5e5;
     /*-webkit-box-shadow: 11px 5px 12px 2px #333, 0 1px 0 #ccc inset, 0 -1px 0 #ccc inset;

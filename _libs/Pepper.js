@@ -697,6 +697,7 @@ Pepper.prototype = {
             replace(/<players/gi, '<Players').replace(/players>/gi, 'Players>').
             replace(/<text/gi, '<Text').replace(/text>/gi, 'Text>').
             replace(/<eventCommands/gi, '<EventCommands').replace(/eventCommands>/gi, 'EventCommands>').
+            replace(/<eventCommand/gi, '<EventCommand').replace(/eventCommand>/gi, 'EventCommand>').
             replace(/<border/gi, '<Border').replace(/border>/gi, 'Border>').
             replace(/<scene/gi, '<Scene').replace(/scene>/gi, 'Scene>').
             replace(/<clock/gi, '<Clock').replace(/clock>/gi, 'Clock>').

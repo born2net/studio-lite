@@ -60,11 +60,6 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     if (!self.m_selected)
                         return;
                     self.m_selectRowIndex = e.edata;
-                    var domPlayerData = self._getBlockPlayerData();
-                    return;
-                    var xSnippet = $(domPlayerData).find('YouTube');
-                    $(xSnippet).attr('volume', volume);
-                    self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
                 };
                 BB.comBroker.listen(BB.EVENTS.COLLECTION_ROW_DRAG, self.m_collectionRowDraggedHandler);
             },
@@ -352,9 +347,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                         return;
                     var domPlayerData = self._getBlockPlayerData();
                     var buff = '<EventCommand from="event" condition="" command="firstPage" />';
-                    //todo: debug IE
-                    var a = $(domPlayerData).find('EventCommands');
-                    $(domPlayerData).find('EventCommands').append(buff);
+                    $(domPlayerData).find('EventCommands').append($(buff));
                     self._setBlockPlayerData(pepper.xmlToStringIEfix(domPlayerData), BB.CONSTS.NO_NOTIFICATION, true);
                     self._populateTableEvents();
                 };

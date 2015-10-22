@@ -3,7 +3,7 @@
  *
  *  SignagePlayer event trigger upon real time GPS coordinates
  *
- *  - To manually test remote events over the web visit: http://signage.me/demo/testsendcommand.html
+ *  - To test remote events via web interface visit: http://signage.me/demo/testsendcommand.html
  *  - For Raspberry PI GPS installation visit: https://github.com/born2net/signagestudio_web-lite/blob/master/examples/location-base/adafruit-ultimate-gps-on-the-raspberry-pi.pdf
  *
  *  Developed by DigitalSignage.com (c)

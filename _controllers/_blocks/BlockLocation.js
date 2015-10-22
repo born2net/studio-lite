@@ -232,6 +232,11 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                             reloadMap = true;
                             break;
                         }
+                        case Elements.LOCATION_RESOURCE_DURATION:
+                        {
+                            $(item).attr('duration', e.edata.value);
+                            break;
+                        }
                     }
                     self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
                     if (reloadMap)
@@ -386,6 +391,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                 self.m_blockProperty.setLocationLiveInput(Elements.LOCATION_RESOURCE_NAME, $(item).attr('page'));
                 self.m_blockProperty.setLocationLiveInput(Elements.LOCATION_RESOURCE_LAT, $(item).attr('lat'));
                 self.m_blockProperty.setLocationLiveInput(Elements.LOCATION_RESOURCE_LNG, $(item).attr('lng'));
+                self.m_blockProperty.setLocationLiveInput(Elements.LOCATION_RESOURCE_DURATION, $(item).attr('duration'));
                 self.m_addBlockLocationView.panToPoint($(item).attr('lat'), $(item).attr('lng'));
             },
 
@@ -511,7 +517,7 @@ define(['jquery', 'backbone', 'Block', 'bootstrap-table-editable', 'bootstrap-ta
                     }
                     case 'addLocation':
                     {
-                        locationBuff = 'lat=":LAT:" lng=":LNG:" radios="0.10" priority="1">';
+                        locationBuff = 'lat=":LAT:" lng=":LNG:" radios="0.10" duration="5" priority="1">';
                         xSnippetLocation = $(domPlayerData).find('GPS');
                         BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.m_block_id);
                         setTimeout(function () {

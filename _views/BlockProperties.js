@@ -549,6 +549,25 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                 value: 'longitude',
                 customEvent: BB.EVENTS.LOCATION_LIVE_INPUT_CHANGED
             });
+
+            var input = self.m_liveLocation[Elements.LOCATION_RESOURCE_DURATION] = new LiveInput({
+                el: Elements.LOCATION_RESOURCE_DURATION,
+                dataLocalize: 'duration',
+                placeHolder: 'duration',
+                value: '5',
+                customEvent: BB.EVENTS.LOCATION_LIVE_INPUT_CHANGED
+            }).on('LIVE_INPUT_CHANGED', function (e) {
+                }
+            ).on('LIVE_INPUT_VALID_ERROR', function (e) {
+                }
+            );
+            input.rules({
+                1: [
+                    input.getValidator().isNumberInRange, $(Elements.MSG_LIVEINPUT_SECONDS).text(), {
+                        min: 5,
+                        max: 86400
+                    }]
+            });
         },
 
         /**
@@ -561,7 +580,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                 handles: 1,
                 start: 1,
                 step: 0.10,
-                range: [0.10, 10],
+                range: [0.10, 4],
                 serialization: {
                     to: [$(Elements.LOCATION_RADIUS_LABEL), 'text']
                 }

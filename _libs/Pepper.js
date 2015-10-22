@@ -323,7 +323,7 @@ Pepper.prototype = {
             url = window.g_protocol + pepper.getUserData().domain + '/WebService/sendCommand.ashx?i_user=' + pepper.getUserData().userName + '&i_password=' + pepper.getUserData().userPass + '&i_stationId=' + i_id + '&i_command=event&i_param1=' + 'gps' + '&i_param2=' + i_lat + ',' + i_lng + '&callback=?';
             returnUrl = '//remoteServer' + '&i_stationId=' + i_id + '&i_command=event&i_param1=' + 'gps' + '&i_param2=' + i_lat + ',' + i_lng;
         }
-        //log(url);
+        // log(url);
         if (i_mode == 'local')
             return returnUrl;
 

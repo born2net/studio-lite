@@ -5,6 +5,7 @@
  *
  *  - To test remote events via web interface visit: http://signage.me/demo/testsendcommand.html
  *  - For Raspberry PI GPS installation visit: https://github.com/born2net/signagestudio_web-lite/blob/master/examples/location-based/adafruit-ultimate-gps-on-the-raspberry-pi.pdf
+ *  - use in Linux nc -zv 192.168.42.27 1026 (example) to test ip / port connection
  *
  *  Developed by DigitalSignage.com (c)
  *

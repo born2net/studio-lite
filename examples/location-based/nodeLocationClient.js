@@ -60,7 +60,7 @@ function sendLocalCommand(i_ip, i_port, i_eventName, i_param) {
 
 /** Get live GPS data via interval **/
 setInterval(function () {
-    exec('python getgps.py', function callback(error, stdout, stderr) {
+    exec('python /root/gps/getgps.py', function callback(error, stdout, stderr) {
         var data = JSON.parse(stdout);
         var p = data.la + ',' + data.lon;
         console.log('Sending ' + p + ' on ' + data.time);

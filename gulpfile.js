@@ -14,7 +14,7 @@ var runSequence = require('run-sequence');
 var shell = require('gulp-shell');
 var minifyHTML = require('gulp-minify-html');
 var yuidoc = require("gulp-yuidoc");
-var sortJSON = require('gulp-sort-json')
+var sortJSON = require('gulp-sort-json');
 
 var server;
 

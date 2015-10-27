@@ -300,7 +300,8 @@ Pepper.prototype = {
     },
 
     /**
-     Push an event to a local station / server for Location based content
+     Push an event to a local station / server for Location based content, see parms for details
+     Keep in mind this supports both local and remote events
      @method sendLocalEventGPS
      @param {String} i_mode local or remote
      @param {Number} i_stationId
@@ -367,7 +368,6 @@ Pepper.prototype = {
             });
         });
     },
-
 
     /**
      Return the url address of StudioLite
@@ -491,7 +491,6 @@ Pepper.prototype = {
         var url = window.g_protocol + pepper.getUserData().domain + '/WebService/sendCommand.ashx?i_user=' + pepper.getUserData().userName + '&i_password=' + pepper.getUserData().userPass + '&i_stationId=' + i_stationId + '&i_command=event&i_param1=' + i_eventName + '&i_param2=' + '&callback=?';
         $.getJSON(url, i_callBack);
     },
-
 
     /**
      Send remote command to retrieve snapshot of a running station

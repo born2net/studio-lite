@@ -18,7 +18,6 @@ var sortJSON = require('gulp-sort-json');
 
 var server;
 
-
 var paths = [
     '_views/**/*.js',
     '_lang/**/*.js',

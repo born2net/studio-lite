@@ -79,84 +79,89 @@ define(['jquery', 'backbone', 'highcharts'], function ($, Backbone) {
          **/
         _getServerResponseTime: function () {
             var self = this;
-            if (window.location.href.indexOf('dev') > -1)
-                return;
-            var url = window.g_protocol + pepper.getUserData().domain + '/WebService/sendCommand.ashx?';
+            var url = window.g_protocol + pepper.getUserData().domain + '/WebService/sendCommand.ashx?i_user=' + pepper.getUserData().userName + '&i_password=' + pepper.getUserData().userPass + '&i_stationId=' + 0 + '&i_command=event&i_param1=' + 'gps' + '&i_param2=' + '0' + ',' + '0' + '&callback=?';
             var sendDate = (new Date()).getTime();
-            $.ajax({
-                //type: "GET", //with response body
-                type: "HEAD", //only headers
-                url: url,
-                success: function () {
-                    var receiveDate = (new Date()).getTime();
-                    var responseTimeMs = receiveDate - sendDate;
-                    var resColor = 'green';
-                    var rest = 2000;
-                    if (responseTimeMs > 2000)
-                        responseTimeMs = rest;
-                    if (responseTimeMs > 600)
-                        resColor = 'yellow';
-                    if (responseTimeMs > 1000)
-                        resColor = 'orange';
-                    if (responseTimeMs > 1600)
-                        resColor = 'red';
-                    rest = rest - responseTimeMs;
+            try {
+                $.ajax({
+                    url: url,
+                    dataType: "jsonp",
+                    type: "post",
+                    complete: function (response) {
+                        var receiveDate = (new Date()).getTime();
+                        var responseTimeMs = receiveDate - sendDate;
+                        var resColor = 'green';
+                        var rest = 2000;
+                        if (responseTimeMs > 2000)
+                            responseTimeMs = rest;
+                        if (responseTimeMs > 600)
+                            resColor = 'yellow';
+                        if (responseTimeMs > 1000)
+                            resColor = 'orange';
+                        if (responseTimeMs > 1600)
+                            resColor = 'red';
+                        rest = rest - responseTimeMs;
 
-                    $(Elements.SERVER_RESPONSETIME).highcharts({
-                        chart: {
-                            type: 'bar',
-                            plotBackgroundColor: self.m_bgColor,
-                            renderTo: 'container',
-                            margin: [0, 0, 0, 0],
-                            spacingTop: 0,
-                            spacingBottom: 0,
-                            spacingLeft: 0,
-                            spacingRight: 0
-                        },
-                        colors: ['#BABABA', resColor],
-                        credits: {
-                            enabled: false
-                        },
-                        tooltip: {
-                            enabled: false
-                        },
-                        title: {
-                            text: '',
-                            style: {
-                                display: 'none'
-                            }
-                        },
-                        yAxis: {
-                            min: 0,
+                        $(Elements.SERVER_RESPONSETIME).highcharts({
+                            chart: {
+                                type: 'bar',
+                                plotBackgroundColor: self.m_bgColor,
+                                renderTo: 'container',
+                                margin: [0, 0, 0, 0],
+                                spacingTop: 0,
+                                spacingBottom: 0,
+                                spacingLeft: 0,
+                                spacingRight: 0
+                            },
+                            colors: ['#BABABA', resColor],
+                            credits: {
+                                enabled: false
+                            },
+                            tooltip: {
+                                enabled: false
+                            },
                             title: {
-                                text: ''
-                            }
-                        },
-                        legend: {
-                            enabled: false
-                        },
-                        plotOptions: {
-                            column: {
-                                colorByPoint: true
+                                text: '',
+                                style: {
+                                    display: 'none'
+                                }
                             },
-                            series: {
-                                stacking: 'normal'
-                            }
-                        },
-                        series: [
-                            {
-                                data: [rest],
-                                pointWidth: 20
+                            yAxis: {
+                                min: 0,
+                                title: {
+                                    text: ''
+                                }
                             },
-                            {
-                                data: [responseTimeMs],
-                                pointWidth: 20
-                            }
-                        ]
-                    });
+                            legend: {
+                                enabled: false
+                            },
+                            plotOptions: {
+                                column: {
+                                    colorByPoint: true
+                                },
+                                series: {
+                                    stacking: 'normal'
+                                }
+                            },
+                            series: [
+                                {
+                                    data: [rest],
+                                    pointWidth: 20
+                                },
+                                {
+                                    data: [responseTimeMs],
+                                    pointWidth: 20
+                                }
+                            ]
+                        });
+                    },
+                    error: function (jqXHR, exception) {
+                        log(jqXHR, exception);
+                    }
+                });
+            } catch (e) {
+                log('error on ajax' + e);
+            }
 
-                }
-            });
         },
 
         /**

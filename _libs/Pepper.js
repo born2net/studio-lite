@@ -341,7 +341,7 @@ Pepper.prototype = {
                     log(jqXHR, exception);
                     if (i_callBack)
                         i_callBack(exception);
-                },
+                }
             });
         } catch (e) {
            log('error on ajax' + e);

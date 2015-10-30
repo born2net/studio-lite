@@ -32,11 +32,11 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         _initResourcesData: function () {
             var self = this;
-            var domPlayerData = self._getBlockPlayerData(   );
+            var domPlayerData = self._getBlockPlayerData();
             var xSnippet = $(domPlayerData).find('Resource');
             self.m_resourceID = $(xSnippet).attr('hResource');
             self.m_nativeID = pepper.getResourceNativeID(self.m_resourceID);
-            if (_.isNull(self.m_nativeID)){
+            if (_.isNull(self.m_nativeID)) {
                 self._selfDestruct();
                 return;
             }
@@ -116,7 +116,13 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             if (self.m_fileFormat == 'swf') {
                 imgPath = './_assets/flash.png';
             } else {
-                imgPath = window.g_protocol + pepper.getUserData().domain + '/Resources/business' +  pepper.getUserData().businessID + '/resources/' + self.m_nativeID + '.' + self.m_fileFormat;
+
+                // CDN
+                imgPath = window.g_protocol + 's3.signage.me/business' +  pepper.getUserData().businessID + '/resources/';
+                imgPath += + self.m_nativeID + '.' + self.m_fileFormat;
+                log('loading img from ' + imgPath);
+
+                // imgPath = window.g_protocol + pepper.getUserData().domain + '/Resources/business' + pepper.getUserData().businessID + '/resources/' + self.m_nativeID + '.' + self.m_fileFormat;
             }
 
             $('<img src="' + imgPath + '" style="display: none" >').load(function () {

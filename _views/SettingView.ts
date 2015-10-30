@@ -200,7 +200,7 @@ define(['jquery', 'validator'], function ($, validator) {
 
             // arrow function
             $(() => {
-                console.log('jquery ready');
+                //console.log('jquery ready');
             });
 
 
@@ -211,7 +211,7 @@ define(['jquery', 'validator'], function ($, validator) {
                 return n + 123;
             };
             myFunction('abc', function (s:string, n:number) {
-                console.log(s, n);
+                //console.log(s, n);
             });
 
             // enum
@@ -220,14 +220,14 @@ define(['jquery', 'validator'], function ($, validator) {
                 level2,
                 level3
             }
-            console.log(DebugLevel.level1);
-            console.log(DebugLevel.level2);
-            console.log(DebugLevel.level3);
+            //console.log(DebugLevel.level1);
+            //console.log(DebugLevel.level2);
+            //console.log(DebugLevel.level3);
 
             //var s:any = comBroker.getService(this._BB.SERVICES['LAYOUT_ROUTER']);
 
             var v:IValidatorStatic = validator;
-            console.log(v.isFloat('123.12'));
+            //console.log(v.isFloat('123.12'));
 
             var typeAlias:Array<string|number|boolean> = [];
             typeAlias.push('abc');
@@ -240,7 +240,7 @@ define(['jquery', 'validator'], function ($, validator) {
 
             // type guard: as transpilrer will check typeof statements
             if (typeof unionType == 'number') {
-                console.log('not proper format');
+                //console.log('not proper format');
             }
         }
 

@@ -182,7 +182,7 @@ define(['jquery', 'validator'], function ($, validator) {
         SettingView.prototype._samples = function () {
             // arrow function
             $(function () {
-                console.log('jquery ready');
+                //console.log('jquery ready');
             });
             // arrow function that takes function for callback + string to number casting
             var myFunction = function (val, callBack) {
@@ -191,7 +191,7 @@ define(['jquery', 'validator'], function ($, validator) {
                 return n + 123;
             };
             myFunction('abc', function (s, n) {
-                console.log(s, n);
+                //console.log(s, n);
             });
             // enum
             var DebugLevel;
@@ -200,12 +200,12 @@ define(['jquery', 'validator'], function ($, validator) {
                 DebugLevel[DebugLevel["level2"] = 1] = "level2";
                 DebugLevel[DebugLevel["level3"] = 2] = "level3";
             })(DebugLevel || (DebugLevel = {}));
-            console.log(DebugLevel.level1);
-            console.log(DebugLevel.level2);
-            console.log(DebugLevel.level3);
+            //console.log(DebugLevel.level1);
+            //console.log(DebugLevel.level2);
+            //console.log(DebugLevel.level3);
             //var s:any = comBroker.getService(this._BB.SERVICES['LAYOUT_ROUTER']);
             var v = validator;
-            console.log(v.isFloat('123.12'));
+            //console.log(v.isFloat('123.12'));
             var typeAlias = [];
             typeAlias.push('abc');
             typeAlias.push(123);
@@ -213,7 +213,6 @@ define(['jquery', 'validator'], function ($, validator) {
             var unionType; // string or array of strings
             // type guard: as transpilrer will check typeof statements
             if (typeof unionType == 'number') {
-                console.log('not proper format');
             }
         };
         return SettingView;

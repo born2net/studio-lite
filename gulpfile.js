@@ -9,10 +9,12 @@
 var gulp = require('gulp');
 var express = require('express');
 var gutil = require('gulp-util');
+var htmlmin = require('gulp-htmlmin');
 var browserSync = require('browser-sync');
 var runSequence = require('run-sequence');
 var shell = require('gulp-shell');
 var minifyHTML = require('gulp-minify-html');
+var rename = require("gulp-rename");
 var yuidoc = require("gulp-yuidoc");
 var sortJSON = require('gulp-sort-json');
 var Rsync = require('rsync');
@@ -30,10 +32,13 @@ var paths = [
 ];
 
 
-gulp.task('releaseDocs', function (done) {
-    runSequence('_genDocs', '_uploadVersionFiles', '_uploadDocs', done);
+gulp.task('release', function (done) {
+    runSequence('_genDocs', '_uploadVersionFiles', '_uploadDocs', 'minifyHTML', done);
 });
 
+gulp.task('minifyHTML', function (done) {
+    runSequence('_htmlMinify', '_htmlCopy', '_rsync', done);
+});
 
 gulp.task('liveServer', ['watchTmpDir'], function () {
     server = express();
@@ -43,6 +48,7 @@ gulp.task('liveServer', ['watchTmpDir'], function () {
         proxy: 'localhost:8002'
     });
 });
+
 
 
 gulp.task('sample', function () {
@@ -162,8 +168,19 @@ function updVersion() {
     return rawVer;
 }
 
+gulp.task('_htmlMinify', function() {
+    return gulp.src('src_studiolite.html')
+        .pipe(htmlmin({collapseWhitespace: true}))
+        .pipe(gulp.dest('temp'))
+});
 
-gulp.task('rsync', function () {
+gulp.task('_htmlCopy', function() {
+    return gulp.src("temp/src_studiolite.html")
+        .pipe(rename("studiolite.html"))
+        .pipe(gulp.dest("./"));
+});
+
+gulp.task('_rsync', function () {
     var rsync = Rsync.build({
         source: '/cygdrive/c/msweb/signagestudio_web-lite/',
         destination: 'Sean@digitalsignage.com:/var/www/sites/dynasite/htdocs/_studiolite-dev/',

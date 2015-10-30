@@ -93,10 +93,11 @@ define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backb
         },
 
         /**
-         Populate the resource preview with loaded resource file
+         Populate the resource preview with loaded resource file (none CDN)
          @method _populateResourcePreview
          @param {Object} i_recResource
          **/
+            /*
         _populateResourcePreview: function (i_recResource) {
             var self = this;
 
@@ -170,6 +171,95 @@ define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backb
                     break
                 }
             }
+        },
+        */
+
+        /**
+         Populate the resource preview with loaded resource file (CDN)
+         @method _populateResourcePreview
+         @param {Object} i_recResource
+         **/
+        _populateResourcePreview: function (i_recResource) {
+            var self = this;
+
+            if (self.m_videoPlayer){
+                self.m_videoPlayer.pause();
+                self.m_videoPlayer.load();
+            }
+            // legacy
+            //var path = window.g_protocol + pepper.getUserData().domain + '/Resources/business' +  pepper.getUserData().businessID + '/resources/' + pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + ext;
+            // CDN
+
+            var path = window.g_protocol + 's3.signage.me/business' +  pepper.getUserData().businessID + '/resources/';
+
+            switch (i_recResource['resource_type']){
+                case 'jpg': {
+                    var ext = 'jpg';
+                }
+                case 'png': {
+                    if (!ext)
+                        ext = 'png';
+                    path += pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + ext;
+                    $(Elements.RESOURCE_PREVIEW_VIDEO).hide();
+                    $(Elements.RESOURCE_PREVIEW_IMAGE).fadeIn();
+                    $(Elements.RESOURCE_PREVIEW_SVG).hide();
+                    var $img = $(Elements.RESOURCE_PREVIEW_IMAGE).find('img');
+                    $img.attr('src',path);
+                    break;
+                }
+                case 'mp4': {
+                    var ext = 'mp4';
+                }
+                case 'flv': {
+                    if (!ext)
+                        ext = 'flv';
+                    $(Elements.RESOURCE_PREVIEW_IMAGE).hide();
+                    $(Elements.RESOURCE_PREVIEW_SVG).hide();
+                    $(Elements.RESOURCE_PREVIEW_VIDEO).fadeIn();
+                    path += pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + ext;
+                    // path = window.g_protocol + pepper.getUserData().domain + '/Resources/business' +  pepper.getUserData().businessID + '/resources/' + pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + ext;
+                    $(Elements.VIDEO_PREVIEW).find('video:nth-child(1)').attr("src",path);
+                    break
+                }
+                case 'swf': {
+                    path = './_assets/flash.png';
+                    $(Elements.RESOURCE_PREVIEW_VIDEO).hide();
+                    $(Elements.RESOURCE_PREVIEW_SVG).hide();
+                    $(Elements.RESOURCE_PREVIEW_IMAGE).fadeIn();
+                    var $img = $(Elements.RESOURCE_PREVIEW_IMAGE).find('img');
+                    $img.attr('src',path);
+                    break
+                }
+                case 'svg': {
+                    path = window.g_protocol + pepper.getUserData().domain + '/Resources/business' +  pepper.getUserData().businessID + '/resources/' + pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + 'svg';
+                    // path += pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + 'svg';
+                    $(Elements.RESOURCE_PREVIEW_VIDEO).hide();
+                    $(Elements.RESOURCE_PREVIEW_IMAGE).hide();
+                    $(Elements.RESOURCE_PREVIEW_SVG).fadeIn();
+                    var $img = $(Elements.RESOURCE_PREVIEW_SVG).find('object');
+                    var urlPath = $.base64.encode(path);
+                    var srvPath = 'https://secure.digitalsignage.com/proxyRequest/' + urlPath;
+
+                    // load svg and force w/h
+                    $.get(srvPath, function(svg) {
+                        var svgHeight, svgWidth, re;
+
+                        svgHeight = svg.match(/(height=")([^\"]*)/)[2];
+                        re = new RegExp('height="' + svgHeight + '"', "ig");
+                        svg = svg.replace(re, 'height="100"');
+
+                        svgWidth = svg.match(/(width=")([^\"]*)/)[2];
+                        re = new RegExp('width="' + svgWidth + '"', "ig");
+                        svg = svg.replace(re, 'width="100"');
+
+                        $('#resourcePreviewSVG').empty();
+                        var s = new String(svg);
+                        $('#resourcePreviewSVG').append(svg).wrap('<center>');
+                    });
+                    break
+                }
+            }
+            log('Loading file from ' + path);
         },
 
         /**

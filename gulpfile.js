@@ -166,7 +166,7 @@ function updVersion() {
 gulp.task('rsync', function () {
     var rsync = Rsync.build({
         source: '/cygdrive/c/msweb/signagestudio_web-lite/',
-        destination: 'root@digitalsignage.com:/var/www/sites/dynasite/htdocs/_studiolite-dev/',
+        destination: 'Sean@digitalsignage.com:/var/www/sites/dynasite/htdocs/_studiolite-dev/',
         exclude: ['*.bat', '*.iml', '.gitignore', 'gulpfile.js', '.git', '.idea/', '_common/', '_doctheme/', '_assets/', '_utils/', '*node_modules', '*SignageStudio/', '*Spotify/']
     });
     rsync.set('progress');

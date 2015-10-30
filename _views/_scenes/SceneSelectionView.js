@@ -18,7 +18,7 @@ define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesload
         initialize: function () {
             var self = this;
             self.m_counter = 1;
-            self.m_counter_max = 200;
+            self.m_counter_max = 300;
             self.m_count_set = 25;
             self.m_selectedSceneID = -1;
             self.m_sceneProperties = new BB.View({
@@ -184,6 +184,7 @@ define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesload
 
                 if (self.m_counter > self.m_counter_max)
                     return;
+
 
                 var $progress, $status;
                 var supportsProgress;

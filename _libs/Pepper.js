@@ -370,8 +370,8 @@ Pepper.prototype = {
     },
 
     /**
-     Push a command to remote station
-     @method getLocalization
+     Push a command to remote station, this v2 has a fall back and returns null on fails
+     @method getLocalizationNew
      @param {String} i_command
      @param {Number} i_stationId
      @param {Function} i_callBack

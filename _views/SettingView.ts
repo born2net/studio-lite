@@ -224,9 +224,7 @@ define(['jquery', 'validator'], function ($, validator) {
             console.log(DebugLevel.level2);
             console.log(DebugLevel.level3);
 
-
             //var s:any = comBroker.getService(this._BB.SERVICES['LAYOUT_ROUTER']);
-
 
             var v:IValidatorStatic = validator;
             console.log(v.isFloat('123.12'));

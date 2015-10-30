@@ -5,8 +5,8 @@
  @constructor
  @return {Object} instantiated AppRouter
  **/
-define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEntryFaderView', 'LoginView', 'AppContentFaderView', 'WaitView', 'LivePreView', 'bootbox', 'CampaignManagerView', 'ResourcesLoaderView', 'ResourcesLoaderView', 'StationsViewLoader', 'SettingsView', 'FQLoaderView', 'AdStatsLoaderView', 'ProStudioView', 'HelpView', 'InstallView', 'LogoutView', 'CampaignSliderStackView', 'ScreenLayoutSelectorView', 'X2JS', 'XDate', 'LanguageSelectorView', 'SceneLoaderView', 'DashboardView'],
-    function (_, $, Backbone, AppAuth, NavigationView, AppEntryFaderView, LoginView, AppContentFaderView, WaitView, LivePreView, Bootbox, CampaignManagerView, ResourcesLoaderView, ResourcesLoaderView, StationsViewLoader, SettingsView, FQLoaderView, AdStatsLoaderView, ProStudioView, HelpView, InstallView, LogoutView, CampaignSliderStackView, ScreenLayoutSelectorView, X2JS, XDate, LanguageSelectorView, SceneLoaderView, DashboardView) {
+define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEntryFaderView', 'LoginView', 'AppContentFaderView', 'WaitView', 'LivePreView', 'bootbox', 'CampaignManagerView', 'ResourcesLoaderView', 'ResourcesLoaderView', 'StationsViewLoader', 'SettingView', 'FQLoaderView', 'AdStatsLoaderView', 'ProStudioView', 'HelpView', 'InstallView', 'LogoutView', 'CampaignSliderStackView', 'ScreenLayoutSelectorView', 'X2JS', 'XDate', 'LanguageSelectorView', 'SceneLoaderView', 'DashboardView'],
+    function (_, $, Backbone, AppAuth, NavigationView, AppEntryFaderView, LoginView, AppContentFaderView, WaitView, LivePreView, Bootbox, CampaignManagerView, ResourcesLoaderView, ResourcesLoaderView, StationsViewLoader, SettingView, FQLoaderView, AdStatsLoaderView, ProStudioView, HelpView, InstallView, LogoutView, CampaignSliderStackView, ScreenLayoutSelectorView, X2JS, XDate, LanguageSelectorView, SceneLoaderView, DashboardView) {
 
         BB.SERVICES.LAYOUT_ROUTER = 'LayoutRouter';
 
@@ -261,7 +261,11 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                     stackView: self.m_appContentFaderView
                 });
 
-                self.m_settingsView = new SettingsView({
+                //require(['SettingView'],function(SettingView){
+                //var settingView = new SettingView({bb:BB});
+                //});
+
+                self.m_settingsView = new SettingView({
                     el: Elements.SETTINGS_PANEL,
                     stackView: self.m_appContentFaderView
                 });

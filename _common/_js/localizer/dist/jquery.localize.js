@@ -1,4 +1,3 @@
-
 /*
  Copyright (c) Jim Garvin (http://github.com/coderifous), 2008.
  Dual licensed under the GPL (http://dev.jquery.com/browser/trunk/jquery/GPL-LICENSE.txt) and MIT (http://dev.jquery.com/browser/trunk/jquery/MIT-LICENSE.txt) licenses.
@@ -7,9 +6,9 @@
  Based off of Keith Wood's Localisation jQuery plugin.
  http://keith-wood.name/localisation.html
  */
-(function($) {
+(function ($) {
     var normaliseLang;
-    normaliseLang = function(lang) {
+    normaliseLang = function (lang) {
         lang = lang.replace(/_/, '-').toLowerCase();
         if (lang.length > 3) {
             lang = lang.substring(0, 3) + lang.substring(3).toUpperCase();
@@ -17,7 +16,7 @@
         return lang;
     };
     $.defaultLanguage = normaliseLang(navigator.language || navigator.userLanguage);
-    $.localize = function(pkg, options) {
+    $.localize = function (pkg, options) {
         var defaultCallback, fileExtension, intermediateLangData, jsonCall, lang, loadLanguage, localizeElement, localizeForSpecialKeys, localizeImageElement, localizeInputElement, localizeOptgroupElement, notifyDelegateLanguageLoaded, regexify, setAttrFromValueForKey, setTextFromValueForKey, valueForKey, wrappedSet, localizeToolTipForElement;
         if (options == null) {
             options = {};
@@ -25,7 +24,7 @@
         wrappedSet = this;
         intermediateLangData = {};
         fileExtension = options.fileExtension || "json";
-        loadLanguage = function(pkg, lang, level) {
+        loadLanguage = function (pkg, lang, level) {
             var file;
             if (level == null) {
                 level = 1;
@@ -53,32 +52,23 @@
                     }
             }
         };
-        jsonCall = function(file, pkg, lang, level) {
+        jsonCall = function (file, pkg, lang, level) {
 
-            /* in distribution mode load through web service */
-            // if (1) { // enable to test localization in dev env
-            if (window.location.href.indexOf('dist') > -1) {
-                pepper.getLocalization(lang, function(e){
-                    var d = e['studiolite'];
-                    $.extend(intermediateLangData, d);
-                    notifyDelegateLanguageLoaded(intermediateLangData);
-                    return loadLanguage(pkg, lang, level + 1);
-                });
-            } else {
-
+            var loadLocal = function () {
                 // in development mode load through local file (english only supported)
+                console.log('loading dev locals');
                 lang = 'en';
                 file = 'local-en.json';
                 var ajaxOptions, errorFunc, successFunc;
                 if (options.pathPrefix != null) {
                     file = "" + options.pathPrefix + "/" + file;
                 }
-                successFunc = function(d) {
+                successFunc = function (d) {
                     $.extend(intermediateLangData, d);
                     notifyDelegateLanguageLoaded(intermediateLangData);
                     return loadLanguage(pkg, lang, level + 1);
                 };
-                errorFunc = function() {
+                errorFunc = function () {
                     if (options.fallback && options.fallback !== lang) {
                         return loadLanguage(pkg, options.fallback);
                     }
@@ -92,44 +82,61 @@
                     error: errorFunc
                 };
                 if (window.location.protocol === "file:") {
-                    ajaxOptions.error = function(xhr) {
+                    ajaxOptions.error = function (xhr) {
                         return successFunc($.parseJSON(xhr.responseText));
                     };
                 }
                 return $.ajax(ajaxOptions);
+            };
+
+            /* in distribution mode load through web service */
+            // if (1) { // enable to test localization in dev env
+            if (window.location.href.indexOf('dist') > -1) {
+                console.log('loading dist locals');
+                pepper.getLocalizationNew(lang, function (e) {
+
+                    // if getting local from galaxy failed, which sometimes happens no idea why, load from local
+                    if (_.isNull(e))
+                        return loadLocal();
+
+                    var d = e['studiolite'];
+                    $.extend(intermediateLangData, d);
+                    notifyDelegateLanguageLoaded(intermediateLangData);
+                    return loadLanguage(pkg, lang, level + 1);
+                });
+            } else {
+                // if running dev mode, load from local
+                loadLocal();
             }
-
-
-
         };
-        notifyDelegateLanguageLoaded = function(data) {
+        notifyDelegateLanguageLoaded = function (data) {
             if (options.callback != null) {
                 return options.callback(data, defaultCallback);
             } else {
                 return defaultCallback(data);
             }
         };
-        defaultCallback = function(data) {
+        defaultCallback = function (data) {
             $.localize.data[pkg] = data;
-            return wrappedSet.each(function() {
+            return wrappedSet.each(function () {
                 var elem, key, value, toolTipKey, toolTipValue;
                 elem = $(this);
                 key = elem.data("localize");
                 key || (key = elem.attr("rel").match(/localize\[(.*?)\]/)[1]);
                 value = valueForKey(key, data);
                 toolTipKey = elem.attr('data-localize-tooltip');
-                if(toolTipKey)
+                if (toolTipKey)
                     toolTipValue = valueForKey(toolTipKey, data);
                 else
                     toolTipValue = false;
-                if(toolTipValue)
+                if (toolTipValue)
                     elem.attr('title', toolTipValue);
                 if (value != null) {
                     return localizeElement(elem, key, value);
                 }
             });
         };
-        localizeElement = function(elem, key, value) {
+        localizeElement = function (elem, key, value) {
             if (elem.is('input')) {
                 localizeInputElement(elem, key, value);
             } else if (elem.is('img')) {
@@ -143,7 +150,7 @@
                 return localizeForSpecialKeys(elem, value);
             }
         };
-        localizeInputElement = function(elem, key, value) {
+        localizeInputElement = function (elem, key, value) {
             var val;
             val = $.isPlainObject(value) ? value.value : value;
             if (elem.is("[placeholder]")) {
@@ -152,21 +159,21 @@
                 return elem.val(val);
             }
         };
-        localizeForSpecialKeys = function(elem, value) {
+        localizeForSpecialKeys = function (elem, value) {
             setAttrFromValueForKey(elem, "title", value);
             return setTextFromValueForKey(elem, "text", value);
         };
-        localizeOptgroupElement = function(elem, key, value) {
+        localizeOptgroupElement = function (elem, key, value) {
             return elem.attr("label", value);
         };
-        localizeImageElement = function(elem, key, value) {
+        localizeImageElement = function (elem, key, value) {
             setAttrFromValueForKey(elem, "alt", value);
             return setAttrFromValueForKey(elem, "src", value);
         };
-        localizeToolTipForElement = function(elem, key, value) {
+        localizeToolTipForElement = function (elem, key, value) {
             return setAttrFromValueForKey(elem, "title", value);
         };
-        valueForKey = function(key, data) {
+        valueForKey = function (key, data) {
             var keys, value, _i, _len;
             keys = key.split(/\./);
             value = data;
@@ -176,24 +183,24 @@
             }
             return value;
         };
-        setAttrFromValueForKey = function(elem, key, value) {
+        setAttrFromValueForKey = function (elem, key, value) {
             value = valueForKey(key, value);
             if (value != null) {
                 return elem.attr(key, value);
             }
         };
-        setTextFromValueForKey = function(elem, key, value) {
+        setTextFromValueForKey = function (elem, key, value) {
             value = valueForKey(key, value);
             if (value != null) {
                 return elem.text(value);
             }
         };
-        regexify = function(string_or_regex_or_array) {
+        regexify = function (string_or_regex_or_array) {
             var thing;
             if (typeof string_or_regex_or_array === "string") {
                 return "^" + string_or_regex_or_array + "$";
             } else if (string_or_regex_or_array.length != null) {
-                return ((function() {
+                return ((function () {
                     var _i, _len, _results;
                     _results = [];
                     for (_i = 0, _len = string_or_regex_or_array.length; _i < _len; _i++) {

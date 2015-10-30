@@ -15,6 +15,7 @@ var shell = require('gulp-shell');
 var minifyHTML = require('gulp-minify-html');
 var yuidoc = require("gulp-yuidoc");
 var sortJSON = require('gulp-sort-json');
+var Rsync = require('rsync');
 
 var server;
 
@@ -160,3 +161,25 @@ function updVersion() {
 
     return rawVer;
 }
+
+
+gulp.task('rsync', function () {
+    var rsync = Rsync.build({
+        source: '/cygdrive/c/msweb/signagestudio_web-lite/',
+        destination: 'root@digitalsignage.com:/var/www/sites/dynasite/htdocs/_studiolite-dev/',
+        exclude: ['*.bat', '*.iml', '.gitignore', 'gulpfile.js', '.git', '.idea/', '_common/', '_doctheme/', '_assets/', '_utils/', '*node_modules', '*SignageStudio/', '*Spotify/']
+    });
+    rsync.set('progress');
+    rsync.flags('avz');
+    console.log('running the command ' + rsync.command());
+    rsync.output(
+        function (data) {
+            console.log('sync: ' + data);
+        }, function (data) {
+            console.log('sync: ' + data);
+        }
+    );
+    rsync.execute(function (error, stdout, stderr) {
+        console.log('completed ' + error + ' ' + stdout + ' ' + stderr)
+    });
+});

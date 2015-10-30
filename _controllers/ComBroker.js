@@ -65,6 +65,11 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             }
         },
 
+        getFramework: function(){
+            var self = this;
+            return window.BB;
+        },
+
         /**
          Register a service  that others can query.
          @method setService

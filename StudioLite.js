@@ -6,6 +6,7 @@
  @return {Object} instantiated StudioLite
  **/
 define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 'ComBroker', 'Lib', 'Pepper', 'PepperHelper', 'Elements', 'bootbox', 'platform'], function (_, $, Backbone, Bootstrap, backbonecontroller, ComBroker, Lib, Pepper, PepperHelper, Elements, bootbox, platform) {
+
     var StudioLite = Backbone.Controller.extend({
 
         // app init

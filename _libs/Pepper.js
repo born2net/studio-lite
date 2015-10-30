@@ -370,6 +370,30 @@ Pepper.prototype = {
     },
 
     /**
+     Push a command to remote station
+     @method getLocalization
+     @param {String} i_command
+     @param {Number} i_stationId
+     @param {Function} i_callBack
+     **/
+    getLocalizationNew: function (i_lang, i_callBack) {
+        $.getJSON(window.g_protocol + window.g_masterDomain + '/WebService/getLocalList.ashx?callback=?', function (data) {
+            data = _.invert(data);
+            if (i_lang == 'zh')
+                i_lang = 'zh-CN';
+            var local = data[i_lang];
+            var url = window.g_protocol + window.g_masterDomain + '/WebService/getResourceBundlesJson.ashx?local=' + local + '&bundleList=studiolite&callback=?';
+            $.getJSON(url, function (data) {
+                i_callBack(data);
+            }).error(function() {
+                i_callBack(null);
+            });
+        }).error(function(e) {
+            i_callBack(null);
+        });
+    },
+
+    /**
      Return the url address of StudioLite
      @method getStudioLiteURL
      @return {String} url address

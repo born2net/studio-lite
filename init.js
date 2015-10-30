@@ -117,7 +117,7 @@ require.config({
         'StorylineView': '_views/StorylineView',
         'StationsViewLoader': '_views/StationsViewLoader',
         'StationsListView': '_views/StationsListView',
-        'SettingsView': '_views/SettingsView',
+        'SettingView': '_views/SettingView',
         'ProStudioView': '_views/ProStudioView',
         'HelpView': '_views/HelpView',
         'AdStatsView': '_views/AdStatsView',

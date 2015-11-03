@@ -5,7 +5,7 @@
  @constructor
  @return {Object} instantiated CompResourcesList
  **/
-define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backbone, bootstrapfileinput, videojs) {
+define(['jquery', 'backbone', 'bootstrapfileinput', 'video', 'platform'], function ($, Backbone, bootstrapfileinput, videojs, platform) {
 
     var ResourceListView = BB.View.extend({
 
@@ -87,19 +87,24 @@ define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backb
                 var recResource = pepper.getResourceRecord(self.m_selected_resource_id);
                 $(Elements.SELECTED_LIB_RESOURCE_NAME).val(recResource['resource_name']);
                 self.m_property.viewPanel(Elements.RESOURCE_LIST_PROPERTIES);
-                self._populateResourcePreview(recResource);
+
+                if (platform.name == 'Chrome'){
+                    self._populateResourcePreviewCDN(recResource);
+                } else {
+                    self._populateResourcePreviewLegacy(recResource);
+                }
                 return false;
             });
         },
 
         /**
          Populate the resource preview with loaded resource file (none CDN)
-         @method _populateResourcePreview
+         @method _populateResourcePreviewLegacy
          @param {Object} i_recResource
          **/
-        _populateResourcePreview: function (i_recResource) {
+        _populateResourcePreviewLegacy: function (i_recResource) {
             var self = this;
-
+            var path;
             if (self.m_videoPlayer){
                 self.m_videoPlayer.pause();
                 self.m_videoPlayer.load();
@@ -112,7 +117,7 @@ define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backb
                 case 'png': {
                     if (!ext)
                         ext = 'png';
-                    var path = window.g_protocol + pepper.getUserData().domain + '/Resources/business' +  pepper.getUserData().businessID + '/resources/' + pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + ext;
+                    path = window.g_protocol + pepper.getUserData().domain + '/Resources/business' +  pepper.getUserData().businessID + '/resources/' + pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + ext;
                     $(Elements.RESOURCE_PREVIEW_VIDEO).hide();
                     $(Elements.RESOURCE_PREVIEW_IMAGE).fadeIn();
                     $(Elements.RESOURCE_PREVIEW_SVG).hide();
@@ -129,12 +134,12 @@ define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backb
                     $(Elements.RESOURCE_PREVIEW_IMAGE).hide();
                     $(Elements.RESOURCE_PREVIEW_SVG).hide();
                     $(Elements.RESOURCE_PREVIEW_VIDEO).fadeIn();
-                    var path = window.g_protocol + pepper.getUserData().domain + '/Resources/business' +  pepper.getUserData().businessID + '/resources/' + pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + ext;
+                    path = window.g_protocol + pepper.getUserData().domain + '/Resources/business' +  pepper.getUserData().businessID + '/resources/' + pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + ext;
                     $(Elements.VIDEO_PREVIEW).find('video:nth-child(1)').attr("src",path);
                     break
                 }
                 case 'swf': {
-                    var path = './_assets/flash.png';
+                    path = './_assets/flash.png';
                     $(Elements.RESOURCE_PREVIEW_VIDEO).hide();
                     $(Elements.RESOURCE_PREVIEW_SVG).hide();
                     $(Elements.RESOURCE_PREVIEW_IMAGE).fadeIn();
@@ -143,7 +148,7 @@ define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backb
                     break
                 }
                 case 'svg': {
-                    var path = window.g_protocol + pepper.getUserData().domain + '/Resources/business' +  pepper.getUserData().businessID + '/resources/' + pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + 'svg';
+                    path = window.g_protocol + pepper.getUserData().domain + '/Resources/business' +  pepper.getUserData().businessID + '/resources/' + pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + 'svg';
                     $(Elements.RESOURCE_PREVIEW_VIDEO).hide();
                     $(Elements.RESOURCE_PREVIEW_IMAGE).hide();
                     $(Elements.RESOURCE_PREVIEW_SVG).fadeIn();
@@ -174,21 +179,15 @@ define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backb
 
         /**
          Populate the resource preview with loaded resource file (CDN)
-         @method _populateResourcePreview
+         @method _populateResourcePreviewCDN
          @param {Object} i_recResource
          **/
-            /*
-        _populateResourcePreview: function (i_recResource) {
+        _populateResourcePreviewCDN: function (i_recResource) {
             var self = this;
-
             if (self.m_videoPlayer){
                 self.m_videoPlayer.pause();
                 self.m_videoPlayer.load();
             }
-            // legacy
-            //var path = window.g_protocol + pepper.getUserData().domain + '/Resources/business' +  pepper.getUserData().businessID + '/resources/' + pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + ext;
-            // CDN
-
             var path = window.g_protocol + 's3.signage.me/business' +  pepper.getUserData().businessID + '/resources/';
 
             switch (i_recResource['resource_type']){
@@ -260,7 +259,6 @@ define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backb
             }
             log('Loading file from ' + path);
         },
-         */
 
         /**
          init HTML5 video.js component

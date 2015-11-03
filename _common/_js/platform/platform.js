@@ -1,6 +1,6 @@
 /*!
- * Platform.js v1.2.0 <http://mths.be/platform>
- * Copyright 2010-2014 John-David Dalton <http://allyoucanleet.com/>
+ * Platform.js v1.3.0 <http://mths.be/platform>
+ * Copyright 2010-2015 John-David Dalton <http://allyoucanleet.com/>
  * Available under MIT license <http://mths.be/mit>
  */
 ;(function() {
@@ -79,6 +79,7 @@
     // http://msdn.microsoft.com/en-us/library/ms537503(VS.85).aspx
     // http://web.archive.org/web/20081122053950/http://msdn.microsoft.com/en-us/library/ms537503(VS.85).aspx
     var data = {
+      '6.4':  '10',
       '6.3':  '8.1',
       '6.2':  '8',
       '6.1':  'Server 2008 R2 / 7',
@@ -104,16 +105,16 @@
 
     os = format(
       os.replace(/ ce$/i, ' CE')
-        .replace(/(\b)hpw/i, '$1web')
-        .replace(/(\b)Macintosh(\b)/, '$1Mac OS$2')
-        .replace(/_PowerPC(\b)/i, ' OS$1')
-        .replace(/(\bOS X) [^ \d]+/i, '$1')
-        .replace(/(\b)Mac (OS X\b)/, '$1$2')
+        .replace(/\bhpw/i, 'web')
+        .replace(/\bMacintosh\b/, 'Mac OS')
+        .replace(/_PowerPC\b/i, ' OS')
+        .replace(/\b(OS X) [^ \d]+/i, '$1')
+        .replace(/\bMac (OS X)\b/, '$1')
         .replace(/\/(\d)/, ' $1')
         .replace(/_/g, '.')
         .replace(/(?: BePC|[ .]*fc[ \d.]+)$/i, '')
-        .replace(/(\b)x86\.64(\b)/gi, '$1x86_64$2')
-        .replace(/(\bWindows Phone)(?! OS\b)/, '$1 OS')
+        .replace(/\bx86\.64\b/gi, 'x86_64')
+        .replace(/\b(Windows Phone) OS\b/, '$1')
         .split(' on ')[0]
     );
 
@@ -303,7 +304,6 @@
      * http://www.howtocreate.co.uk/operaStuff/operaObject.html
      * http://dev.opera.com/articles/view/opera-mini-web-content-authoring-guidelines/#operamini
      */
-    var operaClass;
     var opera = context.operamini || context.opera;
 
     /** Opera `[[Class]]` */
@@ -336,12 +336,12 @@
 
     /* Detectable layout engines (order is important) */
     var layout = getLayout([
+      'Trident',
       { 'label': 'WebKit', 'pattern': 'AppleWebKit' },
       'iCab',
       'Presto',
       'NetFront',
       'Tasman',
-      'Trident',
       'KHTML',
       'Gecko'
     ]);
@@ -385,6 +385,7 @@
       'Chrome',
       { 'label': 'Chrome Mobile', 'pattern': '(?:CriOS|CrMo)' },
       { 'label': 'Firefox', 'pattern': '(?:Firefox|Minefield)' },
+      { 'label': 'IE', 'pattern': 'IEMobile' },
       { 'label': 'IE', 'pattern': 'MSIE' },
       'Safari'
     ]);
@@ -398,6 +399,7 @@
       { 'label': 'Galaxy S3', 'pattern': 'GT-I9300' },
       { 'label': 'Galaxy S4', 'pattern': 'GT-I9500' },
       'Google TV',
+      'Lumia',
       'iPad',
       'iPod',
       'iPhone',
@@ -431,13 +433,14 @@
       'Microsoft': { 'Xbox': 1, 'Xbox One': 1 },
       'Motorola': { 'Xoom': 1 },
       'Nintendo': { 'Wii U': 1,  'Wii': 1 },
-      'Nokia': {},
+      'Nokia': { 'Lumia': 1 },
       'Samsung': { 'Galaxy S': 1, 'Galaxy S2': 1, 'Galaxy S3': 1, 'Galaxy S4': 1 },
       'Sony': { 'PlayStation 4': 1, 'PlayStation 3': 1, 'PlayStation Vita': 1 }
     });
 
     /* Detectable OSes (order is important) */
     var os = getOS([
+      'Windows Phone ',
       'Android',
       'CentOS',
       'Debian',
@@ -598,16 +601,16 @@
       product = getProduct([manufacturer]);
     }
     // clean up Google TV
-    if ((data = /\b(Google TV)\b/.exec(product))) {
-      product = data[1];
+    if ((data = /\bGoogle TV\b/.exec(product))) {
+      product = data[0];
     }
     // detect simulators
     if (/\bSimulator\b/i.test(ua)) {
       product = (product ? product + ' ' : '') + 'Simulator';
     }
-    // detect Opera Mini 8+ running in Turbo / Uncompressed mode on iOS
-    if (name == 'Opera Mini' && /OPiOS/.test(ua)) {
-      description.push('running in Turbo / Uncompressed mode');
+    // detect Opera Mini 8+ running in Turbo/Uncompressed mode on iOS
+    if (name == 'Opera Mini' && /\bOPiOS\b/.test(ua)) {
+      description.push('running in Turbo/Uncompressed mode');
     }
     // detect iOS
     if (/^iP/.test(product)) {
@@ -640,7 +643,7 @@
       }
     }
     // detect Firefox OS
-    if ((data = /\((Mobile|Tablet).*?Firefox/i.exec(ua)) && data[1]) {
+    if ((data = /\((Mobile|Tablet).*?Firefox\b/i.exec(ua)) && data[1]) {
       os = 'Firefox OS';
       if (!product) {
         product = data[1];
@@ -649,7 +652,7 @@
     // detect non-Opera versions (order is important)
     if (!version) {
       version = getVersion([
-        '(?:Cloud9|CriOS|CrMo|Iron|Opera ?Mini|OPiOS|OPR|Raven|Silk(?!/[\\d.]+$))',
+        '(?:Cloud9|CriOS|CrMo|IEMobile|Iron|Opera ?Mini|OPiOS|OPR|Raven|Silk(?!/[\\d.]+$))',
         'Version',
         qualify(name),
         '(?:Firefox|Minefield|NetFront)'
@@ -658,24 +661,48 @@
     // detect stubborn layout engines
     if (layout == 'iCab' && parseFloat(version) > 3) {
       layout = ['WebKit'];
-    } else if ((data =
+    } else if (
+        layout != 'Trident' &&
+        (data =
           /\bOpera\b/.test(name) && (/\bOPR\b/.test(ua) ? 'Blink' : 'Presto') ||
           /\b(?:Midori|Nook|Safari)\b/i.test(ua) && 'WebKit' ||
           !layout && /\bMSIE\b/i.test(ua) && (os == 'Mac OS' ? 'Tasman' : 'Trident')
-        )) {
+        )
+    ) {
       layout = [data];
     }
     // detect NetFront on PlayStation
-    else if (/PlayStation(?! Vita)/i.test(name) && layout == 'WebKit') {
+    else if (/\bPlayStation\b(?! Vita\b)/i.test(name) && layout == 'WebKit') {
       layout = ['NetFront'];
     }
+    // detect Windows Phone 7 desktop mode
+    if (name == 'IE' && (data = (/; *(?:XBLWP|ZuneWP)(\d+)/i.exec(ua) || 0)[1])) {
+      name += ' Mobile';
+      os = 'Windows Phone ' + (/\+$/.test(data) ? data : data + '.x');
+      description.unshift('desktop mode');
+    }
+    // detect Windows Phone 8+ desktop mode
+    else if (/\bWPDesktop\b/i.test(ua)) {
+      name = 'IE Mobile';
+      os = 'Windows Phone 8+';
+      description.unshift('desktop mode');
+      version || (version = (/\brv:([\d.]+)/.exec(ua) || 0)[1]);
+    }
     // detect IE 11 and above
-    if (name != 'IE' && layout == 'Trident' && (data = /\brv:([\d.]+)/.exec(ua))) {
-      if (name) {
-        description.push('identifying as ' + name + (version ? ' ' + version : ''));
+    else if (name != 'IE' && layout == 'Trident' && (data = /\brv:([\d.]+)/.exec(ua))) {
+      if (!/\bWPDesktop\b/i.test(ua)) {
+        if (name) {
+          description.push('identifying as ' + name + (version ? ' ' + version : ''));
+        }
+        name = 'IE';
       }
-      name = 'IE';
       version = data[1];
+    }
+    // detect Microsoft Edge
+    else if ((name == 'Chrome' || name != 'IE') && (data = /\bEdge\/([\d.]+)/.exec(ua))) {
+      name = 'Microsoft Edge';
+      version = data[1];
+      layout = ['Trident'];
     }
     // leverage environment features
     if (useFeatures) {
@@ -761,12 +788,6 @@
         description.unshift('accelerated');
       }
     }
-    // detect Windows Phone desktop mode
-    else if (name == 'IE' && (data = (/; *(?:XBLWP|ZuneWP)(\d+)/i.exec(ua) || 0)[1])) {
-        name += ' Mobile';
-        os = 'Windows Phone OS ' + data + '.x';
-        description.unshift('desktop mode');
-    }
     // detect Xbox 360 and Xbox One
     else if (/\bXbox\b/i.test(product)) {
       os = null;
@@ -775,7 +796,7 @@
       }
     }
     // add mobile postfix
-    else if ((name == 'Chrome' || name == 'IE' || name && !product && !/Browser|Mobi/.test(name)) &&
+    else if ((/^(?:Chrome|IE|Opera)$/.test(name) || name && !product && !/Browser|Mobi/.test(name)) &&
         (os == 'Windows CE' || /Mobi/i.test(ua))) {
       name += ' Mobile';
     }
@@ -853,14 +874,14 @@
       // use the full Chrome version when available
       data[1] = (/\bChrome\/([\d.]+)/i.exec(ua) || 0)[1];
       // detect Blink layout engine
-      if (data[0] == 537.36 && data[2] == 537.36 && parseFloat(data[1]) >= 28) {
+      if (data[0] == 537.36 && data[2] == 537.36 && parseFloat(data[1]) >= 28 && name != 'IE' && name != 'Microsoft Edge') {
         layout = ['Blink'];
       }
       // detect JavaScriptCore
       // http://stackoverflow.com/questions/6768474/how-can-i-detect-which-javascript-engine-v8-or-jsc-is-used-at-runtime-in-androi
       if (!useFeatures || (!likeChrome && !data[1])) {
         layout && (layout[1] = 'like Safari');
-        data = (data = data[0], data < 400 ? 1 : data < 500 ? 2 : data < 526 ? 3 : data < 533 ? 4 : data < 534 ? '4+' : data < 535 ? 5 : data < 537 ? 6 : data < 538 ? 7 : '7');
+        data = (data = data[0], data < 400 ? 1 : data < 500 ? 2 : data < 526 ? 3 : data < 533 ? 4 : data < 534 ? '4+' : data < 535 ? 5 : data < 537 ? 6 : data < 538 ? 7 : data < 601 ? 8 : '8');
       } else {
         layout && (layout[1] = 'like Chrome');
         data = data[1] || (data = data[0], data < 530 ? 1 : data < 532 ? 2 : data < 532.05 ? 3 : data < 533 ? 4 : data < 534.03 ? 5 : data < 534.07 ? 6 : data < 534.10 ? 7 : data < 534.13 ? 8 : data < 534.16 ? 9 : data < 534.24 ? 10 : data < 534.30 ? 11 : data < 535.01 ? 12 : data < 535.02 ? '13+' : data < 535.07 ? 15 : data < 535.11 ? 16 : data < 535.19 ? 17 : data < 536.05 ? 18 : data < 536.10 ? 19 : data < 537.01 ? 20 : data < 537.11 ? '21+' : data < 537.13 ? 23 : data < 537.18 ? 24 : data < 537.24 ? 25 : data < 537.36 ? 26 : layout != 'Blink' ? '27' : '28');
@@ -873,15 +894,16 @@
       }
     }
     // detect Opera desktop modes
-    if (name == 'Opera' &&  (data = /\b(zbov|zvav)$/.exec(os))) {
+    if (name == 'Opera' &&  (data = /\bzbov|zvav$/.exec(os))) {
       name += ' ';
       description.unshift('desktop mode');
-      if (data[1] == 'zvav') {
+      if (data == 'zvav') {
         name += 'Mini';
         version = null;
       } else {
         name += 'Mobile';
       }
+      os = os.replace(RegExp(' *' + data + '$'), '');
     }
     // detect Chrome desktop mode
     else if (name == 'Safari' && /\bChrome\b/.exec(layout && layout[1])) {
@@ -1046,7 +1068,7 @@
        * Common values include:
        * "Windows", "Windows Server 2008 R2 / 7", "Windows Server 2008 / Vista",
        * "Windows XP", "OS X", "Ubuntu", "Debian", "Fedora", "Red Hat", "SuSE",
-       * "Android", "iOS" and "Windows Phone OS"
+       * "Android", "iOS" and "Windows Phone"
        *
        * @memberOf platform.os
        * @type string|null

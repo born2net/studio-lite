@@ -118,11 +118,14 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             } else {
 
                 // CDN
-                imgPath = window.g_protocol + 's3.signage.me/business' +  pepper.getUserData().businessID + '/resources/';
-                imgPath += + self.m_nativeID + '.' + self.m_fileFormat;
-                log('loading img from ' + imgPath);
+                // imgPath = window.g_protocol + 's3.signage.me/business' +  pepper.getUserData().businessID + '/resources/';
+                // imgPath = 'https://s3.signage.me/business' +  pepper.getUserData().businessID + '/resources/';
+                // imgPath += + self.m_nativeID + '.' + self.m_fileFormat;
 
-                // imgPath = window.g_protocol + pepper.getUserData().domain + '/Resources/business' + pepper.getUserData().businessID + '/resources/' + self.m_nativeID + '.' + self.m_fileFormat;
+                // Legacy
+                imgPath = window.g_protocol + pepper.getUserData().domain + '/Resources/business' + pepper.getUserData().businessID + '/resources/' + self.m_nativeID + '.' + self.m_fileFormat;
+
+                // log('loading img from ' + imgPath);
             }
 
             $('<img src="' + imgPath + '" style="display: none" >').load(function () {

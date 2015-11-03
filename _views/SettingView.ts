@@ -34,7 +34,8 @@ define(['jquery', 'validator'], function ($, validator) {
         constructor(options?:any) {
             this.m_options = options;
             super();
-            this._samples();
+            if (window.location.href.indexOf('dev') > -1)
+                this._samples();
         }
 
         initialize() {
@@ -198,11 +199,59 @@ define(['jquery', 'validator'], function ($, validator) {
          **/
         private _samples():void {
 
-            // arrow function
+            /** //////////////////////////////////////// **/
+
+            class Digg {
+                public link:string;
+                public image:string;
+            }
+            var myDigg:Digg = new Digg();
+            console.log(myDigg instanceof Digg);
+
+            $.ajax({
+                url: "https://secure.digitalsignage.com/Digg",
+            }).done(function (data) {
+                var Diggs = <Digg[]>data;
+                var singleDigg:Digg = Diggs[0];
+                console.log(typeof Digg);
+                console.log(singleDigg.link);
+            });
+
+            /** //////////////////////////////////////// **/
+
+            function genericClassFactory<T>():T {
+                var someInstance:{new(): T;};
+                return new someInstance();
+            }
+
+            /** //////////////////////////////////////// **/
+
+                // arrow function
             $(() => {
                 //console.log('jquery ready');
             });
 
+            /** //////////////////////////////////////// **/
+
+            /** specialized overloading signature **/
+            interface Document {
+                createElement(tagName:'div'): HTMLDivElement;
+                createElement(tagName:'span'): HTMLSpanElement;
+                createElement(tagName:string): HTMLElement;
+            }
+            class MyDoc implements Document {
+                createElement(s:String) {
+                    if (s == 'div')
+                        return $('#domRoot')[0];
+                    if (s == 'span')
+                        return $('#fqCurrentlyServing')[0];
+                }
+            }
+            var doc = new MyDoc();
+            doc.createElement('div');
+            doc.createElement('span');
+
+            /** //////////////////////////////////////// **/
 
             // arrow function that takes function for callback + string to number casting
             var myFunction = (val:string, callBack:(s:string, n:number) => void):number => {
@@ -214,6 +263,27 @@ define(['jquery', 'validator'], function ($, validator) {
                 //console.log(s, n);
             });
 
+            /** //////////////////////////////////////// **/
+
+            type callBackType = (myDocs:MyDoc[]) => void;
+
+            // a function that gets a callBack function and that call back function expects
+            // an array of MyDoc instancess
+            function getDocs(cb:callBackType):void {
+                var allMyDocs:MyDoc[];
+                var a1 = new MyDoc();
+                var a2 = new MyDoc();
+                var a3 = new MyDoc();
+                allMyDocs = [a1, a2, a3];
+                cb(allMyDocs);
+            }
+
+            getDocs(function (mydocs:MyDoc[]) {
+                console.log(mydocs.length);
+            });
+
+            /** //////////////////////////////////////// **/
+
             // enum
             enum DebugLevel {
                 level1,
@@ -224,24 +294,46 @@ define(['jquery', 'validator'], function ($, validator) {
             //console.log(DebugLevel.level2);
             //console.log(DebugLevel.level3);
 
+            /** //////////////////////////////////////// **/
+
             //var s:any = comBroker.getService(this._BB.SERVICES['LAYOUT_ROUTER']);
+
+            /** //////////////////////////////////////// **/
 
             var v:IValidatorStatic = validator;
             //console.log(v.isFloat('123.12'));
 
-            var typeAlias:Array<string|number|boolean> = [];
-            typeAlias.push('abc');
-            typeAlias.push(123);
-            typeAlias.push(true);
 
+            /** //////////////////////////////////////// **/
+
+            var typeAlias1:(string|number);
+            typeAlias1 = 123; // = 'abc';
+
+            var typeAlias2:Array<string|number|boolean> = [];
+            typeAlias2.push('abc');
+            typeAlias2.push(123);
+            typeAlias2.push(true);
+
+            /** //////////////////////////////////////// **/
 
             var unionType:string[]|string; // string or array of strings
 
+            /** //////////////////////////////////////// **/
 
             // type guard: as transpilrer will check typeof statements
             if (typeof unionType == 'number') {
                 //console.log('not proper format');
             }
+
+
+            /** //////////////////////////////////////// **/
+            // sample of function that uses generics
+            function sampleGeneric<T>(str:T):void {
+                console.log(str);
+            }
+
+            sampleGeneric<string>('123');
+
         }
 
     }

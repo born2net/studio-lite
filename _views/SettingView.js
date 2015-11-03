@@ -30,7 +30,8 @@ define(['jquery', 'validator'], function ($, validator) {
         function SettingView(options) {
             this.m_options = options;
             _super.call(this);
-            this._samples();
+            if (window.location.href.indexOf('dev') > -1)
+                this._samples();
         }
         SettingView.prototype.initialize = function () {
             var self = this;
@@ -180,10 +181,47 @@ define(['jquery', 'validator'], function ($, validator) {
          @return {Number} Unique clientId.
          **/
         SettingView.prototype._samples = function () {
+            /** //////////////////////////////////////// **/
+            var Digg = (function () {
+                function Digg() {
+                }
+                return Digg;
+            })();
+            var myDigg = new Digg();
+            console.log(myDigg instanceof Digg);
+            $.ajax({
+                url: "https://secure.digitalsignage.com/Digg"
+            }).done(function (data) {
+                var Diggs = data;
+                var singleDigg = Diggs[0];
+                console.log(typeof Digg);
+                console.log(singleDigg.link);
+            });
+            /** //////////////////////////////////////// **/
+            function genericClassFactory() {
+                var someInstance;
+                return new someInstance();
+            }
+            /** //////////////////////////////////////// **/
             // arrow function
             $(function () {
                 //console.log('jquery ready');
             });
+            var MyDoc = (function () {
+                function MyDoc() {
+                }
+                MyDoc.prototype.createElement = function (s) {
+                    if (s == 'div')
+                        return $('#domRoot')[0];
+                    if (s == 'span')
+                        return $('#fqCurrentlyServing')[0];
+                };
+                return MyDoc;
+            })();
+            var doc = new MyDoc();
+            doc.createElement('div');
+            doc.createElement('span');
+            /** //////////////////////////////////////// **/
             // arrow function that takes function for callback + string to number casting
             var myFunction = function (val, callBack) {
                 var n = Number(val);
@@ -193,6 +231,20 @@ define(['jquery', 'validator'], function ($, validator) {
             myFunction('abc', function (s, n) {
                 //console.log(s, n);
             });
+            // a function that gets a callBack function and that call back function expects
+            // an array of MyDoc instancess
+            function getDocs(cb) {
+                var allMyDocs;
+                var a1 = new MyDoc();
+                var a2 = new MyDoc();
+                var a3 = new MyDoc();
+                allMyDocs = [a1, a2, a3];
+                cb(allMyDocs);
+            }
+            getDocs(function (mydocs) {
+                console.log(mydocs.length);
+            });
+            /** //////////////////////////////////////// **/
             // enum
             var DebugLevel;
             (function (DebugLevel) {
@@ -203,17 +255,30 @@ define(['jquery', 'validator'], function ($, validator) {
             //console.log(DebugLevel.level1);
             //console.log(DebugLevel.level2);
             //console.log(DebugLevel.level3);
+            /** //////////////////////////////////////// **/
             //var s:any = comBroker.getService(this._BB.SERVICES['LAYOUT_ROUTER']);
+            /** //////////////////////////////////////// **/
             var v = validator;
             //console.log(v.isFloat('123.12'));
-            var typeAlias = [];
-            typeAlias.push('abc');
-            typeAlias.push(123);
-            typeAlias.push(true);
+            /** //////////////////////////////////////// **/
+            var typeAlias1;
+            typeAlias1 = 123; // = 'abc';
+            var typeAlias2 = [];
+            typeAlias2.push('abc');
+            typeAlias2.push(123);
+            typeAlias2.push(true);
+            /** //////////////////////////////////////// **/
             var unionType; // string or array of strings
+            /** //////////////////////////////////////// **/
             // type guard: as transpilrer will check typeof statements
             if (typeof unionType == 'number') {
             }
+            /** //////////////////////////////////////// **/
+            // sample of function that uses generics
+            function sampleGeneric(str) {
+                console.log(str);
+            }
+            sampleGeneric('123');
         };
         return SettingView;
     })(Backbone.View);

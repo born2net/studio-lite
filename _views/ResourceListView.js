@@ -97,7 +97,6 @@ define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backb
          @method _populateResourcePreview
          @param {Object} i_recResource
          **/
-            /*
         _populateResourcePreview: function (i_recResource) {
             var self = this;
 
@@ -172,13 +171,13 @@ define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backb
                 }
             }
         },
-        */
 
         /**
          Populate the resource preview with loaded resource file (CDN)
          @method _populateResourcePreview
          @param {Object} i_recResource
          **/
+            /*
         _populateResourcePreview: function (i_recResource) {
             var self = this;
 
@@ -261,6 +260,7 @@ define(['jquery', 'backbone', 'bootstrapfileinput', 'video'], function ($, Backb
             }
             log('Loading file from ' + path);
         },
+         */
 
         /**
          init HTML5 video.js component

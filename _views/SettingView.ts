@@ -34,8 +34,10 @@ define(['jquery', 'validator'], function ($, validator) {
         constructor(options?:any) {
             this.m_options = options;
             super();
-            if (window.location.href.indexOf('dev') > -1)
+            if (window.location.href.indexOf('dev') > -1) {
                 this._samples();
+            }
+
         }
 
         initialize() {
@@ -47,7 +49,7 @@ define(['jquery', 'validator'], function ($, validator) {
             BB.comBroker.setService(BB.SERVICES['SETTINGS_VIEW'], self);
             self.m_simpleStorage = undefined;
             self.listenTo(self.m_options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
-                if (e == self && !self.m_rendered) {
+                if (e === self && !self.m_rendered) {
                     self.m_rendered = true;
                     self._render();
                 }
@@ -70,30 +72,32 @@ define(['jquery', 'validator'], function ($, validator) {
                 }
 
                 BB.CONSTS['THEME'] = self.m_simpleStorage.get('theme');
-                if (_.isUndefined(BB.CONSTS['THEME']))
+                if (_.isUndefined(BB.CONSTS['THEME'])) {
                     BB.CONSTS['THEME'] = 'light';
-                $(Elements.THEME_OPTION + ' option[value=' + BB.CONSTS['THEME'] + ']').attr("selected", "selected");
+                }
+
+                $(Elements.THEME_OPTION + ' option[value=' + BB.CONSTS['THEME'] + ']').attr('selected', 'selected');
 
                 var bannerMode = self.m_simpleStorage.get('bannerMode');
                 if (_.isUndefined(bannerMode)) {
                     bannerMode = 1;
                     self.m_simpleStorage.set('bannerMode', bannerMode);
                 }
-                $(Elements.PREVIEW_FULL_OPTION + ' option[value=' + bannerMode + ']').attr("selected", "selected");
+                $(Elements.PREVIEW_FULL_OPTION + ' option[value=' + bannerMode + ']').attr('selected', 'selected');
 
                 var fqSwitchMode = self.m_simpleStorage.get('fqSwitchMode');
                 if (_.isUndefined(fqSwitchMode)) {
                     fqSwitchMode = 0;
                     self.m_simpleStorage.set('fqSwitchMode', fqSwitchMode);
                 }
-                $(Elements.FQ_SWITCH_OPTION + ' option[value=' + fqSwitchMode + ']').attr("selected", "selected");
+                $(Elements.FQ_SWITCH_OPTION + ' option[value=' + fqSwitchMode + ']').attr('selected', 'selected');
 
                 var adStatsSwitchMode = self.m_simpleStorage.get('adStatsMode');
                 if (_.isUndefined(adStatsSwitchMode)) {
                     adStatsSwitchMode = 0;
                     self.m_simpleStorage.set('adStatsMode', adStatsSwitchMode);
                 }
-                $(Elements.AD_STATS_SWITCH_OPTION + ' option[value=' + adStatsSwitchMode + ']').attr("selected", "selected");
+                $(Elements.AD_STATS_SWITCH_OPTION + ' option[value=' + adStatsSwitchMode + ']').attr('selected', 'selected');
 
                 self.m_stationsPollingSlider = $(Elements.STATION_POLL_SLIDER).noUiSlider({
                     handles: 1,
@@ -148,7 +152,7 @@ define(['jquery', 'validator'], function ($, validator) {
             $(Elements.FQ_SWITCH_OPTION).on('change', function (e) {
                 var state = $(Elements.FQ_SWITCH_OPTION + ' option:selected').val();
                 self.m_simpleStorage.set('fqSwitchMode', state);
-                if (state == "1") {
+                if (state === "1") {
                     $(Elements.CLASS_FASTERQ_PANEL).fadeIn();
                 } else {
                     $(Elements.CLASS_FASTERQ_PANEL).fadeOut();
@@ -165,7 +169,7 @@ define(['jquery', 'validator'], function ($, validator) {
             $(Elements.AD_STATS_SWITCH_OPTION).on('change', function (e) {
                 var state = $(Elements.AD_STATS_SWITCH_OPTION + ' option:selected').val();
                 self.m_simpleStorage.set('adStatsMode', state);
-                if (state == "1") {
+                if (state === '1') {
                     $(Elements.CLASS_ADSTATS_PANEL).fadeIn();
                 } else {
                     $(Elements.CLASS_ADSTATS_PANEL).fadeOut();
@@ -182,7 +186,7 @@ define(['jquery', 'validator'], function ($, validator) {
             $(Elements.THEME_OPTION).on('change', function (e) {
                 BB.CONSTS['THEME'] = $(Elements.THEME_OPTION + ' option:selected').val();
                 self.m_simpleStorage.set('theme', BB.CONSTS['THEME']);
-                if (BB.CONSTS['THEME'] == 'light') {
+                if (BB.CONSTS['THEME'] === 'light') {
                     bootbox.alert($(Elements.MSG_BOOTBOX_RELOAD_THEME).text());
                 } else {
                     BB.lib.loadCss('style_' + BB.CONSTS['THEME'] + '.css');
@@ -209,7 +213,7 @@ define(['jquery', 'validator'], function ($, validator) {
             console.log(myDigg instanceof Digg);
 
             $.ajax({
-                url: "https://secure.digitalsignage.com/Digg",
+                url: 'https://secure.digitalsignage.com/Digg'
             }).done(function (data) {
                 var Diggs = <Digg[]>data;
                 var singleDigg:Digg = Diggs[0];
@@ -220,7 +224,7 @@ define(['jquery', 'validator'], function ($, validator) {
             /** //////////////////////////////////////// **/
 
             function genericClassFactory<T>():T {
-                var someInstance:{new(): T;};
+                var someInstance:{ new(): T; };
                 return new someInstance();
             }
 
@@ -241,10 +245,12 @@ define(['jquery', 'validator'], function ($, validator) {
             }
             class MyDoc implements Document {
                 createElement(s:String) {
-                    if (s == 'div')
+                    if (s === 'div') {
                         return $('#domRoot')[0];
-                    if (s == 'span')
+                    }
+                    if (s === 'span') {
                         return $('#fqCurrentlyServing')[0];
+                    }
                 }
             }
             var doc = new MyDoc();
@@ -321,7 +327,7 @@ define(['jquery', 'validator'], function ($, validator) {
             /** //////////////////////////////////////// **/
 
             // type guard: as transpilrer will check typeof statements
-            if (typeof unionType == 'number') {
+            if (typeof unionType === 'number') {
                 //console.log('not proper format');
             }
 

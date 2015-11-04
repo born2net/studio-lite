@@ -183,6 +183,9 @@ define(['jquery', 'validator'], function ($, validator) {
          @return {Number} Unique clientId.
          **/
         SettingView.prototype._samples = function () {
+            var myObj = [];
+            myObj.push({});
+            console.log(myObj.length);
             /** //////////////////////////////////////// **/
             var Digg = (function () {
                 function Digg() {

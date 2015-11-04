@@ -109,6 +109,7 @@ declare module Backbone {
         validationError: any;
         urlRoot: any;
         Pepper: any;
+        PepperHelper:any;
         lib: any;
         EVENTS:any;
         SERVICES:any;

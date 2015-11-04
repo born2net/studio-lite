@@ -10,3 +10,5 @@
 declare var BB:Backbone.Model;
 declare var Elements;
 declare var bootbox;
+declare var platform;
+declare var videojs123;

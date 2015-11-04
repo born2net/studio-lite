@@ -103,7 +103,7 @@ require.config({
         'SceneSelectionView': '_views/_scenes/SceneSelectionView',
         'SceneEditorView': '_views/_scenes/SceneEditorView',
         'ScenesToolbarView': '_views/_scenes/ScenesToolbarView',
-        'ResourceListView': '_views/ResourceListView',
+        'ResourcesListView': '_views/ResourcesListView',
         'ResourcesLoaderView': '_views/ResourcesLoaderView',
         'AddBlockView': '_views/AddBlockView',
         'AddBlockLocationView': '_views/AddBlockLocationView',

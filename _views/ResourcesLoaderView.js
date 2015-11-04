@@ -31,13 +31,13 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _render: function () {
             var self = this;
             if (!self.m_resourceListView) {
-                require(['ResourceListView'], function (ResourceListView) {
-                    self.m_resourceListView = new ResourceListView({
+                require(['ResourcesListView'], function (ResourcesListView) {
+                    self.m_resourceListView = new ResourcesListView({
                         el: Elements.RESOURCES_LIST_VIEW
                     });
                 });
             } else {
-                self.m_resourceListView.render();
+                self.m_resourceListView.renderView();
             }
         },
 
@@ -48,7 +48,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
         _unrender: function () {
             var self = this;
             if (self.m_resourceListView)
-                self.m_resourceListView.unrender();
+                self.m_resourceListView.unrenderView();
         }
     });
 

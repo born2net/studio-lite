@@ -37,7 +37,6 @@ define(['jquery', 'validator'], function ($, validator) {
             if (window.location.href.indexOf('dev') > -1) {
                 this._samples();
             }
-
         }
 
         initialize() {
@@ -202,6 +201,10 @@ define(['jquery', 'validator'], function ($, validator) {
          @return {Number} Unique clientId.
          **/
         private _samples():void {
+
+            var myObj:Object[] = [];
+            myObj.push({});
+            console.log(myObj.length);
 
             /** //////////////////////////////////////// **/
 

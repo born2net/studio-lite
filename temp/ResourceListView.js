@@ -1,5 +1,5 @@
 /**
- ResourceListView is responsible for managing the UI of selecting, adding and deleting resources (i.e.: video, images and swfs)
+ ResourceListView responsible for managing the UI of selecting, adding and deleting resources (i.e.: video, images and swfs)
  as well as property management of resources, such as renaming a resource.
  @class CompResourcesList
  @constructor

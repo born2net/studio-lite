@@ -4,7 +4,7 @@
  @constructor
  @return {Object} instantiated CompCampaignNavigator
  **/
-define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerView', 'ResourceListView', 'StorylineView', 'Draggable'], function ($, Backbone, jqueryui, TouchPunch, Timeline, SequencerView, ResourceListView, StorylineView, Draggable) {
+define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerView', 'StorylineView', 'Draggable'], function ($, Backbone, jqueryui, TouchPunch, Timeline, SequencerView, StorylineView, Draggable) {
 
     BB.SERVICES.CHANNEL_LIST_VIEW = 'ChannelListView';
 

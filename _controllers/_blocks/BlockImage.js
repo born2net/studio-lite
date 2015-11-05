@@ -7,7 +7,7 @@
  * @param {string} i_campaign_timeline_chanel_player_id required and set as block id when block is inserted onto timeline_channel
  * @return {Object} Block instance
  */
-define(['jquery', 'backbone', 'Block', 'platform'], function ($, Backbone, Block, platform) {
+define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
     var BlockImage = Block.extend({
 
@@ -116,16 +116,18 @@ define(['jquery', 'backbone', 'Block', 'platform'], function ($, Backbone, Block
             if (self.m_fileFormat == 'swf') {
                 imgPath = './_assets/flash.png';
             } else {
-
-                if (platform.name == 'Chrome') {
-                    // CDN
-                    imgPath = window.g_protocol + 's3.signage.me/business' + pepper.getUserData().businessID + '/resources/';
-                    imgPath = 'https://s3.signage.me/business' + pepper.getUserData().businessID + '/resources/';
-                    imgPath += +self.m_nativeID + '.' + self.m_fileFormat;
-                } else {
-                    // Legacy
-                    imgPath = window.g_protocol + pepper.getUserData().domain + '/Resources/business' + pepper.getUserData().businessID + '/resources/' + self.m_nativeID + '.' + self.m_fileFormat;
-                }
+                /*
+                 if (platform.name == 'Chrome') {
+                 // CDN
+                 imgPath = window.g_protocol + 's3.signage.me/business' + pepper.getUserData().businessID + '/resources/';
+                 imgPath = 'https://s3.signage.me/business' + pepper.getUserData().businessID + '/resources/';
+                 imgPath += +self.m_nativeID + '.' + self.m_fileFormat;
+                 } else {
+                 // Legacy
+                 imgPath = window.g_protocol + pepper.getUserData().domain + '/Resources/business' + pepper.getUserData().businessID + '/resources/' + self.m_nativeID + '.' + self.m_fileFormat;
+                 }
+                 */
+                imgPath = window.g_protocol + pepper.getUserData().domain + '/Resources/business' + pepper.getUserData().businessID + '/resources/' + self.m_nativeID + '.' + self.m_fileFormat;
                 // log('loading img from ' + imgPath);
             }
 

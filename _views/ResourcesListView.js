@@ -1,15 +1,18 @@
 ///<reference path="../typings/lite/app_references.d.ts" />
+///<reference path="./_components/BSListView.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, bootstrapfileinput, videojs, platform) {
+define(['jquery', 'bootstrapfileinput', 'video', 'platform', 'BSListView'], function ($, bootstrapfileinput, videojs, platform, BSListView) {
     var ResourcesListView = (function (_super) {
         __extends(ResourcesListView, _super);
         function ResourcesListView(options) {
             this.m_options = options;
             _super.call(this);
+            var bsListView = new BSListView();
+            bsListView.isAcceptable('111');
         }
         ResourcesListView.prototype.initialize = function () {
             var self = this;
@@ -84,7 +87,7 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, boots
                 $(Elements.SELECTED_LIB_RESOURCE_NAME).val(recResource['resource_name']);
                 self.m_property.viewPanel(Elements.RESOURCE_LIST_PROPERTIES);
                 if (platform.name == 'Chrome') {
-                    self._populateResourcePreviewCDN(recResource);
+                    self._populateResourcePreviewLegacy(recResource);
                 }
                 else {
                     self._populateResourcePreviewLegacy(recResource);

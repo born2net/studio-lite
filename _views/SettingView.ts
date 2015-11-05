@@ -218,7 +218,9 @@ define(['jquery', 'validator'], function ($, validator) {
             $.ajax({
                 url: 'https://secure.digitalsignage.com/Digg'
             }).done(function (data) {
-                var Diggs = <Digg[]>data;
+                // casting
+                // var Diggs = <Digg[]>data;
+                var Diggs = data as Digg;
                 var singleDigg:Digg = Diggs[0];
                 console.log(typeof Digg);
                 console.log(singleDigg.link);
@@ -226,6 +228,7 @@ define(['jquery', 'validator'], function ($, validator) {
 
             /** //////////////////////////////////////// **/
 
+            // factory creating new instances of passed in class via generics
             function genericClassFactory<T>():T {
                 var someInstance:{ new(): T; };
                 return new someInstance();
@@ -233,14 +236,15 @@ define(['jquery', 'validator'], function ($, validator) {
 
             /** //////////////////////////////////////// **/
 
-                // arrow function
+                // arrow function jquery ready
             $(() => {
                 //console.log('jquery ready');
             });
 
             /** //////////////////////////////////////// **/
 
-            /** specialized overloading signature **/
+            // specialized overloading signature
+            // notice how Document.createElement can have multiple return types, that's the magic
             interface Document {
                 createElement(tagName:'div'): HTMLDivElement;
                 createElement(tagName:'span'): HTMLSpanElement;
@@ -274,7 +278,9 @@ define(['jquery', 'validator'], function ($, validator) {
 
             /** //////////////////////////////////////// **/
 
+            // creating a new type, which in this examples uses a function signature
             type callBackType = (myDocs:MyDoc[]) => void;
+            type myDocArray = MyDoc[];
 
             // a function that gets a callBack function and that call back function expects
             // an array of MyDoc instancess
@@ -287,7 +293,8 @@ define(['jquery', 'validator'], function ($, validator) {
                 cb(allMyDocs);
             }
 
-            getDocs(function (mydocs:MyDoc[]) {
+            // getDocs(function (mydocs:MyDoc[]) {
+            getDocs(function (mydocs:myDocArray) {
                 console.log(mydocs.length);
             });
 
@@ -316,7 +323,8 @@ define(['jquery', 'validator'], function ($, validator) {
             /** //////////////////////////////////////// **/
 
             var typeAlias1:(string|number);
-            typeAlias1 = 123; // = 'abc';
+            typeAlias1 = 123;
+            typeAlias1 = 'abc';
 
             var typeAlias2:Array<string|number|boolean> = [];
             typeAlias2.push('abc');
@@ -326,6 +334,8 @@ define(['jquery', 'validator'], function ($, validator) {
             /** //////////////////////////////////////// **/
 
             var unionType:string[]|string; // string or array of strings
+            unionType = '123';
+            unionType = ['1','2','3'];
 
             /** //////////////////////////////////////// **/
 
@@ -334,15 +344,70 @@ define(['jquery', 'validator'], function ($, validator) {
                 //console.log('not proper format');
             }
 
-
             /** //////////////////////////////////////// **/
             // sample of function that uses generics
             function sampleGeneric<T>(str:T):void {
                 console.log(str);
             }
-
             sampleGeneric<string>('123');
 
+
+            /** //////////////////////////////////////// **/
+
+            /***************************************
+             *  Example of Generic and interfaces
+             *  as well as ability to cast a member as either
+             *  a Generic or Type (see arrControllers)
+             ****************************************/
+
+            interface IController {
+                someNum: number;
+            }
+            interface IControllers {
+                controllerName : string;
+                //arrControllers : Array<IController>;
+                arrControllers : IController[];
+            }
+            class AController implements IController{
+                public someNum;
+            }
+            let aController = new AController();
+            aController.someNum = 1;
+
+            // private controllers:Array <IControllers>;
+            let controllers:IControllers[] = [];
+            controllers.push({
+                arrControllers: [aController],
+                controllerName: 'foo'
+            });
+            controllers[0].arrControllers[0].someNum = 123;
+            console.log(controllers[0].arrControllers[0].someNum);
+
+            /** //////////////////////////////////////// **/
+
+            /*******************************************
+             *  Example using a constructor signature so implementing
+             *  classes must have the same constructor and
+             *  same return type as the supplied construct
+             *********************************************/
+
+            interface ISample {
+                // someMember requires a class with a constructor that has matching signature and return type
+                someMember : { new(...args:string[]): IAnotherSample ;};
+            }
+            interface IAnotherSample {
+                someNum: number;
+            }
+            class MyClass implements IAnotherSample {
+                public someNum:number;
+                constructor(...args:string[]) {
+                }
+            }
+
+            let sample: ISample = {
+                someMember: MyClass
+            };
+            let sampleInstance = new sample.someMember('lots','of','strings!!!');
         }
 
     }

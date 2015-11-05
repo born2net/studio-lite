@@ -197,18 +197,21 @@ define(['jquery', 'validator'], function ($, validator) {
             $.ajax({
                 url: 'https://secure.digitalsignage.com/Digg'
             }).done(function (data) {
+                // casting
+                // var Diggs = <Digg[]>data;
                 var Diggs = data;
                 var singleDigg = Diggs[0];
                 console.log(typeof Digg);
                 console.log(singleDigg.link);
             });
             /** //////////////////////////////////////// **/
+            // factory creating new instances of passed in class via generics
             function genericClassFactory() {
                 var someInstance;
                 return new someInstance();
             }
             /** //////////////////////////////////////// **/
-            // arrow function
+            // arrow function jquery ready
             $(function () {
                 //console.log('jquery ready');
             });
@@ -248,6 +251,7 @@ define(['jquery', 'validator'], function ($, validator) {
                 allMyDocs = [a1, a2, a3];
                 cb(allMyDocs);
             }
+            // getDocs(function (mydocs:MyDoc[]) {
             getDocs(function (mydocs) {
                 console.log(mydocs.length);
             });
@@ -269,13 +273,16 @@ define(['jquery', 'validator'], function ($, validator) {
             //console.log(v.isFloat('123.12'));
             /** //////////////////////////////////////// **/
             var typeAlias1;
-            typeAlias1 = 123; // = 'abc';
+            typeAlias1 = 123;
+            typeAlias1 = 'abc';
             var typeAlias2 = [];
             typeAlias2.push('abc');
             typeAlias2.push(123);
             typeAlias2.push(true);
             /** //////////////////////////////////////// **/
             var unionType; // string or array of strings
+            unionType = '123';
+            unionType = ['1', '2', '3'];
             /** //////////////////////////////////////// **/
             // type guard: as transpilrer will check typeof statements
             if (typeof unionType === 'number') {
@@ -286,6 +293,34 @@ define(['jquery', 'validator'], function ($, validator) {
                 console.log(str);
             }
             sampleGeneric('123');
+            var AController = (function () {
+                function AController() {
+                }
+                return AController;
+            })();
+            var aController = new AController();
+            aController.someNum = 1;
+            // private controllers:Array <IControllers>;
+            var controllers = [];
+            controllers.push({
+                arrControllers: [aController],
+                controllerName: 'foo'
+            });
+            controllers[0].arrControllers[0].someNum = 123;
+            console.log(controllers[0].arrControllers[0].someNum);
+            var MyClass = (function () {
+                function MyClass() {
+                    var args = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        args[_i - 0] = arguments[_i];
+                    }
+                }
+                return MyClass;
+            })();
+            var sample = {
+                someMember: MyClass
+            };
+            var sampleInstance = new sample.someMember('lots', 'of', 'strings!!!');
         };
         return SettingView;
     })(Backbone.View);

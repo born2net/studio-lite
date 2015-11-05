@@ -1,6 +1,7 @@
 ///<reference path="../typings/lite/app_references.d.ts" />
+///<reference path="./_components/BSListView.ts" />
 
-define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, bootstrapfileinput, videojs, platform) {
+define(['jquery', 'bootstrapfileinput', 'video', 'platform', 'BSListView'], function ($, bootstrapfileinput, videojs, platform, BSListView) {
 
     class ResourcesListView extends Backbone.View<Backbone.Model> {
 
@@ -12,6 +13,9 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, boots
         constructor(options?:any) {
             this.m_options = options;
             super();
+
+            let bsListView:BSListView.IBSList = new BSListView();
+            bsListView.isAcceptable('111')
         }
 
         initialize() {
@@ -92,7 +96,8 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, boots
                 self.m_property.viewPanel(Elements.RESOURCE_LIST_PROPERTIES);
 
                 if (platform.name == 'Chrome') {
-                    self._populateResourcePreviewCDN(recResource);
+                    self._populateResourcePreviewLegacy(recResource);
+                    //self._populateResourcePreviewCDN(recResource);
                 } else {
                     self._populateResourcePreviewLegacy(recResource);
                 }

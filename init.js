@@ -9,6 +9,7 @@ require.config({
     paths: {
         'Elements': 'Elements',
         'Events': 'Events',
+        'Declarations': 'Declarations',
         'jquery': '_common/_jquery/std/jq1.9.1/jquery-1.9.1',
         'jqueryui': '_common/_jquery/std/jq1.10.1/jquery-ui-1.10.1',
         'backbone': '_common/_js/backbone/backbone',
@@ -170,6 +171,9 @@ require.config({
         },
         'Events': {
             exports: 'Events'
+        },
+        'Declarations': {
+            exports: 'Declarations'
         },
         'backbone': {
             deps: ['underscore', 'jquery'],

@@ -3,7 +3,7 @@
 // Definitions by: Boris Yankov <https://github.com/borisyankov/>, Natan Vivo <https://github.com/nvivo/>
 // Definitions: https://github.com/borisyankov/DefinitelyTyped
 
-/// <reference path="../jquery/jquery.d.ts" />
+///<reference path="../jquery/jquery.d.ts" />
 ///<reference path="../lite/ComBroker.d.ts" />
 
 declare module Backbone {
@@ -108,12 +108,12 @@ declare module Backbone {
         idAttribute: string;
         validationError: any;
         urlRoot: any;
-        Pepper: any;
-        PepperHelper:any;
-        lib: any;
-        EVENTS:any;
-        SERVICES:any;
-        CONSTS:any;
+        //Pepper: any;
+        //PepperHelper:any;
+        //lib: any;
+        //EVENTS:any;
+        //SERVICES:any;
+        //CONSTS:any;
         comBroker:ComBroker;
 
         constructor(attributes?: any, options?: any);

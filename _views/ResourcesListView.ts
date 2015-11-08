@@ -30,6 +30,9 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform', 'BSListView'], func
             let bsListView:BSListView.IBSList = new BSListView();
             bsListView.isAcceptable('111');
 
+            //var comBroker:ComBroker;
+            //comBroker.setService('aaa',self);
+
             //var aa: typeof BSListView = require('BSListView')
             //var bar: typeof BSListView = new aa('111');
             //bar.isAcceptable('ss');

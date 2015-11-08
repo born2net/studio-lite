@@ -1,6 +1,6 @@
 ///<reference path="../../typings/lite/app_references.d.ts" />
 
-/** sample **/
+/** sample interface **/
 
 module BSListView {
     export interface IBSList {

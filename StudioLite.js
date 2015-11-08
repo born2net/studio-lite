@@ -93,8 +93,10 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             }
 
             // StudioLite
-            require(['LayoutRouter', 'Events'], function (LayoutRouter) {
+            require(['LayoutRouter', 'Events'], function (LayoutRouter, Events) {
                 var LayoutRouter = new LayoutRouter({app: BB.CONSTS.APP_STUDIO_LITE});
+                console.log(BB.EVENTS.ADDED_RESOURCE);
+                console.log(BB.EVENTS.REMOVED_RESOURCE);
                 BB.history.start();
                 LayoutRouter.navigate('authenticate/_/_', {trigger: true});
             });

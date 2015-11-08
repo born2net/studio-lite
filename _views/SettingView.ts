@@ -11,7 +11,7 @@ define(['jquery', 'validator'], function ($, validator) {
      @static
      @final
      **/
-    BB.EVENTS.STATIONS_POLL_TIME_CHANGED = 'STATIONS_POLL_TIME_CHANGED';
+    //BB.EVENTS.STATIONS_POLL_TIME_CHANGED = 'STATIONS_POLL_TIME_CHANGED';
 
     /**
      Theme changed
@@ -22,7 +22,7 @@ define(['jquery', 'validator'], function ($, validator) {
      @static
      @final
      **/
-    BB.EVENTS.THEME_CHANGED = 'THEME_CHANGED';
+    //BB.EVENTS.THEME_CHANGED = 'THEME_CHANGED';
 
     class SettingView extends Backbone.View<Backbone.Model> {
 

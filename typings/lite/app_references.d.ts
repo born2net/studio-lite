@@ -5,10 +5,6 @@
 ///<reference path="../lite/ComBroker.d.ts" />
 ///<reference path="../simplestorage.js/simplestorage.js.d.ts" />
 
-
-// App global declarations
-declare var BB:Backbone.Model;
-declare var Elements;
-declare var bootbox;
-declare var platform;
-declare var videojs;
+///<reference path="../../Elements.ts" />
+///<reference path="../../Events.ts" />
+///<reference path="../../Declarations.ts" />

@@ -36,6 +36,10 @@ gulp.task('release', function (done) {
     runSequence('_genDocs', '_uploadVersionFiles', '_uploadDocs', 'minifyHTML', done);
 });
 
+gulp.task('releaseDocs', function (done) {
+    runSequence('_genDocs', '_uploadDocs', done);
+});
+
 gulp.task('minifyHTML', function (done) {
     runSequence('_htmlMinify', '_htmlCopy', '_rsync', done);
 });

@@ -1,13 +1,13 @@
-var BB;
-(function (BB) {
+module BB {
+
     /**
      Global shared events through the ComBroker framework
      @class Events
      @constructor
      @return {Object} Global Events
      **/
-    var EVENTS;
-    (function (EVENTS) {
+    export module EVENTS {
+
         /**
          Station polling time changes
          @event STATIONS_POLL_TIME_CHANGED
@@ -17,7 +17,7 @@ var BB;
          @static
          @final
          **/
-        EVENTS.STATIONS_POLL_TIME_CHANGED = 'STATIONS_POLL_TIME_CHANGED';
+        export const STATIONS_POLL_TIME_CHANGED = 'STATIONS_POLL_TIME_CHANGED';
         /**
          Theme changed
          @event THEME_CHANGED
@@ -27,7 +27,7 @@ var BB;
          @static
          @final
          **/
-        EVENTS.THEME_CHANGED = 'THEME_CHANGED';
+        export const THEME_CHANGED = 'THEME_CHANGED';
         /**
          Selected stack view
          @event SELECTED_STACK_VIEW
@@ -37,7 +37,7 @@ var BB;
          @static
          @final
          **/
-        EVENTS.SELECTED_STACK_VIEW = 'SELECTED_STACK_VIEW';
+        export const SELECTED_STACK_VIEW = 'SELECTED_STACK_VIEW';
         /**
          Selected block list updated
          @event SCENE_BLOCK_LIST_UPDATED
@@ -47,7 +47,7 @@ var BB;
          @static
          @final
          **/
-        EVENTS.SCENE_BLOCK_LIST_UPDATED = 'SCENE_BLOCK_LIST_UPDATED';
+        export const SCENE_BLOCK_LIST_UPDATED = 'SCENE_BLOCK_LIST_UPDATED';
         /**
          Scene item selected
          @event SCENE_ITEM_SELECTED
@@ -57,7 +57,7 @@ var BB;
          @static
          @final
          **/
-        EVENTS.SCENE_ITEM_SELECTED = 'SCENE_ITEM_SELECTED';
+        export const SCENE_ITEM_SELECTED = 'SCENE_ITEM_SELECTED';
         /**
          Scene loaded and ready event
          @event LOAD_SCENE
@@ -67,7 +67,7 @@ var BB;
          @static
          @final
          **/
-        EVENTS.LOAD_SCENE = 'LOAD_SCENE';
+        export const LOAD_SCENE = 'LOAD_SCENE';
         /**
          Scene zoom in event
          @event SCENE_ZOOM_IN
@@ -77,7 +77,7 @@ var BB;
          @static
          @final
          **/
-        EVENTS.SCENE_ZOOM_IN = 'SCENE_ZOOM_IN';
+        export const SCENE_ZOOM_IN = 'SCENE_ZOOM_IN';
         /**
          Scene zoom out event
          @event SCENE_ZOOM_OUT
@@ -87,7 +87,7 @@ var BB;
          @static
          @final
          **/
-        EVENTS.SCENE_ZOOM_OUT = 'SCENE_ZOOM_OUT';
+        export const SCENE_ZOOM_OUT = 'SCENE_ZOOM_OUT';
         /**
          Scene reset event
          @event SCENE_ZOOM_RESET
@@ -97,7 +97,7 @@ var BB;
          @static
          @final
          **/
-        EVENTS.SCENE_ZOOM_RESET = 'SCENE_ZOOM_RESET';
+        export const SCENE_ZOOM_RESET = 'SCENE_ZOOM_RESET';
         /**
          push top scene
          @event SCENE_PUSH_TOP
@@ -107,7 +107,7 @@ var BB;
          @static
          @final
          **/
-        EVENTS.SCENE_PUSH_TOP = 'SCENE_PUSH_TOP';
+        export const SCENE_PUSH_TOP = 'SCENE_PUSH_TOP';
         /**
          push bottom scene
          @event SCENE_PUSH_BOTTOM
@@ -117,7 +117,7 @@ var BB;
          @static
          @final
          **/
-        EVENTS.SCENE_PUSH_BOTTOM = 'SCENE_PUSH_BOTTOM';
+        export const SCENE_PUSH_BOTTOM = 'SCENE_PUSH_BOTTOM';
         /**
          Scene editor removed event
          @event SCENE_EDITOR_REMOVE
@@ -127,7 +127,7 @@ var BB;
          @static
          @final
          **/
-        EVENTS.SCENE_EDITOR_REMOVE = 'SCENE_EDITOR_REMOVE';
+        export const SCENE_EDITOR_REMOVE = 'SCENE_EDITOR_REMOVE';
         /**
          scene item removed event
          @event SCENE_ITEM_REMOVE
@@ -137,7 +137,7 @@ var BB;
          @static
          @final
          **/
-        EVENTS.SCENE_ITEM_REMOVE = 'SCENE_ITEM_REMOVE';
+        export const SCENE_ITEM_REMOVE = 'SCENE_ITEM_REMOVE';
         /**
          exited the startup wizard event
          @event WIZARD_EXIT
@@ -147,7 +147,7 @@ var BB;
          @static
          @final
          **/
-        EVENTS.WIZARD_EXIT = 'WIZARD_EXIT';
+        export const WIZARD_EXIT = 'WIZARD_EXIT';
         /**
          new scene added event
          @event NEW_SCENE_ADD
@@ -157,7 +157,7 @@ var BB;
          @static
          @final
          **/
-        EVENTS.NEW_SCENE_ADD = 'NEW_SCENE_ADD';
+        export const NEW_SCENE_ADD = 'NEW_SCENE_ADD';
         /**
          scene list updated
          @event SCENE_LIST_UPDATED
@@ -167,7 +167,7 @@ var BB;
          @static
          @final
          **/
-        EVENTS.SCENE_LIST_UPDATED = 'SCENE_LIST_UPDATED';
+        export const SCENE_LIST_UPDATED = 'SCENE_LIST_UPDATED';
         /**
          scene undo event
          @event SCENE_UNDO
@@ -177,7 +177,7 @@ var BB;
          @static
          @final
          **/
-        EVENTS.SCENE_UNDO = 'SCENE_UNDO';
+        export const SCENE_UNDO = 'SCENE_UNDO';
         /**
          scene redo event
          @event SCENE_REDO
@@ -187,7 +187,7 @@ var BB;
          @static
          @final
          **/
-        EVENTS.SCENE_REDO = 'SCENE_REDO';
+        export const SCENE_REDO = 'SCENE_REDO';
         /**
          removing scene (not removed yet)
          @event REMOVING_SCENE
@@ -197,7 +197,7 @@ var BB;
          @static
          @final
          **/
-        EVENTS.REMOVING_SCENE = 'REMOVING_SCENE';
+        export const REMOVING_SCENE = 'REMOVING_SCENE';
         /**
          scene already removed
          @event REMOVED_SCENE
@@ -207,7 +207,7 @@ var BB;
          @static
          @final
          **/
-        EVENTS.REMOVED_SCENE = 'REMOVED_SCENE';
+        export const REMOVED_SCENE = 'REMOVED_SCENE';
         /**
          removing resource (not removed yet)
          @event REMOVING_RESOURCE
@@ -217,7 +217,7 @@ var BB;
          @static
          @final
          **/
-        EVENTS.REMOVING_RESOURCE = 'REMOVING_RESOURCE';
+        export const REMOVING_RESOURCE = 'REMOVING_RESOURCE';
         /**
          resource removed
          @event REMOVED_RESOURCE
@@ -227,7 +227,7 @@ var BB;
          @static
          @final
          **/
-        EVENTS.REMOVED_RESOURCE = 'REMOVED_RESOURCE';
+        export const REMOVED_RESOURCE = 'REMOVED_RESOURCE';
         /**
          added resource
          @event ADDED_RESOURCE
@@ -237,7 +237,7 @@ var BB;
          @static
          @final
          **/
-        EVENTS.ADDED_RESOURCE = 'ADDED_RESOURCE';
+        export const ADDED_RESOURCE = 'ADDED_RESOURCE';
         /**
          campaign list completed loading
          @event CAMPAIGN_LIST_LOADED
@@ -247,7 +247,7 @@ var BB;
          @static
          @final
          **/
-        EVENTS.CAMPAIGN_LIST_LOADING = 'CAMPAIGN_LIST_LOADED';
-    })(EVENTS = BB.EVENTS || (BB.EVENTS = {}));
-})(BB || (BB = {}));
-//# sourceMappingURL=Events.js.map
+        export const CAMPAIGN_LIST_LOADING = 'CAMPAIGN_LIST_LOADED';
+
+    }
+}

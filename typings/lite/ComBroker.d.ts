@@ -18,10 +18,9 @@ interface ComBroker {
     stopListen(events, func);
 }
 
-
-
 declare module "ComBroker" {
     export = ComBroker;
 }
+
 //declare var jQuery: JQueryStatic;
 //declare var $: JQueryStatic;

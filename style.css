@@ -112,7 +112,6 @@ aside > aside > div > ul > li {
     margin: 0;
 }
 
-
 .liveInput {
     display: inline-block;
 }
@@ -545,11 +544,6 @@ iframe {
     cursor: pointer;
 }
 
-#fileRemove {
-    float: left;
-    margin-right: 30px;
-}
-
 #stationProperties {
     margin: 0 auto;
     width: 100%;
@@ -671,7 +665,7 @@ iframe {
 }
 
 #videoPreview {
-    max-width: 150x;
+    max-width: 150px;
     max-height: 150px;
     position: relative;
     top: 20px;
@@ -827,6 +821,18 @@ iframe {
     background-color: white;
     float: right;
     z-index: 150;
+}
+
+#resourceLiseUpload {
+    position: relative;
+    left: 205px;
+    top: -31px;
+}
+
+#resourceListFilter {
+    position: relative;
+    top: -35px;
+    width: 277px;
 }
 
 #loading {
@@ -1596,7 +1602,8 @@ iframe {
     font-size: 1em;
     width: 20%;
     float: left;
-    height: 70px padding : 0;
+    height: 70px;
+    padding: 0;
 }
 
 .personInLine {
@@ -3895,11 +3902,11 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
     z-index: 2; /* over other stuff */
 }
 
-
 #googleMapsLocation #prev {
     position: relative;
     top: -30px;
 }
+
 #importSceneList img {
     cursor: pointer;
     opacity: 0.8;
@@ -3957,6 +3964,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 .material-switch {
     padding-left: 7px;
 }
+
 .material-switch > input[type="checkbox"] {
     display: none;
 }
@@ -4003,7 +4011,5 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
     background: inherit;
     left: 20px;
 }
-
-
 
 

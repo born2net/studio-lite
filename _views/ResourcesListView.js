@@ -5,15 +5,34 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+//import BSListView = require('_views/_components/BSListView')
 define(['jquery', 'bootstrapfileinput', 'video', 'platform', 'BSListView'], function ($, bootstrapfileinput, videojs, platform, BSListView) {
+    /**
+     Resource list manager including adding, removing, previewing studio resources
+     @class ResourcesListView
+     @constructor
+     @return {Object} instantiated ResourcesListView
+     **/
     var ResourcesListView = (function (_super) {
         __extends(ResourcesListView, _super);
+        /**
+         Class constructor
+         @method constructor
+         @param {Object} options
+         **/
         function ResourcesListView(options) {
             this.m_options = options;
             _super.call(this);
             var bsListView = new BSListView();
             bsListView.isAcceptable('111');
+            //var aa: typeof BSListView = require('BSListView')
+            //var bar: typeof BSListView = new aa('111');
+            //bar.isAcceptable('ss');
         }
+        /**
+         Resource list init
+         @method initialize
+         **/
         ResourcesListView.prototype.initialize = function () {
             var self = this;
             this.id = self.m_options.el;
@@ -23,6 +42,8 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform', 'BSListView'], func
             self.m_property.initPanel(Elements.RESOURCE_LIST_PROPERTIES);
             self.m_videoPlayer = undefined;
             self._listenInputChange();
+            self._listenGridList();
+            self._listenFilterList();
             self._initVideo();
             $('input[type=file]').bootstrapFileInput();
             self._listenRemoveResource();
@@ -30,6 +51,25 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform', 'BSListView'], func
                 self._onFileSelected(e);
             });
             self.renderView();
+        };
+        /**
+         Listen to grid or list format selection
+         @method _listenGridList
+         **/
+        ResourcesListView.prototype._listenGridList = function () {
+            var self = this;
+            $('#list').click(function (event) {
+                var query = $(self.id + ' ' + Elements.CLASS_RESOURCES_LIST_ITEMS);
+                event.preventDefault();
+                $(query).addClass('col-xs-12');
+                $(query).removeClass('col-xs-3');
+            });
+            $('#grid').click(function (event) {
+                var query = $(self.id + ' ' + Elements.CLASS_RESOURCES_LIST_ITEMS);
+                event.preventDefault();
+                $(query).addClass('col-xs-3');
+                $(query).removeClass('col-xs-12');
+            });
         };
         /**
          When user changes text update msdb, we use xSavePlayerData
@@ -68,6 +108,7 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform', 'BSListView'], func
                 BB.Pepper.removeResourceFromBlockCollectionsInChannel(self.m_selected_resource_id);
                 self.renderView();
                 self._listenResourceSelected();
+                $(Elements.RESOURCES_FILTER_LIST).val('');
                 BB.comBroker.fire(BB.EVENTS.REMOVED_RESOURCE, this, null, self.m_selected_resource_id);
             });
         };
@@ -293,6 +334,21 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform', 'BSListView'], func
             return 1;
         };
         /**
+         Listen to keyup to filter resource list
+         @method _listenFilterList
+         **/
+        ResourcesListView.prototype._listenFilterList = function () {
+            var self = this;
+            $(Elements.RESOURCES_FILTER_LIST).on('keyup', function () {
+                var rex = new RegExp($(this).val(), 'i');
+                var query = $(self.id + ' ' + Elements.CLASS_RESOURCES_LIST_ITEMS);
+                query.hide();
+                query.filter(function () {
+                    return rex.test($(this).text());
+                }).show();
+            });
+        };
+        /**
          Populate the UI with all resources for the account (i.e.: videos, images, swfs).
          @method renderView
          @return none
@@ -312,13 +368,7 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform', 'BSListView'], func
                     bootbox.alert($(Elements.MSG_BOOTBOX_FILE_FORMAT_INVALID).text());
                 }
                 else {
-                    var snippet = '<li class="' + BB.lib.unclass(Elements.CLASS_RESOURCES_LIST_ITEMS) + ' list-group-item" data-resource_id="' + recResources[i]['resource_id'] + '">' +
-                        '<a href="#">' +
-                        '<i class="fa ' + resourceFontAwesome + '"></i>' +
-                        '<span>' + recResources[i]['resource_name'] + '</span>' +
-                        '<p>' + '' + '</p></a>' +
-                        '</a>' +
-                        '</li>';
+                    var snippet = "<li style=\"white-space: nowrap\" class=\"" + BB.lib.unclass(Elements.CLASS_RESOURCES_LIST_ITEMS) + " list-group-item\" data-resource_id=\"" + recResources[i]['resource_id'] + "\">\n                                        <a href=\"#\">\n                                            <i class=\"fa " + resourceFontAwesome + "\"></i>\n                                            <span style=\"overflow-x: hidden\"> " + recResources[i]['resource_name'] + "</span>\n                                            <p></p>\n                                        </a>\n                                    </li>";
                     $(Elements.RESOURCE_LIB_LIST).append($(snippet));
                 }
             });

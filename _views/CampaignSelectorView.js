@@ -4,7 +4,8 @@
  @constructor
  @return {Object} instantiated CampaignSelectorView
  **/
-define(['jquery', 'backbone', 'simplestorage'], function ($, Backbone, simplestorage) {
+//todo: remove loading ResourcesListView after release of BSList
+define(['jquery', 'backbone', 'simplestorage', 'ResourcesListView'], function ($, Backbone, simplestorage, ResourcesListView) {
 
     BB.CONSTS.SEQUENCER_MODE = '0';
     BB.CONSTS.SCHEDULER_MODE = '1';

@@ -1,8 +1,16 @@
 ///<reference path="../typings/lite/app_references.d.ts" />
 ///<reference path="./_components/BSListView.ts" />
 
+//import BSListView = require('_views/_components/BSListView')
+
 define(['jquery', 'bootstrapfileinput', 'video', 'platform', 'BSListView'], function ($, bootstrapfileinput, videojs, platform, BSListView) {
 
+    /**
+     Resource list manager including adding, removing, previewing studio resources
+     @class ResourcesListView
+     @constructor
+     @return {Object} instantiated ResourcesListView
+     **/
     class ResourcesListView extends Backbone.View<Backbone.Model> {
 
         private m_property:any;
@@ -10,14 +18,27 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform', 'BSListView'], func
         private m_videoPlayer:any;
         private m_selected_resource_id:number;
 
+        /**
+         Class constructor
+         @method constructor
+         @param {Object} options
+         **/
         constructor(options?:any) {
             this.m_options = options;
             super();
 
             let bsListView:BSListView.IBSList = new BSListView();
-            bsListView.isAcceptable('111')
+            bsListView.isAcceptable('111');
+
+            //var aa: typeof BSListView = require('BSListView')
+            //var bar: typeof BSListView = new aa('111');
+            //bar.isAcceptable('ss');
         }
 
+        /**
+         Resource list init
+         @method initialize
+         **/
         initialize() {
             var self = this;
             this.id = self.m_options.el;
@@ -28,6 +49,8 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform', 'BSListView'], func
             self.m_property.initPanel(Elements.RESOURCE_LIST_PROPERTIES);
             self.m_videoPlayer = undefined;
             self._listenInputChange();
+            self._listenGridList();
+            self._listenFilterList();
             self._initVideo();
             $('input[type=file]').bootstrapFileInput();
             self._listenRemoveResource();
@@ -35,6 +58,27 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform', 'BSListView'], func
                 self._onFileSelected(e);
             });
             self.renderView();
+        }
+
+        /**
+         Listen to grid or list format selection
+         @method _listenGridList
+         **/
+        private _listenGridList() {
+            var self = this;
+            $('#list').click(function (event) {
+                var query = $(self.id + ' ' + Elements.CLASS_RESOURCES_LIST_ITEMS);
+                event.preventDefault();
+                $(query).addClass('col-xs-12');
+                $(query).removeClass('col-xs-3');
+            });
+
+            $('#grid').click(function (event) {
+                var query = $(self.id + ' ' + Elements.CLASS_RESOURCES_LIST_ITEMS);
+                event.preventDefault();
+                $(query).addClass('col-xs-3');
+                $(query).removeClass('col-xs-12');
+            });
         }
 
         /**
@@ -75,6 +119,7 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform', 'BSListView'], func
                 BB.Pepper.removeResourceFromBlockCollectionsInChannel(self.m_selected_resource_id);
                 self.renderView();
                 self._listenResourceSelected();
+                $(Elements.RESOURCES_FILTER_LIST).val('');
                 BB.comBroker.fire(BB.EVENTS.REMOVED_RESOURCE, this, null, self.m_selected_resource_id);
             });
         }
@@ -318,6 +363,22 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform', 'BSListView'], func
         }
 
         /**
+         Listen to keyup to filter resource list
+         @method _listenFilterList
+         **/
+        _listenFilterList() {
+            var self = this;
+            $(Elements.RESOURCES_FILTER_LIST).on('keyup', function () {
+                var rex = new RegExp($(this).val(), 'i');
+                var query = $(self.id + ' ' + Elements.CLASS_RESOURCES_LIST_ITEMS);
+                query.hide();
+                query.filter(function () {
+                    return rex.test($(this).text());
+                }).show();
+            });
+        }
+
+        /**
          Populate the UI with all resources for the account (i.e.: videos, images, swfs).
          @method renderView
          @return none
@@ -333,17 +394,17 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform', 'BSListView'], func
                     return;
                 var size = (parseInt(recResources[i]['resource_bytes_total']) / 1000).toFixed(2);
                 var resourceDescription = 'size: ' + size + 'K dimenstion: ' + recResources[i]['resource_pixel_width'] + 'x' + recResources[i]['resource_pixel_height'];
-                var resourceFontAwesome = BB.PepperHelper.getFontAwesome(recResources[i]['resource_type'])
+                var resourceFontAwesome = BB.PepperHelper.getFontAwesome(recResources[i]['resource_type']);
                 if (_.isUndefined(resourceFontAwesome)) {
                     bootbox.alert($(Elements.MSG_BOOTBOX_FILE_FORMAT_INVALID).text());
                 } else {
-                    var snippet = '<li class="' + BB.lib.unclass(Elements.CLASS_RESOURCES_LIST_ITEMS) + ' list-group-item" data-resource_id="' + recResources[i]['resource_id'] + '">' +
-                        '<a href="#">' +
-                        '<i class="fa ' + resourceFontAwesome + '"></i>' +
-                        '<span>' + recResources[i]['resource_name'] + '</span>' +
-                        '<p>' + '' + '</p></a>' +
-                        '</a>' +
-                        '</li>';
+                    var snippet = `<li style="white-space: nowrap" class="${BB.lib.unclass(Elements.CLASS_RESOURCES_LIST_ITEMS)} list-group-item" data-resource_id="${recResources[i]['resource_id']}">
+                                        <a href="#">
+                                            <i class="fa ${resourceFontAwesome}"></i>
+                                            <span style="overflow-x: hidden"> ${recResources[i]['resource_name']}</span>
+                                            <p></p>
+                                        </a>
+                                    </li>`;
 
                     $(Elements.RESOURCE_LIB_LIST).append($(snippet));
                 }

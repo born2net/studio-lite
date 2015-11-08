@@ -1,5 +1,7 @@
 ///<reference path="../../typings/lite/app_references.d.ts" />
 
+/** sample **/
+
 module BSListView {
     export interface IBSList {
         isAcceptable(s:string):void

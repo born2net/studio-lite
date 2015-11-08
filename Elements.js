@@ -330,6 +330,7 @@ Elements.RSS_POLL_SPINNER = '#rssPollSpinner';
 Elements.RSS_SCROLL_SPEED = '#rssScrollSpeed';
 Elements.RSS_SOURCE = '#rssSource';
 Elements.SAVE_CONFIG = '#saveConfig';
+Elements.RESOURCES_FILTER_LIST = '#resourcesFilterList';
 Elements.SCHEDUALED_DAYS = '#scheduledDays';
 Elements.SCENE_ADD_NEW_BLOCK = '#sceneAddNewBlock';
 Elements.SCENE_BACKGROUND_SELECTOR = '#sceneBackgroundSelector';

@@ -17,6 +17,10 @@ module BB {
     export var PepperHelper:any;
 }
 
-declare var bootbox;
+//declare var bootbox;
 declare var platform;
 declare var videojs;
+
+// example of declaring a type alias
+declare type bootBox = any;
+declare var bootbox: bootBox;

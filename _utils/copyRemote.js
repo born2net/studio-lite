@@ -9,7 +9,7 @@ var ftps = new FTPS({
     // protocol is added on beginning of host, ex : sftp://domain.com in this case
 });
 
-var cmd = 'lftp -e "mirror -R /var/www/sites/dynasite/htdocs/_studiolite-dist /" -u' + process.env["usr1"] + ',' + process.env["acc3"] + ' galaxy.signage.me'
+var cmd = 'lftp -e "mirror --exclude node_modules/ --exclude assets/flags --exclude assets/scenes/original/ --exclude logs/ -R /var/www/sites/dynasite/htdocs/_studiolite-dist /" -u' + process.env["usr1"] + ',' + process.env["acc3"] + ' galaxy.signage.me';
 ftps.raw(cmd);
 ftps.raw('exit');
 ftps.exec(function (err, res) {

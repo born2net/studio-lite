@@ -23,8 +23,8 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform', 'BSListView'], func
         function ResourcesListView(options) {
             this.m_options = options;
             _super.call(this);
-            var bsListView = new BSListView();
-            bsListView.isAcceptable('111');
+            //let bsListView:BSListView.IBSList = new BSListView();
+            //bsListView.isAcceptable('111');
             //var comBroker:ComBroker;
             //comBroker.setService('aaa',self);
             //var aa: typeof BSListView = require('BSListView')

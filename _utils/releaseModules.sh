@@ -18,6 +18,8 @@ cp -r -f ../../_studiolite-dev/ ../../_studiolite-bk/
 ### non minified ###
 cp -r -f ../../_studiolite-dev/ ../../_studiolite-dist/
 
+gulp uglify
+
 ### final source file changes ###
 ./presetDist.js
 

@@ -87,7 +87,7 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
          **/
         loadBlockModules: function () {
             var self = this;
-            require(['BlockProperties', 'Block', 'BlockScene', 'BlockRSS', 'BlockQR', 'BlockYouTube', 'BlockCollection', 'BlockLocation', 'BlockFasterQ', 'BlockTwitter', 'BlockTwitterItem', 'BlockVideo', 'BlockImage', 'BlockSVG', 'BlockExtImage', 'BlockExtVideo', 'BlockMRSS', 'BlockHTML', 'BlockLabel', 'BlockClock'], function (BlockProperties, Block, BlockScene, BlockRSS, BlockQR, BlockYouTube, BlockCollection, BlockLocation, BlockFasterQ, BlockTwitter, BlockTwitterItem, BlockVideo, BlockImage, BlockSVG, BlockExtImage, BlockExtVideo, BlockMRSS, BlockHTML, BlockLabel, BlockClock) {
+            require(['BlockProperties', 'Block', 'BlockScene', 'BlockRSS', 'BlockQR', 'BlockYouTube', 'BlockCollection', 'BlockLocation', 'BlockFasterQ', 'BlockTwitter', 'BlockTwitterItem', 'BlockJson', 'BlockJsonItem','BlockVideo', 'BlockImage', 'BlockSVG', 'BlockExtImage', 'BlockExtVideo', 'BlockMRSS', 'BlockHTML', 'BlockLabel', 'BlockClock'], function (BlockProperties, Block, BlockScene, BlockRSS, BlockQR, BlockYouTube, BlockCollection, BlockLocation, BlockFasterQ, BlockTwitter, BlockTwitterItem, BlockJson, BlockJsonItem, BlockVideo, BlockImage, BlockSVG, BlockExtImage, BlockExtVideo, BlockMRSS, BlockHTML, BlockLabel, BlockClock) {
                 if (self.m_blockProperties)
                     return;
                 self.m_blockProperties = new BlockProperties({el: Elements.BLOCK_PROPERTIES});
@@ -101,6 +101,8 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
                 self.m_blockFasterQ = BlockFasterQ;
                 self.m_blockTwitter = BlockTwitter;
                 self.m_blockTwitterItem = BlockTwitterItem;
+                self.m_blockJson = BlockJson;
+                self.m_blockJsonItem = BlockJsonItem;
                 self.m_blockVideo = BlockVideo;
                 self.m_blockImage = BlockImage;
                 self.m_blockSVG = BlockSVG;
@@ -130,7 +132,7 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
             var self = this;
             var block = undefined;
             // uncomment to see XML when adding new components
-            //console.log(i_player_data);
+            // console.log(i_player_data);
             var playerData = this.x2js.xml_str2json(i_player_data);
             var blockCode;
 
@@ -220,6 +222,24 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
                 case 4505:
                 {
                     block = new self.m_blockTwitterItem({
+                        i_placement: i_placement,
+                        i_block_id: block_id,
+                        i_scene_player_data_id: i_scene_id
+                    });
+                    break;
+                }
+                case 4300:
+                {
+                    block = new self.m_blockJson({
+                        i_placement: i_placement,
+                        i_block_id: block_id,
+                        i_scene_player_data_id: i_scene_id
+                    });
+                    break;
+                }
+                case 4310:
+                {
+                    block = new self.m_blockJsonItem({
                         i_placement: i_placement,
                         i_block_id: block_id,
                         i_scene_player_data_id: i_scene_id

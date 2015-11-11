@@ -7,14 +7,6 @@
  **/
 define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
 
-    /**
-     EVent fired when a view is selected
-     @event SELECTED_STACK_VIEW
-     @static
-     @final
-     **/
-    BB.EVENTS.SELECTED_STACK_VIEW = 'SELECTED_STACK_VIEW';
-
     var StackView = BB.StackView = {};
     StackView.ViewPort = BB.View.extend({
 

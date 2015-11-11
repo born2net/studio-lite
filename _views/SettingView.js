@@ -30,6 +30,7 @@ define(['jquery', 'validator'], function ($, validator) {
         function SettingView(options) {
             this.m_options = options;
             _super.call(this);
+            return;
             if (window.location.href.indexOf('dev') > -1) {
                 this._samples();
             }

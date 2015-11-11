@@ -34,6 +34,7 @@ define(['jquery', 'validator'], function ($, validator) {
         constructor(options?:any) {
             this.m_options = options;
             super();
+            return;
             if (window.location.href.indexOf('dev') > -1) {
                 this._samples();
             }

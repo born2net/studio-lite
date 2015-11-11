@@ -89,6 +89,15 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
     BB.EVENTS.VIDEO_VOLUME_CHANGED = 'VIDEO_VOLUME_CHANGED';
 
     /**
+     event fires datagrid json event data chnaged / saved
+     @event JSON_EVENT_ROW_CHANGED
+     @param {Object} this
+     @param {Object} caller the firing element
+     @param {Number} alpha value
+     **/
+    BB.EVENTS.JSON_EVENT_ROW_CHANGED = 'JSON_EVENT_ROW_CHANGED';
+
+    /**
      event fires when youtube volume changed
      @event YOUTUBE_VOLUME_CHANGED
      @param {Object} this
@@ -204,6 +213,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
             self.m_property.initPanel(Elements.BLOCK_PROPERTIES);
             self.m_rssFontSelector = undefined;
             self.m_loadedOnceCollectionDatagrid = false;
+            self.m_loadedOnceJsonDatagrid = false;
             self.m_loadedOnceLocationDatagrid = false;
 
             self._alphaSliderInit();
@@ -936,6 +946,38 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
                     },
                     onEditableSave: function (response, newValue) {
                         BB.comBroker.fire(BB.EVENTS.COLLECTION_EVENT_ROW_CHANGED, this, self, newValue);
+                    },
+                    success: function (response, newValue) {
+                        if (response.status == 'error') {
+                            return response.msg;
+                        } //msg will be shown in editable form
+                    }
+                });
+            });
+        },
+
+        /**
+         Init the json event bootstrap datatable
+         @method jsonEventDatatableInit
+         **/
+        jsonEventDatatableInit: function () {
+            var self = this;
+            if (self.m_loadedOnceJsonDatagrid)
+                return;
+            self.m_loadedOnceJsonDatagrid = true;
+            require(['bootstrap-table-editable', 'bootstrap-table-sort-rows'], function (bootstraptableeditable, bootstraptablesortrows) {
+                self.m_jsonEventTable = $(Elements.JSON_EVENTS_TABLE);
+                self.m_jsonEventTable.bootstrapTable({
+                    data: [],
+                    editable: true,
+                    type: 'select',
+                    title: 'Select status',
+                    placement: 'left',
+                    onEditableInit: function (response, newValue) {
+                        //console.log(newValue);
+                    },
+                    onEditableSave: function (response, newValue) {
+                        BB.comBroker.fire(BB.EVENTS.JSON_EVENT_ROW_CHANGED, this, self, newValue);
                     },
                     success: function (response, newValue) {
                         if (response.status == 'error') {

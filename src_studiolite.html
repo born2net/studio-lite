@@ -302,7 +302,7 @@
             <div class="campaignSlider noScroll">
               <div id="campaignSelector" class="page center" style="opacity: 0.5">
                 <div style="padding-bottom: 10px">
-                                    <span style="font-size: 1.8em;" data-localize="campaignSelection">campaign selection</span>
+                  <span style="font-size: 1.8em;" data-localize="campaignSelection">campaign selection</span>
                 </div>
                 <div>
                   <div id="campaignSelectionButtons" class="btn-group">
@@ -352,8 +352,7 @@
                     <div class="panel panel-default">
                       <div class="panel-heading">
                         <h4 class="panel-title">
-                          <a id="toggleTimelinesCollapsible" data-toggle="collapse" data-parent="#timelinesCollapsible" href="#screenSelectorContainerCollapse">
-                                                        <span style="position: relative; top: 3px" class="glyphicon glyphicon-chevron-down"></span> </a>
+                          <a id="toggleTimelinesCollapsible" data-toggle="collapse" data-parent="#timelinesCollapsible" href="#screenSelectorContainerCollapse"> <span style="position: relative; top: 3px" class="glyphicon glyphicon-chevron-down"></span> </a>
                           <button id="backToCampaigns" type="button" style="margin-left: 8px" title="add new timeline" data-localize="empty" data-localize-tooltip="backToCampaignsTooltip" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-chevron-left"></span></button>
 
                           <button id="addNewTimelineButton" type="button" title="add new timeline" data-localize="empty" data-localize-tooltip="addNewTimelineButtonToolTip" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span></button>
@@ -365,8 +364,7 @@
                           </button>
 
                           <div class="sequenceClass" style="float: right; margin-right: 35px; position: relative; top: 6px">
-                            <span style="font-size: 1em" data-localize="campaignLength">campaign length:</span>
-                                                        <span id="timelinesTotalLength" style="font-size: 1em"> 00:00:00</span>
+                            <span style="font-size: 1em" data-localize="campaignLength">campaign length:</span> <span id="timelinesTotalLength" style="font-size: 1em"> 00:00:00</span>
                           </div>
 
                         </h4>
@@ -498,7 +496,7 @@
                   <label data-role="button" class="file-upload"> <input id="file" name="file" type="file" accept=".flv,.mp4,.jpg,.png,.swf,.svg" class="btn-primary" title="add files" data-filename-placement="inside" multiple data-role="none"> </label> <span data-localize="supportedFiles2"> (supported files: flv, mp4, jpg, png, swf and svg)</span>
                 </div>
                 <div>
-                  <form id="resourceListFilter"  action="#" method="get" _lpchecked="1">
+                  <form id="resourceListFilter" action="#" method="get" _lpchecked="1">
                     <div class="input-group">
                       <input id="resourcesFilterList" class="form-control" name="q" data-localize="searchFor" placeholder="search for" required="">
                                 <span class="input-group-btn">
@@ -626,8 +624,7 @@
                   <span data-localize="none"></span> <span data-localize="manageLines" style="display: block">Manage Lines</span>
                 </button>
                 <button id="fasterQCreateNavButton" type="button" name="mailWasp" class="btn btn-default" style="width: 200px; height: 100px">
-                  <i style="margin: 20px; padding: 20px ; font-size: 4em; width: 120px; position: relative; top: -25px" class="fa fa-cogs"></i> <span data-localize="none"></span>
-                                    <span data-localize="createLines" style="display: block; position: relative; top: -65px">Create Lines</span>
+                  <i style="margin: 20px; padding: 20px ; font-size: 4em; width: 120px; position: relative; top: -25px" class="fa fa-cogs"></i> <span data-localize="none"></span> <span data-localize="createLines" style="display: block; position: relative; top: -65px">Create Lines</span>
                 </button>
               </div>
             </div>
@@ -957,7 +954,7 @@
           <div id="installPanel" style="display: none">
             <h3 data-localize="installSignagePlayer">Install the Signage Player</h3>
             <h5 data-localize="chooseVersion"><b>Choose which version of the SignagePlayer you would like to get</b></h5>
-                        <span style="padding-top: 20px; padding-right: 20px; margin-bottom: 20px" data-localize="recDevice">We recommend that you purchase our device as it is optimized for the signage software. It also has a built in watch-dog and the software comes pre-installed, so you will not need to download anything at all.</span><br/> <br/>
+            <span style="padding-top: 20px; padding-right: 20px; margin-bottom: 20px" data-localize="recDevice">We recommend that you purchase our device as it is optimized for the signage software. It also has a built in watch-dog and the software comes pre-installed, so you will not need to download anything at all.</span><br/> <br/>
 
             <div>
               <div class="panel-group" id="accordion">
@@ -1693,7 +1690,6 @@
                         </div>
                       </div>
                     </div>
-
                     <div id="blockTwitterItemCommonProperties" style="display: none">
                       <div>
                         <span data-localize="twitterItem">Twitter item</span>
@@ -1714,6 +1710,106 @@
                         <div id="twitterFontSettings"></div>
                       </div>
                     </div>
+
+
+                    <!-- todo: new -->
+                    <div id="blockJsonCommonProperties" style="display: none">
+                      <span data-localize="JsonUrl">
+                        Json URL
+                      </span> <br/> <input class="propControlWidth" type="text" name="name" id="jsonURLInput" value="" placeholder="json url">
+                      <hr class="hrThin"/>
+                      <span data-localize="JsonPath">
+                        Object path
+                      </span> <br/> <input class="propControlWidth" type="text" name="name" id="jsonPathInput" value="" placeholder="dot notation">
+                      <hr class="hrThin"/>
+                      <div>
+                        <br/> <span data-localize="loadWithScene">Load with scene</span>
+
+                        <div class="dropdown">
+                          <button class="propControlWidth btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                            <span id="jsonSceneList" data-localize="selectSceneName">select scene</span> <span class="caret"></span>
+                          </button>
+                          <ul id="jsonDropDown" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1"></ul>
+                        </div>
+                        <br/> <span data-localize="Interval" style="float: left; display: block">Interval</span><br/>
+
+                        <div class="spinner spinnerDimHeight">
+                          <input id="jsonIntervalInput" type="text" style="width: 60px" class="input-mini spinner-input">
+
+                          <div name="height" class="spinner-buttons btn-group btn-group-vertical">
+                            <button type="button" name="fontSizeUp" class="squareButton btn spinner-up"><i class="fa fa-chevron-up"></i></button>
+                            <button type="button" name="fontSizeDown" class="squareButton btn spinner-down"><i class="fa fa-chevron-down"></i></button>
+                          </div>
+                        </div>
+                        <hr class="hrthin pull-left"/>
+
+                        <label class="pull-left">Play video to completion</label>
+
+                        <div class="clearfix" style="padding-bottom: 13px"></div>
+                        <div style="position: relative; top: -12px" class="material-switch pull-left">
+                          <input id="jsonPlayVideoCompletion" name="someSwitchOption003" type="checkbox"/> <label for="jsonPlayVideoCompletion" class="label-primary"></label>
+                        </div>
+                        <div class="clearfix" style="padding-bottom: 13px"></div>
+                        <label class="pull-left">Random playback</label>
+
+                        <div class="clearfix" style="padding-bottom: 13px"></div>
+                        <div style="position: relative; top: -12px" class="material-switch pull-left">
+                          <input id="jsonRandomPlayback" name="someSwitchOption004" type="checkbox"/> <label for="jsonRandomPlayback" class="label-primary"></label>
+                        </div>
+                        <div class="clearfix" style="padding-bottom: 13px"></div>
+                        <label class="pull-left">Slideshow mode</label>
+
+                        <div class="clearfix" style="padding-bottom: 13px"></div>
+                        <div style="position: relative; top: -12px" class="material-switch pull-left">
+                          <input id="jsonSlideshow" name="someSwitchOption005" type="checkbox"/> <label for="jsonSlideshow" class="label-primary"></label>
+                        </div>
+                        <div class="clearfix" style="padding-bottom: 13px"></div>
+                        <div id="jsonEventsContainer">
+
+                          <h4 class="panel-title" style="padding-bottom: 15px">
+                            <button id="addJsonEvents" type="button" title="add event" data-localize="empty" data-localize-tooltip="addEvent" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span></button>
+                            <button id="removeJsonEvents" type="button" title="remove event" data-localize="empty" data-localize-tooltip="removeEvent" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-minus"></span></button>
+                          </h4>
+
+                          <label data-localize="onEventTakeAction">On event take the following action</label>
+                          <table id="jsonEventsTable" class="table table-no-bordered" data-sortable="false" data-search="false" data-mode="inline" data-show-columns="false" data-pagination="false" data-reorderable-rows="true" data-height="200">
+                            <thead>
+                            <tr>
+                              <th data-field="state" data-radio="true" data-width="40px"></th>
+                              <th data-field="event" data-editable="true" data-localize="event">event
+                              </th>
+                              <th data-field="action" data-type="number" data-formatter="BB.lib.jsonEventAction" data-halign="center" data-align="center" data-width="60px" data-localize="action">action
+                              </th>
+                              <th data-field="selectedPage" data-formatter="BB.lib.jsonEventActionGoToItem" class="collectionSelectedItem" data-type="number" data-halign="center" data-align="center" data-width="60px" data-localize="jsonURL">json url</th>
+                            </tr>
+                            </thead>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="blockJsonItemCommonProperties" style="display: none">
+                      <div>
+                        <span data-localize="JsonItem">Json item</span>
+
+                        <div class="dropdown">
+                          <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                            <span id="jsonItemTypeSelect" data-localize="labelText">Label text</span> <span class="caret"></span>
+                          </button>
+                          <ul id="jsonItemDropDown" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                            <li><a name="text" data-localize="labelText" role="menuitem" tabindex="-1" href="#">Label text</a></li>
+                            <li><a name="resource" data-localize="profileImage" role="menuitem" tabindex="-1" href="#">Profile Image</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div id="jsonItemLabel" style="display: none">
+                        <br/> <span data-localize="font">Font</span>
+
+                        <div id="jsonFontSettings"></div>
+                      </div>
+                    </div>
+                    <!-- todo: end new -->
+
+
                     <div id="blockHTMLCommonProperties" style="display: none"><span data-localize="webAddr">Web address</span>
 
                       <div data-role="fieldcontain" data-inset="true">

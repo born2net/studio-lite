@@ -34,6 +34,8 @@ PepperHelper.prototype = {
             'fasterq':  { image: 'fa-male' },
             'twitter':  { image: 'fa-twitter' },
             'twitteritem':  { image: 'fa-twitter' },
+            'json':  { image: 'fa-cubes' },
+            'jsonitem':  { image: 'fa-cubes' },
             'rss': { image: 'fa-rss' },
             'mrss': { image: 'fa-rss-square' },
             'flv': { image: 'fa-file-video-o' },
@@ -294,6 +296,48 @@ PepperHelper.prototype = {
                     '</Player>'
                 },
                 fontAwesome: self.getFontAwesome('twitteritem')
+            },
+            4300: {
+                name: 'JS Object player',
+                app_id: '10195',
+                color: '#E5E5E5',
+                acronym: 'JSON',
+                description: 'JSON',
+                svg: '',
+                getDefaultPlayerData: function (i_placement) {
+                    return  '<Player player="4300" label="json" interactive="0">' +
+                                '<Data>' +
+                                    self.getCommonDefaultXML() +
+                                    self.getCommonSceneLayout(i_placement) +
+                                    '<EventCommands></EventCommands>' +
+                                    '<Json providerType="" itemsPath="" slideShow="1" itemInterval="2" playVideoInFull="1" randomOrder="1" url="">'+
+                                        '<Player/>'+
+                                        '<Data/>'+
+                                    '</Json>'+
+                                '</Data>' +
+                            '</Player>'
+                },
+                fontAwesome: self.getFontAwesome('json')
+            },
+            4310: {
+                name: 'JS Object item',
+                app_id: '10195',
+                color: '#E5E5E5',
+                acronym: 'JSON item',
+                description: 'JSON item',
+                svg: new String('<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">     <g transform="translate(-15,-15)">             <g>               <path stroke="null" id="svg_2" d="m41.94732,72.56479l-0.04744,-23.53474l-18.99409,-11.80735l-18.95979,11.76463l0.0462,23.71895l18.91359,11.71272l19.04152,-11.85422zm-17.11468,5.91254l0.03388,-16.4782l13.20205,-8.2264l0.03388,16.44207l-13.26982,8.26253zm-1.92951,-36.5139l13.26653,8.2483l-13.22156,8.23691l-13.26695,-8.2794l13.22198,-8.20581zm-15.10528,11.77734l13.22711,8.25553l-0.03368,16.50076l-13.1616,-8.1517l-0.03183,-16.60458z"/>   <path stroke="null" id="svg_3" d="m62.43145,37.22401l-18.95918,11.76332l0.04744,23.71895l18.91399,11.71272l19.03927,-11.85422l-0.04744,-23.53475l-18.99408,-11.80603zm-0.00267,4.73941l13.26695,8.2483l-13.22198,8.23691l-13.26715,-8.27962l13.22218,-8.20559zm-15.10507,11.77734l13.22567,8.25553l-0.03368,16.50076l-13.15831,-8.1517l-0.03368,-16.60458zm17.03582,24.73657l0.03265,-16.4782l13.20206,-8.2264l0.03368,16.44207l-13.26839,8.26253z"/>   <path stroke="null" id="svg_4" d="m61.70614,11.80406l-18.9947,-11.80406l-18.95918,11.76135l0.04559,23.72005l18.91359,11.7136l19.03988,-11.85421l-0.04518,-23.53672zm-18.99717,-7.06531l13.26777,8.24633l-13.22156,8.23976l-13.26777,-8.28181l13.22156,-8.20427zm-15.10549,11.77646l13.22711,8.25706l-0.03306,16.50076l-13.16222,-8.15039l-0.03183,-16.60743zm17.03418,24.73789l0.03327,-16.47864l13.20267,-8.22771l0.03368,16.44337l-13.26962,8.26297z"/>          </g>     </g>   </svg>'),
+                getDefaultPlayerData: function (i_placement) {
+                    return  '<Player player="4310" label="Json item" interactive="0">' +
+                                '<Data>' +
+                                    self.getCommonDefaultXML() +
+                                    self.getCommonSceneLayout(i_placement) +
+                                    '<XmlItem fieldName="text" fieldType="text">'+
+                                        '<Font fontSize="12" fontColor="0" fontFamily="Astron Boy Video" fontWeight="normal" fontStyle="normal" textDecoration="underline" textAlign="center"/>' +
+                                    '</XmlItem>'+
+                                '</Data>' +
+                            '</Player>'
+                },
+                fontAwesome: self.getFontAwesome('jsonitem')
             },
             3340: {
                 name: 'Multimedia RSS',

@@ -757,6 +757,14 @@ Pepper.prototype = {
             replace(/textalign/gi, 'textAlign').
             replace(/hdatasrc/gi, 'hDataSrc').
             replace(/minrefreshtime/gi, 'minRefreshTime').
+            replace(/itemspath/gi, 'itemsPath').
+            replace(/slideshow/gi, 'slideShow').
+            replace(/iteminterval/gi, 'itemInterval').
+            replace(/playvideoinfull/gi, 'playVideoInFull').
+            replace(/randomorder/gi, 'randomOrder').
+            replace(/providertype/gi, 'providerType').
+            replace(/fieldname/gi, 'fieldName').
+            replace(/fieldtype/gi, 'fieldType').
             replace(/gradienttype/gi, 'gradientType').
             replace(/autorewind/gi, 'autoRewind').
             replace(/clockformat/gi, 'clockFormat').
@@ -766,8 +774,11 @@ Pepper.prototype = {
             replace(/<page/gi, '<Page').replace(/page>/gi, 'Page>').
             replace(/<gps/gi, '<GPS').replace(/gps>/gi, 'GPS>').
             replace(/<fixed/gi, '<Fixed').replace(/fixed>/gi, 'Fixed>').
+            replace(/<xmlitem/gi, '<XmlItem').replace(/xmlitem>/gi, 'XmlItem>').
+            replace(/<json/gi, '<Json').replace(/json>/gi, 'Json>').
             replace(/<locationbased/gi, '<LocationBased').replace(/locationbased>/gi, 'LocationBased>').
             replace(/<params/gi, '<Params').replace(/params>/gi, 'Params>').
+            replace(/<url/gi, '<Url').replace(/url>/gi, 'Url>').
             replace(/maintainaspectratio/gi, 'maintainAspectRatio').
             replace(/<resource/gi, '<Resource').replace(/resource>/g, 'Resource>').
             // replace(/<htdata/gi, '<htData').replace(/htdata>/gi, 'htData>').

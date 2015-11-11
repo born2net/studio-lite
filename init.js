@@ -82,6 +82,8 @@ require.config({
         'BlockFasterQ': '_controllers/_blocks/BlockFasterQ',
         'BlockTwitter': '_controllers/_blocks/BlockTwitter',
         'BlockTwitterItem': '_controllers/_blocks/BlockTwitterItem',
+        'BlockJson': '_controllers/_blocks/BlockJson',
+        'BlockJsonItem': '_controllers/_blocks/BlockJsonItem',
         'BlockVideo': '_controllers/_blocks/BlockVideo',
         'BlockImage': '_controllers/_blocks/BlockImage',
         'BlockSVG': '_controllers/_blocks/BlockSVG',

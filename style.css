@@ -100,7 +100,7 @@ aside > aside > div > ul > li {
 /* Wrapper to push down from header */
 #headerPad {
     background-color: #428bca;
-    min-height: 58px;
+    min-height: 55px;
 }
 
 #logoContainer {
@@ -4013,3 +4013,13 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 }
 
 
+/** todo: NEW **/
+
+#jsonEventsTable select {
+    padding: 0;
+    margin: 0;
+}
+
+#jsonEventsTable tr {
+    cursor: pointer !important;
+}

@@ -113,7 +113,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 $(xSnippet).attr('itemInterval', interval);
                 self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
             }, 250, false);
-            $(Elements.TWITTER_SCREEN_INPUT).on("input", self.m_screenNameChange);
+            //$(Elements.TWITTER_SCREEN_INPUT).on("input", self.m_screenNameChange);
             $('.spinner', Elements.BLOCK_TWITTER_COMMON_PROPERTIES).on('mouseup', self.m_intervalInput);
         },
 

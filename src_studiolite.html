@@ -1710,9 +1710,6 @@
                         <div id="twitterFontSettings"></div>
                       </div>
                     </div>
-
-
-                    <!-- todo: new -->
                     <div id="blockJsonCommonProperties" style="display: none">
                       <span data-localize="JsonUrl">
                         Json URL
@@ -1789,27 +1786,9 @@
                     </div>
                     <div id="blockJsonItemCommonProperties" style="display: none">
                       <div>
-                        <span data-localize="JsonItem">Json item</span>
-
-                        <div class="dropdown">
-                          <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                            <span id="jsonItemTypeSelect" data-localize="labelText">Label text</span> <span class="caret"></span>
-                          </button>
-                          <ul id="jsonItemDropDown" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                            <li><a name="text" data-localize="labelText" role="menuitem" tabindex="-1" href="#">Label text</a></li>
-                            <li><a name="resource" data-localize="profileImage" role="menuitem" tabindex="-1" href="#">Profile Image</a></li>
-                          </ul>
-                        </div>
-                      </div>
-                      <div id="jsonItemLabel" style="display: none">
-                        <br/> <span data-localize="font">Font</span>
-
-                        <div id="jsonFontSettings"></div>
+                        <span data-localize="JsonItem">Json item</span> <input type="text" name="name" id="tmpJsonItem" value="" placeholder="tmp json item">
                       </div>
                     </div>
-                    <!-- todo: end new -->
-
-
                     <div id="blockHTMLCommonProperties" style="display: none"><span data-localize="webAddr">Web address</span>
 
                       <div data-role="fieldcontain" data-inset="true">
@@ -1831,8 +1810,8 @@
                     <div id="blockLabelCommonProperties" style="display: none"><span data-localize="labelText">Label text</span>
 
                       <div data-role="fieldcontain" data-inset="true">
-        <textarea id="labelText" class="span8 propControlWidth" rows="3" placeholder="enter text here" data-localize="enterText">
-        </textarea>
+                      <textarea id="labelText" class="span8 propControlWidth" rows="3" placeholder="enter text here" data-localize="enterText">
+                      </textarea>
                       </div>
 
                       <hr class="propControlWidth"/>

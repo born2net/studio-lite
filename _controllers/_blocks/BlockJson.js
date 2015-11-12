@@ -304,6 +304,8 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                         self._populateSceneLabel(i_name);
                 });
             }
+
+            self._populateEventVisibility(slideShow);
             self._populateSceneDropdown();
             self._populateSceneLabel();
             self._populateUrlInput(url);
@@ -314,7 +316,19 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self._populateObjectPath(itemsPath);
             self._setJsonBlockGlobalValidationOwner(self);
             self._populateTableEvents();
+        },
 
+        /**
+         Show or hide the events UI depending on slideshow mode
+         @method _populateEventVisibility
+         @param {Number} i_slideShow
+         **/
+        _populateEventVisibility: function(i_slideShow){
+            if (i_slideShow == "1") {
+                $(Elements.JSON_EVENTS_CONTAINER).hide();
+            } else {
+                $(Elements.JSON_EVENTS_CONTAINER).show();
+            }
         },
 
         /**
@@ -459,6 +473,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 if (!self.m_selected)
                     return;
                 var mode = $(e.target).prop('checked') == true ? 1 : 0;
+                self._populateEventVisibility(mode);
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Json');
                 $(xSnippet).attr('slideShow', mode);

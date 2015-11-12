@@ -100,13 +100,15 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
                 var primeSnippet = '';
                 var faOpacity = 1;
                 var bufferSwitch = 0;
-                // don't show image, svg or video component in component list
-                if (componentID == '3130' ||
-                    componentID == '3140' ||
-                    componentID == '3100' ||
-                    componentID == '3510' ||
-                    (self.m_placement == BB.CONSTS.PLACEMENT_CHANNEL && componentID == '4505') ||
-                    (self.m_placement == BB.CONSTS.PLACEMENT_SCENE && componentID == '4500')) {
+
+                if (componentID == BB.CONSTS.BLOCKCODE_IMAGE ||
+                    componentID == BB.CONSTS.BLOCKCODE_SVG ||
+                    componentID == BB.CONSTS.BLOCKCODE_VIDEO ||
+                    componentID == BB.CONSTS.BLOCKCODE_SCENE ||
+                    (self.m_placement == BB.CONSTS.PLACEMENT_CHANNEL && componentID == BB.CONSTS.BLOCKCODE_JSON_ITEM) ||
+                    (self.m_placement == BB.CONSTS.PLACEMENT_SCENE && componentID == BB.CONSTS.BLOCKCODE_JSON) ||
+                    (self.m_placement == BB.CONSTS.PLACEMENT_CHANNEL && componentID == BB.CONSTS.BLOCKCODE_TWITTER_ITEM) ||
+                    (self.m_placement == BB.CONSTS.PLACEMENT_SCENE && componentID == BB.CONSTS.BLOCKCODE_TWITTER)) {
                     continue;
                 }
 
@@ -186,7 +188,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
                 });
             }
 
-            if (self.m_placement == BB.CONSTS.PLACEMENT_SCENE){
+            if (self.m_placement == BB.CONSTS.PLACEMENT_SCENE) {
                 $(Elements.ADD_COMPONENTS_BLOCK_LIST_CONTAINER, self.el).show();
                 $(Elements.ADD_SCENE_BLOCK_LIST_CONTAINER, self.el).hide();
             }
@@ -202,7 +204,6 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
                 $(Elements.ADD_COMPONENTS_BLOCK_LIST_CONTAINER, self.el).show();
                 $(Elements.ADD_SCENE_BLOCK_LIST_CONTAINER, self.el).show();
             }
-
 
 
             $(Elements.CLASS_ADD_BLOCK_LIST_ITEMS, self.el).on('click', function (e) {
@@ -242,16 +243,19 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
                 }
 
                 var eventName;
-                switch(self.options.placement){
-                    case BB.CONSTS.PLACEMENT_CHANNEL: {
+                switch (self.options.placement) {
+                    case BB.CONSTS.PLACEMENT_CHANNEL:
+                    {
                         eventName = BB.EVENTS.ADD_NEW_BLOCK_CHANNEL;
                         break;
                     }
-                    case BB.CONSTS.PLACEMENT_SCENE: {
+                    case BB.CONSTS.PLACEMENT_SCENE:
+                    {
                         eventName = BB.EVENTS.ADD_NEW_BLOCK_SCENE;
                         break;
                     }
-                    case BB.CONSTS.PLACEMENT_LISTS: {
+                    case BB.CONSTS.PLACEMENT_LISTS:
+                    {
                         eventName = BB.EVENTS.ADD_NEW_BLOCK_LIST;
                         break;
                     }
@@ -276,7 +280,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
             // free component so show it
 
             // FasterQ, open to all
-            if (i_componentID==6100){
+            if (i_componentID == 6100) {
                 return 1;
             }
             var appID = BB.PepperHelper.getBlockBoilerplate(i_componentID).app_id;
@@ -363,7 +367,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
          @param {Number} i_playerData
          @return {Number} Unique clientId.
          **/
-        setPlacement: function(i_placement){
+        setPlacement: function (i_placement) {
             var self = this;
             self.m_placement = self.options.placement = i_placement;
         }

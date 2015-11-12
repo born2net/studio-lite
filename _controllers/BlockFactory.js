@@ -55,7 +55,13 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
 
     BB.CONSTS.BLOCKCODE_SCENE = '3510';
     BB.CONSTS.BLOCKCODE_COLLECTION = '4100';
-
+    BB.CONSTS.BLOCKCODE_TWITTER = '4500';
+    BB.CONSTS.BLOCKCODE_TWITTER_ITEM = '4505';
+    BB.CONSTS.BLOCKCODE_JSON = '4300';
+    BB.CONSTS.BLOCKCODE_JSON_ITEM = '4310';
+    BB.CONSTS.BLOCKCODE_IMAGE = '3130';
+    BB.CONSTS.BLOCKCODE_SVG = '3140';
+    BB.CONSTS.BLOCKCODE_VIDEO = '3100';
 
     BB.SERVICES.BLOCK_FACTORY = 'BlockFactory';
 
@@ -148,7 +154,7 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
                 }
             }
             switch (parseInt(blockCode)) {
-                case 3510:
+                case parseInt(BB.CONSTS.BLOCKCODE_SCENE):
                 {
                     block = new self.m_blockScene({
                         i_placement: i_placement,
@@ -183,7 +189,7 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
                     });
                     break;
                 }
-                case 4100:
+                case parseInt(BB.CONSTS.BLOCKCODE_COLLECTION):
                 {
                     block = new self.m_blockCollection({
                         i_placement: i_placement,
@@ -210,7 +216,7 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
                     });
                     break;
                 }
-                case 4500:
+                case parseInt(BB.CONSTS.BLOCKCODE_TWITTER):
                 {
                     block = new self.m_blockTwitter({
                         i_placement: i_placement,
@@ -219,7 +225,7 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
                     });
                     break;
                 }
-                case 4505:
+                case parseInt(BB.CONSTS.BLOCKCODE_TWITTER_ITEM):
                 {
                     block = new self.m_blockTwitterItem({
                         i_placement: i_placement,
@@ -228,7 +234,7 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
                     });
                     break;
                 }
-                case 4300:
+                case parseInt(BB.CONSTS.BLOCKCODE_JSON):
                 {
                     block = new self.m_blockJson({
                         i_placement: i_placement,
@@ -237,7 +243,7 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
                     });
                     break;
                 }
-                case 4310:
+                case parseInt(BB.CONSTS.BLOCKCODE_JSON_ITEM):
                 {
                     block = new self.m_blockJsonItem({
                         i_placement: i_placement,
@@ -246,7 +252,7 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
                     });
                     break;
                 }
-                case 3100:
+                case parseInt(BB.CONSTS.BLOCKCODE_VIDEO):
                 {
                     block = new self.m_blockVideo({
                         i_placement: i_placement,
@@ -255,7 +261,7 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
                     });
                     break;
                 }
-                case 3140:
+                case parseInt(BB.CONSTS.BLOCKCODE_SVG):
                 {
                     block = new self.m_blockSVG({
                         i_placement: i_placement,
@@ -264,7 +270,7 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
                     });
                     break;
                 }
-                case 3130:
+                case parseInt(BB.CONSTS.BLOCKCODE_IMAGE):
                 {
                     block = new self.m_blockImage({
                         i_placement: i_placement,

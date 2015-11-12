@@ -6,6 +6,10 @@
  * @param {string} i_placement location where objects resides which can be scene or timeline
  * @param {string} i_campaign_timeline_chanel_player_id required and set as block id when block is inserted onto timeline_channel
  * @return {Object} Block instance
+ * @example
+ * path: http://www.digitalsignage.com/videoTutorials/_data/videos.json
+ * json player: children[0].children
+ * json item: text
  */
 define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
@@ -20,10 +24,25 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self.m_blockType = 4310;
             _.extend(options, {blockType: self.m_blockType})
             Block.prototype.constructor.call(this, options);
-            self._initSubPanel(Elements.BLOCK_TWITTER_ITEM_COMMON_PROPERTIES);
-            self._listenItemSelectDropDownChange();
-            self._listenFontSelectionChange();
-            self.m_twitterFontSelector = self.m_blockProperty.getTwitterItemFontSelector();
+            self._initSubPanel(Elements.BLOCK_JSON_ITEM_COMMON_PROPERTIES);
+            self._listenInputChange();
+            //self._listenItemSelectDropDownChange();
+            //self._listenFontSelectionChange();
+            //self.m_twitterFontSelector = self.m_blockProperty.getTwitterItemFontSelector();
+        },
+
+        _listenInputChange: function(){
+            var self = this;
+            self.m_inputCpathChange = _.debounce(function (e) {
+                if (!self.m_selected)
+                    return;
+                var value = $(e.target).val();
+                var domPlayerData = self._getBlockPlayerData();
+                var xSnippet = $(domPlayerData).find('XmlItem');
+                $(xSnippet).attr('fieldName',value);
+                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
+            }, 333, false);
+            $('#tmpJsonItem').on("input", self.m_inputCpathChange);
         },
 
         /**
@@ -36,17 +55,20 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             var domPlayerData = self._getBlockPlayerData();
             var xSnippet = $(domPlayerData).find('XmlItem');
             var fieldType = $(xSnippet).attr('fieldType');
-            var label = fieldType == 'resource' ? $(Elements.BOOTBOX_PROFILE_IMAGE).text() : $(Elements.BOOTBOX_LABEL_TEXT).text();
-            self._populatePlayItemLabel(label);
-            self._populateToggleItemType(fieldType);
-            self._populateLabel();
+            var fieldName = $(xSnippet).attr('fieldName');
+
+            $('#tmpJsonItem').val(fieldName);
+
+            //var label = fieldType == 'resource' ? $(Elements.BOOTBOX_PROFILE_IMAGE).text() : $(Elements.BOOTBOX_LABEL_TEXT).text();
+            //self._populatePlayItemLabel(label);
+            //self._populateToggleItemType(fieldType);
+            //self._populateLabel();
         },
 
         /**
          Listen to selection of twitter item
          @method _listenItemSelectDropDownChange
-         **/
-        _listenItemSelectDropDownChange: function () {
+         _listenItemSelectDropDownChange: function () {
             var self = this;
             self.m_itemTypeSelect = function (e) {
                 if (!self.m_selected)
@@ -78,23 +100,23 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             };
             $(Elements.TWITTER_ITEM_DROPDOWN).on('click', self.m_itemTypeSelect);
         },
+         **/
 
         /**
          Populate the twitter label (most viewed / custom list)
          @method _populatePlayItemLabel
          @params {String} i_label
-         **/
-        _populatePlayItemLabel: function (i_label) {
+         _populatePlayItemLabel: function (i_label) {
             var self = this;
             $(Elements.TWITTER_ITEMTYPE_SELECT).text(i_label);
         },
+         **/
 
         /**
          Toggle the view of proper list selection
          @method _populateToggleItemType
          @params {String} i_fieldType
-         **/
-        _populateToggleItemType: function (i_fieldType) {
+         _populateToggleItemType: function (i_fieldType) {
             var self = this;
             switch (i_fieldType) {
                 case 'text':
@@ -109,13 +131,13 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 }
             }
         },
+         **/
 
         /**
          Load up property values in the common panel
          @method _populate
          @return none
-         **/
-        _populateLabel: function () {
+         _populateLabel: function () {
             var self = this;
             var domPlayerData = self._getBlockPlayerData();
             var xSnippetFont = $(domPlayerData).find('Font');
@@ -129,12 +151,12 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 size: xSnippetFont.attr('fontSize')
             });
         },
+         **/
 
         /**
          Listen to changes in font UI selection from Block property and take action on changes
          @method _listenFontSelectionChange
-         **/
-        _listenFontSelectionChange: function () {
+         _listenFontSelectionChange: function () {
             var self = this;
             BB.comBroker.listenWithNamespace(BB.EVENTS.FONT_SELECTION_CHANGED, self, function (e) {
                 if (!self.m_selected || e.caller !== self.m_twitterFontSelector)
@@ -152,6 +174,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 self._setBlockPlayerData(domPlayerData);
             });
         },
+         **/
 
         /**
          Populate the common block properties panel, called from base class if exists
@@ -161,7 +184,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         _loadBlockSpecificProps: function () {
             var self = this;
             self._populate();
-            this._viewSubPanel(Elements.BLOCK_TWITTER_ITEM_COMMON_PROPERTIES);
+            this._viewSubPanel(Elements.BLOCK_JSON_ITEM_COMMON_PROPERTIES);
         },
 
         /**
@@ -171,8 +194,9 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
          **/
         deleteBlock: function (i_memoryOnly) {
             var self = this;
-            $(Elements.TWITTER_ITEM_DROPDOWN).off('click', self.m_itemTypeSelect);
-            BB.comBroker.stopListenWithNamespace(BB.EVENTS.FONT_SELECTION_CHANGED, self);
+            //$(Elements.TWITTER_ITEM_DROPDOWN).off('click', self.m_itemTypeSelect);
+            //BB.comBroker.stopListenWithNamespace(BB.EVENTS.FONT_SELECTION_CHANGED, self);
+            $('#tmpJsonItem').off("input", self.m_inputCpathChange);
             self._deleteBlock(i_memoryOnly);
         }
     });

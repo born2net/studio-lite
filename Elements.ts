@@ -226,9 +226,6 @@ module Elements {
     export const JSON_PLAY_VIDEO_COMPLETION = '#jsonPlayVideoCompletion';
     export const JSON_RANDOM_PLAYBACK = '#jsonRandomPlayback';
     export const JSON_SLIDESHOW = '#jsonSlideshow';
-    export const JSON_ITEM_DROPDOWN = '#jsonItemDropDown';
-    export const JSON_ITEM_LABEL = '#jsonItemLabel';
-    export const JSON_FONT_SETTINGS = '#jsonFontSettings';
     export const JSON_EVENTS_TABLE = '#jsonEventsTable';
     export const ADD_JSON_EVENTS = '#addJsonEvents';
     export const REMOVE_JSON_EVENTS = '#removeJsonEvents';

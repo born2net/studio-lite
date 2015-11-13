@@ -89,15 +89,6 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
     BB.EVENTS.VIDEO_VOLUME_CHANGED = 'VIDEO_VOLUME_CHANGED';
 
     /**
-     event fires datagrid json event data chnaged / saved
-     @event JSON_EVENT_ROW_CHANGED
-     @param {Object} this
-     @param {Object} caller the firing element
-     @param {Number} alpha value
-     **/
-    BB.EVENTS.JSON_EVENT_ROW_CHANGED = 'JSON_EVENT_ROW_CHANGED';
-
-    /**
      event fires when youtube volume changed
      @event YOUTUBE_VOLUME_CHANGED
      @param {Object} this

@@ -9,6 +9,15 @@ module BB {
     export module EVENTS {
 
         /**
+         event fires datagrid json event data chnaged / saved
+         @event JSON_EVENT_ROW_CHANGED
+         @param {Object} this
+         @param {Object} caller the firing element
+         @param {Number} alpha value
+         **/
+        export const JSON_EVENT_ROW_CHANGED = 'JSON_EVENT_ROW_CHANGED';
+
+        /**
          Station polling time changes
          @event STATIONS_POLL_TIME_CHANGED
          @param {This} caller

@@ -15,6 +15,7 @@ module BB {
     export var CONSTS:any;
     export var Pepper: any;
     export var PepperHelper:any;
+
 }
 
 //declare var bootbox;

@@ -14,6 +14,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             var self = this;
             window.BB = Backbone;
             window.bootbox = bootbox;
+            window.TSLiteModules = {};
             BB.globs = {};
             BB.globs['CREDENTIALS'] = '';
             BB.SERVICES = {};

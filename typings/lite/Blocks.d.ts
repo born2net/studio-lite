@@ -1,19 +1,20 @@
 ///<reference path="../jquery/jquery.d.ts" />
 ///<reference path="../backbone/backbone.d.ts" />
 
-declare module TSLiteModules  {
+/** abstract class implemented by base class Block **/
 
-    class Block extends Backbone.View<Backbone.Model> {
+declare module TSLiteModules  {
+    export class Block extends Backbone.View<Backbone.Model> {
         protected m_blockProperty:any;
-        protected m_block_id:any;
-        protected m_blockType:any;
-        protected _initSubPanel(i_panel:any);
-        protected getBlockData():any;
+        protected m_block_id:number;
+        protected m_blockType:number;
+        protected _initSubPanel(i_panel:string);
         protected _initSubPanel(i_panel:string):void;
-        protected _getBlockPlayerData():any;
-        protected _loadBlockSpecificProps():any;
-        protected _viewSubPanel(i_panel:string):any;
-        protected _setBlockPlayerData(i_xmlDoc:XMLDocument, i_noNotify:boolean, i_xmlIsString?:boolean):any;
+        protected _getBlockPlayerData():XMLDocument;
+        protected _loadBlockSpecificProps():void;
+        protected _viewSubPanel(i_panel:string):void;
+        protected _setBlockPlayerData(i_xmlDoc:XMLDocument, i_noNotify:boolean, i_xmlIsString?:boolean):void;
         protected _deleteBlock(i_inMemory:Boolean):void;
+        public getBlockData():Object;
     }
 }

@@ -1,13 +1,19 @@
 ///<reference path="../../typings/lite/app_references.d.ts" />
+
 /**
  BlockJson is a Player block that is used as the base class for all JSON based components
  it allows for parsing of JSON data and is supported with the JSON Item inside scenes
  @class BlockJson
  @constructor
  @return {Object} instantiated BlockJson
+ * @example
+ * path: http://www.digitalsignage.com/videoTutorials/_data/videos.json
+ * json player: children[0].children
+ * json item: text
  **/
+
 define(['jquery', 'Block'], function ($, Block) {
-    TSLiteModules['Block'] = Block;
+    TSLiteModules.Block = Block;
 
     class BlockJson extends TSLiteModules.Block {
 
@@ -52,6 +58,7 @@ define(['jquery', 'Block'], function ($, Block) {
             self.m_jsonEventTable = $(Elements.JSON_EVENTS_TABLE);
             self._listenJsonRowEventChanged();
             self.m_blockProperty.jsonEventDatatableInit();
+
             self.m_actions = {
                 firstPage: 'beginning',
                 nextPage: 'next',
@@ -70,7 +77,7 @@ define(['jquery', 'Block'], function ($, Block) {
             self.m_jsonRowEventChangedHandler = function (e) {
                 if (!self.m_selected)
                     return;
-                var domPlayerData = self._getBlockPlayerData();
+                var domPlayerData:XMLDocument = self._getBlockPlayerData();
                 var rowIndex = e.edata.rowIndex;
                 var event = e.edata.event;
                 var action = e.edata.action;

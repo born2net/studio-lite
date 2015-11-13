@@ -82,7 +82,9 @@ require.config({
         'BlockFasterQ': '_controllers/_blocks/BlockFasterQ',
         'BlockTwitter': '_controllers/_blocks/BlockTwitter',
         'BlockTwitterItem': '_controllers/_blocks/BlockTwitterItem',
+        'BlockJsonBase': '_controllers/_blocks/BlockJsonBase',
         'BlockJson': '_controllers/_blocks/BlockJson',
+        'BlockJsonItemBase': '_controllers/_blocks/BlockJsonItemBase',
         'BlockJsonItem': '_controllers/_blocks/BlockJsonItem',
         'BlockVideo': '_controllers/_blocks/BlockVideo',
         'BlockImage': '_controllers/_blocks/BlockImage',
@@ -189,6 +191,12 @@ require.config({
         },
         'Lib': {
             deps: ['backbone', 'jquery']
+        },
+        'BlockJson': {
+            deps: ['BlockJsonBase']
+        },
+        'BlockJsonItem': {
+            deps: ['BlockJsonItemBase']
         },
         'sdk': {
             exports: 'sdk'

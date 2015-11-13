@@ -9,6 +9,7 @@
 var gulp = require('gulp');
 var express = require('express');
 var gutil = require('gulp-util');
+var tsAbstractsGen = require('gulp-ts-abstracts-gen');
 var htmlmin = require('gulp-htmlmin');
 var browserSync = require('browser-sync');
 var runSequence = require('run-sequence');
@@ -54,14 +55,12 @@ gulp.task('liveServer', ['watchTmpDir'], function () {
 });
 
 
-
 gulp.task('sample', function () {
     gulp.src('./_source/*.html')
         .pipe(gulplocaltranslate('5')).on('error', handleError)
         .pipe(gulp.dest('./_tmp/'))
         .pipe(reload());
 });
-
 
 
 gulp.task('_uploadDocs', shell.task([
@@ -100,13 +99,11 @@ gulp.task('_genDocs', function () {
 });
 
 
-
 gulp.task('sortLocals', function () {
     gulp.src('_lang/*.json')
         .pipe(sortJSON())
         .pipe(gulp.dest("_lang/"))
 });
-
 
 
 function reload() {
@@ -172,13 +169,13 @@ function updVersion() {
     return rawVer;
 }
 
-gulp.task('_htmlMinify', function() {
+gulp.task('_htmlMinify', function () {
     return gulp.src('src_studiolite.html')
         .pipe(htmlmin({collapseWhitespace: true}))
         .pipe(gulp.dest('temp'))
 });
 
-gulp.task('_htmlCopy', function() {
+gulp.task('_htmlCopy', function () {
     return gulp.src("temp/src_studiolite.html")
         .pipe(rename("studiolite.html"))
         .pipe(gulp.dest("./"));
@@ -203,4 +200,12 @@ gulp.task('_rsync', function () {
     rsync.execute(function (error, stdout, stderr) {
         console.log('completed ' + error + ' ' + stdout + ' ' + stderr)
     });
+});
+
+
+gulp.task('_TSAbstracts', function (done) {
+    gulp.src('./**/*.abc')
+        .pipe(tsAbstractsGen()).on('error', handleError)
+        .pipe(gulp.dest('./'));
+    done()
 });

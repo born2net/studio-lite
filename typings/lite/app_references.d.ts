@@ -9,3 +9,5 @@
 ///<reference path="../../Elements.ts" />
 ///<reference path="../../Events.ts" />
 ///<reference path="../../Declarations.ts" />
+///<reference path="../../_controllers/_blocks/BlockJsonBase.ts" />
+///<reference path="../../_controllers/_blocks/BlockJsonItemBase.ts" />

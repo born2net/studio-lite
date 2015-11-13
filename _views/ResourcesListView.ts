@@ -27,7 +27,7 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform', 'BSListView'], func
             this.m_options = options;
             super();
 
-            //let bsListView:BSListView.IBSList = new BSListView();
+            let bsListView:BSListView.IBSList = new BSListView();
             //bsListView.isAcceptable('111');
 
             //var comBroker:ComBroker;

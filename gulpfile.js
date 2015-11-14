@@ -32,6 +32,14 @@ var paths = [
     './*.js'
 ];
 
+// generate abstract definition files on public and protected members/methods for
+// typescript files that have a bookmark of "//GULP_ABSTRACT"
+gulp.task('typeScript_CreateAbstracts', function (done) {
+    gulp.src('./**/*.ts')
+        .pipe(tsAbstractsGen('TSLiteModules')).on('error', handleError)
+        .pipe(gulp.dest('./'));
+    done()
+});
 
 gulp.task('release', function (done) {
     runSequence('_genDocs', '_uploadVersionFiles', '_uploadDocs', 'minifyHTML', done);
@@ -200,13 +208,4 @@ gulp.task('_rsync', function () {
     rsync.execute(function (error, stdout, stderr) {
         console.log('completed ' + error + ' ' + stdout + ' ' + stderr)
     });
-});
-
-// generate abstract definition files on public and protected members/methods for
-// typescript files that have a bookmark of "//GULP_ABSTRACT"
-gulp.task('_TSAbstracts', function (done) {
-    gulp.src('./**/*.ts')
-        .pipe(tsAbstractsGen('TSLiteModules')).on('error', handleError)
-        .pipe(gulp.dest('./'));
-    done()
 });

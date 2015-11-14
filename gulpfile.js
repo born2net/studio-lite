@@ -202,10 +202,11 @@ gulp.task('_rsync', function () {
     });
 });
 
-
+// generate abstract definition files on public and protected members/methods for
+// typescript files that have a bookmark of "//GULP_ABSTRACT"
 gulp.task('_TSAbstracts', function (done) {
-    gulp.src('./**/*.abc')
-        .pipe(tsAbstractsGen()).on('error', handleError)
+    gulp.src('./**/*.ts')
+        .pipe(tsAbstractsGen('TSLiteModules')).on('error', handleError)
         .pipe(gulp.dest('./'));
     done()
 });

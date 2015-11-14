@@ -6,15 +6,31 @@
  @class BlockJsonBase
  @constructor
  @return {Object} instantiated BlockJsonBase
- * @example
- * path: http://www.digitalsignage.com/videoTutorials/_data/videos.json
- * json player: children[0].children
- * json item: text
+ @example
+ path: http://www.digitalsignage.com/videoTutorials/_data/videos.json
+ json player: children[0].children
+ json item: text
  **/
+//GULP_ABSTRACT_EXTEND extends Block
+//GULP_ABSTRACT_START
 declare module TSLiteModules {
-    export class BlockJsonBase extends Block {
+   export class BlockJsonBase extends Block {
+        protected m_actions:{firstPage: string; nextPage: string; prevPage: string; lastPage: string; loadUrl: string; };
         protected m_options;
-        protected m_actions: {firstPage: string; nextPage: string; prevPage: string; lastPage: string; loadUrl: string; };
+        protected m_jsonEventTable:any;
+        protected m_jsonRowEventChangedHandler:Function;
+        protected m_addNewEvent:Function;
+        protected m_pathChange:Function;
+        protected m_randomPlayback:Function;
+        protected m_slideShow:Function;
+        protected m_urlChange:Function;
+        protected m_bindScene:Function;
+        protected m_intervalInput:Function;
+        protected m_playVideoCompletion:Function;
+        protected m_removeEvent:Function;
+        protected m_onDropDownEventActionGoToHandler:Function;
+        protected m_onDropDownEventActionHandler:Function;
+        protected m_selected:any;
         protected _listenJsonRowEventChanged():void ;
         protected _listenAddEvent() ;
         protected _listenRemoveEvent() ;
@@ -41,9 +57,10 @@ declare module TSLiteModules {
         protected _listenSceneListChange() ;
         protected _listenSceneDropdownChange() ;
         protected _loadBlockSpecificProps() ;
-        public deleteBlock(i_memoryOnly);
-    }
+        public deleteBlock(i_memoryOnly) ;
+   }
 }
+//GULP_ABSTRACT_END
 
 define(['jquery', 'Block'], function ($, Block) {
     TSLiteModules.Block = Block;

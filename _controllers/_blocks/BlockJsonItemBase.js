@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+//GULP_ABSTRACT_END
 define(['jquery', 'Block'], function ($, Block) {
     TSLiteModules.Block = Block;
     var BlockJsonItemBase = (function (_super) {

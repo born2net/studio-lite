@@ -13,13 +13,16 @@
  * json player: children[0].children
  * json item: text
  */
-declare module TSLiteModules  {
-    export class BlockJsonItemBase extends Block {
+//GULP_ABSTRACT_EXTEND extends Block
+//GULP_ABSTRACT_START
+declare module TSLiteModules {
+   export class BlockJsonItemBase extends Block {
         protected m_options;
         protected m_inputPathChange;
         protected m_selected;
-    }
+   }
 }
+//GULP_ABSTRACT_END
 
 define(['jquery', 'Block'], function ($, Block) {
     TSLiteModules.Block = Block;

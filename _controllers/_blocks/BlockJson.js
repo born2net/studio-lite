@@ -29,22 +29,35 @@ define(['jquery', 'BlockJsonBase'], function ($, BlockJsonBase) {
     var BlockJson = (function (_super) {
         __extends(BlockJson, _super);
         function BlockJson(options) {
-            BB.lib.log('c child');
+            //BB.lib.log('c child');
             this.m_options = options;
             this.m_blockType = 4300;
             _.extend(this.m_options, { blockType: this.m_blockType });
             _super.call(this);
         }
+        /**
+         Init sub class and super on base
+         @method initialize
+         **/
         BlockJson.prototype.initialize = function () {
             var self = this;
             _super.prototype.initialize.call(this, this.m_options);
-            BB.lib.log('i child');
-            setTimeout(function () {
-                var xSnippet = self._getBlockPlayerData();
-                var xSnippetPlayer = $(xSnippet).find('Player');
-            }, 400);
+            //BB.lib.log('i child');
+            //setTimeout(function () {
+            //    var xSnippet:XMLDocument = self._getBlockPlayerData();
+            //    var xSnippetPlayer = $(xSnippet).find('Player');
+            //}, 400)
+        };
+        /**
+         Load up property values in the common panel
+         @method _populate
+         @return none
+         **/
+        BlockJson.prototype._populate = function () {
+            _super.prototype._populate.call(this);
         };
         return BlockJson;
     })(TSLiteModules.BlockJsonBase);
     return BlockJson;
 });
+//# sourceMappingURL=BlockJson.js.map

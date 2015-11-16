@@ -25,21 +25,34 @@ define(['jquery', 'BlockJsonBase'], function ($, BlockJsonBase) {
 
     class BlockJson extends TSLiteModules.BlockJsonBase {
         constructor(options?:any) {
-            BB.lib.log('c child');
+            //BB.lib.log('c child');
             this.m_options = options;
             this.m_blockType = 4300;
             _.extend(this.m_options, {blockType: this.m_blockType});
             super();
         }
 
+        /**
+         Init sub class and super on base
+         @method initialize
+         **/
         initialize() {
             var self = this;
             super.initialize(this.m_options);
-            BB.lib.log('i child');
-            setTimeout(function () {
-                var xSnippet:XMLDocument = self._getBlockPlayerData();
-                var xSnippetPlayer = $(xSnippet).find('Player');
-            }, 400)
+            //BB.lib.log('i child');
+            //setTimeout(function () {
+            //    var xSnippet:XMLDocument = self._getBlockPlayerData();
+            //    var xSnippetPlayer = $(xSnippet).find('Player');
+            //}, 400)
+        }
+
+        /**
+         Load up property values in the common panel
+         @method _populate
+         @return none
+         **/
+        protected _populate(){
+            super._populate();
         }
 
 

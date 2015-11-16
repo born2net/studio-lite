@@ -10,13 +10,13 @@ define(['jquery', 'Block'], function ($, Block) {
     var BlockJsonBase = (function (_super) {
         __extends(BlockJsonBase, _super);
         function BlockJsonBase(options) {
-            BB.lib.log('c base');
+            //BB.lib.log('c base');
             if (options)
                 this.m_options = options;
             _super.call(this);
         }
         BlockJsonBase.prototype.initialize = function () {
-            BB.lib.log('i base');
+            //BB.lib.log('i base');
             var self = this;
             _super.prototype.initialize.call(this, self.m_options);
             self._initSubPanel(Elements.BLOCK_JSON_COMMON_PROPERTIES);
@@ -555,3 +555,4 @@ define(['jquery', 'Block'], function ($, Block) {
     })(TSLiteModules.Block);
     return BlockJsonBase;
 });
+//# sourceMappingURL=BlockJsonBase.js.map

@@ -258,3 +258,4 @@ var BB;
         EVENTS.CAMPAIGN_LIST_LOADING = 'CAMPAIGN_LIST_LOADED';
     })(EVENTS = BB.EVENTS || (BB.EVENTS = {}));
 })(BB || (BB = {}));
+//# sourceMappingURL=Events.js.map

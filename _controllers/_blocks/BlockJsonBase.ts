@@ -86,14 +86,14 @@ define(['jquery', 'Block'], function ($, Block) {
         protected m_selected:any;
 
         constructor(options?:any) {
-            BB.lib.log('c base');
+            //BB.lib.log('c base');
             if (options)
                 this.m_options = options;
             super();
         }
 
         initialize() {
-            BB.lib.log('i base');
+            //BB.lib.log('i base');
             var self = this;
 
             super.initialize(self.m_options);

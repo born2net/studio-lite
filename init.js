@@ -100,6 +100,7 @@ require.config({
         'NavigationView': '_views/NavigationView',
         'WaitView': '_views/WaitView',
         'TutorialView': '_views/TutorialView',
+        'ttt': '_views/_components/ttt',
         'BSListView': '_views/_components/BSListView',
         'BarMeterView': '_views/_components/BarMeterView',
         'LiveInput': '_views/_components/LiveInput',

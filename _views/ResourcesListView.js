@@ -6,7 +6,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 //import BSListView = require('_views/_components/BSListView')
-define(['jquery', 'bootstrapfileinput', 'video', 'platform', 'BSListView'], function ($, bootstrapfileinput, videojs, platform, BSListView) {
+define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, bootstrapfileinput, videojs, platform) {
     /**
      Resource list manager including adding, removing, previewing studio resources
      @class ResourcesListView
@@ -23,7 +23,7 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform', 'BSListView'], func
         function ResourcesListView(options) {
             this.m_options = options;
             _super.call(this);
-            var bsListView = new BSListView();
+            // let bsListView:BSListView.IBSList = new BSListView();
             //bsListView.isAcceptable('111');
             //var comBroker:ComBroker;
             //comBroker.setService('aaa',self);
@@ -387,4 +387,3 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform', 'BSListView'], func
     })(Backbone.View);
     return ResourcesListView;
 });
-//# sourceMappingURL=ResourcesListView.js.map

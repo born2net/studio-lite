@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 /**
- BlockJson is a Player block that is used as the base class for all JSON based components
+ BlockJson is a Player block that used as the base class for all JSON based components
  it allows for parsing of JSON data and is supported with the JSON Item inside scenes
  @class BlockJson
  @constructor
@@ -20,17 +20,18 @@ define(['jquery', 'BlockJsonItemBase'], function ($, BlockJsonItemBase) {
     var BlockJson = (function (_super) {
         __extends(BlockJson, _super);
         function BlockJson(options) {
-            console.log(options);
+            BB.lib.log('c child');
             this.m_options = options;
-            _super.prototype.initialize.call(this, this.m_options);
+            this.m_blockType = 4310;
+            _.extend(this.m_options, { blockType: this.m_blockType });
             _super.call(this);
         }
         BlockJson.prototype.initialize = function () {
             var self = this;
-            console.log(self.m_options);
+            _super.prototype.initialize.call(this, this.m_options);
+            BB.lib.log('i child');
         };
         return BlockJson;
     })(TSLiteModules.BlockJsonItemBase);
     return BlockJson;
 });
-//# sourceMappingURL=BlockJsonItem.js.map

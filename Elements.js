@@ -44,6 +44,8 @@ var Elements;
     Elements.BLOCK_BORDER_WRAP = '#blockBorderWrap';
     Elements.BLOCK_CLOCK_COMMON_PROPERTIES = '#blockClockCommonProperties';
     Elements.BLOCK_COMMON_PROPERTIES = '#blockCommonProperties';
+    Elements.BLOCK_COMMON_SUB_PROPERTIES = '#blockCommonSubProperties';
+    Elements.BLOCK_COMMON_SUB_PROPERTIES_TAB = '#blockCommonSubPropertiesTab';
     Elements.BLOCK_EXT_IMAGE_COMMON_PROPERTIES = '#blockExtImageCommonProperties';
     Elements.BLOCK_EXT_VIDEO_COMMON_PROPERTIES = '#blockExtVideoCommonProperties';
     Elements.BLOCK_HTML_COMMON_PROPERTIES = '#blockHTMLCommonProperties';
@@ -617,4 +619,3 @@ var Elements;
     Elements.WSTEP49 = '#wstep49';
     Elements.WSTEP50 = '#wstep50';
 })(Elements || (Elements = {}));
-//# sourceMappingURL=Elements.js.map

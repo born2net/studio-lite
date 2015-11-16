@@ -43,6 +43,8 @@ module Elements {
     export const BLOCK_BORDER_WRAP = '#blockBorderWrap';
     export const BLOCK_CLOCK_COMMON_PROPERTIES = '#blockClockCommonProperties';
     export const BLOCK_COMMON_PROPERTIES = '#blockCommonProperties';
+    export const BLOCK_COMMON_SUB_PROPERTIES = '#blockCommonSubProperties';
+    export const BLOCK_COMMON_SUB_PROPERTIES_TAB = '#blockCommonSubPropertiesTab';
     export const BLOCK_EXT_IMAGE_COMMON_PROPERTIES = '#blockExtImageCommonProperties';
     export const BLOCK_EXT_VIDEO_COMMON_PROPERTIES = '#blockExtVideoCommonProperties';
     export const BLOCK_HTML_COMMON_PROPERTIES = '#blockHTMLCommonProperties';

@@ -10,13 +10,14 @@ define(['jquery', 'Block'], function ($, Block) {
     var BlockJsonBase = (function (_super) {
         __extends(BlockJsonBase, _super);
         function BlockJsonBase(options) {
-            this.m_options = options;
+            BB.lib.log('c base');
+            if (options)
+                this.m_options = options;
             _super.call(this);
         }
         BlockJsonBase.prototype.initialize = function () {
+            BB.lib.log('i base');
             var self = this;
-            this.m_blockType = 4300;
-            _.extend(self.m_options, { blockType: this.m_blockType });
             _super.prototype.initialize.call(this, self.m_options);
             self._initSubPanel(Elements.BLOCK_JSON_COMMON_PROPERTIES);
             self._listenSceneListChange();
@@ -39,6 +40,15 @@ define(['jquery', 'Block'], function ($, Block) {
                 lastPage: 'last',
                 loadUrl: 'loadURL'
             };
+        };
+        /**
+         Update the title of the selected tab properties element
+         @method m_blockAcronym
+         **/
+        BlockJsonBase.prototype._updateTitleTab = function () {
+            var self = this;
+            _super.prototype._updateTitleTab.call(this);
+            $(Elements.BLOCK_COMMON_SUB_PROPERTIES_TAB).show();
         };
         /**
          Listen to when json row was edited
@@ -545,4 +555,3 @@ define(['jquery', 'Block'], function ($, Block) {
     })(TSLiteModules.Block);
     return BlockJsonBase;
 });
-//# sourceMappingURL=BlockJsonBase.js.map

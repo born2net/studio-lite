@@ -31,9 +31,10 @@ declare module TSLiteModules {
         protected m_onDropDownEventActionGoToHandler:Function;
         protected m_onDropDownEventActionHandler:Function;
         protected m_selected:any;
+        protected _updateTitleTab() ;
         protected _listenJsonRowEventChanged():void ;
-        protected _listenAddEvent() ;
-        protected _listenRemoveEvent() ;
+        protected _listenAddEvent():void ;
+        protected _listenRemoveEvent():void ;
         protected _populateTableEvents() ;
         protected _setJsonBlockGlobalValidationOwner(i_this) ;
         protected _listenActionURLChange() ;
@@ -85,14 +86,16 @@ define(['jquery', 'Block'], function ($, Block) {
         protected m_selected:any;
 
         constructor(options?:any) {
-            this.m_options = options;
+            BB.lib.log('c base');
+            if (options)
+                this.m_options = options;
             super();
         }
 
         initialize() {
+            BB.lib.log('i base');
             var self = this;
-            this.m_blockType = 4300;
-            _.extend(self.m_options, {blockType: this.m_blockType});
+
             super.initialize(self.m_options);
             self._initSubPanel(Elements.BLOCK_JSON_COMMON_PROPERTIES);
             self._listenSceneListChange();
@@ -119,6 +122,16 @@ define(['jquery', 'Block'], function ($, Block) {
         }
 
         /**
+         Update the title of the selected tab properties element
+         @method m_blockAcronym
+         **/
+        protected _updateTitleTab() {
+            var self = this;
+            super._updateTitleTab();
+            $(Elements.BLOCK_COMMON_SUB_PROPERTIES_TAB).show();
+        }
+
+        /**
          Listen to when json row was edited
          @method _listenJsonRowEventChanged
          **/
@@ -142,7 +155,7 @@ define(['jquery', 'Block'], function ($, Block) {
          Listen to when user wants to add new events
          @method _listenAddEvent
          **/
-        protected _listenAddEvent() {
+        protected _listenAddEvent():void {
             var self = this;
             this.m_addNewEvent = () => {
                 if (!self.m_selected)
@@ -163,7 +176,7 @@ define(['jquery', 'Block'], function ($, Block) {
          we delete the proper ordered json item from msdb and refresh the entire table
          @method _listenRemoveResource
          **/
-        protected _listenRemoveEvent() {
+        protected _listenRemoveEvent():void {
             var self = this;
             self.m_removeEvent = function () {
                 if (!self.m_selected)

@@ -327,4 +327,3 @@ define(['jquery', 'validator'], function ($, validator) {
     })(Backbone.View);
     return SettingView;
 });
-//# sourceMappingURL=SettingView.js.map

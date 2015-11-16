@@ -1,7 +1,7 @@
 ///<reference path="../../typings/lite/app_references.d.ts" />
 
 /**
- BlockJson is a Player block that is used as the base class for all JSON based components
+ BlockJson is a Player block that used as the base class for all JSON based components
  it allows for parsing of JSON data and is supported with the JSON Item inside scenes
  @class BlockJson
  @constructor
@@ -17,15 +17,17 @@ define(['jquery', 'BlockJsonItemBase'], function ($, BlockJsonItemBase) {
 
     class BlockJson extends TSLiteModules.BlockJsonItemBase {
         constructor(options?:any) {
-            console.log(options);
+            BB.lib.log('c child');
             this.m_options = options;
-            super.initialize(this.m_options);
+            this.m_blockType = 4310;
+            _.extend(this.m_options, {blockType: this.m_blockType});
             super();
         }
 
         initialize() {
             var self = this;
-            console.log(self.m_options);
+            super.initialize(this.m_options);
+            BB.lib.log('i child');
         }
 
 

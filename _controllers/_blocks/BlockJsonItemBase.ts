@@ -20,6 +20,10 @@ declare module TSLiteModules {
         protected m_options;
         protected m_inputPathChange;
         protected m_selected;
+        protected _listenInputChange() ;
+        protected _populate() ;
+        protected _loadBlockSpecificProps() ;
+        public deleteBlock(i_memoryOnly):void ;
    }
 }
 //GULP_ABSTRACT_END
@@ -34,15 +38,15 @@ define(['jquery', 'Block'], function ($, Block) {
         protected m_selected;
 
         constructor(options?:any) {
-            this.m_options = options;
+            BB.lib.log('c base');
+            if (options)
+                this.m_options = options;
             super();
         }
 
         initialize() {
             var self = this;
-
-            self.m_blockType = 4310;
-            _.extend(self.m_options, {blockType: this.m_blockType})
+            BB.lib.log('i base');
             super.initialize(self.m_options);
             self._initSubPanel(Elements.BLOCK_JSON_ITEM_COMMON_PROPERTIES);
             self._listenInputChange();
@@ -54,7 +58,7 @@ define(['jquery', 'Block'], function ($, Block) {
          @param {Number} i_playerData
          @return {Number} Unique clientId.
          **/
-        _listenInputChange() {
+        protected _listenInputChange() {
             var self = this;
             self.m_inputPathChange = _.debounce(function (e) {
                 if (!self.m_selected)
@@ -73,7 +77,7 @@ define(['jquery', 'Block'], function ($, Block) {
          @method _populate
          @return none
          **/
-        _populate() {
+        protected _populate() {
             var self = this;
             var domPlayerData = self._getBlockPlayerData();
             var xSnippet = $(domPlayerData).find('XmlItem');
@@ -87,7 +91,7 @@ define(['jquery', 'Block'], function ($, Block) {
          @method _loadBlockSpecificProps
          @return none
          **/
-        _loadBlockSpecificProps() {
+        protected _loadBlockSpecificProps() {
             var self = this;
             self._populate();
             this._viewSubPanel(Elements.BLOCK_JSON_ITEM_COMMON_PROPERTIES);
@@ -98,7 +102,7 @@ define(['jquery', 'Block'], function ($, Block) {
          @method deleteBlock
          @params {Boolean} i_memoryOnly if true only remove from existance but not from msdb
          **/
-        deleteBlock(i_memoryOnly) {
+        public deleteBlock(i_memoryOnly):void {
             var self = this;
             $('#tmpJsonItem').off("input", self.m_inputPathChange);
             self._deleteBlock(i_memoryOnly);

@@ -2,16 +2,8 @@
 
 /** sample interface **/
 
-module BSListView {
-    export interface IBSList {
-        isAcceptable(s:string):void
-        isNotAcceptable(s:string):void
-    }
-}
-
-define(['jquery'], function ($) {
-
-    class BSListView implements BSListView.IBSList {
+export module BSListView {
+    export class MyBSListView {
 
         private m_options:any;
         constructor(options?:any) {
@@ -31,6 +23,5 @@ define(['jquery'], function ($) {
         }
 
     }
-    return BSListView;
+}
 
-});

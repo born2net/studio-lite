@@ -144,7 +144,6 @@ define(['jquery', 'backbone'], function ($) {
         /**
          Toggle lock status
          @method _toggleLock
-         @param {xml} i_domPlayerData
          **/
         _listenToggleLock: function () {
             var self = this;
@@ -185,8 +184,6 @@ define(['jquery', 'backbone'], function ($) {
         /**
          On changes in msdb model updated UI common alpha properties
          @method _alphaPopulate
-         @param {Number} i_playerData
-         @return {Number} Unique clientId.
          **/
         _alphaPopulate: function () {
             var self = this;
@@ -222,8 +219,6 @@ define(['jquery', 'backbone'], function ($) {
         /**
          On changes in msdb model updated UI common gradient background properties
          @method _bgPropsPopulate
-         @param {Number} i_playerData
-         @return {Number} Unique clientId.
          **/
         _bgPropsPopulate: function () {
             var self = this;
@@ -565,6 +560,7 @@ define(['jquery', 'backbone'], function ($) {
         _updateTitleTab: function () {
             var self = this;
             $(Elements.BLOCK_SUBPROPERTIES_TITLE).text(self.m_blockAcronym);
+            $(Elements.BLOCK_COMMON_SUB_PROPERTIES_TAB).hide();
         },
 
         /**

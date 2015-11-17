@@ -1898,11 +1898,42 @@
                   </div>
                 </div>
                 <div id="blockCommonSettings" class="noTopBorder tab-pane panel panel-default yScroll" style="height: 100px;">
-                  <div  id="blockCommonSettingsWeather" style="display: none">
-                    <h1>Weather</h1>
+                  <div id="blockCommonSettingsWeather" style="display: none">
+                    <div style="padding: 10px">
+                      <label style="padding-right: 78px; width: 200px" for="weatherTemp" data-localize="units"> Units </label>
+                      <select id="weatherTemp" name="show ad stats" data-role="slider">
+                      <option value="0" data-localize="celsius">Celsius</option>
+                      <option value="1" data-localize="fahrenheit">Fahrenheit</option>
+                    </select>
+                      <hr class="hrThin"/>
+                      <label style="padding-right: 78px; width: 200px" for="WeatherStyle" data-localize="unit"> Style </label>
+                      <select id="WeatherStyle">
+                        <option value="0" data-localize="black">black</option>
+                        <option value="1" data-localize="white">white</option>
+                        <option value="2" data-localize="color">color</option>
+                    </select>
+                      <hr class="hrThin"/>
+                      <label style="padding-right: 78px; width: 200px" data-localize="addressZip">Address / Zip code</label>
+                      <input id="WeatherAddress" type="text" data-localize="address" placeholder="address">
+                    </div>
                   </div>
                   <div id="blockCommonSettingsGoogleSheets" style="display: none">
-                    <h1>Sheets</h1>
+                    <div style="padding: 10px">
+                      <label data-localize="yourGmailToken">your gmail token</label>
+                      <input id="gmailTokenSheets" class="propControlWidth" type="text" data-localize="gmailToken" placeholder="gmail token">
+                      <hr class="hrThin"/>
+                      <label class="pull-left" for="WeatherStyle" data-localize="googleSheets">Google Sheets</label>
+                      <a type="button" class="pull-right">
+                        <span class="glyphicon glyphicon-refresh"></span>
+                      </a>
+                      <div class="clearfix"></div>
+                      <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                          <span data-localize="selectSheet">select sheet</span> <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1"></ul>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

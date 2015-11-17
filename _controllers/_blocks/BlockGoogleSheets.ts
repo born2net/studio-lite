@@ -20,6 +20,7 @@ define(['jquery', 'BlockJsonBase'], function ($, BlockJsonBase) {
 
         /**
          Init sub class and super on base
+         @override
          @method initialize
          **/
         initialize() {
@@ -29,44 +30,24 @@ define(['jquery', 'BlockJsonBase'], function ($, BlockJsonBase) {
         }
 
         /**
-         Populate the common properties UI
-         @method _populate
+         Init the settings panel that's used by Block common props for JSON based components
+         @method _initSettingsPanel
          **/
-        _populate() {
-            super._populate();
-        }
-
         protected _initSettingsPanel(){
             var self = this;
             self.m_blockProperty.initSettingsPanel(Elements.BLOCK_COMMON_SETTINGS_GOOGLE_SHEETS);
         }
 
+        /**
+         Load block specific properties
+         @override
+         @method _loadBlockSpecificProps
+         **/
         protected _loadBlockSpecificProps(){
             var self = this;
             super._loadBlockSpecificProps();
             self.m_blockProperty.viewSettingsPanel(Elements.BLOCK_COMMON_SETTINGS_GOOGLE_SHEETS);
         }
-
-        /**
-         Override base class method by hiding the paths container in json common properties
-         @method _updateJsonPaths
-         **/
-        protected _updateJsonPaths() {
-            $(Elements.JSON_PATHS_CONTAINER).hide();
-        }
-
-        /**
-         Update the title of the selected tab properties element and also show the sub tab
-         for Settings of Json sub components (world weather, Calendar etc...)
-         @method _updateTitleTab
-         */
-        protected _updateTitleTab() {
-            var self = this;
-            super._updateTitleTab();
-            $(Elements.BLOCK_COMMON_SETTINGS_TAB).show();
-
-        }
-
 
     }
     return BlockWorldWeather;

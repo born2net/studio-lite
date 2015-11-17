@@ -22,6 +22,7 @@ define(['jquery', 'BlockJsonBase'], function ($, BlockJsonBase) {
         }
         /**
          Init sub class and super on base
+         @override
          @method initialize
          **/
         BlockWorldWeather.prototype.initialize = function () {
@@ -30,37 +31,22 @@ define(['jquery', 'BlockJsonBase'], function ($, BlockJsonBase) {
             self._initSettingsPanel();
         };
         /**
-         Populate the common properties UI
-         @method _populate
+         Init the settings panel that's used by Block common props for JSON based components
+         @method _initSettingsPanel
          **/
-        BlockWorldWeather.prototype._populate = function () {
-            _super.prototype._populate.call(this);
-        };
         BlockWorldWeather.prototype._initSettingsPanel = function () {
             var self = this;
             self.m_blockProperty.initSettingsPanel(Elements.BLOCK_COMMON_SETTINGS_GOOGLE_SHEETS);
         };
+        /**
+         Load block specific properties
+         @override
+         @method _loadBlockSpecificProps
+         **/
         BlockWorldWeather.prototype._loadBlockSpecificProps = function () {
             var self = this;
             _super.prototype._loadBlockSpecificProps.call(this);
             self.m_blockProperty.viewSettingsPanel(Elements.BLOCK_COMMON_SETTINGS_GOOGLE_SHEETS);
-        };
-        /**
-         Override base class method by hiding the paths container in json common properties
-         @method _updateJsonPaths
-         **/
-        BlockWorldWeather.prototype._updateJsonPaths = function () {
-            $(Elements.JSON_PATHS_CONTAINER).hide();
-        };
-        /**
-         Update the title of the selected tab properties element and also show the sub tab
-         for Settings of Json sub components (world weather, Calendar etc...)
-         @method _updateTitleTab
-         */
-        BlockWorldWeather.prototype._updateTitleTab = function () {
-            var self = this;
-            _super.prototype._updateTitleTab.call(this);
-            $(Elements.BLOCK_COMMON_SETTINGS_TAB).show();
         };
         return BlockWorldWeather;
     })(TSLiteModules.BlockJsonBase);

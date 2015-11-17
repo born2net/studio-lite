@@ -34,16 +34,38 @@ define(['jquery', 'BlockJsonBase'], function ($, BlockJsonBase) {
 
         /**
          Init sub class and super on base
+         @Override
          @method initialize
          **/
         initialize() {
             var self = this;
             super.initialize(this.m_options);
-            //BB.lib.log('i child');
+        }
+
+        /**
+         Show the JSON URL and JSON Object paths inputs for the JSON component only
+         @Override
+         @method  _showJsonPaths
+         **/
+        protected _updateJsonPaths() {
+            $(Elements.JSON_PATHS_CONTAINER).slideDown();
+        }
+
+        /**
+         Update the title of the selected tab properties element and also show the sub tab
+         for Settings of Json sub components (world weather, Calendar etc...)
+         @override
+         @method _updateTitleTab
+         */
+        protected _updateTitleTab() {
+            var self = this;
+            super._updateTitleTab();
+            $(Elements.BLOCK_COMMON_SETTINGS_TAB).hide();
         }
 
         /**
          Populate the common properties UI
+         @Override
          @method _populate
          **/
         _populate(){

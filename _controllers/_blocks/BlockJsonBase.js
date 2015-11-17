@@ -136,6 +136,17 @@ define(['jquery', 'Block'], function ($, Block) {
             }, 500);
         };
         /**
+         Update the title of the selected tab properties element and also show the sub tab
+         for Settings of Json sub components (world weather, Calendar etc...)
+         @override
+         @method _updateTitleTab
+         */
+        BlockJsonBase.prototype._updateTitleTab = function () {
+            var self = this;
+            _super.prototype._updateTitleTab.call(this);
+            $(Elements.BLOCK_COMMON_SETTINGS_TAB).show();
+        };
+        /**
          re-take ownership for a caller block instance and register global Validators for bootstrap-table to format data
          This function has to run everytime we populate the UI since it is a shared global function
          and we have to override it so 'this' refers to correct BlockJsonBase instance
@@ -301,11 +312,11 @@ define(['jquery', 'Block'], function ($, Block) {
             self._updateJsonPaths();
         };
         /**
-         Show the JSON URL and JSON Object paths inputs
+         By default hide the  JSON URL and JSON Object paths inputs
          @method _showJsonPaths
          **/
         BlockJsonBase.prototype._updateJsonPaths = function () {
-            $(Elements.JSON_PATHS_CONTAINER).show();
+            $(Elements.JSON_PATHS_CONTAINER).slideUp();
         };
         /**
          Show or hide the events UI depending on slideshow mode

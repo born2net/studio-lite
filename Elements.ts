@@ -45,6 +45,7 @@ module Elements {
     export const BLOCK_COMMON_PROPERTIES = '#blockCommonProperties';
     export const BLOCK_COMMON_SETTINGS = '#blockCommonSettings';
     export const BLOCK_COMMON_SETTINGS_WEATHER = '#blockCommonSettingsWeather';
+    export const BLOCK_COMMON_SETTINGS_GOOGLE_SHEETS = '#blockCommonSettingsGoogleSheets';
     export const BLOCK_COMMON_SETTINGS_TAB = '#blockCommonSettingsTab';
     export const BLOCK_EXT_IMAGE_COMMON_PROPERTIES = '#blockExtImageCommonProperties';
     export const BLOCK_EXT_VIDEO_COMMON_PROPERTIES = '#blockExtVideoCommonProperties';

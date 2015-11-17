@@ -87,6 +87,7 @@ require.config({
         'BlockJsonItemBase': '_controllers/_blocks/BlockJsonItemBase',
         'BlockJsonItem': '_controllers/_blocks/BlockJsonItem',
         'BlockWorldWeather': '_controllers/_blocks/BlockWorldWeather',
+        'BlockGoogleSheets': '_controllers/_blocks/BlockGoogleSheets',
         'BlockVideo': '_controllers/_blocks/BlockVideo',
         'BlockImage': '_controllers/_blocks/BlockImage',
         'BlockSVG': '_controllers/_blocks/BlockSVG',

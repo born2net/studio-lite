@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Player player="6022" label="Google spreadsheet" interactive="0">
+   <Data>
+      <Json providerType="spreadsheet" itemsPath="" slideShow="1" itemInterval="5" playVideoInFull="1" randomOrder="1">
+         <Player src="17" hDataSrc="8" />
+         <Data token="5aa574fe-1e96-4522-94cf-a7dd62b82ff1" id="1-DBPXrRzvB68kM7-ALH4DapNPOr1pDf7MHoQZSKVhKE" />
+      </Json>
+   </Data>
+</Player>

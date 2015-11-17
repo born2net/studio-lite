@@ -46,6 +46,7 @@ var Elements;
     Elements.BLOCK_COMMON_PROPERTIES = '#blockCommonProperties';
     Elements.BLOCK_COMMON_SETTINGS = '#blockCommonSettings';
     Elements.BLOCK_COMMON_SETTINGS_WEATHER = '#blockCommonSettingsWeather';
+    Elements.BLOCK_COMMON_SETTINGS_GOOGLE_SHEETS = '#blockCommonSettingsGoogleSheets';
     Elements.BLOCK_COMMON_SETTINGS_TAB = '#blockCommonSettingsTab';
     Elements.BLOCK_EXT_IMAGE_COMMON_PROPERTIES = '#blockExtImageCommonProperties';
     Elements.BLOCK_EXT_VIDEO_COMMON_PROPERTIES = '#blockExtVideoCommonProperties';

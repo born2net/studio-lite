@@ -1359,7 +1359,7 @@
                 <li class="active"><a id="blockSubpropertiesTitle" href="#blockSubProperties" data-toggle="tab" data-localize="comp">Comp</a></li>
                 <li><a href="#blockCommonProperties" data-toggle="tab" data-localize="style">Style</a>
                 </li>
-                <li id="blockCommonSubPropertiesTab" style="display: none"><a href="#blockCommonSubProperties" data-toggle="tab" data-localize="settings">Settings</a>
+                <li id="blockCommonSettingsTab" style="display: none"><a href="#blockCommonSettings" data-toggle="tab" data-localize="settings">Settings</a>
                 </li>
               </ul>
               <div class="tab-content">
@@ -1713,14 +1713,16 @@
                       </div>
                     </div>
                     <div id="blockJsonCommonProperties" style="display: none">
-                      <span data-localize="JsonUrl">
-                        Json URL
-                      </span> <br/> <input class="propControlWidth" type="text" name="name" id="jsonURLInput" value="" placeholder="json url">
-                      <hr class="hrThin"/>
-                      <span data-localize="JsonPath">
-                        Object path
-                      </span> <br/> <input class="propControlWidth" type="text" name="name" id="jsonPathInput" value="" placeholder="dot notation">
-                      <hr class="hrThin"/>
+                      <div id="jsonPathsContainer">
+                        <span data-localize="JsonUrl">
+                          Json URL
+                        </span> <br/> <input class="propControlWidth" type="text" name="name" id="jsonURLInput" value="" placeholder="json url">
+                        <hr class="hrThin"/>
+                        <span data-localize="JsonPath">
+                          Object path
+                        </span> <br/> <input class="propControlWidth" type="text" name="name" id="jsonPathInput" value="" placeholder="dot notation">
+                        <hr class="hrThin"/>
+                      </div>
                       <div>
                         <br/> <span data-localize="loadWithScene">Load with scene</span>
 
@@ -1897,7 +1899,13 @@
 
 
                 </div>
-                <div id="blockCommonSubProperties" class="noTopBorder tab-pane panel panel-default yScroll" style="height: 100px;">
+                <div id="blockCommonSettings" class="noTopBorder tab-pane panel panel-default yScroll" style="height: 100px;">
+                  <div id="blockCommonSettingsWeather">
+                    <h1>Weather</h1>
+                  </div>
+                  <div id="blockCommonSettingsGoogleSheets">
+                    <h1>Sheets</h1>
+                  </div>
                 </div>
               </div>
             </div>

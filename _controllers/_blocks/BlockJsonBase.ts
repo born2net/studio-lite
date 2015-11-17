@@ -31,7 +31,6 @@ declare module TSLiteModules {
         protected m_onDropDownEventActionGoToHandler:Function;
         protected m_onDropDownEventActionHandler:Function;
         protected m_selected:any;
-        protected _updateTitleTab() ;
         protected _listenJsonRowEventChanged():void ;
         protected _listenAddEvent():void ;
         protected _listenRemoveEvent():void ;
@@ -44,6 +43,7 @@ declare module TSLiteModules {
         protected _populateInterval(i_interval) ;
         protected _populateUrlInput(i_url) ;
         protected _populate() ;
+        protected _updateJsonPaths() ;
         protected _populateEventVisibility(i_slideShow) ;
         protected _populateObjectPath(i_objectPath) ;
         protected _populateObjectPlayToCompletion(i_playToCompletion) ;
@@ -98,6 +98,7 @@ define(['jquery', 'Block'], function ($, Block) {
 
             super.initialize(self.m_options);
             self._initSubPanel(Elements.BLOCK_JSON_COMMON_PROPERTIES);
+
             self._listenSceneListChange();
             self._listenUrlChange();
             self._listenVideoPlayToCompletion();
@@ -119,16 +120,6 @@ define(['jquery', 'Block'], function ($, Block) {
                 lastPage: 'last',
                 loadUrl: 'loadURL'
             };
-        }
-
-        /**
-         Update the title of the selected tab properties element
-         @method m_blockAcronym
-         **/
-        protected _updateTitleTab() {
-            var self = this;
-            super._updateTitleTab();
-            $(Elements.BLOCK_COMMON_SUB_PROPERTIES_TAB).show();
         }
 
         /**
@@ -403,6 +394,15 @@ define(['jquery', 'Block'], function ($, Block) {
             self._populateObjectPath(itemsPath);
             self._setJsonBlockGlobalValidationOwner(self);
             self._populateTableEvents();
+            self._updateJsonPaths();
+        }
+
+        /**
+         Show the JSON URL and JSON Object paths inputs
+         @method _showJsonPaths
+         **/
+        protected _updateJsonPaths() {
+            $(Elements.JSON_PATHS_CONTAINER).show();
         }
 
         /**

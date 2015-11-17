@@ -39,9 +39,11 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
             BB.comBroker.listen(BB.EVENTS.APP_SIZED, self._reconfigPropPanelLocation);
             BB.comBroker.listen(BB.EVENTS.APP_SIZED, self._reConfigPropPanelIcon);
 
-            this.m_subViewStack = new StackView.Fader({el: Elements.BLOCK_SUBPROPERTIES});
+            this.m_subViewStack = new StackView.Fader({el: Elements.BLOCK_SUBPROPERTIES}); // Block specific properties
+            this.m_blockCommonSettingsViewStack = new StackView.Fader({el: Elements.BLOCK_COMMON_SETTINGS}); // Block specific settings, like used in JSON components
             this.m_selectedPanelID = undefined;
             this.m_selectedSubPanelID = undefined;
+            this.m_selectedCommonSettingsPanelID = undefined;
 
             this._listenClickSlidingPanel();
             this._listenGlobalOpenProps();
@@ -161,6 +163,17 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
         },
 
         /**
+         Load the requested sub panel for the block settings (used mostly for JSON shared components)
+         @method viewSettingsPanel
+         @param {String} i_panelID html element id of sub panel to load into current view stack.
+         **/
+        viewSettingsPanel: function (i_panelID) {
+            var self = this;
+            self.m_blockCommonSettingsViewStack.selectView(i_panelID);
+            self.m_selectedCommonSettingsPanelID = i_panelID;
+        },
+
+        /**
          Init the properties panel and add it to the viewstack.
          @method initPanel
          @param {String} i_panelID the html element id to be inserted into properties panel
@@ -187,6 +200,21 @@ define(['jquery', 'backbone', 'StackView'], function ($, Backbone, StackView) {
                 return false;
             var view = new BB.View({el: i_panelID});
             self.m_subViewStack.addView(view);
+            return true;
+        },
+
+        /**
+         Init the properties sub-panel for block settings view stack.
+         @method initSettingsPanel
+         @param {String} i_panelID  the html element id to be inserted into sub properties panel
+         @return {Boolean} returns true if panel created, or false if it already existed so nothing was done
+         **/
+        initSettingsPanel: function (i_panelID) {
+            var self = this;
+            if (self.m_blockCommonSettingsViewStack.getViewByID(i_panelID) != undefined)
+                return false;
+            var view = new BB.View({el: i_panelID});
+            self.m_blockCommonSettingsViewStack.addView(view);
             return true;
         },
 

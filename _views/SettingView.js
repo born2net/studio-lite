@@ -211,6 +211,11 @@ define(['jquery', 'validator'], function ($, validator) {
                 var someInstance;
                 return new someInstance();
             }
+            // factory creating new instances of specific class
+            function classFactory() {
+                var SettingView;
+                return new SettingView();
+            }
             /** //////////////////////////////////////// **/
             // arrow function jquery ready
             $(function () {

@@ -40,22 +40,16 @@ define(['jquery', 'BlockJsonBase'], function ($, BlockJsonBase) {
             var self = this;
             super.initialize(this.m_options);
             //BB.lib.log('i child');
-            //setTimeout(function () {
-            //    var xSnippet:XMLDocument = self._getBlockPlayerData();
-            //    var xSnippetPlayer = $(xSnippet).find('Player');
-            //}, 400)
         }
 
         /**
-         Load up property values in the common panel
+         Populate the common properties UI
          @method _populate
-         @return none
          **/
-        protected _populate(){
+        _populate(){
             super._populate();
+            $(Elements.JSON_PATHS_CONTAINER).show();
         }
-
-
     }
     return BlockJson;
 

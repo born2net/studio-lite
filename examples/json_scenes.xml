@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Player player="6010" label="" interactive="0">
+   <Data>
+      <Json providerType="weather" itemsPath="" slideShow="1" itemInterval="5" playVideoInFull="1" randomOrder="1">
+         <Player src="11" hDataSrc="2" />
+         <Data unit="F" style="2" address="91301" />
+      </Json>
+   </Data>
+</Player>

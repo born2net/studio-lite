@@ -5,34 +5,28 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 /**
- BlockJson is a Player block that used as the base class for all JSON based components
- it allows for parsing of JSON data and is supported with the JSON Item inside scenes
- @class BlockJson
+ BlockWorldWeatherItem is based on JSON item base class component
+ @class BlockWorldWeatherItem
  @constructor
- @return {Object} instantiated BlockJson
- * @example
- * path: http://www.digitalsignage.com/videoTutorials/_data/videos.json
- * json player: children[0].children
- * json item: text
+ @return {Object} instantiated BlockWorldWeatherItem
  **/
 define(['jquery', 'BlockJsonItemBase'], function ($, BlockJsonItemBase) {
     TSLiteModules.BlockJsonItemBase = BlockJsonItemBase;
-    var BlockJson = (function (_super) {
-        __extends(BlockJson, _super);
-        function BlockJson(options) {
-            //BB.lib.log('c child');
+    var BlockWorldWeatherItem = (function (_super) {
+        __extends(BlockWorldWeatherItem, _super);
+        function BlockWorldWeatherItem(options) {
             this.m_options = options;
-            this.m_blockType = 4310;
+            this.m_blockType = 431111110;
             _.extend(this.m_options, { blockType: this.m_blockType });
             _super.call(this);
         }
-        BlockJson.prototype.initialize = function () {
+        BlockWorldWeatherItem.prototype.initialize = function () {
             var self = this;
             _super.prototype.initialize.call(this, this.m_options);
-            //BB.lib.log('i child');
+            BB.lib.log('i child');
         };
-        return BlockJson;
+        return BlockWorldWeatherItem;
     })(TSLiteModules.BlockJsonItemBase);
-    return BlockJson;
+    return BlockWorldWeatherItem;
 });
-//# sourceMappingURL=BlockJsonItem.js.map
+//# sourceMappingURL=BlockWorldWeatherItem.js.map

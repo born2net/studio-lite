@@ -764,12 +764,30 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         },
 
         /**
+         Bring into view the Block property Settings StackView SubPanel
+         @method initSettingsPanel
+         **/
+        initSettingsPanel: function (i_panel) {
+            var self = this;
+            self.m_property.initSettingsPanel(i_panel);
+        },
+
+        /**
          Bring into view the Block property StackView SubPanel
          @method showBlockProperty
          **/
         viewSubPanel: function (i_panel) {
             var self = this;
             self.m_property.viewSubPanel(i_panel);
+        },
+
+        /**
+         Bring into view the Block property StackView SubPanel
+         @method showBlockProperty
+         **/
+        viewSettingsPanel: function (i_panel) {
+            var self = this;
+            self.m_property.viewSettingsPanel(i_panel);
         },
 
         /**

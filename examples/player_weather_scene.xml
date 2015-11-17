@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Player player="6010" iconName="player6010Icon" label="">
+   <Data>
+      <Json providerType="weather" slideShow="1">
+         <Player src="15" hDataSrc="6" />
+      </Json>
+   </Data>
+</Player>

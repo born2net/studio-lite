@@ -36,6 +36,7 @@ PepperHelper.prototype = {
             'twitteritem':  { image: 'fa-twitter' },
             'json':  { image: 'fa-cubes' },
             'jsonitem':  { image: 'fa-cubes' },
+            'worldweather':  { image: 'fa-sun' },
             'rss': { image: 'fa-rss' },
             'mrss': { image: 'fa-rss-square' },
             'flv': { image: 'fa-file-video-o' },
@@ -338,6 +339,28 @@ PepperHelper.prototype = {
                             '</Player>'
                 },
                 fontAwesome: self.getFontAwesome('jsonitem')
+            },
+            6010: {
+                name: 'Weather',
+                app_id: '12010',
+                color: '#E5E5E5',
+                acronym: 'weather',
+                description: 'Weather',
+                svg: '',
+                getDefaultPlayerData: function (i_placement) {
+                    return  '<Player player="6010" label="json" interactive="0">' +
+                                '<Data>' +
+                                    self.getCommonDefaultXML() +
+                                    self.getCommonSceneLayout(i_placement) +
+                                    '<EventCommands></EventCommands>' +
+                                    '<Json providerType="weather" itemsPath="" slideShow="1" itemInterval="2" playVideoInFull="1" randomOrder="1">'+
+                                        '<Player/>'+
+                                        '<Data unit="F" style="2" address="91301" />'+
+                                    '</Json>'+
+                                '</Data>' +
+                            '</Player>'
+                },
+                fontAwesome: self.getFontAwesome('json')
             },
             3340: {
                 name: 'Multimedia RSS',

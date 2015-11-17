@@ -559,8 +559,9 @@ define(['jquery', 'backbone'], function ($) {
          **/
         _updateTitleTab: function () {
             var self = this;
+            $(Elements.BLOCK_PROPERTIES_TABBER).find('a').eq(0).trigger('click');
             $(Elements.BLOCK_SUBPROPERTIES_TITLE).text(self.m_blockAcronym);
-            $(Elements.BLOCK_COMMON_SUB_PROPERTIES_TAB).hide();
+            $(Elements.BLOCK_COMMON_SETTINGS_TAB).hide();
         },
 
         /**

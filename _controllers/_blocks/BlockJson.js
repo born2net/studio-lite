@@ -43,18 +43,14 @@ define(['jquery', 'BlockJsonBase'], function ($, BlockJsonBase) {
             var self = this;
             _super.prototype.initialize.call(this, this.m_options);
             //BB.lib.log('i child');
-            //setTimeout(function () {
-            //    var xSnippet:XMLDocument = self._getBlockPlayerData();
-            //    var xSnippetPlayer = $(xSnippet).find('Player');
-            //}, 400)
         };
         /**
-         Load up property values in the common panel
+         Populate the common properties UI
          @method _populate
-         @return none
          **/
         BlockJson.prototype._populate = function () {
             _super.prototype._populate.call(this);
+            $(Elements.JSON_PATHS_CONTAINER).show();
         };
         return BlockJson;
     })(TSLiteModules.BlockJsonBase);

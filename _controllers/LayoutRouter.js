@@ -520,6 +520,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 $(Elements.PRICING_TABLE_WRAP).height(h - 200);
                 $(Elements.BLOCK_SUBPROPERTIES).height(h - 200);
                 $(Elements.BLOCK_COMMON_PROPERTIES).height(h - 200);
+                $(Elements.BLOCK_COMMON_SETTINGS).height(h - 200);
                 $(Elements.CLASS_ADD_NEW_BLOCK_LIST_WRAP).height(h);
                 $(Elements.IFRAME_PREVIEW).height(h - 40);
                 $(Elements.DASHBOARD_PROPERTIES).height(h - 30);

@@ -17,7 +17,7 @@ define(['jquery', 'BlockJsonItemBase'], function ($, BlockJsonItemBase) {
 
     class BlockJson extends TSLiteModules.BlockJsonItemBase {
         constructor(options?:any) {
-            BB.lib.log('c child');
+            //BB.lib.log('c child');
             this.m_options = options;
             this.m_blockType = 4310;
             _.extend(this.m_options, {blockType: this.m_blockType});
@@ -27,7 +27,7 @@ define(['jquery', 'BlockJsonItemBase'], function ($, BlockJsonItemBase) {
         initialize() {
             var self = this;
             super.initialize(this.m_options);
-            BB.lib.log('i child');
+            //BB.lib.log('i child');
         }
 
 

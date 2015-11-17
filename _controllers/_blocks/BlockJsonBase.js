@@ -42,15 +42,6 @@ define(['jquery', 'Block'], function ($, Block) {
             };
         };
         /**
-         Update the title of the selected tab properties element
-         @method m_blockAcronym
-         **/
-        BlockJsonBase.prototype._updateTitleTab = function () {
-            var self = this;
-            _super.prototype._updateTitleTab.call(this);
-            $(Elements.BLOCK_COMMON_SUB_PROPERTIES_TAB).show();
-        };
-        /**
          Listen to when json row was edited
          @method _listenJsonRowEventChanged
          **/
@@ -307,6 +298,14 @@ define(['jquery', 'Block'], function ($, Block) {
             self._populateObjectPath(itemsPath);
             self._setJsonBlockGlobalValidationOwner(self);
             self._populateTableEvents();
+            self._updateJsonPaths();
+        };
+        /**
+         Show the JSON URL and JSON Object paths inputs
+         @method _showJsonPaths
+         **/
+        BlockJsonBase.prototype._updateJsonPaths = function () {
+            $(Elements.JSON_PATHS_CONTAINER).show();
         };
         /**
          Show or hide the events UI depending on slideshow mode

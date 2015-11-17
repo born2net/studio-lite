@@ -21,3 +21,4 @@ define(["require", "exports"], function (require, exports) {
         BSListView.MyBSListView = MyBSListView;
     })(BSListView = exports.BSListView || (exports.BSListView = {}));
 });
+//# sourceMappingURL=BSListView.js.map

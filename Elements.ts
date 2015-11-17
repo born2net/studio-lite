@@ -43,8 +43,9 @@ module Elements {
     export const BLOCK_BORDER_WRAP = '#blockBorderWrap';
     export const BLOCK_CLOCK_COMMON_PROPERTIES = '#blockClockCommonProperties';
     export const BLOCK_COMMON_PROPERTIES = '#blockCommonProperties';
-    export const BLOCK_COMMON_SUB_PROPERTIES = '#blockCommonSubProperties';
-    export const BLOCK_COMMON_SUB_PROPERTIES_TAB = '#blockCommonSubPropertiesTab';
+    export const BLOCK_COMMON_SETTINGS = '#blockCommonSettings';
+    export const BLOCK_COMMON_SETTINGS_WEATHER = '#blockCommonSettingsWeather';
+    export const BLOCK_COMMON_SETTINGS_TAB = '#blockCommonSettingsTab';
     export const BLOCK_EXT_IMAGE_COMMON_PROPERTIES = '#blockExtImageCommonProperties';
     export const BLOCK_EXT_VIDEO_COMMON_PROPERTIES = '#blockExtVideoCommonProperties';
     export const BLOCK_HTML_COMMON_PROPERTIES = '#blockHTMLCommonProperties';
@@ -56,6 +57,7 @@ module Elements {
     export const BLOCK_LENGTH_SECONDS = '#blockLengthSeconds';
     export const BLOCK_MRSS_COMMON_PROPERTIES = '#blockMRSSCommonProperties';
     export const BLOCK_PROPERTIES = '#blockProperties';
+    export const BLOCK_PROPERTIES_TABBER = '#blockPropertiesTabber';
     export const BLOCK_QR_COMMON_PROPERTIES = '#blockQRCommonProperties';
     export const BLOCK_RSS_COMMON_PROPERTIES = '#blockRSSCommonProperties';
     export const BLOCK_SCENE_COMMON_PROPERTIES = '#blockSceneCommonProperties';
@@ -229,6 +231,7 @@ module Elements {
     export const JSON_RANDOM_PLAYBACK = '#jsonRandomPlayback';
     export const JSON_SLIDESHOW = '#jsonSlideshow';
     export const JSON_EVENTS_TABLE = '#jsonEventsTable';
+    export const JSON_PATHS_CONTAINER = '#jsonPathsContainer';
     export const ADD_JSON_EVENTS = '#addJsonEvents';
     export const REMOVE_JSON_EVENTS = '#removeJsonEvents';
     export const LABEL_FONT_SETTINGS = '#labelFontSettings';

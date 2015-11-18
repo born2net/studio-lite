@@ -35,6 +35,7 @@ declare module TSLiteModules {
         protected _listenAddEvent():void ;
         protected _listenRemoveEvent():void ;
         protected _populateTableEvents() ;
+        protected _updateTitleTab() ;
         protected _setJsonBlockGlobalValidationOwner(i_this) ;
         protected _listenActionURLChange() ;
         protected _listenDropdownEvenActionSelection() ;

@@ -422,7 +422,11 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
              @method _initProperties
              **/
             _initProperties: function () {
-                require(['PropertiesView'], function (PropertiesView) {
+                require(['PropertiesView', 'bootstrapselect'], function (PropertiesView, bootstrapselect) {
+
+                    // enable bootstrap enhanced dropdown selection
+                    $('.selectpicker').selectpicker({width: '90%'});
+
                     this.m_propertiesView = new PropertiesView({
                         el: Elements.PROP_PANEL,
                         duration: 300

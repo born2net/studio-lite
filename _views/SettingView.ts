@@ -1,5 +1,21 @@
 ///<reference path="../typings/lite/app_references.d.ts" />
 
+/**
+ Application global settings
+ @class SettingView
+ @constructor
+ @return {Object} instantiated SettingView
+ **/
+//GULP_ABSTRACT_EXTEND extends Backbone.View<Backbone.Model>
+//GULP_ABSTRACT_START
+declare module TSLiteModules {
+   export class SettingView extends Backbone.View<Backbone.Model> {
+                public link:string;
+                public image:string;
+                public someNum:number;
+   }
+}
+//GULP_ABSTRACT_END
 define(['jquery', 'validator'], function ($, validator) {
 
     /**
@@ -76,28 +92,31 @@ define(['jquery', 'validator'], function ($, validator) {
                     BB.CONSTS['THEME'] = 'light';
                 }
 
-                $(Elements.THEME_OPTION + ' option[value=' + BB.CONSTS['THEME'] + ']').attr('selected', 'selected');
+                $(Elements.THEME_OPTION).selectpicker('val',BB.CONSTS['THEME']);
 
                 var bannerMode = self.m_simpleStorage.get('bannerMode');
                 if (_.isUndefined(bannerMode)) {
                     bannerMode = 1;
                     self.m_simpleStorage.set('bannerMode', bannerMode);
                 }
-                $(Elements.PREVIEW_FULL_OPTION + ' option[value=' + bannerMode + ']').attr('selected', 'selected');
+                // $(Elements.PREVIEW_FULL_OPTION + ' option[value=' + bannerMode + ']').attr('selected', 'selected');
+                $(Elements.PREVIEW_FULL_OPTION).selectpicker('val',bannerMode);
 
                 var fqSwitchMode = self.m_simpleStorage.get('fqSwitchMode');
                 if (_.isUndefined(fqSwitchMode)) {
                     fqSwitchMode = 0;
                     self.m_simpleStorage.set('fqSwitchMode', fqSwitchMode);
                 }
-                $(Elements.FQ_SWITCH_OPTION + ' option[value=' + fqSwitchMode + ']').attr('selected', 'selected');
+                //$(Elements.FQ_SWITCH_OPTION + ' option[value=' + fqSwitchMode + ']').attr('selected', 'selected');
+                $(Elements.FQ_SWITCH_OPTION).selectpicker('val',fqSwitchMode);
 
                 var adStatsSwitchMode = self.m_simpleStorage.get('adStatsMode');
                 if (_.isUndefined(adStatsSwitchMode)) {
                     adStatsSwitchMode = 0;
                     self.m_simpleStorage.set('adStatsMode', adStatsSwitchMode);
                 }
-                $(Elements.AD_STATS_SWITCH_OPTION + ' option[value=' + adStatsSwitchMode + ']').attr('selected', 'selected');
+                //$(Elements.AD_STATS_SWITCH_OPTION + ' option[value=' + adStatsSwitchMode + ']').attr('selected', 'selected');
+                $(Elements.AD_STATS_SWITCH_OPTION).selectpicker('val',adStatsSwitchMode);
 
                 self.m_stationsPollingSlider = $(Elements.STATION_POLL_SLIDER).noUiSlider({
                     handles: 1,
@@ -376,7 +395,7 @@ define(['jquery', 'validator'], function ($, validator) {
                 arrControllers : IController[];
             }
             class AController implements IController{
-                public someNum;
+                 someNum;
             }
             let aController = new AController();
             aController.someNum = 1;

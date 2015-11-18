@@ -6,8 +6,14 @@
 ///<reference path="../lite/Blocks.d.ts" />
 ///<reference path="../simplestorage.js/simplestorage.js.d.ts" />
 
+///<reference path="../lite/IBlock.ts" />
 ///<reference path="../../Elements.ts" />
 ///<reference path="../../Events.ts" />
 ///<reference path="../../Declarations.ts" />
+///<reference path="../../_views/SettingView.ts" />
+///<reference path="../../_views/ResourcesListView.ts" />
 ///<reference path="../../_controllers/_blocks/BlockJsonBase.ts" />
 ///<reference path="../../_controllers/_blocks/BlockJsonItemBase.ts" />
+///<reference path="../../_controllers/_blocks/BlockWorldWeather.ts" />
+///<reference path="../../_controllers/_blocks/BlockGoogleSheets.ts" />
+

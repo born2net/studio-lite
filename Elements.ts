@@ -570,6 +570,9 @@ module Elements {
     export const LOCATION_RADIUS_WRAP_SLIDER = '#locationRadiusWrapSlider';
     export const LOCATION_RADIUS_LABEL = '#locationRadiusLabel';
     export const LOCATION_PRIORITY_METER = '#locationPriorityMeter';
+    export const WEATHER_UNIT = '#weatherUnit';
+    export const WEATHER_STYLE = '#weatherStyle';
+    export const WEATHER_ADDRESS = '#weatherAddress';
     export const WSTEP0 = '#wstep0';
     export const WSTEP1 = '#wstep1';
     export const WSTEP2 = '#wstep2';

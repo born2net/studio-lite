@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-//import BSListView = require('_views/_components/BSListView')
+//GULP_ABSTRACT_END
 define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, bootstrapfileinput, videojs, platform) {
     /**
      Resource list manager including adding, removing, previewing studio resources

@@ -3,6 +3,21 @@
 
 //import BSListView = require('_views/_components/BSListView')
 
+/**
+ List all resources and allow for user to preview, manage and upload new resources
+ @class ResourcesListView
+ @constructor
+ @return {Object} instantiated ResourcesListView
+ **/
+//GULP_ABSTRACT_EXTEND extends Backbone.View<Backbone.Model>
+//GULP_ABSTRACT_START
+declare module TSLiteModules {
+   export class ResourcesListView extends Backbone.View<Backbone.Model> {
+        public renderView() ;
+        public unrenderView() ;
+   }
+}
+//GULP_ABSTRACT_END
 define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, bootstrapfileinput, videojs, platform) {
 
     /**
@@ -131,7 +146,7 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, boots
          Listen to resource selection, populate the properties panel and open it if needed.
          @method _listenResourceSelected
          **/
-        _listenResourceSelected() {
+        private _listenResourceSelected() {
             var self = this;
             $(Elements.CLASS_RESOURCES_LIST_ITEMS).off('click');
             $(Elements.CLASS_RESOURCES_LIST_ITEMS).on('click', function (e) {
@@ -158,7 +173,7 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, boots
          @method _populateResourcePreviewLegacy
          @param {Object} i_recResource
          **/
-        _populateResourcePreviewLegacy(i_recResource:Object) {
+        private _populateResourcePreviewLegacy(i_recResource:Object) {
             var self = this;
             var path;
             if (self.m_videoPlayer) {
@@ -244,7 +259,7 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, boots
          @method _populateResourcePreviewCDN
          @param {Object} i_recResource
          **/
-        _populateResourcePreviewCDN(i_recResource:Object) {
+        private _populateResourcePreviewCDN(i_recResource:Object) {
             var self = this;
             if (self.m_videoPlayer) {
                 self.m_videoPlayer.pause();
@@ -332,7 +347,7 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, boots
          init HTML5 video.js component
          @method _listenAutoPopup
          **/
-        _initVideo() {
+        private _initVideo() {
             var self = this;
             videojs(BB.lib.unhash(Elements.VIDEO_PREVIEW)).ready(function () {
                 self.m_videoPlayer = this;
@@ -344,7 +359,7 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, boots
          @method _onFileSelected
          @return {number} -1 on fail or 1 on pass
          **/
-        _onFileSelected(e) {
+        private _onFileSelected(e) {
             var self = this;
             var status = BB.Pepper.uploadResources('file');
             if (status.length == 0) {
@@ -369,7 +384,7 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, boots
          Listen to keyup to filter resource list
          @method _listenFilterList
          **/
-        _listenFilterList() {
+        private _listenFilterList() {
             var self = this;
             $(Elements.RESOURCES_FILTER_LIST).on('keyup', function () {
                 var rex = new RegExp($(this).val(), 'i');
@@ -386,7 +401,7 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, boots
          @method renderView
          @return none
          **/
-        renderView() {
+        public renderView() {
             var self = this;
             $(Elements.RESOURCE_LIB_LIST).empty();
 
@@ -419,7 +434,7 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, boots
          Unrender, future support
          @method unrenderView
          **/
-        unrenderView() {
+        public unrenderView() {
             var self = this;
         }
 

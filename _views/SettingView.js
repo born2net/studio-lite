@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+//GULP_ABSTRACT_END
 define(['jquery', 'validator'], function ($, validator) {
     /**
      Station polling time changes
@@ -66,25 +67,28 @@ define(['jquery', 'validator'], function ($, validator) {
                 if (_.isUndefined(BB.CONSTS['THEME'])) {
                     BB.CONSTS['THEME'] = 'light';
                 }
-                $(Elements.THEME_OPTION + ' option[value=' + BB.CONSTS['THEME'] + ']').attr('selected', 'selected');
+                $(Elements.THEME_OPTION).selectpicker('val', BB.CONSTS['THEME']);
                 var bannerMode = self.m_simpleStorage.get('bannerMode');
                 if (_.isUndefined(bannerMode)) {
                     bannerMode = 1;
                     self.m_simpleStorage.set('bannerMode', bannerMode);
                 }
-                $(Elements.PREVIEW_FULL_OPTION + ' option[value=' + bannerMode + ']').attr('selected', 'selected');
+                // $(Elements.PREVIEW_FULL_OPTION + ' option[value=' + bannerMode + ']').attr('selected', 'selected');
+                $(Elements.PREVIEW_FULL_OPTION).selectpicker('val', bannerMode);
                 var fqSwitchMode = self.m_simpleStorage.get('fqSwitchMode');
                 if (_.isUndefined(fqSwitchMode)) {
                     fqSwitchMode = 0;
                     self.m_simpleStorage.set('fqSwitchMode', fqSwitchMode);
                 }
-                $(Elements.FQ_SWITCH_OPTION + ' option[value=' + fqSwitchMode + ']').attr('selected', 'selected');
+                //$(Elements.FQ_SWITCH_OPTION + ' option[value=' + fqSwitchMode + ']').attr('selected', 'selected');
+                $(Elements.FQ_SWITCH_OPTION).selectpicker('val', fqSwitchMode);
                 var adStatsSwitchMode = self.m_simpleStorage.get('adStatsMode');
                 if (_.isUndefined(adStatsSwitchMode)) {
                     adStatsSwitchMode = 0;
                     self.m_simpleStorage.set('adStatsMode', adStatsSwitchMode);
                 }
-                $(Elements.AD_STATS_SWITCH_OPTION + ' option[value=' + adStatsSwitchMode + ']').attr('selected', 'selected');
+                //$(Elements.AD_STATS_SWITCH_OPTION + ' option[value=' + adStatsSwitchMode + ']').attr('selected', 'selected');
+                $(Elements.AD_STATS_SWITCH_OPTION).selectpicker('val', adStatsSwitchMode);
                 self.m_stationsPollingSlider = $(Elements.STATION_POLL_SLIDER).noUiSlider({
                     handles: 1,
                     start: [pollStationsTime],

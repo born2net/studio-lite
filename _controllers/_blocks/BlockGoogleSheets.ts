@@ -1,15 +1,24 @@
 ///<reference path="../../typings/lite/app_references.d.ts" />
 
 /**
- BlockWorldWeather is based on JSON base class component
- @class BlockWorldWeather
+ BlockGoogleSheets is based on JSON base class component
+ @class BlockGoogleSheets
  @constructor
- @return {Object} instantiated BlockWorldWeather
+ @return {Object} instantiated BlockGoogleSheets
  **/
+//GULP_ABSTRACT_EXTEND extends BlockJsonBase
+//GULP_ABSTRACT_START
+declare module TSLiteModules {
+   export class BlockGoogleSheets extends BlockJsonBase {
+        protected _initSettingsPanel();
+        protected _loadBlockSpecificProps();
+   }
+}
+//GULP_ABSTRACT_END
 define(['jquery', 'BlockJsonBase'], function ($, BlockJsonBase) {
     TSLiteModules.BlockJsonBase = BlockJsonBase;
 
-    class BlockWorldWeather extends TSLiteModules.BlockJsonBase {
+    class BlockGoogleSheets extends TSLiteModules.BlockJsonBase {
 
         constructor(options?:any) {
             this.m_options = options;
@@ -50,6 +59,6 @@ define(['jquery', 'BlockJsonBase'], function ($, BlockJsonBase) {
         }
 
     }
-    return BlockWorldWeather;
+    return BlockGoogleSheets;
 
 });

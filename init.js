@@ -31,6 +31,7 @@ require.config({
         'minicolors': '_common/_js/minicolors/jquery.minicolors',
         'datatables': '_common/_js/dt/datatable/media/js/jquery.dataTables',
         'datatablestools': '_common/_js/dt/datatable/extensions/TableTools/js/dataTables.tableTools',
+        'bootstrapselect': '_common/_js/bootstrap-select/bootstrap-select',
         'bootstrap-table': '_common/_js/bootstrap-table/dist/bootstrap-table',
         'bootstrap-table-editable': '_common/_js/bootstrap-table/dist/extensions/editable/bootstrap-table-editable',
         'bootstrap-table-editable-plugin': '_common/_js/bootstrap-table/dist/extensions/editable/xedit-editable',

@@ -202,8 +202,10 @@ define(['jquery', 'backbone', 'X2JS', 'BlockImage', 'BlockSVG', 'BlockVideo', 'B
             var recChannel = pepper.getCampaignTimelineChannelRecord(self.m_campaign_timeline_chanel_id);
             var stateRandom = recChannel['random_order'] == 'True' ? 'on' : 'off';
             var stateRepeat = recChannel['repeat_to_fit'] == 'True' ? 'on' : 'off';
-            $(Elements.RANDOM_PLAYBACK + ' option[value=' + stateRandom + ']').attr("selected", "selected");
-            $(Elements.REPEAT_TO_FIT + ' option[value=' + stateRepeat + ']').attr("selected", "selected");
+            //$(Elements.RANDOM_PLAYBACK + ' option[value=' + stateRandom + ']').attr("selected", "selected");
+            //$(Elements.REPEAT_TO_FIT + ' option[value=' + stateRepeat + ']').attr("selected", "selected");
+            $(Elements.RANDOM_PLAYBACK).selectpicker('val',stateRandom);
+            $(Elements.REPEAT_TO_FIT).selectpicker('val',stateRepeat);
             self.m_property.selectView(Elements.CHANNEL_PROPERTIES);
         },
 

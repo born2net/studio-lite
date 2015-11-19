@@ -34,7 +34,7 @@ var paths = [
 
 // generate abstract definition files on public and protected members/methods for
 // typescript files that have a bookmark of "//GULP_ABSTRACT"
-gulp.task('typeScript_CreateAbstracts', function (done) {
+gulp.task('TS_CreateAbstracts', function (done) {
     gulp.src('./**/*.ts')
         .pipe(tsAbstractsGen('TSLiteModules')).on('error', handleError)
         .pipe(gulp.dest('./'));

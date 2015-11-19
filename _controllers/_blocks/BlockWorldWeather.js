@@ -117,7 +117,7 @@ define(['jquery', 'BlockJsonBase'], function ($, BlockJsonBase) {
          @method deleteBlock
          @params {Boolean} i_memoryOnly if true only remove from existance but not from msdb
          **/
-        BlockWorldWeather.prototype.deleteBlock = function (i_memoryOnly) {
+        BlockWorldWeather.prototype.deletedBlock = function (i_memoryOnly) {
             var self = this;
             _super.prototype.deleteBlock.call(this, i_memoryOnly);
             $(Elements.WEATHER_UNIT).off('change', self.m_weatherUnitChangedHandler);

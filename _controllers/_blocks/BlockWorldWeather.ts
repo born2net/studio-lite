@@ -9,11 +9,12 @@
 //GULP_ABSTRACT_EXTEND extends TSLiteModules.BlockJsonBase implements IBlocks.IBlock
 //GULP_ABSTRACT_START
 declare module TSLiteModules {
-    export class BlockWorldWeather extends TSLiteModules.BlockJsonBase implements IBlocks.IBlock {
-        protected _initSettingsPanel();
-
-        public deleteBlock(i_memoryOnly):void ;
-    }
+   export class BlockWorldWeather extends TSLiteModules.BlockJsonBase implements IBlocks.IBlock {
+        protected _initSettingsPanel() ;
+        protected _loadBlockSpecificProps():void ;
+        protected _populate():void ;
+        public deletedBlock(i_memoryOnly):void ;
+   }
 }
 //GULP_ABSTRACT_END
 define(['jquery', 'BlockJsonBase'], function ($, BlockJsonBase) {
@@ -61,7 +62,6 @@ define(['jquery', 'BlockJsonBase'], function ($, BlockJsonBase) {
                 self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
             };
             $(Elements.WEATHER_UNIT).on('change', self.m_weatherUnitChangedHandler);
-
         }
 
         /**
@@ -144,7 +144,7 @@ define(['jquery', 'BlockJsonBase'], function ($, BlockJsonBase) {
          @method deleteBlock
          @params {Boolean} i_memoryOnly if true only remove from existance but not from msdb
          **/
-        public deleteBlock(i_memoryOnly):void {
+        public deletedBlock(i_memoryOnly):void {
             var self = this;
             super.deleteBlock(i_memoryOnly);
             $(Elements.WEATHER_UNIT).off('change', self.m_weatherUnitChangedHandler);

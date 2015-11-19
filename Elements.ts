@@ -298,6 +298,7 @@ module Elements {
     export const MSG_BOOTBOX_SELECT_COMP_FIRST = '#bootBoxSelectCompFirst';
     export const MSG_BOOTBOX_SCENE_REFER_ITSELF = '#bootBoxSceneReferItself';
     export const MSG_BOOTBOX_NON_ALLOWED_CHARACTERS = '#bootBoxNonAllowedCharacters';
+    export const MSG_BOOTBOX_TOKEN_TOO_SHORT = '#bootBoxTokenTooShort';
     export const MSG_BOOTBOX_SELECT_RESOURCE = '#bootBoxSelectResource';
     export const MSG_BOOTBOX_SELECT_SCENE_FIRST = '#bootBoxSelectSceneFirst';
     export const MSG_BOOTBOX_STEPS = '#bootBoxSteps';
@@ -573,6 +574,9 @@ module Elements {
     export const WEATHER_UNIT = '#weatherUnit';
     export const WEATHER_STYLE = '#weatherStyle';
     export const WEATHER_ADDRESS = '#weatherAddress';
+    export const GOOGLE_SHEET = '#googleSheet';
+    export const GOOGLE_SHEET_REFRESH = '#googleSheetRefresh';
+    export const GOOGLE_SHEET_TOKEN = '#googleSheetToken';
     export const WSTEP0 = '#wstep0';
     export const WSTEP1 = '#wstep1';
     export const WSTEP2 = '#wstep2';

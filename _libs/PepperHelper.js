@@ -378,7 +378,7 @@ PepperHelper.prototype = {
                                     '<EventCommands></EventCommands>' +
                                     '<Json providerType="spreadsheet" itemsPath="" slideShow="1" itemInterval="2" playVideoInFull="1" randomOrder="1">'+
                                         '<Player/>'+
-                                        '<Data token="xxxxx-xxxxx-xxxxx-xxxx" id="" />' +
+                                        '<Data token="" id="" />' +
                                     '</Json>'+
                                 '</Data>' +
                              '</Player>'

@@ -41,6 +41,10 @@ require.config({
         'timepicker': '_common/_js/timepicker/bootstrap-timepicker',
         'datepicker': '_common/_js/datepicker/bootstrap-datepicker',
         'highcharts': '_common/_js/highcharts/highcharts',
+        'rxbind': '_common/_js/rxjs/rx.binding',
+        'rxdom': '_common/_js/rxjs/rx.dom',
+        'rx': '_common/_js/rxjs/rx',
+        'rxtime': '_common/_js/rxjs/rx.time',
         'flashdetect': '_common/_js/flashdetect/flashdetect',
         'TimelineMax': '_common/_js/gsap/TimelineMax',
         'TweenMax': '_common/_js/gsap/TweenMax',
@@ -207,6 +211,18 @@ require.config({
         'highcharts': {
             deps: ['jquery'],
             exports: 'highcharts'
+        },
+        'rxbind': {
+            exports: 'rxbind'
+        },
+        'rxdom': {
+            exports: 'rxdom'
+        },
+        'rx': {
+            exports: 'rx'
+        },
+        'rxtime': {
+            exports: 'rxtime'
         },
         'enjoy': {
             deps: ['kinetic'],

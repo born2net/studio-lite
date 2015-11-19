@@ -1,6 +1,7 @@
 ///<reference path="../requirejs/require.d.ts" />
 ///<reference path="../jquery/jquery.d.ts" />
 ///<reference path="../backbone/backbone.d.ts" />
+///<reference path="../rx/rx.all.d.ts" />
 ///<reference path="../validator/validator.d.ts" />
 ///<reference path="../lite/ComBroker.d.ts" />
 ///<reference path="../lite/Blocks.d.ts" />

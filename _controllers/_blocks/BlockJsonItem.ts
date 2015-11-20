@@ -16,21 +16,19 @@
 //GULP_ABSTRACT_EXTEND extends Block
 //GULP_ABSTRACT_START
 declare module TSLiteModules {
-    export class BlockJsonItem extends Block {
+   export class BlockJsonItem extends Block {
         protected m_options;
         protected m_selected;
         protected m_inputPathChangeHandler:any;
         protected m_labelFontSelector:any;
         protected m_minSize:any;
-
+        protected m_config:{};
+        protected m_sceneMime:string;
         protected _listenInputFieldPathChange() ;
-
         protected _populate() ;
-
         protected _loadBlockSpecificProps() ;
-
         public deleteBlock(i_memoryOnly):void ;
-    }
+   }
 }
 //GULP_ABSTRACT_END
 
@@ -154,11 +152,26 @@ define(['jquery', 'Block'], function ($, Block) {
                 size: xSnippetFont.attr('fontSize')
             });
 
+            self._populateJsonMimeProperties();
+
+        }
+
+        /**
+         Configure the properties dialog depending on the scene the block resides in
+         @method _populateJsonMimeProperties
+         **/
+        _populateJsonMimeProperties(){
+            var self = this;
+
             //todo: expand on config of JsonItem depending on mime type of scene
             if (_.isUndefined(self.m_sceneMime)){
                 $(Elements.JSON_ITEM_FIELD_CONTAINER).show();
+                $(Elements.JSON_ITEM_TEXT_FIELDS_CONTAINER).hide();
             } else {
+
                 $(Elements.JSON_ITEM_FIELD_CONTAINER).hide();
+                $(Elements.JSON_ITEM_TEXT_FIELDS_CONTAINER).show();
+                BB.lib.log('mime: ' + self.m_sceneMime);
             }
         }
 

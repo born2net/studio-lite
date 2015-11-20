@@ -143,8 +143,9 @@ define(['jquery', 'Block'], function ($, Block) {
          */
         BlockJsonBase.prototype._updateTitleTab = function () {
             var self = this;
-            _super.prototype._updateTitleTab.call(this);
+            //super._updateTitleTab();
             $(Elements.BLOCK_COMMON_SETTINGS_TAB).show();
+            $(Elements.BLOCK_SUBPROPERTIES_TITLE).text(self.m_blockAcronym);
         };
         /**
          re-take ownership for a caller block instance and register global Validators for bootstrap-table to format data

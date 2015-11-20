@@ -17,6 +17,7 @@ declare module TSLiteModules {
    export class BlockJsonBase extends Block {
         protected m_actions:{firstPage: string; nextPage: string; prevPage: string; lastPage: string; loadUrl: string; };
         protected m_options;
+        protected m_blockAcronym:string;
         protected m_jsonEventTable:any;
         protected m_jsonRowEventChangedHandler:Function;
         protected m_addNewEvent:Function;
@@ -71,6 +72,7 @@ define(['jquery', 'Block'], function ($, Block) {
 
         protected m_actions:{firstPage: string; nextPage: string; prevPage: string; lastPage: string; loadUrl: string; };
         protected m_options;
+        protected m_blockAcronym:string;
         protected m_jsonEventTable:any;
         protected m_jsonRowEventChangedHandler:Function;
         protected m_addNewEvent:Function;
@@ -230,8 +232,9 @@ define(['jquery', 'Block'], function ($, Block) {
          */
         protected _updateTitleTab() {
             var self = this;
-            super._updateTitleTab();
+            //super._updateTitleTab();
             $(Elements.BLOCK_COMMON_SETTINGS_TAB).show();
+            $(Elements.BLOCK_SUBPROPERTIES_TITLE).text(self.m_blockAcronym);
         }
 
         /**

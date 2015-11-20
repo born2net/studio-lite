@@ -16,21 +16,17 @@
 //GULP_ABSTRACT_EXTEND extends Block
 //GULP_ABSTRACT_START
 declare module TSLiteModules {
-    export class BlockJsonItem extends Block {
+   export class BlockJsonItem extends Block {
         protected m_options;
         protected m_selected;
+        protected m_inputPathChangeHandler:any;
         protected m_labelFontSelector:any;
         protected m_minSize:any;
-        protected m_inputChangeHandler:any;
-
-        protected _listenInputChange() ;
-
+        protected _listenInputFieldPathChange() ;
         protected _populate() ;
-
         protected _loadBlockSpecificProps() ;
-
         public deleteBlock(i_memoryOnly):void ;
-    }
+   }
 }
 //GULP_ABSTRACT_END
 
@@ -149,7 +145,6 @@ define(['jquery', 'Block'], function ($, Block) {
                 color: BB.lib.colorToHex(BB.lib.decimalToHex(xSnippetFont.attr('fontColor'))),
                 size: xSnippetFont.attr('fontSize')
             });
-
         }
 
         /**
@@ -162,7 +157,6 @@ define(['jquery', 'Block'], function ($, Block) {
             self._populate();
             this._viewSubPanel(Elements.BLOCK_JSON_ITEM_COMMON_PROPERTIES);
         }
-
 
         /**
          Convert the block into a fabric js compatible object

@@ -25,7 +25,27 @@ define(['jquery', 'Block'], function ($, Block) {
             self._listenFontSelectionChange();
             self._listenMouseEntersSceneCanvas();
             self.m_sceneMime = BB.Pepper.getSceneMime(self.m_sceneID);
-            self.m_config = {};
+            // Json.spreadsheet
+            // types image/text/dual numeric
+            //todo: start building the json file dynamically for properties box on JSON item
+            self.m_config = [
+                {
+                    mimeType: 'Json.weather',
+                    fields: [
+                        {
+                            'current icon': '$[0].data.weather[0].iconPath:image',
+                            'current temp': '$[0].data.current_condition[0].iconPath:image',
+                            'current humidtiy': '$[0].data.current_condition[0].iconPath:image',
+                            'today min temp': '$[0].data.current_condition[0].iconPath:image',
+                            'today max temp': '$[0].data.current_condition[0].iconPath:image',
+                            'today label': '$[0].data.current_condition[0].iconPath:image',
+                            'today icon+1': '$[0].data.current_condition[0].iconPath:image',
+                            'temp': 'some_field:text',
+                            'when': 'some_field:date'
+                        }
+                    ]
+                }
+            ];
         };
         /**
          Listen to changes in font UI selection from Block property and take action on changes
@@ -123,7 +143,6 @@ define(['jquery', 'Block'], function ($, Block) {
             else {
                 $(Elements.JSON_ITEM_FIELD_CONTAINER).hide();
                 $(Elements.JSON_ITEM_TEXT_FIELDS_CONTAINER).show();
-                BB.lib.log('mime: ' + self.m_sceneMime);
             }
         };
         /**

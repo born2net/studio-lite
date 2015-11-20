@@ -237,6 +237,7 @@ var Elements;
     Elements.ADD_JSON_EVENTS = '#addJsonEvents';
     Elements.REMOVE_JSON_EVENTS = '#removeJsonEvents';
     Elements.LABEL_FONT_SETTINGS = '#labelFontSettings';
+    Elements.JSON_ITEM_FONT_SETTINGS = '#jsonItemFontSettings';
     Elements.LABEL_TEXT = '#labelText';
     Elements.FASTERQ_MANAGE_NAV_BUTTON = '#fasterQManageNavButton';
     Elements.FASTERQ_CREATE_NAV_BUTTON = '#fasterQCreateNavButton';

@@ -227,6 +227,7 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
             self._rssPollTimeInit();
             self._fasterQInit();
             self._labelFontSelectorInit();
+            self._jsonItemFontSelectorInit();
             self._twitterFontSelectorInit();
             self._labelClockFontSelectorInit();
         },
@@ -722,6 +723,18 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         },
 
         /**
+         Create instance of FontSelector used in font json item block
+         @method _jsonItemFontSelectorInit
+         **/
+        _jsonItemFontSelectorInit: function () {
+            var self = this;
+            self.m_jsonItemFontSelector = new FontSelector({
+                appendTo: Elements.JSON_ITEM_FONT_SETTINGS,
+                colorSettings: {animationSpeed: 100}
+            });
+        },
+
+        /**
          Create instance of FontSelector used in font property settings for twitter item block
          @method _twitterFontSelectorInit
          **/
@@ -847,6 +860,16 @@ define(['jquery', 'backbone', 'Knob', 'nouislider', 'gradient', 'spinner', 'Font
         getLabelFontSelector: function () {
             var self = this;
             return self.m_labelFontSelector;
+        },
+
+        /**
+         Returns the instance of label json item font selector
+         @method getLabelJsonItemFontSelector
+         @return {Object} font selector instance
+         **/
+        getLabelJsonItemFontSelector: function () {
+            var self = this;
+            return self.m_jsonItemFontSelector;
         },
 
         /**

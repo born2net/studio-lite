@@ -236,6 +236,7 @@ module Elements {
     export const ADD_JSON_EVENTS = '#addJsonEvents';
     export const REMOVE_JSON_EVENTS = '#removeJsonEvents';
     export const LABEL_FONT_SETTINGS = '#labelFontSettings';
+    export const JSON_ITEM_FONT_SETTINGS = '#jsonItemFontSettings';
     export const LABEL_TEXT = '#labelText';
     export const FASTERQ_MANAGE_NAV_BUTTON = '#fasterQManageNavButton';
     export const FASTERQ_CREATE_NAV_BUTTON = '#fasterQCreateNavButton';

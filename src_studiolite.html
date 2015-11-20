@@ -785,8 +785,7 @@
             <div class="settingsItem">
               <p data-localize="pollingDesc">Set how often (in seconds) remote stations should polled for status</p>
               <hr/>
-              <label style="padding-right: 78px; width: 200px" for="previewFullOption" data-localize="fullScreenPreview">Full screen preview</label>
-              <select id="previewFullOption" name="preview full screen" data-role="slider" class="selectpicker">
+              <label style="padding-right: 78px; width: 200px" for="previewFullOption" data-localize="fullScreenPreview">Full screen preview</label> <select id="previewFullOption" name="preview full screen" data-role="slider" class="selectpicker">
               <option value="1" data-localize="off">Off</option>
               <option value="0" data-localize="on">On</option>
             </select>
@@ -794,8 +793,7 @@
               <p data-localize="fqFullScreen">Allow to preview campaigns, timlines and scenes in full screen</p>
               <hr/>
 
-              <label style="padding-right: 78px; width: 200px" for="adStatsOption" data-localize="addStatsLabel">Ad stats preview</label>
-              <select id="adStatsOption" name="show ad stats" data-role="slider" class="selectpicker">
+              <label style="padding-right: 78px; width: 200px" for="adStatsOption" data-localize="addStatsLabel">Ad stats preview</label> <select id="adStatsOption" name="show ad stats" data-role="slider" class="selectpicker">
               <option value="0" data-localize="off">Off</option>
               <option value="1" data-localize="on">On</option>
             </select>
@@ -803,8 +801,7 @@
               <p data-localize="showLiveAdStats">Show live Advertsing statistics</p>
               <hr/>
 
-              <label style="padding-right: 144px; width: 200px" for="themeOption" data-localize="themeSwitch">Theme</label>
-              <select id="themeOption" name="preview full screen" data-role="slider" class="selectpicker">
+              <label style="padding-right: 144px; width: 200px" for="themeOption" data-localize="themeSwitch">Theme</label> <select id="themeOption" name="preview full screen" data-role="slider" class="selectpicker">
               <option value="light" data-localize="light">light</option>
               <option value="dark" data-localize="dark">dark</option>
             </select>
@@ -812,8 +809,7 @@
               <p data-localize="fqThemeDesc">Choose between a dark and a light theme for StudioLite</p><br/>
               <hr/>
               <div>
-                <label style="padding-right: 144px; width: 200px" for="fqSwitchOption" data-localize="fqSwitch">FasterQueue</label>
-                <select id="fqSwitchOption" name="preview full screen" data-role="slider" class="selectpicker">
+                <label style="padding-right: 144px; width: 200px" for="fqSwitchOption" data-localize="fqSwitch">FasterQueue</label> <select id="fqSwitchOption" name="preview full screen" data-role="slider" class="selectpicker">
                 <option value="0" data-localize="off">Off</option>
                 <option value="1" data-localize="on">On</option>
               </select>
@@ -1237,14 +1233,12 @@
             </div>
             <div id="channelProperties" style="display: none">
               <h5 data-localize="channelSettings">Channel settings</h5>
-              <label for="randomPlayback" data-localize="randPlay"> Random Playback</label>
-              <select id="randomPlayback" name="Random playback" data-role="slider" class="selectpicker">
+              <label for="randomPlayback" data-localize="randPlay"> Random Playback</label> <select id="randomPlayback" name="Random playback" data-role="slider" class="selectpicker">
               <option value="off" data-localize="off">Off</option>
               <option value="on" data-localize="on">On</option>
             </select>
               <hr/>
-              <label for="repeatToFit" data-localize="repeatToFit"> repeat to fit</label>
-              <select id="repeatToFit" data-role="slider" class="selectpicker">
+              <label for="repeatToFit" data-localize="repeatToFit"> repeat to fit</label> <select id="repeatToFit" data-role="slider" class="selectpicker">
               <option value="off" data-localize="off">Off</option>
               <option value="on" data-localize="on">On</option>
             </select>
@@ -1798,6 +1792,7 @@
                       <div>
                         <span data-localize="JsonItem">Json item</span> <input type="text" name="name" id="tmpJsonItem" value="" placeholder="tmp json item">
                       </div>
+                      <div id="jsonItemFontSettings"></div>
                     </div>
                     <div id="blockHTMLCommonProperties" style="display: none"><span data-localize="webAddr">Web address</span>
 
@@ -1906,34 +1901,26 @@
                 <div id="blockCommonSettings" class="noTopBorder tab-pane panel panel-default yScroll" style="height: 100px;">
                   <div id="blockCommonSettingsWeather" style="display: none">
                     <div style="padding: 10px">
-                      <label style="padding-right: 78px; width: 200px" for="weatherUnit" data-localize="units"> Units </label>
-                      <select id="weatherUnit" class="selectpicker">
+                      <label style="padding-right: 78px; width: 200px" for="weatherUnit" data-localize="units"> Units </label> <select id="weatherUnit" class="selectpicker">
                       <option value="C" data-localize="celsius">Celsius</option>
                       <option value="F" data-localize="fahrenheit">Fahrenheit</option>
                     </select>
                       <hr class="hrThin"/>
-                      <label style="padding-right: 78px; width: 200px" for="weatherStyle" data-localize="style"> Style </label>
-                      <select id="weatherStyle" class="selectpicker">
-                        <option value="0" data-localize="black">black</option>
-                        <option value="1" data-localize="white">white</option>
-                        <option value="2" data-localize="color">color</option>
+                      <label style="padding-right: 78px; width: 200px" for="weatherStyle" data-localize="style"> Style </label> <select id="weatherStyle" class="selectpicker">
+                      <option value="0" data-localize="black">black</option>
+                      <option value="1" data-localize="white">white</option>
+                      <option value="2" data-localize="color">color</option>
                     </select>
                       <hr class="hrThin"/>
-                      <label style="padding-right: 78px; width: 200px" data-localize="addressZip">Address / Zip code</label>
-                      <input id="weatherAddress" type="text" data-localize="address" placeholder="address">
+                      <label style="padding-right: 78px; width: 200px" data-localize="addressZip">Address / Zip code</label> <input id="weatherAddress" type="text" data-localize="address" placeholder="address">
                     </div>
                   </div>
                   <div id="blockCommonSettingsGoogleSheets" style="display: none">
                     <div style="padding: 10px">
-                      <label style="padding-right: 78px; width: 200px" for="googleSheet" data-localize="googleSheet"> Google Sheet </label>
-                      <select id="googleSheet" data-live-search="true" class="selectpicker">
-                      </select>
+                      <label style="padding-right: 78px; width: 200px" for="googleSheet" data-localize="googleSheet"> Google Sheet </label> <select id="googleSheet" data-live-search="true" class="selectpicker"> </select>
                       <hr class="hrThin"/>
-                      <label style="padding-right: 78px; width: 200px" for="googleSheetToken" data-localize="gmailToken">Gmail token</label>
-                      <input id="googleSheetToken" type="text" data-localize="yourGmailToken" placeholder="your Gmail token">
-                      <a id="googleSheetRefresh" type="button" class="pull-right" style="padding-right: 53px; padding-top: 5px; cursor: pointer">
-                        <span class="glyphicon glyphicon-refresh"></span>
-                      </a>
+                      <label style="padding-right: 78px; width: 200px" for="googleSheetToken" data-localize="gmailToken">Gmail token</label> <input id="googleSheetToken" type="text" data-localize="yourGmailToken" placeholder="your Gmail token"> <a id="googleSheetRefresh" type="button" class="pull-right" style="padding-right: 53px; padding-top: 5px; cursor: pointer"> <span
+                            class="glyphicon glyphicon-refresh"></span> </a>
                       <hr class="hrThin"/>
                       <label><a href="http://google.signage.me" target="_blank"><span data-localize="genToken">Click here to create a token</span></a></label>
                     </div>

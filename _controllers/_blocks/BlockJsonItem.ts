@@ -16,17 +16,21 @@
 //GULP_ABSTRACT_EXTEND extends Block
 //GULP_ABSTRACT_START
 declare module TSLiteModules {
-   export class BlockJsonItem extends Block {
+    export class BlockJsonItem extends Block {
         protected m_options;
         protected m_selected;
         protected m_inputPathChangeHandler:any;
         protected m_labelFontSelector:any;
         protected m_minSize:any;
+
         protected _listenInputFieldPathChange() ;
+
         protected _populate() ;
+
         protected _loadBlockSpecificProps() ;
+
         public deleteBlock(i_memoryOnly):void ;
-   }
+    }
 }
 //GULP_ABSTRACT_END
 
@@ -40,6 +44,8 @@ define(['jquery', 'Block'], function ($, Block) {
         protected m_inputPathChangeHandler:any;
         protected m_labelFontSelector:any;
         protected m_minSize:any;
+        protected m_config:{};
+        protected m_sceneMime:string;
 
         constructor(options?:any) {
             if (options)
@@ -57,6 +63,8 @@ define(['jquery', 'Block'], function ($, Block) {
             self._listenInputFieldPathChange();
             self._listenFontSelectionChange();
             self._listenMouseEntersSceneCanvas();
+            self.m_sceneMime = BB.Pepper.getSceneMime(self.m_sceneID);
+            self.m_config = {};
         }
 
         /**
@@ -145,6 +153,13 @@ define(['jquery', 'Block'], function ($, Block) {
                 color: BB.lib.colorToHex(BB.lib.decimalToHex(xSnippetFont.attr('fontColor'))),
                 size: xSnippetFont.attr('fontSize')
             });
+
+            //todo: expand on config of JsonItem depending on mime type of scene
+            if (_.isUndefined(self.m_sceneMime)){
+                $(Elements.JSON_ITEM_FIELD_CONTAINER).show();
+            } else {
+                $(Elements.JSON_ITEM_FIELD_CONTAINER).hide();
+            }
         }
 
         /**

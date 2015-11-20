@@ -333,9 +333,9 @@ define(['jquery', 'Block'], function ($, Block) {
             var scenenames = BB.Pepper.getSceneNames();
             if (_.size(scenenames) == 0)
                 return;
-            _.forEach(scenenames, function (i_name, i_id) {
+            _.forEach(scenenames, function (i_name:any, i_id) {
                 // var pseudoID = pepper.getPseudoIdFromSceneId(i_id);
-                var snippet = '<li><a name="resource" data-localize="profileImage" role="menuitem" tabindex="-1" href="#" data-scene_id="' + i_id + '">' + i_name + '</a></li>';
+                var snippet = '<li><a name="resource" data-localize="profileImage" role="menuitem" tabindex="-1" href="#" data-scene_id="' + i_id + '">' + i_name.label + '</a></li>';
                 $(Elements.JSON_DROPDOWN).append($(snippet));
             });
         }
@@ -393,9 +393,9 @@ define(['jquery', 'Block'], function ($, Block) {
                 self._populateSceneLabel($(Elements.BOOTBOX_SELECT_SCENE).text());
             } else {
                 var scenenames = BB.Pepper.getSceneNames();
-                _.forEach(scenenames, function (i_name, i_id) {
+                _.forEach(scenenames, function (i_name:any, i_id) {
                     if (i_id == sceneID)
-                        self._populateSceneLabel(i_name);
+                        self._populateSceneLabel(i_name.label);
                 });
             }
 

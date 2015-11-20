@@ -24,6 +24,8 @@ define(['jquery', 'Block'], function ($, Block) {
             self._listenInputFieldPathChange();
             self._listenFontSelectionChange();
             self._listenMouseEntersSceneCanvas();
+            self.m_sceneMime = BB.Pepper.getSceneMime(self.m_sceneID);
+            self.m_config = {};
         };
         /**
          Listen to changes in font UI selection from Block property and take action on changes
@@ -105,6 +107,13 @@ define(['jquery', 'Block'], function ($, Block) {
                 color: BB.lib.colorToHex(BB.lib.decimalToHex(xSnippetFont.attr('fontColor'))),
                 size: xSnippetFont.attr('fontSize')
             });
+            //todo: expand on config of JsonItem depending on mime type of scene
+            if (_.isUndefined(self.m_sceneMime)) {
+                $(Elements.JSON_ITEM_FIELD_CONTAINER).show();
+            }
+            else {
+                $(Elements.JSON_ITEM_FIELD_CONTAINER).hide();
+            }
         };
         /**
          Populate the common block properties panel, called from base class if exists

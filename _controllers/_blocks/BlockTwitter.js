@@ -39,7 +39,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 return;
             _.forEach(scenenames, function (i_name, i_id) {
                 // var pseudoID = pepper.getPseudoIdFromSceneId(i_id);
-                var snippet = '<li><a name="resource" data-localize="profileImage" role="menuitem" tabindex="-1" href="#" data-scene_id="' + i_id + '">' + i_name + '</a></li>';
+                var snippet = '<li><a name="resource" data-localize="profileImage" role="menuitem" tabindex="-1" href="#" data-scene_id="' + i_id + '">' + i_name.label + '</a></li>';
                 $(Elements.TWITTER_DROPDOWN).append($(snippet));
             });
         },
@@ -85,7 +85,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 var scenenames = BB.Pepper.getSceneNames();
                 _.forEach(scenenames, function (i_name, i_id) {
                     if (i_id == sceneID)
-                        self._populateSceneLabel(i_name);
+                        self._populateSceneLabel(i_name.label);
                 });
             }
             $(Elements.TWITTER_SCREEN_INPUT).val(screenName);

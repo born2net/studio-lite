@@ -120,6 +120,7 @@ module Elements {
     export const CLASS_CAMPAIG_NMANAGER_VIEW = '.campaignManagerView';
     export const CLASS_CAMPIGN_LIST_ITEM = '.selectCampaignListItem';
     export const CLASS_CHANNEL_BODY = '.channelBody';
+    export const JSON_ITEM_FIELD_CONTAINER = '#jsonItemFieldContainer';
     export const CLASS_JSON_EVENT_ACTION = '.jsonAction';
     export const CLASS_JSON_EVENT_ACTION_GOTO = '.jsonActionGoTo';
     export const CLASS_COLLECTION_EVENT_ACTION = '.collectionAction';

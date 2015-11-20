@@ -121,6 +121,7 @@ var Elements;
     Elements.CLASS_CAMPAIG_NMANAGER_VIEW = '.campaignManagerView';
     Elements.CLASS_CAMPIGN_LIST_ITEM = '.selectCampaignListItem';
     Elements.CLASS_CHANNEL_BODY = '.channelBody';
+    Elements.JSON_ITEM_FIELD_CONTAINER = '#jsonItemFieldContainer';
     Elements.CLASS_JSON_EVENT_ACTION = '.jsonAction';
     Elements.CLASS_JSON_EVENT_ACTION_GOTO = '.jsonActionGoTo';
     Elements.CLASS_COLLECTION_EVENT_ACTION = '.collectionAction';

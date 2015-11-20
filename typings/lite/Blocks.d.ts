@@ -8,6 +8,7 @@ declare module TSLiteModules  {
         protected m_blockProperty:any;
         protected m_block_id:number;
         protected m_blockType:number;
+        protected m_sceneID:string;
         protected _initSubPanel(i_panel:string|Object):void;
         protected _viewSubPanel(i_panel:string|Object):void;
         protected _fabricLock():void;

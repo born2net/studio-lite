@@ -66,7 +66,7 @@ define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesload
             _.forEach(scenenames, function (i_name, i_id) {
                 var pseudoID = pepper.getPseudoIdFromSceneId(i_id);
                 var snippet = '<a href="#" class="' + BB.lib.unclass(Elements.CLASS_CAMPIGN_LIST_ITEM) + ' list-group-item" data-sceneid="' + pseudoID + '">' +
-                    '<h4>' + i_name + '</h4>' +
+                    '<h4>' + i_name.label + '</h4>' +
                     '<p class="list-group-item-text">' + '&nbsp;' + '</p>' +
                     '<div class="openProps">' +
                     '<button type="button" class="' + BB.lib.unclass(Elements.CLASS_OPEN_PROPS_BUTTON) + ' btn btn-default btn-sm"><i style="font-size: 1.5em" class="fa fa-gear"></i></button>' +

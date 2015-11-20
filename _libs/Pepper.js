@@ -317,9 +317,9 @@ Pepper.prototype = {
         // https://sun.signage.me/WebService/sendCommand.ashx?i_user=d39@ms.com&i_password=xxxx&i_stationId=44&i_command=event&i_param1=gps&i_param2=34.22447,-118.828&callback=
         var url;
         var returnUrl;
-        if (i_mode == "local"){
+        if (i_mode == "local") {
             url = 'http://' + i_ip + ':' + i_port + '/sendLocalEvent?eventName=gps&eventParam=' + i_lat + ',' + i_lng;
-            returnUrl= url;
+            returnUrl = url;
         } else {
             url = window.g_protocol + pepper.getUserData().domain + '/WebService/sendCommand.ashx?i_user=' + pepper.getUserData().userName + '&i_password=' + pepper.getUserData().userPass + '&i_stationId=' + i_id + '&i_command=event&i_param1=' + 'gps' + '&i_param2=' + i_lat + ',' + i_lng + '&callback=?';
             returnUrl = '//remoteServer' + '&i_stationId=' + i_id + '&i_command=event&i_param1=' + 'gps' + '&i_param2=' + i_lat + ',' + i_lng;
@@ -344,7 +344,7 @@ Pepper.prototype = {
                 }
             });
         } catch (e) {
-           log('error on ajax' + e);
+            log('error on ajax' + e);
         }
         return returnUrl;
     },
@@ -385,10 +385,10 @@ Pepper.prototype = {
             var url = window.g_protocol + window.g_masterDomain + '/WebService/getResourceBundlesJson.ashx?local=' + local + '&bundleList=studiolite&callback=?';
             $.getJSON(url, function (data) {
                 i_callBack(data);
-            }).error(function() {
+            }).error(function () {
                 i_callBack(null);
             });
-        }).error(function(e) {
+        }).error(function (e) {
             i_callBack(null);
         });
     },
@@ -678,9 +678,31 @@ Pepper.prototype = {
         $(self.m_msdb.table_player_data().getAllPrimaryKeys()).each(function (k, player_data_id) {
             var recPlayerData = self.m_msdb.table_player_data().getRec(player_data_id);
             var domPlayerData = $.parseXML(recPlayerData['player_data_value'])
-            sceneNames[player_data_id] = ($(domPlayerData).find('Player').attr('label'));
+            sceneNames[player_data_id] = {
+                label: ($(domPlayerData).find('Player').attr('label')),
+                mimeType: $(domPlayerData).find('Player').attr('mimeType')
+            };
         });
         return sceneNames;
+    },
+
+    /**
+     Returns all scenes
+     @method getSceneMime
+     @param {Number} i_sceneID
+     @return {Object} scene names
+     **/
+    getSceneMime: function (i_sceneID) {
+        var self = this;
+        var mimeType = '';
+        $(self.m_msdb.table_player_data().getAllPrimaryKeys()).each(function (k, player_data_id) {
+            var recPlayerData = self.m_msdb.table_player_data().getRec(player_data_id);
+            var domPlayerData = $.parseXML(recPlayerData['player_data_value'])
+            var id = $(domPlayerData).find('Player').attr('id');
+            if (id == i_sceneID)
+                mimeType = $(domPlayerData).find('Player').attr('mimeType');
+        });
+        return mimeType;
     },
 
     /**

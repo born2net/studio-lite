@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 //GULP_ABSTRACT_END
-define(['jquery', 'BlockJsonBase'], function ($, BlockJsonBase) {
+define(['jquery', 'BlockJsonBase', 'validator'], function ($, BlockJsonBase, validator) {
     TSLiteModules.BlockJsonBase = BlockJsonBase;
     var BlockGoogleSheets = (function (_super) {
         __extends(BlockGoogleSheets, _super);
@@ -28,10 +28,6 @@ define(['jquery', 'BlockJsonBase'], function ($, BlockJsonBase) {
             self._listenTokenChanged();
             self._listenRefreshSheetList();
             self._loadSheetList();
-            // load rx lib
-            require(['rx', 'rxbind', 'rxtime', 'rxdom'], function (Rx, rxbind, rxtime, txdom) {
-                self._testRx();
-            });
         };
         /**
          Get current token from msdb
@@ -160,80 +156,6 @@ define(['jquery', 'BlockJsonBase'], function ($, BlockJsonBase) {
             catch (e) {
                 BB.lib.log('error on ajax' + e);
             }
-        };
-        BlockGoogleSheets.prototype._testRx = function () {
-            var quakes = Rx.Observable
-                .interval(2000)
-                .flatMap(function () {
-                return Rx.DOM.Request.getJSON('https://secure.digitalsignage.com/facebook/getPhotosOfAlbums/CAAMtJcAiZA48BAH0mzYnLpuN2eosel84ZBAYJJYLo4KcWuZChX2musiYzi2wZAfukGyRmMClWgH9h89csdRD0w5GGVgwp7ZCuoyuXsCZC0tZCJoTl8llz4AMF0BrEllshoa9KOu38ipQTIJUOzKa6rW802p7N0wYmueZCz0w3b7eItDLK4g6V27LZBtwAPGmX1gQZD/400455236822277');
-            })
-                .flatMap(function (result) {
-                return Rx.Observable.fromArray(result);
-            })
-                .map(function (quake) {
-                return quake;
-            });
-            quakes.subscribe(function (quake) {
-                BB.lib.log(quake);
-            });
-            var request = Rx.DOM.Request.getJSON('https://secure.digitalsignage.com/facebook/getPhotosOfAlbums/CAAMtJcAiZA48BAH0mzYnLpuN2eosel84ZBAYJJYLo4KcWuZChX2musiYzi2wZAfukGyRmMClWgH9h89csdRD0w5GGVgwp7ZCuoyuXsCZC0tZCJoTl8llz4AMF0BrEllshoa9KOu38ipQTIJUOzKa6rW802p7N0wYmueZCz0w3b7eItDLK4g6V27LZBtwAPGmX1gQZD/400455236822277');
-            request.subscribe(function (x) {
-                BB.lib.log(x);
-            }, function (err) {
-                BB.lib.log(err);
-            });
-            var avg = Rx.Observable.interval(1000);
-            avg.scan(function (prev, cur) {
-                return { sum: prev.sum + cur, count: prev.count + 1 };
-            }, { sum: 0, count: 0 }).map(function (o) {
-                return o.sum / o.count;
-            });
-            var subscription = avg.subscribe(function (x) {
-                console.log(x);
-            });
-            var counter = Rx.Observable.interval(1000);
-            var subscription1 = counter.subscribe(function (i) {
-                console.log(' Subscription 1:', i);
-            });
-            //var request = Rx.DOM.Request.ajax({
-            //    url: 'https://secure.digitalsignage.com/facebook/getPhotosOfAlbums/CAAMtJcAiZA48BAH0mzYnLpuN2eosel84ZBAYJJYLo4KcWuZChX2musiYzi2wZAfukGyRmMClWgH9h89csdRD0w5GGVgwp7ZCuoyuXsCZC0tZCJoTl8llz4AMF0BrEllshoa9KOu38ipQTIJUOzKa6rW802p7N0wYmueZCz0w3b7eItDLK4g6V27LZBtwAPGmX1gQZD/400455236822277',
-            //    crossDomain: true,
-            //    async: true
-            //});
-            //Rx.DOM.ready().subscribe(main);
-            function searchWikipedia(term) {
-                var cleanTerm = term;
-                var url = 'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=' + cleanTerm + '&callback=JSONPCallback';
-                return Rx.DOM.Request.jsonpRequestCold(url);
-            }
-            var input = $('#googleSheetToken');
-            // Get all distinct throttled key up events from the input
-            var keyupObserver = Rx.DOM.fromEvent(input, 'keyup')
-                .map(function (e) {
-                return e.target.value; // Project the text from the input
-            })
-                .filter(function (text) {
-                return text.length > 2; // Only if the text is longer than 2 characters
-            })
-                .throttle(750 /* Pause for 750ms */)
-                .distinctUntilChanged(); // Only if the value has changed
-            // Search wikipedia
-            var searcherObserver = keyupObserver
-                .map(function (text) {
-                return searchWikipedia(text);
-            })
-                .switchLatest(); // Ensure no out of order results
-            var subscription2 = searcherObserver.subscribe(function (data) {
-                var res = data[1];
-                var i, len, li;
-                for (i = 0, len = res.length; i < len; i++) {
-                    BB.lib.log(data[1][i]);
-                }
-            }, function (error) {
-                // Handle any errors
-                var li = document.createElement('li');
-                BB.lib.log('Error: ' + error);
-            });
         };
         /**
          Init the settings panel that's used by Block common props for JSON based components

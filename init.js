@@ -102,6 +102,7 @@ require.config({
         'BlockHTML': '_controllers/_blocks/BlockHTML',
         'BlockLabel': '_controllers/_blocks/BlockLabel',
         'BlockMRSS': '_controllers/_blocks/BlockMRSS',
+        'SampleView': '_views/SampleView',
         'StackView': '_views/StackView',
         'DashboardView': '_views/DashboardView',
         'NavigationView': '_views/NavigationView',

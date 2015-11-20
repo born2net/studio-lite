@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 //GULP_ABSTRACT_END
-define(['jquery', 'validator'], function ($, validator) {
+define(['jquery'], function ($) {
     /**
      Station polling time changes
      @event STATIONS_POLL_TIME_CHANGED
@@ -31,10 +31,6 @@ define(['jquery', 'validator'], function ($, validator) {
         function SettingView(options) {
             this.m_options = options;
             _super.call(this);
-            return;
-            if (window.location.href.indexOf('dev') > -1) {
-                this._samples();
-            }
         }
         SettingView.prototype.initialize = function () {
             var self = this;
@@ -180,157 +176,6 @@ define(['jquery', 'validator'], function ($, validator) {
                 }
                 BB.comBroker.fire(BB.EVENTS.THEME_CHANGED);
             });
-        };
-        /**
-         Typescript samples
-         @method _samples
-         @param {Number} i_playerData
-         @return {Number} Unique clientId.
-         **/
-        SettingView.prototype._samples = function () {
-            var myObj = [];
-            myObj.push({});
-            console.log(myObj.length);
-            /** //////////////////////////////////////// **/
-            var Digg = (function () {
-                function Digg() {
-                }
-                return Digg;
-            })();
-            var myDigg = new Digg();
-            console.log(myDigg instanceof Digg);
-            $.ajax({
-                url: 'https://secure.digitalsignage.com/Digg'
-            }).done(function (data) {
-                // casting
-                // var Diggs = <Digg[]>data;
-                var Diggs = data;
-                var singleDigg = Diggs[0];
-                console.log(typeof Digg);
-                console.log(singleDigg.link);
-            });
-            /** //////////////////////////////////////// **/
-            // factory creating new instances of passed in class via generics
-            function genericClassFactory() {
-                var someInstance;
-                return new someInstance();
-            }
-            // factory creating new instances of specific class
-            function classFactory() {
-                var SettingView;
-                return new SettingView();
-            }
-            /** //////////////////////////////////////// **/
-            // arrow function jquery ready
-            $(function () {
-                //console.log('jquery ready');
-            });
-            var MyDoc = (function () {
-                function MyDoc() {
-                }
-                MyDoc.prototype.createElement = function (s) {
-                    if (s === 'div') {
-                        return $('#domRoot')[0];
-                    }
-                    if (s === 'span') {
-                        return $('#fqCurrentlyServing')[0];
-                    }
-                };
-                return MyDoc;
-            })();
-            var doc = new MyDoc();
-            doc.createElement('div');
-            doc.createElement('span');
-            /** //////////////////////////////////////// **/
-            // arrow function that takes function for callback + string to number casting
-            var myFunction = function (val, callBack) {
-                var n = Number(val);
-                callBack(val, n + 123);
-                return n + 123;
-            };
-            myFunction('abc', function (s, n) {
-                //console.log(s, n);
-            });
-            // a function that gets a callBack function and that call back function expects
-            // an array of MyDoc instancess
-            function getDocs(cb) {
-                var allMyDocs;
-                var a1 = new MyDoc();
-                var a2 = new MyDoc();
-                var a3 = new MyDoc();
-                allMyDocs = [a1, a2, a3];
-                cb(allMyDocs);
-            }
-            // getDocs(function (mydocs:MyDoc[]) {
-            getDocs(function (mydocs) {
-                console.log(mydocs.length);
-            });
-            /** //////////////////////////////////////// **/
-            // enum
-            var DebugLevel;
-            (function (DebugLevel) {
-                DebugLevel[DebugLevel["level1"] = 0] = "level1";
-                DebugLevel[DebugLevel["level2"] = 1] = "level2";
-                DebugLevel[DebugLevel["level3"] = 2] = "level3";
-            })(DebugLevel || (DebugLevel = {}));
-            //console.log(DebugLevel.level1);
-            //console.log(DebugLevel.level2);
-            //console.log(DebugLevel.level3);
-            /** //////////////////////////////////////// **/
-            //var s:any = comBroker.getService(this._BB.SERVICES['LAYOUT_ROUTER']);
-            /** //////////////////////////////////////// **/
-            var v = validator;
-            //console.log(v.isFloat('123.12'));
-            /** //////////////////////////////////////// **/
-            var typeAlias1;
-            typeAlias1 = 123;
-            typeAlias1 = 'abc';
-            var typeAlias2 = [];
-            typeAlias2.push('abc');
-            typeAlias2.push(123);
-            typeAlias2.push(true);
-            /** //////////////////////////////////////// **/
-            var unionType; // string or array of strings
-            unionType = '123';
-            unionType = ['1', '2', '3'];
-            /** //////////////////////////////////////// **/
-            // type guard: as transpilrer will check typeof statements
-            if (typeof unionType === 'number') {
-            }
-            /** //////////////////////////////////////// **/
-            // sample of function that uses generics
-            function sampleGeneric(str) {
-                console.log(str);
-            }
-            sampleGeneric('123');
-            var AController = (function () {
-                function AController() {
-                }
-                return AController;
-            })();
-            var aController = new AController();
-            aController.someNum = 1;
-            // private controllers:Array <IControllers>;
-            var controllers = [];
-            controllers.push({
-                arrControllers: [aController],
-                controllerName: 'foo'
-            });
-            controllers[0].arrControllers[0].someNum = 123;
-            console.log(controllers[0].arrControllers[0].someNum);
-            var MyClass = (function () {
-                function MyClass() {
-                    var args = [];
-                    for (var _i = 0; _i < arguments.length; _i++) {
-                        args[_i - 0] = arguments[_i];
-                    }
-                }
-                return MyClass;
-            })();
-            var sample = {
-                someMember: MyClass
-            };
-            var sampleInstance = new sample.someMember('lots', 'of', 'strings!!!');
         };
         return SettingView;
     })(Backbone.View);

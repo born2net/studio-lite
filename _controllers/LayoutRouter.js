@@ -261,10 +261,6 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                     stackView: self.m_appContentFaderView
                 });
 
-                //require(['SettingView'],function(SettingView){
-                //var settingView = new SettingView({bb:BB});
-                //});
-
                 self.m_settingsView = new SettingView({
                     el: Elements.SETTINGS_PANEL,
                     stackView: self.m_appContentFaderView

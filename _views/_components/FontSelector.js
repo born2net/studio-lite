@@ -6,17 +6,6 @@
  **/
 define(['jquery', 'backbone', 'minicolors', 'spinner', 'Fonts'], function ($, Backbone, minicolors, spinner, Fonts) {
 
-    /**
-     Custom event fired when a font settings changed
-     @event FONT_SELECTION_CHANGED
-     @param {This} caller
-     @param {Self} context caller
-     @param {Event} edata
-     @static
-     @final
-     **/
-    BB.EVENTS.FONT_SELECTION_CHANGED = 'FONT_SELECTION_CHANGED';
-
     BB.SERVICES.FONT_SELECTOR = 'FontSelector';
 
     var FontSelector = BB.View.extend({

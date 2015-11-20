@@ -89,7 +89,6 @@ require.config({
         'BlockTwitterItem': '_controllers/_blocks/BlockTwitterItem',
         'BlockJsonBase': '_controllers/_blocks/BlockJsonBase',
         'BlockJson': '_controllers/_blocks/BlockJson',
-        'BlockJsonItemBase': '_controllers/_blocks/BlockJsonItemBase',
         'BlockJsonItem': '_controllers/_blocks/BlockJsonItem',
         'BlockWorldWeather': '_controllers/_blocks/BlockWorldWeather',
         'BlockGoogleSheets': '_controllers/_blocks/BlockGoogleSheets',
@@ -202,9 +201,6 @@ require.config({
         },
         'BlockJson': {
             deps: ['BlockJsonBase']
-        },
-        'BlockJsonItem': {
-            deps: ['BlockJsonItemBase']
         },
         'sdk': {
             exports: 'sdk'

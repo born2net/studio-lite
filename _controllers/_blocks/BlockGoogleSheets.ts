@@ -9,15 +9,12 @@
 //GULP_ABSTRACT_EXTEND extends TSLiteModules.BlockJsonBase implements IBlocks.IBlock
 //GULP_ABSTRACT_START
 declare module TSLiteModules {
-    export class BlockGoogleSheets extends TSLiteModules.BlockJsonBase implements IBlocks.IBlock {
+   export class BlockGoogleSheets extends TSLiteModules.BlockJsonBase implements IBlocks.IBlock {
         protected _initSettingsPanel() ;
-
         protected _loadBlockSpecificProps():void ;
-
         protected _populate():void ;
-
         public deletedBlock(i_memoryOnly):void ;
-    }
+   }
 }
 //GULP_ABSTRACT_END
 define(['jquery', 'BlockJsonBase', 'validator'], function ($, BlockJsonBase, validator) {
@@ -50,8 +47,6 @@ define(['jquery', 'BlockJsonBase', 'validator'], function ($, BlockJsonBase, val
             self._listenTokenChanged();
             self._listenRefreshSheetList();
             self._loadSheetList();
-
-
         }
 
         /**
@@ -158,14 +153,14 @@ define(['jquery', 'BlockJsonBase', 'validator'], function ($, BlockJsonBase, val
                 return;
             try {
                 $.ajax({
-                    url: 'https://secure.digitalsignage.com:442/GoogleSheetsList/' + token,
+                    url: 'https://secure.digitalsignage.com/GoogleSheetsList/' + token,
                     dataType: "json",
                     type: "post",
                     complete: function (response, status) {
                         if (!self.m_selected)
                             return;
                         self._clearSheetList();
-                        BB.lib.log('from sheets ' + response.responseText);
+                        //BB.lib.log('from sheets ' + response.responseText);
                         if (_.isUndefined(response.responseText) || response.responseText.length == 0)
                             return;
                         var jData = JSON.parse(response.responseText);
@@ -187,8 +182,6 @@ define(['jquery', 'BlockJsonBase', 'validator'], function ($, BlockJsonBase, val
                 BB.lib.log('error on ajax' + e);
             }
         }
-
-
 
         /**
          Init the settings panel that's used by Block common props for JSON based components

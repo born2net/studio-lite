@@ -10,9 +10,6 @@
 //GULP_ABSTRACT_START
 declare module TSLiteModules {
    export class SettingView extends Backbone.View<Backbone.Model> {
-                public link:string;
-                public image:string;
-                public someNum:number;
    }
 }
 //GULP_ABSTRACT_END

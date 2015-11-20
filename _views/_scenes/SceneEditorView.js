@@ -6,17 +6,6 @@
  **/
 define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbarView', 'BlockFactory', 'contextmenu'], function ($, Backbone, fabric, BlockScene, BlockRSS, ScenesToolbarView, BlockFactory, contextmenu) {
 
-    /**
-     Custom events fired when a mouse hovers over canvas
-     @event MOUSE_ENTERS_CANVAS
-     @param {This} caller
-     @param {Self} context caller
-     @param {Event} event
-     @static
-     @final
-     **/
-    BB.EVENTS.MOUSE_ENTERS_CANVAS = 'MOUSE_ENTERS_CANVAS';
-
     BB.SERVICES.SCENE_EDIT_VIEW = 'SceneEditorView';
 
     var SceneEditorView = BB.View.extend({

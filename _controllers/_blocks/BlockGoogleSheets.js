@@ -127,14 +127,14 @@ define(['jquery', 'BlockJsonBase', 'validator'], function ($, BlockJsonBase, val
                 return;
             try {
                 $.ajax({
-                    url: 'https://secure.digitalsignage.com:442/GoogleSheetsList/' + token,
+                    url: 'https://secure.digitalsignage.com/GoogleSheetsList/' + token,
                     dataType: "json",
                     type: "post",
                     complete: function (response, status) {
                         if (!self.m_selected)
                             return;
                         self._clearSheetList();
-                        BB.lib.log('from sheets ' + response.responseText);
+                        //BB.lib.log('from sheets ' + response.responseText);
                         if (_.isUndefined(response.responseText) || response.responseText.length == 0)
                             return;
                         var jData = JSON.parse(response.responseText);

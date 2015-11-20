@@ -224,6 +224,7 @@ var Elements;
     Elements.IMPORT_SCENEL_DIALOG_CONTAINER = '#importScenelDialogContainer';
     Elements.JSON_EVENTS_CONTAINER = '#jsonEventsContainer';
     Elements.JSON_URL_INPUT = '#jsonURLInput';
+    Elements.JSON_ITEM_FIELD = '#jsonItemField';
     Elements.JSON_PATH_INPUT = '#jsonPathInput';
     Elements.JSON_SCENE_LIST = '#jsonSceneList';
     Elements.JSON_DROPDOWN = '#jsonDropDown';

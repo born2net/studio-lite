@@ -247,6 +247,26 @@ var BB;
          **/
         EVENTS.ADDED_RESOURCE = 'ADDED_RESOURCE';
         /**
+         Custom events fired when a mouse hovers over canvas
+         @event MOUSE_ENTERS_CANVAS
+         @param {This} caller
+         @param {Self} context caller
+         @param {Event} event
+         @static
+         @final
+         **/
+        EVENTS.MOUSE_ENTERS_CANVAS = 'MOUSE_ENTERS_CANVAS';
+        /**
+         Custom event fired when a font settings changed
+         @event FONT_SELECTION_CHANGED
+         @param {This} caller
+         @param {Self} context caller
+         @param {Event} edata
+         @static
+         @final
+         **/
+        EVENTS.FONT_SELECTION_CHANGED = 'FONT_SELECTION_CHANGED';
+        /**
          campaign list completed loading
          @event CAMPAIGN_LIST_LOADED
          @param {This} caller

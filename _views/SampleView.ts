@@ -16,7 +16,8 @@ define(['jquery', 'validator'], function ($, validator) {
 
         initialize() {
             var self = this;
-            require(['rx', 'rxbind', 'rxtime', 'rxdom'], function (Rx, rxbind, rxtime, txdom) {
+            //require(['rx', 'rxbind', 'rxtime', 'rxdom'], function (Rx, rxbind, rxtime, txdom) {
+            require(['rxall'], function (Rx) {
                 //self._testRx();
                 //self._testTS();
             });
@@ -25,6 +26,47 @@ define(['jquery', 'validator'], function ($, validator) {
         private _testRx() {
 
             var self = this;
+
+            // declare a function that returns foobar string
+            BB.lib.log( (() => "foobar")() )
+
+
+            var requestStream = Rx.Observable.just('https://api.github.com/users');
+            var responceStream = requestStream.flatMap(requestURL => Rx.Observable.fromPromise($.getJSON(requestURL)));
+            responceStream.subscribe(data => {
+               BB.lib.log(data);
+            });
+
+            var input = $('#formCampaignName');
+            var obs = Rx.Observable.fromEvent(input,'keyup');
+            var clickStream = obs.buffer(()=> obs.throttle(250)).map(e=>{
+                return e;
+            });
+
+            clickStream.subscribe(e=>{
+                BB.lib.log(e);
+            });
+
+
+            var HeroShots = Rx.Observable.combineLatest(
+                responceStream,
+                clickStream,
+                function(a,b) {
+                    return {
+                        a,b
+                    };
+                });
+
+            HeroShots.subscribe(e=>{
+                BB.lib.log(e);
+            })
+
+
+            return;
+
+
+
+
             var url = 'https://secure.digitalsignage.com:442/GoogleSheetsList/' + 'xxxx'
 
             //.interval(1000)

@@ -44,6 +44,7 @@ require.config({
         'rxbind': '_common/_js/rxjs/rx.binding',
         'rxdom': '_common/_js/rxjs/rx.dom',
         'rx': '_common/_js/rxjs/rx',
+        'rxall': '_common/_js/rxjs/rx.all',
         'rxtime': '_common/_js/rxjs/rx.time',
         'flashdetect': '_common/_js/flashdetect/flashdetect',
         'TimelineMax': '_common/_js/gsap/TimelineMax',
@@ -217,6 +218,9 @@ require.config({
         },
         'rx': {
             exports: 'rx'
+        },
+        'rxall': {
+            exports: 'rxall'
         },
         'rxtime': {
             exports: 'rxtime'

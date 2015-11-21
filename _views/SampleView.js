@@ -18,13 +18,38 @@ define(['jquery', 'validator'], function ($, validator) {
         }
         SampleView.prototype.initialize = function () {
             var self = this;
-            require(['rx', 'rxbind', 'rxtime', 'rxdom'], function (Rx, rxbind, rxtime, txdom) {
+            //require(['rx', 'rxbind', 'rxtime', 'rxdom'], function (Rx, rxbind, rxtime, txdom) {
+            require(['rxall'], function (Rx) {
                 //self._testRx();
                 //self._testTS();
             });
         };
         SampleView.prototype._testRx = function () {
             var self = this;
+            // declare a function that returns foobar string
+            BB.lib.log((function () { return "foobar"; })());
+            var requestStream = Rx.Observable.just('https://api.github.com/users');
+            var responceStream = requestStream.flatMap(function (requestURL) { return Rx.Observable.fromPromise($.getJSON(requestURL)); });
+            responceStream.subscribe(function (data) {
+                BB.lib.log(data);
+            });
+            var input = $('#formCampaignName');
+            var obs = Rx.Observable.fromEvent(input, 'keyup');
+            var clickStream = obs.buffer(function () { return obs.throttle(250); }).map(function (e) {
+                return e;
+            });
+            clickStream.subscribe(function (e) {
+                BB.lib.log(e);
+            });
+            var HeroShots = Rx.Observable.combineLatest(responceStream, clickStream, function (a, b) {
+                return {
+                    a: a, b: b
+                };
+            });
+            HeroShots.subscribe(function (e) {
+                BB.lib.log(e);
+            });
+            return;
             var url = 'https://secure.digitalsignage.com:442/GoogleSheetsList/' + 'xxxx';
             //.interval(1000)
             var quakes = Rx.Observable

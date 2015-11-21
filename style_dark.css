@@ -90,6 +90,11 @@ a:hover, a:focus
 {
     color				: #ccc;
 }
+
+.panel, .panel-body, .panel-default, .panel-heading, .panel-group, .panel-collapse {
+    border: none !important;
+}
+
 #footer
 {
     background-color	: #151515;
@@ -275,3 +280,13 @@ input {
 }
 
 
+
+::-webkit-scrollbar-track
+{
+    background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb
+{
+    background: rgba(66, 66, 66, 0.5);
+}

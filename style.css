@@ -4,12 +4,15 @@
  StudioLite CSS tags styling
  ***********************************/
 
+
+@import url(https://fonts.googleapis.com/css?family=Raleway:400);
+
 html,
 body {
     height: 100%;
     background-color: #ffffff;
     font-size: 12px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Raleway', 'sans-serif';
 }
 
 .btn {
@@ -23,6 +26,7 @@ i.fa {
 .enjoy_hint_label text:first-child {
     color: #85e7d3 !important;
 }
+
 
 @font-face {
     font-family: 'Jolly Lodger';
@@ -343,6 +347,7 @@ iframe {
     margin: 0px;
     background-color: #3e3f48;
     border-right: 1px solid #dddddd;
+    font-size: 1.1em;
     /* enable following for dropshadow on appNavPanel */
     /*-webkit-box-shadow: 2px 0px 5px 0px rgba(50, 50, 50, 0.75);
     -moz-box-shadow: 2px 0px 5px 0px rgba(50, 50, 50, 0.75);
@@ -4294,3 +4299,18 @@ select.mobile-device {
     opacity: 0;
 }
 /*# sourceMappingURL=bootstrap-select.css.map */
+::-webkit-scrollbar
+{
+    width: 12px;  /* for vertical scrollbars */
+    height: 12px; /* for horizontal scrollbars */
+}
+
+::-webkit-scrollbar-track
+{
+    background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb
+{
+    background: rgba(195, 195, 195, 0.5);
+}

@@ -222,6 +222,9 @@ module Elements {
     export const IMPORT_SCENE = "#importScene";
     export const IMPORT_SCENEL_DIALOG_CONTAINER = '#importScenelDialogContainer';
     export const JSON_EVENTS_CONTAINER = '#jsonEventsContainer';
+    export const JSON_ITEM_DUAL_NUMERIC1 = '#jsonItemDualNumeric1';
+    export const JSON_ITEM_DUAL_NUMERIC2 = '#jsonItemDualNumeric2';
+    export const JSON_ITEM_DUAL_NUMERIC_SETTINGS = '#jsonItemDualNumericSettings';
     export const JSON_ITEM_FIELD_CONTAINER = '#jsonItemFieldContainer';
     export const JSON_ITEM_TEXT_FIELDS = '#jsonItemTextFields';
     export const JSON_ITEM_TEXT_FIELDS_CONTAINER = '#jsonItemTextFieldsContainer';

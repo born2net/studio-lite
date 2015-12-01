@@ -12,6 +12,12 @@
  * path: http://www.digitalsignage.com/videoTutorials/_data/videos.json
  * json player: children[0].children
  * json item: text
+ *
+ *
+ * https://secure.digitalsignage.com/GoogleSheetsValues/6e2919a1-47f0-4a4f-bd94-de7ecfbe604d/1-DBPXrRzvB68kM7-ALH4DapNPOr1pDf7MHoQZSKVhKE/0/R1C1:R3C21
+
+ 6e2919a1-47f0-4a4f-bd94-de7ecfbe604d
+
  */
 //GULP_ABSTRACT_EXTEND extends Block
 //GULP_ABSTRACT_START
@@ -28,6 +34,8 @@ declare module TSLiteModules {
         protected _listenInputFieldPathChange() ;
 
         protected _populate() ;
+
+        protected _populateAspectRatio(i_aspectRatio) ;
 
         protected _loadBlockSpecificProps() ;
 
@@ -49,6 +57,7 @@ define(['jquery', 'Block'], function ($, Block) {
         protected m_config:{};
         protected m_sceneMime:string;
         private m_maintainAspectHandler:Function;
+        private m_dualNumericHandler:Function;
 
         constructor(options?:any) {
             if (options) {
@@ -69,12 +78,19 @@ define(['jquery', 'Block'], function ($, Block) {
             self._listenMouseEntersSceneCanvas();
             self._listenFieldSelected();
             self._listenMaintainAspectChanged();
+            self._listenDualNumericChanged();
             self.m_sceneMime = BB.Pepper.getSceneMime(self.m_sceneID);
 
-            // Json.spreadsheet
-            // types resource/text/dual_numeric
             self.m_config = {
-                'Json.spreadsheet': {},
+                'Json.spreadsheet': {
+                    fields: {
+                        1: {
+                            name: "$cells.1.1.value",
+                            type: "dual_numeric",
+                            label: "Google sheets"
+                        }
+                    }
+                },
                 'Json.weather': {
                     fields: {
                         1: {
@@ -238,6 +254,54 @@ define(['jquery', 'Block'], function ($, Block) {
         }
 
         /**
+         Populate the dual numeric steppers that are used in components like the google sheets
+         @method _populateDualNumeric
+         **/
+        private _populateDualNumeric() {
+            var self = this;
+            var row:string = '1';
+            var column:string = '1';
+            var domPlayerData = self._getBlockPlayerData();
+            var xSnippet = $(domPlayerData).find('XmlItem');
+            var fieldName = $(xSnippet).attr('fieldName');
+            var re = /cells.([0-9]+).([0-9]+).value/i;
+            var match = fieldName.match(re);
+            if (!_.isNull(match)) {
+                row = String(match[1]);
+                column = String(match[2]);
+            }
+            var spinners = $('.spinner', Elements.JSON_ITEM_DUAL_NUMERIC_SETTINGS);
+            $(spinners[0]).spinner('value', row);
+            $(spinners[2]).spinner('value', column);
+        }
+
+        /**
+         Listen when the dual numeric stepper changed
+         @method _listenDualNumericChanged
+         **/
+        private _listenDualNumericChanged() {
+            var self = this;
+            $('.spinner', Elements.JSON_ITEM_DUAL_NUMERIC_SETTINGS).spinner({value: 1, min: 1, max: 1000, step: 1});
+            $('.spinner-input', Elements.JSON_ITEM_DUAL_NUMERIC_SETTINGS).prop('disabled', true).css({backgroundColor: 'transparent'});
+            self.m_dualNumericHandler = _.debounce(function (e) {
+                if (!self.m_selected)
+                    return;
+                if ($(e.target).prop("tagName") == 'INPUT')
+                    return;
+                var inputs = $('input', Elements.JSON_ITEM_DUAL_NUMERIC_SETTINGS);
+                var row = inputs.eq(0).val();
+                var column = inputs.eq(1).val();
+                var fieldName = `$cells.${row}.${column}.value`;
+                BB.lib.log('' + fieldName);
+                var domPlayerData = self._getBlockPlayerData();
+                var xSnippet = $(domPlayerData).find('XmlItem');
+                $(xSnippet).attr('fieldName', fieldName);
+                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
+            }, 500, false);
+            $('.spinner', Elements.JSON_ITEM_DUAL_NUMERIC_SETTINGS).on('mouseup', self.m_dualNumericHandler);
+        }
+
+        /**
          Listen to json field selection and update msdb
          @method _listenFieldSelected
          **/
@@ -355,12 +419,18 @@ define(['jquery', 'Block'], function ($, Block) {
             var maintainAspectRatio = $(xSnippet).attr('maintainAspectRatio');
 
 
-            // regular JSON item (no mime)
             if (_.isUndefined(self.m_sceneMime)) {
+
+                //// regular JSON item (no mime) ////
+
                 $(Elements.JSON_ITEM_FIELD_CONTAINER).show();
                 $(Elements.JSON_ITEM_TEXT_FIELDS_CONTAINER).hide();
                 $(Elements.JSON_ITEM_FIELD).val(fieldName);
+
             } else {
+
+                //// mime type JSON item ////
+
                 $(Elements.JSON_ITEM_FIELD_CONTAINER).hide();
                 $(Elements.JSON_ITEM_TEXT_FIELDS_CONTAINER).show();
 
@@ -385,6 +455,7 @@ define(['jquery', 'Block'], function ($, Block) {
                     {
                         $(Elements.JSON_ITEM_ICON_SETTINGS).slideUp();
                         $(Elements.JSON_ITEM_FONT_SETTINGS).slideDown();
+
                         self.m_labelFontSelector.setConfig({
                             bold: xSnippetFont.attr('fontWeight') === 'bold' ? true : false,
                             italic: xSnippetFont.attr('fontStyle') === 'italic' ? true : false,
@@ -394,11 +465,24 @@ define(['jquery', 'Block'], function ($, Block) {
                             color: BB.lib.colorToHex(BB.lib.decimalToHex(xSnippetFont.attr('fontColor'))),
                             size: xSnippetFont.attr('fontSize')
                         });
-
                         break;
                     }
                 }
 
+
+                switch (self.m_sceneMime) {
+                    case 'Json.spreadsheet':
+                    {
+                        $(Elements.JSON_ITEM_DUAL_NUMERIC_SETTINGS).show();
+                        self._populateDualNumeric();
+                        break;
+                    }
+
+                    default:
+                    {
+                        $(Elements.JSON_ITEM_DUAL_NUMERIC_SETTINGS).hide();
+                    }
+                }
             }
         }
 
@@ -437,6 +521,8 @@ define(['jquery', 'Block'], function ($, Block) {
             var self = this;
             if (_.isUndefined(self.m_sceneMime))
                 return i_jsonPath;
+            if (self.m_sceneMime == 'Json.spreadsheet')
+                return 'Sheet cell';
             var fields:any = self.m_config[self.m_sceneMime].fields;
             for (var item in fields) {
                 if (fields[item].name == i_jsonPath)
@@ -444,6 +530,33 @@ define(['jquery', 'Block'], function ($, Block) {
             }
             return i_jsonPath;
 
+        }
+
+        /**
+         Some json item field names need to be muated into something else.
+         For example, the default fieldName of text needs to be changed into '$cells.1.1.value' when
+         used in a scene of mimeType Json.spreadsheet
+         @method _mutateCustomFieldName
+         **/
+        private _mutateCustomFieldName():void {
+            var self = this;
+            switch (self.m_sceneMime) {
+                case 'Json.spreadsheet':
+                {
+                    var domPlayerData = self._getBlockPlayerData();
+                    var xSnippet = $(domPlayerData).find('XmlItem');
+                    var fieldName = $(xSnippet).attr('fieldName');
+                    if (fieldName == 'text') {
+                        var value = self.m_config['Json.spreadsheet'].fields['1'].name;
+                        $(xSnippet).attr('fieldName', value);
+                        self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
+                    }
+                    break;
+                }
+                default:
+                {
+                }
+            }
         }
 
         /**
@@ -455,13 +568,13 @@ define(['jquery', 'Block'], function ($, Block) {
          **/
         fabricateBlock(i_canvasScale, i_callback) {
             var self:fabric.IRect|TSLiteModules.Block|any = this; //any to fake it
+            self._mutateCustomFieldName();
             var domPlayerData = self._getBlockPlayerData();
             var layout = $(domPlayerData).find('Layout');
             var xSnippet = $(domPlayerData).find('XmlItem');
             var fieldName = $(xSnippet).attr('fieldName');
-            var text = self._translateJsonToLabel(fieldName)
+            var text = self._translateJsonToLabel(fieldName);
             var font = $(xSnippet).find('Font');
-
             var link = '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
             var url = ('https:' === document.location.protocol ? 'https' : 'http') + link;
 
@@ -525,6 +638,7 @@ define(['jquery', 'Block'], function ($, Block) {
             var self = this;
             $(Elements.JSON_ITEM_FIELD).off('input blur mousemove', self.m_inputPathChangeHandler);
             $(Elements.JSON_ITEM_MAINTAIN_ASPECT_RATIO).off("change", self.m_maintainAspectHandler);
+            $('.spinner', Elements.JSON_ITEM_DUAL_NUMERIC_SETTINGS).off('mouseup', self.m_dualNumericHandler);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.FONT_SELECTION_CHANGED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.MOUSE_ENTERS_CANVAS, self);
             self._deleteBlock(i_memoryOnly);

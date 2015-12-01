@@ -5915,7 +5915,7 @@ fabric.Pattern = fabric.util.createClass(/** @lends fabric.Pattern.prototype */ 
             var ctx = this.getContext();
 
             ctx.imageSmoothingEnabled       = this.imageSmoothingEnabled;
-            ctx.webkitImageSmoothingEnabled = this.imageSmoothingEnabled;
+            ctx.imageSmoothingEnabled       = this.imageSmoothingEnabled;
             ctx.mozImageSmoothingEnabled    = this.imageSmoothingEnabled;
             ctx.msImageSmoothingEnabled     = this.imageSmoothingEnabled;
             ctx.oImageSmoothingEnabled      = this.imageSmoothingEnabled;

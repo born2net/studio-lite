@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "module": "amd"
+  },
+  "files": [
+    "!./node_modules/**/*.ts",
+    "!./typings/**/*.ts",
+    "./view/**/*.ts"
+  ]
+
+}

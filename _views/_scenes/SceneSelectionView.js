@@ -18,7 +18,7 @@ define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesload
         initialize: function () {
             var self = this;
             self.m_counter = 1;
-            self.m_counter_max = 300;
+            self.m_counter_max = 448;
             self.m_count_set = 25;
             self.m_selectedSceneID = -1;
             self.m_sceneProperties = new BB.View({

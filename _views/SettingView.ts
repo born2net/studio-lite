@@ -93,7 +93,7 @@ define(['jquery'], function ($) {
                     self.m_simpleStorage.set('bannerMode', bannerMode);
                 }
                 // $(Elements.PREVIEW_FULL_OPTION + ' option[value=' + bannerMode + ']').attr('selected', 'selected');
-                $(Elements.PREVIEW_FULL_OPTION).selectpicker('val',bannerMode);
+                $(Elements.PREVIEW_FULL_OPTION).selectpicker('val', bannerMode);
 
                 var fqSwitchMode = self.m_simpleStorage.get('fqSwitchMode');
                 if (_.isUndefined(fqSwitchMode)) {
@@ -101,7 +101,7 @@ define(['jquery'], function ($) {
                     self.m_simpleStorage.set('fqSwitchMode', fqSwitchMode);
                 }
                 //$(Elements.FQ_SWITCH_OPTION + ' option[value=' + fqSwitchMode + ']').attr('selected', 'selected');
-                $(Elements.FQ_SWITCH_OPTION).selectpicker('val',fqSwitchMode);
+                $(Elements.FQ_SWITCH_OPTION).selectpicker('val', fqSwitchMode);
 
                 var adStatsSwitchMode = self.m_simpleStorage.get('adStatsMode');
                 if (_.isUndefined(adStatsSwitchMode)) {
@@ -109,7 +109,7 @@ define(['jquery'], function ($) {
                     self.m_simpleStorage.set('adStatsMode', adStatsSwitchMode);
                 }
                 //$(Elements.AD_STATS_SWITCH_OPTION + ' option[value=' + adStatsSwitchMode + ']').attr('selected', 'selected');
-                $(Elements.AD_STATS_SWITCH_OPTION).selectpicker('val',adStatsSwitchMode);
+                $(Elements.AD_STATS_SWITCH_OPTION).selectpicker('val', adStatsSwitchMode);
 
                 self.m_stationsPollingSlider = $(Elements.STATION_POLL_SLIDER).noUiSlider({
                     handles: 1,

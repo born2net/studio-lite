@@ -175,6 +175,7 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, boots
          **/
         private _populateResourcePreviewLegacy(i_recResource:Object) {
             var self = this;
+            var $img;
             var path;
             if (self.m_videoPlayer) {
                 self.m_videoPlayer.pause();
@@ -194,13 +195,13 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, boots
                     $(Elements.RESOURCE_PREVIEW_VIDEO).hide();
                     $(Elements.RESOURCE_PREVIEW_IMAGE).fadeIn();
                     $(Elements.RESOURCE_PREVIEW_SVG).hide();
-                    var $img = $(Elements.RESOURCE_PREVIEW_IMAGE).find('img');
+                    $img = $(Elements.RESOURCE_PREVIEW_IMAGE).find('img');
                     $img.attr('src', path);
                     break;
                 }
                 case 'mp4':
                 {
-                    var ext = 'mp4';
+                    ext = 'mp4';
                 }
                 case 'flv':
                 {
@@ -211,7 +212,7 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, boots
                     $(Elements.RESOURCE_PREVIEW_VIDEO).fadeIn();
                     path = window['g_protocol'] + BB.Pepper.getUserData().domain + '/Resources/business' + BB.Pepper.getUserData().businessID + '/resources/' + BB.Pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + ext;
                     $(Elements.VIDEO_PREVIEW).find('video:nth-child(1)').attr("src", path);
-                    break
+                    break;
                 }
                 case 'swf':
                 {
@@ -219,9 +220,9 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, boots
                     $(Elements.RESOURCE_PREVIEW_VIDEO).hide();
                     $(Elements.RESOURCE_PREVIEW_SVG).hide();
                     $(Elements.RESOURCE_PREVIEW_IMAGE).fadeIn();
-                    var $img = $(Elements.RESOURCE_PREVIEW_IMAGE).find('img');
+                    $img = $(Elements.RESOURCE_PREVIEW_IMAGE).find('img');
                     $img.attr('src', path);
-                    break
+                    break;
                 }
                 case 'svg':
                 {
@@ -229,7 +230,7 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, boots
                     $(Elements.RESOURCE_PREVIEW_VIDEO).hide();
                     $(Elements.RESOURCE_PREVIEW_IMAGE).hide();
                     $(Elements.RESOURCE_PREVIEW_SVG).fadeIn();
-                    var $img = $(Elements.RESOURCE_PREVIEW_SVG).find('object');
+                    $img = $(Elements.RESOURCE_PREVIEW_SVG).find('object');
                     var urlPath = $.base64.encode(path);
                     var srvPath = 'https://secure.digitalsignage.com/proxyRequest/' + urlPath;
 
@@ -249,7 +250,7 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, boots
                         var s = new String(svg);
                         $('#resourcePreviewSVG').append(svg).wrap('<center>');
                     });
-                    break
+                    break;
                 }
             }
         }
@@ -261,6 +262,7 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, boots
          **/
         private _populateResourcePreviewCDN(i_recResource:Object) {
             var self = this;
+            var ext;
             if (self.m_videoPlayer) {
                 self.m_videoPlayer.pause();
                 self.m_videoPlayer.load();
@@ -270,7 +272,7 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, boots
             switch (i_recResource['resource_type']) {
                 case 'jpg':
                 {
-                    var ext = 'jpg';
+                    ext = 'jpg';
                 }
                 case 'png':
                 {
@@ -286,7 +288,7 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, boots
                 }
                 case 'mp4':
                 {
-                    var ext = 'mp4';
+                    ext = 'mp4';
                 }
                 case 'flv':
                 {
@@ -298,7 +300,7 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, boots
                     path += BB.Pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + ext;
                     // path = window['g_protocol'] + BB.Pepper.getUserData().domain + '/Resources/business' +  BB.Pepper.getUserData().businessID + '/resources/' + BB.Pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + ext;
                     $(Elements.VIDEO_PREVIEW).find('video:nth-child(1)').attr("src", path);
-                    break
+                    break;
                 }
                 case 'swf':
                 {
@@ -306,9 +308,9 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, boots
                     $(Elements.RESOURCE_PREVIEW_VIDEO).hide();
                     $(Elements.RESOURCE_PREVIEW_SVG).hide();
                     $(Elements.RESOURCE_PREVIEW_IMAGE).fadeIn();
-                    var $img = $(Elements.RESOURCE_PREVIEW_IMAGE).find('img');
+                    $img = $(Elements.RESOURCE_PREVIEW_IMAGE).find('img');
                     $img.attr('src', path);
-                    break
+                    break;
                 }
                 case 'svg':
                 {
@@ -317,7 +319,7 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, boots
                     $(Elements.RESOURCE_PREVIEW_VIDEO).hide();
                     $(Elements.RESOURCE_PREVIEW_IMAGE).hide();
                     $(Elements.RESOURCE_PREVIEW_SVG).fadeIn();
-                    var $img = $(Elements.RESOURCE_PREVIEW_SVG).find('object');
+                    $img = $(Elements.RESOURCE_PREVIEW_SVG).find('object');
                     var urlPath = $.base64.encode(path);
                     var srvPath = 'https://secure.digitalsignage.com/proxyRequest/' + urlPath;
 
@@ -337,7 +339,7 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, boots
                         var s = new String(svg);
                         $('#resourcePreviewSVG').append(svg).wrap('<center>');
                     });
-                    break
+                    break;
                 }
             }
             //log('Loading file from ' + path);
@@ -372,8 +374,7 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, boots
             self._listenRemoveResource();
             var navigationView = BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW);
             bootbox.alert($(Elements.MSG_BOOTBOX_WAIT_UPLOAD_RESOURCE).text());
-            navigationView.save(function () {
-            })
+            navigationView.save(function () {});
             setTimeout(function () {
                 bootbox.hideAll();
             }, 3000);

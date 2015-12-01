@@ -1744,25 +1744,28 @@
                         </div>
                         <hr class="hrthin pull-left"/>
 
-                        <label class="pull-left">Play video to completion</label>
+                        <label class="pull-left" data-localize="playVideoToCompletion">Play video to completion</label>
 
                         <div class="clearfix" style="padding-bottom: 13px"></div>
                         <div style="position: relative; top: -12px" class="material-switch pull-left">
-                          <input id="jsonPlayVideoCompletion" name="someSwitchOption003" type="checkbox"/> <label for="jsonPlayVideoCompletion" class="label-primary"></label>
+                          <input id="jsonPlayVideoCompletion" name="someSwitchOption003" type="checkbox"/>
+                            <label for="jsonPlayVideoCompletion" class="label-primary"></label>
                         </div>
                         <div class="clearfix" style="padding-bottom: 13px"></div>
-                        <label class="pull-left">Random playback</label>
+                        <label class="pull-left" data-localize="randomPlayback">Random playback</label>
 
                         <div class="clearfix" style="padding-bottom: 13px"></div>
                         <div style="position: relative; top: -12px" class="material-switch pull-left">
-                          <input id="jsonRandomPlayback" name="someSwitchOption004" type="checkbox"/> <label for="jsonRandomPlayback" class="label-primary"></label>
+                          <input id="jsonRandomPlayback" name="someSwitchOption004" type="checkbox"/>
+                            <label for="jsonRandomPlayback" class="label-primary"></label>
                         </div>
                         <div class="clearfix" style="padding-bottom: 13px"></div>
-                        <label class="pull-left">Slideshow mode</label>
+                        <label class="pull-left" data-localize="slideshowMode">Slideshow mode</label>
 
                         <div class="clearfix" style="padding-bottom: 13px"></div>
                         <div style="position: relative; top: -12px" class="material-switch pull-left">
-                          <input id="jsonSlideshow" name="someSwitchOption005" type="checkbox"/> <label for="jsonSlideshow" class="label-primary"></label>
+                          <input id="jsonSlideshow" name="someSwitchOption005" type="checkbox"/>
+                            <label for="jsonSlideshow" class="label-primary"></label>
                         </div>
                         <div class="clearfix" style="padding-bottom: 13px"></div>
                         <div id="jsonEventsContainer">
@@ -1790,19 +1793,27 @@
                     </div>
                     <div id="blockJsonItemCommonProperties" style="display: none">
                       <div id="jsonItemFieldContainer">
-                        <span data-localize="JsonItem">Json path notatio</span> <br/> <input type="text" name="name" id="jsonItemField" value="" placeholder="tmp json item">
+                        <span data-localize="JsonItem">Json path notation</span> <br/> <input type="text" name="name" id="jsonItemField" value="" placeholder="json item">
                       </div>
                       <div>
                         <div id="jsonItemTextFieldsContainer">
-                          <label style="padding-right: 78px; width: 200px" for="jsonItemTextFields" data-localize="field"> field </label> <select id="jsonItemTextFields" class="selectpicker">
-                          <option value="A">AA</option>
-                          <option value="B">BB</option>
-                        </select>
+                          <label style="padding-right: 78px; width: 200px" for="jsonItemTextFields" data-localize="field"> field </label>
+                            <select id="jsonItemTextFields" class="propControlWidth form-control">
+                            </select>
                         </div>
                       </div>
                       <br/>
 
                       <div id="jsonItemFontSettings"></div>
+                      <div id="jsonItemIconSettings">
+                          <label class="pull-left" data-localize="maintainAspectRatio">Maintain Aspect ratio</label>
+                          <div class="clearfix" style="padding-bottom: 13px"></div>
+                          <div style="position: relative; top: -12px" class="material-switch pull-left">
+                              <input id="jsonItemMaintainAspectRatio" name="someSwitchOption006" type="checkbox"/>
+                              <label for="jsonItemMaintainAspectRatio" class="label-primary"></label>
+                          </div>
+                          <div class="clearfix" style="padding-bottom: 13px"></div>
+                      </div>
                     </div>
                     <div id="blockHTMLCommonProperties" style="display: none"><span data-localize="webAddr">Web address</span>
 
@@ -1917,9 +1928,9 @@
                     </select>
                       <hr class="hrThin"/>
                       <label style="padding-right: 78px; width: 200px" for="weatherStyle" data-localize="style"> Style </label> <select id="weatherStyle" class="selectpicker">
-                      <option value="0" data-localize="black">black</option>
-                      <option value="1" data-localize="white">white</option>
-                      <option value="2" data-localize="color">color</option>
+                      <option value="1" data-localize="black">black</option>
+                      <option value="2" data-localize="white">white</option>
+                      <option value="3" data-localize="color">color</option>
                     </select>
                       <hr class="hrThin"/>
                       <label style="padding-right: 78px; width: 200px" data-localize="addressZip">Address / Zip code</label> <input id="weatherAddress" type="text" data-localize="address" placeholder="address">

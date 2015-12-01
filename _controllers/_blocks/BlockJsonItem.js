@@ -10,8 +10,9 @@ define(['jquery', 'Block'], function ($, Block) {
     var BlockJsonItem = (function (_super) {
         __extends(BlockJsonItem, _super);
         function BlockJsonItem(options) {
-            if (options)
+            if (options) {
                 this.m_options = options;
+            }
             this.m_blockType = 4310;
             _.extend(this.m_options, { blockType: this.m_blockType });
             _super.call(this);
@@ -24,28 +25,192 @@ define(['jquery', 'Block'], function ($, Block) {
             self._listenInputFieldPathChange();
             self._listenFontSelectionChange();
             self._listenMouseEntersSceneCanvas();
+            self._listenFieldSelected();
+            self._listenMaintainAspectChanged();
             self.m_sceneMime = BB.Pepper.getSceneMime(self.m_sceneID);
             // Json.spreadsheet
-            // types image/text/dual numeric
-            //todo: start building the json file dynamically for properties box on JSON item
-            self.m_config = [
-                {
-                    mimeType: 'Json.weather',
-                    fields: [
-                        {
-                            'current icon': '$[0].data.weather[0].iconPath:image',
-                            'current temp': '$[0].data.current_condition[0].iconPath:image',
-                            'current humidtiy': '$[0].data.current_condition[0].iconPath:image',
-                            'today min temp': '$[0].data.current_condition[0].iconPath:image',
-                            'today max temp': '$[0].data.current_condition[0].iconPath:image',
-                            'today label': '$[0].data.current_condition[0].iconPath:image',
-                            'today icon+1': '$[0].data.current_condition[0].iconPath:image',
-                            'temp': 'some_field:text',
-                            'when': 'some_field:date'
+            // types resource/text/dual_numeric
+            self.m_config = {
+                'Json.spreadsheet': {},
+                'Json.weather': {
+                    fields: {
+                        1: {
+                            name: "$[0].data.current_condition[0].iconPath",
+                            type: "resource",
+                            label: "current icon"
+                        },
+                        2: {
+                            name: "$[0].data.current_condition[0].temp_@",
+                            type: "text",
+                            label: "current temp"
+                        },
+                        3: {
+                            name: "$[0].data.current_condition[0].humidity",
+                            type: "text",
+                            label: "current humidity"
+                        },
+                        4: {
+                            name: "$[0].data.weather[0].iconPath",
+                            type: "resource",
+                            label: "today icon"
+                        },
+                        5: {
+                            name: "$[0].data.weather[0].mintemp@",
+                            type: "text",
+                            label: "today min temp"
+                        },
+                        6: {
+                            name: "$[0].data.weather[0].maxtemp@",
+                            type: "text",
+                            label: "today max temp"
+                        },
+                        7: {
+                            name: "$[0].data.weather[0].day",
+                            type: "text",
+                            label: "today label"
+                        },
+                        8: {
+                            name: "$[0].data.weather[1].iconPath",
+                            type: "resource",
+                            label: "today+1 icon"
+                        },
+                        9: {
+                            name: "$[0].data.weather[1].mintemp@",
+                            type: "text",
+                            label: "today+1 min temp"
+                        },
+                        10: {
+                            name: "$[0].data.weather[1].maxtemp@",
+                            type: "text",
+                            label: "today+1 max temp"
+                        },
+                        11: {
+                            name: "$[0].data.weather[1].day",
+                            type: "text",
+                            label: "today+1 label"
+                        },
+                        12: {
+                            name: "$[0].data.weather[2].iconPath",
+                            type: "resource",
+                            label: "today+2 icon"
+                        },
+                        13: {
+                            name: "$[0].data.weather[2].mintemp@",
+                            type: "text",
+                            label: "today+2 min temp"
+                        },
+                        14: {
+                            name: "$[0].data.weather[2].maxtemp@",
+                            type: "text",
+                            label: "today+2 max temp"
+                        },
+                        15: {
+                            name: "$[0].data.weather[2].day",
+                            type: "text",
+                            label: "today+2 label"
+                        },
+                        16: {
+                            name: "$[0].data.weather[3].iconPath",
+                            type: "resource",
+                            label: "today+3 icon"
+                        },
+                        17: {
+                            name: "$[0].data.weather[3].mintemp@",
+                            type: "text",
+                            label: "today+3 min temp"
+                        },
+                        18: {
+                            name: "$[0].data.weather[3].maxtemp@",
+                            type: "text",
+                            label: "today+3 max temp"
+                        },
+                        19: {
+                            name: "$[0].data.weather[3].day",
+                            type: "text",
+                            label: "today+3 label"
+                        },
+                        20: {
+                            name: "$[0].data.weather[4].iconPath",
+                            type: "resource",
+                            label: "today+4 icon"
+                        },
+                        21: {
+                            name: "$[0].data.weather[4].mintemp@",
+                            type: "text",
+                            label: "today+4 min temp"
+                        },
+                        22: {
+                            name: "$[0].data.weather[4].maxtemp@",
+                            type: "text",
+                            label: "today+4 max temp"
+                        },
+                        23: {
+                            name: "$[0].data.weather[4].day",
+                            type: "text",
+                            label: "today+4 label"
+                        },
+                        24: {
+                            name: "$[0].data.weather[5].iconPath",
+                            type: "resource",
+                            label: "today+5 icon"
+                        },
+                        25: {
+                            name: "$[0].data.weather[5].mintemp@",
+                            type: "text",
+                            label: "today+5 min temp"
+                        },
+                        26: {
+                            name: "$[0].data.weather[5].maxtemp@",
+                            type: "text",
+                            label: "today+5 max temp"
+                        },
+                        27: {
+                            name: "$[0].data.weather[5].day",
+                            type: "text",
+                            label: "today+5 label"
+                        },
+                        28: {
+                            name: "$[0].data.weather[6].iconPath",
+                            type: "resource",
+                            label: "today+6 icon"
+                        },
+                        29: {
+                            name: "$[0].data.weather[6].mintemp@",
+                            type: "text",
+                            label: "today+6 min temp"
+                        },
+                        30: {
+                            name: "$[0].data.weather[6].maxtemp@",
+                            type: "text",
+                            label: "today+6 max temp"
+                        },
+                        31: {
+                            name: "$[0].data.weather[6].day",
+                            type: "text",
+                            label: "today+6 label"
                         }
-                    ]
+                    }
                 }
-            ];
+            };
+        };
+        /**
+         Listen to json field selection and update msdb
+         @method _listenFieldSelected
+         **/
+        BlockJsonItem.prototype._listenFieldSelected = function () {
+            var self = this;
+            $(Elements.JSON_ITEM_TEXT_FIELDS, self.$el).on('change', function (e) {
+                if (!self.m_selected)
+                    return;
+                var $selected = $(e.target).find(':selected');
+                var fieldName = $selected.val();
+                var fieldType = $selected.data('type');
+                var domPlayerData = self._getBlockPlayerData();
+                var xSnippet = $(domPlayerData).find('XmlItem');
+                $(xSnippet).attr('fieldType', fieldType);
+                $(xSnippet).attr('fieldName', fieldName);
+                self._setBlockPlayerData(domPlayerData);
+            });
         };
         /**
          Listen to changes in font UI selection from Block property and take action on changes
@@ -66,21 +231,39 @@ define(['jquery', 'Block'], function ($, Block) {
         BlockJsonItem.prototype._listenFontSelectionChange = function () {
             var self = this;
             BB.comBroker.listenWithNamespace(BB.EVENTS.FONT_SELECTION_CHANGED, self, function (e) {
-                if (!self.m_selected || e.caller !== self.m_labelFontSelector)
+                if (!self.m_selected || e.caller !== self.m_labelFontSelector) {
                     return;
+                }
                 var config = e.edata;
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('XmlItem');
                 var xSnippetFont = $(xSnippet).find('Font');
-                config.bold == true ? xSnippetFont.attr('fontWeight', 'bold') : xSnippetFont.attr('fontWeight', 'normal');
-                config.italic == true ? xSnippetFont.attr('fontStyle', 'italic') : xSnippetFont.attr('fontStyle', 'normal');
-                config.underline == true ? xSnippetFont.attr('textDecoration', 'underline') : xSnippetFont.attr('textDecoration', 'none');
+                config.bold === true ? xSnippetFont.attr('fontWeight', 'bold') : xSnippetFont.attr('fontWeight', 'normal');
+                config.italic === true ? xSnippetFont.attr('fontStyle', 'italic') : xSnippetFont.attr('fontStyle', 'normal');
+                config.underline === true ? xSnippetFont.attr('textDecoration', 'underline') : xSnippetFont.attr('textDecoration', 'none');
                 xSnippetFont.attr('fontColor', BB.lib.colorToDecimal(config.color));
                 xSnippetFont.attr('fontSize', config.size);
                 xSnippetFont.attr('fontFamily', config.font);
                 xSnippetFont.attr('textAlign', config.alignment);
                 self._setBlockPlayerData(domPlayerData);
             });
+        };
+        /**
+         Listen Maintain Aspect ratio slider changed position
+         @method _listenMaintainAspectChanged
+         **/
+        BlockJsonItem.prototype._listenMaintainAspectChanged = function () {
+            var self = this;
+            self.m_maintainAspectHandler = function (e) {
+                if (!self.m_selected)
+                    return;
+                var mode = $(e.target).prop('checked') == true ? 1 : 0;
+                var domPlayerData = self._getBlockPlayerData();
+                var xSnippet = $(domPlayerData).find('XmlItem');
+                $(xSnippet).attr('maintainAspectRatio', mode);
+                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
+            };
+            $(Elements.JSON_ITEM_MAINTAIN_ASPECT_RATIO).on("change", self.m_maintainAspectHandler);
         };
         /**
          Listen json input path change
@@ -91,19 +274,21 @@ define(['jquery', 'Block'], function ($, Block) {
         BlockJsonItem.prototype._listenInputFieldPathChange = function () {
             var self = this;
             self.m_inputPathChangeHandler = _.debounce(function (e) {
-                if (!self.m_selected)
+                if (!self.m_selected) {
                     return;
+                }
                 var newText = $(e.target).val();
                 newText = BB.lib.cleanProbCharacters(newText, 1);
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('XmlItem');
                 var oldText = $(xSnippet).attr('fieldName');
-                if (newText == oldText)
+                if (newText === oldText) {
                     return;
+                }
                 $(xSnippet).attr('fieldName', newText);
                 self._setBlockPlayerData(domPlayerData);
             }, 333, false);
-            $(Elements.JSON_ITEM_FIELD).on("input blur mousemove", self.m_inputPathChangeHandler);
+            $(Elements.JSON_ITEM_FIELD).on('input blur mousemove', self.m_inputPathChangeHandler);
         };
         /**
          Load up property values in the common panel
@@ -117,32 +302,62 @@ define(['jquery', 'Block'], function ($, Block) {
             var xSnippetFont = $(xSnippet).find('Font');
             var fieldType = $(xSnippet).attr('fieldType');
             var fieldName = $(xSnippet).attr('fieldName');
-            $(Elements.JSON_ITEM_FIELD).val(fieldName);
-            self.m_labelFontSelector.setConfig({
-                bold: xSnippetFont.attr('fontWeight') == 'bold' ? true : false,
-                italic: xSnippetFont.attr('fontStyle') == 'italic' ? true : false,
-                underline: xSnippetFont.attr('textDecoration') == 'underline' ? true : false,
-                alignment: xSnippetFont.attr('textAlign'),
-                font: xSnippetFont.attr('fontFamily'),
-                color: BB.lib.colorToHex(BB.lib.decimalToHex(xSnippetFont.attr('fontColor'))),
-                size: xSnippetFont.attr('fontSize')
-            });
-            self._populateJsonMimeProperties();
-        };
-        /**
-         Configure the properties dialog depending on the scene the block resides in
-         @method _populateJsonMimeProperties
-         **/
-        BlockJsonItem.prototype._populateJsonMimeProperties = function () {
-            var self = this;
-            //todo: expand on config of JsonItem depending on mime type of scene
+            var maintainAspectRatio = $(xSnippet).attr('maintainAspectRatio');
+            // regular JSON item (no mime)
             if (_.isUndefined(self.m_sceneMime)) {
                 $(Elements.JSON_ITEM_FIELD_CONTAINER).show();
                 $(Elements.JSON_ITEM_TEXT_FIELDS_CONTAINER).hide();
+                $(Elements.JSON_ITEM_FIELD).val(fieldName);
             }
             else {
                 $(Elements.JSON_ITEM_FIELD_CONTAINER).hide();
                 $(Elements.JSON_ITEM_TEXT_FIELDS_CONTAINER).show();
+                var snippet = '';
+                var fields = self.m_config[self.m_sceneMime].fields;
+                _.each(fields, function (k) {
+                    snippet += "<option data-type=\"" + k.type + "\" value=\"" + k.name + "\">" + k.label + "</option>";
+                });
+                $(Elements.JSON_ITEM_TEXT_FIELDS).empty().append(snippet);
+                var elem = $(Elements.JSON_ITEM_TEXT_FIELDS).find('option[value="' + fieldName + '"]');
+                elem.prop('selected', 'selected');
+                switch (fieldType) {
+                    case 'resource':
+                        {
+                            $(Elements.JSON_ITEM_FONT_SETTINGS).slideUp();
+                            $(Elements.JSON_ITEM_ICON_SETTINGS).slideDown();
+                            self._populateAspectRatio(maintainAspectRatio);
+                            break;
+                        }
+                    case 'text':
+                        {
+                            $(Elements.JSON_ITEM_ICON_SETTINGS).slideUp();
+                            $(Elements.JSON_ITEM_FONT_SETTINGS).slideDown();
+                            self.m_labelFontSelector.setConfig({
+                                bold: xSnippetFont.attr('fontWeight') === 'bold' ? true : false,
+                                italic: xSnippetFont.attr('fontStyle') === 'italic' ? true : false,
+                                underline: xSnippetFont.attr('textDecoration') === 'underline' ? true : false,
+                                alignment: xSnippetFont.attr('textAlign'),
+                                font: xSnippetFont.attr('fontFamily'),
+                                color: BB.lib.colorToHex(BB.lib.decimalToHex(xSnippetFont.attr('fontColor'))),
+                                size: xSnippetFont.attr('fontSize')
+                            });
+                            break;
+                        }
+                }
+            }
+        };
+        /**
+         Populate aspect ratio switch button
+         @method _populateAspectRatio
+         @params {Boolean} i_aspectRatio
+         **/
+        BlockJsonItem.prototype._populateAspectRatio = function (i_aspectRatio) {
+            var self = this;
+            if (i_aspectRatio == '1') {
+                $(Elements.JSON_ITEM_MAINTAIN_ASPECT_RATIO).prop('checked', true);
+            }
+            else {
+                $(Elements.JSON_ITEM_MAINTAIN_ASPECT_RATIO).prop('checked', false);
             }
         };
         /**
@@ -156,6 +371,23 @@ define(['jquery', 'Block'], function ($, Block) {
             this._viewSubPanel(Elements.BLOCK_JSON_ITEM_COMMON_PROPERTIES);
         };
         /**
+         translate a json item path such as $[0].data.weather... to it's label
+         @method _translateJsonToLabel
+         @param {Number} i_playerData
+         @return {Number} Unique clientId.
+         **/
+        BlockJsonItem.prototype._translateJsonToLabel = function (i_jsonPath) {
+            var self = this;
+            if (_.isUndefined(self.m_sceneMime))
+                return i_jsonPath;
+            var fields = self.m_config[self.m_sceneMime].fields;
+            for (var item in fields) {
+                if (fields[item].name == i_jsonPath)
+                    return fields[item].label;
+            }
+            return i_jsonPath;
+        };
+        /**
          Convert the block into a fabric js compatible object
          @Override
          @method fabricateBlock
@@ -167,11 +399,11 @@ define(['jquery', 'Block'], function ($, Block) {
             var domPlayerData = self._getBlockPlayerData();
             var layout = $(domPlayerData).find('Layout');
             var xSnippet = $(domPlayerData).find('XmlItem');
-            var text = $(xSnippet).attr('fieldName');
-            //var label = $(domPlayerData).find('Label');
-            //var text = $(label).find('XmlItem').attr('');
+            var fieldName = $(xSnippet).attr('fieldName');
+            var text = self._translateJsonToLabel(fieldName);
             var font = $(xSnippet).find('Font');
-            var url = ('https:' === document.location.protocol ? 'https' : 'http') + '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+            var link = '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+            var url = ('https:' === document.location.protocol ? 'https' : 'http') + link;
             //$.getScript(src, function (data) {
             //    console.log(data);
             //});
@@ -211,7 +443,7 @@ define(['jquery', 'Block'], function ($, Block) {
             $.ajax({
                 url: url,
                 async: false,
-                dataType: "script",
+                dataType: 'script',
                 complete: function (e) {
                     setTimeout(i_callback, 1);
                 }
@@ -224,7 +456,8 @@ define(['jquery', 'Block'], function ($, Block) {
          **/
         BlockJsonItem.prototype.deleteBlock = function (i_memoryOnly) {
             var self = this;
-            $(Elements.JSON_ITEM_FIELD).off("input blur mousemove", self.m_inputPathChangeHandler);
+            $(Elements.JSON_ITEM_FIELD).off('input blur mousemove', self.m_inputPathChangeHandler);
+            $(Elements.JSON_ITEM_MAINTAIN_ASPECT_RATIO).off("change", self.m_maintainAspectHandler);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.FONT_SELECTION_CHANGED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.MOUSE_ENTERS_CANVAS, self);
             self._deleteBlock(i_memoryOnly);

@@ -234,6 +234,7 @@ module Elements {
     export const JSON_ITEMTYPE_SELECT = '#jsonItemTypeSelect';
     export const JSON_PLAY_VIDEO_COMPLETION = '#jsonPlayVideoCompletion';
     export const JSON_RANDOM_PLAYBACK = '#jsonRandomPlayback';
+    export const JSON_ITEM_MAINTAIN_ASPECT_RATIO = '#jsonItemMaintainAspectRatio';
     export const JSON_SLIDESHOW = '#jsonSlideshow';
     export const JSON_EVENTS_TABLE = '#jsonEventsTable';
     export const JSON_PATHS_CONTAINER = '#jsonPathsContainer';
@@ -241,6 +242,7 @@ module Elements {
     export const REMOVE_JSON_EVENTS = '#removeJsonEvents';
     export const LABEL_FONT_SETTINGS = '#labelFontSettings';
     export const JSON_ITEM_FONT_SETTINGS = '#jsonItemFontSettings';
+    export const JSON_ITEM_ICON_SETTINGS = '#jsonItemIconSettings';
     export const LABEL_TEXT = '#labelText';
     export const FASTERQ_MANAGE_NAV_BUTTON = '#fasterQManageNavButton';
     export const FASTERQ_CREATE_NAV_BUTTON = '#fasterQCreateNavButton';

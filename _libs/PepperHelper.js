@@ -333,7 +333,7 @@ PepperHelper.prototype = {
                                 '<Data>' +
                                     self.getCommonDefaultXML() +
                                     self.getCommonSceneLayout(i_placement) +
-                                    '<XmlItem fieldName="text" fieldType="text">'+
+                                    '<XmlItem fieldName="text" fieldType="text" maintainAspectRatio="0">'+
                                         '<Font fontSize="12" fontColor="0" fontFamily="Astron Boy Video" fontWeight="normal" fontStyle="normal" textDecoration="underline" textAlign="center"/>' +
                                     '</XmlItem>'+
                                 '</Data>' +
@@ -354,7 +354,7 @@ PepperHelper.prototype = {
                                     self.getCommonDefaultXML() +
                                     self.getCommonSceneLayout(i_placement) +
                                     '<EventCommands></EventCommands>' +
-                                    '<Json providerType="weather" itemsPath="" slideShow="1" itemInterval="2" playVideoInFull="1" randomOrder="1">'+
+                                    '<Json providerType="weather" itemsPath="" slideShow="0" itemInterval="3600" playVideoInFull="0" randomOrder="0">'+
                                         '<Player/>'+
                                         '<Data unit="F" style="2" address="91301" />'+
                                     '</Json>'+

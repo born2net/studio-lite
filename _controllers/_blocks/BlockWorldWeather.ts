@@ -119,7 +119,6 @@ define(['jquery', 'BlockJsonBase'], function ($, BlockJsonBase) {
             var self = this;
             self.m_blockProperty.viewSettingsPanel(Elements.BLOCK_COMMON_SETTINGS_WEATHER);
             super._loadBlockSpecificProps();
-
         }
 
         /**

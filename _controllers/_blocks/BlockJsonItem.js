@@ -35,7 +35,7 @@ define(['jquery', 'Block'], function ($, Block) {
                         1: {
                             name: "$cells.1.1.value",
                             type: "dual_numeric",
-                            label: "Google sheets"
+                            label: "Sheet cell"
                         }
                     }
                 },
@@ -350,66 +350,80 @@ define(['jquery', 'Block'], function ($, Block) {
          **/
         BlockJsonItem.prototype._populate = function () {
             var self = this;
+            // JSON item (no mime)
+            if (_.isUndefined(self.m_sceneMime)) {
+                var domPlayerData = self._getBlockPlayerData();
+                var xSnippet = $(domPlayerData).find('XmlItem');
+                var fieldName = $(xSnippet).attr('fieldName');
+                $(Elements.JSON_ITEM_FIELD_CONTAINER).show();
+                $(Elements.JSON_ITEM_TEXT_FIELDS_CONTAINER).hide();
+                $(Elements.JSON_ITEM_FIELD).val(fieldName);
+                return;
+            }
+            // Json mime subclass
+            self._populateMimeType();
+        };
+        /**
+         The component is a subclass of JSON item (i.e.: it has a mimetype) so we need to populate it according
+         to its mimetype config options
+         @method _populate
+         @return none
+         **/
+        BlockJsonItem.prototype._populateMimeType = function () {
+            var self = this;
             var domPlayerData = self._getBlockPlayerData();
             var xSnippet = $(domPlayerData).find('XmlItem');
             var xSnippetFont = $(xSnippet).find('Font');
             var fieldType = $(xSnippet).attr('fieldType');
             var fieldName = $(xSnippet).attr('fieldName');
             var maintainAspectRatio = $(xSnippet).attr('maintainAspectRatio');
-            if (_.isUndefined(self.m_sceneMime)) {
-                //// regular JSON item (no mime) ////
-                $(Elements.JSON_ITEM_FIELD_CONTAINER).show();
-                $(Elements.JSON_ITEM_TEXT_FIELDS_CONTAINER).hide();
-                $(Elements.JSON_ITEM_FIELD).val(fieldName);
+            $(Elements.JSON_ITEM_FIELD_CONTAINER).hide();
+            $(Elements.JSON_ITEM_TEXT_FIELDS_CONTAINER).show();
+            var snippet = '';
+            var fields = self.m_config[self.m_sceneMime].fields;
+            _.each(fields, function (k) {
+                snippet += "<option data-type=\"" + k.type + "\" value=\"" + k.name + "\">" + k.label + "</option>";
+            });
+            $(Elements.JSON_ITEM_TEXT_FIELDS).empty().append(snippet);
+            var elem = $(Elements.JSON_ITEM_TEXT_FIELDS).find('option[value="' + fieldName + '"]');
+            elem.prop('selected', 'selected');
+            // populate according to filed type (text/resource)
+            switch (fieldType) {
+                case 'resource':
+                    {
+                        $(Elements.JSON_ITEM_FONT_SETTINGS).slideUp();
+                        $(Elements.JSON_ITEM_ICON_SETTINGS).slideDown();
+                        self._populateAspectRatio(maintainAspectRatio);
+                        break;
+                    }
+                case 'text':
+                    {
+                        $(Elements.JSON_ITEM_ICON_SETTINGS).slideUp();
+                        $(Elements.JSON_ITEM_FONT_SETTINGS).slideDown();
+                        self.m_labelFontSelector.setConfig({
+                            bold: xSnippetFont.attr('fontWeight') === 'bold' ? true : false,
+                            italic: xSnippetFont.attr('fontStyle') === 'italic' ? true : false,
+                            underline: xSnippetFont.attr('textDecoration') === 'underline' ? true : false,
+                            alignment: xSnippetFont.attr('textAlign'),
+                            font: xSnippetFont.attr('fontFamily'),
+                            color: BB.lib.colorToHex(BB.lib.decimalToHex(xSnippetFont.attr('fontColor'))),
+                            size: xSnippetFont.attr('fontSize')
+                        });
+                        break;
+                    }
             }
-            else {
-                //// mime type JSON item ////
-                $(Elements.JSON_ITEM_FIELD_CONTAINER).hide();
-                $(Elements.JSON_ITEM_TEXT_FIELDS_CONTAINER).show();
-                var snippet = '';
-                var fields = self.m_config[self.m_sceneMime].fields;
-                _.each(fields, function (k) {
-                    snippet += "<option data-type=\"" + k.type + "\" value=\"" + k.name + "\">" + k.label + "</option>";
-                });
-                $(Elements.JSON_ITEM_TEXT_FIELDS).empty().append(snippet);
-                var elem = $(Elements.JSON_ITEM_TEXT_FIELDS).find('option[value="' + fieldName + '"]');
-                elem.prop('selected', 'selected');
-                switch (fieldType) {
-                    case 'resource':
-                        {
-                            $(Elements.JSON_ITEM_FONT_SETTINGS).slideUp();
-                            $(Elements.JSON_ITEM_ICON_SETTINGS).slideDown();
-                            self._populateAspectRatio(maintainAspectRatio);
-                            break;
-                        }
-                    case 'text':
-                        {
-                            $(Elements.JSON_ITEM_ICON_SETTINGS).slideUp();
-                            $(Elements.JSON_ITEM_FONT_SETTINGS).slideDown();
-                            self.m_labelFontSelector.setConfig({
-                                bold: xSnippetFont.attr('fontWeight') === 'bold' ? true : false,
-                                italic: xSnippetFont.attr('fontStyle') === 'italic' ? true : false,
-                                underline: xSnippetFont.attr('textDecoration') === 'underline' ? true : false,
-                                alignment: xSnippetFont.attr('textAlign'),
-                                font: xSnippetFont.attr('fontFamily'),
-                                color: BB.lib.colorToHex(BB.lib.decimalToHex(xSnippetFont.attr('fontColor'))),
-                                size: xSnippetFont.attr('fontSize')
-                            });
-                            break;
-                        }
-                }
-                switch (self.m_sceneMime) {
-                    case 'Json.spreadsheet':
-                        {
-                            $(Elements.JSON_ITEM_DUAL_NUMERIC_SETTINGS).show();
-                            self._populateDualNumeric();
-                            break;
-                        }
-                    default:
-                        {
-                            $(Elements.JSON_ITEM_DUAL_NUMERIC_SETTINGS).hide();
-                        }
-                }
+            // populate according to mimetype exception
+            switch (self.m_sceneMime) {
+                case 'Json.spreadsheet':
+                    {
+                        $(Elements.JSON_ITEM_DUAL_NUMERIC_SETTINGS).show();
+                        self._populateDualNumeric();
+                        break;
+                    }
+                default:
+                    {
+                        $(Elements.JSON_ITEM_DUAL_NUMERIC_SETTINGS).hide();
+                    }
             }
         };
         /**
@@ -438,20 +452,30 @@ define(['jquery', 'Block'], function ($, Block) {
         };
         /**
          translate a json item path such as $[0].data.weather... to it's label
-         @method _translateJsonToLabel
+         @method _translateToLabel
          @param {Number} i_playerData
          @return {Number} Unique clientId.
          **/
-        BlockJsonItem.prototype._translateJsonToLabel = function (i_jsonPath) {
+        BlockJsonItem.prototype._translateToLabel = function (i_jsonPath) {
             var self = this;
+            // no mime configured in scnene so return same label
             if (_.isUndefined(self.m_sceneMime))
                 return i_jsonPath;
-            if (self.m_sceneMime == 'Json.spreadsheet')
-                return 'Sheet cell';
-            var fields = self.m_config[self.m_sceneMime].fields;
-            for (var item in fields) {
-                if (fields[item].name == i_jsonPath)
-                    return fields[item].label;
+            switch (self.m_sceneMime) {
+                case 'Json.spreadsheet':
+                    {
+                        // lookup up label in m_config for spreadsheet
+                        return self.m_config['Json.spreadsheet'].fields['1'].label;
+                    }
+                default:
+                    {
+                        // look up label in m_config db for everything else
+                        var fields = self.m_config[self.m_sceneMime].fields;
+                        for (var item in fields) {
+                            if (fields[item].name == i_jsonPath)
+                                return fields[item].label;
+                        }
+                    }
             }
             return i_jsonPath;
         };
@@ -495,7 +519,7 @@ define(['jquery', 'Block'], function ($, Block) {
             var layout = $(domPlayerData).find('Layout');
             var xSnippet = $(domPlayerData).find('XmlItem');
             var fieldName = $(xSnippet).attr('fieldName');
-            var text = self._translateJsonToLabel(fieldName);
+            var text = self._translateToLabel(fieldName);
             var font = $(xSnippet).find('Font');
             var link = '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
             var url = ('https:' === document.location.protocol ? 'https' : 'http') + link;
@@ -504,9 +528,6 @@ define(['jquery', 'Block'], function ($, Block) {
             //});
             var t = new fabric.IText(text, {
                 fontSize: $(font).attr('fontSize'),
-                //fontFamily: 'Graduate',
-                //fontFamily: 'Jolly Lodger',
-                //fontFamily: 'Arial',
                 fontFamily: $(font).attr('fontFamily'),
                 fill: '#' + BB.lib.decimalToHex($(font).attr('fontColor')),
                 textDecoration: $(font).attr('textDecoration'),

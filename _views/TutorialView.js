@@ -769,7 +769,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                         self.m_appSectionFunction = self._tutorialScenes;
                         break;
                     }
-                    case Elements.ADD_BLOCK_VIEW:
+                    case Elements.ADD_BLOCK_ELEM_VIEW:
                     {
                     }
                     case Elements.SCENE_ADD_NEW_BLOCK:

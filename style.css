@@ -145,6 +145,10 @@ aside > aside > div > ul > li {
     margin-bottom: 9px;
 }
 
+.sceneHasMimeType {
+    opacity: 0.3;
+}
+
 #stationProperties {
     display: none;
     overflow-y: scroll;

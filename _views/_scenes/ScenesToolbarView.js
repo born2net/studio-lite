@@ -184,17 +184,18 @@ define(['jquery', 'backbone'], function ($, Backbone) {
             var self = this;
             $(Elements.CLASS_SCENE_ADD_NEW, self.el).on('click', function (e) {
                 var sceneEditorView = BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']);
-                if (_.isUndefined(sceneEditorView.getSelectedSceneID())) {
+                var selectedSceneId = sceneEditorView.getSelectedSceneID()
+                if (_.isUndefined(selectedSceneId)) {
                     bootbox.alert({
                         message: $(Elements.MSG_BOOTBOX_MUST_SELECT_SCENE).text()
                     });
                     return;
                 }
+                var sceneMime = BB.Pepper.getSceneMime(selectedSceneId);
                 var addBlockView = BB.comBroker.getService(BB.SERVICES.ADD_SCENE_BLOCK_VIEW);
                 addBlockView.setPlacement(BB.CONSTS.PLACEMENT_SCENE);
+                addBlockView.setSceneMime(sceneMime);
                 self.options.stackView.slideToPage(Elements.SCENE_ADD_NEW_BLOCK, 'right');
-                //self.m_stackFaderView.slideToPage('#sceneAddNewBlock', 'right');
-                //self.m_stackFaderView.selectView(Elements.SCENE_ADD_NEW_BLOCK);
             });
         },
 

@@ -9,7 +9,7 @@ module Elements {
     export const ADD_BLOCK_BUTTON = '#addBlockButton';
     export const ADD_BLOCK_TEMPLATE = '#addBlockTemplate';
     export const ADD_BLOCK_LOCATION_TEMPLATE = '#addBlockLocationTemplate';
-    export const ADD_BLOCK_VIEW = '#addBlockView';
+    export const ADD_BLOCK_ELEM_VIEW = '#addBlockView';
     export const GOOGLE_MAPS_LOCATION = '#googleMapsLocation';
     export const GOOGLE_MAPS_SCENE_LOCATION = '#googleMapsSceneLocation';
     export const ADD_COLLECTION_EVENTS = '#addCollectionEvents';
@@ -100,7 +100,7 @@ module Elements {
     export const CAMPAIGN_MODE_DESCRIPTION = '#campaignModeDescription';
     export const CHANNEL_BLOCK_PROPS = '#channelBlockProps';
     export const CHANNEL_LIST_CONTEXT_MENU = '#channelListContextMenu';
-    export const CHANNEL_LIST_VIEW = '#channelListView';
+    export const CHANNEL_LIST_ELEM_VIEW = '#channelListView';
     export const COLLECTION_KIOSK_MODE = '#collectionKioskMode';
     export const COLLECTION_SLIDESHOW_DURATION_CONTAINER = '#collectionSlideShowDurationContainer';
     export const COLLECTION_SLIDESHOW_DURATION_LABEL = '#collectionSlideShowDurationLabel';
@@ -513,7 +513,7 @@ module Elements {
     export const STATION_SERVER_PORT = '#stationServerPort'
     export const STATION_WATCHDOG = '#stationWatchdog';
     export const STATIONS_PANEL = '#stationsPanel';
-    export const STORYLINE = '#storyLine';
+    export const STORYLINE_ELEM = '#storyLine';
     export const STORYLINE_CONTAINER = '#storylineContainer';
     export const STORYLINE_CONTEXT_MENU = '#storylineContextMenu';
     export const SUBSCRIBE_ACCOUNT = '#subscribeAccount';

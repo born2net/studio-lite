@@ -31,6 +31,8 @@ define(['jquery', 'Block'], function ($, Block) {
             self.m_sceneMime = BB.Pepper.getSceneMime(self.m_sceneID);
             self.m_config = {
                 'Json.spreadsheet': {
+                    title: 'Spreadsheet',
+                    tabTitle: 'Cells',
                     fields: {
                         1: {
                             name: "$cells.1.1.value",
@@ -40,6 +42,8 @@ define(['jquery', 'Block'], function ($, Block) {
                     }
                 },
                 'Json.weather': {
+                    title: 'World weather',
+                    tabTitle: 'Conditions',
                     fields: {
                         1: {
                             name: "$[0].data.current_condition[0].iconPath",
@@ -238,7 +242,6 @@ define(['jquery', 'Block'], function ($, Block) {
                 var row = inputs.eq(0).val();
                 var column = inputs.eq(1).val();
                 var fieldName = "$cells." + row + "." + column + ".value";
-                BB.lib.log('' + fieldName);
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('XmlItem');
                 $(xSnippet).attr('fieldName', fieldName);
@@ -412,7 +415,7 @@ define(['jquery', 'Block'], function ($, Block) {
                         break;
                     }
             }
-            // populate according to mimetype exception
+            // populate according to mimetype exception or default behavior
             switch (self.m_sceneMime) {
                 case 'Json.spreadsheet':
                     {
@@ -478,6 +481,29 @@ define(['jquery', 'Block'], function ($, Block) {
                     }
             }
             return i_jsonPath;
+        };
+        /**
+         Update the title of the block inside the assigned element.
+         @method _updateTitle
+         @return none
+         **/
+        BlockJsonItem.prototype._updateTitle = function () {
+            var self = this;
+            _super.prototype._updateTitle.call(this);
+            if (_.isUndefined(self.m_sceneMime))
+                return;
+            $(Elements.SELECTED_CHANNEL_RESOURCE_NAME).text(self.m_config[self.m_sceneMime].title);
+        };
+        /**
+         Update the title of the selected tab properties element
+         @method m_blockAcronym
+         **/
+        BlockJsonItem.prototype._updateTitleTab = function () {
+            var self = this;
+            _super.prototype._updateTitleTab.call(this);
+            if (_.isUndefined(self.m_sceneMime))
+                return;
+            $(Elements.BLOCK_SUBPROPERTIES_TITLE).text(self.m_config[self.m_sceneMime].tabTitle);
         };
         /**
          Some json item field names need to be muated into something else.

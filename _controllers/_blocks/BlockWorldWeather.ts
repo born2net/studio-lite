@@ -40,6 +40,7 @@ define(['jquery', 'BlockJsonBase'], function ($, BlockJsonBase) {
         initialize() {
             var self = this;
             super.initialize(this.m_options);
+            self.m_mimeType = 'Json.weather';
             self._initSettingsPanel();
             self._listenWeatherUnitsChanged();
             self._listenWeatherStyleChanged();

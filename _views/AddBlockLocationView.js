@@ -527,19 +527,6 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
         },
 
         /**
-         Allow us to control the current placement of the module so the behaviour can be according
-         to where the instance resides (i.e.: current launch is from Block collection list of from Channel list
-         for example)
-         @method setPlayerData
-         @param {Number} i_playerData
-         @return {Number} Unique clientId.
-         setPlacement: function (i_placement) {
-            var self = this;
-            self.m_placement = self.options.placement = i_placement;
-        },
-         **/
-
-        /**
          Add a new point to the map (a point is constructed of marker and circle radius and inserted into m_mapPoints)
          @method addPoint
          @param {Number} latLng

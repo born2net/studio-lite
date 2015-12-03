@@ -61,7 +61,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
             var self = this;
             if (_.isUndefined(self.m_render)) {
                 self.m_render = _.debounce(function () {
-                    $(Elements.STORYLINE).empty();
+                    $(Elements.STORYLINE_ELEM).empty();
                     self.m_storylineContainerSnippet = $(storylineTemplate).find(Elements.STORYLINE_CONTAINER).parent();
                     self.m_TableSnippet = $(storylineTemplate).find('table').parent();
                     self.m_ChannelSnippet = $(storylineTemplate).find(Elements.CLASS_STORYLINE_CHANNEL).parent();
@@ -218,7 +218,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                 var value = BB.lib.padZeros(BB.lib.parseToFloatDouble(ticks[i]), l) + format; // log(value);
                 $(scalaRuler).append('<td class="scalaNum"' + lastTick + ' >' + value + '</td>');
             }
-            $(Elements.STORYLINE).append(self.m_TableSnippet);
+            $(Elements.STORYLINE_ELEM).append(self.m_TableSnippet);
         },
 
         /**
@@ -241,7 +241,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                 $(channelBody).attr('data-campaign_timeline_board_viewer_id', viewerID);
                 self._populateBlocks(channelID);
             }
-            $(Elements.STORYLINE).append(self.m_storylineContainerSnippet);
+            $(Elements.STORYLINE_ELEM).append(self.m_storylineContainerSnippet);
             self._updateWidth();
             setTimeout(function () {
                 self._updateWidth();
@@ -448,7 +448,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                 } else {
                     $(toggle).removeClass('glyphicon-chevron-right').addClass('glyphicon-chevron-down')
                 }
-                $(Elements.STORYLINE).fadeIn(500).queue(function () {
+                $(Elements.STORYLINE_ELEM).fadeIn(500).queue(function () {
                     self._render();
                 }).dequeue().delay(500).queue(function () {
                     self._render();
@@ -462,7 +462,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
          **/
         _listenContextMenu: function () {
             var self = this;
-            $(Elements.STORYLINE).contextmenu({
+            $(Elements.STORYLINE_ELEM).contextmenu({
                 target: Elements.STORYLINE_CONTEXT_MENU,
                 before: function (e, element, target) {
                     e.preventDefault();

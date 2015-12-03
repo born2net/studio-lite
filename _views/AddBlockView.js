@@ -1,6 +1,9 @@
 /**
  Add block view is a UI component which allows selection and insertion of a new component (i.e. QR / RSS ...)
- or a resource to be added to the currently selected timeline_channel
+ or a resource to be added to the currently selected timeline_channel.
+ We also skip displaying certain components / scenes dependon
+
+
  @class AddBlockView
  @constructor
  @return {object} instantiated AddBlockView
@@ -54,6 +57,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
         initialize: function (options) {
             var self = this;
 
+            self.m_sceneMime = undefined;
             self.m_placement = options.placement;
 
             // Clone the AddBlockTemplate
@@ -96,6 +100,9 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
             var primeUpgradeText = $(Elements.MSG_BOOTBOX_ENTERPRISE_UPGRADE).text();
             var bufferFreeComp = '';
             var bufferPrimeComp = '';
+            var specialJsonItemName = '';
+            var specialJsonItemColor = '';
+            //var sceneHasMimeType = '';
             for (var componentID in components) {
                 var primeSnippet = '';
                 var faOpacity = 1;
@@ -106,12 +113,32 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
                     componentID == BB.CONSTS.BLOCKCODE_VIDEO ||
                     componentID == BB.CONSTS.BLOCKCODE_SCENE ||
                     (self.m_placement == BB.CONSTS.PLACEMENT_CHANNEL && componentID == BB.CONSTS.BLOCKCODE_JSON_ITEM) ||
-                    (self.m_placement == BB.CONSTS.PLACEMENT_SCENE && componentID == BB.CONSTS.BLOCKCODE_JSON) ||
                     (self.m_placement == BB.CONSTS.PLACEMENT_CHANNEL && componentID == BB.CONSTS.BLOCKCODE_TWITTER_ITEM) ||
+                    (self.m_placement == BB.CONSTS.PLACEMENT_SCENE && componentID == BB.CONSTS.BLOCKCODE_JSON) ||
+                    (self.m_placement == BB.CONSTS.PLACEMENT_SCENE && componentID == BB.CONSTS.BLOCKCODE_WORLD_WEATHER) ||
+                    (self.m_placement == BB.CONSTS.PLACEMENT_SCENE && componentID == BB.CONSTS.BLOCKCODE_GOOGLE_SHEETS) ||
                     (self.m_placement == BB.CONSTS.PLACEMENT_SCENE && componentID == BB.CONSTS.BLOCKCODE_TWITTER)) {
                     continue;
                 }
 
+                // if PLACEMENT_SCENE and mimetype is set to specific, don't show any JSON based players
+                if (self.m_sceneMime && self.m_placement == BB.CONSTS.PLACEMENT_SCENE) {
+                    var jsonBasedPlayerXML = BB.PepperHelper.getBlockBoilerplate(componentID).getDefaultPlayerData(BB.CONSTS.PLACEMENT_SCENE);
+                    jsonBasedPlayerXML = $.parseXML(jsonBasedPlayerXML);
+                    if ($(jsonBasedPlayerXML).find('Json').length > 0)
+                        continue;
+                }
+
+                // if PLACEMENT_SCENE and mimetype is set on scene, give special attention to JSON_ITEM component since it will often be the one user needs
+                if (self.m_sceneMime && self.m_placement == BB.CONSTS.PLACEMENT_SCENE && componentID == BB.CONSTS.BLOCKCODE_JSON_ITEM) {
+                    specialJsonItemName = BB.lib.capitaliseFirst(self.m_sceneMime.split('.')[1]);
+                    specialJsonItemColor = BB.CONSTS['THEME'] === 'light' ? '#A9CFFA' : '#262627';
+                } else {
+                    specialJsonItemName = '';
+                    specialJsonItemColor = '';
+                }
+
+                // check if and how to render components depending on user account type
                 switch (self._checkAllowedComponent(componentID)) {
                     case 0:
                     {
@@ -136,9 +163,9 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
                     }
                 }
 
-                var snippet = ' <li class="list-group-item ' + BB.lib.unclass(Elements.CLASS_ADD_BLOCK_LIST_ITEMS, self.el) + '" data-component_id="' + componentID + '" data-component_name="' + components[componentID].name + '">';
+                var snippet = ' <li style="background-color: ' + specialJsonItemColor + '" class="list-group-item ' + BB.lib.unclass(Elements.CLASS_ADD_BLOCK_LIST_ITEMS, self.el) + '" data-component_id="' + componentID + '" data-component_name="' + (specialJsonItemName != '' ? specialJsonItemName : components[componentID].name) + '">';
                 snippet += '        <i style="opacity: ' + faOpacity + '" class="fa ' + components[componentID].fontAwesome + '"></i>';
-                snippet += '        <span style="opacity: ' + faOpacity + '"> ' + components[componentID].name + '</span>';
+                snippet += '        <span style="opacity: ' + faOpacity + '"> ' + (specialJsonItemName != '' ? specialJsonItemName : components[componentID].name) + '</span>';
                 snippet += '        <h6 style="opacity: ' + faOpacity + '"> ' + components[componentID].description + '</h6>' + primeSnippet;
                 snippet += '    </li>';
 
@@ -178,6 +205,14 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
                 _.each(scenes, function (scene, i) {
                     var label = $(scene).find('Player').eq(0).attr('label');
                     var sceneID = $(scene).find('Player').eq(0).attr('id');
+
+                    // don't allow adding mimetype scenes to channels directly as needs to be added via Player block
+                    if (self.m_placement == BB.CONSTS.PLACEMENT_CHANNEL) {
+                        var mimeType = BB.Pepper.getSceneMime(sceneID);
+                        if (!_.isUndefined(mimeType))
+                            return;
+                    }
+
                     sceneID = pepper.sterilizePseudoId(sceneID);
                     var snippet = '<li class="list-group-item ' + BB.lib.unclass(Elements.CLASS_ADD_BLOCK_LIST_ITEMS, self.el) + '" data-scene_id="' + sceneID + '">' +
                         '<i class="fa ' + BB.PepperHelper.getFontAwesome('scene') + '"></i>' +
@@ -206,6 +241,18 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
             }
 
 
+            self._listenSelection();
+
+            //reset mimetype
+            self.m_sceneMime = undefined;
+        },
+
+        /**
+         Listen to list selection of components / resources / scenes
+         @method _listenSelection
+         **/
+        _listenSelection: function () {
+            var self = this;
             $(Elements.CLASS_ADD_BLOCK_LIST_ITEMS, self.el).on('click', function (e) {
                 var component_id = $(e.target).closest('li').data('component_id');
                 var resource_id = $(e.target).closest('li').data('resource_id');
@@ -352,7 +399,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
 
         /**
          Deselect current view which will animate page unloading
-         @method selectView
+         @method deSelectView
          **/
         deSelectView: function () {
             var self = this;
@@ -363,13 +410,24 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
          Allow us to control the current placement of the module so the behaviour can be according
          to where the instance resides (i.e.: current launch is from Block collection list of from Channel list
          for example)
-         @method setPlayerData
+         @method setPlacement
          @param {Number} i_playerData
-         @return {Number} Unique clientId.
          **/
         setPlacement: function (i_placement) {
             var self = this;
             self.m_placement = self.options.placement = i_placement;
+        },
+
+        /**
+         Allow us to control the view depending upon the current mimetype of the scene that launched this
+         instance. Keep in mind that m_sceneMime is only set for one duration of _render.
+         Once rendered the list, we reset the m_sceneMime back to undefined so
+         @method setSceneMime
+         @param {String} i_mimeType
+         **/
+        setSceneMime: function (i_mimeType) {
+            var self = this;
+            self.m_sceneMime = i_mimeType;
         }
     });
 

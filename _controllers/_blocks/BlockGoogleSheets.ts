@@ -42,6 +42,7 @@ define(['jquery', 'BlockJsonBase', 'validator'], function ($, BlockJsonBase, val
             var self = this;
             self.m_minTokenLength = 15;
             super.initialize(this.m_options);
+            self.m_mimeType = 'Json.spreadsheet';
             self._initSettingsPanel();
             self._listenSheetChanged();
             self._listenTokenChanged();

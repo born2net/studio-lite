@@ -33,6 +33,7 @@ define(['jquery', 'Block'], function ($, Block) {
             self.m_jsonEventTable = $(Elements.JSON_EVENTS_TABLE);
             self._listenJsonRowEventChanged();
             self.m_blockProperty.jsonEventDatatableInit();
+            self.m_mimeType = '';
             self.m_actions = {
                 firstPage: 'beginning',
                 nextPage: 'next',
@@ -230,6 +231,8 @@ define(['jquery', 'Block'], function ($, Block) {
         };
         /**
          Populate the LI with all available scenes from msdb
+         if the mimetype is empty (used for this class) we show all scenes in dropdown, but if mimetype exists
+         (used by subclasses of this class) we filter dropdown list by matching mimetypes
          @method _populateSceneDropdown
          **/
         BlockJsonBase.prototype._populateSceneDropdown = function () {
@@ -238,11 +241,15 @@ define(['jquery', 'Block'], function ($, Block) {
             var scenenames = BB.Pepper.getSceneNames();
             if (_.size(scenenames) == 0)
                 return;
-            _.forEach(scenenames, function (i_name, i_id) {
-                // var pseudoID = pepper.getPseudoIdFromSceneId(i_id);
-                var snippet = '<li><a name="resource" data-localize="profileImage" role="menuitem" tabindex="-1" href="#" data-scene_id="' + i_id + '">' + i_name.label + '</a></li>';
+            // for Subclasses of this, if  filter by matching mimetypes only
+            for (var sceneID in scenenames) {
+                var mimeType = scenenames[sceneID].mimeType;
+                var label = scenenames[sceneID].label;
+                if (self.m_mimeType != '' && self.m_mimeType != mimeType)
+                    continue;
+                var snippet = '<li><a name="resource" data-localize="profileImage" role="menuitem" tabindex="-1" href="#" data-scene_id="' + sceneID + '">' + label + '</a></li>';
                 $(Elements.JSON_DROPDOWN).append($(snippet));
-            });
+            }
         };
         /**
          Populate the UI of the scene label selector

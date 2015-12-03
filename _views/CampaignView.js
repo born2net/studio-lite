@@ -67,13 +67,13 @@ define(['jquery', 'backbone', 'SequencerView', 'ChannelListView', 'StackView', '
             });
 
             self.m_storylineView = new StorylineView({
-                el: Elements.STORYLINE
+                el: Elements.STORYLINE_ELEM
             });
 
             BB.comBroker.setService(BB.SERVICES['SEQUENCER_VIEW'], self.m_sequencerView);
 
             self.m_channelListView = new ChannelListView({
-                el: Elements.CHANNEL_LIST_VIEW
+                el: Elements.CHANNEL_LIST_ELEM_VIEW
             });
             BB.comBroker.setService(BB.SERVICES.CHANNEL_LIST_VIEW, self.m_channelListView);
 

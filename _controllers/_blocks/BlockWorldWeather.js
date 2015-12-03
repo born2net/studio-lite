@@ -22,6 +22,7 @@ define(['jquery', 'BlockJsonBase'], function ($, BlockJsonBase) {
         BlockWorldWeather.prototype.initialize = function () {
             var self = this;
             _super.prototype.initialize.call(this, this.m_options);
+            self.m_mimeType = 'Json.weather';
             self._initSettingsPanel();
             self._listenWeatherUnitsChanged();
             self._listenWeatherStyleChanged();

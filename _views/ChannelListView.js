@@ -318,7 +318,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             var self = this;
             BB.comBroker.listen(BB.EVENTS['STORYLINE_CHANNEL_SELECTED'], function (e) {
                 self.selected_block_id = e.edata;
-                var resourceElem = $(Elements.CHANNEL_LIST_VIEW).find('[data-block_id="' + self.selected_block_id + '"]');
+                var resourceElem = $(Elements.CHANNEL_LIST_ELEM_VIEW).find('[data-block_id="' + self.selected_block_id + '"]');
                 BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.selected_block_id);
                 $(Elements.CLASS_CHANNEL_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
                 $(resourceElem).addClass('activated').find('a').addClass('whiteFont');
@@ -335,7 +335,7 @@ define(['jquery', 'backbone', 'jqueryui', 'TouchPunch', 'Timeline', 'SequencerVi
             var self = this;
             BB.comBroker.listen(BB.EVENTS['STORYLINE_BLOCK_SELECTED'], function (e) {
                 self.selected_block_id = e.edata;
-                var resourceElem = $(Elements.CHANNEL_LIST_VIEW).find('[data-block_id="' + self.selected_block_id + '"]');
+                var resourceElem = $(Elements.CHANNEL_LIST_ELEM_VIEW).find('[data-block_id="' + self.selected_block_id + '"]');
                 BB.comBroker.fire(BB.EVENTS.BLOCK_SELECTED, this, null, self.selected_block_id);
                 $(Elements.CLASS_CHANNEL_LIST_ITEMS).removeClass('activated').find('a').removeClass('whiteFont');
                 $(resourceElem).addClass('activated').find('a').addClass('whiteFont');

@@ -22,7 +22,7 @@
 //GULP_ABSTRACT_EXTEND extends Block
 //GULP_ABSTRACT_START
 declare module TSLiteModules {
-    export class BlockJsonItem extends Block {
+   export class BlockJsonItem extends Block {
         protected m_options;
         protected m_selected;
         protected m_inputPathChangeHandler:any;
@@ -30,17 +30,12 @@ declare module TSLiteModules {
         protected m_minSize:any;
         protected m_config:{};
         protected m_sceneMime:string;
-
         protected _listenInputFieldPathChange() ;
-
         protected _populate() ;
-
         protected _populateAspectRatio(i_aspectRatio) ;
-
         protected _loadBlockSpecificProps() ;
-
         public deleteBlock(i_memoryOnly):void ;
-    }
+   }
 }
 //GULP_ABSTRACT_END
 
@@ -83,6 +78,8 @@ define(['jquery', 'Block'], function ($, Block) {
 
             self.m_config = {
                 'Json.spreadsheet': {
+                    title: 'Spreadsheet',
+                    tabTitle: 'Cells',
                     fields: {
                         1: {
                             name: "$cells.1.1.value",
@@ -92,6 +89,8 @@ define(['jquery', 'Block'], function ($, Block) {
                     }
                 },
                 'Json.weather': {
+                    title: 'World weather',
+                    tabTitle: 'Conditions',
                     fields: {
                         1: {
                             name: "$[0].data.current_condition[0].iconPath",
@@ -283,6 +282,7 @@ define(['jquery', 'Block'], function ($, Block) {
             var self = this;
             $('.spinner', Elements.JSON_ITEM_DUAL_NUMERIC_SETTINGS).spinner({value: 1, min: 1, max: 1000, step: 1});
             $('.spinner-input', Elements.JSON_ITEM_DUAL_NUMERIC_SETTINGS).prop('disabled', true).css({backgroundColor: 'transparent'});
+
             self.m_dualNumericHandler = _.debounce(function (e) {
                 if (!self.m_selected)
                     return;
@@ -292,7 +292,6 @@ define(['jquery', 'Block'], function ($, Block) {
                 var row = inputs.eq(0).val();
                 var column = inputs.eq(1).val();
                 var fieldName = `$cells.${row}.${column}.value`;
-                BB.lib.log('' + fieldName);
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('XmlItem');
                 $(xSnippet).attr('fieldName', fieldName);
@@ -433,7 +432,7 @@ define(['jquery', 'Block'], function ($, Block) {
          @method _populate
          @return none
          **/
-        protected _populateMimeType() {
+        private _populateMimeType() {
             var self = this;
 
             var domPlayerData = self._getBlockPlayerData();
@@ -482,7 +481,7 @@ define(['jquery', 'Block'], function ($, Block) {
                 }
             }
 
-            // populate according to mimetype exception
+            // populate according to mimetype exception or default behavior
             switch (self.m_sceneMime) {
                 case 'Json.spreadsheet':
                 {
@@ -490,7 +489,6 @@ define(['jquery', 'Block'], function ($, Block) {
                     self._populateDualNumeric();
                     break;
                 }
-
                 default:
                 {
                     $(Elements.JSON_ITEM_DUAL_NUMERIC_SETTINGS).hide();
@@ -553,7 +551,31 @@ define(['jquery', 'Block'], function ($, Block) {
                 }
             }
             return i_jsonPath;
+        }
 
+        /**
+         Update the title of the block inside the assigned element.
+         @method _updateTitle
+         @return none
+         **/
+        _updateTitle() {
+            var self = this;
+            super._updateTitle();
+            if (_.isUndefined(self.m_sceneMime))
+                return;
+            $(Elements.SELECTED_CHANNEL_RESOURCE_NAME).text(self.m_config[self.m_sceneMime].title);
+        }
+
+        /**
+         Update the title of the selected tab properties element
+         @method m_blockAcronym
+         **/
+        _updateTitleTab() {
+            var self = this;
+            super._updateTitleTab();
+            if (_.isUndefined(self.m_sceneMime))
+                return;
+            $(Elements.BLOCK_SUBPROPERTIES_TITLE).text(self.m_config[self.m_sceneMime].tabTitle);
         }
 
         /**

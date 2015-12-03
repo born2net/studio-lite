@@ -48,7 +48,7 @@ define(['jquery', 'backbone', 'SceneSelectionView'], function ($, Backbone, Scen
          **/
         _render: function () {
             var self = this;
-            require(['SceneSliderView', 'SceneEditorView', 'ScenesToolbarView', 'StackView', 'AddBlockView', 'AddBlockLocationView'], function (SceneSliderView, SceneEditorView, ScenesToolbarView, StackView, AddBlockView, AddBlockLocationView) {
+            require(['SceneSliderView', 'SceneEditorView', 'ScenesToolbarView', 'StackView', 'AddBlockView', 'AddBlockLocationView', 'SceneCreatorView'], function (SceneSliderView, SceneEditorView, ScenesToolbarView, StackView, AddBlockView, AddBlockLocationView, SceneCreatorView) {
 
                 self.m_sceneSliderView = new SceneSliderView({
                     el: Elements.SCENES_PANEL
@@ -68,6 +68,12 @@ define(['jquery', 'backbone', 'SceneSelectionView'], function ($, Backbone, Scen
                 });
                 BB.comBroker.setService(BB.SERVICES.ADD_SCENE_BLOCK_VIEW, self.m_sceneAddBlockView);
 
+                self.m_sceneCreatorView = new SceneCreatorView({
+                    stackView: self.m_sceneSliderView,
+                    from: Elements.SCENE_SELECTOR,
+                    el: Elements.SCENE_CREATOR
+                });
+
                 self.m_sceneAddBlockLocationView = new AddBlockLocationView({
                     stackView: self.m_sceneSliderView,
                     from: Elements.SCENE_SLIDER_VIEW,
@@ -84,6 +90,7 @@ define(['jquery', 'backbone', 'SceneSelectionView'], function ($, Backbone, Scen
                 self.m_sceneSliderView.addView(self.m_sceneSelector);
                 self.m_sceneSliderView.addView(self.m_sceneEditorView);
                 self.m_sceneSliderView.addView(self.m_sceneAddBlockView);
+                self.m_sceneSliderView.addView(self.m_sceneCreatorView);
                 self.m_sceneSliderView.selectView(self.m_sceneSelector);
             });
         }

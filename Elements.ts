@@ -394,8 +394,10 @@ module Elements {
     export const SCENE_SELECTION_PROPERTIES = '#sceneSelectionProperties';
     export const SCENE_SELECTOR = '#sceneSelector';
     export const SCENE_SELECTOR_LIST = '#sceneSelectorList';
+    export const SCENE_CREATOR = '#sceneCreator';
     export const SCENE_SLIDER_VIEW = '#sceneStackFaderView';
     export const SCENE_TOOLBAR = '#sceneToolbar';
+    export const SELECT_SCENE_TYPE_CREATE = '#selectSceneTypeCreate';
     export const FQ_PRINT_NUMBER = '#fqPrintNumber';
     export const FQ_RESET_QUEUE_COUNTER = '#fqResetQueueCounter';
     export const FQ_OPEN_CUSTOMER_REMOTE_STATUS = '#fqOpenCustomerRemoteStatus';

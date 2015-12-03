@@ -5,7 +5,6 @@
  @return {Object} instantiated SceneSelectionView
  **/
 define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesloaded) {
-//define(['jquery', 'backbone'], function ($, Backbone) {
 
     BB.SERVICES.SCENES_SELECTION_VIEW = 'SceneSelectionView';
 
@@ -16,10 +15,18 @@ define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesload
          @method initialize
          **/
         initialize: function () {
+
+            /*
+            cards
+             http://bootsnipp.com/snippets/E7ry0
+             http://bootsnipp.com/snippets/featured/pricing-simple
+             http://v4-alpha.getbootstrap.com/components/card/#example
+             http://bootsnipp.com/snippets/xvodW
+             */
             var self = this;
             self.m_counter = 1;
-            self.m_counter_max = 448;
-            self.m_count_set = 25;
+            self.m_counter_max = 500;
+            self.m_count_set = 100;
             self.m_selectedSceneID = -1;
             self.m_sceneProperties = new BB.View({
                 el: Elements.SCENE_SELECTION_PROPERTIES
@@ -300,6 +307,8 @@ define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesload
         _listenAddRemoveScene: function () {
             var self = this;
             $(Elements.NEW_SCENE).on('click', function (e) {
+                self.options.stackView.slideToPage(Elements.SCENE_CREATOR, 'right');
+                return false;
                 self.m_selectedSceneID = -1;
                 BB.comBroker.fire(BB.EVENTS.NEW_SCENE_ADD, this, null);
                 BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this);

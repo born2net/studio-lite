@@ -113,6 +113,7 @@ require.config({
         'LiveInput': '_views/_components/LiveInput',
         'FontSelector': '_views/_components/FontSelector',
         'SceneSliderView': '_views/_scenes/SceneSliderView',
+        'SceneCreatorView': '_views/_scenes/SceneCreatorView',
         'SceneLoaderView': '_views/_scenes/SceneLoaderView',
         'SceneSelectionView': '_views/_scenes/SceneSelectionView',
         'SceneEditorView': '_views/_scenes/SceneEditorView',

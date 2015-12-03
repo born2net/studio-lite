@@ -361,6 +361,8 @@ define(['jquery', 'Block'], function ($, Block) {
                 var fieldName = $(xSnippet).attr('fieldName');
                 $(Elements.JSON_ITEM_FIELD_CONTAINER).show();
                 $(Elements.JSON_ITEM_TEXT_FIELDS_CONTAINER).hide();
+                $(Elements.JSON_ITEM_DUAL_NUMERIC_SETTINGS).hide();
+                $(Elements.JSON_ITEM_ICON_SETTINGS).hide();
                 $(Elements.JSON_ITEM_FIELD).val(fieldName);
                 return;
             }

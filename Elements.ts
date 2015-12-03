@@ -231,7 +231,6 @@ module Elements {
     export const JSON_URL_INPUT = '#jsonURLInput';
     export const JSON_ITEM_FIELD = '#jsonItemField';
     export const JSON_PATH_INPUT = '#jsonPathInput';
-    export const JSON_SCENE_LIST = '#jsonSceneList';
     export const JSON_DROPDOWN = '#jsonDropDown';
     export const JSON_INTERVAL_INPUT = '#jsonIntervalInput';
     export const JSON_ITEMTYPE_SELECT = '#jsonItemTypeSelect';

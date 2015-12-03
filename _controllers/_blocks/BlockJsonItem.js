@@ -255,7 +255,7 @@ define(['jquery', 'Block'], function ($, Block) {
          **/
         BlockJsonItem.prototype._listenFieldSelected = function () {
             var self = this;
-            $(Elements.JSON_ITEM_TEXT_FIELDS, self.$el).on('change', function (e) {
+            self.m_fieldChangeHandler = function (e) {
                 if (!self.m_selected)
                     return;
                 var $selected = $(e.target).find(':selected');
@@ -266,7 +266,8 @@ define(['jquery', 'Block'], function ($, Block) {
                 $(xSnippet).attr('fieldType', fieldType);
                 $(xSnippet).attr('fieldName', fieldName);
                 self._setBlockPlayerData(domPlayerData);
-            });
+            };
+            $(Elements.JSON_ITEM_TEXT_FIELDS, self.$el).on('change', self.m_fieldChangeHandler);
         };
         /**
          Listen to changes in font UI selection from Block property and take action on changes
@@ -600,6 +601,7 @@ define(['jquery', 'Block'], function ($, Block) {
             var self = this;
             $(Elements.JSON_ITEM_FIELD).off('input blur mousemove', self.m_inputPathChangeHandler);
             $(Elements.JSON_ITEM_MAINTAIN_ASPECT_RATIO).off("change", self.m_maintainAspectHandler);
+            $(Elements.JSON_ITEM_TEXT_FIELDS, self.$el).off('change', self.m_fieldChangeHandler);
             $('.spinner', Elements.JSON_ITEM_DUAL_NUMERIC_SETTINGS).off('mouseup', self.m_dualNumericHandler);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.FONT_SELECTION_CHANGED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.MOUSE_ENTERS_CANVAS, self);

@@ -241,24 +241,21 @@ define(['jquery', 'Block'], function ($, Block) {
             var scenenames = BB.Pepper.getSceneNames();
             if (_.size(scenenames) == 0)
                 return;
+            var domPlayerData = self._getBlockPlayerData();
+            var xSnippet = $(domPlayerData).find('Json');
+            var xSnippetPlayer = $(xSnippet).find('Player');
+            var selectedSceneID = $(xSnippetPlayer).attr('hDataSrc');
             // for Subclasses of this, if  filter by matching mimetypes only
+            var snippet = '';
             for (var sceneID in scenenames) {
                 var mimeType = scenenames[sceneID].mimeType;
                 var label = scenenames[sceneID].label;
                 if (self.m_mimeType != '' && self.m_mimeType != mimeType)
                     continue;
-                var snippet = '<li><a name="resource" data-localize="profileImage" role="menuitem" tabindex="-1" href="#" data-scene_id="' + sceneID + '">' + label + '</a></li>';
-                $(Elements.JSON_DROPDOWN).append($(snippet));
+                var selected = sceneID == selectedSceneID ? 'selected' : '';
+                snippet += "<option " + selected + " data-scene_id=\"" + sceneID + "\">" + label + "</option>";
             }
-        };
-        /**
-         Populate the UI of the scene label selector
-         @method _populateSceneLabel
-         @param {Number} i_sceneName
-         **/
-        BlockJsonBase.prototype._populateSceneLabel = function (i_sceneName) {
-            var self = this;
-            $(Elements.JSON_SCENE_LIST).text(i_sceneName);
+            $(Elements.JSON_DROPDOWN).append($(snippet));
         };
         /**
          Populate the UI of the scene interval selector
@@ -296,19 +293,8 @@ define(['jquery', 'Block'], function ($, Block) {
             var playVideoInFull = $(xSnippet).attr('playVideoInFull');
             var randomOrder = $(xSnippet).attr('randomOrder');
             var slideShow = $(xSnippet).attr('slideShow');
-            if (_.isEmpty(sceneID)) {
-                self._populateSceneLabel($(Elements.BOOTBOX_SELECT_SCENE).text());
-            }
-            else {
-                var scenenames = BB.Pepper.getSceneNames();
-                _.forEach(scenenames, function (i_name, i_id) {
-                    if (i_id == sceneID)
-                        self._populateSceneLabel(i_name.label);
-                });
-            }
             self._populateEventVisibility(slideShow);
             self._populateSceneDropdown();
-            self._populateSceneLabel();
             self._populateUrlInput(url);
             self._populateInterval(interval);
             self._populateObjectPlayToCompletion(playVideoInFull);
@@ -523,19 +509,19 @@ define(['jquery', 'Block'], function ($, Block) {
             self.m_bindScene = function (e) {
                 if (!self.m_selected)
                     return;
-                var listType = $(e.target).attr('name');
-                if (_.isUndefined(listType))
-                    return;
-                var sceneName = $(e.target).text();
-                var sceneID = $(e.target).attr('data-scene_id');
-                self._populateSceneLabel(sceneName);
+                //var listType = $(e.target).attr('name');
+                //if (_.isUndefined(listType))
+                //    return;
+                var $selected = $(e.target).find(':selected');
+                //var sceneName = $(e.target).text();
+                var sceneID = $selected.attr('data-scene_id');
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Json');
                 var xSnippetPlayer = $(xSnippet).find('Player');
                 $(xSnippetPlayer).attr('hDataSrc', sceneID);
                 self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
             };
-            $(Elements.JSON_DROPDOWN).on('click', self.m_bindScene);
+            $(Elements.JSON_DROPDOWN).on('change', self.m_bindScene);
         };
         /**
          Populate the common block properties panel, called from base class if exists
@@ -559,7 +545,7 @@ define(['jquery', 'Block'], function ($, Block) {
             $(Elements.CLASS_JSON_EVENT_ACTION_GOTO).off('change', self.m_onDropDownEventActionGoToHandler);
             $(Elements.ADD_JSON_EVENTS).off('click', self.m_addNewEvent);
             $(Elements.REMOVE_JSON_EVENTS).off('click', self.m_removeEvent);
-            $(Elements.JSON_DROPDOWN).off('click', self.m_bindScene);
+            $(Elements.JSON_DROPDOWN).off('change', self.m_bindScene);
             $(Elements.JSON_URL_INPUT).off("input", self.m_urlChange);
             $(Elements.JSON_PATH_INPUT).off("input", self.m_pathChange);
             $(Elements.JSON_PLAY_VIDEO_COMPLETION).off("change", self.m_playVideoCompletion);

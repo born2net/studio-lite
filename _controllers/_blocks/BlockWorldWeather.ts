@@ -1,7 +1,7 @@
 ///<reference path="../../typings/lite/app_references.d.ts" />
 
 /**
- BlockWorldWeather is based on JSON base class component
+ BlockWorldWeather is based on JSON base class component and display world weather
  @class BlockWorldWeather
  @constructor
  @return {Object} instantiated BlockWorldWeather

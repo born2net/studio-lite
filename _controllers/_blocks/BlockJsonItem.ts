@@ -15,9 +15,7 @@
  *
  *
  * https://secure.digitalsignage.com/GoogleSheetsValues/6e2919a1-47f0-4a4f-bd94-de7ecfbe604d/1-DBPXrRzvB68kM7-ALH4DapNPOr1pDf7MHoQZSKVhKE/0/R1C1:R3C21
-
- 6e2919a1-47f0-4a4f-bd94-de7ecfbe604d
-
+ * 6e2919a1-47f0-4a4f-bd94-de7ecfbe604d
  */
 //GULP_ABSTRACT_EXTEND extends Block
 //GULP_ABSTRACT_START
@@ -45,6 +43,7 @@ define(['jquery', 'Block'], function ($, Block) {
     class BlockJsonItem extends TSLiteModules.Block {
 
         protected m_options;
+        protected m_fieldChangeHandler;
         protected m_selected;
         protected m_inputPathChangeHandler:any;
         protected m_labelFontSelector:any;
@@ -306,7 +305,7 @@ define(['jquery', 'Block'], function ($, Block) {
          **/
         _listenFieldSelected() {
             var self = this;
-            $(Elements.JSON_ITEM_TEXT_FIELDS, self.$el).on('change', function (e) {
+            self.m_fieldChangeHandler = function (e) {
                 if (!self.m_selected)
                     return;
                 var $selected = $(e.target).find(':selected');
@@ -317,7 +316,8 @@ define(['jquery', 'Block'], function ($, Block) {
                 $(xSnippet).attr('fieldType', fieldType);
                 $(xSnippet).attr('fieldName', fieldName);
                 self._setBlockPlayerData(domPlayerData);
-            });
+            };
+            $(Elements.JSON_ITEM_TEXT_FIELDS, self.$el).on('change', self.m_fieldChangeHandler)
         }
 
         /**
@@ -681,6 +681,7 @@ define(['jquery', 'Block'], function ($, Block) {
             var self = this;
             $(Elements.JSON_ITEM_FIELD).off('input blur mousemove', self.m_inputPathChangeHandler);
             $(Elements.JSON_ITEM_MAINTAIN_ASPECT_RATIO).off("change", self.m_maintainAspectHandler);
+            $(Elements.JSON_ITEM_TEXT_FIELDS, self.$el).off('change', self.m_fieldChangeHandler);
             $('.spinner', Elements.JSON_ITEM_DUAL_NUMERIC_SETTINGS).off('mouseup', self.m_dualNumericHandler);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.FONT_SELECTION_CHANGED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.MOUSE_ENTERS_CANVAS, self);

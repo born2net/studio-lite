@@ -47,6 +47,22 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
         },
 
         /**
+         Override Update the title of the scene block inside the assigned element.
+         @override _updateTitle
+         @return none
+         **/
+        _updateTitle: function () {
+            var self = this;
+            var sceneMime = BB.Pepper.getSceneMime(self.m_block_id);
+            if (_.isUndefined(sceneMime) || sceneMime == '') {
+                $(Elements.SELECTED_CHANNEL_RESOURCE_NAME).text(self.m_blockName);
+                return;
+            }
+            $(Elements.SELECTED_CHANNEL_RESOURCE_NAME).text('Scene type: ' + sceneMime.split('.')[1]);
+        },
+
+
+        /**
          set player data for a scene
          @Override
          @method getPlayerData
@@ -121,7 +137,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 if (!self.m_selected)
                     return;
                 var text = $(e.target).val();
-                text = BB.lib.cleanProbCharacters(text,1);
+                text = BB.lib.cleanProbCharacters(text, 1);
                 var domPlayerData = self._getBlockPlayerData();
                 $(domPlayerData).find('Player').eq(0).attr('label', text);
                 self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);

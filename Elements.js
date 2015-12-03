@@ -232,7 +232,6 @@ var Elements;
     Elements.JSON_URL_INPUT = '#jsonURLInput';
     Elements.JSON_ITEM_FIELD = '#jsonItemField';
     Elements.JSON_PATH_INPUT = '#jsonPathInput';
-    Elements.JSON_SCENE_LIST = '#jsonSceneList';
     Elements.JSON_DROPDOWN = '#jsonDropDown';
     Elements.JSON_INTERVAL_INPUT = '#jsonIntervalInput';
     Elements.JSON_ITEMTYPE_SELECT = '#jsonItemTypeSelect';

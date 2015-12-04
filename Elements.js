@@ -220,7 +220,6 @@ var Elements;
     Elements.IMG_VERTICAL = '#imgVertical';
     Elements.INSTALL_PANEL = '#installPanel';
     Elements.SCENE_IMPORT_MODAL = '#sceneImportModal';
-    Elements.IMPORT_SCENE = "#importScene";
     Elements.IMPORT_SCENEL_DIALOG_CONTAINER = '#importScenelDialogContainer';
     Elements.JSON_EVENTS_CONTAINER = '#jsonEventsContainer';
     Elements.JSON_ITEM_DUAL_NUMERIC1 = '#jsonItemDualNumeric1';

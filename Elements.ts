@@ -219,7 +219,6 @@ module Elements {
     export const IMG_VERTICAL = '#imgVertical';
     export const INSTALL_PANEL = '#installPanel';
     export const SCENE_IMPORT_MODAL = '#sceneImportModal';
-    export const IMPORT_SCENE = "#importScene";
     export const IMPORT_SCENEL_DIALOG_CONTAINER = '#importScenelDialogContainer';
     export const JSON_EVENTS_CONTAINER = '#jsonEventsContainer';
     export const JSON_ITEM_DUAL_NUMERIC1 = '#jsonItemDualNumeric1';

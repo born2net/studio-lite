@@ -511,7 +511,7 @@ define(['jquery', 'Block'], function ($, Block) {
         /**
          Some json item field names need to be muated into something else.
          For example, the default fieldName of text needs to be changed into '$cells.1.1.value' when
-         used in a scene of mimeType Json.spreadsheet
+         used in a scene with mimeType
          @method _mutateCustomFieldName
          **/
         BlockJsonItem.prototype._mutateCustomFieldName = function () {

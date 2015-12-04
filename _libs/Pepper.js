@@ -707,13 +707,27 @@ Pepper.prototype = {
 
     /**
      Create a new Scene
+     If mimetype was give as an argument and it's of format
+     Json.xxxx (i.e.: Json.weather, Json.spreadsheet ...) add it to scene table as well
      @method createScene
+     @optional i_mimeType
+     @optional i_name
      @return {Number} scene player_data id
      **/
-    createScene: function (i_player_data) {
+    createScene: function (i_player_data, i_mimeType, i_name) {
         var self = this;
         var table_player_data = self.m_msdb.table_player_data();
         var recPlayerData = table_player_data.createRecord();
+        if (i_mimeType && i_mimeType.match(/Json./)){
+            i_player_data = $.parseXML(i_player_data);
+            $(i_player_data).find('Player').attr('mimeType', i_mimeType);
+            i_player_data = pepper.xmlToStringIEfix(i_player_data);
+        }
+        if (!_.isUndefined(i_name)){
+            i_player_data = $.parseXML(i_player_data);
+            $(i_player_data).find('Player').attr('label', i_name);
+            i_player_data = pepper.xmlToStringIEfix(i_player_data);
+        }
         recPlayerData['player_data_value'] = i_player_data;
         table_player_data.addRecord(recPlayerData);
         var scene_id = recPlayerData['player_data_id'];

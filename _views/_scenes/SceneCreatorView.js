@@ -17,12 +17,8 @@ define(['jquery'], function ($) {
             self.id = self.m_options.el;
             self.$el = $(this.id);
             self.el = this.$el.get(0);
-            self.m_sceneTypes = [];
+            self.m_sceneConfig = [];
             self.m_sceneSelector = BB.comBroker.getService(BB.SERVICES['SCENES_SELECTION_VIEW']);
-            $(self.el).find('#prev').on('click', function () {
-                self.m_options.stackView.slideToPage(self.m_options.from, 'left');
-                return false;
-            });
             //BB.comBroker.setService(BB.SERVICES['SETTINGS_VIEW'], self);
             self.listenTo(self.m_options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e === self && !self.m_rendered) {
@@ -30,21 +26,75 @@ define(['jquery'], function ($) {
                     self.m_rendered = true;
                 }
             });
+            $(self.el).find('#prev').on('click', function () {
+                self._goBack();
+                return false;
+            });
         };
-        SceneCreatorView.prototype._createScene = function (i_blockType) {
+        SceneCreatorView.prototype._goBack = function () {
             var self = this;
-            return;
-            //self.m_selectedSceneID = -1;
-            //BB.comBroker.fire(BB.EVENTS.NEW_SCENE_ADD, this, null);
-            //BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this);
+            self.m_options.stackView.slideToPage(self.m_options.from, 'left');
         };
+        SceneCreatorView.prototype._nameScene = function (i_cb) {
+            var self = this;
+            bootbox.prompt("Give your scene a name:", function (result) {
+                if (result === null) {
+                    i_cb();
+                }
+                else {
+                    result = BB.lib.cleanChar(result);
+                    i_cb(result);
+                }
+            });
+        };
+        /**
+         Listen to user selecting specific type of scene to create
+         @method _listenSelectScene
+         **/
         SceneCreatorView.prototype._listenSelectScene = function () {
             var self = this;
             $(self.el).on('click', function (e) {
-                var blockType = $(e.target).closest('.profileCard').data('type');
-                if (_.isUndefined(blockType))
+                var mimeType = $(e.target).closest('.profileCard').data('mimetype');
+                if (_.isUndefined(mimeType))
                     return;
-                self._createScene(blockType);
+                switch (mimeType) {
+                    case 'blank':
+                        {
+                            self._nameScene(function (i_name) {
+                                if (_.isUndefined(i_name) || i_name.length == 0)
+                                    return;
+                                BB.comBroker.fire(BB.EVENTS.NEW_SCENE_ADD, this, null, {
+                                    name: i_name,
+                                    mimeType: ''
+                                });
+                                BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this, this, 'pushToTop');
+                                self._goBack();
+                            });
+                            break;
+                        }
+                    case 'template':
+                        {
+                            bootbox.alert('COMING SOON: We have over 600+ amazing new templates coming in January 2006... it will be amazing..');
+                            break;
+                        }
+                    case 'Json.weather':
+                        {
+                        }
+                    case 'Json.spreadsheet':
+                        {
+                            self._nameScene(function (i_name) {
+                                if (_.isUndefined(i_name) || i_name.length == 0)
+                                    return;
+                                BB.comBroker.fire(BB.EVENTS.NEW_SCENE_ADD, this, null, {
+                                    name: i_name,
+                                    mimeType: mimeType
+                                });
+                                BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this, this, 'pushToTop');
+                                self._goBack();
+                            });
+                            break;
+                        }
+                }
             });
         };
         /**
@@ -55,34 +105,34 @@ define(['jquery'], function ($) {
             var self = this;
             if (self.m_rendered)
                 return;
-            self.m_sceneTypes = [
+            self.m_sceneConfig = [
                 {
                     name: 'start blank',
-                    type: '0',
-                    icon: 'fa-sticky-note-o',
+                    mimeType: 'blank',
+                    icon: 'fa-star',
                     description: 'Create your own design, simply start with a blank scene and mix in your favorite images, videos, SVG graphics and even smart components. Get all the power to design your own custom scene.'
                 },
                 {
                     name: 'from template',
-                    type: '1',
+                    mimeType: 'template',
                     icon: 'fa-paint-brush',
                     description: 'With hundreds of beautiful pre-made designs you are sure to find something you like. The scene templates are preloaded with images and labels so its a great way to get started.'
                 }
             ];
             var blocks = (BB.PepperHelper.getBlocks());
-            _.forEach(blocks, function (block, type) {
-                if (block.jsonItemLongDescription) {
-                    self.m_sceneTypes.push({
+            _.forEach(blocks, function (block) {
+                if (block.mimeType) {
+                    self.m_sceneConfig.push({
                         name: block.description,
-                        type: type,
+                        mimeType: block.mimeType,
                         icon: block.fontAwesome,
                         description: block.jsonItemLongDescription
                     });
                 }
             });
             var snippet = '';
-            _.forEach(self.m_sceneTypes, function (block) {
-                snippet += "\n                    <div data-type=\"" + block.type + "\" class=\"col-xs-12 col-sm-6 col-md-6 col-lg-4 profileCard\">\n                                      <div class=\"profileCard1\">\n                                        <div class=\"pImg\">\n                                          <span class=\"fa " + block.icon + " fa-4x\"></span>\n                                        </div>\n                                        <div class=\"pDes\">\n                                          <h1 class=\"text-center\">" + block.name + "</h1>\n                                          <p>" + block.description + "</p>\n                                          <a class=\"btn btn-md\">\n                                          <span class=\"fa fa-plus fa-2x\"></span>\n                                          </a>\n                                        </div>\n                                      </div>\n                                    </div>\n                    ";
+            _.forEach(self.m_sceneConfig, function (block) {
+                snippet += "\n                    <div data-mimetype=\"" + block.mimeType + "\" class=\"col-xs-12 col-sm-6 col-md-6 col-lg-4 profileCard\">\n                                      <div class=\"profileCard1\">\n                                        <div class=\"pImg\">\n                                          <span class=\"fa " + block.icon + " fa-4x\"></span>\n                                        </div>\n                                        <div class=\"pDes\">\n                                          <h1 class=\"text-center\">" + block.name + "</h1>\n                                          <p>" + block.description + "</p>\n                                          <a class=\"btn btn-md\">\n                                          <span class=\"fa fa-plus fa-2x\"></span>\n                                          </a>\n                                        </div>\n                                      </div>\n                                    </div>\n                    ";
             });
             $(Elements.SELECT_SCENE_TYPE_CREATE).append(snippet);
             self._listenSelectScene();

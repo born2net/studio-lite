@@ -386,7 +386,7 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             var self = this;
             BB.comBroker.listen(BB.EVENTS.NEW_SCENE_ADD, function (e) {
                 var player_data = BB.PepperHelper.getBlockBoilerplate('3510').getDefaultPlayerData(BB.CONSTS.PLACEMENT_IS_SCENE);
-                self.createScene(player_data, false, true);
+                self.createScene(player_data, false, true, e.edata.mimeType, e.edata.name);
             });
         },
 
@@ -1627,14 +1627,16 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
          Create a new scene based on player_data and strip injected IDs if arged
          @method createScene
          @param {String} i_scenePlayerData
-         @param {Boolean} i_stripIDs
-         @param {Boolean} i_loadScene
+         @optional {Boolean} i_stripIDs
+         @optional {Boolean} i_loadScene
+         @optional {String} i_mimeType
+         @optional {String} i_name
          **/
-        createScene: function (i_scenePlayerData, i_stripIDs, i_loadScene) {
+        createScene: function (i_scenePlayerData, i_stripIDs, i_loadScene, i_mimeType, i_name) {
             var self = this;
             if (i_stripIDs)
                 i_scenePlayerData = pepper.stripPlayersID(i_scenePlayerData);
-            self.m_selectedSceneID = pepper.createScene(i_scenePlayerData);
+            self.m_selectedSceneID = pepper.createScene(i_scenePlayerData, i_mimeType, i_name);
             // BB.comBroker.fire(BB.EVENTS.NEW_SCENE_ADDED, this, null, self.m_selectedSceneID);
             if (i_loadScene)
                 self._loadScene();

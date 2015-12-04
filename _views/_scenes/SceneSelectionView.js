@@ -15,14 +15,6 @@ define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesload
          @method initialize
          **/
         initialize: function () {
-
-            /*
-            cards
-             http://bootsnipp.com/snippets/E7ry0
-             http://bootsnipp.com/snippets/featured/pricing-simple
-             http://v4-alpha.getbootstrap.com/components/card/#example
-             http://bootsnipp.com/snippets/xvodW
-             */
             var self = this;
             self.m_counter = 1;
             self.m_counter_max = 500;
@@ -41,7 +33,6 @@ define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesload
             self._listenSceneRemoved();
             self._listenDuplicateScene();
             self._listenSceneRename();
-            self._listenImportSceneModal();
             self._listenSceneSelectorWrap();
         },
 
@@ -52,7 +43,7 @@ define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesload
         _listenSceneSelectorWrap: function () {
             var self = this;
             $(Elements.SCENE_SELECTOR_LIST).on('click', function (e) {
-                if ((e.target.tagName).toLocaleLowerCase() == 'div'){
+                if ((e.target.tagName).toLocaleLowerCase() == 'div') {
                     e.preventDefault();
                     e.stopImmediatePropagation();
                     return false
@@ -70,10 +61,11 @@ define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesload
             var scenenames = BB.Pepper.getSceneNames();
             if (_.size(scenenames) == 0)
                 return;
-            _.forEach(scenenames, function (i_name, i_id) {
+            _.forEach(scenenames, function (i_scene, i_id) {
                 var pseudoID = pepper.getPseudoIdFromSceneId(i_id);
+                var icon = BB.PepperHelper.getIconFromMimeType(i_scene.mimeType);
                 var snippet = '<a href="#" class="' + BB.lib.unclass(Elements.CLASS_CAMPIGN_LIST_ITEM) + ' list-group-item" data-sceneid="' + pseudoID + '">' +
-                    '<h4>' + i_name.label + '</h4>' +
+                    '<h4>' + '<i style="font-size: 1.6em; position: relative; top: 5px; left: -5px" class="fa ' + icon + '"></i>' + i_scene.label + '</h4>' +
                     '<p class="list-group-item-text">' + '&nbsp;' + '</p>' +
                     '<div class="openProps">' +
                     '<button type="button" class="' + BB.lib.unclass(Elements.CLASS_OPEN_PROPS_BUTTON) + ' btn btn-default btn-sm"><i style="font-size: 1.5em" class="fa fa-gear"></i></button>' +
@@ -88,6 +80,31 @@ define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesload
         },
 
         /**
+         Push last scene to top
+         @method _pushLastSceneTop
+         @param {Number} i_delay
+         @param {Number} i_delay
+         **/
+        _pushLastSceneTop: function (i_delay, i_duration) {
+            var self = this;
+            var height = 0, lastHeight = 0;
+            $(Elements.SCENE_SELECTOR_LIST).children().each(function () {
+                lastHeight = $(this).outerHeight(true);
+                height = height + $(this).outerHeight(true);
+            });
+            height = 0 - (height - lastHeight);
+            var last = $(Elements.SCENE_SELECTOR_LIST).children(':last-child');
+            TweenLite.to($(last), i_duration, {
+                top: height,
+                delay: i_delay,
+                onComplete: function () {
+                    $(last).prependTo(Elements.SCENE_SELECTOR_LIST);
+                    $(last).css({top: 0});
+                }
+            });
+        },
+
+        /**
          Listen to renaming of scene so we can render the updated scene list
          @method _listenSceneRename
          **/
@@ -95,6 +112,9 @@ define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesload
             var self = this;
             BB.comBroker.listen(BB.EVENTS['SCENE_LIST_UPDATED'], function (e) {
                 self._render();
+                if (e.edata=='pushToTop'){
+                    self._pushLastSceneTop(1,1);
+                }
             });
         },
 
@@ -178,127 +198,127 @@ define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesload
             }, 333, false);
             $(Elements.FORM_SCENE_NAME).on("input", self.m_onChange);
         },
-
-        /**
-         Open modal dialog for scene import and render all images via imageLoaded
-         @method _listenImportSceneModal
-         **/
-        _listenImportSceneModal: function () {
-            var self = this;
-            $(Elements.IMPORT_SCENE).on('click', function (e) {
-
-                $(Elements.SCENE_IMPORT_MODAL).modal('show');
-
-                if (self.m_counter > self.m_counter_max)
-                    return;
-
-
-                var $progress, $status;
-                var supportsProgress;
-                var loadedImageCount, imageCount;
-
-                var $demo = $('#sceneImportWrapper');
-                var $container = $demo.find('#image-container');
-                $status = $demo.find('#status');
-                $progress = $demo.find('progress');
-
-                supportsProgress = $progress[0] &&
-                        // IE does not support progress
-                    $progress[0].toString().indexOf('Unknown') === -1;
-
-                function populateScenes() {
-                    // add new images
-                    var items = getItems();
-                    //console.log(items);
-                    $container.prepend($(items));
-                    // use ImagesLoaded
-                    $container.imagesLoaded()
-                        .progress(onProgress)
-                        .always(function () {
-                            onAlways();
-                            setTimeout(function () {
-                                if (self.m_counter > self.m_counter_max) {
-                                    $(Elements.IMPORT_SCENEL_DIALOG_CONTAINER).find('button').fadeIn();
-                                    return;
-                                }
-                                populateScenes();
-                            }, 500)
-                        })
-                        .fail(function (e) {
-                            //console.log('some fail ' + e)
-                        })
-                        .done(function () {
-                            //console.log('completed...')
-                        });
-                    // reset progress counter
-                    imageCount = $container.find('img').length;
-                    resetProgress();
-                    updateProgress(0);
-                };
-
-                // reset container
-                $('#reset').click(function () {
-                    $container.empty();
-                    self.m_counter = 0;
-                });
-
-
-                // return doc fragment with
-                function getItems() {
-                    var items = '';
-                    for (var i = 0; i < self.m_count_set; i++) {
-                        var z = self.m_counter++;
-                        items += getImageItem(z);
-                    }
-                    return items;
-                }
-
-                // return an <li> with a <img> in it
-                function getImageItem(index) {
-                    var item = '<li class="is-loading">';
-                    item += '<img style="width: 139px; height: 78px" src="_assets/scenes/Template' + index + '.jpg"/></li>';
-                    return item;
-                }
-
-                function resetProgress() {
-                    $status.css({opacity: 1});
-                    loadedImageCount = 0;
-                    if (supportsProgress) {
-                        $progress.attr('max', imageCount);
-                    }
-                }
-
-                function updateProgress(value) {
-                    if (supportsProgress) {
-                        $progress.attr('value', value);
-                    } else {
-                        // if you don't support progress elem
-                        $status.text(value + ' / ' + imageCount);
-                    }
-                }
-
-                // triggered after each item is loaded
-                function onProgress(imgLoad, image) {
-                    // change class if the image is loaded or broken
-                    var $item = $(image.img).parent();
-                    $item.removeClass('is-loading');
-                    if (!image.isLoaded) {
-                        $item.addClass('is-broken');
-                    }
-                    // update progress element
-                    loadedImageCount++;
-                    updateProgress(loadedImageCount);
-                }
-
-                // hide status when done
-                function onAlways() {
-                    $status.css({opacity: 0});
-                }
-
-                populateScenes();
-            });
-
-        },
+        //
+        ///**
+        // Open modal dialog for scene import and render all images via imageLoaded
+        // @method _listenImportSceneModal
+        // **/
+        //_listenImportSceneModal: function () {
+        //    var self = this;
+        //    $(Elements.IMPORT_SCENE).on('click', function (e) {
+        //
+        //        $(Elements.SCENE_IMPORT_MODAL).modal('show');
+        //
+        //        if (self.m_counter > self.m_counter_max)
+        //            return;
+        //
+        //
+        //        var $progress, $status;
+        //        var supportsProgress;
+        //        var loadedImageCount, imageCount;
+        //
+        //        var $demo = $('#sceneImportWrapper');
+        //        var $container = $demo.find('#image-container');
+        //        $status = $demo.find('#status');
+        //        $progress = $demo.find('progress');
+        //
+        //        supportsProgress = $progress[0] &&
+        //                // IE does not support progress
+        //            $progress[0].toString().indexOf('Unknown') === -1;
+        //
+        //        function populateScenes() {
+        //            // add new images
+        //            var items = getItems();
+        //            //console.log(items);
+        //            $container.prepend($(items));
+        //            // use ImagesLoaded
+        //            $container.imagesLoaded()
+        //                .progress(onProgress)
+        //                .always(function () {
+        //                    onAlways();
+        //                    setTimeout(function () {
+        //                        if (self.m_counter > self.m_counter_max) {
+        //                            $(Elements.IMPORT_SCENEL_DIALOG_CONTAINER).find('button').fadeIn();
+        //                            return;
+        //                        }
+        //                        populateScenes();
+        //                    }, 500)
+        //                })
+        //                .fail(function (e) {
+        //                    //console.log('some fail ' + e)
+        //                })
+        //                .done(function () {
+        //                    //console.log('completed...')
+        //                });
+        //            // reset progress counter
+        //            imageCount = $container.find('img').length;
+        //            resetProgress();
+        //            updateProgress(0);
+        //        };
+        //
+        //        // reset container
+        //        $('#reset').click(function () {
+        //            $container.empty();
+        //            self.m_counter = 0;
+        //        });
+        //
+        //
+        //        // return doc fragment with
+        //        function getItems() {
+        //            var items = '';
+        //            for (var i = 0; i < self.m_count_set; i++) {
+        //                var z = self.m_counter++;
+        //                items += getImageItem(z);
+        //            }
+        //            return items;
+        //        }
+        //
+        //        // return an <li> with a <img> in it
+        //        function getImageItem(index) {
+        //            var item = '<li class="is-loading">';
+        //            item += '<img style="width: 139px; height: 78px" src="_assets/scenes/Template' + index + '.jpg"/></li>';
+        //            return item;
+        //        }
+        //
+        //        function resetProgress() {
+        //            $status.css({opacity: 1});
+        //            loadedImageCount = 0;
+        //            if (supportsProgress) {
+        //                $progress.attr('max', imageCount);
+        //            }
+        //        }
+        //
+        //        function updateProgress(value) {
+        //            if (supportsProgress) {
+        //                $progress.attr('value', value);
+        //            } else {
+        //                // if you don't support progress elem
+        //                $status.text(value + ' / ' + imageCount);
+        //            }
+        //        }
+        //
+        //        // triggered after each item is loaded
+        //        function onProgress(imgLoad, image) {
+        //            // change class if the image is loaded or broken
+        //            var $item = $(image.img).parent();
+        //            $item.removeClass('is-loading');
+        //            if (!image.isLoaded) {
+        //                $item.addClass('is-broken');
+        //            }
+        //            // update progress element
+        //            loadedImageCount++;
+        //            updateProgress(loadedImageCount);
+        //        }
+        //
+        //        // hide status when done
+        //        function onAlways() {
+        //            $status.css({opacity: 0});
+        //        }
+        //
+        //        populateScenes();
+        //    });
+        //
+        //},
 
         /**
          Wire the UI including new scene creation and delete existing scene

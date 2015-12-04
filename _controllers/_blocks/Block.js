@@ -312,7 +312,7 @@ define(['jquery', 'backbone'], function ($) {
                 domPlayerData = $.parseXML(player_data);
                 self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
                 self._bgPropsPopulate();
-                self._announceBlockChanged();
+                //self._announceBlockChanged();
             } else {
                 var xSnippet = self._findBackground(domPlayerData);
                 $(xSnippet).remove();
@@ -348,7 +348,7 @@ define(['jquery', 'backbone'], function ($) {
                 domPlayerData = $.parseXML(player_data);
                 self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
                 self._borderPropsPopulate();
-                self._announceBlockChanged();
+                //self._announceBlockChanged();
             } else {
                 var xSnippet = self._findBorder(domPlayerData);
                 $(xSnippet).remove();

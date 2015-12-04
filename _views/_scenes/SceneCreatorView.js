@@ -74,7 +74,8 @@ define(['jquery'], function ($) {
                         }
                     case 'template':
                         {
-                            bootbox.alert('COMING SOON: We have over 600+ amazing new templates coming in January 2006... it will be amazing..');
+                            self.m_options.stackView.slideToPage(self.m_options.to, 'right');
+                            //bootbox.alert('COMING SOON: We have over 600+ amazing new templates coming in January 2006... it will be amazing..')
                             break;
                         }
                     case 'Json.weather':

@@ -531,6 +531,7 @@ define(['underscore', 'jquery', 'backbone', 'AppAuth', 'NavigationView', 'AppEnt
                 $(Elements.STATION_PROPERTIES).height(h - 50);
                 $(Elements.FASTERQ_LINES_CONTAINER).height(h - 180);
                 $(Elements.SCENE_CREATOR).height(h - 40);
+                $(Elements.SELECT_SCENE_TYPE_CREATE_TEMPLATE).height(h - 40);
 
                 BB.comBroker.fire(BB.EVENTS.APP_SIZED, this, null, {width: self._appWidth, height: self._appHeight});
             },

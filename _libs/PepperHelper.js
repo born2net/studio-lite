@@ -615,12 +615,12 @@ PepperHelper.prototype = {
     },
 
     /**
-     Translate a mimeType to a font-awesome icon of generic icons if does not exost
+     Translate a mimeType to a font-awesome icon of generic icons if does not exist
      @method getIconFromMimeType
      @param {Number} i_playerData
      @return {String} foundMimeIcon
      **/
-    getIconFromMimeType(i_mimeType){
+    getIconFromMimeType: function(i_mimeType){
         var self = this;
         var foundMimeIcon = 'fa-star';
         var blocks = self.getBlocks();

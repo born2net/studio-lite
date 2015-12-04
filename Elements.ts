@@ -399,6 +399,8 @@ module Elements {
     export const SCENE_SELECTOR = '#sceneSelector';
     export const SCENE_SELECTOR_LIST = '#sceneSelectorList';
     export const SCENE_CREATOR = '#sceneCreator';
+    export const SCENE_CREATOR_TEMPLATE = '#sceneCreatorTemplate';
+    export const SELECT_SCENE_TYPE_CREATE_TEMPLATE = '#selectSceneTypeCreateTemplate';
     export const SCENE_SLIDER_VIEW = '#sceneStackFaderView';
     export const SCENE_TOOLBAR = '#sceneToolbar';
     export const SELECT_SCENE_TYPE_CREATE = '#selectSceneTypeCreate';

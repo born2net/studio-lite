@@ -48,12 +48,22 @@ define(['jquery'], function ($) {
             });
         }
 
-        private _createScene() {
+        private _createScene(i_blockType:string) {
             var self = this;
             return;
             //self.m_selectedSceneID = -1;
             //BB.comBroker.fire(BB.EVENTS.NEW_SCENE_ADD, this, null);
             //BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this);
+        }
+
+        private _listenSelectScene() {
+            var self = this;
+            $(self.el).on('click', function(e){
+                var blockType = $(e.target).closest('.profileCard').data('type');
+                if (_.isUndefined(blockType))
+                    return;
+                self._createScene(blockType);
+            });
         }
 
         /**
@@ -65,29 +75,27 @@ define(['jquery'], function ($) {
             if (self.m_rendered)
                 return;
 
-
-            var empty = {
-                name: 'empty',
-                type: 'none',
-                icon: 'fa-sticky-note-o',
-                description: 'Create your own design, simply start with a blank scene and mix in your favorite images, videos, SVG graphics and even smart components. Get all the power to design your own custom scene.'
-            };
-            var fromTemplate = {
-                name: 'from template',
-                type: 'none',
-                icon: 'fa-paint-brush',
-                description: 'With hundreds of beautiful pre-made designs you are sure to find something you like. The scene templates are preloaded with images and labels so its a great way to get started.'
-            };
-            alert('aa')
-            self.m_sceneTypes.push(empty);
-            self.m_sceneTypes.push(fromTemplate);
+            self.m_sceneTypes = [
+                {
+                    name: 'start blank',
+                    type: '0',
+                    icon: 'fa-sticky-note-o',
+                    description: 'Create your own design, simply start with a blank scene and mix in your favorite images, videos, SVG graphics and even smart components. Get all the power to design your own custom scene.'
+                },
+                {
+                    name: 'from template',
+                    type: '1',
+                    icon: 'fa-paint-brush',
+                    description: 'With hundreds of beautiful pre-made designs you are sure to find something you like. The scene templates are preloaded with images and labels so its a great way to get started.'
+                }
+            ];
 
             var blocks = (BB.PepperHelper.getBlocks());
-            _.forEach(blocks, function (block:any) {
+            _.forEach(blocks, function (block:any, type) {
                 if (block.jsonItemLongDescription) {
                     self.m_sceneTypes.push({
                         name: block.description,
-                        type: 'none',
+                        type: type,
                         icon: block.fontAwesome,
                         description: block.jsonItemLongDescription
                     });
@@ -97,7 +105,7 @@ define(['jquery'], function ($) {
             var snippet = '';
             _.forEach(self.m_sceneTypes, function (block) {
                 snippet += `
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 profileCard">
+                    <div data-type="${block.type}" class="col-xs-12 col-sm-6 col-md-6 col-lg-4 profileCard">
                                       <div class="profileCard1">
                                         <div class="pImg">
                                           <span class="fa ${block.icon} fa-4x"></span>
@@ -115,7 +123,7 @@ define(['jquery'], function ($) {
 
             });
             $(Elements.SELECT_SCENE_TYPE_CREATE).append(snippet);
-
+            self._listenSelectScene();
         }
     }
     return SceneCreatorView;

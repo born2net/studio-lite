@@ -31,12 +31,21 @@ define(['jquery'], function ($) {
                 }
             });
         };
-        SceneCreatorView.prototype._createScene = function () {
+        SceneCreatorView.prototype._createScene = function (i_blockType) {
             var self = this;
             return;
             //self.m_selectedSceneID = -1;
             //BB.comBroker.fire(BB.EVENTS.NEW_SCENE_ADD, this, null);
             //BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this);
+        };
+        SceneCreatorView.prototype._listenSelectScene = function () {
+            var self = this;
+            $(self.el).on('click', function (e) {
+                var blockType = $(e.target).closest('.profileCard').data('type');
+                if (_.isUndefined(blockType))
+                    return;
+                self._createScene(blockType);
+            });
         };
         /**
          Render the view
@@ -46,27 +55,26 @@ define(['jquery'], function ($) {
             var self = this;
             if (self.m_rendered)
                 return;
-            var empty = {
-                name: 'empty',
-                type: 'none',
-                icon: 'fa-sticky-note-o',
-                description: 'Create your own design, simply start with a blank scene and mix in your favorite images, videos, SVG graphics and even smart components. Get all the power to design your own custom scene.'
-            };
-            var fromTemplate = {
-                name: 'from template',
-                type: 'none',
-                icon: 'fa-paint-brush',
-                description: 'With hundreds of beautiful pre-made designs you are sure to find something you like. The scene templates are preloaded with images and labels so its a great way to get started.'
-            };
-            alert('aa');
-            self.m_sceneTypes.push(empty);
-            self.m_sceneTypes.push(fromTemplate);
+            self.m_sceneTypes = [
+                {
+                    name: 'start blank',
+                    type: '0',
+                    icon: 'fa-sticky-note-o',
+                    description: 'Create your own design, simply start with a blank scene and mix in your favorite images, videos, SVG graphics and even smart components. Get all the power to design your own custom scene.'
+                },
+                {
+                    name: 'from template',
+                    type: '1',
+                    icon: 'fa-paint-brush',
+                    description: 'With hundreds of beautiful pre-made designs you are sure to find something you like. The scene templates are preloaded with images and labels so its a great way to get started.'
+                }
+            ];
             var blocks = (BB.PepperHelper.getBlocks());
-            _.forEach(blocks, function (block) {
+            _.forEach(blocks, function (block, type) {
                 if (block.jsonItemLongDescription) {
                     self.m_sceneTypes.push({
                         name: block.description,
-                        type: 'none',
+                        type: type,
                         icon: block.fontAwesome,
                         description: block.jsonItemLongDescription
                     });
@@ -74,9 +82,10 @@ define(['jquery'], function ($) {
             });
             var snippet = '';
             _.forEach(self.m_sceneTypes, function (block) {
-                snippet += "\n                    <div class=\"col-xs-12 col-sm-6 col-md-6 col-lg-4 profileCard\">\n                                      <div class=\"profileCard1\">\n                                        <div class=\"pImg\">\n                                          <span class=\"fa " + block.icon + " fa-4x\"></span>\n                                        </div>\n                                        <div class=\"pDes\">\n                                          <h1 class=\"text-center\">" + block.name + "</h1>\n                                          <p>" + block.description + "</p>\n                                          <a class=\"btn btn-md\">\n                                          <span class=\"fa fa-plus fa-2x\"></span>\n                                          </a>\n                                        </div>\n                                      </div>\n                                    </div>\n                    ";
+                snippet += "\n                    <div data-type=\"" + block.type + "\" class=\"col-xs-12 col-sm-6 col-md-6 col-lg-4 profileCard\">\n                                      <div class=\"profileCard1\">\n                                        <div class=\"pImg\">\n                                          <span class=\"fa " + block.icon + " fa-4x\"></span>\n                                        </div>\n                                        <div class=\"pDes\">\n                                          <h1 class=\"text-center\">" + block.name + "</h1>\n                                          <p>" + block.description + "</p>\n                                          <a class=\"btn btn-md\">\n                                          <span class=\"fa fa-plus fa-2x\"></span>\n                                          </a>\n                                        </div>\n                                      </div>\n                                    </div>\n                    ";
             });
             $(Elements.SELECT_SCENE_TYPE_CREATE).append(snippet);
+            self._listenSelectScene();
         };
         return SceneCreatorView;
     })(Backbone.View);

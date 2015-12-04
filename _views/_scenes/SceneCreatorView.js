@@ -107,16 +107,16 @@ define(['jquery'], function ($) {
                 return;
             self.m_sceneConfig = [
                 {
-                    name: 'start blank',
+                    name: $(Elements.BOOTBOX_START_BLANK).text(),
                     mimeType: 'blank',
                     icon: 'fa-star',
-                    description: 'Create your own design, simply start with a blank scene and mix in your favorite images, videos, SVG graphics and even smart components. Get all the power to design your own custom scene.'
+                    description: $(Elements.BOOTBOX_CREATE_DESIGN).text()
                 },
                 {
-                    name: 'from template',
+                    name: $(Elements.BOOTBOX_FROM_TEMPLATE).text(),
                     mimeType: 'template',
                     icon: 'fa-paint-brush',
-                    description: 'With hundreds of beautiful pre-made designs you are sure to find something you like. The scene templates are preloaded with images and labels so its a great way to get started.'
+                    description: $(Elements.BOOTBOX_PRE_MADE_SCENES).text()
                 }
             ];
             var blocks = (BB.PepperHelper.getBlocks());

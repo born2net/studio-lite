@@ -78,7 +78,12 @@ module Elements {
     export const BOOTBOX_PROFILE_IMAGE = '#bootBoxProfileImage';
     export const BOOTBOX_MOST_VIEWED = '#bootBoxMostViewed';
     export const BOOTBOX_SELECT_SCENE = '#bootBoxSelectScene';
-    export const BOOTBOX_SUPPORTED_EXTENSIONS = '#booxboxSupportedExtensions';
+    export const BOOTBOX_CREATE_DESIGN = '#booxboxCreateDesign';
+    export const BOOTBOX_PRE_MADE_SCENES = '#booxboxPreMadeScenes';
+    export const BOOTBOX_START_BLANK = '#booxboxStartBlank';
+    export const BOOTBOX_FROM_TEMPLATE = '#booxboxFromTemplate';
+    export const BOOTBOX_JSON_WEATHER_DESC = '#booxboxJsonWeatherDesc';
+    export const BOOTBOX_JSON_SHEETS_DESC = '#booxboxJsonSheetsDesc';
     export const BS_MODAL = '#bsModal';
     export const BUISINESS_ID = '#buisinessID';
     export const CAMPAIGN = '#campaign';

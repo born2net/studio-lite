@@ -81,6 +81,7 @@
   "bootBoxNoStationSelected": "No station selected",
   "bootBoxNoTimelineSelected": "No timeline selected",
   "bootBoxNonAllowedCharacters": "Some of the characters entered are not allowed, consider using shortening URL maker like google at: https://goo.gl",
+  "bootBoxExpSupp": "Provide supported file type",
   "bootBoxOk": "OK",
   "bootBoxOldBrowser": "Geeesh… Your browser is a dinosaur, please use the latest version from Google chrome, Microsoft Internet Explorer or Mozilla Firefox, and we promise you will be amazed...",
   "bootBoxPrimeUpgrade": "Prime / Upgrade",

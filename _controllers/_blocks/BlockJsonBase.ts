@@ -629,8 +629,8 @@ define(['jquery', 'Block'], function ($, Block) {
                 var xSnippet = $(domPlayerData).find('Json');
                 var xSnippetPlayer = $(xSnippet).find('Player');
                 $(xSnippetPlayer).attr('hDataSrc', sceneID);
+                BB.lib.log('assigning to scene ' + sceneID);
                 self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
-
             };
             $(Elements.JSON_DROPDOWN).on('change', self.m_bindScene);
         }

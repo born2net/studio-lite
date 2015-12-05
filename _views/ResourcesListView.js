@@ -322,7 +322,7 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, boots
             var self = this;
             var status = BB.Pepper.uploadResources('file');
             if (status.length == 0) {
-                bootbox.alert($(Elements.BOOTBOX_SUPPORTED_EXTENSIONS).text());
+                bootbox.alert($(Elements.MSG_BOOTBOX_EXT_SUPP).text());
                 return -1;
             }
             self.renderView();

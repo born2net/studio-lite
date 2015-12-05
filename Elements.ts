@@ -322,6 +322,7 @@ module Elements {
     export const MSG_BOOTBOX_SURE_REMOVE_TIMELINE = '#bootBoxSureRemoveTimeline';
     export const MSG_BOOTBOX_WRONG_USER_PASS = '#bootBoxWrongUserOrPass';
     export const MSG_BOOTBOX_WAIT_UPLOAD_RESOURCE = '#bootBoxWaitUploadResource';
+    export const MSG_BOOTBOX_EXT_SUPP = '#bootBoxExpSupp';
     export const MSG_CANT_DELETE_TIMELINE = '#bootBoxCantDeleteTimeline';
     export const NEW_CAMPAIGN = '#newCampaign';
     export const NEW_CAMPAIGN_NAME = '#newCampaignName';

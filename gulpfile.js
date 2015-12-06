@@ -55,7 +55,7 @@ gulp.task('minifyHTML', function (done) {
 
 gulp.task('liveServer', ['watchTmpDir'], function () {
     server = express();
-    server.use(express.static('C:/msweb/signagestudio_web-lite/src_studiolite.html'));
+    server.use(express.static('C:/msweb/signagestudio_web-lite/studiolite.html'));
     server.listen(8002);
     browserSync({
         proxy: 'localhost:8002'
@@ -78,7 +78,7 @@ gulp.task('_uploadDocs', shell.task([
 
 gulp.task('_uploadVersionFiles', shell.task([
     'scp /cygdrive/c/msweb/signagestudio_web-lite/package.json Sean@digitalsignage.com:/var/www/sites/dynasite/htdocs/_studiolite-dev/',
-    'scp /cygdrive/c/msweb/signagestudio_web-lite/src_studiolite.html Sean@digitalsignage.com:/var/www/sites/dynasite/htdocs/_studiolite-dev/'
+    'scp /cygdrive/c/msweb/signagestudio_web-lite/studiolite.html Sean@digitalsignage.com:/var/www/sites/dynasite/htdocs/_studiolite-dev/'
 ]));
 
 gulp.task('_genDocs', function () {
@@ -178,14 +178,14 @@ function updVersion() {
 }
 
 gulp.task('_htmlMinify', function () {
-    return gulp.src('src_src_studiolite.html')
+    return gulp.src('src_studiolite.html')
         .pipe(htmlmin({collapseWhitespace: true}))
         .pipe(gulp.dest('temp'))
 });
 
 gulp.task('_htmlCopy', function () {
-    return gulp.src("temp/src_src_studiolite.html")
-        .pipe(rename("src_studiolite.html"))
+    return gulp.src("temp/src_studiolite.html")
+        .pipe(rename("studiolite.html"))
         .pipe(gulp.dest("./"));
 });
 

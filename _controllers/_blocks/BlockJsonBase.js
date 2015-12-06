@@ -237,6 +237,8 @@ define(['jquery', 'Block'], function ($, Block) {
          **/
         BlockJsonBase.prototype._populateSceneDropdown = function () {
             var self = this;
+            var selected = '';
+            var snippet = ['<option selected">Select scene to use'];
             $(Elements.JSON_DROPDOWN).empty();
             var scenenames = BB.Pepper.getSceneNames();
             if (_.size(scenenames) == 0)
@@ -245,17 +247,21 @@ define(['jquery', 'Block'], function ($, Block) {
             var xSnippet = $(domPlayerData).find('Json');
             var xSnippetPlayer = $(xSnippet).find('Player');
             var selectedSceneID = $(xSnippetPlayer).attr('hDataSrc');
-            // for Subclasses of this, if  filter by matching mimetypes only
-            var snippet = '';
             for (var sceneID in scenenames) {
                 var mimeType = scenenames[sceneID].mimeType;
                 var label = scenenames[sceneID].label;
                 if (self.m_mimeType != '' && self.m_mimeType != mimeType)
                     continue;
-                var selected = sceneID == selectedSceneID ? 'selected' : '';
-                snippet += "<option " + selected + " data-scene_id=\"" + sceneID + "\">" + label + "</option>";
+                if (sceneID == selectedSceneID) {
+                    selected = 'selected';
+                    snippet.shift();
+                }
+                else {
+                    selected = '';
+                }
+                snippet.push("<option " + selected + " data-scene_id=\"" + sceneID + "\">" + label + "</option>");
             }
-            $(Elements.JSON_DROPDOWN).append($(snippet));
+            $(Elements.JSON_DROPDOWN).append($(snippet.join(' ')));
         };
         /**
          Populate the UI of the scene interval selector

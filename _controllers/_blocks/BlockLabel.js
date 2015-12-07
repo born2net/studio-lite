@@ -199,6 +199,30 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                     setTimeout(i_callback,1)
                 }
             });
+
+            var direction = $(font).attr('textAlign');
+            switch (direction) {
+                case 'left': {
+                    break;
+                }
+                case 'center': {
+                    t.set({
+                        textAlign: $(font).attr('textAlign'),
+                        originX: $(font).attr('textAlign'),
+                        left: 0
+                    });
+                    break;
+                }
+                case 'right': {
+                    t.set({
+                        textAlign: $(font).attr('textAlign'),
+                        originX: $(font).attr('textAlign'),
+                        left: rec.width / 2
+                    });
+                    break;
+                }
+            }
+            //http://jsfiddle.net/Kienz/fgWNL/
         },
 
         /**

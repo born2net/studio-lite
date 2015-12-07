@@ -673,6 +673,29 @@ define(['jquery', 'Block'], function ($, Block) {
                     setTimeout(i_callback, 1);
                 }
             });
+
+            var direction = $(font).attr('textAlign');
+            switch (direction) {
+                case 'left': {
+                    break;
+                }
+                case 'center': {
+                    t.set({
+                        textAlign: direction,
+                        originX: direction,
+                        left: 0
+                    });
+                    break;
+                }
+                case 'right': {
+                    t.set({
+                        textAlign: direction,
+                        originX: direction,
+                        left: rec.width / 2
+                    });
+                    break;
+                }
+            }
         }
 
         /**

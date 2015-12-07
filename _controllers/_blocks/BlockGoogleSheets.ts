@@ -5,6 +5,7 @@
  @class BlockGoogleSheets
  @constructor
  @return {Object} instantiated BlockGoogleSheets
+ 6e2919a1-47f0-4a4f-bd94-de7ecfbe604d
  **/
 //GULP_ABSTRACT_EXTEND extends TSLiteModules.BlockJsonBase implements IBlocks.IBlock
 //GULP_ABSTRACT_START
@@ -165,7 +166,7 @@ define(['jquery', 'BlockJsonBase', 'validator'], function ($, BlockJsonBase, val
                         if (_.isUndefined(response.responseText) || response.responseText.length == 0)
                             return;
                         var jData = JSON.parse(response.responseText);
-                        var snippet = '';
+                        var snippet = `<option value="">Nothing selected</option>`;
                         _.forEach(jData, function (k:any) {
                             snippet += `<option value="${k.id}">${k.title}</option>`;
                         });

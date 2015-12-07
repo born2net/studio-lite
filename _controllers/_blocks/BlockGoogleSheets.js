@@ -139,7 +139,7 @@ define(['jquery', 'BlockJsonBase', 'validator'], function ($, BlockJsonBase, val
                         if (_.isUndefined(response.responseText) || response.responseText.length == 0)
                             return;
                         var jData = JSON.parse(response.responseText);
-                        var snippet = '';
+                        var snippet = "<option value=\"\">Nothing selected</option>";
                         _.forEach(jData, function (k) {
                             snippet += "<option value=\"" + k.id + "\">" + k.title + "</option>";
                         });

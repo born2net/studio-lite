@@ -207,16 +207,16 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 }
                 case 'center': {
                     t.set({
-                        textAlign: $(font).attr('textAlign'),
-                        originX: $(font).attr('textAlign'),
+                        textAlign: direction,
+                        originX: direction,
                         left: 0
                     });
                     break;
                 }
                 case 'right': {
                     t.set({
-                        textAlign: $(font).attr('textAlign'),
-                        originX: $(font).attr('textAlign'),
+                        textAlign: direction,
+                        originX: direction,
                         left: rec.width / 2
                     });
                     break;

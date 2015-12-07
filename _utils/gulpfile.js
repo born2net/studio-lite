@@ -16,5 +16,5 @@ gulp.task('uglify', function() {
     gulp.src(['../**/*.js','!../node_modules/**','!../_utils/**'])
         .pipe(debug({minimal: false}))
         .pipe(uglify({compress: true, mangle: true}))
-        .pipe(gulp.dest('/var/www/sites/dynasite/htdocs/_studiolite-dist/'))
+        .pipe(gulp.dest('/var/www/sites/dynasite/htdocs/_studiolite-tmp/'))
 });

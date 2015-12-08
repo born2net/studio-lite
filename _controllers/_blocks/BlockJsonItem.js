@@ -7,6 +7,23 @@ var __extends = (this && this.__extends) || function (d, b) {
 //GULP_ABSTRACT_END
 define(['jquery', 'Block'], function ($, Block) {
     TSLiteModules.Block = Block;
+    /**
+     * BlockJsonItem block resides inside a scene or timeline
+     * @class BlockJsonItem
+     * @extends Block
+     * @constructor
+     * @param {string} i_placement location where objects resides which can be scene or timeline
+     * @param {string} i_campaign_timeline_chanel_player_id required and set as block id when block is inserted onto timeline_channel
+     * @return {Object} Block instance
+     * @example
+     * path: http://www.digitalsignage.com/videoTutorials/_data/videos.json
+     * json player: children[0].children
+     * json item: text
+     *
+     *
+     * https://secure.digitalsignage.com/GoogleSheetsValues/6e2919a1-47f0-4a4f-bd94-de7ecfbe604d/1-DBPXrRzvB68kM7-ALH4DapNPOr1pDf7MHoQZSKVhKE/0/R1C1:R3C21
+     * 6e2919a1-47f0-4a4f-bd94-de7ecfbe604d
+     */
     var BlockJsonItem = (function (_super) {
         __extends(BlockJsonItem, _super);
         function BlockJsonItem(options) {

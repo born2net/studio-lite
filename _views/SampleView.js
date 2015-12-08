@@ -4,13 +4,13 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-/**
- Sample View
- @class SampleView
- @constructor
- @return {Object} instantiated SampleView
- **/
 define(['jquery', 'validator'], function ($, validator) {
+    /**
+     Sample View
+     @class SampleView
+     @constructor
+     @return {Object} instantiated SampleView
+     **/
     var SampleView = (function (_super) {
         __extends(SampleView, _super);
         function SampleView(options) {

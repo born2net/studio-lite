@@ -7,6 +7,13 @@ var __extends = (this && this.__extends) || function (d, b) {
 //GULP_ABSTRACT_END
 define(['jquery', 'BlockJsonBase', 'validator'], function ($, BlockJsonBase, validator) {
     TSLiteModules.BlockJsonBase = BlockJsonBase;
+    /**
+     BlockGoogleSheets is based on JSON base class component
+     @class BlockGoogleSheets
+     @constructor
+     @return {Object} instantiated BlockGoogleSheets
+     6e2919a1-47f0-4a4f-bd94-de7ecfbe604d
+     **/
     var BlockGoogleSheets = (function (_super) {
         __extends(BlockGoogleSheets, _super);
         function BlockGoogleSheets(options) {

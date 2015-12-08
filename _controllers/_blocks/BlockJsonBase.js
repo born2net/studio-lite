@@ -7,6 +7,17 @@ var __extends = (this && this.__extends) || function (d, b) {
 //GULP_ABSTRACT_END
 define(['jquery', 'Block'], function ($, Block) {
     TSLiteModules.Block = Block;
+    /**
+     BlockJsonBase is a Player block that is used as the base class for all JSON based components
+     it allows for parsing of JSON data and is supported with the JSON Item inside scenes
+     @class BlockJsonBase
+     @constructor
+     @return {Object} instantiated BlockJsonBase
+     @example
+     path: http://www.digitalsignage.com/videoTutorials/_data/videos.json
+     json player: children[0].children
+     json item: text
+     **/
     var BlockJsonBase = (function (_super) {
         __extends(BlockJsonBase, _super);
         function BlockJsonBase(options) {

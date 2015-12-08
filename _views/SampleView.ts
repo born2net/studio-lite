@@ -1,13 +1,14 @@
 ///<reference path="../typings/lite/app_references.d.ts" />
 
-/**
- Sample View
- @class SampleView
- @constructor
- @return {Object} instantiated SampleView
- **/
+
 define(['jquery', 'validator'], function ($, validator) {
 
+    /**
+     Sample View
+     @class SampleView
+     @constructor
+     @return {Object} instantiated SampleView
+     **/
     class SampleView extends Backbone.View<Backbone.Model> {
 
         constructor(options?:any) {

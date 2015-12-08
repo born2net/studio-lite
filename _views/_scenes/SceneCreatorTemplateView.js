@@ -6,6 +6,12 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 //GULP_ABSTRACT_END
 define(['jquery'], function ($) {
+    /**
+     Wizard which allows user to select which scene to create, such as from a template, blank, with mimetype etc
+     @class SceneCreatorTemplateView
+     @constructor
+     @return {Object} instantiated SceneCreatorTemplateView
+     **/
     var SceneCreatorTemplateView = (function (_super) {
         __extends(SceneCreatorTemplateView, _super);
         function SceneCreatorTemplateView(options) {

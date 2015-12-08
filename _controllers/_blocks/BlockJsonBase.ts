@@ -1,16 +1,6 @@
 ///<reference path="../../typings/lite/app_references.d.ts" />
 
-/**
- BlockJsonBase is a Player block that is used as the base class for all JSON based components
- it allows for parsing of JSON data and is supported with the JSON Item inside scenes
- @class BlockJsonBase
- @constructor
- @return {Object} instantiated BlockJsonBase
- @example
- path: http://www.digitalsignage.com/videoTutorials/_data/videos.json
- json player: children[0].children
- json item: text
- **/
+
 //GULP_ABSTRACT_EXTEND extends Block
 //GULP_ABSTRACT_START
 declare module TSLiteModules {
@@ -68,6 +58,17 @@ declare module TSLiteModules {
 define(['jquery', 'Block'], function ($, Block) {
     TSLiteModules.Block = Block;
 
+    /**
+     BlockJsonBase is a Player block that is used as the base class for all JSON based components
+     it allows for parsing of JSON data and is supported with the JSON Item inside scenes
+     @class BlockJsonBase
+     @constructor
+     @return {Object} instantiated BlockJsonBase
+     @example
+     path: http://www.digitalsignage.com/videoTutorials/_data/videos.json
+     json player: children[0].children
+     json item: text
+     **/
     class BlockJsonBase extends TSLiteModules.Block {
 
         protected m_actions:{firstPage: string; nextPage: string; prevPage: string; lastPage: string; loadUrl: string; };

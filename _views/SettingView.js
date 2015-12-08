@@ -26,6 +26,12 @@ define(['jquery'], function ($) {
      @final
      **/
     //BB.EVENTS.THEME_CHANGED = 'THEME_CHANGED';
+    /**
+     Application global settings
+     @class SettingView
+     @constructor
+     @return {Object} instantiated SettingView
+     **/
     var SettingView = (function (_super) {
         __extends(SettingView, _super);
         function SettingView(options) {

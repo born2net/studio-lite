@@ -8,7 +8,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 //GULP_ABSTRACT_END
 define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, bootstrapfileinput, videojs, platform) {
     /**
-     Resource list manager including adding, removing, previewing studio resources
+     List all resources and allow for user to preview, manage and upload new resources
      @class ResourcesListView
      @constructor
      @return {Object} instantiated ResourcesListView

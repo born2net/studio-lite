@@ -1,11 +1,6 @@
 ///<reference path="../../typings/lite/app_references.d.ts" />
 
-/**
- Wizard which allows user to select which scene to create, such as from a template, blank, with mimetype etc
- @class SceneCreatorTemplateView
- @constructor
- @return {Object} instantiated SceneCreatorTemplateView
- **/
+
 //GULP_ABSTRACT_EXTEND extends Backbone.View<Backbone.Model>
 //GULP_ABSTRACT_START
 declare module TSLiteModules {
@@ -15,6 +10,12 @@ declare module TSLiteModules {
 //GULP_ABSTRACT_END
 define(['jquery'], function ($) {
 
+    /**
+     Wizard which allows user to select which scene to create, such as from a template, blank, with mimetype etc
+     @class SceneCreatorTemplateView
+     @constructor
+     @return {Object} instantiated SceneCreatorTemplateView
+     **/
     class SceneCreatorTemplateView extends Backbone.View<Backbone.Model> {
 
         private m_rendered:any;

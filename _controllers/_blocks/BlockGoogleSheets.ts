@@ -1,12 +1,5 @@
 ///<reference path="../../typings/lite/app_references.d.ts" />
 
-/**
- BlockGoogleSheets is based on JSON base class component
- @class BlockGoogleSheets
- @constructor
- @return {Object} instantiated BlockGoogleSheets
- 6e2919a1-47f0-4a4f-bd94-de7ecfbe604d
- **/
 //GULP_ABSTRACT_EXTEND extends TSLiteModules.BlockJsonBase implements IBlocks.IBlock
 //GULP_ABSTRACT_START
 declare module TSLiteModules {
@@ -21,6 +14,13 @@ declare module TSLiteModules {
 define(['jquery', 'BlockJsonBase', 'validator'], function ($, BlockJsonBase, validator) {
     TSLiteModules.BlockJsonBase = BlockJsonBase;
 
+    /**
+     BlockGoogleSheets is based on JSON base class component
+     @class BlockGoogleSheets
+     @constructor
+     @return {Object} instantiated BlockGoogleSheets
+     6e2919a1-47f0-4a4f-bd94-de7ecfbe604d
+     **/
     class BlockGoogleSheets extends TSLiteModules.BlockJsonBase implements IBlocks.IBlock {
 
         private m_sheetsChangedHandler;

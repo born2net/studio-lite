@@ -7,6 +7,12 @@ var __extends = (this && this.__extends) || function (d, b) {
 //GULP_ABSTRACT_END
 define(['jquery'], function ($) {
     BB.SERVICES.SCENES_CREATION_VIEW = 'ScenesCreationView';
+    /**
+     Wizard which allows user to select which scene to create, such as from a template, blank, with mimetype etc
+     @class SceneCreatorView
+     @constructor
+     @return {Object} instantiated SceneCreatorView
+     **/
     var SceneCreatorView = (function (_super) {
         __extends(SceneCreatorView, _super);
         function SceneCreatorView(options) {

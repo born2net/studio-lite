@@ -3,12 +3,6 @@
 
 //import BSListView = require('_views/_components/BSListView')
 
-/**
- List all resources and allow for user to preview, manage and upload new resources
- @class ResourcesListView
- @constructor
- @return {Object} instantiated ResourcesListView
- **/
 //GULP_ABSTRACT_EXTEND extends Backbone.View<Backbone.Model>
 //GULP_ABSTRACT_START
 declare module TSLiteModules {
@@ -21,7 +15,7 @@ declare module TSLiteModules {
 define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, bootstrapfileinput, videojs, platform) {
 
     /**
-     Resource list manager including adding, removing, previewing studio resources
+     List all resources and allow for user to preview, manage and upload new resources
      @class ResourcesListView
      @constructor
      @return {Object} instantiated ResourcesListView

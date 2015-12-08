@@ -1,11 +1,6 @@
 ///<reference path="../typings/lite/app_references.d.ts" />
 
-/**
- Application global settings
- @class SettingView
- @constructor
- @return {Object} instantiated SettingView
- **/
+
 //GULP_ABSTRACT_EXTEND extends Backbone.View<Backbone.Model>
 //GULP_ABSTRACT_START
 declare module TSLiteModules {
@@ -37,6 +32,12 @@ define(['jquery'], function ($) {
      **/
     //BB.EVENTS.THEME_CHANGED = 'THEME_CHANGED';
 
+    /**
+     Application global settings
+     @class SettingView
+     @constructor
+     @return {Object} instantiated SettingView
+     **/
     class SettingView extends Backbone.View<Backbone.Model> {
 
         private m_simpleStorage:simplestoragejs.SimpleStorage;

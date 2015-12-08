@@ -6,6 +6,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 //GULP_ABSTRACT_END
 define(['jquery'], function ($) {
+    BB.SERVICES.SCENES_CREATION_VIEW = 'ScenesCreationView';
     var SceneCreatorView = (function (_super) {
         __extends(SceneCreatorView, _super);
         function SceneCreatorView(options) {
@@ -18,7 +19,8 @@ define(['jquery'], function ($) {
             self.$el = $(this.id);
             self.el = this.$el.get(0);
             self.m_sceneConfig = [];
-            self.m_sceneSelector = BB.comBroker.getService(BB.SERVICES['SCENES_SELECTION_VIEW']);
+            BB.comBroker.setService(BB.SERVICES.SCENES_CREATION_VIEW, self);
+            self.m_sceneSelector = BB.comBroker.getService(BB.SERVICES.SCENES_CREATION_VIEW);
             //BB.comBroker.setService(BB.SERVICES['SETTINGS_VIEW'], self);
             self.listenTo(self.m_options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
                 if (e === self && !self.m_rendered) {
@@ -137,6 +139,21 @@ define(['jquery'], function ($) {
             });
             $(Elements.SELECT_SCENE_TYPE_CREATE).append(snippet);
             self._listenSelectScene();
+        };
+        /**
+         Select scene creation and give it a set name (instead of click operation we can do it manually)
+         @method createScene
+         @param {String} i_name
+         **/
+        SceneCreatorView.prototype.createBlankScene = function (i_name) {
+            var self = this;
+            i_name = BB.lib.cleanChar(i_name);
+            BB.comBroker.fire(BB.EVENTS.NEW_SCENE_ADD, this, null, {
+                name: i_name,
+                mimeType: ''
+            });
+            BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this, this, 'pushToTop');
+            self._goBack();
         };
         return SceneCreatorView;
     })(Backbone.View);

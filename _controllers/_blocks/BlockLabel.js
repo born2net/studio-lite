@@ -222,7 +222,23 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                     break;
                 }
             }
+
+            // todo: add shadow
             //http://jsfiddle.net/Kienz/fgWNL/
+            //http://jsfiddle.net/fabricjs/7gvJG/
+            //http://jsfiddle.net/5KKQ2/
+            //t.set('shadow', {
+            //    color: 'black',
+            //    blur: 1,
+            //    offsetX:3,
+            //    offsetY: 1
+            //});({ color: 'rgba(12,12,12,1)' });
+            //rec.set('shadow', {
+            //    color: 'black',
+            //    blur: 1,
+            //    offsetX:3,
+            //    offsetY: 1
+            //});
         },
 
         /**

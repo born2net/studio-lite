@@ -51,4 +51,4 @@ tar -pczf /tmp/studiolite-dist.tar.gz ../../_studiolite-dist/
 ### upload to remote server ###
 ### echo 'uploading to galaxy for private server distribution'
 ### cp ../redirect.html ../../_studiolite-dist/studiolite.html
-### ./copyRemote.js
+./copyRemote.js

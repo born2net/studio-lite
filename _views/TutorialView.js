@@ -303,6 +303,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                     timeout: 300,
                     onBeforeStart: function () {
                         //$('#sceneSelectorList').children().:not(:last-child)')fadeOut();
+                        var sceneCreationService = BB.comBroker.getService(BB.SERVICES['SCENES_CREATION_VIEW']);
+                        sceneCreationService.createBlankScene('New Scene from Wizard');
                         $('a:not(:last-child)', '#sceneSelectorList').slideUp();
                         log('STEP 22');
                     }

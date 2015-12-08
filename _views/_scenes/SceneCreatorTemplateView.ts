@@ -9,8 +9,8 @@
 //GULP_ABSTRACT_EXTEND extends Backbone.View<Backbone.Model>
 //GULP_ABSTRACT_START
 declare module TSLiteModules {
-    export class SceneCreatorTemplateView extends Backbone.View<Backbone.Model> {
-    }
+   export class SceneCreatorTemplateView extends Backbone.View<Backbone.Model> {
+   }
 }
 //GULP_ABSTRACT_END
 define(['jquery'], function ($) {

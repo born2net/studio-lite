@@ -101,6 +101,9 @@ define(['jquery'], function ($) {
                         //bootbox.alert('COMING SOON: We have over 600+ amazing new templates coming in January 2006... it will be amazing..')
                         break;
                     }
+                    case 'Json.digg':
+                    {
+                    }
                     case 'Json.weather':
                     {
                     }

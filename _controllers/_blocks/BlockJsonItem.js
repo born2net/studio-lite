@@ -47,6 +47,22 @@ define(['jquery', 'Block'], function ($, Block) {
             self._listenDualNumericChanged();
             self.m_sceneMime = BB.Pepper.getSceneMime(self.m_sceneID);
             self.m_config = {
+                'Json.digg': {
+                    title: 'Digg',
+                    tabTitle: 'Cells',
+                    fields: {
+                        1: {
+                            name: "title",
+                            type: "text",
+                            label: "title"
+                        },
+                        2: {
+                            name: "link",
+                            type: "resource",
+                            label: "image"
+                        }
+                    }
+                },
                 'Json.spreadsheet': {
                     title: 'Spreadsheet',
                     tabTitle: 'Cells',
@@ -528,7 +544,7 @@ define(['jquery', 'Block'], function ($, Block) {
         /**
          Some json item field names need to be muated into something else.
          For example, the default fieldName of text needs to be changed into '$cells.1.1.value' when
-         used in a scene of mimeType Json.spreadsheet
+         used in a scene of mimeType
          @method _mutateCustomFieldName
          **/
         BlockJsonItem.prototype._mutateCustomFieldName = function () {

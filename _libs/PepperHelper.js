@@ -38,6 +38,7 @@ PepperHelper.prototype = {
             'jsonitem':  { image: 'fa-cubes' },
             'worldweather':  { image: 'fa-sun-o' },
             'googlesheets':  { image: 'fa-table' },
+            'digg':  { image: 'fa-digg' },
             'rss': { image: 'fa-rss' },
             'mrss': { image: 'fa-rss-square' },
             'flv': { image: 'fa-file-video-o' },
@@ -388,6 +389,30 @@ PepperHelper.prototype = {
                              '</Player>'
                 },
                 fontAwesome: self.getFontAwesome('googlesheets')
+            },
+            6000: {
+                name: 'Digg',
+                app_id: '12000',
+                color: '#E5E5E5',
+                acronym: 'Digg',
+                description: 'Digg',
+                mimeType: 'Json.digg',
+                jsonItemLongDescription: $(Elements.BOOTBOX_JSON_DIGG_DESC).text(),
+                svg: new String('<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">  <g transform="translate(-10,-10)">    <g>   <path stroke="null" id="svg_2" d="m11.00993,15.37582l-6.00993,0l0,15.47803l10.01428,0l0,-22.14885l-4.00435,0l0,6.67082zm-0.12917,10.69365l-2.00331,0l0,-6.3598l2.00331,0c0,0 0,6.3598 0,6.3598zm11.84989,4.97622l5.85356,0l0,1.95619l-5.85356,0l0,4.66812l9.86245,0l0,-22.2128l-9.86245,0l0,15.58849zm3.74374,-10.67912l1.99651,0l0,6.3598l-1.99651,0l0,-6.3598zm8.03817,-4.90937l0,15.58267l5.85356,0l0,1.95619l-5.85356,0l0,4.66812l9.86245,0l0,-22.20698l-9.86245,0l0,0zm5.74025,11.26917l-1.99651,0l0,-6.3598l1.99651,0l0,6.3598zm-23.42784,-17.95743l4.00888,0l0,4.34257l-4.00888,0l0,-4.34257zm0,6.66791l4.00888,0l0,15.53617l-4.00888,0l0,-15.53617z"/>          </g>     </g></svg>'),
+                getDefaultPlayerData: function (i_placement) {
+                    return  '<Player player="6000" label="json" interactive="0">' +
+                        '<Data>' +
+                        self.getCommonDefaultXML() +
+                        self.getCommonSceneLayout(i_placement) +
+                        '<EventCommands></EventCommands>' +
+                        '<Json providerType="digg" itemsPath="" slideShow="1" itemInterval="2" playVideoInFull="1" randomOrder="1">'+
+                        '<Player/>'+
+                        '<Data token="" id="" />' +
+                        '</Json>'+
+                        '</Data>' +
+                        '</Player>'
+                },
+                fontAwesome: self.getFontAwesome('digg')
             },
             3340: {
                 name: 'Multimedia RSS',

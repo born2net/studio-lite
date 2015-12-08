@@ -1,0 +1,40 @@
+Scene:
+<?xml version="1.0" encoding="UTF-8"?>
+<Player player="3510" label="Digg cene" interactive="0" mimeType="Json.digg" id="YmxvY2tpZDU3">
+   <Data>
+      <Layout rotation="0" x="0" y="0" width="400" height="400" />
+      <Scene defaultDuration="10">
+         <Layout>
+            <BasicLayout />
+         </Layout>
+         <Players>
+            <Player player="4310" label="JSON Item" interactive="0" id="YmxvY2tpZDU4">
+               <Data>
+                  <Layout rotation="0" x="96" y="131" width="100" height="100" />
+                  <XmlItem fieldName="title" fieldType="text">
+                     <Font fontSize="16" fontColor="65280" fontFamily="Arial" fontWeight="normal" fontStyle="normal" textDecoration="none" textAlign="left" />
+                  </XmlItem>
+               </Data>
+            </Player>
+            <Player player="4310" label="JSON Item" interactive="0" id="YmxvY2tpZDU5">
+               <Data>
+                  <Layout rotation="0" x="232" y="102" width="100" height="100" />
+                  <XmlItem fieldName="link" fieldType="resource" maintainAspectRatio="1" />
+               </Data>
+            </Player>
+         </Players>
+      </Scene>
+   </Data>
+</Player>
+
+
+Player:
+<?xml version="1.0" encoding="UTF-8"?>
+<Player player="6000" label="Digg" interactive="0">
+   <Data>
+      <Json providerType="digg" itemsPath="" slideShow="1" itemInterval="7" playVideoInFull="1" randomOrder="1">
+         <Player src="33" hDataSrc="10" />
+         <Data />
+      </Json>
+   </Data>
+</Player>

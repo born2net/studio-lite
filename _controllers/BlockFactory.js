@@ -61,6 +61,7 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
     BB.CONSTS.BLOCKCODE_JSON_ITEM = '4310';
     BB.CONSTS.BLOCKCODE_WORLD_WEATHER = '6010';
     BB.CONSTS.BLOCKCODE_GOOGLE_SHEETS = '6022';
+    BB.CONSTS.BLOCKCODE_DIGG = '6000';
     BB.CONSTS.BLOCKCODE_IMAGE = '3130';
     BB.CONSTS.BLOCKCODE_SVG = '3140';
     BB.CONSTS.BLOCKCODE_VIDEO = '3100';
@@ -95,7 +96,7 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
          **/
         loadBlockModules: function () {
             var self = this;
-            require(['BlockProperties', 'Block', 'BlockScene', 'BlockRSS', 'BlockQR', 'BlockYouTube', 'BlockCollection', 'BlockLocation', 'BlockFasterQ', 'BlockTwitter', 'BlockTwitterItem', 'BlockJson', 'BlockJsonItem','BlockWorldWeather', 'BlockGoogleSheets', 'BlockVideo', 'BlockImage', 'BlockSVG', 'BlockExtImage', 'BlockExtVideo', 'BlockMRSS', 'BlockHTML', 'BlockLabel', 'BlockClock'], function (BlockProperties, Block, BlockScene, BlockRSS, BlockQR, BlockYouTube, BlockCollection, BlockLocation, BlockFasterQ, BlockTwitter, BlockTwitterItem, BlockJson, BlockJsonItem, BlockWorldWeather, BlockGoogleSheets, BlockVideo, BlockImage, BlockSVG, BlockExtImage, BlockExtVideo, BlockMRSS, BlockHTML, BlockLabel, BlockClock) {
+            require(['BlockProperties', 'Block', 'BlockScene', 'BlockRSS', 'BlockQR', 'BlockYouTube', 'BlockCollection', 'BlockLocation', 'BlockFasterQ', 'BlockTwitter', 'BlockTwitterItem', 'BlockJson', 'BlockJsonItem','BlockWorldWeather', 'BlockGoogleSheets', 'BlockDigg', 'BlockVideo', 'BlockImage', 'BlockSVG', 'BlockExtImage', 'BlockExtVideo', 'BlockMRSS', 'BlockHTML', 'BlockLabel', 'BlockClock'], function (BlockProperties, Block, BlockScene, BlockRSS, BlockQR, BlockYouTube, BlockCollection, BlockLocation, BlockFasterQ, BlockTwitter, BlockTwitterItem, BlockJson, BlockJsonItem, BlockWorldWeather, BlockGoogleSheets, BlockDigg, BlockVideo, BlockImage, BlockSVG, BlockExtImage, BlockExtVideo, BlockMRSS, BlockHTML, BlockLabel, BlockClock) {
                 if (self.m_blockProperties)
                     return;
                 self.m_blockProperties = new BlockProperties({el: Elements.BLOCK_PROPERTIES});
@@ -113,6 +114,7 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
                 self.m_blockJsonItem = BlockJsonItem;
                 self.m_blockWorldWeather = BlockWorldWeather;
                 self.m_blockGoogleSheets = BlockGoogleSheets;
+                self.m_blockDigg = BlockDigg;
                 self.m_blockVideo = BlockVideo;
                 self.m_blockImage = BlockImage;
                 self.m_blockSVG = BlockSVG;
@@ -250,6 +252,15 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
                 case parseInt(BB.CONSTS.BLOCKCODE_GOOGLE_SHEETS):
                 {
                     block = new self.m_blockGoogleSheets({
+                        i_placement: i_placement,
+                        i_block_id: block_id,
+                        i_scene_player_data_id: i_scene_id
+                    });
+                    break;
+                }
+                case parseInt(BB.CONSTS.BLOCKCODE_DIGG):
+                {
+                    block = new self.m_blockDigg({
                         i_placement: i_placement,
                         i_block_id: block_id,
                         i_scene_player_data_id: i_scene_id

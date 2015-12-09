@@ -33,22 +33,25 @@ echo 'removing old dist'
 rm -r -f ../../_studiolite-dist/
 echo 'copying new dist from tmp to dist'
 cp -r -f ../../_studiolite-tmp/ ../../_studiolite-dist/
-echo 'copying finished'
+echo 'copying finished, site is now LIVE!!!'
 
 
 ### final source changes ###
+echo 'making internal changes to studiolite.html'
 ./presetDist.js
 
 
 ### remove src from dist ###
+echo 'removing dist dev source file ../../_studiolite-dist/src_studiolite.html'
 rm ../../_studiolite-dist/src_studiolite.html
 
 
 ### create backup ###
+echo 'creating a backup /tmp/studiolite-dist.tar.gz'
 tar -pczf /tmp/studiolite-dist.tar.gz ../../_studiolite-dist/
 
 
 ### upload to remote server ###
-### echo 'uploading to galaxy for private server distribution'
+echo 'uploading to galaxy for private server and old distributions'
 ### cp ../redirect.html ../../_studiolite-dist/studiolite.html
 ./copyRemote.js

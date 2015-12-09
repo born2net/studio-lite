@@ -110,6 +110,8 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
 
                 if (componentID == BB.CONSTS.BLOCKCODE_IMAGE ||
                     componentID == BB.CONSTS.BLOCKCODE_SVG ||
+                    componentID == BB.CONSTS.BLOCKCODE_TWITTER ||
+                    componentID == BB.CONSTS.BLOCKCODE_TWITTER_ITEM ||
                     componentID == BB.CONSTS.BLOCKCODE_VIDEO ||
                     componentID == BB.CONSTS.BLOCKCODE_SCENE ||
                     (self.m_placement == BB.CONSTS.PLACEMENT_CHANNEL && componentID == BB.CONSTS.BLOCKCODE_JSON_ITEM) ||

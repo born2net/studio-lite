@@ -94,6 +94,7 @@ require.config({
         'BlockWorldWeather': '_controllers/_blocks/BlockWorldWeather',
         'BlockGoogleSheets': '_controllers/_blocks/BlockGoogleSheets',
         'BlockDigg': '_controllers/_blocks/BlockDigg',
+        'BlockTwitterV3': '_controllers/_blocks/BlockTwitterV3',
         'BlockVideo': '_controllers/_blocks/BlockVideo',
         'BlockImage': '_controllers/_blocks/BlockImage',
         'BlockSVG': '_controllers/_blocks/BlockSVG',

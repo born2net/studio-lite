@@ -104,6 +104,9 @@ define(['jquery'], function ($) {
                     case 'Json.digg':
                     {
                     }
+                    case 'Json.twitter':
+                    {
+                    }
                     case 'Json.weather':
                     {
                     }

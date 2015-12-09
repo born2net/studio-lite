@@ -78,6 +78,22 @@ define(['jquery', 'Block'], function ($, Block) {
             self.m_sceneMime = BB.Pepper.getSceneMime(self.m_sceneID);
 
             self.m_config = {
+                'Json.twitter': {
+                    title: 'Twitter',
+                    tabTitle: 'Cells',
+                    fields: {
+                        1: {
+                            name: "title",
+                            type: "text",
+                            label: "title"
+                        },
+                        2: {
+                            name: "link",
+                            type: "resource",
+                            label: "image"
+                        }
+                    }
+                },
                 'Json.digg': {
                     title: 'Digg',
                     tabTitle: 'Cells',
@@ -465,7 +481,7 @@ define(['jquery', 'Block'], function ($, Block) {
             $(Elements.JSON_ITEM_FIELD_CONTAINER).hide();
             $(Elements.JSON_ITEM_TEXT_FIELDS_CONTAINER).show();
 
-            var snippet:string = '';
+            var snippet:string = `<option selected data-type="" value="no field selected">select field</option>`;
             var fields:any = self.m_config[self.m_sceneMime].fields;
             _.each(fields, (k:any) => {
                 snippet += `<option data-type="${k.type}" value="${k.name}">${k.label}</option>`;

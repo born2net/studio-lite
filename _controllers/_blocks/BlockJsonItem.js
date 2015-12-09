@@ -47,6 +47,22 @@ define(['jquery', 'Block'], function ($, Block) {
             self._listenDualNumericChanged();
             self.m_sceneMime = BB.Pepper.getSceneMime(self.m_sceneID);
             self.m_config = {
+                'Json.twitter': {
+                    title: 'Twitter',
+                    tabTitle: 'Cells',
+                    fields: {
+                        1: {
+                            name: "title",
+                            type: "text",
+                            label: "title"
+                        },
+                        2: {
+                            name: "link",
+                            type: "resource",
+                            label: "image"
+                        }
+                    }
+                },
                 'Json.digg': {
                     title: 'Digg',
                     tabTitle: 'Cells',
@@ -418,7 +434,7 @@ define(['jquery', 'Block'], function ($, Block) {
             var maintainAspectRatio = $(xSnippet).attr('maintainAspectRatio');
             $(Elements.JSON_ITEM_FIELD_CONTAINER).hide();
             $(Elements.JSON_ITEM_TEXT_FIELDS_CONTAINER).show();
-            var snippet = '';
+            var snippet = "<option selected data-type=\"\" value=\"no field selected\">select field</option>";
             var fields = self.m_config[self.m_sceneMime].fields;
             _.each(fields, function (k) {
                 snippet += "<option data-type=\"" + k.type + "\" value=\"" + k.name + "\">" + k.label + "</option>";

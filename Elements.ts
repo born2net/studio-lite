@@ -46,6 +46,7 @@ module Elements {
     export const BLOCK_COMMON_SETTINGS = '#blockCommonSettings';
     export const BLOCK_COMMON_SETTINGS_WEATHER = '#blockCommonSettingsWeather';
     export const BLOCK_COMMON_SETTINGS_GOOGLE_SHEETS = '#blockCommonSettingsGoogleSheets';
+    export const BLOCK_COMMON_SETTINGS_TWITTERV3 = '#blockCommonSettingsTwitterV3';
     export const BLOCK_COMMON_SETTINGS_DIGG = '#blockCommonSettingsDigg';
     export const BLOCK_COMMON_SETTINGS_TAB = '#blockCommonSettingsTab';
     export const BLOCK_EXT_IMAGE_COMMON_PROPERTIES = '#blockExtImageCommonProperties';
@@ -85,6 +86,7 @@ module Elements {
     export const BOOTBOX_FROM_TEMPLATE = '#booxboxFromTemplate';
     export const BOOTBOX_JSON_WEATHER_DESC = '#booxboxJsonWeatherDesc';
     export const BOOTBOX_JSON_SHEETS_DESC = '#booxboxJsonSheetsDesc';
+    export const BOOTBOX_JSON_TWITTER_DESC = '#booxboxJsonTwitterDesc';
     export const BOOTBOX_JSON_DIGG_DESC = '#booxboxJsonDiggDesc';
     export const BS_MODAL = '#bsModal';
     export const BUISINESS_ID = '#buisinessID';

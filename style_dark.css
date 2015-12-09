@@ -290,3 +290,35 @@ input {
 {
     background: rgba(66, 66, 66, 0.5);
 }
+
+.profileCard {
+    background-color: #0c0c0c;
+}
+
+.pImg {
+    background: #eb7c66 !important;
+}
+
+.profileCard .pImg {
+    background-color: #e97b66;
+    border-radius: 50% !important;
+    display: table;
+    height: 100px;
+    margin: 0 auto;
+    width: 100px;
+    margin-top: -60px;
+}
+
+.profileCard1 .pDes > a {
+    background-color: #e97b66;
+    border-radius: 2px;
+    color: #fff;
+    transition: all 0.5s ease 0s;
+}
+
+.profileCard1 .pDes > a:hover {
+    background-color: #e91d33;
+    box-shadow: 0 2px 5px 0 white, 0 2px 10px 0 white;
+    color: #fff;
+    transition: all 0.5s ease 0s;
+}

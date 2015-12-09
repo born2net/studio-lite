@@ -63,7 +63,7 @@ define(['jquery', 'BlockJsonBase', 'validator'], function ($, BlockJsonBase, val
          @method deleteBlock
          @params {Boolean} i_memoryOnly if true only remove from existance but not from msdb
          **/
-        BlockDigg.prototype.deletedBlock = function (i_memoryOnly) {
+        BlockDigg.prototype.deleteBlock = function (i_memoryOnly) {
             var self = this;
             _super.prototype.deleteBlock.call(this, i_memoryOnly);
         };

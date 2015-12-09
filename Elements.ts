@@ -116,6 +116,8 @@ module Elements {
     export const COLLECTION_SLIDESHOW_DURATION = '#collectionSlideShowDuration';
     export const KIOSK_EVENTS_CONTAINER = '#kioskEventsContainer';
     export const CHANNEL_PROPERTIES = '#channelProperties';
+    export const CLASS_ACCESS_TOKEN = '.accessToken';
+    export const CLASS_GEN_TOKEN = '.genToken';
     export const CLASS_ADD_RESOURCE_LOCATION = '.addResourceToLocation';
     export const CLASS_ADD_BLOCK_LIST_ITEMS = '.addBlockListItems';
     export const CLASS_COLLECTION_TABLE_FORMATTER = '.collectionTableIconFormatter';
@@ -316,6 +318,7 @@ module Elements {
     export const MSG_BOOTBOX_SCENE_REFER_ITSELF = '#bootBoxSceneReferItself';
     export const MSG_BOOTBOX_NON_ALLOWED_CHARACTERS = '#bootBoxNonAllowedCharacters';
     export const MSG_BOOTBOX_TOKEN_TOO_SHORT = '#bootBoxTokenTooShort';
+    export const MSG_BOOTBOX_POPUP_BLOCKED = '#bootBoxPopupBlocked';
     export const MSG_BOOTBOX_SELECT_RESOURCE = '#bootBoxSelectResource';
     export const MSG_BOOTBOX_SELECT_SCENE_FIRST = '#bootBoxSelectSceneFirst';
     export const MSG_BOOTBOX_STEPS = '#bootBoxSteps';
@@ -551,6 +554,7 @@ module Elements {
     export const SCHEDULER_REPEAT_MODE = '#schedulerRepeatMode';
     export const TWITTER_ITEMTYPE_SELECT = '#twitterItemTypeSelect';
     export const TWITTER_FONT_SETTINGS = '#twitterFontSettings';
+    export const TWITTER_FILTER_SCREEN_NAME = '#twitterFilterScreenName';
     export const TWITTER_ITEM_LABEL = '#twitterItemLabel';
     export const TWITTER_DROPDOWN = '#twitterDropDown';
     export const TWITTER_ITEM_DROPDOWN = '#twitterItemDropDown';

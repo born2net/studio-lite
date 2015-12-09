@@ -203,7 +203,7 @@ define(['jquery', 'BlockJsonBase', 'validator'], function ($, BlockJsonBase, val
          @method deleteBlock
          @params {Boolean} i_memoryOnly if true only remove from existance but not from msdb
          **/
-        BlockGoogleSheets.prototype.deletedBlock = function (i_memoryOnly) {
+        BlockGoogleSheets.prototype.deleteBlock = function (i_memoryOnly) {
             var self = this;
             _super.prototype.deleteBlock.call(this, i_memoryOnly);
             $(Elements.GOOGLE_SHEET).off('change', self.m_sheetsChangedHandler);

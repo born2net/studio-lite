@@ -49,23 +49,43 @@ define(['jquery', 'Block'], function ($, Block) {
             self.m_config = {
                 'Json.twitter': {
                     title: 'Twitter',
-                    tabTitle: 'Cells',
+                    tabTitle: 'Tweets',
                     fields: {
                         1: {
-                            name: "title",
+                            name: "name",
                             type: "text",
-                            label: "title"
+                            label: "name"
                         },
                         2: {
-                            name: "link",
+                            name: "text",
+                            type: "text",
+                            label: "text"
+                        },
+                        3: {
+                            name: "screen_name",
+                            type: "text",
+                            label: "screen name"
+                        },
+                        4: {
+                            name: "created_at",
+                            type: "text",
+                            label: "created at"
+                        },
+                        5: {
+                            name: "profile_background_image_url",
                             type: "resource",
-                            label: "image"
+                            label: "Background image"
+                        },
+                        6: {
+                            name: "profile_image_url",
+                            type: "resource",
+                            label: "Image"
                         }
                     }
                 },
                 'Json.digg': {
                     title: 'Digg',
-                    tabTitle: 'Cells',
+                    tabTitle: 'Posts',
                     fields: {
                         1: {
                             name: "title",

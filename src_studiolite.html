@@ -1492,7 +1492,7 @@
                 <span class="dashboardBullets" id="serverName"></span><br/>
                 <span class="dashboardBullets" data-localize="businessId"> Business id: </span><span class="dashboardBullets" id="buisinessID"></span><br/>
                 <span class="dashboardBullets" data-localize="username"> User name: </span><span class="userName dashboardBullets"></span><br/>
-                <span class="dashboardBullets" data-localize="version"> Version 1.5.27 </span>
+                <span class="dashboardBullets" data-localize="version"> Version 1.5.28 </span>
                 <br/>
               </div>
 
@@ -2686,16 +2686,15 @@
                   </div>
                   <div id="blockCommonSettingsTwitterV3" style="display: none">
                     <div style="padding: 10px">
-                      <label style="padding-right: 78px; width: 200px" for="googleSheet" data-localize="googleSheet"> Google Sheet </label>
-                      <select id="googleSheet" data-live-search="true" class="selectpicker"> </select>
+                      <label style="padding-right: 78px; width: 200px" for="twitterFilterScreenName" data-localize="screenName">Filter by Screen name</label>
+                      <input id="twitterFilterScreenName" type="text" data-localize="filter" placeholder="filter">
                       <hr class="hrThin"/>
-                      <label style="padding-right: 78px; width: 200px" for="googleSheetToken" data-localize="gmailToken">Gmail token</label>
-                      <input id="googleSheetToken" type="text" data-localize="yourGmailToken" placeholder="your Gmail token">
-                      <a id="googleSheetRefresh" type="button" class="pull-right" style="padding-right: 53px; padding-top: 5px; cursor: pointer">
-                        <span class="glyphicon glyphicon-refresh"></span>
-                      </a>
+                      <label style="padding-right: 78px; width: 200px" data-localize="accessToken">access token</label>
+                      <input class="accessToken" type="text" data-localize="pasteToken" placeholder="paste token here">
                       <hr class="hrThin"/>
-                      <label><a href="http://google.signage.me" target="_blank"><span data-localize="genToken">Click here to create a token</span></a></label>
+                      <label>
+                        <a class="genToken" href="" target="_blank"><span data-localize="genToken">Click here to create a token</span></a>
+                      </label>
                     </div>
                   </div>
                 </div>
@@ -2709,7 +2708,7 @@
 </div>
 <div id="footer">
   <br>
-  <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.5.27 </span>
+  <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.5.28 </span>
 </div>
 
 <div id="popModal" style="display: none"></div>
@@ -3128,6 +3127,8 @@
 
 <p style="display: none" id="bootBoxSceneMustSelectScene" data-localize="bootBoxSceneMustSelectScene">You must first
   select a Scene</p>
+
+<p style="display: none" id="bootBoxPopupBlocked" data-localize="bootBoxPopupBlocked">Popup blocked by browser</p>
 
 <p style="display: none" id="bootBoxBrowserTooSmall" data-localize="bootBoxBrowserTooSmall">your browser width or height
   is too small, please maximize its size and try again</p>

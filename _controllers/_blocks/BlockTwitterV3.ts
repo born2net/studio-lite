@@ -7,7 +7,7 @@ declare module TSLiteModules {
         protected _initSettingsPanel() ;
         protected _loadBlockSpecificProps():void ;
         protected _populate():void ;
-        public deletedBlock(i_memoryOnly):void ;
+        public deleteBlock(i_memoryOnly):void ;
    }
 }
 //GULP_ABSTRACT_END
@@ -23,9 +23,9 @@ define(['jquery', 'BlockJsonBase', 'validator'], function ($, BlockJsonBase, val
      **/
     class BlockTwitterV3 extends TSLiteModules.BlockJsonBase implements IBlocks.IBlock {
 
-        private m_sheetsChangedHandler;
-        private m_tokenChangedHandler;
-        private m_sheetsRefreshHandler;
+        private m_tokenChangedHandler:Function;
+        private m_tokenRequest:Function;
+        private m_filterScreenNameChangedHandler:Function;
         private m_minTokenLength:number;
 
         constructor(options?:any) {
@@ -41,77 +41,37 @@ define(['jquery', 'BlockJsonBase', 'validator'], function ($, BlockJsonBase, val
          **/
         initialize() {
             var self = this;
-            self.m_minTokenLength = 15;
             super.initialize(this.m_options);
             self.m_mimeType = 'Json.twitter';
+            self.m_minTokenLength = 15;
             self._initSettingsPanel();
-            //self._listenSheetChanged();
-            //self._listenTokenChanged();
-            //self._listenRefreshSheetList();
-            //self._loadSheetList();
+            self._listenFilterScreenNameChange();
+            self._listenTokenChanged();
+            self._listenGetNewToken();
         }
 
         /**
-         Get current token from msdb
-         @method _getToken
-         @return {string} token
+         Listen to request to generate a new token
+         @method _listenGetNewToken
          **/
-        private _getToken():string {
-            var self = this;
-            var domPlayerData:XMLDocument = self._getBlockPlayerData();
-            var item = $(domPlayerData).find('Json').find('Data');
-            return $(item).attr('token');
-        }
-
         /**
-         Get current fileID from msdb
-         @method _getFileId
-         @return {string} id
+         Listen to input screen name changes
+         @method _listenFilterScreenNameChange
          **/
-        private _getFileId():string {
+        private _listenGetNewToken():void {
             var self = this;
-            var domPlayerData:XMLDocument = self._getBlockPlayerData();
-            var item = $(domPlayerData).find('Json').find('Data');
-            return $(item).attr('id');
-        }
-
-        /**
-         Load list of latest sheets from server
-         @method _listenRefreshSheetList
-         @param {Number} i_playerData
-         @return {Number} Unique clientId.
-         **/
-        private _listenRefreshSheetList() {
-            var self = this;
-            self.m_sheetsRefreshHandler = function (e) {
+            self.m_tokenRequest = function (e) {
                 if (!self.m_selected)
                     return;
-                var token = self._getToken();
-                if (token.length < self.m_minTokenLength) {
-                    bootbox.alert($(Elements.MSG_BOOTBOX_TOKEN_TOO_SHORT).text());
-                    return;
+                var win = window.open('http://twitter.signage.me', '_blank');
+                if (win) {
+                    win.focus();
+                } else {
+                    bootbox.alert($(Elements.MSG_BOOTBOX_POPUP_BLOCKED).text());
                 }
-                self._loadSheetList();
+                return false;
             };
-            $(Elements.GOOGLE_SHEET_REFRESH).on('click', self.m_sheetsRefreshHandler);
-        }
-
-        /**
-         Listen sheet selected / changed
-         @method _listenSheetChanged
-         **/
-        private _listenSheetChanged() {
-            var self = this;
-            self.m_sheetsChangedHandler = function (e) {
-                if (!self.m_selected)
-                    return;
-                var value = $(Elements.GOOGLE_SHEET + ' option:selected').val();
-                var domPlayerData:XMLDocument = self._getBlockPlayerData();
-                var item = $(domPlayerData).find('Json').find('Data');
-                $(item).attr('id', value);
-                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
-            };
-            $(Elements.GOOGLE_SHEET).on('change', self.m_sheetsChangedHandler);
+            $(Elements.CLASS_GEN_TOKEN, self.el).on('click', self.m_tokenRequest);
         }
 
         /**
@@ -123,66 +83,35 @@ define(['jquery', 'BlockJsonBase', 'validator'], function ($, BlockJsonBase, val
             self.m_tokenChangedHandler = function (e) {
                 if (!self.m_selected)
                     return;
-                var value = $(Elements.GOOGLE_SHEET_TOKEN).val();
+                var token = $(e.target).val();
+                if (token.length < self.m_minTokenLength) {
+                    bootbox.alert($(Elements.MSG_BOOTBOX_TOKEN_TOO_SHORT).text());
+                    return;
+                }
                 var domPlayerData:XMLDocument = self._getBlockPlayerData();
                 var item = $(domPlayerData).find('Json').find('Data');
-                $(item).attr('token', value);
+                $(item).attr('token', token);
                 self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
-                self._loadSheetList();
             };
-            $(Elements.GOOGLE_SHEET_TOKEN).on('change', self.m_tokenChangedHandler);
+            $(Elements.CLASS_ACCESS_TOKEN, self.el).on('change', self.m_tokenChangedHandler);
         }
 
         /**
-         Clear the list of Google sheets
-         @method _clearSheetList
+         Listen to input screen name changes
+         @method _listenFilterScreenNameChange
          **/
-        private _clearSheetList() {
+        private _listenFilterScreenNameChange() {
             var self = this;
-            $(Elements.GOOGLE_SHEET).empty();
-            $(Elements.GOOGLE_SHEET).selectpicker('refresh');
-        }
-
-        /**
-         Load latest sheets from Google services
-         @method _loadSheetList
-         **/
-        private _loadSheetList() {
-            var self = this;
-            self._clearSheetList();
-            var token = self._getToken();
-            if (token.length < self.m_minTokenLength)
-                return;
-            try {
-                $.ajax({
-                    url: 'https://secure.digitalsignage.com/GoogleSheetsList/' + token,
-                    dataType: "json",
-                    type: "post",
-                    complete: function (response, status) {
-                        if (!self.m_selected)
-                            return;
-                        self._clearSheetList();
-                        //BB.lib.log('from sheets ' + response.responseText);
-                        if (_.isUndefined(response.responseText) || response.responseText.length == 0)
-                            return;
-                        var jData = JSON.parse(response.responseText);
-                        var snippet = `<option value="">Nothing selected</option>`;
-                        _.forEach(jData, function (k:any) {
-                            snippet += `<option value="${k.id}">${k.title}</option>`;
-                        });
-                        $(Elements.GOOGLE_SHEET).append(snippet);
-                        var id = self._getFileId();
-                        if (id.length > self.m_minTokenLength)
-                            $(Elements.GOOGLE_SHEET).val(id);
-                        $(Elements.GOOGLE_SHEET).selectpicker('refresh');
-                    },
-                    error: function (jqXHR, exception) {
-                        BB.lib.log(jqXHR, exception);
-                    }
-                });
-            } catch (e) {
-                BB.lib.log('error on ajax' + e);
-            }
+            self.m_filterScreenNameChangedHandler = function (e) {
+                if (!self.m_selected)
+                    return;
+                var screenName = $(e.target).val();
+                var domPlayerData:XMLDocument = self._getBlockPlayerData();
+                var item = $(domPlayerData).find('Json').find('Data');
+                $(item).attr('screenName', screenName);
+                self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
+            };
+            $(Elements.TWITTER_FILTER_SCREEN_NAME, self.el).on('change', self.m_filterScreenNameChangedHandler);
         }
 
         /**
@@ -214,25 +143,23 @@ define(['jquery', 'BlockJsonBase', 'validator'], function ($, BlockJsonBase, val
             super._populate();
             var domPlayerData:XMLDocument = self._getBlockPlayerData();
             var $data = $(domPlayerData).find('Json').find('Data');
-            return;
-            var style = $data.attr('id');
             var token = $data.attr('token');
-            $(Elements.GOOGLE_SHEET).selectpicker('val', style);
-            $(Elements.GOOGLE_SHEET_TOKEN).val(token);
-            self._loadSheetList();
+            var screenName = $data.attr('screenName');
+            $(Elements.CLASS_ACCESS_TOKEN, self.el).val(token);
+            $(Elements.TWITTER_FILTER_SCREEN_NAME, self.el).val(screenName);
         }
 
         /**
          Delete this block
          @method deleteBlock
-         @params {Boolean} i_memoryOnly if true only remove from existance but not from msdb
+         @params {Boolean} i_memoryOnly if true only remove from existence but not from msdb
          **/
-        public deletedBlock(i_memoryOnly):void {
+        public deleteBlock(i_memoryOnly):void {
             var self = this;
             super.deleteBlock(i_memoryOnly);
-            $(Elements.GOOGLE_SHEET).off('change', self.m_sheetsChangedHandler);
-            $(Elements.GOOGLE_SHEET_TOKEN).off('change', self.m_tokenChangedHandler);
-            $(Elements.GOOGLE_SHEET_REFRESH).off('click', self.m_sheetsRefreshHandler);
+            $(Elements.CLASS_ACCESS_TOKEN, self.el).off('change', self.m_tokenChangedHandler);
+            $(Elements.CLASS_GEN_TOKEN, self.el).off('click', self.m_tokenRequest);
+            $(Elements.TWITTER_FILTER_SCREEN_NAME, self.el).off('change', self.m_filterScreenNameChangedHandler);
         }
 
     }

@@ -7,7 +7,7 @@ declare module TSLiteModules {
         protected _initSettingsPanel() ;
         protected _loadBlockSpecificProps():void ;
         protected _updateTitleTab() ;
-        public deletedBlock(i_memoryOnly):void ;
+        public deleteBlock(i_memoryOnly):void ;
    }
 }
 //GULP_ABSTRACT_END
@@ -75,7 +75,7 @@ define(['jquery', 'BlockJsonBase', 'validator'], function ($, BlockJsonBase, val
          @method deleteBlock
          @params {Boolean} i_memoryOnly if true only remove from existance but not from msdb
          **/
-        public deletedBlock(i_memoryOnly):void {
+        public deleteBlock(i_memoryOnly):void {
             var self = this;
             super.deleteBlock(i_memoryOnly);
         }

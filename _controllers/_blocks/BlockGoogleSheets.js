@@ -205,10 +205,10 @@ define(['jquery', 'BlockJsonBase', 'validator'], function ($, BlockJsonBase, val
          **/
         BlockGoogleSheets.prototype.deleteBlock = function (i_memoryOnly) {
             var self = this;
-            _super.prototype.deleteBlock.call(this, i_memoryOnly);
             $(Elements.GOOGLE_SHEET).off('change', self.m_sheetsChangedHandler);
             $(Elements.GOOGLE_SHEET_TOKEN).off('change', self.m_tokenChangedHandler);
             $(Elements.GOOGLE_SHEET_REFRESH).off('click', self.m_sheetsRefreshHandler);
+            _super.prototype.deleteBlock.call(this, i_memoryOnly);
         };
         return BlockGoogleSheets;
     })(TSLiteModules.BlockJsonBase);

@@ -146,10 +146,10 @@ define(['jquery', 'BlockJsonBase'], function ($, BlockJsonBase) {
          **/
         public deleteBlock(i_memoryOnly):void {
             var self = this;
-            super.deleteBlock(i_memoryOnly);
             $(Elements.WEATHER_UNIT).off('change', self.m_weatherUnitChangedHandler);
             $(Elements.WEATHER_STYLE).off('change', self.m_weatherStyleChangedHandler);
             $(Elements.WEATHER_ADDRESS).off('change', self.m_weatherAddressChangedHandler);
+            super.deleteBlock(i_memoryOnly);
         }
 
     }

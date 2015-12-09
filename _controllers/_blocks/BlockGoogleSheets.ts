@@ -228,10 +228,10 @@ define(['jquery', 'BlockJsonBase', 'validator'], function ($, BlockJsonBase, val
          **/
         public deleteBlock(i_memoryOnly):void {
             var self = this;
-            super.deleteBlock(i_memoryOnly);
             $(Elements.GOOGLE_SHEET).off('change', self.m_sheetsChangedHandler);
             $(Elements.GOOGLE_SHEET_TOKEN).off('change', self.m_tokenChangedHandler);
             $(Elements.GOOGLE_SHEET_REFRESH).off('click', self.m_sheetsRefreshHandler);
+            super.deleteBlock(i_memoryOnly);
         }
 
     }

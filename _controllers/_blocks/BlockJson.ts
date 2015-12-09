@@ -68,7 +68,7 @@ define(['jquery', 'BlockJsonBase'], function ($, BlockJsonBase) {
          @Override
          @method _populate
          **/
-        _populate(){
+        _populate() {
             super._populate();
             $(Elements.JSON_PATHS_CONTAINER).show();
         }

@@ -120,10 +120,10 @@ define(['jquery', 'BlockJsonBase'], function ($, BlockJsonBase) {
          **/
         BlockWorldWeather.prototype.deleteBlock = function (i_memoryOnly) {
             var self = this;
-            _super.prototype.deleteBlock.call(this, i_memoryOnly);
             $(Elements.WEATHER_UNIT).off('change', self.m_weatherUnitChangedHandler);
             $(Elements.WEATHER_STYLE).off('change', self.m_weatherStyleChangedHandler);
             $(Elements.WEATHER_ADDRESS).off('change', self.m_weatherAddressChangedHandler);
+            _super.prototype.deleteBlock.call(this, i_memoryOnly);
         };
         return BlockWorldWeather;
     })(TSLiteModules.BlockJsonBase);

@@ -156,10 +156,10 @@ define(['jquery', 'BlockJsonBase', 'validator'], function ($, BlockJsonBase, val
          **/
         public deleteBlock(i_memoryOnly):void {
             var self = this;
-            super.deleteBlock(i_memoryOnly);
             $(Elements.CLASS_ACCESS_TOKEN, self.el).off('change', self.m_tokenChangedHandler);
             $(Elements.CLASS_GEN_TOKEN, self.el).off('click', self.m_tokenRequest);
             $(Elements.TWITTER_FILTER_SCREEN_NAME, self.el).off('change', self.m_filterScreenNameChangedHandler);
+            super.deleteBlock(i_memoryOnly);
         }
 
     }

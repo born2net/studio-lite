@@ -137,10 +137,10 @@ define(['jquery', 'BlockJsonBase', 'validator'], function ($, BlockJsonBase, val
          **/
         BlockTwitterV3.prototype.deleteBlock = function (i_memoryOnly) {
             var self = this;
-            _super.prototype.deleteBlock.call(this, i_memoryOnly);
             $(Elements.CLASS_ACCESS_TOKEN, self.el).off('change', self.m_tokenChangedHandler);
             $(Elements.CLASS_GEN_TOKEN, self.el).off('click', self.m_tokenRequest);
             $(Elements.TWITTER_FILTER_SCREEN_NAME, self.el).off('change', self.m_filterScreenNameChangedHandler);
+            _super.prototype.deleteBlock.call(this, i_memoryOnly);
         };
         return BlockTwitterV3;
     })(TSLiteModules.BlockJsonBase);

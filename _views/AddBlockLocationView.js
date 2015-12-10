@@ -463,7 +463,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox', '
                 case BB.CONSTS.PLACEMENT_SCENE:
                 {
                     self.m_sceneSliderView = BB.comBroker.getService(BB.SERVICES['SCENE_SLIDER_VIEW']);
-                    self.m_sceneSliderView.slideToPage(Elements.SCENE_SLIDER_VIEW, 'left');
+                    self.m_sceneSliderView.slideToPage(Elements.SCENE_SLIDER_ELEMENT_VIEW, 'left');
                     break;
                 }
                 case BB.CONSTS.PLACEMENT_LISTS:

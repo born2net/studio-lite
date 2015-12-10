@@ -62,7 +62,7 @@ define(['jquery', 'backbone', 'SceneSelectionView'], function ($, Backbone, Scen
 
                 self.m_sceneAddBlockView = new AddBlockView({
                     stackView: self.m_sceneSliderView,
-                    from: Elements.SCENE_SLIDER_VIEW,
+                    from: Elements.SCENE_SLIDER_ELEMENT_VIEW,
                     el: Elements.SCENE_ADD_NEW_BLOCK,
                     placement: BB.CONSTS.PLACEMENT_SCENE
                 });
@@ -84,7 +84,7 @@ define(['jquery', 'backbone', 'SceneSelectionView'], function ($, Backbone, Scen
 
                 self.m_sceneAddBlockLocationView = new AddBlockLocationView({
                     stackView: self.m_sceneSliderView,
-                    from: Elements.SCENE_SLIDER_VIEW,
+                    from: Elements.SCENE_SLIDER_ELEMENT_VIEW,
                     el: Elements.GOOGLE_MAPS_SCENE_LOCATION,
                     placement: BB.CONSTS.PLACEMENT_SCENE
                 });
@@ -92,7 +92,7 @@ define(['jquery', 'backbone', 'SceneSelectionView'], function ($, Backbone, Scen
 
                 self.m_sceneEditorView = new SceneEditorView({
                     stackView: self.m_sceneSliderView,
-                    el: Elements.SCENE_SLIDER_VIEW
+                    el: Elements.SCENE_SLIDER_ELEMENT_VIEW
                 });
 
                 self.m_sceneSliderView.addView(self.m_sceneSelector);

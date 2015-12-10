@@ -766,7 +766,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                         self.m_appSectionFunction = self._tutorialScenesSelector;
                         break;
                     }
-                    case Elements.SCENE_SLIDER_VIEW:
+                    case Elements.SCENE_SLIDER_ELEMENT_VIEW:
                     {
                         self.m_appSectionFunction = self._tutorialScenes;
                         break;

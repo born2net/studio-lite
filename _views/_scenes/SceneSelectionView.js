@@ -166,7 +166,7 @@ define(['jquery', 'backbone', 'imagesloaded'], function ($, Backbone, imagesload
                 self.m_selectedSceneID = $(this).data('sceneid');
                 BB.comBroker.getService(BB.SERVICES['SCENE_EDIT_VIEW']).disposeScene();
                 self.m_propertiesPanel.resetPropertiesView();
-                self.options.stackView.slideToPage(Elements.SCENE_SLIDER_VIEW, 'right');
+                self.options.stackView.slideToPage(Elements.SCENE_SLIDER_ELEMENT_VIEW, 'right');
                 setTimeout(function () {
                     BB.comBroker.fire(BB.EVENTS.LOAD_SCENE, this, null, self.m_selectedSceneID);
                 }, 555);

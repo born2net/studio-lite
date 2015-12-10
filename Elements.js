@@ -413,7 +413,7 @@ var Elements;
     Elements.SCENE_CREATOR = '#sceneCreator';
     Elements.SCENE_CREATOR_TEMPLATE = '#sceneCreatorTemplate';
     Elements.SELECT_SCENE_TYPE_CREATE_TEMPLATE = '#selectSceneTypeCreateTemplate';
-    Elements.SCENE_SLIDER_VIEW = '#sceneStackFaderView';
+    Elements.SCENE_SLIDER_ELEMENT_VIEW = '#sceneStackFaderView';
     Elements.SCENE_TOOLBAR = '#sceneToolbar';
     Elements.SELECT_SCENE_TYPE_CREATE = '#selectSceneTypeCreate';
     Elements.FQ_PRINT_NUMBER = '#fqPrintNumber';

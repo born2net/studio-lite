@@ -60,6 +60,7 @@
   "back": "back",
   "backToCampaignsTooltip": "back to campaigns",
   "booxboxJsonWeatherDesc": "Include a seven day extended weather forecast in your presentation, including highs, lows, humidity, wind conditions and more. Pick from white, black or color icons",
+  "booxboxJsonInstagramDesc": "Get live feed from your favorite Instagram account. Load data in real time and watch your posts come to life inside your digital signage presentation",
   "booxboxJsonSheetsDesc": "Easily link Scene labels to Google spreadsheet cells simply by specifying the column and row you want to link to, on the Google cloud spreadsheet. Very flexible, easy to add and even easier to edit",
   "booxboxJsonDiggDesc": "In one click add live content from Digg.com and keep your screen always fresh with live a feed that includes images and news",
   "booxboxStartBlank": "Start blank",

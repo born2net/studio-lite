@@ -107,6 +107,9 @@ define(['jquery'], function ($) {
                     case 'Json.twitter':
                     {
                     }
+                    case 'Json.instagram.feed':
+                    {
+                    }
                     case 'Json.weather':
                     {
                     }

@@ -47,6 +47,27 @@ define(['jquery', 'Block'], function ($, Block) {
             self._listenDualNumericChanged();
             self.m_sceneMime = BB.Pepper.getSceneMime(self.m_sceneID);
             self.m_config = {
+                'Json.instagram.feed': {
+                    title: 'Instagram',
+                    tabTitle: 'Posts',
+                    fields: {
+                        1: {
+                            name: "title",
+                            type: "text",
+                            label: "title"
+                        },
+                        2: {
+                            name: "urlimage",
+                            type: "resource",
+                            label: "image"
+                        },
+                        3: {
+                            name: "video",
+                            type: "resource",
+                            label: "video"
+                        }
+                    }
+                },
                 'Json.twitter': {
                     title: 'Twitter',
                     tabTitle: 'Tweets',

@@ -782,6 +782,8 @@ Pepper.prototype = {
             replace(/<label/gi, '<Label').replace(/label>/gi, 'Label>').
             replace(/<font/gi, '<Font').replace(/font>/gi, 'Font>').
             replace(/fontsize/gi, 'fontSize').
+            replace(/startdate/gi, 'startDate').
+            replace(/enddate/gi, 'endDate').
             replace(/fontcolor/gi, 'fontColor').
             replace(/fontfamily/gi, 'fontFamily').
             replace(/fontweight/gi, 'fontWeight').

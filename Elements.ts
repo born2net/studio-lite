@@ -46,6 +46,7 @@ module Elements {
     export const BLOCK_COMMON_SETTINGS = '#blockCommonSettings';
     export const BLOCK_COMMON_SETTINGS_WEATHER = '#blockCommonSettingsWeather';
     export const BLOCK_COMMON_SETTINGS_GOOGLE_SHEETS = '#blockCommonSettingsGoogleSheets';
+    export const BLOCK_COMMON_SETTINGS_GOOGLE_CALENDAR = '#blockCommonSettingsGoogleCalendar';
     export const BLOCK_COMMON_SETTINGS_TWITTERV3 = '#blockCommonSettingsTwitterV3';
     export const BLOCK_COMMON_SETTINGS_INSTAGRAM = '#BlockInstagram';
     export const BLOCK_COMMON_SETTINGS_MEDIA_FEED = '#BlockInstagramMedia';
@@ -88,6 +89,7 @@ module Elements {
     export const BOOTBOX_FROM_TEMPLATE = '#booxboxFromTemplate';
     export const BOOTBOX_JSON_WEATHER_DESC = '#booxboxJsonWeatherDesc';
     export const BOOTBOX_JSON_SHEETS_DESC = '#booxboxJsonSheetsDesc';
+    export const BOOTBOX_JSON_CALENDAR_DESC = '#booxboxJsonCalendarDesc';
     export const BOOTBOX_JSON_TWITTER_DESC = '#booxboxJsonTwitterDesc';
     export const BOOTBOX_JSON_INSTAGRAM_DESC = '#booxboxJsonInstagramDesc';
     export const BOOTBOX_JSON_DIGG_DESC = '#booxboxJsonDiggDesc';
@@ -258,6 +260,7 @@ module Elements {
     export const LABEL_FONT_SETTINGS = '#labelFontSettings';
     export const JSON_ITEM_FONT_SETTINGS = '#jsonItemFontSettings';
     export const JSON_ITEM_ICON_SETTINGS = '#jsonItemIconSettings';
+    export const JSON_ITEM_DATE_SETTINGS = '#jsonItemDateSettings';
     export const LABEL_TEXT = '#labelText';
     export const FASTERQ_MANAGE_NAV_BUTTON = '#fasterQManageNavButton';
     export const FASTERQ_CREATE_NAV_BUTTON = '#fasterQCreateNavButton';
@@ -606,6 +609,9 @@ module Elements {
     export const GOOGLE_SHEET = '#googleSheet';
     export const GOOGLE_SHEET_REFRESH = '#googleSheetRefresh';
     export const GOOGLE_SHEET_TOKEN = '#googleSheetToken';
+    export const GOOGLE_CALENDAR = '#googleCalendar';
+    export const GOOGLE_CALENDAR_TOKEN = '#googleCalendarToken';
+    export const GOOGLE_CALENDAR_REFRESH = '#googleCalendarRefresh';
     export const WSTEP0 = '#wstep0';
     export const WSTEP1 = '#wstep1';
     export const WSTEP2 = '#wstep2';

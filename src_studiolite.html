@@ -2503,6 +2503,7 @@
                       <div class="clearfix"></div>
                       <hr/>
                       <div id="jsonItemFontSettings"></div>
+                      <div id="jsonItemDateSettings"><h1>date</h1></div>
                       <div id="jsonItemIconSettings">
                         <label class="pull-left" data-localize="maintainAspectRatio">Maintain
                           Aspect ratio</label>
@@ -2680,6 +2681,20 @@
                       <label style="padding-right: 78px; width: 200px" for="googleSheetToken" data-localize="gmailToken">Gmail token</label>
                       <input id="googleSheetToken" type="text" data-localize="yourGmailToken" placeholder="your Gmail token">
                       <a id="googleSheetRefresh" type="button" class="pull-right" style="padding-right: 53px; padding-top: 5px; cursor: pointer">
+                        <span class="glyphicon glyphicon-refresh"></span>
+                      </a>
+                      <hr class="hrThin"/>
+                      <label><a href="http://google.signage.me" target="_blank"><span data-localize="genToken">Click here to create a token</span></a></label>
+                    </div>
+                  </div>
+                  <div id="blockCommonSettingsGoogleCalendar" style="display: none">
+                    <div style="padding: 10px">
+                      <label style="padding-right: 78px; width: 200px" for="googleSheet" data-localize="googleSheet"> Google Sheet </label>
+                      <select id="googleCalendar" data-live-search="true" class="selectpicker"> </select>
+                      <hr class="hrThin"/>
+                      <label style="padding-right: 78px; width: 200px" for="googleCalendarToken" data-localize="gmailToken">Gmail token</label>
+                      <input id="googleCalendarToken" type="text" data-localize="yourGmailToken" placeholder="your Gmail token">
+                      <a id="googleCalendarRefresh" type="button" class="pull-right" style="padding-right: 53px; padding-top: 5px; cursor: pointer">
                         <span class="glyphicon glyphicon-refresh"></span>
                       </a>
                       <hr class="hrThin"/>
@@ -3238,6 +3253,8 @@
 <p style="display: none" id="booxboxFromTemplate" data-localize="booxboxFromTemplate">From template</p>
 
 <p style="display: none" id="booxboxJsonWeatherDesc" data-localize="booxboxJsonWeatherDesc">Include a seven day extended weather forecast in your presentation, including highs, lows, humidity, wind conditions and more. Pick from white, black or color icons</p>
+
+<p style="display: none" id="booxboxJsonCalendarDesc" data-localize="booxboxJsonCalendarDesc">With the Google Calendar component you can simply select only the Calendar you want and set a specific date range relative to today, allowing your content to always stay relevant</p>
 
 <p style="display: none" id="booxboxJsonSheetsDesc" data-localize="booxboxJsonSheetsDesc">Easily link Scene labels to Google spreadsheet cells simply by specifying the column and row you want to link to, on the Google cloud spreadsheet. Very flexible, easy to add and even easier to edit</p>
 

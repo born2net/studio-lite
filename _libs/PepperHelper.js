@@ -39,6 +39,7 @@ PepperHelper.prototype = {
             'jsonitem':  { image: 'fa-cubes' },
             'worldweather':  { image: 'fa-sun-o' },
             'googlesheets':  { image: 'fa-table' },
+            'googlecalendar':  { image: 'fa-calendar' },
             'digg':  { image: 'fa-digg' },
             'rss': { image: 'fa-rss' },
             'mrss': { image: 'fa-rss-square' },
@@ -375,7 +376,7 @@ PepperHelper.prototype = {
                 description: 'Google Sheets',
                 mimeType: 'Json.spreadsheet',
                 jsonItemLongDescription: $(Elements.BOOTBOX_JSON_SHEETS_DESC).text(),
-                svg: new String('<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">     <g transform="translate(-10,-10)">       <g>      <path stroke="null" id="svg_2" d="m43.6674,6.36l-38.48369,0c-1.20411,0 -2.18372,0.9795 -2.18372,2.1835l0,34.24977c0,1.204 0.97961,2.18351 2.18372,2.18351l19.22599,0c0.00547,0 0.0105,-0.00066 0.01597,-0.00066c0.00525,0 0.0105,0.00066 0.01575,0.00066l19.2261,0c1.20411,0 2.1835,-0.9795 2.1835,-2.18351l0,-34.24988c-0.00011,-1.20389 -0.9795,-2.18339 -2.18361,-2.18339zm-21.44087,34.24977l-14.85932,0l0,-7.03144l14.85932,0l0,7.03144zm0,-11.39844l-14.85932,0l0,-7.03166l14.85932,0l0,7.03166zm19.25737,11.39844l-14.85909,0l0,-7.03144l14.85909,0l0,7.03144l0,0zm0,-11.39844l-14.85909,0l0,-7.03166l14.85909,0l0,7.03166l0,0z"/>         </g>    </g>   </svg>'),
+                svg: '',
                 getDefaultPlayerData: function (i_placement) {
                     return  '<Player player="6022" label="json" interactive="0">' +
                                 '<Data>' +
@@ -391,6 +392,30 @@ PepperHelper.prototype = {
                 },
                 fontAwesome: self.getFontAwesome('googlesheets')
             },
+            6020: {
+                name: 'Calendar',
+                app_id: '12030',
+                color: '#E5E5E5',
+                acronym: 'Calendar',
+                description: 'Google Calendar',
+                mimeType: 'Json.calendar',
+                jsonItemLongDescription: $(Elements.BOOTBOX_JSON_CALENDAR_DESC).text(),
+                svg: '',
+                getDefaultPlayerData: function (i_placement) {
+                    return  '<Player player="6020" label="json" interactive="0">' +
+                                '<Data>' +
+                                    self.getCommonDefaultXML() +
+                                    self.getCommonSceneLayout(i_placement) +
+                                    '<EventCommands></EventCommands>' +
+                                    '<Json providerType="calendar" itemsPath="" slideShow="1" itemInterval="2" playVideoInFull="1" randomOrder="1">'+
+                                        '<Player/>'+
+                                        '<Data id="" token="" mode="fixed" startDate="1450382400000" endDate="1452974400000" before="3" after="6"/>' +
+                                    '</Json>'+
+                                '</Data>' +
+                            '</Player>'
+                },
+                fontAwesome: self.getFontAwesome('googlecalendar')
+            },
             6230: {
                 name: 'Twitter V3',
                 app_id: '12230',
@@ -402,16 +427,16 @@ PepperHelper.prototype = {
                 svg: new String('<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg"><g transform="translate(5,5)"><g>  <path stroke="null" id="svg_1" d="m34.24468,3l-29.48936,0c-0.96929,0 -1.75532,0.78603 -1.75532,1.75532l0,29.48936c0,0.96929 0.78603,1.75532 1.75532,1.75532l29.48936,0c0.96929,0 1.75532,-0.78603 1.75532,-1.75532l0,-29.48936c0,-0.96929 -0.78603,-1.75532 -1.75532,-1.75532zm-1.09742,8.18049c-0.74496,1.11533 -1.66825,2.079 -2.74462,2.86608c0.00878,0.21626 0.01299,0.43286 0.01299,0.65122c0,7.83399 -5.96107,15.93689 -15.9369,15.93689c-3.04969,0 -6.01864,-0.87029 -8.58632,-2.51678c-0.05336,-0.03405 -0.07618,-0.1004 -0.05442,-0.16008c0.02142,-0.05933 0.08215,-0.09619 0.14359,-0.08917c0.43146,0.05126 0.87134,0.07688 1.30912,0.07688c2.37249,0 4.6186,-0.73337 6.5182,-2.12499c-2.27735,-0.19203 -4.23453,-1.73355 -4.93877,-3.93191c-0.01439,-0.04564 -0.00386,-0.09514 0.02809,-0.1313c0.0316,-0.03616 0.08039,-0.05161 0.12708,-0.04353c0.63086,0.12041 1.27225,0.12744 1.89118,0.02773c-2.34862,-0.73056 -3.99967,-2.92998 -3.99967,-5.43482l0.0007,-0.07302c0.00105,-0.04774 0.02703,-0.09128 0.06776,-0.11445c0.04143,-0.02387 0.09268,-0.02422 0.13376,-0.00105c0.6119,0.33983 1.29086,0.55854 1.98527,0.64174c-1.34949,-1.07566 -2.14219,-2.70635 -2.14219,-4.45079c0,-1.0065 0.26681,-1.99615 0.77023,-2.86047c0.02247,-0.03827 0.06249,-0.06389 0.10707,-0.0667c0.04459,-0.00456 0.08777,0.01474 0.1155,0.04985c2.76287,3.38812 6.82608,5.47484 11.1712,5.7427c-0.07302,-0.36511 -0.10953,-0.74074 -0.10953,-1.12024c0,-3.13711 2.55259,-5.68899 5.68934,-5.68899c1.54292,0 3.03284,0.63402 4.10078,1.74128c1.2045,-0.24539 2.35107,-0.68808 3.41023,-1.31649c0.0488,-0.02879 0.10989,-0.02422 0.15412,0.01053c0.04388,0.03546 0.06179,0.09408 0.04424,0.1478c-0.35844,1.12305 -1.05916,2.10252 -1.99966,2.80991c0.88573,-0.15412 1.74619,-0.41496 2.56312,-0.77726c0.05547,-0.02528 0.12041,-0.00948 0.15903,0.03651c0.03932,0.04634 0.04353,0.11234 0.00948,0.16289z"/></g></g></svg>'),
                 getDefaultPlayerData: function (i_placement) {
                     return  '<Player player="6230" label="json" interactive="0">' +
-                        '<Data>' +
-                        self.getCommonDefaultXML() +
-                        self.getCommonSceneLayout(i_placement) +
-                        '<EventCommands></EventCommands>' +
-                        '<Json providerType="twitter" itemsPath="" slideShow="1" itemInterval="2" playVideoInFull="1" randomOrder="1">'+
-                        '<Player/>'+
-                        '<Data token="" screenName="" />' +
-                        '</Json>'+
-                        '</Data>' +
-                        '</Player>'
+                                '<Data>' +
+                                    self.getCommonDefaultXML() +
+                                    self.getCommonSceneLayout(i_placement) +
+                                    '<EventCommands></EventCommands>' +
+                                    '<Json providerType="twitter" itemsPath="" slideShow="1" itemInterval="2" playVideoInFull="1" randomOrder="1">'+
+                                        '<Player/>'+
+                                        '<Data token="" screenName="" />' +
+                                    '</Json>'+
+                                '</Data>' +
+                                '</Player>'
                 },
                 fontAwesome: self.getFontAwesome('twitter')
             },
@@ -426,16 +451,16 @@ PepperHelper.prototype = {
                 svg: new String(''),
                 getDefaultPlayerData: function (i_placement) {
                     return  '<Player player="6050" label="json" interactive="0">' +
-                        '<Data>' +
-                        self.getCommonDefaultXML() +
-                        self.getCommonSceneLayout(i_placement) +
-                        '<EventCommands></EventCommands>' +
-                        '<Json providerType="instagram.feed" itemsPath="" slideShow="1" itemInterval="2" playVideoInFull="1" randomOrder="1">'+
-                        '<Player/>'+
-                        '<Data token="" screenName="" />' +
-                        '</Json>'+
-                        '</Data>' +
-                        '</Player>'
+                                '<Data>' +
+                                    self.getCommonDefaultXML() +
+                                    self.getCommonSceneLayout(i_placement) +
+                                    '<EventCommands></EventCommands>' +
+                                    '<Json providerType="instagram.feed" itemsPath="" slideShow="1" itemInterval="2" playVideoInFull="1" randomOrder="1">'+
+                                        '<Player/>'+
+                                        '<Data token="" screenName="" />' +
+                                    '</Json>'+
+                                '</Data>' +
+                            '</Player>'
                 },
                 fontAwesome: self.getFontAwesome('instagram')
             },
@@ -450,16 +475,16 @@ PepperHelper.prototype = {
                 svg: new String('<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">  <g transform="translate(-10,-10)">    <g>   <path stroke="null" id="svg_2" d="m11.00993,15.37582l-6.00993,0l0,15.47803l10.01428,0l0,-22.14885l-4.00435,0l0,6.67082zm-0.12917,10.69365l-2.00331,0l0,-6.3598l2.00331,0c0,0 0,6.3598 0,6.3598zm11.84989,4.97622l5.85356,0l0,1.95619l-5.85356,0l0,4.66812l9.86245,0l0,-22.2128l-9.86245,0l0,15.58849zm3.74374,-10.67912l1.99651,0l0,6.3598l-1.99651,0l0,-6.3598zm8.03817,-4.90937l0,15.58267l5.85356,0l0,1.95619l-5.85356,0l0,4.66812l9.86245,0l0,-22.20698l-9.86245,0l0,0zm5.74025,11.26917l-1.99651,0l0,-6.3598l1.99651,0l0,6.3598zm-23.42784,-17.95743l4.00888,0l0,4.34257l-4.00888,0l0,-4.34257zm0,6.66791l4.00888,0l0,15.53617l-4.00888,0l0,-15.53617z"/>          </g>     </g></svg>'),
                 getDefaultPlayerData: function (i_placement) {
                     return  '<Player player="6000" label="json" interactive="0">' +
-                        '<Data>' +
-                        self.getCommonDefaultXML() +
-                        self.getCommonSceneLayout(i_placement) +
-                        '<EventCommands></EventCommands>' +
-                        '<Json providerType="digg" itemsPath="" slideShow="1" itemInterval="2" playVideoInFull="1" randomOrder="1">'+
-                        '<Player/>'+
-                        '<Data token="" id="" />' +
-                        '</Json>'+
-                        '</Data>' +
-                        '</Player>'
+                                '<Data>' +
+                                    self.getCommonDefaultXML() +
+                                    self.getCommonSceneLayout(i_placement) +
+                                    '<EventCommands></EventCommands>' +
+                                    '<Json providerType="digg" itemsPath="" slideShow="1" itemInterval="2" playVideoInFull="1" randomOrder="1">'+
+                                        '<Player/>'+
+                                        '<Data token="" id="" />' +
+                                    '</Json>'+
+                                '</Data>' +
+                            '</Player>'
                 },
                 fontAwesome: self.getFontAwesome('digg')
             },

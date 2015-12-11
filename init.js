@@ -102,6 +102,7 @@ require.config({
         'BlockExtImage': '_controllers/_blocks/BlockExtImage',
         'BlockExtVideo': '_controllers/_blocks/BlockExtVideo',
         'BlockClock': '_controllers/_blocks/BlockClock',
+        'BlockGoogleCalendar': '_controllers/_blocks/BlockGoogleCalendar',
         'BlockHTML': '_controllers/_blocks/BlockHTML',
         'BlockLabel': '_controllers/_blocks/BlockLabel',
         'BlockMRSS': '_controllers/_blocks/BlockMRSS',

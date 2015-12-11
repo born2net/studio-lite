@@ -60,7 +60,7 @@ define(['jquery'], function ($) {
         _loadSceneTemplates() {
             var self = this;
 
-            $(Elements.SCENE_IMPORT_MODAL).modal('show');
+            $(Elements.SCENE_IMPORT_MODAL).modal('now');
 
             if (self.m_counter > self.m_counter_max)
                 return;

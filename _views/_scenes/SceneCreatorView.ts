@@ -110,6 +110,10 @@ define(['jquery'], function ($) {
                     case 'Json.instagram.feed':
                     {
                     }
+                    case 'Json.calendar':
+                    {
+
+                    }
                     case 'Json.weather':
                     {
                     }

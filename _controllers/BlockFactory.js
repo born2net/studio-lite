@@ -61,6 +61,7 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
     BB.CONSTS.BLOCKCODE_JSON_ITEM = '4310';
     BB.CONSTS.BLOCKCODE_WORLD_WEATHER = '6010';
     BB.CONSTS.BLOCKCODE_GOOGLE_SHEETS = '6022';
+    BB.CONSTS.BLOCKCODE_CALENDAR = '6020';
     BB.CONSTS.BLOCKCODE_TWITTERV3 = '6230';
     BB.CONSTS.BLOCKCODE_INSTAGRAM = '6050';
     BB.CONSTS.BLOCKCODE_DIGG = '6000';
@@ -98,40 +99,99 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
          **/
         loadBlockModules: function () {
             var self = this;
-            require(['BlockProperties', 'Block', 'BlockScene', 'BlockRSS', 'BlockQR', 'BlockYouTube', 'BlockCollection', 'BlockLocation', 'BlockFasterQ', 'BlockTwitter', 'BlockTwitterItem', 'BlockJson', 'BlockJsonItem','BlockWorldWeather', 'BlockGoogleSheets', 'BlockTwitterV3', 'BlockInstagram', 'BlockDigg', 'BlockVideo', 'BlockImage', 'BlockSVG', 'BlockExtImage', 'BlockExtVideo', 'BlockMRSS', 'BlockHTML', 'BlockLabel', 'BlockClock'], function (BlockProperties, Block, BlockScene, BlockRSS, BlockQR, BlockYouTube, BlockCollection, BlockLocation, BlockFasterQ, BlockTwitter, BlockTwitterItem, BlockJson, BlockJsonItem, BlockWorldWeather, BlockGoogleSheets, BlockTwitterV3, BlockInstagram, BlockDigg, BlockVideo, BlockImage, BlockSVG, BlockExtImage, BlockExtVideo, BlockMRSS, BlockHTML, BlockLabel, BlockClock) {
-                if (self.m_blockProperties)
-                    return;
-                self.m_blockProperties = new BlockProperties({el: Elements.BLOCK_PROPERTIES});
-                self.m_block = Block;
-                self.m_blockScene = BlockScene;
-                self.m_blockRSS = BlockRSS;
-                self.m_blockQR = BlockQR;
-                self.m_blockYouTube = BlockYouTube;
-                self.m_blockCollection = BlockCollection;
-                self.m_blockLocation = BlockLocation
-                self.m_blockFasterQ = BlockFasterQ;
-                self.m_blockTwitter = BlockTwitter;
-                self.m_blockTwitterItem = BlockTwitterItem;
-                self.m_blockJson = BlockJson;
-                self.m_blockJsonItem = BlockJsonItem;
-                self.m_blockWorldWeather = BlockWorldWeather;
-                self.m_blockGoogleSheets = BlockGoogleSheets;
-                self.m_blockTwitterV3 = BlockTwitterV3;
-                self.m_blockInstagram = BlockInstagram;
-                self.m_blockDigg = BlockDigg;
-                self.m_blockVideo = BlockVideo;
-                self.m_blockImage = BlockImage;
-                self.m_blockSVG = BlockSVG;
-                self.m_blockExtImage = BlockExtImage;
-                self.m_blockExtVideo = BlockExtVideo;
-                self.m_blockMRSS = BlockMRSS;
-                self.m_blockHTML = BlockHTML;
-                self.m_blockLabel = BlockLabel;
-                self.m_blockClock = BlockClock;
 
-                BB.comBroker.fire(BB.EVENTS.BLOCKS_LOADED);
+            require(['BlockProperties',
+                    'Block',
+                    'BlockScene',
+                    'BlockRSS',
+                    'BlockQR',
+                    'BlockYouTube',
+                    'BlockCollection',
+                    'BlockLocation',
+                    'BlockFasterQ',
+                    'BlockTwitter',
+                    'BlockTwitterItem',
+                    'BlockJson',
+                    'BlockJsonItem',
+                    'BlockWorldWeather',
+                    'BlockGoogleSheets',
+                    'BlockTwitterV3',
+                    'BlockInstagram',
+                    'BlockDigg',
+                    'BlockVideo',
+                    'BlockImage',
+                    'BlockSVG',
+                    'BlockExtImage',
+                    'BlockExtVideo',
+                    'BlockMRSS',
+                    'BlockHTML',
+                    'BlockGoogleCalendar',
+                    'BlockLabel',
+                    'BlockClock'],
 
-            });
+                function (BlockProperties,
+                          Block, BlockScene,
+                          BlockRSS,
+                          BlockQR,
+                          BlockYouTube,
+                          BlockCollection,
+                          BlockLocation,
+                          BlockFasterQ,
+                          BlockTwitter,
+                          BlockTwitterItem,
+                          BlockJson,
+                          BlockJsonItem,
+                          BlockWorldWeather,
+                          BlockGoogleSheets,
+                          BlockTwitterV3,
+                          BlockInstagram,
+                          BlockDigg,
+                          BlockVideo,
+                          BlockImage,
+                          BlockSVG,
+                          BlockExtImage,
+                          BlockExtVideo,
+                          BlockMRSS,
+                          BlockHTML,
+                          BlockGoogleCalendar,
+                          BlockLabel,
+                          BlockClock) {
+
+                    if (self.m_blockProperties)
+                        return;
+
+                    self.m_blockProperties = new BlockProperties({el: Elements.BLOCK_PROPERTIES});
+
+                    self.m_block = Block;
+                    self.m_blockScene = BlockScene;
+                    self.m_blockRSS = BlockRSS;
+                    self.m_blockQR = BlockQR;
+                    self.m_blockYouTube = BlockYouTube;
+                    self.m_blockCollection = BlockCollection;
+                    self.m_blockLocation = BlockLocation
+                    self.m_blockFasterQ = BlockFasterQ;
+                    self.m_blockTwitter = BlockTwitter;
+                    self.m_blockTwitterItem = BlockTwitterItem;
+                    self.m_blockJson = BlockJson;
+                    self.m_blockJsonItem = BlockJsonItem;
+                    self.m_blockWorldWeather = BlockWorldWeather;
+                    self.m_blockGoogleSheets = BlockGoogleSheets;
+                    self.m_blockTwitterV3 = BlockTwitterV3;
+                    self.m_blockInstagram = BlockInstagram;
+                    self.m_blockDigg = BlockDigg;
+                    self.m_blockVideo = BlockVideo;
+                    self.m_blockImage = BlockImage;
+                    self.m_blockSVG = BlockSVG;
+                    self.m_blockExtImage = BlockExtImage;
+                    self.m_blockExtVideo = BlockExtVideo;
+                    self.m_blockMRSS = BlockMRSS;
+                    self.m_blockHTML = BlockHTML;
+                    self.m_blockGoogleCalendar = BlockGoogleCalendar;
+                    self.m_blockLabel = BlockLabel;
+                    self.m_blockClock = BlockClock;
+
+                    BB.comBroker.fire(BB.EVENTS.BLOCKS_LOADED);
+                });
         },
 
         /**
@@ -265,6 +325,15 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
                 case parseInt(BB.CONSTS.BLOCKCODE_TWITTERV3):
                 {
                     block = new self.m_blockTwitterV3({
+                        i_placement: i_placement,
+                        i_block_id: block_id,
+                        i_scene_player_data_id: i_scene_id
+                    });
+                    break;
+                }
+                case parseInt(BB.CONSTS.BLOCKCODE_CALENDAR):
+                {
+                    block = new self.m_blockGoogleCalendar({
                         i_placement: i_placement,
                         i_block_id: block_id,
                         i_scene_player_data_id: i_scene_id

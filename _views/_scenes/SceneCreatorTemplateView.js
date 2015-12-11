@@ -44,7 +44,7 @@ define(['jquery'], function ($) {
          **/
         SceneCreatorTemplateView.prototype._loadSceneTemplates = function () {
             var self = this;
-            $(Elements.SCENE_IMPORT_MODAL).modal('show');
+            $(Elements.SCENE_IMPORT_MODAL).modal('now');
             if (self.m_counter > self.m_counter_max)
                 return;
             var $progress, $status;

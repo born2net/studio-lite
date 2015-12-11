@@ -57,7 +57,7 @@ define(['jquery', 'Block'], function ($, Block) {
                             label: "title"
                         },
                         2: {
-                            name: "urlimage",
+                            name: "urlImage",
                             type: "resource",
                             label: "image"
                         },
@@ -128,6 +128,52 @@ define(['jquery', 'Block'], function ($, Block) {
                             name: "$cells.1.1.value",
                             type: "dual_numeric",
                             label: "Sheet cell"
+                        }
+                    }
+                },
+                'Json.calendar': {
+                    title: 'Calendar',
+                    tabTitle: 'Date',
+                    fields: {
+                        1: {
+                            name: "summary",
+                            type: "text",
+                            label: "summary"
+                        },
+                        2: {
+                            name: "description",
+                            type: "text",
+                            label: "description"
+                        },
+                        3: {
+                            name: "organizer",
+                            type: "text",
+                            label: "organizer"
+                        },
+                        4: {
+                            name: "organizerEmail",
+                            type: "text",
+                            label: "organizer email"
+                        },
+                        5: {
+                            name: "created",
+                            type: "text",
+                            label: "created"
+                        },
+                        6: {
+                            name: "startDateTime_time",
+                            type: "date",
+                            label: "start date time"
+                        },
+                        7: {
+                            name: "endDateTime_time",
+                            type: "date",
+                            label: "end date time"
+                        },
+                        8: {
+                            name: "updated",
+                            type: "text",
+                            label: "updated"
                         }
                     }
                 },
@@ -453,6 +499,7 @@ define(['jquery', 'Block'], function ($, Block) {
                 $(Elements.JSON_ITEM_TEXT_FIELDS_CONTAINER).hide();
                 $(Elements.JSON_ITEM_DUAL_NUMERIC_SETTINGS).hide();
                 $(Elements.JSON_ITEM_ICON_SETTINGS).hide();
+                $(Elements.JSON_ITEM_DATE_SETTINGS).hide();
                 $(Elements.JSON_ITEM_FIELD).val(fieldName);
                 return;
             }
@@ -488,13 +535,23 @@ define(['jquery', 'Block'], function ($, Block) {
                 case 'resource':
                     {
                         $(Elements.JSON_ITEM_FONT_SETTINGS).slideUp();
+                        $(Elements.JSON_ITEM_DATE_SETTINGS).slideUp();
                         $(Elements.JSON_ITEM_ICON_SETTINGS).slideDown();
+                        self._populateAspectRatio(maintainAspectRatio);
+                        break;
+                    }
+                case 'date':
+                    {
+                        $(Elements.JSON_ITEM_FONT_SETTINGS).slideUp();
+                        $(Elements.JSON_ITEM_ICON_SETTINGS).slideUp();
+                        $(Elements.JSON_ITEM_DATE_SETTINGS).slideDown();
                         self._populateAspectRatio(maintainAspectRatio);
                         break;
                     }
                 case 'text':
                     {
                         $(Elements.JSON_ITEM_ICON_SETTINGS).slideUp();
+                        $(Elements.JSON_ITEM_DATE_SETTINGS).slideUp();
                         $(Elements.JSON_ITEM_FONT_SETTINGS).slideDown();
                         self.m_labelFontSelector.setConfig({
                             bold: xSnippetFont.attr('fontWeight') === 'bold' ? true : false,

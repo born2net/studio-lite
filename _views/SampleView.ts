@@ -29,22 +29,22 @@ define(['jquery', 'validator'], function ($, validator) {
             var self = this;
 
             // declare a function that returns foobar string
-            BB.lib.log( (() => "foobar")() )
+            BB.lib.log((() => "foobar")())
 
 
             var requestStream = Rx.Observable.just('https://api.github.com/users');
             var responceStream = requestStream.flatMap(requestURL => Rx.Observable.fromPromise($.getJSON(requestURL)));
             responceStream.subscribe(data => {
-               BB.lib.log(data);
+                BB.lib.log(data);
             });
 
             var input = $('#formCampaignName');
-            var obs = Rx.Observable.fromEvent(input,'keyup');
-            var clickStream = obs.buffer(()=> obs.throttle(250)).map(e=>{
+            var obs = Rx.Observable.fromEvent(input, 'keyup');
+            var clickStream = obs.buffer(()=> obs.throttle(250)).map(e=> {
                 return e;
             });
 
-            clickStream.subscribe(e=>{
+            clickStream.subscribe(e=> {
                 BB.lib.log(e);
             });
 
@@ -52,13 +52,13 @@ define(['jquery', 'validator'], function ($, validator) {
             var HeroShots = Rx.Observable.combineLatest(
                 responceStream,
                 clickStream,
-                function(a,b) {
+                function (a, b) {
                     return {
-                        a,b
+                        a, b
                     };
                 });
 
-            HeroShots.subscribe(e=>{
+            HeroShots.subscribe(e=> {
                 BB.lib.log(e);
             })
 
@@ -66,13 +66,11 @@ define(['jquery', 'validator'], function ($, validator) {
             return;
 
 
-
-
             var url = 'https://secure.digitalsignage.com:442/GoogleSheetsList/' + 'xxxx'
 
             //.interval(1000)
             var quakes = Rx.Observable
-                .range(1,5)
+                .range(1, 5)
                 .flatMap(function () {
                     return Rx.DOM.Request.getJSON(url);
                 })

@@ -409,7 +409,7 @@ PepperHelper.prototype = {
                                     '<EventCommands></EventCommands>' +
                                     '<Json providerType="calendar" itemsPath="" slideShow="1" itemInterval="2" playVideoInFull="1" randomOrder="1">'+
                                         '<Player/>'+
-                                        '<Data id="" token="" mode="fixed" startDate="1450382400000" endDate="1452974400000" before="3" after="6"/>' +
+                                        '<Data id="" token="" mode="offset" startDate="" endDate="" before="3" after="6"/>' +
                                     '</Json>'+
                                 '</Data>' +
                             '</Player>'

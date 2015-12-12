@@ -1494,7 +1494,7 @@
                 <span class="dashboardBullets" id="serverName"></span><br/>
                 <span class="dashboardBullets" data-localize="businessId"> Business id: </span><span class="dashboardBullets" id="buisinessID"></span><br/>
                 <span class="dashboardBullets" data-localize="username"> User name: </span><span class="userName dashboardBullets"></span><br/>
-                <span class="dashboardBullets" data-localize="version"> Version 1.5.37 </span>
+                <span class="dashboardBullets" data-localize="version"> Version 1.5.38 </span>
                 <br/>
               </div>
 
@@ -2393,9 +2393,7 @@
                         </div>
                         <hr class="hrthin pull-left"/>
 
-                        <label class="pull-left" data-localize="playVideoToCompletion">Play
-                          video to completion</label>
-
+                        <label class="pull-left" data-localize="playVideoToCompletion">Play video to completion</label>
                         <div class="clearfix" style="padding-bottom: 13px"></div>
                         <div style="position: relative; top: -12px" class="material-switch pull-left">
                           <input id="jsonPlayVideoCompletion" name="someSwitchOption003" type="checkbox"/>
@@ -2503,7 +2501,9 @@
                       <div class="clearfix"></div>
                       <hr/>
                       <div id="jsonItemFontSettings"></div>
-                      <div id="jsonItemDateSettings"><h1>date</h1></div>
+                      <div id="jsonItemDateSettings">
+                        <h1>date</h1>
+                      </div>
                       <div id="jsonItemIconSettings">
                         <label class="pull-left" data-localize="maintainAspectRatio">Maintain
                           Aspect ratio</label>
@@ -2671,8 +2671,7 @@
                       <input id="weatherAddress" type="text" data-localize="address" placeholder="address">
                     </div>
                   </div>
-                  <div id="blockCommonSettingsDigg" style="display: none">
-                  </div>
+                  <div id="blockCommonSettingsDigg" style="display: none"></div>
                   <div id="blockCommonSettingsGoogleSheets" style="display: none">
                     <div style="padding: 10px">
                       <label style="padding-right: 78px; width: 200px" for="googleSheet" data-localize="googleSheet"> Google Sheet </label>
@@ -2699,6 +2698,54 @@
                       </a>
                       <hr class="hrThin"/>
                       <label><a href="http://google.signage.me" target="_blank"><span data-localize="genToken">Click here to create a token</span></a></label>
+                    </div>
+                    <hr class="hrThin"/>
+                    <div style="padding: 5px">
+                      <span data-localize="offsetRangeMode">offset range mode</span><br/>
+                      <br/>
+                      <div class="clearfix"></div>
+                      <div style="position: relative; top: -12px" class="material-switch pull-left">
+                        <input id="googleCalendarMode" name="someSwitchOption003" type="checkbox"/>
+                        <label for="googleCalendarMode" class="label-primary"></label>
+                      </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <hr class="hrThin"/>
+                    <div id="calendarOffset" style="display: block;padding: 5px">
+                      <span data-localize="daysBeforeToday">days before today</span><br/>
+                      <div class="spinner spinnerDimHeight" name="before">
+                        <input id="daysBeforeTodayInput" type="text" style="width: 60px" class="input-mini spinner-input">
+                        <div name="height" class="spinner-buttons btn-group btn-group-vertical">
+                          <button type="button" name="fontSizeUp" class="squareButton btn spinner-up">
+                            <i class="fa fa-chevron-up"></i>
+                          </button>
+                          <button type="button" name="fontSizeDown" class="squareButton btn spinner-down">
+                            <i class="fa fa-chevron-down"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="clearfix"></div>
+                      <br/>
+                      <span data-localize="daysAfterToday" style="float: left; display: block">days after today</span><br/>
+                      <div class="spinner spinnerDimHeight" name="after">
+                        <input id="daysAfterTodayInput" type="text" style="width: 60px" class="input-mini spinner-input">
+
+                        <div name="height" class="spinner-buttons btn-group btn-group-vertical">
+                          <button type="button" name="fontSizeUp" class="squareButton btn spinner-up">
+                            <i class="fa fa-chevron-up"></i>
+                          </button>
+                          <button type="button" name="fontSizeDown" class="squareButton btn spinner-down">
+                            <i class="fa fa-chevron-down"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="calendarFixedMode" style="display: none; padding: 5px">
+                      <span data-localize="startDate">Start date:</span><br/>
+                      <input id="googleCalendarStart" name="start_date" class="datepickerScheduler" type="text" type="text">
+                      <br/>
+                      <span data-localize="endDate">End date:</span><br/>
+                      <input id="googleCalendarEnd" name="end_date" class="datepicker-dropdown datepickerScheduler" type="text" type="text">
                     </div>
                   </div>
                   <div id="blockCommonSettingsTwitterV3" style="display: none">
@@ -2735,7 +2782,7 @@
 </div>
 <div id="footer">
   <br>
-  <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.5.37 </span>
+  <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.5.38 </span>
 </div>
 
 <div id="popModal" style="display: none"></div>

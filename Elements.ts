@@ -612,6 +612,13 @@ module Elements {
     export const GOOGLE_CALENDAR = '#googleCalendar';
     export const GOOGLE_CALENDAR_TOKEN = '#googleCalendarToken';
     export const GOOGLE_CALENDAR_REFRESH = '#googleCalendarRefresh';
+    export const GOOGLE_CALENDAR_MODE = '#googleCalendarMode';
+    export const CALENDAR_OFFSET_MODE = '#calendarOffset';
+    export const CALENDAR_FIXED_MODE = '#calendarFixedMode';
+    export const DAYS_BEFORE_TODAY_INPUT = '#daysBeforeTodayInput';
+    export const DAYS_AFTER_TODAY_INPUT = '#daysAfterTodayInput';
+    export const GOOGLE_CALENDAR_START = '#googleCalendarStart';
+    export const GOOGLE_CALENDAR_END = '#googleCalendarEnd';
     export const WSTEP0 = '#wstep0';
     export const WSTEP1 = '#wstep1';
     export const WSTEP2 = '#wstep2';

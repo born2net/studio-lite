@@ -208,7 +208,7 @@ define(['jquery', 'backbone', 'X2JS', 'fabric'], function ($, Backbone, X2JS, fa
             var self = this;
             var block = undefined;
             // uncomment to see XML when adding new components
-            console.log(i_player_data);
+            // console.log(i_player_data);
             var playerData = this.x2js.xml_str2json(i_player_data);
             var blockCode;
 

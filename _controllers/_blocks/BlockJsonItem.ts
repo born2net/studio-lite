@@ -601,7 +601,8 @@ define(['jquery', 'Block'], function ($, Block) {
                 'MMM/DD/YYYY J:NN:SS',
                 'J:NN:SS',
                 'J:NN:SS A',
-                'J:NN:SS A'
+                'J:NN:SS A',
+                'J:NN A'
             ];
             var snippet:string = `<option selected data-type="" value="select format">select format</option>`;
             for (var i = 0; i < formats.length; i++) {

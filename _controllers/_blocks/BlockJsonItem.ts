@@ -602,7 +602,7 @@ define(['jquery', 'Block'], function ($, Block) {
                 'J:NN:SS',
                 'J:NN:SS A',
                 'J:NN:SS A',
-                'J:NN A'
+                'J:NN'
             ];
             var snippet:string = `<option selected data-type="" value="select format">select format</option>`;
             for (var i = 0; i < formats.length; i++) {
@@ -645,25 +645,24 @@ define(['jquery', 'Block'], function ($, Block) {
             switch (fieldType) {
                 case 'resource':
                 {
-                    $(Elements.JSON_ITEM_FONT_SETTINGS).slideUp();
-                    $(Elements.JSON_ITEM_DATE_SETTINGS).slideUp();
-                    $(Elements.JSON_ITEM_ICON_SETTINGS).slideDown();
+                    $(Elements.JSON_ITEM_FONT_SETTINGS).hide();
+                    $(Elements.JSON_ITEM_DATE_SETTINGS).hide();
+                    $(Elements.JSON_ITEM_ICON_SETTINGS).show();
                     self._populateAspectRatio(maintainAspectRatio);
                     break;
                 }
                 case 'date':
                 {
-                    $(Elements.JSON_ITEM_FONT_SETTINGS).slideUp();
-                    $(Elements.JSON_ITEM_ICON_SETTINGS).slideUp();
-                    $(Elements.JSON_ITEM_DATE_SETTINGS).slideDown();
                     self._populateDateFormat(dateFormat);
-                    break;
+                    setTimeout(function(){
+                        $(Elements.JSON_ITEM_DATE_SETTINGS).show();
+                    },10);
                 }
                 case 'text':
                 {
-                    $(Elements.JSON_ITEM_ICON_SETTINGS).slideUp();
-                    $(Elements.JSON_ITEM_DATE_SETTINGS).slideUp();
-                    $(Elements.JSON_ITEM_FONT_SETTINGS).slideDown();
+                    $(Elements.JSON_ITEM_ICON_SETTINGS).hide();
+                    $(Elements.JSON_ITEM_DATE_SETTINGS).hide();
+                    $(Elements.JSON_ITEM_FONT_SETTINGS).show();
 
                     self.m_labelFontSelector.setConfig({
                         bold: xSnippetFont.attr('fontWeight') === 'bold' ? true : false,

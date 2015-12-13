@@ -262,6 +262,7 @@ var Elements;
     Elements.JSON_ITEM_FONT_SETTINGS = '#jsonItemFontSettings';
     Elements.JSON_ITEM_ICON_SETTINGS = '#jsonItemIconSettings';
     Elements.JSON_ITEM_DATE_SETTINGS = '#jsonItemDateSettings';
+    Elements.JSON_ITEM_DATE_FORMAT = '#jsonItemDateFormat';
     Elements.LABEL_TEXT = '#labelText';
     Elements.FASTERQ_MANAGE_NAV_BUTTON = '#fasterQManageNavButton';
     Elements.FASTERQ_CREATE_NAV_BUTTON = '#fasterQCreateNavButton';

@@ -43,6 +43,7 @@ define(['jquery', 'Block'], function ($, Block) {
             self._listenFontSelectionChange();
             self._listenMouseEntersSceneCanvas();
             self._listenFieldSelected();
+            self._listenDateFormatSelected();
             self._listenMaintainAspectChanged();
             self._listenDualNumericChanged();
             self.m_sceneMime = BB.Pepper.getSceneMime(self.m_sceneID);
@@ -386,6 +387,24 @@ define(['jquery', 'Block'], function ($, Block) {
             $('.spinner', Elements.JSON_ITEM_DUAL_NUMERIC_SETTINGS).on('mouseup', self.m_dualNumericHandler);
         };
         /**
+         Listen date format selected
+         @method _listenDateFormatSelected
+         **/
+        BlockJsonItem.prototype._listenDateFormatSelected = function () {
+            var self = this;
+            self.m_dateFormatChangeHandler = function (e) {
+                if (!self.m_selected)
+                    return;
+                var $selected = $(e.target).find(':selected');
+                var value = $selected.val();
+                var domPlayerData = self._getBlockPlayerData();
+                var xSnippet = $(domPlayerData).find('XmlItem');
+                $(xSnippet).attr('dateFormat', value);
+                self._setBlockPlayerData(domPlayerData);
+            };
+            $(Elements.JSON_ITEM_DATE_FORMAT, self.$el).on('change', self.m_dateFormatChangeHandler);
+        };
+        /**
          Listen to json field selection and update msdb
          @method _listenFieldSelected
          **/
@@ -507,6 +526,40 @@ define(['jquery', 'Block'], function ($, Block) {
             self._populateMimeType();
         };
         /**
+         Populate date format for common types of date styles on dropdown selection
+         @method _populateDateFormat
+         @param {string} i_selectedFormat
+         **/
+        BlockJsonItem.prototype._populateDateFormat = function (i_selectedFormat) {
+            var self = this;
+            var formats = [
+                'D/M/Y',
+                'DD/MM/YY',
+                'DD/MM/YYYY',
+                'DD/MMM/YY',
+                'MM/DD/YY',
+                'MM/DD/YYYY',
+                'MMM/DD/YYYY ',
+                'D/M/Y J:NN:SS',
+                'DD/MM/YY J:NN:SS',
+                'DD/MM/YYYY J:NN:SS',
+                'DD/MMM/YY J:NN:SS',
+                'MM/DD/YY J:NN:SS',
+                'MM/DD/YYYY J:NN:SS',
+                'MMM/DD/YYYY J:NN:SS',
+                'J:NN:SS',
+                'J:NN:SS A',
+                'J:NN:SS A'
+            ];
+            var snippet = "<option selected data-type=\"\" value=\"select format\">select format</option>";
+            for (var i = 0; i < formats.length; i++) {
+                snippet += "<option value=\"" + formats[i] + "\">" + formats[i] + "</option>";
+            }
+            $(Elements.JSON_ITEM_DATE_FORMAT).empty().append(snippet);
+            var elem = $(Elements.JSON_ITEM_DATE_FORMAT).find('option[value="' + i_selectedFormat + '"]');
+            elem.prop('selected', 'selected');
+        };
+        /**
          The component is a subclass of JSON item (i.e.: it has a mimetype) so we need to populate it according
          to its mimetype config options
          @method _populate
@@ -520,6 +573,7 @@ define(['jquery', 'Block'], function ($, Block) {
             var fieldType = $(xSnippet).attr('fieldType');
             var fieldName = $(xSnippet).attr('fieldName');
             var maintainAspectRatio = $(xSnippet).attr('maintainAspectRatio');
+            var dateFormat = $(xSnippet).attr('dateFormat');
             $(Elements.JSON_ITEM_FIELD_CONTAINER).hide();
             $(Elements.JSON_ITEM_TEXT_FIELDS_CONTAINER).show();
             var snippet = "<option selected data-type=\"\" value=\"no field selected\">select field</option>";
@@ -545,7 +599,7 @@ define(['jquery', 'Block'], function ($, Block) {
                         $(Elements.JSON_ITEM_FONT_SETTINGS).slideUp();
                         $(Elements.JSON_ITEM_ICON_SETTINGS).slideUp();
                         $(Elements.JSON_ITEM_DATE_SETTINGS).slideDown();
-                        self._populateAspectRatio(maintainAspectRatio);
+                        self._populateDateFormat(dateFormat);
                         break;
                     }
                 case 'text':
@@ -742,25 +796,28 @@ define(['jquery', 'Block'], function ($, Block) {
             });
             var direction = $(font).attr('textAlign');
             switch (direction) {
-                case 'left': {
-                    break;
-                }
-                case 'center': {
-                    t.set({
-                        textAlign: direction,
-                        originX: direction,
-                        left: 0
-                    });
-                    break;
-                }
-                case 'right': {
-                    t.set({
-                        textAlign: direction,
-                        originX: direction,
-                        left: rec.width / 2
-                    });
-                    break;
-                }
+                case 'left':
+                    {
+                        break;
+                    }
+                case 'center':
+                    {
+                        t.set({
+                            textAlign: direction,
+                            originX: direction,
+                            left: 0
+                        });
+                        break;
+                    }
+                case 'right':
+                    {
+                        t.set({
+                            textAlign: direction,
+                            originX: direction,
+                            left: rec.width / 2
+                        });
+                        break;
+                    }
             }
         };
         /**
@@ -773,6 +830,7 @@ define(['jquery', 'Block'], function ($, Block) {
             $(Elements.JSON_ITEM_FIELD).off('input blur mousemove', self.m_inputPathChangeHandler);
             $(Elements.JSON_ITEM_MAINTAIN_ASPECT_RATIO).off("change", self.m_maintainAspectHandler);
             $(Elements.JSON_ITEM_TEXT_FIELDS, self.$el).off('change', self.m_fieldChangeHandler);
+            $(Elements.JSON_ITEM_DATE_FORMAT, self.$el).off('change', self.m_dateFormatChangeHandler);
             $('.spinner', Elements.JSON_ITEM_DUAL_NUMERIC_SETTINGS).off('mouseup', self.m_dualNumericHandler);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.FONT_SELECTION_CHANGED, self);
             BB.comBroker.stopListenWithNamespace(BB.EVENTS.MOUSE_ENTERS_CANVAS, self);

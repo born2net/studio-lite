@@ -336,7 +336,7 @@ PepperHelper.prototype = {
                                 '<Data>' +
                                     self.getCommonDefaultXML() +
                                     self.getCommonSceneLayout(i_placement) +
-                                    '<XmlItem fieldName="text" fieldType="text" maintainAspectRatio="0">'+
+                                    '<XmlItem fieldName="text" fieldType="text" dateFormat="mm/dd/yy" maintainAspectRatio="0">'+
                                         '<Font fontSize="12" fontColor="0" fontFamily="Astron Boy Video" fontWeight="normal" fontStyle="normal" textDecoration="underline" textAlign="center"/>' +
                                     '</XmlItem>'+
                                 '</Data>' +

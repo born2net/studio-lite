@@ -261,6 +261,7 @@ module Elements {
     export const JSON_ITEM_FONT_SETTINGS = '#jsonItemFontSettings';
     export const JSON_ITEM_ICON_SETTINGS = '#jsonItemIconSettings';
     export const JSON_ITEM_DATE_SETTINGS = '#jsonItemDateSettings';
+    export const JSON_ITEM_DATE_FORMAT = '#jsonItemDateFormat';
     export const LABEL_TEXT = '#labelText';
     export const FASTERQ_MANAGE_NAV_BUTTON = '#fasterQManageNavButton';
     export const FASTERQ_CREATE_NAV_BUTTON = '#fasterQCreateNavButton';

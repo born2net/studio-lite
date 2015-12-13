@@ -654,9 +654,9 @@ define(['jquery', 'Block'], function ($, Block) {
                 case 'date':
                 {
                     self._populateDateFormat(dateFormat);
-                    setTimeout(function(){
+                    setTimeout(function () {
                         $(Elements.JSON_ITEM_DATE_SETTINGS).show();
-                    },10);
+                    }, 10);
                 }
                 case 'text':
                 {

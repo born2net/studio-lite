@@ -54,7 +54,7 @@ define(['jquery', 'BlockJsonBase', 'moment'], function ($, BlockJsonBase, moment
                 var startDate = Date.parse(e.date) / 1000;
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Json').find('Data');
-                $(xSnippet).attr('startDate', startDate);
+                $(xSnippet).attr('startDate', startDate + '000');
                 self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
             };
             $(Elements.GOOGLE_CALENDAR_START).on('hide.timepicker', self.m_schedChangeStartTimeHandler);
@@ -71,7 +71,7 @@ define(['jquery', 'BlockJsonBase', 'moment'], function ($, BlockJsonBase, moment
                 var endDate = Date.parse(e.date) / 1000;
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Json').find('Data');
-                $(xSnippet).attr('endDate', endDate);
+                $(xSnippet).attr('endDate', endDate + '000');
                 self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
             };
             $(Elements.GOOGLE_CALENDAR_END).on('hide.timepicker', self.m_schedChangeEndTimeHandler);
@@ -111,10 +111,11 @@ define(['jquery', 'BlockJsonBase', 'moment'], function ($, BlockJsonBase, moment
                 var startDate = self.m_moment(date).format("MM/DD/YYYY");
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Json').find('Data');
-                $(xSnippet).attr('startDate', startDateUnix);
+                $(xSnippet).attr('startDate', startDateUnix + '000');
                 self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
             }
             else {
+                startDate = startDate.substr(0, 10);
                 startDate = self.m_moment.unix(startDate).format("MM/DD/YYYY");
             }
             $(Elements.GOOGLE_CALENDAR_START).datepicker('setDate', startDate);
@@ -126,10 +127,11 @@ define(['jquery', 'BlockJsonBase', 'moment'], function ($, BlockJsonBase, moment
                 var endDate = self.m_moment(inWeek).format("MM/DD/YYYY");
                 var domPlayerData = self._getBlockPlayerData();
                 var xSnippet = $(domPlayerData).find('Json').find('Data');
-                $(xSnippet).attr('endDate', endDateUnix);
+                $(xSnippet).attr('endDate', endDateUnix + '000');
                 self._setBlockPlayerData(domPlayerData, BB.CONSTS.NO_NOTIFICATION);
             }
             else {
+                endDate = endDate.substr(0, 10);
                 endDate = self.m_moment.unix(endDate).format("MM/DD/YYYY");
             }
             $(Elements.GOOGLE_CALENDAR_END).datepicker('setDate', endDate);
@@ -313,7 +315,7 @@ define(['jquery', 'BlockJsonBase', 'moment'], function ($, BlockJsonBase, moment
                 return;
             try {
                 $.ajax({
-                    url: "https://secure.digitalsignage.com:442/GoogleCalendarList/" + token + "/100",
+                    url: "https://secure.digitalsignage.com/GoogleCalendarList/" + token + "/100",
                     dataType: "json",
                     type: "post",
                     complete: function (response, status) {

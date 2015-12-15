@@ -266,8 +266,12 @@ define(['jquery', 'backbone','TimelineMax', 'TweenMax', 'TutorialView'], functio
                         className: "btn-success",
                         callback: function () {
                             self.save(function () {
+                                // reboot will reboot the PC or exits presentation android
                                 // pepper.sendCommand('rebootStation', -1, function () {});
-                                pepper.sendCommand('rebootPlayer', -1, function () {
+                                // reboot player exits player
+                                // pepper.sendCommand('rebootPlayer', -1, function () {
+                                // sync and restart does a fast / soft restart of player
+                                pepper.sendCommand('syncAndStart', -1, function () {
                                 });
 
                             });

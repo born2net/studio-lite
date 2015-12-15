@@ -296,6 +296,7 @@ Pepper.prototype = {
      **/
     sendCommand: function (i_command, i_stationId, i_callBack) {
         var url = window.g_protocol + pepper.getUserData().domain + '/WebService/sendCommand.ashx?i_user=' + pepper.getUserData().userName + '&i_password=' + pepper.getUserData().userPass + '&i_stationId=' + i_stationId + '&i_command=' + i_command + '&i_param1=' + 'SignageStudioLite' + '&i_param2=' + '&callback=?';
+        console.log(url)
         $.getJSON(url, i_callBack);
     },
 

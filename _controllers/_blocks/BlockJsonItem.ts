@@ -837,15 +837,23 @@ define(['jquery', 'Block'], function ($, Block) {
             });
 
             // calculate block so it can always contain the text it holds and doesn't bleed
-            self.m_minSize.w = t.width < 50 ? 50 : t.width * 1.2;
-            self.m_minSize.h = t.height < 50 ? 50 : t.height * 1.2;
-            var w = parseInt(layout.attr('width')) < self.m_minSize.w ? self.m_minSize.w : parseInt(layout.attr('width'));
-            var h = parseInt(layout.attr('height')) < self.m_minSize.h ? self.m_minSize.h : parseInt(layout.attr('height'));
+            //self.m_minSize.w = t.width < 50 ? 50 : t.width * 1.2;
+            //self.m_minSize.h = t.height < 50 ? 50 : t.height * 1.2;
+            //var w = parseInt(layout.attr('width')) < self.m_minSize.w ? self.m_minSize.w : parseInt(layout.attr('width'));
+            //var h = parseInt(layout.attr('height')) < self.m_minSize.h ? self.m_minSize.h : parseInt(layout.attr('height'));
 
+            var w = parseInt(layout.attr('width'));
+            var textWidth = t.width * 1.2;
+            if (textWidth > w) {
+                t.setText('...');
+            }
+            var h = parseInt(layout.attr('height'));
+            var textHeight = t.height * 1.2;
+            if (textHeight > h) {
+                t.setText('...');
+            }
             var rec = self._fabricRect(w, h, domPlayerData);
             var o = self._fabricateOptions(parseInt(layout.attr('y')), parseInt(layout.attr('x')), w, h, parseInt(layout.attr('rotation')));
-            //var group = new fabric.Group([ rec, t ], o);
-            //_.extend(self, group);
 
             rec.originX = 'center';
             rec.originY = 'center';

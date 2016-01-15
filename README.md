@@ -15,7 +15,7 @@
 StudioLite, Digital Signage for the rest of us
 ---------------------------------------
 
-current version: 1.5.47 dev-build
+current version: 1.5.51 dev-build
 
 ------------------------------------------------------------------------
 

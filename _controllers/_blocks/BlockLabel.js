@@ -191,14 +191,16 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             self._fabricLock();
             self['canvasScale'] = i_canvasScale;
 
-            $.ajax({
-                url: url,
-                async: false,
-                dataType: "script",
-                complete: function(e){
-                    setTimeout(i_callback,1)
-                }
-            });
+            //$.ajax({
+            //    url: url,
+            //    async: false,
+            //    dataType: "script",
+            //    complete: function(e){
+            //        setTimeout(i_callback,1)
+            //    }
+            //});
+
+            setTimeout(i_callback,1)
 
             var direction = $(font).attr('textAlign');
             switch (direction) {

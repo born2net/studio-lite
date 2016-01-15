@@ -25,7 +25,7 @@ echo 'inserting localization to msdb'
 
 
 ### minified files ###
-gulp uglify
+# gulp uglify
 
 
 ### non minified ###

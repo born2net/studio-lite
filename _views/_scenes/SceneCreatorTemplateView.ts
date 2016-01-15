@@ -4,8 +4,8 @@
 //GULP_ABSTRACT_EXTEND extends Backbone.View<Backbone.Model>
 //GULP_ABSTRACT_START
 declare module TSLiteModules {
-   export class SceneCreatorTemplateView extends Backbone.View<Backbone.Model> {
-   }
+    export class SceneCreatorTemplateView extends Backbone.View<Backbone.Model> {
+    }
 }
 //GULP_ABSTRACT_END
 define(['jquery'], function ($) {
@@ -96,7 +96,7 @@ define(['jquery'], function ($) {
                                 return;
                             }
                             populateScenes();
-                        }, 500)
+                        }, 500);
                     })
                     .fail(function (e) {
                         //console.log('some fail ' + e)
@@ -186,9 +186,43 @@ define(['jquery'], function ($) {
             var self = this;
             if (self.m_rendered)
                 return;
+            //BB.Pepper.m_loaderManager.importScene(401212, 6, function(i_SceneId){
+            //    BB.Pepper.injectPseudoScenePlayersIDs(i_SceneId);
+            //    var navigationView = BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW);
+            //    navigationView.save(function () {
+            //    });
+            //    //pepper.sync(function () {
+            //    //    self._removeStationFromLI(self.m_selected_station_id);
+            //    //    navigationView.resetPropertiesView();
+            //    //});
+            //});
+
             self._loadSceneTemplates();
 
         }
     }
     return SceneCreatorTemplateView;
 });
+
+
+//try {
+//    $.ajax({
+//        url: 'https://pluto.signage.me/WebService/SharedDataService.asmx/GetSharedSceneList?i_search=',
+//        dataType: "xml",
+//        type: "GET",
+//        success: function (xml) {
+//            var items = $(xml).find('PlayerData');
+//            for (var i = 0; i < items.length; i++){
+//                var playerData = items[i];
+//                var xData = $(playerData);
+//                console.log('playerDataId ' + xData.attr('playerDataId') + ' ' + xData.attr('label'));
+//            }
+//        },
+//        complete: function (response) {
+//        },
+//        error: function (jqXHR, exception) {
+//        }
+//    });
+//} catch (e) {
+//    log('error on ajax' + e);
+//}

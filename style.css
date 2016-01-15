@@ -12,7 +12,7 @@ body {
     height: 100%;
     background-color: #ffffff;
     font-size: 12px;
-    font-family: 'Raleway', 'sans-serif';
+    font-family: 'Raleway', 'sans-serif', 'Roboto','Oswald','Montserrat','Raleway','Ubuntu','Lora','Merriweather','Arimo','Bitter','Lobster','Dosis','Cabin','Arvo','Abel','Inconsolata','Signika','Pacifico','Alegreya','Orbitron','Anton','Quicksand','Exo','Bangers','Chewy','Philosopher','Righteous','Playball','Courgette','Cinzel','Satisfy','Amaranth','Handlee','ABeeZee','Tangerine','Cookie','Limelight','Damion','Niconne','Basic','Acme','Ultra','Alice','Overlock','Rancho','Boogaloo','Yellowtail','Aclonica','Unkempt','Gruppo','Belleza','Allan','Capriola','Lemon','Graduate','Rye','Baumans','Italianno','Merienda','Englebert','Metamorphous','Shojumaru','Meddon','Sniglet','Kavoon','Sofia','Gabriela','Aladin','Dorsa','Redressed','Condiment','Quintessential','Sail','Bilbo','Stoke','Milonga','Galindo','Offside','Fondamento','Wellfleet','Kenia','Chango','Julee','Astloch','Griffy','Elsie','Miniver','Ribeye','Piedra','Smythe','Trochut','Ruthie','Iceberg','Lancelot','Devonshire','Combo','Peralta','Sarpanch','Akronim';
 }
 
 .btn {
@@ -41,6 +41,8 @@ i.fa {
     font-weight: 500;
     src: local('Lobster Two'), local('LobsterTwo'), url(https://themes.googleusercontent.com/static/fonts/lobstertwo/v5/Law3VVulBOoxyKPkrNsAaIbN6UDyHWBl620a-IRfuBk.woff) format('woff');
 }
+
+
 
 /*
 font-face {

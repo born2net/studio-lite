@@ -199,8 +199,7 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
             //        setTimeout(i_callback,1)
             //    }
             //});
-
-            setTimeout(i_callback,1)
+            setTimeout(i_callback,1);
 
             var direction = $(font).attr('textAlign');
             switch (direction) {

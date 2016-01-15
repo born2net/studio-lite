@@ -28,7 +28,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
 
             for (var i = 0 ; i < this.m_fonts.length; i++){
                 var family = this.m_fonts[i];
-                addGoogleFont(family); // for example
+                addGoogleFont(family);
             }
         },
 

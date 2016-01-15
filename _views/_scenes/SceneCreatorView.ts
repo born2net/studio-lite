@@ -97,38 +97,44 @@ define(['jquery'], function ($) {
                     }
                     case 'template':
                     {
+                        BB.comBroker.getService(BB.SERVICES.SCENE_CREATOR_TEMPLATE_VIEW).setSceneMimeType('all');
                         self.m_options.stackView.slideToPage(self.m_options.to, 'right');
-                        //bootbox.alert('COMING SOON: We have over 600+ amazing new templates coming in January 2006... it will be amazing..')
                         break;
                     }
                     case 'Json.digg':
                     {
+                        BB.comBroker.getService(BB.SERVICES.SCENE_CREATOR_TEMPLATE_VIEW).setSceneMimeType('Json.digg');
+                        self.m_options.stackView.slideToPage(self.m_options.to, 'right');
+                        break;
                     }
                     case 'Json.twitter':
                     {
+                        BB.comBroker.getService(BB.SERVICES.SCENE_CREATOR_TEMPLATE_VIEW).setSceneMimeType('Json.twitter');
+                        self.m_options.stackView.slideToPage(self.m_options.to, 'right');
+                        break;
                     }
                     case 'Json.instagram.feed':
                     {
+                        BB.comBroker.getService(BB.SERVICES.SCENE_CREATOR_TEMPLATE_VIEW).setSceneMimeType('Json.instagram');
+                        self.m_options.stackView.slideToPage(self.m_options.to, 'right');
+                        break;
                     }
                     case 'Json.calendar':
                     {
-
+                        BB.comBroker.getService(BB.SERVICES.SCENE_CREATOR_TEMPLATE_VIEW).setSceneMimeType('Json.calendar');
+                        self.m_options.stackView.slideToPage(self.m_options.to, 'right');
+                        break;
                     }
                     case 'Json.weather':
                     {
+                        BB.comBroker.getService(BB.SERVICES.SCENE_CREATOR_TEMPLATE_VIEW).setSceneMimeType('Json.weather');
+                        self.m_options.stackView.slideToPage(self.m_options.to, 'right');
+                        break;
                     }
                     case 'Json.spreadsheet':
                     {
-                        self._nameScene(function (i_name) {
-                            if (_.isUndefined(i_name) || i_name.length == 0)
-                                return;
-                            BB.comBroker.fire(BB.EVENTS.NEW_SCENE_ADD, this, null, {
-                                name: i_name,
-                                mimeType: mimeType
-                            });
-                            BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this, this, 'pushToTop');
-                            self._goBack();
-                        });
+                        BB.comBroker.getService(BB.SERVICES.SCENE_CREATOR_TEMPLATE_VIEW).setSceneMimeType('Json.spreadsheet');
+                        self.m_options.stackView.slideToPage(self.m_options.to, 'right');
                         break;
                     }
 

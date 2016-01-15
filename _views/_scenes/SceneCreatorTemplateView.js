@@ -5,7 +5,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 //GULP_ABSTRACT_END
-define(['jquery'], function ($) {
+define(['jquery', 'SceneTemplates'], function ($, SceneTemplates) {
+    BB.SERVICES.SCENE_CREATOR_TEMPLATE_VIEW = 'SceneCreatorTemplateView';
     /**
      Wizard which allows user to select which scene to create, such as from a template, blank, with mimetype etc
      @class SceneCreatorTemplateView
@@ -24,18 +25,38 @@ define(['jquery'], function ($) {
             self.$el = $(this.id);
             self.el = this.$el.get(0);
             self.m_counter = 1;
-            self.m_counter_max = 500;
-            self.m_count_set = 100;
-            //self.m_sceneSelector = BB.comBroker.getService(BB.SERVICES['SCENES_SELECTION_VIEW']);
+            //self.m_count_set = 100;
+            self.m_sceneTemplates = new SceneTemplates();
+            self.m_counter_max = _.size(this.m_sceneTemplates.m_scenes);
+            BB.comBroker.setService(BB.SERVICES.SCENE_CREATOR_TEMPLATE_VIEW, this);
+            self._listenSceneImportSelection();
             self.listenTo(self.m_options.stackView, BB.EVENTS.SELECTED_STACK_VIEW, function (e) {
-                if (e === self && !self.m_rendered) {
+                if (e === self)
                     self._render();
-                    self.m_rendered = true;
-                }
             });
             $(self.el).find('#prev').on('click', function () {
                 self._goBack();
                 return false;
+            });
+        };
+        SceneCreatorTemplateView.prototype._listenSceneImportSelection = function () {
+            var self = this;
+            $('#sceneCreatorTemplate').on('click', function (e) {
+                if ($(e.target).hasClass('sceneImportThumb')) {
+                    var businessID = $(e.target).data('businessid');
+                    var nativeID = $(e.target).data('native');
+                    console.log("importing " + businessID + " " + nativeID);
+                    BB.Pepper.m_loaderManager.importScene(businessID, nativeID, function (i_SceneId) {
+                        BB.Pepper.injectPseudoScenePlayersIDs(i_SceneId);
+                        var navigationView = BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW);
+                        navigationView.save(function () {
+                        });
+                        //pepper.sync(function () {
+                        //    self._removeStationFromLI(self.m_selected_station_id);
+                        //    navigationView.resetPropertiesView();
+                        //});
+                    });
+                }
             });
         };
         /**
@@ -50,7 +71,7 @@ define(['jquery'], function ($) {
             var $progress, $status;
             var supportsProgress;
             var loadedImageCount, imageCount;
-            //SELECT_SCENE_TYPE_CREATE_TEMPLATE
+            $('#image-container').empty();
             var $demo = $('#selectSceneTypeCreateTemplate');
             var $container = $demo.find('#image-container');
             $status = $demo.find('#status');
@@ -68,13 +89,13 @@ define(['jquery'], function ($) {
                     .progress(onProgress)
                     .always(function () {
                     onAlways();
-                    setTimeout(function () {
-                        if (self.m_counter > self.m_counter_max) {
-                            $(Elements.IMPORT_SCENEL_DIALOG_CONTAINER).find('button').fadeIn();
-                            return;
-                        }
-                        populateScenes();
-                    }, 500);
+                    //setTimeout(function () {
+                    //    if (self.m_counter > self.m_counter_max) {
+                    //        $(Elements.IMPORT_SCENEL_DIALOG_CONTAINER).find('button').fadeIn();
+                    //        return;
+                    //    }
+                    //    //populateScenes();
+                    //}, 500);
                 })
                     .fail(function (e) {
                     //console.log('some fail ' + e)
@@ -87,18 +108,53 @@ define(['jquery'], function ($) {
                 resetProgress();
                 updateProgress(0);
             }
-            ;
             // reset container
             $('#reset').click(function () {
-                $container.empty();
+                $container1.empty();
                 self.m_counter = 0;
             });
-            // return doc fragment with
             function getItems() {
                 var items = '';
-                for (var i = 0; i < self.m_count_set; i++) {
-                    var z = self.m_counter++;
-                    items += getImageItem(z);
+                for (var sceneName in self.m_sceneTemplates.m_scenes) {
+                    var sceneConfig = self.m_sceneTemplates.m_scenes[sceneName];
+                    console.log(self.m_selectedSceneMime + ' ' + sceneName);
+                    switch (self.m_selectedSceneMime) {
+                        case 'Json.digg':
+                            {
+                                if (sceneName.indexOf('Digg') == -1)
+                                    continue;
+                                break;
+                            }
+                        case 'Json.twitter':
+                            {
+                                if (sceneName.indexOf('Twitter') == -1)
+                                    continue;
+                                break;
+                            }
+                        case 'Json.instagram':
+                            {
+                                if (sceneName.indexOf('Instagram') == -1)
+                                    continue;
+                                break;
+                            }
+                        case 'Json.calendar':
+                            {
+                                if (sceneName.indexOf('Calendar') == -1)
+                                    continue;
+                                break;
+                            }
+                        case 'Json.weather':
+                            {
+                                if (sceneName.indexOf('Weather') == -1)
+                                    continue;
+                                break;
+                            }
+                        default:
+                            {
+                            }
+                    }
+                    var item = "<li class=\"is-loading\">';\n                                    '<img class=\"sceneImportThumb\" data-native=\"" + sceneConfig[2] + "\" data-businessid=\"" + sceneConfig[0] + "\" src=\"_assets/scenes/" + sceneName + ".jpg\"/>\n                                </li>';";
+                    items = items + item;
                 }
                 return items;
             }
@@ -152,19 +208,18 @@ define(['jquery'], function ($) {
          **/
         SceneCreatorTemplateView.prototype._render = function () {
             var self = this;
-            if (self.m_rendered)
-                return;
-            //BB.Pepper.m_loaderManager.importScene(401212, 6, function(i_SceneId){
-            //    BB.Pepper.injectPseudoScenePlayersIDs(i_SceneId);
-            //    var navigationView = BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW);
-            //    navigationView.save(function () {
-            //    });
-            //    //pepper.sync(function () {
-            //    //    self._removeStationFromLI(self.m_selected_station_id);
-            //    //    navigationView.resetPropertiesView();
-            //    //});
-            //});
             self._loadSceneTemplates();
+        };
+        /**
+         Returns this model's attributes as...
+         @method setSceneMimeType
+         @param {Number} i_playerData
+         @return {Number} Unique clientId.
+         **/
+        SceneCreatorTemplateView.prototype.setSceneMimeType = function (i_selectedSceneMime) {
+            var self = this;
+            self.m_selectedSceneMime = i_selectedSceneMime;
+            self._render();
         };
         return SceneCreatorTemplateView;
     })(Backbone.View);

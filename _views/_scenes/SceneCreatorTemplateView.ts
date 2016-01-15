@@ -59,7 +59,7 @@ define(['jquery', 'SceneTemplates'], function ($, SceneTemplates) {
                 if ($(e.target).hasClass('sceneImportThumb')) {
                     var businessID = $(e.target).data('businessid');
                     var nativeID = $(e.target).data('native');
-                    console.log(`importing ${businessID} ${nativeID}`);
+                    //console.log(`importing ${businessID} ${nativeID}`);
                     BB.Pepper.m_loaderManager.importScene(businessID, nativeID, function (i_SceneId) {
                         BB.Pepper.injectPseudoScenePlayersIDs(i_SceneId);
                         var navigationView = BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW);
@@ -140,7 +140,6 @@ define(['jquery', 'SceneTemplates'], function ($, SceneTemplates) {
                 for (var sceneName in self.m_sceneTemplates.m_scenes) {
                     var sceneConfig = self.m_sceneTemplates.m_scenes[sceneName];
 
-                    console.log(self.m_selectedSceneMime + ' ' + sceneName);
                     switch (self.m_selectedSceneMime) {
                         case 'Json.digg':
                         {
@@ -163,6 +162,12 @@ define(['jquery', 'SceneTemplates'], function ($, SceneTemplates) {
                         case 'Json.calendar':
                         {
                             if (sceneName.indexOf('Calendar') == -1)
+                                continue;
+                            break;
+                        }
+                        case 'Json.spreadsheet':
+                        {
+                            if (sceneName.indexOf('Sheet') == -1)
                                 continue;
                             break;
                         }

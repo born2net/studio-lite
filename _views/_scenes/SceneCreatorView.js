@@ -39,6 +39,10 @@ define(['jquery'], function ($) {
                 return false;
             });
         };
+        /**
+         Go back with slider
+         @method _goBack
+         **/
         SceneCreatorView.prototype._goBack = function () {
             var self = this;
             self.m_options.stackView.slideToPage(self.m_options.from, 'left');

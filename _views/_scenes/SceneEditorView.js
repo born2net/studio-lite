@@ -681,6 +681,9 @@ define(['jquery', 'backbone', 'fabric', 'BlockScene', 'BlockRSS', 'ScenesToolbar
             });
         },
 
+        /**
+         @method _sceneProcessing
+         **/
         _sceneProcessing: function (i_status, i_callBack) {
             var self = this;
             if (i_status) {

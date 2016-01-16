@@ -52,6 +52,10 @@ define(['jquery'], function ($) {
             });
         }
 
+        /**
+         Go back with slider
+         @method _goBack
+         **/
         private _goBack() {
             var self = this;
             self.m_options.stackView.slideToPage(self.m_options.from, 'left');

@@ -131,15 +131,26 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
                 // log('loading img from ' + imgPath);
             }
 
-            $('<img src="' + imgPath + '" style="display: none" >').load(function () {
-                $(this).width(1000).height(800).appendTo('body');
+            var initImage = function (i_image, i_passed) {
+                if (!i_passed){
+                    i_callback();
+                    return;
+                }
+                $(i_image).width(1000).height(800).appendTo('body');
                 var options = self._fabricateOptions(parseInt(layout.attr('y')), parseInt(layout.attr('x')), parseInt(layout.attr('width')), parseInt(layout.attr('height')), parseInt(layout.attr('rotation')));
-                var img = new fabric.Image(this, options);
+                var img = new fabric.Image(i_image, options);
                 _.extend(self, img);
                 self._fabricAlpha(domPlayerData);
                 self._fabricLock();
                 self['canvasScale'] = i_canvasScale;
                 i_callback();
+            };
+
+            // manage errors of resources which don't load
+            $('<img src="' + imgPath + '" style="display: none" >').load(function () {
+                initImage(this, true);
+            }).error(function () {
+                initImage(this, false);
             })
         },
 

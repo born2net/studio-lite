@@ -59,16 +59,13 @@ define(['jquery', 'SceneTemplates'], function ($, SceneTemplates) {
                 if ($(e.target).hasClass('sceneImportThumb')) {
                     var businessID = $(e.target).data('businessid');
                     var nativeID = $(e.target).data('native');
-                    //console.log(`importing ${businessID} ${nativeID}`);
                     BB.Pepper.m_loaderManager.importScene(businessID, nativeID, function (i_SceneId) {
                         BB.Pepper.injectPseudoScenePlayersIDs(i_SceneId);
                         var navigationView = BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW);
                         navigationView.save(function () {
+                            BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this, this, 'pushToTop');
+                            self._goBack();
                         });
-                        //pepper.sync(function () {
-                        //    self._removeStationFromLI(self.m_selected_station_id);
-                        //    navigationView.resetPropertiesView();
-                        //});
                     });
                 }
             });

@@ -59,13 +59,31 @@ define(['jquery', 'SceneTemplates'], function ($, SceneTemplates) {
                 if ($(e.target).hasClass('sceneImportThumb')) {
                     var businessID = $(e.target).data('businessid');
                     var nativeID = $(e.target).data('native');
-                    BB.Pepper.m_loaderManager.importScene(businessID, nativeID, function (i_SceneId) {
-                        BB.Pepper.injectPseudoScenePlayersIDs(i_SceneId);
-                        var navigationView = BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW);
-                        navigationView.save(function () {
-                            BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this, this, 'pushToTop');
-                            self._goBack();
-                        });
+                    var sceneName = $(e.target).data('scenename');
+                    var largePreview = `http://s3.signage.me/business1000/resources/scenes_snaps/${sceneName}.png`;
+
+                    bootbox.dialog({
+                        title: `${sceneName}`,
+                        message: `<center>
+                                    <img src="${largePreview}" width="512" height="286"/>
+                                  </center>
+                            `,
+                        buttons: {
+                            success: {
+                                label: "Download it now",
+                                className: "btn-success",
+                                callback: function() {
+                                    BB.Pepper.m_loaderManager.importScene(businessID, nativeID, function (i_SceneId) {
+                                        BB.Pepper.injectPseudoScenePlayersIDs(i_SceneId);
+                                        var navigationView = BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW);
+                                        navigationView.save(function () {
+                                            BB.comBroker.fire(BB.EVENTS.SCENE_LIST_UPDATED, this, this, 'pushToTop');
+                                            self._goBack();
+                                        });
+                                    });
+                                }
+                            }
+                        }
                     });
                 }
             });
@@ -127,7 +145,7 @@ define(['jquery', 'SceneTemplates'], function ($, SceneTemplates) {
 
             // reset container
             $('#reset').click(function () {
-                $container1.empty();
+                $container.empty();
                 self.m_counter = 0;
             });
 
@@ -179,7 +197,7 @@ define(['jquery', 'SceneTemplates'], function ($, SceneTemplates) {
                         }
                     }
                     var item = `<li class="is-loading">';
-                                    '<img class="sceneImportThumb" data-native="${sceneConfig[2]}" data-businessid="${sceneConfig[0]}" src="_assets/scenes/${sceneName}.jpg"/>
+                                    '<img class="sceneImportThumb" data-native="${sceneConfig[2]}" data-scenename="${sceneName}" data-businessid="${sceneConfig[0]}" src="_assets/scenes/${sceneName}.jpg"/>
                                 </li>';`;
                     items = items + item;
                 }

@@ -130,7 +130,14 @@ define(['jquery', 'backbone', 'Block'], function ($, Backbone, Block) {
 
                 // set new height in SVG per current selection box height
                 hh = layout.attr('height');
-                svgHeight = svg.match(/(height=")([^\"]*)/)[2];
+
+                // catch load errors
+                svgHeight = svg.match(/(height=")([^\"]*)/)
+                if (_.isNull(svgHeight)){
+                    i_callback();
+                    return;
+                }
+                svgHeight = svgHeight[2];
                 re = new RegExp('height="' + svgHeight + '"', "ig");
                 svg = svg.replace(re, 'height="' + hh + '"');
 

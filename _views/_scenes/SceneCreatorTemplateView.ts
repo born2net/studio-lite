@@ -72,7 +72,7 @@ define(['jquery', 'SceneTemplates'], function ($, SceneTemplates) {
                             success: {
                                 label: "Download it now",
                                 className: "btn-success",
-                                callback: function() {
+                                callback: function () {
                                     BB.Pepper.m_loaderManager.importScene(businessID, nativeID, function (i_SceneId) {
                                         BB.Pepper.injectPseudoScenePlayersIDs(i_SceneId);
                                         var navigationView = BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW);
@@ -196,9 +196,9 @@ define(['jquery', 'SceneTemplates'], function ($, SceneTemplates) {
                         {
                         }
                     }
-                    var item = `<li class="is-loading">';
-                                    '<img class="sceneImportThumb" data-native="${sceneConfig[2]}" data-scenename="${sceneName}" data-businessid="${sceneConfig[0]}" src="_assets/scenes/${sceneName}.jpg"/>
-                                </li>';`;
+                    var item = `<li class="is-loading">
+                                    <img class="sceneImportThumb" data-native="${sceneConfig[2]}" data-scenename="${sceneName}" data-businessid="${sceneConfig[0]}" src="_assets/scenes/${sceneName}.jpg"/>
+                                </li>`;
                     items = items + item;
                 }
                 return items;
@@ -261,7 +261,7 @@ define(['jquery', 'SceneTemplates'], function ($, SceneTemplates) {
          **/
         private _render():void {
             var self = this;
-            self._loadSceneTemplates();
+            setTimeout((e) => self._loadSceneTemplates(), 500);
         }
 
         /**
@@ -273,31 +273,10 @@ define(['jquery', 'SceneTemplates'], function ($, SceneTemplates) {
         public setSceneMimeType(i_selectedSceneMime) {
             var self = this;
             self.m_selectedSceneMime = i_selectedSceneMime;
-            self._render();
+            //self._render();
         }
     }
     return SceneCreatorTemplateView;
 });
 
 
-//try {
-//    $.ajax({
-//        url: 'https://pluto.signage.me/WebService/SharedDataService.asmx/GetSharedSceneList?i_search=',
-//        dataType: "xml",
-//        type: "GET",
-//        success: function (xml) {
-//            var items = $(xml).find('PlayerData');
-//            for (var i = 0; i < items.length; i++){
-//                var playerData = items[i];
-//                var xData = $(playerData);
-//                console.log('playerDataId ' + xData.attr('playerDataId') + ' ' + xData.attr('label'));
-//            }
-//        },
-//        complete: function (response) {
-//        },
-//        error: function (jqXHR, exception) {
-//        }
-//    });
-//} catch (e) {
-//    log('error on ajax' + e);
-//}

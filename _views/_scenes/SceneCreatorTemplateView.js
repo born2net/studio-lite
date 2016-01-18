@@ -169,7 +169,7 @@ define(['jquery', 'SceneTemplates'], function ($, SceneTemplates) {
                             {
                             }
                     }
-                    var item = "<li class=\"is-loading\">';\n                                    '<img class=\"sceneImportThumb\" data-native=\"" + sceneConfig[2] + "\" data-scenename=\"" + sceneName + "\" data-businessid=\"" + sceneConfig[0] + "\" src=\"_assets/scenes/" + sceneName + ".jpg\"/>\n                                </li>';";
+                    var item = "<li class=\"is-loading\">\n                                    <img class=\"sceneImportThumb\" data-native=\"" + sceneConfig[2] + "\" data-scenename=\"" + sceneName + "\" data-businessid=\"" + sceneConfig[0] + "\" src=\"_assets/scenes/" + sceneName + ".jpg\"/>\n                                </li>";
                     items = items + item;
                 }
                 return items;
@@ -224,7 +224,7 @@ define(['jquery', 'SceneTemplates'], function ($, SceneTemplates) {
          **/
         SceneCreatorTemplateView.prototype._render = function () {
             var self = this;
-            self._loadSceneTemplates();
+            setTimeout(function (e) { return self._loadSceneTemplates(); }, 500);
         };
         /**
          Returns this model's attributes as...
@@ -235,31 +235,10 @@ define(['jquery', 'SceneTemplates'], function ($, SceneTemplates) {
         SceneCreatorTemplateView.prototype.setSceneMimeType = function (i_selectedSceneMime) {
             var self = this;
             self.m_selectedSceneMime = i_selectedSceneMime;
-            self._render();
+            //self._render();
         };
         return SceneCreatorTemplateView;
     })(Backbone.View);
     return SceneCreatorTemplateView;
 });
-//try {
-//    $.ajax({
-//        url: 'https://pluto.signage.me/WebService/SharedDataService.asmx/GetSharedSceneList?i_search=',
-//        dataType: "xml",
-//        type: "GET",
-//        success: function (xml) {
-//            var items = $(xml).find('PlayerData');
-//            for (var i = 0; i < items.length; i++){
-//                var playerData = items[i];
-//                var xData = $(playerData);
-//                console.log('playerDataId ' + xData.attr('playerDataId') + ' ' + xData.attr('label'));
-//            }
-//        },
-//        complete: function (response) {
-//        },
-//        error: function (jqXHR, exception) {
-//        }
-//    });
-//} catch (e) {
-//    log('error on ajax' + e);
-//} 
 //# sourceMappingURL=SceneCreatorTemplateView.js.map

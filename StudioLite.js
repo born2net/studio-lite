@@ -44,6 +44,8 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             BB.CONSTS.ROOT_URL = 'https://secure.digitalsignage.com' + (BB.lib.inDevMode() ? ':442' : '');
             BB.CONSTS.BASE_URL = BB.CONSTS.ROOT_URL + (BB.lib.inDevMode() ? '/_studiolite-dev/studiolite.html' : '/_studiolite-dist/studiolite.html');
 
+            //console.log(platform.name + ' ' + platform.version);
+
             $.ajaxSetup({
                 cache: false,
                 timeout: 3000,

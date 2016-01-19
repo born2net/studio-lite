@@ -156,6 +156,7 @@ aside > aside > div > ul > li {
     opacity: 0.3;
 }
 
+
 #stationProperties {
     display: none;
     overflow-y: scroll;
@@ -2484,6 +2485,29 @@ Language selector
     height: 78px;
 }
 
+
+/* CSS for Credit Card Payment form */
+.panel-title {display: inline;font-weight: bold;}
+.checkbox.pull-right { margin: 0; }
+.pl-ziro { padding-left: 0px; }
+.form-control.error {
+    border-color: red;
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(255,0,0,0.6);
+}
+label.error {
+    font-weight: bold;
+    color: red;
+    padding: 2px 8px;
+    margin-top: 2px;
+}
+.payment-errors {
+    font-weight: bold;
+    color: red;
+    padding: 2px 8px;
+    margin-top: 2px;
+}
+
 /*
 i.fa {
     -webkit-animation: show 1s 1;
@@ -4419,4 +4443,13 @@ select.mobile-device {
     box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16), 0 2px 5px 0 rgba(0, 0, 0, 0.12);
     color: #fff;
     transition: all 0.5s ease 0s;
+}
+
+
+.showUpgradeModal {
+    font-size: 1.2em !important;
+}
+
+.showUpgradeModal i {
+    color: red !important;
 }

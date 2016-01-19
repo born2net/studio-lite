@@ -138,6 +138,7 @@ require.config({
         'StationsViewLoader': '_views/StationsViewLoader',
         'StationsListView': '_views/StationsListView',
         'SettingView': '_views/SettingView',
+        'UpgradeView': '_views/UpgradeView',
         'ProStudioView': '_views/ProStudioView',
         'HelpView': '_views/HelpView',
         'AdStatsView': '_views/AdStatsView',

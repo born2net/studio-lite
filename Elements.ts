@@ -123,6 +123,8 @@ module Elements {
     export const CHANNEL_PROPERTIES = '#channelProperties';
     export const CLASS_ACCESS_TOKEN = '.accessToken';
     export const CLASS_GEN_TOKEN = '.genToken';
+    export const CLASS_START_UPGRADE = '.startUpgrade';
+    export const CLASS_SHOW_UPGRADE_MODAL = '.showUpgradeModal';
     export const CLASS_ADD_RESOURCE_LOCATION = '.addResourceToLocation';
     export const CLASS_ADD_BLOCK_LIST_ITEMS = '.addBlockListItems';
     export const CLASS_COLLECTION_TABLE_FORMATTER = '.collectionTableIconFormatter';
@@ -570,6 +572,14 @@ module Elements {
     export const TWITTER_INTERVAL_INPUT = '#twitterIntervalInput';
     export const USER_NAME = '#userName';
     export const USER_PASS = '#userPass';
+    export const UPGRADE_MODAL = '#upgradeModal';
+    export const UPG_CV = '#upgCV';
+    export const UPG_YEAR = '#upgYear';
+    export const UPG_MONTH = '#upgMonth';
+    export const UPG_CREDIT = '#upgCredit';
+    export const UPG_PASS2 = '#upgPass2';
+    export const UPG_PASS = '#upgPass';
+    export const UPG_USERNAME = '#upgUserName';
     export const PRINT_DIAG = '#printDiag';
     export const VIDEO_ASPECT_RATIO = '#videoAspectRatio';
     export const VIDEO_AUTO_REWIND = '#videoAutoRewind';

@@ -124,6 +124,9 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
+          <a class="showUpgradeModal reshid" href="#"><i class="faHeader fa fa-cloud-upload"></i></a>
+        </li>
+        <li>
           <a id="saveConfig" href="#"><i class="faHeader fa fa-save"></i></a>
         </li>
         <li>
@@ -1246,12 +1249,13 @@
                   <div class="try">
                     <p class="reshid price">$99/<span class="reshid" data-localize="month">month</span>
                     </p>
-                    <button id="subscribeAccount" class="reshid btnPrice btn-primary btn btn-default" href="#" type="button" data-localize="subscribe"> Subscribe
+                    <button id="subscribeAccount" class="showUpgradeModal reshid btnPrice btn-primary btn btn-default" href="#" type="button" data-localize="subscribe"> Subscribe
                     </button>
                   </div>
                 </div>
               </div>
             </div>
+
           </div>
           <div id="helpPanel" style="display: none">
             <!-- video tutorials -->
@@ -2790,6 +2794,96 @@
   <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.5.62 </span>
 </div>
 
+<div class="modal fade" id="upgradeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div  class="modal-dialog">
+    <div  class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+        </button>
+        <span  class="modal-title" id="videoModalHeader"></span>
+        <h4>Upgrade to Enterprise - $99.00 per month</h4>
+        <a href="http://www.digitalsignage.com/_html/benefits.html" target="_blank">Learn more about Enterprise</a>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-5">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">
+                    <center>
+                      <img  src="http://i76.imgup.net/accepted_c22e0.png">
+                    </center>
+                  </h3>
+                </div>
+                <div class="panel-body">
+                  <form role="form" id="payment-form">
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <div class="form-group">
+                          <label for="newName">Pick a new enterprise user name</label>
+                          <input id="upgUserName" type="text" class="form-control" name="newName" />
+                        </div>
+                        <div class="form-group">
+                          <label for="newPass">Pick an enterprise password</label>
+                          <input id="upgPass" type="password" class="form-control" name="newPass" />
+                        </div>
+                        <div class="form-group">
+                          <label for="newPass2">Repeat your new password</label>
+                          <input id="upgPass2" type="password" class="form-control" name="newPass2" />
+                        </div>
+                      </div>
+                      <div class="col-xs-12">
+                        <div class="form-group">
+                          <label for="cardNumber">CARD NUMBER</label>
+                          <div class="input-group">
+                            <input id="upgCredit" type="text" class="form-control" name="cardNumber" placeholder="Valid Card Number" required autofocus data-stripe="number" />
+                            <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-7 col-md-7">
+                        <div class="form-group">
+
+                          <div class="col-xs-6 col-lg-6 pl-ziro">
+                            <input id="upgMonth" type="text" class="form-control" name="expMonth" placeholder="MM" required data-stripe="exp_month" />
+                          </div>
+                          <div class="col-xs-6 col-lg-6 pl-ziro">
+                            <input id="upgYear" type="text" class="form-control" name="expYear" placeholder="YY" required data-stripe="exp_year" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xs-5 col-md-5 pull-right">
+                        <div class="form-group">
+                          <input id="upgCV" class="form-control" name="cvCode" placeholder="CV" required data-stripe="cvc" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <button class="startUpgrade btn btn-success btn-lg btn-block" type="submit">Start Subscription</button>
+                      </div>
+                    </div>
+                    <div class="row" style="display:none;">
+                      <div class="col-xs-12">
+                        <p class="payment-errors"></p>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
 <div id="popModal" style="display: none"></div>
 <div id="popupProperties" style="display: none">
   <button style="float: right; margin: 20px" type="button" class="btn btn-default btn-sm modal_close" data-dismiss="modal">

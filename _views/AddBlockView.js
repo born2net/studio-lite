@@ -263,24 +263,25 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
                 var blockCode = -1;
 
                 if (primeComp.length > 0) {
-                    Bootbox.dialog({
-                        message: $(Elements.MSG_BOOTBOX_ENTERPRISE_UPGRADE_TEXT).text(),
-                        title: $(Elements.MSG_BOOTBOX_ENTERPRISE_UPGRADE).text(),
-                        buttons: {
-                            success: {
-                                label: $(Elements.MSG_BOOTBOX_ENTERPRISE_UPGRADE).text(),
-                                className: "btn-success",
-                                callback: function () {
-                                    BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW).selectNavigation(Elements.CLASSS_PRO_STUDIO_PANEL);
-                                }
-                            },
-                            main: {
-                                label: $(Elements.MSG_BOOTBOX_OK).text(),
-                                className: "btn-primary"
-                            }
-                        }
-                    });
+                    $(Elements.UPGRADE_MODAL).modal('show');
                     return;
+                    //Bootbox.dialog({
+                    //    message: $(Elements.MSG_BOOTBOX_ENTERPRISE_UPGRADE_TEXT).text(),
+                    //    title: $(Elements.MSG_BOOTBOX_ENTERPRISE_UPGRADE).text(),
+                    //    buttons: {
+                    //        success: {
+                    //            label: $(Elements.MSG_BOOTBOX_ENTERPRISE_UPGRADE).text(),
+                    //            className: "btn-success",
+                    //            callback: function () {
+                    //                BB.comBroker.getService(BB.SERVICES.NAVIGATION_VIEW).selectNavigation(Elements.CLASSS_PRO_STUDIO_PANEL);
+                    //            }
+                    //        },
+                    //        main: {
+                    //            label: $(Elements.MSG_BOOTBOX_OK).text(),
+                    //            className: "btn-primary"
+                    //        }
+                    //    }
+                    //});
                 }
 
                 if (!_.isUndefined(component_id)) {

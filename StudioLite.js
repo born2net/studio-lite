@@ -48,7 +48,7 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
 
             $.ajaxSetup({
                 cache: false,
-                timeout: 3000,
+                timeout: 8000,
                 crossDomain: true
             });
 

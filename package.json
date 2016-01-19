@@ -1,6 +1,6 @@
 {
   "name": "studiolite",
-  "version": "1.5.62",
+  "version": "1.5.64",
   "author": {
     "name": "MediaSignage",
     "email": "mstech@mediasignage.com",
@@ -29,7 +29,8 @@
     "express": "=3.3.4"
   },
   "devDependencies": {
-    "gulp-uglify": "^1.4.2"
+    "gulp-uglify": "^1.4.2",
+    "shelljs": "^0.5.3"
   },
   "scripts": {},
   "readme": "StudioLite\n=========\n\for full info visit http://www.digitalsignage.com or http://lite.digitalsignage.com.\n",

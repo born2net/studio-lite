@@ -795,6 +795,12 @@ iframe {
     left: 486px;
 }
 
+#helpPanel button {
+    padding: 20px;
+    width: 200px;
+    margin: 5px;
+}
+
 #fqSelectedCustomer:hover {
     opacity: 0.3;
     background-color: gray;

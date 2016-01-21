@@ -22,7 +22,7 @@ var isPortTaken = function (port, fn) {
 };
 
 
-isPortTaken(8080, function (err) {
+isPortTaken(port, function (err) {
     if (err) {
         console.log('\nport ' + port + ' is busy, try using a different port by editing server.js\n');
         process.exit();
@@ -30,7 +30,7 @@ isPortTaken(8080, function (err) {
     app.listen(port, function () {
         console.log('\n========================================================================================\n');
         console.log("Server is listening on port " + port + "\n");
-        console.log("Now open a browser and point it to http://localhost:8080/_studiolite-dev/studiolite.html");
+        console.log("Now open a browser and point it to http://localhost:" + port + "/_studiolite-dev/studiolite.html");
         console.log('\n========================================================================================\n');
     });
 });

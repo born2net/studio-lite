@@ -62,7 +62,6 @@ define(['jquery', 'backbone'], function ($, Backbone) {
          **/
         _loadCredentials: function (i_user, i_pass) {
             var self = this;
-
             var user = i_user == '_' ? '_' : $.base64.decode(i_user);
             var pass = i_pass == '_' ? '_' : $.base64.decode(i_pass);
 

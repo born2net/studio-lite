@@ -1,0 +1,49 @@
+app_id	app_name	help_name	description	uninstallable	hidden	price	min_version
+10005	Embeded Resource	""	Embeded Resource	False	True	0	4.12
+10010	Scene	""	Scene	False	True	0	4.12
+10020	External Resource	""	External Resource	False	False	0	4.12
+10030	Label	""	Label	False	False	0	4.12
+10040	Html	""	Html	False	False	0	4.12
+10050	Rss Text	""	Rss Text	False	False	0	4.12
+10060	Custom Rss	""	Custom Rss	False	False	0	4.12
+10070	Media Rss/Podcast	""	Media Rss/Podcast	False	False	0	4.12
+10080	Weather	""	Weather	False	False	0	4.12
+10090	Stock	""	Stock	False	False	0	4.12
+10100	Catalog	""	Catalog	False	False	0	4.12
+10110	Capture/Camera	""	Capture/Camera	True	False	0	4.12
+10120	Clock	""	Clock	True	False	0	4.12
+10122	Countdown	""	Countdown	True	False	0	4.12
+10130	Grid/Chart	""	Grid/Chart	True	False	0	4.12
+10140	Ext Application	""	Ext Application	True	False	0	4.12
+10145	Webkit	""	Webkit	True	False	0	4.33
+10150	Advertising	""	Advertising	True	False	0	4.12
+10160	QR Code	""	QR Code	True	False	0	4.12
+10180	CollectionViewer	""	CollectionViewer	True	False	0	4.12
+10185	Location based	""	Location based	True	False	0	4.33
+10190	XML Player	""	XML Player	True	False	0	4.12
+10195	JSON Player	""	JSON Player	True	False	0	4.33
+10210	Twitter	""	Twitter	True	False	0	4.12
+10220	YouTube	""	YouTube	True	False	0	4.12
+10300	Form	""	Form	True	False	0	4.12
+10400	Message	""	Message	True	False	0	4.12
+10500	Label Queue	""	Label Queue	True	False	0	4.15
+11000	Browser	""	Browser	True	False	0	4.33
+12000	Digg	""	Digg	True	False	0	4.33
+12010	World weather	""	Weather	True	False	0	4.33
+12020	Facebook	""	Facebook	True	False	0	4.33
+12030	Google calendar	""	Google calendar	True	False	0	4.33
+12032	Google Sheets	""	Google Sheets	True	False	0	4.33
+12040	Google plus	""	Google plus	True	False	0	4.33
+12050	Picasa	""	Picasa	True	False	0	4.33
+12060	Instagram	""	Instagram	True	False	0	4.33
+12070	Google drive	""	Google drive	True	False	0	4.33
+12080	500px	""	500px	True	False	0	4.33
+12090	Pinterest	""	Pinterest	True	False	0	4.33
+12100	FasterQ	""	FasterQ	True	False	0	4.33
+12200	Tumblr	""	Tumblr	True	False	0	4.33
+12210	Dropbox	""	Dropbox	True	False	0	4.33
+12220	Flickr	""	Flickr	True	False	0	4.33
+12230	Twitter	""	Twitter	True	False	0	4.33
+12240	Yelp	""	Yelp	True	False	0	4.33
+12250	Etsy	""	Etsy	True	False	0	4.33
+12260	Mashape	""	Mashape	True	False	0	4.33

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Player player="4300" label="json" interactive="0">
+   <Data>
+      <EventCommands>
+         <EventCommand from="ev1" condition="" command="loadUrl">
+            <Params>
+               <Url name="http://www.google.com" />
+            </Params>
+         </EventCommand>
+         <EventCommand from="ev2" condition="" command="firstPage" />
+         <EventCommand from="ev3" condition="" command="firstPage" />
+         <EventCommand from="ev4" condition="" command="nextPage" />
+         <EventCommand from="ev5" condition="" command="lastPage" />
+      </EventCommands>
+      <Appearance alpha="1" blendMode="normal" />
+      <Border borderThickness="0" borderColor="65535" cornerRadius="0" />
+      <Background style="Gradient" gradientType="linear" angle="0" offsetX="0" offsetY="0">
+         <GradientPoints>
+            <Point color="4361162" opacity="1" midpoint="125" />
+         </GradientPoints>
+      </Background>
+      <Json providerType="" itemsPath="ZZ" slideShow="1" itemInterval="12" playVideoInFull="1" randomOrder="1" url="XX">
+         <Player src="7" hDataSrc="2" />
+         <Data />
+      </Json>
+   </Data>
+</Player>

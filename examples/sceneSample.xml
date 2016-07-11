@@ -1,0 +1,86 @@
+<Player player="3510" label="my scene 1" interactive="0">
+	<Data>
+		<EventCommands>
+			<EventCommand from="" condition="" command="redirect"/>
+		</EventCommands>
+		<Layout rotation="0" x="10" y="20" width="555" height="405"/>
+		<Appearance alpha="0.9" blendMode="normal"/>
+		<Border borderThickness="3" borderColor="16711680" cornerRadius="8"/>
+		<Background style="Gradient" gradientType="linear" angle="90" offsetX="0" offsetY="0">
+			<GradientPoints>
+				<Point color="16769071" opacity="0.6" midpoint="5"/>
+				<Point color="16772453" opacity="0.7" midpoint="46"/>
+				<Point color="16777215" opacity="0.2" midpoint="181"/>
+				<Point color="16515072" opacity="0.8" midpoint="227"/>
+			</GradientPoints>
+		</Background>
+		<Scene defaultDuration="10">
+			<Layout>
+				<BasicLayout/>
+			</Layout>
+			<Players>
+				<Player player="3130" label="Resource" interactive="0">
+					<Data>
+						<Layout rotation="0" x="51" y="189" width="153" height="46"/>
+						<Resource resource="9" hResource="0">
+							<AspectRatio maintain="0"/>
+						</Resource>
+					</Data>
+				</Player>
+				<Player player="3320" label="Clock" interactive="0">
+					<Data>
+						<Layout rotation="0" x="38" y="302" width="301" height="58"/>
+						<Clock clockFormat="time" clockMask="J:NN:SS">
+							<Font fontSize="72" fontColor="3355443" fontFamily="Arial Rounded MT Bold" fontWeight="bold" fontStyle="none" textDecoration="none" textAlign="left"/>
+						</Clock>
+					</Data>
+				</Player>
+				<Player player="3241" label="component name" interactive="0">
+					<Data>
+						<Layout rotation="0" left="64" verticalCenter="-50" width="296" height="56"/>
+						<Border borderThickness="4" borderColor="16711680" cornerRadius="6"/>
+						<Background style="Gradient" gradientType="linear" angle="90" offsetX="0" offsetY="0">
+							<GradientPoints>
+								<Point color="16733463" opacity="0.9" midpoint="7"/>
+								<Point color="16777215" opacity="0.7" midpoint="59"/>
+								<Point color="5240588" opacity="0.9" midpoint="117"/>
+								<Point color="16777215" opacity="0.3" midpoint="176"/>
+								<Point color="11942570" opacity="1" midpoint="244"/>
+							</GradientPoints>
+						</Background>
+						<Blur blurX="2" blurY="1"/>
+						<Label>
+							<Text>Sean text</Text>
+							<Font fontSize="48" fontColor="10027059" fontFamily="Arial" fontWeight="normal" fontStyle="italic" textDecoration="none" textAlign="left"/>
+						</Label>
+					</Data>
+				</Player>
+				<Player player="3430" label="QR Code" interactive="0">
+					<Data>
+						<Layout rotation="0" x="23.4" y="14.8" width="71" height="61"/>
+						<Text textSource="static">I am qr</Text>
+					</Data>
+				</Player>
+				<Player player="3345" label="Rss news" interactive="0">
+					<Data>
+						<Layout rotation="0" x="153.75" y="15.6" width="240" height="89"/>
+						<Rss url="http://rss.news.yahoo.com/rss/tech" minRefreshTime="24" speed="20" vertical="1" rtl="0">
+							<Title>
+								<Font fontSize="16" fontColor="102" fontFamily="Arial" fontWeight="bold" fontStyle="normal" textDecoration="none" textAlign="left"/>
+							</Title>
+							<Description>
+								<Font fontSize="16" fontColor="10053171" fontFamily="Arial" fontWeight="normal" fontStyle="normal" textDecoration="none" textAlign="left"/>
+							</Description>
+						</Rss>
+					</Data>
+				</Player>
+				<Player player="3150" label="External video" interactive="0">
+					<Data>
+						<Layout rotation="0" x="259.2" y="215.15" width="100" height="56"/>
+						<LINK src="http://somesite.com/vifro.flv"/>
+					</Data>
+				</Player>
+			</Players>
+		</Scene>
+	</Data>
+</Player>

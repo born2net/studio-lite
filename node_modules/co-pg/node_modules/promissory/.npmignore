@@ -1,0 +1,10 @@
+# node.js
+node_modules
+
+# editors
+.idea
+*.swp
+*.kate-swp
+
+# file managers
+.directory

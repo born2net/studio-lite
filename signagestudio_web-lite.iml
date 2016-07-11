@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="Python" name="Python">
+      <configuration sdkName="" />
+    </facet>
+  </component>
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="backbone" level="application" />
+    <orderEntry type="library" name="Events" level="application" />
+    <orderEntry type="library" name="fabric.require" level="application" />
+    <orderEntry type="library" name="Lib" level="application" />
+    <orderEntry type="library" name="require" level="application" />
+    <orderEntry type="library" name="StackView" level="application" />
+    <orderEntry type="library" name="underscore" level="application" />
+    <orderEntry type="library" name="Elements" level="project" />
+    <orderEntry type="library" name="signagestudio_web-lite node_modules" level="project" />
+    <orderEntry type="library" name="jquery-ui-1.10.1-min" level="application" />
+  </component>
+</module>

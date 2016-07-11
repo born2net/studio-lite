@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Player player="3510" label="locks" interactive="0" id="YmxvY2tpZDQx">
+   <Data>
+      <Layout rotation="0" x="0" y="0" width="400" height="400" />
+      <Scene defaultDuration="10">
+         <Layout>
+            <BasicLayout />
+         </Layout>
+         <Players>
+            <Player player="3130" label="Resource" interactive="0" id="YmxvY2tpZDQy">
+               <Data>
+                  <Layout rotation="0" left="25" right="273" top="43" bottom="255" />
+                  <Resource resource="4" hResource="1">
+                     <AspectRatio maintain="0" />
+                  </Resource>
+               </Data>
+            </Player>
+            <Player player="3130" label="Resource" interactive="0" id="YmxvY2tpZDQz">
+               <Data>
+                  <Layout rotation="0" horizontalCenter="30" verticalCenter="10" width="100" height="100" />
+                  <Resource resource="7" hResource="4">
+                     <AspectRatio maintain="0" />
+                  </Resource>
+               </Data>
+            </Player>
+         </Players>
+      </Scene>
+   </Data>
+</Player>

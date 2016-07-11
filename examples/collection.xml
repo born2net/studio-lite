@@ -1,0 +1,55 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<Player player="4100" label="Collection" interactive="0">
+   <Data>
+      <EventCommands>
+         <EventCommand from="ev1" condition="" command="firstPage" />
+         <EventCommand from="ev2" condition="" command="nextPage" />
+         <EventCommand from="ev3" condition="" command="lastPage" />
+         <EventCommand from="ev4" condition="" command="selectPage">
+            <Params>
+               <Page name="page4" />
+            </Params>
+         </EventCommand>
+         <EventCommand from="ev5" condition="" command="selectPage">
+            <Params>
+               <Page name="page5" />
+            </Params>
+         </EventCommand>
+      </EventCommands>
+      <Collection mode="kiosk" duration="10">
+         <Page page="page1" type="resource" duration="11">
+            <Player player="3130">
+               <Data>
+                  <Resource resource="11" hResource="4" />
+               </Data>
+            </Player>
+            <AdLocalContent id="1" handle="0" />
+         </Page>
+         <Page page="page3" type="resource" duration="312">
+            <Player player="3130">
+               <Data>
+                  <Resource resource="14" hResource="6" />
+               </Data>
+            </Player>
+         </Page>
+         <Page page="page4" type="resource" duration="22">
+            <Player player="3130">
+               <Data>
+                  <Resource resource="15" hResource="7" />
+               </Data>
+            </Player>
+         </Page>
+         <Page page="page5" type="scene" duration="42">
+            <Player src="1" hDataSrc="0" />
+         </Page>
+         <Page page="page2" type="resource" duration="22">
+            <Player player="3130">
+               <Data>
+                  <Resource resource="13" hResource="5" />
+               </Data>
+            </Player>
+         </Page>
+      </Collection>
+   </Data>
+</Player>

@@ -1,0 +1,40 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<Player player="4105" label="Location based" interactive="0">
+   <Data>
+      <LocationBased duration="10">
+         <GPS>
+            <Page page="page2" type="resource" duration="5" lat="34.15585218402147" lng="-118.80546569824219" radios="1" priority="0">
+               <Player player="3130">
+                  <Data>
+                     <Resource resource="350" hResource="4" />
+                  </Data>
+               </Player>
+            </Page>
+            <Page page="page3" type="resource" duration="5" lat="34.15585218402147" lng="-118.80546569824219" radios="1" priority="1">
+               <Player player="3130">
+                  <Data>
+                     <Resource resource="352" hResource="6" />
+                  </Data>
+               </Player>
+            </Page>
+         </GPS>
+         <Fixed>
+            <Page page="page1" type="resource" duration="3">
+               <Player player="3130">
+                  <Data>
+                     <Resource resource="363" hResource="15" />
+                  </Data>
+               </Player>
+            </Page>
+            <Page page="page2" type="resource" duration="3">
+               <Player player="3130">
+                  <Data>
+                     <Resource resource="362" hResource="14" />
+                  </Data>
+               </Player>
+            </Page>
+         </Fixed>
+      </LocationBased>
+   </Data>
+</Player>

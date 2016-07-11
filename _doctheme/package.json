@@ -1,0 +1,32 @@
+{
+  "name": "yuidoc-bootstrap-theme",
+  "version": "1.0.4",
+  "description": "A revamped yuidoc theme with bootstrap",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kevinlacotaco/yuidoc-bootstrap-theme.git"
+  },
+  "keywords": [
+    "yuidoc",
+    "bootstrap"
+  ],
+  "author": {
+    "name": "Kevin Lakotko"
+  },
+  "contributors": [
+    {
+      "name": "Anthony Barone",
+      "email": "tonybaroneee@gmail.com",
+      "url": "http://anthonyb.me"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/kevinlacotaco/yuidoc-bootstrap-theme/issues"
+  },
+  "homepage": "https://github.com/kevinlacotaco/yuidoc-bootstrap-theme",
+  "license": "MIT",
+  "readme": "yuidoc-bootstrap-theme\n======================\n\nA revamped yuidoc theme with bootstrap.\n\nGrab from npm via:\n     \n     npm install yuidoc-bootstrap-theme\n     \nhttps://www.npmjs.org/package/yuidoc-bootstrap-theme\n\nWhen running yuidoc from command line:\n    -t : themedir\n    -H : helper js file\n\nEx.\n\n    yuidoc -t _location_/yuidoc-bootstrap-theme -H _location_/yuidoc-bootstrap-theme/helpers/helpers.js\n\nWhen running with grunt it is best to use this as a submodule.\n\nThen under yuidoc.json options add:\n\n    \"themedir\" : _location_/yuidoc-bootstrap-theme,\n    \"helpers\" : [ _location_/yuidoc-bootstrap-theme/helpers/helpers.js ]\n\nEx.\n\n    {\n        \"name\": \"Example\",\n        \"url\": \"www.example.com\",\n        \"version\": \"0.1.0\",\n        \"options\": {\n            \"paths\": \"_location to parse_\",\n            \"outdir\": \"build/docs\",\n            \"exclude\": \"lib,docs,build\",\n            \"themedir\": \"_location_/yuidoc-bootstrap-theme\",\n            \"helpers\": [\"_location_/yuidoc-bootstrap-theme/helpers/helpers.js\"]\n        }\n    }\n\n",
+  "readmeFilename": "README.md",
+  "_id": "yuidoc-bootstrap-theme@1.0.4",
+  "_from": "yuidoc-bootstrap-theme@"
+}

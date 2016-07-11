@@ -1,0 +1,1 @@
+lftp -f upload.txt

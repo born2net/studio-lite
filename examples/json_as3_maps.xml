@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ms:PlayerPage xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:ms="*"
+			   width="100%" height="300"
+	label="Json">
+
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+[Bindable]  private var m_fieldCollection:ArrayCollection;
+
+			protected override function createChildren():void
+			{
+				super.createChildren();
+				fontCtrl.addEventListener(FontCtrl.FONT_CHANGED, onFontChanged);
+			}
+
+			protected override function commitProperties():void
+			{
+				super.commitProperties();
+				if (m_playerLoader.player==null)
+					return;
+
+				var mimeType:String = "";
+				if (m_playerLoader.parentPlayerLoader!=null)
+				{
+					mimeType = PlayerLoader(m_playerLoader.parentPlayerLoader).mimeType;
+				}
+
+				m_fieldCollection = new ArrayCollection();
+				switch(mimeType)
+				{
+					case "Json.digg":
+						m_fieldCollection.addItem({name:"title",type:"text",label:"Title"});
+						m_fieldCollection.addItem({name:"link",type:"resource",label:"Image"});
+						break;
+
+					case "Json.weather":
+						m_fieldCollection.addItem({name:"$[0].data.current_condition[0].iconPath",type:"resource",label:"current icon"});
+						m_fieldCollection.addItem({name:"$[0].data.current_condition[0].temp_@",type:"text",label:"current temp"});
+						m_fieldCollection.addItem({name:"$[0].data.current_condition[0].humidity",type:"text",label:"current humidity"});
+
+
+
+						m_fieldCollection.addItem({name:"$[0].data.weather[0].iconPath",type:"resource",label:"today icon"});
+						m_fieldCollection.addItem({name:"$[0].data.weather[0].mintemp@",type:"text",label:"today min temp"});
+						m_fieldCollection.addItem({name:"$[0].data.weather[0].maxtemp@",type:"text",label:"today max temp"});
+						m_fieldCollection.addItem({name:"$[0].data.weather[0].day",type:"text",label:"today label"});
+
+						m_fieldCollection.addItem({name:"$[0].data.weather[1].iconPath",type:"resource",label:"today+1 icon"});
+						m_fieldCollection.addItem({name:"$[0].data.weather[1].mintemp@",type:"text",label:"today+1 min temp"});
+						m_fieldCollection.addItem({name:"$[0].data.weather[1].maxtemp@",type:"text",label:"today+1 max temp"});
+						m_fieldCollection.addItem({name:"$[0].data.weather[1].day",type:"text",label:"today+1 label"});
+
+						m_fieldCollection.addItem({name:"$[0].data.weather[2].iconPath",type:"resource",label:"today+2 icon"});
+						m_fieldCollection.addItem({name:"$[0].data.weather[2].mintemp@",type:"text",label:"today+2 min temp"});
+						m_fieldCollection.addItem({name:"$[0].data.weather[2].maxtemp@",type:"text",label:"today+2 max temp"});
+						m_fieldCollection.addItem({name:"$[0].data.weather[2].day",type:"text",label:"today+2 label"});
+
+						m_fieldCollection.addItem({name:"$[0].data.weather[3].iconPath",type:"resource",label:"today+3 icon"});
+						m_fieldCollection.addItem({name:"$[0].data.weather[3].mintemp@",type:"text",label:"today+3 min temp"});
+						m_fieldCollection.addItem({name:"$[0].data.weather[3].maxtemp@",type:"text",label:"today+3 max temp"});
+						m_fieldCollection.addItem({name:"$[0].data.weather[3].day",type:"text",label:"today+3 label"});
+
+						m_fieldCollection.addItem({name:"$[0].data.weather[4].iconPath",type:"resource",label:"today+4 icon"});
+						m_fieldCollection.addItem({name:"$[0].data.weather[4].mintemp@",type:"text",label:"today+4 min temp"});
+						m_fieldCollection.addItem({name:"$[0].data.weather[4].maxtemp@",type:"text",label:"today+4 max temp"});
+						m_fieldCollection.addItem({name:"$[0].data.weather[4].day",type:"text",label:"today+4 label"});
+
+						m_fieldCollection.addItem({name:"$[0].data.weather[5].iconPath",type:"resource",label:"today+5 icon"});
+						m_fieldCollection.addItem({name:"$[0].data.weather[5].mintemp@",type:"text",label:"today+5 min temp"});
+						m_fieldCollection.addItem({name:"$[0].data.weather[5].maxtemp@",type:"text",label:"today+5 max temp"});
+						m_fieldCollection.addItem({name:"$[0].data.weather[5].day",type:"text",label:"today+5 label"});
+
+						m_fieldCollection.addItem({name:"$[0].data.weather[6].iconPath",type:"resource",label:"today+6 icon"});
+						m_fieldCollection.addItem({name:"$[0].data.weather[6].mintemp@",type:"text",label:"today+6 min temp"});
+						m_fieldCollection.addItem({name:"$[0].data.weather[6].maxtemp@",type:"text",label:"today+6 max temp"});
+						m_fieldCollection.addItem({name:"$[0].data.weather[6].day",type:"text",label:"today+6 label"});
+						break;
+
+					case "Json.facebook.wall":
+						m_fieldCollection.addItem({name:"txt",type:"text",label:"Text"});
+						m_fieldCollection.addItem({name:"pic",type:"resource",label:"Picture"});
+						break;
+
+					case "Json.facebook.album":
+						m_fieldCollection.addItem({name:"src",type:"resource",label:"Picture"});
+						break;
+
+					case "Json.facebook.videos":
+						m_fieldCollection.addItem({name:"desc",type:"text",label:"Description"});
+						m_fieldCollection.addItem({name:"src",type:"resource",label:"Video"});
+						break;
+
+					case "Json.picasa":
+						m_fieldCollection.addItem({name:"src",type:"resource",label:"Image"});
+						break;
+
+					case "Json.plus":
+						m_fieldCollection.addItem({name:"title",type:"text",label:"Title"});
+						m_fieldCollection.addItem({name:"description",type:"text",label:"Description"});
+						m_fieldCollection.addItem({name:"published",type:"text",label:"Published"});
+						m_fieldCollection.addItem({name:"src",type:"resource",label:"Image"});
+						break;
+
+					case "Json.calendar":
+						m_fieldCollection.addItem({name:"summary",type:"text",label:"Summary"});
+						m_fieldCollection.addItem({name:"description",type:"text",label:"Description"});
+						m_fieldCollection.addItem({name:"organizer",type:"text",label:"Organizer name"});
+						m_fieldCollection.addItem({name:"organizerEmail",type:"text",label:"Organizer email"});
+						m_fieldCollection.addItem({name:"created",type:"text",label:"Created"});
+						m_fieldCollection.addItem({name:"startDateTime_time",type:"date",label:"Start time"});
+						m_fieldCollection.addItem({name:"endDateTime_time",type:"date",label:"End time"});
+						m_fieldCollection.addItem({name:"updated",type:"text",label:"Updated"});
+						break;
+
+					case "Json.spreadsheet":
+						break;
+
+					case "Json.instagram.feed":
+						m_fieldCollection.addItem({name:"urlImage",type:"resource",label:"Image"});
+						m_fieldCollection.addItem({name:"video",type:"resource",label:"Video"});
+						m_fieldCollection.addItem({name:"title",type:"text",label:"Title"});
+						break;
+					case "Json.instagram.media":
+						m_fieldCollection.addItem({name:"urlImage",type:"resource",label:"Image"});
+						m_fieldCollection.addItem({name:"video",type:"resource",label:"Video"});
+						m_fieldCollection.addItem({name:"title",type:"text",label:"Title"});
+						break;
+
+					case "Json.500px.collection":
+						m_fieldCollection.addItem({name:"name",type:"text",label:"Name"});
+						m_fieldCollection.addItem({name:"description",type:"text",label:"Description"});
+						m_fieldCollection.addItem({name:"image_url",type:"resource",label:"Image"});
+						break;
+					case "Json.500px.user":
+						m_fieldCollection.addItem({name:"name",type:"text",label:"Name"});
+						m_fieldCollection.addItem({name:"description",type:"text",label:"Description"});
+						m_fieldCollection.addItem({name:"image_url",type:"resource",label:"Image"});
+						break;
+
+					case "Json.pinterest.user":
+						m_fieldCollection.addItem({name:"boardThumb",type:"resource",label:"Thumb"});
+						m_fieldCollection.addItem({name:"boardName",type:"text",label:"Name"});
+						m_fieldCollection.addItem({name:"src",type:"resource",label:"Image"});
+						m_fieldCollection.addItem({name:"description",type:"text",label:"Description"});
+						m_fieldCollection.addItem({name:"likes",type:"text",label:"Likes"});
+						break;
+
+					case "Json.pinterest.board":
+						m_fieldCollection.addItem({name:"src",type:"resource",label:"Image"});
+						m_fieldCollection.addItem({name:"description",type:"text",label:"Description"});
+						m_fieldCollection.addItem({name:"likes",type:"text",label:"Likes"});
+						break;
+
+					case "Json.tumblr.posts":
+						m_fieldCollection.addItem({name:"date_time",type:"date",label:"Date"});
+						m_fieldCollection.addItem({name:"title",type:"text",label:"Title"});
+						m_fieldCollection.addItem({name:"slug",type:"text",label:"Slug"});
+						m_fieldCollection.addItem({name:"body",type:"text",label:"Body"});
+						break;
+					case "Json.tumblr.videos":
+						m_fieldCollection.addItem({name:"body",type:"text",label:"Body"});
+						m_fieldCollection.addItem({name:"date_time",type:"date",label:"Date"});
+						m_fieldCollection.addItem({name:"video_url",type:"resource",label:"Video"});
+						m_fieldCollection.addItem({name:"slug",type:"text",label:"Slug"});
+						break;
+
+					case "Json.tumblr.photos":
+						m_fieldCollection.addItem({name:"body",type:"text",label:"Body"});
+						m_fieldCollection.addItem({name:"date_time",type:"date",label:"Date"});
+						m_fieldCollection.addItem({name:"photo_url",type:"resource",label:"Image"});
+						m_fieldCollection.addItem({name:"slug",type:"text",label:"Slug"});
+						break;
+
+					case "Json.tumblr.texts":
+						m_fieldCollection.addItem({name:"date_time",type:"date",label:"Date"});
+						m_fieldCollection.addItem({name:"title",type:"text",label:"Title"});
+						m_fieldCollection.addItem({name:"slug",type:"text",label:"Slug"});
+						m_fieldCollection.addItem({name:"body",type:"text",label:"Body"});
+						break;
+
+					case "Json.flickr":
+						m_fieldCollection.addItem({name:"thumbnail",type:"resource",label:"Thumbnail"});
+						m_fieldCollection.addItem({name:"large",type:"resource",label:"Image"});
+						break;
+
+					case "Json.twitter":
+						m_fieldCollection.addItem({name:"name",type:"text",label:"Name"});
+						m_fieldCollection.addItem({name:"text",type:"text",label:"Text"});
+						m_fieldCollection.addItem({name:"screen_name",type:"text",label:"Screen name"});
+						m_fieldCollection.addItem({name:"created_at",type:"text",label:"Created at"});
+						m_fieldCollection.addItem({name:"profile_background_image_url",type:"resource",label:"Background image"});
+						m_fieldCollection.addItem({name:"profile_image_url",type:"resource",label:"Image"});
+						break;
+
+					case "Json.drive":
+						m_fieldCollection.addItem({name:"title",type:"text",label:"Name"});
+						m_fieldCollection.addItem({name:"id",type:"object",label:"File"});
+						break;
+
+					case "Json.dropbox":
+						m_fieldCollection.addItem({name:"file",type:"object",label:"File"});
+						break;
+
+
+					case "Json.yelp.info":
+						m_fieldCollection.addItem({name:"$rating",type:"text",label:"Rating"});
+						m_fieldCollection.addItem({name:"$name",type:"text",label:"Name"});
+						m_fieldCollection.addItem({name:"$phone",type:"text",label:"Phone"});
+						m_fieldCollection.addItem({name:"$snippet_text",type:"text",label:"Snippet text"});
+						m_fieldCollection.addItem({name:"$snippet_image_url",type:"resource",label:"Snippet image"});
+						m_fieldCollection.addItem({name:"$rating_img_url_small",type:"resource",label:"Rating image small"});
+						m_fieldCollection.addItem({name:"$rating_img_url_large",type:"resource",label:"Rating image large"});
+						m_fieldCollection.addItem({name:"$image_url",type:"resource",label:"Image"});
+						break;
+
+					case "Json.yelp.reviews":
+						m_fieldCollection.addItem({name:"rating",type:"text",label:"Rating"});
+						m_fieldCollection.addItem({name:"excerpt",type:"text",label:"Excerpt"});
+						m_fieldCollection.addItem({name:"time_created",type:"date",label:"Created"});
+						m_fieldCollection.addItem({name:"rating_image_url",type:"resource",label:"Rating image"})
+						m_fieldCollection.addItem({name:"rating_image_small_url",type:"resource",label:"Rating image small"})
+						m_fieldCollection.addItem({name:"rating_image_large_url",type:"resource",label:"Rating image large"})
+						m_fieldCollection.addItem({name:"user.name",type:"text",label:"User name"});
+						m_fieldCollection.addItem({name:"user.image_url",type:"resource",label:"User image"})
+						break;
+
+					case "Json.etsy.shopListings":
+						m_fieldCollection.addItem({name:"title",type:"text",label:"Title"});
+						m_fieldCollection.addItem({name:"description",type:"text",label:"Description"});
+						m_fieldCollection.addItem({name:"quantity",type:"text",label:"Quantity"});
+						m_fieldCollection.addItem({name:"price",type:"text",label:"Price"});
+						m_fieldCollection.addItem({name:"currency_code",type:"text",label:"Currency"});
+						m_fieldCollection.addItem({name:"image_full",type:"resource",label:"Image full"});
+						m_fieldCollection.addItem({name:"image_large",type:"resource",label:"Image large"});
+						m_fieldCollection.addItem({name:"image_medium",type:"resource",label:"Image medium"});
+						m_fieldCollection.addItem({name:"image_small",type:"resource",label:"Image small"});
+						break;
+
+					case "Json.etsy.shopAbout":
+						m_fieldCollection.addItem({name:"$story",type:"text",label:"Story"});
+						m_fieldCollection.addItem({name:"$story_headline",type:"text",label:"Story headline"});
+						m_fieldCollection.addItem({name:"$story_leading_paragraph",type:"text",label:"Story paragraph"});
+						m_fieldCollection.addItem({name:"$status",type:"text",label:"status"});
+						break;
+
+					case "Json.etsy.userProfile":
+						m_fieldCollection.addItem({name:"$first_name",type:"text",label:"First name"});
+						m_fieldCollection.addItem({name:"$last_name",type:"text",label:"Last name"});
+						m_fieldCollection.addItem({name:"$bio",type:"text",label:"bio"});
+						m_fieldCollection.addItem({name:"$birth_day",type:"text",label:"Birth day"});
+						m_fieldCollection.addItem({name:"$birth_month",type:"text",label:"Birth month"});
+						m_fieldCollection.addItem({name:"$city",type:"text",label:"City"});
+						m_fieldCollection.addItem({name:"$location",type:"text",label:"Location"});
+						m_fieldCollection.addItem({name:"$region",type:"text",label:"Region"});
+						m_fieldCollection.addItem({name:"$gender",type:"text",label:"Gender"});
+						m_fieldCollection.addItem({name:"$is_seller",type:"text",label:"Seller"});
+						m_fieldCollection.addItem({name:"$materials",type:"text",label:"Materials"});
+						m_fieldCollection.addItem({name:"$transaction_buy_count",type:"text",label:"transaction_buy_count"});
+						m_fieldCollection.addItem({name:"$transaction_sold_count",type:"text",label:"transaction_sold_count"});
+						m_fieldCollection.addItem({name:"$image_url_75x75",type:"resource",label:"Image"});
+						break;
+
+					case "Json.mashape.randomQuote":
+						m_fieldCollection.addItem({name:"quote",type:"text",label:"quote"});
+						m_fieldCollection.addItem({name:"author",type:"text",label:"author"});
+						m_fieldCollection.addItem({name:"category",type:"text",label:"category"});
+						break;
+
+
+					case "Json.mashape.btc":
+						m_fieldCollection.addItem({name:"$currency",type:"text",label:"currency"});
+						m_fieldCollection.addItem({name:"$value",type:"text",label:"value"});
+						break;
+
+					case "Json.mashape.currency":
+						m_fieldCollection.addItem({name:"$from",type:"text",label:"From currency"});
+						m_fieldCollection.addItem({name:"$to",type:"text",label:"To currency"});
+						m_fieldCollection.addItem({name:"$from_amount",type:"text",label:"From amount"});
+						m_fieldCollection.addItem({name:"$to_amount",type:"text",label:"To amount"});
+						break;
+				}
+
+
+				fieldPath.text = BlockJsonItemPlayer(m_playerLoader.player).fieldName;
+
+
+				if (mimeType=="Json.spreadsheet")
+				{
+					fieldComboForm.label = "Row/Column";
+					fieldComboForm.visible = true;
+					fieldComboForm.height = NaN;
+					fieldPathForm.enabled = false;
+					fieldTypeForm.enabled = false;
+
+					fieldCombo.visible = false;
+					spreadsheetFrame.visible = true;
+
+
+					var fieldName:String = fieldPath.text = BlockJsonItemPlayer(m_playerLoader.player).fieldName;
+					if (fieldName.substr(0, 7)=="$cells.")
+					{
+						fieldName = fieldName.substring(7, fieldName.length-6);
+						var rowCol:Array = fieldName.split('.');
+						row.value = Math.max(1, int(rowCol[0]));
+						col.value = Math.max(1, int(rowCol[1]));
+					}
+					else
+					{
+						if (fieldPath.text=="title")
+						{
+							row.value = 1;
+							col.value = 1;
+							onSpreadsheetCell();
+						}
+					}
+				}
+				else if (m_fieldCollection.length>0)
+				{
+
+					for each(var item:Object in m_fieldCollection.source)
+					{
+						if (item.name==BlockJsonItemPlayer(m_playerLoader.player).fieldName)
+						{
+							fieldCombo.selectedItem = item;
+							break;
+						}
+					}
+					fieldComboForm.label = "Field name";
+					fieldComboForm.visible = true;
+					fieldComboForm.height = NaN;
+					spreadsheetFrame.visible = false;
+					fieldPathForm.enabled = false;
+					fieldTypeForm.enabled = false;
+					fieldCombo.visible = true;
+				}
+				else
+				{
+					fieldComboForm.label = "Field name";
+					fieldComboForm.visible = false;
+					fieldComboForm.height = 10;
+					fieldPathForm.enabled = true;
+					fieldTypeForm.enabled = true;
+					fieldCombo.visible = true;
+				}
+
+				fontCtrl.fontItem = BlockJsonItemPlayer(m_playerLoader.player).fontItem;
+				for each(var fieldType:Object in ArrayList(fieldTypeCombo.dataProvider).source)
+				{
+					if (fieldType.name==BlockJsonItemPlayer(m_playerLoader.player).fieldType)
+					{
+						fieldTypeCombo.selectedItem = fieldType;
+						break;
+					}
+				}
+
+				updateButtons();
+				if (BlockJsonItemPlayer(m_playerLoader.player).fieldType=="date")
+				{
+					dateFormat.text = BlockJsonItemPlayer(m_playerLoader.player).dateFormat;
+				}
+				else if (BlockJsonItemPlayer(m_playerLoader.player).fieldType=="resource" || BlockJsonItemPlayer(m_playerLoader.player).fieldType=="object")
+				{
+					maintainAspectRatio.selected = BlockJsonItemPlayer(m_playerLoader.player).maintainAspectRatio;
+				}
+			}
+
+			private function onFieldChanged(event:Event):void
+			{
+				BlockJsonItemPlayer(m_playerLoader.player).fieldType= fieldCombo.selectedItem.type;
+				fieldPath.text = BlockJsonItemPlayer(m_playerLoader.player).fieldName = fieldCombo.selectedItem.name;
+				if (BlockJsonItemPlayer(m_playerLoader.player).fieldType=="date")
+				{
+					dateFormat.text = BlockJsonItemPlayer(m_playerLoader.player).dateFormat;
+				}
+				else if (BlockJsonItemPlayer(m_playerLoader.player).fieldType=="resource" || BlockJsonItemPlayer(m_playerLoader.player).fieldType=="object")
+				{
+					maintainAspectRatio.selected = BlockJsonItemPlayer(m_playerLoader.player).maintainAspectRatio;
+				}
+
+				updateButtons();
+
+				for each(var fieldType:Object in ArrayList(fieldTypeCombo.dataProvider).source)
+				{
+					if (fieldType.name==BlockJsonItemPlayer(m_playerLoader.player).fieldType)
+					{
+						fieldTypeCombo.selectedItem = fieldType;
+						break;
+					}
+				}
+			}
+
+			private function onFieldPathChanged(event:Event):void
+			{
+				BlockJsonItemPlayer(m_playerLoader.player).fieldName = fieldPath.text;
+			}
+
+
+			private function onFieldType():void
+			{
+				BlockJsonItemPlayer(m_playerLoader.player).fieldType= fieldTypeCombo.selectedItem.name;
+				updateButtons();
+			}
+
+			private function onFontChanged(event:Event):void
+			{
+				BlockJsonItemPlayer(m_playerLoader.player).fontItem = fontCtrl.fontItem;
+			}
+
+			private function onMaintainAspectRatio():void
+			{
+				BlockJsonItemPlayer(m_playerLoader.player).maintainAspectRatio = maintainAspectRatio.selected;
+			}
+
+			private function onDateFormat():void
+			{
+				BlockJsonItemPlayer(m_playerLoader.player).dateFormat = dateFormat.text;
+			}
+
+
+			private function onSpreadsheetCell():void
+			{
+				BlockJsonItemPlayer(m_playerLoader.player).fieldName = fieldPath.text = "$cells." + row.value + "." + col.value + ".value";
+			}
+
+			private function updateButtons():void
+			{
+				if (BlockJsonItemPlayer(m_playerLoader.player).fieldType=="text")
+				{
+					fontCtrl.visible = true;
+					maintainAspectRatioForm.visible = false;
+					dateFormatForm.visible = dateInfo.visible = false;
+				}
+				else if (BlockJsonItemPlayer(m_playerLoader.player).fieldType=="date")
+				{
+					fontCtrl.visible = true;
+					maintainAspectRatioForm.visible = false;
+					dateFormatForm.visible = dateInfo.visible = true;
+				}
+				else
+				{
+					fontCtrl.visible = false;
+					maintainAspectRatioForm.visible = true;
+					dateFormatForm.visible = dateInfo.visible = false;
+				}
+			}
+		]]>
+	</fx:Script>
+
+	<fx:Declarations>
+	</fx:Declarations>
+
+	<ms:layout>
+		<s:VerticalLayout/>
+	</ms:layout>
+
+	<s:Form width="100%">
+		<s:FormItem width="100%" id="fieldComboForm"
+			label="Field name">
+			<s:layout>
+				<s:BasicLayout/>
+			</s:layout>
+			<s:DropDownList id="fieldCombo" width="100%"
+					dataProvider="{m_fieldCollection}" labelField="label"
+					change="onFieldChanged(event)"/>
+
+			<s:HGroup id="spreadsheetFrame">
+				<s:NumericStepper id="row" minimum="1" maximum="10000" change="onSpreadsheetCell()"/>
+				<s:Label text=":" paddingTop="5" fontWeight="bold"/>
+				<s:NumericStepper id="col" minimum="1" maximum="10000" change="onSpreadsheetCell()"/>
+			</s:HGroup>
+		</s:FormItem>
+		<s:FormItem id="fieldPathForm" width="100%"
+					label="Field path">
+			<s:TextInput id="fieldPath" width="100%"
+						enter="onFieldPathChanged(event)" focusOut="onFieldPathChanged(event)"/>
+		</s:FormItem>
+		<s:FormItem id="fieldTypeForm" width="100%"
+					label="Field type">
+			<s:DropDownList id="fieldTypeCombo" labelField="label" width="100%"
+						change="onFieldType()">
+				<s:dataProvider>
+					<s:ArrayList>
+						<fx:Object name="text" label="Text"/>
+						<fx:Object name="date" label="Date"/>
+						<fx:Object name="resource" label="Resource"/>
+						<fx:Object name="object" label="Object"/>
+					</s:ArrayList>
+				</s:dataProvider>
+			</s:DropDownList>
+		</s:FormItem>
+		<s:FormItem id="maintainAspectRatioForm" width="100%"
+					label="Maintain aspect ratio">
+			<s:CheckBox id="maintainAspectRatio" change="onMaintainAspectRatio()"/>
+		</s:FormItem>
+		<s:FormItem id="dateFormatForm" width="100%"
+					label="Date format">
+			<s:TextInput id="dateFormat"
+						 focusOut="onDateFormat()" enter="onDateFormat()"/>
+		</s:FormItem>
+	</s:Form>
+	<ms:FontCtrl id="fontCtrl" width="100%"/>
+
+	<s:VGroup id="dateInfo" width="100%" height="100%">
+		<s:Line width="100%" height="1"/>
+
+		<s:RichText>
+			<s:text>
+				Y Year              YY YYYY
+				M Month in year     M MM MMM MMM
+				D Day in month      D DD
+				E Days in week      E EE EEE EEEE
+				A AM/PM             AM or PM
+				J Hour in Day       0-23
+				H Hour in Day       1-24
+				K Hour in am/pm     0-11
+				L Hour in am/pm     1-12
+				N Minute in hour    N NN
+				S Seconds in minute SS
+			</s:text>
+		</s:RichText>
+	</s:VGroup>
+
+</ms:PlayerPage>

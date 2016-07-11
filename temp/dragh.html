@@ -1,0 +1,135 @@
+<HTML>
+<HEAD>
+    <style>
+        body {
+            font-size: 24px;
+        }
+
+        .container {
+            background-color: palegoldenrod;
+            width: 700px;
+            padding: 0px;
+            margin: 0px;
+            overflow-x: scroll;
+            overflow-y: hidden;
+        }
+
+        .container2 {
+            width: 1500px;
+        }
+
+        .myclass {
+            float: left;
+            background-color: red;
+            width: 145px;
+            border: 2px solid green;
+            margin: 10px;
+        }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-2.1.1.js" type="text/javascript"></script>
+    <script src="https://secure.digitalsignage.com/_studiolite-dev/_common/_js/gsap/TimelineMax.js"
+            type="text/javascript"></script>
+    <script src="https://secure.digitalsignage.com/_studiolite-dev/_common/_js/gsap/TweenMax.js"
+            type="text/javascript"></script>
+    <script src="https://secure.digitalsignage.com/_studiolite-dev/_common/_js/gsap/utils/Draggable.js"
+            type="text/javascript"></script>
+
+    <script>
+        $(document).ready(function () {
+            createSortable("#div");
+
+            function createSortable(selector) {
+                var sortable = document.querySelector(selector);
+                Draggable.create(sortable.children, {
+                    type: "x",
+                    bounds: sortable,
+                    edgeResistance: 1,
+                    onPress: sortablePress,
+                    onDragStart: sortableDragStart,
+                    onDrag: sortableDrag,
+                    onDragEnd: sortableDragEnd
+                });
+            }
+
+            function sortablePress() {
+                var t = this.target,
+                        i = 0,
+                        child = t;
+                while (child = child.previousSibling)
+                    if (child.nodeType === 1) i++;
+                t.currentIndex = i;
+                t.currentWidth = t.offsetWidth;
+                t.kids = [].slice.call(t.parentNode.children); // convert to array
+            }
+
+            function sortableDragStart() {
+                TweenLite.set(this.target, { color: "#88CE02" });
+            }
+
+            function sortableDrag() {
+                console.log(this.target.currentWidth + ' ' + this.x);
+                var t = this.target,
+                        elements = t.kids.slice(), // clone
+                        indexChange = Math.round(this.x / t.currentWidth),
+                        srcIndex = t.currentIndex,
+                        dstIndex = srcIndex + indexChange;
+
+
+                if (srcIndex < dstIndex) { // moved down
+                    TweenLite.to(elements.splice(srcIndex + 1, dstIndex - srcIndex), 0.15, { x: '-100%' });
+                    TweenLite.to(elements, 0.15, { xPercent: 0 });
+                } else if (srcIndex === dstIndex) {
+                    elements.splice(srcIndex, 1);
+                    TweenLite.to(elements, 0.15, { xPercent: 0 });
+                } else { // moved up
+                    if (indexChange == -5 && (dstIndex - srcIndex) == -5) {
+                        console.log('s:' + srcIndex + ' d:' + indexChange + ' t:' + (dstIndex - srcIndex));
+                    }
+                    if ((indexChange * -1) > srcIndex) {
+                        //    indexChange = indexChange + 1;
+                        //    srcIndex = srcIndex - 1;
+                    }
+
+                    console.log('s:' + srcIndex + ' d:' + indexChange + ' t:' + (dstIndex - srcIndex));
+                    TweenLite.to(elements.splice(dstIndex, srcIndex - dstIndex), 0.15, { x: '100%' });
+                    TweenLite.to(elements, 0.15, { xPercent: 0 });
+
+                }
+            }
+
+            function sortableSnap(x) {
+                var h = this.target.currentWidth;
+                return Math.round(x / h) * h;
+            }
+
+            function sortableDragEnd() {
+                var t = this.target,
+                        max = t.kids.length - 1,
+                        newIndex = Math.round(this.x / t.currentWidth);
+                newIndex += (newIndex < 0 ? -1 : 0) + t.currentIndex;
+                if (newIndex === max) {
+                    t.parentNode.appendChild(t);
+                } else {
+                    t.parentNode.insertBefore(t, t.kids[newIndex + 1]);
+                }
+                TweenLite.set(t.kids, { xPercent: 0, overwrite: "all" });
+                TweenLite.set(t, { x: 0, color: "" });
+            }
+        });
+
+    </script>
+</HEAD>
+</HTML>
+
+<div class="container">
+    <div id="div" class="container2">
+        <div class="myclass a">a</div>
+        <div class="myclass b">b</div>
+        <div class="myclass c">c</div>
+        <div class="myclass d">d</div>
+        <div class="myclass e">e</div>
+        <div class="myclass f">f</div>
+    </div>
+
+</div>

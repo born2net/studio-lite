@@ -1,0 +1,70 @@
+Scene
+<?xml version="1.0" encoding="UTF-8"?>
+<Player player="3510" label="ywitter csns" interactive="0" mimeType="Json.twitter" id="YmxvY2tpZDYx">
+   <Data>
+      <Layout rotation="0" x="0" y="0" width="400" height="400" />
+      <Scene defaultDuration="10">
+         <Layout>
+            <BasicLayout />
+         </Layout>
+         <Players>
+            <Player player="4310" label="JSON Item" interactive="0" id="YmxvY2tpZDYy">
+               <Data>
+                  <Layout rotation="0" x="27" y="19" width="100" height="100" />
+                  <XmlItem fieldName="name" fieldType="text">
+                     <Font fontSize="16" fontColor="65280" fontFamily="Arial" fontWeight="normal" fontStyle="normal" textDecoration="none" textAlign="left" />
+                  </XmlItem>
+               </Data>
+            </Player>
+            <Player player="4310" label="JSON Item" interactive="0" id="YmxvY2tpZDYz">
+               <Data>
+                  <Layout rotation="0" x="251" y="19" width="100" height="100" />
+                  <XmlItem fieldName="screen_name" fieldType="text">
+                     <Font fontSize="16" fontColor="65280" fontFamily="Arial" fontWeight="normal" fontStyle="normal" textDecoration="none" textAlign="left" />
+                  </XmlItem>
+               </Data>
+            </Player>
+            <Player player="4310" label="JSON Item" interactive="0" id="YmxvY2tpZDY0">
+               <Data>
+                  <Layout rotation="0" x="138" y="72" width="100" height="100" />
+                  <XmlItem fieldName="profile_background_image_url" fieldType="resource" maintainAspectRatio="0" />
+               </Data>
+            </Player>
+            <Player player="4310" label="JSON Item" interactive="0" id="YmxvY2tpZDY1">
+               <Data>
+                  <Layout rotation="0" x="38" y="192" width="100" height="100" />
+                  <XmlItem fieldName="created_at" fieldType="text">
+                     <Font fontSize="22" fontColor="255" fontFamily="Arial" fontWeight="bold" fontStyle="italic" textDecoration="underline" textAlign="left" />
+                  </XmlItem>
+               </Data>
+            </Player>
+            <Player player="4310" label="JSON Item" interactive="0" id="YmxvY2tpZDY2">
+               <Data>
+                  <Layout rotation="0" x="138" y="36" width="100" height="100" />
+                  <XmlItem fieldName="text" fieldType="text">
+                     <Font fontSize="16" fontColor="65280" fontFamily="Arial" fontWeight="normal" fontStyle="normal" textDecoration="none" textAlign="left" />
+                  </XmlItem>
+               </Data>
+            </Player>
+            <Player player="4310" label="JSON Item" interactive="0" id="YmxvY2tpZDY3">
+               <Data>
+                  <Layout rotation="0" x="251" y="72" width="100" height="100" />
+                  <XmlItem fieldName="profile_image_url" fieldType="resource" maintainAspectRatio="1" />
+               </Data>
+            </Player>
+         </Players>
+      </Scene>
+   </Data>
+</Player>
+
+
+Player
+<?xml version="1.0" encoding="UTF-8"?>
+<Player player="6230" label="" interactive="0">
+   <Data>
+      <Json providerType="twitter" itemsPath="" slideShow="1" itemInterval="5" playVideoInFull="0" randomOrder="0">
+         <Player src="37" hDataSrc="11" />
+         <Data token="d1b05f94-df59-46d4-b5b0-05536f48ab44" screenName="" />
+      </Json>
+   </Data>
+</Player>

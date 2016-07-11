@@ -1,0 +1,324 @@
+/* Dark theme */
+html, body
+{
+    background-color	: #262626;
+}
+body
+{
+    color				: #ccc;
+}
+a
+{
+    color				: #ccc;
+}
+h2
+{
+    color				: #fff;
+}
+hr
+{
+    border-top			: 1px solid #6a6a6a;
+}
+
+#fileMenu {
+    background-color: #151515;
+}
+
+#headerPad
+{
+    background-color	: #ec7c66;
+}
+.navbar-inverse
+{
+    background-color	: #535353;
+    border-color		: #535353;
+}
+
+#appNavigator
+{
+    background-color	: #535353;
+    border-right		: 1px solid #6a6a6a;
+}
+
+#appNavigator li
+{
+    background-color	: #535353;
+    border-color		: #595959;
+}
+
+
+#appNavigator li:hover
+{
+    background-color	: #4c4c4c;
+}
+#propPanelWrap
+{
+    background-color	: #535353;
+}
+#mainPanelWrap
+{
+    border-right		: 1px solid #6a6a6a;
+}
+#mainPanelWrap hr
+{
+    border-top			: 1px solid #414141;
+}
+.btn-default
+{
+    color				: #ccc;
+    background-color	: #535353;
+    border-color		: #6a6a6a;
+}
+.btn-default:hover
+{
+    background-color	: #4c4c4c;
+}
+.list-group-item
+{
+    background-color	: #535353;
+    border				: 1px solid #6a6a6a;
+}
+a.list-group-item:hover, a.list-group-item:focus
+{
+    background-color	: #4c4c4c;
+}
+a.list-group-item
+{
+    color				: #ccc;
+}
+a:hover, a:focus
+{
+    color				: #ccc;
+}
+
+.panel, .panel-body, .panel-default, .panel-heading, .panel-group, .panel-collapse {
+    border: none !important;
+}
+
+#footer
+{
+    background-color	: #151515;
+    border-top			: 1px solid #6a6a6a;
+    padding				: 21px 10px;
+}
+#footerText
+{
+    color				: #ccc;
+}
+#footer br
+{
+    display				: none;
+}
+.btn-primary
+{
+    color				: #fff;
+    background-color	: #535353;
+    border-color		: #6a6a6a;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary
+{
+    background-color	: #4c4c4c;
+    border-color		: #6a6a6a;
+}
+li:hover a
+{
+    color				: #ccc;
+}
+.alert-danger
+{
+    color				: #FFF;
+    background-color	: #ec7c66;
+    border-color		: #ec7c66;
+}
+.noUi-background
+{
+    background			: #535353;
+    box-shadow			: none;
+}
+.noUi-target
+{
+    border				: 1px solid #6a6a6a;
+    box-shadow			: none;
+}
+.noUi-handle
+{
+    border				: 1px solid #6a6a6a;
+    border-radius		: 3px;
+    background			: #535353;
+    cursor				: default;
+    box-shadow			: none;
+}
+button, select
+{
+    text-transform		: none;
+    border				: 1px solid #6a6a6a;
+    background			: #535353;
+}
+.panel
+{
+    background-color	: #535353;
+}
+.panel-default > .panel-heading
+{
+    color				: #fff;
+    background-color	: #535353;
+    border-color		: #6a6a6a;
+}
+.panel-default
+{
+    border-color		: #6a6a6a;
+}
+.installs
+{
+    color				: #ccc !important;
+}
+
+
+@media (min-width: 768px)
+{
+    .navbar-nav.navbar-right:last-child
+    {
+        margin-right	: 0;
+    }
+}
+
+.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
+    background-color: #777777 !important;
+    border-color: #eb7c66 !important;
+}
+
+.activated {
+    background-color: #777777 !important;
+}
+
+input {
+   background-color: #262626 !important;
+   color: #cbcbcb !important;
+    border-color: #eb7c66 !important;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    color: #fdfdfe !important;
+    background-color: #535353 !important;
+
+}
+
+.panel {
+    border-color: #dcdcdc !important;
+}
+
+.navActiveSel {
+    background-color: #454545 !important;
+}
+
+#videoModalHeader {
+    color: #eb7c66 !important;
+}
+
+#videoModalHeaderLite {
+    font-family: Lobster Two;
+    color: #eb7c66 !important;
+}
+
+/* Wrapper to push down from header */
+#headerPad {
+    background-color: #eb7c66 !important;
+}
+
+#appNavigator li:hover {
+    background-color: #eb7c66 !important;
+}
+
+.channelHeadSelected {
+    background-color: #eb7c66 !important;
+}
+
+#installPanel i {
+    color: #eb7c66 !important;
+}
+
+.timelineBlockSelected {
+    background-color: #eb7c66 !important;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    background-color: #eb7c66 !important;
+}
+
+.activated {
+    background-color: #eb7c66 !important;
+}
+
+.pricing_header1 {
+    background: none repeat scroll 0% 0% rgb(235, 124, 102);
+    border-radius: 5px 5px 0px 0px;
+}
+
+.pricing_header2 {
+    background: none repeat scroll 0% 0% rgb(235, 66, 71);
+    border-radius: 5px 5px 0px 0px;
+}
+
+.pricing_header3 {
+    background: none repeat scroll 0% 0% rgb(235, 56, 9);
+    border-radius: 5px 5px 0px 0px;
+}
+
+.space {
+    background-color: #b14117;
+}
+
+.noUi-background {
+    background: #eb7c66 !important;
+}
+
+#collectionTable tr,
+#collectionTable th,
+#collectionTable td {
+    background-color: #535353;
+    border-color: #535353;
+}
+
+
+
+::-webkit-scrollbar-track
+{
+    background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb
+{
+    background: rgba(66, 66, 66, 0.5);
+}
+
+.profileCard {
+    background-color: #0c0c0c;
+}
+
+.pImg {
+    background: #eb7c66 !important;
+}
+
+.profileCard .pImg {
+    background-color: #e97b66;
+    border-radius: 50% !important;
+    display: table;
+    height: 100px;
+    margin: 0 auto;
+    width: 100px;
+    margin-top: -60px;
+}
+
+.profileCard1 .pDes > a {
+    background-color: #e97b66;
+    border-radius: 2px;
+    color: #fff;
+    transition: all 0.5s ease 0s;
+}
+
+.profileCard1 .pDes > a:hover {
+    background-color: #e91d33;
+    box-shadow: 0 2px 5px 0 white, 0 2px 10px 0 white;
+    color: #fff;
+    transition: all 0.5s ease 0s;
+}

@@ -1,0 +1,21 @@
+<div bs-panel="controls outline">
+    <h1 bs-heading>
+        <icon icon="{{ctrl.section.icon}}"></icon>
+        {{ctrl.section.title}}
+    </h1>
+    <div ng-if="ui.plugins.length" bs-button-row>
+        <button bs-button="inline success" ng-click="ctrl.setMany(true)">
+            <svg bs-svg-icon="">
+                <use xlink:href="#svg-circle-ok"></use>
+            </svg>
+            Enable All
+        </button>
+        <button bs-button="inline" ng-click="ctrl.setMany(false)">
+            <svg bs-svg-icon="">
+                <use xlink:href="#svg-circle-delete"></use>
+            </svg>
+            Disable all
+        </button>
+    </div>
+</div>
+<plugin-list ng-if="ctrl.options" options="ctrl.options" plugins="ctrl.ui.plugins"></plugin-list>

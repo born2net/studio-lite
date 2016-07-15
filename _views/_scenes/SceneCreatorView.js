@@ -185,7 +185,7 @@ define(['jquery'], function ($) {
             self._goBack();
         };
         return SceneCreatorView;
-    })(Backbone.View);
+    }(Backbone.View));
     return SceneCreatorView;
 });
 //# sourceMappingURL=SceneCreatorView.js.map

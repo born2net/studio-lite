@@ -577,3 +577,4 @@ define(['jquery', 'Block'], function ($, Block) {
     }(TSLiteModules.Block));
     return BlockJsonBase;
 });
+//# sourceMappingURL=BlockJsonBase.js.map

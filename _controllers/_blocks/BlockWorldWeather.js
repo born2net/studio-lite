@@ -129,3 +129,4 @@ define(['jquery', 'BlockJsonBase'], function ($, BlockJsonBase) {
     }(TSLiteModules.BlockJsonBase));
     return BlockWorldWeather;
 });
+//# sourceMappingURL=BlockWorldWeather.js.map

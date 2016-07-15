@@ -238,7 +238,7 @@ define(['jquery', 'SceneTemplates'], function ($, SceneTemplates) {
             //self._render();
         };
         return SceneCreatorTemplateView;
-    })(Backbone.View);
+    }(Backbone.View));
     return SceneCreatorTemplateView;
 });
 //# sourceMappingURL=SceneCreatorTemplateView.js.map

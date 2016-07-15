@@ -214,3 +214,4 @@ define(['jquery', 'BlockJsonBase', 'validator'], function ($, BlockJsonBase, val
     }(TSLiteModules.BlockJsonBase));
     return BlockGoogleSheets;
 });
+//# sourceMappingURL=BlockGoogleSheets.js.map

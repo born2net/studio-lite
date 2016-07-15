@@ -13,6 +13,9 @@ define(['jquery', 'backbone', 'bootbox'], function ($, Backbone, Bootbox) {
          @method initialize
          **/
         initialize: function () {
+            if (BB.HIDE_CREATE_ACCOUNT){
+                $(Elements.CREATE_ACCOUNT_BUTTON).hide();
+            }
             $(Elements.LOGIN_BUTTON).on('click', function () {
                 if ($(Elements.USER_NAME).val().length > 1 && $(Elements.USER_PASS).val().length > 1) {
                     var user = $.base64.encode($(Elements.USER_NAME).val());

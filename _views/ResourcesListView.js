@@ -388,3 +388,4 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, boots
     }(Backbone.View));
     return ResourcesListView;
 });
+//# sourceMappingURL=ResourcesListView.js.map

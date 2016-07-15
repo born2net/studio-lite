@@ -187,3 +187,4 @@ define(['jquery'], function ($) {
     }(Backbone.View));
     return SettingView;
 });
+//# sourceMappingURL=SettingView.js.map

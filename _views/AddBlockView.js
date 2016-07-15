@@ -329,7 +329,7 @@ define(['jquery', 'backbone', 'StackView', 'ScreenTemplateFactory', 'bootbox'], 
          @return {Number} 0 = hide, 1 = show, 2 = upgradable
          **/
         _checkAllowedComponent: function (i_componentID) {
-            if (BB.PRIV_HYBRID)
+            if (window.g_private_hybrid)
                 return 1;
             // free component so show it
 

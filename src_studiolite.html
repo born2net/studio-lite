@@ -32,10 +32,14 @@
          var protocol = origin.match(re)[1];
          var server = origin.match(re)[3];
          if (server == "secure.digitalsignage.com"||"secure.digitalsignage.com:442") {
+         	window.g_private_hybrid = false;
             server = "galaxy.signage.me";
+         }  else {
+         	window.g_private_hybrid = true;
          }
          window.g_protocol = protocol + "://";
          window.g_sdkDomain = "js.signage.me";
+         
          window.g_masterDomain = server;
          document.write('<script type="text/javascript" src="' + window.g_protocol + window.g_sdkDomain + '/SignageSDK.js"></scr' + 'ipt>');
      </script>

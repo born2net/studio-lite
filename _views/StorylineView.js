@@ -428,7 +428,7 @@ define(['jquery', 'backbone', 'text', 'text!_templates/_storyboard.html'], funct
                 blockElem = $(e.target).parent();
                 self.selected_block_id = $(blockElem).data('timeline_channel_block_id');
             }
-            e.target = blockElem[0];
+            e['target'] = blockElem[0];
             self._blockChannelSelected(e);
             BB.comBroker.fire(BB.EVENTS.STORYLINE_BLOCK_SELECTED, this, null, self.selected_block_id);
             $(blockElem).addClass(BB.lib.unclass(Elements.CLASS_TIMELINE_BLOCK_SELECTED));

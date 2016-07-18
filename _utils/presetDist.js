@@ -9,7 +9,7 @@ initPage = initPage.replace(/-dev/gi, '-dist');
 ms.fs.writeFileSync('../../_studiolite-dist/init.js', initPage, 'utf8');
 
 // Update studiolite with dist
-var studiolite = ms.fs.readFileSync('../../_studiolite-dist/studiolite.html', 'utf8');
+var studiolite = ms.fs.readFileSync('../../_studiolite-dist/src_studiolite.html', 'utf8');
 studiolite = studiolite.replace(/<!--SDK_START-->[^]+<!--SDK_END-->/ig, '');
 studiolite = studiolite.replace(/<!--SERVER_START/gi, '');
 studiolite = studiolite.replace(/SERVER_END-->/gi, '');

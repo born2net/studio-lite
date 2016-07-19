@@ -20,7 +20,6 @@ define(['underscore', 'jquery', 'backbone', 'bootstrap', 'backbone.controller', 
             BB.SERVICES = {};
             BB.EVENTS = {};
             BB.CONSTS = {};
-            BB.HIDE_CREATE_ACCOUNT = false;
             BB.CONSTS.APP_STUDIO_LITE = '0';
             BB.CONSTS.APP_CUSTOMER_TERMINAL = '1';
             BB.CONSTS.APP_REMOTE_STATUS = '2';

@@ -13,7 +13,7 @@ define(['jquery', 'backbone', 'bootbox'], function ($, Backbone, Bootbox) {
          @method initialize
          **/
         initialize: function () {
-            if (BB.HIDE_CREATE_ACCOUNT){
+            if (window.g_private_hybrid){
                 $(Elements.CREATE_ACCOUNT_BUTTON).hide();
             }
             $(Elements.LOGIN_BUTTON).on('click', function () {

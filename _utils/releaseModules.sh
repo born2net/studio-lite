@@ -42,8 +42,8 @@ echo 'making internal changes to studiolite.html'
 
 
 ### remove src from dist ###
-echo 'removing dist dev source file ../../_studiolite-dist/src_studiolite.html'
-rm ../../_studiolite-dist/src_studiolite.html
+# echo 'removing dist dev source file ../../_studiolite-dist/src_studiolite.html'
+# rm ../../_studiolite-dist/src_studiolite.html
 
 
 ### create backup ###

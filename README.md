@@ -74,6 +74,14 @@ With node.js and npm you will be able to easily update to the latest version of 
 - open browser and point it to ```[YOUR_IP]/_studiolite-dev/studiolite.html```
 - IMPORTANT: make sure _studiolite-dev is in the root of web server
 
+Main html files
+------------------------------------------------------------------------
+- If you are using the mediaCLOUD or this repo on GithHub, to host this 
+ project on your own server you will use: ```studiolite.html``` to load the app
+- If you are using a private or hybrid mediaSERVER you will find in your 
+ server distribution the file: ```index.html``` to load the app
+ 
+
 Updates:
 ------------------------------------------------------------------------
 If you used ```npm install studiolite``` updating is as easy as switching to your node directory and typing ```node update studiolite``` to get the latest release

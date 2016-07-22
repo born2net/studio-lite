@@ -538,6 +538,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 Digg4: [411115, 'ida.signage.me', 16],
                 Digg5: [411115, 'ida.signage.me', 17],
                 Digg7: [411115, 'ida.signage.me', 19],
+                Digg21: [434454, 'jupiter.signage.me', 6],
                 Sheet6: [411116, 'ida.signage.me', 24],
                 Sheet7: [411116, 'ida.signage.me', 25],
                 Sheet5: [411116, 'ida.signage.me', 23],
@@ -559,6 +560,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 Sheet3: [411116, 'ida.signage.me', 21],
                 Sheet4: [411116, 'ida.signage.me', 22],
                 Sheet20: [411116, 'ida.signage.me', 38],
+                Sheet21: [434454, 'jupiter.signage.me', 8],
                 Calendar11: [411117, 'ida.signage.me', 22],
                 Calendar10: [411117, 'ida.signage.me', 24],
                 Calendar12: [411117, 'ida.signage.me', 25],
@@ -580,6 +582,7 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 Calendar2: [411117, 'ida.signage.me', 14],
                 Calendar19: [411117, 'ida.signage.me', 32],
                 Calendar20: [411117, 'ida.signage.me', 33],
+                Calendar21: [434454, 'jupiter.signage.me', 5],
                 Twitter1: [411119, 'ida.signage.me', 24],
                 Twitter2: [411119, 'ida.signage.me', 25],
                 Twitter4: [411119, 'ida.signage.me', 27],
@@ -643,7 +646,8 @@ define(['jquery', 'backbone'], function ($, Backbone) {
                 Weather41: [411120, 'ida.signage.me', 40],
                 Weather42: [411120, 'ida.signage.me', 42],
                 Weather43: [411120, 'ida.signage.me', 41],
-                Weather44: [411120, 'ida.signage.me', 43]
+                Weather44: [411120, 'ida.signage.me', 43],
+                Weather46: [434454, 'jupiter.signage.me', 7]
             }
         },
 

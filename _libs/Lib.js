@@ -59,7 +59,7 @@ define(['jquery', 'backbone', 'platform'], function ($, Backbone, platform) {
         },
 
         /**
-         Prompt on application exit
+         In dev mode
          @method inDevMode
          @return {Boolean}
          **/

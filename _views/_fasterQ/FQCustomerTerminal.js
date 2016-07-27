@@ -16,6 +16,7 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel', 'moment'], func
             var self = this;
             self.m_base_url = BB.CONSTS.BASE_URL + '?mode=remoteStatus&param=';
             $(Elements.FASTERQ_LINE_NAME).text(self.model.get('name'));
+            $(Elements.FQ_TAKE_NUMBER_LINE_NAME).text(self.model.get('line_name'));
             self._createQRcode();
             self._listenPrintButton();
             self._listenEmailButton();

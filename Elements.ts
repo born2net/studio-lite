@@ -434,6 +434,7 @@ module Elements {
     export const FQ_LINE_GOTO = '#fqLineGoTo';
     export const FQ_LINE_COMP_SERVICED = '#fqLineCompServiced';
     export const FQ_LINE_COMP_NEXT = '#fqLineCompNext';
+    export const FQ_TAKE_NUMBER_LINE_NAME = '#fqTakeNumberLineName';
     export const FQ_DISPLAY_PRINT_NUMBER = '#fqDisplayPrintNumber';
     export const FQ_DISPLAY_QR_NUMBER = '#fqDisplayQRNumber';
     export const FQ_DISPLAY_VERIFICATION = '#fqDisplayVerification';

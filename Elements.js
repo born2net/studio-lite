@@ -435,6 +435,7 @@ var Elements;
     Elements.FQ_LINE_GOTO = '#fqLineGoTo';
     Elements.FQ_LINE_COMP_SERVICED = '#fqLineCompServiced';
     Elements.FQ_LINE_COMP_NEXT = '#fqLineCompNext';
+    Elements.FQ_TAKE_NUMBER_LINE_NAME = '#fqTakeNumberLineName';
     Elements.FQ_DISPLAY_PRINT_NUMBER = '#fqDisplayPrintNumber';
     Elements.FQ_DISPLAY_QR_NUMBER = '#fqDisplayQRNumber';
     Elements.FQ_DISPLAY_VERIFICATION = '#fqDisplayVerification';

@@ -771,7 +771,7 @@ iframe {
 
 #fqLineQueueComponent {
     height: 200px;
-    width: 10000px;
+    width: 1000000px;
     padding: 0;
     margin: 0;
     overflow: scroll;

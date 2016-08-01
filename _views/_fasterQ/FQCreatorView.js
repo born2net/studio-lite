@@ -178,7 +178,7 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
         },
 
         /**
-         Listen to changes in Line collection and re-populate Line list
+         Listen  to changes in Line collection and re-populate Line list
          @method _listenCollectionChanged
          **/
         _listenCollectionChanged: function () {

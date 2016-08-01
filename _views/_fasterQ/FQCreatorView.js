@@ -195,8 +195,8 @@ define(['jquery', 'backbone', 'LinesCollection', 'LineModel', 'FQLinePropView', 
         _listenResetQueueCounter: function(){
             var self = this;
             $(Elements.FQ_RESET_QUEUE_COUNTER).on('click',function(){
-                bootbox.prompt('are you sure you want to reset the counter? (enter password)',function(i_password){
-                    if (i_password != '123') return;
+                bootbox.prompt('are you sure you want to reset the counter? (enter YES)',function(i_password){
+                    if (i_password != 'YES') return;
                     $.ajax({
                         url: BB.CONSTS.ROOT_URL + '/ResetQueueCounter',
                         data: {

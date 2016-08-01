@@ -184,16 +184,22 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel', 'moment'], func
         _printNumber: function(i_service_id){
             var self = this;
             var $printDiag = $(Elements.PRINT_DIAG);
-            $printDiag.find('h1').text('your number is ' + i_service_id);
-            $printDiag.find('h3').text('created on ' + moment().format('MMMM Do YYYY, h:mm:ss a'));
-            var divContents = $(Elements.PRINT_DIAG).html();
-            var printWindow = window.open('', '', 'height=250,width=450');
-            printWindow.document.write('<html><head><title>' + self.model.get('name') + '</title>');
-            printWindow.document.write('</head><body><center>');
-            printWindow.document.write(divContents);
-            printWindow.document.write('</center></body></html>');
-            printWindow.document.close();
-            printWindow.print();
+            //var div = document.getElementById("printerDiv");
+            var p = function(){
+                $('body').append('<h2>foo</h2>')
+            }
+            $printDiag.html('<iframe src="print.html?serviceId=' + i_service_id + '" onload="this.contentWindow.print();"></iframe>');
+
+            // $printDiag.find('h1').text('your number is ' + i_service_id);
+            // $printDiag.find('h3').text('created on ' + moment().format('MMMM Do YYYY, h:mm:ss a'));
+            // var divContents = $(Elements.PRINT_DIAG).html();
+            // var printWindow = window.open('', '', 'height=250,width=450');
+            // printWindow.document.write('<html><head><title>' + self.model.get('name') + '</title>');
+            // printWindow.document.write('</head><body><center>');
+            // printWindow.document.write(divContents);
+            // printWindow.document.write('</center></body></html>');
+            // printWindow.document.close();
+            // printWindow.print();
         },
 
         /**

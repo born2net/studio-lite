@@ -1,0 +1,41 @@
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" crossorigin="anonymous"></script>
+<script>
+  
+  var urlParam = function (name) {
+	 var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+	 if (results == null) {
+		return null;
+	 }
+	 else {
+		return results[1] || 0;
+	 }
+  }
+  
+  function timeFormatter(dateTime) {
+	 var date = new Date(dateTime);
+	 if (date.getHours() >= 12) {
+		var hour = parseInt(date.getHours()) - 12;
+		var amPm = "PM";
+	 } else {
+		var hour = date.getHours();
+		var amPm = "AM";
+	 }
+	 var time = hour + ":" + date.getMinutes() + " " + amPm;
+	 console.log(time);
+	 return time;
+  }
+  
+  var p = function () {
+	 $(document).ready(function () {
+		var serviceId = urlParam('serviceId')
+		var d = new Date();
+		var time = timeFormatter(d);
+		var msg1 = '<h2>your number is ' + serviceId + ' <h2/><br/>' + '<h5>created at ' + time + '</h5>';
+		$('body').append(msg1);
+	 })
+	 
+  }
+</script>
+
+<body id="myBody" onload="p()">
+</body>

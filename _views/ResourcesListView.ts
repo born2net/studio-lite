@@ -196,17 +196,24 @@ define(['jquery', 'bootstrapfileinput', 'video', 'platform'], function ($, boots
                 case 'mp4':
                 {
                     ext = 'mp4';
-                }
-                case 'flv':
-                {
-                    if (!ext)
-                        ext = 'flv';
                     $(Elements.RESOURCE_PREVIEW_IMAGE).hide();
                     $(Elements.RESOURCE_PREVIEW_SVG).hide();
                     $(Elements.RESOURCE_PREVIEW_VIDEO).fadeIn();
                     path = window['g_protocol'] + BB.Pepper.getUserData().domain + '/Resources/business' + BB.Pepper.getUserData().businessID + '/resources/' + BB.Pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + ext;
                     $(Elements.VIDEO_PREVIEW).find('video:nth-child(1)').attr("src", path);
                     break;
+                }
+                case 'flv':
+                {
+                    if (!ext)
+                        ext = 'flv';
+                    /** disabled 8-16-2016 **/
+                    // $(Elements.RESOURCE_PREVIEW_IMAGE).hide();
+                    // $(Elements.RESOURCE_PREVIEW_SVG).hide();
+                    // $(Elements.RESOURCE_PREVIEW_VIDEO).fadeIn();
+                    // path = window['g_protocol'] + BB.Pepper.getUserData().domain + '/Resources/business' + BB.Pepper.getUserData().businessID + '/resources/' + BB.Pepper.getResourceNativeID(i_recResource['resource_id']) + '.' + ext;
+                    // $(Elements.VIDEO_PREVIEW).find('video:nth-child(1)').attr("src", path);
+                    //break;
                 }
                 case 'swf':
                 {

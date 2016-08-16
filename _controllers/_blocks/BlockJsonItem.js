@@ -846,7 +846,7 @@ define(['jquery', 'Block'], function ($, Block) {
             self._deleteBlock(i_memoryOnly);
         };
         return BlockJsonItem;
-    }(TSLiteModules.Block));
+    })(TSLiteModules.Block);
     return BlockJsonItem;
 });
 //# sourceMappingURL=BlockJsonItem.js.map

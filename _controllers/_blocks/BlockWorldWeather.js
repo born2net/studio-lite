@@ -126,7 +126,7 @@ define(['jquery', 'BlockJsonBase'], function ($, BlockJsonBase) {
             _super.prototype.deleteBlock.call(this, i_memoryOnly);
         };
         return BlockWorldWeather;
-    }(TSLiteModules.BlockJsonBase));
+    })(TSLiteModules.BlockJsonBase);
     return BlockWorldWeather;
 });
 //# sourceMappingURL=BlockWorldWeather.js.map

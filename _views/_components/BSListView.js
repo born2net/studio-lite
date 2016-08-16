@@ -1,6 +1,5 @@
 ///<reference path="../../typings/lite/app_references.d.ts" />
 define(["require", "exports"], function (require, exports) {
-    "use strict";
     /** sample interface **/
     var BSListView;
     (function (BSListView) {
@@ -18,7 +17,7 @@ define(["require", "exports"], function (require, exports) {
                 var self = this;
             };
             return MyBSListView;
-        }());
+        })();
         BSListView.MyBSListView = MyBSListView;
     })(BSListView = exports.BSListView || (exports.BSListView = {}));
 });

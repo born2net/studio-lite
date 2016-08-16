@@ -184,7 +184,7 @@ define(['jquery'], function ($) {
             });
         };
         return SettingView;
-    }(Backbone.View));
+    })(Backbone.View);
     return SettingView;
 });
 //# sourceMappingURL=SettingView.js.map

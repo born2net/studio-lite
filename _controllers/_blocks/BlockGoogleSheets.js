@@ -211,7 +211,7 @@ define(['jquery', 'BlockJsonBase', 'validator'], function ($, BlockJsonBase, val
             _super.prototype.deleteBlock.call(this, i_memoryOnly);
         };
         return BlockGoogleSheets;
-    }(TSLiteModules.BlockJsonBase));
+    })(TSLiteModules.BlockJsonBase);
     return BlockGoogleSheets;
 });
 //# sourceMappingURL=BlockGoogleSheets.js.map

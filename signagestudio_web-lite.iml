@@ -16,7 +16,5 @@
     <orderEntry type="library" name="StackView" level="application" />
     <orderEntry type="library" name="underscore" level="application" />
     <orderEntry type="library" name="Elements" level="project" />
-    <orderEntry type="library" name="signagestudio_web-lite node_modules" level="project" />
-    <orderEntry type="library" name="jquery-ui-1.10.1-min" level="application" />
   </component>
 </module>

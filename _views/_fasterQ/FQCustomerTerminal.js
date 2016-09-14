@@ -159,6 +159,7 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel', 'moment'], func
             // save with extra parameters
 
             var model = new QueueModel();
+
             model.save({
                 business_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('business_id'),
                 line_id: BB.comBroker.getService(BB.SERVICES.FQ_LINE_MODEL).get('line_id'),
@@ -166,7 +167,7 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel', 'moment'], func
             }, {
                 success: (function (model, data) {
                     $(Elements.FQ_DISPLAY_PRINT_NUMBER).text(model.get('service_id'));
-                    self._printNumber(model.get('service_id'));
+                    self._printNumber(model.get('service_id'), model.get('name'));
                 }),
                 error: (function (e) {
                     log('Service request failure: ' + e);
@@ -181,14 +182,15 @@ define(['jquery', 'backbone', 'bootbox', 'qrcode', 'QueueModel', 'moment'], func
          @method _printNumber
          @param {Number} i_service_id
          **/
-        _printNumber: function(i_service_id){
+        _printNumber: function(i_service_id, name){
             var self = this;
             var $printDiag = $(Elements.PRINT_DIAG);
             //var div = document.getElementById("printerDiv");
             var p = function(){
-                $('body').append('<h2>foo</h2>')
+                $('body').append('<h2></h2>')
             }
-            $printDiag.html('<iframe src="print.html?serviceId=' + i_service_id + '" onload="this.contentWindow.print();"></iframe>');
+            var arg = BB.lib.base64Encode(i_service_id + ':_:' + name)
+            $printDiag.html('<iframe src="print.html?serviceId=' + arg + '" onload="this.contentWindow.print();"></iframe>');
 
             // $printDiag.find('h1').text('your number is ' + i_service_id);
             // $printDiag.find('h3').text('created on ' + moment().format('MMMM Do YYYY, h:mm:ss a'));

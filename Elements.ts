@@ -428,6 +428,7 @@ module Elements {
     export const FQ_SELECTED_QUEUE = '#fqSelectedQueue';
     export const FQ_VERIFICATION = '#fqVerification';
     export const FQ_LINE_QUEUE_COMPONENT = '#fqLineQueueComponent';
+    export const FQ_LINE_NAME = '#fqLineName';
     export const FQ_LINE_QUEUE_COMPONENT_CONTAINER = '#fqLineQueueComponentContainer';
     export const FQ_LINE_COMP_PREV = '#fqLineCompPrev';
     export const FQ_LINE_COMP_CALL = '#fqLineCompCall';

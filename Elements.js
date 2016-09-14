@@ -429,6 +429,7 @@ var Elements;
     Elements.FQ_SELECTED_QUEUE = '#fqSelectedQueue';
     Elements.FQ_VERIFICATION = '#fqVerification';
     Elements.FQ_LINE_QUEUE_COMPONENT = '#fqLineQueueComponent';
+    Elements.FQ_LINE_NAME = '#fqLineName';
     Elements.FQ_LINE_QUEUE_COMPONENT_CONTAINER = '#fqLineQueueComponentContainer';
     Elements.FQ_LINE_COMP_PREV = '#fqLineCompPrev';
     Elements.FQ_LINE_COMP_CALL = '#fqLineCompCall';

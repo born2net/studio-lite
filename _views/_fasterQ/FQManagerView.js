@@ -169,6 +169,10 @@ define(['jquery', 'backbone', 'ScrollToPlugin', 'TweenMax', 'FQQueuePropView', '
 
 
             $(Elements.FQ_LINE_QUEUE_COMPONENT).empty();
+
+            var selectedLine = self.m_fqCreatorView.getSelectedLine();
+            $(Elements.FQ_LINE_NAME).text(self.m_fqCreatorView.getSelectedLineName(selectedLine));
+
             for (var i = -8; i < 0; i++) {
                 snippet = '<div class="' + BB.lib.unclass(Elements.CLASS_PERSON_IN_LINE) + '">';
                 $(Elements.FQ_LINE_QUEUE_COMPONENT).append(snippet);

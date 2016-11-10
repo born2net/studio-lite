@@ -1,6 +1,5 @@
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" crossorigin="anonymous"></script>
 <script>
-  
   var Base64 = {
 	 _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=", encode: function (e) {
 		var t = "";
@@ -87,7 +86,6 @@
 		return t
 	 }
   }
-  
   var urlParam = function (name) {
 	 var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
 	 if (results == null) {
@@ -97,34 +95,54 @@
 		return results[1] || 0;
 	 }
   }
-  
-  function timeFormatter(dateTime) {
-	 var date = new Date(dateTime);
-	 if (date.getHours() >= 12) {
-		var hour = parseInt(date.getHours()) - 12;
-		var amPm = "PM";
-	 } else {
-		var hour = date.getHours();
-		var amPm = "AM";
-	 }
-	 var time = hour + ":" + date.getMinutes() + " " + amPm;
-	 console.log(time);
-	 return time;
-  }
-  
-  var p = function () {
-	 $(document).ready(function () {
-		var arg = Base64.decode(urlParam('serviceId'));
-		var serviceId = arg.split(':_:')[0]
-		var name = arg.split(':_:')[1]
-		var d = new Date();
-		var time = timeFormatter(d);
-		var msg1 = '<h1>line: ' + name + '</h1><br/><p>your number is ' + serviceId + ' </p><br/>' + '<h5>created at ' + time + '</h5><br/><br/><br/><br/><p><small>version 1.2</small></p>';
-		$('body').append(msg1);
-	 })
-	 
-  }
 </script>
 
-<body id="myBody" onload="p()">
+<style media="print">
+  @page {
+	 size: auto;
+	 margin: 0;
+  }
+</style>
+
+<style>
+	 * {
+		font-family: arial;
+	 }
+	.serviceId {
+	  color: black;
+	  font-family: arial;
+	  font-weight: bold;
+	  position: relative;
+	  display: block;
+	}
+</style>
+
+
+<body id="myBody">
+	<script>
+       $(document).ready(function() {
+           var arg = Base64.decode(urlParam('serviceId'));
+           var serviceId = arg.split(':_:')[0]
+           var name = arg.split(':_:')[1]
+           var msg1 = '';
+
+           if (name.indexOf('ver12') > -1) {
+               if (serviceId==undefined){
+                   serviceId = -1;
+                   alert('no service id');
+               }
+               var time = new Date($.now());
+               msg1 = 	'<h3>' + 'line: ' + name + ' # ' + serviceId + '' + '</h3>' +
+                   		'<h3>' + 'line: ' + name + ' # ' + serviceId + '' + '</h3>' +
+                   		'<h3>' + 'line: ' + name + ' # ' + serviceId + '' + '</h3>' +
+                   		'<h3>' + 'line: ' + name + ' # ' + serviceId + '' + '</h3>' +
+                   		'<h3>' + 'line: ' + name + ' # ' + serviceId + '' + '</h3>' +
+                   		'<h5>' + time  + '</h5>';
+               			
+           } else {
+               msg1 = '<h1>line: ' + name + '</h1><br/><p>your number is ' + serviceId + ' </p><br/>' + '<h5>created at ' + time + '</h5>';
+           }
+           $('body').append(msg1);
+       });
+	</script>
 </body>

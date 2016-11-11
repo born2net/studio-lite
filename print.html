@@ -126,17 +126,18 @@
            var name = arg.split(':_:')[1]
            var msg1 = '';
 
+           // test version
            if (name.indexOf('ver12') > -1) {
+           } else {
+					// msg1 = '<h1>line: ' + name + '</h1><br/><p>your number is ' + serviceId + ' </p><br/>' + '<h5>created at ' + time + '</h5>';
                var time = new Date($.now());
                msg1 = 	'<h3>' + 'line: ' + name + ' # ' + serviceId + '' + '</h3>' +
-                   		'<h3>' + 'line: ' + name + ' # ' + serviceId + '' + '</h3>' +
-                   		'<h3>' + 'line: ' + name + ' # ' + serviceId + '' + '</h3>' +
-                   		'<h3>' + 'line: ' + name + ' # ' + serviceId + '' + '</h3>' +
-                   		'<h3>' + 'line: ' + name + ' # ' + serviceId + '' + '</h3>' +
-                   		'<h5>' + time  + '</h5>';
-               			
-           } else {
-               msg1 = '<h1>line: ' + name + '</h1><br/><p>your number is ' + serviceId + ' </p><br/>' + '<h5>created at ' + time + '</h5>';
+                   '<h3>' + 'line: ' + name + ' # ' + serviceId + '' + '</h3>' +
+                   '<h3>' + 'line: ' + name + ' # ' + serviceId + '' + '</h3>' +
+                   '<h3>' + 'line: ' + name + ' # ' + serviceId + '' + '</h3>' +
+                   '<h3>' + 'line: ' + name + ' # ' + serviceId + '' + '</h3>' +
+                   '<h5>' + time  + '</h5>';
+               
            }
            $('body').append(msg1);
        });

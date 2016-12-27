@@ -15,7 +15,8 @@
 StudioLite, Digital Signage for the rest of us
 ---------------------------------------
 
-current version: 1.5.114 dev-build
+[![NPM](https://nodei.co/npm/studiolite.png)](https://nodei.co/npm/studiolite/)
+
 
 ------------------------------------------------------------------------
 

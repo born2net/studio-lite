@@ -55,7 +55,7 @@ gulp.task('minifyHTML', function (done) {
 
 gulp.task('liveServer', ['watchTmpDir'], function () {
     server = express();
-    server.use(express.static('C:/msweb/signagestudio_web-lite/studiolite.html'));
+    server.use(express.static('C:/msweb/studiolite/studiolite.html'));
     server.listen(8002);
     browserSync({
         proxy: 'localhost:8002'
@@ -77,8 +77,8 @@ gulp.task('_uploadDocs', shell.task([
 
 
 gulp.task('_uploadVersionFiles', shell.task([
-    'scp /cygdrive/c/msweb/signagestudio_web-lite/package.json Sean@digitalsignage.com:/var/www/sites/dynasite/htdocs/_studiolite-dev/',
-    'scp /cygdrive/c/msweb/signagestudio_web-lite/studiolite.html Sean@digitalsignage.com:/var/www/sites/dynasite/htdocs/_studiolite-dev/'
+    'scp /cygdrive/c/msweb/studiolite/package.json Sean@digitalsignage.com:/var/www/sites/dynasite/htdocs/_studiolite-dev/',
+    'scp /cygdrive/c/msweb/studiolite/studiolite.html Sean@digitalsignage.com:/var/www/sites/dynasite/htdocs/_studiolite-dev/'
 ]));
 
 gulp.task('_genDocs', function () {
@@ -191,7 +191,7 @@ gulp.task('_htmlCopy', function () {
 
 gulp.task('_rsync', function () {
     var rsync = Rsync.build({
-        source: '/cygdrive/c/msweb/signagestudio_web-lite/',
+        source: '/cygdrive/c/msweb/studiolite/',
         destination: 'Sean@digitalsignage.com:/var/www/sites/dynasite/htdocs/_studiolite-dev/',
         exclude: ['*.bat', '*.iml', '.gitignore', 'gulpfile.js', '.git', '.idea/', '_common/', '_doctheme/', '_assets/', '_utils/', '*node_modules', '*SignageStudio/', '*Spotify/']
     });

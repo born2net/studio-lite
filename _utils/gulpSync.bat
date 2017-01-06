@@ -1,2 +1,2 @@
-cd c:\msweb\signagestudio_web-lite
+cd c:\msweb\studiolite
 gulp _rsync

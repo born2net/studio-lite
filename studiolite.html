@@ -34,9 +34,9 @@
 		 window.g_private_hybrid = true;
 		 PRIVATE_SERVER_END**/
 		 window.g_masterDomain = server;
-		 document.write('<script type="text/javascript" src="' + window.g_protocol + window.g_sdkDomain + '/SignageSDK.js"></scr' + 'ipt>');
+		 document.write('<script type="text/javascript" src="' + window.g_protocol + window.g_sdkDomain + '/SignageSDK_combined.js"></scr' + 'ipt>');
 	</script>
-     
+  
   <script data-main="init" src="_common/_js/requirejs/require.js" type="text/javascript"></script>
   <!-- <script src="_utils/bugsense.min.js" type="text/javascript"></script> --><!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -1497,7 +1497,7 @@
                 <span class="dashboardBullets" id="serverName"></span><br/>
                 <span class="dashboardBullets" data-localize="businessId"> Business id: </span><span class="dashboardBullets" id="buisinessID"></span><br/>
                 <span class="dashboardBullets" data-localize="username"> User name: </span><span class="userName dashboardBullets"></span><br/>
-                <span class="dashboardBullets" data-localize="version"> Version 1.5.116 </span>
+                <span class="dashboardBullets" data-localize="version"> Version 1.5.117 </span>
                 <br/>
               </div>
 
@@ -2171,124 +2171,84 @@
                               </button>
                               <ul id="youtubeCountryListDropDown" class="dropdown-menu" style="min-width: 30px" role="menu" aria-labelledby="dropdownMenu1">
                                 <li class="youtubeFlag" name="US">
-                                  <a href="#"><img src="_assets/flags/us.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="AR">
-                                  <a href="#"><img src="_assets/flags/ar.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="AU">
-                                  <a href="#"><img src="_assets/flags/au.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="AT">
-                                  <a href="#"><img src="_assets/flags/at.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="BE">
-                                  <a href="#"><img src="_assets/flags/be.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="BR">
-                                  <a href="#"><img src="_assets/flags/br.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="CA">
-                                  <a href="#"><img src="_assets/flags/ca.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="CL">
-                                  <a href="#"><img src="_assets/flags/cl.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="CO">
-                                  <a href="#"><img src="_assets/flags/co.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="CZ">
-                                  <a href="#"><img src="_assets/flags/cz.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="EG">
-                                  <a href="#"><img src="_assets/flags/eg.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="FR">
-                                  <a href="#"><img src="_assets/flags/fr.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="DE">
-                                  <a href="#"><img src="_assets/flags/de.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="GB">
-                                  <a href="#"><img src="_assets/flags/gb.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="HK">
-                                  <a href="#"><img src="_assets/flags/hk.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="HU">
-                                  <a href="#"><img src="_assets/flags/hu.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="IN">
-                                  <a href="#"><img src="_assets/flags/in.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="IE">
-                                  <a href="#"><img src="_assets/flags/ie.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="IL">
-                                  <a href="#"><img src="_assets/flags/il.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="IT">
-                                  <a href="#"><img src="_assets/flags/it.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="JP">
-                                  <a href="#"><img src="_assets/flags/jp.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="JO">
-                                  <a href="#"><img src="_assets/flags/jo.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="MY">
-                                  <a href="#"><img src="_assets/flags/my.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="MX">
-                                  <a href="#"><img src="_assets/flags/mx.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="MA">
-                                  <a href="#"><img src="_assets/flags/ma.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="NL">
-                                  <a href="#"><img src="_assets/flags/nl.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="NZ">
-                                  <a href="#"><img src="_assets/flags/nz.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="PE">
-                                  <a href="#"><img src="_assets/flags/pe.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="PH">
-                                  <a href="#"><img src="_assets/flags/ph.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="PL">
-                                  <a href="#"><img src="_assets/flags/pl.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="RU">
-                                  <a href="#"><img src="_assets/flags/ru.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="SA">
-                                  <a href="#"><img src="_assets/flags/sa.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="SG">
-                                  <a href="#"><img src="_assets/flags/sg.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="ZA">
-                                  <a href="#"><img src="_assets/flags/za.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="KR">
-                                  <a href="#"><img src="_assets/flags/kr.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="ES">
-                                  <a href="#"><img src="_assets/flags/es.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="SE">
-                                  <a href="#"><img src="_assets/flags/se.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="CH">
-                                  <a href="#"><img src="_assets/flags/ch.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="TW">
-                                  <a href="#"><img src="_assets/flags/tw.png" alt=""/></a>
                                 </li>
                                 <li class="youtubeFlag" name="AE">
-                                  <a href="#"><img src="_assets/flags/ae.png" alt=""/></a>
                                 </li>
                               </ul>
                             </div>
@@ -2788,7 +2748,7 @@
 </div>
 <div id="footer">
   <br>
-  <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.5.116 </span>
+  <span class="reshid hiddenElement" id="footerText">&nbsp;MediaSignage Inc &#169; | version 1.5.117 </span>
 </div>
 
 <div class="modal fade" id="upgradeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -2910,131 +2870,131 @@
   <dd>
     <ul>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/en.png" alt=""/>English<span class="value">en</span></a>
+        <a href="#">English<span class="value">en</span></a>
       </li>
       <hr/>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/ar.png" alt=""/>Arabic<span class="value">ar</span></a>
+        <a href="#">Arabic<span class="value">ar</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/bg.png" alt=""/>Bulgarian<span class="value">bg</span></a>
+        <a href="#">Bulgarian<span class="value">bg</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/sq.png" alt=""/>Albanian<span class="value">sq</span></a>
+        <a href="#">Albanian<span class="value">sq</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/ca.png" alt=""/>Catalan<span class="value">ca</span></a>
+        <a href="#">Catalan<span class="value">ca</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/zh.png" alt=""/>Chinese Simplified<span class="value">zh</span></a>
+        <a href="#">Chinese Simplified<span class="value">zh</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/hr.png" alt=""/>Croatian<span class="value">hr</span></a>
+        <a href="#">Croatian<span class="value">hr</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/cs.png" alt=""/>Czech<span class="value">cs</span></a>
+        <a href="#">Czech<span class="value">cs</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/da.png" alt=""/>Danish<span class="value">da</span></a>
+        <a href="#">Danish<span class="value">da</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/nl.png" alt=""/>Dutch<span class="value">nl</span></a>
+        <a href="#">Dutch<span class="value">nl</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/en.png" alt=""/>English<span class="value">en</span></a>
+        <a href="#">English<span class="value">en</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/et.png" alt=""/>Estonian<span class="value">et</span></a>
+        <a href="#">Estonian<span class="value">et</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/tl.png" alt=""/>Filipino<span class="value">tl</span></a>
+        <a href="#">Filipino<span class="value">tl</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/fi.png" alt=""/>Finnish<span class="value">fi</span></a>
+        <a href="#">Finnish<span class="value">fi</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/fr.png" alt=""/>French<span class="value">fr</span></a>
+        <a href="#">French<span class="value">fr</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/gl.png" alt=""/>Galician<span class="value">gl</span></a>
+        <a href="#">Galician<span class="value">gl</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/de.png" alt=""/>German<span class="value">de</span></a>
+        <a href="#">German<span class="value">de</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/el.png" alt=""/>Greek<span class="value">el</span></a>
+        <a href="#">Greek<span class="value">el</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/iw.png" alt=""/>Hebrew<span class="value">iw</span></a>
+        <a href="#">Hebrew<span class="value">iw</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/hi.png" alt=""/>Hindi<span class="value">hi</span></a>
+        <a href="#">Hindi<span class="value">hi</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/hu.png" alt=""/>Hungarian<span class="value">hu</span></a>
+        <a href="#">Hungarian<span class="value">hu</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/id.png" alt=""/>Indonesian<span class="value">id</span></a>
+        <a href="#">Indonesian<span class="value">id</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/it.png" alt=""/>Italian<span class="value">it</span></a>
+        <a href="#">Italian<span class="value">it</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/ja.png" alt=""/>Japanese<span class="value">ja</span></a>
+        <a href="#">Japanese<span class="value">ja</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/ko.png" alt=""/>Korean<span class="value">ko</span></a>
+        <a href="#">Korean<span class="value">ko</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/lv.png" alt=""/>Latvian<span class="value">lv</span></a>
+        <a href="#">Latvian<span class="value">lv</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/lt.png" alt=""/>Lithuanian<span class="value">lt</span></a>
+        <a href="#">Lithuanian<span class="value">lt</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/mt.png" alt=""/>Maltese<span class="value">mt</span></a>
+        <a href="#">Maltese<span class="value">mt</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/no.png" alt=""/>Norwegian<span class="value">no</span></a>
+        <a href="#">Norwegian<span class="value">no</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/pl.png" alt=""/>Polish<span class="value">pl</span></a>
+        <a href="#">Polish<span class="value">pl</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/pt.png" alt=""/>Portuguese<span class="value">pt</span></a>
+        <a href="#">Portuguese<span class="value">pt</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/ro.png" alt=""/>Romanian<span class="value">ro</span></a>
+        <a href="#">Romanian<span class="value">ro</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/ru.png" alt=""/>Russian<span class="value">ru</span></a>
+        <a href="#">Russian<span class="value">ru</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/sr.png" alt=""/>Serbian<span class="value">sr</span></a>
+        <a href="#">Serbian<span class="value">sr</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/sk.png" alt=""/>Slovak<span class="value">sk</span></a>
+        <a href="#">Slovak<span class="value">sk</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/sl.png" alt=""/>Slovenian<span class="value">sl</span></a>
+        <a href="#">Slovenian<span class="value">sl</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/es.png" alt=""/>Spanish<span class="value">es</span></a>
+        <a href="#">Spanish<span class="value">es</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/sv.png" alt=""/>Swedish<span class="value">sv</span></a>
+        <a href="#">Swedish<span class="value">sv</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/th.png" alt=""/>Thai<span class="value">th</span></a>
+        <a href="#">Thai<span class="value">th</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/tr.png" alt=""/>Turkish<span class="value">tr</span></a>
+        <a href="#">Turkish<span class="value">tr</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/uk.png" alt=""/>Ukrainian<span class="value">uk</span></a>
+        <a href="#">Ukrainian<span class="value">uk</span></a>
       </li>
       <li>
-        <a href="#"><img class="flag" src="_assets/flags/vi.png" alt=""/>Vietnamese<span class="value">vi</span></a>
+        <a href="#">Vietnamese<span class="value">vi</span></a>
       </li>
     </ul>
   </dd>

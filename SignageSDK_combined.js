@@ -1,14 +1,14 @@
 /**
  DigitalSignage.com JS SDK
 
- to minify:  http://www.minifier.org/
+ to minify:
+ ==========
+ 1. find . -type f -name '*.js' -exec cat {} + >> SignageSDK_combined.js
+ 2. http://www.minifier.org/
 
- old:  https://js.signage.me/SignageSDK.js
-
- new:  https://js.signage.me/SignageSDK_combined.js
-
+ old: https://js.signage.me/SignageSDK.js
+ new: https://js.signage.me/SignageSDK_combined.js
  hosted: http://go.digitalsignage.com
-
  **/
 
 if (window.g_protocol == undefined) {

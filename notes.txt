@@ -55,6 +55,20 @@ npm install -g @angular/cli
 
 
 ==================================================================================================================
+
+reflection Usage:
+
+to run this script and generate interface sdk / msdb:
+
+run live-server inside /cygdrive/c/msweb/studiolite
+
+open browser to:
+
+http://127.0.0.1:8080/src/create_reflection.html
+
+
+==================================================================================================================
+
 Switching fabric versions:
 
 add/remove import "fabric"; from app-modules.ts

@@ -31,6 +31,7 @@ Links:
 - StudioLite intro video: http://lite.digitalsignage.com/video1.html
 - StudioLite advanced  video: http://lite.digitalsignage.com/video2.html
 - Developers page: http://www.digitalsignage.com/_html/open_source_digital_signage.html
+- Angular: https://angular.io/
 
 Technical data:
 ------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-StudioWeb
+StudioWeb 1.0
 =====================
 
 DigitalSignage.com StudioWeb    

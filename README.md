@@ -11,7 +11,8 @@ npm install -g @angular/cli@latest
 npm install
 ```
 
-Release date
+
+Release dates
 ----------------
 TBA: Summer of 2017
 

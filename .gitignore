@@ -1,1 +1,61 @@
-/.idea/
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+
+
+# compiled output
+/dist/*.js
+/dist/**
+/dist
+/tmp
+
+# dependencies
+/node_modules
+/bower_components
+
+# IDEs and editors
+/.idea
+/.idea/workspace.xml
+/.vscode
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage/*
+/libpeerconnection.log
+npm-debug.log
+testem.log
+/typings
+*.log.*
+
+#include
+!index.js
+!/typings
+
+# js/map
+*.js
+src/**/*.js
+*prod.js
+src/**/*.map
+#System Files
+.DS_Store
+Thumbs.db
+workspace.xml
+
+!signageSDK.js
+!service-worker.js
+!src/store/signage_sdk.js
+!src/libs/*
+!src/libs/**/*
+#src/store/application.state.js
+#src/store/imsdb.interfaces.js
+#src/store/imsdb.interfaces_auto.js
+#src/store/store.data.js
+#*.xlf
+#*.xmb
+!temp/*.js
+!temp/*.txt

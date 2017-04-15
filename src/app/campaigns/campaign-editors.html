@@ -1,0 +1,92 @@
+<small class="debug">{{me}}</small>
+<h4 i18n>campaign editor</h4>
+<!-- todo: need to investigate as performance sometime laggy when using the matchBodyHeight directive here -->
+<!--<div matchBodyHeight="150" id="campaignView" style="margin-right: 30px; padding-right: 5px; overflow-y: auto">-->
+<div id="campaignView" style="padding-right: 24px">
+    <div class="panel-group" id="timelinesCollapsible">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a (click)="m_isVisible1 = m_isVisible1 == 'on' ? 'off' : 'on'" id="toggleTimelinesCollapsible" data-toggle="collapse" data-parent="#timelinesCollapsible" href="#screenSelectorContainerCollapse">
+                        <span style="position: relative; top: 3px" [@visibilityChanged]="m_isVisible1" class="glyphicon glyphicon-chevron-down"></span>
+                    </a>
+                    <button (click)="_onGoBack()" type="button" style="margin-left: 8px" title="add new timeline" data-localize="empty" data-localize-tooltip="backToCampaignsTooltip" class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </button>
+
+                    <button (click)="_onAddTimeline()" id="addNewTimelineButton" type="button" title="add new timeline" data-localize="empty" data-localize-tooltip="addNewTimelineButtonToolTip" class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                    <button  (click)="_onRemoveTimeline()" id="removeTimelineButton" type="button" title="remove the selected timeline" data-localize="empty" data-localize-tooltip="removeTimelineButtonToolTip" class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                    <button (click)="_onEditScreenLayout()" id="editScreenLayout" type="button" title="edit screen layout" data-localize="empty" data-localize-tooltip="editScreenLayout" class="btn btn-default btn-sm">
+                        <i class="fa fa-object-group"></i>
+                    </button>
+                    <button id="campaignPreview" (click)="_onCampaignPreview()" type="button" title="campaign preview" data-localize="empty" data-localize-tooltip="campaignPreviewTooltip" class="btn btn-default btn-sm">
+                        <i class="fa fa-play-circle"></i>
+                    </button>
+
+                    <!--<button (click)="m_toggleShowChannel = !m_toggleShowChannel" class="btn btn-default btn-sm">-->
+                        <!--toggle channels hack-->
+                    <!--</button>-->
+
+                    <div class="sequenceClass" style="float: right; margin-right: 35px; position: relative; top: 6px">
+                        <campaign-duration></campaign-duration>
+                    </div>
+                </h4>
+            </div>
+            <div id="screenSelectorContainerCollapse" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <aside>
+                        <aside>
+                            <div id="screenSelectorContainer" vertical-align="middle">
+                                <div id="screenLayoutsUL" style="overflow-x: scroll">
+                                    <sequencer #sequencer (onEditLayout)="_onEditScreenLayout()" [setCampaignTimelinesModels]="m_campaignTimelinesModels"></sequencer>
+                                </div>
+                            </div>
+                        </aside>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-group" id="storylineCollapsible">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a (click)="m_isVisible2 = m_isVisible2 == 'on' ? 'off' : 'on'" id="toggleStorylineCollapsible" data-toggle="collapse" data-parent="#storylineCollapsible" href="#storylineContainerCollapse">
+                        <span [@visibilityChanged]="m_isVisible2" class="collapsed glyphicon glyphicon-chevron-up"></span>
+                        <span data-localize="timeline">Timeline</span>
+                    </a>
+                    <button (click)="sequencer.onSelectNextChannel()" style="margin-left: 30px" id="selectNextChannel" type="button" class="btn btn-default btn-sm">
+                        <i i18n class="fa fa-crosshairs"></i><span data-localize="nextChannel"> next channel</span>
+                    </button>
+                    <button id="addBlockButton" (click)="_onAddContent()" type="button" title="add content" class="btn btn-default btn-sm">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                    <button (click)="_onRemoveContent()" id="removeBlockButton" type="button" title="remove content" data-localize="empty" data-localize-tooltip="removeContent" class="btn btn-default btn-sm">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                    <button (click)="_onTimelinePreview()" id="timelinePreview" type="button" title="campaign preview" data-localize="empty" data-localize-tooltip="campaignPreviewTooltip" class="btn btn-default btn-sm">
+                        <i class="fa fa-play-circle"></i>
+                    </button>
+                </h4>
+            </div>
+            <div id="storylineContainerCollapse" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <aside>
+                        <aside>
+                            <div id="storyLine"></div>
+                        </aside>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+    <campaign-channels *ngIf="m_toggleShowChannel"></campaign-channels>
+</div>
+
+
+

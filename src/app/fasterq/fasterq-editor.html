@@ -1,0 +1,91 @@
+<small class="debug">{{me}}</small>
+<div id="fasterQManagerContainer">
+    <button (click)="_openRemoteStatus()" i18n style="margin-right: 100px; position: relative; top: -30px" id="fqOpenCustomerRemoteStatus" class="pull-right btn btn-primary">remote status</button>
+    <h5>Line: {{m_fasterqLineModel?.lineName}}</h5>
+    <h5>Service id: {{m_selectedServiceId > 0 ? m_selectedServiceId : 'none'}}</h5>
+    <div>
+        <br/>
+        <br/>
+        <br/>
+        <div style="margin: 0 20px 0 -9px" class="row fqStats">
+            <div class="col-xs-6 col-sm-3" style="margin-top: 0; padding: 0;">
+                <div class="fakeVerticalLineDivL" style="height: 58px; width: 100%; float: left">
+                    <span><strong>called customer: </strong></span><br/>
+                    <span id="fqTimeWithCustomer">{{m_stopTimer}}</span>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-3" style="margin-top: 0; padding: 0">
+                <div class="fakeVerticalLineDivL" style="height: 58px; width: 100%; float: left">
+                    <span><strong>last you serviced</strong></span><br/>
+                    <span id="fqLastServiced">{{m_fqLastServiced}}</span>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-3" style="margin-top: 0; padding: 0">
+                <div class="fakeVerticalLineDivL" style="height: 58px; width: 100%; float: left">
+                    <span><strong>last you called</strong></span><br/>
+                    <span id="fqLastCalled">{{m_lastCalled}}</span>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-3" style="margin-top: 0; padding: 0;">
+                <div class="fakeVerticalLineDivL" style="height: 58px; width: 100%; float: left">
+                    <span><strong>total to be serviced</strong></span><br/>
+                    <span id="fqTotalToBeServiced">{{m_totalToBeServiced}}</span>
+                </div>
+            </div>
+        </div>
+        <div style="margin: 0 20px 0 -9px" class="row fqStats">
+            <div class="col-xs-4" style="margin-top: 0; padding: 0;">
+                <div class="fakeVerticalLineDivL" style="width: 100%; float: left">
+                    <span><strong>avg customer service time (minutes): </strong></span><br/>
+                    <h1 id="fqAvgCustomerService">{{m_avgServiceTimeCalc}}</h1>
+                </div>
+            </div>
+            <div class="col-xs-4" style="margin-top: 0; padding: 0">
+                <div class="fakeVerticalLineDivL" style="width: 100%; float: left">
+                    <span><strong>avg customer wait time (minutes):</strong></span><br/>
+                    <h1 id="fqAvgCustomerWait">{{m_avgCalledTimeCalc}}</h1>
+                </div>
+            </div>
+            <div class="col-xs-4" style="margin-top: 0; padding: 0;">
+                <div class="fakeVerticalLineDivL" style="width: 100%; float: left">
+                    <span><strong>now servicing: </strong></span><br/>
+                    <h1 id="fqNowServicing">Latest: {{m_nowServicing}}</h1>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div id="fqLineQueueComponentWrap">
+            <div id="fqSelectedCustomer"></div>
+            <div id="fqLineQueueComponentContainer">
+                <div id="fqLineQueueComponent">
+                    <div *ngFor="let queue of m_queues; let i = index" class="personInLine" (click)="_onQueueSelected(queue)" [ngClass]="{serviced: queue.serviced, called: queue.called}">
+                        <div *ngIf="queue.lineId != -1">
+                            <i style="font-size: 90px" class="fa fa-male"></i>
+                            <h3 style="position: relative; left: 6px">{{queue.serviceId}}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; width: 100%;" class="centerElement">
+            <button (click)="_onCall()" id="fqLineCompCall" type="button" data-localize-tooltip="back" data-localize="empty" title="back" class="lineComponentButtons btn btn-default btn-sm">
+                <span class="fa fa-bullhorn"></span> Call
+            </button>
+            <button (click)="_onService()" id="fqLineCompServiced" type="button" data-localize-tooltip="back" data-localize="empty" title="back" class="lineComponentButtons btn btn-default btn-sm">
+                <span class="fa fa-thumbs-up"></span> Serviced
+            </button>
+            <button (click)="_onPrev()" id="fqLineCompPrev" type="button" data-localize-tooltip="back" data-localize="empty" title="back" class="lineComponentButtons btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-chevron-left"></span> Previous
+            </button>
+            <span>
+      <button (click)="_onGoTo()" id="fqLineGoTo" type="button" data-localize-tooltip="goTo" data-localize="empty" title="go to" class="lineComponentButtons btn btn-default btn-sm">
+      Go to <input  [(ngModel)]="m_gotoModel" id="fqGoToLineInput">
+      </button>
+      </span>
+            <button (click)="_onNext()" id="fqLineCompNext" type="button" data-localize-tooltip="back" data-localize="empty" title="back" class="lineComponentButtons btn btn-default btn-sm">
+                Next
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </button>
+        </div>
+    </div>
+</div>

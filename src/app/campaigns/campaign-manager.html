@@ -1,0 +1,65 @@
+<small class="debug" style="padding-left: 30px">{{me}}</small>
+
+
+<div style="padding-bottom: 10px">
+    <span i18n style="font-size: 1.8em;" i18n>campaign selection</span>
+</div>
+<div>
+    <div class="btn-group">
+        <button id="newCampaign" (click)="_createCampaign()" type="button" class="btn btn-default">
+            <i style="font-size: 1em" class="fa fa-rocket"></i>
+            <span i18n>new campaign</span>
+        </button>
+        <!--<button disabled="true" type="button" class="btn btn-danger">-->
+        <button (click)="_onWizard()" type="button" class="btn btn-danger">
+            <i class="fa fa-magic"></i>
+            <span i18n>Get Wizard help</span>
+        </button>
+        <!--<button (click)="save()" type="button" class="btn btn-primary">-->
+            <!--<i class="fa fa-plane"></i>-->
+            <!--<span i18n>save</span>-->
+        <!--</button>-->
+    </div>
+</div>
+<!--<button (click)="onRoute1()">camp</button>-->
+<!--<button (click)="onRoute2()">fq</button>-->
+<!--<button (click)="onRoute3()">res</button>-->
+<!--<button (click)="onRoute4()">sett</button>-->
+<!--<button (click)="onRoute5()">stations</button>-->
+<!--<button (click)="onRoute6()">pro</button>-->
+
+<!--<h4>user name: {{(userModel$ | async)?.getUser() }}</h4>-->
+<!--<h4>account type: {{(userModel$ | async)?.getAccountType()}}</h4>-->
+
+<!-- move scroller to proper offset -->
+<div class="responsive-pad-right">
+    <div matchBodyHeight="350" style="overflow: scroll">
+        <campaign-list (onCampaignSelected)="_onCampaignSelected($event)"
+                       (slideToCampaignName)="slideToCampaignName.emit($event)"
+                       (slideToCampaignEditor)="slideToCampaignEditor.emit($event)"
+                       [campaigns]="campaigns$ | async">
+        </campaign-list>
+        <hr/>
+        <!--<h2>sample code for testing only</h2>-->
+        <!--<h4>ng-bootstrap dropdown</h4>-->
+        <!--<div class="btn-group" dropdown>-->
+            <!--<button id="single-button" type="button" class="btn btn-primary" dropdownToggle>-->
+                <!--Button dropdown <span class="caret"></span>-->
+            <!--</button>-->
+            <!--<ul dropdownMenu role="menu" aria-labelledby="single-button">-->
+                <!--<li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>-->
+                <!--<li role="menuitem"><a class="dropdown-item" href="#">Another action</a></li>-->
+                <!--<li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>-->
+                <!--<li class="divider dropdown-divider"></li>-->
+                <!--<li role="menuitem"><a class="dropdown-item" href="#">Separated link</a></li>-->
+            <!--</ul>-->
+        <!--</div>-->
+        <!--<p-orderList [responsive]="true" [value]="campaigns$ | async | ListToArrayPipe">-->
+            <!--<ng-template let-car pTemplate="item">-->
+                <!--<div class="ui-helper-clearfix">-->
+                    <!--<div style="font-size:14px;float:left;margin:15px 5px 0 0">{{car.getCampaignName()}}</div>-->
+                <!--</div>-->
+            <!--</ng-template>-->
+        <!--</p-orderList>-->
+    </div>
+</div>

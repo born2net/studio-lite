@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE messagebundle [
+<!ELEMENT messagebundle (msg)*>
+<!ATTLIST messagebundle class CDATA #IMPLIED>
+
+<!ELEMENT msg (#PCDATA|ph|source)*>
+<!ATTLIST msg id CDATA #IMPLIED>
+<!ATTLIST msg seq CDATA #IMPLIED>
+<!ATTLIST msg name CDATA #IMPLIED>
+<!ATTLIST msg desc CDATA #IMPLIED>
+<!ATTLIST msg meaning CDATA #IMPLIED>
+<!ATTLIST msg obsolete (obsolete) #IMPLIED>
+<!ATTLIST msg xml:space (default|preserve) "default">
+<!ATTLIST msg is_hidden CDATA #IMPLIED>
+
+<!ELEMENT source (#PCDATA)>
+
+<!ELEMENT ph (#PCDATA|ex)*>
+<!ATTLIST ph name CDATA #REQUIRED>
+
+<!ELEMENT ex (#PCDATA)>
+]>
+<messagebundle>
+  <msg id="7212624462478696127">verifying access...</msg>
+  <msg id="1156206314346372426">account dashboard</msg>
+  <msg id="8613741909398167343">dashboard</msg>
+  <msg id="7652143960831314087">campaign board</msg>
+  <msg id="6108618462851148193">campaign editor</msg>
+  <msg id="9198441993514322349">screen orientation</msg>
+  <msg id="2741646832903808697">screen layout</msg>
+  <msg id="6454444033973204385">campaign selection</msg>
+  <msg id="6028894272398949430">new campaign</msg>
+  <msg id="2123171795960509943">remove</msg>
+  <msg id="3008329758802399315">Get Wizard help</msg>
+  <msg id="8694910169978522327">save to server</msg>
+  <msg id="4145364267099301397">Select your campaign name</msg>
+  <msg id="3843469504048287640">Enter new campaign name</msg>
+  <msg id="1167977099462453641">screen resolution</msg>
+</messagebundle>

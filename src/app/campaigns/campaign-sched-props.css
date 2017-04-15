@@ -1,0 +1,59 @@
+.carousel-control.left, .carousel-control.right {
+    background-image: none;
+
+}
+
+#schedulePriority img:first-child {
+    position: relative;
+    top: 5px;
+    left: 1px;
+}
+
+#schedulePriority img:last-child {
+    position: relative;
+    top: -4px;
+    left: -2px;
+}
+
+#schedulePriority img:hover {
+    cursor: pointer;
+}
+
+.carousel-control.left span, .carousel-control.right span {
+    background-image: none;
+    color: gray;
+    font-size: 0.8em;
+}
+
+.carousel-control {
+    height: 30px;
+}
+
+.carousel-control.left {
+    position: absolute;
+    left: -15px;
+    top: 0px;
+
+}
+
+.carousel-control.right {
+    position: absolute;
+    top: 0px;
+}
+
+input.ng-invalid {
+    border-right: 10px solid red;
+}
+
+.material-switch {
+    position: relative;
+    padding-top: 10px;
+}
+
+.input-group {
+    padding-top: 10px;
+}
+
+i {
+    width: 20px;
+}

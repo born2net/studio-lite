@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE translationbundle [
+<!ELEMENT translationbundle (translation)*>
+<!ATTLIST translationbundle lang CDATA #REQUIRED>
+
+<!ELEMENT translation (#PCDATA|ph)*>
+<!ATTLIST translation id CDATA #REQUIRED>
+<!ATTLIST translation desc CDATA #IMPLIED>
+<!ATTLIST translation meaning CDATA #IMPLIED>
+<!ATTLIST translation xml:space (default|preserve) "default">
+
+<!ELEMENT ph (#PCDATA|ex)*>
+<!ATTLIST ph name CDATA #REQUIRED>
+
+<!ELEMENT ex (#PCDATA)>
+]>
+<translationbundle lang="he">
+  <translation id="7212624462478696127">גִישָׁה</translation>
+  <translation id="1156206314346372426">אהבה</translation>
+  <translation id="8613741909398167343">לוּחַ מַחווָנִים</translation>
+  <translation id="7652143960831314087">ללכת</translation>
+  <translation id="6108618462851148193">מִבְחָן</translation>
+  <translation id="9198441993514322349">שלום</translation>
+  <translation id="2741646832903808697">זוויתי</translation>
+  <translation id="6454444033973204385">1 שלום</translation>
+  <translation id="6028894272398949430">שלום2 </translation>
+  <translation id="2123171795960509943">שלום3 </translation>
+  <translation id="3008329758802399315">שלום 4 </translation>
+  <translation id="8694910169978522327">שלום 5 </translation>
+  <translation id="4145364267099301397">שלום 6 </translation>
+  <translation id="3843469504048287640">7 שלום</translation>
+  <translation id="1167977099462453641">שלום8 </translation>
+</translationbundle>

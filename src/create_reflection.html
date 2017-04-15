@@ -1,0 +1,173 @@
+<!--
+
+Usage:
+
+to run this script and generate interface sdkmsdb:
+
+run live-server inside /cygdrive/c/msweb/studiotouch
+
+open browser to:
+
+http://127.0.0.1:8080/src/create_reflection.html
+
+-->
+
+<html>
+<script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://js.signage.me/SignageSDK_combined.js"></script>
+<script type="text/javascript" src="http://www.digitalsignage.com/js/jquery.base64.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/string.js/3.3.3/string.min.js"></script>
+<script>
+    var protocol = 'https'
+    window.g_protocol = protocol + "://";
+    window.g_sdkDomain = "js.signage.me";
+    var server = "galaxy.signage.me";
+    var g_masterDomain = server;
+    window.g_masterDomain = server;
+    var loaderManager = new LoaderManager();
+    var msdb = loaderManager.m_dataBaseManager;
+    var buffer = ''
+    var modelFields = {}
+    var breakHr = '\n//---------------------------------------------------------------------------------------------------------';
+
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+
+    loaderManager.create('d25@ms.com', "123123", function (v) {
+
+        function getAargs(func) {
+            return (func + '')
+                .replace(/[/][/].*$/mg,'') // strip single-line comments
+                .replace(/\s+/g, '') // strip white space
+                .replace(/[/][*][^/*]*[*][/]/g, '') // strip multi-line comments
+                .split('){', 1)[0].replace(/^[^(]*[(]/, '') // extract the parameters
+                .replace(/=[^,]+/g, '') // strip any ES6 defaults
+                .split(',').filter(Boolean); // split & filter [""]
+        }
+
+        var allTables = '\nexport const TableNames = [\n';
+        _.forEach(msdb.m_selectedDataBase.m_tableList, (k, v) => {
+            allTables = `    ${allTables}       '${k}',\n`
+        })
+        allTables = `${allTables}\n]`
+
+        var campaigns = msdb.table_campaigns();
+        var tableProto = campaigns.__proto__.__proto__;
+
+        var functions = 'm_name:string;\n';
+        functions = functions + '    fields:Array&lt;any&gt;\n';
+        _.forEach(tableProto, (func, funcName) => {
+            var args = getAargs(func).join(',');
+            functions = functions + `    ${funcName}: (${args}) => any;\n`
+        })
+
+        var baseProto = `
+export interface IBaseProto {
+    ${functions}
+}
+`
+
+
+        // build all redux StoreData
+        var allReduxStores = `
+export interface ISDK {
+        `;
+        _.forEach(msdb.m_selectedDataBase.m_tableList, (k, v) => {
+            var storeName = capitalizeFirstLetter(S(k).camelize().s) + 'Model';
+            var storeTemplate = `
+        table_${k}?: List&lt;${storeName}&gt;;`;
+            allReduxStores = `${allReduxStores} ${storeTemplate}`
+        });
+        allReduxStores = `${allReduxStores}
+
+}`;
+
+
+        // examples for debug to evaluate proto data
+        var a = msdb.table_campaigns().getAllPrimaryKeys();
+        var b = msdb.table_campaigns().m_name;
+        var c = msdb.table_campaigns().m_fields[2].field
+        var d = msdb.table_campaigns().m_fields[0].isNullAble;
+        var e = msdb.table_campaigns().m_fields[1].field;
+
+
+        // build tables names
+        var tables = '';
+        _.forEach(msdb.__proto__, (tableFunc, table) => {
+            var tableCap = capitalizeFirstLetter(table)
+            if (msdb[table]()) {
+                var fields = msdb[table]().m_fields;
+                modelFields[table] = fields;
+                var f = JSON.stringify(fields)
+            }
+            tables = tables + `export interface I${tableCap} extends IBaseProto {
+    m_fields: ${f}
+}\n`
+        })
+
+
+        // build tables names
+        var b2 = '';
+        _.forEach(msdb.__proto__, (tableFunc, table) => {
+            var tableCap = capitalizeFirstLetter(table)
+            b2 = `${b2}     ${table}:()=> I${tableCap}\n`
+        })
+        var DataManager = `
+export interface IDataManager_proto {
+${b2}
+}
+`
+
+        // build StoreModels
+        var allStores = 'import {StoreModel} from "../store/model/StoreModel";\n';
+        _.forEach(msdb.m_selectedDataBase.m_tableList, (table, v) => {
+            var storeName = capitalizeFirstLetter(S(table).camelize().s) + 'Model';
+            var fields = modelFields['table_' + table];
+            var fieldNames = '';
+            _.forEach(fields, (fieldName) => {
+                var methodGetter = 'get'+capitalizeFirstLetter(S(fieldName.field).camelize().s);
+                var templateField = `
+    public ${methodGetter}() {
+        return this.getKey('${fieldName.field}');
+    }`;
+                fieldNames = `${fieldNames}     ${templateField}\n`
+            })
+            var storeTemplate = `
+export class ${storeName} extends StoreModel {
+    constructor(data: any = {}) {super(data);}
+${fieldNames}
+}`;
+            allStores = `${allStores}       ${storeTemplate}`
+        })
+
+
+        buffer = `<pre>
+
+
+// >>>> paste into: store/imsdb.interfaces_auto.ts
+
+import {List} from 'immutable';
+
+${allStores}
+
+
+${allReduxStores}
+
+${allTables}
+
+${baseProto}
+
+${tables}
+
+${DataManager}
+
+</pre>`;
+
+        $('body').append(buffer);
+    });
+
+</script>
+</html>

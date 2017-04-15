@@ -1,0 +1,87 @@
+<form novalidate autocomplete="off" [formGroup]="m_contGroup">
+    <div class="row">
+        <div class="inner userGeneral">
+            <div class="panel-heading">
+                <small class="release">target properties
+                    <i style="font-size: 1.4em" class="fa fa-cog pull-right"></i>
+                </small>
+                <small class="debug">{{me}}</small>
+            </div>
+            <a style="padding: 10px" i18n href="http://www.digitalsignage.com/_html/benefits.html" target="_blank">
+                Learn more about Enterprise
+            </a>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <img src="assets/accepted_c22e0.png">
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <form role="form" id="payment-form">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="newName">Pick a new enterprise user name</label>
+                                    <div class="input-group">
+                                        <input id="newName" [formControl]="m_contGroup.controls['userName']" type="text" class="form-control" name="newName"/>
+                                        <span class="input-group-addon"><i class="fa fa-user-circle"></i></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newPass">Pick an enterprise password</label>
+                                    <div class="input-group">
+                                        <input id="newPass" [formControl]="m_contGroup.controls['password']" id="upgPass" type="password" class="form-control" name="newPass"/>
+                                        <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newPass2">Repeat your new password</label>
+                                    <div class="input-group">
+                                        <input id="newPass2" [formControl]="m_contGroup.controls['confirmPassword']" id="upgPass2" type="password" class="form-control" name="newPass2"/>
+                                        <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="cardNumber">CARD NUMBER</label>
+                                    <div class="input-group">
+                                        <input id="cardNumber" [formControl]="m_contGroup.controls['creditCard']" id="upgCredit" type="text" class="form-control" name="cardNumber" placeholder="Valid Card Number" required autofocus data-stripe="number"/>
+                                        <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-7 col-md-7">
+                                <div class="form-group">
+                                    <div class="col-xs-6 col-lg-6 pl-ziro">
+                                        <input [formControl]="m_contGroup.controls['month']" type="text" class="form-control" name="expMonth" placeholder="MM" required data-stripe="exp_month"/>
+                                    </div>
+                                    <div class="col-xs-6 col-lg-6 pl-ziro">
+                                        <input [formControl]="m_contGroup.controls['year']" type="text" class="form-control" name="expYear" placeholder="YYYY" required data-stripe="exp_year"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-5 col-md-5 pull-right">
+                                <div class="form-group">
+                                    <input [formControl]="m_contGroup.controls['cv']" class="form-control" name="cvCode" placeholder="CV" required data-stripe="cvc"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <button (click)="_onStartSubscription()" class="startUpgrade btn btn-success btn-lg btn-block" type="submit">Start Subscription</button>
+                            </div>
+                        </div>
+                        <div class="row" style="display:none;">
+                            <div class="col-xs-12">
+                                <p class="payment-errors"></p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

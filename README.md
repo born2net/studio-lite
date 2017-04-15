@@ -1,22 +1,10 @@
 <h5>by digitalsignage.com</h5> 
 ==========
 
-<pre>
-   _____ _             _ _       _      _ _       
-  / ____| |           | (_)     | |    (_) |      
- | (___ | |_ _   _  __| |_  ___ | |     _| |_ ___ 
-  \___ \| __| | | |/ _` | |/ _ \| |    | | __/ _ \
-  ____) | |_| |_| | (_| | | (_) | |____| | ||  __/
- |_____/ \__|\__,_|\__,_|_|\___/|______|_|\__\___|
-                                                  
-                                                                                                                            
-</pre>
-
 StudioLite, Digital Signage for the rest of us
 ---------------------------------------
 
 <!-- [![NPM](https://nodei.co/npm/studiolite.png)](https://nodei.co/npm/studiolite/) -->
-
 
 <p align="center">  
   <img src="http://www.digitalsignage.com/_images/kitchensinklogo.png">
@@ -70,6 +58,7 @@ git clone https://github.com/born2net/studioweb.git
 cd studioweb
 npm install -g @angular/cli@latest
 npm install
+open browser to: http://localhost:4208/
 ```
 
 Customization:

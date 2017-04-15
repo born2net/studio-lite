@@ -1,0 +1,119 @@
+<small class="debug">{{me}}</small>
+<chart [options]="options"></chart>
+<!--<div class="row">-->
+    <!--<br/>-->
+    <!--<div class="col-sm-4 col-lg-2">-->
+        <!--<Infobox [value1]="businessStats.lites" [value3]="'lite account'" [icon]="'fa-circle-o'"></Infobox>-->
+    <!--</div>-->
+    <!--<div class="col-sm-4 col-lg-2">-->
+        <!--<Infobox [value1]="businessStats.pros" [value3]="'pro accounts'" [icon]="'fa-circle'"></Infobox>-->
+    <!--</div>-->
+    <!--<div class="col-sm-4 col-lg-2">-->
+        <!--<Infobox [value1]="businessStats.activeAccounts" [value3]="'active accounts'" [icon]="'fa-user-plus'"></Infobox>-->
+    <!--</div>-->
+    <!--<div class="col-sm-4 col-lg-2">-->
+        <!--<Infobox [value1]="businessStats.inactiveAccounts" [value3]="'inactive accounts'" [icon]="'fa-user-times'"></Infobox>-->
+    <!--</div>-->
+    <!--<div class="col-sm-4 col-lg-2">-->
+        <!--<Infobox [value1]="businessStats.lastLogin" [value3]="'last login'" [icon]="'fa-clock-o '"></Infobox>-->
+    <!--</div>-->
+    <!--<div class="col-sm-4 col-lg-2">-->
+        <!--<Infobox [value1]="businessStats.totalBusinesses" [value3]="'total businesses'" [icon]="'fa-users'"></Infobox>-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div class="row">-->
+    <!--<div class="col-sm-12 col-lg-4">-->
+        <!--<ServerStats [data]="serverStats" [categories]="serverStatsCategories"></ServerStats>-->
+    <!--</div>-->
+    <!--<div class="col-sm-12 col-lg-4" style="min-height: 280px">-->
+        <!--<ServerAvg [data]="serverAvgResponse"></ServerAvg>-->
+    <!--</div>-->
+    <!--<div class="col-sm-12 col-lg-4">-->
+        <!--<div class="row">-->
+            <!--<div class="col-xm-12">-->
+                <!--<Infobox style="color: green" [value1]="screensOnline" [value3]="'updated'" icon="fa-tv"></Infobox>-->
+            <!--</div>-->
+            <!--<div class="col-xm-12">-->
+                <!--<Infobox style="color: red" [value1]="screensOffline" [value3]="'updated'" icon="fa-tv"></Infobox>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div class="row">-->
+    <!--<div *ngIf="errorLoadingStations">-->
+        <!--<h5 align="center">there was a problem loading stations</h5>-->
+        <!--<h6 align="center">please let the Digital Signage admin know so we can fix this asap...</h6>-->
+    <!--</div>-->
+    <!--<Loading *ngIf="stations.size == 0 && errorLoadingStations == false"  [size]="'100px'" [style]="{'margin-top': '150px'}">-->
+    <!--</Loading>-->
+    <!--<div *ngIf="stations.size > 0" class="panel panel-default">-->
+        <!--<div class="panel-body">-->
+            <!--<div class="btn-group" role="group">-->
+                <!--<button (click)="onStationComponentSelect('grid')" style="width: 40px; padding: 9px" type="button" class="btn btn-default">-->
+                    <!--<span class="fa fa-list"></span>-->
+                <!--</button>-->
+                <!--<button (click)="onStationComponentSelect('map')" style="width: 40px; padding: 9px" type="button" class="btn btn-default">-->
+                    <!--<span class="fa fa-map-pin"></span>-->
+                <!--</button>-->
+                <!--&lt;!&ndash;<h2 style="display: inline; position: relative; top: -3px; left: 10px">{{totalFilteredPlayers}}</h2>&ndash;&gt;-->
+            <!--</div>-->
+            <!--<div class="pull-right">-->
+                <!--<div class="btn-group" role="group">-->
+                    <!--<input [formControl]="businessNameControl" type="text" class="form-control" placeholder="business name filter"/>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="pull-right">-->
+                <!--<div class="btn-group" role="group">-->
+                    <!--<select (change)="onStationsFilterSelected('appVersion', $event.target.value)" class="form-control">-->
+                        <!--<option>all player versions</option>-->
+                        <!--<option *ngFor="let item of stationsFilter['appVersion'] | sortBy">{{item}}</option>-->
+                    <!--</select>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="pull-right">-->
+                <!--<div class="btn-group" role="group">-->
+                    <!--<select (change)="onStationsFilterSelected('os', $event.target.value)" class="form-control">-->
+                        <!--<option>all os versions</option>-->
+                        <!--<option *ngFor="let item of stationsFilter['os'] | sortBy">{{item}}</option>-->
+                    <!--</select>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="pull-right">-->
+                <!--<div class="btn-group" role="group">-->
+                    <!--<select (change)="onStationsFilterSelected('airVersion', $event.target.value)" class="form-control">-->
+                        <!--<option>all runtime versions</option>-->
+                        <!--<option *ngFor="let item of stationsFilter['airVersion'] | sortBy">{{item}}</option>-->
+                    <!--</select>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="pull-right">-->
+                <!--<div class="btn-group" role="group">-->
+                    <!--<select (change)="onStationsFilterSelected('connection', $event.target.value)" class="form-control">-->
+                        <!--<option>all players</option>-->
+                        <!--<option>connected</option>-->
+                        <!--<option>disconnected</option>-->
+                    <!--</select>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="panel-footer" style="height: 400px; overflow-y: scroll">-->
+            <!--<stationsGrid (onStationSelected)="onStationModalOpen($event)" *ngIf="stationComponentMode=='grid'" [stations]="stationsFiltered"></stationsGrid>-->
+            <!--<stationsMap (onStationSelected)="onStationModalOpen($event)" *ngIf="stationComponentMode=='map'" [stations]="stationsFiltered"></stationsMap>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<modal #modalStationDetails [animation]="true" (onClose)="onModalClose($event)">-->
+        <!--<modal-header [show-close]="true">-->
+            <!--<h4 class="modal-title">-->
+                <!--<span class="fa fa-circle" style="font-size: 2em; color: {{selectedStation ? selectedStation.getConnectionIcon('color') : 'white'}}"></span>-->
+                <!--&lt;!&ndash;{{selectedStation ? (selectedStation.getStationName() + ' / id: ' + selectedStation.getStationId() ) : ''}}&ndash;&gt;-->
+            <!--</h4>-->
+        <!--</modal-header>-->
+        <!--<modal-body>-->
+            <!--<stationDetails [station]="selectedStation"></stationDetails>-->
+        <!--</modal-body>-->
+        <!--<modal-footer [show-default-buttons]="false"></modal-footer>-->
+    <!--</modal>-->
+<!--</div>-->
+
+
+

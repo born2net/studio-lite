@@ -42,7 +42,7 @@ import "gsap";
 import "gsap/CSSPlugin";
 import "gsap/Draggable";
 import "gsap/TweenLite";
-import "gsap/ScrollToPlugin";
+import "gsap/ScrollToPlugin"; 
 import {Lib} from "../Lib";   
 import {FontLoaderService} from "../services/font-loader-service";
 import {SimpleGridModule} from "../comps/simple-grid-module/SimpleGridModule";
@@ -51,14 +51,15 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {FasterqTerminal} from "./fasterq/fasterq-terminal";
 import {WizardService} from "../services/wizard-service";
 import {ResellerLogo} from "../comps/logo/reseller-logo";
+import {DashPanel} from "./dashboard/dash-panel";
 
 // import "fabric"; // need to remove if we import via cli
 // import {ScreenTemplate} from "../comps/screen-template/screen-template";
 
 declare global {
     interface JQueryStatic {
-        base64:any
-        knob:any
+        base64:any;
+        knob:any;
         gradientPicker:any;
         timepicker:any;
         contextmenu:any;
@@ -66,7 +67,7 @@ declare global {
     }
 }
 
-export var providing = [CommBroker, WizardService, AUTH_PROVIDERS, RedPepperService, YellowPepperService, LocalStorage, StoreService, FontLoaderService, AppdbAction, {
+export const providing = [CommBroker, WizardService, AUTH_PROVIDERS, RedPepperService, YellowPepperService, LocalStorage, StoreService, FontLoaderService, AppdbAction, {
     provide: "OFFLINE_ENV",
     useValue: window['offlineDevMode']
 },
@@ -80,7 +81,7 @@ export var providing = [CommBroker, WizardService, AUTH_PROVIDERS, RedPepperServ
     }
 ];
 
-var decelerations = [AppComponent, AutoLogin, LoginPanel, Logo, ResellerLogo ,Appwrap, Dashboard, Logout, NgMenu, NgMenuItem, ImgLoader, FasterqTerminal];
+const decelerations = [AppComponent, AutoLogin, LoginPanel, Logo, ResellerLogo ,Appwrap, Dashboard, Logout, NgMenu, NgMenuItem, ImgLoader, FasterqTerminal, DashPanel];
 
 export function appReducer(state: any = INITIAL_APPLICATION_STATE, action: any) {
     if (environment.production) {

@@ -84,7 +84,8 @@ If you are looking for the previous version of StudioLite which was developed us
 
 License:
 ------------------------------------------------------------------------
-- The SignageStudio Web Lite and Pepper SDK are available under GPL V3 https://github.com/born2net/studio-lite/blob/master/LICENSE
+The SignageStudio Web Lite and Pepper SDK are available under GPL
+ - V3 https://github.com/born2net/studio-lite/blob/master/LICENSE
 
 
 

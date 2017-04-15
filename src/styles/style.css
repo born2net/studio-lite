@@ -649,13 +649,13 @@ small {
 
 small.debug {
     color: red;
-    display: none !important;
+    /*display: none !important;*/
 }
 
 small.release {
     text-transform: lowercase;
     color: #4c4c4c;
-    /*display: none !important;*/
+    display: none !important;
 }
 
 .panel-title {

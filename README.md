@@ -1,13 +1,10 @@
-<h5>by digitalsignage.com</h5> 
-==========
-
 StudioLite, Digital Signage for the rest of us
 ---------------------------------------
 
 <!-- [![NPM](https://nodei.co/npm/studiolite.png)](https://nodei.co/npm/studiolite/) -->
 
 <p align="center">  
-  <img src="http://www.digitalsignage.com/_images/kitchensinklogo.png">
+  <img src="http://www.digitalsignage.com/files/techlogos.png">
 </p>
 
 

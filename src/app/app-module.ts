@@ -52,6 +52,7 @@ import {FasterqTerminal} from "./fasterq/fasterq-terminal";
 import {WizardService} from "../services/wizard-service";
 import {ResellerLogo} from "../comps/logo/reseller-logo";
 import {DashPanel} from "./dashboard/dash-panel";
+import {ServerAvg} from "./dashboard/server-avg";
 
 // import "fabric"; // need to remove if we import via cli
 // import {ScreenTemplate} from "../comps/screen-template/screen-template";
@@ -81,7 +82,7 @@ export const providing = [CommBroker, WizardService, AUTH_PROVIDERS, RedPepperSe
     }
 ];
 
-const decelerations = [AppComponent, AutoLogin, LoginPanel, Logo, ResellerLogo ,Appwrap, Dashboard, Logout, NgMenu, NgMenuItem, ImgLoader, FasterqTerminal, DashPanel];
+const decelerations = [AppComponent, AutoLogin, LoginPanel, Logo, ResellerLogo ,Appwrap, Dashboard, Logout, NgMenu, NgMenuItem, ImgLoader, FasterqTerminal, DashPanel, ServerAvg];
 
 export function appReducer(state: any = INITIAL_APPLICATION_STATE, action: any) {
     if (environment.production) {

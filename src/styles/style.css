@@ -688,6 +688,13 @@ small.release {
     transform: scale(1.1);
 }
 
+@media (max-width: 1200px) {
+    .responsive-pad-top {
+        margin-top: 50px !important;
+        padding-top: 50px !important;
+    }
+}
+
 @media (min-width: 767px) {
     .responsive-pad-right {
         margin-right: 60px !important;
@@ -696,7 +703,7 @@ small.release {
 
 @media (min-width: 768px) {
     .responsive-pad-right {
-        margin-right: 10px !important;;
+        margin-right: 10px !important;
     }
 }
 

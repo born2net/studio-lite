@@ -31,10 +31,40 @@
         <server-avg style="width: 100%"></server-avg>
     </div>
     <div class="responsive-pad-top col-sm-12 col-lg-4">
-        <server-avg style="width: 100%"></server-avg>
+        <div class="row">
+            <div class="col-xm-12">
+                <Infobox style="color: green" [value1]="'1'" [value3]="'updated'" icon="fa-tv"></Infobox>
+            </div>
+            <div class="col-xm-12">
+                <Infobox style="color: red" [value1]="'2'" [value3]="'updated'" icon="fa-tv"></Infobox>
+            </div>
+        </div>
     </div>
 </div>
 
+<div class="row">
+    <br/>
+    <div class="col-sm-12 col-lg-4">
+        <a class="twitter-timeline" href="https://twitter.com/MediaSignage" data-widget-id="378653740623863808">Tweets by @MediaSignage</a>
+    </div>
+    <div class="col-sm-12 col-lg-8">
+        <div class="row">
+            <div class="col-sm-12 col-lg-6">
+                <Infobox [value1]="'B1'" [value3]="'lite account'" [icon]="'fa-circle-o'"></Infobox>
+            </div>
+            <div class="col-sm-12 col-lg-6">
+                <Infobox [value1]="'B2'" [value3]="'lite account'" [icon]="'fa-circle-o'"></Infobox>
+            </div>
+        </div>
+        <div class="row" style="margin: 0px 0px 10px 0px">
+            <div class="col-xs-12" style="border: 1px solid #dbdbdb; background-color: #fafafa; height: 275px">
+                live stats...
+            </div>
+        </div>
+
+    </div>
+
+</div>
 
 
 <!--<div class="row">-->

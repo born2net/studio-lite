@@ -52,8 +52,8 @@ With git you will be able to easily update to the latest version of StudioLite a
 
 to install and host:
 ```
-git clone https://github.com/born2net/studioweb.git
-cd studioweb
+git clone https://github.com/born2net/studio-lite.git
+cd studio-lite
 npm install -g @angular/cli@latest
 npm install
 open browser to: http://localhost:4208/

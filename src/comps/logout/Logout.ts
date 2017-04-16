@@ -30,7 +30,7 @@ import {timeout} from "../../decorators/timeout-decorator";
             cursor: pointer;
             -webkit-box-shadow: inset 0 -3px #9FE8EF;
             box-shadow: inset 0 -3px #9FE8EF;
-            width: 300px;
+            width: 250px;
         }
 
         .btn-xlarge:active {
@@ -46,9 +46,9 @@ import {timeout} from "../../decorators/timeout-decorator";
     `],
     template: `
         <div class="row">
-            <div class="center-block">
-                <button href="#"  (click)="_onSaveChangesLogout()" class="btn btn-xlarge"><i class="fa fa-floppy-o fa-5x" ></i><h4>Save and Logout</h4></button>
-                <button href="#"  (click)="_onLogout()" class="btn btn-xlarge"><i class="fa fa-power-off fa-5x" ></i><h4>Just Logout</h4></button>
+            <div style="width: 700px; padding-top: 100px" class="center-block">
+                <button href="#"  (click)="_onSaveChangesLogout()" class="btn btn-xlarge"><i class="fa fa-floppy-o fa-4x" ></i><h4>Save & Logout</h4></button>
+                <button href="#"  (click)="_onLogout()" class="btn btn-xlarge"><i class="fa fa-power-off fa-4x" ></i><h4>Just Logout</h4></button>
             </div>
         </div>
         `

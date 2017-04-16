@@ -64,7 +64,7 @@ import {Observable} from "rxjs/Observable";
                         <a class="helpLinks"target="_blank" href="http://script.digitalsignage.com/forum/index.php" data-localize="supportForum">Support forum</a>
                     </li>
                     <li *ngIf="isBrandingDisabled | async">
-                        <a class="helpLinks"target="_blank" href="http://git.digitalsignage.com" data-localize="openSource">Open source</a>
+                        <a class="helpLinks"target="_blank" href="http://git.digitalsignage.com" data-localize="openSource">StudioLite as open source (GitHub)</a>
                     </li>
                     <li *ngIf="isBrandingDisabled | async">
                         <a class="helpLinks" target="_blank" href="http://script.digitalsignage.com/cgi-bin/webinar.cgi" data-localize="webinar">Webinar</a>

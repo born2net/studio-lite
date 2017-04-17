@@ -79,30 +79,30 @@ export class CampaignEditor extends Compbaser {
                 start: 0,
                 duration: 60,
                 channel: 0,
-                selected: false
+                selected: true
             },
             {
                 resource: "assets/sample1.png",
                 title: 'Logo_splash',
-                start: 0,
-                duration: 160,
-                channel: 2,
-                selected: false
-            },
-            {
-                resource: "assets/sample1.png",
-                title: 'Logo_splash',
-                start: 0,
+                start: 60,
                 duration: 60,
+                channel: 0,
+                selected: false
+            },
+            {
+                resource: "assets/sample1.png",
+                title: 'Logo_splash',
+                start: 120,
+                duration: 120,
                 channel: 0,
                 selected: false
             },
             {
                 resource: "assets/sample3.svg",
                 title: '350x350',
-                start: 300,
-                duration: 6,
-                channel: 3,
+                start: 500,
+                duration: 150,
+                channel: 0,
                 selected: false
             }
         ]

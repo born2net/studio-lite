@@ -1,0 +1,135 @@
+
+
+.rul_wrapper{
+    position: absolute;
+    height: 100%;
+    width: 783px;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.rul_wrapper *{
+    -webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;      /* IE 10+ */
+    /* No support for these yet, use at own risk */
+    -o-user-select: none;
+    user-select: none;
+}
+
+.rul_ruler{
+    display: block;
+    position: absolute;
+    border: 1px solid rgba(206, 219, 236, .5);
+    pointer-events: all;
+    filter: blur(0);
+    -webkit-filter: blur(0);
+    z-index: 1000;
+
+}
+
+.rul_corner{
+    pointer-events: all;
+    position: absolute;
+    background-color: white;
+    z-index: 1010;
+    cursor: pointer;
+}
+
+.rul_corner:hover{
+    background-color: lightgray;
+}
+
+.rul_cornerTL{
+    top:0;
+    left:0;
+    border-bottom: 1px solid rgba(206, 219, 236, .5);
+    border-right:  1px solid rgba(206, 219, 236, .5);
+}
+.rul_cornerTR{
+    top:1px;
+    right:1px;
+    border-bottom: 1px solid rgba(206, 219, 236, .5);
+    border-left:  1px solid rgba(206, 219, 236, .5);
+}
+.rul_cornerBL{
+    bottom:1px;
+    left:1px;
+    border-top: 1px solid rgba(206, 219, 236, .5);
+    border-right:  1px solid rgba(206, 219, 236, .5);
+}
+.rul_cornerBR{
+    bottom:1px;
+    right:1px;
+    border-top: 1px solid rgba(206, 219, 236, .5);
+    border-left:  1px solid rgba(206, 219, 236, .5);
+}
+.rul_ruler_Vertical{
+    cursor: ew-resize;
+    border-left: none;
+}
+
+.rul_ruler_Horizontal{
+    /*cursor: ns-resize;*/
+    border-top: none;
+}
+
+.rul_line{
+    position: absolute;
+    color: transparent;
+    background-color: transparent;
+    border-bottom: 1px solid #3BB7C7;
+    border-left: 1px solid #3BB7C7;
+    pointer-events: all;
+    z-index: 1000;
+}
+.rul_line_dragged{
+    border: 1px dotted #6B7587;
+}
+
+.rul_line:hover{
+    border-bottom: 1px solid #236E77;
+    border-left: 1px solid #236E77;
+}
+
+.rul_lineVer{
+    top: 0;
+    bottom: 0;
+}
+
+.rul_lineVer:hover{
+    cursor: ew-resize;
+}
+
+.rul_lineHor{
+    right: 0;
+    left: 0;
+}
+
+.rul_lineHor:hover{
+    cursor: ns-resize;
+}
+
+.rul_tooltip:after{
+    background: #fff;
+    color: black;
+    border: 1px solid gray;
+    font-size: 10px;
+    content: attr(data-tip);
+    top: 50%;
+    left: 50%;
+    margin-top: 1px;
+    margin-left: 1px;
+    padding: 2px 5px;
+    position: absolute;
+    z-index: 10001;
+    min-width: 45px;
+}
+
+.rul_tracker{
+    height: 1px;
+    width: 1px;
+    background: black;
+    position: absolute;
+    pointer-events: none;
+}

@@ -53,6 +53,79 @@ export class CampaignEditor extends Compbaser {
         this.items.unshift({id: this.id++, name: 'item'})
     }
 
+    itemMoved(state) {
+        console.log("Item moved", state);
+    }
+
+    channelAdded(state) {
+        console.log("Channel added", state);
+    }
+
+    itemAdded(state) {
+        console.log("Item Added", state);
+    }
+
+    resources = [
+        {
+            name: 'logo',
+            type: 'png',
+            time: '0',
+            size: '110KB',
+            src: 'assets/sample1.png'
+        },
+        {
+            name: 'samplesvg',
+            type: 'svg',
+            time: '0',
+            size: '110KB',
+            src: 'assets/sample3.svg'
+        }
+    ];
+    state = {
+        zoom: 1,
+        channels: [
+            {
+                name: 'CH0',
+                type: 'normal',
+                color: '#0000FF'
+            },
+            {
+                name: 'CH1',
+                type: 'normal',
+                color: '#0000FF'
+            },
+            {
+                name: 'CH2',
+                color: '#0000FF',
+                type: 'common'
+            },
+        ],
+        outputs: [
+            {
+                name: "Output",
+                color: "#000"
+            }
+        ],
+        items: [
+            {
+                resource: "assets/sample1.png",
+                title: 'Logo_splash',
+                start: 0,
+                duration: 60,
+                channel: 0,
+                selected: false
+            },
+            {
+                resource: "assets/sample3.svg",
+                title: '350x350',
+                start: 300,
+                duration: 60,
+                channel: 1,
+                selected: false
+            }
+        ]
+    }
+    
     constructor(private yp: YellowPepperService, private actions: AppdbAction, private rp: RedPepperService) {
         super();
 

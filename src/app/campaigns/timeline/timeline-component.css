@@ -1,0 +1,87 @@
+#container {
+  height: 801px;
+  overflow: visible;
+  padding: 0;
+  position: relative;
+}
+
+:host /deep/ .box {
+  background-color: #a9a9a9;
+  text-align: center;
+  font-family: Asap, Avenir, Arial, sans-serif;
+  width: 196px;
+  height: 50px;
+  line-height: 50px;
+  color: black;
+  position: absolute;
+  top: 0;
+  border: 1px solid black;
+  z-index: 1000;
+  list-style: none;
+}
+
+.box-image {
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.item-title {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+:host /deep/ .ui-selected { background: #c7c7c7; }
+
+.ruler {
+  height: 50px;
+}
+
+.ruler-container {
+  padding-left: 0px;
+}
+
+.channel-titles {
+  padding-right: 0px;
+}
+
+.channel-title {
+  height: 50px;
+  border: 1px solid black;
+  background-color: #2d2d2d;
+  color: #e0e0e0;
+  font-weight: bold;
+  line-height: 50px;
+  padding-left: 10px;
+  cursor: pointer;
+}
+
+.common-channel {
+  text-decoration: underline;
+}
+
+.channel-color {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+}
+
+.timeline {
+  padding-left: 0px;
+}
+
+:host /deep/ .timeline-row {
+  position: absolute;
+  border: 1px solid #454545;
+}
+
+.output-row {
+  background-color: #adadad;
+  border: 1px solid #454545;
+  width: 783px;
+  height: 49px;
+  left: 0px;
+}

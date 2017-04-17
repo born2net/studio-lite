@@ -27,6 +27,7 @@
         "../node_modules/primeng/resources/primeng.min.css",
         "./libs/bootstrap-timepicker/css/bootstrap-timepicker.css",
         "./libs/minicolors/jquery.minicolors.css",
+        "./libs/ruler/ruler.css",
         "./styles/style.css"
       ],
       "scripts": [
@@ -38,6 +39,7 @@
         "./libs/rc4v1/rc4v1.js",
         "./libs/rc4v2/rc4v2.js",
         "./libs/qrcode/qrcode.js",
+        "./libs/ruler/ruler.js",
         "./libs/bootstrap-timepicker/js/bootstrap-timepicker.min.js",
         "./libs/contextmenu/bootstrap-contextmenu.js",
         "./libs/stop-watch/stop-watch.js",

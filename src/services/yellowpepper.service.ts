@@ -596,6 +596,16 @@ export class YellowPepperService {
             .take(1);
     }
 
+    getTimelines(): Observable<List<CampaignTimelinesModel>> {
+        return this.store.select(store => store.msDatabase.sdk.table_campaign_timelines)
+            .take(1);
+    }
+
+    getResources(): Observable<List<ResourcesModel>> {
+        return this.store.select(store => store.msDatabase.sdk.table_resources)
+            .take(1);
+    }
+
     /**
      Returns all scenes
      **/

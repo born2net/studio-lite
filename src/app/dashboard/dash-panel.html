@@ -6,19 +6,19 @@
         <Infobox [value1]="(m_campaigns$ | async)?.size" [value3]="'total campaigns'" [icon]="'fa-bars'"></Infobox>
     </div>
     <div class="col-sm-4 col-lg-2">
-        <Infobox [value1]="'B'" [value3]="'total resources'" [icon]="'fa-certificate'"></Infobox>
+        <Infobox [value1]="(m_resources$ | async)?.size" [value3]="'total resources'" [icon]="'fa-certificate'"></Infobox>
     </div>
     <div class="col-sm-4 col-lg-2">
         <Infobox [value1]="(m_scenes$ | async)?.length" [value3]="'total scenes'" [icon]="'fa-crosshairs'"></Infobox>
     </div>
     <div class="col-sm-4 col-lg-2">
-        <Infobox [value1]="'D'" [value3]="'lite account'" [icon]="'fa-circle-o'"></Infobox>
+        <Infobox [value1]="(m_timelines$ | async)?.size" [value3]="'total timelines'" [icon]="'fa-crosshairs'"></Infobox>
     </div>
     <div class="col-sm-4 col-lg-2">
-        <Infobox [value1]="'E'" [value3]="'lite account'" [icon]="'fa-circle-o'"></Infobox>
+        <Infobox [value1]="(m_lines$ | async)?.size" [value3]="'fasterq lines'" [icon]="'fa-user-o'"></Infobox>
     </div>
     <div class="col-sm-4 col-lg-2">
-        <Infobox [value1]="'F'" [value3]="'lite account'" [icon]="'fa-circle-o'"></Infobox>
+        <Infobox [value1]="(m_userModel$ | async)?.getRememberMe() == true ? 'ON' : 'OFF'" [value3]="'auto login'" [icon]="'fa-circle-o'"></Infobox>
     </div>
 </div>
 

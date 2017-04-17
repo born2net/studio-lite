@@ -2,7 +2,7 @@ import {Component, ChangeDetectionStrategy, AfterViewInit} from "@angular/core";
 import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {timeout} from "../../decorators/timeout-decorator";
-import {EFFECT_LOAD_STATIONS} from "../../store/effects/appdb.effects";
+import {EFFECT_LOAD_FASTERQ_LINES, EFFECT_LOAD_STATIONS} from "../../store/effects/appdb.effects";
 import {RedPepperService} from "../../services/redpepper.service";
 import {Observable} from "rxjs/Observable";
 import {Map, List} from 'immutable';
@@ -29,6 +29,9 @@ export class DashPanel extends Compbaser implements AfterViewInit {
     m_userModel$;
     m_scenes$;
     m_campaigns$;
+    m_resources$;
+    m_lines$;
+    m_timelines$;
 
     constructor(private yp: YellowPepperService, private rp: RedPepperService) {
         super();
@@ -36,13 +39,22 @@ export class DashPanel extends Compbaser implements AfterViewInit {
         this.m_userModel$ = this.yp.listenUserModel();
         this.m_scenes$ = this.yp.getScenes();
         this.m_campaigns$ = this.yp.getCampaigns();
+        this.m_resources$ = this.yp.getResources();
+        this.m_lines$ = this.yp.listenFasterqLines();
+        this.m_timelines$ = this.yp.getTimelines();
+
         this._listenStationsConnection();
+        this._listenLoadLines();
         this.options = {
             title: {text: 'simple chart'},
             series: [{
                 data: [29.9, 71.5, 106.4, 129.2],
             }]
         };
+    }
+
+    _listenLoadLines (){
+        this.yp.ngrxStore.dispatch({type: EFFECT_LOAD_FASTERQ_LINES, payload: {}})
     }
 
     _listenStationsConnection() {

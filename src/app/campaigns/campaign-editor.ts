@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Output} from "@angular/core";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Output} from "@angular/core";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {Compbaser} from "ng-mslib";
 import {CampaignsModelExt, CampaignTimelineChanelPlayersModelExt} from "../../store/model/msdb-models-extended";
@@ -30,6 +30,8 @@ export class CampaignEditor extends Compbaser {
     private campaignModel: CampaignsModelExt;
     private campaignTimelinesModel: CampaignTimelinesModel;
     private channelModel: CampaignTimelineChanelsModel;
+
+    m_showTimeline = false;
 
     resources = [
         {
@@ -144,8 +146,13 @@ export class CampaignEditor extends Compbaser {
 
 
     
-    constructor(private yp: YellowPepperService, private actions: AppdbAction, private rp: RedPepperService) {
+    constructor(private yp: YellowPepperService, private actions: AppdbAction, private rp: RedPepperService, private cd:ChangeDetectorRef) {
         super();
+
+        setTimeout(()=>{
+            this.m_showTimeline = true;
+            this.cd.markForCheck();
+        },1000)
 
         this.cancelOnDestroy(
             //

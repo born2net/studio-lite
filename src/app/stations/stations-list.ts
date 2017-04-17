@@ -1,10 +1,7 @@
 import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output} from "@angular/core";
 import {Compbaser} from "ng-mslib";
-import {ResourcesModel} from "../../store/imsdb.interfaces_auto";
 import {List} from "immutable";
 import {BlockService} from "../blocks/block-service";
-import {IUiState} from "../../store/store.data";
-import {SideProps} from "../../store/actions/appdb.actions";
 import {StationModel} from "../../models/StationModel";
 
 @Component({
@@ -48,7 +45,7 @@ import {StationModel} from "../../models/StationModel";
                 <!--<p class="pull-left list-group-item-text">file type: {{station.os}} </p>-->
                 <!--<span class="clearfix"></span>-->
                 <!--<div class="openProps">-->
-                    <!--<button type="button" class="props btn btn-default btn-sm"><i style="font-size: 1.5em" class="props fa fa-gear"></i></button>-->
+                <!--<button type="button" class="props btn btn-default btn-sm"><i style="font-size: 1.5em" class="props fa fa-gear"></i></button>-->
                 <!--</div>-->
             </a>
         </ul>

@@ -90,6 +90,7 @@ export interface IUiState {
     previewMode?: number;
     uiSideProps?: number;
     appSized?: Map<any,any>;
+    appSaved?: string;
     campaign?: IUiStateCampaign;
     locationMap?: IUiStateLocation;
     resources?: IUiStateResources;
@@ -132,6 +133,7 @@ export const INITIAL_APP_DB: IAppDb = {
         previewMode: -1,
         uiSideProps: SideProps.none,
         appSized: Map({}),
+        appSaved: '00:00:00',
         campaign: {
             campaignTimelineBoardViewerSelected: -1,
             campaignTimelineChannelSelected: -1,

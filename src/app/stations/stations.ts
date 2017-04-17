@@ -117,7 +117,7 @@ export class Stations extends Compbaser {
                 .subscribe((i_stationModel: StationModel) => {
                     this.m_stationModel = i_stationModel;
                 }, (e) => console.error(e))
-        )
+        );
 
         this.cancelOnDestroy(
             //
@@ -130,15 +130,15 @@ export class Stations extends Compbaser {
                         }
                     }
                 }, (e) => console.error(e))
-        )
+        );
     }
 
     _loadData() {
-        this.yp.ngrxStore.dispatch({type: EFFECT_LOAD_STATIONS, payload: {userData: this.rp.getUserData()}})
+        this.yp.ngrxStore.dispatch({type: EFFECT_LOAD_STATIONS, payload: {userData: this.rp.getUserData()}});
         if (_.isUndefined(this.m_loadStationsHandle)) {
             this.m_loadStationsHandle = setInterval(() => {
                 this._loadData();
-            }, 4000)
+            }, 4000);
         }
     }
 
@@ -160,30 +160,30 @@ export class Stations extends Compbaser {
         bootbox.confirm('Are you sure you want to uninstall the selected station?', (result) => {
             if (!result) return;
 
-            this.yp.dispatch(({type: ACTION_UISTATE_UPDATE, payload: {uiSideProps: SideProps.miniDashboard}}))
+            this.yp.dispatch(({type: ACTION_UISTATE_UPDATE, payload: {uiSideProps: SideProps.miniDashboard}}));
             this.rp.removeStation(this.m_stationModel.id);
             // this.rp.sendCommand('rebootStation', this.m_stationModel.id, () => {});
             this.rp.sendCommand('rebootPlayer', this.m_stationModel.id, () => {});
             this.rp.sendCommand('rebootPlayer', this.m_stationModel.id, () => {});
             this.rp.sendCommand('rebootPlayer', this.m_stationModel.id, () => {});
-            var uiState: IUiState = {uiSideProps: SideProps.miniDashboard, stations: {stationSelected: -1}}
-            this.yp.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
-            this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: {mainAppState: MainAppShowStateEnum.SAVE}}))
+            var uiState: IUiState = {uiSideProps: SideProps.miniDashboard, stations: {stationSelected: -1}};
+            this.yp.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}));
+            this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: {mainAppState: MainAppShowStateEnum.SAVE}}));
         });
     }
 
     _onSelected(i_station: StationModel) {
-        let uiState: IUiState = {
+        const uiState: IUiState = {
             uiSideProps: SideProps.stationProps,
             stations: {stationSelected: i_station.id}
-        }
-        this.yp.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
+        };
+        this.yp.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}));
     }
 
     destroy() {
         clearInterval(this.m_loadStationsHandle);
-        var uiState: IUiState = {stations: {stationSelected: -1}}
-        this.yp.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
+        var uiState: IUiState = {stations: {stationSelected: -1}};
+        this.yp.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}));
     }
 }
 

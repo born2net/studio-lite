@@ -71,8 +71,8 @@ export class Logout extends Compbaser {
     }
 
     _onSaveChangesLogout(){
-        let uiState: IUiState = {mainAppState: MainAppShowStateEnum.SAVE}
-        this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
+        let uiState: IUiState = {mainAppState: MainAppShowStateEnum.SAVE};
+        this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}));
     }
 
     @timeout(500)

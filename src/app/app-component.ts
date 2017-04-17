@@ -16,6 +16,7 @@ import {ModalComponent} from "ng2-bs3-modal/ng2-bs3-modal";
 import {Map, List} from 'immutable';
 import {Consts} from "../interfaces/Consts";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import * as moment from 'moment'
 
 enum MainAppShowModeEnum {
     MAIN,
@@ -55,8 +56,8 @@ export class AppComponent implements AfterViewInit {
     m_ShowModeEnum = MainAppShowModeEnum;
     m_showMode: any = MainAppShowModeEnum.MAIN;
     m_hidden = false;
-    isBrandingDisabled: Observable<boolean>
-    syncOnSave: boolean = false;
+    isBrandingDisabled: Observable<boolean>;
+    syncOnSave = false;
     m_logoutState = '';
 
     constructor(private router: Router,
@@ -203,6 +204,8 @@ export class AppComponent implements AfterViewInit {
                             this.rp.sendCommand('syncAndStart', -1, () => {
                             });
                         this.syncOnSave = false;
+                        const uiState: IUiState = {appSaved: moment().format('h:mm:ss')};
+                        this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}));
                         break;
                     }
 
@@ -216,8 +219,8 @@ export class AppComponent implements AfterViewInit {
                     case MainAppShowStateEnum.SAVE: {
                         this.save(() => {
                             this.viewMode(MainAppShowModeEnum.MAIN);
-                            let uiState: IUiState = {mainAppState: MainAppShowStateEnum.NORMAL}
-                            this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
+                            const uiState: IUiState = {mainAppState: MainAppShowStateEnum.NORMAL};
+                            this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}));
                         });
                         break;
                     }

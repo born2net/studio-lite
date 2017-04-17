@@ -113,7 +113,7 @@ export class UserModel extends StoreModel {
         return this.setKey<UserModel>(UserModel, 'businessId', value);
     }
 
-    getBusinessId(): boolean {
+    getBusinessId(): number {
         return this.getKey('businessId');
     }
 

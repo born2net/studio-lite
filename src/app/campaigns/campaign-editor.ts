@@ -31,40 +31,6 @@ export class CampaignEditor extends Compbaser {
     private campaignTimelinesModel: CampaignTimelinesModel;
     private channelModel: CampaignTimelineChanelsModel;
 
-    m_campaignTimelinesModels: List<CampaignTimelinesModel>;
-    m_campaignTimelineChanelPlayersModel: CampaignTimelineChanelPlayersModelExt;
-    m_isVisible1 = 'off';
-    m_isVisible2 = 'off';
-    m_toggleShowChannel = true;
-
-    id = 0
-    items = []
-
-    remove(id) {
-        let index = this.items.findIndex(item => item.id === id)
-        this.items.splice(index, 1)
-    }
-
-    reset() {
-        this.items = []
-    }
-
-    add() {
-        this.items.unshift({id: this.id++, name: 'item'})
-    }
-
-    itemMoved(state) {
-        console.log("Item moved", state);
-    }
-
-    channelAdded(state) {
-        console.log("Channel added", state);
-    }
-
-    itemAdded(state) {
-        console.log("Item Added", state);
-    }
-
     resources = [
         {
             name: 'logo',
@@ -116,15 +82,67 @@ export class CampaignEditor extends Compbaser {
                 selected: false
             },
             {
+                resource: "assets/sample1.png",
+                title: 'Logo_splash',
+                start: 0,
+                duration: 160,
+                channel: 2,
+                selected: false
+            },
+            {
+                resource: "assets/sample1.png",
+                title: 'Logo_splash',
+                start: 0,
+                duration: 60,
+                channel: 0,
+                selected: false
+            },
+            {
                 resource: "assets/sample3.svg",
                 title: '350x350',
                 start: 300,
-                duration: 60,
-                channel: 1,
+                duration: 6,
+                channel: 3,
                 selected: false
             }
         ]
     }
+
+    m_campaignTimelinesModels: List<CampaignTimelinesModel>;
+    m_campaignTimelineChanelPlayersModel: CampaignTimelineChanelPlayersModelExt;
+    m_isVisible1 = 'off';
+    m_isVisible2 = 'off';
+    m_toggleShowChannel = true;
+
+    id = 0
+    items = []
+
+    remove(id) {
+        let index = this.items.findIndex(item => item.id === id)
+        this.items.splice(index, 1)
+    }
+
+    reset() {
+        this.items = []
+    }
+
+    add() {
+        this.items.unshift({id: this.id++, name: 'item'})
+    }
+
+    itemMoved(state) {
+        console.log("Item moved", state);
+    }
+
+    channelAdded(state) {
+        console.log("Channel added", state);
+    }
+
+    itemAdded(state) {
+        console.log("Item Added", state);
+    }
+
+
     
     constructor(private yp: YellowPepperService, private actions: AppdbAction, private rp: RedPepperService) {
         super();

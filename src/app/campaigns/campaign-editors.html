@@ -74,17 +74,18 @@
                     </button>
                 </h4>
             </div>
+            <app-timeline
+                    [resources]="resources"
+                    [state]="state"
+                    (itemAdded)="itemAdded($event)"
+                    (channelAdded)="channelAdded($event)"
+                    (itemMoved)="itemMoved($event)"
+            ></app-timeline>
+
             <div id="storylineContainerCollapse" class="panel-collapse collapse">
                 <div class="panel-body">
                     <aside>
                         <aside>
-                            <app-timeline
-                                    [resources]="resources"
-                                    [state]="state"
-                                    (itemAdded)="itemAdded($event)"
-                                    (channelAdded)="channelAdded($event)"
-                                    (itemMoved)="itemMoved($event)"
-                            ></app-timeline>
                         </aside>
                     </aside>
                 </div>

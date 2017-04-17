@@ -114,7 +114,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
             $(this.target).addClass('ui-selected');
             e.stopPropagation();
 
-            //when the user presses, we'll create an array ("companions") and populate it with all the OTHER elements that have the ".ui-selected" class applied (excluding the one that's being dragged). We also record their x and y position so that we can apply the delta to it in the onDrag.
+            // when the user presses, we'll create an array ("companions") and populate it with all the OTHER elements that have the ".ui-selected" class applied (excluding the one that's being dragged). We also record their x and y position so that we can apply the delta to it in the onDrag.
             var boxes = $(".box.ui-selected"),
               i = boxes.length;
 
@@ -330,7 +330,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
     $('.resizable').removeClass('ui-selected');
     this.state.items.map((item) => {
       item.selected = false;
-    })
+    });
   }
 
   drawChannels() {
@@ -372,7 +372,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
       };
     });
 
-    //set the container's size to match the grid, and ensure that the box widths/heights reflect the variables above
+    // set the container's size to match the grid, and ensure that the box widths/heights reflect the variables above
     this.updateContainerSize();
 
     // update bounds for all draggable items
@@ -432,7 +432,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
 
     this.state.items.filter(item => item.selected)
       .map((item, i) => {
-        this.moveItem(item, leftAlign, item.top)
+        this.moveItem(item, leftAlign, item.top);
       });
   }
 

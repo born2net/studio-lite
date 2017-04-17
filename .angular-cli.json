@@ -39,7 +39,6 @@
         "./libs/rc4v1/rc4v1.js",
         "./libs/rc4v2/rc4v2.js",
         "./libs/qrcode/qrcode.js",
-        "./libs/ruler/ruler.js",
         "./libs/bootstrap-timepicker/js/bootstrap-timepicker.min.js",
         "./libs/contextmenu/bootstrap-contextmenu.js",
         "./libs/stop-watch/stop-watch.js",
@@ -52,7 +51,8 @@
         "./libs/gradient/colorpicker.js",
         "./libs/gradient/jquery.gradientpicker.js",
         "./libs/enjoyhint/enjoyhint.js",
-        "../node_modules/xdate/src/xdate.js"
+        "../node_modules/xdate/src/xdate.js",
+        "./libs/ruler/ruler.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

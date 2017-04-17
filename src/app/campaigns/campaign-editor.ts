@@ -150,8 +150,8 @@ export class CampaignEditor extends Compbaser {
         super();
 
         setTimeout(()=>{
-            this.m_showTimeline = true;
-            this.cd.markForCheck();
+            // this.m_showTimeline = true;
+            // this.cd.markForCheck();
         },1000)
 
         this.cancelOnDestroy(

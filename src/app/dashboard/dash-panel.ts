@@ -21,7 +21,6 @@ import {StationModel} from "../../models/StationModel";
     templateUrl: './dash-panel.html'
 })
 export class DashPanel extends Compbaser implements AfterViewInit {
-    options: Object;
     m_totalStationsConnected = 0;
     m_totalStationsDisconnected = 0;
     m_lastSave$;
@@ -31,7 +30,7 @@ export class DashPanel extends Compbaser implements AfterViewInit {
     m_resources$;
     m_lines$;
     m_timelines$;
-
+    
     constructor(private yp: YellowPepperService, private rp: RedPepperService) {
         super();
         this.m_lastSave$ = this.yp.ngrxStore.select(store => store.appDb.uiState.appSaved)
@@ -44,12 +43,6 @@ export class DashPanel extends Compbaser implements AfterViewInit {
 
         this._listenStationsConnection();
         this._listenLoadLines();
-        this.options = {
-            title: {text: 'simple chart'},
-            series: [{
-                data: [29.9, 71.5, 106.4, 129.2],
-            }]
-        };
     }
 
     _listenLoadLines() {
@@ -91,11 +84,6 @@ export class DashPanel extends Compbaser implements AfterViewInit {
 
     _loadStationData() {
         this.yp.ngrxStore.dispatch({type: EFFECT_LOAD_STATIONS, payload: {userData: this.rp.getUserData()}});
-        // if (_.isUndefined(this.m_loadStationsHandle)) {
-        //     this.m_loadStationsHandle = setInterval(() => {
-        //         this._loadData();
-        //     }, 4000);
-        // }
     }
 
     @timeout(500)

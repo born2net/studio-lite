@@ -41,12 +41,13 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row" >
     <br/>
-    <div class="col-sm-12 col-lg-4">
-        <a *ngIf="(isBrandingDisabled | async)" class="twitter-timeline" href="https://twitter.com/MediaSignage" data-widget-id="378653740623863808">Tweets by @MediaSignage</a>
+    <div *ngIf="(isBrandingDisabled | async)==true" class="col-sm-12 col-lg-4">
+        <a class="twitter-timeline" href="https://twitter.com/MediaSignage" data-widget-id="378653740623863808">Tweets by @MediaSignage</a>
+        <!--<div *ngIf="(isBrandingDisabled | async)==false" style="border: 1px solid #dbdbdb; background-color: #fafafa; height: 400px">AAAA</div>-->
     </div>
-    <div class="col-sm-12 col-lg-8">
+    <div [ngClass]="{'col-sm-12':true, 'col-lg-8': (isBrandingDisabled | async)==true}">
         <div class="row">
             <div class="col-sm-12 col-lg-6">
                 <Infobox [value1]="(m_userModel$ | async)?.user()" [value3]="'business id ' + (m_userModel$ | async)?.businessId()" [icon]="'fa-user-circle-o'"></Infobox>
@@ -77,9 +78,7 @@
                 </div>
             </div>
         </div>
-
     </div>
-
 </div>
 
 

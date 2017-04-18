@@ -231,14 +231,14 @@ export class StationsPropsManager extends Compbaser {
         setTimeout(() => {
             this.loadImage(path)
                 .subscribe(v => {
-                    console.log(v);
+                    // console.log(v);
                 })
         }, 100)
 
         setTimeout(() => {
             this.m_loading = false;
             this.m_snapPath = path;
-            console.log('loading image from ' + this.m_snapPath);
+            // console.log('loading image from ' + this.m_snapPath);
         }, 100);
 
     }

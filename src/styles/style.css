@@ -103,14 +103,6 @@ a {
     color: #cbcbcb;
 }
 
-#angularText {
-    position: relative;
-    top: 12px;
-    color: ghostwhite;
-    padding-left: 18px;
-    font-size: 1.2em;
-}
-
 #angularText .flipcard {
     padding-top: 2px;
 }
@@ -358,13 +350,13 @@ Software accelerated vertical
 }
 */
 
-#logoContainer {
-    position: relative;
-    top: -3px;
-    float: left;
-    padding: 0;
-    margin: 0;
-}
+/*#logoContainer {*/
+    /*position: relative;*/
+    /*top: -3px;*/
+    /*float: left;*/
+    /*padding: 0;*/
+    /*margin: 0;*/
+/*}*/
 
 .clearFloat {
     clear: both;
@@ -436,7 +428,7 @@ Software accelerated vertical
     width: 39px;
     height: 25px;
     position: relative;
-    margin: 50px auto;
+    /*margin: 50px auto;*/
 }
 
 .flip .flipcard.flipped {

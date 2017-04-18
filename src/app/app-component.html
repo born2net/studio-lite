@@ -8,10 +8,17 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <span id="angularText">
-                StudioWeb
-                <Logo *ngIf="isBrandingDisabled | async"></Logo>
-                <label [ngClass]="{offline: offlineDevMode}" style="font-size: 10px; font-family: Arial">{{version}} | ng {{ngVersion}} | {{offlineDevMode==true ? 'offline' : 'online'}}</label>
+            <span class="pull-left" id="angularText" style="color: ghostwhite; padding-top: 5px; padding-left: 10px">
+
+                <Logo          class="pull-left" *ngIf="isBrandingDisabled" style="padding-left: 5px; padding-top: 5px"></Logo>
+                <reseller-logo class="pull-left" *ngIf="!isBrandingDisabled" style="padding-left: 5px; padding-top: 5px"></reseller-logo>
+
+                <span class="pull-left" style="padding-top: 4px; padding-left: 4px">
+                    <span style="font-size: 1.4em">{{productName}}</span>
+                    <label [ngClass]="{offline: offlineDevMode}" style="font-size: 10px; font-family: Arial">{{version}} | ng {{ngVersion}} | {{offlineDevMode==true ? 'offline' : 'online'}}</label>
+                </span>
+                <div class="clearfix"></div>
+
             </span>
 
         </div>
@@ -24,7 +31,7 @@
                 <ng-menu-item [fontawesome]="'fa-laptop'" [title]="'Stations'"></ng-menu-item>
                 <ng-menu-item [fontawesome]="'fa-group'" [title]="'Fasterq'"></ng-menu-item>
                 <ng-menu-item [fontawesome]="'fa-heart'" [title]="'Help'"></ng-menu-item>
-                <ng-menu-item *ngIf="isBrandingDisabled | async" [fontawesome]="'fa-laptop'" [title]="'Install'"></ng-menu-item>
+                <ng-menu-item *ngIf="isBrandingDisabled" [fontawesome]="'fa-laptop'" [title]="'Install'"></ng-menu-item>
                 <!--<ng-menu-item [fontawesome]="'fa-cog'" [title]="'Settings'"></ng-menu-item>-->
                 <ng-menu-item [fontawesome]="'fa-cloud-upload'" [title]="'Studiopro'"></ng-menu-item>
                 <ng-menu-item [fontawesome]="'fa-power-off'" [title]="'Resources'"></ng-menu-item>
@@ -32,16 +39,13 @@
 
             <ul style="height: 20px" class="nav navbar-nav navbar-right noCollapsing">
                 <li>
-                    <a (click)="_onMenuIcon('upgrade',$event)" *ngIf="isBrandingDisabled | async" class="showUpgradeModal reshid" href="#"><i style="color: red" class="faHeader fa fa-cloud-upload"></i></a>
+                    <a (click)="_onMenuIcon('upgrade',$event)" *ngIf="isBrandingDisabled" class="showUpgradeModal reshid" href="#"><i style="color: red" class="faHeader fa fa-cloud-upload"></i></a>
                 </li>
                 <li>
                     <a (click)="_onMenuIcon('save',$event)" id="saveConfig" href="#"><i style="color: greenyellow" class="faHeader fa fa-save"></i></a>
                 </li>
-                <li class="hidden-sm hidden-xs">
-                    <reseller-logo></reseller-logo>
-                </li>
                 <li>
-                    <a (click)="_onMenuIcon('chat',$event)" *ngIf="isBrandingDisabled | async" class="reshid" id="liveChat" href="#"><i class="faHeader fa fa-comments-o"></i></a>
+                    <a (click)="_onMenuIcon('chat',$event)" *ngIf="isBrandingDisabled" class="reshid" id="liveChat" href="#"><i class="faHeader fa fa-comments-o"></i></a>
                 </li>
                 <!-- disabled menubar tutorial view -->
                 <div style="display: none">
@@ -50,7 +54,7 @@
                     </li>
                 </div>
                 <li style="padding-right: 20px">
-                    <a (click)="_onMenuIcon('web',$event)" *ngIf="isBrandingDisabled | async" id="languagePrompt" href="#"><i class="faHeader fa fa-globe"></i></a>
+                    <a (click)="_onMenuIcon('web',$event)" *ngIf="isBrandingDisabled" id="languagePrompt" href="#"><i class="faHeader fa fa-globe"></i></a>
                 </li>
                 <!--<li style="padding-right: 20px">-->
                 <!--<a (click)="_onMenuIcon('dash',$event)" id="dashboard" href="#"><i class="faHeader fa fa-dashboard"></i></a>-->

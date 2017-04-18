@@ -41,7 +41,6 @@ export enum MainAppShowStateEnum {
     animations: [
         trigger('logoutState', [
             state('active', style({
-                backgroundColor: '#6cff1c',
                 transform: 'scale(2)',
                 alpha: 0
             })),
@@ -56,9 +55,11 @@ export class AppComponent implements AfterViewInit {
     m_ShowModeEnum = MainAppShowModeEnum;
     m_showMode: any = MainAppShowModeEnum.MAIN;
     m_hidden = false;
-    isBrandingDisabled: Observable<boolean>;
+    // isBrandingDisabled: Observable<boolean>;
     syncOnSave = false;
     m_logoutState = '';
+    productName = 'Studio-Lite';
+    isBrandingDisabled: boolean = false;
 
     constructor(private router: Router,
                 private localStorage: LocalStorage,
@@ -93,8 +94,16 @@ export class AppComponent implements AfterViewInit {
     @ViewChild(ModalComponent)
     modal: ModalComponent;
 
+
     ngOnInit() {
-        this.isBrandingDisabled = this.yp.isBrandingDisabled()
+
+        this.yp.isBrandingDisabled()
+            .subscribe((v) => {
+                this.isBrandingDisabled = v;
+                if (!this.isBrandingDisabled)
+                    this.productName = this.rp.getUserData().resellerName;
+            }, (e) => console.error(e));
+
         let s = this.router.events
             .subscribe((val) => {
                 if (val instanceof NavigationEnd) {
@@ -197,7 +206,7 @@ export class AppComponent implements AfterViewInit {
                         this.viewMode(MainAppShowModeEnum.MAIN);
                         break;
                     }
-                            
+
                     case MainAppShowStateEnum.SAVED: {
                         con('Saved to server');
                         if (this.syncOnSave)

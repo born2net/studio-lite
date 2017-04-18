@@ -125,10 +125,10 @@ export class StorageUsed extends Compbaser {
                 name: 'cloud storage',
                 colorByPoint: true,
                 data: [{
-                    name: '% used',
+                    name: '% storage used',
                     y: used
                 }, {
-                    name: '% free',
+                    name: '% storage free',
                     y: free,
                     sliced: true,
                     selected: true

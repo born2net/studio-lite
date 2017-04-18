@@ -14,6 +14,7 @@ import {StationModel} from "../models/StationModel";
 import {FasterqLineModel} from "../models/fasterq-line-model";
 import {FasterqQueueModel} from "../models/fasterq-queue-model";
 import {FasterqAnalyticsModel} from "../models/fasterq-analytics";
+import {LiveLogModel} from "../models/live-log-model";
 
 const reducers = {msDatabase, appDb};
 export const developmentReducer: ActionReducer<ApplicationState> = compose(storeFreeze, combineReducers)(reducers);
@@ -89,7 +90,7 @@ export interface IUiState {
     mainAppState?: MainAppShowStateEnum;
     previewMode?: number;
     uiSideProps?: number;
-    appSized?: Map<any,any>;
+    appSized?: Map<any, any>;
     appSaved?: string;
     campaign?: IUiStateCampaign;
     locationMap?: IUiStateLocation;
@@ -112,6 +113,7 @@ export interface IAppDb {
     appStartTime: number;
     appBaseUrl: string;
     userModel: UserModel;
+    liveLog: List<LiveLogModel>;
     stations: List<StationModel>;
     fasterq: IFasterQ;
     cloudServers: string;
@@ -172,6 +174,7 @@ export const INITIAL_APP_DB: IAppDb = {
     appStartTime: -1,
     appBaseUrl: '',
     stations: List([]),
+    liveLog: List([]),
     fasterq: {
         lines: List([]),
         queues: List([]),

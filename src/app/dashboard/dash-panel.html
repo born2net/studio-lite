@@ -44,7 +44,7 @@
 <div class="row">
     <br/>
     <div class="col-sm-12 col-lg-4">
-        <a class="twitter-timeline" href="https://twitter.com/MediaSignage" data-widget-id="378653740623863808">Tweets by @MediaSignage</a>
+        <a *ngIf="(isBrandingDisabled | async)" class="twitter-timeline" href="https://twitter.com/MediaSignage" data-widget-id="378653740623863808">Tweets by @MediaSignage</a>
     </div>
     <div class="col-sm-12 col-lg-8">
         <div class="row">
@@ -56,8 +56,25 @@
             </div>
         </div>
         <div class="row" style="margin: 0px 0px 10px 0px">
-            <div class="col-xs-12" style="border: 1px solid #dbdbdb; background-color: #fafafa; height: 275px">
-                live stats...
+            <div class="col-xs-12" style="border: 1px solid #dbdbdb; background-color: #fafafa; height: 275px; padding: 0">
+                <div style="overflow-x: scroll">
+                    <div style="width: 100%; height: 250px">
+                        <simpleGridTable #simpleGrid>
+                            <thead>
+                            <tr>
+                                <th>time</th>
+                                <th>action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="simpleGridRecord" simpleGridRecord *ngFor="let item of m_liveLog; let index=index" [item]="item" [index]="index">
+                                <td simpleGridData style="width: 20%" [editable]="false" field="date" [item]="item"></td>
+                                <td simpleGridData style="width: 80%" [editable]="false" field="event" [item]="item"></td>
+                            </tr>
+                            </tbody>
+                        </simpleGridTable>
+                    </div>
+                </div>
             </div>
         </div>
 

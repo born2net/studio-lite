@@ -10,6 +10,8 @@ import {Lib} from "../../Lib";
 import {FasterqLineModel} from "../../models/fasterq-line-model";
 import {FasterqQueueModel} from "../../models/fasterq-queue-model";
 import {FasterqAnalyticsModel} from "../../models/fasterq-analytics";
+import {LiveLogModel} from "../../models/live-log-model";
+import * as moment from 'moment'
 
 const baseUrl = 'https://galaxy.signage.me/WebService/ResellerService.ashx';
 export const appBaseUrlCloud = 'https://secure.digitalsignage.com';
@@ -68,7 +70,7 @@ export function appDb(state: IAppDb, action: any): IAppDb {
                 return queue;
             });
             return state;
-                                                      
+
         case EffectActions.EFFECT_QUEUE_SERVICE_SAVED:
             var index = state.fasterq.queues.findIndex((i_fasterqLineModel: FasterqQueueModel) => i_fasterqLineModel.queueId == action.payload.queue_id);
             state.fasterq.queues = state.fasterq.queues.update(index, (i_fasterqQueueModel: FasterqQueueModel) => {
@@ -116,6 +118,12 @@ export function appDb(state: IAppDb, action: any): IAppDb {
             var userModel = state.userModel;
             userModel = userModel.setTwoFactorRequired(false);
             state.userModel = userModel.setTime();
+            return state;
+
+        case StoreActions.ACTION_LIVELOG_UPDATE:
+            var liveLog: LiveLogModel = action.payload;
+            liveLog = liveLog.setKey<LiveLogModel>(LiveLogModel, 'date', moment().format('h:mm:ss MM/DD/YYYY'))
+            state.liveLog = state.liveLog.push(liveLog)
             return state;
 
         case EffectActions.EFFECT_AUTH_STATUS:

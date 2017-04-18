@@ -13,6 +13,7 @@ export const APP_INIT = 'APP_INIT';
 export const ACTION_INJECT_SDK = 'ACTION_INJECT_SDK';
 export const ACTION_TWO_FACTOR_REMOVED = 'ACTION_TWO_FACTOR_REMOVED';
 export const ACTION_UISTATE_UPDATE = 'ACTION_UISTATE_UPDATE';
+export const ACTION_LIVELOG_UPDATE = 'ACTION_LIVELOG_UPDATE';
 
 export enum AuthenticateFlags {
     NONE,

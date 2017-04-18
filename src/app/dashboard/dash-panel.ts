@@ -6,6 +6,7 @@ import {RedPepperService} from "../../services/redpepper.service";
 import {List} from "immutable";
 import {StationModel} from "../../models/StationModel";
 import {Observable} from "rxjs/Observable";
+import {LiveLogModel} from "../../models/live-log-model";
 
 @Component({
     selector: 'dash-panel',
@@ -30,6 +31,9 @@ export class DashPanel extends Compbaser implements AfterViewInit {
     m_resources$;
     m_lines$;
     m_timelines$;
+    m_liveLog:List<LiveLogModel>;
+    isBrandingDisabled: Observable<boolean>;
+
 
     constructor(private yp: YellowPepperService, private rp: RedPepperService) {
         super();
@@ -40,9 +44,19 @@ export class DashPanel extends Compbaser implements AfterViewInit {
         this.m_resources$ = this.yp.getResources();
         this.m_lines$ = this.yp.listenFasterqLines();
         this.m_timelines$ = this.yp.getTimelines();
-
+        this.isBrandingDisabled = this.yp.isBrandingDisabled();
         this._listenStationsConnection();
         this._listenLoadLines();
+        this._listenLiveLog();
+    }
+
+    _listenLiveLog() {
+        this.cancelOnDestroy(
+            this.yp.ngrxStore.select(store => store.appDb.liveLog)
+                .subscribe((i_liveLog) => {
+                    this.m_liveLog = i_liveLog;
+                }, (e) => console.error(e))
+        )
     }
 
     _listenLoadLines() {

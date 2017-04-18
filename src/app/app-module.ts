@@ -28,7 +28,7 @@ import {StoreModule} from "@ngrx/store";
 import {INITIAL_APPLICATION_STATE} from "../store/application.state";
 import {EffectsModule} from "@ngrx/effects";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
-import {AppdbAction} from "../store/actions/appdb.actions";
+import {ACTION_LIVELOG_UPDATE, AppdbAction} from "../store/actions/appdb.actions";
 import {AppDbEffects} from "../store/effects/appdb.effects";
 import {MsdbEffects} from "../store/effects/msdb.effects";
 import {environment} from "../environments/environment";
@@ -42,8 +42,8 @@ import "gsap";
 import "gsap/CSSPlugin";
 import "gsap/Draggable";
 import "gsap/TweenLite";
-import "gsap/ScrollToPlugin"; 
-import {Lib} from "../Lib";   
+import "gsap/ScrollToPlugin";
+import {Lib} from "../Lib";
 import {FontLoaderService} from "../services/font-loader-service";
 import {SimpleGridModule} from "../comps/simple-grid-module/SimpleGridModule";
 import {GlobalErrorHandler} from "../services/global-error-handler";
@@ -54,18 +54,19 @@ import {ResellerLogo} from "../comps/logo/reseller-logo";
 import {DashPanel} from "./dashboard/dash-panel";
 import {ServerAvg} from "./dashboard/server-avg";
 import {StorageUsed} from "./dashboard/storage-used";
+import {LiveLogModel} from "../models/live-log-model";
 
 // import "fabric"; // need to remove if we import via cli
 // import {ScreenTemplate} from "../comps/screen-template/screen-template";
 
 declare global {
     interface JQueryStatic {
-        base64:any;
-        knob:any;
-        gradientPicker:any;
-        timepicker:any;
-        contextmenu:any;
-        index:any;
+        base64: any;
+        knob: any;
+        gradientPicker: any;
+        timepicker: any;
+        contextmenu: any;
+        index: any;
     }
 }
 
@@ -83,7 +84,7 @@ export const providing = [CommBroker, WizardService, AUTH_PROVIDERS, RedPepperSe
     }
 ];
 
-const decelerations = [AppComponent, AutoLogin, LoginPanel, Logo, ResellerLogo ,Appwrap, Dashboard, Logout, NgMenu, NgMenuItem, ImgLoader, FasterqTerminal, DashPanel, ServerAvg, StorageUsed];
+const decelerations = [AppComponent, AutoLogin, LoginPanel, Logo, ResellerLogo, Appwrap, Dashboard, Logout, NgMenu, NgMenuItem, ImgLoader, FasterqTerminal, DashPanel, ServerAvg, StorageUsed];
 
 export function appReducer(state: any = INITIAL_APPLICATION_STATE, action: any) {
     if (environment.production) {
@@ -154,6 +155,7 @@ export class AppModule {
         this.ngmslibService.globalizeStringJS();
         Lib.Con(StringJS('app-loaded-and-ready').humanize().s);
         Lib.AlertOnLeave();
+        this.yp.dispatch(({type: ACTION_LIVELOG_UPDATE, payload: new LiveLogModel({event: 'app started'})}));
     }
 }
 

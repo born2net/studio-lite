@@ -6,6 +6,7 @@ import {EFFECT_LOAD_FASTERQ_LINES, EFFECT_LOAD_STATIONS} from "../../store/effec
 import {RedPepperService} from "../../services/redpepper.service";
 import {List} from "immutable";
 import {StationModel} from "../../models/StationModel";
+import {Observable} from "rxjs/Observable";
 
 @Component({
     selector: 'dash-panel',
@@ -30,7 +31,7 @@ export class DashPanel extends Compbaser implements AfterViewInit {
     m_resources$;
     m_lines$;
     m_timelines$;
-    
+
     constructor(private yp: YellowPepperService, private rp: RedPepperService) {
         super();
         this.m_lastSave$ = this.yp.ngrxStore.select(store => store.appDb.uiState.appSaved)
@@ -86,10 +87,12 @@ export class DashPanel extends Compbaser implements AfterViewInit {
         this.yp.ngrxStore.dispatch({type: EFFECT_LOAD_STATIONS, payload: {userData: this.rp.getUserData()}});
     }
 
-    @timeout(500)
     setTwitterWidth() {
-        jQuery('.twitter-timeline').css({width: '100%'});
-
+        Observable.interval(400)
+            .take(5)
+            .subscribe(() => {
+                jQuery('.twitter-timeline').css({width: '100%'});
+            })
     }
 
     destroy() {

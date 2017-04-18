@@ -15,38 +15,39 @@ import {UserModel} from "../../models/UserModel";
         '(input-blur)': 'onFormChange($event)'
     },
     template: `
-        <div>
-            <h3>Mini Dashboard</h3>
-            <div>
-                <chart style="position: relative; left: -150px" [options]="options"></chart>
-                <h4>user name: {{(userModel$ | async)?.getUser() }}</h4>
-                <h4>account type: {{(userModel$ | async)?.getAccountType()}}</h4>
-            </div>
-        </div>
+        <dash-panel-mini></dash-panel-mini>
+        <!--<div>-->
+            <!--<h3>Mini Dashboard!!!</h3>-->
+            <!--<div>-->
+                <!--<chart style="position: relative; left: -150px" [options]="options"></chart>-->
+                <!--<h4>user name: {{(userModel$ | async)?.getUser() }}</h4>-->
+                <!--<h4>account type: {{(userModel$ | async)?.getAccountType()}}</h4>-->
+            <!--</div>-->
+        <!--</div>-->
     `
 
 })
 export class DashboardProps extends Compbaser {
 
-    options: Object;
-    public userModel$: Observable<UserModel>;
+    // options: Object;
+    // public userModel$: Observable<UserModel>;
 
     constructor(private yp: YellowPepperService) {
         super();
-        this.userModel$ = this.yp.ngrxStore.select(store => store.appDb.userModel);
-        this.options = {
-            chart: {
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false,
-                type: 'pie',
-                height: '250'
-            },
-            title : { text : 'simple chart' },
-            series: [{
-                data: [29.9, 71.5, 106.4, 129.2],
-            }]
-        };
+        // this.userModel$ = this.yp.ngrxStore.select(store => store.appDb.userModel);
+        // this.options = {
+        //     chart: {
+        //         plotBackgroundColor: null,
+        //         plotBorderWidth: null,
+        //         plotShadow: false,
+        //         type: 'pie',
+        //         height: '250'
+        //     },
+        //     title : { text : 'simple chart' },
+        //     series: [{
+        //         data: [29.9, 71.5, 106.4, 129.2],
+        //     }]
+        // };
     }
 
     destroy() {

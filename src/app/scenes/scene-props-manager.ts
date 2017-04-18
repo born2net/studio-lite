@@ -30,7 +30,7 @@ import {CommBroker} from "../../services/CommBroker";
                 <block-prop-container></block-prop-container>
             </div>
             <div *ngSwitchCase="m_sidePropsEnum.miniDashboard">
-                <h5>scene dashboard</h5>
+                <dash-panel-mini></dash-panel-mini>
             </div>
         </ul>
     `,

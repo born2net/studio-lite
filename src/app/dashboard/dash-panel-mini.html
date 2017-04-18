@@ -1,0 +1,84 @@
+<small class="debug">{{me}}</small>
+<!--<div class="row">-->
+    <!--<br/>-->
+    <!--<div class="col-sm-4 col-lg-2">-->
+        <!--<Infobox [value1]="(m_campaigns$ | async)?.size" [value3]="'total campaigns'" [icon]="'fa-bars'"></Infobox>-->
+    <!--</div>-->
+    <!--<div class="col-sm-4 col-lg-2">-->
+        <!--<Infobox [value1]="(m_resources$ | async)?.size" [value3]="'total resources'" [icon]="'fa-certificate'"></Infobox>-->
+    <!--</div>-->
+    <!--<div class="col-sm-4 col-lg-2">-->
+        <!--<Infobox [value1]="(m_scenes$ | async)?.length" [value3]="'total scenes'" [icon]="'fa-crosshairs'"></Infobox>-->
+    <!--</div>-->
+    <!--<div class="col-sm-4 col-lg-2">-->
+        <!--<Infobox [value1]="(m_timelines$ | async)?.size" [value3]="'total timelines'" [icon]="'fa-list'"></Infobox>-->
+    <!--</div>-->
+    <!--<div class="col-sm-4 col-lg-2">-->
+        <!--<Infobox [value1]="(m_lines$ | async)?.size" [value3]="'fasterq lines'" [icon]="'fa-user-o'"></Infobox>-->
+    <!--</div>-->
+    <!--<div class="col-sm-4 col-lg-2">-->
+        <!--<Infobox [value1]="(m_userModel$ | async)?.getRememberMe() == true ? 'ON' : 'OFF'" [value3]="'auto login'" [icon]="'fa-circle-o'"></Infobox>-->
+    <!--</div>-->
+<!--</div>-->
+
+<!--<div class="row">-->
+    <!--<br/>-->
+    <!--<div class="col-sm-6 col-lg-4">-->
+    <!--</div>-->
+    <!--<div class="col-sm-6 col-lg-4">-->
+        <!--&lt;!&ndash;<storage-used style="width: 100%"></storage-used>&ndash;&gt;-->
+    <!--</div>-->
+    <!--<div class="responsive-pad-top col-sm-12 col-lg-4">-->
+        <!--<div class="row">-->
+            <!--<div class="col-xm-12">-->
+                <!--<Infobox style="color: green" [value1]="m_totalStationsConnected" [value3]="'stations connected'" icon="fa-tv"></Infobox>-->
+            <!--</div>-->
+            <!--<div class="col-xm-12">-->
+                <!--<Infobox style="color: red" [value1]="m_totalStationsDisconnected" [value3]="'stations disconnected'" icon="fa-tv"></Infobox>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<!--<div class="row" >-->
+    <!--<br/>-->
+    <!--<div *ngIf="(isBrandingDisabled | async)==true" class="col-sm-12 col-lg-4">-->
+        <!--<a class="twitter-timeline" href="https://twitter.com/MediaSignage" data-widget-id="378653740623863808">Tweets by @MediaSignage</a>-->
+        <!--&lt;!&ndash;<div *ngIf="(isBrandingDisabled | async)==false" style="border: 1px solid #dbdbdb; background-color: #fafafa; height: 400px">AAAA</div>&ndash;&gt;-->
+    <!--</div>-->
+    <!--<div [ngClass]="{'col-sm-12':true, 'col-lg-8': (isBrandingDisabled | async)==true}">-->
+        <!--<div class="row">-->
+            <!--<div class="col-sm-12 col-lg-6">-->
+                <!--<Infobox [value1]="(m_userModel$ | async)?.user()" [value3]="'business id ' + (m_userModel$ | async)?.businessId()" [icon]="'fa-user-circle-o'"></Infobox>-->
+            <!--</div>-->
+            <!--<div class="col-sm-12 col-lg-6">-->
+                <!--<Infobox [value1]="(m_lastSave$ | async)" [value3]="'last save'" [icon]="'fa-save'"></Infobox>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="row" style="margin: 0px 0px 10px 0px">-->
+            <!--<div class="col-xs-12" style="border: 1px solid #dbdbdb; background-color: #fafafa; height: 275px; padding: 0">-->
+                <!--<div style="overflow-x: scroll">-->
+                    <!--<div style="width: 100%; height: 250px">-->
+                        <!--<simpleGridTable #simpleGrid>-->
+                            <!--<thead>-->
+                            <!--<tr>-->
+                                <!--<th>time</th>-->
+                                <!--<th>action</th>-->
+                            <!--</tr>-->
+                            <!--</thead>-->
+                            <!--<tbody>-->
+                            <!--<tr class="simpleGridRecord" simpleGridRecord *ngFor="let item of m_liveLog; let index=index" [item]="item" [index]="index">-->
+                                <!--<td simpleGridData style="width: 20%" [editable]="false" field="date" [item]="item"></td>-->
+                                <!--<td simpleGridData style="width: 80%" [editable]="false" field="event" [item]="item"></td>-->
+                            <!--</tr>-->
+                            <!--</tbody>-->
+                        <!--</simpleGridTable>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+
+

@@ -50,7 +50,7 @@ import {RedPepperService} from "../../services/redpepper.service";
             </div>
 
             <div *ngSwitchCase="m_sidePropsEnum.miniDashboard">
-                <h4>resource dashboard</h4>
+                <dash-panel-mini></dash-panel-mini>
             </div>
 
         </ul>

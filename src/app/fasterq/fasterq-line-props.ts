@@ -72,7 +72,7 @@ import {Lib} from "../../Lib";
                 </form>
             </div>
             <div *ngSwitchCase="m_sidePropsEnum.miniDashboard">
-                <h4>line dashboard</h4>
+                <dash-panel-mini></dash-panel-mini>
             </div>
             <div *ngSwitchCase="m_sidePropsEnum.fasterqQueueProps">
                 <div class="inner">

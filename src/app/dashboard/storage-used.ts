@@ -3,6 +3,8 @@ import {Http} from "@angular/http";
 import * as _ from 'lodash';
 import {Observable} from "rxjs/Observable";
 import {Compbaser} from "ng-mslib";
+import {RedPepperService} from "../../services/redpepper.service";
+import {Lib} from "../../Lib";
 
 @Component({
     selector: 'storage-used',
@@ -27,19 +29,22 @@ export class StorageUsed extends Compbaser {
     _chart: any;
     _ready = false;
 
-    constructor(private _http: Http, private cd:ChangeDetectorRef) {
+
+    constructor(private _http: Http, private cd:ChangeDetectorRef, private rp:RedPepperService) {
         super();
-        this.serverStatus();
+        var totalCapacity = this.rp.getUserData().resellerID == 1 ? 1000 : 25000;
+        var gigs = totalCapacity / 1000 + 'GB';
+        var bytesTotal = 0;
+        this.rp.getResources().forEach((recResources)=>{
+            if (recResources['change_type'] != 3)
+                bytesTotal = bytesTotal + parseInt(recResources['resource_bytes_total']);
+        });
+        var used = Lib.ParseToFloatDouble((Math.ceil(bytesTotal / 1000000) / totalCapacity) * 100);
+        var free = 100 - used;
 
-        // var totalCapacity = pepper.getUserData().resellerID == 1 ? 1000 : 25000;
-        // $(Elements.CLOUD_STORAGE_CAPACITY).text(totalCapacity / 1000 + 'GB');
-        // var recResources = pepper.getResources();
-        // $(recResources).each(function (i) {
-        //     if (recResources[i]['change_type'] != 3)
-        //         bytesTotal = bytesTotal + parseInt(recResources[i]['resource_bytes_total']);
-        // });
-        
-
+        // if (String(mbTotalPercentRounded).length == 1 && String(mbTotalPercentRounded) != '0')
+        //     mbTotalPercentRounded = '0' + mbTotalPercentRounded;
+        // console.log(`Used %${mbTotalPercentRounded} of ${gigs}gb` );
         this._options = {
             chart: {
                 type: 'pie',
@@ -116,41 +121,57 @@ export class StorageUsed extends Compbaser {
                     borderWidth: 0
                 }
             },
-            series: [{data: [0]}]
+            series: [{
+                name: 'cloud storage',
+                colorByPoint: true,
+                data: [{
+                    name: '% used',
+                    y: used
+                }, {
+                    name: '% free',
+                    y: free,
+                    sliced: true,
+                    selected: true
+                }]
+            }]
         };
+        this._ready = true;
+
     }
 
     saveInstance(chartInstance) {
         this._chart = chartInstance;
+        this.cd.markForCheck();
+
     }
 
-    public serverStatus() {
-        this.cancelOnDestroy(
-            Observable.interval(2000)
-                .startWith(0)
-                .switchMap(() =>
-                    this._http.get(`https://secure.digitalsignage.com/msPingServersGuest`)
-                        .map(result => {
-                            this._ready = true;
-                            this.cd.markForCheck();
-                            result = result.json();
-                            var avg = 0, t = 0;
-                            _.forEach(result, (stats) => {
-                                t++;
-                                avg = Number(stats) + avg;
-                            });
-                            if (!this._chart)
-                                return 0;
-                            return avg / t;
-                        })
-                )
-                .subscribe((value) => {
-                    if (!this._chart)
-                        return;
-                    var series = this._chart.series[0],
-                        shift = series.data.length > 20;
-                    this._chart.series[0].addPoint(value, true, shift);
-                }, (e) => console.error(e))
-        );
-    }
+    // public serverStatus() {
+    //     this.cancelOnDestroy(
+    //         Observable.interval(2000)
+    //             .startWith(0)
+    //             .switchMap(() =>
+    //                 this._http.get(`https://secure.digitalsignage.com/msPingServersGuest`)
+    //                     .map(result => {
+    //                         this._ready = true;
+    //                         this.cd.markForCheck();
+    //                         result = result.json();
+    //                         var avg = 0, t = 0;
+    //                         _.forEach(result, (stats) => {
+    //                             t++;
+    //                             avg = Number(stats) + avg;
+    //                         });
+    //                         if (!this._chart)
+    //                             return 0;
+    //                         return avg / t;
+    //                     })
+    //             )
+    //             .subscribe((value) => {
+    //                 if (!this._chart)
+    //                     return;
+    //                 var series = this._chart.series[0],
+    //                     shift = series.data.length > 20;
+    //                 this._chart.series[0].addPoint(value, true, shift);
+    //             }, (e) => console.error(e))
+    //     );
+    // }
 }

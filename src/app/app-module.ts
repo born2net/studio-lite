@@ -53,7 +53,7 @@ import {WizardService} from "../services/wizard-service";
 import {ResellerLogo} from "../comps/logo/reseller-logo";
 import {DashPanel} from "./dashboard/dash-panel";
 import {ServerAvg} from "./dashboard/server-avg";
-import {StorageUsed} from "./dashboard/stoarge-used";
+import {StorageUsed} from "./dashboard/storage-used";
 
 // import "fabric"; // need to remove if we import via cli
 // import {ScreenTemplate} from "../comps/screen-template/screen-template";

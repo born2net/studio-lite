@@ -2702,10 +2702,8 @@ export class RedPepperService {
      @return {Array} all records of all resources in current account
      **/
     getResources() {
-
         var resources = [];
-
-        $(this.databaseManager.table_resources().getAllPrimaryKeys()).each(function (k, resource_id) {
+        $(this.databaseManager.table_resources().getAllPrimaryKeys()).each((k, resource_id) => {
             var recResource = this.databaseManager.table_resources().getRec(resource_id);
             // dont process deleted resources
             if (recResource['change_type'] == 3)

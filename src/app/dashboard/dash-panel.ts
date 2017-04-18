@@ -1,7 +1,6 @@
 import {AfterViewInit, Component} from "@angular/core";
 import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
-import {timeout} from "../../decorators/timeout-decorator";
 import {EFFECT_LOAD_FASTERQ_LINES, EFFECT_LOAD_STATIONS} from "../../store/effects/appdb.effects";
 import {RedPepperService} from "../../services/redpepper.service";
 import {List} from "immutable";

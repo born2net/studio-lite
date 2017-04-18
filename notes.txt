@@ -41,15 +41,20 @@ FasterqRemoteStatus (base64):
 FasterqTerminal (rc4):
     http://localhost:4208/index.html?data=5b6bcb27d4547657cfe4e021e1c6761fe8b4a33c3d62983ee8f6b0ccbded7b8a6578e47862f0aca0ca7ac070a1a27121fe17f5c496483ee08cf0a061440f277a3e49dcaaf3bb198c71033ed398d60166e3b82c9153f4c3a6d346f7d11b3016
 
-auto-login local demo
-    http://localhost:4208/index.html?param=dXNlcj1kZW1vX2xpdGVAbXMuY29tLHBhc3M9cGFzc3dvcmQ=
+auto-login local demo_lite
+	http://localhost:4208/index.html?param=dXNlcj1kZW1vX2xpdGVAbXMuY29tLHBhc3M9cGFzc3dvcmQ=
 
-auto-login remote demo
-    https://secure.digitalsignage.com/studioweb/index.html?param=dXNlcj1kZW1vX2xpdGVAbXMuY29tLHBhc3M9cGFzc3dvcmQ=
+auto-login remote demo_lite
+	https://secure.digitalsignage.com/studioweb/index.html?param=dXNlcj1kZW1vX2xpdGVAbXMuY29tLHBhc3M9cGFzc3dvcmQ=
 
 auto-login local lite22
-    http://localhost:4208/index.html?param=dXNlcj1saXRlMjJAbXMuY29tLHBhc3M9MTIzMTIz
+	http://localhost:4208/index.html?param=dXNlcj1saXRlMjJAbXMuY29tLHBhc3M9MTIzMTIz
 
+auto-login local lite90
+	http://localhost:4208/index.html?param=dXNlcj1saXRlOTBAbXMuY29tLHBhc3M9MTIzMTIz
+
+auto-login local lite28
+	http://localhost:4208/index.html?param=dXNlcj1saXRlMjhAbXMuY29tLHBhc3M9MTIzMTIz
 
 ==================================================================================================================
 

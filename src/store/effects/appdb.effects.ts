@@ -315,8 +315,7 @@ export class AppDbEffects {
                 var str = jQuery.base64.decode(s64);
                 return boundCallback(this, str)
             }).map(response => {
-
-                if (_.isEmpty(response.Stations))
+                if (_.isNull(response) || _.isEmpty(response.Stations))
                     return List([]);
 
                 var totalBranches = this.rp.getStationBranchTotal();

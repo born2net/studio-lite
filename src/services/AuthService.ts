@@ -77,11 +77,11 @@ export class AuthService {
     private enterApplication() {
         setTimeout(() => {
             if (Lib.DevMode()) {
-                // var nav = '/App1/Campaigns';
-                this.router.navigate(['/App1/Dashboard']);
+                var nav = '/App1/Scenes';
+                // this.router.navigate(['/App1/Dashboard']);
                 // Lib.Con(`in dev mode entering:  ${nav}`);
                 // this.router.navigate([this.requestedRoute]);
-                // this.router.navigate([nav]);
+                this.router.navigate([nav]);
             } else {
                 console.log('requested route ' + this.requestedRoute);
                 console.log('entering /App1/Dashboard');
@@ -111,9 +111,8 @@ export class AuthService {
             // var id = this.activatedRoute.snapshot.queryParams['id'];
             var id = this.activatedRoute.snapshot.queryParams['param'];
             if (!_.isUndefined(id)) {
-                id = id.replace(/=/ig, '');
                 try {
-                    credentials = this.ngmslibService.base64().decode(id);
+                    credentials = this.decodeBase64(id);
                     var local = this.activatedRoute.snapshot.queryParams['local'];
                     var credentialsArr = credentials.match(/user=(.*),pass=(.*)/);
                     i_user = credentialsArr[1];
@@ -121,7 +120,7 @@ export class AuthService {
                     i_remember = 'false';
                     console.log('auth with url ' + i_user);
                 } catch (e) {
-                    console.error('error problem decoding url base65 params on login ' + e);
+                    console.error('credentials error problem decoding url base64 params on login ' + e);
                 }
             }
         }
@@ -133,6 +132,19 @@ export class AuthService {
             // no valid user/pass found so go to user login, end of process
             console.log(`auth no valids`);
             this.router.navigate(['/UserLogin']);
+        }
+    }
+
+    private decodeBase64(i_credentials){
+        try {
+            return this.ngmslibService.base64().decode(i_credentials);
+        } catch (e) {
+            try {
+                i_credentials = i_credentials.replace(/=/ig, '');
+                return this.ngmslibService.base64().decode(i_credentials);
+            } catch (e) {
+                console.error('credentials error problem decoding url base64 params on login ' + e);
+            }
         }
     }
 

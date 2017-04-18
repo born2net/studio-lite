@@ -83,8 +83,8 @@ export class ServerAvg extends Compbaser {
             },
             yAxis: [{
                 min: 0,
-                title: {
-                    text: 'average response time'
+                title: {  
+                    text: 'average cloud response'
                 }
             }, {
                 title: {

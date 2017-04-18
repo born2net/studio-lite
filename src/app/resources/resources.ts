@@ -6,9 +6,10 @@ import {List} from "immutable";
 import {Observable} from "rxjs";
 import {Compbaser} from "ng-mslib";
 import {IUiState} from "../../store/store.data";
-import {ACTION_UISTATE_UPDATE, SideProps} from "../../store/actions/appdb.actions";
+import {ACTION_LIVELOG_UPDATE, ACTION_UISTATE_UPDATE, SideProps} from "../../store/actions/appdb.actions";
 import {BlockService} from "../blocks/block-service";
 import {MainAppShowStateEnum} from "../app-component";
+import {LiveLogModel} from "../../models/live-log-model";
 
 @Component({
     // changeDetection: ChangeDetectionStrategy.OnPush,
@@ -154,6 +155,7 @@ export class Resources extends Compbaser {
         }
         let uiState: IUiState = {mainAppState: MainAppShowStateEnum.SAVE}
         this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
+        this.yp.dispatch(({type: ACTION_LIVELOG_UPDATE, payload: new LiveLogModel({event: 'uploaded resource'})}));
     }
 
     _onSelected(i_resource: ResourcesModel) {

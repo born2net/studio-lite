@@ -11,12 +11,13 @@ import {LocalStorage} from "../services/LocalStorage";
 import {YellowPepperService} from "../services/yellowpepper.service";
 import {RedPepperService} from "../services/redpepper.service";
 import {IUiState} from "../store/store.data";
-import {ACTION_UISTATE_UPDATE} from "../store/actions/appdb.actions";
+import {ACTION_LIVELOG_UPDATE, ACTION_UISTATE_UPDATE} from "../store/actions/appdb.actions";
 import {ModalComponent} from "ng2-bs3-modal/ng2-bs3-modal";
 import {Map, List} from 'immutable';
 import {Consts} from "../interfaces/Consts";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import * as moment from 'moment'
+import {LiveLogModel} from "../models/live-log-model";
 
 enum MainAppShowModeEnum {
     MAIN,
@@ -159,6 +160,7 @@ export class AppComponent implements AfterViewInit {
                     callback: () => {
                         let uiState: IUiState = {mainAppState: MainAppShowStateEnum.SAVE}
                         this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
+                        this.yp.dispatch(({type: ACTION_LIVELOG_UPDATE, payload: new LiveLogModel({event: 'app saved'})}));
                     }
                 },
                 danger: {
@@ -173,6 +175,7 @@ export class AppComponent implements AfterViewInit {
                         this.syncOnSave = true;
                         let uiState: IUiState = {mainAppState: MainAppShowStateEnum.SAVE}
                         this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
+                        this.yp.dispatch(({type: ACTION_LIVELOG_UPDATE, payload: new LiveLogModel({event: 'app saved and restarting all stations'})}));
                     }
                 },
                 main: {
@@ -197,6 +200,7 @@ export class AppComponent implements AfterViewInit {
 
                     case MainAppShowStateEnum.SAVE_AND_PREVIEW: {
                         this.save(() => {
+                            this.yp.dispatch(({type: ACTION_LIVELOG_UPDATE, payload: new LiveLogModel({event: 'loading preview'})}));
                             this.viewMode(MainAppShowModeEnum.PREVIEW);
                         });
                         break;

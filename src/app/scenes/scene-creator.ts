@@ -7,10 +7,11 @@ import {Lib} from "../../Lib";
 import {RedPepperService} from "../../services/redpepper.service";
 import {ModalComponent} from "ng2-bs3-modal/ng2-bs3-modal";
 import {IUiState} from "../../store/store.data";
-import {ACTION_UISTATE_UPDATE} from "../../store/actions/appdb.actions";
+import {ACTION_LIVELOG_UPDATE, ACTION_UISTATE_UPDATE} from "../../store/actions/appdb.actions";
 import {ToastsManager} from "ng2-toastr";
 import {PLACEMENT_IS_SCENE} from "../../interfaces/Consts";
 import {MainAppShowStateEnum} from "../app-component";
+import {LiveLogModel} from "../../models/live-log-model";
 
 @Component({
     selector: 'scene-creator',
@@ -123,6 +124,7 @@ export class SceneCreator extends Compbaser implements AfterViewInit {
             this.rp.injectPseudoScenePlayersIDs(i_SceneId);
             let uiState: IUiState = {mainAppState: MainAppShowStateEnum.SAVE}
             this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
+            this.yp.dispatch(({type: ACTION_LIVELOG_UPDATE, payload: new LiveLogModel({event: 'scene imported id: ' + i_SceneId})}));
         });
     }
 

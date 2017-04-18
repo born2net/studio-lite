@@ -7,9 +7,10 @@ import {RedPepperService} from "../../services/redpepper.service";
 import {timeout} from "../../decorators/timeout-decorator";
 import {Observable} from "rxjs";
 import {IUiState} from "../../store/store.data";
-import {ACTION_UISTATE_UPDATE, SideProps} from "../../store/actions/appdb.actions";
+import {ACTION_LIVELOG_UPDATE, ACTION_UISTATE_UPDATE, SideProps} from "../../store/actions/appdb.actions";
 import * as _ from "lodash";
 import {simpleRegExp} from "../../Lib";
+import {LiveLogModel} from "../../models/live-log-model";
 
 enum CampaignPlaylistModeEnum  {
     SEQUENCER,
@@ -264,6 +265,7 @@ export class CampaignProps extends Compbaser {
                     this.rp.reduxCommit();
                     var uiState: IUiState = {uiSideProps: SideProps.miniDashboard}
                     this.yp.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
+                    this.yp.dispatch(({type: ACTION_LIVELOG_UPDATE, payload: new LiveLogModel({event: 'campaign deleted ' + campaignId})}));
                 }
             }
         });

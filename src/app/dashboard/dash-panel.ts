@@ -7,6 +7,7 @@ import {List} from "immutable";
 import {StationModel} from "../../models/StationModel";
 import {Observable} from "rxjs/Observable";
 import {LiveLogModel} from "../../models/live-log-model";
+import {ACTION_LIVELOG_UPDATE} from "../../store/actions/appdb.actions";
 
 @Component({
     selector: 'dash-panel',
@@ -61,6 +62,7 @@ export class DashPanel extends Compbaser implements AfterViewInit {
 
     _listenLoadLines() {
         this.yp.ngrxStore.dispatch({type: EFFECT_LOAD_FASTERQ_LINES, payload: {}})
+        this.yp.dispatch(({type: ACTION_LIVELOG_UPDATE, payload: new LiveLogModel({event: 'updating remote stations status'})}));
     }
 
     _listenStationsConnection() {

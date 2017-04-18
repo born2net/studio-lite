@@ -2,13 +2,14 @@ import {Component, EventEmitter, Output} from "@angular/core";
 import {Observable} from "rxjs";
 import {Compbaser} from "ng-mslib";
 import {RedPepperService} from "../../services/redpepper.service";
-import {ACTION_UISTATE_UPDATE, SideProps} from "../../store/actions/appdb.actions";
+import {ACTION_LIVELOG_UPDATE, ACTION_UISTATE_UPDATE, SideProps} from "../../store/actions/appdb.actions";
 import {IUiState} from "../../store/store.data";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {ToastsManager} from "ng2-toastr";
 import {EFFECT_ADD_FASTERQ_LINE, EFFECT_LOAD_FASTERQ_ANALYTICS, EFFECT_LOAD_FASTERQ_LINES, EFFECT_LOAD_FASTERQ_QUEUES, EFFECT_REMOVE_FASTERQ_LINE} from "../../store/effects/appdb.effects";
 import {FasterqLineModel} from "../../models/fasterq-line-model";
 import {List} from "immutable";
+import {LiveLogModel} from "../../models/live-log-model";
 
 @Component({
     selector: 'fasterq-manager',
@@ -106,6 +107,7 @@ export class FasterqManager extends Compbaser {
             type: EFFECT_ADD_FASTERQ_LINE,
             payload: {name: 'new line', business_id: this.rp.getUserData().businessID}
         })
+        this.yp.dispatch(({type: ACTION_LIVELOG_UPDATE, payload: new LiveLogModel({event: 'created new fasterq line'})}));
     }
 
     _remove() {
@@ -120,6 +122,7 @@ export class FasterqManager extends Compbaser {
             this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
             this.m_selectedLine = null;
             this.selectedIdx = -1;
+            this.yp.dispatch(({type: ACTION_LIVELOG_UPDATE, payload: new LiveLogModel({event: 'removed fasterq line id: ' + this.m_selectedLine.lineId})}));
         });
     }
 

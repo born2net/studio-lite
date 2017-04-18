@@ -9,6 +9,8 @@ import {IUiStateCampaign} from "../../store/store.data";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {RedPepperService} from "../../services/redpepper.service";
 import {IScreenTemplateData} from "../../interfaces/IScreenTemplate";
+import {ACTION_LIVELOG_UPDATE} from "../../store/actions/appdb.actions";
+import {LiveLogModel} from "../../models/live-log-model";
 
 @Component({
     selector: 'campaign-layout',
@@ -74,13 +76,12 @@ export class CampaignLayout extends Compbaser {
     private getNewCampaignParams() {
         return this.yp.getNewCampaignParmas()
             .subscribe((value: IUiStateCampaign) => {
-                console.log(this.m_onNewCampaignMode);
                 if (this.m_onNewCampaignMode) {
                     this.m_addToExistingCampaignMode = false;
-                    console.log(this.m_addToExistingCampaignMode);
                     this.m_resolution = value.campaignCreateResolution;
                     this.m_orientation = value.campaignCreateOrientation;
                     this.m_campaignName = value.campaignCreateName;
+                    this.yp.dispatch(({type: ACTION_LIVELOG_UPDATE, payload: new LiveLogModel({event: 'campaign created ' + this.m_campaignName})}));
                 } else {
                     this.m_addToExistingCampaignMode = true;
                     var recBoard = this.rp.getGlobalBoardFromCampaignId(value.campaignSelected)

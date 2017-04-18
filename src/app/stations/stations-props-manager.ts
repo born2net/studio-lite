@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, ViewChild} from "@angular/core";
 import {Compbaser} from "ng-mslib";
 import {Observable} from "rxjs";
-import {SideProps} from "../../store/actions/appdb.actions";
+import {ACTION_LIVELOG_UPDATE, SideProps} from "../../store/actions/appdb.actions";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {RedPepperService} from "../../services/redpepper.service";
 import {StationModel} from "../../models/StationModel";
@@ -13,6 +13,7 @@ import {List} from "immutable";
 import {Http} from "@angular/http";
 import {LazyImage} from "../../comps/lazy-image/lazy-image";
 import {ToastsManager} from "ng2-toastr";
+import {LiveLogModel} from "../../models/live-log-model";
 
 @Component({
     selector: 'stations-props-manager',
@@ -184,6 +185,7 @@ export class StationsPropsManager extends Compbaser {
     }
 
     _onCommand(i_command) {
+        this.yp.dispatch(({type: ACTION_LIVELOG_UPDATE, payload: new LiveLogModel({event: 'send station event ' + i_command})}));
         switch (i_command) {
             case 'play': {
                 this.rp.sendCommand('start', this.m_selectedStation.id, () => {
@@ -245,6 +247,7 @@ export class StationsPropsManager extends Compbaser {
         this.shouldToggle != this.shouldToggle;
         this.rp.sendEvent(this.contGroup.controls.m_eventValue.value, this.m_selectedStation.id, function () {
         });
+        this.yp.dispatch(({type: ACTION_LIVELOG_UPDATE, payload: new LiveLogModel({event: 'send station event ' + this.contGroup.controls.m_eventValue.value})}));
     }
 
     @timeout()

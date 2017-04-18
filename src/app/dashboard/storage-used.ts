@@ -5,6 +5,9 @@ import {Observable} from "rxjs/Observable";
 import {Compbaser} from "ng-mslib";
 import {RedPepperService} from "../../services/redpepper.service";
 import {Lib} from "../../Lib";
+import {LiveLogModel} from "../../models/live-log-model";
+import {ACTION_LIVELOG_UPDATE} from "../../store/actions/appdb.actions";
+import {YellowPepperService} from "../../services/yellowpepper.service";
 
 @Component({
     selector: 'storage-used',
@@ -30,7 +33,7 @@ export class StorageUsed extends Compbaser {
     _ready = false;
 
 
-    constructor(private _http: Http, private cd:ChangeDetectorRef, private rp:RedPepperService) {
+    constructor(private yp: YellowPepperService, private cd:ChangeDetectorRef, private rp:RedPepperService) {
         super();
         var totalCapacity = this.rp.getUserData().resellerID == 1 ? 1000 : 25000;
         var gigs = totalCapacity / 1000 + 'GB';
@@ -136,7 +139,6 @@ export class StorageUsed extends Compbaser {
             }]
         };
         this._ready = true;
-
     }
 
     saveInstance(chartInstance) {

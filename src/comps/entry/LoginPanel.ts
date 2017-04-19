@@ -17,6 +17,13 @@ import {UserModel} from "../../models/UserModel";
 import {AuthenticateFlags} from "../../store/actions/appdb.actions";
 import {Compbaser, NgmslibService} from "ng-mslib";
 
+enum ViewMod {
+    LOGIN,
+    FORGOT_PASSWORD,
+    CHANGE_PASSWORD,
+    CHANGE_BUSINESS_NAME
+}
+
 @Injectable()
 @Component({
     selector: 'LoginPanel',
@@ -60,44 +67,86 @@ import {Compbaser, NgmslibService} from "ng-mslib";
             transition(':leave', animate('500ms cubic-bezier(.17,.67,.83,.67)'))
         ])
     ],
+    styles: [`
+        a {
+            color: gray;
+        }
+
+        a:visited {
+            color: gray;
+        }
+    `],
     template: `
-        <div [@loginState]="loginState" class="login-page" id="appLogin">
+        <ul [@loginState]="loginState" class="login-page" id="appLogin">
+            <br/>
+            <br/>
             <br/>
             <br/>
             <form class="form-signin" role="form">
-                <h2 class="form-signin-heading"></h2>
-                <input (keyup.enter)="passFocus()" #userName id="userName" spellcheck="false" type="text" name="m_user" [(ngModel)]="m_user" class="input-underline input-lg form-control" placeholder="user name" required autofocus>
-                <input (keyup.enter)="onClickedLogin()" #userPass id="userPass" type="password" [(ngModel)]="m_pass" name="m_pass" class="input-underline input-lg form-control" placeholder="password" required>
-                <div [@showTwoFactor]="m_showTwoFactor" *ngIf="m_showTwoFactor">
-                    <br/>
-                    <br/>
-                    <span style="color: #989898; position: relative; left: -40px; top: 34px" class="fa fa-key fa-2x pull-right"></span>
-                    <input #twoFactor spellcheck="false" type="text" name="m_twoFactor" [(ngModel)]="m_twoFactor" class="input-underline input-lg form-control" placeholder="enter two factor key" required autofocus>
-                    <br/>
-                    <br/>
-                </div>
-                <br/>
-                <a id="loginButton" (click)="onClickedLogin()" type="submit" class="btn rounded-btn">  login to your account
-                    <span *ngIf="m_showTwoFactor" style="font-size: 9px; max-height: 15px; display: block; padding: 0; margin: 0; position: relative; top: -20px">with Google authenticator</span>
-                </a>&nbsp;
-                <br/>
-                <div *ngIf="!m_showTwoFactor">
-                    <label class="checkbox" style="padding-left: 20px">
-                        <input #rememberMe type="checkbox" [checked]="m_rememberMe" (change)="m_rememberMe = rememberMe.checked"/>
-                        <span style="color: gray"> remember me for next time </span>
-                    </label>
-                </div>
-                <br/>
-                <br/>
-                <br/>
-                <!--<a href="http://www.digitalsignage.com/_html/benefits.html" target="_blank">not an enterprise member? learn more</a>-->
-                <!-- todo: add forgot password in v2-->
-                <div id="languageSelectionLogin"></div>
+                <ul [ngSwitch]="m_currentViewMode">
+                    <div *ngSwitchCase="m_viewMod.LOGIN">
+                        <h2 class="form-signin-heading"></h2>
+                        <input (keyup.enter)="passFocus()" #userName id="userName" spellcheck="false" type="text" name="m_user" [(ngModel)]="m_user" class="input-underline input-lg form-control" placeholder="user name" required autofocus>
+                        <input (keyup.enter)="onClickedLogin()" #userPass id="userPass" type="password" [(ngModel)]="m_pass" name="m_pass" class="input-underline input-lg form-control" placeholder="password" required>
+                        <div [@showTwoFactor]="m_showTwoFactor" *ngIf="m_showTwoFactor">
+                            <br/>
+                            <br/>
+                            <span style="color: #989898; position: relative; left: -40px; top: 34px" class="fa fa-key fa-2x pull-right"></span>
+                            <input #twoFactor spellcheck="false" type="text" name="m_twoFactor" [(ngModel)]="m_twoFactor" class="input-underline input-lg form-control" placeholder="enter two factor key" required autofocus>
+                            <br/>
+                            <br/>
+                        </div>
+                        <br/>
+                        <a id="loginButton" style="width: 280px" (click)="onClickedLogin()" type="submit" class="btn rounded-btn"> login to your account
+                            <span *ngIf="m_showTwoFactor" style="font-size: 9px; max-height: 15px; display: block; padding: 0; margin: 0; position: relative; top: -20px">with Google authenticator</span>
+                        </a>&nbsp;
+                        <br/>
+                        <div style="width: 280px; position: relative">
+                            <div class="pull-left" *ngIf="!m_showTwoFactor">
+                                <label class="checkbox" style="padding-left: 20px">
+                                    <input #rememberMe type="checkbox" [checked]="m_rememberMe" (change)="m_rememberMe = rememberMe.checked"/>
+                                    <span style="color: gray"> remember me </span>
+                                </label>
+                            </div>
+                            <div style="text-align: right" id="loginExtras" class="pull-right">
+                                <a id="forgotPassword" (click)="$event.preventDefault(); m_currentViewMode = m_viewMod.FORGOT_PASSWORD" href="#">forgot password</a>
+                                <br/>
+                                <a id="changePassword" (click)="$event.preventDefault(); m_currentViewMode = m_viewMod.CHANGE_PASSWORD" href="#">change password</a>
+                                <br/>
+                                <a id="changeBusiness" (click)="$event.preventDefault(); m_currentViewMode = m_viewMod.CHANGE_BUSINESS_NAME" href="#">change business name</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div *ngSwitchCase="m_viewMod.FORGOT_PASSWORD">
+                        <h2 class="form-signin-heading"></h2>
+                        <input (keyup.enter)="passFocus()" #userName id="userName" spellcheck="false" type="text" name="m_user" [(ngModel)]="m_user" class="input-underline input-lg form-control" placeholder="user name" required autofocus>
+                        <br/>
+                        <a  style="width: 280px" (click)="onClickedLogin()" type="submit" class="btn rounded-btn"> reset your password
+                            <span *ngIf="m_showTwoFactor" style="font-size: 9px; max-height: 15px; display: block; padding: 0; margin: 0; position: relative; top: -20px">with Google authenticator</span>
+                        </a>
+                        <a class="pull-left" (click)="$event.preventDefault(); m_currentViewMode = m_viewMod.LOGIN" href="#"><i class="fa fa-arrow-circle-left"></i> back</a>
+                        <br/>
+                        
+                        
+                        
+                    </div>
+                    <div *ngSwitchCase="m_viewMod.CHANGE_PASSWORD">
+                        <h2>change password</h2>
+                        <a  (click)="$event.preventDefault(); m_currentViewMode = m_viewMod.LOGIN" href="#">back</a>
+                    </div>
+                    <div *ngSwitchCase="m_viewMod.CHANGE_BUSINESS_NAME">
+                        <h2>change business name</h2>
+                        <a  (click)="$event.preventDefault(); m_currentViewMode = m_viewMod.LOGIN" href="#">back</a>
+                    </div>
+                </ul>
             </form>
-        </div>
+        </ul>
     `
 })
 export class LoginPanel extends Compbaser {
+    m_viewMod = ViewMod;
+    m_currentViewMode = ViewMod.LOGIN;
     public m_user: string = '';
     public m_pass: string = '';
     public m_twoFactor: string;
@@ -128,7 +177,7 @@ export class LoginPanel extends Compbaser {
         )
 
         this.cancelOnDestroy(
-            this.store.select(store => store.appDb.appAuthStatus).subscribe((i_authStatus: Map<string,AuthenticateFlags>) => {
+            this.store.select(store => store.appDb.appAuthStatus).subscribe((i_authStatus: Map<string, AuthenticateFlags>) => {
                 let authStatus = i_authStatus.get('authStatus')
                 if (this.isAccessAllowed(authStatus) == false)
                     return;

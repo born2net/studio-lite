@@ -16,7 +16,7 @@ export class SvgIcon {
     @Input() width;
     @Input() alt: string;
 
-    constructor(private http: Http, private elementRef: ElementRef,  private renderer: Renderer,) {
+    constructor(private http: Http, private elementRef: ElementRef) {
 
     }
 

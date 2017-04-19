@@ -107,7 +107,6 @@ export class LoginPanel extends Compbaser {
     public userModel: UserModel;
 
     constructor(private ngmslibService: NgmslibService, private store: Store<ApplicationState>,
-                private renderer: Renderer,
                 private toast: ToastsManager,
                 private activatedRoute: ActivatedRoute,
                 private authService: AuthService) {
@@ -164,7 +163,8 @@ export class LoginPanel extends Compbaser {
     }
 
     passFocus() {
-        this.renderer.invokeElementMethod(this.userPass.nativeElement, 'focus', [])
+        // this.renderer.invokeElementMethod(this.userPass.nativeElement, 'focus', [])
+        jQuery(this.userPass.nativeElement).focus();
     }
 
     onClickedLogin() {

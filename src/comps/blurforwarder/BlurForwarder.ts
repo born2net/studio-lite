@@ -6,7 +6,7 @@ import {Directive, ElementRef, Renderer} from "@angular/core";
     }
 })
 export class BlurForwarder {
-    constructor(private elRef: ElementRef, private renderer: Renderer) {
+    constructor(private elRef: ElementRef) {
     }
 
     onBlur($event) {

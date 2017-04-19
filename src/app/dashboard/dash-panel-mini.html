@@ -20,7 +20,7 @@
 <hr/>
 <h5>User: {{(m_userModel$ | async).getUser()}}</h5>
 <h5>Business id: {{(m_userModel$ | async).businessId()}}</h5>
-<h5>server id: {{(m_userModel$ | async).businessId()}}</h5>
-<h5>app version: {{(m_userModel$ | async).businessId()}}</h5>
-<h5>framework version: {{(m_userModel$ | async).businessId()}}</h5>
+<h5>server : {{(m_userModel$ | async).getPartialDomain()}}</h5>
+<h5>app version: {{version}}</h5>
+<h5>framework version: {{ngVersion}}</h5>
 <hr/>

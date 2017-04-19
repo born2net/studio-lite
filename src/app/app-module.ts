@@ -15,7 +15,6 @@ import {routing} from "../app-routes";
 import {LoginPanel} from "../comps/entry/LoginPanel";
 import {Logout} from "../comps/logout/Logout";
 import {AgmCoreModule} from "angular2-google-maps/core";
-import {Logo} from "../comps/logo/Logo";
 import {ImgLoader} from "../comps/imgloader/ImgLoader";
 import {ChartModule} from "angular2-highcharts";
 import {CommBroker} from "../services/CommBroker";

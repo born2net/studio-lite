@@ -73,8 +73,8 @@ export class AppComponent implements AfterViewInit {
                 private titleService: Title,
                 private toastr: ToastsManager) {
 
-        this.version = packageJson.version;
-        this.ngVersion = VERSION.full
+        // this.version = packageJson.version;
+        // this.ngVersion = VERSION.full
 
         // this.localStorage.removeItem('remember_me')
         // this.localStorage.removeItem('business_id')

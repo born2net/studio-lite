@@ -69,6 +69,18 @@ export class UserModel extends StoreModel {
         return this.getKey('pass');
     }
 
+    getDomain() {
+        return this.getKey('domain');
+    }
+
+    getPartialDomain() {
+        return this.getKey('domain').split('.')[0];
+    }
+
+    setDomain(value:string) {
+        return this.setKey<UserModel>(UserModel, 'domain', value);
+    }
+
     setAccountType(value:number) {
         return this.setKey<UserModel>(UserModel, 'accountType', value);
     }

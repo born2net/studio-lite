@@ -210,6 +210,7 @@ export class AppDbEffects {
                 boundCallback(this, resellerDataString).subscribe((i_resellerDataJson) => {
                     resellerDataJson = i_resellerDataJson;
                 }, (e) => console.error(e))
+                userModel = userModel.setDomain(pepperConnection.loadManager.m_domain);
                 userModel = userModel.setAuthenticated(true);
                 userModel = userModel.setAccountType(AuthenticateFlags.USER_ACCOUNT);
                 userModel = userModel.setResellerInfo(pepperConnection.loadManager.m_resellerInfo);

@@ -35,39 +35,40 @@ export class AuthService {
     private requestedRoute: string;
 
     private listenEvents() {
-        this.store.select(store => store.appDb.appAuthStatus).subscribe((i_authStatus: Map<string, AuthenticateFlags>) => {
-            let authStatus: AuthenticateFlags = i_authStatus.get('authStatus')
-            switch (authStatus) {
-                case AuthenticateFlags.WRONG_PASS: {
-                    this.saveCredentials('', '', '');
-                    this.router.navigate(['/UserLogin']);
-                    break;
-                }
-                case AuthenticateFlags.TWO_FACTOR_ENABLED: {
-                    var user = this.ngmslibService.base64().encode(this.userModel.getUser());
-                    var pass = this.ngmslibService.base64().encode(this.userModel.getPass());
-                    this.router.navigate([`/UserLogin/twoFactor/${user}/${pass}`])
-                    break;
-                }
-                case AuthenticateFlags.TWO_FACTOR_PASS: {
-                    this.saveCredentials('', '', '');
-                    this.enterApplication();
-                    break;
-                }
-                case AuthenticateFlags.AUTH_PASS_NO_TWO_FACTOR: {
-                    if (this.userModel.getRememberMe()) {
-                        this.saveCredentials(this.userModel.getUser(), this.userModel.getPass(), this.userModel.rememberMe());
-                    } else {
+        this.store.select(store => store.appDb.appAuthStatus)
+            .subscribe((i_authStatus: Map<string, AuthenticateFlags>) => {
+                let authStatus: AuthenticateFlags = i_authStatus.get('authStatus')
+                switch (authStatus) {
+                    case AuthenticateFlags.WRONG_PASS: {
                         this.saveCredentials('', '', '');
+                        this.router.navigate(['/UserLogin']);
+                        break;
                     }
-                    console.log('Auth pass no two factor');
-                    this.enterApplication();
-                    break;
+                    case AuthenticateFlags.TWO_FACTOR_ENABLED: {
+                        var user = this.ngmslibService.base64().encode(this.userModel.getUser());
+                        var pass = this.ngmslibService.base64().encode(this.userModel.getPass());
+                        this.router.navigate([`/UserLogin/twoFactor/${user}/${pass}`])
+                        break;
+                    }
+                    case AuthenticateFlags.TWO_FACTOR_PASS: {
+                        this.saveCredentials('', '', '');
+                        this.enterApplication();
+                        break;
+                    }
+                    case AuthenticateFlags.AUTH_PASS_NO_TWO_FACTOR: {
+                        if (this.userModel.getRememberMe()) {
+                            this.saveCredentials(this.userModel.getUser(), this.userModel.getPass(), this.userModel.rememberMe());
+                        } else {
+                            this.saveCredentials('', '', '');
+                        }
+                        console.log('Auth pass no two factor');
+                        this.enterApplication();
+                        break;
+                    }
                 }
-            }
-        }, (e) => {
-            console.error(e)
-        })
+            }, (e) => {
+                console.error(e)
+            })
         this.router.events.filter(event => event instanceof NavigationStart).take(1).subscribe(event => {
             this.requestedRoute = event['url'];
             // this.requestedRoute = event.url == '/' ? '/App1/Campaigns' : event.url;
@@ -134,7 +135,7 @@ export class AuthService {
         }
     }
 
-    private decodeBase64(i_credentials){
+    private decodeBase64(i_credentials) {
         try {
             return this.ngmslibService.base64().decode(i_credentials);
         } catch (e) {

@@ -174,8 +174,6 @@ export class LoginPanel extends Compbaser {
         } else {
             // this.toast.info('Authenticating...');
             this.authService.authUser(this.m_user, this.m_pass, this.m_rememberMe);
-            // this.authService.authUser('reseller@ms.com', '123123', this.m_rememberMe);
-
         }
     }
 

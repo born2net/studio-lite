@@ -174,105 +174,127 @@ export class AppDbEffects {
         let userModel: UserModel = action.payload;
         this.store.dispatch({type: EFFECT_UPDATE_USER_MODEL, payload: userModel});
 
-        return this.rp.dbConnect(userModel.user(), userModel.pass()).take(1).map((pepperConnection: IPepperConnection) => {
-            console.log('authenticating in process');
-            if (pepperConnection.pepperAuthReply.status == false) {
-                console.log('authentication failed');
-                this.toastr.error('Authentication failed')
-                userModel = userModel.setAuthenticated(false);
-                userModel = userModel.setAccountType(-1);
-                this.store.dispatch({type: EFFECT_UPDATE_USER_MODEL, payload: userModel});
-                this.store.dispatch({type: EFFECT_AUTH_STATUS, payload: AuthenticateFlags.WRONG_PASS});
-                return;
+        return this.rp.dbConnect(userModel.user(), userModel.pass())
+            .take(1)
+            .map((pepperConnection: IPepperConnection) => {
+                console.log('authenticating in process');
+                if (pepperConnection.pepperAuthReply.status == false) {
+                    console.log('authentication failed');
+                    this.toastr.error('Authentication failed')
+                    userModel = userModel.setAuthenticated(false);
+                    userModel = userModel.setAccountType(-1);
+                    if (pepperConnection.pepperAuthReply.warning == 'reseller account') {
+                        bootbox.confirm({
+                            title: "Enterprise account",
+                            message: "You are attempting to login with Enterprise credentials, Would you like to be redirected to the Enterprise studio?",
+                            buttons: {
+                                cancel: {
+                                    label: '<i class="fa fa-times"></i> cancel'
+                                },
+                                confirm: {
+                                    label: '<i class="fa fa-check"></i> take me there'
+                                }
+                            },
+                            callback: (result) => {
+                                if (result) {
+                                    return window.location.replace('http://dash.digitalsignage.com');
+                                } else {
+                                    this.store.dispatch({type: EFFECT_UPDATE_USER_MODEL, payload: userModel});
+                                    this.store.dispatch({type: EFFECT_AUTH_STATUS, payload: AuthenticateFlags.WRONG_PASS});
+                                    return;
+                                }
+                            }
+                        });
+                    }
 
-            } else {
-                console.log('authenticating check account type');
-                if (pepperConnection.pepperAuthReply.warning == 'not a studioLite account') {
-                    return bootbox.alert('This is not a StudioLite account, please use StudioPro')
                 } else {
-                    // console.log('lite account');
+                    console.log('authenticating check account type');
+                    if (pepperConnection.pepperAuthReply.warning == 'not a studioLite account') {
+                        return bootbox.alert('This is not a StudioLite account, please use StudioPro')
+                    } else {
+                        // console.log('lite account');
+                    }
+
+                    var whiteLabel = jXML(pepperConnection.loadManager.m_resellerInfo).find('WhiteLabel');//.attr('enabled'));
+                    var resellerId = jXML(pepperConnection.loadManager.m_resellerInfo).find('BusinessInfo');//.attr('businessId'));
+                    var resellerDataString = jXML(pepperConnection.loadManager.m_resellerInfo).children()[0].innerHTML;
+
+                    var componentList = {};
+                    var components = jXML(pepperConnection.loadManager.m_resellerInfo).find('InstalledApps').find('App');
+                    _.each(components, function (component) {
+                        if (jXML(component).attr('installed') == '1')
+                            componentList[jXML(component).attr('id')] = 1;
+                    });
+                    userModel = userModel.setComponents(componentList)
+
+                    var resellerDataJson = {};
+                    const boundCallback = Observable.bindCallback(this.processXml, (xmlData: any) => xmlData);
+                    boundCallback(this, resellerDataString).subscribe((i_resellerDataJson) => {
+                        resellerDataJson = i_resellerDataJson;
+                    }, (e) => console.error(e))
+                    userModel = userModel.setDomain(pepperConnection.loadManager.m_domain);
+                    userModel = userModel.setAuthenticated(true);
+                    userModel = userModel.setAccountType(AuthenticateFlags.USER_ACCOUNT);
+                    userModel = userModel.setResellerInfo(pepperConnection.loadManager.m_resellerInfo);
+                    userModel = userModel.setResellerName(
+                        jXML(pepperConnection.loadManager.m_resellerInfo)
+                            .find('BusinessInfo')
+                            .attr('name')
+                    );
+                    userModel = userModel.setResellerId(
+                        Number(jXML(pepperConnection.loadManager.m_resellerInfo)
+                            .find('BusinessInfo')
+                            .attr('businessId'))
+                    );
+                    userModel = userModel.setEri(pepperConnection.loadManager.m_eri);
+                    userModel = userModel.setResellerWhiteLabel(resellerDataJson);
+
+                    this.store.dispatch({type: EFFECT_UPDATE_USER_MODEL, payload: userModel});
+                    this.store.dispatch({
+                        type: EFFECT_AUTH_STATUS, payload: AuthenticateFlags.USER_ACCOUNT
+                    });
+
+                    /////////////////////////////////////////////////////////////////////////////
+                    // todo: currently if logging in with enterprise account, dbConnect will timeout,
+                    // todo: Alon needs to fix and we can dispatch code below
+                    // userModel = userModel.setAuthenticated(true);
+                    // userModel = userModel.setAccountType(AuthenticateFlags.ENTERPRISE_ACCOUNT);
+                    // this.store.dispatch({type: EFFECT_UPDATE_USER_MODEL, payload: userModel});
+                    // this.store.dispatch({
+                    //     type: EFFECT_AUTH_STATUS, payload: AuthenticateFlags.ENTERPRISE_ACCOUNT
+                    // });
+                    /////////////////////////////////////////////////////////////////////////////
                 }
 
-                var whiteLabel = jXML(pepperConnection.loadManager.m_resellerInfo).find('WhiteLabel');//.attr('enabled'));
-                var resellerId = jXML(pepperConnection.loadManager.m_resellerInfo).find('BusinessInfo');//.attr('businessId'));
-                var resellerDataString = jXML(pepperConnection.loadManager.m_resellerInfo).children()[0].innerHTML;
-
-                var componentList = {};
-                var components = jXML(pepperConnection.loadManager.m_resellerInfo).find('InstalledApps').find('App');
-                _.each(components, function (component) {
-                    if (jXML(component).attr('installed') == '1')
-                        componentList[jXML(component).attr('id')] = 1;
-                });
-                userModel = userModel.setComponents(componentList)
-
-                var resellerDataJson = {};
-                const boundCallback = Observable.bindCallback(this.processXml, (xmlData: any) => xmlData);
-                boundCallback(this, resellerDataString).subscribe((i_resellerDataJson) => {
-                    resellerDataJson = i_resellerDataJson;
-                }, (e) => console.error(e))
-                userModel = userModel.setDomain(pepperConnection.loadManager.m_domain);
-                userModel = userModel.setAuthenticated(true);
-                userModel = userModel.setAccountType(AuthenticateFlags.USER_ACCOUNT);
-                userModel = userModel.setResellerInfo(pepperConnection.loadManager.m_resellerInfo);
-                userModel = userModel.setResellerName(
-                    jXML(pepperConnection.loadManager.m_resellerInfo)
-                        .find('BusinessInfo')
-                        .attr('name')
-                );
-                userModel = userModel.setResellerId(
-                    Number(jXML(pepperConnection.loadManager.m_resellerInfo)
-                        .find('BusinessInfo')
-                        .attr('businessId'))
-                );
-                userModel = userModel.setEri(pepperConnection.loadManager.m_eri);
-                userModel = userModel.setResellerWhiteLabel(resellerDataJson);
-
-                this.store.dispatch({type: EFFECT_UPDATE_USER_MODEL, payload: userModel});
-                this.store.dispatch({
-                    type: EFFECT_AUTH_STATUS, payload: AuthenticateFlags.USER_ACCOUNT
-                });
-
-                /////////////////////////////////////////////////////////////////////////////
-                // todo: currently if logging in with enterprise account, dbConnect will timeout,
-                // todo: Alon needs to fix and we can dispatch code below
-                // userModel = userModel.setAuthenticated(true);
-                // userModel = userModel.setAccountType(AuthenticateFlags.ENTERPRISE_ACCOUNT);
-                // this.store.dispatch({type: EFFECT_UPDATE_USER_MODEL, payload: userModel});
-                // this.store.dispatch({
-                //     type: EFFECT_AUTH_STATUS, payload: AuthenticateFlags.ENTERPRISE_ACCOUNT
-                // });
-                /////////////////////////////////////////////////////////////////////////////
-            }
-
-            // if passed check for two factor
-            if (userModel.getAuthenticated()) {
-                this.twoFactorCheck()
-                    .take(1)
-                    .subscribe((twoFactorResult) => {
-                        if (window['offlineDevMode']) {
-                            return this.store.dispatch({
-                                type: EFFECT_AUTH_STATUS,
-                                payload: AuthenticateFlags.AUTH_PASS_NO_TWO_FACTOR
-                            });
-                        }
-                        userModel = userModel.setBusinessId(twoFactorResult.businessId);
-                        userModel = userModel.setTwoFactorRequired(twoFactorResult.enabled);
-                        this.store.dispatch({type: EFFECT_UPDATE_USER_MODEL, payload: userModel});
-                        if (twoFactorResult.enabled) {
-                            this.store.dispatch({
-                                type: EFFECT_AUTH_STATUS,
-                                payload: AuthenticateFlags.TWO_FACTOR_ENABLED
-                            });
-                        } else {
-                            this.toastr.info('Authenticated successfully');
-                            this.store.dispatch({
-                                type: EFFECT_AUTH_STATUS,
-                                payload: AuthenticateFlags.AUTH_PASS_NO_TWO_FACTOR
-                            });
-                        }
-                    }, (e) => console.error(e))
-            }
-        });
+                // if passed check for two factor
+                if (userModel.getAuthenticated()) {
+                    this.twoFactorCheck()
+                        .take(1)
+                        .subscribe((twoFactorResult) => {
+                            if (window['offlineDevMode']) {
+                                return this.store.dispatch({
+                                    type: EFFECT_AUTH_STATUS,
+                                    payload: AuthenticateFlags.AUTH_PASS_NO_TWO_FACTOR
+                                });
+                            }
+                            userModel = userModel.setBusinessId(twoFactorResult.businessId);
+                            userModel = userModel.setTwoFactorRequired(twoFactorResult.enabled);
+                            this.store.dispatch({type: EFFECT_UPDATE_USER_MODEL, payload: userModel});
+                            if (twoFactorResult.enabled) {
+                                this.store.dispatch({
+                                    type: EFFECT_AUTH_STATUS,
+                                    payload: AuthenticateFlags.TWO_FACTOR_ENABLED
+                                });
+                            } else {
+                                this.toastr.info('Authenticated successfully');
+                                this.store.dispatch({
+                                    type: EFFECT_AUTH_STATUS,
+                                    payload: AuthenticateFlags.AUTH_PASS_NO_TWO_FACTOR
+                                });
+                            }
+                        }, (e) => console.error(e))
+                }
+            });
     }
 
     /**
@@ -392,7 +414,7 @@ export class AppDbEffects {
             .finally(() => {
             })
             .map((response: Response) => {
-                var data:any = response.json()[0];
+                var data: any = response.json()[0];
                 var line = new FasterqLineModel(data)
                 return line;
             })

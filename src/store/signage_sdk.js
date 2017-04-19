@@ -1125,7 +1125,8 @@ LoaderManager.prototype.create = function (i_user, i_password, i_requestCallback
         jQuery.getJSON(url,
             function (data) {
                 // to update latest offline grab 'data' and paste onto the top var: offlineDataUser
-                //;debugger; /// <<< here
+                ;
+                // debugger; /// <<< here
                 if (data.businessId == -1) {
                     i_requestCallback({status: false, error: 'login fail'});
                     return;
@@ -1142,7 +1143,6 @@ LoaderManager.prototype.create = function (i_user, i_password, i_requestCallback
                 var xml = jQuery.parseXML(str);
                 me.m_resellerInfo = xml;
 
-
                 me.m_dataBaseManager.createDataBase(me.m_domain, me.m_businessId);
                 me.m_dataBaseManager.selectDomainBusiness(me.m_domain, me.m_businessId);
 
@@ -1157,7 +1157,12 @@ LoaderManager.prototype.create = function (i_user, i_password, i_requestCallback
                     }
                 );
             }
-        );
+            // todo: Alon needs to add the following lines done, fail, always
+        ).done(function (msg) {
+        }).fail(function (err) {
+            i_requestCallback({status: false, error: err, warning: 'reseller account'});
+        }).always(function (msg) {
+        });
     }
 
 

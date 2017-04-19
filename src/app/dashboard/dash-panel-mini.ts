@@ -24,8 +24,9 @@ export class DashPanelMini extends Compbaser implements AfterViewInit {
     m_userModel$;
     offlineDevMode: any = window['offlineDevMode'];
     version = packageJson.version;
-    isBrandingDisabled: Observable<boolean>;
+    isBrandingDisabled: boolean = false;
     ngVersion = VERSION.full;
+    resellerName = 'MediasSignage Inc.';
 
     constructor(private yp: YellowPepperService, private rp: RedPepperService) {
         super();
@@ -36,7 +37,14 @@ export class DashPanelMini extends Compbaser implements AfterViewInit {
             .map(() => new Date());
 
         this.m_userModel$ = this.yp.listenUserModel();
-        this.isBrandingDisabled = this.yp.isBrandingDisabled();
+        this.cancelOnDestroy(
+            this.yp.isBrandingDisabled()
+                .subscribe((v) => {
+                    this.isBrandingDisabled = v;
+                    if (!this.isBrandingDisabled)
+                        this.resellerName = this.rp.getUserData().resellerName;
+                }, (e) => console.error(e))
+        )
     }
 
     ngAfterViewInit() {

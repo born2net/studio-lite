@@ -198,6 +198,8 @@ export class BlockPropCalendar extends Compbaser implements AfterViewInit {
                     self.m_calList = [];
                     if (_.isUndefined(response.responseText) || response.responseText.length == 0)
                         return;
+                    if (response.responseText.indexOf('Cannot')>-1)
+                        return;
                     var jData = JSON.parse(response.responseText);
                     _.forEach(jData, function (k: any) {
                         self.m_calList.push({

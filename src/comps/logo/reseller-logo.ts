@@ -4,6 +4,7 @@ import {YellowPepperService} from "../../services/yellowpepper.service";
 import {RedPepperService} from "../../services/redpepper.service";
 import {LazyImage} from "../lazy-image/lazy-image";
 import {UserModel} from "../../models/UserModel";
+import {Observable} from "rxjs/Observable";
 
 @Component({
     selector: 'reseller-logo',
@@ -22,28 +23,13 @@ import {UserModel} from "../../models/UserModel";
 })
 export class ResellerLogo extends Compbaser implements AfterViewInit {
 
+
     constructor(private yp: YellowPepperService, private rp: RedPepperService) {
         super();
-        this.cancelOnDestroy(
-            this.yp.listenUserModel()
-                .take(1)
-                .subscribe((i_userModel: UserModel) => {
-                    if (i_userModel.resellerId == 1)
-                        return;
-                    var urls = [
-                        `http://galaxy.signage.me/Resources/Resellers/${i_userModel.resellerId}/Logo.png`,
-                        `http://galaxy.signage.me/Resources/Resellers/${i_userModel.resellerId}/Logo.jpg`
-                    ];
-                    this.lazyImage.setUrls(urls);
-                }, (e) => console.error(e))
-        )
-
-
     }
 
     @ViewChild(LazyImage)
     lazyImage: LazyImage;
-
 
     _onLoaded() {
         console.log('img loaded');
@@ -58,7 +44,19 @@ export class ResellerLogo extends Compbaser implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-
+        this.cancelOnDestroy(
+            this.yp.listenUserModel()
+                .take(1)
+                .subscribe((i_userModel: UserModel) => {
+                    if (i_userModel.resellerId == 1)
+                        return;
+                    var urls = [
+                        `http://galaxy.signage.me/Resources/Resellers/${i_userModel.resellerId}/Logo.png`,
+                        `http://galaxy.signage.me/Resources/Resellers/${i_userModel.resellerId}/Logo.jpg`
+                    ];
+                    this.lazyImage.setUrls(urls);
+                }, (e) => console.error(e))
+        )
 
     }
 

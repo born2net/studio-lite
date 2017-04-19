@@ -84,7 +84,7 @@ export const providing = [CommBroker, WizardService, AUTH_PROVIDERS, RedPepperSe
     }
 ];
 
-const decelerations = [AppComponent, AutoLogin, LoginPanel, Logo, ResellerLogo, Appwrap, Dashboard, Logout, NgMenu, NgMenuItem, ImgLoader, FasterqTerminal, DashPanel, ServerAvg, StorageUsed];
+const decelerations = [AppComponent, AutoLogin, LoginPanel, Appwrap, Dashboard, Logout, NgMenu, NgMenuItem, ImgLoader, FasterqTerminal, DashPanel, ServerAvg, StorageUsed];
 
 export function appReducer(state: any = INITIAL_APPLICATION_STATE, action: any) {
     if (environment.production) {

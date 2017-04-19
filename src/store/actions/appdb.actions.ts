@@ -18,6 +18,7 @@ export const ACTION_LIVELOG_UPDATE = 'ACTION_LIVELOG_UPDATE';
 export enum AuthenticateFlags {
     NONE,
     USER_ACCOUNT,
+    USER_ACCOUNT_PRO,
     ENTERPRISE_ACCOUNT,
     WRONG_TWO_FACTOR,
     WRONG_PASS,

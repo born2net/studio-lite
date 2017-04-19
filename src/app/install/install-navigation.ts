@@ -25,25 +25,6 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
             transition('* => void', animate(333, style({opacity: 0})))
         ])
     ],
-    styles: [`
-        .installopts li {
-            height: 40px;
-            min-height: 40px;
-            overflow: hidden;
-        }
-
-        .installs {
-            font-size: 22px !important;
-            margin-right: 10px !important;
-            color: #4a4a4a !important;
-            opacity: 0.8 !important;
-        }
-
-        .installs:hover {
-            opacity: 1 !important;
-        }
-
-    `],
     template: `
         <div id="installPanel">
             <h3 data-localize="installSignagePlayer">Install the Signage Player</h3>

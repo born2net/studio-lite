@@ -25,7 +25,6 @@ import {FasterqAnalyticsModel} from "../../models/fasterq-analytics";
 import {IQueueSave} from "../../app/fasterq/fasterq-editor";
 import {CommBroker, IMessage} from "../../services/CommBroker";
 import {FASTERQ_QUEUE_CALL_CANCLED} from "../../interfaces/Consts";
-import {message} from "gulp-typescript/release/utils";
 import {ToastsManager} from "ng2-toastr";
 
 export const EFFECT_AUTH_START = 'EFFECT_AUTH_START';
@@ -184,6 +183,7 @@ export class AppDbEffects {
                     userModel = userModel.setAuthenticated(false);
                     userModel = userModel.setAccountType(-1);
                     if (pepperConnection.pepperAuthReply.warning == 'reseller account') {
+                        userModel = userModel.setAccountType(AuthenticateFlags.ENTERPRISE_ACCOUNT);
                         bootbox.confirm({
                             title: "Enterprise account",
                             message: "You are attempting to login with Enterprise credentials, Would you like to be redirected to the Enterprise studio?",
@@ -210,7 +210,65 @@ export class AppDbEffects {
                 } else {
                     console.log('authenticating check account type');
                     if (pepperConnection.pepperAuthReply.warning == 'not a studioLite account') {
-                        return bootbox.alert('This is not a StudioLite account, please use StudioPro')
+                        userModel = userModel.setAccountType(AuthenticateFlags.USER_ACCOUNT_PRO);
+                        var snippet = `
+                        <div id="installPanel">
+                            <h3 data-localize="installSignagePlayer">Attempting to login with a StudioPro account</h3>
+                            <h5 data-localize="chooseVersion">
+                                <b>Your user is a StudioPro account and this is a StudioLite login prompt, please download StudioPro for your operating system to proceed</b>
+                            </h5>
+                            <br/>
+                            <div>
+                                <div class="panel-group" id="accordion">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                                    <i class="installs fa fa-windows"></i><span data-localize="signageWindows">StudioPro for Windows</span></a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseThree" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <ul class="installopts">
+                                                    <li style="padding-top: 10px">
+                                                        <a href="http://galaxy.signage.me/code/install/exe/CloudSignageStudioSetup.exe" class="helpLinks btn btn-primary btn-xl">download now </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                                                    <i class="installs fa fa-apple"></i><span data-localize="signageMac">StudioPro for Mac</span></a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseFour" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <ul class="installopts">
+                                                    <li>
+                                                        <b data-localize="step1">Step 1:</b><span data-localize="downloadAIR"> download Adobe AIR runtime</span>
+                                                        <a href="http://get.adobe.com/air/" target="_blank" class="helpLinks btn btn-primary btn-xs">download</a>
+                                                    </li>
+                                                    <li>
+                                                        <b data-localize="step2">Step 2:</b><span data-localize="downloadSignagePlayer"> download StudioPro for Mac</span>
+                                                        <a target="_blank" href="http://galaxy.signage.me/Code/Install/air/CloudSignageStudio.air" type="button" class="helpLinks btn btn-primary btn-xs">
+                                                            download
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <b data-localize="step3">Step 3:</b>
+                                                         Install the runtime and proceed with installing StudioPro for Mac
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                        return bootbox.alert(snippet);
                     } else {
                         // console.log('lite account');
                     }

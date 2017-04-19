@@ -1586,3 +1586,21 @@ div.kineticjs-content{
     text-align: center;
     max-width: 80%;
 }
+
+
+.installopts li {
+    height: 40px;
+    min-height: 40px;
+    overflow: hidden;
+}
+
+.installs {
+    font-size: 22px !important;
+    margin-right: 10px !important;
+    color: #4a4a4a !important;
+    opacity: 0.8 !important;
+}
+
+.installs:hover {
+    opacity: 1 !important;
+}

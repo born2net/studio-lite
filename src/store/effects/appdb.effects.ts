@@ -213,9 +213,9 @@ export class AppDbEffects {
                         userModel = userModel.setAccountType(AuthenticateFlags.USER_ACCOUNT_PRO);
                         var snippet = `
                         <div id="installPanel">
-                            <h3 data-localize="installSignagePlayer">Attempting to login with a StudioPro account</h3>
+                            <h3 data-localize="installSignagePlayer">Attempting to login with StudioPro credentials</h3>
                             <h5 data-localize="chooseVersion">
-                                <b>Your user is a StudioPro account and this is a StudioLite login prompt, please download StudioPro for your operating system to proceed</b>
+                                <b>Your are using a StudioPro account in StudioLite, <br/>Please download StudioPro to proceed...</b>
                             </h5>
                             <br/>
                             <div>

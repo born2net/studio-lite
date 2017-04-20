@@ -69,7 +69,11 @@ enum ViewMod {
         }
 
         a:visited {
-            color: gray;
+            color: #b9b9b9;
+        }
+
+        a:over {
+            color: #b9b9b9;
         }
     `],
     template: `

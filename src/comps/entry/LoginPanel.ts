@@ -1,11 +1,5 @@
-import {
-    Component,
-    Injectable,
-    ViewChild,
-    ElementRef,
-    Renderer
-} from "@angular/core";
-import {keyframes, trigger, transition, animate, state, style} from "@angular/animations";
+import {Component, ElementRef, Injectable, ViewChild} from "@angular/core";
+import {animate, keyframes, state, style, transition, trigger} from "@angular/animations";
 import {ActivatedRoute} from "@angular/router";
 import {LocalStorage} from "../../services/LocalStorage";
 import {AuthService} from "../../services/AuthService";
@@ -16,6 +10,8 @@ import {Store} from "@ngrx/store";
 import {UserModel} from "../../models/UserModel";
 import {AuthenticateFlags} from "../../store/actions/appdb.actions";
 import {Compbaser, NgmslibService} from "ng-mslib";
+import {RedPepperService} from "../../services/redpepper.service";
+import {Lib} from "../../Lib";
 
 enum ViewMod {
     LOGIN,
@@ -84,9 +80,10 @@ enum ViewMod {
             <br/>
             <form class="form-signin" role="form">
                 <ul [ngSwitch]="m_currentViewMode">
+
                     <div *ngSwitchCase="m_viewMod.LOGIN">
                         <h2 class="form-signin-heading"></h2>
-                        <input (keyup.enter)="passFocus()" #userName id="userName" spellcheck="false" type="text" name="m_user" [(ngModel)]="m_user" class="input-underline input-lg form-control" placeholder="user name" required autofocus>
+                        <input (keyup.enter)="passFocus()" #userName id="userName" spellcheck="false" type="text" name="m_user" [(ngModel)]="m_user" class="input-underline input-lg form-control" placeholder="user name / email" required autofocus>
                         <input (keyup.enter)="onClickedLogin()" #userPass id="userPass" type="password" [(ngModel)]="m_pass" name="m_pass" class="input-underline input-lg form-control" placeholder="password" required>
                         <div [@showTwoFactor]="m_showTwoFactor" *ngIf="m_showTwoFactor">
                             <br/>
@@ -116,28 +113,37 @@ enum ViewMod {
                                 <a id="changeBusiness" (click)="$event.preventDefault(); m_currentViewMode = m_viewMod.CHANGE_BUSINESS_NAME" href="#">change business name</a>
                             </div>
                         </div>
+                    </div>
+
+                    <div *ngSwitchCase="m_viewMod.CHANGE_PASSWORD">
+                        <h2 class="form-signin-heading"></h2>
+                        <input spellcheck="false" type="text" name="m_user" [(ngModel)]="m_user" class="input-underline input-lg form-control" placeholder="user name / email" required autofocus>
+                        <input type="password" [(ngModel)]="m_pass" name="m_pass" class="input-underline input-lg form-control" placeholder="old password" required>
+                        <input type="password" [(ngModel)]="m_passNew" name="m_pass" class="input-underline input-lg form-control" placeholder="new password" required>
+                        <input type="password" [(ngModel)]="m_passRepeat" name="m_pass" class="input-underline input-lg form-control" placeholder="repeat new password" required>
+                        <br/>
+                        <a style="width: 280px" (click)="onChangePassword()" type="submit" class="btn rounded-btn"> change password
+                            <span *ngIf="m_showTwoFactor" style="font-size: 9px; max-height: 15px; display: block; padding: 0; margin: 0; position: relative; top: -20px">with Google authenticator</span>
+                        </a>
+                        <br/>
+                        <a class="pull-left" (click)="$event.preventDefault(); m_currentViewMode = m_viewMod.LOGIN" href="#"><i class="fa fa-arrow-circle-left"></i> back</a>
 
                     </div>
+
                     <div *ngSwitchCase="m_viewMod.FORGOT_PASSWORD">
                         <h2 class="form-signin-heading"></h2>
-                        <input (keyup.enter)="passFocus()" #userName id="userName" spellcheck="false" type="text" name="m_user" [(ngModel)]="m_user" class="input-underline input-lg form-control" placeholder="user name" required autofocus>
+                        <input (keyup.enter)="passFocus()" #userName id="userName" spellcheck="false" type="text" name="m_user" [(ngModel)]="m_user" class="input-underline input-lg form-control" placeholder="user name / email" required autofocus>
                         <br/>
-                        <a  style="width: 280px" (click)="onClickedLogin()" type="submit" class="btn rounded-btn"> reset your password
+                        <a style="width: 280px" (click)="onResetPassword()" type="submit" class="btn rounded-btn"> reset your password
                             <span *ngIf="m_showTwoFactor" style="font-size: 9px; max-height: 15px; display: block; padding: 0; margin: 0; position: relative; top: -20px">with Google authenticator</span>
                         </a>
                         <a class="pull-left" (click)="$event.preventDefault(); m_currentViewMode = m_viewMod.LOGIN" href="#"><i class="fa fa-arrow-circle-left"></i> back</a>
                         <br/>
-                        
-                        
-                        
                     </div>
-                    <div *ngSwitchCase="m_viewMod.CHANGE_PASSWORD">
-                        <h2>change password</h2>
-                        <a  (click)="$event.preventDefault(); m_currentViewMode = m_viewMod.LOGIN" href="#">back</a>
-                    </div>
+
                     <div *ngSwitchCase="m_viewMod.CHANGE_BUSINESS_NAME">
                         <h2>change business name</h2>
-                        <a  (click)="$event.preventDefault(); m_currentViewMode = m_viewMod.LOGIN" href="#">back</a>
+                        <a (click)="$event.preventDefault(); m_currentViewMode = m_viewMod.LOGIN" href="#">back</a>
                     </div>
                 </ul>
             </form>
@@ -149,6 +155,8 @@ export class LoginPanel extends Compbaser {
     m_currentViewMode = ViewMod.LOGIN;
     public m_user: string = '';
     public m_pass: string = '';
+    public m_passNew: string = '';
+    public m_passRepeat: string = '';
     public m_twoFactor: string;
     public m_showTwoFactor: boolean = false;
     public m_rememberMe: any;
@@ -157,6 +165,7 @@ export class LoginPanel extends Compbaser {
 
     constructor(private ngmslibService: NgmslibService, private store: Store<ApplicationState>,
                 private toast: ToastsManager,
+                private rp: RedPepperService,
                 private activatedRoute: ActivatedRoute,
                 private authService: AuthService) {
         super();
@@ -214,6 +223,30 @@ export class LoginPanel extends Compbaser {
     passFocus() {
         // this.renderer.invokeElementMethod(this.userPass.nativeElement, 'focus', [])
         jQuery(this.userPass.nativeElement).focus();
+    }
+
+    onResetPassword() {
+        if (!Lib.ValidateEmail(this.m_user))
+            return bootbox.alert('user name must be in the form of an email address');
+        this.rp.resetPassword(this.m_user, (value) => {
+            if (!value.result)
+                return bootbox.alert('Sorry no account found');
+            bootbox.alert('Please check your email for a new password');
+            this.m_currentViewMode = ViewMod.LOGIN;
+        })
+    }
+
+    onChangePassword() {
+        if (this.m_passNew != this.m_passRepeat)
+            return bootbox.alert('passwords do not match')
+        if (this.m_user.length < 2)
+            return bootbox.alert('user name is too short')
+        this.rp.changePassword(this.m_user, this.m_pass, this.m_passNew, (value) => {
+            if (value.result == -1)
+                return bootbox.alert('authentication for password change failed, try again');
+            bootbox.alert('Password changed successfully');
+            this.m_currentViewMode = ViewMod.LOGIN;
+        })
     }
 
     onClickedLogin() {

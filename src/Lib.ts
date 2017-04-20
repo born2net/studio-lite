@@ -158,7 +158,7 @@ export class Lib {
         return rc4.doEncrypt(crumb);
     }
 
-    static AlertOnLeave(){
+    static AlertOnLeave() {
         if (!Lib.DevMode()) {
             window.onbeforeunload = function (e) {
                 var message = "Did you save your changes?",
@@ -173,6 +173,7 @@ export class Lib {
         }
 
     }
+
     /**
      Format a seconds value into an object broken into hours / minutes / seconds
      @method formatSecondsToObject
@@ -261,7 +262,7 @@ export class Lib {
      @return {String}
      **/
     static Base64Encode(str) {
-        var c1,c2,c3;
+        var c1, c2, c3;
         var Base64 = {
             _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=", encode: function (e) {
                 var t = "";
@@ -358,7 +359,7 @@ export class Lib {
      @return {String}
      **/
     static Base64Decode(str) {
-        var c1,c2,c3;
+        var c1, c2, c3;
         var Base64 = {
             _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=", encode: function (e) {
                 var t = "";
@@ -796,6 +797,11 @@ export class Lib {
 
         })
         return computedAccessMask;
+    }
+
+    static ValidateEmail(email) {
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
     }
 
     static GetAccessMask(accessMask): List<any> {

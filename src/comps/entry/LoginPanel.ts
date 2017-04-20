@@ -142,8 +142,17 @@ enum ViewMod {
                     </div>
 
                     <div *ngSwitchCase="m_viewMod.CHANGE_BUSINESS_NAME">
-                        <h2>change business name</h2>
-                        <a (click)="$event.preventDefault(); m_currentViewMode = m_viewMod.LOGIN" href="#">back</a>
+                        <h2 class="form-signin-heading"></h2>
+                        <input spellcheck="false" type="text" name="m_user" [(ngModel)]="m_user" class="input-underline input-lg form-control" placeholder="user name / email" required autofocus>
+                        <input type="password" [(ngModel)]="m_pass" name="m_pass" class="input-underline input-lg form-control" placeholder="password" required>
+                        <input type="text" name="m_businessName" [(ngModel)]="m_businessName" class="input-underline input-lg form-control" placeholder="new business name" required>
+                        <br/>
+                        <a style="width: 280px" (click)="onChangeBusinessName()" type="submit" class="btn rounded-btn"> change business name
+                            <span *ngIf="m_showTwoFactor" style="font-size: 9px; max-height: 15px; display: block; padding: 0; margin: 0; position: relative; top: -20px">with Google authenticator</span>
+                        </a>
+                        <br/>
+                        <a class="pull-left" (click)="$event.preventDefault(); m_currentViewMode = m_viewMod.LOGIN" href="#"><i class="fa fa-arrow-circle-left"></i> back</a>
+
                     </div>
                 </ul>
             </form>
@@ -157,6 +166,7 @@ export class LoginPanel extends Compbaser {
     public m_pass: string = '';
     public m_passNew: string = '';
     public m_passRepeat: string = '';
+    public m_businessName: string = '';
     public m_twoFactor: string;
     public m_showTwoFactor: boolean = false;
     public m_rememberMe: any;
@@ -223,6 +233,15 @@ export class LoginPanel extends Compbaser {
     passFocus() {
         // this.renderer.invokeElementMethod(this.userPass.nativeElement, 'focus', [])
         jQuery(this.userPass.nativeElement).focus();
+    }
+
+    onChangeBusinessName(){
+        this.rp.changeBusinessName(this.m_user, this.m_pass, this.m_businessName, (value) => {
+            if (!value.result)
+                return bootbox.alert('Sorry there was a problem authenticating');
+            bootbox.alert('Your business name has been renamed successfully');
+            this.m_currentViewMode = ViewMod.LOGIN;
+        })
     }
 
     onResetPassword() {

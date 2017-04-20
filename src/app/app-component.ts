@@ -83,6 +83,7 @@ export class AppComponent implements AfterViewInit {
         this.listenAppStateChange();
         this.toastr.setRootViewContainerRef(vRef);
         this.listenRouterUpdateTitle();
+        this.listenUpgradeEnterpris();
         this.appResized();
         Observable.fromEvent(window, 'resize').debounceTime(250)
             .subscribe(() => {
@@ -94,7 +95,6 @@ export class AppComponent implements AfterViewInit {
 
     @ViewChild(ModalComponent)
     modal: ModalComponent;
-
 
     ngOnInit() {
 
@@ -293,6 +293,13 @@ export class AppComponent implements AfterViewInit {
                 break;
             }
         }
+    }
+
+    private listenUpgradeEnterpris(){
+        this.commBroker.onEvent(Consts.Events().UPGRADE_ENTERPRISE)
+            .subscribe((v) => {
+                this.modal.open();
+        }, (e) => console.error(e));
     }
 
     public appResized(): void {

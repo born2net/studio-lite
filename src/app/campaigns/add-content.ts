@@ -8,7 +8,7 @@ import {UserModel} from "../../models/UserModel";
 import {ResourcesModel} from "../../store/imsdb.interfaces_auto";
 import {IAddContents} from "../../interfaces/IAddContent";
 import {BlockTypeEnum} from "../../interfaces/BlockTypeEnum";
-import {BlockLabels, PLACEMENT_CHANNEL, PLACEMENT_LISTS, PLACEMENT_SCENE} from "../../interfaces/Consts";
+import {BlockLabels, Consts, PLACEMENT_CHANNEL, PLACEMENT_LISTS, PLACEMENT_SCENE} from "../../interfaces/Consts";
 import {CommBroker} from "../../services/CommBroker";
 import {ADD_NEW_BLOCK_SCENE} from "../scenes/scene-editor";
 import {Lib} from "../../Lib";
@@ -212,7 +212,7 @@ export class AddContent extends Compbaser implements AfterViewInit {
     _onUpgEnterprise(event: MouseEvent) {
         event.stopImmediatePropagation();
         event.preventDefault();
-        con('upg ent');
+        this.commBroker.fire({event: Consts.Events().UPGRADE_ENTERPRISE, fromInstance: this, message: ''});
     }
 
     _onComponentSelected(i_component) {

@@ -46,7 +46,8 @@ export class Consts {
         return {
             WIN_SIZED: 'winSized',
             MENU_SELECTION: 'menuSelection',
-            STATIONS_NETWORK_ERROR: 'stationsNetworkError'
+            STATIONS_NETWORK_ERROR: 'stationsNetworkError',
+            UPGRADE_ENTERPRISE: 'UPGRADE_ENTERPRISE'
         };
     }
 

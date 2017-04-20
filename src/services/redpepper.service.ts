@@ -84,6 +84,7 @@ export class RedPepperService {
                     self.m_authenticated = true;
                     self.m_domain = self.m_loaderManager['m_domain'];
                     var resellerInfo = self.m_loaderManager['m_resellerInfo'];
+                    // var resellerInfoString = (new XMLSerializer()).serializeToString(resellerInfo);
                     self.m_userName = i_user;
                     self.m_userPassword = i_pass;
                     self.m_whiteLabel = parseInt($(resellerInfo).find('WhiteLabel').attr('enabled'));

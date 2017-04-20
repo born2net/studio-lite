@@ -2,7 +2,7 @@ import {AfterViewInit, Component, VERSION, ViewChild, ViewContainerRef} from "@a
 import "rxjs/add/operator/catch";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {CommBroker} from "../services/CommBroker";
-import {Title} from "@angular/platform-browser";
+import {EventManager, Title} from "@angular/platform-browser";
 import {ToastsManager} from "ng2-toastr";
 import {Observable} from "rxjs";
 import * as packageJson from "../../package.json";
@@ -71,6 +71,7 @@ export class AppComponent implements AfterViewInit {
                 private activatedRoute: ActivatedRoute,
                 private vRef: ViewContainerRef,
                 private titleService: Title,
+                private eventManager:EventManager,
                 private toastr: ToastsManager) {
 
         // this.version = packageJson.version;
@@ -84,6 +85,7 @@ export class AppComponent implements AfterViewInit {
         this.toastr.setRootViewContainerRef(vRef);
         this.listenRouterUpdateTitle();
         this.listenUpgradeEnterpris();
+        this.listenSaves();
         this.appResized();
         Observable.fromEvent(window, 'resize').debounceTime(250)
             .subscribe(() => {
@@ -302,6 +304,12 @@ export class AppComponent implements AfterViewInit {
         }, (e) => console.error(e));
     }
 
+    private listenSaves(){
+        this.eventManager.addGlobalEventListener('window','keydown.control.s',(event)=>{
+            event.preventDefault();
+            this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: {mainAppState: MainAppShowStateEnum.SAVE}}));
+        })
+    }
     public appResized(): void {
         var appHeight = document.body.clientHeight;
         var appWidth = document.body.clientWidth;

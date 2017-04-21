@@ -63,7 +63,7 @@ import {LocationMarkModel} from "../../models/LocationMarkModel";
                 </li>
             </div>
             <hr/>
-            <h4 id="locationControls" class="panel-title">
+            <h4 *ngIf="!m_pendingBlocAddition" id="locationControls" class="panel-title">
                 <button (click)="_onAddNewBlock('GPS')" type="button" name="addLocation" title="add a new item" class="addResourceToLocation btn btn-default btn-sm">
                     <span class="glyphicon glyphicon-plus"></span>
                 </button>
@@ -85,7 +85,7 @@ import {LocationMarkModel} from "../../models/LocationMarkModel";
                 <span i18n>Total location based: {{m_totalLocations}}</span>
             </label>
 
-            <div class="row">
+            <div class="row" *ngIf="!m_pendingBlocAddition">
                 <ul class="list-group">
                     <li class="list-group-item">
                         <span i18n class="inliner">name</span>
@@ -113,8 +113,6 @@ import {LocationMarkModel} from "../../models/LocationMarkModel";
                     </li>
                 </ul>
             </div>
-
-
         </form>
         <modal #modalAddContent>
             <modal-header [show-close]="true">
@@ -125,7 +123,6 @@ import {LocationMarkModel} from "../../models/LocationMarkModel";
             </modal-body>
             <modal-footer [show-default-buttons]="true"></modal-footer>
         </modal>
-
         <!--<modal [cssClass]="modal-xl" (onClose)="_onModelMapClosed()" #modalMap [size]="'lg'">-->
         <!--<modal-header [show-close]="false">-->
         <!--<h4 i18n class="modal-title">add content to collection</h4>-->

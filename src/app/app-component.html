@@ -39,10 +39,10 @@
 
             <ul style="height: 20px" class="nav navbar-nav navbar-right noCollapsing">
                 <li>
-                    <a (click)="_onMenuIcon('upgrade',$event)" *ngIf="isBrandingDisabled" class="showUpgradeModal reshid" href="#"><i style="color: red" class="faHeader fa fa-cloud-upload"></i></a>
+                    <a style="padding-bottom: 0px; margin-bottom: 0px" (click)="_onMenuIcon('upgrade',$event)" *ngIf="isBrandingDisabled" class="showUpgradeModal reshid" href="#"><i style="color: red" class="faHeader fa fa-cloud-upload"></i></a>
                 </li>
                 <li>
-                    <a (click)="_onMenuIcon('save',$event)" id="saveConfig" href="#"><i style="color: greenyellow" class="faHeader fa fa-save"></i></a>
+                    <a style="padding-bottom: 0px; margin-bottom: 0px" (click)="_onMenuIcon('save',$event)" id="saveConfig" href="#"><i style="color: greenyellow" class="faHeader fa fa-save"></i></a>
                 </li>
                 <li>
                     <a (click)="_onMenuIcon('chat',$event)" *ngIf="isBrandingDisabled" class="reshid" id="liveChat" href="#"><i class="faHeader fa fa-comments-o"></i></a>
@@ -50,11 +50,11 @@
                 <!-- disabled menubar tutorial view -->
                 <div style="display: none">
                     <li>
-                        <a class="hidden-xs hidden-sm hidden-md" id="liveTutorial" href="#"><i class="faHeader fa fa-magic"></i></a>
+                        <a style="padding-bottom: 0px; margin-bottom: 0px" class="hidden-xs hidden-sm hidden-md" id="liveTutorial" href="#"><i class="faHeader fa fa-magic"></i></a>
                     </li>
                 </div>
                 <li style="padding-right: 20px">
-                    <a (click)="_onMenuIcon('web',$event)" *ngIf="isBrandingDisabled" id="languagePrompt" href="#"><i class="faHeader fa fa-globe"></i></a>
+                    <a style="padding-bottom: 0px; margin-bottom: 0px" (click)="_onMenuIcon('web',$event)" *ngIf="isBrandingDisabled"  href="#"><i class="faHeader fa fa-globe"></i></a>
                 </li>
                 <!--<li style="padding-right: 20px">-->
                 <!--<a (click)="_onMenuIcon('dash',$event)" id="dashboard" href="#"><i class="faHeader fa fa-dashboard"></i></a>-->

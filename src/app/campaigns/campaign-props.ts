@@ -52,7 +52,7 @@ enum CampaignPlaylistModeEnum  {
                                 <li class="list-group-item">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-paper-plane"></i></span>
-                                        <input [formControl]="m_contGroup.controls['campaign_name']" required
+                                        <input (keyup.enter)="$event.preventDefault(); $event.stopImmediatePropagation()" [formControl]="m_contGroup.controls['campaign_name']" required
                                                type="text" class="form-control" maxlength="50"
                                                placeholder="campaign name">
                                     </div>
@@ -84,7 +84,7 @@ enum CampaignPlaylistModeEnum  {
                                 </li>
                                 <li class="list-group-item">
                                     <div class="center-block row paddingCeilingFloor20" style="width: 144px">
-                                        <button (click)="removeCampaign()" class="btn btn-danger">
+                                        <button type="button" (click)="removeCampaign()" class="btn btn-danger">
                                             <i class="fa fa-remove"></i>
                                             delete campaign
                                         </button>

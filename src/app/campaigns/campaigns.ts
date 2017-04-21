@@ -8,7 +8,7 @@ import {RedPepperService} from "../../services/redpepper.service";
 import {Once} from "../../decorators/once-decorator";
 import {PLACEMENT_CHANNEL} from "../../interfaces/Consts";
 import {IAddContents} from "../../interfaces/IAddContent";
-import {CampaignTimelineBoardViewerChanelsModel} from "../../store/imsdb.interfaces_auto";
+import {CampaignTimelineBoardViewerChanelsModel, CampaignTimelinesModel} from "../../store/imsdb.interfaces_auto";
 import {BlockService} from "../blocks/block-service";
 import {IScreenTemplateData} from "../../interfaces/IScreenTemplate";
 
@@ -82,9 +82,20 @@ export class Campaigns extends Compbaser {
 
     m_PLACEMENT_CHANNEL = PLACEMENT_CHANNEL;
     private m_selected_campaign_timeline_chanel_id = -1;
+    private m_selected_campaign_timeline_id = -1;
 
     constructor(private yp: YellowPepperService, private rp: RedPepperService, private bs: BlockService) {
         super();
+
+        this.cancelOnDestroy(
+            //
+            this.yp.listenTimelineSelected(true)
+                .subscribe((i_campaignTimelinesModel: CampaignTimelinesModel) => {
+                    if (!i_campaignTimelinesModel)
+                        return this.m_selected_campaign_timeline_id = -1;
+                    this.m_selected_campaign_timeline_id = i_campaignTimelinesModel.getCampaignTimelineId();
+                }, (e) => console.error(e))
+        )
 
         this.cancelOnDestroy(
             //
@@ -121,7 +132,9 @@ export class Campaigns extends Compbaser {
             this.yp.getTotalDurationChannel(this.m_selected_campaign_timeline_chanel_id)
                 .subscribe((i_totalChannelLength) => {
                     var boilerPlate = this.bs.getBlockBoilerplate(i_addContents.blockCode);
-                    this._createNewChannelBlock(i_addContents, boilerPlate, i_totalChannelLength);
+                    this.rp.createNewChannelPlayer(this.m_selected_campaign_timeline_chanel_id, i_addContents, boilerPlate, i_totalChannelLength);
+                    this.rp.updateTotalTimelineDuration(this.m_selected_campaign_timeline_id);
+                    this.rp.reduxCommit();
                 }, (e) => console.error(e))
         )
     }
@@ -134,14 +147,6 @@ export class Campaigns extends Compbaser {
     _onAddedContentClosed(){
         var uiState: IUiState = {uiSideProps: SideProps.miniDashboard}
         this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
-    }
-
-    /**
-     Create a new block (player) on the current channel and refresh UI bindings such as properties open events.
-     **/
-    _createNewChannelBlock(i_addContents: IAddContents, i_boilerPlate, i_totalChannelLength) {
-        this.rp.createNewChannelPlayer(this.m_selected_campaign_timeline_chanel_id, i_addContents, i_boilerPlate, i_totalChannelLength);
-        this.rp.reduxCommit();
     }
 
     _onSlideChange(event: ISliderItemData) {

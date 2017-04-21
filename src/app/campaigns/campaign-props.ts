@@ -246,6 +246,10 @@ export class CampaignProps extends Compbaser {
     }
 
     removeCampaign() {
+        var campaignId = this.m_campaignModel.getCampaignId();
+        var allCampaignIDs = this.rp.getStationCampaignIDs();
+        if (_.indexOf(allCampaignIDs, campaignId) > -1)
+            return bootbox.alert('Cannot remove this campaign as one or more stations are associated with it, be sure to remove them first.');
         bootbox.confirm({
             message: "Are you sure you want to delete the campaign, there is NO WAY BACK?",
             buttons: {
@@ -259,7 +263,7 @@ export class CampaignProps extends Compbaser {
                 }
             },
             callback: (result) => {
-                if (result) {
+                if (result == true) {
                     var campaignId = this.m_campaignModel.getCampaignId();
                     this.rp.removeCampaignKeepBoards(campaignId);
                     this.rp.reduxCommit();

@@ -120,7 +120,7 @@ export class BlockPropYouTube extends Compbaser implements AfterViewInit {
         jXML(xSnippet).attr('listType', this.m_contGroup.value.listType);
         jXML(xSnippet).find('VideoIdList').remove();
         if (this.m_contGroup.value.listType == 'manually') {
-            jXML(xSnippet).append(jXML(`<VideoIdList>jXML{this.m_contGroup.value.customList}</VideoIdList>`));
+            jXML(xSnippet).append(jXML(`<VideoIdList>${this.m_contGroup.value.customList}</VideoIdList>`));
         } else {
             jXML(xSnippet).find('VideoIdList').remove();
         }

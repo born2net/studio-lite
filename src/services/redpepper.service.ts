@@ -1097,6 +1097,21 @@ export class RedPepperService {
     }
 
     /**
+     Returns all of the campaign IDs that all stations belonging to account are associated with
+     @method getStationCampaignIDs
+     @return {Array} array of campaign IDs
+     **/
+    getStationCampaignIDs() {
+        var campaignIDs = [];
+        $(this.databaseManager.table_branch_stations().getAllPrimaryKeys()).each((k, branch_station_id) => {
+            var recBranchStation = this.databaseManager.table_branch_stations().getRec(branch_station_id);
+            var campaign_board_id = recBranchStation['campaign_board_id'];
+            campaignIDs.push(this.getCampaignIdFromCampaignBoardId(campaign_board_id));
+        });
+        return campaignIDs;
+    }
+
+    /**
      Get a list of all campaigns per the account
      @method getCampaignIDs
      @return {Array} campaigns
@@ -2770,22 +2785,6 @@ export class RedPepperService {
     getCampaignRecord(i_campaign_id) {
 
         return this.databaseManager.table_campaigns().getRec(i_campaign_id);
-    }
-
-    /**
-     Returns all of the campaign IDs that all stations belonging to account are associated with
-     @method getStationCampaignIDs
-     @return {Array} array of campaign IDs
-     **/
-    getStationCampaignIDs() {
-
-        var campaignIDs = [];
-        $(this.databaseManager.table_branch_stations().getAllPrimaryKeys()).each(function (k, branch_station_id) {
-            var recBranchStation = this.databaseManager.table_branch_stations().getRec(branch_station_id);
-            var campaign_board_id = recBranchStation['campaign_board_id'];
-            campaignIDs.push(this.getCampaignIdFromCampaignBoardId(campaign_board_id));
-        });
-        return campaignIDs;
     }
 
     /**

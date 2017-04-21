@@ -28,7 +28,10 @@ export class AuthService {
         }, (e) => {
             console.error(e)
         })
+        this.ieAutoLoginPatch();
         this.listenEvents();
+
+
     }
 
     private userModel: UserModel;
@@ -75,6 +78,24 @@ export class AuthService {
         }, (e) => console.error(e));
     }
 
+    private ieAutoLoginPatch() {
+        // workaround for auto login on IE 11<
+        if (platform.name == 'IE' && Math.round(Number(platform.version)) <= 11) {
+            var url = window.location.href;
+            var credentials: any = url.split('param=')[1];
+            if (credentials) {
+                credentials = this.decodeBase64(credentials)
+                var credentialsArr = credentials.match(/user=(.*),pass=(.*)/);
+                var user = credentialsArr[1];
+                var pass = credentialsArr[2];
+                if (user && pass) {
+                    console.log('applying IE auto login patch');
+                    this.saveCredentials(user, pass, true);
+                }
+            }
+        }
+    }
+
     private enterApplication() {
         setTimeout(() => {
             if (Lib.DevMode()) {
@@ -107,7 +128,9 @@ export class AuthService {
 
         } else {
             // check url params
-            console.log('credentials not found, checking url params');
+            console.log('credentials not found, checking url params ' + this.activatedRoute.snapshot.queryParams);
+
+            debugger
             // var id = this.activatedRoute.snapshot.queryParams['id'];
             var id = this.activatedRoute.snapshot.queryParams['param'];
             if (!_.isUndefined(id)) {

@@ -17,6 +17,7 @@ const routes: Routes = [
     {path: 'Logout', component: Logout},
     {path: '', pathMatch: 'full', redirectTo: '/App1/Dashboard'},
     {path: 'studioweb', pathMatch: 'full', redirectTo: '/App1/Dashboard'},  // IE/FF compatibility
+    {path: 'studioweb/index.html', pathMatch: 'full', redirectTo: '/App1/Dashboard'},  // IE 11
     {
         path: 'App1', component: Appwrap,
         children: [

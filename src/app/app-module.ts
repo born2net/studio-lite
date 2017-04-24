@@ -148,7 +148,6 @@ export class AppModule {
     constructor(private commBroker: CommBroker, private compiler: Compiler, private ngmslibService: NgmslibService, private yp: YellowPepperService, private fontLoaderService: FontLoaderService) {
         Lib.Con(`running in dev mode: ${Lib.DevMode()}`);
         Lib.Con(`App in ${(compiler instanceof Compiler) ? 'AOT' : 'JIT'} mode`);
-        console.log(commBroker);
         window['jQueryAny'] = jQuery;
         window['jXML'] = jQuery;
         this.ngmslibService.globalizeStringJS();

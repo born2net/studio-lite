@@ -130,7 +130,6 @@ export class AuthService {
             // check url params
             console.log('credentials not found, checking url params ' + this.activatedRoute.snapshot.queryParams);
 
-            debugger
             // var id = this.activatedRoute.snapshot.queryParams['id'];
             var id = this.activatedRoute.snapshot.queryParams['param'];
             if (!_.isUndefined(id)) {

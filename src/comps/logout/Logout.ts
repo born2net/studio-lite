@@ -80,6 +80,7 @@ export class Logout extends Compbaser {
         window.onbeforeunload = () => {
         };
         this.localStorage.removeItem('remember_me_studioweb');
+        this.localStorage.removeItem('no_show_limited');
         let uiState: IUiState = {mainAppState: MainAppShowStateEnum.GOODBYE}
         this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
         if (this.rp.getUserData().resellerID == 1)

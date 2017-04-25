@@ -213,8 +213,10 @@ export class AuthService {
         }
     }
 
-    public checkAccess(): Promise<any> {
+    public checkAccess(activatedRouteSnapshot: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): Promise<any> {
         if (this.userModel.getAuthenticated()) {
+            // if (this.userModel.getAccountType() == AuthenticateFlags.USER_ACCOUNT_PRO)
+            //     console.log('limited');
             return Promise.resolve(true);
         } else {
             return Promise.resolve(false);
@@ -223,7 +225,7 @@ export class AuthService {
 
     public canActivate(activatedRouteSnapshot: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): Observable<boolean> {
         return Observable
-            .fromPromise(this.checkAccess())
+            .fromPromise(this.checkAccess(activatedRouteSnapshot,routerStateSnapshot))
             .do(result => {
                 if (!result)
                     this.router.navigate(['/AutoLogin']);

@@ -26,6 +26,7 @@ import {IQueueSave} from "../../app/fasterq/fasterq-editor";
 import {CommBroker, IMessage} from "../../services/CommBroker";
 import {FASTERQ_QUEUE_CALL_CANCLED} from "../../interfaces/Consts";
 import {ToastsManager} from "ng2-toastr";
+import {LocalStorage} from "../../services/LocalStorage";
 
 export const EFFECT_AUTH_START = 'EFFECT_AUTH_START';
 export const EFFECT_AUTH_END = 'EFFECT_AUTH_END';
@@ -76,6 +77,7 @@ export class AppDbEffects {
                 private rp: RedPepperService,
                 private yp: YellowPepperService,
                 private commBroker: CommBroker,
+                private localStorage: LocalStorage,
                 private toastr: ToastsManager,
                 private http: Http) {
 
@@ -208,14 +210,17 @@ export class AppDbEffects {
                     }
 
                 } else {
+
+                    // Authenticated
+
                     console.log('authenticating check account type');
                     if (pepperConnection.pepperAuthReply.warning == 'not a studioLite account') {
                         userModel = userModel.setAccountType(AuthenticateFlags.USER_ACCOUNT_PRO);
                         var snippet = `
                         <div id="installPanel">
-                            <h3 data-localize="installSignagePlayer">Attempting to login with StudioPro credentials</h3>
-                            <h5 data-localize="chooseVersion">
-                                <b>Your are using a StudioPro account in StudioLite, <br/>Please download StudioPro to proceed...</b>
+                            <h4>You are login in to StudioLite with StudioPro credentials</h4>
+                            <h5>
+                                <b>This will result in limited functionality, please proceed to download StudioPro below...</b>
                             </h5>
                             <br/>
                             <div>
@@ -268,7 +273,27 @@ export class AppDbEffects {
                                 </div>
                             </div>
                         `
-                        return bootbox.alert(snippet);
+
+                        if (!this.localStorage.getItem('no_show_limited')){
+                            bootbox.confirm({
+                                title: "Limited functionality",
+                                message: snippet,
+                                buttons: {
+                                    cancel: {
+                                        label: '<i class="fa fa-circle-o"></i> do not show again'
+                                    },
+                                    confirm: {
+                                        label: '<i class="fa fa-circle"></i> close'
+                                    }
+                                },
+                                callback: (result) => {
+                                    if (result) return;
+                                    this.localStorage.setItem('no_show_limited',1);
+
+                                }
+                            });
+                        }
+
                     } else {
                         // console.log('lite account');
                     }
@@ -292,13 +317,16 @@ export class AppDbEffects {
                     }, (e) => console.error(e))
                     userModel = userModel.setDomain(pepperConnection.loadManager.m_domain);
                     userModel = userModel.setAuthenticated(true);
-                    userModel = userModel.setAccountType(AuthenticateFlags.USER_ACCOUNT);
                     userModel = userModel.setResellerInfo(pepperConnection.loadManager.m_resellerInfo);
                     userModel = userModel.setResellerName(
                         jXML(pepperConnection.loadManager.m_resellerInfo)
                             .find('BusinessInfo')
                             .attr('name')
                     );
+
+                    if (userModel.getAccountType() != AuthenticateFlags.USER_ACCOUNT_PRO)
+                        userModel = userModel.setAccountType(AuthenticateFlags.USER_ACCOUNT);
+
                     userModel = userModel.setResellerId(
                         Number(jXML(pepperConnection.loadManager.m_resellerInfo)
                             .find('BusinessInfo')
@@ -312,16 +340,7 @@ export class AppDbEffects {
                         type: EFFECT_AUTH_STATUS, payload: AuthenticateFlags.USER_ACCOUNT
                     });
 
-                    /////////////////////////////////////////////////////////////////////////////
-                    // todo: currently if logging in with enterprise account, dbConnect will timeout,
-                    // todo: Alon needs to fix and we can dispatch code below
-                    // userModel = userModel.setAuthenticated(true);
-                    // userModel = userModel.setAccountType(AuthenticateFlags.ENTERPRISE_ACCOUNT);
-                    // this.store.dispatch({type: EFFECT_UPDATE_USER_MODEL, payload: userModel});
-                    // this.store.dispatch({
-                    //     type: EFFECT_AUTH_STATUS, payload: AuthenticateFlags.ENTERPRISE_ACCOUNT
-                    // });
-                    /////////////////////////////////////////////////////////////////////////////
+
                 }
 
                 // if passed check for two factor
@@ -753,3 +772,15 @@ export class AppDbEffects {
 // this.rp.dbConnect(userModel.user(), userModel.pass(), (result:{[key: string]: string}) => {
 //     console.log(result);
 // })
+
+
+/////////////////////////////////////////////////////////////////////////////
+//  currently if logging in with enterprise account, dbConnect will timeout,
+//  Alon needs to fix and we can dispatch code below
+// userModel = userModel.setAuthenticated(true);
+// userModel = userModel.setAccountType(AuthenticateFlags.ENTERPRISE_ACCOUNT);
+// this.store.dispatch({type: EFFECT_UPDATE_USER_MODEL, payload: userModel});
+// this.store.dispatch({
+//     type: EFFECT_AUTH_STATUS, payload: AuthenticateFlags.ENTERPRISE_ACCOUNT
+// });
+/////////////////////////////////////////////////////////////////////////////

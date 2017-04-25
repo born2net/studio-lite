@@ -2,8 +2,10 @@ import {ChangeDetectionStrategy, Component} from "@angular/core";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {Compbaser} from "ng-mslib";
 import {BlockService} from "../blocks/block-service";
-import {AppdbAction} from "../../store/actions/appdb.actions";
+import {AppdbAction, AuthenticateFlags} from "../../store/actions/appdb.actions";
 import {PLACEMENT_CHANNEL} from "../../interfaces/Consts";
+import {YellowPepperService} from "../../services/yellowpepper.service";
+import {UserModel} from "../../models/UserModel";
 
 
 @Component({
@@ -35,20 +37,29 @@ import {PLACEMENT_CHANNEL} from "../../interfaces/Consts";
 
     template: `
         <small class="debug">campaigns-navigation</small>
-        <panel-split-container>
-            <panel-split-main>
-                <campaigns>
-                </campaigns>
-            </panel-split-main>
-            <panel-split-side>
-                <campaign-props-manager></campaign-props-manager>
-            </panel-split-side>
-        </panel-split-container>
+        <div *ngIf="(userModel$ | async).getAccountType() == m_AuthenticateFlags.USER_ACCOUNT_PRO; else fullAccess">
+            <limited-access></limited-access>            
+        </div>
+        <ng-template #fullAccess>
+            <panel-split-container>
+                <panel-split-main>
+                    <campaigns>
+                    </campaigns>
+                </panel-split-main>
+                <panel-split-side>
+                    <campaign-props-manager></campaign-props-manager>
+                </panel-split-side>
+            </panel-split-container>    
+        </ng-template>
+        
     `
 })
 export class CampaignsNavigation extends Compbaser {
-    constructor(private actions: AppdbAction) {
+    userModel$;
+    m_AuthenticateFlags = AuthenticateFlags;
+    constructor(private actions: AppdbAction, private yp: YellowPepperService) {
         super();
+        this.userModel$ = this.yp.listenUserModel();
     }
 
     destroy() {

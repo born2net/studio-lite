@@ -79,6 +79,7 @@ export class AppComponent implements AfterViewInit {
 
         // this.localStorage.removeItem('remember_me')
         // this.localStorage.removeItem('business_id')
+        // this.localStorage.removeItem('no_show_limited')
 
         this.checkPlatform();
         this.listenAppStateChange();

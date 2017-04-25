@@ -65,8 +65,9 @@ import {ProUpgrade} from "../app/studiopro/pro-upgrade";
 import {DashPanelMini} from "../app/dashboard/dash-panel-mini";
 import {ResellerLogo} from "../comps/logo/reseller-logo";
 import {Logo} from "../comps/logo/Logo";
+import {LimitedAccess} from "../comps/limited-access/limited-access";
 
-var sharedComponents = [Tabs, Tab, Infobox, Sliderpanel, Slideritem, SlideritemContent, PanelSplitMain, PanelSplitSide, PanelSplitContainer, ListToArrayPipe, FormatSecondsPipe, MatchBodyHeight, ScreenTemplate, BlurForwarder, DraggableList, AddContent, Loading,
+var sharedComponents = [Tabs, Tab, Infobox, Sliderpanel, Slideritem, SlideritemContent, PanelSplitMain, PanelSplitSide, PanelSplitContainer, ListToArrayPipe, FormatSecondsPipe, MatchBodyHeight, ScreenTemplate, BlurForwarder, DraggableList, AddContent, Loading, LimitedAccess,
     FontSelector, BlockPropContainer, BlockPropCommon, BlockPropHtml, BlockPropClock, BlockPropWeather, BlockPropInstagram, BlockPropJsonPlayer, BlockPropJsonItem, LivePreview, LocationMap, MediaPlayer, FilterModelPipe, SvgIcon, LazyImage, ProUpgrade, ResellerLogo, Logo,
     BlockPropScene, BlockPropCalendar, BlockPropSheets, BlockPropTwitter, BlockPropVideo, BlockPropImage, BlockPropLabel, BlockPropMrss, BlockPropLocation, BlockPropRss, BlockPropDigg, BlockPropFasterQ, BlockPropCollection, BlockPropQR, BlockPropYouTube, JsonEventGrid, DashPanelMini];
 

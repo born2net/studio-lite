@@ -69,6 +69,10 @@
   display: inline-block;
 }
 
+.channel-selected {
+  background: #656565;
+}
+
 .timeline {
   padding-left: 0px;
 }
@@ -76,12 +80,16 @@
 :host /deep/ .timeline-row {
   position: absolute;
   border: 1px solid #454545;
+  width: 100%;
 }
 
-.output-row {
+:host /deep/ .output-row {
   background-color: #adadad;
   border: 1px solid #454545;
-  width: 783px;
-  height: 49px;
-  left: 0px;
+  width: 100%;
+}
+
+.timeline-container {
+  max-width: 1200px;
+  overflow-x: auto;
 }

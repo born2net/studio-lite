@@ -33,78 +33,96 @@ export class CampaignEditor extends Compbaser {
 
     m_showTimeline = false;
 
-    resources = [
-        {
-            name: 'logo',
-            type: 'png',
-            time: '0',
-            size: '110KB',
-            src: 'assets/sample1.png'
-        },
-        {
-            name: 'samplesvg',
-            type: 'svg',
-            time: '0',
-            size: '110KB',
-            src: 'assets/sample3.svg'
-        }
-    ];
+    resources = {
+        items: [
+            {
+                id: 1,
+                name: 'logo',
+                type: 'png',
+                time: '0',
+                size: '110KB',
+                src: 'assets/img/doc-13-128.png'
+            },
+            {
+                id: 2,
+                name: 'samplesvg',
+                type: 'svg',
+                time: '0',
+                size: '110KB',
+                src: 'assets/img/svgexample.svg'
+            }
+        ],
+        outputs: [
+            {
+                id: 1,
+                name: 'logo',
+                type: 'png',
+                time: '0',
+                size: '110KB',
+                src: 'assets/img/doc-13-128.png'
+            },
+            {
+                id: 2,
+                name: 'samplesvg',
+                type: 'svg',
+                time: '0',
+                size: '110KB',
+                src: 'assets/img/svgexample.svg'
+            }
+        ]
+    };
     state = {
         zoom: 1,
         channels: [
             {
+                id: 1,
                 name: 'CH0',
                 type: 'normal',
-                color: '#0000FF'
+                color: '#0000FF',
+                selected: false,
             },
             {
+                id: 2,
                 name: 'CH1',
                 type: 'normal',
-                color: '#0000FF'
+                color: '#0000FF',
+                selected: false
             },
             {
+                id: 3,
                 name: 'CH2',
                 color: '#0000FF',
-                type: 'common'
+                type: 'common',
+                selected: false
             },
         ],
         outputs: [
             {
+                id: 1,
                 name: "Output",
-                color: "#000"
+                color: "#000",
+                selected: false
             }
         ],
         items: [
             {
+                id: 1,
+                type: 'channel',
                 resource: "assets/sample1.png",
                 title: 'Logo_splash',
                 start: 0,
                 duration: 60,
-                channel: 0,
-                selected: true
-            },
-            {
-                resource: "assets/sample1.png",
-                title: 'Logo_splash',
-                start: 60,
-                duration: 60,
-                channel: 0,
+                channel: 1,
                 selected: false
             },
             {
-                resource: "assets/sample1.png",
-                title: 'Logo_splash',
-                start: 120,
-                duration: 120,
-                channel: 0,
-                selected: false
-            },
-            {
+                id: 2,
+                type: 'channel',
                 resource: "assets/sample3.svg",
                 title: '350x350',
-                start: 500,
-                duration: 150,
-                channel: 0,
+                start: 300,
+                duration: 60,
+                channel: 2,
                 selected: false
             }
         ]

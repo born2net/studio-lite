@@ -118,4 +118,5 @@ for translation:
 1. release_aot > to generate all ./dist files in english
 2. x_translate > to create an english version of ./src/local/messages.xmb
 3. develop_new_script > to generate ./src/local/hebrew.xtb from messages.xmb (use server API)
+    https://secure.digitalsignage.com/getLocal/he/xxx/go%20find%20me%20and%20bring%20me%20here
 4. release_aot_hebrew > to create new StudioLite in hebrew and upload to specific local server dir

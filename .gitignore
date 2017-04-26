@@ -36,6 +36,7 @@ testem.log
 !index.js
 !/typings
 
+
 # js/map
 *.js
 src/**/*.js
@@ -51,6 +52,7 @@ workspace.xml
 !src/store/signage_sdk.js
 !src/libs/*
 !src/libs/**/*
+!src/locale/**/*
 #src/store/application.state.js
 #src/store/imsdb.interfaces.js
 #src/store/imsdb.interfaces_auto.js

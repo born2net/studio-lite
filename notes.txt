@@ -110,3 +110,12 @@ to load remotely:
     <!--ga('create', 'UA-36671151-9', 'auto');-->
     <!--ga('send', 'pageview');-->
 <!--</script>-->
+
+==================================================================================================================
+
+for translation:
+
+1. release_aot > to generate all ./dist files in english
+2. x_translate > to create an english version of ./src/local/messages.xmb
+3. develop_new_script > to generate ./src/local/hebrew.xtb from messages.xmb (use server API)
+4. release_aot_hebrew > to create new StudioLite in hebrew and upload to specific local server dir

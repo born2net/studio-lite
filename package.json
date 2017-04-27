@@ -1,6 +1,6 @@
 {
   "name": "studioweb",
-  "version": "0.1.514",
+  "version": "0.1.520",
   "license": "Modified GPL (see readme.md)",
   "angular-cli": {},
   "scripts": {
@@ -102,7 +102,9 @@
     "@types/node": "^6.0.42",
     "@types/x2js": "0.0.27",
     "autoprefixer": "^6.6.1",
+    "co": "^4.6.0",
     "codelyzer": "~2.0.0",
+    "fs-extra": "^2.1.2",
     "gulp": "^3.9.1",
     "gulp-comment-swap": "0.0.10",
     "gulp-concat": "^2.6.0",

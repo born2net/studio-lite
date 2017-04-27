@@ -1,12 +1,37 @@
-var _ = require('lodash');
-var os = require('os');
-var spawn = require('child_process').spawn;
+const _ = require('lodash');
+const os = require('os');
+const co = require('co');
 const languages = ['he', 'de'];
+const fs = require('fs');
+const fsextra = require('fs-extra');
+
+
+var spawn = require('child_process').spawn;
 
 if (os.platform().indexOf('win') > -1) {
     var cmd = 'npm.cmd'
 } else {
     var cmd = 'npm'
+}
+
+
+const serverTranslation = (i_lang) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve('');
+        },2000)
+    });
+}
+
+
+const createLanguageFiles = () => {
+    _.forEach(languages, (lang) => {
+        console.log(`creating lang ${lang}`);
+        if (!fs.existsSync(`${lang}.xtb`)) {
+            fsextra.copySync('template.xtb',`${lang}.xtb`);
+        }
+    });
+
 }
 
 const createTranslationFile = () => {
@@ -20,9 +45,7 @@ const createTranslationFile = () => {
         console.log(std);
     });
     genTranslateFile.on('close', (std) => {
-        _.forEach(languages, (lang) => {
-            console.log(`creating lang ${lang}`);
-        });
+        createLanguageFiles();
     });
 }
 
@@ -50,3 +73,22 @@ genReleaseAOT();
 
 
 
+//
+//
+// co(function* createLanguageFiles() {
+//     try {
+//
+//         for (var i = 0; i < languages.length; i++) {
+//             var lang = languages[i];
+//             yield serverTranslation(lang);
+//             console.log(lang);
+//         }
+//
+//     } catch (err) {
+//         ms.log('twoFactorCheck error 0: ', err, err.stack);
+//     }
+// }).then(function () {
+//     // ms.log('done all');
+// }, function (err) {
+//     console.log('twoFactorCheck error 1: ', err, err.stack);
+// });

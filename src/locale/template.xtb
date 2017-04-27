@@ -15,5 +15,4 @@
 <!ELEMENT ex (#PCDATA)>
 ]>
 <translationbundle lang=":LANG:">
-  :TRANSLATIONS:
 </translationbundle>

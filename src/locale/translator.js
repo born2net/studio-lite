@@ -4,7 +4,7 @@ const co = require('co');
 const languages = ['he', 'de'];
 const fs = require('fs');
 const fsextra = require('fs-extra');
-
+const replace = require("replace");
 
 var spawn = require('child_process').spawn;
 
@@ -27,8 +27,16 @@ const serverTranslation = (i_lang) => {
 const createLanguageFiles = () => {
     _.forEach(languages, (lang) => {
         console.log(`creating lang ${lang}`);
-        if (!fs.existsSync(`${lang}.xtb`)) {
-            fsextra.copySync('template.xtb',`${lang}.xtb`);
+        const fileName = `${lang}.xtb`;
+        if (!fs.existsSync(fileName)) {
+            fsextra.copySync('template.xtb',`${fileName}`);
+            replace({
+                regex: ":LANG:",
+                replacement: `${lang}`,
+                paths: [fileName],
+                recursive: false,
+                silent: false
+            });
         }
     });
 

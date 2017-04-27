@@ -1,6 +1,6 @@
 {
   "name": "studioweb",
-  "version": "0.1.520",
+  "version": "0.1.525",
   "license": "Modified GPL (see readme.md)",
   "angular-cli": {},
   "scripts": {
@@ -122,6 +122,7 @@
     "gulp-uglify": "^1.2.0",
     "gulp-util": "^3.0.7",
     "gulp-watch": "^4.2.4",
+    "replace": "^0.3.0",
     "rsync": "^0.5.0",
     "run-sequence": "^1.2.2",
     "sw-precache": "4.2.1",

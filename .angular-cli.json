@@ -52,6 +52,7 @@
         "./libs/gradient/jquery.gradientpicker.js",
         "./libs/enjoyhint/enjoyhint.js",
         "../node_modules/xdate/src/xdate.js",
+        "../node_modules/xml2js/lib/xml2js.js",
         "./libs/ruler/ruler.js"
       ],
       "environmentSource": "environments/environment.ts",

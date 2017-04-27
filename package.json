@@ -1,6 +1,6 @@
 {
   "name": "studioweb",
-  "version": "0.1.533",
+  "version": "0.1.535",
   "license": "Modified GPL (see readme.md)",
   "angular-cli": {},
   "scripts": {
@@ -28,15 +28,15 @@
     "release_jit": "rm -r -f ./dist && npm run x_bump && npm run x_prod_jit && npm run x_sw && npm run x_rsync"
   },
   "dependencies": {
-    "@angular/animations": "^4.0.2",
-    "@angular/common": "^4.0.2",
-    "@angular/compiler": "^4.0.2",
-    "@angular/core": "^4.0.2",
-    "@angular/forms": "^4.0.2",
-    "@angular/http": "^4.0.2",
-    "@angular/platform-browser": "^4.0.2",
-    "@angular/platform-browser-dynamic": "^4.0.2",
-    "@angular/router": "4.0.2",
+    "@angular/animations": "^4.1.0",
+    "@angular/common": "^4.1.0",
+    "@angular/compiler": "^4.1.0",
+    "@angular/core": "^4.1.0",
+    "@angular/forms": "^4.1.0",
+    "@angular/http": "^4.1.0",
+    "@angular/platform-browser": "^4.1.0",
+    "@angular/platform-browser-dynamic": "^4.1.0",
+    "@angular/router": "4.1.0",
     "@ngrx/core": "^1.2.0",
     "@ngrx/effects": "^2.0.0",
     "@ngrx/store": "^2.2.1",
@@ -90,9 +90,9 @@
     "zone.js": "^0.8.5"
   },
   "devDependencies": {
-    "@angular/cli": "^1.0.0",
-    "@angular/compiler-cli": "^4.0.2",
-    "@angular/language-service": "^4.0.2",
+    "@angular/cli": "^1.0.1",
+    "@angular/compiler-cli": "^4.1.0",
+    "@angular/language-service": "^4.1.0",
     "@angularclass/hmr": "^1.2.2",
     "@types/core-js": "^0.9.41",
     "@types/hammerjs": "^2.0.33",

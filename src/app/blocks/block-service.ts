@@ -4,7 +4,7 @@
 
 import {Inject, Injectable} from "@angular/core";
 import {YellowPepperService} from "../../services/yellowpepper.service";
-import X2JS from "x2js";
+import * as X2JS from "X2JS";
 import * as _ from "lodash";
 import {Observable} from "rxjs";
 import {CampaignTimelineChanelPlayersModelExt, PlayerDataModelExt} from "../../store/model/msdb-models-extended";
@@ -14,6 +14,8 @@ import {BLOCK_SERVICE, BlockLabels, PLACEMENT_CHANNEL, PLACEMENT_SCENE} from "..
 import {CommBroker} from "../../services/CommBroker";
 import {IUiState} from "../../store/store.data";
 import {ACTION_UISTATE_UPDATE} from "../../store/actions/appdb.actions";
+
+//// import X2JS from "x2js";
 
 interface IDomPlayerDataJson {
     Player: {

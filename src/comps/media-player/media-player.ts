@@ -43,7 +43,7 @@ import {VgAPI} from "videogular2/core";
     `
 })
 export class MediaPlayer {
-    sources: Array<Object>;
+    sources: Array<any>;
     api: VgAPI
 
     constructor() {

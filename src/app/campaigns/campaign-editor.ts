@@ -33,7 +33,7 @@ export class CampaignEditor extends Compbaser {
     private campaignTimelinesModel: CampaignTimelinesModel;
     private channelModel: CampaignTimelineChanelsModel;
 
-    m_showTimeline = true;
+    m_showTimeline = false;
 
     resources = {
         items: [

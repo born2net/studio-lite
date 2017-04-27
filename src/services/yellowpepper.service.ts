@@ -21,7 +21,7 @@ import {OrientationEnum} from "../app/campaigns/campaign-orientation";
 import {List} from "immutable";
 import * as _ from "lodash";
 import {UserModel} from "../models/UserModel";
-import X2JS from "x2js";
+import * as X2JS from "X2JS"
 import {ISceneData} from "../app/blocks/block-service";
 import {IScreenTemplateData} from "../interfaces/IScreenTemplate";
 import {LocationMarkModel} from "../models/LocationMarkModel";
@@ -30,6 +30,8 @@ import {FasterqLineModel} from "../models/fasterq-line-model";
 import {FasterqAnalyticsModel} from "../models/fasterq-analytics";
 import {FasterqQueueModel} from "../models/fasterq-queue-model";
 
+//// import X2JS from "x2js";
+//// import "x2js";
 
 @Injectable()
 export class YellowPepperService {

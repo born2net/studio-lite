@@ -98,6 +98,9 @@ declare class LoaderManager {
 }
 
 
+// declare var require: any;
+
+
 declare module 'xml2js' {
     var parseString;
 }

@@ -13,8 +13,11 @@ import * as _ from "lodash";
 import {NgmslibService} from "ng-mslib";
 import {IAddContents} from "../interfaces/IAddContent";
 import {BlockLabels, PLACEMENT_CHANNEL} from "../interfaces/Consts";
-import X2JS from "x2js";
+import * as X2JS from "X2JS";
 import {BlockService} from "../app/blocks/block-service";
+
+//// import X2JS from "x2js";
+//// import "x2js";
 
 export interface IPepperUserData {
     userName: string;
@@ -30,7 +33,7 @@ export interface IPepperUserData {
 }
 
 
-var parser = new X2JS({
+var parser: any = new X2JS({
     escapeMode: true,
     attributePrefix: "_",
     arrayAccessForm: "none",

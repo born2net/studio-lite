@@ -8,8 +8,11 @@ import {BlockFabricLabel} from "../app/blocks/block-fabric-label";
 import {BlockFabricSvg} from "../app/blocks/block-fabric-svg";
 import {BlockService} from "../app/blocks/block-service";
 import * as _ from "lodash";
-import X2JS from "x2js";
+import * as X2JS from "X2JS";
 import {BlockFabricJsonItem} from "../app/blocks/block-fabric-josn-item";
+
+//// import X2JS from "x2js";
+//// import "x2js";
 
 @Injectable()
 export class BlockFactoryService {
@@ -58,12 +61,18 @@ export class BlockFactoryService {
                 break;
             }
 
-            case BlockLabels.BLOCKCODE_GOOGLE_SHEETS: {}
-            case BlockLabels.BLOCKCODE_CALENDAR: {}
-            case BlockLabels.BLOCKCODE_INSTAGRAM: {}
-            case BlockLabels.BLOCKCODE_JSON_ITEM: {}
-            case BlockLabels.BLOCKCODE_WORLD_WEATHER: {}
-            case BlockLabels.BLOCKCODE_TWITTER_ITEM: {}
+            case BlockLabels.BLOCKCODE_GOOGLE_SHEETS: {
+            }
+            case BlockLabels.BLOCKCODE_CALENDAR: {
+            }
+            case BlockLabels.BLOCKCODE_INSTAGRAM: {
+            }
+            case BlockLabels.BLOCKCODE_JSON_ITEM: {
+            }
+            case BlockLabels.BLOCKCODE_WORLD_WEATHER: {
+            }
+            case BlockLabels.BLOCKCODE_TWITTER_ITEM: {
+            }
             case BlockLabels.BLOCKCODE_JSON_ITEM: {
                 block = new BlockFabricJsonItem({i_block_id: block_id, i_scene_player_data_id: i_scene_id}, this.bs, this.rp);
                 break;

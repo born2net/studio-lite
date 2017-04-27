@@ -82,7 +82,7 @@ import {LocationMarkModel} from "../../models/LocationMarkModel";
             </h4>
             <br/>
             <label>
-                <span i18n>Total location based: {{m_totalLocations}}</span>
+                <span i18n>Total location based: ></span><span>{{m_totalLocations}}</span>
             </label>
 
             <div class="row" *ngIf="!m_pendingBlocAddition">
@@ -104,7 +104,7 @@ import {LocationMarkModel} from "../../models/LocationMarkModel";
                         <input type="number" min="5" max="86400" class="numStepper inliner" formControlName="duration">
                     </li>
                     <li class="list-group-item">
-                        <span i18n>radius range {{m_radius}} kilometers</span><br/>
+                        <span i18n>radius range </span><span>{{m_radius}} </span> <span i18n> kilometers</span><br/>
                         <input #radiusControl (change)="m_radius = radiusControl.value" class="default-prop-width" type="range" max="0.10" step="0.1" max="4" formControlName="radius"/>
                     </li>
                     <li class="list-group-item">

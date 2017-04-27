@@ -17,7 +17,7 @@ import {WizardService} from "../../services/wizard-service";
     template: `
         <small class="debug" style="padding-left: 30px">{{me}}</small>
         <div style="padding-bottom: 10px">
-            <span id="sceneSelection"i18n style="font-size: 1.8em;" i18n>scene selection</span>
+            <span id="sceneSelection"style="font-size: 1.8em;" i18n>scene selection</span>
         </div>
         <div>
             <div class="btn-group">

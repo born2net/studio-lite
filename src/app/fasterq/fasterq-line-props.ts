@@ -76,16 +76,16 @@ import {Lib} from "../../Lib";
             </div>
             <div *ngSwitchCase="m_sidePropsEnum.fasterqQueueProps">
                 <div class="inner">
-                    <h4 i18n>Queue porperties</h4>
+                    <h4 i18n>Queue properties</h4>
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <h5 i18n>selected customer: {{m_customer}}</h5>
+                            <span i18n>selected customer: </span><span> {{m_customer}}</span>
                         </li>
                         <li class="list-group-item">
-                            <h5 i18n>verification: {{m_verification}}</h5>
+                            <span i18n>verification: </span><span> {{m_verification}}</span>
                         </li>
                         <li class="list-group-item">
-                            <h5 i18n>called by: {{m_calledBy}}</h5>
+                            <span i18n>called by: </span><span> {{m_calledBy}}</span>
                         </li>
                     </ul>
                 </div>

@@ -24,19 +24,39 @@ const serverTranslation = (i_lang) => {
     });
 }
 
-const processLanguage = () => {
-    _.forEach(languages, (lang) => {
-        const fileName = `${lang}.xtb`;
+const processLangFile = (i_lang) => {
+    return new Promise((resolve, reject) => {
+        const fileName = `${i_lang}.xtb`;
         console.log('injecting translations to ' + fileName);
         rl = readline(fileName);
-        rl.on('line', function(line, lineCount, byteCount) {
-            console.log(line);
+        rl.on('line', function (line, lineCount, byteCount) {
+            // console.log(line);
         });
-        rl.on('close', function() {
-            console.log('DONE');
+        rl.on('close', function () {
+            console.log('injecting translations completed for ' + fileName);
+            resolve('');
         })
     });
+}
 
+const processLanguage = () => {
+
+    co(function* processLanguage() {
+        try {
+
+            for (var i = 0; i < languages.length; i++) {
+                var lang = languages[i];
+                yield processLangFile(lang);
+            }
+
+        } catch (err) {
+            console.log('processLanguage error 0: ', err, err.stack);
+        }
+    }).then(function () {
+        // ms.log('done all');
+    }, function (err) {
+        console.log('processLanguage error 1: ', err, err.stack);
+    });
 }
 
 const createLanguageFiles = () => {
@@ -74,8 +94,8 @@ const createTranslationFile = () => {
 }
 
 const genReleaseAOT = function () {
-    var npmRunAot = spawn(cmd, ['run', 'x_bump'], {stdio: 'inherit'}); // simulate
-    // var npmRunAot = spawn(cmd, ['run', 'release_aot', ''], {stdio: 'inherit'});
+    // var npmRunAot = spawn(cmd, ['run', 'x_bump'], {stdio: 'inherit'}); // simulate
+    var npmRunAot = spawn(cmd, ['run', 'release_aot_no_sync', ''], {stdio: 'inherit'});
     npmRunAot.on('error', function (err) {
         console.error(err);
         process.exit(1);

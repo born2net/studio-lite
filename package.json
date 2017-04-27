@@ -1,6 +1,6 @@
 {
   "name": "studioweb",
-  "version": "0.1.535",
+  "version": "0.1.546",
   "license": "Modified GPL (see readme.md)",
   "angular-cli": {},
   "scripts": {
@@ -25,6 +25,7 @@
     "dev": "ng serve --port 4208 --aot false",
     "release_aot_hebrew": "rm -r -f ./dist && npm run x_bump && npm run x_prod_aot_hebrew && npm run x_sw && npm run x_rsync_he",
     "release_aot": "rm -r -f ./dist && npm run x_bump && npm run x_prod_aot && npm run x_sw && npm run x_rsync",
+    "release_aot_no_sync": "rm -r -f ./dist && npm run x_bump && npm run x_prod_aot && npm run x_sw",
     "release_jit": "rm -r -f ./dist && npm run x_bump && npm run x_prod_jit && npm run x_sw && npm run x_rsync"
   },
   "dependencies": {

@@ -19,7 +19,7 @@ import * as _ from "lodash";
                             <input type="text" [formControl]="m_contGroup.controls['token']"/>
                         </li>
                         <li class="list-group-item">
-                            <button i18n class="btn btn-default" (click)="_onCreateToken()">create instagram access token</button>
+                            <button class="btn btn-default" (click)="_onCreateToken()"><span i18n>create instagram access token</span></button>
                         </li>
                     </ul>
                 </div>

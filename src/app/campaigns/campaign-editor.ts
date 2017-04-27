@@ -12,6 +12,8 @@ import * as _ from "lodash";
 import {RedPepperService} from "../../services/redpepper.service";
 import {MainAppShowStateEnum} from "../app-component";
 
+// https://github.com/AlexWD/ds-timeline-widget
+
 @Component({
     selector: 'campaign-editor',
     templateUrl: './campaign-editors.html',

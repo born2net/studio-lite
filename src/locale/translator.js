@@ -1,7 +1,6 @@
 const _ = require('lodash');
 const os = require('os');
 const co = require('co');
-const languages = ['he', 'de'];
 const fs = require('fs');
 const fsextra = require('fs-extra');
 const parseString = require('xml2js').parseString;
@@ -9,6 +8,8 @@ const replace = require("replace");
 const fetch = require('node-fetch');
 const spawn = require('child_process').spawn;
 var jsonEnglishLibrary = {};
+const languages = ['iw', 'de'];
+
 
 var cmd = 'npm'
 if (os.platform().indexOf('win') > -1)
@@ -109,7 +110,7 @@ const createNewLanguageFiles = () => {
 
 const generateSourceTranslationFile = () => {
     var genTranslateFile = spawn(cmd, ['run', 'x_translate'], {stdio: 'inherit'});
-    // var genTranslateFile = spawn(cmd, ['run', 'x_bump'], {stdio: 'inherit'}); // debug
+    // var genTranslateFile = spawn(cmd, ['run', 'x_bump'], {stdio: 'inherit'}); // debug on
     console.log('generating ./src/local/messages.xmb');
     genTranslateFile.on('error', (err) => {
         console.error(err);
@@ -125,8 +126,8 @@ const generateSourceTranslationFile = () => {
 }
 
 const releaseAOT = function () {
-    var npmRunAot = spawn(cmd, ['run', 'x_bump'], {stdio: 'inherit'}); // simulate
-    // var npmRunAot = spawn(cmd, ['run', 'release_aot_no_sync', ''], {stdio: 'inherit'});
+    var npmRunAot = spawn(cmd, ['run', 'x_bump'], {stdio: 'inherit'}); 
+    // var npmRunAot = spawn(cmd, ['run', 'release_aot_no_sync', ''], {stdio: 'inherit'}); // debug on
     npmRunAot.on('error', function (err) {
         console.error(err);
         process.exit(1);

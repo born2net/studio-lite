@@ -46,6 +46,7 @@
 
 .channel-titles {
   padding-right: 0px;
+  margin-top: 50px;
 }
 
 .channel-title {
@@ -75,6 +76,8 @@
 
 .timeline {
   padding-left: 0px;
+  max-width: 1200px;
+  overflow-x: auto;
 }
 
 :host /deep/ .timeline-row {
@@ -90,6 +93,5 @@
 }
 
 .timeline-container {
-  max-width: 1200px;
-  overflow-x: auto;
+
 }

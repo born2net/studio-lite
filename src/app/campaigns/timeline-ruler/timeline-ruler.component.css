@@ -1,0 +1,7 @@
+#ruler {
+  border: 1px solid black;
+}
+
+#ruler-container {
+  height: 50px;
+}

@@ -20,13 +20,6 @@
     </select>
     Timeline Length <input type="number" [(ngModel)]="state.gridWidth" (change)="updateContainerSize()" />
   </div>
-  <div class="row">
-    <div class="col-xs-11 col-xs-offset-1 ruler-container">
-      <div class="ruler">
-
-      </div>
-    </div>
-  </div>
   <div class="row timeline-container">
     <div class="col-xs-1 channel-titles">
       <div class="channel-title" *ngFor="let output of state.outputs; let i = index" (click)="selectOutput(i)" [class.channel-selected]="output.selected">
@@ -37,6 +30,12 @@
       </div>
     </div>
     <div class="col-xs-11 timeline">
+      <app-timeline-ruler
+        width="{{ state.gridWidth * (1 / this.state.zoom) }}"
+        height="50"
+        scale="{{ state.zoom / 10}}"
+      >
+      </app-timeline-ruler>
       <div id="container">
         <ng-container *ngFor="let item of state.items;let i = index">
           <li *ngIf="item.type == 'output'"

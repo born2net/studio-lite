@@ -5,6 +5,7 @@ const languages = ['he', 'de'];
 const fs = require('fs');
 const fsextra = require('fs-extra');
 const replace = require("replace");
+const readline = require('linebyline');
 
 var spawn = require('child_process').spawn;
 
@@ -19,17 +20,31 @@ const serverTranslation = (i_lang) => {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve('');
-        },2000)
+        }, 2000)
     });
 }
 
+const processLanguage = () => {
+    _.forEach(languages, (lang) => {
+        const fileName = `${lang}.xtb`;
+        console.log('injecting translations to ' + fileName);
+        rl = readline(fileName);
+        rl.on('line', function(line, lineCount, byteCount) {
+            console.log(line);
+        });
+        rl.on('close', function() {
+            console.log('DONE');
+        })
+    });
+
+}
 
 const createLanguageFiles = () => {
     _.forEach(languages, (lang) => {
         console.log(`creating lang ${lang}`);
         const fileName = `${lang}.xtb`;
         if (!fs.existsSync(fileName)) {
-            fsextra.copySync('template.xtb',`${fileName}`);
+            fsextra.copySync('template.xtb', `${fileName}`);
             replace({
                 regex: ":LANG:",
                 replacement: `${lang}`,
@@ -54,6 +69,7 @@ const createTranslationFile = () => {
     });
     genTranslateFile.on('close', (std) => {
         createLanguageFiles();
+        processLanguage();
     });
 }
 
@@ -74,11 +90,6 @@ const genReleaseAOT = function () {
 }
 
 genReleaseAOT();
-
-
-
-
-
 
 
 //

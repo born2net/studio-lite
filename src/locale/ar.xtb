@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE translationbundle [
+<!ELEMENT translationbundle (translation)*>
+<!ATTLIST translationbundle lang CDATA #REQUIRED>
+
+<!ELEMENT translation (#PCDATA|ph)*>
+<!ATTLIST translation id CDATA #REQUIRED>
+<!ATTLIST translation desc CDATA #IMPLIED>
+<!ATTLIST translation meaning CDATA #IMPLIED>
+<!ATTLIST translation xml:space (default|preserve) "default">
+
+<!ELEMENT ph (#PCDATA|ex)*>
+<!ATTLIST ph name CDATA #REQUIRED>
+
+<!ELEMENT ex (#PCDATA)>
+]>
+<translationbundle lang="ar">
+	<translation id="9198441993514322349">اتجاه الشاشة</translation>
+	<translation id="2838690440296896849">الوضع عن بعد</translation>
+	<translation id="2849064100927111571">جار التحميل...</translation>
+	<translation id="7309719557896597512">أتمنى لك نهارا سعيد</translation>
+	<translation id="5805758016483237261">الترقية إلى المؤسسة - 99،00 $ شهريا</translation>
+	<translation id="7212624462478696127">التحقق من وصول ...</translation>
+	<translation id="1156206314346372426">لوحة حساب</translation>
+	<translation id="892759319569190037">لون خلفية المشهد</translation>
+	<translation id="463077023711449502">لون الحدود</translation>
+	<translation id="7844431484369877777">رابط</translation>
+	<translation id="6727478076005438064">اختيار شكل</translation>
+	<translation id="8932917860978648376">وحدة</translation>
+	<translation id="6447113917741810043">فهرنهايت</translation>
+	<translation id="1546647220090341106">درجة مئوية</translation>
+	<translation id="6977749640368501596">الأنماط</translation>
+	<translation id="30300572504753589">أسود</translation>
+	<translation id="7850674593676755019">أبيض</translation>
+	<translation id="9011959596901584887">اللون</translation>
+	<translation id="5667922561719642173">الحمل مع المشهد</translation>
+	<translation id="5466334165625502718">فترة</translation>
+	<translation id="1128028236258747485">تشغيل الفيديو على الانتهاء</translation>
+	<translation id="3372777815572567783">تشغيل عشوائي</translation>
+	<translation id="6757770085960264448">عرض الشرائح</translation>
+	<translation id="6659445582099947212">رمز</translation>
+	<translation id="6262368721870308838">إنشاء رمز وصول الانستقرام</translation>
+	<translation id="6358635099770142731">إنشاء رمز</translation>
+	<translation id="7499211462525828161">الحمل مع تقويم</translation>
+	<translation id="3128474301651540051">تعويض وضع مجموعة</translation>
+	<translation id="5645011507444946232">قبل أيام اليوم</translation>
+	<translation id="472347571959391022">بعد أيام اليوم</translation>
+	<translation id="7382546590159708114">تاريخ البدء</translation>
+	<translation id="8615958092383580706">تاريخ الانتهاء</translation>
+	<translation id="7824071976623180870">الحمل مع ورقة</translation>
+	<translation id="4370305429271412983">الاسم الذي سيظهر</translation>
+	<translation id="7641098557273120361">إنشاء رمز وصول</translation>
+	<translation id="361150460746746781">الحفاظ على نسبة الارتفاع</translation>
+	<translation id="3046991000485970172">RSS تحديث (دقيقة)</translation>
+	<translation id="2303401327609002516">RSS الاتجاه التمرير</translation>
+	<translation id="8382375758916799432">أفقي</translation>
+	<translation id="160958144287367985">عمودي</translation>
+	<translation id="5576694760844259892">RSS سرعة التمرير</translation>
+	<translation id="3801245379625272309">بطيء</translation>
+	<translation id="4688460977394283086">متوسط</translation>
+	<translation id="9161614188045173336">بسرعة</translation>
+	<translation id="6107231410782382609">على الحدث اتخاذ الإجراءات التالية</translation>
+	<translation id="8875363048655701399">وضع كشك</translation>
+	<translation id="6880124786888445040">تلعب مجموعة في تسلسل</translation>
+	<translation id="2166463051767640100">إضافة محتوى لمجموعة</translation>
+	<translation id="7365517136074263312">رمز الاستجابة السريعة</translation>
+	<translation id="810733191089543608">الصوت</translation>
+	<translation id="4815249204085613710">جودة الفيديو</translation>
+	<translation id="5082095396043563283">منطقة</translation>
+	<translation id="396267502411280310">الأكثر مشاهدة</translation>
+	<translation id="2441920677226386245">قائمة مخصصة</translation>
+	<translation id="1223194855937061908">معرفات فيديو</translation>
+	<translation id="4103549354606724944">خطوط العملاء</translation>
+	<translation id="7262144878230347914">لون الخلفية</translation>
+	<translation id="1435085881129646880">قائمة التشغيل متتابعة افتراضي</translation>
+	<translation id="1587536276491357593">إجمالي الموقع بناء:></translation>
+	<translation id="3325180562659478330">اسم</translation>
+	<translation id="3051480550159545291">خط العرض</translation>
+	<translation id="2703718513716530782">خط الطول</translation>
+	<translation id="5602245631444655788">المدة الزمنية</translation>
+	<translation id="118487254857410201">مجموعة دائرة نصف قطرها</translation>
+	<translation id="9178543898761255307">كم</translation>
+	<translation id="7866202877490561957">أولوية الصراع</translation>
+	<translation id="720146333131008909">إضافة محتوى إلى موقع الحادث</translation>
+	<translation id="8729372534532732068">اسم المشهد</translation>
+	<translation id="2224690894219674949">وضع المحاكاة</translation>
+	<translation id="7220335122322620944">معرفة المزيد عن المؤسسة</translation>
+	<translation id="8444323300278462770">أعلى</translation>
+	<translation id="7449548947549758066">اليسار</translation>
+	<translation id="9172672254266086971">عرض</translation>
+	<translation id="4093381701787958997">ارتفاع</translation>
+	<translation id="2062170564010556149">دوران</translation>
+	<translation id="9088937454320275395">تطبيق التغييرات</translation>
+	<translation id="1870560040946711505">مقفل</translation>
+	<translation id="6108618462851148193">محرر الحملة</translation>
+	<translation id="2741646832903808697">تخطيط الشاشة</translation>
+	<translation id="6454444033973204385">اختيار حملة</translation>
+	<translation id="6028894272398949430">حملة جديدة</translation>
+	<translation id="3008329758802399315">الحصول على معالج مساعدة</translation>
+	<translation id="4145364267099301397">اختر اسم حملتك</translation>
+	<translation id="3843469504048287640">أدخل اسم الحملة الجديدة</translation>
+	<translation id="4895430942430831092">معرف الحملة:</translation>
+	<translation id="1901427837939428954">وضع كشك</translation>
+	<translation id="8329228391349300722">حملة وضع تشغيل الموسيقى:</translation>
+	<translation id="8793145092368811184">التسلسل (الوضع البسيط):</translation>
+	<translation id="4691632839818550461">لعب الجداول الزمنية لهذه الحملة في حلقة مستمرة. فمن السهل أن الإعداد وسهل الاستخدام</translation>
+	<translation id="6075423017399759230">جدولة (الوضع المتقدم):</translation>
+	<translation id="750837672459228230">لعب الجداول الزمنية لهذه الحملة فقط على أوقات محددة. على سبيل المثال، تلعب الجدول الزمني (أ) في الصباح والجدول الزمني B في الليل.</translation>
+	<translation id="1167977099462453641">دقة الشاشة</translation>
+	<translation id="7626905534069326448">أولوية الصراع:</translation>
+	<translation id="4220765745195024064">المدة الزمنية:</translation>
+	<translation id="4049333306580215724">لعب مرة واحدة</translation>
+	<translation id="7249155645987524413">لعب يوميا</translation>
+	<translation id="8568181330490588741">لعب أسبوعيا</translation>
+	<translation id="3408786538616090951">حدد يوما:</translation>
+	<translation id="4039555836273676912">...</translation>
+	<translation id="6324587259626414962">تكرار لتناسب</translation>
+	<translation id="2012264763266897754">ترتيب عشوائي</translation>
+	<translation id="4324819244706823449">تحرير تخطيط</translation>
+	<translation id="5755245564638965488">قناة المقبل</translation>
+	<translation id="2925036210758384238">الخط المحدد</translation>
+	<translation id="3601209751322374737">تذكير قبل الناس</translation>
+	<translation id="1790884679999452685">محطة المفتوحة</translation>
+	<translation id="4878432943521432749">خط إعادة تعيين</translation>
+	<translation id="3728601907282119753">خصائص قائمة الانتظار</translation>
+	<translation id="2536017892630886700">العملاء المختارة:</translation>
+	<translation id="6228967158577655533">التحقق:</translation>
+	<translation id="6435015929996679472">ودعا من قبل:</translation>
+	<translation id="8711852116268389728">اختيار المشهد</translation>
+	<translation id="5053705054681686956">خط جديد</translation>
+	<translation id="5225640858395745699">إزالة خط</translation>
+	<translation id="3116266439138367996">الروابط</translation>
+	<translation id="4159874591284333337">مدعوم من إطار الزاوي جوجل</translation>
+	<translation id="3008186756887926107">تحميل الملفات</translation>
+	<translation id="2123171795960509943">إزالة</translation>
+	<translation id="7246196759043272468">قائمة</translation>
+	<translation id="946077791002604877">شبكة</translation>
+	<translation id="5936943188558553659">الملفات المدعومة: flv، mp4، JPG، PNG، فرنك سويسري و SVG</translation>
+	<translation id="8054250976557949996">مشهد جديد</translation>
+	<translation id="6133338617402043535">مكرر</translation>
+	<translation id="1576591662761177526">قالب استيراد</translation>
+	<translation id="2225048990372533999">إعادة تحميل</translation>
+	<translation id="987425828725037788">عنوان بروتوكول الإنترنت</translation>
+	<translation id="1646067470190508925">ميناء</translation>
+
+	<translation id="8097415329769247281">اختر الباقة التي تناسبك</translation>
+
+</translationbundle>

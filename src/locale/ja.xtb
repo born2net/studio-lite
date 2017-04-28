@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE translationbundle [
+<!ELEMENT translationbundle (translation)*>
+<!ATTLIST translationbundle lang CDATA #REQUIRED>
+
+<!ELEMENT translation (#PCDATA|ph)*>
+<!ATTLIST translation id CDATA #REQUIRED>
+<!ATTLIST translation desc CDATA #IMPLIED>
+<!ATTLIST translation meaning CDATA #IMPLIED>
+<!ATTLIST translation xml:space (default|preserve) "default">
+
+<!ELEMENT ph (#PCDATA|ex)*>
+<!ATTLIST ph name CDATA #REQUIRED>
+
+<!ELEMENT ex (#PCDATA)>
+]>
+<translationbundle lang="ja">
+	<translation id="9198441993514322349">画面の向き</translation>
+	<translation id="2838690440296896849">リモート状態</translation>
+	<translation id="2849064100927111571">読み込んでいます...</translation>
+	<translation id="7309719557896597512">良い一日を</translation>
+	<translation id="5805758016483237261">Enterpriseへのアップグレード - 月額$ 99.00</translation>
+	<translation id="7212624462478696127">アクセスを確認しています...</translation>
+	<translation id="1156206314346372426">アカウントのダッシュボード</translation>
+	<translation id="892759319569190037">シーンの背景色</translation>
+	<translation id="463077023711449502">境界線の色</translation>
+	<translation id="7844431484369877777">URL</translation>
+	<translation id="6727478076005438064">形式を選択してください</translation>
+	<translation id="8932917860978648376">単位</translation>
+	<translation id="6447113917741810043">華氏</translation>
+	<translation id="1546647220090341106">摂氏</translation>
+	<translation id="6977749640368501596">スタイル</translation>
+	<translation id="30300572504753589">ブラック</translation>
+	<translation id="7850674593676755019">白</translation>
+	<translation id="9011959596901584887">色</translation>
+	<translation id="5667922561719642173">シーンにロード</translation>
+	<translation id="5466334165625502718">間隔</translation>
+	<translation id="1128028236258747485">完了までのビデオを再生</translation>
+	<translation id="3372777815572567783">ランダム再生</translation>
+	<translation id="6757770085960264448">スライドショー</translation>
+	<translation id="6659445582099947212">トークン</translation>
+	<translation id="6262368721870308838">Instagramのアクセストークンを作成します</translation>
+	<translation id="6358635099770142731">トークンを作成します</translation>
+	<translation id="7499211462525828161">カレンダー付きロード</translation>
+	<translation id="3128474301651540051">オフセットレンジモード</translation>
+	<translation id="5645011507444946232">今日の前の日</translation>
+	<translation id="472347571959391022">日後の今日</translation>
+	<translation id="7382546590159708114">開始日</translation>
+	<translation id="8615958092383580706">終了日</translation>
+	<translation id="7824071976623180870">シートとロード</translation>
+	<translation id="4370305429271412983">ハンドルネーム</translation>
+	<translation id="7641098557273120361">アクセストークンを作成します</translation>
+	<translation id="361150460746746781">アスペクト比を維持</translation>
+	<translation id="3046991000485970172">RSSの更新（分）</translation>
+	<translation id="2303401327609002516">RSSスクロール方向</translation>
+	<translation id="8382375758916799432">水平な</translation>
+	<translation id="160958144287367985">垂直</translation>
+	<translation id="5576694760844259892">RSSスクロール速度</translation>
+	<translation id="3801245379625272309">スロー</translation>
+	<translation id="4688460977394283086">中</translation>
+	<translation id="9161614188045173336">速いです</translation>
+	<translation id="6107231410782382609">イベントには、次の行動を取ります</translation>
+	<translation id="8875363048655701399">キオスクモード</translation>
+	<translation id="6880124786888445040">順序でコレクションを再生します</translation>
+	<translation id="2166463051767640100">コレクションにコンテンツを追加</translation>
+	<translation id="7365517136074263312">QRコード</translation>
+	<translation id="810733191089543608">ボリューム</translation>
+	<translation id="4815249204085613710">ビデオ品質</translation>
+	<translation id="5082095396043563283">領域</translation>
+	<translation id="396267502411280310">最も見られました</translation>
+	<translation id="2441920677226386245">カスタムリスト</translation>
+	<translation id="1223194855937061908">動画ID</translation>
+	<translation id="4103549354606724944">顧客回線</translation>
+	<translation id="7262144878230347914">背景色</translation>
+	<translation id="1435085881129646880">デフォルトのシーケンシャルプレイリスト</translation>
+	<translation id="1587536276491357593">総ロケーションベース：></translation>
+	<translation id="3325180562659478330">名</translation>
+	<translation id="3051480550159545291">緯度</translation>
+	<translation id="2703718513716530782">経度</translation>
+	<translation id="5602245631444655788">期間</translation>
+	<translation id="118487254857410201">半径範囲</translation>
+	<translation id="9178543898761255307">キロメートル</translation>
+	<translation id="7866202877490561957">競合の優先順位</translation>
+	<translation id="720146333131008909">シーンにコンテンツを追加</translation>
+	<translation id="8729372534532732068">シーン名</translation>
+	<translation id="2224690894219674949">シミュレーションモード</translation>
+	<translation id="7220335122322620944">エンタープライズ詳細については、こちらをご覧ください</translation>
+	<translation id="8444323300278462770">上</translation>
+	<translation id="7449548947549758066">左</translation>
+	<translation id="9172672254266086971">幅</translation>
+	<translation id="4093381701787958997">高さ</translation>
+	<translation id="2062170564010556149">回転</translation>
+	<translation id="9088937454320275395">変更を適用</translation>
+	<translation id="1870560040946711505">ロック</translation>
+	<translation id="6108618462851148193">キャンペーンエディタ</translation>
+	<translation id="2741646832903808697">画面レイアウト</translation>
+	<translation id="6454444033973204385">キャンペーンの選択</translation>
+	<translation id="6028894272398949430">新しいキャンペーン</translation>
+	<translation id="3008329758802399315">ウィザードのヘルプを表示</translation>
+	<translation id="4145364267099301397">キャンペーン名を選択</translation>
+	<translation id="3843469504048287640">新しいキャンペーン名を入力してください</translation>
+	<translation id="4895430942430831092">キャンペーンID：</translation>
+	<translation id="1901427837939428954">キオスクモード</translation>
+	<translation id="8329228391349300722">キャンペーンの再生モード：</translation>
+	<translation id="8793145092368811184">シーケンサー（シンプルモード）：</translation>
+	<translation id="4691632839818550461">連続ループでこのキャンペーンのためのタイムラインを再生します。これは、セットアップが簡単で、使用するのは簡単です</translation>
+	<translation id="6075423017399759230">スケジューラ（アドバンストモード）：</translation>
+	<translation id="750837672459228230">唯一の特定の時間に、このキャンペーンのためのタイムラインを再生します。例えば、夜に朝のタイムラインAとBのタイムラインを再生します。</translation>
+	<translation id="1167977099462453641">画面の解像度</translation>
+	<translation id="7626905534069326448">紛争の優先順位：</translation>
+	<translation id="4220765745195024064">所要時間：</translation>
+	<translation id="4049333306580215724">一度遊びます</translation>
+	<translation id="7249155645987524413">毎日遊びます</translation>
+	<translation id="8568181330490588741">毎週プレー</translation>
+	<translation id="3408786538616090951">日を選択：</translation>
+	<translation id="4039555836273676912">...</translation>
+	<translation id="6324587259626414962">合わせて繰り返し</translation>
+	<translation id="2012264763266897754">順不同</translation>
+	<translation id="4324819244706823449">編集レイアウト</translation>
+	<translation id="5755245564638965488">次のチャンネル</translation>
+	<translation id="2925036210758384238">選択された行</translation>
+	<translation id="3601209751322374737">先に人のリマインダー</translation>
+	<translation id="1790884679999452685">開放端子</translation>
+	<translation id="4878432943521432749">リセットライン</translation>
+	<translation id="3728601907282119753">キューのプロパティ</translation>
+	<translation id="2536017892630886700">選択した顧客：</translation>
+	<translation id="6228967158577655533">検証：</translation>
+	<translation id="6435015929996679472">によって呼び出さ：</translation>
+	<translation id="8711852116268389728">シーン選択</translation>
+	<translation id="5053705054681686956">改行</translation>
+	<translation id="5225640858395745699">行を削除</translation>
+	<translation id="3116266439138367996">リンク</translation>
+	<translation id="4159874591284333337">Googleの角度フレームワークを搭載</translation>
+	<translation id="3008186756887926107">ファイルをアップロード</translation>
+	<translation id="2123171795960509943">取り除きます</translation>
+	<translation id="7246196759043272468">リスト</translation>
+	<translation id="946077791002604877">グリッド</translation>
+	<translation id="5936943188558553659">サポートファイル：FLV、MP4、JPG、PNG、SWFおよびSVG</translation>
+	<translation id="8054250976557949996">新しいシーン</translation>
+	<translation id="6133338617402043535">複写</translation>
+	<translation id="1576591662761177526">インポートテンプレート</translation>
+	<translation id="2225048990372533999">リロード</translation>
+	<translation id="987425828725037788">IPアドレス</translation>
+	<translation id="1646067470190508925">ポート</translation>
+
+	<translation id="8097415329769247281">あなたにぴったりのパッケージを選択します。</translation>
+
+</translationbundle>

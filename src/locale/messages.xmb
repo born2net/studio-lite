@@ -150,4 +150,5 @@
   <msg id="2225048990372533999"><source>C:/msweb/studiolite/src/app/stations/stations.ts:7</source>reload</msg>
   <msg id="987425828725037788"><source>C:/msweb/studiolite/src/app/stations/stations-props-manager.ts:115</source>ip address</msg>
   <msg id="1646067470190508925"><source>C:/msweb/studiolite/src/app/stations/stations-props-manager.ts:119</source>port</msg>
+  <msg id="8097415329769247281"><source>C:/msweb/studiolite/src/app/studiopro/studiopro-navigation.ts:3</source>Choose the package that&apos;s right for you</msg>
 </messagebundle>

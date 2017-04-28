@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE translationbundle [
+<!ELEMENT translationbundle (translation)*>
+<!ATTLIST translationbundle lang CDATA #REQUIRED>
+
+<!ELEMENT translation (#PCDATA|ph)*>
+<!ATTLIST translation id CDATA #REQUIRED>
+<!ATTLIST translation desc CDATA #IMPLIED>
+<!ATTLIST translation meaning CDATA #IMPLIED>
+<!ATTLIST translation xml:space (default|preserve) "default">
+
+<!ELEMENT ph (#PCDATA|ex)*>
+<!ATTLIST ph name CDATA #REQUIRED>
+
+<!ELEMENT ex (#PCDATA)>
+]>
+<translationbundle lang="ko">
+	<translation id="9198441993514322349">화면 방향</translation>
+	<translation id="2838690440296896849">원격 상태</translation>
+	<translation id="2849064100927111571">로드 중 ...</translation>
+	<translation id="7309719557896597512">좋은 하루 되세요</translation>
+	<translation id="5805758016483237261">엔터프라이즈 업그레이드 - 한달에 $ 99.00</translation>
+	<translation id="7212624462478696127">액세스를 확인 ...</translation>
+	<translation id="1156206314346372426">계정 대시 보드</translation>
+	<translation id="892759319569190037">장면의 배경 색상</translation>
+	<translation id="463077023711449502">테두리 색상</translation>
+	<translation id="7844431484369877777">URL</translation>
+	<translation id="6727478076005438064">형식을 선택합니다</translation>
+	<translation id="8932917860978648376">단위</translation>
+	<translation id="6447113917741810043">화씨</translation>
+	<translation id="1546647220090341106">섭씨</translation>
+	<translation id="6977749640368501596">스타일</translation>
+	<translation id="30300572504753589">검은</translation>
+	<translation id="7850674593676755019">화이트</translation>
+	<translation id="9011959596901584887">색깔</translation>
+	<translation id="5667922561719642173">장면로드</translation>
+	<translation id="5466334165625502718">간격</translation>
+	<translation id="1128028236258747485">완료 비디오를 재생</translation>
+	<translation id="3372777815572567783">임의 재생</translation>
+	<translation id="6757770085960264448">슬라이드 쇼</translation>
+	<translation id="6659445582099947212">토큰</translation>
+	<translation id="6262368721870308838">인스 타 그램 액세스 토큰을 생성</translation>
+	<translation id="6358635099770142731">토큰 생성</translation>
+	<translation id="7499211462525828161">달력로드</translation>
+	<translation id="3128474301651540051">다양한 모드를 오프셋</translation>
+	<translation id="5645011507444946232">일전 오늘</translation>
+	<translation id="472347571959391022">일 후 오늘</translation>
+	<translation id="7382546590159708114">시작 날짜</translation>
+	<translation id="8615958092383580706">종료 날짜</translation>
+	<translation id="7824071976623180870">시트와로드</translation>
+	<translation id="4370305429271412983">화면 이름</translation>
+	<translation id="7641098557273120361">액세스 토큰을 생성</translation>
+	<translation id="361150460746746781">종횡비를 유지</translation>
+	<translation id="3046991000485970172">RSS 새로 고침 (분)</translation>
+	<translation id="2303401327609002516">RSS 스크롤 방향</translation>
+	<translation id="8382375758916799432">수평</translation>
+	<translation id="160958144287367985">수직선</translation>
+	<translation id="5576694760844259892">RSS 스크롤 속도</translation>
+	<translation id="3801245379625272309">느린</translation>
+	<translation id="4688460977394283086">매질</translation>
+	<translation id="9161614188045173336">빠른</translation>
+	<translation id="6107231410782382609">이벤트에 다음과 같은 조치를 취할</translation>
+	<translation id="8875363048655701399">키오스크 모드</translation>
+	<translation id="6880124786888445040">순서에 따라 수집 플레이</translation>
+	<translation id="2166463051767640100">컬렉션에 내용을 추가</translation>
+	<translation id="7365517136074263312">QR 코드</translation>
+	<translation id="810733191089543608">음량</translation>
+	<translation id="4815249204085613710">비디오 품질</translation>
+	<translation id="5082095396043563283">부위</translation>
+	<translation id="396267502411280310">가장 많이 본</translation>
+	<translation id="2441920677226386245">사용자 지정 목록</translation>
+	<translation id="1223194855937061908">동영상 ID</translation>
+	<translation id="4103549354606724944">고객의 라인</translation>
+	<translation id="7262144878230347914">배경색</translation>
+	<translation id="1435085881129646880">기본 연속 재생 목록</translation>
+	<translation id="1587536276491357593">총 위치 기반 :></translation>
+	<translation id="3325180562659478330">이름</translation>
+	<translation id="3051480550159545291">위도</translation>
+	<translation id="2703718513716530782">경도</translation>
+	<translation id="5602245631444655788">지속</translation>
+	<translation id="118487254857410201">반경 범위</translation>
+	<translation id="9178543898761255307">km</translation>
+	<translation id="7866202877490561957">충돌 우선 순위</translation>
+	<translation id="720146333131008909">현장에 내용을 추가</translation>
+	<translation id="8729372534532732068">장면 이름</translation>
+	<translation id="2224690894219674949">시뮬레이션 모드</translation>
+	<translation id="7220335122322620944">기업에 대해 자세히 알아보기</translation>
+	<translation id="8444323300278462770">상단</translation>
+	<translation id="7449548947549758066">왼쪽</translation>
+	<translation id="9172672254266086971">폭</translation>
+	<translation id="4093381701787958997">신장</translation>
+	<translation id="2062170564010556149">회전</translation>
+	<translation id="9088937454320275395">변경 승인</translation>
+	<translation id="1870560040946711505">고정</translation>
+	<translation id="6108618462851148193">캠페인 편집기</translation>
+	<translation id="2741646832903808697">화면 레이아웃</translation>
+	<translation id="6454444033973204385">캠페인 선택</translation>
+	<translation id="6028894272398949430">새로운 캠페인</translation>
+	<translation id="3008329758802399315">마법사의 도움 받기</translation>
+	<translation id="4145364267099301397">캠페인 이름을 선택</translation>
+	<translation id="3843469504048287640">새 캠페인 이름을 입력합니다</translation>
+	<translation id="4895430942430831092">캠페인 ID :</translation>
+	<translation id="1901427837939428954">키오스크 모드</translation>
+	<translation id="8329228391349300722">재생 모드 캠페인 :</translation>
+	<translation id="8793145092368811184">시퀀서 (단순 모드) :</translation>
+	<translation id="4691632839818550461">연속 루프에서이 캠페인 타임 라인을 재생합니다. 그것은 쉽게 설치 및 사용이 간편하다</translation>
+	<translation id="6075423017399759230">스케줄러 (고급 모드) :</translation>
+	<translation id="750837672459228230">특정 시간에이 캠페인 타임 라인을 재생합니다. 예를 들어, 밤에 아침에 타임 라인 A와 타임 라인 B를 재생할 수 있습니다.</translation>
+	<translation id="1167977099462453641">화면 해상도</translation>
+	<translation id="7626905534069326448">충돌 우선 순위 :</translation>
+	<translation id="4220765745195024064">지속:</translation>
+	<translation id="4049333306580215724">한 번 연주</translation>
+	<translation id="7249155645987524413">매일 플레이</translation>
+	<translation id="8568181330490588741">매주 재생</translation>
+	<translation id="3408786538616090951">일 선택 :</translation>
+	<translation id="4039555836273676912">...</translation>
+	<translation id="6324587259626414962">에 맞게 반복</translation>
+	<translation id="2012264763266897754">임의의 순서로</translation>
+	<translation id="4324819244706823449">편집 레이아웃</translation>
+	<translation id="5755245564638965488">다음 채널</translation>
+	<translation id="2925036210758384238">선택한 선</translation>
+	<translation id="3601209751322374737">앞서 사람들의 알림</translation>
+	<translation id="1790884679999452685">터미널 열기</translation>
+	<translation id="4878432943521432749">리셋 라인</translation>
+	<translation id="3728601907282119753">큐 속성</translation>
+	<translation id="2536017892630886700">선택한 고객 :</translation>
+	<translation id="6228967158577655533">확인:</translation>
+	<translation id="6435015929996679472">에 의해 호출 :</translation>
+	<translation id="8711852116268389728">장면 선택</translation>
+	<translation id="5053705054681686956">새로운 라인</translation>
+	<translation id="5225640858395745699">줄을 제거</translation>
+	<translation id="3116266439138367996">모래밭</translation>
+	<translation id="4159874591284333337">구글의 각도 프레임 워크에 의해 구동</translation>
+	<translation id="3008186756887926107">파일 업로드하다</translation>
+	<translation id="2123171795960509943">풀다</translation>
+	<translation id="7246196759043272468">명부</translation>
+	<translation id="946077791002604877">그리드</translation>
+	<translation id="5936943188558553659">지원 파일 : FLV, MP4, JPG, PNG, SWF 및 SVG</translation>
+	<translation id="8054250976557949996">새로운 장면</translation>
+	<translation id="6133338617402043535">복제</translation>
+	<translation id="1576591662761177526">가져 오기 템플릿</translation>
+	<translation id="2225048990372533999">다시로드</translation>
+	<translation id="987425828725037788">IP 주소</translation>
+	<translation id="1646067470190508925">포트</translation>
+
+	<translation id="8097415329769247281">당신에게 적합한 패키지를 선택</translation>
+
+</translationbundle>

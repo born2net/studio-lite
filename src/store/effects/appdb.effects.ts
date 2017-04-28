@@ -468,6 +468,8 @@ export class AppDbEffects {
             .map((response: Response) => {
                 var lines = List([]);
                 var rxLines = response.json();
+                if (rxLines.error)
+                    return lines;
                 rxLines.forEach((line) => {
                     lines = lines.push(new FasterqLineModel(line))
                 })

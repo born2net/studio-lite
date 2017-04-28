@@ -101,7 +101,7 @@ import {UserModel} from "../../models/UserModel";
     ],
     template: `
         <div id="proStudioPanel">
-            <h3 data-localize="theRightPackage">Choose the package that's right for you</h3>
+            <h3 i18n data-localize="theRightPackage">Choose the package that's right for you</h3>
             <!-- price & service -->
             <div class="pricingContainer">
                 <div class="row"></div>

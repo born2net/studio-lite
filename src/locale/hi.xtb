@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE translationbundle [
+<!ELEMENT translationbundle (translation)*>
+<!ATTLIST translationbundle lang CDATA #REQUIRED>
+
+<!ELEMENT translation (#PCDATA|ph)*>
+<!ATTLIST translation id CDATA #REQUIRED>
+<!ATTLIST translation desc CDATA #IMPLIED>
+<!ATTLIST translation meaning CDATA #IMPLIED>
+<!ATTLIST translation xml:space (default|preserve) "default">
+
+<!ELEMENT ph (#PCDATA|ex)*>
+<!ATTLIST ph name CDATA #REQUIRED>
+
+<!ELEMENT ex (#PCDATA)>
+]>
+<translationbundle lang="hi">
+	<translation id="9198441993514322349">स्क्रीन दिशानिर्देश</translation>
+	<translation id="2838690440296896849">दूरस्थ स्थिति</translation>
+	<translation id="2849064100927111571">लोड हो रहा है...</translation>
+	<translation id="7309719557896597512">आपका दिन शुभ हो</translation>
+	<translation id="5805758016483237261">उद्यम में अपग्रेड करें - $ 99.00 प्रति माह</translation>
+	<translation id="7212624462478696127">पहुँच की पुष्टि करने के ...</translation>
+	<translation id="1156206314346372426">खाता डैशबोर्ड</translation>
+	<translation id="892759319569190037">दृश्य पृष्ठभूमि रंग</translation>
+	<translation id="463077023711449502">किनारे का रंग</translation>
+	<translation id="7844431484369877777">यूआरएल</translation>
+	<translation id="6727478076005438064">प्रारूप चुनें</translation>
+	<translation id="8932917860978648376">इकाई</translation>
+	<translation id="6447113917741810043">फारेनहाइट</translation>
+	<translation id="1546647220090341106">सेल्सीयस</translation>
+	<translation id="6977749640368501596">शैलियाँ</translation>
+	<translation id="30300572504753589">काली</translation>
+	<translation id="7850674593676755019">सफेद</translation>
+	<translation id="9011959596901584887">रंग</translation>
+	<translation id="5667922561719642173">दृश्य के साथ लोड</translation>
+	<translation id="5466334165625502718">मध्यान्तर</translation>
+	<translation id="1128028236258747485">पूरा होने के लिए वीडियो चलाने</translation>
+	<translation id="3372777815572567783">यादृच्छिक प्लेबैक</translation>
+	<translation id="6757770085960264448">स्लाइड शो</translation>
+	<translation id="6659445582099947212">टोकन</translation>
+	<translation id="6262368721870308838">instagram पहुँच टोकन बनाने</translation>
+	<translation id="6358635099770142731">टोकन बनाने</translation>
+	<translation id="7499211462525828161">कैलेंडर के साथ लोड</translation>
+	<translation id="3128474301651540051">रेंज मोड ऑफसेट</translation>
+	<translation id="5645011507444946232">दिन पहले आज</translation>
+	<translation id="472347571959391022">दिनों के बाद आज</translation>
+	<translation id="7382546590159708114">आरंभ करने की तिथि</translation>
+	<translation id="8615958092383580706">अंतिम तिथि</translation>
+	<translation id="7824071976623180870">शीट के साथ लोड</translation>
+	<translation id="4370305429271412983">स्क्रीन नाम</translation>
+	<translation id="7641098557273120361">पहुँच टोकन बनाने</translation>
+	<translation id="361150460746746781">स्वरुप अनुपात बनायें रखें</translation>
+	<translation id="3046991000485970172">आरएसएस ताज़ा (मिनट)</translation>
+	<translation id="2303401327609002516">आरएसएस स्क्रॉल दिशा</translation>
+	<translation id="8382375758916799432">क्षैतिज</translation>
+	<translation id="160958144287367985">खड़ा</translation>
+	<translation id="5576694760844259892">आरएसएस स्क्रॉल गति</translation>
+	<translation id="3801245379625272309">धीमा</translation>
+	<translation id="4688460977394283086">मध्यम</translation>
+	<translation id="9161614188045173336">उपवास</translation>
+	<translation id="6107231410782382609">घटना पर निम्न कदम उठा</translation>
+	<translation id="8875363048655701399">किओस्क मोड</translation>
+	<translation id="6880124786888445040">अनुक्रम में संग्रह खेलते हैं</translation>
+	<translation id="2166463051767640100">समूह में सामग्री जोड़ने</translation>
+	<translation id="7365517136074263312">क्यूआर कोड</translation>
+	<translation id="810733191089543608">आयतन</translation>
+	<translation id="4815249204085613710">वीडियो की गुणवत्ता</translation>
+	<translation id="5082095396043563283">क्षेत्र</translation>
+	<translation id="396267502411280310">सबसे ज्यादा देखा गया</translation>
+	<translation id="2441920677226386245">कस्टम सूची</translation>
+	<translation id="1223194855937061908">वीडियो आईडी</translation>
+	<translation id="4103549354606724944">ग्राहक लाइनों</translation>
+	<translation id="7262144878230347914">पीछे का रंग</translation>
+	<translation id="1435085881129646880">डिफ़ॉल्ट अनुक्रमिक प्लेलिस्ट</translation>
+	<translation id="1587536276491357593">कुल स्थान आधारित:></translation>
+	<translation id="3325180562659478330">नाम</translation>
+	<translation id="3051480550159545291">अक्षांश</translation>
+	<translation id="2703718513716530782">देशान्तर</translation>
+	<translation id="5602245631444655788">अवधि</translation>
+	<translation id="118487254857410201">त्रिज्या रेंज</translation>
+	<translation id="9178543898761255307">किलोमीटर की दूरी पर</translation>
+	<translation id="7866202877490561957">संघर्ष प्राथमिकता</translation>
+	<translation id="720146333131008909">दृश्य पर सामग्री जोड़ने</translation>
+	<translation id="8729372534532732068">दृश्य नाम</translation>
+	<translation id="2224690894219674949">अनुकरण मोड</translation>
+	<translation id="7220335122322620944">Enterprise बारे में और जानें</translation>
+	<translation id="8444323300278462770">चोटी</translation>
+	<translation id="7449548947549758066">बाएं</translation>
+	<translation id="9172672254266086971">चौड़ाई</translation>
+	<translation id="4093381701787958997">ऊंचाई</translation>
+	<translation id="2062170564010556149">रोटेशन</translation>
+	<translation id="9088937454320275395">परिवर्तन लागू करें</translation>
+	<translation id="1870560040946711505">बंद</translation>
+	<translation id="6108618462851148193">अभियान संपादक</translation>
+	<translation id="2741646832903808697">स्क्रीन लेआउट</translation>
+	<translation id="6454444033973204385">अभियान चयन</translation>
+	<translation id="6028894272398949430">नया अभियान</translation>
+	<translation id="3008329758802399315">जादूगर सहायता प्राप्त करें</translation>
+	<translation id="4145364267099301397">अपने अभियान का नाम का चयन करें</translation>
+	<translation id="3843469504048287640">नए अभियान का नाम डालें</translation>
+	<translation id="4895430942430831092">अभियान आईडी:</translation>
+	<translation id="1901427837939428954">कियोस्क मोड</translation>
+	<translation id="8329228391349300722">अभियान प्लेबैक मोड:</translation>
+	<translation id="8793145092368811184">अनुक्रमक (सरल मोड):</translation>
+	<translation id="4691632839818550461">समय खेलते हैं एक सतत पाश में इस अभियान के लिए। यह सेटअप करने के लिए आसान है और उपयोग करने के लिए आसान है</translation>
+	<translation id="6075423017399759230">समयबद्धक (उन्नत मोड):</translation>
+	<translation id="750837672459228230">समय खेलते हैं केवल विशिष्ट समय पर इस अभियान के लिए। उदाहरण के लिए, रात में सुबह समय एक और समय बी खेलते हैं।</translation>
+	<translation id="1167977099462453641">स्क्रीन संकल्प</translation>
+	<translation id="7626905534069326448">संघर्ष प्राथमिकता:</translation>
+	<translation id="4220765745195024064">अवधि:</translation>
+	<translation id="4049333306580215724">एक बार खेलने</translation>
+	<translation id="7249155645987524413">दैनिक खेलने</translation>
+	<translation id="8568181330490588741">साप्ताहिक खेलने</translation>
+	<translation id="3408786538616090951">दिन का चयन करें:</translation>
+	<translation id="4039555836273676912">...</translation>
+	<translation id="6324587259626414962">फिट करने के लिए दोहराने</translation>
+	<translation id="2012264763266897754">अनियमित क्रम</translation>
+	<translation id="4324819244706823449">संपादित लेआउट</translation>
+	<translation id="5755245564638965488">अगले चैनल</translation>
+	<translation id="2925036210758384238">चयनित लाइन</translation>
+	<translation id="3601209751322374737">लोगों से आगे अनुस्मारक</translation>
+	<translation id="1790884679999452685">खुला टर्मिनल</translation>
+	<translation id="4878432943521432749">रीसेट लाइन</translation>
+	<translation id="3728601907282119753">कतार गुण</translation>
+	<translation id="2536017892630886700">चयनित ग्राहक:</translation>
+	<translation id="6228967158577655533">सत्यापन:</translation>
+	<translation id="6435015929996679472">से बुलाया:</translation>
+	<translation id="8711852116268389728">दृश्य का चुनाव</translation>
+	<translation id="5053705054681686956">नई पंक्ति</translation>
+	<translation id="5225640858395745699">लाइन को दूर</translation>
+	<translation id="3116266439138367996">लिंक</translation>
+	<translation id="4159874591284333337">गूगल के कोणीय ढांचे द्वारा संचालित</translation>
+	<translation id="3008186756887926107">फाइल अपलोड करो</translation>
+	<translation id="2123171795960509943">हटाना</translation>
+	<translation id="7246196759043272468">सूची</translation>
+	<translation id="946077791002604877">जाल</translation>
+	<translation id="5936943188558553659">समर्थित फ़ाइलें: FLV, MP4, jpg, png, swf और svg</translation>
+	<translation id="8054250976557949996">नया दृश्य</translation>
+	<translation id="6133338617402043535">प्रतिलिपि</translation>
+	<translation id="1576591662761177526">आयात टेम्पलेट</translation>
+	<translation id="2225048990372533999">सीमा से अधिक लादना</translation>
+	<translation id="987425828725037788">आईपी ​​पता</translation>
+	<translation id="1646067470190508925">बंदरगाह</translation>
+
+	<translation id="8097415329769247281">पैकेज आपके लिए सही है कि चुनें</translation>
+
+</translationbundle>

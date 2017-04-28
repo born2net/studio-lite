@@ -76,7 +76,7 @@ enum ViewMod {
             color: #b9b9b9;
         }
     `],
-    template: `
+    template: `        
         <ul [@loginState]="loginState" class="login-page" id="appLogin">
             <br/>
             <br/>
@@ -85,46 +85,52 @@ enum ViewMod {
             <form class="form-signin" role="form">
                 <ul [ngSwitch]="m_currentViewMode">
 
+                    
+                    
                     <div *ngSwitchCase="m_viewMod.LOGIN">
                         <h2 class="form-signin-heading"></h2>
-                        <input (keyup.enter)="passFocus()" #userName id="userName" spellcheck="false" type="text" name="m_user" [(ngModel)]="m_user" class="input-underline input-lg form-control" placeholder="user name / email" required autofocus>
-                        <input (keyup.enter)="onClickedLogin()" #userPass id="userPass" type="password" [(ngModel)]="m_pass" name="m_pass" class="input-underline input-lg form-control" placeholder="password" required>
+                        <input (keyup.enter)="passFocus()" #userName id="userName" spellcheck="false" type="text" name="m_user" [(ngModel)]="m_user" class="input-underline input-lg form-control" i18n-placeholder placeholder="user name / email" required autofocus>
+                        <input (keyup.enter)="onClickedLogin()" #userPass id="userPass" type="password" [(ngModel)]="m_pass" name="m_pass" class="input-underline input-lg form-control" i18n-placeholder placeholder="password" required>
                         <div [@showTwoFactor]="m_showTwoFactor" *ngIf="m_showTwoFactor">
                             <br/>
                             <br/>
                             <span style="color: #989898; position: relative; left: -40px; top: 34px" class="fa fa-key fa-2x pull-right"></span>
-                            <input #twoFactor spellcheck="false" type="text" name="m_twoFactor" [(ngModel)]="m_twoFactor" class="input-underline input-lg form-control" placeholder="enter two factor key" required autofocus>
+                            <input #twoFactor spellcheck="false" type="text" name="m_twoFactor" [(ngModel)]="m_twoFactor" class="input-underline input-lg form-control" i18n-placeholder placeholder="enter two factor key" required autofocus>
                             <br/>
                             <br/>
                         </div>
                         <br/>
-                        <a id="loginButton" style="width: 280px" (click)="onClickedLogin()" type="submit" class="btn rounded-btn"> login to your account
-                            <span *ngIf="m_showTwoFactor" style="font-size: 9px; max-height: 15px; display: block; padding: 0; margin: 0; position: relative; top: -20px">with Google authenticator</span>
+                        <a i18n id="loginButton" style="width: 280px" (click)="onClickedLogin()" type="submit" class="btn rounded-btn"> login to your account
+                            <span i18n *ngIf="m_showTwoFactor" style="font-size: 9px; max-height: 15px; display: block; padding: 0; margin: 0; position: relative; top: -20px">with Google authenticator</span>
                         </a>&nbsp;
+
                         <br/>
                         <div style="width: 280px; position: relative">
                             <div class="pull-left" *ngIf="!m_showTwoFactor">
                                 <label class="checkbox" style="padding-left: 20px">
                                     <input #rememberMe type="checkbox" [checked]="m_rememberMe" (change)="m_rememberMe = rememberMe.checked"/>
-                                    <span style="color: gray"> remember me </span>
+                                    <span i18n style="color: gray"> remember me </span>
                                 </label>
                             </div>
                             <div style="text-align: right" id="loginExtras" class="pull-right">
-                                <a id="forgotPassword" (click)="$event.preventDefault(); m_currentViewMode = m_viewMod.FORGOT_PASSWORD" href="#">forgot password</a>
+                                <a id="forgotPassword" i18n (click)="$event.preventDefault(); m_currentViewMode = m_viewMod.FORGOT_PASSWORD" href="#">forgot password</a>
                                 <br/>
-                                <a id="changePassword" (click)="$event.preventDefault(); m_currentViewMode = m_viewMod.CHANGE_PASSWORD" href="#">change password</a>
+                                <a id="changePassword" i18n (click)="$event.preventDefault(); m_currentViewMode = m_viewMod.CHANGE_PASSWORD" href="#">change password</a>
                                 <br/>
-                                <a id="changeBusiness" (click)="$event.preventDefault(); m_currentViewMode = m_viewMod.CHANGE_BUSINESS_NAME" href="#">change business name</a>
+                                <a id="changeBusiness" i18n (click)="$event.preventDefault(); m_currentViewMode = m_viewMod.CHANGE_BUSINESS_NAME" href="#">change business name</a>
                             </div>
+                             <br/>
                         </div>
+                        <div class="clearFloat"></div>
+                        <locale-selector></locale-selector>
                     </div>
 
                     <div *ngSwitchCase="m_viewMod.CHANGE_PASSWORD">
                         <h2 class="form-signin-heading"></h2>
-                        <input spellcheck="false" type="text" name="m_user" [(ngModel)]="m_user" class="input-underline input-lg form-control" placeholder="user name / email" required autofocus>
-                        <input type="password" [(ngModel)]="m_pass" name="m_pass" class="input-underline input-lg form-control" placeholder="old password" required>
-                        <input type="password" [(ngModel)]="m_passNew" name="m_pass" class="input-underline input-lg form-control" placeholder="new password" required>
-                        <input type="password" [(ngModel)]="m_passRepeat" name="m_pass" class="input-underline input-lg form-control" placeholder="repeat new password" required>
+                        <input spellcheck="false" type="text" name="m_user" [(ngModel)]="m_user" class="input-underline input-lg form-control" i18n-placeholder placeholder="user name / email" required autofocus>
+                        <input type="password" [(ngModel)]="m_pass" name="m_pass" class="input-underline input-lg form-control" i18n-placeholder placeholder="old password" required>
+                        <input type="password" [(ngModel)]="m_passNew" name="m_pass" class="input-underline input-lg form-control" i18n-placeholder placeholder="new password" required>
+                        <input type="password" [(ngModel)]="m_passRepeat" name="m_pass" class="input-underline input-lg form-control" i18n-placeholder placeholder="repeat new password" required>
                         <br/>
                         <a style="width: 280px" (click)="onChangePassword()" type="submit" class="btn rounded-btn"> change password
                             <span *ngIf="m_showTwoFactor" style="font-size: 9px; max-height: 15px; display: block; padding: 0; margin: 0; position: relative; top: -20px">with Google authenticator</span>
@@ -136,7 +142,7 @@ enum ViewMod {
 
                     <div *ngSwitchCase="m_viewMod.FORGOT_PASSWORD">
                         <h2 class="form-signin-heading"></h2>
-                        <input (keyup.enter)="passFocus()" #userName id="userName" spellcheck="false" type="text" name="m_user" [(ngModel)]="m_user" class="input-underline input-lg form-control" placeholder="user name / email" required autofocus>
+                        <input (keyup.enter)="passFocus()" #userName id="userName" spellcheck="false" type="text" name="m_user" [(ngModel)]="m_user" class="input-underline input-lg form-control" i18n-placeholder placeholder="user name / email" required autofocus>
                         <br/>
                         <a style="width: 280px" (click)="onResetPassword()" type="submit" class="btn rounded-btn"> reset your password
                             <span *ngIf="m_showTwoFactor" style="font-size: 9px; max-height: 15px; display: block; padding: 0; margin: 0; position: relative; top: -20px">with Google authenticator</span>
@@ -147,9 +153,9 @@ enum ViewMod {
 
                     <div *ngSwitchCase="m_viewMod.CHANGE_BUSINESS_NAME">
                         <h2 class="form-signin-heading"></h2>
-                        <input spellcheck="false" type="text" name="m_user" [(ngModel)]="m_user" class="input-underline input-lg form-control" placeholder="user name / email" required autofocus>
-                        <input type="password" [(ngModel)]="m_pass" name="m_pass" class="input-underline input-lg form-control" placeholder="password" required>
-                        <input type="text" name="m_businessName" [(ngModel)]="m_businessName" class="input-underline input-lg form-control" placeholder="new business name" required>
+                        <input spellcheck="false" type="text" name="m_user" [(ngModel)]="m_user" class="input-underline input-lg form-control" i18n-placeholder placeholder="user name / email" required autofocus>
+                        <input type="password" [(ngModel)]="m_pass" name="m_pass" class="input-underline input-lg form-control" i18n-placeholder placeholder="password" required>
+                        <input type="text" name="m_businessName" [(ngModel)]="m_businessName" class="input-underline input-lg form-control" i18n-placeholder placeholder="new business name" required>
                         <br/>
                         <a style="width: 280px" (click)="onChangeBusinessName()" type="submit" class="btn rounded-btn"> change business name
                             <span *ngIf="m_showTwoFactor" style="font-size: 9px; max-height: 15px; display: block; padding: 0; margin: 0; position: relative; top: -20px">with Google authenticator</span>

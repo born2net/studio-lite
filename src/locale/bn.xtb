@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE translationbundle [
+<!ELEMENT translationbundle (translation)*>
+<!ATTLIST translationbundle lang CDATA #REQUIRED>
+
+<!ELEMENT translation (#PCDATA|ph)*>
+<!ATTLIST translation id CDATA #REQUIRED>
+<!ATTLIST translation desc CDATA #IMPLIED>
+<!ATTLIST translation meaning CDATA #IMPLIED>
+<!ATTLIST translation xml:space (default|preserve) "default">
+
+<!ELEMENT ph (#PCDATA|ex)*>
+<!ATTLIST ph name CDATA #REQUIRED>
+
+<!ELEMENT ex (#PCDATA)>
+]>
+<translationbundle lang="bn">
+	<translation id="9198441993514322349">পর্দা স্থিতিবিন্যাস</translation>
+	<translation id="2838690440296896849">দূরবর্তী অবস্থা</translation>
+	<translation id="2849064100927111571">লোড হচ্ছে ...</translation>
+	<translation id="7309719557896597512">আপনার দিনটি শুভ হোক</translation>
+	<translation id="5805758016483237261">এন্টারপ্রাইজ এ আপগ্রেড করুন - $ 99.00 প্রতি মাসে</translation>
+	<translation id="7212624462478696127">এক্সেস যাচাই করা হচ্ছে ...</translation>
+	<translation id="1156206314346372426">অ্যাকাউন্ট ড্যাশবোর্ড</translation>
+	<translation id="892759319569190037">দৃশ্য পটভূমির রঙ</translation>
+	<translation id="463077023711449502">সীমান্ত রঙ</translation>
+	<translation id="7844431484369877777">URL</translation>
+	<translation id="6727478076005438064">ফর্ম্যাট চয়ন করুন</translation>
+	<translation id="8932917860978648376">একক</translation>
+	<translation id="6447113917741810043">তাপমান যন্ত্রবিশেষ</translation>
+	<translation id="1546647220090341106">তাপমাপক যন্ত্র</translation>
+	<translation id="6977749640368501596">শৈলী</translation>
+	<translation id="30300572504753589">কালো</translation>
+	<translation id="7850674593676755019">সাদা</translation>
+	<translation id="9011959596901584887">রঙ</translation>
+	<translation id="5667922561719642173">দৃশ্য সঙ্গে লোড</translation>
+	<translation id="5466334165625502718">অন্তর</translation>
+	<translation id="1128028236258747485">সমাপ্তির ভিডিও প্লে</translation>
+	<translation id="3372777815572567783">র্যান্ডম প্লেব্যাক</translation>
+	<translation id="6757770085960264448">স্লাইডশো</translation>
+	<translation id="6659445582099947212">টোকেন</translation>
+	<translation id="6262368721870308838">Instagram অ্যাক্সেস টোকেন তৈরি</translation>
+	<translation id="6358635099770142731">টোকেন তৈরি</translation>
+	<translation id="7499211462525828161">ক্যালেন্ডারের সাথে লোড</translation>
+	<translation id="3128474301651540051">পরিসর মোড অফসেট</translation>
+	<translation id="5645011507444946232">দিন পূর্বে আজকের</translation>
+	<translation id="472347571959391022">দিন পরে আজ</translation>
+	<translation id="7382546590159708114">শুরুর তারিখ</translation>
+	<translation id="8615958092383580706">শেষ তারিখ</translation>
+	<translation id="7824071976623180870">চাদর দিয়ে লোড</translation>
+	<translation id="4370305429271412983">স্ক্রীনের নাম</translation>
+	<translation id="7641098557273120361">অ্যাক্সেস টোকেন তৈরি</translation>
+	<translation id="361150460746746781">অনুপাত বজায় রাখা</translation>
+	<translation id="3046991000485970172">আরএসএস রিফ্রেশ (মিনিট)</translation>
+	<translation id="2303401327609002516">আরএসএস স্ক্রল দিক</translation>
+	<translation id="8382375758916799432">অনুভূমিক</translation>
+	<translation id="160958144287367985">উল্লম্ব</translation>
+	<translation id="5576694760844259892">আরএসএস স্ক্রল গতি</translation>
+	<translation id="3801245379625272309">ধীর</translation>
+	<translation id="4688460977394283086">মধ্যম</translation>
+	<translation id="9161614188045173336">দ্রুত</translation>
+	<translation id="6107231410782382609">ঘটনা নিম্নলিখিত ব্যবস্থা গ্রহণ</translation>
+	<translation id="8875363048655701399">কিয়স্ক মোড</translation>
+	<translation id="6880124786888445040">ক্রমানুসারে সংগ্রহ খেলুন</translation>
+	<translation id="2166463051767640100">সংগ্রহে বিষয়বস্তু যোগ</translation>
+	<translation id="7365517136074263312">QR কোড</translation>
+	<translation id="810733191089543608">আয়তন</translation>
+	<translation id="4815249204085613710">ভিডিও এর ধরন</translation>
+	<translation id="5082095396043563283">এলাকা</translation>
+	<translation id="396267502411280310">সর্বাধিক দেখা</translation>
+	<translation id="2441920677226386245">কাস্টম তালিকা</translation>
+	<translation id="1223194855937061908">ভিডিও আইডির</translation>
+	<translation id="4103549354606724944">গ্রাহকের লাইন</translation>
+	<translation id="7262144878230347914">পেছনের রং</translation>
+	<translation id="1435085881129646880">ডিফল্ট অনুক্রমিক প্লেলিস্ট</translation>
+	<translation id="1587536276491357593">মোট অবস্থান ভিত্তিক:></translation>
+	<translation id="3325180562659478330">নাম</translation>
+	<translation id="3051480550159545291">অক্ষাংশ</translation>
+	<translation id="2703718513716530782">দ্রাঘিমা</translation>
+	<translation id="5602245631444655788">স্থিতিকাল</translation>
+	<translation id="118487254857410201">ব্যাসার্ধ পরিসীমা</translation>
+	<translation id="9178543898761255307">কিলোমিটার</translation>
+	<translation id="7866202877490561957">দ্বন্দ্ব অগ্রাধিকার</translation>
+	<translation id="720146333131008909">ঘটনাস্থলে বিষয়বস্তু যোগ</translation>
+	<translation id="8729372534532732068">দৃশ্য নাম</translation>
+	<translation id="2224690894219674949">সিমুলেশন মোড</translation>
+	<translation id="7220335122322620944">এন্টারপ্রাইজ সম্পর্কে আরো জানুন</translation>
+	<translation id="8444323300278462770">শীর্ষ</translation>
+	<translation id="7449548947549758066">বাম</translation>
+	<translation id="9172672254266086971">প্রস্থ</translation>
+	<translation id="4093381701787958997">উচ্চতা</translation>
+	<translation id="2062170564010556149">ঘূর্ণন</translation>
+	<translation id="9088937454320275395">পরিবর্তনগুলি প্রয়োগ</translation>
+	<translation id="1870560040946711505">লক</translation>
+	<translation id="6108618462851148193">প্রচারণা সম্পাদক</translation>
+	<translation id="2741646832903808697">স্ক্রীন লেআউট</translation>
+	<translation id="6454444033973204385">প্রচারণা নির্বাচন</translation>
+	<translation id="6028894272398949430">নতুন প্রচারাভিযান</translation>
+	<translation id="3008329758802399315">উইজার্ড সহায়তা পান</translation>
+	<translation id="4145364267099301397">আপনার প্রচারাভিযান নাম নির্বাচন করুন</translation>
+	<translation id="3843469504048287640">নতুন প্রচারাভিযান নাম লিখুন</translation>
+	<translation id="4895430942430831092">প্রচারণা আইডি:</translation>
+	<translation id="1901427837939428954">কিয়স্ক মোডে</translation>
+	<translation id="8329228391349300722">প্রচারাভিযানের প্লেব্যাক মোড:</translation>
+	<translation id="8793145092368811184">Sequencer (সাধারণ মোড):</translation>
+	<translation id="4691632839818550461">টাইমলাইন খেলুন একটি ক্রমাগত লুপ এই প্রচারণা জন্য। এটা তোলে সেটআপ করা সহজ এবং ব্যবহার করা সহজ হয়</translation>
+	<translation id="6075423017399759230">নির্ধারণকারী (উন্নত মোড):</translation>
+	<translation id="750837672459228230">টাইমলাইন খেলুন শুধুমাত্র নির্দিষ্ট সময়ের উপর এই প্রচারণার জন্য। উদাহরণ হিসেবে বলা যায়, রাতে সকালে সময়রেখা A এবং সময়রেখা বি খেলা এবং খেলার।</translation>
+	<translation id="1167977099462453641">পর্দা রেজল্যুশন</translation>
+	<translation id="7626905534069326448">সংঘর্ষ অগ্রাধিকার:</translation>
+	<translation id="4220765745195024064">স্থিতিকাল:</translation>
+	<translation id="4049333306580215724">একবার খেলতে</translation>
+	<translation id="7249155645987524413">দৈনন্দিন খেলা</translation>
+	<translation id="8568181330490588741">সাপ্তাহিক খেলা</translation>
+	<translation id="3408786538616090951">দিন নির্বাচন করুন:</translation>
+	<translation id="4039555836273676912">...</translation>
+	<translation id="6324587259626414962">মাপসই পুনরাবৃত্তি</translation>
+	<translation id="2012264763266897754">বিক্ষিপ্ত আদেশ</translation>
+	<translation id="4324819244706823449">সম্পাদন করা বিন্যাস</translation>
+	<translation id="5755245564638965488">পরবর্তী চ্যানেল</translation>
+	<translation id="2925036210758384238">নির্বাচিত লাইন</translation>
+	<translation id="3601209751322374737">লোকদের আগে আগে হাঁটতে অনুস্মারক</translation>
+	<translation id="1790884679999452685">খোলা টার্মিনাল</translation>
+	<translation id="4878432943521432749">রিসেট লাইন</translation>
+	<translation id="3728601907282119753">সারি বৈশিষ্ট্য</translation>
+	<translation id="2536017892630886700">নির্বাচিত গ্রাহক:</translation>
+	<translation id="6228967158577655533">প্রতিপাদন:</translation>
+	<translation id="6435015929996679472">ডাকা:</translation>
+	<translation id="8711852116268389728">দৃশ্য নির্বাচন</translation>
+	<translation id="5053705054681686956">নতুন লাইন</translation>
+	<translation id="5225640858395745699">লাইন অপসারণ</translation>
+	<translation id="3116266439138367996">লিংক</translation>
+	<translation id="4159874591284333337">Google এর কৌণিক ফ্রেমওয়ার্ক দ্বারা চালিত</translation>
+	<translation id="3008186756887926107">ফাইল আপলোড</translation>
+	<translation id="2123171795960509943">অপসারণ</translation>
+	<translation id="7246196759043272468">তালিকা</translation>
+	<translation id="946077791002604877">গ্রিড</translation>
+	<translation id="5936943188558553659">সমর্থিত ফাইলগুলি: FLV, MP4, JPG, PNG, SWF এবং SVG</translation>
+	<translation id="8054250976557949996">নতুন দৃশ্য</translation>
+	<translation id="6133338617402043535">নকল</translation>
+	<translation id="1576591662761177526">আমদানি টেমপ্লেট</translation>
+	<translation id="2225048990372533999">পুনরায় বোঝাই করা</translation>
+	<translation id="987425828725037788">আইপি ঠিকানা</translation>
+	<translation id="1646067470190508925">বন্দর</translation>
+
+	<translation id="8097415329769247281">প্যাকেজ আপনার জন্য সঠিক চয়ন করুন</translation>
+
+</translationbundle>

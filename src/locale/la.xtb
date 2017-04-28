@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE translationbundle [
+<!ELEMENT translationbundle (translation)*>
+<!ATTLIST translationbundle lang CDATA #REQUIRED>
+
+<!ELEMENT translation (#PCDATA|ph)*>
+<!ATTLIST translation id CDATA #REQUIRED>
+<!ATTLIST translation desc CDATA #IMPLIED>
+<!ATTLIST translation meaning CDATA #IMPLIED>
+<!ATTLIST translation xml:space (default|preserve) "default">
+
+<!ELEMENT ph (#PCDATA|ex)*>
+<!ATTLIST ph name CDATA #REQUIRED>
+
+<!ELEMENT ex (#PCDATA)>
+]>
+<translationbundle lang="la">
+	<translation id="9198441993514322349">screen sexualis</translation>
+	<translation id="2838690440296896849">status remote</translation>
+	<translation id="2849064100927111571">... loading</translation>
+	<translation id="7309719557896597512">bonum diem habeas</translation>
+	<translation id="5805758016483237261">Phasellus ut Enterprise - $ 99.00 per month</translation>
+	<translation id="7212624462478696127">probari possit aditus ...</translation>
+	<translation id="1156206314346372426">propter ashboardday</translation>
+	<translation id="892759319569190037">SCENA background color</translation>
+	<translation id="463077023711449502">terminus color</translation>
+	<translation id="7844431484369877777">url</translation>
+	<translation id="6727478076005438064">Elige forma</translation>
+	<translation id="8932917860978648376">Unit</translation>
+	<translation id="6447113917741810043">Fahrenheit IX</translation>
+	<translation id="1546647220090341106">celsius</translation>
+	<translation id="6977749640368501596">styli</translation>
+	<translation id="30300572504753589">nigrum</translation>
+	<translation id="7850674593676755019">alba</translation>
+	<translation id="9011959596901584887">color</translation>
+	<translation id="5667922561719642173">onus in scena</translation>
+	<translation id="5466334165625502718">spatium</translation>
+	<translation id="1128028236258747485">video ludere ad completionem</translation>
+	<translation id="3372777815572567783">temere playback</translation>
+	<translation id="6757770085960264448">slideshow</translation>
+	<translation id="6659445582099947212">firmitatis indicium</translation>
+	<translation id="6262368721870308838">aditus tesseram creare instagram</translation>
+	<translation id="6358635099770142731">partum firmitatis indicium</translation>
+	<translation id="7499211462525828161">Onus in fastis</translation>
+	<translation id="3128474301651540051">offset range modus</translation>
+	<translation id="5645011507444946232">antequam dies est hodie</translation>
+	<translation id="472347571959391022">post dies est hodie</translation>
+	<translation id="7382546590159708114">satus date</translation>
+	<translation id="8615958092383580706">ultimum diem</translation>
+	<translation id="7824071976623180870">Et onus sheet</translation>
+	<translation id="4370305429271412983">screen nomen,</translation>
+	<translation id="7641098557273120361">partum aditus tesseram</translation>
+	<translation id="361150460746746781">ponere rationem ratio</translation>
+	<translation id="3046991000485970172">RSS reficite (minuta)</translation>
+	<translation id="2303401327609002516">Liber via RSS</translation>
+	<translation id="8382375758916799432">vestibulum</translation>
+	<translation id="160958144287367985">vertical</translation>
+	<translation id="5576694760844259892">Celeritate volumen RSS</translation>
+	<translation id="3801245379625272309">tarda</translation>
+	<translation id="4688460977394283086">medium</translation>
+	<translation id="9161614188045173336">celer</translation>
+	<translation id="6107231410782382609">In rem actione accipe</translation>
+	<translation id="8875363048655701399">ac ante modus</translation>
+	<translation id="6880124786888445040">Ludere in tempore collectione</translation>
+	<translation id="2166463051767640100">addere in contentus collectio</translation>
+	<translation id="7365517136074263312">QR code</translation>
+	<translation id="810733191089543608">magnitudo</translation>
+	<translation id="4815249204085613710">qualis video</translation>
+	<translation id="5082095396043563283">regionem</translation>
+	<translation id="396267502411280310">maxime spectantur</translation>
+	<translation id="2441920677226386245">more album</translation>
+	<translation id="1223194855937061908">video ids</translation>
+	<translation id="4103549354606724944">Lorem lineae</translation>
+	<translation id="7262144878230347914">background color</translation>
+	<translation id="1435085881129646880">Default sequentem playlist</translation>
+	<translation id="1587536276491357593">Totalis secundum locum:></translation>
+	<translation id="3325180562659478330">nomine</translation>
+	<translation id="3051480550159545291">latitudo</translation>
+	<translation id="2703718513716530782">longitudo</translation>
+	<translation id="5602245631444655788">tempus</translation>
+	<translation id="118487254857410201">radii range</translation>
+	<translation id="9178543898761255307">chiliometrorum</translation>
+	<translation id="7866202877490561957">prius conflictu</translation>
+	<translation id="720146333131008909">addere in contentus scena</translation>
+	<translation id="8729372534532732068">SCENA nomen eius</translation>
+	<translation id="2224690894219674949">modus simulation</translation>
+	<translation id="7220335122322620944">Disce magis de Enterprise</translation>
+	<translation id="8444323300278462770">summitatem</translation>
+	<translation id="7449548947549758066">reliquit</translation>
+	<translation id="9172672254266086971">width</translation>
+	<translation id="4093381701787958997">altitudo</translation>
+	<translation id="2062170564010556149">rotatione</translation>
+	<translation id="9088937454320275395">mutationes adhibere</translation>
+	<translation id="1870560040946711505">clausa</translation>
+	<translation id="6108618462851148193">expeditionem Editor</translation>
+	<translation id="2741646832903808697">screen layout</translation>
+	<translation id="6454444033973204385">expeditionem delectu</translation>
+	<translation id="6028894272398949430">novam expeditionem</translation>
+	<translation id="3008329758802399315">Carmina Get Auxilium</translation>
+	<translation id="4145364267099301397">Select expeditionem nomen tuum</translation>
+	<translation id="3843469504048287640">Intra expeditionem nomen novum,</translation>
+	<translation id="4895430942430831092">id expeditionem,</translation>
+	<translation id="1901427837939428954">ac ante modus</translation>
+	<translation id="8329228391349300722">Bella gerere playback modus:</translation>
+	<translation id="8793145092368811184">Sequencer (simplex modus)</translation>
+	<translation id="4691632839818550461">Ludere hanc expeditionem in continua timelines pro loop. Hoc est simplex quod securus utor setup</translation>
+	<translation id="6075423017399759230">Scheduler (provectus modus)</translation>
+	<translation id="750837672459228230">Ludere hanc expeditionem timelines tantum in certis temporibus. Eg ludere Quintus Quintus A et B mane in nocte.</translation>
+	<translation id="1167977099462453641">screen resolutio</translation>
+	<translation id="7626905534069326448">Conflictus prius:</translation>
+	<translation id="4220765745195024064">Duration:</translation>
+	<translation id="4049333306580215724">ludere semel,</translation>
+	<translation id="7249155645987524413">cotidie ludere</translation>
+	<translation id="8568181330490588741">ludere weekly</translation>
+	<translation id="3408786538616090951">Select a diebus:</translation>
+	<translation id="4039555836273676912">...</translation>
+	<translation id="6324587259626414962">ut fit iterare</translation>
+	<translation id="2012264763266897754">ut temere</translation>
+	<translation id="4324819244706823449">recensere layout</translation>
+	<translation id="5755245564638965488">deinde channel</translation>
+	<translation id="2925036210758384238">delectis recta</translation>
+	<translation id="3601209751322374737">praemisit in memoriam vos in populos</translation>
+	<translation id="1790884679999452685">terminalibus patentibus</translation>
+	<translation id="4878432943521432749">reset recta</translation>
+	<translation id="3728601907282119753">Queue possessiones</translation>
+	<translation id="2536017892630886700">lectus elit;</translation>
+	<translation id="6228967158577655533">solvas:</translation>
+	<translation id="6435015929996679472">per dicitur:</translation>
+	<translation id="8711852116268389728">SCENA delectu</translation>
+	<translation id="5053705054681686956">novam lineam</translation>
+	<translation id="5225640858395745699">acie remove</translation>
+	<translation id="3116266439138367996">Nexus</translation>
+	<translation id="4159874591284333337">Potentia a Google data est Versio compage</translation>
+	<translation id="3008186756887926107">fasciculos oneres</translation>
+	<translation id="2123171795960509943">remove</translation>
+	<translation id="7246196759043272468">album</translation>
+	<translation id="946077791002604877">euismod</translation>
+	<translation id="5936943188558553659">files nititur, rar, mp4, jpg, png, et swf Chinne</translation>
+	<translation id="8054250976557949996">new scene</translation>
+	<translation id="6133338617402043535">duplicare</translation>
+	<translation id="1576591662761177526">import template</translation>
+	<translation id="2225048990372533999">reload</translation>
+	<translation id="987425828725037788">Disputatio</translation>
+	<translation id="1646067470190508925">portum</translation>
+
+	<translation id="8097415329769247281">Elige tibi in sarcina quod iustum est</translation>
+
+</translationbundle>

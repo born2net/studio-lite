@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE translationbundle [
+<!ELEMENT translationbundle (translation)*>
+<!ATTLIST translationbundle lang CDATA #REQUIRED>
+
+<!ELEMENT translation (#PCDATA|ph)*>
+<!ATTLIST translation id CDATA #REQUIRED>
+<!ATTLIST translation desc CDATA #IMPLIED>
+<!ATTLIST translation meaning CDATA #IMPLIED>
+<!ATTLIST translation xml:space (default|preserve) "default">
+
+<!ELEMENT ph (#PCDATA|ex)*>
+<!ATTLIST ph name CDATA #REQUIRED>
+
+<!ELEMENT ex (#PCDATA)>
+]>
+<translationbundle lang="cs">
+	<translation id="9198441993514322349">orientace obrazovky</translation>
+	<translation id="2838690440296896849">vzdálená status</translation>
+	<translation id="2849064100927111571">načítání...</translation>
+	<translation id="7309719557896597512">hezký den</translation>
+	<translation id="5805758016483237261">Upgradovat na Enterprise - 99,00 $ za měsíc</translation>
+	<translation id="7212624462478696127">ověření přístupu ...</translation>
+	<translation id="1156206314346372426">účet dashboard</translation>
+	<translation id="892759319569190037">barvu pozadí scény</translation>
+	<translation id="463077023711449502">barva ohraničení</translation>
+	<translation id="7844431484369877777">url</translation>
+	<translation id="6727478076005438064">zvolit formát</translation>
+	<translation id="8932917860978648376">Jednotka</translation>
+	<translation id="6447113917741810043">Fahrenheita</translation>
+	<translation id="1546647220090341106">Celsia</translation>
+	<translation id="6977749640368501596">styly</translation>
+	<translation id="30300572504753589">Černá</translation>
+	<translation id="7850674593676755019">Bílý</translation>
+	<translation id="9011959596901584887">Barva</translation>
+	<translation id="5667922561719642173">Zatížení se scénou</translation>
+	<translation id="5466334165625502718">interval</translation>
+	<translation id="1128028236258747485">přehrávat video až do konce</translation>
+	<translation id="3372777815572567783">náhodné přehrávání</translation>
+	<translation id="6757770085960264448">slideshow</translation>
+	<translation id="6659445582099947212">žeton</translation>
+	<translation id="6262368721870308838">Vytvoření Instagram přístupový token</translation>
+	<translation id="6358635099770142731">vytvoření tokenu</translation>
+	<translation id="7499211462525828161">Zatížení s kalendářem</translation>
+	<translation id="3128474301651540051">ofsetový režim rozsah</translation>
+	<translation id="5645011507444946232">dní před dnes</translation>
+	<translation id="472347571959391022">dní po dnešku</translation>
+	<translation id="7382546590159708114">Datum zahájení</translation>
+	<translation id="8615958092383580706">datum ukončení</translation>
+	<translation id="7824071976623180870">Zatížení se list</translation>
+	<translation id="4370305429271412983">přezdívka</translation>
+	<translation id="7641098557273120361">vytvořit přístupový token</translation>
+	<translation id="361150460746746781">udržuje poměr stran</translation>
+	<translation id="3046991000485970172">RSS refresh (minuty)</translation>
+	<translation id="2303401327609002516">RSS scroll směr</translation>
+	<translation id="8382375758916799432">Horizontální</translation>
+	<translation id="160958144287367985">Vertikální</translation>
+	<translation id="5576694760844259892">RSS rychlost procházení</translation>
+	<translation id="3801245379625272309">pomalý</translation>
+	<translation id="4688460977394283086">střední</translation>
+	<translation id="9161614188045173336">rychle</translation>
+	<translation id="6107231410782382609">Na akci tyto kroky</translation>
+	<translation id="8875363048655701399">režim Kiosk</translation>
+	<translation id="6880124786888445040">Hrají sbírku v pořadí</translation>
+	<translation id="2166463051767640100">přidávat obsah do sbírky</translation>
+	<translation id="7365517136074263312">QR kód</translation>
+	<translation id="810733191089543608">hlasitost</translation>
+	<translation id="4815249204085613710">kvalita videa</translation>
+	<translation id="5082095396043563283">kraj</translation>
+	<translation id="396267502411280310">nejsledovanější</translation>
+	<translation id="2441920677226386245">vlastní seznam</translation>
+	<translation id="1223194855937061908">ID videí</translation>
+	<translation id="4103549354606724944">linky zákazníků</translation>
+	<translation id="7262144878230347914">barva pozadí</translation>
+	<translation id="1435085881129646880">Výchozí sekvenční playlist</translation>
+	<translation id="1587536276491357593">Celkové umístění založen:></translation>
+	<translation id="3325180562659478330">název</translation>
+	<translation id="3051480550159545291">zeměpisná šířka</translation>
+	<translation id="2703718513716530782">zeměpisná délka</translation>
+	<translation id="5602245631444655788">doba trvání</translation>
+	<translation id="118487254857410201">rozsah poloměr</translation>
+	<translation id="9178543898761255307">kilometry</translation>
+	<translation id="7866202877490561957">priority konflikt</translation>
+	<translation id="720146333131008909">přidávat obsah na scéně</translation>
+	<translation id="8729372534532732068">název scény</translation>
+	<translation id="2224690894219674949">režim simulace</translation>
+	<translation id="7220335122322620944">Dozvědět se více o podnikání</translation>
+	<translation id="8444323300278462770">horní</translation>
+	<translation id="7449548947549758066">vlevo, odjet</translation>
+	<translation id="9172672254266086971">šířka</translation>
+	<translation id="4093381701787958997">výška</translation>
+	<translation id="2062170564010556149">otáčení</translation>
+	<translation id="9088937454320275395">aplikuj změny</translation>
+	<translation id="1870560040946711505">zamčený</translation>
+	<translation id="6108618462851148193">editor kampaně</translation>
+	<translation id="2741646832903808697">rozložení obrazovky</translation>
+	<translation id="6454444033973204385">Volba kampaň</translation>
+	<translation id="6028894272398949430">nová kampaň</translation>
+	<translation id="3008329758802399315">Získat Wizard pomoc</translation>
+	<translation id="4145364267099301397">Vyberte si název kampaně</translation>
+	<translation id="3843469504048287640">Zadejte nový název kampaně</translation>
+	<translation id="4895430942430831092">Kampaň id:</translation>
+	<translation id="1901427837939428954">režim kiosk</translation>
+	<translation id="8329228391349300722">Kampani režimu přehrávání:</translation>
+	<translation id="8793145092368811184">Sekvencer (jednoduchý režim):</translation>
+	<translation id="4691632839818550461">Hrát časový plán pro tuto kampaň v nekonečné smyčce. Je snadné nastavení a snadné použití</translation>
+	<translation id="6075423017399759230">Scheduler (rozšířený režim):</translation>
+	<translation id="750837672459228230">Hrát časový plán pro tuto kampaň pouze v určitých časech. Například, hrát časové osy A v ranních hodinách a na časové ose B v noci.</translation>
+	<translation id="1167977099462453641">Rozlišení obrazovky</translation>
+	<translation id="7626905534069326448">priority konflikt:</translation>
+	<translation id="4220765745195024064">Doba trvání:</translation>
+	<translation id="4049333306580215724">jednou přehrála</translation>
+	<translation id="7249155645987524413">hrát denně</translation>
+	<translation id="8568181330490588741">hrají týdenní</translation>
+	<translation id="3408786538616090951">Zvolte dny:</translation>
+	<translation id="4039555836273676912">...</translation>
+	<translation id="6324587259626414962">opakovat, aby se vešly</translation>
+	<translation id="2012264763266897754">náhodná objednávka</translation>
+	<translation id="4324819244706823449">editovat rozvržení</translation>
+	<translation id="5755245564638965488">další kanál</translation>
+	<translation id="2925036210758384238">vybraný řádek</translation>
+	<translation id="3601209751322374737">připomínka před lidmi</translation>
+	<translation id="1790884679999452685">otevřený terminál</translation>
+	<translation id="4878432943521432749">resetovací linka</translation>
+	<translation id="3728601907282119753">vlastnosti fronty</translation>
+	<translation id="2536017892630886700">vybrán zákazník:</translation>
+	<translation id="6228967158577655533">ověření:</translation>
+	<translation id="6435015929996679472">nazvaný:</translation>
+	<translation id="8711852116268389728">Volba scény</translation>
+	<translation id="5053705054681686956">nový řádek</translation>
+	<translation id="5225640858395745699">odstranit řádek</translation>
+	<translation id="3116266439138367996">odkazy</translation>
+	<translation id="4159874591284333337">Běží na úhlové rámci Google</translation>
+	<translation id="3008186756887926107">nahrát soubory</translation>
+	<translation id="2123171795960509943">odstranit</translation>
+	<translation id="7246196759043272468">seznam</translation>
+	<translation id="946077791002604877">mřížka</translation>
+	<translation id="5936943188558553659">podporované soubory: flv, mp4, jpg, png, swf a SVG</translation>
+	<translation id="8054250976557949996">nová scéna</translation>
+	<translation id="6133338617402043535">duplikát</translation>
+	<translation id="1576591662761177526">import šablony</translation>
+	<translation id="2225048990372533999">Znovu načíst</translation>
+	<translation id="987425828725037788">IP adresa</translation>
+	<translation id="1646067470190508925">přístav</translation>
+
+	<translation id="8097415329769247281">Vyberte si balíček, který je pro vás to pravé</translation>
+
+</translationbundle>

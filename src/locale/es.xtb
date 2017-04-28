@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE translationbundle [
+<!ELEMENT translationbundle (translation)*>
+<!ATTLIST translationbundle lang CDATA #REQUIRED>
+
+<!ELEMENT translation (#PCDATA|ph)*>
+<!ATTLIST translation id CDATA #REQUIRED>
+<!ATTLIST translation desc CDATA #IMPLIED>
+<!ATTLIST translation meaning CDATA #IMPLIED>
+<!ATTLIST translation xml:space (default|preserve) "default">
+
+<!ELEMENT ph (#PCDATA|ex)*>
+<!ATTLIST ph name CDATA #REQUIRED>
+
+<!ELEMENT ex (#PCDATA)>
+]>
+<translationbundle lang="es">
+	<translation id="9198441993514322349">orientación de la pantalla</translation>
+	<translation id="2838690440296896849">estado remoto</translation>
+	<translation id="2849064100927111571">cargando...</translation>
+	<translation id="7309719557896597512">que tengas un buen día</translation>
+	<translation id="5805758016483237261">Actualizar a Enterprise - $ 99.00 por mes</translation>
+	<translation id="7212624462478696127">verificar el acceso ...</translation>
+	<translation id="1156206314346372426">cuenta salpicadero</translation>
+	<translation id="892759319569190037">color de fondo de escena</translation>
+	<translation id="463077023711449502">color del borde</translation>
+	<translation id="7844431484369877777">url</translation>
+	<translation id="6727478076005438064">elegir el formato</translation>
+	<translation id="8932917860978648376">Unidad</translation>
+	<translation id="6447113917741810043">Fahrenheit</translation>
+	<translation id="1546647220090341106">Celsius</translation>
+	<translation id="6977749640368501596">estilos</translation>
+	<translation id="30300572504753589">Negro</translation>
+	<translation id="7850674593676755019">Blanco</translation>
+	<translation id="9011959596901584887">Color</translation>
+	<translation id="5667922561719642173">carga con la escena</translation>
+	<translation id="5466334165625502718">intervalo</translation>
+	<translation id="1128028236258747485">reproducir vídeo hasta su finalización</translation>
+	<translation id="3372777815572567783">reproducción aleatoria</translation>
+	<translation id="6757770085960264448">diapositivas</translation>
+	<translation id="6659445582099947212">simbólico</translation>
+	<translation id="6262368721870308838">crear token de acceso instagram</translation>
+	<translation id="6358635099770142731">crear símbolo</translation>
+	<translation id="7499211462525828161">Cargar con el calendario</translation>
+	<translation id="3128474301651540051">compensado modo de rango</translation>
+	<translation id="5645011507444946232">días antes de hoy</translation>
+	<translation id="472347571959391022">días a partir de hoy</translation>
+	<translation id="7382546590159708114">fecha de inicio</translation>
+	<translation id="8615958092383580706">fecha final</translation>
+	<translation id="7824071976623180870">Cargar con la hoja</translation>
+	<translation id="4370305429271412983">Nombre de pantalla</translation>
+	<translation id="7641098557273120361">crear token de acceso</translation>
+	<translation id="361150460746746781">mantener la relación de aspecto</translation>
+	<translation id="3046991000485970172">RSS de actualización (minutos)</translation>
+	<translation id="2303401327609002516">RSS dirección de desplazamiento</translation>
+	<translation id="8382375758916799432">Horizontal</translation>
+	<translation id="160958144287367985">Vertical</translation>
+	<translation id="5576694760844259892">velocidad de desplazamiento RSS</translation>
+	<translation id="3801245379625272309">lento</translation>
+	<translation id="4688460977394283086">medio</translation>
+	<translation id="9161614188045173336">rápido</translation>
+	<translation id="6107231410782382609">En caso de tomar las siguientes medidas</translation>
+	<translation id="8875363048655701399">modo de pantalla completa</translation>
+	<translation id="6880124786888445040">Jugar la colección en secuencia</translation>
+	<translation id="2166463051767640100">añadir contenido a la colección</translation>
+	<translation id="7365517136074263312">Código QR</translation>
+	<translation id="810733191089543608">volumen</translation>
+	<translation id="4815249204085613710">calidad de video</translation>
+	<translation id="5082095396043563283">región</translation>
+	<translation id="396267502411280310">mas visto</translation>
+	<translation id="2441920677226386245">lista personalizada</translation>
+	<translation id="1223194855937061908">ID de vídeo</translation>
+	<translation id="4103549354606724944">líneas de clientes</translation>
+	<translation id="7262144878230347914">color de fondo</translation>
+	<translation id="1435085881129646880">lista de reproducción secuencial predeterminado</translation>
+	<translation id="1587536276491357593">Total basado ubicación:></translation>
+	<translation id="3325180562659478330">nombre</translation>
+	<translation id="3051480550159545291">latitud</translation>
+	<translation id="2703718513716530782">longitud</translation>
+	<translation id="5602245631444655788">duración</translation>
+	<translation id="118487254857410201">intervalo de radios</translation>
+	<translation id="9178543898761255307">kilómetros</translation>
+	<translation id="7866202877490561957">prioridad conflicto</translation>
+	<translation id="720146333131008909">añadir contenido a escena</translation>
+	<translation id="8729372534532732068">nombre de la escena</translation>
+	<translation id="2224690894219674949">el modo de simulación</translation>
+	<translation id="7220335122322620944">Más información sobre la empresa</translation>
+	<translation id="8444323300278462770">parte superior</translation>
+	<translation id="7449548947549758066">izquierda</translation>
+	<translation id="9172672254266086971">anchura</translation>
+	<translation id="4093381701787958997">altura</translation>
+	<translation id="2062170564010556149">rotación</translation>
+	<translation id="9088937454320275395">aplicar cambios</translation>
+	<translation id="1870560040946711505">bloqueada</translation>
+	<translation id="6108618462851148193">editor de campañas</translation>
+	<translation id="2741646832903808697">diseño de pantalla</translation>
+	<translation id="6454444033973204385">la selección de campaña</translation>
+	<translation id="6028894272398949430">nueva campaña</translation>
+	<translation id="3008329758802399315">Asistente para obtener ayuda</translation>
+	<translation id="4145364267099301397">Seleccione el nombre de la campaña</translation>
+	<translation id="3843469504048287640">Introducir nuevo nombre de la campaña</translation>
+	<translation id="4895430942430831092">ID de la campaña:</translation>
+	<translation id="1901427837939428954">modo de pantalla completa</translation>
+	<translation id="8329228391349300722">Campaña modo de reproducción:</translation>
+	<translation id="8793145092368811184">Sequencer (modo simple):</translation>
+	<translation id="4691632839818550461">Juega líneas de tiempo para esta campaña en un bucle continuo. Es fácil de configurar y fácil de usar</translation>
+	<translation id="6075423017399759230">Programador (modo avanzado):</translation>
+	<translation id="750837672459228230">Juega líneas de tiempo para esta campaña sólo en momentos específicos. Por ejemplo, jugar Cronología A en la mañana y en la noche Cronograma B.</translation>
+	<translation id="1167977099462453641">resolución de la pantalla</translation>
+	<translation id="7626905534069326448">Conflicto de prioridad:</translation>
+	<translation id="4220765745195024064">Duración:</translation>
+	<translation id="4049333306580215724">jugar una vez</translation>
+	<translation id="7249155645987524413">jugar a diario</translation>
+	<translation id="8568181330490588741">jugar semanal</translation>
+	<translation id="3408786538616090951">Seleccione los días:</translation>
+	<translation id="4039555836273676912">...</translation>
+	<translation id="6324587259626414962">repetir para encajar</translation>
+	<translation id="2012264763266897754">Orden aleatorio</translation>
+	<translation id="4324819244706823449">Editar diseño</translation>
+	<translation id="5755245564638965488">siguiente canal</translation>
+	<translation id="2925036210758384238">línea seleccionada</translation>
+	<translation id="3601209751322374737">recordatorio delante de la gente</translation>
+	<translation id="1790884679999452685">terminal abierto</translation>
+	<translation id="4878432943521432749">línea de reset</translation>
+	<translation id="3728601907282119753">propiedades de la cola</translation>
+	<translation id="2536017892630886700">seleccionada por el cliente:</translation>
+	<translation id="6228967158577655533">verificación:</translation>
+	<translation id="6435015929996679472">llamado por:</translation>
+	<translation id="8711852116268389728">selección de escena</translation>
+	<translation id="5053705054681686956">nueva línea</translation>
+	<translation id="5225640858395745699">quite la línea de</translation>
+	<translation id="3116266439138367996">campo de golf</translation>
+	<translation id="4159874591284333337">Con tecnología de marco angular de Google</translation>
+	<translation id="3008186756887926107">subir archivos</translation>
+	<translation id="2123171795960509943">retirar</translation>
+	<translation id="7246196759043272468">lista</translation>
+	<translation id="946077791002604877">cuadrícula</translation>
+	<translation id="5936943188558553659">archivos soportados: FLV, MP4, JPG, PNG, SVG y SWF</translation>
+	<translation id="8054250976557949996">nueva escena</translation>
+	<translation id="6133338617402043535">duplicar</translation>
+	<translation id="1576591662761177526">plantilla de importación</translation>
+	<translation id="2225048990372533999">recargar</translation>
+	<translation id="987425828725037788">dirección IP</translation>
+	<translation id="1646067470190508925">Puerto</translation>
+
+	<translation id="8097415329769247281">Elija el paquete que sea adecuado para usted</translation>
+
+</translationbundle>

@@ -100,7 +100,7 @@ enum ViewMod {
                             <br/>
                         </div>
                         <br/>
-                        <a i18n id="loginButton" style="width: 280px" (click)="onClickedLogin()" type="submit" class="btn rounded-btn"> login to your account
+                        <a id="loginButton" style="width: 280px" (click)="onClickedLogin()" type="submit" class="btn rounded-btn"> login to your account
                             <span i18n *ngIf="m_showTwoFactor" style="font-size: 9px; max-height: 15px; display: block; padding: 0; margin: 0; position: relative; top: -20px">with Google authenticator</span>
                         </a>&nbsp;
 

@@ -61,6 +61,8 @@ export class LocaleSelector extends Compbaser implements AfterViewInit {
     }
 
     onLocale(i_locale){
+        window.onbeforeunload = () => {
+        };
         window.location.replace(`https://secure.digitalsignage.com/studioweb/locale/${i_locale.locale}/`);
     }
 

@@ -89,7 +89,7 @@ enum ViewMod {
                     
                     <div *ngSwitchCase="m_viewMod.LOGIN">
                         <h2 class="form-signin-heading"></h2>
-                        <input (keyup.enter)="passFocus()" #userName id="userName" spellcheck="false" type="text" name="m_user" [(ngModel)]="m_user" class="input-underline input-lg form-control" i18n-placeholder placeholder="user name / email" required autofocus>
+                        <input (keyup.enter)="passFocus()" #userName id="userName" spellcheck="false" type="text" name="m_user" [(ngModel)]="m_user" class="input-underline input-lg form-control" i18n-placeholder placeholder="user name or email" required autofocus>
                         <input (keyup.enter)="onClickedLogin()" #userPass id="userPass" type="password" [(ngModel)]="m_pass" name="m_pass" class="input-underline input-lg form-control" i18n-placeholder placeholder="password" required>
                         <div [@showTwoFactor]="m_showTwoFactor" *ngIf="m_showTwoFactor">
                             <br/>

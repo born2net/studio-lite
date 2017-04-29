@@ -23,6 +23,7 @@
 <messagebundle>
   <msg id="9198441993514322349"><source>C:/msweb/studiolite/src/app/campaigns/campaign-orientation.ts:3</source>screen orientation</msg>
   <msg id="2838690440296896849"><source>C:/msweb/studiolite/src/app/fasterq/fasterq-editor.ts:3</source>remote status</msg>
+  <msg id="2446117790692479672"><source>C:/msweb/studiolite/src/app/app-component.ts:29</source><source>C:/msweb/studiolite/src/app/appwrap.ts:6</source>Resources</msg>
   <msg id="2849064100927111571"><source>C:/msweb/studiolite/src/app/app-component.ts:94</source>loading...</msg>
   <msg id="7309719557896597512"><source>C:/msweb/studiolite/src/app/app-component.ts:97</source>have a nice day </msg>
   <msg id="5805758016483237261"><source>C:/msweb/studiolite/src/app/app-component.ts:103</source><source>C:/msweb/studiolite/src/app/studiopro/studiopro-navigation.ts:175</source>Upgrade to Enterprise - $99.00 per month</msg>

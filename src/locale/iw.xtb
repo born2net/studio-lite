@@ -17,10 +17,8 @@
 <translationbundle lang="iw">
 	<translation id="9198441993514322349">כיוון המסך</translation>
 	<translation id="2838690440296896849">מצב מרחוק</translation>
-	<translation id="2849064100927111571">טוען...</translation>
 	<translation id="7309719557896597512">שֶׁיִּהְיֶה לְךָ יוֹם טוֹב</translation>
 	<translation id="5805758016483237261">שדרג Enterprise - 99.00 $ לחודש</translation>
-	<translation id="7212624462478696127">אימות גישה ...</translation>
 	<translation id="1156206314346372426">שליטה של ​​חשבון</translation>
 	<translation id="892759319569190037">צבע רקע הסצנה</translation>
 	<translation id="463077023711449502">צבע גבול</translation>
@@ -113,7 +111,6 @@
 	<translation id="7249155645987524413">לשחק יומי</translation>
 	<translation id="8568181330490588741">לשחק שבועי</translation>
 	<translation id="3408786538616090951">בחר את הימים:</translation>
-	<translation id="4039555836273676912">...</translation>
 	<translation id="6324587259626414962">לחזור על כך שיתאים</translation>
 	<translation id="2012264763266897754">סדר אקראי</translation>
 	<translation id="4324819244706823449">ערוך פריסה</translation>
@@ -144,5 +141,17 @@
 	<translation id="1646067470190508925">נָמָל</translation>
 
 	<translation id="8097415329769247281">בחר את החבילה המתאימה לך</translation>
+
+	<translation id="4809196861118879526">סיסמה</translation>
+	<translation id="9162857816822524614">יש להזין שני מפתח גורם</translation>
+	<translation id="24227595514967590">עם מאמת Google</translation>
+	<translation id="2001940299854753031">זכור אותי</translation>
+	<translation id="5872337092278414963">שכחת את הסיסמא</translation>
+	<translation id="8246600873004586882">שנה סיסמא</translation>
+	<translation id="5289326240092186479">שם עסק שינוי</translation>
+	<translation id="867339644855996577">סיסמה ישנה</translation>
+	<translation id="48285893667252664">סיסמה חדשה</translation>
+	<translation id="6917932917401642982">חזור על סיסמה חדשה</translation>
+	<translation id="5666893431176348635">שם עסק חדש</translation>
 
 </translationbundle>

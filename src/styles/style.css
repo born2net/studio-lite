@@ -1593,10 +1593,6 @@ div.kineticjs-content {
     opacity: 1 !important;
 }
 
-/* flags:
-    project: https://github.com/lafeber/world-flags-sprite
-    codes: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
-*/
 
 .f32 .flag {
     display: inline-block;

@@ -6,7 +6,7 @@ import {YellowPepperService} from "../../services/yellowpepper.service";
     selector: 'locale-selector',
     styles: [`
         ul {
-            width: 275px;
+            width: 290px;
             padding-left: 0px; 
             padding-top: 50px;
         }
@@ -28,15 +28,22 @@ import {YellowPepperService} from "../../services/yellowpepper.service";
 })
 export class LocaleSelector extends Compbaser implements AfterViewInit {
 
+    /* flags:
+     project: https://github.com/lafeber/world-flags-sprite
+     flags codes: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
+     google codes: https://cloud.google.com/translate/docs/languages
+     */
+
     locales  = [
+        {flag: 'us', locale: 'en', name: 'English'},
         {flag: 'cn', locale: 'zh-CN', name: 'Chinese'},
-        {flag: 'il', locale: 'iw', name: 'Hebrew'},
+        {flag: 'in', locale: 'bn', name: 'Bengali'},
         {flag: 'es', locale: 'es', name: 'Spanish'},
         {flag: 'in', locale: 'hi', name: 'Hindi'},
         {flag: 'jo', locale: 'ar', name: 'Arabic'},
+        {flag: 'il', locale: 'iw', name: 'Hebrew'},
         {flag: 'br', locale: 'pt', name: 'Portuguese'},
         {flag: 'de', locale: 'de', name: 'German'},
-        {flag: 'in', locale: 'bn', name: 'Bengali'},
         {flag: 'jp', locale: 'ja', name: 'Japanese'},
         {flag: 'ru', locale: 'ru', name: 'Russian'},
         {flag: 'ph', locale: 'tl', name: 'Filipino'},
@@ -44,6 +51,7 @@ export class LocaleSelector extends Compbaser implements AfterViewInit {
         {flag: 'gr', locale: 'el', name: 'Greek'},
         {flag: 'kr', locale: 'ko', name: 'Korean'},
         {flag: 'th', locale: 'th', name: 'Thai'},
+        {flag: 'my', locale: 'ms', name: 'Malay'},
         {flag: 'it', locale: 'it', name: 'Italian'}
     ]
 

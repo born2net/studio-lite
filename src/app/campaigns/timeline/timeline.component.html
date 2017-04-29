@@ -20,6 +20,15 @@
     <!--</select>-->
     <!--Timeline Length <input type="number" [(ngModel)]="state.gridWidth" (change)="updateContainerSize()" />-->
   <!--</div>-->
+  <!--<div class="row" style="margin-left: 83px;">-->
+    <!--<app-timeline-ruler-->
+      <!--width="{{ state.gridWidth * (1 / this.state.zoom) }}"-->
+      <!--height="50"-->
+      <!--position="{{ scrollPosition }}"-->
+      <!--scale="{{ state.zoom / 10}}"-->
+    <!--&gt;-->
+    <!--</app-timeline-ruler>-->
+  <!--</div>-->
   <!--<div class="row timeline-container">-->
     <!--<div class="col-xs-1 channel-titles">-->
       <!--<div class="channel-title" *ngFor="let output of state.outputs; let i = index" (click)="selectOutput(i)" [class.channel-selected]="output.selected">-->
@@ -29,13 +38,8 @@
         <!--<span class="channel-color" [style.backgroundColor]="channel.color"></span> {{ channel.name }}-->
       <!--</div>-->
     <!--</div>-->
-    <!--<div class="col-xs-11 timeline">-->
-      <!--<app-timeline-ruler-->
-        <!--width="{{ state.gridWidth * (1 / this.state.zoom) }}"-->
-        <!--height="50"-->
-        <!--scale="{{ state.zoom / 10}}"-->
-      <!--&gt;-->
-      <!--</app-timeline-ruler>-->
+    <!--<div class="col-xs-11 timeline" (scroll)="onScroll($event)">-->
+
       <!--<div id="container">-->
         <!--<ng-container *ngFor="let item of state.items;let i = index">-->
           <!--<li *ngIf="item.type == 'output'"-->

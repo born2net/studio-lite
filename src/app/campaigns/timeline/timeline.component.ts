@@ -5,7 +5,6 @@ import { TimelineRulerComponent } from '../timeline-ruler/timeline-ruler.compone
 declare let $: any;
 declare let Draggable: any;
 declare let TweenLite: any;
-declare let ruler: any;
 
 @Component({
   selector: 'app-timeline',
@@ -18,6 +17,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
   ruler = undefined;
 
   draggingItem;
+  scrollPosition = 0;
 
   defaultState = {
     gridWidth: 1776,
@@ -68,21 +68,6 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
         this.resetSelection();
       }
     });
-
-    // this.ruler = new ruler({
-    //   container: document.querySelector('.ruler'),// reference to DOM element to apply rulers on
-    //   rulerHeight: 50, // thickness of ruler
-    //   fontFamily: 'arial',// font for points
-    //   fontSize: '10px',
-    //   cornerSides: [],
-    //   strokeStyle: 'black',
-    //   lineWidth: 1,
-    //   enableMouseTracking: false,
-    //   enableToolTip: false,
-    //   sides: ['top']
-    // });
-    //
-    // this.ruler.api.setScale(this.state.zoom);
 
     // draw channels
     this.drawChannels();
@@ -182,7 +167,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
               var channelNum = Math.floor(item.top / self.state.gridHeight);
 
               item.channel = channelNum;
-              
+
               if (channelNum >= self.state.outputs.length) {
                 var channel = self.state.channels[Math.floor(item.top / self.state.gridHeight) - self.state.outputs.length];
 
@@ -404,6 +389,9 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
     });
   }
 
+  onScroll(e) {
+    this.scrollPosition = e.target.scrollLeft;
+  }
 
   drag(e, type, resourceIndex) {
     e.dataTransfer.setData("text", resourceIndex);

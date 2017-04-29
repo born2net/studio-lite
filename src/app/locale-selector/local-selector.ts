@@ -28,10 +28,11 @@ import {YellowPepperService} from "../../services/yellowpepper.service";
 })
 export class LocaleSelector extends Compbaser implements AfterViewInit {
 
-    /* flags:
+    /* locale info:
      project: https://github.com/lafeber/world-flags-sprite
      flags codes: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
      google codes: https://cloud.google.com/translate/docs/languages
+     docs: https://angular.io/docs/ts/latest/cookbook/i18n.html
      */
 
     locales  = [

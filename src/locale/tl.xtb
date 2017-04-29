@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE translationbundle [
+<!ELEMENT translationbundle (translation)*>
+<!ATTLIST translationbundle lang CDATA #REQUIRED>
+
+<!ELEMENT translation (#PCDATA|ph)*>
+<!ATTLIST translation id CDATA #REQUIRED>
+<!ATTLIST translation desc CDATA #IMPLIED>
+<!ATTLIST translation meaning CDATA #IMPLIED>
+<!ATTLIST translation xml:space (default|preserve) "default">
+
+<!ELEMENT ph (#PCDATA|ex)*>
+<!ATTLIST ph name CDATA #REQUIRED>
+
+<!ELEMENT ex (#PCDATA)>
+]>
+<translationbundle lang="tl">
+	<translation id="9198441993514322349">screen orientation</translation>
+	<translation id="2838690440296896849">remote status</translation>
+	<translation id="2849064100927111571">naglo-load ...</translation>
+	<translation id="7309719557896597512">magandang araw</translation>
+	<translation id="5805758016483237261">Mag-upgrade sa Enterprise - $ 99.00 bawat buwan</translation>
+	<translation id="7212624462478696127">pag-verify ng pag-access ...</translation>
+	<translation id="1156206314346372426">account dashboard</translation>
+	<translation id="892759319569190037">kulay scene background</translation>
+	<translation id="463077023711449502">kulay ng border</translation>
+	<translation id="7844431484369877777">url</translation>
+	<translation id="6727478076005438064">Pumili ng format</translation>
+	<translation id="8932917860978648376">yunit</translation>
+	<translation id="6447113917741810043">Parenhayt</translation>
+	<translation id="1546647220090341106">Sentigrado</translation>
+	<translation id="6977749640368501596">Mga estilo</translation>
+	<translation id="30300572504753589">itim</translation>
+	<translation id="7850674593676755019">puti</translation>
+	<translation id="9011959596901584887">kulay</translation>
+	<translation id="5667922561719642173">load na may tanawin</translation>
+	<translation id="5466334165625502718">agwat</translation>
+	<translation id="1128028236258747485">i-play ang video sa pagkumpleto</translation>
+	<translation id="3372777815572567783">random playback</translation>
+	<translation id="6757770085960264448">slideshow</translation>
+	<translation id="6659445582099947212">token</translation>
+	<translation id="6262368721870308838">lumikha ng instagram access token</translation>
+	<translation id="6358635099770142731">lumikha ng token</translation>
+	<translation id="7499211462525828161">Mag-load na may calendar</translation>
+	<translation id="3128474301651540051">offset range mode</translation>
+	<translation id="5645011507444946232">araw bago ang araw na ito</translation>
+	<translation id="472347571959391022">araw pagkatapos ng araw na ito</translation>
+	<translation id="7382546590159708114">petsa ng pagsisimula</translation>
+	<translation id="8615958092383580706">petsa ng pagtatapos</translation>
+	<translation id="7824071976623180870">Mag-load na may sheet</translation>
+	<translation id="4370305429271412983">screen name</translation>
+	<translation id="7641098557273120361">lumikha ng access token</translation>
+	<translation id="361150460746746781">mapanatili ang aspect ratio</translation>
+	<translation id="3046991000485970172">RSS refresh (minuto)</translation>
+	<translation id="2303401327609002516">RSS scroll direksyon</translation>
+	<translation id="8382375758916799432">Pahalang</translation>
+	<translation id="160958144287367985">patayo</translation>
+	<translation id="5576694760844259892">RSS scroll bilis</translation>
+	<translation id="3801245379625272309">mabagal</translation>
+	<translation id="4688460977394283086">medium</translation>
+	<translation id="9161614188045173336">mabilis</translation>
+	<translation id="6107231410782382609">Sa kaganapan gawin ang sumusunod na aksyon</translation>
+	<translation id="8875363048655701399">Kiosk mode</translation>
+	<translation id="6880124786888445040">I-play koleksyon sa pagkakasunod-sunod</translation>
+	<translation id="2166463051767640100">magdagdag ng nilalaman sa koleksyon</translation>
+	<translation id="7365517136074263312">QR code</translation>
+	<translation id="810733191089543608">dami</translation>
+	<translation id="4815249204085613710">kalidad ng video</translation>
+	<translation id="5082095396043563283">rehiyon</translation>
+	<translation id="396267502411280310">pinaka-pinapanood</translation>
+	<translation id="2441920677226386245">pasadyang listahan</translation>
+	<translation id="1223194855937061908">video ids</translation>
+	<translation id="4103549354606724944">linya ng customer</translation>
+	<translation id="7262144878230347914">kulay ng background</translation>
+	<translation id="1435085881129646880">Default sequential playlist</translation>
+	<translation id="1587536276491357593">Kabuuang mga lokasyon batay:></translation>
+	<translation id="3325180562659478330">pangalan</translation>
+	<translation id="3051480550159545291">latitud</translation>
+	<translation id="2703718513716530782">longhitud</translation>
+	<translation id="5602245631444655788">tagal</translation>
+	<translation id="118487254857410201">radius range</translation>
+	<translation id="9178543898761255307">kilometro</translation>
+	<translation id="7866202877490561957">priority salungatan</translation>
+	<translation id="720146333131008909">magdagdag ng nilalaman sa scene</translation>
+	<translation id="8729372534532732068">pangalan ng eksena</translation>
+	<translation id="2224690894219674949">simulation mode</translation>
+	<translation id="7220335122322620944">Matuto nang higit pa tungkol sa Enterprise</translation>
+	<translation id="8444323300278462770">tuktok</translation>
+	<translation id="7449548947549758066">kaliwa</translation>
+	<translation id="9172672254266086971">lapad</translation>
+	<translation id="4093381701787958997">taas</translation>
+	<translation id="2062170564010556149">pag-ikot</translation>
+	<translation id="9088937454320275395">ilapat ang mga pagbabago</translation>
+	<translation id="1870560040946711505">nakakandado</translation>
+	<translation id="6108618462851148193">editor ng kampanya</translation>
+	<translation id="2741646832903808697">layout ng screen</translation>
+	<translation id="6454444033973204385">pagpili ng kampanya</translation>
+	<translation id="6028894272398949430">bagong kampanya</translation>
+	<translation id="3008329758802399315">Kumuha ng Wizard tulong</translation>
+	<translation id="4145364267099301397">Piliin ang pangalan ng iyong kampanya</translation>
+	<translation id="3843469504048287640">Magpasok ng bagong pangalan ng kampanya</translation>
+	<translation id="4895430942430831092">id ng kampanya:</translation>
+	<translation id="1901427837939428954">kiosk mode</translation>
+	<translation id="8329228391349300722">Kampanya playback mode:</translation>
+	<translation id="8793145092368811184">Sequencer (simple mode):</translation>
+	<translation id="4691632839818550461">I-play timeline para sa kampanyang ito sa isang tuloy-tuloy na loop. Ito ay madali upang i-setup at simpleng upang gamitin ang</translation>
+	<translation id="6075423017399759230">Scheduler (advanced mode):</translation>
+	<translation id="750837672459228230">I-play timeline para sa kampanyang ito lamang sa mga tiyak na beses. Halimbawa, i-play Timeline A sa umaga at Timeline B sa gabi.</translation>
+	<translation id="1167977099462453641">resolution ng screen</translation>
+	<translation id="7626905534069326448">Conflict priority:</translation>
+	<translation id="4220765745195024064">Tagal:</translation>
+	<translation id="4049333306580215724">i-play nang isang beses</translation>
+	<translation id="7249155645987524413">i-play ang araw-araw na</translation>
+	<translation id="8568181330490588741">i-play ang lingguhang</translation>
+	<translation id="3408786538616090951">Piliin ang mga araw:</translation>
+	<translation id="4039555836273676912">...</translation>
+	<translation id="6324587259626414962">ulitin upang magkasya</translation>
+	<translation id="2012264763266897754">random order</translation>
+	<translation id="4324819244706823449">edit layout</translation>
+	<translation id="5755245564638965488">susunod na channel</translation>
+	<translation id="2925036210758384238">napiling linya</translation>
+	<translation id="3601209751322374737">paalala nangunguna sa mga tao</translation>
+	<translation id="1790884679999452685">bukas na terminal</translation>
+	<translation id="4878432943521432749">reset linya</translation>
+	<translation id="3728601907282119753">queue properties</translation>
+	<translation id="2536017892630886700">pinili ng customer:</translation>
+	<translation id="6228967158577655533">pag-verify:</translation>
+	<translation id="6435015929996679472">na tinatawag sa pamamagitan ng:</translation>
+	<translation id="8711852116268389728">pagpili ng eksena</translation>
+	<translation id="5053705054681686956">bagong linya</translation>
+	<translation id="5225640858395745699">alisin linya</translation>
+	<translation id="3116266439138367996">mga link</translation>
+	<translation id="4159874591284333337">Pinapatakbo ng Angular framework Google</translation>
+	<translation id="3008186756887926107">upload ng mga file</translation>
+	<translation id="2123171795960509943">alisin</translation>
+	<translation id="7246196759043272468">listahan</translation>
+	<translation id="946077791002604877">parilya</translation>
+	<translation id="5936943188558553659">suportado ng mga file: flv, mp4, jpg, png, swf at svg</translation>
+	<translation id="8054250976557949996">bagong eksena</translation>
+	<translation id="6133338617402043535">Kopyahin</translation>
+	<translation id="1576591662761177526">import template</translation>
+	<translation id="2225048990372533999">reload</translation>
+	<translation id="987425828725037788">IP address</translation>
+	<translation id="1646067470190508925">port</translation>
+	<translation id="8097415329769247281">Piliin ang package na tama para sa iyo</translation>
+
+</translationbundle>

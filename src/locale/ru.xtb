@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE translationbundle [
+<!ELEMENT translationbundle (translation)*>
+<!ATTLIST translationbundle lang CDATA #REQUIRED>
+
+<!ELEMENT translation (#PCDATA|ph)*>
+<!ATTLIST translation id CDATA #REQUIRED>
+<!ATTLIST translation desc CDATA #IMPLIED>
+<!ATTLIST translation meaning CDATA #IMPLIED>
+<!ATTLIST translation xml:space (default|preserve) "default">
+
+<!ELEMENT ph (#PCDATA|ex)*>
+<!ATTLIST ph name CDATA #REQUIRED>
+
+<!ELEMENT ex (#PCDATA)>
+]>
+<translationbundle lang="ru">
+	<translation id="9198441993514322349">ориентация экрана</translation>
+	<translation id="2838690440296896849">удаленный статус</translation>
+	<translation id="2849064100927111571">загрузка ...</translation>
+	<translation id="7309719557896597512">хорошего дня</translation>
+	<translation id="5805758016483237261">Обновление до Enterprise - $ 99,00 в месяц</translation>
+	<translation id="7212624462478696127">Проверка доступа ...</translation>
+	<translation id="1156206314346372426">счет приборной панели</translation>
+	<translation id="892759319569190037">цвет сцены фон</translation>
+	<translation id="463077023711449502">цвет границы</translation>
+	<translation id="7844431484369877777">URL</translation>
+	<translation id="6727478076005438064">Выберите формат</translation>
+	<translation id="8932917860978648376">Ед. изм</translation>
+	<translation id="6447113917741810043">Фаренгейт</translation>
+	<translation id="1546647220090341106">Celsius</translation>
+	<translation id="6977749640368501596">Стили</translation>
+	<translation id="30300572504753589">черный</translation>
+	<translation id="7850674593676755019">белый</translation>
+	<translation id="9011959596901584887">цвет</translation>
+	<translation id="5667922561719642173">Нагрузка на сцене</translation>
+	<translation id="5466334165625502718">интервал</translation>
+	<translation id="1128028236258747485">воспроизведения видео до завершения</translation>
+	<translation id="3372777815572567783">воспроизведение в случайном порядке</translation>
+	<translation id="6757770085960264448">слайд-шоу</translation>
+	<translation id="6659445582099947212">знак</translation>
+	<translation id="6262368721870308838">создать маркер доступа Instagram</translation>
+	<translation id="6358635099770142731">создать маркер</translation>
+	<translation id="7499211462525828161">Нагрузка с календарем</translation>
+	<translation id="3128474301651540051">Смещение режима диапазона</translation>
+	<translation id="5645011507444946232">дней до сегодняшнего дня</translation>
+	<translation id="472347571959391022">дней после того, как сегодня</translation>
+	<translation id="7382546590159708114">Дата начала</translation>
+	<translation id="8615958092383580706">Дата окончания</translation>
+	<translation id="7824071976623180870">Нагрузка с листом</translation>
+	<translation id="4370305429271412983">Ник</translation>
+	<translation id="7641098557273120361">создать маркер доступа</translation>
+	<translation id="361150460746746781">сохранять пропорции</translation>
+	<translation id="3046991000485970172">RSS обновления (в минутах)</translation>
+	<translation id="2303401327609002516">RSS направление прокрутки</translation>
+	<translation id="8382375758916799432">горизонтальный</translation>
+	<translation id="160958144287367985">вертикальный</translation>
+	<translation id="5576694760844259892">RSS скорость прокрутки</translation>
+	<translation id="3801245379625272309">медленный</translation>
+	<translation id="4688460977394283086">средний</translation>
+	<translation id="9161614188045173336">быстро</translation>
+	<translation id="6107231410782382609">В случае принять следующие меры</translation>
+	<translation id="8875363048655701399">режим киоска</translation>
+	<translation id="6880124786888445040">Играть коллекцию в последовательности</translation>
+	<translation id="2166463051767640100">добавить содержимое в коллекцию</translation>
+	<translation id="7365517136074263312">QR код</translation>
+	<translation id="810733191089543608">объем</translation>
+	<translation id="4815249204085613710">качество видео</translation>
+	<translation id="5082095396043563283">область</translation>
+	<translation id="396267502411280310">наиболее просматриваемые</translation>
+	<translation id="2441920677226386245">пользовательский список</translation>
+	<translation id="1223194855937061908">идентификаторы видео</translation>
+	<translation id="4103549354606724944">линии клиентов</translation>
+	<translation id="7262144878230347914">фоновый цвет</translation>
+	<translation id="1435085881129646880">По умолчанию последовательный плейлист</translation>
+	<translation id="1587536276491357593">Общее расположение на основе:></translation>
+	<translation id="3325180562659478330">имя</translation>
+	<translation id="3051480550159545291">широта</translation>
+	<translation id="2703718513716530782">долгота</translation>
+	<translation id="5602245631444655788">продолжительность</translation>
+	<translation id="118487254857410201">диапазон радиус</translation>
+	<translation id="9178543898761255307">километров</translation>
+	<translation id="7866202877490561957">коллизия приоритетов</translation>
+	<translation id="720146333131008909">добавить содержимое в сцене</translation>
+	<translation id="8729372534532732068">название сцены</translation>
+	<translation id="2224690894219674949">режим моделирования</translation>
+	<translation id="7220335122322620944">Подробнее о предприятии</translation>
+	<translation id="8444323300278462770">Вверх</translation>
+	<translation id="7449548947549758066">оставил</translation>
+	<translation id="9172672254266086971">ширина</translation>
+	<translation id="4093381701787958997">высота</translation>
+	<translation id="2062170564010556149">вращение</translation>
+	<translation id="9088937454320275395">применить изменения</translation>
+	<translation id="1870560040946711505">запертый</translation>
+	<translation id="6108618462851148193">редактор кампании</translation>
+	<translation id="2741646832903808697">расположение экрана</translation>
+	<translation id="6454444033973204385">выбор кампании</translation>
+	<translation id="6028894272398949430">новая кампания</translation>
+	<translation id="3008329758802399315">Получить мастер помощь</translation>
+	<translation id="4145364267099301397">Выберите название кампании</translation>
+	<translation id="3843469504048287640">Введите новое название кампании</translation>
+	<translation id="4895430942430831092">Идентификатор кампании:</translation>
+	<translation id="1901427837939428954">режим киоска</translation>
+	<translation id="8329228391349300722">Кампания режима воспроизведения:</translation>
+	<translation id="8793145092368811184">Sequencer (простой режим):</translation>
+	<translation id="4691632839818550461">Играть временные рамки для этой кампании в непрерывном цикле. Он прост в установке и прост в использовании</translation>
+	<translation id="6075423017399759230">Планировщик (расширенный режим):</translation>
+	<translation id="750837672459228230">Играть временные рамки для этой кампании только в определенные моменты времени. Например, играть Timeline А утром и Timeline B в ночное время.</translation>
+	<translation id="1167977099462453641">разрешение экрана</translation>
+	<translation id="7626905534069326448">Приоритет Conflict:</translation>
+	<translation id="4220765745195024064">Продолжительность:</translation>
+	<translation id="4049333306580215724">играть один раз</translation>
+	<translation id="7249155645987524413">играть ежедневно</translation>
+	<translation id="8568181330490588741">играть в неделю</translation>
+	<translation id="3408786538616090951">Выберите дни:</translation>
+	<translation id="4039555836273676912">...</translation>
+	<translation id="6324587259626414962">Повторяю, чтобы соответствовать</translation>
+	<translation id="2012264763266897754">случайный порядок</translation>
+	<translation id="4324819244706823449">редактировать макет</translation>
+	<translation id="5755245564638965488">следующий канал</translation>
+	<translation id="2925036210758384238">Выбранная линия</translation>
+	<translation id="3601209751322374737">напоминание перед людьми</translation>
+	<translation id="1790884679999452685">открыт терминал</translation>
+	<translation id="4878432943521432749">сброс линии</translation>
+	<translation id="3728601907282119753">свойства очереди</translation>
+	<translation id="2536017892630886700">выбранный клиентом:</translation>
+	<translation id="6228967158577655533">проверка:</translation>
+	<translation id="6435015929996679472">называют:</translation>
+	<translation id="8711852116268389728">выбор сцены</translation>
+	<translation id="5053705054681686956">новая линия</translation>
+	<translation id="5225640858395745699">удалить строку</translation>
+	<translation id="3116266439138367996">связи</translation>
+	<translation id="4159874591284333337">Работает на угловыми рамках компании Google</translation>
+	<translation id="3008186756887926107">загрузить файлы</translation>
+	<translation id="2123171795960509943">Удалить</translation>
+	<translation id="7246196759043272468">список</translation>
+	<translation id="946077791002604877">сетка</translation>
+	<translation id="5936943188558553659">Поддерживаемые файлы: FLV, MP4, JPG, PNG, SWF и SVG</translation>
+	<translation id="8054250976557949996">новая сцена</translation>
+	<translation id="6133338617402043535">дублировать</translation>
+	<translation id="1576591662761177526">шаблон импорта</translation>
+	<translation id="2225048990372533999">перезагружать</translation>
+	<translation id="987425828725037788">айпи адрес</translation>
+	<translation id="1646067470190508925">порт</translation>
+	<translation id="8097415329769247281">Выберите пакет, который подходит для вас</translation>
+
+</translationbundle>

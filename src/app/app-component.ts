@@ -96,8 +96,11 @@ export class AppComponent implements AfterViewInit {
             });
     }
 
-    @ViewChild(ModalComponent)
+    @ViewChild('modalProUpgrade')
     modal: ModalComponent;
+
+    @ViewChild('modalLocale')
+    modalLocale: ModalComponent;
 
     ngOnInit() {
 
@@ -140,6 +143,10 @@ export class AppComponent implements AfterViewInit {
             case 'save': {
                 this.saveAndRestartPrompt(() => {
                 })
+                break;
+            }
+            case 'locale': {
+                this.modalLocale.open();
                 break;
             }
         }

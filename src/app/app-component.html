@@ -39,19 +39,19 @@
 
             <ul style="height: 20px" class="nav navbar-nav navbar-right noCollapsing">
                 <li>
-                    <a title="upgrade" style="padding-bottom: 0px; margin-bottom: 0px" (click)="_onMenuIcon('upgrade',$event)" *ngIf="isBrandingDisabled" class="showUpgradeModal reshid" href="#"><i style="color: red" class="faHeader fa fa-cloud-upload"></i></a>
+                    <a i18n-title title="upgrade" style="padding-bottom: 0px; margin-bottom: 0px" (click)="_onMenuIcon('upgrade',$event)" *ngIf="isBrandingDisabled" class="showUpgradeModal reshid" href="#"><i style="color: red" class="faHeader fa fa-cloud-upload"></i></a>
                 </li>
                 <li>
-                    <a title="Cont-S" style="padding-bottom: 0px; margin-bottom: 0px" (click)="_onMenuIcon('save',$event)" id="saveConfig" href="#"><i style="color: greenyellow" class="faHeader fa fa-save"></i></a>
+                    <a i18n-title title="Cont-S" style="padding-bottom: 0px; margin-bottom: 0px" (click)="_onMenuIcon('save',$event)" href="#"><i style="color: greenyellow" class="faHeader fa fa-save"></i></a>
                 </li>
                 <li>
-                    <a title="language" style="padding-bottom: 0px; margin-bottom: 0px" (click)="_onMenuIcon('save',$event)" id="saveConfig" href="#"><i class="faHeader fa fa-question-circle"></i></a>
+                    <a i18n-title title="language" style="padding-bottom: 0px; margin-bottom: 0px" (click)="_onMenuIcon('locale',$event)" href="#"><i class="faHeader fa fa-question-circle"></i></a>
                 </li>
                 <li>
-                    <a title="live chat" (click)="_onMenuIcon('chat',$event)" *ngIf="isBrandingDisabled" class="reshid" id="liveChat" href="#"><i class="faHeader fa fa-comments-o"></i></a>
+                    <a i18n-title title="live chat" (click)="_onMenuIcon('chat',$event)" *ngIf="isBrandingDisabled" class="reshid" id="liveChat" href="#"><i class="faHeader fa fa-comments-o"></i></a>
                 </li>
                 <li style="padding-right: 20px">
-                    <a title="web site" style="padding-bottom: 0px; margin-bottom: 0px" (click)="_onMenuIcon('web',$event)" *ngIf="isBrandingDisabled"  href="#"><i class="faHeader fa fa-globe"></i></a>
+                    <a i18n-title title="web site" style="padding-bottom: 0px; margin-bottom: 0px" (click)="_onMenuIcon('web',$event)" *ngIf="isBrandingDisabled"  href="#"><i class="faHeader fa fa-globe"></i></a>
                 </li>
                 <!--<li style="padding-right: 20px">-->
                 <!--<a (click)="_onMenuIcon('dash',$event)" id="dashboard" href="#"><i class="faHeader fa fa-dashboard"></i></a>-->
@@ -95,7 +95,8 @@
 </div>
 
 <live-preview *ngIf="m_showMode == m_ShowModeEnum.PREVIEW"></live-preview>
-<modal #modal>
+
+<modal #modalProUpgrade>
     <modal-header [show-close]="true">
         <h4 i18n class="modal-title">Upgrade to Enterprise - $99.00 per month</h4>
     </modal-header>
@@ -105,5 +106,14 @@
     <modal-footer [show-default-buttons]="false"></modal-footer>
 </modal>
 
+<modal #modalLocale>
+    <modal-header [show-close]="true">
+        <h4 i18n class="modal-title">Pick your language</h4>
+    </modal-header>
+    <modal-body>
+        <locale-selector [type]="'modal'"></locale-selector>
+    </modal-body>
+    <modal-footer [show-default-buttons]="false"></modal-footer>
+</modal>
 
 

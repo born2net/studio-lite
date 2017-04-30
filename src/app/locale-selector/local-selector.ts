@@ -1,41 +1,49 @@
-import {Component, ChangeDetectionStrategy, AfterViewInit} from "@angular/core";
+import {ChangeDetectionStrategy, Component, Input} from "@angular/core";
 import {Compbaser} from "ng-mslib";
-import {YellowPepperService} from "../../services/yellowpepper.service";
 
 @Component({
     selector: 'locale-selector',
-    styles: [`
-        ul {
-            width: 290px;
-            padding-left: 0px; 
-            padding-top: 50px;
-        }
-        li {
-            cursor: pointer;
-            opacity: 0.3;
-        }
-        li:hover {
-            opacity: 1;
-        }
-    `],
+    styleUrls: ['./local-selector.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <small class="debug">{{me}}</small>
-        <ul class="f32">
-            <li (click)="onLocale(locale)" *ngFor="let locale of locales" class="flag {{locale.flag}}"></li>
-        </ul>
+        <div *ngIf="type=='inline'">
+            <ul class="f32">
+                <li (click)="onLocale(locale)" *ngFor="let locale of locales" class="flag {{locale.flag}}">
+                </li>
+            </ul>
+        </div>
+        <div *ngIf="type=='modal'">
+            <table class="f32 table">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr (click)="onLocale(locale)" *ngFor="let locale of locales; let i = index" class="flag2">
+                    <td class="flag2 {{locale.flag}}"></td>
+                    <td>{{locale.name}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     `
 })
-export class LocaleSelector extends Compbaser implements AfterViewInit {
+export class LocaleSelector extends Compbaser {
 
-    /* locale info:
+    /**
+     locale info:
+
      project: https://github.com/lafeber/world-flags-sprite
      flags codes: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
      google codes: https://cloud.google.com/translate/docs/languages
      docs: https://angular.io/docs/ts/latest/cookbook/i18n.html
-     */
 
-    locales  = [
+     **/
+
+    locales = [
         {flag: 'us', locale: 'en', name: 'English'},
         {flag: 'cn', locale: 'zh-CN', name: 'Chinese'},
         {flag: 'in', locale: 'bn', name: 'Bengali'},
@@ -56,25 +64,16 @@ export class LocaleSelector extends Compbaser implements AfterViewInit {
         {flag: 'it', locale: 'it', name: 'Italian'}
     ]
 
-    constructor(private yp: YellowPepperService) {
+    constructor() {
         super();
     }
 
-    onLocale(i_locale){
+    @Input() type: 'inline' | 'modal';
+
+    onLocale(i_locale) {
         window.onbeforeunload = () => {
         };
         window.location.replace(`https://secure.digitalsignage.com/studioweb/locale/${i_locale.locale}/`);
-    }
-
-    ngAfterViewInit() {
-
-
-    }
-
-    ngOnInit() {
-    }
-
-    destroy() {
     }
 }
 

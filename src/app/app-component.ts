@@ -57,6 +57,7 @@ export class AppComponent implements AfterViewInit {
     m_ShowModeEnum = MainAppShowModeEnum;
     m_showMode: any = MainAppShowModeEnum.MAIN;
     m_hidden = false;
+    m_localSelected;
     // isBrandingDisabled: Observable<boolean>;
     syncOnSave = false;
     m_logoutState = '';
@@ -72,7 +73,7 @@ export class AppComponent implements AfterViewInit {
                 private activatedRoute: ActivatedRoute,
                 private vRef: ViewContainerRef,
                 private titleService: Title,
-                private eventManager:EventManager,
+                private eventManager: EventManager,
                 private toastr: ToastsManager) {
 
         // this.version = packageJson.version;
@@ -207,8 +208,10 @@ export class AppComponent implements AfterViewInit {
         this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
     }
 
-    _localeSelectionChanged(i_state){
-        this.localSelector.modalStateChanged(i_state)
+    _onLocaleChanged(i_localSelected) {
+        this.m_localSelected = i_localSelected;
+        this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: {mainAppState: MainAppShowStateEnum.SAVE}}));
+        this.modalLocale.close();
     }
 
     private listenAppStateChange() {
@@ -237,6 +240,8 @@ export class AppComponent implements AfterViewInit {
                         this.syncOnSave = false;
                         const uiState: IUiState = {appSaved: moment().format('h:mm:ss')};
                         this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}));
+                        if (this.m_localSelected)
+                            this.localSelector.redirect(this.m_localSelected)
                         break;
                     }
 
@@ -313,19 +318,20 @@ export class AppComponent implements AfterViewInit {
         }
     }
 
-    private listenUpgradeEnterpris(){
+    private listenUpgradeEnterpris() {
         this.commBroker.onEvent(Consts.Events().UPGRADE_ENTERPRISE)
             .subscribe((v) => {
                 this.modal.open();
-        }, (e) => console.error(e));
+            }, (e) => console.error(e));
     }
 
-    private listenSaves(){
-        this.eventManager.addGlobalEventListener('window','keydown.control.s',(event)=>{
+    private listenSaves() {
+        this.eventManager.addGlobalEventListener('window', 'keydown.control.s', (event) => {
             event.preventDefault();
             this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: {mainAppState: MainAppShowStateEnum.SAVE}}));
         })
     }
+
     public appResized(): void {
         var appHeight = document.body.clientHeight;
         var appWidth = document.body.clientWidth;

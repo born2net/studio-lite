@@ -1,7 +1,8 @@
-import {ChangeDetectionStrategy, Component, Input} from "@angular/core";
+import {ChangeDetectionStrategy, EventEmitter, Component, Input, Output} from "@angular/core";
 import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {MainAppShowStateEnum} from "../app-component";
+import {ACTION_UISTATE_UPDATE} from "../../store/actions/appdb.actions";
 
 @Component({
     selector: 'locale-selector',
@@ -11,14 +12,14 @@ import {MainAppShowStateEnum} from "../app-component";
         <small class="debug">{{me}}</small>
         <div *ngIf="m_orientation=='inline'">
             <ul class="f32">
-                <li (click)="onLocale(locale)" *ngFor="let locale of locales" class="flag {{locale.flag}}">
+                <li (click)="redirect(locale)" *ngFor="let locale of locales" class="flag {{locale.flag}}">
                 </li>
             </ul>
         </div>
         <div *ngIf="m_orientation=='modal'">
             <div *ngIf="m_selectedLocale">
                 <label>Selected language: {{m_selectedLocale.name}}</label>
-                <button (click)="saveAndReload()" class="btn btn-primary pull-right">Save and reload language</button>
+                <button (click)="_saveAndReload()" class="btn btn-primary pull-right">Save and reload language</button>
             </div>
             <table class="f32 table">
                 <thead>
@@ -28,7 +29,7 @@ import {MainAppShowStateEnum} from "../app-component";
                 </tr>
                 </thead>
                 <tbody>
-                <tr (click)="onSelected(locale)" *ngFor="let locale of locales; let i = index" class="flag2">
+                <tr (click)="_onSelected(locale)" *ngFor="let locale of locales; let i = index" class="flag2">
                     <td class="flag2 {{locale.flag}}"></td>
                     <td>{{locale.name}}</td>
                 </tr>
@@ -40,7 +41,6 @@ import {MainAppShowStateEnum} from "../app-component";
 export class LocaleSelector extends Compbaser {
 
     m_selectedLocale;
-    m_modalState;
     m_orientation;
 
     /**
@@ -76,45 +76,25 @@ export class LocaleSelector extends Compbaser {
 
     constructor(private yp: YellowPepperService) {
         super();
-
-
     }
-
-    public modalStateChanged(i_modalState) {
-        this.m_modalState = i_modalState;
-    }
-
 
     @Input()
     set orientation(i_orientation: 'inline' | 'modal') {
         this.m_orientation = i_orientation;
-        if (this.m_orientation == 'modal') {
-            this.listenSave();
-        }
     }
 
-    private listenSave() {
-        this.yp.listenMainAppState()
-            .subscribe((i_value: MainAppShowStateEnum) => {
-                switch (i_value) {
-                    case MainAppShowStateEnum.SAVED: {
-                        if (this.m_modalState == 'open')
-                            this.onLocale(this.m_selectedLocale)
+    @Output()
+    onLocaleChanged:EventEmitter<any> = new EventEmitter<any>();
 
-                    }
-                }
-            }, (e) => console.error(e))
+    _saveAndReload() {
+        this.onLocaleChanged.emit(this.m_selectedLocale);
     }
 
-    saveAndReload() {
-
-    }
-
-    onSelected(i_locale) {
+    _onSelected(i_locale) {
         this.m_selectedLocale = i_locale;
     }
 
-    onLocale(i_locale) {
+    public redirect(i_locale) {
         window.onbeforeunload = () => {
         };
         window.location.replace(`https://secure.digitalsignage.com/studioweb/locale/${i_locale.locale}/`);

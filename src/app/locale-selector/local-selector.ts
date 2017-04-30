@@ -17,10 +17,8 @@ import {ACTION_UISTATE_UPDATE} from "../../store/actions/appdb.actions";
             </ul>
         </div>
         <div *ngIf="m_orientation=='modal'">
-            <div *ngIf="m_selectedLocale">
-                <label>Selected language: {{m_selectedLocale.name}}</label>
-                <button (click)="_saveAndReload()" class="btn btn-primary pull-right">Save and reload language</button>
-            </div>
+            <h4 style="display: inline-block">Selected language: {{m_selectedLocale?.name}}</h4>
+            <button [disabled]="!m_selectedLocale" (click)="_saveAndReload()" class="btn btn-primary pull-right">Save and reload language</button>
             <table class="f32 table">
                 <thead>
                 <tr>
@@ -84,7 +82,7 @@ export class LocaleSelector extends Compbaser {
     }
 
     @Output()
-    onLocaleChanged:EventEmitter<any> = new EventEmitter<any>();
+    onLocaleChanged: EventEmitter<any> = new EventEmitter<any>();
 
     _saveAndReload() {
         this.onLocaleChanged.emit(this.m_selectedLocale);

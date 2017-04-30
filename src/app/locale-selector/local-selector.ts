@@ -1,5 +1,7 @@
 import {ChangeDetectionStrategy, Component, Input} from "@angular/core";
 import {Compbaser} from "ng-mslib";
+import {YellowPepperService} from "../../services/yellowpepper.service";
+import {MainAppShowStateEnum} from "../app-component";
 
 @Component({
     selector: 'locale-selector',
@@ -7,13 +9,17 @@ import {Compbaser} from "ng-mslib";
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <small class="debug">{{me}}</small>
-        <div *ngIf="type=='inline'">
+        <div *ngIf="m_orientation=='inline'">
             <ul class="f32">
                 <li (click)="onLocale(locale)" *ngFor="let locale of locales" class="flag {{locale.flag}}">
                 </li>
             </ul>
         </div>
-        <div *ngIf="type=='modal'">
+        <div *ngIf="m_orientation=='modal'">
+            <div *ngIf="m_selectedLocale">
+                <label>Selected language: {{m_selectedLocale.name}}</label>
+                <button (click)="saveAndReload()" class="btn btn-primary pull-right">Save and reload language</button>
+            </div>
             <table class="f32 table">
                 <thead>
                 <tr>
@@ -22,7 +28,7 @@ import {Compbaser} from "ng-mslib";
                 </tr>
                 </thead>
                 <tbody>
-                <tr (click)="onLocale(locale)" *ngFor="let locale of locales; let i = index" class="flag2">
+                <tr (click)="onSelected(locale)" *ngFor="let locale of locales; let i = index" class="flag2">
                     <td class="flag2 {{locale.flag}}"></td>
                     <td>{{locale.name}}</td>
                 </tr>
@@ -32,6 +38,10 @@ import {Compbaser} from "ng-mslib";
     `
 })
 export class LocaleSelector extends Compbaser {
+
+    m_selectedLocale;
+    m_modalState;
+    m_orientation;
 
     /**
      locale info:
@@ -64,16 +74,53 @@ export class LocaleSelector extends Compbaser {
         {flag: 'it', locale: 'it', name: 'Italian'}
     ]
 
-    constructor() {
+    constructor(private yp: YellowPepperService) {
         super();
+
+
     }
 
-    @Input() type: 'inline' | 'modal';
+    public modalStateChanged(i_modalState) {
+        this.m_modalState = i_modalState;
+    }
+
+
+    @Input()
+    set orientation(i_orientation: 'inline' | 'modal') {
+        this.m_orientation = i_orientation;
+        if (this.m_orientation == 'modal') {
+            this.listenSave();
+        }
+    }
+
+    private listenSave() {
+        this.yp.listenMainAppState()
+            .subscribe((i_value: MainAppShowStateEnum) => {
+                switch (i_value) {
+                    case MainAppShowStateEnum.SAVED: {
+                        if (this.m_modalState == 'open')
+                            this.onLocale(this.m_selectedLocale)
+
+                    }
+                }
+            }, (e) => console.error(e))
+    }
+
+    saveAndReload() {
+
+    }
+
+    onSelected(i_locale) {
+        this.m_selectedLocale = i_locale;
+    }
 
     onLocale(i_locale) {
         window.onbeforeunload = () => {
         };
         window.location.replace(`https://secure.digitalsignage.com/studioweb/locale/${i_locale.locale}/`);
+    }
+
+    destroy() {
     }
 }
 

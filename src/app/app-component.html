@@ -106,12 +106,12 @@
     <modal-footer [show-default-buttons]="false"></modal-footer>
 </modal>
 
-<modal #modalLocale>
+<modal (onOpen)="_localeSelectionChanged('open')" (onClose)="_localeSelectionChanged('closed')" (onDismiss)="_localeSelectionChanged('closed')" #modalLocale>
     <modal-header [show-close]="true">
         <h4 i18n class="modal-title">Pick your language</h4>
     </modal-header>
     <modal-body>
-        <locale-selector [type]="'modal'"></locale-selector>
+        <locale-selector #localSelector [orientation]="'modal'"></locale-selector>
     </modal-body>
     <modal-footer [show-default-buttons]="false"></modal-footer>
 </modal>

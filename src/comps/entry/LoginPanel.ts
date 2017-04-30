@@ -122,7 +122,7 @@ enum ViewMod {
                              <br/>
                         </div>
                         <div class="clearFloat"></div>
-                        <locale-selector [type]="'inline'"></locale-selector>
+                        <locale-selector [orientation]="'inline'"></locale-selector>
                     </div>
 
                     <div *ngSwitchCase="m_viewMod.CHANGE_PASSWORD">

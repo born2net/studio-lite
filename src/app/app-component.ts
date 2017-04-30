@@ -18,6 +18,7 @@ import {Consts} from "../interfaces/Consts";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import * as moment from 'moment'
 import {LiveLogModel} from "../models/live-log-model";
+import {LocaleSelector} from "./locale-selector/local-selector";
 
 enum MainAppShowModeEnum {
     MAIN,
@@ -101,6 +102,9 @@ export class AppComponent implements AfterViewInit {
 
     @ViewChild('modalLocale')
     modalLocale: ModalComponent;
+
+    @ViewChild('localSelector')
+    localSelector: LocaleSelector;
 
     ngOnInit() {
 
@@ -201,6 +205,10 @@ export class AppComponent implements AfterViewInit {
     ngAfterViewInit() {
         let uiState: IUiState = {mainAppState: MainAppShowStateEnum.NORMAL}
         this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
+    }
+
+    _localeSelectionChanged(i_state){
+        this.localSelector.modalStateChanged(i_state)
     }
 
     private listenAppStateChange() {

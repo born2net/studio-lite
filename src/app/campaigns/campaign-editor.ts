@@ -11,6 +11,7 @@ import {PreviewModeEnum} from "../live-preview/live-preview";
 import * as _ from "lodash";
 import {RedPepperService} from "../../services/redpepper.service";
 import {MainAppShowStateEnum} from "../app-component";
+import {Lib} from "../../Lib";
 
 // https://github.com/AlexWD/ds-timeline-widget
 
@@ -33,7 +34,7 @@ export class CampaignEditor extends Compbaser {
     private campaignTimelinesModel: CampaignTimelinesModel;
     private channelModel: CampaignTimelineChanelsModel;
 
-    m_showTimeline = false;
+    m_inDevMode = Lib.DevMode();
 
     resources = {
         items: [

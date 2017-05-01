@@ -74,7 +74,7 @@
                     </button>
                 </h4>
             </div>
-            <app-timeline *ngIf="m_showTimeline"
+            <app-timeline *ngIf="m_isVisible2=='on' && m_inDevMode"
                     [resources]="resources"
                     [state]="state"
                     (itemAdded)="itemAdded($event)"

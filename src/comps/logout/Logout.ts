@@ -47,8 +47,8 @@ import {timeout} from "../../decorators/timeout-decorator";
     template: `
         <div class="row">
             <div style="width: 700px; padding-top: 100px" class="center-block">
-                <button href="#"  (click)="_onSaveChangesLogout()" class="btn btn-xlarge"><i class="fa fa-floppy-o fa-4x" ></i><h4>Save & Logout</h4></button>
-                <button href="#"  (click)="_onLogout()" class="btn btn-xlarge"><i class="fa fa-power-off fa-4x" ></i><h4>Just Logout</h4></button>
+                <button href="#" (click)="_onSaveChangesLogout()" class="btn btn-xlarge"><i class="fa fa-floppy-o fa-4x" ></i><h4 i18n>Save & Logout</h4></button>
+                <button href="#" (click)="_onLogout()" class="btn btn-xlarge"><i class="fa fa-power-off fa-4x" ></i><h4 i18n>Just Logout</h4></button>
             </div>
         </div>
         `

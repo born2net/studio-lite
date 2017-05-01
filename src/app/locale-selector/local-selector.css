@@ -17,11 +17,11 @@ tr:hover {
     cursor: pointer;
 }
 
-li .f32 {
+li {
     opacity: 0.3;
 }
 
-li:hover .f32 {
+li:hover {
     opacity: 1;
 }
 

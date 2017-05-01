@@ -1,8 +1,6 @@
 import {ChangeDetectionStrategy, EventEmitter, Component, Input, Output} from "@angular/core";
 import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
-import {MainAppShowStateEnum} from "../app-component";
-import {ACTION_UISTATE_UPDATE} from "../../store/actions/appdb.actions";
 
 @Component({
     selector: 'locale-selector',

@@ -18,9 +18,14 @@ export class NgMenuItem extends Compbaser {
 
     @Input() fontawesome:string;
     @Input() title:string;
+    @Input() name:string;
 
     get getTitle(): string {
         return this.title;
+    }
+
+    get getName(): string {
+        return this.name;
     }
 
     get getFontAwesome(): string {

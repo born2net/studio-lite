@@ -12,9 +12,9 @@ import {Consts} from "../../interfaces/Consts";
         <ng-container *ngIf="fileMenuMode">
             <div class="row">
                 <section id="appNavigatorWasp" class="appMenu fill hidden-xs hidden-sm hidden-md col-lg-1">
-                    <li *ngFor="let item of items" (click)="listenMenuSelected(item.getTitle, $event)" data-ripple-color="white" class="btn btn-default list-group-item navicons">
-                        <i *ngIf="!m_hidden" (click)="listenMenuSelected(item.getTitle, $event)" class="iconSize fa {{item.getFontAwesome}}"></i>
-                        <span (click)="listenMenuSelected(item.getTitle, $event)">{{item.getTitle}}</span>
+                    <li *ngFor="let item of items" (click)="listenMenuSelected(item, $event)" data-ripple-color="white" class="btn btn-default list-group-item navicons">
+                        <i *ngIf="!m_hidden" (click)="listenMenuSelected(item, $event)" class="iconSize fa {{item.getFontAwesome}}"></i>
+                        <span (click)="listenMenuSelected(item, $event)">{{item.getTitle}}</span>
                     </li>
                 </section>
             </div>
@@ -28,8 +28,8 @@ import {Consts} from "../../interfaces/Consts";
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Menu<b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li class="divider"></li>
-                                <li *ngFor="let item of items" (click)="listenMenuSelected(item.getTitle, $event)">
-                                    <a href="#" (click)="listenMenuSelected(item.getTitle,$event)">{{item.getTitle}}</a>
+                                <li *ngFor="let item of items" (click)="listenMenuSelected(item, $event)">
+                                    <a href="#" (click)="listenMenuSelected(item,$event)">{{item.getTitle}}</a>
                                 </li>
                                 <li class="divider"></li>
                             </ul>
@@ -88,9 +88,9 @@ export class NgMenu extends Compbaser {
         }, (e) => console.error(e));
     }
 
-    private listenMenuSelected(routeTo, event: MouseEvent) {
+    private listenMenuSelected(ngMenuItem:NgMenuItem, event: MouseEvent) {
         event.preventDefault();
-        this.router.navigate([`/${this.routePrefix}/${routeTo}`]);
+        this.router.navigate([`/${this.routePrefix}/${ngMenuItem.name}`]);
     }
 
     public addMenuItem(i_item: NgMenuItem): void {

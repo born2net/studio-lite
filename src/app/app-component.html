@@ -24,30 +24,17 @@
         </div>
         <div id="appNavigatorComp" class="noCollapsing collapse navbar-collapse" id="bs-example-navbar-collapse-1">>
             <ng-menu [routePrefix]="'App1'" [fileMenuMode]="false">
-                <!--<ng-menu-item [fontawesome]="'fa-dashboard'" i18n-title title="Dashboard"></ng-menu-item>-->
-                <!--<ng-menu-item [fontawesome]="'fa-navicon'" i18n-title title="Campaigns"></ng-menu-item>-->
-                <!--<ng-menu-item [fontawesome]="'fa-certificate'" i18n-title title="Resources"></ng-menu-item>-->
-                <!--<ng-menu-item [fontawesome]="'fa-edit'" i18n-title title="Scenes"></ng-menu-item>-->
-                <!--<ng-menu-item [fontawesome]="'fa-laptop'" i18n-title title="Stations"></ng-menu-item>-->
-                <!--<ng-menu-item [fontawesome]="'fa-group'" i18n-title title="Fasterq"></ng-menu-item>-->
-                <!--<ng-menu-item [fontawesome]="'fa-heart'" i18n-title title="Help"></ng-menu-item>-->
-                <!--<ng-menu-item *ngIf="isBrandingDisabled" [fontawesome]="'fa-laptop'" i18n-title title="Install"></ng-menu-item>-->
-                <!--&lt;!&ndash;<ng-menu-item [fontawesome]="'fa-cog'" title="'Settings'"></ng-menu-item>&ndash;&gt;-->
-                <!--<ng-menu-item [fontawesome]="'fa-cloud-upload'" i18n-title title="Studiopro"></ng-menu-item>-->
-                <!--<ng-menu-item [fontawesome]="'fa-power-off'" i18n-title title="Logout"></ng-menu-item>-->
-
-                <ng-menu-item [fontawesome]="'fa-dashboard'" title="Dashboard"></ng-menu-item>
-                <ng-menu-item [fontawesome]="'fa-navicon'" title="Campaigns"></ng-menu-item>
-                <ng-menu-item [fontawesome]="'fa-certificate'" title="Resources"></ng-menu-item>
-                <ng-menu-item [fontawesome]="'fa-edit'" title="Scenes"></ng-menu-item>
-                <ng-menu-item [fontawesome]="'fa-laptop'" title="Stations"></ng-menu-item>
-                <ng-menu-item [fontawesome]="'fa-group'" title="Fasterq"></ng-menu-item>
-                <ng-menu-item [fontawesome]="'fa-heart'" title="Help"></ng-menu-item>
-                <ng-menu-item *ngIf="isBrandingDisabled" [fontawesome]="'fa-laptop'" title="Install"></ng-menu-item>
-                <!--<ng-menu-item [fontawesome]="'fa-cog'" title="'Settings'"></ng-menu-item>-->
-                <ng-menu-item [fontawesome]="'fa-cloud-upload'" title="Studiopro"></ng-menu-item>
-                <ng-menu-item [fontawesome]="'fa-power-off'" title="Logout"></ng-menu-item>
-                
+                <ng-menu-item [fontawesome]="'fa-dashboard'" i18n-title name="Dashboard" title="Dashboard"></ng-menu-item>
+                <ng-menu-item [fontawesome]="'fa-navicon'" i18n-title name="Campaigns" title="Campaigns"></ng-menu-item>
+                <ng-menu-item [fontawesome]="'fa-certificate'" i18n-title name="Resources" title="Resources"></ng-menu-item>
+                <ng-menu-item [fontawesome]="'fa-edit'" i18n-title name="Scenes" title="Scenes"></ng-menu-item>
+                <ng-menu-item [fontawesome]="'fa-laptop'" i18n-title name="Stations" title="Stations"></ng-menu-item>
+                <ng-menu-item [fontawesome]="'fa-group'" i18n-title name="Fasterq" title="Fasterq"></ng-menu-item>
+                <ng-menu-item [fontawesome]="'fa-heart'" i18n-title name="Help" title="Help"></ng-menu-item>
+                <ng-menu-item *ngIf="isBrandingDisabled" [fontawesome]="'fa-laptop'" i18n-title name="Install" title="Install"></ng-menu-item>
+                <!--<ng-menu-item [fontawesome]="'fa-cog'" name="Settings" title="'Settings'"></ng-menu-item>-->
+                <ng-menu-item [fontawesome]="'fa-cloud-upload'" i18n-title name="Studiopro" title="Studiopro"></ng-menu-item>
+                <ng-menu-item [fontawesome]="'fa-power-off'" i18n-title name="Logout" title="Logout"></ng-menu-item>
             </ng-menu>
 
             <ul style="height: 20px" class="nav navbar-nav navbar-right noCollapsing">

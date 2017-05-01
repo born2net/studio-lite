@@ -9,16 +9,16 @@ import {YellowPepperService} from "../services/yellowpepper.service";
         <div id="appWrapComp" class="row" style="margin-left: 0; margin-right: 0;">
             <ng-menu class="col-md-1" [routePrefix]="'App1'" [fileMenuMode]="true">
                 <ng-menu-item  i18n-title [fontawesome]="'fa-dashboard'" name="Dashboard" title="Dashboard"></ng-menu-item>
-                <ng-menu-item [fontawesome]="'fa-navicon'" name="Campaigns" title="Campaigns"></ng-menu-item>
-                <ng-menu-item [fontawesome]="'fa-certificate'" name="Resources" title="Resources"></ng-menu-item>
-                <ng-menu-item [fontawesome]="'fa-crosshairs'" name="Scenes" title="Scenes" class="wizardHookScene"></ng-menu-item>
-                <ng-menu-item [fontawesome]="'fa-laptop'" name="Stations" title="Stations"></ng-menu-item>
-                <ng-menu-item [fontawesome]="'fa-group'" name="Fasterq" title="Fasterq"></ng-menu-item>
-                <!--<ng-menu-item [fontawesome]="'fa-cog'" name="Settings" title="'Settings'"></ng-menu-item>-->
-                <ng-menu-item [fontawesome]="'fa-cloud-upload'" name="Studiopro" title="Studiopro"></ng-menu-item>
-                <ng-menu-item [fontawesome]="'fa-heart'" name="Help" title="Help"></ng-menu-item>
-                <ng-menu-item *ngIf="isBrandingDisabled | async" [fontawesome]="'fa-rocket'" name="Install" title="Install"></ng-menu-item>
-                <ng-menu-item [fontawesome]="'fa-power-off'" name="title" title="Logout"></ng-menu-item>
+                <ng-menu-item i18n-title [fontawesome]="'fa-navicon'" name="Campaigns" title="Campaigns"></ng-menu-item>
+                <ng-menu-item i18n-title [fontawesome]="'fa-certificate'" name="Resources" title="Resources"></ng-menu-item>
+                <ng-menu-item i18n-title [fontawesome]="'fa-crosshairs'" name="Scenes" title="Scenes" class="wizardHookScene"></ng-menu-item>
+                <ng-menu-item i18n-title [fontawesome]="'fa-laptop'" name="Stations" title="Stations"></ng-menu-item>
+                <ng-menu-item i18n-title [fontawesome]="'fa-group'" name="Fasterq" title="Fasterq"></ng-menu-item>
+                <!--<ng-menu-item i18n-title [fontawesome]="'fa-cog'" name="Settings" title="'Settings'"></ng-menu-item>-->
+                <ng-menu-item i18n-title [fontawesome]="'fa-cloud-upload'" name="Studiopro" title="Studiopro"></ng-menu-item>
+                <ng-menu-item i18n-title [fontawesome]="'fa-heart'" name="Help" title="Help"></ng-menu-item>
+                <ng-menu-item i18n-title *ngIf="isBrandingDisabled | async" [fontawesome]="'fa-rocket'" name="Install" title="Install"></ng-menu-item>
+                <ng-menu-item i18n-title [fontawesome]="'fa-power-off'" name="title" title="Logout"></ng-menu-item>
             </ng-menu>
             <div class="col-md-11" id="mainPanelWrapWasp" >
                 <router-outlet></router-outlet>

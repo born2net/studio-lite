@@ -30,151 +30,18 @@ import {Lib} from "../../Lib";
 
 export class CampaignEditor extends Compbaser {
 
-    private campaignModel: CampaignsModelExt;
-    private campaignTimelinesModel: CampaignTimelinesModel;
-    private channelModel: CampaignTimelineChanelsModel;
-
-    m_inDevMode = Lib.DevMode();
-
-    resources = {
-        items: [
-            {
-                id: 1,
-                name: 'logo',
-                type: 'png',
-                time: '0',
-                size: '110KB',
-                src: 'assets/img/doc-13-128.png'
-            },
-            {
-                id: 2,
-                name: 'samplesvg',
-                type: 'svg',
-                time: '0',
-                size: '110KB',
-                src: 'assets/img/svgexample.svg'
-            }
-        ],
-        outputs: [
-            {
-                id: 1,
-                name: 'logo',
-                type: 'png',
-                time: '0',
-                size: '110KB',
-                src: 'assets/img/doc-13-128.png'
-            },
-            {
-                id: 2,
-                name: 'samplesvg',
-                type: 'svg',
-                time: '0',
-                size: '110KB',
-                src: 'assets/img/svgexample.svg'
-            }
-        ]
-    };
-    state = {
-        zoom: 1,
-        channels: [
-            {
-                id: 1,
-                name: 'CH0',
-                type: 'normal',
-                color: '#0000FF',
-                selected: false,
-            },
-            {
-                id: 2,
-                name: 'CH1',
-                type: 'normal',
-                color: '#0000FF',
-                selected: false
-            },
-            {
-                id: 3,
-                name: 'CH2',
-                color: '#0000FF',
-                type: 'common',
-                selected: false
-            },
-        ],
-        outputs: [
-            {
-                id: 1,
-                name: "Output",
-                color: "#000",
-                selected: false
-            }
-        ],
-        items: [
-            {
-                id: 1,
-                type: 'channel',
-                resource: "assets/sample1.png",
-                title: 'Logo_splash',
-                start: 0,
-                duration: 60,
-                channel: 1,
-                selected: false
-            },
-            {
-                id: 2,
-                type: 'channel',
-                resource: "assets/sample3.svg",
-                title: '350x350',
-                start: 300,
-                duration: 60,
-                channel: 2,
-                selected: false
-            }
-        ]
-    }
-
+    campaignModel: CampaignsModelExt;
+    campaignTimelinesModel: CampaignTimelinesModel;
+    channelModel: CampaignTimelineChanelsModel;
     m_campaignTimelinesModels: List<CampaignTimelinesModel>;
     m_campaignTimelineChanelPlayersModel: CampaignTimelineChanelPlayersModelExt;
     m_isVisible1 = 'off';
     m_isVisible2 = 'off';
     m_toggleShowChannel = true;
+    m_inDevMode = Lib.DevMode();
 
-    id = 0
-    items = []
-
-    remove(id) {
-        let index = this.items.findIndex(item => item.id === id)
-        this.items.splice(index, 1)
-    }
-
-    reset() {
-        this.items = []
-    }
-
-    add() {
-        this.items.unshift({id: this.id++, name: 'item'})
-    }
-
-    itemMoved(state) {
-        console.log("Item moved", state);
-    }
-
-    channelAdded(state) {
-        console.log("Channel added", state);
-    }
-
-    itemAdded(state) {
-        console.log("Item Added", state);
-    }
-
-
-    
     constructor(private yp: YellowPepperService, private actions: AppdbAction, private rp: RedPepperService, private cd:ChangeDetectorRef) {
         super();
-
-        setTimeout(()=>{
-            // this.m_showTimeline = true;
-            // this.cd.markForCheck();
-        },1000)
-
         this.cancelOnDestroy(
             //
             this.yp.listenCampaignSelected()

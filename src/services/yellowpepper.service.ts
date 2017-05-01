@@ -400,6 +400,17 @@ export class YellowPepperService {
                 }).mergeMap(v => (v ? Observable.of(v) : ( emitOnEmpty ? Observable.of(v) : Observable.empty())));
     }
 
+    listenChannelsOfTimeline(i_campaign_timeline_id): Observable<any> {
+        return this.store.select(store => store.msDatabase.sdk.table_campaign_timeline_chanels)
+            .map((campaignTimelineChanels: List<CampaignTimelineChanelsModel>) => {
+                return campaignTimelineChanels.reduce((result: Array<number>, campaignTimelineChanelsModel) => {
+                    if (campaignTimelineChanelsModel.getCampaignTimelineId() == i_campaign_timeline_id)
+                        result.push(campaignTimelineChanelsModel.getCampaignTimelineChanelId());
+                    return result;
+                }, [])
+            });
+    }
+
     /**
      Listen to when a channel that is selected changed value
      **/

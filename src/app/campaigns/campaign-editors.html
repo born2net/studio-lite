@@ -74,14 +74,7 @@
                     </button>
                 </h4>
             </div>
-            <app-timeline *ngIf="m_isVisible2=='on' && m_inDevMode"
-                    [resources]="resources"
-                    [state]="state"
-                    (itemAdded)="itemAdded($event)"
-                    (channelAdded)="channelAdded($event)"
-                    (itemMoved)="itemMoved($event)"
-            ></app-timeline>
-
+            <campaign-story-timeline *ngIf="m_isVisible2=='on' && m_inDevMode"></campaign-story-timeline>
             <div id="storylineContainerCollapse" class="panel-collapse collapse">
                 <div class="panel-body">
                     <aside>

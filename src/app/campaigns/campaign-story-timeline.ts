@@ -66,7 +66,6 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
     m_campaignTimelineChanelPlayersModel: CampaignTimelineChanelPlayersModelExt;
     selected_campaign_timeline_id: number = -1;
     selected_campaign_timeline_chanel_id: number = -1;
-    durationChanged$ = new Subject();
     m_blockList: List<IBlockData> = List([]);
 
     resources = {
@@ -211,13 +210,6 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
                 .subscribe((i_campaignTimelineChanelPlayersModel: CampaignTimelineChanelPlayersModelExt) => {
                     this.m_campaignTimelineChanelPlayersModel = i_campaignTimelineChanelPlayersModel;
                 }, (e) => console.error(e))
-        )
-
-        this.cancelOnDestroy(
-            this.yp.listenTimelineDurationChanged(true)
-                .subscribe((totalDuration) => {
-                    this.durationChanged$.next(totalDuration);
-                })
         )
 
         this.cancelOnDestroy(

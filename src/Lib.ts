@@ -137,6 +137,7 @@ export class Lib {
         }
     }
 
+    /** deep compare two objects **/
     static IsEqual(obj1, obj2) {
         function _equals(obj1, obj2) {
             var clone = $.extend(true, {}, obj1),

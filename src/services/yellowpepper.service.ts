@@ -212,7 +212,7 @@ export class YellowPepperService {
 
     listenUserModel(): Observable<UserModel> {
         return this.store.select(store => store.appDb.userModel)
-            .filter((userModel) => !_.isUndefined(userModel.resellerId) )
+            .filter((userModel) => !_.isUndefined(userModel.resellerId))
     }
 
     /**
@@ -400,14 +400,12 @@ export class YellowPepperService {
                 }).mergeMap(v => (v ? Observable.of(v) : ( emitOnEmpty ? Observable.of(v) : Observable.empty())));
     }
 
-    listenChannelsOfTimeline(i_campaign_timeline_id): Observable<any> {
+    listenChannelsOfTimeline(i_campaign_timeline_id): Observable<List<CampaignTimelineChanelsModel>> {
         return this.store.select(store => store.msDatabase.sdk.table_campaign_timeline_chanels)
-            .map((campaignTimelineChanels: List<CampaignTimelineChanelsModel>) => {
-                return campaignTimelineChanels.reduce((result: Array<number>, campaignTimelineChanelsModel) => {
-                    if (campaignTimelineChanelsModel.getCampaignTimelineId() == i_campaign_timeline_id)
-                        result.push(campaignTimelineChanelsModel.getCampaignTimelineChanelId());
-                    return result;
-                }, [])
+            .map((i_campaignTimelineChanelsModels: List<CampaignTimelineChanelsModel>) => {
+                return i_campaignTimelineChanelsModels.filter(campaignTimelineChanelsModel => {
+                    return campaignTimelineChanelsModel.getCampaignTimelineId() == i_campaign_timeline_id;
+                })
             });
     }
 

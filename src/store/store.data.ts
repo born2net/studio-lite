@@ -57,6 +57,9 @@ export interface IUiStateCampaign {
     campaignSelected?: number;
     timelineSelected?: number;
     blockChannelSelected?: number;
+    storyBoardItemSelected?: number;
+    storyBoardOutputSelected?: number;
+    storyBoardChannelSelected?: number;
 }
 
 export interface IUiStateLocation {
@@ -144,7 +147,10 @@ export const INITIAL_APP_DB: IAppDb = {
             campaignCreateOrientation: -1,
             blockChannelSelected: -1,
             campaignCreateResolution: '',
-            campaignCreateName: ''
+            campaignCreateName: '',
+            storyBoardItemSelected: -1,
+            storyBoardOutputSelected: -1,
+            storyBoardChannelSelected: -1
         },
         locationMap: {
             loadLocationMap: false,

@@ -41,10 +41,12 @@ const rxjsDebugger = true;
 const rc4Key = '226a3a42f34ddd778ed2c3ba56644315';
 Observable.prototype.sub = Observable.prototype.subscribe;
 
-window['con'] = (msg, stringify) => {
+window['con'] = (msg, stringify, unique) => {
     if (Lib.DevMode()) {
         if (stringify)
             msg = JSON.stringify(msg);
+        if (unique)
+            msg = _.uniqueId() + ' ' + msg;
         console.info(`${new Date().toLocaleTimeString()} ${msg}`);
     }
 
@@ -92,8 +94,8 @@ Observable.prototype.debug = function (message: string) {
 @Injectable()
 export class Lib {
 
-    static Con(msg: any, stringify?: boolean) {
-        con(msg, stringify)
+    static Con(msg: any, stringify?: boolean, unique?:boolean) {
+        con(msg, stringify, unique)
     }
 
     /**

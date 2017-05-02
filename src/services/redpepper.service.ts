@@ -1857,6 +1857,23 @@ export class RedPepperService {
     }
 
     /**
+     Get the assigned viewer id to the specified channel
+     @method getAssignedViewerIdFromChannelId
+     @param {Number} i_campaign_timeline_channel_id
+     @return {Number} foundViewerID
+     **/
+    getAssignedViewerIdFromChannelId(i_campaign_timeline_channel_id) {
+        var foundViewerID;
+        $(this.databaseManager.table_campaign_timeline_board_viewer_chanels().getAllPrimaryKeys()).each((k, campaign_timeline_board_viewer_chanel_id) => {
+            var recCampaignTimelineViewerChanels = this.databaseManager.table_campaign_timeline_board_viewer_chanels().getRec(campaign_timeline_board_viewer_chanel_id);
+            if (recCampaignTimelineViewerChanels['campaign_timeline_chanel_id'] == i_campaign_timeline_channel_id) {
+                foundViewerID = recCampaignTimelineViewerChanels['board_template_viewer_id']
+            }
+        });
+        return foundViewerID;
+    }
+
+    /**
      Get campaign schedule for timeline
      @method setCampaignsSchedule
      @param {Number} i_campaign_timeline_id
@@ -3172,24 +3189,6 @@ export class RedPepperService {
         });
 
         return recCampaignTimelineViewerChanelsFound;
-    }
-
-    /**
-     Get the assigned viewer id to the specified channel
-     @method getAssignedViewerIdFromChannelId
-     @param {Number} i_campaign_timeline_channel_id
-     @return {Number} foundViewerID
-     **/
-    getAssignedViewerIdFromChannelId(i_campaign_timeline_channel_id) {
-
-        var foundViewerID;
-        $(this.databaseManager.table_campaign_timeline_board_viewer_chanels().getAllPrimaryKeys()).each(function (k, campaign_timeline_board_viewer_chanel_id) {
-            var recCampaignTimelineViewerChanels = this.databaseManager.table_campaign_timeline_board_viewer_chanels().getRec(campaign_timeline_board_viewer_chanel_id);
-            if (recCampaignTimelineViewerChanels['campaign_timeline_chanel_id'] == i_campaign_timeline_channel_id) {
-                foundViewerID = recCampaignTimelineViewerChanels['board_template_viewer_id']
-            }
-        });
-        return foundViewerID;
     }
 
     /**

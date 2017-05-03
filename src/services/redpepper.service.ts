@@ -86,6 +86,7 @@ export class RedPepperService {
                 if (pepperAuthReply.status == true) {
                     self.m_authenticated = true;
                     self.m_domain = self.m_loaderManager['m_domain'];
+                    window['business_id'] = self.m_loaderManager['m_businessId'];
                     var resellerInfo = self.m_loaderManager['m_resellerInfo'];
                     // var resellerInfoString = (new XMLSerializer()).serializeToString(resellerInfo);
                     self.m_userName = i_user;

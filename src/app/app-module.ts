@@ -148,12 +148,17 @@ export class AppModule {
     constructor(private commBroker: CommBroker, private compiler: Compiler, private ngmslibService: NgmslibService, private yp: YellowPepperService, private fontLoaderService: FontLoaderService) {
         Lib.Con(`running in dev mode: ${Lib.DevMode()}`);
         Lib.Con(`App in ${(compiler instanceof Compiler) ? 'AOT' : 'JIT'} mode`);
+        window['business_id'] = -1;
         window['jQueryAny'] = jQuery;
         window['jXML'] = jQuery;
         this.ngmslibService.globalizeStringJS();
         Lib.Con(StringJS('app-loaded-and-ready').humanize().s);
         Lib.AlertOnLeave();
         this.yp.dispatch(({type: ACTION_LIVELOG_UPDATE, payload: new LiveLogModel({event: 'app started'})}));
+
+        setTimeout(()=>{
+              throw new Error('foo')
+        },3000)
     }
 }
 

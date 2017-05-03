@@ -27,7 +27,7 @@ export class GlobalErrorHandler implements ErrorHandler {
                     return sf.toString();
                 }).join('\n');
             var date = moment().format('YYYY-MM-DD h:mm:ss');
-            message = `error :: business :: ${window['business_id']} :: studioweb :: ${date} :: ${message}`
+            message = `error :: business :: ${window['business_id']} :: studiolite :: ${date} :: ${message}`
             StackTrace.report(stackString, url, message);
         });
         throw error;

@@ -133,7 +133,7 @@ declare var jXML: JQueryStatic;
 declare var jQueryAny: JQueryStatic | any;
 
 interface Con {
-    (msg:any, stringify?:boolean, unique?:boolean):void;
+    (msg:any, stringify?:boolean):void;
 }
 
 interface PlatformStatic {

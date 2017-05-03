@@ -1,13 +1,11 @@
 import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Output} from "@angular/core";
 import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
-import {CampaignsModelExt, CampaignTimelineChanelPlayersModelExt} from "../../store/model/msdb-models-extended";
 import {List} from "immutable";
 import {CampaignTimelineChanelsModel, CampaignTimelinesModel} from "../../store/imsdb.interfaces_auto";
 import {RedPepperService} from "../../services/redpepper.service";
 import {Observable} from "rxjs/Observable";
 import {BlockService, IBlockData} from "../blocks/block-service";
-import * as _ from "lodash";
 
 interface IChannelCollection {
     blocks: Array<number>;
@@ -64,14 +62,15 @@ interface ITimelineState {
 })
 export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
 
-    campaignModel: CampaignsModelExt;
-    campaignTimelinesModel: CampaignTimelinesModel;
-    channelModel: CampaignTimelineChanelsModel;
     m_campaignTimelinesModels: List<CampaignTimelinesModel>;
-    m_campaignTimelineChanelPlayersModel: CampaignTimelineChanelPlayersModelExt;
-    selected_campaign_timeline_id: number = -1;
-    selected_campaign_timeline_chanel_id: number = -1;
-    m_blockList: List<IBlockData> = List([]);
+    campaignTimelinesModel: CampaignTimelinesModel;
+
+    // campaignModel: CampaignsModelExt;
+    // channelModel: CampaignTimelineChanelsModel;
+    // m_campaignTimelineChanelPlayersModel: CampaignTimelineChanelPlayersModelExt;
+    // selected_campaign_timeline_id: number = -1;
+    // selected_campaign_timeline_chanel_id: number = -1;
+    // m_blockList: List<IBlockData> = List([]);
 
     resources = {
         items: [
@@ -210,7 +209,6 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
                                     } else {
                                         return {channelId, blocks: [-1]};
                                     }
-
                                 })
                         })
                         .combineAll()
@@ -218,10 +216,8 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
                 .mergeMap((i_channelArray: Array<IChannelCollection>) => {
                     return Observable.from(i_channelArray)
                         .map((i_channelCollection: IChannelCollection) => {
-                            console.log(i_channelCollection);
                             return Observable.from(i_channelCollection.blocks)
                                 .map((i_block) => {
-                                    console.log('zz' + i_block);
                                     if (i_block == -1) return Observable.of(-1);
                                     return this.bs.getBlockData(i_block).map((block) => {
                                         return {block, channelId: i_channelCollection.channelId}
@@ -231,108 +227,17 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
                         })
                         .combineAll()
                 })
-                .subscribe((v) => {
-                    con('final ' + v);
-                    con('final ' + v);
-                    // this.m_blockList = List(this._sortBlock(i_blockList));
-                    // con('total ' + this.m_blockList.size)
-                    // this.draggableList.createSortable()
+                .subscribe((i_channels) => {
+
+                    con('final');
+                    con('final ' + i_channels);
+
                 }, e => console.error(e))
+
             // .subscribe((i_blockList: Array<IBlockData>) => {
             //     this.m_blockList = List(this._sortBlock(i_blockList));
-            //     con('total ' + this.m_blockList.size)
-            //     // this.draggableList.createSortable()
             // }, e => console.error(e))
         );
-
-        // this.cancelOnDestroy(
-        //     //
-        //     this.yp.listenCampaignSelected()
-        //         .switchMap((i_campaignsModelExt: CampaignsModelExt) => {
-        //             this.campaignModel = i_campaignsModelExt;
-        //             return this.yp.listenCampaignTimelines(i_campaignsModelExt.getCampaignId())
-        //         })
-        //         .subscribe((i_campaignTimelinesModel: List<CampaignTimelinesModel>) => {
-        //             this.m_campaignTimelinesModels = i_campaignTimelinesModel;
-        //         }, (e) => console.error(e))
-        // );
-        //
-        // this.cancelOnDestroy(
-        //     this.yp.listenTimelineSelected()
-        //         .map((i_campaignTimelinesModel: CampaignTimelinesModel) => {
-        //             this.campaignTimelinesModel = i_campaignTimelinesModel;
-        //             return i_campaignTimelinesModel;
-        //         })
-        //         .mergeMap((i_campaignTimelinesModel: CampaignTimelinesModel) => {
-        //             return this.yp.listenChannelsOfTimeline(i_campaignTimelinesModel.getCampaignTimelineId())
-        //         })
-        //         .subscribe((i_channels: List<CampaignTimelineChanelsModel>) => {
-        //             this.updateStateChannels(i_channels);
-        //         }, (e) => console.error(e))
-        // );
-        //
-        // this.cancelOnDestroy(
-        //     this.yp.listenCampaignTimelineBoardViewerSelected(true)
-        //         .combineLatest(
-        //             this.yp.listenTimelineDurationChanged(true),
-        //             this.yp.ngrxStore.select(store => store.msDatabase.sdk.table_campaign_timeline_chanel_players)
-        //         )
-        //         .filter((v) => {
-        //             var campaignTimelineBoardViewerChanelsModel: CampaignTimelineBoardViewerChanelsModel = v[0];
-        //             var totalDuration = v[1];
-        //             var campaignTimelineChanelPlayersModel = v[2];
-        //             if (campaignTimelineBoardViewerChanelsModel == null) this.m_blockList = List([]);
-        //             return campaignTimelineBoardViewerChanelsModel != null;
-        //
-        //         })
-        //         .withLatestFrom(this.yp.listenTimelineSelected(), (i_channelModel: CampaignTimelineBoardViewerChanelsModel, i_campaignTimelinesModel: CampaignTimelinesModel) => {
-        //             this.selected_campaign_timeline_chanel_id = i_channelModel[0].getCampaignTimelineChanelId();
-        //             this.selected_campaign_timeline_id = i_campaignTimelinesModel.getCampaignTimelineId();
-        //
-        //             // this.yp.listenChannelsOfTimeline(i_campaignTimelinesModel.getCampaignTimelineId())
-        //
-        //             return i_channelModel[0].getCampaignTimelineBoardViewerChanelId()
-        //
-        //         })
-        //         .mergeMap(i_boardViewerChanelId => {
-        //             return this.yp.getChannelFromCampaignTimelineBoardViewer(i_boardViewerChanelId)
-        //
-        //         })
-        //         .mergeMap((i_campaignTimelineChanelModel: CampaignTimelineChanelsModel) => {
-        //             return this.yp.getChannelBlocks(i_campaignTimelineChanelModel.getCampaignTimelineChanelId())
-        //
-        //         })
-        //         .mergeMap(blockIds => {
-        //             if (blockIds.length == 0)
-        //                 return Observable.of([])
-        //
-        //             return Observable.from(blockIds)
-        //                 .map((blockId) => this.bs.getBlockData(blockId))
-        //                 .combineAll()
-        //
-        //         })
-        //         .subscribe((i_blockList: Array<IBlockData>) => {
-        //             this.m_blockList = List(this._sortBlock(i_blockList));
-        //             // this.draggableList.createSortable()
-        //         }, e => console.error(e))
-        // )
-        //
-        // this.cancelOnDestroy(
-        //     this.yp.listenChannelSelected(true)
-        //         .subscribe((channel: CampaignTimelineChanelsModel) => {
-        //             this.channelModel = channel;
-        //         }, (e) => {
-        //             console.error(e)
-        //         })
-        // );
-        // this.cancelOnDestroy(
-        //     this.yp.listenBlockChannelSelected(true)
-        //         .subscribe((i_campaignTimelineChanelPlayersModel: CampaignTimelineChanelPlayersModelExt) => {
-        //             this.m_campaignTimelineChanelPlayersModel = i_campaignTimelineChanelPlayersModel;
-        //         }, (e) => console.error(e))
-        // )
-
-
     }
 
     private _sortBlock(i_blockList: Array<IBlockData>): Array<IBlockData> {
@@ -361,12 +266,6 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
             this.state.channels.push(channel);
         })
 
-        // i_channelIds.forEach((channelId) => {
-        //     var channel:IChannels = {
-        //
-        //         viewerId:  this.rp.getAssignedViewerIdFromChannelId(channelId)
-        //     }
-        // })
 
     }
 
@@ -407,3 +306,97 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
     }
 }
 
+
+// this.cancelOnDestroy(
+//     //
+//     this.yp.listenCampaignSelected()
+//         .switchMap((i_campaignsModelExt: CampaignsModelExt) => {
+//             this.campaignModel = i_campaignsModelExt;
+//             return this.yp.listenCampaignTimelines(i_campaignsModelExt.getCampaignId())
+//         })
+//         .subscribe((i_campaignTimelinesModel: List<CampaignTimelinesModel>) => {
+//             this.m_campaignTimelinesModels = i_campaignTimelinesModel;
+//         }, (e) => console.error(e))
+// );
+//
+// this.cancelOnDestroy(
+//     this.yp.listenTimelineSelected()
+//         .map((i_campaignTimelinesModel: CampaignTimelinesModel) => {
+//             this.campaignTimelinesModel = i_campaignTimelinesModel;
+//             return i_campaignTimelinesModel;
+//         })
+//         .mergeMap((i_campaignTimelinesModel: CampaignTimelinesModel) => {
+//             return this.yp.listenChannelsOfTimeline(i_campaignTimelinesModel.getCampaignTimelineId())
+//         })
+//         .subscribe((i_channels: List<CampaignTimelineChanelsModel>) => {
+//             this.updateStateChannels(i_channels);
+//         }, (e) => console.error(e))
+// );
+//
+// this.cancelOnDestroy(
+//     this.yp.listenCampaignTimelineBoardViewerSelected(true)
+//         .combineLatest(
+//             this.yp.listenTimelineDurationChanged(true),
+//             this.yp.ngrxStore.select(store => store.msDatabase.sdk.table_campaign_timeline_chanel_players)
+//         )
+//         .filter((v) => {
+//             var campaignTimelineBoardViewerChanelsModel: CampaignTimelineBoardViewerChanelsModel = v[0];
+//             var totalDuration = v[1];
+//             var campaignTimelineChanelPlayersModel = v[2];
+//             if (campaignTimelineBoardViewerChanelsModel == null) this.m_blockList = List([]);
+//             return campaignTimelineBoardViewerChanelsModel != null;
+//
+//         })
+//         .withLatestFrom(this.yp.listenTimelineSelected(), (i_channelModel: CampaignTimelineBoardViewerChanelsModel, i_campaignTimelinesModel: CampaignTimelinesModel) => {
+//             this.selected_campaign_timeline_chanel_id = i_channelModel[0].getCampaignTimelineChanelId();
+//             this.selected_campaign_timeline_id = i_campaignTimelinesModel.getCampaignTimelineId();
+//
+//             // this.yp.listenChannelsOfTimeline(i_campaignTimelinesModel.getCampaignTimelineId())
+//
+//             return i_channelModel[0].getCampaignTimelineBoardViewerChanelId()
+//
+//         })
+//         .mergeMap(i_boardViewerChanelId => {
+//             return this.yp.getChannelFromCampaignTimelineBoardViewer(i_boardViewerChanelId)
+//
+//         })
+//         .mergeMap((i_campaignTimelineChanelModel: CampaignTimelineChanelsModel) => {
+//             return this.yp.getChannelBlocks(i_campaignTimelineChanelModel.getCampaignTimelineChanelId())
+//
+//         })
+//         .mergeMap(blockIds => {
+//             if (blockIds.length == 0)
+//                 return Observable.of([])
+//
+//             return Observable.from(blockIds)
+//                 .map((blockId) => this.bs.getBlockData(blockId))
+//                 .combineAll()
+//
+//         })
+//         .subscribe((i_blockList: Array<IBlockData>) => {
+//             this.m_blockList = List(this._sortBlock(i_blockList));
+//             // this.draggableList.createSortable()
+//         }, e => console.error(e))
+// )
+//
+// this.cancelOnDestroy(
+//     this.yp.listenChannelSelected(true)
+//         .subscribe((channel: CampaignTimelineChanelsModel) => {
+//             this.channelModel = channel;
+//         }, (e) => {
+//             console.error(e)
+//         })
+// );
+// this.cancelOnDestroy(
+//     this.yp.listenBlockChannelSelected(true)
+//         .subscribe((i_campaignTimelineChanelPlayersModel: CampaignTimelineChanelPlayersModelExt) => {
+//             this.m_campaignTimelineChanelPlayersModel = i_campaignTimelineChanelPlayersModel;
+//         }, (e) => console.error(e))
+// )
+
+// i_channelIds.forEach((channelId) => {
+//     var channel:IChannels = {
+//
+//         viewerId:  this.rp.getAssignedViewerIdFromChannelId(channelId)
+//     }
+// })

@@ -929,7 +929,8 @@ export class YellowPepperService {
                 var found: CampaignTimelineSequencesModel = campaignTimelineSequencesModels.find((campaignTimelineSequencesModel: CampaignTimelineSequencesModel) => {
                     return campaignTimelineSequencesModel.getCampaignTimelineId() == i_campaign_timeline_id
                 });
-                return found.getSequenceIndex();
+                if (!found)
+                    return -1;
             }).take(1);
     }
 

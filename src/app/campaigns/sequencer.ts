@@ -13,7 +13,7 @@ import {Once} from "../../decorators/once-decorator";
 import {IScreenTemplateData} from "../../interfaces/IScreenTemplate";
 import {Compbaser} from "ng-mslib";
 // import TweenLite = gsap.TweenLite;
-          
+
 @Component({
     selector: 'sequencer',
     styles: [`
@@ -170,6 +170,7 @@ export class Sequencer extends Compbaser {
         return Observable.from(this.m_campaignTimelinesModels.toArray())
             .switchMap((i_campaignTimelinesModel: CampaignTimelinesModel) => {
                 return this.yp.getCampaignTimelineSequencerIndex(i_campaignTimelinesModel.getCampaignTimelineId())
+                    .filter(v => v != -1)
                     .map((index) => {
                         return Observable.of({
                             index: index,

@@ -20,7 +20,8 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
   scrollPosition = 0;
 
   defaultState = {
-    gridWidth: 1776,
+    duration: 3600,
+    gridWidth: 36000,
     gridHeight: 50,
     items: [],
     channels: [],
@@ -40,6 +41,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
   @Output() itemMoved = new EventEmitter<Object>();
   @Output() itemAdded = new EventEmitter<Object>();
   @Output() itemClicked = new EventEmitter<Object>();
+  @Output() itemResized = new EventEmitter<Object>();
 
   @Output() channelAdded = new EventEmitter<Object>();
   @Output() channelClicked = new EventEmitter<Object>();
@@ -55,10 +57,21 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
 
     this.$container = $('#container');
 
+    // initialize timeline length input
+    $('.timeline-length').timepicker({ 'timeFormat': 'H:i:s' });
+    $('.timeline-length').change((e) => {
+      var parts = e.target.value.split(":");
+      var duration = parseInt(parts[0]) * 60 * 60 + parseInt(parts[1]) * 60 + parseInt(parts[2]);
+      this.state.duration = duration;
+      this.updateContainerSize();
+    });
+
+
+
     // initialize item positions
     this.state.items.map((item) => {
-      item.left = item.start * (1 / this.state.zoom);
-      item.width = item.duration * (1 / this.state.zoom);
+      item.left = item.start * (10 / this.state.zoom);
+      item.width = item.duration * (10 / this.state.zoom);
       item.top = item.channel * this.state.gridHeight;
     });
 
@@ -132,6 +145,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
 
             // emit click event for item
             self.itemClicked.emit(item);
+            console.log("Item clicked: " + item);
 
             //when the user presses, we'll create an array ("companions") and populate it with all the OTHER elements that have the ".ui-selected" class applied (excluding the one that's being dragged). We also record their x and y position so that we can apply the delta to it in the onDrag.
             var boxes = $(".box.ui-selected"),
@@ -182,7 +196,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
                   var bounds = {
                     left: 0,
                     top: self.state.outputs.length * self.state.gridHeight,
-                    width: self.state.gridWidth * (1 / self.state.zoom),
+                    width: self.state.gridWidth,
                     height: self.state.channels.length * self.state.gridHeight
                   };
                   item.draggable.applyBounds(bounds);
@@ -243,12 +257,13 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
         //connect object to drag event listener to update position
         item.draggable.addEventListener("drag", function() {
           item.left = this._gsTransform.x;
-          item.start = item.left * self.state.zoom;
+          item.start = item.left * self.state.zoom / 10;
           item.top = this._gsTransform.y;
         });
 
         item.draggable.addEventListener("dragend", function() {
           self.itemMoved.emit(item);
+          console.log("Item Moved: " + item);
         });
 
         // set item initial position
@@ -269,7 +284,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
             var id = ui.originalElement.data('bid');
             var resizingItem = self.state.items[id];
             resizingItem.width = ui.size.width;
-            resizingItem.duration = ui.size.width * self.state.zoom;
+            resizingItem.duration = ui.size.width * self.state.zoom / 10;
 
             var widthDelta = resizingItem.width - startWidth;
 
@@ -277,7 +292,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
             self.state.items.filter((item) => item.selected).map((selectedItem) => {
               if (selectedItem != resizingItem) {
                 selectedItem.width += widthDelta;
-                selectedItem.duration = selectedItem.width * self.state.zoom;
+                selectedItem.duration = selectedItem.width * self.state.zoom / 10;
               }
             });
 
@@ -292,6 +307,9 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
             $(this).css({ left: 0 });
 
             self.moveItem(resizingItem, resizingItem.left + left, resizingItem.top);
+
+            self.itemResized.emit(resizingItem);
+            console.log("Item resized: " + resizingItem);
           }
         });
 
@@ -329,21 +347,21 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
         left: 0
       }).addClass('timeline-row').appendTo(this.$container);
 
-      // add ondrop event listener for accepting item drops
+      //add ondrop event listener for accepting item drops
       channel.$el[0].ondrop = (e) => {
         e.preventDefault();
 
         var data = resources[e.dataTransfer.getData("text")];
         var offset = this.$container.offset();
         var left = e.x - offset.left;
-        var top = Math.floor((e.y - offset.top) / this.state.gridHeight) * this.state.gridHeight;
+        var top = i * this.state.gridHeight;
 
         this.addItem({
           resource: data.src,
           title: data.name,
           type: type,
           left: left,
-          width: 60 * (1 / this.state.zoom),
+          width: 60 * (10 / this.state.zoom),
           channel: Math.floor(top / this.state.gridHeight),
           top: top,
           draggable: undefined,
@@ -372,7 +390,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
           var bounds = {
             left: 0,
             top: 0,
-            width: this.state.gridWidth * (1 / this.state.zoom),
+            width: this.state.gridWidth,
             height: this.state.outputs.length * this.state.gridHeight
           };
           item.draggable.applyBounds(bounds);
@@ -380,7 +398,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
           var bounds = {
             left: 0,
             top: this.state.outputs.length * this.state.gridHeight,
-            width: this.state.gridWidth * (1 / this.state.zoom),
+            width: this.state.gridWidth,
             height: this.state.channels.length * this.state.gridHeight
           };
           item.draggable.applyBounds(bounds);
@@ -406,7 +424,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
     this.state.items.filter(item => item.selected)
       .map((item) => {
         item.width = largest;
-        item.duration = largest * this.state.zoom;
+        item.duration = largest * this.state.zoom / 10;
         item.$el.css({ width: largest });
       });
   }
@@ -458,7 +476,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
   }
 
   changeZoom(e) {
-    var zoomFactor = 1 / this.state.zoom;
+    var zoomFactor = 10 / this.state.zoom;
 
     this.state.items.map((item) => {
       item.width = item.duration * zoomFactor;
@@ -467,8 +485,6 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
 
     this.updateContainerSize();
     this.applyItemBounds();
-
-    //this.ruler.api.setScale(this.state.zoom);
   }
 
   toggleFrozen(e) {
@@ -493,7 +509,6 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
       TweenLite.to(item.$el[0], dur / 1000, { x: x, y: y });
       item.draggable.update(); // update the draggable position
       item.left = x;
-      item.start = item.left * this.state.zoom;
       item.top = y;
     }
   }
@@ -514,6 +529,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
     this.drawChannels();
 
     this.channelAdded.emit(newChannel);
+    console.log("Channel Added: " + newChannel);
   }
 
   addCommonChannel(channel) {
@@ -532,6 +548,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
     this.drawChannels();
 
     this.channelAdded.emit(newChannel);
+    console.log("Channel added: " + newChannel);
   }
 
   addOutput(output) {
@@ -554,6 +571,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
     this.drawChannels();
 
     this.outputAdded.emit(newOutput);
+    console.log("Output added: " + newOutput);
   }
 
   addItem(item) {
@@ -569,16 +587,17 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
     this.state.items.push(newItem);
 
     this.itemAdded.emit(newItem);
+    console.log("Item added: " + newItem);
   }
 
   updateContainerSize() {
+    this.state.gridWidth = this.state.duration * (10 / this.state.zoom);
     TweenLite.set(
       this.$container, {
         height: (this.state.channels.length + this.state.outputs.length) * this.state.gridHeight + 1,
-        width: (this.state.gridWidth + 1) * (1 / this.state.zoom)
+        width: this.state.gridWidth
       }
     );
-    //this.ruler.api.setScale(this.state.zoom);
   }
 
   selectChannel(i) {
@@ -586,6 +605,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
     this.resetObjectSelection();
     channel.selected = true;
     this.channelClicked.emit(channel);
+    console.log("Channel clicked: " + channel);
   }
 
   selectItem(item) {
@@ -603,6 +623,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
     output.selected = true;
 
     this.outputClicked.emit(output);
+    console.log("Output clicked: " + output);
   }
 
   resetObjectSelection() {

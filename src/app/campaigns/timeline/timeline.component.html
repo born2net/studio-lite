@@ -1,139 +1,139 @@
-<!--<div class="container">-->
-  <!--<div class="row" style="padding-top:50px;padding-bottom:50px;">-->
-    <!--<button type="button" class="btn btn-default" (click)="addChannel()">Add Channel</button>-->
-    <!--<button type="button" class="btn btn-default" (click)="addCommonChannel()">Add Common Channel</button>-->
-    <!--<button type="button" class="btn btn-default" (click)="addOutput()">Add Output</button>-->
-    <!--<button type="button" class="btn btn-default" (click)="closeGaps()">Close Gaps</button>-->
-    <!--<input type="checkbox" [(ngModel)]="state.magnetic"> Magnetic-->
-    <!--<button type="button" class="btn btn-default" (click)="resizeToLargest()">Resize to largest</button>-->
-    <!--<button type="button" class="btn btn-default" (click)="alignLeft()">Align Left</button>-->
-    <!--<button type="button" class="btn btn-default" (click)="alignRight()">Align Right</button>-->
-    <!--<input type="checkbox" [(ngModel)]="state.switch"> Switch-->
-    <!--<input type="checkbox" (change)="toggleFrozen($event)"> Frozen-->
-    <!--<select (change)="changeZoom($event)" [(ngModel)]="state.zoom">-->
-      <!--<option value="1">1.0 : 10</option>-->
-      <!--<option value="2">2.0 : 10</option>-->
-      <!--<option value="5">5.0 : 10</option>-->
-      <!--<option value="10">10 : 10</option>-->
-      <!--<option value="20">20 : 10</option>-->
-      <!--<option value="40">40 : 10</option>-->
-    <!--</select>-->
-    <!--Timeline Length <input type="number" [(ngModel)]="state.gridWidth" (change)="updateContainerSize()" />-->
-  <!--</div>-->
-  <!--<div class="row" style="margin-left: 83px;">-->
-    <!--<app-timeline-ruler-->
-      <!--width="{{ state.gridWidth * (1 / this.state.zoom) }}"-->
-      <!--height="50"-->
-      <!--position="{{ scrollPosition }}"-->
-      <!--scale="{{ state.zoom / 10}}"-->
-    <!--&gt;-->
-    <!--</app-timeline-ruler>-->
-  <!--</div>-->
-  <!--<div class="row timeline-container">-->
-    <!--<div class="col-xs-1 channel-titles">-->
-      <!--<div class="channel-title" *ngFor="let output of state.outputs; let i = index" (click)="selectOutput(i)" [class.channel-selected]="output.selected">-->
-        <!--<span class="channel-color" [style.backgroundColor]="output.color"></span> {{ output.name }}-->
-      <!--</div>-->
-      <!--<div class="channel-title" *ngFor="let channel of state.channels; let i = index" [class.common-channel]="channel.type == 'common'" [class.channel-selected]="channel.selected" (click)="selectChannel(i)">-->
-        <!--<span class="channel-color" [style.backgroundColor]="channel.color"></span> {{ channel.name }}-->
-      <!--</div>-->
-    <!--</div>-->
-    <!--<div class="col-xs-11 timeline" (scroll)="onScroll($event)">-->
+<div class="container">
+  <div class="row" style="padding-top:50px;padding-bottom:50px;">
+    <button type="button" class="btn btn-default" (click)="addChannel()">Add Channel</button>
+    <button type="button" class="btn btn-default" (click)="addCommonChannel()">Add Common Channel</button>
+    <button type="button" class="btn btn-default" (click)="addOutput()">Add Output</button>
+    <button type="button" class="btn btn-default" (click)="closeGaps()">Close Gaps</button>
+    <input type="checkbox" [(ngModel)]="state.magnetic"> Magnetic
+    <button type="button" class="btn btn-default" (click)="resizeToLargest()">Resize to largest</button>
+    <button type="button" class="btn btn-default" (click)="alignLeft()">Align Left</button>
+    <button type="button" class="btn btn-default" (click)="alignRight()">Align Right</button>
+    <input type="checkbox" [(ngModel)]="state.switch"> Switch
+    <input type="checkbox" (change)="toggleFrozen($event)"> Frozen
+    <select (change)="changeZoom($event)" [(ngModel)]="state.zoom">
+      <option value="1">1.0 : 10</option>
+      <option value="2">2.0 : 10</option>
+      <option value="5">5.0 : 10</option>
+      <option value="10">10 : 10</option>
+      <option value="20">20 : 10</option>
+      <option value="40">40 : 10</option>
+    </select>
+    Timeline Length <input type="text" class="timeline-length" value="1:00:00" />
+  </div>
+  <div class="row" style="margin-left: 83px;">
+    <app-timeline-ruler
+      width="{{ state.gridWidth }}"
+      height="50"
+      position="{{ scrollPosition }}"
+      scale="{{ state.zoom / 10}}"
+    >
+    </app-timeline-ruler>
+  </div>
+  <div class="row timeline-container">
+    <div class="col-xs-1 channel-titles">
+      <div class="channel-title" *ngFor="let output of state.outputs; let i = index" (click)="selectOutput(i)" [class.channel-selected]="output.selected">
+        <span class="channel-color" [style.backgroundColor]="output.color"></span> {{ output.name }}
+      </div>
+      <div class="channel-title" *ngFor="let channel of state.channels; let i = index" [class.common-channel]="channel.type == 'common'" [class.channel-selected]="channel.selected" (click)="selectChannel(i)">
+        <span class="channel-color" [style.backgroundColor]="channel.color"></span> {{ channel.name }}
+      </div>
+    </div>
+    <div class="col-xs-11 timeline" (scroll)="onScroll($event)">
 
-      <!--<div id="container">-->
-        <!--<ng-container *ngFor="let item of state.items;let i = index">-->
-          <!--<li *ngIf="item.type == 'output'"-->
-              <!--class="resizable selectable box" [attr.data-bid]="i" [style.width.px]="item.width">-->
-            <!--<img class="box-image" src="{{ item.resource }}" style="height: 100%;width: 100%;max-width: 50px;float:left" />-->
-            <!--<div class="item-title">{{ item.title }}</div>-->
-          <!--</li>-->
-        <!--</ng-container>-->
-        <!--<ng-container *ngFor="let item of state.items;let i = index">-->
-          <!--<li *ngIf="item.type == 'channel'"-->
-              <!--class="resizable selectable box" [attr.data-bid]="i" [style.width.px]="item.width">-->
-            <!--<img class="box-image" src="{{ item.resource }}" style="height: 100%;width: 100%;max-width: 50px;float:left" />-->
-            <!--<div class="item-title">{{ item.title }}</div>-->
-          <!--</li>-->
-        <!--</ng-container>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
-  <!--<div class="row"  style="padding-top:50px;padding-bottom:50px;">-->
-    <!--<div class="col-xs-4">-->
-      <!--<h4>Resources</h4>-->
-      <!--<table class="table">-->
-        <!--<tr>-->
-          <!--<th>Name</th>-->
-          <!--<th>Type</th>-->
-          <!--<th>Total time</th>-->
-          <!--<th>size</th>-->
-        <!--</tr>-->
-        <!--<tr *ngFor="let resource of resources.items; let i = index" draggable="true" (dragstart)="drag($event, 'channel', i)">-->
-          <!--<td>{{ resource.name }}</td>-->
-          <!--<td>{{ resource.type }}</td>-->
-          <!--<td>{{ resource.time }}</td>-->
-          <!--<td>{{ resource.size }}</td>-->
-        <!--</tr>-->
-      <!--</table>-->
+      <div id="container">
+        <ng-container *ngFor="let item of state.items;let i = index">
+          <li *ngIf="item.type == 'output'"
+              class="resizable selectable box" [attr.data-bid]="i" [style.width.px]="item.width">
+            <img class="box-image" src="{{ item.resource }}" style="height: 100%;width: 100%;max-width: 50px;float:left" />
+            <div class="item-title">{{ item.title }}</div>
+          </li>
+        </ng-container>
+        <ng-container *ngFor="let item of state.items;let i = index">
+          <li *ngIf="item.type == 'channel'"
+              class="resizable selectable box" [attr.data-bid]="i" [style.width.px]="item.width">
+            <img class="box-image" src="{{ item.resource }}" style="height: 100%;width: 100%;max-width: 50px;float:left" />
+            <div class="item-title">{{ item.title }}</div>
+          </li>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="row"  style="padding-top:50px;padding-bottom:50px;">
+    <div class="col-xs-4">
+      <h4>Resources</h4>
+      <table class="table">
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Total time</th>
+          <th>size</th>
+        </tr>
+        <tr *ngFor="let resource of resources.items; let i = index" draggable="true" (dragstart)="drag($event, 'channel', i)">
+          <td>{{ resource.name }}</td>
+          <td>{{ resource.type }}</td>
+          <td>{{ resource.time }}</td>
+          <td>{{ resource.size }}</td>
+        </tr>
+      </table>
 
-      <!--<h4>Outputs</h4>-->
-      <!--<table class="table">-->
-        <!--<tr>-->
-          <!--<th>Name</th>-->
-          <!--<th>Type</th>-->
-          <!--<th>Total time</th>-->
-          <!--<th>size</th>-->
-        <!--</tr>-->
-        <!--<tr *ngFor="let resource of resources.outputs; let i = index" draggable="true" (dragstart)="drag($event, 'output', i)">-->
-          <!--<td>{{ resource.name }}</td>-->
-          <!--<td>{{ resource.type }}</td>-->
-          <!--<td>{{ resource.time }}</td>-->
-          <!--<td>{{ resource.size }}</td>-->
-        <!--</tr>-->
-      <!--</table>-->
-    <!--</div>-->
-    <!--<div class="col-xs-4 col-xs-offset-4">-->
-      <!--<ng-container *ngFor="let channel of state.channels; let i = index">-->
-        <!--<div *ngIf="channel.selected">-->
-          <!--<form>-->
-            <!--<div class="form-group">-->
-              <!--<label for="exampleInputEmail1">Name</label>-->
-              <!--<input type="text" class="form-control" name="channel-name" [(ngModel)]="channel.name" placeholder="Email">-->
-            <!--</div>-->
-            <!--<div class="form-group">-->
-              <!--<label for="exampleInputEmail1">Color</label>-->
-              <!--<input type="text" class="form-control" name="channel-color" [(ngModel)]="channel.color" placeholder="Color">-->
-            <!--</div>-->
-            <!--<button type="submit" class="btn btn-default" (click)="deleteChannel(i)">Delete</button>-->
-          <!--</form>-->
-        <!--</div>-->
-      <!--</ng-container>-->
-      <!--<ng-container *ngFor="let output of state.outputs; let i = index">-->
-        <!--<div *ngIf="output.selected">-->
-          <!--<form>-->
-            <!--<div class="form-group">-->
-              <!--<label for="exampleInputEmail1">Name</label>-->
-              <!--<input type="text" class="form-control" name="output-name" [(ngModel)]="output.name" placeholder="Email">-->
-            <!--</div>-->
-            <!--<div class="form-group">-->
-              <!--<label for="exampleInputEmail1">Color</label>-->
-              <!--<input type="text" class="form-control" name="output-color" [(ngModel)]="output.color" placeholder="Color">-->
-            <!--</div>-->
-            <!--<button type="submit" class="btn btn-default" (click)="deleteOutput(i)">Delete</button>-->
-          <!--</form>-->
-        <!--</div>-->
-      <!--</ng-container>-->
-      <!--<ng-container *ngFor="let item of state.items; let i = index">-->
-        <!--<div *ngIf="item.selected">-->
-          <!--<form>-->
-            <!--<div class="form-group">-->
-              <!--<label for="exampleInputEmail1">Name</label>-->
-              <!--<input type="text" class="form-control" name="item-title" [(ngModel)]="item.title" placeholder="Email">-->
-            <!--</div>-->
-            <!--<button type="submit" class="btn btn-default" (click)="deleteItem(i)">Delete</button>-->
-          <!--</form>-->
-        <!--</div>-->
-      <!--</ng-container>-->
-    <!--</div>-->
-  <!--</div>-->
-<!--</div>-->
+      <h4>Outputs</h4>
+      <table class="table">
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Total time</th>
+          <th>size</th>
+        </tr>
+        <tr *ngFor="let resource of resources.outputs; let i = index" draggable="true" (dragstart)="drag($event, 'output', i)">
+          <td>{{ resource.name }}</td>
+          <td>{{ resource.type }}</td>
+          <td>{{ resource.time }}</td>
+          <td>{{ resource.size }}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="col-xs-4 col-xs-offset-4">
+      <ng-container *ngFor="let channel of state.channels; let i = index">
+        <div *ngIf="channel.selected">
+          <form>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Name</label>
+              <input type="text" class="form-control" name="channel-name" [(ngModel)]="channel.name" placeholder="Email">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Color</label>
+              <input type="text" class="form-control" name="channel-color" [(ngModel)]="channel.color" placeholder="Color">
+            </div>
+            <button type="submit" class="btn btn-default" (click)="deleteChannel(i)">Delete</button>
+          </form>
+        </div>
+      </ng-container>
+      <ng-container *ngFor="let output of state.outputs; let i = index">
+        <div *ngIf="output.selected">
+          <form>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Name</label>
+              <input type="text" class="form-control" name="output-name" [(ngModel)]="output.name" placeholder="Email">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Color</label>
+              <input type="text" class="form-control" name="output-color" [(ngModel)]="output.color" placeholder="Color">
+            </div>
+            <button type="submit" class="btn btn-default" (click)="deleteOutput(i)">Delete</button>
+          </form>
+        </div>
+      </ng-container>
+      <ng-container *ngFor="let item of state.items; let i = index">
+        <div *ngIf="item.selected">
+          <form>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Name</label>
+              <input type="text" class="form-control" name="item-title" [(ngModel)]="item.title" placeholder="Email">
+            </div>
+            <button type="submit" class="btn btn-default" (click)="deleteItem(i)">Delete</button>
+          </form>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

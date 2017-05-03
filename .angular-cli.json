@@ -28,7 +28,8 @@
         "./libs/bootstrap-timepicker/css/bootstrap-timepicker.css",
         "./libs/minicolors/jquery.minicolors.css",
         "./libs/ruler/ruler.css",
-        "./styles/style.css"
+        "./styles/style.css",
+        "./styles/jquery.timepicker.min.css"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",
@@ -40,6 +41,7 @@
         "./libs/rc4v2/rc4v2.js",
         "./libs/qrcode/qrcode.js",
         "./libs/bootstrap-timepicker/js/bootstrap-timepicker.min.js",
+        "./libs/jquery.timepicker/jquery.timepicker.min.js",
         "./libs/contextmenu/bootstrap-contextmenu.js",
         "./libs/stop-watch/stop-watch.js",
         "./store/signage_sdk.js",

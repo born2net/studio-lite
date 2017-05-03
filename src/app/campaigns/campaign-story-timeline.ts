@@ -39,6 +39,7 @@ interface IItems {
 
 interface ITimelineState {
     zoom: number;
+    duration: number;
     channels: Array<IChannels>;
     outputs: Array<IOutputs>;
     items: Array<IItems>;
@@ -108,6 +109,7 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
     };
     state: ITimelineState = {
         zoom: 1,
+        duration: 3600,
         channels: [
             {
                 id: 1,

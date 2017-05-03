@@ -9,6 +9,10 @@ import {Observable} from "rxjs/Observable";
 import {BlockService, IBlockData} from "../blocks/block-service";
 import * as _ from "lodash";
 
+interface IChannelCollection {
+    blocks: Array<number>;
+    channelId: number;
+}
 
 interface IOutputs {
     id: number;
@@ -201,25 +205,35 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
                         .map((channelId) => {
                             return this.yp.getChannelBlocks(channelId)
                                 .map((blocks) => {
-                                    return {
-                                        channelId, blocks
+                                    if (blocks.length > 0) {
+                                        return {channelId, blocks};
+                                    } else {
+                                        return {channelId, blocks: [-1]};
                                     }
+
                                 })
                         })
                         .combineAll()
-                    // return this.yp.getChannelBlocks(i_campaignTimelineChanelModels.get(0).getCampaignTimelineChanelId())
                 })
-                // .mergeMap(blockIds => {
-                //     if (blockIds.length == 0)
-                //         return Observable.of([])
-                //
-                //     return Observable.from(blockIds)
-                //         .map((blockId) => this.bs.getBlockData(blockId))
-                //         .combineAll()
-                //
-                // })
+                .mergeMap((i_channelArray: Array<IChannelCollection>) => {
+                    return Observable.from(i_channelArray)
+                        .map((i_channelCollection: IChannelCollection) => {
+                            console.log(i_channelCollection);
+                            return Observable.from(i_channelCollection.blocks)
+                                .map((i_block) => {
+                                    console.log('zz' + i_block);
+                                    if (i_block == -1) return Observable.of(-1);
+                                    return this.bs.getBlockData(i_block).map((block) => {
+                                        return {block, channelId: i_channelCollection.channelId}
+                                    })
+                                })
+                                .combineAll()
+                        })
+                        .combineAll()
+                })
                 .subscribe((v) => {
-                    console.log(v);
+                    con('final ' + v);
+                    con('final ' + v);
                     // this.m_blockList = List(this._sortBlock(i_blockList));
                     // con('total ' + this.m_blockList.size)
                     // this.draggableList.createSortable()

@@ -639,17 +639,6 @@ small {
     display: block;
 }
 
-small.debug {
-    color: red;
-    display: none !important;
-}
-
-small.release {
-    text-transform: lowercase;
-    color: #4c4c4c;
-    /*display: none !important;*/
-}
-
 .panel-title {
     font-size: 0.9em;
 }
@@ -1592,4 +1581,23 @@ div.kineticjs-content {
 .installs:hover {
     opacity: 1 !important;
 }
+
+/**dev_mode_start**/
+small.debug {
+    color: red;
+}
+
+small.release {
+    text-transform: lowercase;
+    color: #4c4c4c;
+    display: none !important;
+}
+/**dev_mode_end**/
+
+
+
+
+
+
+
 

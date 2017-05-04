@@ -1,6 +1,6 @@
 {
   "name": "studioweb",
-  "version": "0.1.737",
+  "version": "0.1.740",
   "license": "Modified GPL (see readme.md)",
   "angular-cli": {},
   "scripts": {
@@ -17,16 +17,18 @@
     "x_rsync_iw": "rsync --progress  --chmod=ug=rwx --chmod=o=rx -av --stats -e ssh /cygdrive/c/msweb/studiolite/dist/ Sean@digitalsignage.com:/var/www/sites/dynasite/htdocs/_msportal/_js/_node/_studioweb/locale/iw",
     "x_sw": "sw-precache --root=dist --config=sw-precache-config.js",
     "x_bump": "gulp x_bump",
+    "x_cssDev": "gulp cssDev",
+    "x_cssRelease": "gulp cssRelease",
     "x_translate": "node_modules/.bin/ng-xi18n -p src/tsconfig.json --i18nFormat=xmb",
     "x_node_copy": "cp -r -f ./node_modules/ ./dist/out-tsc/",
     "cp module": "cp ./node_modules/ng-mslib/src/myng-component.ts ./node_modules/ng-mslib/dist/",
     "generate_locale": "npm run x_node_copy && npm run x_translate",
     "hmr": "ng serve --port 4208 --aot false --hmr -e=hmr",
-    "dev": "ng serve --port 4208 --aot false",
-    "release_aot_hebrew": "rm -r -f ./dist && npm run x_bump && npm run x_prod_aot_hebrew && npm run x_sw && npm run x_rsync_iw",
-    "release_aot": "rm -r -f ./dist && npm run x_bump && npm run x_prod_aot && npm run x_sw && npm run x_rsync",
-    "release_aot_no_sync": "rm -r -f ./dist && npm run x_bump && npm run x_prod_aot && npm run x_sw",
-    "release_jit": "rm -r -f ./dist && npm run x_bump && npm run x_prod_jit && npm run x_sw && npm run x_rsync"
+    "dev": "npm run x_cssDev && ng serve --port 4208 --aot false",
+    "release_aot_hebrew": "npm run x_cssRelease && rm -r -f ./dist && npm run x_bump && npm run x_prod_aot_hebrew && npm run x_sw && npm run x_rsync_iw",
+    "release_aot": "npm run x_cssRelease && rm -r -f ./dist && npm run x_bump && npm run x_prod_aot && npm run x_sw && npm run x_rsync",
+    "release_aot_no_sync": "npm run x_cssRelease && rm -r -f ./dist && npm run x_bump && npm run x_prod_aot && npm run x_sw",
+    "release_jit": "npm run x_cssRelease && rm -r -f ./dist && npm run x_bump && npm run x_prod_jit && npm run x_sw && npm run x_rsync"
   },
   "dependencies": {
     "@angular/animations": "^4.1.0",

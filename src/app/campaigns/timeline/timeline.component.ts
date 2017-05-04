@@ -83,15 +83,15 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
   }
 
   initializeStateChanges() {
+    // draw channels
+    this.drawChannels();
+
     // initialize item positions
     this.state.items.map((item) => {
       item.left = item.start * (10 / this.state.zoom);
       item.width = item.duration * (10 / this.state.zoom);
-      item.top = item.channel * this.state.gridHeight;
+      item.top = this.getChannelById(item.channel).top;
     });
-
-    // draw channels
-    this.drawChannels();
   }
 
   ngAfterViewChecked() {
@@ -182,32 +182,26 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
           onDrag: function() {
             // update item bounds based on type of channel for common channels
             self.state.items.filter((item) => item.type == 'channel').map((item, idx) => {
-              var channelNum = Math.floor(item.top / self.state.gridHeight);
+              var newChannel = self.state.channels.filter((c) => c.top == item.top)[0];
 
-              item.channel = channelNum;
+              item.channel = newChannel.id;
 
-              if (channelNum >= self.state.outputs.length) {
-                var channel = self.state.channels[Math.floor(item.top / self.state.gridHeight) - self.state.outputs.length];
-
-                if (channel && channel.type == "common") {
-                  item.draggable.applyBounds({
-                    top: 0,
-                    left: 0,
-                    width: 13000,
-                    height: self.$container.height()
-                  });
-                } else {
-                  var bounds = {
-                    left: 0,
-                    top: self.state.outputs.length * self.state.gridHeight,
-                    width: self.state.gridWidth,
-                    height: self.state.channels.length * self.state.gridHeight
-                  };
-                  item.draggable.applyBounds(bounds);
-                }
+              if (newChannel && newChannel.type == "common") {
+                item.draggable.applyBounds({
+                  top: 0,
+                  left: 0,
+                  width: 13000,
+                  height: self.$container.height()
+                });
+              } else {
+                var bounds = {
+                  left: 0,
+                  top: self.state.outputs.length * self.state.gridHeight,
+                  width: self.state.gridWidth,
+                  height: self.state.channels.length * self.state.gridHeight
+                };
+                item.draggable.applyBounds(bounds);
               }
-
-
             });
 
             // mutliselect movement
@@ -240,7 +234,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
                     var selectedItemId = self.state.items.indexOf(selectedItem);
 
                     var min = 0,
-                      max = (selectedItem.channel.type == "common" ? 1300 : self.state.gridWidth) - otherItem.width;
+                      max = (selectedItem.channel.type == "common" ? 13000 : self.state.gridWidth) - otherItem.width;
 
                     if (selectedItem.left >= otherItem.left + otherItem.width / 2 - 10 &&
                       selectedItem.left <= otherItem.left + otherItem.width / 2 + 10) {
@@ -345,9 +339,11 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
         resources = this.resources.outputs;
       }
       // create element for channel and append it to the container
+
+      channel.top = i * this.state.gridHeight;
       channel.$el = $("<div/>").css({
         height: this.state.gridHeight - 1,
-        top: i * this.state.gridHeight,
+        top: channel.top,
         left: 0
       }).addClass('timeline-row').appendTo(this.$container);
 
@@ -366,7 +362,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
           type: type,
           left: left,
           width: 60 * (10 / this.state.zoom),
-          channel: Math.floor(top / this.state.gridHeight),
+          channel: channel.id,
           top: top,
           draggable: undefined,
           $el: undefined,
@@ -437,7 +433,6 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
     var channel;
     for (var i = 0; i < this.state.items.length; ++i) {
       var item = this.state.items[i];
-      item.channel = Math.floor((item.top) / this.state.gridHeight);
       if (item.selected) {
         channel = item.channel;
       }
@@ -594,6 +589,14 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
     console.log("Item added: " + newItem);
   }
 
+  getChannelById(id) {
+    for (var i = 0; i < this.state.channels.length; ++i) {
+      if (this.state.channels[i].id == id)
+        return this.state.channels[i];
+    }
+    return false;
+  }
+
   updateContainerSize() {
     this.state.gridWidth = this.state.duration * (10 / this.state.zoom);
     TweenLite.set(
@@ -616,8 +619,8 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
     //this.resetObjectSelection();
     this.state.channels
       .concat(this.state.outputs).map((o) => {
-      o.selected = false;
-    });
+        o.selected = false;
+      });
     item.selected = true;
   }
 
@@ -634,8 +637,8 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
     this.state.channels
       .concat(this.state.outputs)
       .concat(this.state.items).map((o) => {
-      o.selected = false;
-    });
+        o.selected = false;
+      });
   }
 
   deleteChannel(i) {

@@ -32,7 +32,7 @@ interface IChannels {
 
 interface IItem {
     id: number;
-    type: string;
+    type: 'output' | 'channel';
     resource: string;
     title: string;
     start: number;
@@ -242,6 +242,22 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
         );
     }
 
+    private updateStateChannels(i_channels: List<CampaignTimelineChanelsModel>) {
+        var channels = []
+        i_channels.forEach((i_channel: CampaignTimelineChanelsModel) => {
+            var channel: IChannels = {
+                id: i_channel.getCampaignTimelineChanelId(),
+                viewerId: this.rp.getAssignedViewerIdFromChannelId(i_channel.getCampaignTimelineChanelId()),
+                name: i_channel.getChanelName(),
+                color: i_channel.getChanelColor(),
+                type: 'normal',
+                selected: false
+            }
+            channels.push(channel);
+        });
+        this.state = this.state.set('channels', channels);
+    }
+    
     private updateStateBlocks(i_channels) {
         var self = this;
         var items = []
@@ -253,7 +269,7 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
                 var block: IBlockData = i_block.block
                 var item: IItem = {
                     id: block.blockID,
-                    type: 'normal',
+                    type: 'channel',
                     channel: channelId,
                     duration: block.duration,
                     selected: false,
@@ -264,7 +280,7 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
                 items.push(item);
             });
             self.state = this.state.set('items', items);
-            console.log(this.state);
+
         })
 
         // this.state.items = [
@@ -289,7 +305,8 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
         //         selected: false
         //     }
         // ]
-
+        var s = this.state.toJS();
+        console.log(s);
         this.showTimeline = true;
     }
 
@@ -303,22 +320,6 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
                 return 0;
         })
         return sorted;
-    }
-
-    private updateStateChannels(i_channels: List<CampaignTimelineChanelsModel>) {
-        var channels = []
-        i_channels.forEach((i_channel: CampaignTimelineChanelsModel) => {
-            var channel: IChannels = {
-                id: i_channel.getCampaignTimelineChanelId(),
-                viewerId: this.rp.getAssignedViewerIdFromChannelId(i_channel.getCampaignTimelineChanelId()),
-                name: i_channel.getChanelName(),
-                color: i_channel.getChanelColor(),
-                type: 'normal',
-                selected: false
-            }
-            channels.push(channel);
-        })
-        this.state = this.state.set('channels', channels);
     }
 
     remove(id) {

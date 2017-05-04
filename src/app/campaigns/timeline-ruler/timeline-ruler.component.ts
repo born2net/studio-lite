@@ -11,7 +11,7 @@ export class TimelineRulerComponent implements OnInit, OnChanges {
   @Input() scale : number = 1.0 / 10;
   @Input() position : number;
 
-  canvas : any;    
+  canvas : any;
   ctx;
 
   constructor() { }

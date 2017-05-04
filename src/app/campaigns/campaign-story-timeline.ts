@@ -1,12 +1,12 @@
 import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Output} from "@angular/core";
 import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
-import {List} from "immutable";
 import {CampaignTimelineChanelsModel, CampaignTimelinesModel} from "../../store/imsdb.interfaces_auto";
 import {RedPepperService} from "../../services/redpepper.service";
 import {Observable} from "rxjs/Observable";
 import {BlockService, IBlockData} from "../blocks/block-service";
 import * as _ from 'lodash';
+import {Map, List} from 'immutable';
 
 
 interface IChannelCollection {
@@ -112,66 +112,73 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
             }
         ]
     };
-    state: ITimelineState = {
+    state: Map<any, any> = Map({
         zoom: 1,
-        duration: 3600,
-        channels: [
-            {
-                id: 1,
-                viewerId: -1,
-                name: 'CH0',
-                type: 'normal',
-                color: '#0000FF',
-                selected: false,
-            },
-            {
-                id: 2,
-                viewerId: -1,
-                name: 'CH1',
-                type: 'normal',
-                color: '#e9ff71',
-                selected: false
-            },
-            {
-                id: 3,
-                viewerId: -1,
-                name: 'CH2',
-                color: '#ff0014',
-                type: 'common',
-                selected: false
-            },
-        ],
-        outputs: [
-            {
-                id: 1,
-                name: "Output",
-                color: "#000",
-                selected: false
-            }
-        ],
-        items: [
-            {
-                id: 1,
-                type: 'channel',
-                resource: "assets/sample1.png",
-                title: 'Logo_splash',
-                start: 0,
-                duration: 60,
-                channel: 7,
-                selected: false
-            },
-            {
-                id: 2,
-                type: 'channel',
-                resource: "assets/sample3.svg",
-                title: '350x350',
-                start: 300,
-                duration: 60,
-                channel: 8,
-                selected: false
-            }
-        ]
-    }
+        duration: 500,
+        channels: [],
+        outputs: [],
+        items: []
+    });
+    // state = {
+    //     zoom: 1,
+    //     duration: 3600,
+    //     channels: [
+    //         {
+    //             id: 1,
+    //             viewerId: -1,
+    //             name: 'CH0',
+    //             type: 'normal',
+    //             color: '#0000FF',
+    //             selected: false,
+    //         },
+    //         {
+    //             id: 2,
+    //             viewerId: -1,
+    //             name: 'CH1',
+    //             type: 'normal',
+    //             color: '#e9ff71',
+    //             selected: false
+    //         },
+    //         {
+    //             id: 3,
+    //             viewerId: -1,
+    //             name: 'CH2',
+    //             color: '#ff0014',
+    //             type: 'common',
+    //             selected: false
+    //         },
+    //     ],
+    //     outputs: [
+    //         {
+    //             id: 1,
+    //             name: "Output",
+    //             color: "#000",
+    //             selected: false
+    //         }
+    //     ],
+    //     items: [
+    //         {
+    //             id: 1,
+    //             type: 'channel',
+    //             resource: "assets/sample1.png",
+    //             title: 'Logo_splash',
+    //             start: 0,
+    //             duration: 60,
+    //             channel: 7,
+    //             selected: false
+    //         },
+    //         {
+    //             id: 2,
+    //             type: 'channel',
+    //             resource: "assets/sample3.svg",
+    //             title: '350x350',
+    //             start: 300,
+    //             duration: 60,
+    //             channel: 8,
+    //             selected: false
+    //         }
+    //     ]
+    // }
     id = 0
     showTimeline = false;
     // items = []
@@ -236,7 +243,8 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
     }
 
     private updateStateBlocks(i_channels) {
-        this.state.items = [];
+        var self = this;
+        var items = []
         _.forEach(i_channels, (i_channel) => {
             var channelId = i_channel["0"].channelId;
             var blockList = this._sortBlock(i_channel);
@@ -253,8 +261,10 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
                     start: block.offset,
                     resource: "assets/sample3.svg",
                 }
-                this.state.items.push(item);
+                items.push(item);
             });
+            self.state = this.state.set('items', items);
+            console.log(this.state);
         })
 
         // this.state.items = [
@@ -280,7 +290,6 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
         //     }
         // ]
 
-        console.log(this.state);
         this.showTimeline = true;
     }
 
@@ -297,7 +306,7 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
     }
 
     private updateStateChannels(i_channels: List<CampaignTimelineChanelsModel>) {
-        this.state.channels = [];
+        var channels = []
         i_channels.forEach((i_channel: CampaignTimelineChanelsModel) => {
             var channel: IChannels = {
                 id: i_channel.getCampaignTimelineChanelId(),
@@ -307,9 +316,9 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
                 type: 'normal',
                 selected: false
             }
-            this.state.channels.push(channel);
+            channels.push(channel);
         })
-
+        this.state = this.state.set('channels', channels);
     }
 
     remove(id) {

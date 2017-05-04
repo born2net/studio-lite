@@ -1,4 +1,6 @@
-import { Component, OnInit, Input, AfterViewChecked, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, AfterViewChecked, OnChanges, EventEmitter, Output } from '@angular/core';
+
+const { Map } = require('immutable');
 
 import { TimelineRulerComponent } from '../timeline-ruler/timeline-ruler.component';
 
@@ -11,7 +13,7 @@ declare let TweenLite: any;
   templateUrl: './timeline.component.html',
   styleUrls: ['./timeline.component.css']
 })
-export class TimelineComponent implements OnInit, AfterViewChecked {
+export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
   $container;
 
   ruler = undefined;
@@ -53,9 +55,6 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
   constructor() { }
 
   ngOnInit() {
-    this.state = Object.assign({}, this.defaultState, this.state);
-
-    this.$container = $('#container');
 
     // initialize timeline length input
     $('.timeline-length').timepicker({ 'timeFormat': 'H:i:s' });
@@ -66,8 +65,24 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
       this.updateContainerSize();
     });
 
+    // reset item selection when the container is clicked
+    this.$container.click((e) => {
+      if (!$(e.target).hasClass('box') && !$(e.target).hasClass('box-image') && !$(e.target).hasClass('item-title')) {
+        this.resetSelection();
+      }
+    });
+  }
 
+  ngOnChanges() {
+    // ngOnChanges gets called first, so initialize here
+    this.$container = $('#container');
 
+    this.state = Object.assign({}, this.defaultState, this.state.toJS());
+
+    this.initializeStateChanges();
+  }
+
+  initializeStateChanges() {
     // initialize item positions
     this.state.items.map((item) => {
       item.left = item.start * (10 / this.state.zoom);
@@ -75,18 +90,8 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
       item.top = item.channel * this.state.gridHeight;
     });
 
-    // reset item selection when the container is clicked
-    this.$container.click((e) => {
-      if (!$(e.target).hasClass('box') && !$(e.target).hasClass('box-image') && !$(e.target).hasClass('item-title')) {
-        this.resetSelection();
-      }
-    });
-
     // draw channels
     this.drawChannels();
-
-    // draw outputs
-    //this.drawOutputs();
   }
 
   ngAfterViewChecked() {
@@ -129,7 +134,6 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
               }
 
               return endValue;
-
             }
           },
           onPress: function(e) {
@@ -517,7 +521,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
     var newChannel = Object.assign(
       {},
       {
-        id: this.state.channels[this.state.channels.length - 1].id + 1,
+        id: -1,
         $el: undefined,
         name: "CH" + this.state.channels.length,
         type: "normal",
@@ -536,7 +540,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
     var newChannel = Object.assign(
       {},
       {
-        id: this.state.channels[this.state.channels.length - 1].id + 1,
+        id: -1,
         $el: undefined,
         name: "CH" + this.state.channels.length,
         type: "common",
@@ -555,7 +559,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
     var newOutput = Object.assign(
       {},
       {
-        id: this.state.outputs[this.state.outputs.length - 1].id + 1,
+        id: -1,
         name: "Output",
         color: "#000"
       },
@@ -578,7 +582,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
     var newItem = Object.assign(
       {},
       {
-        id: this.state.items[this.state.items.length - 1].id + 1,
+        id: -1,
         duration: item.width,
         start: item.left
       },

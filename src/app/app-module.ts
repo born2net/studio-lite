@@ -155,10 +155,6 @@ export class AppModule {
         Lib.Con(StringJS('app-loaded-and-ready').humanize().s);
         Lib.AlertOnLeave();
         this.yp.dispatch(({type: ACTION_LIVELOG_UPDATE, payload: new LiveLogModel({event: 'app started'})}));
-
-        setTimeout(()=>{
-              throw new Error('foo')
-        },3000)
     }
 }
 

@@ -12,7 +12,13 @@ export class BlurForwarder {
     onBlur($event) {
         // this.renderer.invokeElementMethod(this.elRef.nativeElement, 'dispatchEvent', [new CustomEvent('input-blur', {bubbles: true})]);
         // or just
-        this.elRef.nativeElement.dispatchEvent(new CustomEvent('input-blur', { bubbles: true }));
+        // don't error out on older browsers just fail silently
+        try {
+            this.elRef.nativeElement.dispatchEvent(new CustomEvent('input-blur', { bubbles: true }));
+        } catch (e){
+
+        }
+
         // if you don't care about webworker compatibility
     }
 }

@@ -33,13 +33,21 @@
   <msg id="6082171864197428613"><source>C:/msweb/studiolite/src/app/app-component.ts:34</source><source>C:/msweb/studiolite/src/app/appwrap.ts:13</source>Install</msg>
   <msg id="3476206505271758484"><source>C:/msweb/studiolite/src/app/app-component.ts:36</source><source>C:/msweb/studiolite/src/app/appwrap.ts:11</source>Studiopro</msg>
   <msg id="3797778920049399855"><source>C:/msweb/studiolite/src/app/app-component.ts:37</source><source>C:/msweb/studiolite/src/app/appwrap.ts:14</source>Logout</msg>
-  <msg id="2849064100927111571"><source>C:/msweb/studiolite/src/app/app-component.ts:94</source>loading...</msg>
-  <msg id="7309719557896597512"><source>C:/msweb/studiolite/src/app/app-component.ts:97</source>have a nice day </msg>
-  <msg id="5805758016483237261"><source>C:/msweb/studiolite/src/app/app-component.ts:103</source><source>C:/msweb/studiolite/src/app/studiopro/studiopro-navigation.ts:175</source>Upgrade to Enterprise - $99.00 per month</msg>
+  <msg id="4010072142461558046"><source>C:/msweb/studiolite/src/app/app-component.ts:42</source>upgrade</msg>
+  <msg id="8894542476475088437"><source>C:/msweb/studiolite/src/app/app-component.ts:45</source>Cont-S</msg>
+  <msg id="2347724151568473592"><source>C:/msweb/studiolite/src/app/app-component.ts:48</source>language</msg>
+  <msg id="4376434433661751094"><source>C:/msweb/studiolite/src/app/app-component.ts:51</source>live chat</msg>
+  <msg id="5344752701442428839"><source>C:/msweb/studiolite/src/app/app-component.ts:54</source>web site</msg>
+  <msg id="2849064100927111571"><source>C:/msweb/studiolite/src/app/app-component.ts:91</source>loading...</msg>
+  <msg id="7309719557896597512"><source>C:/msweb/studiolite/src/app/app-component.ts:94</source>have a nice day </msg>
+  <msg id="5805758016483237261"><source>C:/msweb/studiolite/src/app/app-component.ts:101</source><source>C:/msweb/studiolite/src/app/studiopro/studiopro-navigation.ts:175</source>Upgrade to Enterprise - $99.00 per month</msg>
+  <msg id="7108535247064136881"><source>C:/msweb/studiolite/src/app/app-component.ts:111</source>Pick your language</msg>
   <msg id="7746065369460476808"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:14</source>user name or email</msg>
   <msg id="4809196861118879526"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:15</source><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:79</source>password</msg>
   <msg id="9162857816822524614"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:20</source>enter two factor key</msg>
-  <msg id="24227595514967590"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:26</source>with Google authenticator</msg>
+  <msg id="4137049537431219133"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:25,27</source> login to your account
+                            <ph name="START_TAG_SPAN"><ex>&lt;span&gt;</ex></ph>with Google authenticator<ph name="CLOSE_TAG_SPAN"><ex>&lt;/span&gt;</ex></ph>
+                        </msg>
   <msg id="2001940299854753031"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:34</source> remember me </msg>
   <msg id="5872337092278414963"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:38</source>forgot password</msg>
   <msg id="8246600873004586882"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:40</source>change password</msg>
@@ -49,6 +57,8 @@
   <msg id="48285893667252664"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:54</source>new password</msg>
   <msg id="6917932917401642982"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:55</source>repeat new password</msg>
   <msg id="5666893431176348635"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:80</source>new business name</msg>
+  <msg id="4785021168351486737"><source>C:/msweb/studiolite/src/comps/logout/Logout.ts:4</source>Save &amp; Logout</msg>
+  <msg id="6524180701596149125"><source>C:/msweb/studiolite/src/comps/logout/Logout.ts:5</source>Just Logout</msg>
   <msg id="7212624462478696127"><source>C:/msweb/studiolite/src/comps/entry/AutoLogin.ts:2</source>verifying access...</msg>
   <msg id="1156206314346372426"><source>C:/msweb/studiolite/src/app/dashboard/dashboard-navigation.ts:2</source>account dashboard</msg>
   <msg id="892759319569190037"><source>C:/msweb/studiolite/src/app/blocks/block-prop-common.ts:25</source>scene background color</msg>

@@ -6,6 +6,8 @@ import {CampaignTimelineChanelsModel, CampaignTimelinesModel} from "../../store/
 import {RedPepperService} from "../../services/redpepper.service";
 import {Observable} from "rxjs/Observable";
 import {BlockService, IBlockData} from "../blocks/block-service";
+import * as _ from 'lodash';
+
 
 interface IChannelCollection {
     blocks: Array<number>;
@@ -28,7 +30,7 @@ interface IChannels {
     selected: boolean;
 }
 
-interface IItems {
+interface IItem {
     id: number;
     type: string;
     resource: string;
@@ -44,7 +46,7 @@ interface ITimelineState {
     duration: number;
     channels: Array<IChannels>;
     outputs: Array<IOutputs>;
-    items: Array<IItems>;
+    items: Array<IItem>;
 }
 
 @Component({
@@ -52,7 +54,7 @@ interface ITimelineState {
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <small class="debug">{{me}}</small>
-        <app-timeline [resources]="resources"
+        <app-timeline *ngIf="showTimeline" [resources]="resources"
                       [state]="state"
                       (itemAdded)="itemAdded($event)"
                       (channelAdded)="channelAdded($event)"
@@ -155,7 +157,7 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
                 title: 'Logo_splash',
                 start: 0,
                 duration: 60,
-                channel: 1,
+                channel: 7,
                 selected: false
             },
             {
@@ -165,17 +167,17 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
                 title: '350x350',
                 start: 300,
                 duration: 60,
-                channel: 2,
+                channel: 8,
                 selected: false
             }
         ]
     }
     id = 0
+    showTimeline = false;
     // items = []
 
     constructor(private yp: YellowPepperService, private rp: RedPepperService, private cd: ChangeDetectorRef, private bs: BlockService) {
         super();
-
         this.cancelOnDestroy(
             this.yp.listenTimelineSelected()
                 .map((i_campaignTimelinesModel: CampaignTimelinesModel) => {
@@ -228,25 +230,67 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
                         .combineAll()
                 })
                 .subscribe((i_channels) => {
-
-                    con('final');
-                    con('final ' + i_channels);
-
+                    this.updateStateBlocks(i_channels);
                 }, e => console.error(e))
-
-            // .subscribe((i_blockList: Array<IBlockData>) => {
-            //     this.m_blockList = List(this._sortBlock(i_blockList));
-            // }, e => console.error(e))
         );
     }
 
-    private _sortBlock(i_blockList: Array<IBlockData>): Array<IBlockData> {
+    private updateStateBlocks(i_channels) {
+        this.state.items = [];
+        _.forEach(i_channels, (i_channel) => {
+            var channelId = i_channel["0"].channelId;
+            var blockList = this._sortBlock(i_channel);
+            blockList.forEach((i_block) => {
+                if (i_block == -1) return;
+                var block: IBlockData = i_block.block
+                var item: IItem = {
+                    id: block.blockID,
+                    type: 'normal',
+                    channel: channelId,
+                    duration: block.duration,
+                    selected: false,
+                    title: block.blockName,
+                    start: block.offset,
+                    resource: "assets/sample3.svg",
+                }
+                this.state.items.push(item);
+            });
+        })
+
+        // this.state.items = [
+        //     {
+        //         id: 1,
+        //         type: 'channel',
+        //         resource: "assets/sample1.png",
+        //         title: 'Logo_splash',
+        //         start: 0,
+        //         duration: 60,
+        //         channel: 7,
+        //         selected: false
+        //     },
+        //     {
+        //         id: 2,
+        //         type: 'channel',
+        //         resource: "assets/sample3.svg",
+        //         title: '350x350',
+        //         start: 300,
+        //         duration: 60,
+        //         channel: 8,
+        //         selected: false
+        //     }
+        // ]
+
+        console.log(this.state);
+        this.showTimeline = true;
+    }
+
+    private _sortBlock(i_blockList) {
         var sorted = i_blockList.sort((a, b) => {
-            if (a.offset < b.offset)
+            if (a.block.offset < b.block.offset)
                 return -1;
-            if (a.offset > b.offset)
+            if (a.block.offset > b.block.offset)
                 return 1;
-            if (a.offset === b.offset)
+            if (a.block.offset === b.block.offset)
                 return 0;
         })
         return sorted;
@@ -265,7 +309,6 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
             }
             this.state.channels.push(channel);
         })
-
 
     }
 

@@ -11,7 +11,7 @@ export class GlobalErrorHandler implements ErrorHandler {
     handleError(error) {
         if (Lib.DevMode()){
             throw error;
-        }
+        }          
 
         // const loggingService = this.injector.get(LoggingService);
         // const location = this.injector.get(LocationStrategy);

@@ -50,6 +50,7 @@ export enum MainAppShowStateEnum {
         ])
     ]
 })
+
 export class AppComponent implements AfterViewInit {
     version: string;
     ngVersion: string;

@@ -56,6 +56,7 @@ interface ITimelineState {
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <small class="debug">{{me}}</small>
+        <daycounter></daycounter>
         <app-timeline [resources]="resources"
                       [state]="state"
                       (channelClicked)="onChannelClicked($event)"

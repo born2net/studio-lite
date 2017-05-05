@@ -67,8 +67,9 @@ import {ResellerLogo} from "../comps/logo/reseller-logo";
 import {Logo} from "../comps/logo/Logo";
 import {LimitedAccess} from "../comps/limited-access/limited-access";
 import {LocaleSelector} from "../app/locale-selector/local-selector";
+import {DaycounterComponent} from "../comps/day-counter/daycounter.component";
 
-var sharedComponents = [Tabs, Tab, Infobox, Sliderpanel, Slideritem, SlideritemContent, PanelSplitMain, PanelSplitSide, PanelSplitContainer, ListToArrayPipe, FormatSecondsPipe, MatchBodyHeight, ScreenTemplate, BlurForwarder, DraggableList, AddContent, Loading, LimitedAccess,
+var sharedComponents = [Tabs, Tab, Infobox, Sliderpanel, Slideritem, SlideritemContent, PanelSplitMain, PanelSplitSide, PanelSplitContainer, ListToArrayPipe, FormatSecondsPipe, MatchBodyHeight, ScreenTemplate, BlurForwarder, DraggableList, AddContent, Loading, LimitedAccess, DaycounterComponent,
     FontSelector, BlockPropContainer, BlockPropCommon, BlockPropHtml, BlockPropClock, BlockPropWeather, BlockPropInstagram, BlockPropJsonPlayer, BlockPropJsonItem, LivePreview, LocationMap, MediaPlayer, FilterModelPipe, SvgIcon, LazyImage, ProUpgrade, ResellerLogo, Logo, LocaleSelector,
     BlockPropScene, BlockPropCalendar, BlockPropSheets, BlockPropTwitter, BlockPropVideo, BlockPropImage, BlockPropLabel, BlockPropMrss, BlockPropLocation, BlockPropRss, BlockPropDigg, BlockPropFasterQ, BlockPropCollection, BlockPropQR, BlockPropYouTube, JsonEventGrid, DashPanelMini];
 

@@ -57,6 +57,9 @@
   line-height: 50px;
   padding-left: 10px;
   cursor: pointer;
+  text-overflow: clip;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .common-channel {

@@ -1,12 +1,14 @@
 import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Output} from "@angular/core";
 import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
-import {CampaignTimelineChanelsModel, CampaignTimelinesModel} from "../../store/imsdb.interfaces_auto";
+import {CampaignTimelineBoardViewerChanelsModel, CampaignTimelineChanelsModel, CampaignTimelinesModel} from "../../store/imsdb.interfaces_auto";
 import {RedPepperService} from "../../services/redpepper.service";
 import {Observable} from "rxjs/Observable";
 import {BlockService, IBlockData} from "../blocks/block-service";
 import * as _ from 'lodash';
 import {Map, List} from 'immutable';
+import {IUiState} from "../../store/store.data";
+import {ACTION_UISTATE_UPDATE} from "../../store/actions/appdb.actions";
 
 
 interface IChannelCollection {
@@ -54,8 +56,10 @@ interface ITimelineState {
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <small class="debug">{{me}}</small>
-        <app-timeline *ngIf="showTimeline" [resources]="resources"
+        <app-timeline [resources]="resources"
                       [state]="state"
+                      (channelClicked)="onChannelClicked($event)"
+                      (closedGaps)="onCloseGaps($event)"
                       (itemAdded)="itemAdded($event)"
                       (channelAdded)="channelAdded($event)"
                       (itemMoved)="itemMoved($event)"
@@ -180,7 +184,6 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
     //     ]
     // }
     id = 0
-    showTimeline = false;
     // items = []
 
     constructor(private yp: YellowPepperService, private rp: RedPepperService, private cd: ChangeDetectorRef, private bs: BlockService) {
@@ -202,6 +205,9 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
                     this.yp.listenTimelineDurationChanged(true),
                     this.yp.ngrxStore.select(store => store.msDatabase.sdk.table_campaign_timeline_chanel_players))
                 .map((i_data): List<CampaignTimelineChanelsModel> => {
+                    var i_campaignTimelineBoardViewerChanelsModel: CampaignTimelineBoardViewerChanelsModel = i_data["1"]
+                    if (i_campaignTimelineBoardViewerChanelsModel)
+                        this.updateStateChannelSelection(i_campaignTimelineBoardViewerChanelsModel.getCampaignTimelineChanelId());
                     return i_data[0];
                 })
                 .mergeMap((i_campaignTimelineChanelModels: List<CampaignTimelineChanelsModel>) => {
@@ -238,8 +244,32 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
                 })
                 .subscribe((i_channels) => {
                     this.updateStateBlocks(i_channels);
+                    this.cd.markForCheck();
                 }, e => console.error(e))
         );
+
+        // this.cancelOnDestroy(
+        //     this.yp.listenCampaignTimelineBoardViewerSelected(true)
+        //         .skip(1)
+        //         .distinctUntilChanged()
+        //         .subscribe((v) => {
+        //             console.log(v);
+        //         })
+        // )
+
+    }
+
+    private updateStateChannelSelection(i_channelSelectedId: number) {
+        var channels = this.state.get('channels');
+        channels.forEach((ch,index) => {
+            if (ch.id == i_channelSelectedId) {
+                ch.selected = true;
+            } else {
+                ch.selected = false;
+            }
+            channels[index] = ch;
+        })
+        this.state = this.state.set('channels',channels);
     }
 
     private updateStateChannels(i_channels: List<CampaignTimelineChanelsModel>) {
@@ -257,7 +287,7 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
         });
         this.state = this.state.set('channels', channels);
     }
-    
+
     private updateStateBlocks(i_channels) {
         var self = this;
         var items = []
@@ -282,32 +312,8 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
             self.state = this.state.set('items', items);
 
         })
-
-        // this.state.items = [
-        //     {
-        //         id: 1,
-        //         type: 'channel',
-        //         resource: "assets/sample1.png",
-        //         title: 'Logo_splash',
-        //         start: 0,
-        //         duration: 60,
-        //         channel: 7,
-        //         selected: false
-        //     },
-        //     {
-        //         id: 2,
-        //         type: 'channel',
-        //         resource: "assets/sample3.svg",
-        //         title: '350x350',
-        //         start: 300,
-        //         duration: 60,
-        //         channel: 8,
-        //         selected: false
-        //     }
-        // ]
-        var s = this.state.toJS();
-        console.log(s);
-        this.showTimeline = true;
+        // var s = this.state.toJS();
+        // console.log(s);
     }
 
     private _sortBlock(i_blockList) {
@@ -341,6 +347,20 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
 
     channelAdded(state) {
         console.log("Channel added", state);
+    }
+
+    onChannelClicked(state){
+        var uiState: IUiState = {
+            campaign: {
+                campaignTimelineChannelSelected: state.id,
+                campaignTimelineBoardViewerSelected: state.id
+            }
+        }
+        this.yp.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
+    }
+
+    onCloseGaps(state){
+        console.log(state);
     }
 
     itemAdded(state) {

@@ -97,6 +97,16 @@ export class Sequencer extends Compbaser {
 
     ngAfterViewInit() {
         // auto select the timeline / division on component creation if need to
+
+        this.cancelOnDestroy(
+            this.yp.ngrxStore.select(store => store.appDb.uiState.campaign.campaignTimelineChannelSelected)
+                .filter(v => v != -1)
+                .subscribe((v) => {
+                    this._onDivisionDoubleClicked(v);
+
+                })
+        )
+
         this.cancelOnDestroy(
             this.yp.ngrxStore.select(store => store.appDb.uiState.campaign)
                 .take(1)

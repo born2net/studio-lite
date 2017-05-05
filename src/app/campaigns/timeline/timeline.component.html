@@ -20,7 +20,7 @@
     </select>
     Timeline Length <input type="text" class="timeline-length" value="1:00:00" />
   </div>
-  <div class="row" style="margin-left: 83px;">
+  <div class="row" style="margin-left: 81px;">
     <app-timeline-ruler
       width="{{ state.gridWidth }}"
       height="50"
@@ -95,7 +95,7 @@
     <div class="col-xs-4 col-xs-offset-4">
       <ng-container *ngFor="let channel of state.channels; let i = index">
         <div *ngIf="channel.selected">
-          <form>
+          <form (keydown.enter)="$event.preventDefault()">
             <div class="form-group">
               <label for="exampleInputEmail1">Name</label>
               <input type="text" class="form-control" name="channel-name" [(ngModel)]="channel.name" placeholder="Email">
@@ -110,7 +110,7 @@
       </ng-container>
       <ng-container *ngFor="let output of state.outputs; let i = index">
         <div *ngIf="output.selected">
-          <form>
+          <form (keydown.enter)="$event.preventDefault()">
             <div class="form-group">
               <label for="exampleInputEmail1">Name</label>
               <input type="text" class="form-control" name="output-name" [(ngModel)]="output.name" placeholder="Email">
@@ -125,7 +125,7 @@
       </ng-container>
       <ng-container *ngFor="let item of state.items; let i = index">
         <div *ngIf="item.selected">
-          <form>
+          <form (keydown.enter)="$event.preventDefault()">
             <div class="form-group">
               <label for="exampleInputEmail1">Name</label>
               <input type="text" class="form-control" name="item-title" [(ngModel)]="item.title" placeholder="Email">

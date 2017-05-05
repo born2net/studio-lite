@@ -51,6 +51,11 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
   @Output() outputAdded = new EventEmitter<Object>();
   @Output() outputClicked = new EventEmitter<Object>();
 
+  @Output() closedGaps = new EventEmitter<Object>();
+  @Output() resizedToLargest = new EventEmitter<Object>();
+  @Output() alignedLeft = new EventEmitter<Object>();
+  @Output() alignedRight = new EventEmitter<Object>();
+
 
   constructor() { }
 
@@ -133,7 +138,9 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
                 });
               }
 
-              return endValue;
+              // only allow objects to stop at positions that represent whole numbers of seconds
+              var timeValue = Math.round(endValue * self.state.zoom / 10);
+              return timeValue * (10 / self.state.zoom);
             }
           },
           onPress: function(e) {
@@ -276,15 +283,23 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
             var resizingItem = self.state.items[id];
 
             startWidth = resizingItem.width;
+            console.log('start: ' + startWidth);
           },
-          create: function(event, ui) { },
           resize: function(event, ui) {
+            // var newWidth = Math.round(ui.size.width / 10) * 10;
+            // $(this).width(newWidth);
             var id = ui.originalElement.data('bid');
             var resizingItem = self.state.items[id];
+
             resizingItem.width = ui.size.width;
             resizingItem.duration = ui.size.width * self.state.zoom / 10;
-
             var widthDelta = resizingItem.width - startWidth;
+
+            // resizingItem.width = newWidth;
+            // resizingItem.duration = newWidth * (self.state.zoom / 10);
+            // var widthDelta = newWidth - startWidth;
+
+
 
             // move any companions
             self.state.items.filter((item) => item.selected).map((selectedItem) => {
@@ -293,6 +308,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
                 selectedItem.duration = selectedItem.width * self.state.zoom / 10;
               }
             });
+            console.log('newWidth: ' + resizingItem.width);
 
             startWidth = resizingItem.width;
           },
@@ -306,7 +322,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
 
             self.moveItem(resizingItem, resizingItem.left + left, resizingItem.top);
 
-            self.itemResized.emit(resizingItem);
+            //self.itemResized.emit(resizingItem);
             console.log("Item resized: " + resizingItem);
           }
         });
@@ -421,12 +437,16 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
       return Math.max(accum, item.width);
     }, 0);
 
-    this.state.items.filter(item => item.selected)
+    var resizedItems = this.state.items.filter(item => item.selected)
       .map((item) => {
         item.width = largest;
         item.duration = largest * this.state.zoom / 10;
         item.$el.css({ width: largest });
+        return item;
       });
+
+    this.resizedToLargest.emit(resizedItems);
+    console.log("Resized to largest", resizedItems);
   }
 
   closeGaps() {
@@ -451,6 +471,8 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
         this.moveItem(item, nextStartPos, item.top);
         nextStartPos += item.width;
       });
+      this.closedGaps.emit(groupedItems);
+      console.log("Closed gaps", groupedItems);
     }
   }
 
@@ -458,20 +480,28 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
     var leftAlign = this.state.items.filter((item) => item.selected)
       .reduce((accum, item) => Math.min(accum, item.left), Infinity);
 
-    this.state.items.filter(item => item.selected)
+    var alignedItems = this.state.items.filter(item => item.selected)
       .map((item, i) => {
-        this.moveItem(item, leftAlign, item.top)
+        this.moveItem(item, leftAlign, item.top);
+        return item;
       });
+
+    this.alignedLeft.emit(alignedItems);
+    console.log("Aligned Left", alignedItems);
   }
 
   alignRight() {
     var rightAlign = this.state.items.filter((item) => item.selected)
       .reduce((accum, item) => Math.max(accum, item.left + item.width), 0);
 
-    this.state.items.filter(item => item.selected)
+    var alignedItems = this.state.items.filter(item => item.selected)
       .map((item, i) => {
-        this.moveItem(item, rightAlign - item.width, item.top)
+        this.moveItem(item, rightAlign - item.width, item.top);
+        return item;
       });
+
+    this.alignedRight.emit(alignedItems);
+    console.log("Aligned Right", alignedItems);
   }
 
   changeZoom(e) {
@@ -508,6 +538,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
       TweenLite.to(item.$el[0], dur / 1000, { x: x, y: y });
       item.draggable.update(); // update the draggable position
       item.left = x;
+      item.start = item.left * this.state.zoom / 10;
       item.top = y;
     }
   }
@@ -642,14 +673,14 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
   }
 
   deleteChannel(i) {
-    var deleted = this.state.channels.splice(i, 1);
+    var deleted = this.state.channels.splice(i, 1)[0];
     deleted.$el.remove();
 
     this.drawChannels();
   }
 
   deleteOutput(i) {
-    var deleted = this.state.outputs.splice(i, 1);
+    var deleted = this.state.outputs.splice(i, 1)[0];
     deleted.$el.remove();
 
     // move all existing items on channels up one row
@@ -661,7 +692,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
   }
 
   deleteItem(i) {
-    var deleted = this.state.items.splice(i, 1);
+    var deleted = this.state.items.splice(i, 1)[0];
   }
 
 }

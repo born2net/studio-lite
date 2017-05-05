@@ -12,7 +12,7 @@ export class TimelineRulerComponent implements OnInit, OnChanges {
   @Input() position : number;
 
   canvas : any;
-  ctx;
+  ctx;     
 
   constructor() { }
 

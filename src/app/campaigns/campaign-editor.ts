@@ -57,12 +57,8 @@ export class CampaignEditor extends Compbaser {
     m_campaignTimelinesModels: List<CampaignTimelinesModel>;
     m_campaignTimelineChanelPlayersModel: CampaignTimelineChanelPlayersModelExt;
     m_isVisible1 = 'off';
-    m_isVisible2 = 'off';
     m_list_timeline = 0;
-
     loginState: string = '';
-
-    m_toggleShowChannel = true;
     m_inDevMode = Lib.DevMode();
 
     constructor(private yp: YellowPepperService, private actions: AppdbAction, private rp: RedPepperService, private cd: ChangeDetectorRef) {

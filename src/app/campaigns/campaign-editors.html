@@ -28,10 +28,6 @@
                         <i class="fa fa-play-circle"></i>
                     </button>
 
-                    <!--<button (click)="m_toggleShowChannel = !m_toggleShowChannel" class="btn btn-default btn-sm">-->
-                    <!--toggle channels hack-->
-                    <!--</button>-->
-
                     <div class="sequenceClass" style="float: right; margin-right: 35px; position: relative; top: 6px">
                         <campaign-duration></campaign-duration>
                     </div>
@@ -56,10 +52,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a (click)="m_isVisible2 = m_isVisible2 == 'on' ? 'off' : 'on'" id="toggleStorylineCollapsible" data-toggle="collapse" data-parent="#storylineCollapsible" href="#storylineContainerCollapse">
-                        <span [@visibilityChanged]="m_isVisible2" class="collapsed glyphicon glyphicon-chevron-up"></span>
-                        <span data-localize="timeline">Timeline</span>
-                    </a>
+                    <span data-localize="timeline">Timeline</span>
                     <button (click)="sequencer.onSelectNextChannel()" style="margin-left: 30px" id="selectNextChannel" type="button" class="btn btn-default btn-sm">
                         <i i18n class="fa fa-crosshairs"></i><span data-localize="nextChannel"> next channel</span>
                     </button>
@@ -90,6 +83,9 @@
             <div [@fadeInOut] *ngIf="m_list_timeline==1">
                 <campaign-story-timeline></campaign-story-timeline>
             </div>
+            <div [@fadeInOut] *ngIf="m_list_timeline == 0">
+                <campaign-channels></campaign-channels>
+            </div>
             <div id="storylineContainerCollapse" class="panel-collapse collapse">
                 <div class="panel-body">
                     <aside>
@@ -100,9 +96,7 @@
             </div>
         </div>
     </div>
-    <div [@fadeInOut] *ngIf="m_toggleShowChannel && m_list_timeline == 0">
-        <campaign-channels></campaign-channels>
-    </div>
+
 
 </div>
 

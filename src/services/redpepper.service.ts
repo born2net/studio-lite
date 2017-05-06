@@ -1599,6 +1599,27 @@ export class RedPepperService {
     }
 
     /**
+     Set a block (a.k.a player) offset to support timeline
+     @method setBlockTimelineChannelBlockOffset
+     @param {Number} i_campaign_timeline_chanel_player_id {string} plyer / block id
+     @param {Number} i_hours total hours to play
+     @param {Number} i_minutes total minutes to play
+     @param {Number} i_seconds total seconds to play
+     @return none
+     **/
+    setBlockTimelineChannelBlockOffset(i_campaign_timeline_chanel_player_id, i_offset) {
+        _.find(this.databaseManager.table_campaign_timeline_chanel_players().getAllPrimaryKeys(), campaign_timeline_chanel_player_id => {
+            if (campaign_timeline_chanel_player_id == i_campaign_timeline_chanel_player_id) {
+                this.databaseManager.table_campaign_timeline_chanel_players().openForEdit(campaign_timeline_chanel_player_id);
+                var recPlayer = this.databaseManager.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
+                recPlayer.player_offset_time = i_offset;
+                this.addPendingTables(['table_campaign_timeline_chanel_players']);
+                return true;
+            }
+        })
+    }
+
+    /**
      Set a station so its bound to campaign_id
      @method SetStationCampaignID
      @param {Number} i_native_station_id

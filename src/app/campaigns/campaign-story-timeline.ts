@@ -343,6 +343,8 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
 
     itemMoved(state) {
         console.log("Item moved", state);
+        this.rp.setBlockTimelineChannelBlockOffset(state.id,state.start)
+        this.rp.reduxCommit();
     }
 
     channelAdded(state) {

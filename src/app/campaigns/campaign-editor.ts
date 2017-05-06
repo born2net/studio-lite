@@ -19,12 +19,33 @@ import {Lib} from "../../Lib";
     selector: 'campaign-editor',
     templateUrl: './campaign-editors.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
+    styles: [`
+        .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+            outline: 0;
+        }
+
+        label {
+            border-radius: 0px;
+        }
+    `],
     animations: [
         trigger('visibilityChanged', [
             state('on', style({transform: 'rotate(0deg)'})),
             state('off', style({transform: 'rotate(180deg)'})),
             transition('* => *', animate('300ms'))
+        ]),
+
+        trigger('fadeInOut', [
+            transition(':enter', [
+                style({opacity:0}),
+                animate('400ms', style({opacity: 1}))
+            ]),
+            transition(':leave', [
+                style({opacity:1}),
+                animate('200ms', style({opacity: 0}))
+            ])
         ])
+
     ]
 })
 
@@ -37,10 +58,14 @@ export class CampaignEditor extends Compbaser {
     m_campaignTimelineChanelPlayersModel: CampaignTimelineChanelPlayersModelExt;
     m_isVisible1 = 'off';
     m_isVisible2 = 'off';
+    m_list_timeline = 0;
+
+    loginState: string = '';
+
     m_toggleShowChannel = true;
     m_inDevMode = Lib.DevMode();
 
-    constructor(private yp: YellowPepperService, private actions: AppdbAction, private rp: RedPepperService, private cd:ChangeDetectorRef) {
+    constructor(private yp: YellowPepperService, private actions: AppdbAction, private rp: RedPepperService, private cd: ChangeDetectorRef) {
         super();
         this.cancelOnDestroy(
             //

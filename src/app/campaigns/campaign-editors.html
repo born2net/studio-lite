@@ -18,7 +18,7 @@
                     <button (click)="_onAddTimeline()" id="addNewTimelineButton" type="button" title="add new timeline" data-localize="empty" data-localize-tooltip="addNewTimelineButtonToolTip" class="btn btn-default btn-sm">
                         <span class="glyphicon glyphicon-plus"></span>
                     </button>
-                    <button  (click)="_onRemoveTimeline()" id="removeTimelineButton" type="button" title="remove the selected timeline" data-localize="empty" data-localize-tooltip="removeTimelineButtonToolTip" class="btn btn-default btn-sm">
+                    <button (click)="_onRemoveTimeline()" id="removeTimelineButton" type="button" title="remove the selected timeline" data-localize="empty" data-localize-tooltip="removeTimelineButtonToolTip" class="btn btn-default btn-sm">
                         <span class="glyphicon glyphicon-minus"></span>
                     </button>
                     <button (click)="_onEditScreenLayout()" id="editScreenLayout" type="button" title="edit screen layout" data-localize="empty" data-localize-tooltip="editScreenLayout" class="btn btn-default btn-sm">
@@ -29,7 +29,7 @@
                     </button>
 
                     <!--<button (click)="m_toggleShowChannel = !m_toggleShowChannel" class="btn btn-default btn-sm">-->
-                        <!--toggle channels hack-->
+                    <!--toggle channels hack-->
                     <!--</button>-->
 
                     <div class="sequenceClass" style="float: right; margin-right: 35px; position: relative; top: 6px">
@@ -72,9 +72,24 @@
                     <button (click)="_onTimelinePreview()" id="timelinePreview" type="button" title="campaign preview" data-localize="empty" data-localize-tooltip="campaignPreviewTooltip" class="btn btn-default btn-sm">
                         <i class="fa fa-play-circle"></i>
                     </button>
+
+                    <div style="height: 30px" class="btn-group" data-toggle="buttons">
+
+                        <label (click)="m_list_timeline=0" style="height: 30px" class="btn btn-default active" data-active-class="success">
+                            <i class="fa fa-list-ul"></i>
+                            <input type="radio" name="options" id="option1" autocomplete="off"> list
+                        </label>
+                        <label (click)="m_list_timeline=1" style="height: 30px" class="btn btn-default" data-active-class="danger">
+                            <i class="fa fa-sliders"></i>
+                            <input type="radio" name="options" id="option2" autocomplete="off"> timeline
+                        </label>
+                    </div>
+
                 </h4>
             </div>
-            <campaign-story-timeline *ngIf="m_isVisible2=='on' && m_inDevMode"></campaign-story-timeline>
+            <div [@fadeInOut] *ngIf="m_list_timeline==1">
+                <campaign-story-timeline></campaign-story-timeline>
+            </div>
             <div id="storylineContainerCollapse" class="panel-collapse collapse">
                 <div class="panel-body">
                     <aside>
@@ -85,7 +100,10 @@
             </div>
         </div>
     </div>
-    <campaign-channels *ngIf="m_toggleShowChannel"></campaign-channels>
+    <div [@fadeInOut] *ngIf="m_toggleShowChannel && m_list_timeline == 0">
+        <campaign-channels></campaign-channels>
+    </div>
+
 </div>
 
 

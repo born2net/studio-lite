@@ -100,10 +100,9 @@ export class Sequencer extends Compbaser {
 
         this.cancelOnDestroy(
             this.yp.ngrxStore.select(store => store.appDb.uiState.campaign.campaignTimelineChannelSelected)
-                .filter(v => v != -1)
-                .subscribe((v) => {
-                    this._onDivisionDoubleClicked(v);
-
+                .filter(channelId => channelId != -1 && !_.isUndefined(this.m_selectedScreenTemplate))
+                .subscribe((i_channelId) => {
+                    this._onDivisionDoubleClicked(i_channelId);
                 })
         )
 

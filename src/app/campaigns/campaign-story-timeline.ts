@@ -58,7 +58,7 @@ interface ITimelineState {
         <small class="debug">{{me}}</small>
         <app-timeline [resources]="resources"
                       [state]="state"
-                      (channelClicked)="onChannelClicked($event)"
+                      (channelClicked)="onChannelClicked($event)"                      
                       (closedGaps)="onCloseGaps($event)"
                       (itemAdded)="itemAdded($event)"
                       (channelAdded)="channelAdded($event)"

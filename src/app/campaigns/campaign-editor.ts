@@ -58,6 +58,7 @@ export class CampaignEditor extends Compbaser {
     m_campaignTimelineChanelPlayersModel: CampaignTimelineChanelPlayersModelExt;
     m_isVisible1 = 'off';
     m_list_timeline = 0;
+    zoom = 1;
     loginState: string = '';
     m_inDevMode = Lib.DevMode();
 
@@ -149,6 +150,10 @@ export class CampaignEditor extends Compbaser {
                 this.rp.reduxCommit();
             }
         });
+    }
+
+    _changeZoom(value){
+        // console.log(value);
     }
 
     _onAddTimeline() {

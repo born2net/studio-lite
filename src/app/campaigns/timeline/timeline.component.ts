@@ -503,6 +503,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
     }
 
     changeZoom(e) {
+        if (!this.state) return;
         var zoomFactor = 10 / this.state.zoom;
 
         this.state.items.map((item) => {
@@ -512,6 +513,11 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
 
         this.updateContainerSize();
         this.applyItemBounds();
+    }
+
+    setZoom(i_value) {
+        this.state.zoom = i_value;
+        this.changeZoom(null);
     }
 
     toggleFrozen(e) {

@@ -95,7 +95,7 @@
                             <input title="timeline length" style="width: 70px; height: 30px; position: relative; top: 2px" type="text" class="timeline-length" value="00:00:59"/>
                         </span>
                         <span>
-                            <select title="zoom (ratio / pixels)" style="width: 70px; height: 30px; position: relative; top: 2px">
+                            <select title="zoom (ratio / pixels)" style="width: 70px; height: 30px; position: relative; top: 2px" (change)="_changeZoom($event)" [(ngModel)]="zoom">
                                   <option value="1">1.0 : 10</option>
                                   <option value="2">2.0 : 10</option>
                                   <option value="5">5.0 : 10</option>
@@ -108,7 +108,7 @@
                 </h4>
             </div>
             <div [@fadeInOut] *ngIf="m_list_timeline==1">
-                <campaign-story-timeline></campaign-story-timeline>
+                <campaign-story-timeline [zoom]="zoom"></campaign-story-timeline>
             </div>
             <div [@fadeInOut] *ngIf="m_list_timeline == 0">
                 <campaign-channels></campaign-channels>

@@ -11,20 +11,20 @@
                     <a (click)="m_isVisible1 = m_isVisible1 == 'on' ? 'off' : 'on'" id="toggleTimelinesCollapsible" data-toggle="collapse" data-parent="#timelinesCollapsible" href="#screenSelectorContainerCollapse">
                         <span style="position: relative; top: 3px" [@visibilityChanged]="m_isVisible1" class="glyphicon glyphicon-chevron-down"></span>
                     </a>
-                    <button (click)="_onGoBack()" type="button" style="margin-left: 8px" title="add new timeline" data-localize="empty" data-localize-tooltip="backToCampaignsTooltip" class="btn btn-default btn-sm">
+                    <button (click)="_onGoBack()" type="button" style="margin-left: 8px" title="add new timeline" data-localize-tooltip="backToCampaignsTooltip" class="btn btn-default btn-sm">
                         <span class="glyphicon glyphicon-chevron-left"></span>
                     </button>
 
-                    <button (click)="_onAddTimeline()" id="addNewTimelineButton" type="button" title="add new timeline" data-localize="empty" data-localize-tooltip="addNewTimelineButtonToolTip" class="btn btn-default btn-sm">
+                    <button (click)="_onAddTimeline()" id="addNewTimelineButton" type="button" title="add new timeline" data-localize-tooltip="addNewTimelineButtonToolTip" class="btn btn-default btn-sm">
                         <span class="glyphicon glyphicon-plus"></span>
                     </button>
-                    <button (click)="_onRemoveTimeline()" id="removeTimelineButton" type="button" title="remove the selected timeline" data-localize="empty" data-localize-tooltip="removeTimelineButtonToolTip" class="btn btn-default btn-sm">
+                    <button (click)="_onRemoveTimeline()" id="removeTimelineButton" type="button" title="remove the selected timeline" data-localize-tooltip="removeTimelineButtonToolTip" class="btn btn-default btn-sm">
                         <span class="glyphicon glyphicon-minus"></span>
                     </button>
-                    <button (click)="_onEditScreenLayout()" id="editScreenLayout" type="button" title="edit screen layout" data-localize="empty" data-localize-tooltip="editScreenLayout" class="btn btn-default btn-sm">
+                    <button (click)="_onEditScreenLayout()" id="editScreenLayout" type="button" title="edit screen layout" data-localize-tooltip="editScreenLayout" class="btn btn-default btn-sm">
                         <i class="fa fa-object-group"></i>
                     </button>
-                    <button id="campaignPreview" (click)="_onCampaignPreview()" type="button" title="campaign preview" data-localize="empty" data-localize-tooltip="campaignPreviewTooltip" class="btn btn-default btn-sm">
+                    <button id="campaignPreview" (click)="_onCampaignPreview()" type="button" title="campaign preview" data-localize-tooltip="campaignPreviewTooltip" class="btn btn-default btn-sm">
                         <i class="fa fa-play-circle"></i>
                     </button>
 
@@ -59,25 +59,52 @@
                     <button id="addBlockButton" (click)="_onAddContent()" type="button" title="add content" class="btn btn-default btn-sm">
                         <i class="fa fa-plus"></i>
                     </button>
-                    <button (click)="_onRemoveContent()" id="removeBlockButton" type="button" title="remove content" data-localize="empty" data-localize-tooltip="removeContent" class="btn btn-default btn-sm">
+                    <button (click)="_onRemoveContent()" id="removeBlockButton" type="button" title="remove content" data-localize-tooltip="removeContent" class="btn btn-default btn-sm">
                         <i class="fa fa-minus"></i>
                     </button>
-                    <button (click)="_onTimelinePreview()" id="timelinePreview" type="button" title="campaign preview" data-localize="empty" data-localize-tooltip="campaignPreviewTooltip" class="btn btn-default btn-sm">
+                    <button (click)="_onTimelinePreview()" id="timelinePreview" type="button" title="campaign preview" data-localize-tooltip="campaignPreviewTooltip" class="btn btn-default btn-sm">
                         <i class="fa fa-play-circle"></i>
                     </button>
 
                     <div style="height: 30px" class="btn-group" data-toggle="buttons">
 
-                        <label (click)="m_list_timeline=0" style="height: 30px" class="btn btn-default active" data-active-class="success">
+                        <label title="view as list" (click)="m_list_timeline=0" style="height: 30px" class="btn btn-default active" data-active-class="success">
                             <i class="fa fa-list-ul"></i>
                             <input type="radio" name="options" id="option1" autocomplete="off"> list
                         </label>
-                        <label (click)="m_list_timeline=1" style="height: 30px" class="btn btn-default" data-active-class="danger">
+                        <label title="view as timeline" (click)="m_list_timeline=1" style="height: 30px" class="btn btn-default" data-active-class="danger">
                             <i class="fa fa-sliders"></i>
                             <input type="radio" name="options" id="option2" autocomplete="off"> timeline
                         </label>
                     </div>
 
+                    <span *ngIf="m_list_timeline==1">
+                        <button (click)="_onAddContent()" type="button" title="remove gaps" class="btn btn-default btn-sm">
+                            <i class="fa fa-exchange"></i>
+                        </button>
+                        <button (click)="_onAddContent()" type="button" title="resize to largest" class="btn btn-default btn-sm">
+                            <i class="fa fa-arrows-h"></i>
+                        </button>
+                        <button (click)="_onRemoveContent()" type="button" title="align left" class="btn btn-default btn-sm">
+                            <i class="fa fa fa-outdent"></i>
+                        </button>
+                        <button (click)="_onRemoveContent()" type="button" title="align right" class="btn btn-default btn-sm">
+                            <i class="fa fa fa-indent"></i>
+                        </button>
+                        <span style="font-size: 14px">
+                            <input title="timeline length" style="width: 70px; height: 30px; position: relative; top: 2px" type="text" class="timeline-length" value="00:00:59"/>
+                        </span>
+                        <span>
+                            <select title="zoom (ratio / pixels)" style="width: 70px; height: 30px; position: relative; top: 2px">
+                                  <option value="1">1.0 : 10</option>
+                                  <option value="2">2.0 : 10</option>
+                                  <option value="5">5.0 : 10</option>
+                                  <option value="10">10 : 10</option>
+                                  <option value="20">20 : 10</option>
+                                  <option value="40">40 : 10</option>
+                            </select>
+                        </span>
+                    </span>
                 </h4>
             </div>
             <div [@fadeInOut] *ngIf="m_list_timeline==1">
@@ -96,8 +123,6 @@
             </div>
         </div>
     </div>
-
-
 </div>
 
 

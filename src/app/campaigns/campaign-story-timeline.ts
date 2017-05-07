@@ -58,8 +58,9 @@ interface ITimelineState {
         <small class="debug">{{me}}</small>
         <app-timeline [resources]="resources"
                       [state]="state"
-                      (channelClicked)="onChannelClicked($event)"                      
+                      (channelClicked)="onChannelClicked($event)"
                       (closedGaps)="onCloseGaps($event)"
+                      (itemResized)="onItemResized($event)"
                       (itemAdded)="itemAdded($event)"
                       (channelAdded)="channelAdded($event)"
                       (itemMoved)="itemMoved($event)"
@@ -261,7 +262,7 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
 
     private updateStateChannelSelection(i_channelSelectedId: number) {
         var channels = this.state.get('channels');
-        channels.forEach((ch,index) => {
+        channels.forEach((ch, index) => {
             if (ch.id == i_channelSelectedId) {
                 ch.selected = true;
             } else {
@@ -269,7 +270,7 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
             }
             channels[index] = ch;
         })
-        this.state = this.state.set('channels',channels);
+        this.state = this.state.set('channels', channels);
     }
 
     private updateStateChannels(i_channels: List<CampaignTimelineChanelsModel>) {
@@ -343,7 +344,7 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
 
     itemMoved(state) {
         console.log("Item moved", state);
-        this.rp.setBlockTimelineChannelBlockOffset(state.id,state.start)
+        this.rp.setBlockTimelineChannelBlockNewPosition(state.id, "player_offset_time", state.start);
         this.rp.reduxCommit();
     }
 
@@ -351,7 +352,7 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
         console.log("Channel added", state);
     }
 
-    onChannelClicked(state){
+    onChannelClicked(state) {
         var uiState: IUiState = {
             campaign: {
                 campaignTimelineChannelSelected: state.id,
@@ -361,7 +362,14 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
         this.yp.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
     }
 
-    onCloseGaps(state){
+    onItemResized(state) {
+        console.log("Item resized", state);
+        this.rp.setBlockTimelineChannelBlockNewPosition(state.id, "player_offset_time", Math.round(state.start));
+        this.rp.setBlockTimelineChannelBlockNewPosition(state.id, "player_duration", Math.round(state.duration));
+        this.rp.reduxCommit();
+    }
+
+    onCloseGaps(state) {
         console.log(state);
     }
 
@@ -475,3 +483,9 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
 //         viewerId:  this.rp.getAssignedViewerIdFromChannelId(channelId)
 //     }
 // })
+
+
+
+
+// notes to update in Alex's timelime component
+// line 323: uncomment self.itemResized.emit(resizingItem);

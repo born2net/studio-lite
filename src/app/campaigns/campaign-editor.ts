@@ -6,7 +6,7 @@ import {YellowPepperService} from "../../services/yellowpepper.service";
 import {CampaignTimelineChanelsModel, CampaignTimelinesModel} from "../../store/imsdb.interfaces_auto";
 import {List} from "immutable";
 import {ACTION_UISTATE_UPDATE, AppdbAction, SideProps} from "../../store/actions/appdb.actions";
-import {IUiState} from "../../store/store.data";
+import {IUiState, TimelineViewModeEnum} from "../../store/store.data";
 import {PreviewModeEnum} from "../live-preview/live-preview";
 import * as _ from "lodash";
 import {RedPepperService} from "../../services/redpepper.service";
@@ -37,11 +37,11 @@ import {Lib} from "../../Lib";
 
         trigger('fadeInOut', [
             transition(':enter', [
-                style({opacity:0}),
+                style({opacity: 0}),
                 animate('400ms', style({opacity: 1}))
             ]),
             transition(':leave', [
-                style({opacity:1}),
+                style({opacity: 1}),
                 animate('200ms', style({opacity: 0}))
             ])
         ])
@@ -57,10 +57,11 @@ export class CampaignEditor extends Compbaser {
     m_campaignTimelinesModels: List<CampaignTimelinesModel>;
     m_campaignTimelineChanelPlayersModel: CampaignTimelineChanelPlayersModelExt;
     m_isVisible1 = 'off';
-    m_list_timeline = 0;
     zoom = 1;
     loginState: string = '';
     m_inDevMode = Lib.DevMode();
+    m_TimelineViewModeEnum = TimelineViewModeEnum;
+    m_TimelineViewModeSelection = TimelineViewModeEnum.ListMode;
 
     constructor(private yp: YellowPepperService, private actions: AppdbAction, private rp: RedPepperService, private cd: ChangeDetectorRef) {
         super();
@@ -152,8 +153,18 @@ export class CampaignEditor extends Compbaser {
         });
     }
 
-    _changeZoom(value){
+    _changeZoom(value) {
         // console.log(value);
+    }
+
+    _onTimelineViewMode(i_mode: TimelineViewModeEnum) {
+        var uiState: IUiState = {
+            campaign: {
+                timelineViewModeSelected: i_mode
+            }
+        }
+        this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
+        this.m_TimelineViewModeSelection = i_mode;
     }
 
     _onAddTimeline() {

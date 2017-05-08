@@ -267,7 +267,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
 
                 item.draggable.addEventListener("dragend", function () {
                     self.itemMoved.emit(item);
-                    console.log("Item Moved: " + item);
+                    console.log("Item Moved:: " + item);
                 });
 
                 // set item initial position

@@ -8,8 +8,9 @@ import {BlockService, IBlockData} from "../blocks/block-service";
 import * as _ from 'lodash';
 import {Map, List} from 'immutable';
 import {IUiState} from "../../store/store.data";
-import {ACTION_UISTATE_UPDATE} from "../../store/actions/appdb.actions";
+import {ACTION_UISTATE_UPDATE, SideProps} from "../../store/actions/appdb.actions";
 import {TimelineComponent} from "./timeline/timeline.component";
+import {timeout} from "../../decorators/timeout-decorator";
 
 interface IChannelCollection {
     blocks: Array<number>;
@@ -60,6 +61,7 @@ interface ITimelineState {
                       [state]="state"
                       (channelClicked)="onChannelClicked($event)"
                       (closedGaps)="onCloseGaps($event)"
+                      (itemClicked)="onItemClicked($event)"
                       (itemResized)="onItemResized($event)"
                       (itemAdded)="itemAdded($event)"
                       (channelAdded)="channelAdded($event)"
@@ -242,6 +244,14 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
             var blockList = this._sortBlock(i_channel);
             blockList.forEach((i_block) => {
                 if (i_block == -1) return;
+                var name;
+                if (i_block.block.scene) {
+                    name = i_block.block.scene.name;
+                } else if (i_block.block.resource) {
+                    name = i_block.block.resource.name;
+                } else {
+                    name = i_block.block.blockName;
+                }
                 var block: IBlockData = i_block.block
                 var item: IItem = {
                     id: block.blockID,
@@ -249,9 +259,10 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
                     channel: channelId,
                     duration: block.duration,
                     selected: false,
-                    title: block.blockName,
+                    title: name,
                     start: block.offset,
-                    resource: "assets/sample3.svg",
+                    resource: "assets/sample3.svg"
+                    // resource: i_block.block.blockFontAwesome,
                 }
                 items.push(item);
             });
@@ -289,7 +300,7 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
 
     itemMoved(state) {
         console.log("Item moved", state);
-        this.rp.setBlockTimelineChannelBlockNewPosition(state.id, "player_offset_time", state.start);
+        this.rp.setBlockTimelineChannelBlockNewPosition(state.channel, state.id, "player_offset_time", state.start);
         this.rp.reduxCommit();
     }
 
@@ -307,10 +318,24 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
         this.yp.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
     }
 
+    // delay for better performance when selecting timeline item
+    // @timeout(250)
+    onItemClicked(state){
+        var uiState: IUiState = {
+            campaign: {
+                blockChannelSelected: state.id, 
+                campaignTimelineBoardViewerSelected: state.channel,
+                campaignTimelineChannelSelected: state.channel
+            },
+            uiSideProps: SideProps.channelBlock
+        }
+        this.yp.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
+    }
+    
     onItemResized(state) {
         console.log("Item resized", state);
-        this.rp.setBlockTimelineChannelBlockNewPosition(state.id, "player_offset_time", Math.round(state.start));
-        this.rp.setBlockTimelineChannelBlockNewPosition(state.id, "player_duration", Math.round(state.duration));
+        this.rp.setBlockTimelineChannelBlockNewPosition(state.channel, state.id, "player_offset_time", Math.round(state.start));
+        this.rp.setBlockTimelineChannelBlockNewPosition(state.channel, state.id, "player_duration", Math.round(state.duration));
         this.rp.reduxCommit();
     }
 

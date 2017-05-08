@@ -20,6 +20,11 @@ const reducers = {msDatabase, appDb};
 export const developmentReducer: ActionReducer<ApplicationState> = compose(storeFreeze, combineReducers)(reducers);
 export const productionReducer: ActionReducer<ApplicationState> = combineReducers(reducers);
 
+export enum TimelineViewModeEnum {
+    ListMode,
+    StoryMode
+}
+
 export interface IMsDatabase {
     thread: { [key: number]: any };
     sdk: ISDK;
@@ -56,6 +61,7 @@ export interface IUiStateCampaign {
     campaignCreateName?: string,
     campaignSelected?: number;
     timelineSelected?: number;
+    timelineViewModeSelected?: number;
     blockChannelSelected?: number;
     storyBoardItemSelected?: number;
     storyBoardOutputSelected?: number;
@@ -144,6 +150,7 @@ export const INITIAL_APP_DB: IAppDb = {
             campaignTimelineChannelSelected: -1,
             campaignSelected: -1,
             timelineSelected: -1,
+            timelineViewModeSelected: TimelineViewModeEnum.ListMode,
             campaignCreateOrientation: -1,
             blockChannelSelected: -1,
             campaignCreateResolution: '',

@@ -1607,15 +1607,16 @@ export class RedPepperService {
      @param {Number} i_seconds total seconds to play
      @return none
      **/
-    setBlockTimelineChannelBlockNewPosition(i_campaign_timeline_chanel_player_id, i_field:'player_offset_time'|'player_duration', i_value) {
+    setBlockTimelineChannelBlockNewPosition(i_channel, i_campaign_timeline_chanel_player_id, i_field:'player_offset_time'|'player_duration', i_value) {
         _.find(this.databaseManager.table_campaign_timeline_chanel_players().getAllPrimaryKeys(), campaign_timeline_chanel_player_id => {
             if (campaign_timeline_chanel_player_id == i_campaign_timeline_chanel_player_id) {
                 this.databaseManager.table_campaign_timeline_chanel_players().openForEdit(campaign_timeline_chanel_player_id);
                 var recPlayer = this.databaseManager.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
                 recPlayer[i_field] = i_value;
+                recPlayer['campaign_timeline_chanel_id'] = i_channel;
                 this.addPendingTables(['table_campaign_timeline_chanel_players']);
                 return true;
-            }
+            }     
         })
     }
 

@@ -6,6 +6,7 @@ import {Lib} from "../../Lib";
 import {RedPepperService} from "../../services/redpepper.service";
 import {List} from "immutable";
 import {CampaignTimelineChanelPlayersModelExt} from "../../store/model/msdb-models-extended";
+import {TimelineViewModeEnum} from "../../store/store.data";
 
 @Component({
     selector: 'channel-block-props',
@@ -68,7 +69,10 @@ export class ChannelBlockProps extends Compbaser implements AfterViewInit {
         var self = this
         this.cancelOnDestroy(
             this.yp.getChannelBlockModels(this.m_campaignTimelineChanelPlayersModel.getCampaignTimelineChanelId())
-                .subscribe((i_campaignTimelineChanelPlayersModels: List<CampaignTimelineChanelPlayersModelExt>) => {
+                .withLatestFrom(this.yp.ngrxStore.select(store => store.appDb.uiState.campaign.timelineViewModeSelected))
+                .filter(v => v[1] == TimelineViewModeEnum.ListMode)
+                .subscribe((v: any) => {
+                    var i_campaignTimelineChanelPlayersModels: List<CampaignTimelineChanelPlayersModelExt> = v[0];
                     var sorted = i_campaignTimelineChanelPlayersModels.sort((a, b) => {
                         if (a.getPlayerOffsetTimeInt() < b.getPlayerOffsetTimeInt())
                             return -1;
@@ -79,10 +83,10 @@ export class ChannelBlockProps extends Compbaser implements AfterViewInit {
                     })
                     var playerOffsetTime: any = 0;
                     sorted.forEach((i_campaignTimelineChanelPlayersModel) => {
-                        // console.log(i_campaignTimelineChanelPlayersModel.getPlayerDuration() + ' ' + i_campaignTimelineChanelPlayersModel.getPlayerOffsetTime());
+                        console.log(i_campaignTimelineChanelPlayersModel.getPlayerDuration() + ' ' + i_campaignTimelineChanelPlayersModel.getPlayerOffsetTime());
                         var playerDuration = i_campaignTimelineChanelPlayersModel.getPlayerDuration();
                         self.rp.setBlockRecord(i_campaignTimelineChanelPlayersModel.getCampaignTimelineChanelPlayerId(), 'player_offset_time', playerOffsetTime);
-                        // console.log('player ' + i_campaignTimelineChanelPlayersModel.getCampaignTimelineChanelPlayerId() + ' offset ' + playerOffsetTime + ' playerDuration ' + playerDuration);
+                        console.log('player ' + i_campaignTimelineChanelPlayersModel.getCampaignTimelineChanelPlayerId() + ' offset ' + playerOffsetTime + ' playerDuration ' + playerDuration);
                         playerOffsetTime = parseFloat(playerOffsetTime) + parseFloat(playerDuration);
                     })
                     self.rp.updateTotalTimelineDuration(this.m_selectedCampaignTimelinesModel.getCampaignTimelineId());

@@ -16,7 +16,7 @@
   position: absolute;
   top: 0;
   border: 1px solid black;
-  z-index: 100;
+  z-index: 1000;
   list-style: none;
 }
 

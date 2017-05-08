@@ -11,6 +11,7 @@ import {IUiState} from "../../store/store.data";
 import {ACTION_UISTATE_UPDATE, SideProps} from "../../store/actions/appdb.actions";
 import {TimelineComponent} from "./timeline/timeline.component";
 import {timeout} from "../../decorators/timeout-decorator";
+import {EventManager} from "@angular/platform-browser";
 
 interface IChannelCollection {
     blocks: Array<number>;
@@ -55,6 +56,10 @@ interface ITimelineState {
 @Component({
     selector: 'campaign-story-timeline',
     changeDetection: ChangeDetectionStrategy.OnPush,
+    host: {
+        '(document:keyup)': 'handleKeyboardEvents($event,"up")',
+        '(document:keydown)': 'handleKeyboardEvents($event,"down")'
+    },
     template: `
         <small class="debug">{{me}}</small>
         <app-timeline [resources]="resources"
@@ -74,6 +79,8 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
     m_campaignTimelinesModels: List<CampaignTimelinesModel>;
     m_zoom = 1;
     campaignTimelinesModel: CampaignTimelinesModel;
+    m_contPressed: 'down' | 'up' = 'up';
+    m_selectedItems:Array<any> = [];
 
     resources = {
         items: [
@@ -124,8 +131,13 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
 
     // id = 0
 
-    constructor(private yp: YellowPepperService, private rp: RedPepperService, private cd: ChangeDetectorRef, private bs: BlockService) {
+    constructor(private yp: YellowPepperService, private rp: RedPepperService, private cd: ChangeDetectorRef, private bs: BlockService, private eventManager: EventManager) {
         super();
+
+        // this.eventManager.addGlobalEventListener('window', 'keydown.alt', (event) => {
+        //     console.log(event);
+        // })
+
         this.cancelOnDestroy(
             this.yp.listenTimelineSelected()
                 .map((i_campaignTimelinesModel: CampaignTimelinesModel) => {
@@ -198,11 +210,11 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
     }
 
     @ViewChild(TimelineComponent)
-    timelineComponent:TimelineComponent;
+    timelineComponent: TimelineComponent;
 
     @Input()
     set zoom(i_zoom: number) {
-        this.state = this.state.set('zoom',i_zoom);
+        this.state = this.state.set('zoom', i_zoom);
         this.cd.detectChanges();
         this.timelineComponent.changeZoom(null);
     }
@@ -318,12 +330,18 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
         this.yp.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
     }
 
-    // delay for better performance when selecting timeline item
-    // @timeout(250)
-    onItemClicked(state){
+    handleKeyboardEvents(event: KeyboardEvent, direction) {
+        var key = event.which || event.keyCode;
+        if (key != 17) return;
+        this.m_contPressed = direction;
+        return true;
+    }
+
+    onItemClicked(state) {
+        if (this.m_contPressed == 'down') return;
         var uiState: IUiState = {
             campaign: {
-                blockChannelSelected: state.id, 
+                blockChannelSelected: state.id,
                 campaignTimelineBoardViewerSelected: state.channel,
                 campaignTimelineChannelSelected: state.channel
             },
@@ -331,7 +349,7 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
         }
         this.yp.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
     }
-    
+
     onItemResized(state) {
         console.log("Item resized", state);
         this.rp.setBlockTimelineChannelBlockNewPosition(state.channel, state.id, "player_offset_time", Math.round(state.start));
@@ -526,11 +544,13 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
 
 /**
 
-notes to update in Alex's timelime component
-line 323:
-    uncomment self.itemResized.emit(resizingItem);
+ Github: https://github.com/AlexWD/ds-timeline-widget
 
-line 506:
+ notes to update in Alex's timelime component
+ line 323:
+ uncomment self.itemResized.emit(resizingItem);
+
+ line 506:
  changeZoom(e) {
     if (!this.state) return;
 

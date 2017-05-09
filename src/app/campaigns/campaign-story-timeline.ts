@@ -59,7 +59,9 @@ interface ITimelineState {
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
         '(document:keyup)': 'handleKeyboardEvents($event,"up")',
-        '(document:keydown)': 'handleKeyboardEvents($event,"down")'
+        '(document:keydown)': 'handleKeyboardEvents($event,"down")',
+        '(window:mouseup)': 'handleMouseEvents($event,"up")',
+        '(window:mousedown)': 'handleMouseEvents($event,"down")'
     },
     template: `
         <small class="debug">{{me}}</small>
@@ -342,6 +344,10 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
             }
         }
         this.yp.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
+    }
+
+    handleMouseEvents(event: KeyboardEvent, direction) {
+        con(event + ' ' + direction);
     }
 
     handleKeyboardEvents(event: KeyboardEvent, direction) {

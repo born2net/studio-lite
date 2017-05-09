@@ -68,17 +68,23 @@
 
                     <div style="height: 30px" class="btn-group" data-toggle="buttons">
 
-                        <label title="view as list" (click)="_onTimelineViewMode(m_TimelineViewModeEnum.ListMode)" style="height: 30px" class="btn btn-default active" data-active-class="success">
+                        <label title="view as list" (click)="_onTimelineViewMode(m_storyBoardListViewModeEnum.ListMode)" style="height: 30px"
+                               [ngClass]="{active: m_storyBoardListViewModeSelection==m_storyBoardListViewModeEnum.ListMode}"
+                               class="btn btn-default" data-active-class="success">
                             <i class="fa fa-list-ul"></i>
                             <input type="radio" name="options" id="option1" autocomplete="off"> list
                         </label>
-                        <label title="view as timeline" (click)="_onTimelineViewMode(m_TimelineViewModeEnum.StoryMode)" style="height: 30px" class="btn btn-default" data-active-class="danger">
+
+                        <label title="view as timeline" (click)="_onTimelineViewMode(m_storyBoardListViewModeEnum.StoryMode)" style="height: 30px"
+                               [ngClass]="{active: m_storyBoardListViewModeSelection==m_storyBoardListViewModeEnum.StoryMode}"
+                               class="btn btn-default" data-active-class="danger">
                             <i class="fa fa-sliders"></i>
                             <input type="radio" name="options" id="option2" autocomplete="off"> timeline
                         </label>
+
                     </div>
 
-                    <span *ngIf="m_TimelineViewModeSelection==m_TimelineViewModeEnum.StoryMode">
+                    <span *ngIf="m_storyBoardListViewModeSelection==m_storyBoardListViewModeEnum.StoryMode">
                         <button (click)="_onAddContent()" type="button" title="remove gaps" class="btn btn-default btn-sm">
                             <i class="fa fa-exchange"></i>
                         </button>
@@ -107,10 +113,10 @@
                     </span>
                 </h4>
             </div>
-            <div [@fadeInOut] *ngIf="m_TimelineViewModeSelection==m_TimelineViewModeEnum.StoryMode">
+            <div [@fadeInOut] *ngIf="m_storyBoardListViewModeSelection==m_storyBoardListViewModeEnum.StoryMode">
                 <campaign-story-timeline [zoom]="zoom"></campaign-story-timeline>
             </div>
-            <div [@fadeInOut] *ngIf="m_TimelineViewModeSelection==m_TimelineViewModeEnum.ListMode">
+            <div [@fadeInOut] *ngIf="m_storyBoardListViewModeSelection==m_storyBoardListViewModeEnum.ListMode">
                 <campaign-channels></campaign-channels>
             </div>
             <div id="storylineContainerCollapse" class="panel-collapse collapse">

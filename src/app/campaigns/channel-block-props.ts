@@ -6,7 +6,7 @@ import {Lib} from "../../Lib";
 import {RedPepperService} from "../../services/redpepper.service";
 import {List} from "immutable";
 import {CampaignTimelineChanelPlayersModelExt} from "../../store/model/msdb-models-extended";
-import {TimelineViewModeEnum} from "../../store/store.data";
+import {StoryBoardListViewModeEnum} from "../../store/store.data";
 
 @Component({
     selector: 'channel-block-props',
@@ -69,8 +69,8 @@ export class ChannelBlockProps extends Compbaser implements AfterViewInit {
         var self = this
         this.cancelOnDestroy(
             this.yp.getChannelBlockModels(this.m_campaignTimelineChanelPlayersModel.getCampaignTimelineChanelId())
-                .withLatestFrom(this.yp.ngrxStore.select(store => store.appDb.uiState.campaign.timelineViewModeSelected))
-                .filter(v => v[1] == TimelineViewModeEnum.ListMode)
+                .withLatestFrom(this.yp.ngrxStore.select(store => store.appDb.uiState.campaign.storyBoardListViewModeSelected))
+                .filter(v => v[1] == StoryBoardListViewModeEnum.ListMode)
                 .subscribe((v: any) => {
                     var i_campaignTimelineChanelPlayersModels: List<CampaignTimelineChanelPlayersModelExt> = v[0];
                     var sorted = i_campaignTimelineChanelPlayersModels.sort((a, b) => {

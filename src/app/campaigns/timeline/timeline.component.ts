@@ -140,6 +140,12 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
               return timeValue * (10 / self.state.zoom);
             }
           },
+          onRelease: function () {
+            // emit click event for selected items on release
+            var selectedItems = self.state.items.filter(i => i.selected);
+            self.itemsClicked.emit(selectedItems);
+            console.log("Item clicked: ", selectedItems);
+          },
           onPress: function(e) {
             // mutli-select functionality
             if (!e.ctrlKey && $(".box.ui-selected").length == 1) {
@@ -147,12 +153,6 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
             }
             self.selectItem(item);
             e.stopPropagation();
-
-            var selectedItems = self.state.items.filter(i => i.selected);
-
-            // emit click event for item
-            self.itemsClicked.emit(selectedItems);
-            console.log("Item clicked: ", selectedItems);
 
             //when the user presses, we'll create an array ("companions") and populate it with all the OTHER elements that have the ".ui-selected" class applied (excluding the one that's being dragged). We also record their x and y position so that we can apply the delta to it in the onDrag.
             var boxes = $(".box.ui-selected"),
@@ -274,7 +274,6 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
 
                   if (selectedItem.left + selectedItem.width >= otherItem.left + otherItem.width - 10 &&
                     selectedItem.left + selectedItem.width <= otherItem.left + otherItem.width + 10) {
-                      console.log('from left fire');
                     self.moveItem(otherItem, Math.min(max, Math.max(min, otherItem.left - selectedItem.width)), otherItem.top, 100);
                     selectedItem.overlapsLeft = [];
                   }
@@ -285,7 +284,6 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
                     max = (self.getChannelById(selectedItem.channel).type == "common" ? 13000 : self.state.gridWidth) - otherItem.width;
                   if (selectedItem.left >= otherItem.left - 10 &&
                     selectedItem.left <= otherItem.left + 10) {
-                      console.log('from right fire');
 
                     var newPos = otherItem.left + selectedItem.width;
 

@@ -82,6 +82,10 @@ export class YellowPepperService {
         return this.store.select(store => store.appDb.uiState.mainAppState)
     }
 
+    listenStoryBoardListViewModeSelected() {
+        return this.store.select(store => store.appDb.uiState.campaign.storyBoardListViewModeSelected)
+    }
+
     /**
      Listen to when a campaign timeline channel is selected
      **/

@@ -18,6 +18,14 @@
   border: 1px solid black;
   z-index: 1000;
   list-style: none;
+  display: flex;
+  align-items: center;
+}
+
+:host /deep/ .fa-item {
+  float: left;
+  padding: 10px;
+  opacity: 0.8;
 }
 
 .box-image {

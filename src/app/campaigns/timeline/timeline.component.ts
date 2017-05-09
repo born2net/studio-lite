@@ -60,15 +60,6 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
   constructor() { }
 
   ngOnInit() {
-    // initialize timeline length input
-    $('.timeline-length').timepicker({ 'timeFormat': 'H:i:s' });
-    $('.timeline-length').change((e) => {
-      var parts = e.target.value.split(":");
-      var duration = parseInt(parts[0]) * 60 * 60 + parseInt(parts[1]) * 60 + parseInt(parts[2]);
-      this.state.duration = duration;
-      this.updateContainerSize();
-    });
-
     // reset item selection when the container is clicked
     this.$container.click((e) => {
       if (!$(e.target).hasClass('box') && !$(e.target).hasClass('box-image') && !$(e.target).hasClass('item-title')) {
@@ -146,13 +137,11 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
             }
           },
           onPress: function(e) {
-            // select item
-            self.selectItem(item);
-
             // mutli-select functionality
             if (!e.ctrlKey && $(".box.ui-selected").length == 1) {
               self.resetSelection();
             }
+            self.selectItem(item);
             $(this.target).addClass('ui-selected');
             e.stopPropagation();
 
@@ -385,6 +374,11 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
     });
   }
 
+  timelineDurationChange(dur) {
+    this.state.duration = dur;
+    this.updateContainerSize();
+  }
+
   resetSelection() {
     $('.resizable').removeClass('ui-selected');
     this.state.items.map((item) => {
@@ -572,7 +566,6 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
   }
 
   changeZoom(e) {
-    if (!this.state) return;
     var zoomFactor = 10 / this.state.zoom;
 
     this.state.items.map((item) => {

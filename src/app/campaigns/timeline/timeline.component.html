@@ -18,8 +18,13 @@
       <option value="20">20 : 10</option>
       <option value="40">40 : 10</option>
     </select>
-    Timeline Length <input type="text" class="timeline-length" value="1:00:00" />
-    <!-- <app-duration-input></app-duration-input> -->
+
+  </div>
+  <div class="row" style="padding-bottom:50px;">
+    <app-duration-input
+      duration="{{ state.duration }}"
+      (change)="timelineDurationChange($event)"
+    ></app-duration-input>
   </div>
   <div class="row" style="margin-left: 81px;">
     <app-timeline-ruler
@@ -52,7 +57,7 @@
               style="height: 100%;width: 100%;max-width: 50px;float:left"
             />
 
-            <i *ngIf="item.resource.type == 'fa'" class="fa {{ item.resource.src }} fa-3x" style="float: left;"></i>
+            <i *ngIf="item.resource.type == 'fa'" class="box-image fa {{ item.resource.src }} fa-item"></i>
 
             <div class="item-title">{{ item.title }}</div>
           </li>
@@ -67,7 +72,7 @@
                 style="height: 100%;width: 100%;max-width: 50px;float:left"
               />
 
-              <i *ngIf="item.resource.type == 'fa'" class="fa {{ item.resource.src }} fa-3x" style="float: left;"></i>
+              <i *ngIf="item.resource.type == 'fa'" class="box-image fa {{ item.resource.src }} fa-item"></i>
 
             <div class="item-title">{{ item.title }}</div>
           </li>

@@ -1,6 +1,6 @@
-<input type="text" name="hour" value="{{ hoursOutput }}" (focus)="setFocus('hour')" />
-<input type="text" name="minute" value="{{ minutesOutput }}" (focus)="setFocus('minute')"/>
-<input type="text" name="second" value="{{ secondsOutput }}" (focus)="setFocus('second')"/>
+<input type="text" name="hour" value="{{ hoursOutput }}" (focus)="setFocus($event, 'hour')" />
+<input type="text" name="minute" value="{{ minutesOutput }}" (focus)="setFocus($event, 'minute')"/>
+<input type="text" name="second" value="{{ secondsOutput }}" (focus)="setFocus($event, 'second')"/>
 
-<button (mousedown)="mouseDownIncrement()">+</button>
-<button (mousedown)="mouseDownDecrement()">-</button>
+<button (mousedown)="mouseDownIncrement()" (mouseup)="mouseUpIncrement()">+</button>
+<button (mousedown)="mouseDownDecrement()" (mouseup)="mouseUpDecrement()">-</button>

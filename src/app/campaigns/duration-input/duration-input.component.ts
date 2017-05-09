@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-duration-input',
@@ -12,23 +12,48 @@ export class DurationInputComponent implements OnInit {
   hoursOutput = "00";
   minutesOutput = "00";
   secondsOutput = "01";
-  focus : any = "";
+  focus = "second";
+  focusedItem;
+  timer;
+
+  @Input() duration;
+
+  @Output() change = new EventEmitter<Object>();
 
   constructor() { }
 
   ngOnInit() {
+    var totalSeconds = this.duration;
+    this.hours = Math.floor(totalSeconds / 3600);
+    totalSeconds -= this.hours * 3600;
+    this.minutes = Math.floor(totalSeconds / 60);
+    totalSeconds -= this.minutes * 60;
+    this.seconds = totalSeconds;
+
+    this.updateDisplay();
   }
 
   increment() {
+    if (this.focusedItem) {
+      this.focusedItem.focus();
+    }
     switch (this.focus) {
       case "hour":
-        this.hours++;
+        if (++this.hours > 24) {
+          this.hours = 24;
+        }
         break;
       case "minute":
-        this.minutes++;
+        if (++this.minutes == 60) {
+            this.minutes = 0;
+            this.hours++;
+        }
         break;
       case "second":
-        this.seconds++;
+        if (++this.seconds == 60) {
+          this.seconds = 0;
+          this.minutes++;
+        }
         break;
       default:
         break;
@@ -37,33 +62,70 @@ export class DurationInputComponent implements OnInit {
   }
 
   decrement() {
-
+    switch (this.focus) {
+      case "hour":
+        if (--this.hours < 0) {
+            this.hours = 0;
+        }
+        break;
+      case "minute":
+        if (this.minutes == 0 && this.hours == 0) break;
+        if (--this.minutes == -1) {
+            this.minutes = 59;
+            this.hours--;
+        }
+        break;
+      case "second":
+        if (this.seconds == 0 && this.minutes == 0 && this.hours == 0) break;
+        if (--this.seconds == -1) {
+          this.seconds = 59;
+          if (--this.minutes == -1) {
+            this.minutes = 59;
+            this.hours--;
+          }
+        }
+        break;
+      default:
+        break;
+    }
+    this.updateDisplay();
   }
 
   updateDisplay() {
     this.secondsOutput = this.padLeft(this.seconds);
     this.minutesOutput = this.padLeft(this.minutes);
     this.hoursOutput = this.padLeft(this.hours);
+    this.change.emit(this.hours * 60 * 60 + this.minutes * 60 + this.seconds);
   }
 
-  setFocus(field) {
+  setFocus(event, field) {
     this.focus = field;
+    this.focusedItem = event.target;
   }
 
   mouseDownIncrement() {
     this.increment();
-    console.log('mouse down');
+    this.timer = setInterval(() => this.increment(), 150);
+  }
+
+  mouseUpIncrement() {
+    clearInterval(this.timer);
   }
 
   mouseDownDecrement() {
-    console.log('mouse down also');
+    this.decrement();
+    this.timer = setInterval(() => this.decrement(), 150);
+  }
+
+  mouseUpDecrement() {
+    clearInterval(this.timer);
   }
 
   padLeft(n){
-  	n=n.toString();
-      n= "00".substring(0,2-n.length)+""+n.toString() ;
-      n=n.substring(n.length-2);
-      return n;
+  	n = n.toString();
+    n = "00".substring(0, 2-n.length) + "" + n.toString();
+    n = n.substring(n.length-2);
+    return n;
   }
 
 

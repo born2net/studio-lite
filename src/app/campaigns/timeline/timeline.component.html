@@ -19,6 +19,7 @@
       <option value="40">40 : 10</option>
     </select>
     Timeline Length <input type="text" class="timeline-length" value="1:00:00" />
+    <!-- <app-duration-input></app-duration-input> -->
   </div>
   <div class="row" style="margin-left: 81px;">
     <app-timeline-ruler
@@ -44,14 +45,30 @@
         <ng-container *ngFor="let item of state.items;let i = index">
           <li *ngIf="item.type == 'output'"
               class="resizable selectable box" [attr.data-bid]="i" [style.width.px]="item.width">
-            <img class="box-image" src="{{ item.resource }}" style="height: 100%;width: 100%;max-width: 50px;float:left" />
+
+            <img
+              *ngIf="item.resource.type == 'png' || item.resource.type == 'svg'"
+              class="box-image" src="{{ item.resource.src }}"
+              style="height: 100%;width: 100%;max-width: 50px;float:left"
+            />
+
+            <i *ngIf="item.resource.type == 'fa'" class="fa {{ item.resource.src }} fa-3x" style="float: left;"></i>
+
             <div class="item-title">{{ item.title }}</div>
           </li>
         </ng-container>
         <ng-container *ngFor="let item of state.items;let i = index">
           <li *ngIf="item.type == 'channel'"
               class="resizable selectable box" [attr.data-bid]="i" [style.width.px]="item.width">
-            <img class="box-image" src="{{ item.resource }}" style="height: 100%;width: 100%;max-width: 50px;float:left" />
+
+              <img
+                *ngIf="item.resource.type == 'png' || item.resource.type == 'svg'"
+                class="box-image" src="{{ item.resource.src }}"
+                style="height: 100%;width: 100%;max-width: 50px;float:left"
+              />
+
+              <i *ngIf="item.resource.type == 'fa'" class="fa {{ item.resource.src }} fa-3x" style="float: left;"></i>
+
             <div class="item-title">{{ item.title }}</div>
           </li>
         </ng-container>

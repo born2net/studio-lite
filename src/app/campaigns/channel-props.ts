@@ -1,14 +1,12 @@
 import {Component} from "@angular/core";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
-import {Compbaser, NgmslibService} from "ng-mslib";
+import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {RedPepperService} from "../../services/redpepper.service";
 import {timeout} from "../../decorators/timeout-decorator";
 import * as _ from "lodash";
 import {CampaignTimelineChanelsModel} from "../../store/imsdb.interfaces_auto";
-import {Observable} from "rxjs";
 import {Lib} from "../../Lib";
-
 
 @Component({
     selector: 'channel-props',
@@ -31,11 +29,11 @@ import {Lib} from "../../Lib";
                                 <li class="list-group-item">
                                     Channel name:
                                     <!--Channel name: {{(m_channel$ | async)?.getChanelName()}}-->
-                                    <input class="pull-right" [formControl]="m_contGroup.controls['chanel_name']" />
+                                    <input class="pull-right" [formControl]="m_contGroup.controls['chanel_name']"/>
                                 </li>
                                 <li class="list-group-item">
                                     Channel color (hex):
-                                    <input class="pull-right" [formControl]="m_contGroup.controls['chanel_color']" />
+                                    <input class="pull-right" [formControl]="m_contGroup.controls['chanel_color']"/>
                                 </li>
                                 <li class="list-group-item">
                                     <span i18n>repeat to fit</span>

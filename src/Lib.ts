@@ -138,8 +138,8 @@ export class Lib {
     /** deep compare two objects **/
     static IsEqual(obj1, obj2) {
         function _equals(obj1, obj2) {
-            var clone = $.extend(true, {}, obj1),
-                cloneStr = JSON.stringify(clone);
+            var clone = $.extend(true, {}, obj1);
+            var cloneStr = JSON.stringify(clone);
             return cloneStr === JSON.stringify($.extend(true, clone, obj2));
         }
 

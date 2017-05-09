@@ -38,7 +38,7 @@ interface IChannels {
 interface IItem {
     id: number;
     type: 'output' | 'channel';
-    resource: string;
+    resource: Object;
     title: string;
     start: number;
     duration: number;
@@ -67,11 +67,11 @@ interface ITimelineState {
                       [state]="state"
                       (channelClicked)="onChannelClicked($event)"
                       (closedGaps)="onCloseGaps($event)"
-                      (itemClicked)="onItemClicked($event)"
-                      (itemResized)="onItemResized($event)"
+                      (itemsClicked)="itemsClicked($event)"
+                      (itemsResized)="itemsResized($event)"
                       (itemAdded)="itemAdded($event)"
                       (channelAdded)="channelAdded($event)"
-                      (itemMoved)="itemMoved($event)"
+                      (itemsMoved)="itemsMoved($event)"
         ></app-timeline>
     `
 })
@@ -81,7 +81,7 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
     m_zoom = 1;
     campaignTimelinesModel: CampaignTimelinesModel;
     m_contPressed: 'down' | 'up' = 'up';
-    m_selectedItems:Array<any> = [];
+    m_selectedItems: Array<any> = [];
 
     resources = {
         items: [
@@ -128,6 +128,14 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
         outputs: [],
         items: []
     });
+
+    stateTemp: ITimelineState = {
+        zoom: 1,
+        duration: 500,
+        channels: [],
+        outputs: [],
+        items: []
+    }
 
 
     // id = 0
@@ -215,22 +223,22 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
 
     @Input()
     set zoom(i_zoom: number) {
-        this.state = this.state.set('zoom', i_zoom);
+        this.stateTemp.zoom = i_zoom;
+        this.applyState();
         this.cd.detectChanges();
         this.timelineComponent.changeZoom(null);
     }
 
     private updateStateChannelSelection(i_channelSelectedId: number) {
-        var channels = this.state.get('channels');
-        channels.forEach((ch, index) => {
+        this.stateTemp.channels.forEach((ch, index) => {
             if (ch.id == i_channelSelectedId) {
                 ch.selected = true;
             } else {
                 ch.selected = false;
             }
-            channels[index] = ch;
+            this.stateTemp.channels[index] = ch;
         })
-        this.state = this.state.set('channels', channels);
+        this.applyState();
     }
 
     private updateStateChannels(i_channels: List<CampaignTimelineChanelsModel>) {
@@ -240,17 +248,17 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
                 id: i_channel.getCampaignTimelineChanelId(),
                 viewerId: this.rp.getAssignedViewerIdFromChannelId(i_channel.getCampaignTimelineChanelId()),
                 name: i_channel.getChanelName(),
-                color: '#'+Lib.DecimalToHex(i_channel.getChanelColor()),
+                color: '#' + Lib.DecimalToHex(i_channel.getChanelColor()),
                 type: 'normal',
                 selected: false
             }
             channels.push(channel);
         });
-        this.state = this.state.set('channels', channels);
+        this.stateTemp.channels = channels;
+        this.applyState();
     }
 
     private updateStateBlocks(i_channels) {
-        var self = this;
         var items = []
         _.forEach(i_channels, (i_channel) => {
             var channelId = i_channel["0"].channelId;
@@ -274,16 +282,29 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
                     selected: false,
                     title: name,
                     start: block.offset,
-                    resource: "assets/sample3.svg"
-                    // resource: i_block.block.blockFontAwesome,
+                    // resource: {
+                    //     type: 'svg',
+                    //     src: "assets/sample3.svg"
+                    // }
+                    resource: {
+                        type: 'fa',
+                        src: "fa-plus"
+                    }
                 }
                 items.push(item);
             });
-            self.state = this.state.set('items', items);
+            this.stateTemp.items = items;
+            this.applyState();
 
         })
-        // var s = this.state.toJS();
-        // console.log(s);
+
+    }
+
+    private applyState() {
+        const currentState = this.state.toJS();
+        var equal = _.isEqual(currentState, this.stateTemp);
+        if (equal) return;
+        this.state = Map(this.stateTemp);
     }
 
     private _sortBlock(i_blockList) {
@@ -311,21 +332,24 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
         // this.items.unshift({id: this.id++, name: 'item'})
     }
 
-    itemMoved(state) {
-        console.log("Item moved", state);
-        this.rp.setBlockTimelineChannelBlockNewPosition(state.channel, state.id, "player_offset_time", state.start);
+    itemsMoved(event) {
+        event.forEach((item)=>{
+            console.log("Item moved", item);
+            this.rp.setBlockTimelineChannelBlockNewPosition(item.channel, item.id, "player_offset_time", item.start);
+
+        })
         this.rp.reduxCommit();
     }
 
-    channelAdded(state) {
-        console.log("Channel added", state);
+    channelAdded(event) {
+        console.log("Channel added", event);
     }
 
-    onChannelClicked(state) {
+    onChannelClicked(event) {
         var uiState: IUiState = {
             campaign: {
-                campaignTimelineChannelSelected: state.id,
-                campaignTimelineBoardViewerSelected: state.id
+                campaignTimelineChannelSelected: event.id,
+                campaignTimelineBoardViewerSelected: event.id
             }
         }
         this.yp.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
@@ -338,32 +362,34 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
         return true;
     }
 
-    onItemClicked(state) {
+    itemsClicked(event) {
         if (this.m_contPressed == 'down') return;
         var uiState: IUiState = {
             campaign: {
-                blockChannelSelected: state.id,
-                campaignTimelineBoardViewerSelected: state.channel,
-                campaignTimelineChannelSelected: state.channel
-            },
-            uiSideProps: SideProps.channelBlock
+                blockChannelSelected: event.id,
+                // campaignTimelineBoardViewerSelected: event.channel,
+                // campaignTimelineChannelSelected: event.channel
+            }//,
+            // uiSideProps: SideProps.channelBlock
         }
         this.yp.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
     }
 
-    onItemResized(state) {
-        console.log("Item resized", state);
-        this.rp.setBlockTimelineChannelBlockNewPosition(state.channel, state.id, "player_offset_time", Math.round(state.start));
-        this.rp.setBlockTimelineChannelBlockNewPosition(state.channel, state.id, "player_duration", Math.round(state.duration));
+    itemsResized(event) {
+        event.forEach((item)=>{
+            console.log("Item resized", event);
+            this.rp.setBlockTimelineChannelBlockNewPosition(item.channel, item.id, "player_offset_time", Math.round(item.start));
+            this.rp.setBlockTimelineChannelBlockNewPosition(item.channel, item.id, "player_duration", Math.round(item.duration));
+        })
         this.rp.reduxCommit();
     }
 
-    onCloseGaps(state) {
-        console.log(state);
+    onCloseGaps(event) {
+        console.log(event);
     }
 
-    itemAdded(state) {
-        console.log("Item Added", state);
+    itemAdded(event) {
+        console.log("Item Added", event);
     }
 
     ngAfterViewInit() {
@@ -546,10 +572,6 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
 /**
 
  Github: https://github.com/AlexWD/ds-timeline-widget
-
- notes to update in Alex's timelime component
- line 323:
- uncomment self.itemResized.emit(resizingItem);
 
  line 506:
  changeZoom(e) {

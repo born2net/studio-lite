@@ -1,0 +1,6 @@
+<input type="text" name="hour" value="{{ hoursOutput }}" (focus)="setFocus('hour')" />
+<input type="text" name="minute" value="{{ minutesOutput }}" (focus)="setFocus('minute')"/>
+<input type="text" name="second" value="{{ secondsOutput }}" (focus)="setFocus('second')"/>
+
+<button (mousedown)="mouseDownIncrement()">+</button>
+<button (mousedown)="mouseDownDecrement()">-</button>

@@ -31,6 +31,7 @@ import {TimelineComponent} from "./timeline/timeline.component";
 import {TimelineRulerComponent} from "./timeline-ruler/timeline-ruler.component";
 import {CampaignStoryTimeline} from "./campaign-story-timeline";
 import {HourCounter} from "../../comps/hour-counter/hour-counter";
+import {DurationInputComponent} from "./duration-input/duration-input.component";
 
 export const LAZY_ROUTES = [
     {path: ':folder', component: CampaignsNavigation},
@@ -41,7 +42,7 @@ export const LAZY_ROUTES = [
 @NgModule({
     imports: [DropdownModulePrime, SharedModule, CommonModule, DropdownModule, OrderListModule, Ng2Bs3ModalModule, RouterModule.forChild(LAZY_ROUTES)],
     declarations: [CampaignsNavigation, Campaigns, CampaignManager, CampaignName, CampaignOrientation, CampaignLayout, TimelineComponent, TimelineRulerComponent, HourCounter,
-        CampaignEditor, CampaignResolution, CampaignList, Sequencer, ScreenLayoutEditor, ScreenLayoutEditorProps, CampaignChannels, CampaignDuration, CampaignStoryTimeline,
+        CampaignEditor, CampaignResolution, CampaignList, Sequencer, ScreenLayoutEditor, ScreenLayoutEditorProps, CampaignChannels, CampaignDuration, CampaignStoryTimeline, DurationInputComponent,
         CampaignPropsManager, CampaignProps, TimelineProps, ChannelProps, DashboardProps, CampaignEditorProps, CampaignSchedProps, ChannelBlockProps]
 })
 export class CampaignsLazyModule {

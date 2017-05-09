@@ -23,6 +23,10 @@ export class DurationInputComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    document.body.onmouseup = () => {
+      clearInterval(this.timer);
+    }
+    
     var totalSeconds = this.duration;
     this.hours = Math.floor(totalSeconds / 3600);
     totalSeconds -= this.hours * 3600;

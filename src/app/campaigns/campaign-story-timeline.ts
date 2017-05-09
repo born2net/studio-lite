@@ -12,6 +12,7 @@ import {ACTION_UISTATE_UPDATE, SideProps} from "../../store/actions/appdb.action
 import {TimelineComponent} from "./timeline/timeline.component";
 import {timeout} from "../../decorators/timeout-decorator";
 import {EventManager} from "@angular/platform-browser";
+import {Lib} from "../../Lib";
 
 interface IChannelCollection {
     blocks: Array<number>;
@@ -239,7 +240,7 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
                 id: i_channel.getCampaignTimelineChanelId(),
                 viewerId: this.rp.getAssignedViewerIdFromChannelId(i_channel.getCampaignTimelineChanelId()),
                 name: i_channel.getChanelName(),
-                color: i_channel.getChanelColor(),
+                color: '#'+Lib.DecimalToHex(i_channel.getChanelColor()),
                 type: 'normal',
                 selected: false
             }

@@ -7,6 +7,7 @@ import {timeout} from "../../decorators/timeout-decorator";
 import * as _ from "lodash";
 import {CampaignTimelineChanelsModel} from "../../store/imsdb.interfaces_auto";
 import {Observable} from "rxjs";
+import {Lib} from "../../Lib";
 
 
 @Component({
@@ -28,7 +29,13 @@ import {Observable} from "rxjs";
                             </div>
                             <ul class="list-group">
                                 <li class="list-group-item">
-                                    Channel name: {{(m_channel$ | async)?.getChanelName()}}
+                                    Channel name:
+                                    <!--Channel name: {{(m_channel$ | async)?.getChanelName()}}-->
+                                    <input class="pull-right" [formControl]="m_contGroup.controls['chanel_name']" />
+                                </li>
+                                <li class="list-group-item">
+                                    Channel color (hex):
+                                    <input class="pull-right" [formControl]="m_contGroup.controls['chanel_color']" />
                                 </li>
                                 <li class="list-group-item">
                                     <span i18n>repeat to fit</span>
@@ -80,21 +87,20 @@ export class ChannelProps extends Compbaser {
 
     private channelModel: CampaignTimelineChanelsModel;
     private formInputs = {};
-    m_channel$: Observable<CampaignTimelineChanelsModel>;
+    // m_channel$: Observable<CampaignTimelineChanelsModel>;
     m_contGroup: FormGroup;
 
     constructor(private fb: FormBuilder, private yp: YellowPepperService, private rp: RedPepperService) {
         super();
         this.m_contGroup = fb.group({
             'repeat_to_fit': [0],
+            'chanel_name': [''],
+            'chanel_color': ['#000'],
             'random_order': [0]
         });
         _.forEach(this.m_contGroup.controls, (value, key: string) => {
             this.formInputs[key] = this.m_contGroup.controls[key] as FormControl;
         })
-
-        this.m_channel$ = this.yp.listenChannelValueChanged();
-
         this.cancelOnDestroy(
             this.yp.listenChannelSelected()
                 .subscribe((channel: CampaignTimelineChanelsModel) => {
@@ -115,6 +121,8 @@ export class ChannelProps extends Compbaser {
         // console.log(this.m_contGroup.status + ' ' + JSON.stringify(this.ngmslibService.cleanCharForXml(this.m_contGroup.value)));
         this.rp.setCampaignTimelineChannelRecord(this.channelModel.getCampaignTimelineChanelId(), 'random_order', this.m_contGroup.value.random_order);
         this.rp.setCampaignTimelineChannelRecord(this.channelModel.getCampaignTimelineChanelId(), 'repeat_to_fit', this.m_contGroup.value.repeat_to_fit);
+        this.rp.setCampaignTimelineChannelRecord(this.channelModel.getCampaignTimelineChanelId(), 'chanel_name', this.m_contGroup.value.chanel_name);
+        this.rp.setCampaignTimelineChannelRecord(this.channelModel.getCampaignTimelineChanelId(), 'chanel_color', Lib.ColorToDecimal(this.m_contGroup.value.chanel_color));
         this.rp.reduxCommit()
     }
 
@@ -124,6 +132,8 @@ export class ChannelProps extends Compbaser {
         _.forEach(this.formInputs, (value, key: string) => {
             let data = this.channelModel.getKey(key);
             data = StringJS(data).booleanToNumber();
+            if (key == 'chanel_color')
+                data = Lib.DecimalToHex(data)
             this.formInputs[key].setValue(data)
         });
     };

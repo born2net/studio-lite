@@ -62,6 +62,8 @@ export class CampaignEditor extends Compbaser {
     m_inDevMode = Lib.DevMode();
     m_storyBoardListViewModeEnum = StoryBoardListViewModeEnum;
     m_storyBoardListViewModeSelection = StoryBoardListViewModeEnum.ListMode;
+    m_switchMode = false;
+
 
     constructor(private yp: YellowPepperService, private actions: AppdbAction, private rp: RedPepperService, private cd: ChangeDetectorRef) {
         super();

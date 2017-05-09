@@ -1,16 +1,15 @@
-import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, Output, ViewChild} from "@angular/core";
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewChild} from "@angular/core";
 import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {CampaignTimelineBoardViewerChanelsModel, CampaignTimelineChanelsModel, CampaignTimelinesModel} from "../../store/imsdb.interfaces_auto";
 import {RedPepperService} from "../../services/redpepper.service";
 import {Observable} from "rxjs/Observable";
 import {BlockService, IBlockData} from "../blocks/block-service";
-import * as _ from 'lodash';
-import {Map, List} from 'immutable';
+import * as _ from "lodash";
+import {List, Map} from "immutable";
 import {IUiState} from "../../store/store.data";
 import {ACTION_UISTATE_UPDATE, SideProps} from "../../store/actions/appdb.actions";
 import {TimelineComponent} from "./timeline/timeline.component";
-import {timeout} from "../../decorators/timeout-decorator";
 import {EventManager} from "@angular/platform-browser";
 import {Lib} from "../../Lib";
 
@@ -48,6 +47,7 @@ interface IItem {
 
 interface ITimelineState {
     zoom: number;
+    switch: boolean;
     duration: number;
     channels: Array<IChannels>;
     outputs: Array<IOutputs>;
@@ -68,11 +68,12 @@ interface ITimelineState {
         <app-timeline [resources]="resources"
                       [state]="state"
                       (channelClicked)="onChannelClicked($event)"
-                      (closedGaps)="onCloseGaps($event)"
+                      (closedGaps)="itemsChanged($event)"
                       (itemsClicked)="itemsClicked($event)"
-                      (itemsResized)="itemsResized($event)"
+                      (itemsResized)="itemsChanged($event)"
                       (itemAdded)="itemAdded($event)"
                       (channelAdded)="channelAdded($event)"
+                      (resizedToLargest)="itemsChanged($event)"
                       (itemsMoved)="itemsMoved($event)"
         ></app-timeline>
     `
@@ -133,6 +134,7 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
 
     stateTemp: ITimelineState = {
         zoom: 1,
+        switch: false,
         duration: 500,
         channels: [],
         outputs: [],
@@ -220,6 +222,12 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
         this.applyState();
         this.cd.detectChanges();
         this.timelineComponent.changeZoom(null);
+    }
+
+    @Input()
+    set switchMode(i_mode: boolean) {
+        this.stateTemp.switch = i_mode;
+        this.applyState();
     }
 
     private updateStateChannelSelection(i_channelSelectedId: number) {
@@ -372,9 +380,8 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
         this.yp.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
     }
 
-    itemsResized(event) {
+    itemsChanged(event) {
         event.forEach((item) => {
-            console.log("Item resized", event);
             this.rp.setBlockTimelineChannelBlockNewPosition(item.channel, item.id, "player_offset_time", Math.round(item.start));
             this.rp.setBlockTimelineChannelBlockNewPosition(item.channel, item.id, "player_duration", Math.round(item.duration));
         })

@@ -18,7 +18,7 @@ export class DurationInputComponent implements OnInit {
 
   @Input() duration;
 
-  @Output() change = new EventEmitter<Object>();
+  @Output() durationChange = new EventEmitter<Object>();
 
   constructor() { }
 
@@ -34,38 +34,43 @@ export class DurationInputComponent implements OnInit {
   }
 
   increment() {
+    console.log('increment');
     if (this.focusedItem) {
       this.focusedItem.focus();
     }
     switch (this.focus) {
       case "hour":
-        if (++this.hours > 24) {
-          this.hours = 24;
-        }
+        ++this.hours;
         break;
       case "minute":
-        if (++this.minutes == 60) {
-            this.minutes = 0;
-            this.hours++;
-        }
+        ++this.minutes;
         break;
       case "second":
-        if (++this.seconds == 60) {
-          this.seconds = 0;
-          this.minutes++;
-        }
+        ++this.seconds;
         break;
       default:
         break;
+    }
+    if (this.seconds == 60) {
+      this.seconds = 0;
+      this.minutes++;
+    }
+    if (this.minutes == 60) {
+      this.minutes = 0;
+      this.hours++;
+    }
+    if (this.hours > 24) {
+      this.hours = 0;
     }
     this.updateDisplay();
   }
 
   decrement() {
+    console.log('decrement');
     switch (this.focus) {
       case "hour":
         if (--this.hours < 0) {
-            this.hours = 0;
+            this.hours = 24;
         }
         break;
       case "minute":
@@ -95,7 +100,43 @@ export class DurationInputComponent implements OnInit {
     this.secondsOutput = this.padLeft(this.seconds);
     this.minutesOutput = this.padLeft(this.minutes);
     this.hoursOutput = this.padLeft(this.hours);
-    this.change.emit(this.hours * 60 * 60 + this.minutes * 60 + this.seconds);
+    this.durationChange.emit(this.hours * 60 * 60 + this.minutes * 60 + this.seconds);
+    console.log('change emitted');
+  }
+
+  inputTime(e) {
+    if (!/[0-9]/.test(e.key)) {
+      e.preventDefault();
+    } else {
+
+    }
+  }
+
+  keyUp(e) {
+    this.seconds = +this.secondsOutput;
+    this.minutes = +this.minutesOutput;
+    this.hours = +this.hoursOutput;
+    if (!this.hours) {
+      this.hours = 0;
+    }
+    if (this.hours > 24) {
+      this.hours = 24;
+    }
+
+    if (!this.minutes) {
+      this.minutes = 0;
+    }
+    if (this.minutes > 59) {
+      this.minutes = 59;
+    }
+
+    if (!this.seconds) {
+      this.seconds = 0;
+    }
+    if (this.seconds > 59) {
+      this.seconds = 59;
+    }
+    this.updateDisplay();
   }
 
   setFocus(event, field) {

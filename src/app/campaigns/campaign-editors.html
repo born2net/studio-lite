@@ -81,12 +81,11 @@
                             <i class="fa fa-sliders"></i>
                             <input type="radio" name="options" id="option2" autocomplete="off"> timeline
                         </label>
-
                     </div>
 
                     <span *ngIf="m_storyBoardListViewModeSelection==m_storyBoardListViewModeEnum.StoryMode">
                         <button (click)="_onAddContent()" type="button" title="remove gaps" class="btn btn-default btn-sm">
-                            <i class="fa fa-exchange"></i>
+                            <i class="fa fa-scissors"></i>
                         </button>
                         <button (click)="_onAddContent()" type="button" title="resize to largest" class="btn btn-default btn-sm">
                             <i class="fa fa-arrows-h"></i>
@@ -97,6 +96,13 @@
                         <button (click)="_onRemoveContent()" type="button" title="align right" class="btn btn-default btn-sm">
                             <i class="fa fa fa-indent"></i>
                         </button>
+                        <!--<label title="switch place mode" style="height: 30px" (click)="m_switchMode = !m_switchMode"-->
+                               <!--[ngClass]="{active: m_switchMode}"-->
+                               <!--class="btn btn-default" data-active-class="danger">-->
+                            <!--<i style="position: relative; top: -3px" class="fa fa-exchange"></i>-->
+                        <!--</label>-->
+
+
                         <span style="font-size: 14px">
                             <input title="timeline length" style="width: 70px; height: 30px; position: relative; top: 2px" type="text" class="timeline-length" value="00:00:59"/>
                         </span>
@@ -114,7 +120,7 @@
                 </h4>
             </div>
             <div [@fadeInOut] *ngIf="m_storyBoardListViewModeSelection==m_storyBoardListViewModeEnum.StoryMode">
-                <campaign-story-timeline [zoom]="zoom"></campaign-story-timeline>
+                <campaign-story-timeline [switchMode]="m_switchMode" [zoom]="zoom"></campaign-story-timeline>
             </div>
             <div [@fadeInOut] *ngIf="m_storyBoardListViewModeSelection==m_storyBoardListViewModeEnum.ListMode">
                 <campaign-channels></campaign-channels>

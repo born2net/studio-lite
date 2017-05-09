@@ -377,6 +377,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
 
   timelineDurationChange(dur) {
     this.state.duration = dur;
+    console.log('new timeline duration: ', dur);
     this.updateContainerSize();
   }
 

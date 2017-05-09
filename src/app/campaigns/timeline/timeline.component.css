@@ -24,7 +24,7 @@
 
 :host /deep/ .fa-item {
   float: left;
-  padding: 10px;
+  padding: 0 16px 0 10px;
   opacity: 0.8;
 }
 

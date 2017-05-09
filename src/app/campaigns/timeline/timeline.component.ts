@@ -103,6 +103,10 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
 
         item.$el = $("li[data-bid='" + i + "']");
 
+        if (item.selected) {
+          item.$el.addClass('ui-selected');
+        }
+
         var container = this.$container;
 
         item.draggable = Draggable.create(item.$el, {
@@ -142,7 +146,6 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
               self.resetSelection();
             }
             self.selectItem(item);
-            $(this.target).addClass('ui-selected');
             e.stopPropagation();
 
             var selectedItems = self.state.items.filter(i => i.selected);
@@ -726,6 +729,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
         o.selected = false;
       });
     item.selected = true;
+    item.$el.addClass('ui-selected');
   }
 
   selectOutput(i) {

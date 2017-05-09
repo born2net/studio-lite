@@ -143,12 +143,6 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
     constructor(private yp: YellowPepperService, private rp: RedPepperService, private cd: ChangeDetectorRef, private bs: BlockService, private eventManager: EventManager) {
         super();
 
-        // this.eventManager.addGlobalEventListener('window', 'keydown.alt', (event) => {
-        //     console.log(event);
-        // })
-
-        var blockSelected$ = this.yp.ngrxStore.select(store => store.appDb.uiState.campaign.blockChannelSelected);
-
         this.cancelOnDestroy(
             this.yp.listenTimelineSelected()
                 .map((i_campaignTimelinesModel: CampaignTimelinesModel) => {
@@ -204,24 +198,15 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
                         .combineAll()
                 })
                 .withLatestFrom(
-                    blockSelected$,
-                    (i_channels, i_blockIdSelected) => ({i_channels,i_blockIdSelected})
-                ).subscribe(({i_channels,i_blockIdSelected}) => {
-                this.updateStateBlocks(i_channels, i_blockIdSelected);
-                this.applyState();
-                this.cd.markForCheck();
-            }, e => console.error(e))
+                    this.yp.ngrxStore.select(store => store.appDb.uiState.campaign.blockChannelSelected),
+                    (i_channels, i_blockIdSelected) => ({i_channels, i_blockIdSelected})
+                )
+                .subscribe(({i_channels, i_blockIdSelected}) => {
+                    this.updateStateBlocks(i_channels, i_blockIdSelected);
+                    this.applyState();
+                    this.cd.markForCheck();
+                }, e => console.error(e))
         );
-
-        // this.cancelOnDestroy(
-        //     this.yp.listenCampaignTimelineBoardViewerSelected(true)
-        //         .skip(1)
-        //         .distinctUntilChanged()
-        //         .subscribe((v) => {
-        //             console.log(v);
-        //         })
-        // )
-
     }
 
     @ViewChild(TimelineComponent)

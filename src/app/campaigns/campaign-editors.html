@@ -109,13 +109,17 @@
                               <option value="20">20 : 10</option>
                               <option value="40">40 : 10</option>
                         </select>
-                        <app-duration-input style="float: right; position: relative; top: -3px" *ngIf="m_storyBoardListViewModeSelection==m_storyBoardListViewModeEnum.StoryMode" [duration]="m_duration" (durationChange)="_timelineDurationChange($event)"></app-duration-input>
+                        <app-duration-input style="float: right; position: relative; top: -3px"
+                                            *ngIf="m_storyBoardListViewModeSelection == m_storyBoardListViewModeEnum.StoryMode"
+                                            [setDuration]="m_duration"
+                                            (durationChange)="_timelineDurationChange($event)">
+                        </app-duration-input>
                     </span>
 
                 </h4>
             </div>
             <div [@fadeInOut] *ngIf="m_storyBoardListViewModeSelection==m_storyBoardListViewModeEnum.StoryMode">
-                <campaign-story-timeline [duration]="m_duration" [switchMode]="m_switchMode" [zoom]="zoom"></campaign-story-timeline>
+                <campaign-story-timeline (stateChanged)="_onStateChanged($event)" [duration]="m_duration" [switchMode]="m_switchMode" [zoom]="zoom"></campaign-story-timeline>
             </div>
             <div [@fadeInOut] *ngIf="m_storyBoardListViewModeSelection==m_storyBoardListViewModeEnum.ListMode">
                 <campaign-channels></campaign-channels>

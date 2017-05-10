@@ -12,6 +12,7 @@ import * as _ from "lodash";
 import {RedPepperService} from "../../services/redpepper.service";
 import {MainAppShowStateEnum} from "../app-component";
 import {Lib} from "../../Lib";
+import {ITimelineState} from "./campaign-story-timeline";
 
 // https://github.com/AlexWD/ds-timeline-widget
 
@@ -63,7 +64,7 @@ export class CampaignEditor extends Compbaser {
     m_storyBoardListViewModeEnum = StoryBoardListViewModeEnum;
     m_storyBoardListViewModeSelection = StoryBoardListViewModeEnum.ListMode;
     m_switchMode = false;
-    m_duration = 0;
+    m_duration:number = 0;
 
     constructor(private yp: YellowPepperService, private actions: AppdbAction, private rp: RedPepperService, private cd: ChangeDetectorRef) {
         super();
@@ -90,6 +91,12 @@ export class CampaignEditor extends Compbaser {
             this.yp.listenTimelineSelected(true)
                 .subscribe((i_campaignTimelinesModel: CampaignTimelinesModel) => {
                     this.campaignTimelinesModel = i_campaignTimelinesModel;
+                    if (this.campaignTimelinesModel){
+                        this.m_duration = this.campaignTimelinesModel.getTimelineDuration();
+                        console.log('duration ' + this.m_duration);
+                        cd.detectChanges();
+                    }
+
                 }, (e) => console.error(e))
         );
         this.cancelOnDestroy(
@@ -129,6 +136,10 @@ export class CampaignEditor extends Compbaser {
 
     _timelineDurationChange(i_duration) {
         this.m_duration = i_duration;
+    }
+
+    _onStateChanged(state:ITimelineState){
+        this.m_duration = state.duration;
     }
 
     _onRemoveTimeline() {

@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewChild} from "@angular/core";
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output, ViewChild} from "@angular/core";
 import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {CampaignTimelineBoardViewerChanelsModel, CampaignTimelineChanelsModel, CampaignTimelinesModel} from "../../store/imsdb.interfaces_auto";
@@ -45,7 +45,7 @@ interface IItem {
     selected: boolean;
 }
 
-interface ITimelineState {
+export interface ITimelineState {
     zoom: number;
     switch: boolean;
     duration: number;
@@ -86,6 +86,9 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
     m_contPressed: 'down' | 'up' = 'up';
     m_selectedItems: Array<any> = [];
     m_zoom = 1;
+
+    @Output()
+    stateChanged:EventEmitter<ITimelineState> = new EventEmitter<ITimelineState>();
 
     resources = {
         items: [
@@ -217,7 +220,11 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
     @ViewChild(TimelineComponent)
     timelineComponent: TimelineComponent;
 
-    @Input() duration;
+    @Input()
+    set duration(i_duration:number) {
+        this.stateTemp.duration = i_duration;
+        this.applyState();
+    }
 
     @Input()
     set zoom(i_zoom: number) {
@@ -308,6 +315,7 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
         var equal = _.isEqual(currentState, this.stateTemp);
         if (equal) return;
         this.state = Map(this.stateTemp);
+        this.stateChanged.emit(currentState);
     }
 
     private _sortBlock(i_blockList) {

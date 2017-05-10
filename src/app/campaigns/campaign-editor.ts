@@ -19,7 +19,7 @@ import {ITimelineState} from "./campaign-story-timeline";
 @Component({
     selector: 'campaign-editor',
     templateUrl: './campaign-editors.html',
-    // changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     styles: [`
         .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
             outline: 0;

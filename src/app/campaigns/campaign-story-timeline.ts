@@ -65,7 +65,7 @@ export interface ITimelineState {
     },
     template: `
         <small class="debug">{{me}}</small>
-        <app-timeline *ngIf="state.get('channels').length > 0"
+        <app-timeline *ngIf="state"
                       [resources]="resources"
                       [state]="state"
                       (channelClicked)="onChannelClicked($event)"
@@ -128,18 +128,19 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
             }
         ]
     };
-    state: Map<any, any> = Map({
-        zoom: 1,
-        duration: 500,
-        channels: [],
-        outputs: [],
-        items: []
-    });
+    state: Map<any, any>;
+    // = Map({
+    //     zoom: 1,
+    //     duration: -1,
+    //     channels: [],
+    //     outputs: [],
+    //     items: []
+    // });
 
     stateTemp: ITimelineState = {
         zoom: 1,
         switch: false,
-        duration: 500,
+        duration: -1,
         channels: [],
         outputs: [],
         items: []
@@ -311,6 +312,10 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
     }
 
     private applyState() {
+        if (this.stateTemp.duration == -1)
+            return;
+        if (!this.state)
+            return this.state = Map(this.stateTemp);
         const currentState = this.state.toJS();
         var equal = _.isEqual(currentState, this.stateTemp);
         if (equal) return;

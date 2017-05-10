@@ -19,7 +19,7 @@ import {ITimelineState} from "./campaign-story-timeline";
 @Component({
     selector: 'campaign-editor',
     templateUrl: './campaign-editors.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    // changeDetection: ChangeDetectionStrategy.OnPush,
     styles: [`
         .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
             outline: 0;
@@ -94,7 +94,8 @@ export class CampaignEditor extends Compbaser {
                     if (this.campaignTimelinesModel){
                         this.m_duration = this.campaignTimelinesModel.getTimelineDuration();
                         console.log('duration ' + this.m_duration);
-                        cd.detectChanges();
+                        //todo: error when enabled but need for Duration component
+                        // this.cd.detectChanges();
                     }
 
                 }, (e) => console.error(e))
@@ -139,7 +140,7 @@ export class CampaignEditor extends Compbaser {
     }
 
     _onStateChanged(state:ITimelineState){
-        this.m_duration = state.duration;
+        // this.m_duration = state.duration;
     }
 
     _onRemoveTimeline() {

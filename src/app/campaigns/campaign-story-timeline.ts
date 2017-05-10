@@ -65,7 +65,7 @@ export interface ITimelineState {
     },
     template: `
         <small class="debug">{{me}}</small>
-        <app-timeline *ngIf="state"
+        <app-timeline *ngIf="state && state.get('channels').length > 0"
                       [resources]="resources"
                       [state]="state"
                       (channelClicked)="onChannelClicked($event)"

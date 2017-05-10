@@ -78,6 +78,7 @@ export class DurationInputComponent implements OnInit {
             this.hours = 0;
         }
         this.updateDisplay();
+        this.notifyChanges();
     }
 
     decrement() {
@@ -109,15 +110,20 @@ export class DurationInputComponent implements OnInit {
                 break;
         }
         this.updateDisplay();
+        this.notifyChanges();
+    }
+
+    notifyChanges(){
+        const newDuration = this.hours * 60 * 60 + this.minutes * 60 + this.seconds;
+        console.log('change emitted ' + newDuration);
+        this.durationChange.emit(newDuration);
     }
 
     updateDisplay() {
         this.secondsOutput = this.padLeft(this.seconds);
         this.minutesOutput = this.padLeft(this.minutes);
         this.hoursOutput = this.padLeft(this.hours);
-        const newDuration = this.hours * 60 * 60 + this.minutes * 60 + this.seconds;
-        // console.log('change emitted ' + newDuration);
-        // this.durationChange.emit(newDuration);
+
 
     }
 

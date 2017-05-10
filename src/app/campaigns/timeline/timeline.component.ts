@@ -17,7 +17,7 @@ export class TimelineComponent implements OnInit, AfterViewChecked, OnChanges {
   $container;
 
   ruler = undefined;
-
+  dev = false;
   draggingItem;
   scrollPosition = 0;
 

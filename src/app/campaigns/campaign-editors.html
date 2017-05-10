@@ -120,7 +120,8 @@
                 </h4>
             </div>
             <div [@fadeInOut] *ngIf="m_storyBoardListViewModeSelection==m_storyBoardListViewModeEnum.StoryMode">
-                <campaign-story-timeline (stateChanged)="_onStateChanged($event)" [duration]="m_duration" [switchMode]="m_switchMode" [zoom]="zoom"></campaign-story-timeline>
+                <!--<campaign-story-timeline (stateChanged)="_onStateChanged($event)" [duration]="m_duration" [switchMode]="m_switchMode" [zoom]="zoom"></campaign-story-timeline>-->
+                <campaign-story-timeline [switchMode]="m_switchMode" [zoom]="zoom"></campaign-story-timeline>
             </div>
             <div [@fadeInOut] *ngIf="m_storyBoardListViewModeSelection==m_storyBoardListViewModeEnum.ListMode">
                 <campaign-channels></campaign-channels>

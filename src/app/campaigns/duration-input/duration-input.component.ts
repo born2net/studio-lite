@@ -116,7 +116,7 @@ export class DurationInputComponent implements OnInit {
         this.minutesOutput = this.padLeft(this.minutes);
         this.hoursOutput = this.padLeft(this.hours);
         const newDuration = this.hours * 60 * 60 + this.minutes * 60 + this.seconds;
-        console.log('change emitted ' + newDuration);
+        // console.log('change emitted ' + newDuration);
         // this.durationChange.emit(newDuration);
 
     }

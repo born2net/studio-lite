@@ -77,9 +77,9 @@ export interface ITimelineState {
                           (channelAdded)="channelAdded($event)"
                           (resizedToLargest)="itemsChanged($event)"
                           (itemsMoved)="itemsMoved($event)">
-            </app-timeline>    
+            </app-timeline>
         </div>
-        
+
     `
 })
 export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
@@ -90,8 +90,8 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
     m_selectedItems: Array<any> = [];
     m_zoom = 1;
 
-    @Output()
-    stateChanged:EventEmitter<ITimelineState> = new EventEmitter<ITimelineState>();
+    // @Output()
+    // stateChanged:EventEmitter<ITimelineState> = new EventEmitter<ITimelineState>();
 
     resources = {
         items: [
@@ -159,9 +159,12 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
             this.yp.listenTimelineSelected()
                 .map((i_campaignTimelinesModel: CampaignTimelinesModel) => {
                     this.campaignTimelinesModel = i_campaignTimelinesModel;
+                    console.log(i_campaignTimelinesModel.getCampaignTimelineId());
+                    this.updateStateDuration(i_campaignTimelinesModel.getTimelineDuration());
                     return i_campaignTimelinesModel;
                 })
                 .mergeMap((i_campaignTimelinesModel: CampaignTimelinesModel) => {
+
                     return this.yp.listenChannelsOfTimeline(i_campaignTimelinesModel.getCampaignTimelineId())
                 })
                 .do((i_channels: List<CampaignTimelineChanelsModel>) => {
@@ -224,11 +227,11 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
     @ViewChild(TimelineComponent)
     timelineComponent: TimelineComponent;
 
-    @Input()
-    set duration(i_duration:number) {
-        this.stateTemp.duration = i_duration;
-        this.applyState();
-    }
+    // @Input()
+    // set duration(i_duration:number) {
+    //     this.stateTemp.duration = i_duration;
+    //     this.applyState();
+    // }
 
     @Input()
     set zoom(i_zoom: number) {
@@ -254,6 +257,11 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
             }
             this.stateTemp.channels[index] = ch;
         })
+    }
+
+    private updateStateDuration(i_duration:number) {
+        console.log('upd duration ' + i_duration);
+        this.stateTemp.duration = i_duration;
     }
 
     private updateStateChannels(i_channels: List<CampaignTimelineChanelsModel>) {
@@ -315,15 +323,15 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
     }
 
     private applyState() {
-        if (this.stateTemp.duration == -1)
-            return;
+        // if (this.stateTemp.duration == -1)
+        //     return;
         if (!this.state)
             return this.state = Map(this.stateTemp);
         const currentState = this.state.toJS();
         var equal = _.isEqual(currentState, this.stateTemp);
         if (equal) return;
         this.state = Map(this.stateTemp);
-        this.stateChanged.emit(currentState);
+        // this.stateChanged.emit(currentState);
     }
 
     private _sortBlock(i_blockList) {
@@ -500,4 +508,4 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
 
 /**
  Github: https://github.com/AlexWD/ds-timeline-widget
-**/
+ **/

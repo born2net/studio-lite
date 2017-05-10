@@ -496,11 +496,5 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
 // m_blockList: List<IBlockData> = List([]);
 
 /**
-
  Github: https://github.com/AlexWD/ds-timeline-widget
-
- line 506:
- changeZoom(e) {
-    if (!this.state) return;
-
 **/

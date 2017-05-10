@@ -65,7 +65,8 @@ interface ITimelineState {
     },
     template: `
         <small class="debug">{{me}}</small>
-        <app-timeline [resources]="resources"
+        <app-timeline *ngIf="state.get('channels').length > 0"
+                      [resources]="resources"
                       [state]="state"
                       (channelClicked)="onChannelClicked($event)"
                       (closedGaps)="itemsChanged($event)"
@@ -81,10 +82,10 @@ interface ITimelineState {
 export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
 
     m_campaignTimelinesModels: List<CampaignTimelinesModel>;
-    m_zoom = 1;
     campaignTimelinesModel: CampaignTimelinesModel;
     m_contPressed: 'down' | 'up' = 'up';
     m_selectedItems: Array<any> = [];
+    m_zoom = 1;
 
     resources = {
         items: [
@@ -216,9 +217,12 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
     @ViewChild(TimelineComponent)
     timelineComponent: TimelineComponent;
 
+    @Input() duration;
+
     @Input()
     set zoom(i_zoom: number) {
         this.stateTemp.zoom = i_zoom;
+        if (!this.timelineComponent) return;
         this.applyState();
         this.cd.detectChanges();
         this.timelineComponent.changeZoom(null);

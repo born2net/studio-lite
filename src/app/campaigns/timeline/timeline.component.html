@@ -22,7 +22,7 @@
   </div>
   <div class="row" style="padding-bottom:50px;">
     <app-duration-input
-      duration="{{ state.duration }}"
+      [duration]="state.duration"
       (durationChange)="timelineDurationChange($event)"
     ></app-duration-input>
   </div>

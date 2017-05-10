@@ -63,7 +63,7 @@ export class CampaignEditor extends Compbaser {
     m_storyBoardListViewModeEnum = StoryBoardListViewModeEnum;
     m_storyBoardListViewModeSelection = StoryBoardListViewModeEnum.ListMode;
     m_switchMode = false;
-
+    m_duration = 0;
 
     constructor(private yp: YellowPepperService, private actions: AppdbAction, private rp: RedPepperService, private cd: ChangeDetectorRef) {
         super();
@@ -125,6 +125,10 @@ export class CampaignEditor extends Compbaser {
             return bootbox.alert('Select channel to add content to. First be sure to select a timeline and next, click the [Next Channel] button');
         this.onToAddContent.emit();
 
+    }
+
+    _timelineDurationChange(i_duration) {
+        this.m_duration = i_duration;
     }
 
     _onRemoveTimeline() {

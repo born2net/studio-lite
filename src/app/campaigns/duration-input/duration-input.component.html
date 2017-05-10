@@ -1,6 +1,18 @@
-<input type="text" name="hour" [(ngModel)]="hoursOutput" (focus)="setFocus($event, 'hour')" (keypress)="inputTime($event)" (keyup)="keyUp($event)" />
-<input type="text" name="minute" [(ngModel)]="minutesOutput" (focus)="setFocus($event, 'minute')" (keypress)="inputTime($event)" (keyup)="keyUp($event)" />
-<input type="text" name="second" [(ngModel)]="secondsOutput" (focus)="setFocus($event, 'second')" (keypress)="inputTime($event)" (keyup)="keyUp($event)" />
+<div class="wrap">
+    <div>
+        <div style="float: left">
+            <input type="text" name="hour" [(ngModel)]="hoursOutput" (focus)="setFocus($event, 'hour')" (keypress)="inputTime($event)" (keyup)="keyUp($event)" />
+            <input type="text" name="minute" [(ngModel)]="minutesOutput" (focus)="setFocus($event, 'minute')" (keypress)="inputTime($event)" (keyup)="keyUp($event)" />
+            <input type="text" name="second" [(ngModel)]="secondsOutput" (focus)="setFocus($event, 'second')" (keypress)="inputTime($event)" (keyup)="keyUp($event)" />
+        </div>
+        <div style="float: left">
+            <a style="display: block" (mousedown)="mouseDownIncrement()" (mouseup)="mouseUpIncrement()">
+                <i class="fa fa-plus"></i>
+            </a>
+            <a style="display: block" (mousedown)="mouseDownDecrement()" (mouseup)="mouseUpDecrement()">
+                <i class="fa fa-minus"></i>
+            </a>
+        </div>
 
-<button (mousedown)="mouseDownIncrement()" (mouseup)="mouseUpIncrement()">+</button>
-<button (mousedown)="mouseDownDecrement()" (mouseup)="mouseUpDecrement()">-</button>
+    </div>
+</div>

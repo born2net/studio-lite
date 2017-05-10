@@ -1,3 +1,37 @@
+div {
+    display: inline-block;
+}
+
 input {
-  width: 20px;
+    width: 22px;
+    border: none;
+    outline: 0;
+}
+
+.btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+    outline: 0;
+}
+
+a {
+    height: 12px;
+    width: 12px;
+    cursor: pointer;
+}
+
+i {
+    font-size: 8px;
+    position: relative;
+    top: -5px;
+    left: 5px;
+    color: black;
+}
+
+.wrap {
+    background-color: white;
+    height: 35px;
+    width: 100px;
+    margin: 5px;
+    padding: 5px;
+    border: solid #cccccc 1px;
+    height: 30px;
 }

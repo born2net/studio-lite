@@ -83,7 +83,7 @@
                         </label>
                     </div>
 
-                    <span *ngIf="m_storyBoardListViewModeSelection==m_storyBoardListViewModeEnum.StoryMode">
+                    <span style="float: right" *ngIf="m_storyBoardListViewModeSelection==m_storyBoardListViewModeEnum.StoryMode">
                         <button (click)="_onAddContent()" type="button" title="remove gaps" class="btn btn-default btn-sm">
                             <i class="fa fa-scissors"></i>
                         </button>
@@ -97,30 +97,25 @@
                             <i class="fa fa fa-indent"></i>
                         </button>
                         <!--<label title="switch place mode" style="height: 30px" (click)="m_switchMode = !m_switchMode"-->
-                               <!--[ngClass]="{active: m_switchMode}"-->
-                               <!--class="btn btn-default" data-active-class="danger">-->
-                            <!--<i style="position: relative; top: -3px" class="fa fa-exchange"></i>-->
+                        <!--[ngClass]="{active: m_switchMode}"-->
+                        <!--class="btn btn-default" data-active-class="danger">-->
+                        <!--<i style="position: relative; top: -3px" class="fa fa-exchange"></i>-->
                         <!--</label>-->
-
-
-                        <span style="font-size: 14px">
-                            <input title="timeline length" style="width: 70px; height: 30px; position: relative; top: 2px" type="text" class="timeline-length" value="00:00:59"/>
-                        </span>
-                        <span>
-                            <select title="zoom (ratio / pixels)" style="width: 70px; height: 30px; position: relative; top: 2px" (change)="_changeZoom($event)" [(ngModel)]="zoom">
-                                  <option value="1">1.0 : 10</option>
-                                  <option value="2">2.0 : 10</option>
-                                  <option value="5">5.0 : 10</option>
-                                  <option value="10">10 : 10</option>
-                                  <option value="20">20 : 10</option>
-                                  <option value="40">40 : 10</option>
-                            </select>
-                        </span>
+                        <select style="float: right" title="zoom (ratio / pixels)" style="width: 70px; height: 30px; position: relative; top: 2px; border: solid 1px #d1d1d1" (change)="_changeZoom($event)" [(ngModel)]="zoom">
+                              <option value="1">1.0 : 10</option>
+                              <option value="2">2.0 : 10</option>
+                              <option value="5">5.0 : 10</option>
+                              <option value="10">10 : 10</option>
+                              <option value="20">20 : 10</option>
+                              <option value="40">40 : 10</option>
+                        </select>
+                        <app-duration-input style="float: right; position: relative; top: -3px" *ngIf="m_storyBoardListViewModeSelection==m_storyBoardListViewModeEnum.StoryMode" [duration]="m_duration" (durationChange)="_timelineDurationChange($event)"></app-duration-input>
                     </span>
+
                 </h4>
             </div>
             <div [@fadeInOut] *ngIf="m_storyBoardListViewModeSelection==m_storyBoardListViewModeEnum.StoryMode">
-                <campaign-story-timeline [switchMode]="m_switchMode" [zoom]="zoom"></campaign-story-timeline>
+                <campaign-story-timeline [duration]="m_duration" [switchMode]="m_switchMode" [zoom]="zoom"></campaign-story-timeline>
             </div>
             <div [@fadeInOut] *ngIf="m_storyBoardListViewModeSelection==m_storyBoardListViewModeEnum.ListMode">
                 <campaign-channels></campaign-channels>

@@ -65,18 +65,21 @@ export interface ITimelineState {
     },
     template: `
         <small class="debug">{{me}}</small>
-        <app-timeline *ngIf="state && state.get('channels').length > 0"
-                      [resources]="resources"
-                      [state]="state"
-                      (channelClicked)="onChannelClicked($event)"
-                      (closedGaps)="itemsChanged($event)"
-                      (itemsClicked)="itemsClicked($event)"
-                      (itemsResized)="itemsChanged($event)"
-                      (itemAdded)="itemAdded($event)"
-                      (channelAdded)="channelAdded($event)"
-                      (resizedToLargest)="itemsChanged($event)"
-                      (itemsMoved)="itemsMoved($event)"
-        ></app-timeline>
+        <div matchBodyHeight="350" style="overflow: scroll">
+            <app-timeline *ngIf="state && state.get('channels').length > 0"
+                          [resources]="resources"
+                          [state]="state"
+                          (channelClicked)="onChannelClicked($event)"
+                          (closedGaps)="itemsChanged($event)"
+                          (itemsClicked)="itemsClicked($event)"
+                          (itemsResized)="itemsChanged($event)"
+                          (itemAdded)="itemAdded($event)"
+                          (channelAdded)="channelAdded($event)"
+                          (resizedToLargest)="itemsChanged($event)"
+                          (itemsMoved)="itemsMoved($event)">
+            </app-timeline>    
+        </div>
+        
     `
 })
 export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {

@@ -214,6 +214,16 @@ export class YellowPepperService {
             })
     }
 
+    listenSelectedTimelineChanged(): Observable<CampaignTimelinesModel> {
+        var $timelinesList$ = this.store.select(store => store.msDatabase.sdk.table_campaign_timelines);
+        return this.listenTimelineSelected()
+            .combineLatest($timelinesList$, (timeline:CampaignTimelinesModel, timelines:List<CampaignTimelinesModel>) => {
+                return timelines.find((i_timeline:CampaignTimelinesModel)=>{
+                    return i_timeline.getCampaignTimelineId() == timeline.getCampaignTimelineId();
+                })
+            })
+    }
+
     listenUserModel(): Observable<UserModel> {
         return this.store.select(store => store.appDb.userModel)
             .filter((userModel) => !_.isUndefined(userModel.resellerId))

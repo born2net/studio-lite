@@ -160,11 +160,9 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
                 .map((i_campaignTimelinesModel: CampaignTimelinesModel) => {
                     this.campaignTimelinesModel = i_campaignTimelinesModel;
                     console.log(i_campaignTimelinesModel.getCampaignTimelineId());
-                    this.updateStateDuration(i_campaignTimelinesModel.getTimelineDuration());
                     return i_campaignTimelinesModel;
                 })
                 .mergeMap((i_campaignTimelinesModel: CampaignTimelinesModel) => {
-
                     return this.yp.listenChannelsOfTimeline(i_campaignTimelinesModel.getCampaignTimelineId())
                 })
                 .do((i_channels: List<CampaignTimelineChanelsModel>) => {
@@ -172,9 +170,11 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
                 })
                 .combineLatest(
                     this.yp.listenCampaignTimelineBoardViewerSelected(true),
-                    this.yp.listenTimelineDurationChanged(true),
+                    this.yp.listenSelectedTimelineChanged(),
                     this.yp.ngrxStore.select(store => store.msDatabase.sdk.table_campaign_timeline_chanel_players))
                 .map((i_data): List<CampaignTimelineChanelsModel> => {
+                    var i_campaignTimelinesModel = i_data[2];
+                    this.updateStateDuration(i_campaignTimelinesModel.getTimelineDuration());
                     var i_campaignTimelineBoardViewerChanelsModel: CampaignTimelineBoardViewerChanelsModel = i_data["1"]
                     if (i_campaignTimelineBoardViewerChanelsModel)
                         this.updateStateChannelSelection(i_campaignTimelineBoardViewerChanelsModel.getCampaignTimelineChanelId());
@@ -259,7 +259,7 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
         })
     }
 
-    private updateStateDuration(i_duration:number) {
+    private updateStateDuration(i_duration: number) {
         console.log('upd duration ' + i_duration);
         this.stateTemp.duration = i_duration;
     }

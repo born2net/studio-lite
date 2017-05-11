@@ -1,3 +1,7 @@
+/**
+ Github repo: https://github.com/AlexWD/ds-timeline-widget
+ **/
+
 import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output, ViewChild} from "@angular/core";
 import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
@@ -5,13 +9,13 @@ import {CampaignTimelineBoardViewerChanelsModel, CampaignTimelineChanelsModel, C
 import {RedPepperService} from "../../services/redpepper.service";
 import {Observable} from "rxjs/Observable";
 import {BlockService, IBlockData} from "../blocks/block-service";
-import * as _ from "lodash";
-import {List, Map} from "immutable";
 import {IUiState} from "../../store/store.data";
 import {ACTION_UISTATE_UPDATE, SideProps} from "../../store/actions/appdb.actions";
 import {TimelineComponent} from "./timeline/timeline.component";
 import {EventManager} from "@angular/platform-browser";
 import {Lib} from "../../Lib";
+import * as _ from "lodash";
+import {List, Map} from "immutable";
 
 interface IChannelCollection {
     blocks: Array<number>;
@@ -81,7 +85,6 @@ export interface ITimelineState {
                           (itemsMoved)="itemsMoved($event)">
             </app-timeline>
         </div>
-
     `
 })
 export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
@@ -449,77 +452,3 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
     destroy() {
     }
 }
-
-
-// state = {
-//     zoom: 1,
-//     duration: 3600,
-//     channels: [
-//         {
-//             id: 1,
-//             viewerId: -1,
-//             name: 'CH0',
-//             type: 'normal',
-//             color: '#0000FF',
-//             selected: false,
-//         },
-//         {
-//             id: 2,
-//             viewerId: -1,
-//             name: 'CH1',
-//             type: 'normal',
-//             color: '#e9ff71',
-//             selected: false
-//         },
-//         {
-//             id: 3,
-//             viewerId: -1,
-//             name: 'CH2',
-//             color: '#ff0014',
-//             type: 'common',
-//             selected: false
-//         },
-//     ],
-//     outputs: [
-//         {
-//             id: 1,
-//             name: "Output",
-//             color: "#000",
-//             selected: false
-//         }
-//     ],
-//     items: [
-//         {
-//             id: 1,
-//             type: 'channel',
-//             resource: "assets/sample1.png",
-//             title: 'Logo_splash',
-//             start: 0,
-//             duration: 60,
-//             channel: 7,
-//             selected: false
-//         },
-//         {
-//             id: 2,
-//             type: 'channel',
-//             resource: "assets/sample3.svg",
-//             title: '350x350',
-//             start: 300,
-//             duration: 60,
-//             channel: 8,
-//             selected: false
-//         }
-//     ]
-// }
-// items = []
-
-// campaignModel: CampaignsModelExt;
-// channelModel: CampaignTimelineChanelsModel;
-// m_campaignTimelineChanelPlayersModel: CampaignTimelineChanelPlayersModelExt;
-// selected_campaign_timeline_id: number = -1;
-// selected_campaign_timeline_chanel_id: number = -1;
-// m_blockList: List<IBlockData> = List([]);
-
-/**
- Github: https://github.com/AlexWD/ds-timeline-widget
- **/

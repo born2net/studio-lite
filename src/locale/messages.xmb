@@ -40,8 +40,8 @@
   <msg id="5344752701442428839"><source>C:/msweb/studiolite/src/app/app-component.ts:54</source>web site</msg>
   <msg id="2849064100927111571"><source>C:/msweb/studiolite/src/app/app-component.ts:91</source>loading...</msg>
   <msg id="7309719557896597512"><source>C:/msweb/studiolite/src/app/app-component.ts:94</source>have a nice day </msg>
-  <msg id="5805758016483237261"><source>C:/msweb/studiolite/src/app/app-component.ts:101</source><source>C:/msweb/studiolite/src/app/studiopro/studiopro-navigation.ts:175</source>Upgrade to Enterprise - $99.00 per month</msg>
-  <msg id="7108535247064136881"><source>C:/msweb/studiolite/src/app/app-component.ts:111</source>Pick your language</msg>
+  <msg id="5805758016483237261"><source>C:/msweb/studiolite/src/app/app-component.ts:102</source><source>C:/msweb/studiolite/src/app/studiopro/studiopro-navigation.ts:175</source>Upgrade to Enterprise - $99.00 per month</msg>
+  <msg id="7108535247064136881"><source>C:/msweb/studiolite/src/app/app-component.ts:112</source>Pick your language</msg>
   <msg id="7746065369460476808"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:14</source>user name or email</msg>
   <msg id="4809196861118879526"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:15</source><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:79</source>password</msg>
   <msg id="9162857816822524614"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:20</source>enter two factor key</msg>
@@ -135,9 +135,9 @@
   <msg id="1870560040946711505"><source>C:/msweb/studiolite/src/app/blocks/block-prop-position.ts:35</source>locked</msg>
   <msg id="6108618462851148193"><source>C:/msweb/studiolite/src/app/campaigns/campaign-editor.ts:2</source>campaign editor</msg>
   <msg id="2741646832903808697"><source>C:/msweb/studiolite/src/app/campaigns/campaign-layout.ts:3</source>screen layout</msg>
-  <msg id="6454444033973204385"><source>C:/msweb/studiolite/src/app/campaigns/campaign-manager.ts:5</source>campaign selection</msg>
-  <msg id="6028894272398949430"><source>C:/msweb/studiolite/src/app/campaigns/campaign-manager.ts:11</source>new campaign</msg>
-  <msg id="3008329758802399315"><source>C:/msweb/studiolite/src/app/campaigns/campaign-manager.ts:16</source>Get Wizard help</msg>
+  <msg id="6454444033973204385"><source>C:/msweb/studiolite/src/app/campaigns/campaign-manager.ts:4</source>campaign selection</msg>
+  <msg id="6028894272398949430"><source>C:/msweb/studiolite/src/app/campaigns/campaign-manager.ts:10</source>new campaign</msg>
+  <msg id="3008329758802399315"><source>C:/msweb/studiolite/src/app/campaigns/campaign-manager.ts:15</source>Get Wizard help</msg>
   <msg id="4145364267099301397"><source>C:/msweb/studiolite/src/app/campaigns/campaign-name.ts:3</source>Select your campaign name</msg>
   <msg id="3843469504048287640"><source>C:/msweb/studiolite/src/app/campaigns/campaign-name.ts:6</source>Enter new campaign name</msg>
   <msg id="4895430942430831092"><source>C:/msweb/studiolite/src/app/campaigns/campaign-props.ts:15</source>campaign id: </msg>
@@ -155,8 +155,8 @@
   <msg id="8568181330490588741"><source>C:/msweb/studiolite/src/app/campaigns/campaign-sched-props.ts:75</source>play weekly</msg>
   <msg id="3408786538616090951"><source>C:/msweb/studiolite/src/app/campaigns/campaign-sched-props.ts:92</source>Select the days:</msg>
   <msg id="4039555836273676912"><source>C:/msweb/studiolite/src/app/campaigns/channel-block-props.ts:4</source>hours / minutes /seconds</msg>
-  <msg id="6324587259626414962"><source>C:/msweb/studiolite/src/app/campaigns/channel-props.ts:18</source>repeat to fit</msg>
-  <msg id="2012264763266897754"><source>C:/msweb/studiolite/src/app/campaigns/channel-props.ts:28</source> random order</msg>
+  <msg id="6324587259626414962"><source>C:/msweb/studiolite/src/app/campaigns/channel-props.ts:24</source>repeat to fit</msg>
+  <msg id="2012264763266897754"><source>C:/msweb/studiolite/src/app/campaigns/channel-props.ts:34</source> random order</msg>
   <msg id="4324819244706823449"><source>C:/msweb/studiolite/src/app/campaigns/sequencer.ts:20</source>edit layout</msg>
   <msg id="5755245564638965488"><source>C:/msweb/studiolite/src/app/campaigns/sequencer.ts:21</source>next channel</msg>
   <msg id="2925036210758384238"><source>C:/msweb/studiolite/src/app/fasterq/fasterq-line-props.ts:14</source>selected line</msg>

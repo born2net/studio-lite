@@ -30,7 +30,7 @@ export class TimelineRulerComponent implements OnInit, OnChanges {
 
     this.width = parseInt(this.width);
 
-        this.canvas.width = Math.min(1072, this.width);
+        this.canvas.width = Math.min(document.getElementById("ruler-container").offsetWidth, this.width);
         this.canvas.height = this.height;
 
         this.ctx.fillStyle = 'rgb(50, 50, 50)';

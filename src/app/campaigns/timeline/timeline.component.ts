@@ -1,9 +1,5 @@
 import { Component, OnInit, Input, AfterViewChecked, OnChanges, EventEmitter, Output } from '@angular/core';
 
-const { Map } = require('immutable');
-
-import { TimelineRulerComponent } from '../timeline-ruler/timeline-ruler.component';
-
 declare let $: any;
 declare let Draggable: any;
 declare let TweenLite: any;

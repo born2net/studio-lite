@@ -86,7 +86,7 @@
 
 .timeline {
   padding-left: 0px;
-  max-width: 1200px;
+  /*max-width: 1200px;*/
   overflow-x: auto;
 }
 

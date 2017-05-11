@@ -18,6 +18,8 @@ export class TimelineRulerComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.drawScale();
+
+    window.onresize = () => this.drawScale();
   }
 
   ngOnChanges() {

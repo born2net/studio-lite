@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Output} from "@angular/core";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Output, ViewChild} from "@angular/core";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {Compbaser} from "ng-mslib";
 import {CampaignsModelExt, CampaignTimelineChanelPlayersModelExt} from "../../store/model/msdb-models-extended";
@@ -12,7 +12,7 @@ import * as _ from "lodash";
 import {RedPepperService} from "../../services/redpepper.service";
 import {MainAppShowStateEnum} from "../app-component";
 import {Lib} from "../../Lib";
-import {ITimelineState} from "./campaign-story-timeline";
+import {CampaignStoryTimeline, ITimelineState} from "./campaign-story-timeline";
 
 // https://github.com/AlexWD/ds-timeline-widget
 
@@ -116,6 +116,9 @@ export class CampaignEditor extends Compbaser {
         )
     }
 
+    @ViewChild(CampaignStoryTimeline)
+    campaignStoryTimeline:CampaignStoryTimeline;
+
     @Output()
     onToScreenLayoutEditor: EventEmitter<any> = new EventEmitter<any>();
 
@@ -141,6 +144,10 @@ export class CampaignEditor extends Compbaser {
         this.rp.setTimelineTotalDuration(this.campaignModel.getCampaignId(), i_duration);
         this.rp.reduxCommit();
         this.cd.markForCheck();
+    }
+
+    _campaignStoryTimelineCmd(i_cmd){
+        this.campaignStoryTimeline[i_cmd]();
     }
 
     _onStateChanged(state:ITimelineState){

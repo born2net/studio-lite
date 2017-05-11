@@ -71,6 +71,8 @@ export interface ITimelineState {
                           [state]="state"
                           (channelClicked)="onChannelClicked($event)"
                           (closedGaps)="itemsChanged($event)"
+                          (alignedRight)="itemsChanged($event)"
+                          (alignedLeft)="itemsChanged($event)"
                           (itemsClicked)="itemsClicked($event)"
                           (itemsResized)="itemsChanged($event)"
                           (itemAdded)="itemAdded($event)"
@@ -346,6 +348,22 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
         return sorted;
     }
 
+    public closedGaps(){
+        this.timelineComponent.closeGaps();
+    }
+
+    public resizeToLargest(){
+        this.timelineComponent.resizeToLargest();
+    }
+
+    public alignLeft(){
+        this.timelineComponent.alignLeft();
+    }
+
+    public alignRight(){
+        this.timelineComponent.alignRight();
+    }
+
     remove(id) {
         // let index = this.items.findIndex(item => item.id === id)
         // this.items.splice(index, 1)
@@ -414,10 +432,6 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
             this.rp.setBlockTimelineChannelBlockNewPosition(item.channel, item.id, "player_duration", Math.round(item.duration));
         })
         this.rp.reduxCommit();
-    }
-
-    onCloseGaps(event) {
-        console.log(event);
     }
 
     itemAdded(event) {

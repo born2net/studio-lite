@@ -1,4 +1,4 @@
-<div class="container">
+<div style="width: 100%">
   <div class="row" style="padding-top:50px;padding-bottom:50px;" *ngIf="dev">
     <button type="button" class="btn btn-default" (click)="addChannel()">Add Channel</button>
     <button type="button" class="btn btn-default" (click)="addCommonChannel()">Add Common Channel</button>
@@ -26,14 +26,16 @@
       <!--(durationChange)="timelineDurationChange($event)"-->
     <!--&gt;</app-duration-input>-->
   </div>
-  <div class="row timeline-ruler" style="margin-left: 81px;">
-    <app-timeline-ruler
-      width="{{ state.gridWidth }}"
-      height="50"
-      position="{{ scrollPosition }}"
-      scale="{{ state.zoom / 10}}"
-    >
-    </app-timeline-ruler>
+  <div class="row timeline-ruler">
+    <div class="col-xs-11 col-xs-offset-1" style="padding: 0;">
+      <app-timeline-ruler
+        width="{{ state.gridWidth }}"
+        height="50"
+        position="{{ scrollPosition }}"
+        scale="{{ state.zoom / 10}}"
+      >
+      </app-timeline-ruler>
+    </div>
   </div>
   <div class="row timeline-container">
     <div class="col-xs-1 channel-titles">

@@ -166,16 +166,16 @@ export class DurationInputComponent implements OnInit {
 
     mouseDownIncrement() {
         this.increment();
-        this.timer = setInterval(() => this.increment(), 150);
+        // this.timer = setInterval(() => this.increment(), 150);
     }
 
     mouseUpIncrement() {
-        clearInterval(this.timer);
+        // clearInterval(this.timer);
     }
 
     mouseDownDecrement() {
         this.decrement();
-        this.timer = setInterval(() => this.decrement(), 150);
+        // this.timer = setInterval(() => this.decrement(), 150);
     }
 
     mouseUpDecrement() {

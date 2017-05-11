@@ -19,6 +19,7 @@ export class DurationInputComponent implements OnInit {
 
     @Input()
     set setDuration(i_duration: number) {
+        i_duration = Math.round(i_duration);
         if (this.duration == i_duration || i_duration == -1) return;
         console.log(`>>>>>>>> setting new duration old ${this.duration} > ${i_duration}`);
         this.duration = i_duration;
@@ -78,7 +79,6 @@ export class DurationInputComponent implements OnInit {
             this.hours = 0;
         }
         this.updateDisplay();
-        this.notifyChanges();
     }
 
     decrement() {
@@ -110,7 +110,6 @@ export class DurationInputComponent implements OnInit {
                 break;
         }
         this.updateDisplay();
-        this.notifyChanges();
     }
 
     notifyChanges(){
@@ -123,8 +122,6 @@ export class DurationInputComponent implements OnInit {
         this.secondsOutput = this.padLeft(this.seconds);
         this.minutesOutput = this.padLeft(this.minutes);
         this.hoursOutput = this.padLeft(this.hours);
-
-
     }
 
     inputTime(e) {

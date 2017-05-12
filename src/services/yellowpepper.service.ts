@@ -532,7 +532,14 @@ export class YellowPepperService {
     }
 
     listenFasterqQueues(): Observable<List<FasterqQueueModel>> {
-        return this.store.select(store => store.appDb.fasterq.queues)
+        var selected$ = this.store.select(store => store.appDb.uiState.fasterq.fasterqLineSelected);
+        var queues$ = this.store.select(store => store.appDb.fasterq.queues);
+        return selected$
+            .combineLatest(queues$, (lineId, queues: List<FasterqQueueModel>) => {
+                return queues.filter((queue: FasterqQueueModel) => {
+                    return queue.lineId == lineId;
+                });
+            }).filter(value => value != null);
     }
 
     listenFasterqAnalytics(): Observable<List<FasterqAnalyticsModel>> {

@@ -19,6 +19,8 @@ export class CampaignSchedProps extends Compbaser implements AfterViewInit {
 
     private m_campaignTimelineSchedulesModel: CampaignTimelineSchedulesModel;
     m_days: Array<any> = [];
+    m_startTime = 0;
+    m_duration = 0;
     private formInputs = {};
     contGroup: FormGroup;
     private m_ONCE = '0';
@@ -37,9 +39,7 @@ export class CampaignSchedProps extends Compbaser implements AfterViewInit {
             'weekly_start': ['1/1/2020'],
             'weekly_end': ['1/1/2020'],
             'daily_start': ['1/1/2020'],
-            'daily_end': ['1/1/2020'],
-            'start_time': [],
-            'duration': []
+            'daily_end': ['1/1/2020']
         });
         _.forEach(this.contGroup.controls, (value, key: string) => {
             this.formInputs[key] = this.contGroup.controls[key] as FormControl;
@@ -47,7 +47,7 @@ export class CampaignSchedProps extends Compbaser implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this._listenTimepickerChanges();
+        // this._listenTimepickerChanges();
 
         this.cancelOnDestroy(
             this.yp.listenSchedulerValueChanged()
@@ -64,31 +64,41 @@ export class CampaignSchedProps extends Compbaser implements AfterViewInit {
         )
     }
 
-    _setPriority(i_priority: number) {
-        this.rp.setCampaignsSchedule(this.m_campaignTimelineSchedulesModel.getCampaignTimelineId(), 'priorty', i_priority);
+    _setPriority(i_value: number) {
+        this.rp.setCampaignsSchedule(this.m_campaignTimelineSchedulesModel.getCampaignTimelineId(), 'priorty', i_value);
         this.rp.reduxCommit();
     }
 
-    _listenTimepickerChanges() {
-        jQuery('#timepickerDurationInput', this.el.nativeElement).on("hide.timepicker", (e:any) => {
-            var totalSeconds = this.rp.formatObjectToSeconds({
-                hours: e.time.hours,
-                minutes: e.time.minutes,
-                seconds: e.time.seconds
-            });
-            this.rp.setCampaignsSchedule(this.m_campaignTimelineSchedulesModel.getCampaignTimelineId(), 'duration', totalSeconds);
-            this.rp.reduxCommit();
-        });
-        jQuery('#timepickerTimeInput', this.el.nativeElement).on("hide.timepicker", (e:any) => {
-            var totalSeconds = this.rp.formatObjectToSeconds({
-                hours: e.time.hours,
-                minutes: e.time.minutes,
-                seconds: e.time.seconds
-            });
-            this.rp.setCampaignsSchedule(this.m_campaignTimelineSchedulesModel.getCampaignTimelineId(), 'start_time', totalSeconds);
-            this.rp.reduxCommit();
-        });
+    _onDurationChanged(i_value) {
+        this.rp.setCampaignsSchedule(this.m_campaignTimelineSchedulesModel.getCampaignTimelineId(), 'duration', i_value);
+        this.rp.reduxCommit();
     }
+
+    _onStartTimeChanged(i_value) {
+        this.rp.setCampaignsSchedule(this.m_campaignTimelineSchedulesModel.getCampaignTimelineId(), 'start_time', i_value);
+        this.rp.reduxCommit();
+    }
+
+    // _listenTimepickerChanges() {
+    //     jQuery('#timepickerDurationInput', this.el.nativeElement).on("hide.timepicker", (e:any) => {
+    //         var totalSeconds = this.rp.formatObjectToSeconds({
+    //             hours: e.time.hours,
+    //             minutes: e.time.minutes,
+    //             seconds: e.time.seconds
+    //         });
+    //         this.rp.setCampaignsSchedule(this.m_campaignTimelineSchedulesModel.getCampaignTimelineId(), 'duration', totalSeconds);
+    //         this.rp.reduxCommit();
+    //     });
+    //     jQuery('#timepickerTimeInput', this.el.nativeElement).on("hide.timepicker", (e:any) => {
+    //         var totalSeconds = this.rp.formatObjectToSeconds({
+    //             hours: e.time.hours,
+    //             minutes: e.time.minutes,
+    //             seconds: e.time.seconds
+    //         });
+    //         this.rp.setCampaignsSchedule(this.m_campaignTimelineSchedulesModel.getCampaignTimelineId(), 'start_time', totalSeconds);
+    //         this.rp.reduxCommit();
+    //     });
+    // }
 
     private _renderCarouselPosition() {
         jQuery('#schedulerRepeatMode', this.el.nativeElement).carousel(Number(this.m_campaignTimelineSchedulesModel.getRepeatType()));
@@ -105,6 +115,10 @@ export class CampaignSchedProps extends Compbaser implements AfterViewInit {
     }
 
     private _renderFormInputs() {
+
+        this.m_startTime = this.m_campaignTimelineSchedulesModel.getStartTime();
+        this.m_duration = this.m_campaignTimelineSchedulesModel.getDuration();
+
         _.forEach(this.formInputs, (value, key: string) => {
             switch (key) {
                 case 'once': {
@@ -129,20 +143,16 @@ export class CampaignSchedProps extends Compbaser implements AfterViewInit {
                     this.formInputs['once'].setValue(xStart)
                     return;
                 }
-                case 'start_time': {
-                    var startTime = this.rp.formatSecondsToObject(this.m_campaignTimelineSchedulesModel.getStartTime());
-                    var startTimeFormatted = `${startTime.hours}:${startTime.minutes}:${startTime.seconds}`;
-                    this.formInputs['start_time'].setValue(startTimeFormatted);
-                    jQuery('#timepickerTimeInput', this.el.nativeElement).timepicker('setTime', startTimeFormatted);
-                    return;
-                }
-                case 'duration': {
-                    var duration = this.rp.formatSecondsToObject(this.m_campaignTimelineSchedulesModel.getDuration());
-                    var durationFormatted = `${duration.hours}:${duration.minutes}:${duration.seconds}`;
-                    this.formInputs['duration'].setValue(durationFormatted);
-                    jQuery('#timepickerDurationInput', this.el.nativeElement).timepicker('setTime', durationFormatted);
-                    return;
-                }
+
+                // var startTime = this.rp.formatSecondsToObject(this.m_campaignTimelineSchedulesModel.getStartTime());
+                // var startTimeFormatted = `${startTime.hours}:${startTime.minutes}:${startTime.seconds}`;
+                // this.formInputs['start_time'].setValue(startTimeFormatted);
+                // jQuery('#timepickerTimeInput', this.el.nativeElement).timepicker('setTime', startTimeFormatted);
+                // var duration = this.rp.formatSecondsToObject(this.m_campaignTimelineSchedulesModel.getDuration());
+                // var durationFormatted = `${duration.hours}:${duration.minutes}:${duration.seconds}`;
+                // this.formInputs['duration'].setValue(durationFormatted);
+                // jQuery('#timepickerDurationInput', this.el.nativeElement).timepicker('setTime', durationFormatted);
+                    
                 default: {
 
                 }

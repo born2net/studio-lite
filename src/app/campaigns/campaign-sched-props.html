@@ -15,26 +15,28 @@
         <span i18n class="schedulerClass">Conflict priority:</span>
         <div id="schedulePriority" style="width: 155px" class="center-block schedulerClass">
             <img (click)="_setPriority(2)" class="schedulePriorities" name="2" src="assets/trip1.png"/>
-            <img (click)="_setPriority(1)"  class="schedulePriorities" name="1" src="assets/trip2.png"/>
+            <img (click)="_setPriority(1)" class="schedulePriorities" name="1" src="assets/trip2.png"/>
             <img (click)="_setPriority(0)" class="schedulePriorities" name="0" src="assets/trip3.png"/>
         </div>
         <hr/>
 
-        <span i18n class="schedulerClass">Duration:</span>
-        <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-key"></i></span>
-            <input style="height: 30px" type="text" [formControl]="contGroup.controls['duration']"
-                   id="timepickerDurationInput" class="schedulerClass" name="start_time" placeholder="hh:mm:ss" data-default-time="false">
-        </div>
+        <span i18n style="display: inline">Duration: </span>
+        <app-duration-input class="offsetDurations" [setDuration]="m_duration" (durationChange)="_onDurationChanged($event)">
+            <!--(durationChange)="_timelineDurationChange($event)">-->
+        </app-duration-input>
+
+        <!--<span class="input-group-addon"><i class="fa fa-key"></i></span>-->
+        <!--<input style="height: 30px" type="text" [formControl]="contGroup.controls['duration']"-->
+        <!--id="timepickerDurationInput" class="schedulerClass" name="start_time" placeholder="hh:mm:ss" data-default-time="false">-->
         <hr/>
-        <span data-localize="startTime" class="schedulerClass">Start time:</span>
-        <div>
-            <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                <input style="height: 30px" type="text" id="timepickerTimeInput" [formControl]="contGroup.controls['start_time']"
-                       class="schedulerClass" name="start_time" placeholder="hh:mm:ss" data-default-time="false">
-            </div>
-        </div>
+        <span i18n class="schedulerClass">Start time:</span>
+            <app-duration-input class="offsetDurations" [setDuration]="m_startTime" (durationChange)="_onStartTimeChanged($event)">
+            <!--[setDuration]="m_duration"-->
+            <!--(durationChange)="_timelineDurationChange($event)">-->
+        </app-duration-input>
+
+        <!--<input style="height: 30px" type="text" id="timepickerTimeInput" [formControl]="contGroup.controls['start_time']"-->
+        <!--class="schedulerClass" name="start_time" placeholder="hh:mm:ss" data-default-time="false">-->
         <br/>
         <br/>
         <br/>
@@ -47,7 +49,7 @@
                                 <h4 i18n>play once</h4>
                             </div>
                             <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                                 <input (blur)="_saveDates('once',$event)" #datepickerSchedulerOnce type="date" [formControl]="contGroup.controls['once']"
                                        class="form-control"
                                        placeholder="access key">
@@ -58,13 +60,13 @@
                                 <h4 i18n>play daily</h4>
                             </div>
                             <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                                 <input (blur)="_saveDates('daily_start',$event)" #datepickerSchedulerDailyStart type="date" [formControl]="contGroup.controls['daily_start']"
                                        class="form-control"
                                        placeholder="start date">
                             </div>
                             <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                                 <input (blur)="_saveDates('daily_end',$event)" #datepickerSchedulerDailyEnd type="date" [formControl]="contGroup.controls['daily_end']"
                                        class="form-control"
                                        placeholder="end date">

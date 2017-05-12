@@ -19,6 +19,13 @@
     cursor: pointer;
 }
 
+.offsetDurations {
+    display: inline;
+    position: relative;
+    top: 10px;
+    left: 30px
+}
+
 .carousel-control.left span, .carousel-control.right span {
     background-image: none;
     color: gray;

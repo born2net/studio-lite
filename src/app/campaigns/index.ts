@@ -31,7 +31,7 @@ import {TimelineComponent} from "./timeline/timeline.component";
 import {TimelineRulerComponent} from "./timeline-ruler/timeline-ruler.component";
 import {CampaignStoryTimeline} from "./campaign-story-timeline";
 import {HourCounter} from "../../comps/hour-counter/hour-counter";
-import {DurationInputComponent} from "./duration-input/duration-input.component";
+import {DurationInputComponent} from "../../comps/duration-input/duration-input.component";
 
 export const LAZY_ROUTES = [
     {path: ':folder', component: CampaignsNavigation},

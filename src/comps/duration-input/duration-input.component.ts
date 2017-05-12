@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 
 @Component({
     selector: 'app-duration-input',
@@ -16,12 +16,13 @@ export class DurationInputComponent implements OnInit {
     focusedItem;
     timer;
     duration = 0;
+    prevDuration = 0;
 
     @Input()
     set setDuration(i_duration: number) {
         i_duration = Math.round(i_duration);
         if (this.duration == i_duration || i_duration == -1) return;
-        console.log(`>>>>>>>> setting new duration old ${this.duration} > ${i_duration}`);
+        // console.log(`>>>>>>>> setting new duration old ${this.duration} > ${i_duration}`);
         this.duration = i_duration;
         this.calcSeconds();
         this.updateDisplay();
@@ -112,10 +113,14 @@ export class DurationInputComponent implements OnInit {
         this.updateDisplay();
     }
 
-    notifyChanges(){
+    notifyChanges() {
         const newDuration = this.hours * 60 * 60 + this.minutes * 60 + this.seconds;
-        console.log('change emitted ' + newDuration);
-        this.durationChange.emit(newDuration);
+        if (newDuration != this.prevDuration) {
+            this.prevDuration = newDuration;
+            console.log('change emitted ' + newDuration);
+            this.durationChange.emit(newDuration);
+        }
+
     }
 
     updateDisplay() {

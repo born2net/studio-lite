@@ -20,10 +20,9 @@
 }
 
 .offsetDurations {
-    display: inline;
+    float: right;
     position: relative;
-    top: 10px;
-    left: 30px
+    top: -10px;
 }
 
 .carousel-control.left span, .carousel-control.right span {

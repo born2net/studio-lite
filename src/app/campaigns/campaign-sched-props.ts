@@ -47,8 +47,6 @@ export class CampaignSchedProps extends Compbaser implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        // this._listenTimepickerChanges();
-
         this.cancelOnDestroy(
             this.yp.listenSchedulerValueChanged()
                 .subscribe(i_campaignTimelineSchedulesModel => {
@@ -78,27 +76,6 @@ export class CampaignSchedProps extends Compbaser implements AfterViewInit {
         this.rp.setCampaignsSchedule(this.m_campaignTimelineSchedulesModel.getCampaignTimelineId(), 'start_time', i_value);
         this.rp.reduxCommit();
     }
-
-    // _listenTimepickerChanges() {
-    //     jQuery('#timepickerDurationInput', this.el.nativeElement).on("hide.timepicker", (e:any) => {
-    //         var totalSeconds = this.rp.formatObjectToSeconds({
-    //             hours: e.time.hours,
-    //             minutes: e.time.minutes,
-    //             seconds: e.time.seconds
-    //         });
-    //         this.rp.setCampaignsSchedule(this.m_campaignTimelineSchedulesModel.getCampaignTimelineId(), 'duration', totalSeconds);
-    //         this.rp.reduxCommit();
-    //     });
-    //     jQuery('#timepickerTimeInput', this.el.nativeElement).on("hide.timepicker", (e:any) => {
-    //         var totalSeconds = this.rp.formatObjectToSeconds({
-    //             hours: e.time.hours,
-    //             minutes: e.time.minutes,
-    //             seconds: e.time.seconds
-    //         });
-    //         this.rp.setCampaignsSchedule(this.m_campaignTimelineSchedulesModel.getCampaignTimelineId(), 'start_time', totalSeconds);
-    //         this.rp.reduxCommit();
-    //     });
-    // }
 
     private _renderCarouselPosition() {
         jQuery('#schedulerRepeatMode', this.el.nativeElement).carousel(Number(this.m_campaignTimelineSchedulesModel.getRepeatType()));
@@ -144,17 +121,7 @@ export class CampaignSchedProps extends Compbaser implements AfterViewInit {
                     return;
                 }
 
-                // var startTime = this.rp.formatSecondsToObject(this.m_campaignTimelineSchedulesModel.getStartTime());
-                // var startTimeFormatted = `${startTime.hours}:${startTime.minutes}:${startTime.seconds}`;
-                // this.formInputs['start_time'].setValue(startTimeFormatted);
-                // jQuery('#timepickerTimeInput', this.el.nativeElement).timepicker('setTime', startTimeFormatted);
-                // var duration = this.rp.formatSecondsToObject(this.m_campaignTimelineSchedulesModel.getDuration());
-                // var durationFormatted = `${duration.hours}:${duration.minutes}:${duration.seconds}`;
-                // this.formInputs['duration'].setValue(durationFormatted);
-                // jQuery('#timepickerDurationInput', this.el.nativeElement).timepicker('setTime', durationFormatted);
-                    
                 default: {
-
                 }
             }
             let data = this.m_campaignTimelineSchedulesModel.getKey(key);
@@ -245,3 +212,36 @@ export class CampaignSchedProps extends Compbaser implements AfterViewInit {
         jQuery('#timepickerTimeInput', this.el.nativeElement).off("hide.timepicker");
     }
 }
+
+
+
+// _listenTimepickerChanges() {
+//     jQuery('#timepickerDurationInput', this.el.nativeElement).on("hide.timepicker", (e:any) => {
+//         var totalSeconds = this.rp.formatObjectToSeconds({
+//             hours: e.time.hours,
+//             minutes: e.time.minutes,
+//             seconds: e.time.seconds
+//         });
+//         this.rp.setCampaignsSchedule(this.m_campaignTimelineSchedulesModel.getCampaignTimelineId(), 'duration', totalSeconds);
+//         this.rp.reduxCommit();
+//     });
+//     jQuery('#timepickerTimeInput', this.el.nativeElement).on("hide.timepicker", (e:any) => {
+//         var totalSeconds = this.rp.formatObjectToSeconds({
+//             hours: e.time.hours,
+//             minutes: e.time.minutes,
+//             seconds: e.time.seconds
+//         });
+//         this.rp.setCampaignsSchedule(this.m_campaignTimelineSchedulesModel.getCampaignTimelineId(), 'start_time', totalSeconds);
+//         this.rp.reduxCommit();
+//     });
+// }
+
+// var startTime = this.rp.formatSecondsToObject(this.m_campaignTimelineSchedulesModel.getStartTime());
+// var startTimeFormatted = `${startTime.hours}:${startTime.minutes}:${startTime.seconds}`;
+// this.formInputs['start_time'].setValue(startTimeFormatted);
+// jQuery('#timepickerTimeInput', this.el.nativeElement).timepicker('setTime', startTimeFormatted);
+// var duration = this.rp.formatSecondsToObject(this.m_campaignTimelineSchedulesModel.getDuration());
+// var durationFormatted = `${duration.hours}:${duration.minutes}:${duration.seconds}`;
+// this.formInputs['duration'].setValue(durationFormatted);
+// jQuery('#timepickerDurationInput', this.el.nativeElement).timepicker('setTime', durationFormatted);
+                    

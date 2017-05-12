@@ -28,7 +28,8 @@
         <!--<span class="input-group-addon"><i class="fa fa-key"></i></span>-->
         <!--<input style="height: 30px" type="text" [formControl]="contGroup.controls['duration']"-->
         <!--id="timepickerDurationInput" class="schedulerClass" name="start_time" placeholder="hh:mm:ss" data-default-time="false">-->
-        <hr/>
+        <br/>
+        <div class="clearfix"></div>
         <span i18n class="schedulerClass">Start time:</span>
             <app-duration-input class="offsetDurations" [setDuration]="m_startTime" (durationChange)="_onStartTimeChanged($event)">
             <!--[setDuration]="m_duration"-->

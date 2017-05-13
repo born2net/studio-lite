@@ -1058,8 +1058,14 @@ export class BlockService {
                     };
                     return this.yp.getResourceRecord(blockData.resource.handle)
                         .map((i_resourcesModel: ResourcesModel) => {
-                            blockData.resource.name = i_resourcesModel.getResourceName()
-                            blockData.resource.type = i_resourcesModel.getResourceType()
+                            // todo: temp hack till resolved
+                            if (_.isUndefined(i_resourcesModel)) {
+                                blockData.resource.name = '???';
+                                blockData.resource.type = '';
+                            } else {
+                                blockData.resource.name = i_resourcesModel.getResourceName()
+                                blockData.resource.type = i_resourcesModel.getResourceType()
+                            }
                             return blockData;
                         })
                 }

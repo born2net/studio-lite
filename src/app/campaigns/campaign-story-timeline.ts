@@ -164,7 +164,7 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
             this.yp.listenTimelineSelected()
                 .map((i_campaignTimelinesModel: CampaignTimelinesModel) => {
                     this.campaignTimelinesModel = i_campaignTimelinesModel;
-                    console.log(i_campaignTimelinesModel.getCampaignTimelineId());
+                    console.log('selected timeline ' + i_campaignTimelinesModel.getCampaignTimelineId());
                     return i_campaignTimelinesModel;
                 })
                 .mergeMap((i_campaignTimelinesModel: CampaignTimelinesModel) => {
@@ -265,7 +265,7 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
     }
 
     private updateStateDuration(i_duration: number) {
-        console.log('upd duration ' + i_duration);
+        console.log('CampaignStoryTimeline: upd duration ' + i_duration);
         this.stateTemp.duration = i_duration;
     }
 
@@ -382,7 +382,7 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
 
     itemsMoved(event) {
         event.forEach((item) => {
-            console.log("Item moved", item);
+            // console.log("Item moved", item);
             this.rp.setBlockTimelineChannelBlockNewPosition(item.channel, item.id, "player_offset_time", item.start);
 
         })
@@ -390,7 +390,7 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
     }
 
     channelAdded(event) {
-        console.log("Channel added", event);
+        // console.log("Channel added", event);
     }
 
     onChannelClicked(event) {
@@ -404,7 +404,7 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
     }
 
     handleMouseEvents(event: KeyboardEvent, direction) {
-        con(event + ' ' + direction);
+        // con(event + ' ' + direction);
     }
 
     handleKeyboardEvents(event: KeyboardEvent, direction) {
@@ -415,7 +415,7 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
     }
 
     itemsClicked(event) {
-        con('Total items clicks ' + event.length);
+        // con('Total items clicks ' + event.length);
         if (this.m_contPressed == 'down' || event.length == 0) return;
         const item = event[event.length - 1];
         var uiState: IUiState = {
@@ -438,7 +438,7 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
     }
 
     itemAdded(event) {
-        console.log("Item Added", event);
+        // console.log("Item Added", event);
     }
 
     ngAfterViewInit() {

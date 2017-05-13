@@ -140,8 +140,8 @@ export class CampaignEditor extends Compbaser {
 
     _timelineDurationChange(i_duration) {
         this.m_duration = i_duration;
-        console.log('upd db new duration ' + i_duration);
-        this.rp.setTimelineTotalDuration(this.campaignModel.getCampaignId(), i_duration);
+        console.log('CampaignEditor db total new duration ' + i_duration + ' ' + this.campaignTimelinesModel.getCampaignTimelineId());
+        this.rp.setTimelineTotalDuration(this.campaignTimelinesModel.getCampaignTimelineId(), i_duration);
         this.rp.reduxCommit();
         this.cd.markForCheck();
     }

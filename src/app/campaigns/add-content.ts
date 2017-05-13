@@ -14,6 +14,8 @@ import {ADD_NEW_BLOCK_SCENE} from "../scenes/scene-editor";
 import {Lib} from "../../Lib";
 import {List} from "immutable";
 import * as _ from "lodash";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import {Subject} from "rxjs/Subject";
 
 @Component({
     selector: 'add-content',
@@ -180,21 +182,26 @@ export class AddContent extends Compbaser implements AfterViewInit {
         this._render();
     }
 
-    @Output()
-    onAddContentSelected: EventEmitter<IAddContents> = new EventEmitter<IAddContents>();
+    // @Output()
+    // onAddContentSelected: EventEmitter<IAddContents> = new EventEmitter<IAddContents>();
 
     @Output()
     onClosed: EventEmitter<any> = new EventEmitter<any>();
 
+    @Output()
+    onAddContentSelected = new Subject().debounceTime(200);
+
     _addBlock(i_addContents: IAddContents) {
         switch (this.m_placement) {
             case PLACEMENT_CHANNEL: {
-                this.onAddContentSelected.emit(i_addContents)
+                (this.onAddContentSelected as Subject<any>).next(i_addContents)
+                // this.onAddContentSelected.emit(i_addContents)
                 break;
             }
 
             case PLACEMENT_LISTS: {
-                this.onAddContentSelected.emit(i_addContents)
+                (this.onAddContentSelected as Subject<any>).next(i_addContents)
+                // this.onAddContentSelected.emit(i_addContents)
                 break;
             }
 

@@ -54,7 +54,7 @@ export class CampaignLayout extends Compbaser {
                 this.m_screenTemplateData = i_screenTemplateData;
                 return i_screenTemplateData;
             })
-                .debounceTime(100)
+                .debounceTime(200)
                 .do(() => {
                     this.onSelection.emit(this.m_screenTemplateData)
                 }).subscribe(() => {

@@ -27,14 +27,17 @@ import {Lib} from "../../Lib";
                             </div>
                             <ul class="list-group">
                                 <li class="list-group-item">
-                                    Channel name:
+                                    Name:
                                     <!--Channel name: {{(m_channel$ | async)?.getChanelName()}}-->
                                     <input class="pull-right" [formControl]="m_contGroup.controls['chanel_name']"/>
+                                    <hr/>
                                 </li>
                                 <li class="list-group-item">
-                                    Channel color (hex):
+                                    Color (hex):
                                     <input class="pull-right" [formControl]="m_contGroup.controls['chanel_color']"/>
+                                    <hr/>
                                 </li>
+                                
                                 <li class="list-group-item">
                                     <span i18n>repeat to fit</span>
                                     <div class="material-switch pull-right">

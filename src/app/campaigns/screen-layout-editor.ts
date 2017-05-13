@@ -183,6 +183,8 @@ export class ScreenLayoutEditor extends Compbaser implements AfterViewInit {
      **/
     _onAddDivision() {
         var self = this;
+        this.m_selectedViewerID  = -1;
+        self.m_canvas.deactivateAll().renderAll();
         var props = {
             x: 0,
             y: 0,

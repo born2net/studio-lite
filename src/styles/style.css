@@ -1585,12 +1585,12 @@ div.kineticjs-content {
 /**dev_mode_start**/
 small.debug {
     color: red;
+    display: none !important;
 }
 
 small.release {
     text-transform: lowercase;
     color: #4c4c4c;
-    display: none !important;
 }
 /**dev_mode_end**/
 

@@ -136,13 +136,13 @@ import {LocationMarkModel} from "../../models/LocationMarkModel";
 })
 export class BlockPropLocation extends Compbaser implements AfterViewInit {
 
-     m_formInputs = {};
-     m_currentIndex = 0;
-     m_radius = 0;
-     m_totalLocations = 0;
-     m_contGroup: FormGroup;
-     m_blockData: IBlockData;
-     m_pendingBlocAddition: { type: string, content: IAddContents, xmlSnippet: string };
+    m_formInputs = {};
+    m_currentIndex = 0;
+    m_radius = 0;
+    m_totalLocations = 0;
+    m_contGroup: FormGroup;
+    m_blockData: IBlockData;
+    m_pendingBlocAddition: { type: string, content: IAddContents, xmlSnippet: string };
 
     m_showMap = false;
     m_PLACEMENT_LISTS = PLACEMENT_LISTS;
@@ -186,6 +186,9 @@ export class BlockPropLocation extends Compbaser implements AfterViewInit {
             this.yp.listenLocationMapLoad()
                 .pairwise()
                 .filter(v => v[0] == true && v[1] == false && this.m_pendingBlocAddition && this.m_pendingBlocAddition.xmlSnippet != '')
+                .do(() => {
+                    console.log(1);
+                })
                 .combineLatest(this.yp.ngrxStore.select(store => store.appDb.uiState.locationMap.locationMarkerSelected))
                 .subscribe((v) => {
                     console.log(v);
@@ -306,7 +309,8 @@ export class BlockPropLocation extends Compbaser implements AfterViewInit {
 
             case 'Fixed': {
                 jXML(xSnippetLocation).append(jXML(buff));
-                this.bs.setBlockPlayerData(this.m_blockData, domPlayerData)
+                this.bs.setBlockPlayerData(this.m_blockData, domPlayerData);
+                this.m_pendingBlocAddition = null;
                 break;
             }
             case 'GPS': {

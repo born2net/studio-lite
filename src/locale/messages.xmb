@@ -43,20 +43,21 @@
   <msg id="5805758016483237261"><source>C:/msweb/studiolite/src/app/app-component.ts:102</source><source>C:/msweb/studiolite/src/app/studiopro/studiopro-navigation.ts:175</source>Upgrade to Enterprise - $99.00 per month</msg>
   <msg id="7108535247064136881"><source>C:/msweb/studiolite/src/app/app-component.ts:112</source>Pick your language</msg>
   <msg id="7746065369460476808"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:14</source>user name or email</msg>
-  <msg id="4809196861118879526"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:15</source><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:79</source>password</msg>
+  <msg id="4809196861118879526"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:15</source><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:81</source>password</msg>
   <msg id="9162857816822524614"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:20</source>enter two factor key</msg>
-  <msg id="4137049537431219133"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:25,27</source> login to your account
-                            <ph name="START_TAG_SPAN"><ex>&lt;span&gt;</ex></ph>with Google authenticator<ph name="CLOSE_TAG_SPAN"><ex>&lt;/span&gt;</ex></ph>
+  <msg id="2503331336991669578"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:25,27</source> login to your account
+                            
                         </msg>
   <msg id="2001940299854753031"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:34</source> remember me </msg>
   <msg id="5872337092278414963"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:38</source>forgot password</msg>
   <msg id="8246600873004586882"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:40</source>change password</msg>
   <msg id="5289326240092186479"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:42</source>change business name</msg>
-  <msg id="8732769503581158362"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:52</source><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:67</source><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:78</source>user name / email</msg>
-  <msg id="867339644855996577"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:53</source>old password</msg>
-  <msg id="48285893667252664"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:54</source>new password</msg>
-  <msg id="6917932917401642982"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:55</source>repeat new password</msg>
-  <msg id="5666893431176348635"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:80</source>new business name</msg>
+  <msg id="8359621426539146583"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:49</source>Don&apos;t have an account? create one</msg>
+  <msg id="8732769503581158362"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:54</source><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:69</source><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:80</source>user name / email</msg>
+  <msg id="867339644855996577"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:55</source>old password</msg>
+  <msg id="48285893667252664"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:56</source>new password</msg>
+  <msg id="6917932917401642982"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:57</source>repeat new password</msg>
+  <msg id="5666893431176348635"><source>C:/msweb/studiolite/src/comps/entry/LoginPanel.ts:82</source>new business name</msg>
   <msg id="4785021168351486737"><source>C:/msweb/studiolite/src/comps/logout/Logout.ts:4</source>Save &amp; Logout</msg>
   <msg id="6524180701596149125"><source>C:/msweb/studiolite/src/comps/logout/Logout.ts:5</source>Just Logout</msg>
   <msg id="7212624462478696127"><source>C:/msweb/studiolite/src/comps/entry/AutoLogin.ts:2</source>verifying access...</msg>
@@ -149,14 +150,15 @@
   <msg id="750837672459228230"><source>C:/msweb/studiolite/src/app/campaigns/campaign-props.ts:58</source>Play timelines for this campaign only on specific times. For example, play Timeline A in the morning and Timeline B at night.</msg>
   <msg id="1167977099462453641"><source>C:/msweb/studiolite/src/app/campaigns/campaign-resolution.ts:3</source>screen resolution</msg>
   <msg id="7626905534069326448"><source>C:/msweb/studiolite/src/app/campaigns/campaign-sched-props.ts:15</source>Conflict priority:</msg>
-  <msg id="4220765745195024064"><source>C:/msweb/studiolite/src/app/campaigns/campaign-sched-props.ts:23</source>Duration:</msg>
-  <msg id="4049333306580215724"><source>C:/msweb/studiolite/src/app/campaigns/campaign-sched-props.ts:47</source>play once</msg>
-  <msg id="7249155645987524413"><source>C:/msweb/studiolite/src/app/campaigns/campaign-sched-props.ts:58</source>play daily</msg>
-  <msg id="8568181330490588741"><source>C:/msweb/studiolite/src/app/campaigns/campaign-sched-props.ts:75</source>play weekly</msg>
-  <msg id="3408786538616090951"><source>C:/msweb/studiolite/src/app/campaigns/campaign-sched-props.ts:92</source>Select the days:</msg>
+  <msg id="569785428576811345"><source>C:/msweb/studiolite/src/app/campaigns/campaign-sched-props.ts:23</source>Duration: </msg>
+  <msg id="9043806075514219833"><source>C:/msweb/studiolite/src/app/campaigns/campaign-sched-props.ts:33</source>Start time:</msg>
+  <msg id="4049333306580215724"><source>C:/msweb/studiolite/src/app/campaigns/campaign-sched-props.ts:50</source>play once</msg>
+  <msg id="7249155645987524413"><source>C:/msweb/studiolite/src/app/campaigns/campaign-sched-props.ts:61</source>play daily</msg>
+  <msg id="8568181330490588741"><source>C:/msweb/studiolite/src/app/campaigns/campaign-sched-props.ts:78</source>play weekly</msg>
+  <msg id="3408786538616090951"><source>C:/msweb/studiolite/src/app/campaigns/campaign-sched-props.ts:95</source>Select the days:</msg>
   <msg id="4039555836273676912"><source>C:/msweb/studiolite/src/app/campaigns/channel-block-props.ts:4</source>hours / minutes /seconds</msg>
-  <msg id="6324587259626414962"><source>C:/msweb/studiolite/src/app/campaigns/channel-props.ts:24</source>repeat to fit</msg>
-  <msg id="2012264763266897754"><source>C:/msweb/studiolite/src/app/campaigns/channel-props.ts:34</source> random order</msg>
+  <msg id="6324587259626414962"><source>C:/msweb/studiolite/src/app/campaigns/channel-props.ts:27</source>repeat to fit</msg>
+  <msg id="2012264763266897754"><source>C:/msweb/studiolite/src/app/campaigns/channel-props.ts:37</source> random order</msg>
   <msg id="4324819244706823449"><source>C:/msweb/studiolite/src/app/campaigns/sequencer.ts:20</source>edit layout</msg>
   <msg id="5755245564638965488"><source>C:/msweb/studiolite/src/app/campaigns/sequencer.ts:21</source>next channel</msg>
   <msg id="2925036210758384238"><source>C:/msweb/studiolite/src/app/fasterq/fasterq-line-props.ts:14</source>selected line</msg>

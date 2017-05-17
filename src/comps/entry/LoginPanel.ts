@@ -123,6 +123,8 @@ enum ViewMod {
                         </div>
                         <div class="clearFloat"></div>
                         <locale-selector [orientation]="'inline'"></locale-selector>
+                        <br/>
+                        <a i18n style="padding-left: 20px" href="https://secure.digitalsignage.com/msgetstarted/#selectStudioLite">Don't have an account? create one</a>
                     </div>
 
                     <div *ngSwitchCase="m_viewMod.CHANGE_PASSWORD">

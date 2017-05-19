@@ -17,7 +17,7 @@ import {Lib} from "../../Lib";
                     <div *ngIf="jsonItemFieldContainer">
                         <span data-localize="JsonItem">Json path notation</span>
                         <br/>
-                        <input type="text" name="name" formControlName="jsonItemField" value="jsonItemField" placeholder="json item">
+                        <input (change)="_onJsonItemTextFieldChanged($event)" type="text" name="name" formControlName="jsonItemField" value="jsonItemField" placeholder="json item">
                     </div>
                     <div>
                         <div *ngIf="jsonItemTextFieldsContainer">
@@ -134,6 +134,7 @@ export class BlockPropJsonItem extends Compbaser implements AfterViewInit {
             this.jsonItemDualNumericSettings = false;
             this.jsonItemIconSettings = false;
             this.jsonItemDateSettings = false;
+            this.jsonItemFontSettings = true;
             this.m_formInputs['jsonItemField'].setValue(fieldName);
             this._populateFonts(xSnippetFont)
         } else {
@@ -147,6 +148,13 @@ export class BlockPropJsonItem extends Compbaser implements AfterViewInit {
         var domPlayerData = this.m_blockData.playerDataDom;
         var xSnippet = jXML(domPlayerData).find('XmlItem');
         jXML(xSnippet).attr('maintainAspectRatio', i_value);
+        this.bs.setBlockPlayerData(this.m_blockData, domPlayerData)
+    }
+
+    _onJsonItemTextFieldChanged(i_event) {
+        var domPlayerData = this.m_blockData.playerDataDom;
+        var xSnippet = jXML(domPlayerData).find('XmlItem');
+        jXML(xSnippet).attr('fieldName', i_event.target.value);
         this.bs.setBlockPlayerData(this.m_blockData, domPlayerData)
     }
 

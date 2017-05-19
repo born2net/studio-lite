@@ -16,6 +16,8 @@ import {List} from "immutable";
 import * as _ from "lodash";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {Subject} from "rxjs/Subject";
+import {Observer} from "rxjs/Observer";
+import {Observable} from "rxjs/Observable";
 
 @Component({
     selector: 'add-content',
@@ -185,11 +187,14 @@ export class AddContent extends Compbaser implements AfterViewInit {
     // @Output()
     // onAddContentSelected: EventEmitter<IAddContents> = new EventEmitter<IAddContents>();
 
-    @Output()
-    onClosed: EventEmitter<any> = new EventEmitter<any>();
+    // @Output()
+    // onClosed: EventEmitter<any> = new EventEmitter<any>();
 
     @Output()
-    onAddContentSelected = new Subject().debounceTime(200);
+    onClosed:Observable<any> = new Subject().debounceTime(200).delay(333);
+
+    @Output()
+    onAddContentSelected:Observable<any> = new Subject().debounceTime(200);
 
     _addBlock(i_addContents: IAddContents) {
         switch (this.m_placement) {
@@ -240,7 +245,7 @@ export class AddContent extends Compbaser implements AfterViewInit {
     }
 
     _close() {
-        this.onClosed.emit();
+        (this.onClosed as Subject<any>).next();
     }
 
     /**

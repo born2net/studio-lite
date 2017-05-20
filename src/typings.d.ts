@@ -39,40 +39,44 @@ declare module 'redux-thunk' {
 }
 
 
-
 declare module FlashDetect {
     export var installed;
-    export var versionAtLeast:(v:number)=>void;
+    export var versionAtLeast: (v: number) => void;
 }
 
 declare class EnjoyHint {
-    constructor(config:any)
-    set(value:any);
-    trigger(value:any);
-    run:()=>void;
-    end:()=>void;
-    getCurrentStep:()=>void;
+    constructor(config: any)
+
+    set(value: any);
+
+    trigger(value: any);
+
+    run: () => void;
+    end: () => void;
+    getCurrentStep: () => void;
 }
 
 declare class RC4 {
-    constructor(key:any);
+    constructor(key: any);
+
     doEncrypt: any;
     doDecrypt: any;
 }
 
 declare class QRCode {
-    constructor(a:any,b:any);
-    makeCode(a:any);
+    constructor(a: any, b: any);
+
+    makeCode(a: any);
 }
 
 declare class Stopwatch {
-    stop:()=>void;
-    reset:()=>void;
-    setListener:()=>void;
+    stop: () => void;
+    reset: () => void;
+    setListener: () => void;
 }
 
 declare class Power4 {
-    easeOut:any;
+    easeOut: any;
 }
 
 declare class RC4V2 {
@@ -120,24 +124,29 @@ interface jQueryModal extends JQuery {
 }
 
 interface JQueryStatic {
-    base64:any;
-    timepicker:any;
-    carousel:any;
-    knob:any;
-    gradientPicker:any;
+    base64: any;
+    timepicker: any;
+    carousel: any;
+    knob: any;
+    gradientPicker: any;
 }
 
-// interface JQuery {
-//     modal: any;
-// }
+interface JQuery {
+    modal:any;
+    base64: any;
+    timepicker: any;
+    carousel: any;
+    knob: any;
+    gradientPicker: any;
+}
 
 declare var Draggable;
-declare var con:Con;
+declare var con: Con;
 declare var jXML: JQueryStatic;
 declare var jQueryAny: JQueryStatic | any;
 
 interface Con {
-    (msg:any, stringify?:boolean):void;
+    (msg: any, stringify?: boolean): void;
 }
 
 interface PlatformStatic {
@@ -150,7 +159,9 @@ interface PlatformStatic {
     ua?: string;
     version?: string;
     os?: PlatformOS;
+
     parse?(ua: string): PlatformStatic;
+
     toString?(): string;
 }
 
@@ -158,6 +169,7 @@ interface PlatformOS {
     architecture?: number;
     family?: string;
     version?: string;
+
     toString(): string;
 }
 
@@ -547,6 +559,7 @@ declare namespace fabric {
          * @param eventName Object with key/value pairs (eg. {'after:render': handler, 'selection:cleared': handler})
          */
         on(eventName: { [key: string]: Function }): T;
+
         /**
          * Fires event with an optional options object
          * @deprecated `fire` deprecated since 1.0.7 (use `trigger` instead)
@@ -554,6 +567,7 @@ declare namespace fabric {
          * @param {Object} [options] Options object
          */
         trigger(eventName: string, options?: any): T;
+
         /**
          * Stops event observing for a particular event handler. Calling this method
          * without arguments removes all handlers for all events
@@ -568,6 +582,7 @@ declare namespace fabric {
     // ----------------------------------------------------
     interface ICanvasAnimation<T> {
         FX_DURATION: number;
+
         /**
          * Centers object horizontally with animation.
          * @param {fabric.Object} object Object to center
@@ -597,6 +612,7 @@ declare namespace fabric {
          */
         fxRemove(object: IObject, callbacks?: { onComplete: Function; onChange: Function; }): T;
     }
+
     interface IObjectAnimation<T> {
         /**
          * Animates object's properties
@@ -606,6 +622,7 @@ declare namespace fabric {
          * @param options The animation options
          */
         animate(property: string, value: number | string, options?: IAnimationOptions): IObject;
+
         /**
          * Animates object's properties
          * object.animate({ left: ..., top: ... }, { duration: ... });
@@ -614,11 +631,12 @@ declare namespace fabric {
          */
         animate(properties: any, options?: IAnimationOptions): IObject;
     }
+
     interface IAnimationOptions {
         /**
          * Allows to specify starting value of animatable property (if we don't want current value to be used).
          */
-            from?: string | number;
+        from?: string | number;
         /**
          * Defaults to 500 (ms). Can be used to change duration of an animation.
          */
@@ -702,12 +720,14 @@ declare namespace fabric {
          * @param {Number} threshold
          */
         toBlackWhite(threshold: number): IColor;
+
         /**
          * Overlays color with another color
          * @param {String|fabric.Color} otherColor
          */
         overlayWith(otherColor: string | IColor): IColor;
     }
+
     interface IColorStatic {
         /**
          * Color class
@@ -721,31 +741,37 @@ declare namespace fabric {
          * @param {String} color Color value ex: rgb(0-255,0-255,0-255)
          */
         fromRgb(color: string): IColor;
+
         /**
          * Returns new color object, when given a color in RGBA format
          * @param {String} color Color value ex: rgb(0-255,0-255,0-255)
          */
         fromRgba(color: string): IColor;
+
         /**
          * Returns array represenatation (ex: [100, 100, 200, 1]) of a color that's in RGB or RGBA format
          * @param {String} color Color value ex: rgb(0-255,0-255,0-255), rgb(0%-100%,0%-100%,0%-100%)
          */
         sourceFromRgb(color: string): number[];
+
         /**
          * Returns new color object, when given a color in HSL format
          * @param {String} color Color value ex: hsl(0-260,0%-100%,0%-100%)
          */
         fromHsl(color: string): IColor;
+
         /**
          * Returns new color object, when given a color in HSLA format
          * @param {String} color Color value ex: hsl(0-260,0%-100%,0%-100%)
          */
         fromHsla(color: string): IColor;
+
         /**
          * Returns array represenatation (ex: [100, 100, 200, 1]) of a color that's in HSL or HSLA format.
          * @param {String} color Color value ex: hsl(0-360,0%-100%,0%-100%) or hsla(0-360,0%-100%,0%-100%, 0-1)
          */
         sourceFromHsl(color: string): number[];
+
         /**
          * Returns new color object, when given a color in HEX format
          * @param {String} color Color value ex: FF5555
@@ -757,11 +783,13 @@ declare namespace fabric {
          * @param {String} color ex: FF5555
          */
         sourceFromHex(color: string): number[];
+
         /**
          * Returns new color object, when given color in array representation (ex: [200, 100, 100, 0.5])
          * @param {Array} source
          */
         fromSource(source: number[]): IColor;
+
         prototype: any;
     }
 
@@ -769,7 +797,7 @@ declare namespace fabric {
         /**
          * @param {String} [options.type] Type of gradient 'radial' or 'linear'
          */
-            type?: string;
+        type?: string;
         /**
          * x-coordinate of start point
          */
@@ -799,16 +827,19 @@ declare namespace fabric {
      */
         colorStops?: any;
     }
+
     interface IGradient extends IGradientOptions {
         /**
          * Adds another colorStop
          * @param {Object} colorStop Object with offset and color
          */
         addColorStop(colorStop: any): IGradient;
+
         /**
          * Returns object representation of a gradient
          */
         toObject(): any;
+
         /**
          * Returns SVG representation of an gradient
          * @param {Object} object Object to create a gradient for
@@ -823,14 +854,17 @@ declare namespace fabric {
          */
         toLive(ctx: CanvasRenderingContext2D, object?: IPathGroup): CanvasGradient;
     }
+
     interface IGrandientStatic {
         new (options?: IGradientOptions): IGradient;
+
         /**
          * Returns instance from an SVG element
          * @param {SVGGradientElement} el SVG gradient element
          * @param {fabric.Object} instance
          */
         fromElement(el: SVGGradientElement, instance: IObject): IGradient;
+
         /**
          * Returns instance from its object representation
          * @param {Object} obj
@@ -844,28 +878,34 @@ declare namespace fabric {
          * Appends a point to intersection
          */
         appendPoint(point: IPoint): void;
+
         /**
          * Appends points to intersection
          */
         appendPoints(points: IPoint[]): void;
     }
+
     interface IIntersectionStatic {
         /**
          * Intersection class
          */
         new (status?: string): void;
+
         /**
          * Checks if polygon intersects another polygon
          */
         intersectPolygonPolygon(points1: IPoint[], points2: IPoint[]): IIntersection;
+
         /**
          * Checks if line intersects polygon
          */
         intersectLinePolygon(a1: IPoint, a2: IPoint, points: IPoint[]): IIntersection;
+
         /**
          * Checks if one line intersects another
          */
         intersectLineLine(a1: IPoint, a2: IPoint, b1: IPoint, b2: IPoint): IIntersection;
+
         /**
          * Checks if polygon intersects rectangle
          */
@@ -892,10 +932,12 @@ declare namespace fabric {
          */
         source: string | HTMLImageElement;
     }
+
     interface IPattern extends IPatternOptions {
         new (options?: IPatternOptions): IPattern;
 
         initialise(options?: IPatternOptions): IPattern;
+
         /**
          * Returns an instance of CanvasPattern
          */
@@ -905,20 +947,24 @@ declare namespace fabric {
          * Returns object representation of a pattern
          */
         toObject(): any;
+
         /**
          * Returns SVG representation of a pattern
          * @param {fabric.Object} object
          */
         toSVG(object: IObject): string;
     }
+
     interface IPatternStatic {
         new (options?: IPatternOptions): IPattern;
+
         prototype: any;
     }
 
     interface IPoint {
         x: number;
         y: number;
+
         /**
          * Adds another point to this one and returns another one
          * @param {fabric.Point} that
@@ -1076,8 +1122,10 @@ declare namespace fabric {
          */
         swap(that: IPoint): IPoint;
     }
+
     interface IPointStatic {
         new (x: number, y: number): IPoint;
+
         prototype: any;
     }
 
@@ -1107,16 +1155,20 @@ declare namespace fabric {
          */
         offsetY: number;
     }
+
     interface IShadow extends IShadowOptions {
         initialize(options?: IShadowOptions | string): IShadow;
+
         /**
          * Returns object representation of a shadow
          */
         toObject(): IObject;
+
         /**
          * Returns a string representation of an instance, CSS3 text-shadow declaration
          */
         toString(): string;
+
         /**
          * Returns SVG representation of a shadow
          * @param {fabric.Object} object
@@ -1128,8 +1180,10 @@ declare namespace fabric {
          */
         reOffsetsAndBlur: RegExp
     }
+
     interface IShadowStatic {
         new (options?: IShadowOptions): IShadow;
+
         reOffsetsAndBlur: RegExp;
     }
 
@@ -1146,6 +1200,7 @@ declare namespace fabric {
          */
         height: number;
     }
+
     interface ICanvasDimensionsOptions {
         /**
          * Set the given dimensions only as canvas backstore dimensions
@@ -1233,6 +1288,7 @@ declare namespace fabric {
          */
         stateful?: boolean;
     }
+
     interface IStaticCanvas extends IObservable<IStaticCanvas>, IStaticCanvasOptions, ICollection<IStaticCanvas>, ICanvasAnimation<IStaticCanvas> {
         /**
          * Calculates canvas element offset relative to the document
@@ -1388,6 +1444,7 @@ declare namespace fabric {
          * Returned value is an object with top and left properties
          */
         getCenter(): { top: number; left: number; };
+
         /**
          * Centers object horizontally.
          * You might need to call `setCoords` on an object after centering, to update controls area.
@@ -1469,6 +1526,7 @@ declare namespace fabric {
          * @chainable
          */
         bringForward(object: IObject): IStaticCanvas;
+
         /**
          * Moves an object to specified level in stack of drawn objects
          * @param {fabric.Object} object Object to send
@@ -1511,6 +1569,7 @@ declare namespace fabric {
          * @param {Function} [reviver] Method for further parsing of JSON elements, called after each fabric object created.
          */
         loadFromJSON(json: string | any, callback: Function, reviver?: Function): ICanvas;
+
         /**
          * Clones canvas instance
          * @param {Object} [callback] Receives cloned instance as a first argument
@@ -1546,6 +1605,7 @@ declare namespace fabric {
          */
         fxStraightenObject(object: IObject): IStaticCanvas
     }
+
     interface IStaticCanvasStatic {
         /**
          * Constructor
@@ -1555,13 +1615,16 @@ declare namespace fabric {
         new (element: HTMLCanvasElement | string, options?: ICanvasOptions): IStaticCanvas;
 
         EMPTY_JSON: string;
+
         /**
          * Provides a way to check support of some of the canvas methods
          * (either those of HTMLCanvasElement itself, or rendering context)
          * @param {String} methodName Method to check support for; Could be one of "getImageData", "toDataURL", "toDataURLWithQuality" or "setLineDash"
          */
         supports(methodName: string): boolean;
+
         prototype: any;
+
         /**
          * Returns JSON representation of canvas
          * @param {Array} [propertiesToInclude] Any properties that you might want to additionally include in the output
@@ -1670,6 +1733,7 @@ declare namespace fabric {
          */
         isDrawingMode?: boolean;
     }
+
     interface ICanvas extends IStaticCanvas, ICanvasOptions {
         _objects: IObject[];
 
@@ -1679,23 +1743,27 @@ declare namespace fabric {
          * @param {fabric.Object} target Object to test against
          */
         containsPoint(e: Event, target: IObject): boolean;
+
         /**
          * Deactivates all objects on canvas, removing any active group or object
          * @return {fabric.Canvas} thisArg
          */
         deactivateAll(): ICanvas;
+
         /**
          * Deactivates all objects and dispatches appropriate events
          * @param {Event} [e] Event (passed along when firing)
          * @return {fabric.Canvas} thisArg
          */
         deactivateAllWithDispatch(e?: Event): ICanvas;
+
         /**
          * Discards currently active group
          * @param {Event} [e] Event (passed along when firing)
          * @return {fabric.Canvas} thisArg
          */
         discardActiveGroup(e?: Event): ICanvas;
+
         /**
          * Discards currently active object
          * @param {Event} [e] Event (passed along when firing)
@@ -1703,43 +1771,51 @@ declare namespace fabric {
          * @chainable
          */
         discardActiveObject(e?: Event): ICanvas;
+
         /**
          * Draws objects' controls (borders/controls)
          * @param {CanvasRenderingContext2D} ctx Context to render controls on
          */
         drawControls(ctx: CanvasRenderingContext2D): void;
+
         /**
          * Method that determines what object we are clicking on
          * @param {Event} e mouse event
          * @param {Boolean} skipGroup when true, group is skipped and only objects are traversed through
          */
         findTarget(e: MouseEvent, skipGroup: boolean): ICanvas;
+
         /**
          * Returns currently active group
          * @return {fabric.Group} Current group
          */
         getActiveGroup(): IGroup;
+
         /**
          * Returns currently active object
          * @return {fabric.Object} active object
          */
         getActiveObject(): IObject;
+
         /**
          * Returns pointer coordinates relative to canvas.
          * @param {Event} e
          * @return {Object} object with "x" and "y" number values
          */
         getPointer(e: Event, ignoreZoom?: boolean, upperCanvasEl?: CanvasRenderingContext2D): { x: number; y: number; };
+
         /**
          * Returns context of canvas where object selection is drawn
          * @return {CanvasRenderingContext2D}
          */
         getSelectionContext(): CanvasRenderingContext2D;
+
         /**
          * Returns <canvas> element on which object selection is drawn
          * @return {HTMLCanvasElement}
          */
         getSelectionElement(): HTMLCanvasElement;
+
         /**
          * Returns true if object is transparent at a certain location
          * @param {fabric.Object} target Object to check
@@ -1747,18 +1823,21 @@ declare namespace fabric {
          * @param {Number} y Top coordinate
          */
         isTargetTransparent(target: IObject, x: number, y: number): boolean;
+
         /**
          * Sets active group to a speicified one
          * @param {fabric.Group} group Group to set as a current one
          * @param {Event} [e] Event (passed along when firing)
          */
         setActiveGroup(group: IGroup, e?: Event): ICanvas;
+
         /**
          * Sets given object as the only active object on canvas
          * @param {fabric.Object} object Object to set as an active one
          * @param {Event} [e] Event (passed along when firing "object:selected")
          */
         setActiveObject(object: IObject, e?: Event): ICanvas;
+
         /**
          * Set the cursor type of the canvas element
          * @param {String} value Cursor type of the canvas element.
@@ -1771,6 +1850,7 @@ declare namespace fabric {
          */
         removeListeners(): void
     }
+
     interface ICanvasStatic {
         /**
          * Constructor
@@ -1780,13 +1860,16 @@ declare namespace fabric {
         new (element: HTMLCanvasElement | string, options?: ICanvasOptions): ICanvas;
 
         EMPTY_JSON: string;
+
         /**
          * Provides a way to check support of some of the canvas methods
          * (either those of HTMLCanvasElement itself, or rendering context)
          * @param {String} methodName Method to check support for; Could be one of "getImageData", "toDataURL", "toDataURLWithQuality" or "setLineDash"
          */
         supports(methodName: string): boolean;
+
         prototype: any;
+
         /**
          * Returns JSON representation of canvas
          * @param {Array} [propertiesToInclude] Any properties that you might want to additionally include in the output
@@ -1813,22 +1896,26 @@ declare namespace fabric {
          */
         endAngle?: number;
     }
+
     interface ICircle extends IObject, ICircleOptions {
         /**
          * Returns complexity of an instance
          * @return {Number} complexity of this instance
          */
         complexity(): number;
+
         /**
          * Returns horizontal radius of an object (according to how an object is scaled)
          * @return {Number}
          */
         getRadiusX(): number;
+
         /**
          * Returns vertical radius of an object (according to how an object is scaled)
          * @return {Number}
          */
         getRadiusY(): number;
+
         /**
          * Sets radius of an object (and updates width accordingly)
          * @return {Number}
@@ -1841,6 +1928,7 @@ declare namespace fabric {
          * @return {Object} object representation of an instance
          */
         toObject(propertiesToInclude?: any[]): any;
+
         /**
          * Returns svg representation of an instance
          * @param {Function} [reviver] Method for further parsing of svg representation.
@@ -1848,26 +1936,31 @@ declare namespace fabric {
          */
         toSVG(reviver?: Function): string;
     }
+
     interface ICircleStatic {
         /**
          * List of attribute names to account for when parsing SVG element (used by {@link fabric.Circle.fromElement})
          */
         ATTRIBUTE_NAMES: string[];
+
         /**
          * Returns Circle instance from an SVG element
          * @param {SVGElement} element Element to parse
          * @param {Object} [options] Options object
          */
         fromElement(element: SVGElement, options: ICircleOptions): ICircle;
+
         /**
          * Returns Circle instance from an object representation
          * @param {Object} object Object to create an instance from
          */
         fromObject(object: any): ICircle;
+
         /**
          * Circle class
          */
         new (options?: ICircleOptions): ICircle;
+
         prototype: any;
     }
 
@@ -1881,6 +1974,7 @@ declare namespace fabric {
          */
         ry?: number;
     }
+
     interface IEllipse extends IObject, IEllipseOptions {
         /**
          * Returns horizontal radius of an object (according to how an object is scaled)
@@ -1893,26 +1987,31 @@ declare namespace fabric {
          * @return {Number}
          */
         getRy(): number;
+
         /**
          * Returns object representation of an instance
          * @param {Array} [propertiesToInclude] Any properties that you might want to additionally include in the output
          * @return {Object} object representation of an instance
          */
         toObject(propertiesToInclude?: any[]): any;
+
         /**
          * Returns svg representation of an instance
          * @param {Function} [reviver] Method for further parsing of svg representation.
          * @return {String} svg representation of an instance
          */
         toSVG(reviver?: Function): string;
+
         /**
          * Returns complexity of an instance
          * @return {Number} complexity
          */
         complexity(): number;
     }
+
     interface IEllipseStatic {
         new (options?: IEllipseOptions): IEllipse;
+
         /**
          * List of attribute names to account for when parsing SVG element (used by {@link fabric.Ellipse.fromElement})
          */
@@ -1934,6 +2033,7 @@ declare namespace fabric {
 
     interface IGroup extends IObject, ICollection<IGroup> {
         activateAllObjects(): IGroup;
+
         /**
          * Adds an object to a group; Then recalculates group's dimension, position.
          * @param {Object} object
@@ -1941,24 +2041,29 @@ declare namespace fabric {
          * @chainable
          */
         addWithUpdate(object: IObject): IGroup;
+
         containsPoint(point: IPoint): boolean;
+
         /**
          * Destroys a group (restoring state of its objects)
          * @return {fabric.Group} thisArg
          * @chainable
          */
         destroy(): IGroup;
+
         /**
          * Returns requested property
          * @param {String} prop Property to get
          * @return {Any}
          */
         get(prop: string): any;
+
         /**
          * Checks whether this group was moved (since `saveCoords` was called last)
          * @return {Boolean} true if an object was moved (since fabric.Group#saveCoords was called)
          */
         hasMoved(): boolean;
+
         /**
          * Removes an object from a group; Then recalculates group's dimension, position.
          * @param {Object} object
@@ -1966,11 +2071,13 @@ declare namespace fabric {
          * @chainable
          */
         removeWithUpdate(object: IObject): IGroup;
+
         /**
          * Renders instance on a given context
          * @param {CanvasRenderingContext2D} ctx context to render instance on
          */
         render(ctx: CanvasRenderingContext2D): void;
+
         /**
          * Removes objects from a collection, then renders canvas (if `renderOnAddRemove` is not `false`)
          * @param {...fabric.Object} object Zero or more fabric instances
@@ -1978,6 +2085,7 @@ declare namespace fabric {
          * @chainable
          */
         remove(...object: IObject[]): IGroup;
+
         /**
          * Saves coordinates of this instance (to be used together with `hasMoved`)
          * @saveCoords
@@ -1985,23 +2093,27 @@ declare namespace fabric {
          * @chainable
          */
         saveCoords(): IGroup;
+
         /**
          * Sets coordinates of all group objects
          * @return {fabric.Group} thisArg
          * @chainable
          */
         setObjectsCoords(): IGroup;
+
         /**
          * Returns object representation of an instance
          * @param {Array} [propertiesToInclude] Any properties that you might want to additionally include in the output
          * @return {Object} object representation of an instance
          */
         toObject(propertiesToInclude?: any[]): any;
+
         /**
          * Returns string represenation of a group
          * @return {String}
          */
         toString(): string;
+
         /**
          * Returns svg representation of an instance
          * @param {Function} [reviver] Method for further parsing of svg representation.
@@ -2009,6 +2121,7 @@ declare namespace fabric {
          */
         toSVG(reviver?: Function): string;
     }
+
     interface IGroupStatic {
         /**
          * Constructor
@@ -2016,6 +2129,7 @@ declare namespace fabric {
          * @param {Object} [options] Options object
          */
         new (items?: any[], options?: IObjectOptions): IGroup;
+
         /**
          * Returns {@link fabric.Group} instance from an object representation
          * @param {Object} object Object to create a group from
@@ -2054,39 +2168,47 @@ declare namespace fabric {
          */
         filters: IBaseFilter[];
     }
+
     interface IImage extends IObject, IImageOptions {
         initialize(element?: string | HTMLImageElement, options?: IImageOptions): void;
+
         /**
          * Applies filters assigned to this image (from "filters" array)
          * @param {Function} callback Callback is invoked when all filters have been applied and new image is generated
          */
         applyFilters(callback: Function): void;
+
         /**
          * Returns a clone of an instance
          * @param {Function} callback Callback is invoked with a clone as a first argument
          * @param {Array} [propertiesToInclude] Any properties that you might want to additionally include in the output
          */
         clone(callback?: Function, propertiesToInclude?: any[]): IObject;
+
         /**
          * Returns complexity of an instance
          * @return {Number} complexity of this instance
          */
         complexity(): number;
+
         /**
          * Returns image element which this instance if based on
          * @return {HTMLImageElement} Image element
          */
         getElement(): HTMLImageElement;
+
         /**
          * Returns original size of an image
          * @return {Object} Object with "width" and "height" properties
          */
         getOriginalSize(): { width: number; height: number; };
+
         /**
          * Returns source of an image
          * @return {String} Source of an image
          */
         getSrc(): string;
+
         render(ctx: CanvasRenderingContext2D, noTransform: boolean): void;
 
         /**
@@ -2098,27 +2220,32 @@ declare namespace fabric {
          * @param {Object} [options] Options object
          */
         setElement(element: HTMLImageElement, callback: Function, options: IImageOptions): IImage;
+
         /**
          * Sets crossOrigin value (on an instance and corresponding image element)
          */
         setCrossOrigin(value: string): IImage;
+
         /**
          * Returns object representation of an instance
          * @param {Array} [propertiesToInclude] Any properties that you might want to additionally include in the output
          * @return {Object} Object representation of an instance
          */
         toObject(propertiesToInclude?: any[]): any;
+
         /**
          * Returns string representation of an instance
          * @return {String} String representation of an instance
          */
         toString(): string;
+
         /**
          * Returns SVG representation of an instance
          * @param {Function} [reviver] Method for further parsing of svg representation.
          * @return {String} svg representation of an instance
          */
         toSVG(reviver?: Function): string;
+
         /**
          * Sets source of an image
          * @param {String} src Source string (URL)
@@ -2127,6 +2254,7 @@ declare namespace fabric {
          */
         setSrc(src: string, callback: Function, options: IImageOptions): IImage;
     }
+
     interface IImageStatic {
         /**
          * Constructor
@@ -2134,6 +2262,7 @@ declare namespace fabric {
          * @param {Object} [options] Options object
          */
         new (element: HTMLImageElement, objObjects: IObjectOptions): IImage;
+
         /**
          * Creates an instance of fabric.Image from an URL string
          * @param {String} url URL to create an image from
@@ -2141,6 +2270,7 @@ declare namespace fabric {
          * @param {Object} [imgOptions] Options object
          */
         fromURL(url: string, callback?: (image: IImage) => any, objObjects?: IObjectOptions): IImage;
+
         /**
          * Creates an instance of fabric.Image from its object representation
          * @static
@@ -2148,6 +2278,7 @@ declare namespace fabric {
          * @param {Function} [callback] Callback to invoke when an image instance is created
          */
         fromObject(object: any, callback: (image: IImage) => {}): void;
+
         /**
          * Returns Image instance from an SVG element
          * @param {SVGElement} element Element to parse
@@ -2155,6 +2286,7 @@ declare namespace fabric {
          * @param {Object} [options] Options object
          */
         fromElement(element: SVGElement, callback: Function, options?: IImageOptions): void;
+
         prototype: any;
         /**
          * Default CSS class name for canvas
@@ -2182,13 +2314,16 @@ declare namespace fabric {
          */
         y2: number;
     }
+
     interface ILine extends IObject, ILineOptions {
         /**
          * Returns complexity of an instance
          * @return {Number} complexity
          */
         complexity(): number;
+
         initialize(points?: number[], options?: ILineOptions): ILine;
+
         /**
          * Returns object representation of an instance
          * @methd toObject
@@ -2196,6 +2331,7 @@ declare namespace fabric {
          * @return {Object} object representation of an instance
          */
         toObject(propertiesToInclude: any[]): any;
+
         /**
          * Returns SVG representation of an instance
          * @param {Function} [reviver] Method for further parsing of svg representation.
@@ -2203,20 +2339,25 @@ declare namespace fabric {
          */
         toSVG(reviver?: Function): string;
     }
+
     interface ILineStatic {
         ATTRIBUTE_NAMES: string[];
+
         /**
          * Returns fabric.Line instance from an SVG element
          * @param {SVGElement} element Element to parse
          * @param {Object} [options] Options object
          */
         fromElement(element: SVGElement, options?: ILineOptions): ILine;
+
         /**
          * Returns fabric.Line instance from an object representation
          * @param {Object} object Object to create an instance from
          */
         fromObject(object: any): ILine;
+
         prototype: any;
+
         /**
          * Constructor
          * @param {Array} [points] Array of points
@@ -2231,7 +2372,7 @@ declare namespace fabric {
          * Note that this property is meant to be read-only and not meant to be modified.
          * If you modify, certain parts of Fabric (such as JSON loading) won't work correctly.
          */
-            type?: string;
+        type?: string;
 
         /**
          * Horizontal origin of transformation of an object (one of "left", "right", "center")
@@ -2512,60 +2653,80 @@ declare namespace fabric {
          */
         data?: any;
     }
+
     interface IObject extends IObservable<IObject>, IObjectOptions, IObjectAnimation<IObject> {
         getCurrentWidth(): number;
+
         getCurrentHeight(): number;
 
         getAngle(): number;
+
         setAngle(value: number): IObject;
 
         getBorderColor(): string;
+
         setBorderColor(value: string): IObject;
 
         getBorderScaleFactor(): number;
 
         getCornersize(): number;
+
         setCornersize(value: number): IObject;
 
         getFill(): string;
+
         setFill(value: string): IObject;
 
         getFillRule(): string;
+
         setFillRule(value: string): IObject;
 
         getFlipX(): boolean;
+
         setFlipX(value: boolean): IObject;
 
         getFlipY(): boolean;
+
         setFlipY(value: boolean): IObject;
 
         getHeight(): number;
+
         setHeight(value: number): IObject;
 
         getLeft(): number;
+
         setLeft(value: number): IObject;
 
         getOpacity(): number;
+
         setOpacity(value: number): IObject;
 
         overlayFill: string;
+
         getOverlayFill(): string;
+
         setOverlayFill(value: string): IObject;
 
         getScaleX(): number;
+
         setScaleX(value: number): IObject;
 
         getScaleY(): number;
+
         setScaleY(value: number): IObject;
 
         setShadow(options: any): IObject;
+
         getShadow(): IObject;
 
         stateProperties: any[];
+
         getTop(): number;
+
         setTop(value: number): IObject;
 
         getWidth(): number;
+
         setWidth(value: number): IObject;
 
         /* * Sets object's properties from options
@@ -2611,6 +2772,7 @@ declare namespace fabric {
          * @param {Object|Function} value Property value (if function, the value is passed into it and its return value is used as a new one)
          */
         set(key: string, value: any | Function): IObject;
+
         /**
          * Sets property to a given value.
          * When changing position/dimension -related properties (left, top, scale, angle, etc.) `set` does not update position of object's borders/controls.
@@ -2686,6 +2848,7 @@ declare namespace fabric {
          * @param {Object} [options] Options object
          */
         setGradient(property: string, options: IGradientOptions): IObject;
+
         /**
          * Sets pattern fill of an object
          * @param {Object} options Options object
@@ -2697,6 +2860,7 @@ declare namespace fabric {
          * @param {String} [options] Options object or string (e.g. "2px 2px 10px rgba(0,0,0,0.2)")
          */
         setShadow(options?: string): IObject;
+
         /**
          * Sets shadow of an object
          * @param [options] Options object
@@ -2756,21 +2920,25 @@ declare namespace fabric {
          * @param {Object} [options] Options object
          */
         setOptions(options: any): void;
+
         /**
          * Sets sourcePath of an object
          * @param {String} value Value to set sourcePath to
          */
         setSourcePath(value: string): IObject;
+
         // functions from object svg export mixin
         // -----------------------------------------------------------------------------------------------------------------------------------
         /**
          * Returns styles-string for svg-export
          */
         getSvgStyles(): string;
+
         /**
          * Returns transform-string for svg-export
          */
         getSvgTransform(): string;
+
         /**
          * Returns transform-string for svg-export from the transform matrix of single elements
          */
@@ -2782,22 +2950,26 @@ declare namespace fabric {
          * Returns true if object state (one of its state properties) was changed
          */
         hasStateChanged(): boolean;
+
         /**
          * Saves state of an object
          * @param {Object} [options] Object with additional `stateProperties` array to include when saving state
          * @return {fabric.Object} thisArg
          */
         saveState(options?: { stateProperties: any[] }): IObject;
+
         /**
          * Setups state of an object
          */
         setupState(): IObject;
+
         // functions from object straightening mixin
         // -----------------------------------------------------------------------------------------------------------------------------------
         /**
          * Straightens an object (rotating it from current angle to one of 0, 90, 180, 270, etc. depending on which is closer)
          */
         straighten(): IObject;
+
         /**
          * Same as straighten but with animation
          * @param {Object} callbacks Object with callback functions
@@ -2813,19 +2985,23 @@ declare namespace fabric {
          * @param {Boolean} [intersecting] If `true`, send object in front of next upper intersecting object
          */
         bringForward(intersecting?: boolean): IObject;
+
         /**
          * Moves an object to the top of the stack of drawn objects
          */
         bringToFront(): IObject;
+
         /**
          * Moves an object down in stack of drawn objects
          * @param {Boolean} [intersecting] If `true`, send object behind next lower intersecting object
          */
         sendBackwards(intersecting?: boolean): IObject;
+
         /**
          * Moves an object to the bottom of the stack of drawn objects
          */
         sendToBack(): IObject;
+
         /**
          * Moves an object to specified level in stack of drawn objects
          * @param {Number} index New position of object
@@ -2849,6 +3025,7 @@ declare namespace fabric {
          * @param {String} originY Vertical origin: 'top', 'center' or 'bottom'
          */
         translateToOriginPoint(center: IPoint, originX: string, originY: string): IPoint;
+
         /**
          * Returns the real center coordinates of the object
          */
@@ -2906,6 +3083,7 @@ declare namespace fabric {
          * @param {String} controlName The name of the control. Possible values are 'tl', 'tr', 'br', 'bl', 'ml', 'mt', 'mr', 'mb', 'mtr'.
          */
         isControlVisible(controlName: string): boolean;
+
         /**
          * Sets the visibility of the specified control.
          * @param {String} controlName The name of the control. Possible values are 'tl', 'tr', 'br', 'bl', 'ml', 'mt', 'mr', 'mb', 'mtr'.
@@ -2936,48 +3114,57 @@ declare namespace fabric {
          * See https://github.com/kangax/fabric.js/wiki/When-to-call-setCoords
          */
         setCoords(): IObject;
+
         /**
          * Returns coordinates of object's bounding rectangle (left, top, width, height)
          * @return {Object} Object with left, top, width, height properties
          */
         getBoundingRect(): { left: number; top: number; width: number; height: number };
+
         /**
          * Checks if object is fully contained within area of another object
          * @param {Object} other Object to test
          */
         isContainedWithinObject(other: IObject): boolean;
+
         /**
          * Checks if object is fully contained within area formed by 2 points
          * @param {Object} pointTL top-left point of area
          * @param {Object} pointBR bottom-right point of area
          */
         isContainedWithinRect(pointTL: any, pointBR: any): boolean;
+
         /**
          * Checks if point is inside the object
          * @param {fabric.Point} point Point to check against
          */
         containsPoint(point: IPoint): boolean;
+
         /**
          * Scales an object (equally by x and y)
          * @param {Number} value Scale factor
          * @return {fabric.Object} thisArg
          */
         scale(value: number): IObject;
+
         /**
          * Scales an object to a given height, with respect to bounding box (scaling by x/y equally)
          * @param {Number} value New height value
          */
         scaleToHeight(value: number): IObject;
+
         /**
          * Scales an object to a given width, with respect to bounding box (scaling by x/y equally)
          * @param {Number} value New width value
          */
         scaleToWidth(value: number): IObject;
+
         /**
          * Checks if object intersects with another object
          * @param {Object} other Object to test
          */
         intersectsWithObject(other: IObject): boolean;
+
         /**
          * Checks if object intersects with an area formed by 2 points
          * @param {Object} pointTL top-left point of area
@@ -2985,6 +3172,7 @@ declare namespace fabric {
          */
         intersectsWithRect(pointTL: any, pointBR: any): boolean;
     }
+
     interface IObjectStatic {
         prototype: any;
     }
@@ -3005,6 +3193,7 @@ declare namespace fabric {
          */
         minY?: number;
     }
+
     interface IPath extends IObject, IPathOptions {
         initialize(path?: any[], options?: IPathOptions): IPath;
 
@@ -3020,23 +3209,27 @@ declare namespace fabric {
          * @param {Boolean} [noTransform] When true, context is not transformed
          */
         render(ctx: CanvasRenderingContext2D, noTransform: boolean): void;
+
         /**
          * Returns dataless object representation of an instance
          * @param {Array} [propertiesToInclude] Any properties that you might want to additionally include in the output
          * @return {Object} object representation of an instance
          */
         toDatalessObject(propertiesToInclude?: any[]): any;
+
         /**
          * Returns object representation of an instance
          * @param {Array} [propertiesToInclude] Any properties that you might want to additionally include in the output
          * @return {Object} object representation of an instance
          */
         toObject(propertiesToInclude?: any[]): any;
+
         /**
          * Returns string representation of an instance
          * @return {String} string representation of an instance
          */
         toString(): string;
+
         /**
          * Returns svg representation of an instance
          * @param {Function} [reviver] Method for further parsing of svg representation.
@@ -3044,6 +3237,7 @@ declare namespace fabric {
          */
         toSVG(reviver?: Function): string;
     }
+
     interface IPathStatic {
         /**
          * Creates an instance of fabric.Path from an SVG <path> element
@@ -3052,12 +3246,14 @@ declare namespace fabric {
          * @param {Object} [options] Options object
          */
         fromElement(element: SVGElement, callback: (path: IPath) => any, options?: IPathOptions): void;
+
         /**
          * Creates an instance of fabric.Path from an object
          * @param {Object} object
          * @param {Function} callback Callback to invoke when an fabric.Path instance is created
          */
         fromObject(object: any, callback: (path: IPath) => any): void;
+
         /**
          * Constructor
          * @param {Array|String} path Path data (sequence of coordinates and corresponding "command" tokens)
@@ -3068,58 +3264,69 @@ declare namespace fabric {
 
     interface IPathGroup extends IObject {
         initialize(paths: IPath[], options?: IObjectOptions): void;
+
         /**
          * Returns number representation of object's complexity
          * @return {Number} complexity
          */
         complexity(): number;
+
         /**
          * Returns true if all paths in this group are of same color
          * @return {Boolean} true if all paths are of the same color (`fill`)
          */
         isSameColor(): boolean;
+
         /**
          * Renders this group on a specified context
          * @param {CanvasRenderingContext2D} ctx Context to render this instance on
          */
         render(ctx: CanvasRenderingContext2D): void;
+
         /**
          * Returns dataless object representation of this path group
          * @param {Array} [propertiesToInclude] Any properties that you might want to additionally include in the output
          * @return {Object} dataless object representation of an instance
          */
         toDatalessObject(propertiesToInclude?: any[]): any;
+
         /**
          * Returns object representation of this path group
          * @param {Array} [propertiesToInclude] Any properties that you might want to additionally include in the output
          * @return {Object} object representation of an instance
          */
         toObject(propertiesToInclude?: any[]): any;
+
         /**
          * Returns a string representation of this path group
          * @return {String} string representation of an object
          */
         toString(): string;
+
         /**
          * Returns svg representation of an instance
          * @param {Function} [reviver] Method for further parsing of svg representation.
          * @return {String} svg representation of an instance
          */
         toSVG(reviver?: Function): string;
+
         /**
          * Returns all paths in this path group
          * @return {Array} array of path objects included in this path group
          */
         getObjects(): IPath[];
     }
+
     interface IPathGroupStatic {
         fromObject(object: any): IPathGroup;
+
         /**
          * Constructor
          * @param {Array} paths
          * @param {Object} [options] Options object
          */
         new (paths: IPath[], options?: IObjectOptions): IPathGroup;
+
         /**
          * Creates fabric.PathGroup instance from an object representation
          * @static
@@ -3128,6 +3335,7 @@ declare namespace fabric {
          * @param {Function} callback Callback to invoke when an fabric.PathGroup instance is created
          */
         fromObject(object: any, callback: (group: IPathGroup) => any): void;
+
         prototype: any;
     }
 
@@ -3147,6 +3355,7 @@ declare namespace fabric {
          */
         minY?: number;
     }
+
     interface IPolygon extends IObject, IPolygonOptions {
         /**
          * Returns complexity of an instance
@@ -3160,6 +3369,7 @@ declare namespace fabric {
          * @return {Object} object representation of an instance
          */
         toObject(propertiesToInclude?: any[]): any;
+
         /**
          * Returns svg representation of an instance
          * @param {Function} [reviver] Method for further parsing of svg representation.
@@ -3167,6 +3377,7 @@ declare namespace fabric {
          */
         toSVG(reviver?: Function): string;
     }
+
     interface IPolygonStatic {
         /**
          * List of attribute names to account for when parsing SVG element (used by `fabric.Polygon.fromElement`)
@@ -3179,17 +3390,20 @@ declare namespace fabric {
          * @param {Object} [options] Options object
          */
         fromElement(element: SVGElement, options?: IPolygonOptions): IPolygon;
+
         /**
          * Returns fabric.Polygon instance from an object representation
          * @param {Object} object Object to create an instance from
          */
         fromObject(object: any): IPolygon;
+
         /**
          * Constructor
          * @param {Array} points Array of points
          * @param {Object} [options] Options object
          */
         new (points: { x: number; y: number }[], options?: IObjectOptions, skipOffset?: boolean): IPolygon;
+
         prototype: any;
     }
 
@@ -3209,19 +3423,23 @@ declare namespace fabric {
          */
         minY?: number;
     }
+
     interface IPolyline extends IObject, IPolylineOptions {
         initialize(points: IPoint[], options?: IPolylineOptions): void;
+
         /**
          * Returns complexity of an instance
          * @return {Number} complexity of this instance
          */
         complexity(): number;
+
         /**
          * Returns object representation of an instance
          * @param {Array} [propertiesToInclude] Any properties that you might want to additionally include in the output
          * @return {Object} Object representation of an instance
          */
         toObject(propertiesToInclude?: any[]): any;
+
         /**
          * Returns SVG representation of an instance
          * @param {Function} [reviver] Method for further parsing of svg representation.
@@ -3229,6 +3447,7 @@ declare namespace fabric {
          */
         toSVG(reviver?: Function): string;
     }
+
     interface IPolylineStatic {
         /**
          * List of attribute names to account for when parsing SVG element (used by `fabric.Polygon.fromElement`)
@@ -3241,11 +3460,13 @@ declare namespace fabric {
          * @param {Object} [options] Options object
          */
         fromElement(element: SVGElement, options?: IPolylineOptions): IPolyline;
+
         /**
          * Returns fabric.Polyline instance from an object representation
          * @param {Object} object Object to create an instance from
          */
         fromObject(object: any): IPolyline;
+
         /**
          * Constructor
          * @param {Array} points Array of points (where each point is an object with x and y)
@@ -3253,6 +3474,7 @@ declare namespace fabric {
          * @param {Boolean} [skipOffset] Whether points offsetting should be skipped
          */
         new (points: { x: number; y: number }[], options?: IPolylineOptions): IPolyline;
+
         prototype: any;
     }
 
@@ -3272,19 +3494,23 @@ declare namespace fabric {
         ry?: number;
 
     }
+
     interface IRect extends IObject, IRectOptions {
         initialize(points?: number[], options?: any): IRect;
+
         /**
          * Returns complexity of an instance
          * @return {Number} complexity
          */
         complexity(): number;
+
         /**
          * Returns object representation of an instance
          * @param {Array} [propertiesToInclude] Any properties that you might want to additionally include in the output
          * @return {Object} object representation of an instance
          */
         toObject(propertiesToInclude: any[]): any;
+
         /**
          * Returns svg representation of an instance
          * @param {Function} [reviver] Method for further parsing of svg representation.
@@ -3292,27 +3518,32 @@ declare namespace fabric {
          */
         toSVG(reviver?: Function): string;
     }
+
     interface IRectStatic {
         /**
          * List of attribute names to account for when parsing SVG element (used by `fabric.Rect.fromElement`)
          */
         ATTRIBUTE_NAMES: string[];
+
         /**
          * Returns Rect instance from an SVG element
          * @param {SVGElement} element Element to parse
          * @param {Object} [options] Options object
          */
         fromElement(element: SVGElement, options?: IRectOptions): IRect;
+
         /**
          * Returns Rect instance from an object representation
          * @param {Object} object Object to create an instance from
          */
         fromObject(object: any): IRect;
+
         /**
          * Constructor
          * @param {Object} [options] Options object
          */
         new (options?: IRectOptions): IRect;
+
         prototype: any;
     }
 
@@ -3364,112 +3595,136 @@ declare namespace fabric {
         useNative?: Boolean;
         text?: string;
     }
+
     interface IText extends IObject, ITextOptions {
         /**
          * Returns complexity of an instance
          */
         complexity(): number;
+
         /**
          * Returns string representation of an instance
          */
         toString(): string;
+
         /**
          * Renders text instance on a specified context
          * @param {CanvasRenderingContext2D} ctx Context to render on
          */
         render(ctx: CanvasRenderingContext2D, noTransform: boolean): void;
+
         /**
          * Returns object representation of an instance
          * @param {Array} [propertiesToInclude] Any properties that you might want to additionally include in the output
          */
         toObject(propertiesToInclude?: any[]): IObject;
+
         /**
          * Returns SVG representation of an instance
          * @param {Function} [reviver] Method for further parsing of svg representation.
          */
         toSVG(reviver?: Function): string;
+
         /**
          * Retrieves object's fontSize
          */
         getFontSize(): number;
+
         /**
          * Sets object's fontSize
          * @param {Number} fontSize Font size (in pixels)
          */
         setFontSize(fontSize: number): IText;
+
         /**
          * Retrieves object's fontWeight
          */
         getFontWeight(): number | string;
+
         /**
          * Sets object's fontWeight
          * @param {(Number|String)} fontWeight Font weight
          */
         setFontWeight(fontWeight: string | number): IText;
+
         /**
          * Retrieves object's fontFamily
          */
         getFontFamily(): string;
+
         /**
          * Sets object's fontFamily
          * @param {String} fontFamily Font family
          */
         setFontFamily(fontFamily: string): IText;
+
         /**
          * Retrieves object's text
          */
         getText(): string;
+
         /**
          * Sets object's text
          * @param {String} text Text
          */
         setText(text: string): IText;
+
         /**
          * Retrieves object's textDecoration
          */
         getTextDecoration(): string;
+
         /**
          * Sets object's textDecoration
          * @param {String} textDecoration Text decoration
          */
         setTextDecoration(textDecoration: string): IText;
+
         /**
          * Retrieves object's fontStyle
          */
         getFontStyle(): string;
+
         /**
          * Sets object's fontStyle
          * @param {String} fontStyle Font style
          */
         setFontStyle(fontStyle: string): IText;
+
         /**
          * Retrieves object's lineHeight
          */
         getLineHeight(): number;
+
         /**
          * Sets object's lineHeight
          * @param {Number} lineHeight Line height
          */
         setLineHeight(lineHeight: number): IText;
+
         /**
          * Retrieves object's textAlign
          */
         getTextAlign(): string;
+
         /**
          * Sets object's textAlign
          * @param {String} textAlign Text alignment
          */
         setTextAlign(textAlign: string): IText;
+
         /**
          * Retrieves object's textBackgroundColor
          */
         getTextBackgroundColor(): string;
+
         /**
          * Sets object's textBackgroundColor
          * @param {String} textBackgroundColor Text background color
          */
         setTextBackgroundColor(textBackgroundColor: string): IText;
     }
+
     interface ITextStatic {
         /**
          * List of attribute names to account for when parsing SVG element (used by `fabric.Text.fromElement`)
@@ -3479,6 +3734,7 @@ declare namespace fabric {
          * Default SVG font size
          */
         DEFAULT_SVG_FONT_SIZE: number;
+
         /**
          * Constructor
          * @param {String} text Text string
@@ -3492,6 +3748,7 @@ declare namespace fabric {
          * @param {Object} [options] Options object
          */
         fromElement(element: SVGElement, options?: ITextOptions): IText;
+
         /**
          * Returns fabric.Text instance from an object representation
          * @param {Object} object Object to create an instance from
@@ -3561,12 +3818,15 @@ declare namespace fabric {
          */
         caching?: boolean;
     }
+
     interface IIText extends IObject, IText, IITextOptions {
         /**
          * Returns true if object has no styling
          */
         isEmptyStyles(): boolean;
+
         render(ctx: CanvasRenderingContext2D, noTransform: boolean): void;
+
         /**
          * Returns object representation of an instance
          * @method toObject
@@ -3576,16 +3836,19 @@ declare namespace fabric {
         toObject(propertiesToInclude?: any[]): IObject;
 
         setText(value: string): IText;
+
         /**
          * Sets selection start (left boundary of a selection)
          * @param {Number} index Index to set selection start to
          */
         setSelectionStart(index: number): void;
+
         /**
          * Sets selection end (right boundary of a selection)
          * @param {Number} index Index to set selection end to
          */
         setSelectionEnd(index: number): void;
+
         /**
          * Gets style of a current selection/cursor (at the start position)
          * @param {Number} [startIndex] Start index to get styles at
@@ -3593,6 +3856,7 @@ declare namespace fabric {
          * @return {Object} styles Style object at a specified (or current) index
          */
         getSelectionStyles(startIndex: number, endIndex: number): any;
+
         /**
          * Sets style of a current selection
          * @param {Object} [styles] Styles object
@@ -3611,6 +3875,7 @@ declare namespace fabric {
          * @param {Number} [selectionStart] Optional index. When not given, current selectionStart is used.
          */
         get2DCursorLocation(selectionStart?: number): void;
+
         /**
          * Returns complete style of char at the current cursor
          * @param {Number} lineIndex Line index
@@ -3634,6 +3899,7 @@ declare namespace fabric {
          * @return {String} Character color (fill)
          */
         getCurrentCharColor(lineIndex: number, charIndex: number): string;
+
         /**
          * Renders cursor
          * @param {Object} boundaries
@@ -3729,6 +3995,7 @@ declare namespace fabric {
          * @param {Number} selectionStart Index of a character
          */
         selectWord(selectionStart: number): void;
+
         /**
          * Selects a line based on the index
          * @param {Number} selectionStart Index of a character
@@ -3744,6 +4011,7 @@ declare namespace fabric {
          * Initializes "mousemove" event handler
          */
         initMouseMoveHandler(): void;
+
         /**
          * Exits from editing state
          * @return {fabric.IText} thisArg
@@ -3756,6 +4024,7 @@ declare namespace fabric {
          * @param {String} _chars Characters to insert
          */
         insertChars(_chars: string, useCopiedStyle?: boolean): void;
+
         /**
          * Inserts new style object
          * @param {Number} lineIndex Index of a line
@@ -3793,12 +4062,14 @@ declare namespace fabric {
          * @param {Number} [index] Optional index. When not given, current selectionStart is used.
          */
         removeStyleObject(isBeginningOfLine: boolean, index?: number): void;
+
         /**
          * Inserts new line
          */
         insertNewline(): void;
 
     }
+
     interface IITextStatic extends ITextStatic {
         /**
          * Constructor
@@ -3806,6 +4077,7 @@ declare namespace fabric {
          * @param {Object} [options] Options object
          */
         new (text: string, options?: IITextOptions): IIText;
+
         /**
          * Returns fabric.IText instance from an object representation
          * @param {Object} object Object to create an instance from
@@ -3815,6 +4087,7 @@ declare namespace fabric {
 
     interface ITriangleOptions extends IObjectOptions {
     }
+
     interface ITriangle extends IObject {
         /**
          * Returns complexity of an instance
@@ -3822,6 +4095,7 @@ declare namespace fabric {
          */
 
         complexity(): number;
+
         /**
          * Returns SVG representation of an instance
          * @param {Function} [reviver] Method for further parsing of svg representation.
@@ -3829,12 +4103,14 @@ declare namespace fabric {
          */
         toSVG(reviver?: Function): string;
     }
+
     interface ITriangleStatic {
         /**
          * Constructor
          * @param {Object} [options] Options object
          */
         new (options?: ITriangleOptions): ITriangle;
+
         /**
          * Returns Triangle instance from an object representation
          * @param {Object} object Object to create an instance from
@@ -4047,21 +4323,25 @@ declare namespace fabric {
             fromObject(object: any): ITintFilter
         };
     }
+
     interface IBaseFilter {
         /**
          * Sets filter's properties from options
          * @param {Object} [options] Options object
          */
         setOptions(options?: any): void;
+
         /**
          * Returns object representation of an instance
          */
         toObject(): any;
+
         /**
          * Returns a JSON representation of an instance
          */
         toJSON(): string;
     }
+
     interface IBlendFilter extends IBaseFilter {
         /**
          * Applies filter to canvas element
@@ -4069,6 +4349,7 @@ declare namespace fabric {
          */
         applyTo(canvasEl: HTMLCanvasElement): void;
     }
+
     interface IBrightnessFilter extends IBaseFilter {
         /**
          * Applies filter to canvas element
@@ -4076,6 +4357,7 @@ declare namespace fabric {
          */
         applyTo(canvasEl: HTMLCanvasElement): void;
     }
+
     interface IConvoluteFilter extends IBaseFilter {
         /**
          * Applies filter to canvas element
@@ -4083,6 +4365,7 @@ declare namespace fabric {
          */
         applyTo(canvasEl: HTMLCanvasElement): void;
     }
+
     interface IGradientTransparencyFilter {
         /**
          * Applies filter to canvas element
@@ -4090,6 +4373,7 @@ declare namespace fabric {
          */
         applyTo(canvasEl: HTMLCanvasElement): void;
     }
+
     interface IGrayscaleFilter {
         /**
          * Applies filter to canvas element
@@ -4097,6 +4381,7 @@ declare namespace fabric {
          */
         applyTo(canvasEl: HTMLCanvasElement): void;
     }
+
     interface IInvertFilter {
         /**
          * Applies filter to canvas element
@@ -4104,6 +4389,7 @@ declare namespace fabric {
          */
         applyTo(canvasEl: HTMLCanvasElement): void;
     }
+
     interface IMaskFilter {
         /**
          * Applies filter to canvas element
@@ -4111,6 +4397,7 @@ declare namespace fabric {
          */
         applyTo(canvasEl: HTMLCanvasElement): void;
     }
+
     interface IMultiplyFilter {
         /**
          * Applies filter to canvas element
@@ -4118,6 +4405,7 @@ declare namespace fabric {
          */
         applyTo(canvasEl: HTMLCanvasElement): void;
     }
+
     interface INoiseFilter {
         /**
          * Applies filter to canvas element
@@ -4125,6 +4413,7 @@ declare namespace fabric {
          */
         applyTo(canvasEl: HTMLCanvasElement): void;
     }
+
     interface IPixelateFilter {
         /**
          * Applies filter to canvas element
@@ -4132,6 +4421,7 @@ declare namespace fabric {
          */
         applyTo(canvasEl: HTMLCanvasElement): void;
     }
+
     interface IRemoveWhiteFilter {
         /**
          * Applies filter to canvas element
@@ -4139,6 +4429,7 @@ declare namespace fabric {
          */
         applyTo(canvasEl: HTMLCanvasElement): void;
     }
+
     interface IResizeFilter {
         /**
          * Resize type
@@ -4159,12 +4450,14 @@ declare namespace fabric {
          * LanczosLobes parameter for lanczos filter
          */
         lanczosLobes: number;
+
         /**
          * Applies filter to canvas element
          * @param {Object} canvasEl Canvas element to apply filter to
          */
         applyTo(canvasEl: HTMLCanvasElement): void;
     }
+
     interface ISepiaFilter {
         /**
          * Applies filter to canvas element
@@ -4172,6 +4465,7 @@ declare namespace fabric {
          */
         applyTo(canvasEl: HTMLCanvasElement): void;
     }
+
     interface ISepia2Filter {
         /**
          * Applies filter to canvas element
@@ -4179,6 +4473,7 @@ declare namespace fabric {
          */
         applyTo(canvasEl: HTMLCanvasElement): void;
     }
+
     interface ITintFilter {
         /**
          * Applies filter to canvas element
@@ -4229,11 +4524,13 @@ declare namespace fabric {
         setShadow(options: string | any): IBaseBrush;
 
     }
+
     interface ICircleBrush extends IBaseBrush {
         /**
          * Width of a brush
          */
         width: number;
+
         /**
          * Invoked inside on mouse down and mouse move
          * @param {Object} pointer
@@ -4246,6 +4543,7 @@ declare namespace fabric {
          */
         addPoint(pointer: any): IPoint
     }
+
     interface ISprayBrush extends IBaseBrush {
         /**
          * Width of a brush
@@ -4273,11 +4571,13 @@ declare namespace fabric {
          * Whether overlapping dots (rectangles) should be removed (for performance reasons)
          */
         optimizeOverlapping: boolean;
+
         /**
          * @param {Object} pointer
          */
         addSprayChunk(pointer: any): void
     }
+
     interface IPatternBrush extends IPencilBrush {
         getPatternSrc(): HTMLCanvasElement;
 
@@ -4287,11 +4587,13 @@ declare namespace fabric {
          * Creates "pattern" instance property
          */
         getPattern(): any;
+
         /**
          * Creates path
          */
         createPath(pathData: string): IPath;
     }
+
     interface IPencilBrush extends IBaseBrush {
         /**
          * Converts points to SVG path
@@ -4307,6 +4609,7 @@ declare namespace fabric {
          */
         createPath(pathData: string): IPath;
     }
+
     var BaseBrush: {
         new (): IBaseBrush
     };
@@ -4355,12 +4658,14 @@ declare namespace fabric {
          */
         easing?: Function;
     }
+
     interface IUtilAnimation {
         /**
          * Changes value from one to another within certain period of time, invoking callbacks as value is being changed.
          * @param {Object} [options] Animation options
          */
         animate(options?: IUtilAnimationOptions): void;
+
         /**
          * requestAnimationFrame polyfill based on http://paulirish.com/2011/requestanimationframe-for-smart-animating/
          * In order to get a precise start time, `requestAnimFrame` should be called as an entry into the method
@@ -4415,6 +4720,7 @@ declare namespace fabric {
          * @param {Array} coords
          */
         drawArc(ctx: CanvasRenderingContext2D, fx: number, fy: number, coords: number[]): void;
+
         /**
          * Calculate bounding box of a elliptic-arc
          * @param {Number} fx start point of arc
@@ -4428,6 +4734,7 @@ declare namespace fabric {
          * @param {Number} ty
          */
         getBoundsOfArc(fx: number, fy: number, rx: number, ry: number, rot: number, large: number, sweep: number, tx: number, ty: number): IPoint[];
+
         /**
          * Calculate bounding box of a beziercurve
          * @param {Number} x0 starting point
@@ -4474,11 +4781,13 @@ declare namespace fabric {
          * @param {String|HTMLElement} id
          */
         getById(id: string | HTMLElement): HTMLElement;
+
         /**
          * Converts an array-like object (e.g. arguments or NodeList) to an array
          * @param {Object} arrayLike
          */
         toArray(arrayLike: any): any[];
+
         /**
          * Creates specified element with specified attributes
          * @memberOf fabric.util
@@ -4487,12 +4796,14 @@ declare namespace fabric {
          * @return {HTMLElement} Newly created element
          */
         makeElement(tagName: string, attributes?: any): HTMLElement;
+
         /**
          * Adds class to an element
          * @param {HTMLElement} element Element to add class to
          * @param {String} className Class to add to an element
          */
         addClass(element: HTMLElement, classname: string): void;
+
         /**
          * Wraps element with another element
          * @param {HTMLElement} element Element to wrap
@@ -4500,23 +4811,27 @@ declare namespace fabric {
          * @param {Object} [attributes] Attributes to set on a wrapper
          */
         wrapElement(element: HTMLElement, wrapper: HTMLElement | string, attributes?: any): HTMLElement;
+
         /**
          * Returns element scroll offsets
          * @param {HTMLElement} element Element to operate on
          * @param {HTMLElement} upperCanvasEl Upper canvas element
          */
         getScrollLeftTop(element: HTMLElement, upperCanvasEl: HTMLElement): { left: number; right: number; };
+
         /**
          * Returns offset for a given element
          * @param {HTMLElement} element Element to get offset for
          */
         getElementOffset(element: HTMLElement): { left: number; right: number; };
+
         /**
          * Returns style attribute value of a given element
          * @param {HTMLElement} element Element to get style attribute for
          * @param {String} attr Style attribute to get for element
          */
         getElementStyle(elment: HTMLElement, attr: string): string;
+
         /**
          * Inserts a script element with a given url into a document; invokes callback, when that script is finished loading
          * @memberOf fabric.util
@@ -4524,11 +4839,13 @@ declare namespace fabric {
          * @param {Function} callback Callback to execute when script is finished loading
          */
         getScript(url: string, callback: Function): void;
+
         /**
          * Makes element unselectable
          * @param {HTMLElement} element Element to make unselectable
          */
         makeElementUnselectable(element: HTMLElement): HTMLElement;
+
         /**
          * Makes element selectable
          * @param {HTMLElement} element Element to make selectable
@@ -4563,12 +4880,14 @@ declare namespace fabric {
          * @param {String} method Name of a method to invoke
          */
         invoke(array: any[], method: string): any[];
+
         /**
          * Finds minimum value in array (not necessarily "first" one)
          * @param {Array} array Array to iterate over
          * @param {String} byProperty
          */
         min(array: any[], byProperty: string): any;
+
         /**
          * Finds maximum value in array (not necessarily "first" one)
          * @param {Array} array Array to iterate over
@@ -4585,6 +4904,7 @@ declare namespace fabric {
          *                  (be careful modifying objects defined here as this would affect all instances)
          */
         createClass(parent: Function, properties?: any): void;
+
         /**
          * Helper for creation of "classes".
          * @param {Object} [properties] Properties shared by all instances of this class

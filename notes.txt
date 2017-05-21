@@ -1,0 +1,119 @@
+////////////// NOTES ////////////////
+
+
+
+need to find a way to remove core-js from videoangular definitions
+sed -i.bak '/core-js/d' './node_modules/videogular2/src/core/vg-media/i-playable.d.ts ; sed -i.bak '/core-js/d' './node_modules/videogular2/src/core/services/vg-api.d.ts'
+
+
+reload video:
+https://github.com/videogular/videogular2/issues/442
+
+
+npm uninstall -g angular-cli @angular/cli
+npm cache clean
+npm install -g @angular/cli@latest
+Local project package:
+
+rm -rf node_modules dist # use rmdir on Windows
+npm install --save-dev @angular/cli@latest <<<<<<<<<<<<<<<<
+npm install
+
+
+ng init --ng4
+
+
+==================================================================================================================
+debug sessions:
+
+reflection:
+    http://127.0.0.1:8080/src/create_reflection.html
+
+local:
+    http://localhost:4208/
+
+campaigns:
+    http://localhost:4208/campaigns
+
+FasterqRemoteStatus (base64):
+    http://localhost:4208/index.html?mode=remoteStatus&param=eyJjYWxsX3R5cGUiOiJFTUFJTCIsInNlcnZpY2VfaWQiOjE5LCJ2ZXJpZmljYXRpb24iOjY5NSwibGluZV9pZCI6IjIxMTAiLCJsaW5lX25hbWUiOiIgbmV3IGxpbmUgMSIsImJ1c2luZXNzX2lkIjoiMzU4NjEzIiwic21zIjoiIiwiZW1haWwiOiJib3JuMm5ldEBnbWFpbC5jb20iLCJkYXRlIjoiNC83LzIwMTcifQ==
+
+FasterqTerminal (rc4):
+    http://localhost:4208/index.html?data=5b6bcb27d4547657cfe4e021e1c6761fe8b4a33c3d62983ee8f6b0ccbded7b8a6578e47862f0aca0ca7ac070a1a27121fe17f5c496483ee08cf0a061440f277a3e49dcaaf3bb198c71033ed398d60166e3b82c9153f4c3a6d346f7d11b3016
+
+auto-login local demo_lite
+	http://localhost:4208/index.html?param=dXNlcj1kZW1vX2xpdGVAbXMuY29tLHBhc3M9cGFzc3dvcmQ=
+
+auto-login remote demo_lite
+	https://secure.digitalsignage.com/studioweb/index.html?param=dXNlcj1kZW1vX2xpdGVAbXMuY29tLHBhc3M9cGFzc3dvcmQ=
+
+auto-login remote demo_lite
+    https://goo.gl/rru309
+
+auto-login local lite22
+	http://localhost:4208/index.html?param=dXNlcj1saXRlMjJAbXMuY29tLHBhc3M9MTIzMTIz
+
+auto-login local lite90
+	http://localhost:4208/index.html?param=dXNlcj1saXRlOTBAbXMuY29tLHBhc3M9MTIzMTIz
+
+auto-login local lite28
+	http://localhost:4208/index.html?param=dXNlcj1saXRlMjhAbXMuY29tLHBhc3M9MTIzMTIz
+
+
+==================================================================================================================
+
+revert webpack ng tools: npm install --save @ngtools/webpack@1.2.4
+
+
+==================================================================================================================
+
+
+clear cache: npm clear cache
+
+npm install @angular/cli@latest -g
+npm install -g @angular/cli
+
+
+==================================================================================================================
+
+reflection Usage:
+
+to run this script and generate interface sdk / msdb:
+
+run live-server inside /cygdrive/c/msweb/studiolite
+
+open browser to:
+
+http://127.0.0.1:8080/src/create_reflection.html
+
+
+==================================================================================================================
+
+Switching fabric versions:
+
+add/remove import "fabric"; from app-modules.ts
+add/remove form angular-cli.json:
+"../node_modules/fabric/dist/fabric.js"
+or
+angular-cli.json: "./libs/fabric.require1-4-12.js",
+or
+to load remotely:
+<script src="https://secure.digitalsignage.com/studioweb/fabric1-4-2.min.js"></script>
+<script src="https://secure.digitalsignage.com/studioweb/fabric.require1-4-12.min.js"></script>
+
+==================================================================================================================
+
+
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/shim.min.js"></script>-->
+<!--<script>-->
+    <!--(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){-->
+            <!--(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),-->
+        <!--m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)-->
+    <!--})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');-->
+
+    <!--ga('create', 'UA-36671151-9', 'auto');-->
+    <!--ga('send', 'pageview');-->
+<!--</script>-->
+
+
+

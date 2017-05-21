@@ -64,6 +64,7 @@ export class AppComponent implements AfterViewInit {
     m_logoutState = '';
     productName = 'Studio-Lite';
     isBrandingDisabled: boolean = false;
+    demoModeMsg = `Sorry cannot save while in demo mode, <a href="https://secure.digitalsignage.com/msgetstarted/#selectStudioLite">please open a new FREE account</a> to be able to use all features...`;
 
     constructor(private router: Router,
                 private localStorage: LocalStorage,
@@ -221,6 +222,12 @@ export class AppComponent implements AfterViewInit {
                 switch (i_value) {
 
                     case MainAppShowStateEnum.SAVE_AND_PREVIEW: {
+                        if (this.rp.getUserData().businessID == 459848) {
+                            this.viewMode(MainAppShowModeEnum.MAIN);
+                            const uiState: IUiState = {mainAppState: MainAppShowStateEnum.NORMAL};
+                            this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}));
+                            return bootbox.alert(this.demoModeMsg);
+                        }
                         this.save(() => {
                             this.yp.dispatch(({type: ACTION_LIVELOG_UPDATE, payload: new LiveLogModel({event: 'loading preview'})}));
                             this.viewMode(MainAppShowModeEnum.PREVIEW);
@@ -254,6 +261,12 @@ export class AppComponent implements AfterViewInit {
                     }
 
                     case MainAppShowStateEnum.SAVE: {
+                        if (this.rp.getUserData().businessID == 459848) {
+                            this.viewMode(MainAppShowModeEnum.MAIN);
+                            const uiState: IUiState = {mainAppState: MainAppShowStateEnum.NORMAL};
+                            this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}));
+                            return bootbox.alert(this.demoModeMsg);
+                        }
                         this.save(() => {
                             this.viewMode(MainAppShowModeEnum.MAIN);
                             const uiState: IUiState = {mainAppState: MainAppShowStateEnum.NORMAL};

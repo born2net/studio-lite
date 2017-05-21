@@ -60,7 +60,11 @@ export class AuthService {
                     }
                     case AuthenticateFlags.AUTH_PASS_NO_TWO_FACTOR: {
                         if (this.userModel.getRememberMe()) {
-                            this.saveCredentials(this.userModel.getUser(), this.userModel.getPass(), this.userModel.rememberMe());
+                            if (this.userModel.getUser()=='demo_lite@ms.com'){
+                                this.saveCredentials('', '', '');
+                            } else {
+                                this.saveCredentials(this.userModel.getUser(), this.userModel.getPass(), this.userModel.rememberMe());
+                            }
                         } else {
                             this.saveCredentials('', '', '');
                         }

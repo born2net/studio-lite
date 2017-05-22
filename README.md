@@ -77,6 +77,12 @@ If we like what you did we we will merge it into our code base, so you will alwa
 If you are not a developer you can hire professional, inexpensive help from sites like oDesk and Freelancer.
 Since Angular is an opinionated framework, any developer who is verse in Angular, will be able to quickly customize a solution for your own business logic. 
 
+Videos:
+------------------------------------------------------------------------
+
+[![Development with StudioLite](http://img.youtube.com/vi/Znti-QVDjvg/0.jpg)](https://www.youtube.com/watch?v=Znti-QVDjvg&feature=youtu.be "Advanced angular tips and tricks")
+
+
 previous version:
 ------------------------------------------------------------------------
 If you are looking for the previous version of StudioLite which was developed using BackboneJS, go to the branch:

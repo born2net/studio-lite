@@ -135,7 +135,6 @@ export class CampaignEditor extends Compbaser {
         if (!this.channelModel)
             return bootbox.alert('Select channel to add content to. First be sure to select a timeline and next, click the [Next Channel] button');
         this.onToAddContent.emit();
-
     }
 
     _timelineDurationChange(i_duration) {

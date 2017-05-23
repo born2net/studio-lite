@@ -5,6 +5,7 @@
   "angular-cli": {},
   "scripts": {
     "postinstall": "npm run dev",
+    "compodoc": "./node_modules/.bin/compodoc -p src/tsconfig.json",
     "x_disk-build": "ng build && npm run sw",
     "x_disk-serve": "cd dist && live-server --port=4208 --host=localhost --entry-file=/index.html",
     "x_reg_release": "rm -r -f ./dist && npm run x_bump && npm run x_prod && npm run x_rsync",
@@ -14,6 +15,7 @@
     "x_prod_aot": "ng build --target=production --base-href ./ --aot true",
     "x_prod_aot_hebrew": "ng build --locale iw -i18n-file src/locale/iw.xtb --i18n-format xtb --target=production --base-href ./ --aot true",
     "x_rsync": "rsync --progress  --chmod=ug=rwx --chmod=o=rx -av --stats -e ssh /cygdrive/c/msweb/studiolite/dist/ Sean@digitalsignage.com:/var/www/sites/dynasite/htdocs/_msportal/_js/_node/_studioweb",
+    "x_rsync_docs": "rsync --progress  --chmod=ug=rwx --chmod=o=rx -av --stats -e ssh /cygdrive/c/msweb/studiolite/documentation/ Sean@digitalsignage.com:/var/www/sites/dynasite/htdocs/_msportal/_js/_node/_studioweb_docs",
     "x_rsync_iw": "rsync --progress  --chmod=ug=rwx --chmod=o=rx -av --stats -e ssh /cygdrive/c/msweb/studiolite/dist/ Sean@digitalsignage.com:/var/www/sites/dynasite/htdocs/_msportal/_js/_node/_studioweb/locale/iw",
     "x_sw": "sw-precache --root=dist --config=sw-precache-config.js",
     "x_bump": "gulp x_bump",
@@ -96,6 +98,7 @@
     "@angular/compiler-cli": "^4.1.0",
     "@angular/language-service": "^4.1.0",
     "@angularclass/hmr": "^1.2.2",
+    "@compodoc/compodoc": "^1.0.0-beta.9",
     "@types/core-js": "^0.9.41",
     "@types/hammerjs": "^2.0.33",
     "@types/immutable": "^3.8.6",

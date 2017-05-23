@@ -23,6 +23,7 @@ Best of all, you will take full advantage of the world's most popular Digital Si
 
 Links:
 ------------------------------------------------------------------------
+- StudioLite documentation: http://www.digitalsignage.com/lite_docs/
 - Cloud web app: https://galaxy.signage.me/_studiolite-dist/studiolite.html
 - Home: http://lite.digitalsignage.com
 - Docs: http://www.digitalsignage.com/msdocs/

@@ -15,7 +15,7 @@
     "x_prod_aot": "ng build --target=production --base-href ./ --aot true",
     "x_prod_aot_hebrew": "ng build --locale iw -i18n-file src/locale/iw.xtb --i18n-format xtb --target=production --base-href ./ --aot true",
     "x_rsync": "rsync --progress  --chmod=ug=rwx --chmod=o=rx -av --stats -e ssh /cygdrive/c/msweb/studiolite/dist/ Sean@digitalsignage.com:/var/www/sites/dynasite/htdocs/_msportal/_js/_node/_studioweb",
-    "x_rsync_docs": "rsync --progress  --chmod=ug=rwx --chmod=o=rx -av --stats -e ssh /cygdrive/c/msweb/studiolite/documentation/ Sean@digitalsignage.com:/var/www/sites/dynasite/htdocs/_msportal/_js/_node/_studioweb_docs",
+    "x_rsync_docs": "rsync --progress  --chmod=ug=rwx --chmod=o=rx -av --stats -e ssh /cygdrive/c/msweb/studiolite/documentation/ Sean@digitalsignage.com:/var/www/sites/mediasignage.com/htdocs/lite_docs",
     "x_rsync_iw": "rsync --progress  --chmod=ug=rwx --chmod=o=rx -av --stats -e ssh /cygdrive/c/msweb/studiolite/dist/ Sean@digitalsignage.com:/var/www/sites/dynasite/htdocs/_msportal/_js/_node/_studioweb/locale/iw",
     "x_sw": "sw-precache --root=dist --config=sw-precache-config.js",
     "x_bump": "gulp x_bump",

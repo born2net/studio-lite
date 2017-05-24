@@ -4,7 +4,7 @@
 
 import {Inject, Injectable} from "@angular/core";
 import {YellowPepperService} from "../../services/yellowpepper.service";
-import * as X2JS from "X2JS";
+import * as X2JS from "x2js";
 import * as _ from "lodash";
 import {Observable} from "rxjs";
 import {CampaignTimelineChanelPlayersModelExt, PlayerDataModelExt} from "../../store/model/msdb-models-extended";

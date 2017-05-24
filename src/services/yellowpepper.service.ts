@@ -21,7 +21,7 @@ import {OrientationEnum} from "../app/campaigns/campaign-orientation";
 import {List} from "immutable";
 import * as _ from "lodash";
 import {UserModel} from "../models/UserModel";
-import * as X2JS from "X2JS"
+import * as X2JS from "x2js"
 import {ISceneData} from "../app/blocks/block-service";
 import {IScreenTemplateData} from "../interfaces/IScreenTemplate";
 import {LocationMarkModel} from "../models/LocationMarkModel";

@@ -8,7 +8,7 @@ import {BlockFabricLabel} from "../app/blocks/block-fabric-label";
 import {BlockFabricSvg} from "../app/blocks/block-fabric-svg";
 import {BlockService} from "../app/blocks/block-service";
 import * as _ from "lodash";
-import * as X2JS from "X2JS";
+import * as X2JS from "x2js";
 import {BlockFabricJsonItem} from "../app/blocks/block-fabric-josn-item";
 
 //// import X2JS from "x2js";

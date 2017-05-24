@@ -13,7 +13,7 @@ import * as _ from "lodash";
 import {NgmslibService} from "ng-mslib";
 import {IAddContents} from "../interfaces/IAddContent";
 import {BlockLabels, PLACEMENT_CHANNEL} from "../interfaces/Consts";
-import * as X2JS from "X2JS";
+import * as X2JS from "x2js";
 import {BlockService} from "../app/blocks/block-service";
 
 //// import X2JS from "x2js";

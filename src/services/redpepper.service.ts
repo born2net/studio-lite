@@ -15,6 +15,7 @@ import {IAddContents} from "../interfaces/IAddContent";
 import {BlockLabels, PLACEMENT_CHANNEL} from "../interfaces/Consts";
 import * as X2JS from "x2js";
 import {BlockService} from "../app/blocks/block-service";
+import {Lib} from "../Lib";
 
 //// import X2JS from "x2js";
 //// import "x2js";
@@ -1287,7 +1288,7 @@ export class RedPepperService {
         recTimelinePlayer.player_data = player_data;
         recTimelinePlayer.campaign_timeline_chanel_id = i_campaign_timeline_chanel_id;
         recTimelinePlayer.player_duration = 10;
-        recTimelinePlayer.player_offset_time = i_offset;
+        recTimelinePlayer.player_offset_time = Lib.ToValidNumber(i_offset);
         timelinePlayers.addRecord(recTimelinePlayer, null);
 
         this.addPendingTables(['table_campaign_timeline_chanel_players']);
@@ -1606,13 +1607,13 @@ export class RedPepperService {
      @param {Number} i_minutes total minutes to play
      @param {Number} i_seconds total seconds to play
      @return none
-     **/
+     **/                  
     setBlockTimelineChannelBlockNewPosition(i_channel, i_campaign_timeline_chanel_player_id, i_field:'player_offset_time'|'player_duration', i_value) {
         _.find(this.databaseManager.table_campaign_timeline_chanel_players().getAllPrimaryKeys(), campaign_timeline_chanel_player_id => {
             if (campaign_timeline_chanel_player_id == i_campaign_timeline_chanel_player_id) {
                 this.databaseManager.table_campaign_timeline_chanel_players().openForEdit(campaign_timeline_chanel_player_id);
                 var recPlayer = this.databaseManager.table_campaign_timeline_chanel_players().getRec(campaign_timeline_chanel_player_id);
-                recPlayer[i_field] = i_value;
+                recPlayer[i_field] = Lib.ToValidNumber(i_value);
                 recPlayer['campaign_timeline_chanel_id'] = i_channel;
                 this.addPendingTables(['table_campaign_timeline_chanel_players']);
                 return true;

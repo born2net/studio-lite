@@ -54,6 +54,7 @@ declare module 'rxjs/Observable' {
     interface Observable<T> {
         debug: (...any) => Observable<T>
     }
+
     // interface Observable<T> {
     //     get(next?: (value: T) => void, error?: (error: any) => void, complete?: () => void): Subscription;
     // }
@@ -124,6 +125,14 @@ export class Lib {
              console.log(moment().startOf('day').fromNow());
              **/
         }
+    }
+
+    static ToValidNumber(i_value): number {
+        if (_.isNaN(i_value))
+            return 0;
+        if (_.isNumber(i_value))
+            return i_value;
+        return 0;
     }
 
     static Try(i_fn: () => void) {
@@ -252,7 +261,7 @@ export class Lib {
      @param {String} string
      @return {String} string
      **/
-    static  CapitaliseFirst(string) {
+    static CapitaliseFirst(string) {
         return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
     }
 

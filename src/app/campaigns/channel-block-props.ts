@@ -85,7 +85,7 @@ export class ChannelBlockProps extends Compbaser implements AfterViewInit {
                     sorted.forEach((i_campaignTimelineChanelPlayersModel) => {
                         console.log(i_campaignTimelineChanelPlayersModel.getPlayerDuration() + ' ' + i_campaignTimelineChanelPlayersModel.getPlayerOffsetTime());
                         var playerDuration = i_campaignTimelineChanelPlayersModel.getPlayerDuration();
-                        self.rp.setBlockRecord(i_campaignTimelineChanelPlayersModel.getCampaignTimelineChanelPlayerId(), 'player_offset_time', playerOffsetTime);
+                        self.rp.setBlockRecord(i_campaignTimelineChanelPlayersModel.getCampaignTimelineChanelPlayerId(), 'player_offset_time', Lib.ToValidNumber(playerOffsetTime));
                         console.log('player ' + i_campaignTimelineChanelPlayersModel.getCampaignTimelineChanelPlayerId() + ' offset ' + playerOffsetTime + ' playerDuration ' + playerDuration);
                         playerOffsetTime = parseFloat(playerOffsetTime) + parseFloat(playerDuration);
                     })

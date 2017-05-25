@@ -12,6 +12,7 @@ import {ACTION_UISTATE_UPDATE, SideProps} from "../../store/actions/appdb.action
 import {DraggableList} from "../../comps/draggable-list/draggable-list";
 import {IAddContents} from "../../interfaces/IAddContent";
 import {timeout} from "../../decorators/timeout-decorator";
+import {Lib} from "../../Lib";
 
 
 @Component({
@@ -193,11 +194,11 @@ export class CampaignChannels extends Compbaser implements AfterViewInit {
             var block_id = jQuery('[data-block_id]', this).data('block_id');
             self._getBlockRecord(block_id, (i_campaignTimelineChanelPlayersModel: CampaignTimelineChanelPlayersModel) => {
                 var playerDuration = i_campaignTimelineChanelPlayersModel.getPlayerDuration();
-                self.rp.setBlockRecord(block_id, 'player_offset_time', playerOffsetTime);
+                self.rp.setBlockRecord(block_id, 'player_offset_time', Lib.ToValidNumber(playerOffsetTime));
                 // console.log('player ' + block_id + ' offset ' + playerOffsetTime + ' playerDuration ' + playerDuration);
                 playerOffsetTime = parseFloat(playerOffsetTime) + parseFloat(playerDuration);
             })
-        });
+        });       
         self.rp.updateTotalTimelineDuration(this.selected_campaign_timeline_id);
         self.rp.reduxCommit();
     }

@@ -41,8 +41,8 @@ import {Observable} from "rxjs/Observable";
         <!--<button *ngIf="m_placement == m_PLACEMENT_CHANNEL" (click)="_close()" id="prev" type="button" class="openPropsButton btn btn-default btn-sm">-->
         <!--<span class="glyphicon glyphicon-chevron-left"></span>-->
         <!--</button>-->
-        <input [(ngModel)]="m_filter" style="width: 200px" class="form-control" placeholder="search for" required="">
-        <div style="padding-top: 20px; padding-right: 30px" class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <input [(ngModel)]="m_filter" style="width: 300px; margin-right: 30px" class="form-control pull-right" placeholder="search for" required="">        
+        <div style="padding-top: 20px; padding-right: 30px" class="panel-group clearFloat" id="accordion" role="tablist" aria-multiselectable="true">
             <div *ngIf="m_placement == m_PLACEMENT_SCENE || m_placement == m_PLACEMENT_CHANNEL" class="panel panel-default">
                 <div class="panel-heading" role="tab" id="headingOne">
                     <h4 class="panel-title">

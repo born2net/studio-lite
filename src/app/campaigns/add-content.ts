@@ -39,8 +39,9 @@ import {Observable} from "rxjs/Observable";
     template: `
         <small class="debug">{{me}}</small>
         <!--<button *ngIf="m_placement == m_PLACEMENT_CHANNEL" (click)="_close()" id="prev" type="button" class="openPropsButton btn btn-default btn-sm">-->
-            <!--<span class="glyphicon glyphicon-chevron-left"></span>-->
+        <!--<span class="glyphicon glyphicon-chevron-left"></span>-->
         <!--</button>-->
+        <input [(ngModel)]="m_filter" style="width: 200px" class="form-control" placeholder="search for" required="">
         <div style="padding-top: 20px; padding-right: 30px" class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             <div *ngIf="m_placement == m_PLACEMENT_SCENE || m_placement == m_PLACEMENT_CHANNEL" class="panel panel-default">
                 <div class="panel-heading" role="tab" id="headingOne">
@@ -53,7 +54,10 @@ import {Observable} from "rxjs/Observable";
                 <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                     <div class="panel-body">
                         <ul class="list-group" id="addComponentBlockList" style="padding:20px">
-                            <li (click)="_onComponentSelected(component)" *ngFor="let component of m_componentList" class="list-group-item ">
+                            <li (click)="_onComponentSelected(component)" 
+                                *ngFor="let component of m_componentList"
+                                [class.hidden]="component | FilterModelPipe:m_filter:component:'name'"
+                                class="list-group-item">
                                 <i [ngClass]="{nowAllowed: !component.allow}" style="display: inline" class="fa fa-2x {{component.fa}}"></i>
                                 <h3 [ngClass]="{nowAllowed: !component.allow}" style=" display: inline"> {{component.name}} </h3>
                                 <h6 [ngClass]="{nowAllowed: !component.allow}"> {{component.description}}</h6>
@@ -76,7 +80,9 @@ import {Observable} from "rxjs/Observable";
                 <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
                     <div class="panel-body">
                         <ul class="list-group" id="addComponentBlockList" style="padding:20px">
-                            <li (click)="_onResourceSelected(resource)" *ngFor="let resource of m_resourceList" class="list-group-item ">
+                            <li (click)="_onResourceSelected(resource)"
+                                *ngFor="let resource of m_resourceList" class="list-group-item"
+                                [class.hidden]="resource | FilterModelPipe:m_filter:resource:'name'">
                                 <i style="display: inline" class="fa fa-2x {{resource.fa}}"></i>
                                 <h3 style=" display: inline"> {{resource.name}} </h3>
                                 <h6> {{resource.description}}</h6>
@@ -96,7 +102,9 @@ import {Observable} from "rxjs/Observable";
                 <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
                     <div class="panel-body">
                         <ul class="list-group" id="addComponentBlockList" style="padding:20px">
-                            <li (click)="_onSceneSelected(scene)" *ngFor="let scene of m_sceneList" class="list-group-item ">
+                            <li (click)="_onSceneSelected(scene)" *ngFor="let scene of m_sceneList"
+                                [class.hidden]="scene | FilterModelPipe:m_filter:scene:'name'"
+                                class="list-group-item">
                                 <i style="display: inline" class="fa fa-2x {{scene.fa}}"></i>
                                 <h3 style=" display: inline"> {{scene.name}} </h3>
                             </li>
@@ -122,6 +130,7 @@ import {Observable} from "rxjs/Observable";
 export class AddContent extends Compbaser implements AfterViewInit {
     m_placement;
     m_sceneMime;
+    m_filter;
     m_userModel: UserModel;
     m_resourceModels: List<ResourcesModel>;
     m_sceneDatas: Array<ISceneData>;
@@ -191,10 +200,10 @@ export class AddContent extends Compbaser implements AfterViewInit {
     // onClosed: EventEmitter<any> = new EventEmitter<any>();
 
     @Output()
-    onClosed:Observable<any> = new Subject().debounceTime(200).delay(333);
+    onClosed: Observable<any> = new Subject().debounceTime(200).delay(333);
 
     @Output()
-    onAddContentSelected:Observable<any> = new Subject().debounceTime(200);
+    onAddContentSelected: Observable<any> = new Subject().debounceTime(200);
 
     _addBlock(i_addContents: IAddContents) {
         switch (this.m_placement) {
@@ -361,7 +370,7 @@ export class AddContent extends Compbaser implements AfterViewInit {
                 if (this.m_placement == PLACEMENT_CHANNEL) {
                     if (!_.isUndefined(mimeType))
                         return;
-                }       
+                }
                 this.m_sceneList.push({
                     sceneData: i_sceneData,
                     type: BlockTypeEnum.SCENE,

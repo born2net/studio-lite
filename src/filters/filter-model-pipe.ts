@@ -12,7 +12,13 @@ export class FilterModelPipe implements PipeTransform {
         try {
             var field = args[2];
             var str1:string = args[0].toLowerCase();
-            var str2:string = model[field]().toLowerCase();
+            var str2:string;
+            if (typeof model[field] === "function"){
+                str2 = model[field]().toLowerCase();
+            } else {
+                str2 = model[field].toLowerCase();
+            }
+
             if (str2.indexOf(str1) > -1)
                 return false;
             return true;

@@ -13,7 +13,8 @@ import {FasterqAnalyticsModel} from "../../models/fasterq-analytics";
 import {LiveLogModel} from "../../models/live-log-model";
 import * as moment from 'moment'
 
-const baseUrl = 'https://galaxy.signage.me/WebService/ResellerService.ashx';
+const baseUrl = `${window.g_protocol}${window.g_masterDomain}/WebService/ResellerService.ashx`;
+
 export const appBaseUrlCloud = 'https://secure.digitalsignage.com';
 
 export function appDb(state: IAppDb, action: any): IAppDb {

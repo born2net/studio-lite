@@ -14,6 +14,23 @@
     <meta name="description" content="DigitalSignage.com FREE Digital Signage for everyone. StudioWeb, an open source Digital Signage editor powered by Angular">
     <meta name="keywords" content="Digital Signage, Kiosk, Digital Kiosk">
     <script>window['offlineDevMode'] = false;</script>
+
+    <script type="text/javascript">
+        var origin = window.location.toString();
+        var re = new RegExp(/^(https|http)(:\/\/)(.*?)\//);
+        var protocol = origin.match(re)[1];
+        window.g_protocol = protocol + "://";
+        window.g_sdkDomain = "js.signage.me";
+        var server = "galaxy.signage.me";
+        // PRIVATE_SERVER_START
+        // var server = origin.match(re)[3];
+        // server = 'alpha.example.com/';
+        // window.g_private_hybrid = true;
+        // PRIVATE_SERVER_END
+        window.g_masterDomain = server;
+        document.write('<script type="text/javascript" src="' + window.g_protocol + window.g_sdkDomain + '/SignageSDK_combined.js"></scr' + 'ipt>');
+    </script>
+
     <style>#loading {
         padding-top: 130px
     }

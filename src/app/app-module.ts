@@ -107,7 +107,8 @@ export function appReducer(state: any = INITIAL_APPLICATION_STATE, action: any) 
         StoreModule.provideStore(appReducer),
         EffectsModule.run(AppDbEffects),
         EffectsModule.run(MsdbEffects),
-        StoreDevtoolsModule.instrumentStore({maxAge: 2}),
+        environment.imports,
+        // StoreDevtoolsModule.instrumentStore({maxAge: 2}),
         // StoreDevtoolsModule.instrumentOnlyWithExtension(),
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyDKa8Z3QLtACfSfxF-S8A44gm5bkvNTmuM',

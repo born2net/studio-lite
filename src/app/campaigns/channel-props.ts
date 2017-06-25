@@ -34,7 +34,7 @@ import {Subject} from "rxjs/Subject";
                                     <hr/>
                                 </li>
                                 <li class="list-group-item">
-                                    Color (hex):
+                                    Channel Color:
                                     <!--<input class="pull-right" [formControl]="m_contGroup.controls['chanel_color']"/>-->
                                     <!--<input #borderColor [disabled]="!borderSelection.checked" (colorPickerChange)="m_channelColorChanged.next($event)"-->
                                     <input class="pull-right" #borderColor (colorPickerChange)="m_channelColorChanged.next($event)"

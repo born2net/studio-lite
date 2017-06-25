@@ -7,6 +7,7 @@ import {timeout} from "../../decorators/timeout-decorator";
 import * as _ from "lodash";
 import {CampaignTimelineChanelsModel} from "../../store/imsdb.interfaces_auto";
 import {Lib} from "../../Lib";
+import {Subject} from "rxjs/Subject";
 
 @Component({
     selector: 'channel-props',
@@ -34,10 +35,19 @@ import {Lib} from "../../Lib";
                                 </li>
                                 <li class="list-group-item">
                                     Color (hex):
-                                    <input class="pull-right" [formControl]="m_contGroup.controls['chanel_color']"/>
+                                    <!--<input class="pull-right" [formControl]="m_contGroup.controls['chanel_color']"/>-->
+                                    <!--<input #borderColor [disabled]="!borderSelection.checked" (colorPickerChange)="m_channelColorChanged.next($event)"-->
+                                    <input class="pull-right" #borderColor (colorPickerChange)="m_channelColorChanged.next($event)"
+                                           [cpOKButton]="true" [cpOKButtonClass]="'btn btn-primary btn-xs'"
+                                           [cpFallbackColor]="'#123'"
+                                           [cpPresetColors]="[]"
+                                           [(colorPicker)]="m_color" [cpPosition]="'bottom'"
+                                           [cpAlphaChannel]="'disabled'" style="width: 185px"
+                                           [style.background]="m_color" [value]="m_color"/>
+
                                     <hr/>
                                 </li>
-                                
+
                                 <li class="list-group-item">
                                     <span i18n>repeat to fit</span>
                                     <div class="material-switch pull-right">
@@ -90,6 +100,8 @@ export class ChannelProps extends Compbaser {
     private formInputs = {};
     // m_channel$: Observable<CampaignTimelineChanelsModel>;
     m_contGroup: FormGroup;
+    m_color;
+    m_channelColorChanged = new Subject();
 
     constructor(private fb: FormBuilder, private yp: YellowPepperService, private rp: RedPepperService) {
         super();
@@ -111,6 +123,16 @@ export class ChannelProps extends Compbaser {
                     console.error(e)
                 })
         );
+        this.cancelOnDestroy(
+            //
+            this.m_channelColorChanged
+                .debounceTime(1000)
+                .filter(v => v != '#123')
+                .subscribe((i_color: any) => {
+                    this.updateSore()
+                }, (e) => console.error(e))
+        )
+
     }
 
     onFormChange(event) {
@@ -123,7 +145,7 @@ export class ChannelProps extends Compbaser {
         this.rp.setCampaignTimelineChannelRecord(this.channelModel.getCampaignTimelineChanelId(), 'random_order', this.m_contGroup.value.random_order);
         this.rp.setCampaignTimelineChannelRecord(this.channelModel.getCampaignTimelineChanelId(), 'repeat_to_fit', this.m_contGroup.value.repeat_to_fit);
         this.rp.setCampaignTimelineChannelRecord(this.channelModel.getCampaignTimelineChanelId(), 'chanel_name', this.m_contGroup.value.chanel_name);
-        this.rp.setCampaignTimelineChannelRecord(this.channelModel.getCampaignTimelineChanelId(), 'chanel_color', Lib.ColorToDecimal(this.m_contGroup.value.chanel_color));
+        this.rp.setCampaignTimelineChannelRecord(this.channelModel.getCampaignTimelineChanelId(), 'chanel_color', Lib.ColorToDecimal(this.m_color));
         this.rp.reduxCommit()
     }
 
@@ -134,7 +156,7 @@ export class ChannelProps extends Compbaser {
             let data = this.channelModel.getKey(key);
             data = StringJS(data).booleanToNumber();
             if (key == 'chanel_color')
-                data = Lib.DecimalToHex(data)
+                this.m_color = '#' + Lib.DecimalToHex(data);
             this.formInputs[key].setValue(data)
         });
     };

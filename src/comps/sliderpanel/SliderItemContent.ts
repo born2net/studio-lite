@@ -45,7 +45,7 @@ export class SlideritemContent extends Compbaser {
     @Input() from: string;
     @Input() showToButton: boolean = true;
     @Input() showFromButton: boolean = true;
-    @Output() onChange: Observable<ISliderItemData> = new Subject().delay(300).debounceTime(1000);
+    @Output() onChange: Observable<ISliderItemData | {}> = new Subject().delay(300).debounceTime(1000);
 
     public addClass(i_className) {
         this.viewContainer.element.nativeElement.classList.add(i_className);

@@ -18,6 +18,7 @@ import {PreviewModeEnum} from "../live-preview/live-preview";
 import {AddContent} from "../campaigns/add-content";
 import {Lib} from "../../Lib";
 import {MainAppShowStateEnum} from "../app-component";
+import {PlayerDataModel} from "../../store/imsdb.interfaces_auto";
 
 export const ADD_NEW_BLOCK_SCENE = 'ADD_NEW_BLOCK_SCENE';
 export const SCENE_BLOCK_CHANGE = 'SCENE_BLOCK_CHANGE';
@@ -552,7 +553,7 @@ export class SceneEditor extends Compbaser implements AfterViewInit {
         this.cancelOnDestroy(
             this.yp.listenSelectedSceneChanged()
                 .pairwise()
-                .map((i_playerDataModelsExt: Array<PlayerDataModelExt>) => {
+                .map((i_playerDataModelsExt: Array<PlayerDataModelExt | PlayerDataModel>) => {
                     var a0 = i_playerDataModelsExt[0].getPlayerDataValue();
                     var a1 = $.parseXML(a0);
                     var a2 = $(a1).find('Players').children('Player')

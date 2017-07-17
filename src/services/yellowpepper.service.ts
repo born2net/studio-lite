@@ -29,6 +29,7 @@ import {StationModel} from "../models/StationModel";
 import {FasterqLineModel} from "../models/fasterq-line-model";
 import {FasterqAnalyticsModel} from "../models/fasterq-analytics";
 import {FasterqQueueModel} from "../models/fasterq-queue-model";
+import {EmptyObservable} from "rxjs/observable/EmptyObservable";
 
 //// import X2JS from "x2js";
 //// import "x2js";
@@ -151,7 +152,7 @@ export class YellowPepperService {
     /**
      Listen to changes in selected scene
      **/
-    listenSelectedSceneChanged(emitOnEmpty: boolean = false): Observable<PlayerDataModelExt> {
+    listenSelectedSceneChanged(emitOnEmpty: boolean = false): Observable<PlayerDataModelExt | PlayerDataModel> {
         var sceneSelected = this.store.select(store => store.appDb.uiState.scene.sceneSelected);
         var playerDataList$ = this.store.select(store => store.msDatabase.sdk.table_player_data);
         return sceneSelected.combineLatest(
@@ -237,7 +238,7 @@ export class YellowPepperService {
             .map((campaignTimelinesModels: List<CampaignTimelinesModel>) => {
                 return campaignTimelinesModels.filter((campaignTimelinesModel: CampaignTimelinesModel) => {
                     return campaignTimelinesModel.getCampaignId() == i_campaign_id;
-                });
+                }) as List<CampaignTimelinesModel>;
             })
     }
 
@@ -342,6 +343,7 @@ export class YellowPepperService {
     /**
      Listen to changes in selected scene
      **/
+    // listenSceneOrBlockSelectedChanged(): Observable<ISceneData> | Observable<{}> | EmptyObservable<any> { <<< for TS 2.4.X
     listenSceneOrBlockSelectedChanged(): Observable<ISceneData> {
         var sceneSelected$ = this.store.select(store => store.appDb.uiState.scene.sceneSelected);
         var blockSelected$ = this.store.select(store => store.appDb.uiState.scene.blockSelected);
@@ -410,7 +412,7 @@ export class YellowPepperService {
                 (campaignId, campaigns) => {
                     return campaigns.find((i_campaign: CampaignsModelExt) => {
                         return i_campaign.getCampaignId() == campaignId;
-                    });
+                    }) as CampaignsModelExt;
                 }).mergeMap(v => (v ? Observable.of(v) : ( emitOnEmpty ? Observable.of(v) : Observable.empty())));
     }
 
@@ -419,7 +421,7 @@ export class YellowPepperService {
             .map((i_campaignTimelineChanelsModels: List<CampaignTimelineChanelsModel>) => {
                 return i_campaignTimelineChanelsModels.filter(campaignTimelineChanelsModel => {
                     return campaignTimelineChanelsModel.getCampaignTimelineId() == i_campaign_timeline_id;
-                })
+                }) as List<CampaignTimelineChanelsModel>
             });
     }
 
@@ -480,7 +482,7 @@ export class YellowPepperService {
             .map((resourceModels: List<ResourcesModel>) => {
                 return resourceModels.filter((i_resourceModel: ResourcesModel) => {
                     return i_resourceModel.getChangeType() != 3
-                })
+                }) as List<ResourcesModel>;
             })
     }
 
@@ -538,7 +540,7 @@ export class YellowPepperService {
             .combineLatest(queues$, (lineId, queues: List<FasterqQueueModel>) => {
                 return queues.filter((queue: FasterqQueueModel) => {
                     return queue.lineId == lineId;
-                });
+                }) as List<FasterqQueueModel>;
             }).filter(value => value != null);
     }
 
@@ -625,7 +627,7 @@ export class YellowPepperService {
 
     getCampaigns(): Observable<List<CampaignsModelExt>> {
         return this.store.select(store => store.msDatabase.sdk.table_campaigns)
-            .take(1);
+            .take(1) as Observable<List<CampaignsModelExt>>
     }
 
     getTimelines(): Observable<List<CampaignTimelinesModel>> {
@@ -762,7 +764,7 @@ export class YellowPepperService {
             .map((playerDataModels: List<PlayerDataModel>) => {
                 return playerDataModels.find((playerDataModel: PlayerDataModel) => {
                     return scene_id == playerDataModel.getPlayerDataId();
-                })
+                }) as PlayerDataModelExt
             }).take(1);
     }
 
@@ -806,7 +808,7 @@ export class YellowPepperService {
             .map((campaignTimelineChanelPlayersModels: List<CampaignTimelineChanelPlayersModel>) => {
                 return campaignTimelineChanelPlayersModels.filter(campaignTimelineChanelsModel => {
                     return campaignTimelineChanelsModel.getCampaignTimelineChanelId() == i_campaign_timeline_chanel_id;
-                })
+                }) as List<CampaignTimelineChanelPlayersModel>
             }).take(1);
     }
 
@@ -908,7 +910,7 @@ export class YellowPepperService {
             .map((campaignTimelinesModels: List<CampaignTimelinesModel>) => {
                 return campaignTimelinesModels.filter((campaignTimelinesModel: CampaignTimelinesModel) => {
                     return campaignTimelinesModel.getCampaignId() == i_campaign_id;
-                });
+                }) as List<CampaignTimelinesModel>;
             }).take(1);
     }
 

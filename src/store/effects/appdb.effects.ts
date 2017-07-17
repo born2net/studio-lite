@@ -592,7 +592,7 @@ export class AppDbEffects {
         .switchMap(action => this._resetFasterqLine(action))
         .map(res => ({type: null}));
 
-    private _resetFasterqLine(action: Action): Observable<List<FasterqLineModel>> {
+    private _resetFasterqLine(action: Action): Observable<{}> {
         var options: RequestOptionsArgs = this.fasterqCreateServerCall(`/ResetQueueCounter`, RequestMethod.Post, action.payload)
         return this.http.get(options.url, options)
             .catch((err: any) => {

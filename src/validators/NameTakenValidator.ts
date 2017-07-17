@@ -3,7 +3,7 @@ interface ValidationResult {
     [key:string]:boolean;
 }
 
-export default function NameTakenValidator(control:NgControl):Promise<ValidationResult> {
+export default function NameTakenValidator(control:NgControl):Promise<ValidationResult> | Promise<any> {
     let q = new Promise((resolve, reject) => {
         setTimeout(() => {
             if (control.value === 'Sean') {

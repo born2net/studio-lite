@@ -32,7 +32,7 @@ export class ResellerLogo extends Compbaser implements AfterViewInit {
     lazyImage: LazyImage;
 
     _onLoaded() {
-        console.log('img loaded');
+        // console.log('img loaded');
     }
 
     _onError() {
@@ -40,7 +40,7 @@ export class ResellerLogo extends Compbaser implements AfterViewInit {
     }
 
     _onCompleted() {
-        console.log('img completed');
+        // console.log('img completed');
     }
 
     ngAfterViewInit() {

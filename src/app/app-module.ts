@@ -8,7 +8,7 @@ import {LocalStorage} from "../services/LocalStorage";
 import {RedPepperService} from "../services/redpepper.service";
 import {YellowPepperService} from "../services/yellowpepper.service";
 import {MsLibModule} from "ng-mslib/dist/mslib.module";
-import {ToastModule} from "ng2-toastr";
+import {ToastModule, ToastOptions} from "ng2-toastr";
 import {AccordionModule, AlertModule, ModalModule} from "ngx-bootstrap";
 import {DropdownModule, DropdownModule as DropdownModulePrime, InputTextModule, SelectButtonModule, TreeModule} from "primeng/primeng";
 import {routing} from "../app-routes";
@@ -69,10 +69,23 @@ declare global {
     }
 }
 
+export class CustomToastOption extends ToastOptions {
+    animate: 'flyRight';
+    positionClass: 'toast-bottom-right';
+    toastLife: 10000;
+    showCloseButton: true;
+    maxShown: 5;
+    newestOnTop: true;
+    enableHTML: true;
+    dismiss: 'auto';
+    messageClass: "";
+    titleClass: ""
+}
+
 export const providing = [CommBroker, WizardService, AUTH_PROVIDERS, RedPepperService, YellowPepperService, LocalStorage, StoreService, FontLoaderService, AppdbAction, {
     provide: "OFFLINE_ENV",
     useValue: window['offlineDevMode']
-},
+    },
     {
         provide: "HYBRID_PRIVATE",
         useValue: false
@@ -80,6 +93,10 @@ export const providing = [CommBroker, WizardService, AUTH_PROVIDERS, RedPepperSe
     {
         provide: ErrorHandler,
         useClass: GlobalErrorHandler
+    },
+    {
+        provide: ToastOptions,
+        useClass: CustomToastOption
     }
 ];
 
@@ -93,6 +110,7 @@ export function appReducer(state: any = INITIAL_APPLICATION_STATE, action: any) 
         // return developmentReducer(state, action);
     }
 }
+
 
 @NgModule({
     declarations: [decelerations],
@@ -116,18 +134,7 @@ export function appReducer(state: any = INITIAL_APPLICATION_STATE, action: any) 
         }),
         SimpleGridModule.forRoot(),
         SharedModule.forRoot(),
-        ToastModule.forRoot({
-            animate: 'flyRight',
-            positionClass: 'toast-bottom-right',
-            toastLife: 10000,
-            showCloseButton: true,
-            maxShown: 5,
-            newestOnTop: true,
-            enableHTML: true,
-            dismiss: 'auto',
-            messageClass: "",
-            titleClass: ""
-        }),
+        ToastModule.forRoot(),
         AlertModule.forRoot(),
         MsLibModule.forRoot({a: 1}),
         ModalModule.forRoot(),

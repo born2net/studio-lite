@@ -19,6 +19,7 @@ import {WizardService} from "../../services/wizard-service";
         button {
             width: 160px;
         }
+
         /*.selectedItem {*/
         /*background-color: green !important*/
         /*}*/
@@ -35,23 +36,16 @@ export class CampaignManager extends Compbaser {
 
     public campaigns$: Observable<List<CampaignsModelExt>>;
     public timelineSelected$: Observable<number>;
-    cars;
 
-    constructor(private el: ElementRef, private yp: YellowPepperService, private redPepperService: RedPepperService, private router: Router, private wizardService:WizardService) {
+    constructor(private el: ElementRef, private yp: YellowPepperService, private redPepperService: RedPepperService, private router: Router, private wizardService: WizardService) {
         super();
         this.preventRedirect(true);
         this.timelineSelected$ = this.yp.ngrxStore.select(store => store.appDb.uiState.campaign.timelineSelected).map(v => v);
 
         // this.userModel$ = this.yp.ngrxStore.select(store => store.appDb.userModel);
 
-        this.campaigns$ = this.yp.ngrxStore.select(store => store.msDatabase.sdk.table_campaigns).map((list: List<CampaignsModelExt>) => {
-            this.cars = list;//.toArray();
-            return list.filter((campaignModel: CampaignsModelExt) => {
-                if (campaignModel.getCampaignName().indexOf('bla_bla') > -1)
-                    return false
-                return true;
-            })
-        });
+        this.campaigns$ = this.yp.ngrxStore.select(store => store.msDatabase.sdk.table_campaigns)
+            .map((list: List<CampaignsModelExt>) => list);
         // this.yp.ngrxStore.select(store => store.msDatabase.sdk.table_resources).subscribe((resourceModels: List<ResourcesModel>) => {
         //     // console.log(resourceModels.first().getResourceName());
         //     // console.log(resourceModels.first().getResourceBytesTotal());
@@ -137,7 +131,7 @@ export class CampaignManager extends Compbaser {
         this.slideToCampaignName.emit();
     }
 
-    _onWizard(){
+    _onWizard() {
         this.wizardService.start();
     }
 

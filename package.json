@@ -86,7 +86,7 @@
     "stacktrace-js": "^1.3.1",
     "string": "^3.3.3",
     "ts-helpers": "^1.1.1",
-    "typescript": "^2.3.4",
+    "typescript": "2.4.0",
     "videogular2": "^5.2.0",
     "x2js": "^3.1.0",
     "xdate": "^0.8.0",

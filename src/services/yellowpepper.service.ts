@@ -343,8 +343,8 @@ export class YellowPepperService {
     /**
      Listen to changes in selected scene
      **/
-    // listenSceneOrBlockSelectedChanged(): Observable<ISceneData> | Observable<{}> | EmptyObservable<any> { <<< for TS 2.4.X
-    listenSceneOrBlockSelectedChanged(): Observable<ISceneData> {
+    listenSceneOrBlockSelectedChanged(): Observable<ISceneData> | Observable<{}> | EmptyObservable<any> { // <<< for TS 2.4.X
+    // listenSceneOrBlockSelectedChanged(): Observable<ISceneData> {
         var sceneSelected$ = this.store.select(store => store.appDb.uiState.scene.sceneSelected);
         var blockSelected$ = this.store.select(store => store.appDb.uiState.scene.blockSelected);
         var player_data$ = this.store.select(store => store.msDatabase.sdk.table_player_data);

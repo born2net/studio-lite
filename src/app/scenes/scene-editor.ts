@@ -340,7 +340,7 @@ export class SceneEditor extends Compbaser implements AfterViewInit {
             this.yp.listenSceneOrBlockSelectedChanged()
                 .startWith(sceneData)
                 .pairwise()
-                .filter((v: Array<ISceneData>) => {
+                .filter((v: Array<ISceneData | any>) => {
                     if (v[0].scene_id == null)
                         return false;
                     if (v[0].block_pseudo_id != v[1].block_pseudo_id)

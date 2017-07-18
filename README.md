@@ -52,8 +52,8 @@ StudioLite can be downloaded directly from GitHub
 With git you will be able to easily update to the latest version of StudioLite as well as take advantage Angular CLI which is included in the bundle
 
 currently the application should run under:
-typescript 2.4
-node 6.x 
+- typescript 2.4
+- node 6.x 
 
 to install and host:
 ```

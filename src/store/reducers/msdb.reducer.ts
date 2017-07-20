@@ -1,11 +1,11 @@
-import {Action} from "@ngrx/store";
 import {ACTION_INJECT_SDK} from "../actions/appdb.actions";
 import {IMsDatabase} from "../store.data";
 import {redpepperTables} from "../../services/redpepper.service";
 import {List, Map} from "immutable";
 import * as _ from "lodash";
+import {Actioning} from "../../interfaces/IGeneral";
 
-export function msDatabase(state: IMsDatabase, action: Action): IMsDatabase {
+export function msDatabase(state: IMsDatabase, action: Actioning): IMsDatabase {
     switch (action.type) {
 
         /**

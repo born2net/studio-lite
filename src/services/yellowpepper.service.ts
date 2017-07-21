@@ -954,6 +954,7 @@ export class YellowPepperService {
                 });
                 if (!found)
                     return -1;
+                return found.getSequenceIndex();
             }).take(1);
     }
 

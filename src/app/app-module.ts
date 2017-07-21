@@ -24,14 +24,14 @@ import {NgMenu} from "../comps/ng-menu/ng-menu";
 import {NgMenuItem} from "../comps/ng-menu/ng-menu-item";
 import {AutoLogin} from "../comps/entry/AutoLogin";
 import {StoreModule} from "@ngrx/store";
-import {getInitialState} from "../store/application.state";
+import {INITIAL_APPLICATION_STATE} from "../store/application.state";
 import {EffectsModule} from "@ngrx/effects";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {ACTION_LIVELOG_UPDATE, AppdbAction} from "../store/actions/appdb.actions";
 import {AppDbEffects} from "../store/effects/appdb.effects";
 import {MsdbEffects} from "../store/effects/msdb.effects";
 import {environment} from "../environments/environment";
-import {reducers} from "../store/store.data";
+import {productionReducer} from "../store/store.data";
 import {NgmslibService} from "ng-mslib";
 import {SharedModule} from "../modules/shared.module";
 import {Dashboard} from "./dashboard/dashboard-navigation";
@@ -85,7 +85,7 @@ export class CustomToastOption extends ToastOptions {
 export const providing = [CommBroker, WizardService, AUTH_PROVIDERS, RedPepperService, YellowPepperService, LocalStorage, StoreService, FontLoaderService, AppdbAction, {
     provide: "OFFLINE_ENV",
     useValue: window['offlineDevMode']
-},
+    },
     {
         provide: "HYBRID_PRIVATE",
         useValue: false
@@ -102,14 +102,14 @@ export const providing = [CommBroker, WizardService, AUTH_PROVIDERS, RedPepperSe
 
 const decelerations = [AppComponent, AutoLogin, LoginPanel, Appwrap, Dashboard, Logout, NgMenu, NgMenuItem, ImgLoader, FasterqTerminal, DashPanel, ServerAvg, StorageUsed];
 
-// export function appReducer(state: any = INITIAL_APPLICATION_STATE, action: any) {
-//     if (environment.production) {
-//         return productionReducer(state, action);
-//     } else {
-//         return productionReducer(state, action);
-//         // return developmentReducer(state, action);
-//     }
-// }
+export function appReducer(state: any = INITIAL_APPLICATION_STATE, action: any) {
+    if (environment.production) {
+        return productionReducer(state, action);
+    } else {
+        return productionReducer(state, action);
+        // return developmentReducer(state, action);
+    }
+}
 
 
 @NgModule({
@@ -122,19 +122,16 @@ const decelerations = [AppComponent, AutoLogin, LoginPanel, Appwrap, Dashboard, 
         Ng2Bs3ModalModule,
         HttpModule,
         ChartModule,
-        // StoreModule.forRoot(appReducer),
-        StoreModule.forRoot(reducers, {
-            initialState: getInitialState
-        }),
-        EffectsModule.forRoot([AppDbEffects, MsdbEffects]),
-        environment.imports,
+        StoreModule.provideStore(appReducer),
+        EffectsModule.run(AppDbEffects),
+        EffectsModule.run(MsdbEffects),
+        environment.imports,  
         // StoreDevtoolsModule.instrumentStore({maxAge: 2}),
         // StoreDevtoolsModule.instrumentOnlyWithExtension(),
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyDKa8Z3QLtACfSfxF-S8A44gm5bkvNTmuM',
             libraries: ['places']
         }),
-        !environment.production ? StoreDevtoolsModule.instrument({maxAge: 2}) : [],
         SimpleGridModule.forRoot(),
         SharedModule.forRoot(),
         ToastModule.forRoot(),

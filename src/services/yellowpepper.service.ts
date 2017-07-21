@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Store} from "@ngrx/store";
+import {Action, Store} from "@ngrx/store";
 import {ApplicationState} from "../store/application.state";
 import {Observable} from "rxjs";
 import {BranchStationsModelExt, CampaignsModelExt, PlayerDataModelExt} from "../store/model/msdb-models-extended";
@@ -30,7 +30,6 @@ import {FasterqLineModel} from "../models/fasterq-line-model";
 import {FasterqAnalyticsModel} from "../models/fasterq-analytics";
 import {FasterqQueueModel} from "../models/fasterq-queue-model";
 import {EmptyObservable} from "rxjs/observable/EmptyObservable";
-import {Actioning} from "../interfaces/IGeneral";
 
 //// import X2JS from "x2js";
 //// import "x2js";
@@ -52,7 +51,7 @@ export class YellowPepperService {
         });
     }
 
-    public dispatch(action: Actioning) {
+    public dispatch(action: Action) {
         this.store.dispatch(action);
     }
 

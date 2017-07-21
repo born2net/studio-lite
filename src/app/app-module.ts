@@ -24,7 +24,7 @@ import {NgMenu} from "../comps/ng-menu/ng-menu";
 import {NgMenuItem} from "../comps/ng-menu/ng-menu-item";
 import {AutoLogin} from "../comps/entry/AutoLogin";
 import {StoreModule} from "@ngrx/store";
-import {INITIAL_APPLICATION_STATE} from "../store/application.state";
+import {getInitialState} from "../store/application.state";
 import {EffectsModule} from "@ngrx/effects";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {ACTION_LIVELOG_UPDATE, AppdbAction} from "../store/actions/appdb.actions";
@@ -124,7 +124,7 @@ const decelerations = [AppComponent, AutoLogin, LoginPanel, Appwrap, Dashboard, 
         ChartModule,
         // StoreModule.forRoot(appReducer),
         StoreModule.forRoot(reducers, {
-            initialState: INITIAL_APPLICATION_STATE
+            initialState: getInitialState
         }),
         EffectsModule.forRoot([AppDbEffects, MsdbEffects]),
         environment.imports,

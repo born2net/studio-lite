@@ -1,13 +1,11 @@
-import {Map, List} from 'immutable';
+import {List, Map} from 'immutable';
 import {UserModel} from "../models/UserModel";
 import {AuthenticateFlags, SideProps} from "./actions/appdb.actions";
-import {ISDK, CampaignBoardsModel} from "../store/imsdb.interfaces_auto";
+import {ISDK} from "../store/imsdb.interfaces_auto";
 import {appDb} from "../store/reducers/appdb.reducer";
 import {msDatabase} from "../store/reducers/msdb.reducer";
-import {storeFreeze} from "ngrx-store-freeze";
-import {ActionReducer, combineReducers} from "@ngrx/store";
-import {ApplicationState} from "./application.state";
-import {compose} from "@ngrx/core";
+// import {storeFreeze} from "ngrx-store-freeze";
+import {ActionReducerMap} from "@ngrx/store";
 import {MainAppShowStateEnum} from "../app/app-component";
 import {LocationMarkModel} from "../models/LocationMarkModel";
 import {StationModel} from "../models/StationModel";
@@ -16,9 +14,20 @@ import {FasterqQueueModel} from "../models/fasterq-queue-model";
 import {FasterqAnalyticsModel} from "../models/fasterq-analytics";
 import {LiveLogModel} from "../models/live-log-model";
 
-const reducers = {msDatabase, appDb};
-export const developmentReducer: ActionReducer<ApplicationState> = compose(storeFreeze, combineReducers)(reducers);
-export const productionReducer: ActionReducer<ApplicationState> = combineReducers(reducers);
+// const reducers = {msDatabase, appDb};
+// export const developmentReducer: ActionReducer<ApplicationState> = compose(storeFreeze, combineReducers)(reducers);
+// export const developmentReducer: ActionReducer<ApplicationState> = compose(combineReducers)(reducers);
+// export const productionReducer: ActionReducer<ApplicationState> = combineReducers(reducers);
+
+export interface State {
+    msDatabase: any;
+    appDb: any;
+}
+
+export const reducers: ActionReducerMap<State> = {
+    msDatabase: msDatabase,
+    appDb: appDb
+};
 
 export enum StoryBoardListViewModeEnum {
     ListMode,

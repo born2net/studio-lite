@@ -8,3 +8,7 @@ export const INITIAL_APPLICATION_STATE: ApplicationState = {
     msDatabase: INITIAL_STORE_DATA,
     appDb: INITIAL_APP_DB
 };
+
+export function getInitialState() {
+    return INITIAL_APPLICATION_STATE;
+}

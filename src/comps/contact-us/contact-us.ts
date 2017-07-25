@@ -31,7 +31,7 @@ import {EFFECT_CONTACT_US} from "../../store/effects/appdb.effects";
                     <option *ngFor="let option of options" [ngValue]="option.id">{{option.label}}</option>
                 </select>
                 <br/>
-                <button style="margin-top: 20px" (submit)="submit($event)" [disabled]="contactForm.invalid" class="btn btn-primary" type="submit">Submit</button>
+                <button style="margin-top: 20px" (click)="submit()" [disabled]="contactForm.invalid" class="btn btn-primary" type="button">Submit</button>
 
             </form>
 

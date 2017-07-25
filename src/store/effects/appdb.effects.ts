@@ -436,7 +436,7 @@ export class AppDbEffects {
             })
     }
 
-    private contactService(body: IContactForm): Observable<List<FasterqLineModel>> {
+    private contactService(body): Observable<List<FasterqLineModel>> {
         var options: RequestOptionsArgs = this.getContactUrl('/Lines', RequestMethod.Get, body)
         return this.http.get(options.url, options)
             .catch((err: any) => Observable.throw(err))
@@ -445,18 +445,41 @@ export class AppDbEffects {
             })
     }
 
+    // private contactService(body: IContactForm): Observable<List<FasterqLineModel>> {
+    //     var options: RequestOptionsArgs = this.getContactUrl('/LineXXXs', RequestMethod.Get, '')
+    //     return this.http.get(options.url, options)
+    //         .catch((err: any) => {
+    //         console.log(err);
+    //             return Observable.throw(err)
+    //         })
+    //         .map((response: Response) => {
+    //             return response.json();
+    //         })
+    // }
+
+    // @Effect() contactUs$ = this.actions$
+    //     .ofType(EFFECT_CONTACT_US)
+    //     .withLatestFrom(this.store.select(store => store.appDb.contact))
+    //     .switchMap((value: any, index: number): any => {
+    //         var contactMap: Map<string, IContactForm> = value[1];
+    //         this.contactService(contactMap.toJS())
+    //             .catch(err => Observable.of({err: true}))
+    //             .map((v: any) => {
+    //                 return v.err ? formErrorAction('appDb.contact', 'problem connecting to server, please try later...') : formSuccessAction('appDb.contact');
+    //             })
+    //     })
+
     @Effect() contactUs$ = this.actions$
         .ofType(EFFECT_CONTACT_US)
-        .withLatestFrom(this.store.select(store => store.appDb.contact))
-        .switchMap((value:any, index:number):any => {
-            var contactMap:Map<string,IContactForm> = value[1];
-            this.contactService(contactMap.toJS())
-                .catch(err => Observable.of({err: true}))
-                .map((v: any) => {
-                    return v.err ? formErrorAction('appDb.contact', 'problem connecting to server, please try later...') : formSuccessAction('appDb.contact');
-                })
-        })
-
+        .switchMap(action =>
+            this.contactService(action.payload)
+                .catch(err => {
+                    return Observable.of({err: true});
+                }).map((v: any) => {
+                if (v.err) return formErrorAction('appDb.contact', 'some error')
+                return formSuccessAction('appDb.contact');
+            })
+        )
 
     private getContactUrl(i_urlEndPoint, i_method, i_body): RequestOptionsArgs {
         var credentials = Lib.EncryptUserPass(this.rp.getUserData().userName, this.rp.getUserData().userPass);

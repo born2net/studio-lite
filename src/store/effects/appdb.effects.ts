@@ -457,8 +457,7 @@ export class AppDbEffects {
                 .catch(err => {
                     return Observable.of({err: true});
                 }).map((v: any) => {
-                if (v.err) return formErrorAction('appDb.contact', 'some error')
-                return formSuccessAction('appDb.contact');
+                return v.err ? formErrorAction('appDb.contact', 'problem connecting to server, please try later...') : formSuccessAction('appDb.contact');
             })
         )
 

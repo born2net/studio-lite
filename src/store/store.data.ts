@@ -116,6 +116,11 @@ export interface IFasterQ {
     terminal: FasterqLineModel
 }
 
+export interface IContactForm {
+    email: string;
+    message: string;
+}
+
 export interface IAppDb {
     uiState: IUiState;
     totalStations: string;
@@ -131,6 +136,7 @@ export interface IAppDb {
     appBaseUrlUser: string;
     appBaseUrlCloud: string;
     appBaseUrlServices: string;
+    contact: Map<string, any>; //IContactForm waiting for next version of immutablejs to support typed maps
 }
 
 export const INITIAL_STORE_DATA: IMsDatabase = {
@@ -209,5 +215,10 @@ export const INITIAL_APP_DB: IAppDb = {
     serversStatus: '',
     appBaseUrlUser: '',
     appBaseUrlCloud: '',
-    appBaseUrlServices: ''
+    appBaseUrlServices: '',
+    contact: Map({
+        email: 'your@email.com',
+        message: 'how can we help?',
+        type: 0
+    })
 };

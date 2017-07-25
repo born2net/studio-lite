@@ -14,8 +14,8 @@ import {ACTION_UISTATE_UPDATE, AuthenticateFlags} from "../actions/appdb.actions
 import {RedPepperService} from "../../services/redpepper.service";
 import {IPepperConnection} from "../../store/imsdb.interfaces";
 import * as _ from "lodash";
-import {IStation, IUiState} from "../store.data";
-import {List} from "immutable";
+import {IContactForm, IStation, IUiState} from "../store.data";
+import {List, Map} from "immutable";
 import {StationModel} from "../../models/StationModel";
 import {Lib} from "../../Lib";
 import {FasterqLineModel} from "../../models/fasterq-line-model";
@@ -27,6 +27,9 @@ import {CommBroker, IMessage} from "../../services/CommBroker";
 import {FASTERQ_QUEUE_CALL_CANCLED} from "../../interfaces/Consts";
 import {ToastsManager} from "ng2-toastr";
 import {LocalStorage} from "../../services/LocalStorage";
+import {formErrorAction, formSuccessAction} from "../../comps/connect-form/connect-form";
+import {EmptyObservable} from "rxjs/observable/EmptyObservable";
+import {ObservableInput} from "rxjs/Observable";
 
 export const EFFECT_AUTH_START = 'EFFECT_AUTH_START';
 export const EFFECT_AUTH_END = 'EFFECT_AUTH_END';
@@ -64,6 +67,7 @@ export const EFFECT_QUEUE_SERVICE_SAVING = 'EFFECT_QUEUE_SERVICE_SAVING';
 export const EFFECT_QUEUE_SERVICE_SAVED = 'EFFECT_QUEUE_SERVICE_SAVED';
 export const EFFECT_QUEUE_POLL_SERVICE = 'EFFECT_QUEUE_POLL_SERVICE';
 export const EFFECT_RESET_FASTERQ_LINE = 'EFFECT_RESET_FASTERQ_LINE';
+export const EFFECT_CONTACT_US = 'EFFECT_CONTACT_US';
 
 @Injectable()
 export class AppDbEffects {
@@ -274,7 +278,7 @@ export class AppDbEffects {
                             </div>
                         `
 
-                        if (!this.localStorage.getItem('no_show_limited')){
+                        if (!this.localStorage.getItem('no_show_limited')) {
                             bootbox.confirm({
                                 title: "Limited functionality",
                                 message: snippet,
@@ -288,7 +292,7 @@ export class AppDbEffects {
                                 },
                                 callback: (result) => {
                                     if (result) return;
-                                    this.localStorage.setItem('no_show_limited',1);
+                                    this.localStorage.setItem('no_show_limited', 1);
 
                                 }
                             });
@@ -430,6 +434,41 @@ export class AppDbEffects {
                     return insertStations(response);
                 }
             })
+    }
+
+    private contactService(body: IContactForm): Observable<List<FasterqLineModel>> {
+        var options: RequestOptionsArgs = this.getContactUrl('/Lines', RequestMethod.Get, body)
+        return this.http.get(options.url, options)
+            .catch((err: any) => Observable.throw(err))
+            .map((response: Response) => {
+                return response.json();
+            })
+    }
+
+    @Effect() contactUs$ = this.actions$
+        .ofType(EFFECT_CONTACT_US)
+        .withLatestFrom(this.store.select(store => store.appDb.contact))
+        .switchMap((value:any, index:number):any => {
+            var contactMap:Map<string,IContactForm> = value[1];
+            this.contactService(contactMap.toJS())
+                .catch(err => Observable.of({err: true}))
+                .map((v: any) => {
+                    return v.err ? formErrorAction('appDb.contact', 'problem connecting to server, please try later...') : formSuccessAction('appDb.contact');
+                })
+        })
+
+
+    private getContactUrl(i_urlEndPoint, i_method, i_body): RequestOptionsArgs {
+        var credentials = Lib.EncryptUserPass(this.rp.getUserData().userName, this.rp.getUserData().userPass);
+        var url = `${this.appBaseUrlServices}${i_urlEndPoint}`;
+        var headers = new Headers();
+        headers.append('Authorization', credentials);
+        return {
+            url: url,
+            method: i_method,
+            headers: new Headers({'Authorization': credentials}),
+            body: i_body
+        };
     }
 
     /**

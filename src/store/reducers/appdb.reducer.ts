@@ -131,6 +131,11 @@ export function appDb(state: IAppDb, action: any): IAppDb {
             state.appAuthStatus = Map({authStatus: action.payload});
             return state;
 
+        case ActionsConst.ACTION_FORM_UPDATE: {
+            state[action.payload.path] = Map(action.payload.value);
+            return state;
+        }
+
         default:
             return state;
     }

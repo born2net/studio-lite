@@ -14,7 +14,7 @@ import {ACTION_UISTATE_UPDATE, AuthenticateFlags} from "../actions/appdb.actions
 import {RedPepperService} from "../../services/redpepper.service";
 import {IPepperConnection} from "../../store/imsdb.interfaces";
 import * as _ from "lodash";
-import {IContactForm, IStation, IUiState} from "../store.data";
+import {IStation, IUiState} from "../store.data";
 import {List, Map} from "immutable";
 import {StationModel} from "../../models/StationModel";
 import {Lib} from "../../Lib";
@@ -28,8 +28,6 @@ import {FASTERQ_QUEUE_CALL_CANCLED} from "../../interfaces/Consts";
 import {ToastsManager} from "ng2-toastr";
 import {LocalStorage} from "../../services/LocalStorage";
 import {formErrorAction, formSuccessAction} from "../../comps/connect-form/connect-form";
-import {EmptyObservable} from "rxjs/observable/EmptyObservable";
-import {ObservableInput} from "rxjs/Observable";
 
 export const EFFECT_AUTH_START = 'EFFECT_AUTH_START';
 export const EFFECT_AUTH_END = 'EFFECT_AUTH_END';
@@ -436,23 +434,10 @@ export class AppDbEffects {
             })
     }
 
-    private contactService(body:Map<any,any>): Observable<List<FasterqLineModel>> {
-        var bodyJS = body.toJS()
-        var options: RequestOptionsArgs = this.getContactUrl('/Lines', RequestMethod.Get, bodyJS)
-        return this.http.get(options.url, options)
-            .catch((err: any) => {
-            console.log(err);
-                return Observable.throw(err)
-            })
-            .map((response: Response) => {
-                return response.json();
-            })
-    }
-
     @Effect() contactUs$ = this.actions$
         .ofType(EFFECT_CONTACT_US)
         .withLatestFrom(this.store.select(store => store.appDb.contact))
-        .switchMap((value:any) =>
+        .switchMap((value: any) =>
             this.contactService(value[1])
                 .catch(err => {
                     return Observable.of({err: true});
@@ -460,6 +445,19 @@ export class AppDbEffects {
                 return v.err ? formErrorAction('appDb.contact', 'problem connecting to server, please try later...') : formSuccessAction('appDb.contact');
             })
         )
+
+    private contactService(body: Map<any, any>): Observable<List<FasterqLineModel>> {
+        var bodyJS = body.toJS()
+        var options: RequestOptionsArgs = this.getContactUrl('/Lines', RequestMethod.Get, bodyJS)
+        return this.http.get(options.url, options)
+            .catch((err: any) => {
+                console.log(err);
+                return Observable.throw(err)
+            })
+            .map((response: Response) => {
+                return response.json();
+            })
+    }
 
     private getContactUrl(i_urlEndPoint, i_method, i_body): RequestOptionsArgs {
         var credentials = Lib.EncryptUserPass(this.rp.getUserData().userName, this.rp.getUserData().userPass);

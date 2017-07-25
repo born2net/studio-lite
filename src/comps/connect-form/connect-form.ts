@@ -8,7 +8,6 @@ import {ACTION_FORM_UPDATE} from "../../store/actions/appdb.actions";
 
 const FORM_SUBMIT_SUCCESS = 'FORM_SUBMIT_SUCCESS';
 const FORM_SUBMIT_ERROR = 'FORM_SUBMIT_ERROR';
-const UPDATE_FORM = 'UPDATE_FORM';
 
 export const formSuccessAction = path => ({
     type: FORM_SUBMIT_SUCCESS,

@@ -436,43 +436,24 @@ export class AppDbEffects {
             })
     }
 
-    private contactService(body): Observable<List<FasterqLineModel>> {
-        var options: RequestOptionsArgs = this.getContactUrl('/Lines', RequestMethod.Get, body)
+    private contactService(body:Map<any,any>): Observable<List<FasterqLineModel>> {
+        var bodyJS = body.toJS()
+        var options: RequestOptionsArgs = this.getContactUrl('/Lines', RequestMethod.Get, bodyJS)
         return this.http.get(options.url, options)
-            .catch((err: any) => Observable.throw(err))
+            .catch((err: any) => {
+            console.log(err);
+                return Observable.throw(err)
+            })
             .map((response: Response) => {
                 return response.json();
             })
     }
 
-    // private contactService(body: IContactForm): Observable<List<FasterqLineModel>> {
-    //     var options: RequestOptionsArgs = this.getContactUrl('/LineXXXs', RequestMethod.Get, '')
-    //     return this.http.get(options.url, options)
-    //         .catch((err: any) => {
-    //         console.log(err);
-    //             return Observable.throw(err)
-    //         })
-    //         .map((response: Response) => {
-    //             return response.json();
-    //         })
-    // }
-
-    // @Effect() contactUs$ = this.actions$
-    //     .ofType(EFFECT_CONTACT_US)
-    //     .withLatestFrom(this.store.select(store => store.appDb.contact))
-    //     .switchMap((value: any, index: number): any => {
-    //         var contactMap: Map<string, IContactForm> = value[1];
-    //         this.contactService(contactMap.toJS())
-    //             .catch(err => Observable.of({err: true}))
-    //             .map((v: any) => {
-    //                 return v.err ? formErrorAction('appDb.contact', 'problem connecting to server, please try later...') : formSuccessAction('appDb.contact');
-    //             })
-    //     })
-
     @Effect() contactUs$ = this.actions$
         .ofType(EFFECT_CONTACT_US)
-        .switchMap(action =>
-            this.contactService(action.payload)
+        .withLatestFrom(this.store.select(store => store.appDb.contact))
+        .switchMap((value:any) =>
+            this.contactService(value[1])
                 .catch(err => {
                     return Observable.of({err: true});
                 }).map((v: any) => {

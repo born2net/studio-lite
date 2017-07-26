@@ -440,17 +440,15 @@ export class AppDbEffects {
         .switchMap((value: any) =>
             this.contactService(value[1])
                 .catch(err => {
-                    return Observable.of({err: true});
+                    return Observable.of({err: true, error: err});
                 }).map((v: any) => {
                 return v.err ? formErrorAction('appDb.contact', 'problem connecting to server, please try later...') : formSuccessAction('appDb.contact');
             })
         )
 
-    private contactService(body: Map<any, any>): Observable<List<FasterqLineModel>> {
+    private contactService(body: Map<any, any>) {
         var data = body.toJS()
-        // var options: RequestOptionsArgs = this.getContactUrl('/submitContact_lite', RequestMethod.Get, bodyJS)
         var options: RequestOptionsArgs = this.createServerCall(`/submitContact_lite/`, RequestMethod.Put, data)
-        // var options: RequestOptionsArgs = this.getContactUrl('https://secure.digitalsignage.com:442/submitContact_lite', RequestMethod.Get, bodyJS)
         return this.http.get(options.url, options)
             .catch((err: any) => {
                 console.log(err);

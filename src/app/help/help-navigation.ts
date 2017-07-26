@@ -82,7 +82,7 @@ import {Observable} from "rxjs/Observable";
                         </li>
                     </div>
                     <li>
-                        <a class="helpLinks" target="_blank" href="http://www.digitalsignage.com/files/FQ_PrinterSetup.pdf">Setting up FasterQ printer</a>
+                        <a class="helpLinks" target="_blank" href="http://www.signage.me/files/FQ_PrinterSetup.pdf">Setting up FasterQ printer</a>
                     </li>
                 </div>
                 <hr/>

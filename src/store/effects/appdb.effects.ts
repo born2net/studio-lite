@@ -447,8 +447,10 @@ export class AppDbEffects {
         )
 
     private contactService(body: Map<any, any>): Observable<List<FasterqLineModel>> {
-        var bodyJS = body.toJS()
-        var options: RequestOptionsArgs = this.getContactUrl('/Lines', RequestMethod.Get, bodyJS)
+        var data = body.toJS()
+        // var options: RequestOptionsArgs = this.getContactUrl('/submitContact_lite', RequestMethod.Get, bodyJS)
+        var options: RequestOptionsArgs = this.createServerCall(`/submitContact_lite/`, RequestMethod.Put, data)
+        // var options: RequestOptionsArgs = this.getContactUrl('https://secure.digitalsignage.com:442/submitContact_lite', RequestMethod.Get, bodyJS)
         return this.http.get(options.url, options)
             .catch((err: any) => {
                 console.log(err);
@@ -472,12 +474,7 @@ export class AppDbEffects {
         };
     }
 
-    /**
-     *
-     * Fasterq
-     *
-     */
-    private fasterqCreateServerCall(i_urlEndPoint, i_method, i_body): RequestOptionsArgs {
+    private createServerCall(i_urlEndPoint, i_method, i_body): RequestOptionsArgs {
         var credentials = Lib.EncryptUserPass(this.rp.getUserData().userName, this.rp.getUserData().userPass);
         var url = `${this.appBaseUrlServices}${i_urlEndPoint}`;
         var headers = new Headers();
@@ -490,6 +487,11 @@ export class AppDbEffects {
         };
     }
 
+    /**
+     *
+     * Fasterq
+     *
+     */
     @Effect({dispatch: true})
     loadfasterqLines: Observable<Action> = this.actions$.ofType(EFFECT_LOAD_FASTERQ_LINES)
         .switchMap(action => this._loadFasterqLines(action))
@@ -497,7 +499,7 @@ export class AppDbEffects {
 
     private _loadFasterqLines(action: Action): Observable<List<FasterqLineModel>> {
         this.store.dispatch({type: EFFECT_LOADING_FASTERQ_LINES, payload: {}})
-        var options: RequestOptionsArgs = this.fasterqCreateServerCall('/Lines', RequestMethod.Get, '')
+        var options: RequestOptionsArgs = this.createServerCall('/Lines', RequestMethod.Get, '')
         return this.http.get(options.url, options)
             .catch((err: any) => {
                 bootbox.alert('Error loading fasterq lines, try again later...');
@@ -524,7 +526,7 @@ export class AppDbEffects {
 
     private _loadFasterqLine(action: Action): Observable<FasterqLineModel> {
         this.store.dispatch({type: EFFECT_LOADING_FASTERQ_LINE, payload: {}})
-        var options: RequestOptionsArgs = this.fasterqCreateServerCall(`/GetLine`, RequestMethod.Post, action.payload)
+        var options: RequestOptionsArgs = this.createServerCall(`/GetLine`, RequestMethod.Post, action.payload)
         return this.http.get(options.url, options)
             .catch((err: any) => {
                 bootbox.alert('Error loading fasterq line, try again later...');
@@ -547,7 +549,7 @@ export class AppDbEffects {
 
     private _loadfasterqAnalytics(action: Action): Observable<List<FasterqLineModel>> {
         this.store.dispatch({type: EFFECT_LOADING_FASTERQ_ANALYTICS, payload: {}})
-        var options: RequestOptionsArgs = this.fasterqCreateServerCall('/LineAnalytics', RequestMethod.Post, action.payload)
+        var options: RequestOptionsArgs = this.createServerCall('/LineAnalytics', RequestMethod.Post, action.payload)
         return this.http.get(options.url, options)
             .catch((err: any) => {
                 bootbox.alert('Error loading fasterq analytics, try again later...');
@@ -575,7 +577,7 @@ export class AppDbEffects {
 
     private _loadfasterqQueues(action: Action): Observable<List<FasterqLineModel>> {
         this.store.dispatch({type: EFFECT_LOADING_FASTERQ_QUEUES, payload: {}})
-        var options: RequestOptionsArgs = this.fasterqCreateServerCall(`/Queues`, RequestMethod.Post, action.payload)
+        var options: RequestOptionsArgs = this.createServerCall(`/Queues`, RequestMethod.Post, action.payload)
         return this.http.get(options.url, options)
             .catch((err: any) => {
                 bootbox.alert('Error loading fasterq queues, try again later...');
@@ -603,7 +605,7 @@ export class AppDbEffects {
         this.store.dispatch({type: EFFECT_QUEUE_CALL_SAVING, payload: {}})
         var queueSave: IQueueSave = action.payload;
         var data = Object.assign({}, queueSave.queue.getData().toJS(), queueSave)
-        var options: RequestOptionsArgs = this.fasterqCreateServerCall(`/Queue/${action.payload.queue_id}`, RequestMethod.Put, data)
+        var options: RequestOptionsArgs = this.createServerCall(`/Queue/${action.payload.queue_id}`, RequestMethod.Put, data)
         return this.http.get(options.url, options)
             .catch((err: any) => {
                 bootbox.alert('Error saving call fasterq queue, try again later...');
@@ -633,7 +635,7 @@ export class AppDbEffects {
         .map(res => ({type: null}));
 
     private _resetFasterqLine(action: Action): Observable<{}> {
-        var options: RequestOptionsArgs = this.fasterqCreateServerCall(`/ResetQueueCounter`, RequestMethod.Post, action.payload)
+        var options: RequestOptionsArgs = this.createServerCall(`/ResetQueueCounter`, RequestMethod.Post, action.payload)
         return this.http.get(options.url, options)
             .catch((err: any) => {
                 bootbox.alert('Error resetting line, try again later...');
@@ -657,7 +659,7 @@ export class AppDbEffects {
         this.store.dispatch({type: EFFECT_QUEUE_SERVICE_SAVING, payload: {}})
         var queueSave: IQueueSave = action.payload;
         var data = Object.assign({}, queueSave.queue.getData().toJS(), queueSave)
-        var options: RequestOptionsArgs = this.fasterqCreateServerCall(`/Queue/${action.payload.queue_id}`, RequestMethod.Put, data)
+        var options: RequestOptionsArgs = this.createServerCall(`/Queue/${action.payload.queue_id}`, RequestMethod.Put, data)
         return this.http.get(options.url, options)
             .catch((err: any) => {
                 bootbox.alert('Error saving service fasterq queue, try again later...');
@@ -682,7 +684,7 @@ export class AppDbEffects {
         .map(result => ({type: null}));
 
     private _pollServicing(action: Action): Observable<List<FasterqLineModel>> {
-        var options: RequestOptionsArgs = this.fasterqCreateServerCall(`/LastCalledQueue`, RequestMethod.Post, action.payload)
+        var options: RequestOptionsArgs = this.createServerCall(`/LastCalledQueue`, RequestMethod.Post, action.payload)
         return this.http.get(options.url, options)
             .catch((err: any) => {
                 bootbox.alert('Error saving service fasterq queue, try again later...');
@@ -702,7 +704,7 @@ export class AppDbEffects {
         .map(payload => ({type: EFFECT_UPDATED_FASTERQ_LINE, payload: payload}));
 
     private _updateFasterqLine(action: Action): Observable<any> {
-        var options: RequestOptionsArgs = this.fasterqCreateServerCall(`/Line/${action.payload.id}`, RequestMethod.Put, action.payload)
+        var options: RequestOptionsArgs = this.createServerCall(`/Line/${action.payload.id}`, RequestMethod.Put, action.payload)
         return this.http.get(options.url, options)
             .catch((err: any) => {
                 bootbox.alert('Error saving fasterq line, try again later...');
@@ -724,7 +726,7 @@ export class AppDbEffects {
         .map(payload => ({type: EFFECT_REMOVED_FASTERQ_LINE, payload: payload}));
 
     private _removeFasterqLine(action: Action): Observable<any> {
-        var options: RequestOptionsArgs = this.fasterqCreateServerCall(`/Line/${action.payload.id}`, RequestMethod.Delete, action.payload)
+        var options: RequestOptionsArgs = this.createServerCall(`/Line/${action.payload.id}`, RequestMethod.Delete, action.payload)
         return this.http.get(options.url, options)
             .catch((err: any) => {
                 bootbox.alert('Error removing fasterq line, try again later...');
@@ -746,7 +748,7 @@ export class AppDbEffects {
         .map(payload => ({type: EFFECT_ADDED_FASTERQ_LINE, payload: payload}));
 
     private _addFasterqLine(action: Action): Observable<any> {
-        var options: RequestOptionsArgs = this.fasterqCreateServerCall(`/Line`, RequestMethod.Post, action.payload)
+        var options: RequestOptionsArgs = this.createServerCall(`/Line`, RequestMethod.Post, action.payload)
         return this.http.get(options.url, options)
             .catch((err: any) => {
                 bootbox.alert('Error adding fasterq line, try again later...');

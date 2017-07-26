@@ -217,8 +217,8 @@ export const INITIAL_APP_DB: IAppDb = {
     appBaseUrlCloud: '',
     appBaseUrlServices: '',
     contact: Map({
-        email: 'your@email.com',
-        message: 'how can we help?',
+        email: '',
+        message: '',
         type: 0
     })
 };

@@ -9,7 +9,7 @@ import {EFFECT_CONTACT_US} from "../../store/effects/appdb.effects";
         <div class="container pull-left" style="width: 400px">
             <form [formGroup]="contactForm"
                   (submit)="submit($event)"
-                  (success)="onSuccess()"
+                  (success)="onSuccess($event)"
                   (error)="onError($event)"
                   connectForm="appDb.contact">
 
@@ -31,7 +31,7 @@ import {EFFECT_CONTACT_US} from "../../store/effects/appdb.effects";
                     <option *ngFor="let option of options" [ngValue]="option.id">{{option.label}}</option>
                 </select>
                 <br/>
-                <button style="margin-top: 20px" (click)="submit()" [disabled]="contactForm.invalid" class="btn btn-primary" type="button">Submit</button>
+                <button style="margin-top: 20px" (click)="submit($event)" [disabled]="contactForm.invalid" class="btn btn-primary" type="button">Submit</button>
 
             </form>
 
@@ -54,7 +54,7 @@ export class ContactUs {
         this.error = error;
     }
 
-    onSuccess() {
+    onSuccess(e) {
         this.success = true;
     }
 

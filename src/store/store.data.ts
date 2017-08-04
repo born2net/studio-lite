@@ -95,6 +95,10 @@ export interface IUiStateScene {
     }
 }
 
+export interface IUIMultiStationSelected {
+    stations: Map<any,any>;
+}
+
 export interface IUiState {
     mainAppState?: MainAppShowStateEnum;
     previewMode?: number;
@@ -107,6 +111,7 @@ export interface IUiState {
     stations?: IUiStateStations;
     fasterq?: IUiStateFatserq;
     scene?: IUiStateScene;
+    multiStationSelected?: IUIMultiStationSelected;
 }
 
 export interface IFasterQ {
@@ -187,7 +192,11 @@ export const INITIAL_APP_DB: IAppDb = {
             fabric: {
                 scale: -1
             }
+        },
+        multiStationSelected: {
+            stations: Map({})
         }
+
     },
     totalStations: '',
     appStartTime: -1,

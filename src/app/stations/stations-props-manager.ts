@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, ViewChild} from "@angular/core";
 import {Compbaser} from "ng-mslib";
 import {Observable} from "rxjs";
-import {ACTION_LIVELOG_UPDATE, SideProps} from "../../store/actions/appdb.actions";
+import {ACTION_LIVELOG_UPDATE, ACTION_UISTATE_UPDATE, SideProps} from "../../store/actions/appdb.actions";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {RedPepperService} from "../../services/redpepper.service";
 import {StationModel} from "../../models/StationModel";
@@ -10,10 +10,13 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {timeout} from "../../decorators/timeout-decorator";
 import {BranchStationsModelExt, CampaignsModelExt} from "../../store/model/msdb-models-extended";
 import {List} from "immutable";
-import {Http} from "@angular/http";
 import {LazyImage} from "../../comps/lazy-image/lazy-image";
 import {ToastsManager} from "ng2-toastr";
 import {LiveLogModel} from "../../models/live-log-model";
+import * as _ from 'lodash';
+import {IUiState} from "../../store/store.data";
+import {MainAppShowStateEnum} from "../app-component";
+import {PreviewModeEnum} from "../live-preview/live-preview";
 
 @Component({
     selector: 'stations-props-manager',
@@ -73,6 +76,7 @@ export class StationsPropsManager extends Compbaser {
     m_selectedBranchStation: BranchStationsModelExt;
     m_selectedCampaignId = -1;
     m_loading = false;
+    m_totalStationsSelected = [];
     m_snapPath = '';
     shouldToggle = true;
     m_disabled = true;
@@ -80,6 +84,7 @@ export class StationsPropsManager extends Compbaser {
     m_campaigns: List<CampaignsModelExt>;
     m_ip = '';
     m_inFocus = false;
+    m_multiOptions = ['change campaigns, no save','change campaigns & save','change campaigns, save & restart station']
 
     constructor(private toast: ToastsManager, private fb: FormBuilder, private yp: YellowPepperService, private rp: RedPepperService, private cd: ChangeDetectorRef) {
         super();
@@ -89,12 +94,30 @@ export class StationsPropsManager extends Compbaser {
 
         this.contGroup = fb.group({
             'm_campaignsControl': [''],
+            'm_campaignsMultiControl': [''],
             'm_stationName': [''],
             'm_eventValue': [''],
             'm_enableLan': [],
             'm_ip': [],
             'm_port': []
         });
+
+        this.cancelOnDestroy(
+            //
+            this.yp.getMultiSelectedStations()
+                .map(i_stations => {
+                    var jStationsData = i_stations.toJSON();
+                    this.m_totalStationsSelected =  [];
+                    _.forEach(jStationsData, (i_selected, i_stationId) => {
+                        if (i_selected)
+                            this.m_totalStationsSelected.push(i_stationId)
+                    })
+                    return this.m_totalStationsSelected;
+                })
+                .subscribe((i_stationsIds) => {
+                    console.log(i_stationsIds);
+                }, (e) => console.error(e))
+        )
 
         this.cancelOnDestroy(
             //
@@ -163,6 +186,44 @@ export class StationsPropsManager extends Compbaser {
             this.lazyImage.resetToDefault();
     }
 
+    _onMultiChangeCampaign(){
+        this.m_totalStationsSelected.forEach((i_stationId)=>{
+            this.rp.setStationCampaignID(i_stationId, this.contGroup.value.m_campaignsControl);
+        });
+        switch (this.contGroup.value.m_campaignsMultiControl) {
+            case 'change campaigns, no save': {
+                break;
+            }
+            case 'change campaigns & save': {
+                let uiState: IUiState = {mainAppState: MainAppShowStateEnum.SAVE, previewMode: PreviewModeEnum.NONE}
+                this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
+                break;
+            }
+            case 'change campaigns, save & restart station': {
+                let uiState: IUiState = {mainAppState: MainAppShowStateEnum.SAVE, previewMode: PreviewModeEnum.NONE}
+                this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
+                this.yp.listenMainAppState()
+                    .skip(1)
+                    .take(1)
+                    .subscribe(i_status => {
+                        if (i_status == MainAppShowStateEnum.SAVED) {
+                            this.m_totalStationsSelected.forEach((i_stationId)=>{
+                                this.rp.sendCommand('rebootPlayer', i_stationId, () => {
+                                });
+                            });
+                        }
+                    })
+                break;
+            }
+
+        }
+
+
+        this.rp.reduxCommit();
+
+        // bootbox.alert('next, restart selected stations to have them play your newly selected campaign');
+    }
+
     _render() {
         if (!this.m_selectedBranchStation)
             return;
@@ -180,7 +241,7 @@ export class StationsPropsManager extends Compbaser {
         this.m_inFocus = i_value;
     }
 
-    _onStationRename(){
+    _onStationRename() {
         this.toast.info('Station name will apply a few minutes after you save Studio changes, click [Save]');
     }
 
@@ -213,9 +274,10 @@ export class StationsPropsManager extends Compbaser {
         console.log('img loaded');
     }
 
-    _onError(){
+    _onError() {
         console.log('img error');
     }
+
     _onCompleted() {
         console.log('img completed');
     }
@@ -251,7 +313,7 @@ export class StationsPropsManager extends Compbaser {
     }
 
     @timeout()
-    private  saveToStore() {
+    private saveToStore() {
         // console.log(this.contGroup.status + ' ' + JSON.stringify(this.ngmslibService.cleanCharForXml(this.contGroup.value)));
         if (this.contGroup.status != 'VALID')
             return;

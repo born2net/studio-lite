@@ -4,7 +4,7 @@
     <ul [ngSwitch]="m_sideProps$ | async">
         <div *ngSwitchCase="m_sidePropsEnum.stationProps">
             <div id="stationProperties">
-                <img lazyImage class="center-block" style="width: 229px; height: 130px"
+                <img *ngIf="m_totalStationsSelected.length <= 1" lazyImage class="center-block" style="width: 229px; height: 130px"
                      [loadingImage]="'https://secure.digitalsignage.com/studioweb/assets/screen_loading.png'"
                      [defaultImage]="'https://secure.digitalsignage.com/studioweb/assets/screen.png'"
                      [errorImage]="'https://secure.digitalsignage.com/studioweb/assets/screen_error.png'"
@@ -15,25 +15,25 @@
                      (completed)="_onCompleted()">
 
                 <!--<div id="snapShotWrap">-->
-                    <!--<img lazyImage [url]="'http://s3-us-west-2.amazonaws.com/oregon-signage-snapshots/business358613/station75/_1491055107002.jpg'">-->
-                    <!--<div style="text-align: center">-->
-                        <!--<svg style="width: 250px" xmlns="http://www.w3.org/2000/svg">-->
-                            <!--<g>-->
-                                <!--<rect stroke-width="10" stroke="#191919" height="120" width="220" y="9.5" x="10" fill="#cccccc"></rect>-->
-                            <!--</g>-->
-                        <!--</svg>-->
-                    <!--</div>-->
-                    <!--<div style="text-align: center">-->
-                        <!--<loading class="loading" [size]="'50px'" *ngIf="m_loading"></loading>-->
-                    <!--</div>-->
-                    <!--<div *ngIf="m_snapPath != ''" style="text-align: center">-->
-                        <!--<img (error)="_onImageError($event)" [src]="m_snapPath"/>-->
-                    <!--</div>-->
+                <!--<img lazyImage [url]="'http://s3-us-west-2.amazonaws.com/oregon-signage-snapshots/business358613/station75/_1491055107002.jpg'">-->
+                <!--<div style="text-align: center">-->
+                <!--<svg style="width: 250px" xmlns="http://www.w3.org/2000/svg">-->
+                <!--<g>-->
+                <!--<rect stroke-width="10" stroke="#191919" height="120" width="220" y="9.5" x="10" fill="#cccccc"></rect>-->
+                <!--</g>-->
+                <!--</svg>-->
+                <!--</div>-->
+                <!--<div style="text-align: center">-->
+                <!--<loading class="loading" [size]="'50px'" *ngIf="m_loading"></loading>-->
+                <!--</div>-->
+                <!--<div *ngIf="m_snapPath != ''" style="text-align: center">-->
+                <!--<img (error)="_onImageError($event)" [src]="m_snapPath"/>-->
+                <!--</div>-->
                 <!--</div>-->
 
                 <hr/>
                 <div id="propWrap">
-                    <div id="stationcontrol" class="btn-group">
+                    <div *ngIf="m_totalStationsSelected.length <= 1" id="stationcontrol" class="btn-group">
                         <button (click)="_onCommand('snap')" [disabled]="m_disabled" type="button" class="btn btn-default">
                             <span class="glyphicon  glyphicon glyphicon-picture"></span>
                         </button>
@@ -51,10 +51,19 @@
                         <option [value]="campaign.getCampaignId()" *ngFor="let campaign of m_campaigns">{{campaign.getCampaignName()}}</option>
                     </select>
                     <br/>
-                    <Label>Station name</Label>
-                    <input (change)="_onStationRename()" (focus)="_onFocus(true)" (blur)="_onFocus(false)" formControlName="m_stationName" type="text">
+                    <div *ngIf="m_totalStationsSelected.length > 1">
+                        <select formControlName="m_campaignsMultiControl" class="form-control">
+                            <option [value]="options" *ngFor="let options of m_multiOptions">{{options}}</option>
+                        </select>
+                        <br/>
+                        <button class="btn btn-danger center-block" (click)="_onMultiChangeCampaign()">apply selections</button>
+                    </div>
+                    <div *ngIf="m_totalStationsSelected.length <= 1">
+                        <Label>Station name</Label>
+                        <input (change)="_onStationRename()" (focus)="_onFocus(true)" (blur)="_onFocus(false)" formControlName="m_stationName" type="text">
+                    </div>
                     <hr/>
-                    <div id="stationInfo">
+                    <div *ngIf="m_totalStationsSelected.length <= 1" id="stationInfo">
                         <ul *ngIf="m_selectedStation">
                             <li>
                                 <span>Name </span>: {{m_selectedStation.name}}
@@ -90,36 +99,37 @@
                     </div>
                     <br/>
                     <br/>
+                    <div *ngIf="m_totalStationsSelected.length <= 1">
+                        <Label>Station events</Label>
+                        <input formControlName="m_eventValue" type="text" name="eventName" data-localize="eventName" placeholder="event name" id="stationSendEventValue" value="">
 
-                    <Label>Station events</Label>
-                    <input formControlName="m_eventValue" type="text" name="eventName" data-localize="eventName" placeholder="event name" id="stationSendEventValue" value="">
+                        <p></p>
+                        <button (click)="_onSendEvent()" [@toggleState]="shouldToggle" id="stationEventSendCommand" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Send event to remote station
+                        </button>
+                        <hr/>
+                        <div>
+                            <label class="pull-left" data-localize="serverMode">server mode (listen to local
+                                events)</label>
 
-                    <p></p>
-                    <button (click)="_onSendEvent()" [@toggleState]="shouldToggle" id="stationEventSendCommand" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Send event to remote station
-                    </button>
-                    <hr/>
-                    <div>
-                        <label class="pull-left" data-localize="serverMode">server mode (listen to local
-                            events)</label>
-
-                        <div class="clearfix" style="padding-bottom: 13px"></div>
-                        <div style="position: relative; top: -12px" class="material-switch pull-left">
-                            <input (change)="saveToStore()" formControlName="m_enableLan" id="stationServerMode" name="someSwitchOption001" type="checkbox"/>
-                            <label for="stationServerMode" class="label-primary"></label>
+                            <div class="clearfix" style="padding-bottom: 13px"></div>
+                            <div style="position: relative; top: -12px" class="material-switch pull-left">
+                                <input (change)="saveToStore()" formControlName="m_enableLan" id="stationServerMode" name="someSwitchOption001" type="checkbox"/>
+                                <label for="stationServerMode" class="label-primary"></label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="clearfix"></div>
-                    <div *ngIf="m_selectedBranchStation && m_selectedBranchStation.getLanEnabled" class="row">
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                <span i18n class="inliner">ip address</span>
-                                <input (focus)="_onFocus(true)" (blur)="_onFocus(false)" formControlName="m_ip" type="text" class="numStepper inliner">
-                            </li>
-                            <li class="list-group-item">
-                                <span i18n class="inliner">port</span>
-                                <input (focus)="_onFocus(true)" (blur)="_onFocus(false)" formControlName="m_port" type="number" step="1" class="numStepper inliner">
-                            </li>
-                        </ul>
+                        <div class="clearfix"></div>
+                        <div *ngIf="m_selectedBranchStation && m_selectedBranchStation.getLanEnabled" class="row">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <span i18n class="inliner">ip address</span>
+                                    <input (focus)="_onFocus(true)" (blur)="_onFocus(false)" formControlName="m_ip" type="text" class="numStepper inliner">
+                                </li>
+                                <li class="list-group-item">
+                                    <span i18n class="inliner">port</span>
+                                    <input (focus)="_onFocus(true)" (blur)="_onFocus(false)" formControlName="m_port" type="number" step="1" class="numStepper inliner">
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>

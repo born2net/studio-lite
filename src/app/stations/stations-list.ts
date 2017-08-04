@@ -1,13 +1,20 @@
-import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output} from "@angular/core";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output} from "@angular/core";
 import {Compbaser} from "ng-mslib";
 import {List} from "immutable";
 import {BlockService} from "../blocks/block-service";
 import {StationModel} from "../../models/StationModel";
+import {timeout} from "../../decorators/timeout-decorator";
 
 @Component({
     selector: 'stations-list',
     changeDetection: ChangeDetectionStrategy.OnPush,
     styles: [`
+        input[type="checkbox"] {
+            transform: scale(2, 2);
+            position: relative;
+            top: -40px;
+        }
+
         .green {
             color: green;
         }
@@ -41,6 +48,7 @@ import {StationModel} from "../../models/StationModel";
                     <h4>{{station.name}}</h4>
                     <h5>os: {{station.os}}</h5>
                 </div>
+                <input type="checkbox" (click)="_onCheckedChange(station)" [checked]="m_checked[station.id] == true" class="pull-right"/>
                 <!--<i class="pull-left fa {{station.airVersion}}"></i>-->
                 <!--<p class="pull-left list-group-item-text">file type: {{station.os}} </p>-->
                 <!--<span class="clearfix"></span>-->
@@ -54,9 +62,9 @@ import {StationModel} from "../../models/StationModel";
 export class StationsList extends Compbaser {
     selectedIdx = -1;
     m_stations: List<StationModel>;
-    m_selected;
+    m_checked = {};
 
-    constructor(private bs: BlockService, private el: ElementRef) {
+    constructor(private bs: BlockService, private el: ElementRef, private cd:ChangeDetectorRef) {
         super();
     }
 
@@ -70,9 +78,25 @@ export class StationsList extends Compbaser {
     @Output()
     onSelected: EventEmitter<StationModel> = new EventEmitter<StationModel>();
 
+    @Output()
+    onMultiSelected: EventEmitter<any> = new EventEmitter<any>();
+
+    @timeout()
+    _onCheckedChange(station: StationModel) {
+        if (!this.m_checked[station.id]){
+            this.m_checked[station.id] = true;
+        } else {
+            this.m_checked[station.id] = !this.m_checked[station.id];
+        }
+        this.cd.markForCheck();
+        this.onMultiSelected.emit(this.m_checked)
+    }
+
+
     _onSelected(event: MouseEvent, i_station: StationModel, index) {
         this.selectedIdx = index;
         this.onSelected.emit(i_station)
+        // this.cd.markForCheck();
         // this.m_selected = i_resource;
     }
 

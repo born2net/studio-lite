@@ -630,6 +630,10 @@ export class YellowPepperService {
             .take(1) as Observable<List<CampaignsModelExt>>
     }
 
+    getMultiSelectedStations(): Observable<any> {
+        return this.store.select(store => store.appDb.uiState.multiStationSelected.stations)
+    }
+
     getTimelines(): Observable<List<CampaignTimelinesModel>> {
         return this.store.select(store => store.msDatabase.sdk.table_campaign_timelines)
             .take(1);

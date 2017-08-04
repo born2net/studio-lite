@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component} from "@angular/core";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {RedPepperService} from "../../services/redpepper.service";
 import {ResourcesModel} from "../../store/imsdb.interfaces_auto";
-import {List} from "immutable";
+import {List, Map} from "immutable";
 import {Observable} from "rxjs";
 import {Compbaser} from "ng-mslib";
 import {IUiState} from "../../store/store.data";
@@ -38,7 +38,7 @@ import * as _ from 'lodash';
         <!-- move scroller to proper offset -->
         <div class="responsive-pad-right">
             <div id="stationsPanel" matchBodyHeight="150" style="overflow: scroll">
-                <stations-list [filter]="m_filter" [stations]="m_stationModels$ | async" (onSelected)="_onSelected($event)">
+                <stations-list [filter]="m_filter" [stations]="m_stationModels$ | async" (onMultiSelected)="_onMultiSelected($event)" (onSelected)="_onSelected($event)">
                 </stations-list>
             </div>
         </div>
@@ -176,6 +176,15 @@ export class Stations extends Compbaser {
         const uiState: IUiState = {
             uiSideProps: SideProps.stationProps,
             stations: {stationSelected: i_station.id}
+        };
+        this.yp.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}));
+    }
+
+    _onMultiSelected(i_stations: any) {
+        const uiState: IUiState = {
+            multiStationSelected:  {
+                stations: Map(i_stations)
+            }
         };
         this.yp.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}));
     }

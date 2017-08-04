@@ -209,6 +209,7 @@ export class StationsPropsManager extends Compbaser {
                         if (i_status == MainAppShowStateEnum.SAVED) {
                             this.m_totalStationsSelected.forEach((i_stationId)=>{
                                 this.rp.sendCommand('rebootPlayer', i_stationId, () => {
+                                // this.rp.sendCommand('rebootPlayer', -1, () => {
                                 });
                             });
                         }

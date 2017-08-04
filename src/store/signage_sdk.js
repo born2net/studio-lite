@@ -1549,7 +1549,13 @@ LoaderManager.prototype.save = function (i_saveCallback) {
 
 
     function uploadTables(i_cookie) {
-        //alert('up1');
+
+        // todo: Alon needs to fix, Mantis bug: 0002650, add support for extended characters via fix of Base64 encode / decode in signage_sdk.js
+        // debugger;
+        // var arg = Base64Encode('先秦兩');
+        // var v = Base64Decode(arg);
+        // console.log(v);
+        
         var changelist = sv.m_dataBaseManager.getChangelist();
         var s64 = jQuery.base64.encode(changelist);
         s64 = s64.replace(/=/g, ".");

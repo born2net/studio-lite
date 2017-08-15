@@ -483,7 +483,6 @@ export class Lib {
         return value;
     }
 
-
     /**
      Remove characters that a problemtaic to app / js
      **/

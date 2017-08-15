@@ -635,11 +635,11 @@ export class SceneEditor extends Compbaser implements AfterViewInit {
                 self.m_mouseY = e.offsetY;
 
                 // group selected
-                var active = self.m_canvas.getActiveGroup();
-                if (active) {
-                    $('.blocksOnly', '#sceneContextMenu').show();
-                    return true;
-                }
+                //var active = self.m_canvas.getActiveGroup();
+                //if (active) {
+                //    $('.blocksOnly', '#sceneContextMenu').show();
+                //    return true;
+                //}
                 // scene selected
                 var block = self.m_canvas.getActiveObject();
                 if (_.isNull(block)) {
@@ -755,16 +755,16 @@ export class SceneEditor extends Compbaser implements AfterViewInit {
             return;
         }
         // group selected
-        var group = this.m_canvas.getActiveGroup();
-        if (group) {
-            con(i_command + ' on group');
-            blocks = [];
-            _.each(group.objects, (selectedObject) => {
-                blocks.push(selectedObject);
-            });
-            contextCmd(blocks);
-            return;
-        }
+        //var group = this.m_canvas.getActiveGroup();
+        //if (group) {
+        //    con(i_command + ' on group');
+        //    blocks = [];
+        //    _.each(group.objects, (selectedObject) => {
+        //        blocks.push(selectedObject);
+        //    });
+        //    contextCmd(blocks);
+        //    return;
+        //}
         // scene selected
         var block = this.m_canvas.getActiveObject();
         if (_.isNull(block)) {
@@ -1233,7 +1233,7 @@ export class SceneEditor extends Compbaser implements AfterViewInit {
             this.m_canvas.on('mouse:up', (options) => {
                 this.m_canvasMouseState = 0;
                 var active = this.m_canvas.getActiveObject();
-                var group = this.m_canvas.getActiveGroup();
+                var group = this.m_canvas.getActiveObject();
 
                 //options.e.stopImmediatePropagation();
                 //options.e.preventDefault();
@@ -1285,6 +1285,7 @@ export class SceneEditor extends Compbaser implements AfterViewInit {
      @param {Object} i_block
      **/
     _blockSelected(i_block) {
+        console.log('block');
         this.m_canvas.setActiveObject(i_block);
         var blockID = i_block.getBlockData().blockID;
         // con('object: ' + i_block.m_blockType + ' ' + blockID);
@@ -1299,7 +1300,7 @@ export class SceneEditor extends Compbaser implements AfterViewInit {
     _discardSelections() {
         if (!this.m_canvas)
             return;
-        this.m_canvas.discardActiveGroup();
+        //this.m_canvas.discardActiveGroup();
         this.m_canvas.discardActiveObject();
     }
 
@@ -1369,7 +1370,7 @@ export class SceneEditor extends Compbaser implements AfterViewInit {
         if (_.isUndefined(this.m_selectedSceneID))
             return;
         _.each(this.m_canvas.getObjects(), (obj) => {
-            this._resetObjectScale(obj);
+            //this._resetObjectScale(obj);
         });
         // this.m_canvas.renderAll();
     }
@@ -1605,7 +1606,7 @@ export class SceneEditor extends Compbaser implements AfterViewInit {
      **/
     _zoomReset() {
         if (_.isUndefined(this.m_selectedSceneID) || _.isUndefined(this.m_canvas)) {
-            this.m_canvasScale = 1;
+            //this.m_canvasScale = 1;
             this._notifyScaleChange();
             return;
         }

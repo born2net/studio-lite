@@ -82,7 +82,7 @@ export class BlockFabric extends fabric.Group {
     _fabricAlpha(i_domPlayerData) {
         var appearance = $(i_domPlayerData).find('Appearance');
         var opacity: any = $(appearance).attr('alpha');
-        this.setOpacity(opacity);
+//        this.setOpacity(opacity);
     }
 
     /**

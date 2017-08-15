@@ -424,12 +424,12 @@ export class BlockFabricJsonItem extends BlockFabricLabel {
         var w = parseInt(layout.attr('width'));
         var textWidth = t.width * 1.2;
         if (textWidth > w) {
-            t.setText('...');
+//            t.setText('...');
         }
         var h = parseInt(layout.attr('height'));
         var textHeight = t.height * 1.2;
         if (textHeight > h) {
-            t.setText('...');
+//            t.setText('...');
         }
         var rec = self._fabricRect(w, h, domPlayerData);
         var o = self._fabricateOptions(parseInt(layout.attr('y')), parseInt(layout.attr('x')), w, h, parseInt(layout.attr('rotation')));

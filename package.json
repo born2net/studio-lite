@@ -1,6 +1,6 @@
 {
   "name": "studioweb",
-  "version": "0.1.769",
+  "version": "0.1.768",
   "license": "Modified GPL (see readme.md)",
   "angular-cli": {},
   "scripts": {
@@ -60,7 +60,7 @@
     "bootbox": "^4.4.0",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
-    "fabric": "git://github.com/born2net/fabric.js.git",
+    "fabric": "git://github.com/kangax/fabric.js.git",
     "font-awesome": "~4.7.0",
     "gsap": "1.19.1",
     "gulp-bump": "^2.5.1",

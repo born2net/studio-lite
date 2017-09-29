@@ -56,6 +56,7 @@ currently the application should run under:
 - node 6.x 
 
 to install and host:
+
 ``` npm install -g npm``` (this will ensure npm 5.4.2 >)
 
 

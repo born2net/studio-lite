@@ -56,9 +56,8 @@ currently the application should run under:
 - node 6.x 
 
 to install and host:
-``` 
-npm install -g npm``` (this will ensure npm 5.4.2 >)
-```
+``` npm install -g npm``` (this will ensure npm 5.4.2 >)
+
 
 ```
 git clone https://github.com/born2net/studio-lite.git

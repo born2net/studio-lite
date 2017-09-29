@@ -668,7 +668,7 @@ export class SceneEditor extends Compbaser implements AfterViewInit {
             switch (i_command) {
                 case 'copy': {
                     this.m_copiesObjects = [];
-                    _.each(i_blocks, (selectedObject) => {
+                    _.each(i_blocks, (selectedObject:any) => {
                         var blockPlayerData = selectedObject.getBlockData().blockData;
                         blockPlayerData = this.rp.stripPlayersID(blockPlayerData);
                         this.m_copiesObjects.push(blockPlayerData);
@@ -680,7 +680,7 @@ export class SceneEditor extends Compbaser implements AfterViewInit {
                     let uiState: IUiState = {scene: {blockSelected: -1}}
                     this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
                     this.m_copiesObjects = [];
-                    _.each(i_blocks, (selectedObject) => {
+                    _.each(i_blocks, (selectedObject:any) => {
                         var blockData = selectedObject.getBlockData();
                         var blockPlayerData = blockData.blockData;
                         this._discardSelections();
@@ -699,7 +699,7 @@ export class SceneEditor extends Compbaser implements AfterViewInit {
                 case 'remove': {
                     let uiState: IUiState = {scene: {blockSelected: -1}}
                     this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
-                    _.each(i_blocks, (selectedObject) => {
+                    _.each(i_blocks, (selectedObject:any) => {
                         var blockData = selectedObject.getBlockData();
                         this._discardSelections();
                         this.rp.removeScenePlayer(this.m_selectedSceneID, blockData.blockID);
@@ -1242,7 +1242,7 @@ export class SceneEditor extends Compbaser implements AfterViewInit {
                 if (group) {
                     con('group selected');
                     var selectedGroup = options.target || group;
-                    _.each(group.objects, (selectedObject) => {
+                    _.each(group.objects, (selectedObject:any) => {
                         var objectPos = {
                             x: (selectedGroup.left + (selectedObject.left)),
                             y: (selectedGroup.top + (selectedObject.top))

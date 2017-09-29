@@ -13,6 +13,7 @@ https://github.com/videogular/videogular2/issues/442
 npm uninstall -g angular-cli @angular/cli
 npm cache clean
 npm install -g @angular/cli@latest
+OR npm install -g @angular/cli@1.2.6
 Local project package:
 
 rm -rf node_modules dist # use rmdir on Windows

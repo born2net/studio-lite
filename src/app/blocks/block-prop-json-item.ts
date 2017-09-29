@@ -163,7 +163,7 @@ export class BlockPropJsonItem extends Compbaser implements AfterViewInit {
         var mime = this.m_blockData.playerMimeScene;
         var domPlayerData: XMLDocument = this.m_blockData.playerDataDom;
         var xSnippet = jXML(domPlayerData).find('XmlItem');
-        _.forEach(this.m_config[mime].fields, (k) => {
+        _.forEach(this.m_config[mime].fields, (k:any) => {
             if (k.name == name) {
                 jXML(xSnippet).attr('fieldType', k.type);
                 jXML(xSnippet).attr('fieldName', k.name);

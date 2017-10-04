@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from "@angular/core";
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import * as _ from "lodash";
@@ -14,18 +14,16 @@ import {BlockLabels} from "../../interfaces/Consts";
     styles: [`
 
         .checkered {
-            background-image:
-                    -moz-linear-gradient(45deg, #000 25%, transparent 25%,transparent 75%, #000 75%, #000 100%),
-                    -moz-linear-gradient(45deg, #000 25%, transparent 25%,transparent 75%, #000 75%, #000 100%);
-            background-image:
-                    -webkit-linear-gradient(45deg, #000 25%, transparent 25%,transparent 75%, #000 75%, #000 100%),
-                    -webkit-linear-gradient(45deg, #000 25%, transparent 25%,transparent 75%, #000 75%, #000 100%);
-            -moz-background-size:50px 50px;
-            background-size:50px 50px;
-            -webkit-background-size:5px 5px;
-            background-position:0 0, 5px 5px;
+            background-image: -moz-linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000 100%),
+            -moz-linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000 100%);
+            background-image: -webkit-linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000 100%),
+            -webkit-linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000 100%);
+            -moz-background-size: 50px 50px;
+            background-size: 50px 50px;
+            -webkit-background-size: 5px 5px;
+            background-position: 0 0, 5px 5px;
         }
-        
+
         li {
             padding-top: 3px;
             padding-bottom: 3px;
@@ -105,48 +103,36 @@ import {BlockLabels} from "../../interfaces/Consts";
                         </div>
                     </div>
                 </div>
-                <div>
-                    <table border="0" style="width: 150px; height: 150px">
-                        <tr>
-                            <td></td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="checkbox"></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" style="padding-right: 5px"></td>
-                            <td colspan="3" rowspan="3" class="checkered" style="background-color: #c1c1c1"></td>
-                            <td><input type="text" style="width: 32px; margin-left: 5px"/></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" style="margin-right: 5px"></td>
-                            <td><input type="text" style="width: 32px; margin-left: 5px"/></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td><input type="text" style="width: 32px; margin-left: 5px"/></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td><input type="text" style="width: 32px"/></td>
-                            <td><input type="text" style="width: 32px"/></td>
-                            <td><input type="text" style="width: 32px"/></td>
-                            <td></td>
-                        </tr>
-                    </table>
 
-
-                    <!--<input type="checkbox" style="margin-right: 30px" class="pull-left"/>-->
-                    <!--<input type="checkbox" style="margin-right: 30px" class="pull-left"/>-->
-                    <!--<input type="checkbox" style="margin-right: 30px" class="pull-left"/>-->
-                    <!--<div class="clearFloat"></div>                    -->
-                    <!--<input type="checkbox" style="margin-top: 30px"/>-->
-                    <!--<br/>-->
-                    <!--<input type="checkbox" style="margin-top: 30px"/>-->
-                    <!--<br/>-->
-                    <!--<input type="checkbox" style="margin-top: 30px"/>                                        -->
-                </div>
+                <table border="0" style="width: 150px; height: 150px">
+                    <tr>
+                        <td></td>
+                        <td><input type="checkbox" formControlName="x1_check"></td>
+                        <td><input type="checkbox" formControlName="x2_check"></td>
+                        <td><input type="checkbox" formControlName="x3_check"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" formControlName="y1_check" style="padding-right: 5px" ></td>
+                        <td colspan="3" rowspan="3" class="checkered" style="background-color: #c1c1c1"></td>
+                        <td><input type="text" style="width: 32px; margin-left: 5px" formControlName="x1_text"/></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" formControlName="y2_check" style="margin-right: 5px"></td>
+                        <td><input type="text" style="width: 32px; margin-left: 5px" formControlName="x2_text"/></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" formControlName="y3_check"></td>
+                        <td><input type="text" style="width: 32px; margin-left: 5px" formControlName="x3_text"/></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="text" style="width: 32px" formControlName="y1_text"/></td>
+                        <td><input type="text" style="width: 32px" formControlName="y2_text"/></td>
+                        <td><input type="text" style="width: 32px" formControlName="y3_text"/></td>
+                        <td></td>
+                    </tr>
+                </table>
             </form>
         </div>
     `
@@ -168,12 +154,26 @@ export class BlockPropPosition extends Compbaser {
             'pixel_width': [0],
             'pixel_height': [0],
             'rotation': [0],
-            'locked': []
+            'locked': [],
+            'x1_check':  [{value: '', disabled: true}],
+            'x2_check':  [{value: '', disabled: true}],
+            'x3_check': [{value: '', disabled: true}],
+            'y1_check': [{value: '', disabled: true}],
+            'y2_check': [{value: '', disabled: true}],
+            'y3_check': [{value: '', disabled: true}],
+            'x1_text': [{value: '', disabled: true}],
+            'x2_text': [{value: '', disabled: true}],
+            'x3_text': [{value: '', disabled: true}],
+            'y1_text': [{value: '', disabled: true}],
+            'y2_text': [{value: '', disabled: true}],
+            'y3_text': [{value: '', disabled: true}]
         });
 
         _.forEach(this.m_contGroup.controls, (value, key: string) => {
             this.m_formInputs[key] = this.m_contGroup.controls[key] as FormControl;
         })
+
+        // this.m_formInputs['x1_check'].disable();
 
         this.cancelOnDestroy(
             //

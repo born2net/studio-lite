@@ -68,10 +68,11 @@ import {Logo} from "../comps/logo/Logo";
 import {LimitedAccess} from "../comps/limited-access/limited-access";
 import {LocaleSelector} from "../app/locale-selector/local-selector";
 import {ConnectFormDirective} from "../comps/connect-form/connect-form";
+import {DisableControlDirective} from "../comps/disable-control/disable-control";
 
 var sharedComponents = [Tabs, Tab, Infobox, Sliderpanel, Slideritem, SlideritemContent, PanelSplitMain, PanelSplitSide, PanelSplitContainer, ListToArrayPipe, FormatSecondsPipe, MatchBodyHeight, ScreenTemplate, BlurForwarder, DraggableList, AddContent, Loading, LimitedAccess,
     FontSelector, BlockPropContainer, BlockPropCommon, BlockPropHtml, BlockPropClock, BlockPropWeather, BlockPropInstagram, BlockPropJsonPlayer, BlockPropJsonItem, ConnectFormDirective, LivePreview, LocationMap, MediaPlayer, FilterModelPipe, SvgIcon, LazyImage, ProUpgrade, ResellerLogo, Logo, LocaleSelector,
-    BlockPropScene, BlockPropCalendar, BlockPropSheets, BlockPropTwitter, BlockPropVideo, BlockPropImage, BlockPropLabel, BlockPropMrss, BlockPropLocation, BlockPropRss, BlockPropDigg, BlockPropFasterQ, BlockPropCollection, BlockPropQR, BlockPropYouTube, JsonEventGrid, DashPanelMini];
+    BlockPropScene, BlockPropCalendar, BlockPropSheets, BlockPropTwitter, BlockPropVideo, BlockPropImage, BlockPropLabel, BlockPropMrss, BlockPropLocation, BlockPropRss, BlockPropDigg, BlockPropFasterQ, BlockPropCollection, BlockPropQR, BlockPropYouTube, JsonEventGrid, DashPanelMini, DisableControlDirective];
 
 @NgModule({
     imports: [CommonModule, FormsModule, HttpModule, JsonpModule, ReactiveFormsModule, ContextMenuModule, ChartModule, ReactiveFormsModule, ColorPickerModule, DropdownModule, RadioButtonModule, SimpleGridModule, Ng2Bs3ModalModule, AgmCoreModule, VgCoreModule, VgControlsModule, VgOverlayPlayModule, VgBufferingModule],

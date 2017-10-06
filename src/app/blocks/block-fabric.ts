@@ -135,6 +135,11 @@ export class BlockFabric extends fabric.Group {
                 i_top = consTop;
             }
 
+            // constraint bottom only
+            if (consBottom && !consTop){
+                i_top = sceneDimension.h - consBottom - i_height;
+            }
+
             // constraint top & bottom
             if (consTop && consBottom){
                 i_top = consTop;
@@ -148,11 +153,6 @@ export class BlockFabric extends fabric.Group {
             }
 
             // constraint left only
-            if (!consRight && consLeft){
-                i_left = consLeft;
-            }
-
-            // constraint top only
             if (!consRight && consLeft){
                 i_left = consLeft;
             }

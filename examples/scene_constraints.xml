@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Player player="3510" label="scene2" interactive="0" id="YmxvY2tpZDY">
+   <Data>
+      <Layout rotation="0" x="0" y="0" width="600" height="400" />
+      <Appearance alpha="1" blendMode="normal" />
+      <Border borderThickness="0" borderColor="65535" cornerRadius="0" />
+      <Scene defaultDuration="10">
+         <Layout>
+            <BasicLayout />
+         </Layout>
+         <Players>
+            <Player player="3130" label="" interactive="0" id="YmxvY2tpZDc">
+               <Data>
+                  <Layout rotation="0" left="31" right="467" top="20" bottom="278" />
+                  <Appearance alpha="1" blendMode="normal" />
+                  <Border borderThickness="0" borderColor="65535" cornerRadius="0" />
+                  <Background style="Gradient" gradientType="linear" angle="0" offsetX="0" offsetY="0">
+                     <GradientPoints>
+                        <Point color="4361162" opacity="1" midpoint="125" />
+                     </GradientPoints>
+                  </Background>
+                  <Resource resource="3" hResource="0">
+                     <AspectRatio maintain="0" />
+                  </Resource>
+               </Data>
+            </Player>
+            <Player player="3130" label="Resource" interactive="0" id="YmxvY2tpZDg">
+               <Data>
+                  <Layout rotation="0" horizontalCenter="-218" verticalCenter="3" width="135" height="145" />
+                  <Resource resource="3" hResource="0">
+                     <AspectRatio maintain="0" />
+                  </Resource>
+               </Data>
+            </Player>
+            <Player player="3130" label="Resource" interactive="0" id="YmxvY2tpZDk">
+               <Data>
+                  <Layout rotation="0" x="185" y="20" width="64" height="76" />
+                  <Resource resource="3" hResource="0">
+                     <AspectRatio maintain="0" />
+                  </Resource>
+               </Data>
+            </Player>
+         </Players>
+      </Scene>
+   </Data>
+</Player>
+

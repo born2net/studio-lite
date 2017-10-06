@@ -432,7 +432,7 @@ export class BlockFabricJsonItem extends BlockFabricLabel {
             t.setText('...');
         }
         var rec = self._fabricRect(w, h, domPlayerData);
-        var o = self._fabricateOptions(parseInt(layout.attr('y')), parseInt(layout.attr('x')), w, h, parseInt(layout.attr('rotation')));
+        var o = self._fabricateOptions(parseInt(layout.attr('y')), parseInt(layout.attr('x')), w, h, parseInt(layout.attr('rotation')),layout);
 
         rec.originX = 'center';
         rec.originY = 'center';

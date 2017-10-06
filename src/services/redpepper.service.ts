@@ -2384,6 +2384,24 @@ export class RedPepperService {
     }
 
     /**
+     get a scene's width and height
+     @method getSceneDimension
+     **/
+    getSceneDimension(i_scene_id) {
+        i_scene_id = this.sterilizePseudoId(i_scene_id);
+        var recPlayerData = this.getScenePlayerRecord(i_scene_id);
+        var player_data = recPlayerData['player_data_value'];
+        var domPlayerData = $.parseXML(player_data);
+        var layout = $(domPlayerData).find('Layout');
+        var a = layout.attr('rotation');
+        var x = layout.attr('x');
+        var y = layout.attr('y');
+        var w = layout.attr('width');
+        var h = layout.attr('height');
+        return {a, x, y, w, h};
+    }
+
+    /**
      Set a scene's default length (can be overridden on timeline)
      @method setSceneDuration
      @param {number} i_scene_id

@@ -1362,7 +1362,7 @@ export class SceneEditor extends Compbaser implements AfterViewInit {
     }
 
     /**
-     Reset all canvas objects to their scale is set to 1
+     Reset canvas objects to their scale is set to 1
      @method _resetAllObjectScale
      **/
     _resetAllObjectScale() {

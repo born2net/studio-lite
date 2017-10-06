@@ -59,7 +59,7 @@ export class BlockFabricLabel extends BlockFabric {
         var h = parseInt(layout.attr('height')) < this.m_minSize.h ? this.m_minSize.h : parseInt(layout.attr('height'));
 
         var rec = this._fabricRect(w, h, domPlayerData);
-        var o = this._fabricateOptions(parseInt(layout.attr('y')), parseInt(layout.attr('x')), w, h, parseInt(layout.attr('rotation')));
+        var o = this._fabricateOptions(parseInt(layout.attr('y')), parseInt(layout.attr('x')), w, h, parseInt(layout.attr('rotation')), layout);
         //var group = new fabric.Group([ rec, t ], o);
         //_.extend(this, group);
 
@@ -82,7 +82,7 @@ export class BlockFabricLabel extends BlockFabric {
         //        setTimeout(i_callback,1)
         //    }
         //});
-        setTimeout(i_callback,1);
+        setTimeout(i_callback, 1);
 
         var direction = $(font).attr('textAlign');
         switch (direction) {

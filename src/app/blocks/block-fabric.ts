@@ -129,6 +129,17 @@ export class BlockFabric extends fabric.Group {
             var consBottom = parseInt(i_layout.attr('bottom'));
 
 
+            // constraint left & right
+            if (consRight && consLeft){
+                i_left = consLeft;
+                i_width =  (sceneDimension.w - consRight) - consLeft;
+            }
+
+            // constraint left only
+            if (!consRight && consLeft){
+                i_left = consLeft;
+            }
+
             // constraint right only
             if (consRight && !consLeft){
                 i_left = sceneDimension.w - consRight - i_width;

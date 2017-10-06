@@ -120,6 +120,8 @@ export class BlockFabric extends fabric.Group {
      **/
     _fabricateOptions(i_top, i_left, i_width, i_height, i_angle, i_layout: JQuery) {
         var sceneDimension: any = this.m_pepper.getSceneDimension(this.m_sceneID);
+
+        // support constraints and make'em backward compatible with fabric
         if (i_layout) {
             var consHorizontalCenter = parseInt(i_layout.attr('horizontalCenter'));
             var consVerticalCenter = parseInt(i_layout.attr('verticalCenter'))
@@ -128,6 +130,16 @@ export class BlockFabric extends fabric.Group {
             var consTop = parseInt(i_layout.attr('top'))
             var consBottom = parseInt(i_layout.attr('bottom'));
 
+            // constraint top only
+            if (consTop && !consBottom){
+                i_top = consTop;
+            }
+
+            // constraint top & bottom
+            if (consTop && consBottom){
+                i_top = consTop;
+                i_height =  (sceneDimension.h - consBottom) - consTop;
+            }
 
             // constraint left & right
             if (consRight && consLeft){
@@ -136,6 +148,11 @@ export class BlockFabric extends fabric.Group {
             }
 
             // constraint left only
+            if (!consRight && consLeft){
+                i_left = consLeft;
+            }
+
+            // constraint top only
             if (!consRight && consLeft){
                 i_left = consLeft;
             }

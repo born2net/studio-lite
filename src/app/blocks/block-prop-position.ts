@@ -13,16 +13,7 @@ import {BlockLabels} from "../../interfaces/Consts";
     changeDetection: ChangeDetectionStrategy.OnPush,
     styles: [`
 
-        .checkered {
-            background-image: -moz-linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000 100%),
-            -moz-linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000 100%);
-            background-image: -webkit-linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000 100%),
-            -webkit-linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000 100%);
-            -moz-background-size: 50px 50px;
-            background-size: 50px 50px;
-            -webkit-background-size: 5px 5px;
-            background-position: 0 0, 5px 5px;
-        }
+        
 
         li {
             padding-top: 3px;
@@ -104,35 +95,7 @@ import {BlockLabels} from "../../interfaces/Consts";
                     </div>
                 </div>
 
-                <table border="0" style="width: 150px; height: 150px">
-                    <tr>
-                        <td></td>
-                        <td><input type="checkbox" formControlName="x1_check"></td>
-                        <td><input type="checkbox" formControlName="x2_check"></td>
-                        <td><input type="checkbox" formControlName="x3_check"></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" formControlName="y1_check" style="padding-right: 5px" ></td>
-                        <td colspan="3" rowspan="3" class="checkered" style="background-color: #c1c1c1"></td>
-                        <td><input type="text" style="width: 32px; margin-left: 5px" formControlName="x1_text"/></td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" formControlName="y2_check" style="margin-right: 5px"></td>
-                        <td><input type="text" style="width: 32px; margin-left: 5px" formControlName="x2_text"/></td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" formControlName="y3_check"></td>
-                        <td><input type="text" style="width: 32px; margin-left: 5px" formControlName="x3_text"/></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><input type="text" style="width: 32px" formControlName="y1_text"/></td>
-                        <td><input type="text" style="width: 32px" formControlName="y2_text"/></td>
-                        <td><input type="text" style="width: 32px" formControlName="y3_text"/></td>
-                        <td></td>
-                    </tr>
-                </table>
+               
             </form>
         </div>
     `

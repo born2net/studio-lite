@@ -77,7 +77,7 @@ export class BlockFabricImage extends BlockFabric {
                 return;
             }
             $(i_image).width(1000).height(800).appendTo('body');
-            var options = this._fabricateOptions(parseInt(layout.attr('y')), parseInt(layout.attr('x')), parseInt(layout.attr('width')), parseInt(layout.attr('height')), parseInt(layout.attr('rotation')));
+            var options = this._fabricateOptions(parseInt(layout.attr('y')), parseInt(layout.attr('x')), parseInt(layout.attr('width')), parseInt(layout.attr('height')), parseInt(layout.attr('rotation')),layout);
             var img = new fabric.Image(i_image, options);
             _.extend(this, img);
             this._fabricAlpha(domPlayerData);

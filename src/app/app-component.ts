@@ -43,8 +43,7 @@ export enum MainAppShowStateEnum {
     animations: [
         trigger('logoutState', [
             state('active', style({
-                transform: 'scale(2)',
-                alpha: 0
+                transform: 'scale(2)'
             })),
             transition('* => active', animate('1000ms ease-out'))
         ])
@@ -218,7 +217,7 @@ export class AppComponent implements AfterViewInit {
 
     private listenAppStateChange() {
         this.yp.listenMainAppState()
-            .subscribe((i_value: MainAppShowStateEnum) => {
+            .subscribe((i_value: any):any => {
                 switch (i_value) {
 
                     case MainAppShowStateEnum.SAVE_AND_PREVIEW: {

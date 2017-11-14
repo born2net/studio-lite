@@ -7,7 +7,7 @@ import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 export const environment = {
   production: false,
   hmr: false,
-  imports: [
-    StoreDevtoolsModule.instrumentStore({maxAge: 2}),
-  ]
+  // imports: [
+  //   StoreDevtoolsModule.instrumentStore({maxAge: 2}),
+  // ]
 };

@@ -1,10 +1,10 @@
-import {Directive, EventEmitter, Input, Output} from '@angular/core';
-import {FormGroupDirective} from '@angular/forms';
-import {Subscription} from 'rxjs/Subscription';
-import {Actions} from '@ngrx/effects';
-import {YellowPepperService} from "../../services/yellowpepper.service";
+import { Directive, EventEmitter, Input, Output } from '@angular/core';
+import { FormGroupDirective } from '@angular/forms';
+import { Subscription } from 'rxjs/Subscription';
+import { Actions } from '@ngrx/effects';
+import { YellowPepperService } from "../../services/yellowpepper.service";
 import * as _ from 'lodash';
-import {ACTION_FORM_UPDATE} from "../../store/actions/appdb.actions";
+import { ACTION_FORM_UPDATE } from "../../store/actions/appdb.actions";
 
 const FORM_SUBMIT_SUCCESS = 'FORM_SUBMIT_SUCCESS';
 const FORM_SUBMIT_ERROR = 'FORM_SUBMIT_ERROR';
@@ -37,8 +37,8 @@ export class ConnectFormDirective {
     formError: Subscription;
 
     constructor(private formGroupDirective: FormGroupDirective,
-                private actions$: Actions,
-                private yp: YellowPepperService) {
+        private actions$: Actions,
+        private yp: YellowPepperService) {
     }
 
     ngOnInit() {
@@ -63,7 +63,7 @@ export class ConnectFormDirective {
 
         this.formSuccess = this.actions$
             .ofType(FORM_SUBMIT_SUCCESS)
-            .filter(({payload}) => payload.path === this.path)
+            .filter(action => (action as any).payload.path === this.path)
             .subscribe(() => {
                 this.formGroupDirective.form.reset();
                 this.success.emit();
@@ -71,10 +71,11 @@ export class ConnectFormDirective {
 
         this.formError = this.actions$
             .ofType(FORM_SUBMIT_ERROR)
-            .filter(({payload}) => payload.path === this.path)
-            .subscribe(({payload}) => {
-                return this.error.emit(payload.error)
+            .filter(action => (action as any).payload.path === this.path)
+            .subscribe(action => {
+                return this.error.emit((action as any).payload.error)
             })
+
     }
 
     ngOnDestroy() {

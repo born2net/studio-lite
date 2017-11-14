@@ -118,7 +118,63 @@ export class BlockFabric extends fabric.Group {
     /**
      Build the options injected into a newly created fabric object
      **/
-    _fabricateOptions(i_top, i_left, i_width, i_height, i_angle) {
+    _fabricateOptions(i_top, i_left, i_width, i_height, i_angle, i_layout: JQuery) {
+        var sceneDimension: any = this.m_pepper.getSceneDimension(this.m_sceneID);
+
+        // support constraints and make'em backward compatible with fabric
+        if (i_layout) {
+            var consHorizontalCenter = parseInt(i_layout.attr('horizontalCenter'));
+            var consVerticalCenter = parseInt(i_layout.attr('verticalCenter'))
+            var consLeft = parseInt(i_layout.attr('left'))
+            var consRight = parseInt(i_layout.attr('right'))
+            var consTop = parseInt(i_layout.attr('top'))
+            var consBottom = parseInt(i_layout.attr('bottom'));
+
+            // constraint top only
+            if (consTop && !consBottom){
+                i_top = consTop;
+            }
+
+            // constraint bottom only
+            if (consBottom && !consTop){
+                i_top = sceneDimension.h - consBottom - i_height;
+            }
+
+            // constraint top & bottom
+            if (consTop && consBottom){
+                i_top = consTop;
+                i_height =  (sceneDimension.h - consBottom) - consTop;
+            }
+
+            // constraint left & right
+            if (consRight && consLeft){
+                i_left = consLeft;
+                i_width =  (sceneDimension.w - consRight) - consLeft;
+            }
+
+            // constraint left only
+            if (!consRight && consLeft){
+                i_left = consLeft;
+            }
+
+            // constraint right only
+            if (consRight && !consLeft){
+                i_left = sceneDimension.w - consRight - i_width;
+            }
+
+            // constraint horizontal center
+            if (consHorizontalCenter) {
+                var width = i_width / 2;
+                i_left = (sceneDimension.w / 2 + consHorizontalCenter) - width;
+            }
+
+            // constraint vertical center
+            if (consVerticalCenter) {
+                var height = i_height / 2;
+                i_top = (sceneDimension.h / 2 + consVerticalCenter) - height;
+            }
+        }
+
         var options = {
             top: i_top,
             left: i_left,
@@ -140,7 +196,7 @@ export class BlockFabric extends fabric.Group {
      Fabricate color points to canvas
      **/
     _fabricRect(i_width, i_height, i_domPlayerData) {
-        var options = this._fabricateOptions(0, 0, i_width, i_height, 0);
+        var options = this._fabricateOptions(0, 0, i_width, i_height, 0, null);
         var r = new fabric.Rect(options);
         r.setGradient('fill', {
             x1: 0 - (i_width / 2),

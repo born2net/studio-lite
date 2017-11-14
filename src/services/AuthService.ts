@@ -1,30 +1,41 @@
-import {Injectable} from "@angular/core";
-import {ActivatedRoute, ActivatedRouteSnapshot, NavigationStart, Router, RouterStateSnapshot} from "@angular/router";
-import {LocalStorage} from "./LocalStorage";
-import {StoreService} from "./StoreService";
+import { Injectable } from "@angular/core";
+import { ActivatedRoute, ActivatedRouteSnapshot, NavigationStart, Router, RouterStateSnapshot } from "@angular/router";
+import { LocalStorage } from "./LocalStorage";
+import { StoreService } from "./StoreService";
 import "rxjs/add/observable/fromPromise";
-import {Observable} from "rxjs/Observable";
-import {Map} from "immutable";
+import { Observable } from "rxjs/Observable";
+import 'rxjs/add/operator/take';
+
+import { Map } from "immutable";
 import * as _ from "lodash";
-import {Store} from "@ngrx/store";
-import {ApplicationState} from "../store/application.state";
-import {AuthenticateFlags} from "../store/actions/appdb.actions";
-import {UserModel} from "../models/UserModel";
-import {EFFECT_AUTH_START, EFFECT_TWO_FACTOR_AUTH} from "../store/effects/appdb.effects";
-import {NgmslibService} from "ng-mslib";
-import {Lib} from "../Lib";
+import { Store } from "@ngrx/store";
+import { ApplicationState } from "../store/application.state";
+import { AuthenticateFlags } from "../store/actions/appdb.actions";
+import { UserModel } from "../models/UserModel";
+import { EFFECT_AUTH_START, EFFECT_TWO_FACTOR_AUTH } from "../store/effects/appdb.effects";
+import { NgmslibService } from "ng-mslib";
+import { Lib } from "../Lib";
 
 @Injectable()
 export class AuthService {
     constructor(private ngmslibService: NgmslibService,
-                private router: Router,
-                private store: Store<ApplicationState>,
-                private localStorage: LocalStorage,
-                private storeService: StoreService,
-                private activatedRoute: ActivatedRoute) {
+        private router: Router,
+        private store: Store<ApplicationState>,
+        private localStorage: LocalStorage,
+        private storeService: StoreService,
+        private activatedRoute: ActivatedRoute) {
 
-        this.store.select(store => store.appDb.userModel).subscribe((userModel: UserModel) => {
-            this.userModel = userModel;
+        this.store.select(store => {
+            if (store.appDb) {
+                return store.appDb.userModel
+
+            }
+
+        }).subscribe((userModel: UserModel) => {
+            if (userModel) {
+                this.userModel = userModel;
+
+            }
         }, (e) => {
             console.error(e)
         })
@@ -38,41 +49,49 @@ export class AuthService {
     private requestedRoute: string;
 
     private listenEvents() {
-        this.store.select(store => store.appDb.appAuthStatus)
+        this.store.select(store => {
+            if (store.appDb) {
+                return store.appDb.appAuthStatus
+            }
+        })
             .subscribe((i_authStatus: Map<string, AuthenticateFlags>) => {
-                let authStatus: AuthenticateFlags = i_authStatus.get('authStatus')
-                switch (authStatus) {
-                    case AuthenticateFlags.WRONG_PASS: {
-                        this.saveCredentials('', '', '');
-                        this.router.navigate(['/UserLogin']);
-                        break;
-                    }
-                    case AuthenticateFlags.TWO_FACTOR_ENABLED: {
-                        var user = this.ngmslibService.base64().encode(this.userModel.getUser());
-                        var pass = this.ngmslibService.base64().encode(this.userModel.getPass());
-                        this.router.navigate([`/UserLogin/twoFactor/${user}/${pass}`])
-                        break;
-                    }
-                    case AuthenticateFlags.TWO_FACTOR_PASS: {
-                        this.saveCredentials('', '', '');
-                        this.enterApplication();
-                        break;
-                    }
-                    case AuthenticateFlags.AUTH_PASS_NO_TWO_FACTOR: {
-                        if (this.userModel.getRememberMe()) {
-                            if (this.userModel.getUser()=='demo_lite@ms.com'){
-                                this.saveCredentials('', '', '');
-                            } else {
-                                this.saveCredentials(this.userModel.getUser(), this.userModel.getPass(), this.userModel.rememberMe());
-                            }
-                        } else {
+                if (i_authStatus) {
+                    let authStatus: AuthenticateFlags = i_authStatus.get('authStatus')
+                    switch (authStatus) {
+                        case AuthenticateFlags.WRONG_PASS: {
                             this.saveCredentials('', '', '');
+                            this.router.navigate(['/UserLogin']);
+                            break;
                         }
-                        console.log('Auth pass no two factor');
-                        this.enterApplication();
-                        break;
+                        case AuthenticateFlags.TWO_FACTOR_ENABLED: {
+                            var user = this.ngmslibService.base64().encode(this.userModel.getUser());
+                            var pass = this.ngmslibService.base64().encode(this.userModel.getPass());
+                            this.router.navigate([`/UserLogin/twoFactor/${user}/${pass}`])
+                            break;
+                        }
+                        case AuthenticateFlags.TWO_FACTOR_PASS: {
+                            this.saveCredentials('', '', '');
+                            this.enterApplication();
+                            break;
+                        }
+                        case AuthenticateFlags.AUTH_PASS_NO_TWO_FACTOR: {
+                            if (this.userModel.getRememberMe()) {
+                                if (this.userModel.getUser() == 'demo_lite@ms.com') {
+                                    this.saveCredentials('', '', '');
+                                } else {
+                                    this.saveCredentials(this.userModel.getUser(), this.userModel.getPass(), this.userModel.rememberMe());
+                                }
+                            } else {
+                                this.saveCredentials('', '', '');
+                            }
+                            console.log('Auth pass no two factor');
+                            this.enterApplication();
+                            break;
+                        }
                     }
+
                 }
+
             }, (e) => {
                 console.error(e)
             })
@@ -191,14 +210,15 @@ export class AuthService {
     }
 
     public authUser(user: string, pass: string, rememberMe: boolean = false): void {
-        this.store.dispatch({
-            type: EFFECT_AUTH_START,
-            payload: this.userModel.setUser(user.trim()).setPass(pass.trim()).setRememberMe(rememberMe)
-        })
+        if (this.userModel)
+            this.store.dispatch({
+                type: EFFECT_AUTH_START,
+                payload: this.userModel.setUser(user.trim()).setPass(pass.trim()).setRememberMe(rememberMe)
+            })
     }
 
     public authServerTwoFactor(token): void {
-        this.store.dispatch({type: EFFECT_TWO_FACTOR_AUTH, payload: {token: token, enable: false}})
+        this.store.dispatch({ type: EFFECT_TWO_FACTOR_AUTH, payload: { token: token, enable: false } })
     }
 
 
@@ -218,7 +238,7 @@ export class AuthService {
     }
 
     public checkAccess(activatedRouteSnapshot: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): Promise<any> {
-        if (this.userModel.getAuthenticated()) {
+        if (this.userModel && this.userModel.getAuthenticated()) {
             // if (this.userModel.getAccountType() == AuthenticateFlags.USER_ACCOUNT_PRO)
             //     console.log('limited');
             return Promise.resolve(true);
@@ -229,7 +249,7 @@ export class AuthService {
 
     public canActivate(activatedRouteSnapshot: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): Observable<boolean> {
         return Observable
-            .fromPromise(this.checkAccess(activatedRouteSnapshot,routerStateSnapshot))
+            .fromPromise(this.checkAccess(activatedRouteSnapshot, routerStateSnapshot))
             .do(result => {
                 if (!result)
                     this.router.navigate(['/AutoLogin']);

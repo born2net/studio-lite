@@ -109,7 +109,7 @@ export class SceneCreator extends Compbaser implements AfterViewInit {
         this.cancelOnDestroy(
             this.yp.listenMainAppState()
                 .skip(1)
-                .subscribe(i_status => {
+                .subscribe((i_status:any) => {
                     if (i_status == MainAppShowStateEnum.SAVED) {
                         this.toastr.info('scene imported and is available in scene list');
                         this._goBack();

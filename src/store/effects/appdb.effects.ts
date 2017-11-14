@@ -1,33 +1,40 @@
-import {Injectable} from "@angular/core";
-import {Headers, Http, RequestMethod, RequestOptionsArgs, Response} from "@angular/http";
+import { Injectable } from "@angular/core";
+import { Headers, Http, RequestMethod, RequestOptionsArgs, Response } from "@angular/http";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/mergeMap";
 import "rxjs/add/operator/merge";
 import "rxjs/add/operator/debounceTime";
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/withLatestFrom';
+import 'rxjs/add/operator/takeWhile';
+
+
+
 import * as xml2js from "xml2js";
-import {Action, Store} from "@ngrx/store";
-import {ApplicationState} from "../application.state";
-import {Actions, Effect} from "@ngrx/effects";
-import {Observable} from "rxjs";
-import {UserModel} from "../../models/UserModel";
-import {ACTION_UISTATE_UPDATE, AuthenticateFlags} from "../actions/appdb.actions";
-import {RedPepperService} from "../../services/redpepper.service";
-import {IPepperConnection} from "../../store/imsdb.interfaces";
+import { Store } from "@ngrx/store";
+import { Action } from "../../action.interface";
+import { ApplicationState } from "../application.state";
+import { Actions, Effect } from "@ngrx/effects";
+import { Observable } from "rxjs";
+import { UserModel } from "../../models/UserModel";
+import { ACTION_UISTATE_UPDATE, AuthenticateFlags } from "../actions/appdb.actions";
+import { RedPepperService } from "../../services/redpepper.service";
+import { IPepperConnection } from "../../store/imsdb.interfaces";
 import * as _ from "lodash";
-import {IStation, IUiState} from "../store.data";
-import {List, Map} from "immutable";
-import {StationModel} from "../../models/StationModel";
-import {Lib} from "../../Lib";
-import {FasterqLineModel} from "../../models/fasterq-line-model";
-import {YellowPepperService} from "../../services/yellowpepper.service";
-import {FasterqQueueModel} from "../../models/fasterq-queue-model";
-import {FasterqAnalyticsModel} from "../../models/fasterq-analytics";
-import {IQueueSave} from "../../app/fasterq/fasterq-editor";
-import {CommBroker, IMessage} from "../../services/CommBroker";
-import {FASTERQ_QUEUE_CALL_CANCLED} from "../../interfaces/Consts";
-import {ToastsManager} from "ng2-toastr";
-import {LocalStorage} from "../../services/LocalStorage";
-import {formErrorAction, formSuccessAction} from "../../comps/connect-form/connect-form";
+import { IStation, IUiState } from "../store.data";
+import { List, Map } from "immutable";
+import { StationModel } from "../../models/StationModel";
+import { Lib } from "../../Lib";
+import { FasterqLineModel } from "../../models/fasterq-line-model";
+import { YellowPepperService } from "../../services/yellowpepper.service";
+import { FasterqQueueModel } from "../../models/fasterq-queue-model";
+import { FasterqAnalyticsModel } from "../../models/fasterq-analytics";
+import { IQueueSave } from "../../app/fasterq/fasterq-editor";
+import { CommBroker, IMessage } from "../../services/CommBroker";
+import { FASTERQ_QUEUE_CALL_CANCLED } from "../../interfaces/Consts";
+import { ToastsManager } from "ng2-toastr";
+import { LocalStorage } from "../../services/LocalStorage";
+import { formErrorAction, formSuccessAction } from "../../comps/connect-form/connect-form";
 
 export const EFFECT_AUTH_START = 'EFFECT_AUTH_START';
 export const EFFECT_AUTH_END = 'EFFECT_AUTH_END';
@@ -75,18 +82,23 @@ export class AppDbEffects {
     fasterQueueInFlight = false;
 
     constructor(private actions$: Actions,
-                private store: Store<ApplicationState>,
-                private rp: RedPepperService,
-                private yp: YellowPepperService,
-                private commBroker: CommBroker,
-                private localStorage: LocalStorage,
-                private toastr: ToastsManager,
-                private http: Http) {
+        private store: Store<ApplicationState>,
+        private rp: RedPepperService,
+        private yp: YellowPepperService,
+        private commBroker: CommBroker,
+        private localStorage: LocalStorage,
+        private toastr: ToastsManager,
+        private http: Http) {
 
         // todo: disabled injection as broken in AOT
         // @Inject('OFFLINE_ENV') private offlineEnv,
 
-        this.yp.ngrxStore.select(store => store.appDb.appBaseUrlServices)
+        this.yp.ngrxStore.select(store => {
+            if (store.appDb) {
+                store.appDb.appBaseUrlServices
+
+            }
+        })
             .subscribe((i_appBaseUrlServices) => {
                 this.appBaseUrlServices = i_appBaseUrlServices;
             })
@@ -100,13 +112,13 @@ export class AppDbEffects {
      *
      */
 
-    @Effect({dispatch: true})
+    @Effect({ dispatch: true })
     authTwoFactor$: Observable<Action> = this.actions$.ofType(EFFECT_TWO_FACTOR_AUTH)
         .switchMap(action => this.authTwoFactor(action))
-        .map(authStatus => ({type: EFFECT_AUTH_END, payload: authStatus}));
+        .map(authStatus => ({ type: EFFECT_AUTH_END, payload: authStatus }));
 
     private authTwoFactor(action: Action): Observable<any> {
-        this.store.dispatch({type: EFFECT_AUTH_STATUS, payload: AuthenticateFlags.TWO_FACTOR_CHECK})
+        this.store.dispatch({ type: EFFECT_AUTH_STATUS, payload: AuthenticateFlags.TWO_FACTOR_CHECK })
 
         return this.store.select(store => store.appDb.appBaseUrlCloud)
             .take(1)
@@ -122,9 +134,9 @@ export class AppDbEffects {
                     .map(res => {
                         var status = res.json();
                         if (status.result) {
-                            this.store.dispatch({type: EFFECT_AUTH_STATUS, payload: AuthenticateFlags.TWO_FACTOR_PASS})
+                            this.store.dispatch({ type: EFFECT_AUTH_STATUS, payload: AuthenticateFlags.TWO_FACTOR_PASS })
                         } else {
-                            this.store.dispatch({type: EFFECT_AUTH_STATUS, payload: AuthenticateFlags.TWO_FACTOR_FAIL})
+                            this.store.dispatch({ type: EFFECT_AUTH_STATUS, payload: AuthenticateFlags.TWO_FACTOR_FAIL })
                         }
                     })
             })
@@ -133,7 +145,7 @@ export class AppDbEffects {
     @Effect()
     updatedTwoFactor$: Observable<Action> = this.actions$.ofType(EFFECT_TWO_FACTOR_UPDATING)
         .switchMap(action => this.updatedTwoFactor(action))
-        .map(authStatus => ({type: EFFECT_AUTH_END, payload: authStatus}));
+        .map(authStatus => ({ type: EFFECT_AUTH_END, payload: authStatus }));
 
     private updatedTwoFactor(action: Action): Observable<any> {
         return this.store.select(store => store.appDb.appBaseUrlCloud)
@@ -168,14 +180,14 @@ export class AppDbEffects {
     @Effect()
     authUser$: Observable<Action> = this.actions$.ofType(EFFECT_AUTH_START)
         .switchMap(action => this.authUser(action))
-        .map(authStatus => ({type: EFFECT_AUTH_END, payload: authStatus}));
+        .map(authStatus => ({ type: EFFECT_AUTH_END, payload: authStatus }));
 
     private authUser(action: Action): Observable<any> {
         console.log('authenticating');
         this.toastr.clearAllToasts();
         this.toastr.warning('Authenticating, please wait');
         let userModel: UserModel = action.payload;
-        this.store.dispatch({type: EFFECT_UPDATE_USER_MODEL, payload: userModel});
+        this.store.dispatch({ type: EFFECT_UPDATE_USER_MODEL, payload: userModel });
 
         return this.rp.dbConnect(userModel.user(), userModel.pass())
             .take(1)
@@ -203,8 +215,8 @@ export class AppDbEffects {
                                 if (result) {
                                     return window.location.replace('http://dash.digitalsignage.com');
                                 } else {
-                                    this.store.dispatch({type: EFFECT_UPDATE_USER_MODEL, payload: userModel});
-                                    this.store.dispatch({type: EFFECT_AUTH_STATUS, payload: AuthenticateFlags.WRONG_PASS});
+                                    this.store.dispatch({ type: EFFECT_UPDATE_USER_MODEL, payload: userModel });
+                                    this.store.dispatch({ type: EFFECT_AUTH_STATUS, payload: AuthenticateFlags.WRONG_PASS });
                                     return;
                                 }
                             }
@@ -337,7 +349,7 @@ export class AppDbEffects {
                     userModel = userModel.setEri(pepperConnection.loadManager.m_eri);
                     userModel = userModel.setResellerWhiteLabel(resellerDataJson);
 
-                    this.store.dispatch({type: EFFECT_UPDATE_USER_MODEL, payload: userModel});
+                    this.store.dispatch({ type: EFFECT_UPDATE_USER_MODEL, payload: userModel });
                     this.store.dispatch({
                         type: EFFECT_AUTH_STATUS, payload: AuthenticateFlags.USER_ACCOUNT
                     });
@@ -358,7 +370,7 @@ export class AppDbEffects {
                             }
                             userModel = userModel.setBusinessId(twoFactorResult.businessId);
                             userModel = userModel.setTwoFactorRequired(twoFactorResult.enabled);
-                            this.store.dispatch({type: EFFECT_UPDATE_USER_MODEL, payload: userModel});
+                            this.store.dispatch({ type: EFFECT_UPDATE_USER_MODEL, payload: userModel });
                             if (twoFactorResult.enabled) {
                                 this.store.dispatch({
                                     type: EFFECT_AUTH_STATUS,
@@ -382,10 +394,10 @@ export class AppDbEffects {
      *
      */
 
-    @Effect({dispatch: true})
+    @Effect({ dispatch: true })
     loadStations: Observable<Action> = this.actions$.ofType(EFFECT_LOAD_STATIONS)
         .switchMap(action => this._loadStations(action))
-        .map(stations => ({type: EFFECT_LOADED_STATIONS, payload: stations}));
+        .map(stations => ({ type: EFFECT_LOADED_STATIONS, payload: stations }));
 
     private _loadStations(action: Action): Observable<List<StationModel>> {
 
@@ -402,7 +414,7 @@ export class AppDbEffects {
         }
 
         const boundCallback = Observable.bindCallback(this.processXml, (xmlData: any) => xmlData);
-        this.store.dispatch({type: EFFECT_LOADING_STATIONS, payload: {}})
+        this.store.dispatch({ type: EFFECT_LOADING_STATIONS, payload: {} })
         var url = window.g_protocol + action.payload.userData.domain + '/WebService/getStatus.ashx?user=' + action.payload.userData.userName + '&password=' + action.payload.userData.userPass + '&callback=?';
         return this.http.get(url)
             .catch((err: any) => {
@@ -436,14 +448,19 @@ export class AppDbEffects {
 
     @Effect() contactUs$ = this.actions$
         .ofType(EFFECT_CONTACT_US)
-        .withLatestFrom(this.store.select(store => store.appDb.contact))
+        .withLatestFrom(this.store.select(store => {
+            if(store.appDb){
+                store.appDb.contact
+                
+            }
+        }))
         .switchMap((value: any) =>
             this.contactService(value[1])
                 .catch(err => {
-                    return Observable.of({err: true, error: err});
+                    return Observable.of({ err: true, error: err });
                 }).map((v: any) => {
-                return v.err ? formErrorAction('appDb.contact', 'problem connecting to server, please try later...') : formSuccessAction('appDb.contact');
-            })
+                    return v.err ? formErrorAction('appDb.contact', 'problem connecting to server, please try later...') : formSuccessAction('appDb.contact');
+                })
         )
 
     private contactService(body: Map<any, any>) {
@@ -467,7 +484,7 @@ export class AppDbEffects {
         return {
             url: url,
             method: i_method,
-            headers: new Headers({'Authorization': credentials}),
+            headers: new Headers({ 'Authorization': credentials }),
             body: i_body
         };
     }
@@ -480,7 +497,7 @@ export class AppDbEffects {
         return {
             url: url,
             method: i_method,
-            headers: new Headers({'Authorization': credentials}),
+            headers: new Headers({ 'Authorization': credentials }),
             body: i_body
         };
     }
@@ -490,13 +507,13 @@ export class AppDbEffects {
      * Fasterq
      *
      */
-    @Effect({dispatch: true})
+    @Effect({ dispatch: true })
     loadfasterqLines: Observable<Action> = this.actions$.ofType(EFFECT_LOAD_FASTERQ_LINES)
         .switchMap(action => this._loadFasterqLines(action))
-        .map(stations => ({type: EFFECT_LOADED_FASTERQ_LINES, payload: stations}));
+        .map(stations => ({ type: EFFECT_LOADED_FASTERQ_LINES, payload: stations }));
 
     private _loadFasterqLines(action: Action): Observable<List<FasterqLineModel>> {
-        this.store.dispatch({type: EFFECT_LOADING_FASTERQ_LINES, payload: {}})
+        this.store.dispatch({ type: EFFECT_LOADING_FASTERQ_LINES, payload: {} })
         var options: RequestOptionsArgs = this.createServerCall('/Lines', RequestMethod.Get, '')
         return this.http.get(options.url, options)
             .catch((err: any) => {
@@ -517,13 +534,13 @@ export class AppDbEffects {
             })
     }
 
-    @Effect({dispatch: true})
+    @Effect({ dispatch: true })
     loadfasterqLine: Observable<Action> = this.actions$.ofType(EFFECT_LOAD_FASTERQ_LINE)
         .switchMap(action => this._loadFasterqLine(action))
-        .map(stations => ({type: EFFECT_LOADED_FASTERQ_LINE, payload: stations}));
+        .map(stations => ({ type: EFFECT_LOADED_FASTERQ_LINE, payload: stations }));
 
     private _loadFasterqLine(action: Action): Observable<FasterqLineModel> {
-        this.store.dispatch({type: EFFECT_LOADING_FASTERQ_LINE, payload: {}})
+        this.store.dispatch({ type: EFFECT_LOADING_FASTERQ_LINE, payload: {} })
         var options: RequestOptionsArgs = this.createServerCall(`/GetLine`, RequestMethod.Post, action.payload)
         return this.http.get(options.url, options)
             .catch((err: any) => {
@@ -540,13 +557,13 @@ export class AppDbEffects {
     }
 
 
-    @Effect({dispatch: true})
+    @Effect({ dispatch: true })
     loadfasterqAnalytics: Observable<Action> = this.actions$.ofType(EFFECT_LOAD_FASTERQ_ANALYTICS)
         .switchMap(action => this._loadfasterqAnalytics(action))
-        .map(stations => ({type: EFFECT_LOADED_FASTERQ_ANALYTICS, payload: stations}));
+        .map(stations => ({ type: EFFECT_LOADED_FASTERQ_ANALYTICS, payload: stations }));
 
     private _loadfasterqAnalytics(action: Action): Observable<List<FasterqLineModel>> {
-        this.store.dispatch({type: EFFECT_LOADING_FASTERQ_ANALYTICS, payload: {}})
+        this.store.dispatch({ type: EFFECT_LOADING_FASTERQ_ANALYTICS, payload: {} })
         var options: RequestOptionsArgs = this.createServerCall('/LineAnalytics', RequestMethod.Post, action.payload)
         return this.http.get(options.url, options)
             .catch((err: any) => {
@@ -565,16 +582,16 @@ export class AppDbEffects {
             })
     }
 
-    @Effect({dispatch: true})
+    @Effect({ dispatch: true })
     loadfasterqQueues: Observable<Action> = this.actions$.ofType(EFFECT_LOAD_FASTERQ_QUEUES)
         .takeWhile(() => {
             return this.fasterQueueInFlight == false;
         })
         .switchMap(action => this._loadfasterqQueues(action))
-        .map(stations => ({type: EFFECT_LOADED_FASTERQ_QUEUES, payload: stations}));
+        .map(stations => ({ type: EFFECT_LOADED_FASTERQ_QUEUES, payload: stations }));
 
     private _loadfasterqQueues(action: Action): Observable<List<FasterqLineModel>> {
-        this.store.dispatch({type: EFFECT_LOADING_FASTERQ_QUEUES, payload: {}})
+        this.store.dispatch({ type: EFFECT_LOADING_FASTERQ_QUEUES, payload: {} })
         var options: RequestOptionsArgs = this.createServerCall(`/Queues`, RequestMethod.Post, action.payload)
         return this.http.get(options.url, options)
             .catch((err: any) => {
@@ -593,14 +610,14 @@ export class AppDbEffects {
             })
     }
 
-    @Effect({dispatch: true})
+    @Effect({ dispatch: true })
     savefasterqQueueCall: Observable<Action> = this.actions$.ofType(EFFECT_QUEUE_CALL_SAVE)
         .do(() => this.fasterQueueInFlight = true)
         .switchMap(action => this._savefasterqQueueCall(action))
-        .map(stations => ({type: EFFECT_QUEUE_CALL_SAVED, payload: stations}));
+        .map(stations => ({ type: EFFECT_QUEUE_CALL_SAVED, payload: stations }));
 
     private _savefasterqQueueCall(action: Action): Observable<List<FasterqLineModel>> {
-        this.store.dispatch({type: EFFECT_QUEUE_CALL_SAVING, payload: {}})
+        this.store.dispatch({ type: EFFECT_QUEUE_CALL_SAVING, payload: {} })
         var queueSave: IQueueSave = action.payload;
         var data = Object.assign({}, queueSave.queue.getData().toJS(), queueSave)
         var options: RequestOptionsArgs = this.createServerCall(`/Queue/${action.payload.queue_id}`, RequestMethod.Put, data)
@@ -627,10 +644,10 @@ export class AppDbEffects {
             })
     }
 
-    @Effect({dispatch: false})
+    @Effect({ dispatch: false })
     resetFasterqLine: Observable<Action> = this.actions$.ofType(EFFECT_RESET_FASTERQ_LINE)
         .switchMap(action => this._resetFasterqLine(action))
-        .map(res => ({type: null}));
+        .map(res => ({ type: null }));
 
     private _resetFasterqLine(action: Action): Observable<{}> {
         var options: RequestOptionsArgs = this.createServerCall(`/ResetQueueCounter`, RequestMethod.Post, action.payload)
@@ -647,14 +664,14 @@ export class AppDbEffects {
             })
     }
 
-    @Effect({dispatch: true})
+    @Effect({ dispatch: true })
     savefasterqQueueService: Observable<Action> = this.actions$.ofType(EFFECT_QUEUE_SERVICE_SAVE)
         .do(() => this.fasterQueueInFlight = true)
         .switchMap(action => this._savefasterqQueueService(action))
-        .map(stations => ({type: EFFECT_QUEUE_SERVICE_SAVED, payload: stations}));
+        .map(stations => ({ type: EFFECT_QUEUE_SERVICE_SAVED, payload: stations }));
 
     private _savefasterqQueueService(action: Action): Observable<List<FasterqLineModel>> {
-        this.store.dispatch({type: EFFECT_QUEUE_SERVICE_SAVING, payload: {}})
+        this.store.dispatch({ type: EFFECT_QUEUE_SERVICE_SAVING, payload: {} })
         var queueSave: IQueueSave = action.payload;
         var data = Object.assign({}, queueSave.queue.getData().toJS(), queueSave)
         var options: RequestOptionsArgs = this.createServerCall(`/Queue/${action.payload.queue_id}`, RequestMethod.Put, data)
@@ -672,14 +689,14 @@ export class AppDbEffects {
             })
     }
 
-    @Effect({dispatch: false})
+    @Effect({ dispatch: false })
     pollServicing: Observable<Action> = this.actions$.ofType(EFFECT_QUEUE_POLL_SERVICE)
         .switchMap(action => this._pollServicing(action))
         .do((data: any) => {
-            var uiState: IUiState = {fasterq: {fasterqNowServicing: data}}
-            this.yp.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
+            var uiState: IUiState = { fasterq: { fasterqNowServicing: data } }
+            this.yp.dispatch(({ type: ACTION_UISTATE_UPDATE, payload: uiState }))
         })
-        .map(result => ({type: null}));
+        .map(result => ({ type: null }));
 
     private _pollServicing(action: Action): Observable<List<FasterqLineModel>> {
         var options: RequestOptionsArgs = this.createServerCall(`/LastCalledQueue`, RequestMethod.Post, action.payload)
@@ -696,10 +713,10 @@ export class AppDbEffects {
             })
     }
 
-    @Effect({dispatch: true})
+    @Effect({ dispatch: true })
     updateFasterqLine: Observable<Action> = this.actions$.ofType(EFFECT_UPDATE_FASTERQ_LINE)
         .switchMap(action => this._updateFasterqLine(action))
-        .map(payload => ({type: EFFECT_UPDATED_FASTERQ_LINE, payload: payload}));
+        .map(payload => ({ type: EFFECT_UPDATED_FASTERQ_LINE, payload: payload }));
 
     private _updateFasterqLine(action: Action): Observable<any> {
         var options: RequestOptionsArgs = this.createServerCall(`/Line/${action.payload.id}`, RequestMethod.Put, action.payload)
@@ -718,10 +735,10 @@ export class AppDbEffects {
             })
     }
 
-    @Effect({dispatch: true})
+    @Effect({ dispatch: true })
     removeFasterqLine: Observable<Action> = this.actions$.ofType(EFFECT_REMOVE_FASTERQ_LINE)
         .switchMap(action => this._removeFasterqLine(action))
-        .map(payload => ({type: EFFECT_REMOVED_FASTERQ_LINE, payload: payload}));
+        .map(payload => ({ type: EFFECT_REMOVED_FASTERQ_LINE, payload: payload }));
 
     private _removeFasterqLine(action: Action): Observable<any> {
         var options: RequestOptionsArgs = this.createServerCall(`/Line/${action.payload.id}`, RequestMethod.Delete, action.payload)
@@ -740,10 +757,10 @@ export class AppDbEffects {
             })
     }
 
-    @Effect({dispatch: true})
+    @Effect({ dispatch: true })
     addFasterqLine: Observable<Action> = this.actions$.ofType(EFFECT_ADD_FASTERQ_LINE)
         .switchMap(action => this._addFasterqLine(action))
-        .map(payload => ({type: EFFECT_ADDED_FASTERQ_LINE, payload: payload}));
+        .map(payload => ({ type: EFFECT_ADDED_FASTERQ_LINE, payload: payload }));
 
     private _addFasterqLine(action: Action): Observable<any> {
         var options: RequestOptionsArgs = this.createServerCall(`/Line`, RequestMethod.Post, action.payload)
@@ -763,7 +780,7 @@ export class AppDbEffects {
     }
 
     private processXml(context, xmlData, cb) {
-        context.parseString(xmlData, {attrkey: 'attr'}, function (err, result) {
+        context.parseString(xmlData, { attrkey: 'attr' }, function (err, result) {
             if (err || !result)
                 return cb(null);
             return cb(result);

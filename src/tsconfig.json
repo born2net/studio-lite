@@ -1,25 +1,33 @@
 {
-  "compilerOptions": {
-    "baseUrl": "",
-    "declaration": false,
-    "emitDecoratorMetadata": true,
-    "skipLibCheck": false,
-    "experimentalDecorators": true,
-    "lib": [
-      "es6",
-      "dom"
+    "compilerOptions": {
+        "baseUrl": "",
+        "declaration": false,
+        "emitDecoratorMetadata": true,
+        "skipLibCheck": false,
+        "experimentalDecorators": true,
+        "lib": [
+            "es6",
+            "dom"
+        ],
+
+        "mapRoot": "./",
+        "module": "es6",
+        "moduleResolution": "node",
+        "outDir": "../dist/out-tsc",
+        "sourceMap": true,
+        "target": "es5",
+        "typeRoots": [
+            "../node_modules/@types"
+        ]
+    },
+    "include": [
+        "../src/**/*",
+
+        "../node_modules/ng-validators/src/*.ts",
+
+        "../node_modules/ng-validators/index.ts"
     ],
-    "mapRoot": "./",
-    "module": "es6",
-    "moduleResolution": "node",
-    "outDir": "../dist/out-tsc",
-    "sourceMap": true,
-    "target": "es5",
-    "typeRoots": [
-      "../node_modules/@types"
-    ]
-  },
-  "angularCompilerOptions": {
-    "genDir": "../src/locale"
-  }
+    "angularCompilerOptions": {
+        "genDir": "../src/locale"
+    }
 }

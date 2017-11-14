@@ -119,7 +119,7 @@ export class Campaigns extends Compbaser {
         var uiState: IUiState = {uiSideProps: SideProps.miniDashboard}
         this.yp.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
     }
-
+  
     @ViewChild('sliderItemCampaignEditor')
     sliderItemCampaignEditor:Slideritem;
 

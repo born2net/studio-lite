@@ -667,6 +667,7 @@ export class RedPepperService {
                 var board_id = recCampaignTimeline['board_id']
                 res = this.databaseManager.table_boards().getRec(board_id);
             }
+            return true;
         });
         return res;
     }
@@ -2381,6 +2382,24 @@ export class RedPepperService {
             totalInSeconds: totalInSeconds
         };
         return playbackLength;
+    }
+
+    /**
+     get a scene's width and height
+     @method getSceneDimension
+     **/
+    getSceneDimension(i_scene_id) {
+        i_scene_id = this.sterilizePseudoId(i_scene_id);
+        var recPlayerData = this.getScenePlayerRecord(i_scene_id);
+        var player_data = recPlayerData['player_data_value'];
+        var domPlayerData = $.parseXML(player_data);
+        var layout = $(domPlayerData).find('Layout');
+        var a = layout.attr('rotation');
+        var x = layout.attr('x');
+        var y = layout.attr('y');
+        var w = layout.attr('width');
+        var h = layout.attr('height');
+        return {a, x, y, w, h};
     }
 
     /**

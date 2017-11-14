@@ -624,7 +624,7 @@ export class Lib {
         var offset = position == 'first' ? 0 : 1;
         if (mapJsPairs[index] == undefined)
             return "0"
-        return mapJsPairs[index][offset];
+        return mapJsPairs[index][offset] as string;
     }
 
     /**

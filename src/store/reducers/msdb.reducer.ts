@@ -1,4 +1,4 @@
-import {Action} from "@ngrx/store";
+import {Action} from "../../action.interface";
 import {ACTION_INJECT_SDK} from "../actions/appdb.actions";
 import {IMsDatabase} from "../store.data";
 import {redpepperTables} from "../../services/redpepper.service";

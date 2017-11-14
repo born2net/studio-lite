@@ -18,7 +18,7 @@ RC4.prototype = {
      @param {Object} i_key
      @return {String} _arcfour_byte_string
      **/
-    _arcfour_crypt: function (i_data, i_key) {
+    _arcfour_crypt: function(i_data, i_key) {
         var self = this;
         var STATE_LENGTH = 256;
         var i, i1, i2, x, y, temp;
@@ -63,7 +63,7 @@ RC4.prototype = {
      @param {Object} i_input
      @return {Object} output
      **/
-    _arcfour_byte_string: function (i_input) {
+    _arcfour_byte_string: function(i_input) {
         var self = this;
         var output = new String();
         for (var i = 0; i < i_input.length; i++) {
@@ -78,7 +78,7 @@ RC4.prototype = {
      @param {Object} i_input
      @return {Object} output
      **/
-    _arcfour_hex_encode: function (i_input) {
+    _arcfour_hex_encode: function(i_input) {
         var self = this;
         var hex_digits = "0123456789abcdef";
         var output = new String();
@@ -95,7 +95,7 @@ RC4.prototype = {
      @param {Object} i_input
      @return {Object} output
      **/
-    _arcfour_hex_decode: function (i_input) {
+    _arcfour_hex_decode: function(i_input) {
         var self = this;
         var left, right, index;
         var output = new Array(i_input.length / 2);
@@ -103,8 +103,8 @@ RC4.prototype = {
             left = i_input.charCodeAt(i);
             right = i_input.charCodeAt(i + 1);
             index = i / 2;
-            if (left < 97)  // left < 'a'
-                output[index] = ((left - 48) << 4);  // left - '0'
+            if (left < 97) // left < 'a'
+                output[index] = ((left - 48) << 4); // left - '0'
             else
                 output[index] = ((left - 97 + 10) << 4);
             if (right < 97)
@@ -120,7 +120,7 @@ RC4.prototype = {
      @method _genKey
      @return {Number} new ley
      **/
-    _genKey: function () {
+    _genKey: function() {
         var self = this;
         var key = new Array();
         var i = 0;
@@ -139,7 +139,7 @@ RC4.prototype = {
      @param {String} i_plaintext
      @return {String} encrypted dtaa
      **/
-    doEncrypt: function (i_plaintext) {
+    doEncrypt: function(i_plaintext) {
         var self = this;
         if (i_plaintext.length > 0) {
             return self._arcfour_hex_encode(self._arcfour_crypt(i_plaintext, self._arcfour_hex_decode(self.m_passkey)));
@@ -152,14 +152,11 @@ RC4.prototype = {
      @param {String} plaintext
      @return {String} decrypted i_value
      **/
-    doDecrypt: function (i_value) {
+    doDecrypt: function(i_value) {
         var self = this;
         var ciphertext = self._arcfour_hex_decode(i_value);
         if (ciphertext.length > 0) {
             return self._arcfour_crypt(ciphertext, self._arcfour_hex_decode(self.m_passkey));
         }
     }
-}
-
-
-
+};

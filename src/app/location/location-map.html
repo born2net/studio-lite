@@ -7,9 +7,7 @@
     <hr/>
     <div id="simModeContainer">
         <div class="material-switch pull-right">
-            <input #simMode (change)="_toggleSimMode()"
-                   id="simMode"
-                   name="simMode" type="checkbox"/>
+            <input #simMode (change)="_toggleSimMode()" id="simMode" name="simMode" type="checkbox" />
             <label for="simMode" class="label-primary"></label>
         </div>
         <span class="pull-right" i18n>simulation mode</span>
@@ -32,19 +30,13 @@
             <h5 (click)="_openSimUrl($event)" style="font-size: 7px; cursor: pointer">{{m_simUrl}}</h5>
         </div>
     </div>
-    <input id="addressLookup" class="list-group-item" #address type="text"/>
+    <input id="addressLookup" class="list-group-item" #address type="text" />
 </form>
 
 <div class="row map">
     <!--<sebm-google-map class="center-block" #googleMaps [disableDefaultUI]="false" [latitude]="38.2500" [longitude]="-96.7500"></sebm-google-map>-->
 
-    <sebm-google-map #googleMaps class="center-block"
-                     [latitude]="lat"
-                     [longitude]="lng"
-                     [zoom]="zoom"
-                     [disableDefaultUI]="false"
-                     [zoomControl]="false"
-                     (mapClick)="mapClicked($event)">
+    <agm-map #googleMaps class="center-block" [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false" [zoomControl]="false" (mapClick)="mapClicked($event)">
 
         <!--<sebm-google-map-marker-->
         <!--*ngFor="let m of markers; let i = index"-->
@@ -60,19 +52,11 @@
         <!--</sebm-google-map-info-window>-->
 
         <!--</sebm-google-map-marker>-->
-        <sebm-google-map-circle *ngFor="let m of markers; let i = index"
-                                (circleClick)="clickedMarker(m, i)"
-                                [latitude]="m.lat"
-                                [fillOpacity]="0.6"
-                                (dragEnd)="markerDragEnd(m, $event)"
-                                [longitude]="m.lng"
-                                [radius]="m.radius"
-                                [fillColor]="'red'"
-                                [circleDraggable]="false"
-                                [editable]="false">
-        </sebm-google-map-circle>
+        <agm-circle *ngFor="let m of markers; let i = index" (circleClick)="clickedMarker(m, i)" [latitude]="m.lat" [fillOpacity]="0.6" (dragEnd)="markerDragEnd(m, $event)" [longitude]="m.lng" [radius]="m.radius" [fillColor]="'red'" [circleDraggable]="false"
+            [editable]="false">
+        </agm-circle>
 
-    </sebm-google-map>
+    </agm-map>
 
 </div>
 
@@ -88,7 +72,6 @@
 <!--*ngFor="let m of markers; let i = index"-->
 <!--(markerClick)="clickedMarker(m, i)"-->
 <!--[latitude]="m.lat"-->
-<!--[longitude]="m.lng"-->
 <!--[iconUrl]="getMarkerIcon(m)"-->
 <!--[label]="m.label">-->
 <!--&lt;!&ndash;<sebm-google-map-info-window>&ndash;&gt;-->

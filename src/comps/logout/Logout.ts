@@ -59,7 +59,7 @@ export class Logout extends Compbaser {
         super();
         this.cancelOnDestroy(
             this.yp.listenMainAppState()
-                .subscribe((i_value: MainAppShowStateEnum) => {
+                .subscribe((i_value: any) => {
                     switch (i_value) {
                         case MainAppShowStateEnum.SAVED: {
                             this._onLogout();

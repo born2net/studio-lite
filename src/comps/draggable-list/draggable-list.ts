@@ -42,7 +42,7 @@ import {timeout} from "../../decorators/timeout-decorator";
             <div *ngIf="customTemplate">
                 <div class="sortableList">
                     <li (click)="_onItemSelected(item, $event, i)" *ngFor="let item of m_items; let i = index" class="listItems list-group-item" [ngClass]="{'selectedItem': m_selectedIdx == i}">
-                        <ng-template [ngTemplateOutlet]="customTemplate" [ngOutletContext]="{$implicit: item}">
+                        <ng-template [ngTemplateOutlet]="customTemplate" [ngTemplateOutletContext]="{$implicit: item}">
                         </ng-template>
                     </li>
                 </div>

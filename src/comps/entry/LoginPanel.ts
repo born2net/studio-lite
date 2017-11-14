@@ -30,12 +30,11 @@ enum ViewMod {
             state('inactive', style({
                 backgroundColor: 'red',
                 transform: 'scale(1)',
-                alpha: 0
+            
             })),
             state('default', style({
                 backgroundColor: '#313131',
                 transform: 'scale(1)',
-                alpha: 1
             })),
             state('active', style({
                 backgroundColor: 'green',
@@ -199,7 +198,7 @@ export class LoginPanel extends Compbaser {
     private listenEvents() {
 
         this.cancelOnDestroy(
-            this.store.select(store => store.appDb.userModel)
+            this.store.select(store => {if(store.appDb) return store.appDb.userModel})
                 .subscribe((userModel: UserModel) => {
                     this.userModel = userModel
                 }, (e) => {
@@ -208,24 +207,27 @@ export class LoginPanel extends Compbaser {
         )
 
         this.cancelOnDestroy(
-            this.store.select(store => store.appDb.appAuthStatus).subscribe((i_authStatus: Map<string, AuthenticateFlags>) => {
-                let authStatus = i_authStatus.get('authStatus')
-                if (this.isAccessAllowed(authStatus) == false)
-                    return;
-                switch (authStatus) {
-                    case AuthenticateFlags.TWO_FACTOR_ENABLED: {
-                        this.m_showTwoFactor = true;
-                        break;
-                    }
-                    case AuthenticateFlags.TWO_FACTOR_PASS: {
-                        this.loginState = 'active';
-                        break;
-                    }
-                    case AuthenticateFlags.AUTH_PASS_NO_TWO_FACTOR: {
-                        this.loginState = 'active';
-                        break;
+            this.store.select(store => {if(store.appDb) return store.appDb.appAuthStatus}).subscribe((i_authStatus: Map<string, AuthenticateFlags>) => {
+                if(i_authStatus){
+                    let authStatus = i_authStatus.get('authStatus')
+                    if (this.isAccessAllowed(authStatus) == false)
+                        return;
+                    switch (authStatus) {
+                        case AuthenticateFlags.TWO_FACTOR_ENABLED: {
+                            this.m_showTwoFactor = true;
+                            break;
+                        }
+                        case AuthenticateFlags.TWO_FACTOR_PASS: {
+                            this.loginState = 'active';
+                            break;
+                        }
+                        case AuthenticateFlags.AUTH_PASS_NO_TWO_FACTOR: {
+                            this.loginState = 'active';
+                            break;
+                        }
                     }
                 }
+                
             }, (e) => {
                 console.error(e)
             })

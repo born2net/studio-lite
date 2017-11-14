@@ -1,10 +1,9 @@
 import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Inject, NgZone, Output, ViewChild} from "@angular/core";
 import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
-import {SebmGoogleMap} from "angular2-google-maps/esm/core";
 import {IUiState} from "../../store/store.data";
 import {ACTION_UISTATE_UPDATE} from "../../store/actions/appdb.actions";
-import {MapsAPILoader} from "angular2-google-maps/core";
+import {MapsAPILoader,AgmMap} from "@agm/core";
 import {BlockService, IBlockData, ISceneData} from "../blocks/block-service";
 import {RedPepperService} from "../../services/redpepper.service";
 import {PLACEMENT_CHANNEL, PLACEMENT_SCENE} from "../../interfaces/Consts";
@@ -25,7 +24,7 @@ export declare var google: any;
 @Component({
     selector: 'location-map',
     styles: [`
-        .sebm-google-map-container {
+        .agm-map-container {
             height: 700px;
             width: 1700px;
         }
@@ -94,7 +93,7 @@ export class LocationMap extends Compbaser implements AfterViewInit {
     address;
 
     @ViewChild('googleMaps')
-    googleMaps: SebmGoogleMap;
+    googleMaps: AgmMap;
 
     @Output()
     onClose: EventEmitter<any> = new EventEmitter<any>();

@@ -14,6 +14,7 @@
     ],
     "index": "index.html",
     "main": "main.ts",
+    "polyfills": "polyfills.ts",
     "test": "test.ts",
     "tsconfig": "tsconfig.json",
     "prefix": "app",
@@ -73,6 +74,7 @@
       "config": "./protractor.conf.js"
     }
   },
+
   "test": {
     "karma": {
       "config": "./karma.conf.js"

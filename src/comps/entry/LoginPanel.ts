@@ -284,9 +284,13 @@ export class LoginPanel extends Compbaser {
 
     onClickedLogin() {
         if (this.m_showTwoFactor) {
+        console.log("one");
+        
             // this.toast.warning('Authenticating Two factor...');
             this.authService.authServerTwoFactor(this.m_twoFactor);
         } else {
+        console.log("two");
+        
             // this.toast.info('Authenticating...');
             this.authService.authUser(this.m_user, this.m_pass, this.m_rememberMe);
         }

@@ -35,6 +35,10 @@ import { FASTERQ_QUEUE_CALL_CANCLED } from "../../interfaces/Consts";
 import { ToastsManager } from "ng2-toastr";
 import { LocalStorage } from "../../services/LocalStorage";
 import { formErrorAction, formSuccessAction } from "../../comps/connect-form/connect-form";
+import 'rxjs/add/operator/toPromise';
+import 'rxjs/operators/map';
+
+
 
 export const EFFECT_AUTH_START = 'EFFECT_AUTH_START';
 export const EFFECT_AUTH_END = 'EFFECT_AUTH_END';

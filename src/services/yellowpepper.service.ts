@@ -147,12 +147,12 @@ export class YellowPepperService {
         var timelineList$ = this.store.select(store => store.msDatabase.sdk.table_campaign_timelines);
         return timelineSelected$
             .withLatestFrom(
-                timelineList$,
-                (timelineId, timelines) => {
-                    return timelines.find((i_timeline: CampaignTimelinesModel) => {
-                        return i_timeline.getCampaignTimelineId() == timelineId;
-                    });
-                }).mergeMap(v => (v ? Observable.of(v) : (emitOnEmpty ? Observable.of(v) : Observable.empty())));
+            timelineList$,
+            (timelineId, timelines) => {
+                return timelines.find((i_timeline: CampaignTimelinesModel) => {
+                    return i_timeline.getCampaignTimelineId() == timelineId;
+                });
+            }).mergeMap(v => (v ? Observable.of(v) : (emitOnEmpty ? Observable.of(v) : Observable.empty())));
     }
 
 
@@ -180,15 +180,15 @@ export class YellowPepperService {
         var $viewerChannels$ = this.store.select(store => store.msDatabase.sdk.table_campaign_timeline_board_viewer_chanels);
         return boardSelected$
             .withLatestFrom(
-                $viewerChannels$,
-                (boardId, viewerChannels) => {
-                    if (emitOnEmpty && (_.isUndefined(boardId) || boardId == -1)) {
-                        return null;
-                    }
-                    return viewerChannels.find((i_viewerChannel: CampaignTimelineBoardViewerChanelsModel) => {
-                        return i_viewerChannel.getBoardTemplateViewerId() == boardId;
-                    });
-                }).mergeMap(v => (v ? Observable.of(v) : (emitOnEmpty ? Observable.of(v) : Observable.empty())));
+            $viewerChannels$,
+            (boardId, viewerChannels) => {
+                if (emitOnEmpty && (_.isUndefined(boardId) || boardId == -1)) {
+                    return null;
+                }
+                return viewerChannels.find((i_viewerChannel: CampaignTimelineBoardViewerChanelsModel) => {
+                    return i_viewerChannel.getBoardTemplateViewerId() == boardId;
+                });
+            }).mergeMap(v => (v ? Observable.of(v) : (emitOnEmpty ? Observable.of(v) : Observable.empty())));
     }
 
     listenLocationMapLoad(): Observable<any> {
@@ -404,12 +404,12 @@ export class YellowPepperService {
                 return i_scene_id != -1;
             })
             .withLatestFrom(
-                this.listenScenes(),
-                (sceneId, scenes: Array<ISceneData>) => {
-                    return scenes.find((scene: ISceneData) => {
-                        return scene.scene_id == sceneId;
-                    });
-                }).mergeMap(v => (v ? Observable.of(v) : (emitOnEmpty ? Observable.of(v) : Observable.empty())));
+            this.listenScenes(),
+            (sceneId, scenes: Array<ISceneData>) => {
+                return scenes.find((scene: ISceneData) => {
+                    return scene.scene_id == sceneId;
+                });
+            }).mergeMap(v => (v ? Observable.of(v) : (emitOnEmpty ? Observable.of(v) : Observable.empty())));
     }
 
     /**
@@ -420,12 +420,12 @@ export class YellowPepperService {
         var campaignsList$ = this.store.select(store => store.msDatabase.sdk.table_campaigns);
         return campaignSelected$
             .withLatestFrom(
-                campaignsList$,
-                (campaignId, campaigns) => {
-                    return campaigns.find((i_campaign: CampaignsModelExt) => {
-                        return i_campaign.getCampaignId() == campaignId;
-                    }) as CampaignsModelExt;
-                }).mergeMap(v => (v ? Observable.of(v) : (emitOnEmpty ? Observable.of(v) : Observable.empty())));
+            campaignsList$,
+            (campaignId, campaigns) => {
+                return campaigns.find((i_campaign: CampaignsModelExt) => {
+                    return i_campaign.getCampaignId() == campaignId;
+                }) as CampaignsModelExt;
+            }).mergeMap(v => (v ? Observable.of(v) : (emitOnEmpty ? Observable.of(v) : Observable.empty())));
     }
 
     listenChannelsOfTimeline(i_campaign_timeline_id): Observable<List<CampaignTimelineChanelsModel>> {
@@ -580,7 +580,7 @@ export class YellowPepperService {
         var table_campaign_timeline_chanel_players$ = this.ngrxStore.select(store => store.msDatabase.sdk.table_campaign_timeline_chanel_players)
         return Observable.combineLatest(table_campaign_timeline_chanels$, table_campaign_timeline_chanel_players$,
             (table_campaign_timeline_chanels: List<CampaignTimelineChanelsModel>,
-             table_campaign_timeline_chanel_players: List<CampaignTimelineChanelPlayersModel>) => {
+                table_campaign_timeline_chanel_players: List<CampaignTimelineChanelPlayersModel>) => {
                 var longestChannelDuration = 0;
                 // loop over channels of timeline and sum up lengths
                 table_campaign_timeline_chanels.forEach(i_campaignTimelineChanelsModel => {
@@ -607,9 +607,9 @@ export class YellowPepperService {
         var table_campaign_boards$ = this.ngrxStore.select(store => store.msDatabase.sdk.table_campaign_boards)
         return table_branch_stations$
             .combineLatest(
-                table_campaign_boards$, (branchStationsModels: List<BranchStationsModelExt>, campaignBoardsModels: List<CampaignBoardsModel>) => {
-                    return { branchStationsModels, campaignBoardsModels }
-                })
+            table_campaign_boards$, (branchStationsModels: List<BranchStationsModelExt>, campaignBoardsModels: List<CampaignBoardsModel>) => {
+                return { branchStationsModels, campaignBoardsModels }
+            })
             .map((value) => {
                 var branchStationsModel: BranchStationsModelExt = value.branchStationsModels.find((i_branchStationsModel: BranchStationsModelExt) => {
                     return i_branchStationsModel.getNativeId == i_native_station_id;
@@ -1089,10 +1089,10 @@ export class YellowPepperService {
             table_boards$,
 
             (campaignTimelineBoardTemplatesModels: List<CampaignTimelineBoardTemplatesModel>,
-             boardTemplateViewersModels: List<BoardTemplateViewersModel>,
-             campaignTimelineBoardViewerChanelsModels: List<CampaignTimelineBoardViewerChanelsModel>,
-             boardTemplates: List<BoardTemplatesModel>,
-             boardsModel: List<BoardsModel>) => {
+                boardTemplateViewersModels: List<BoardTemplateViewersModel>,
+                campaignTimelineBoardViewerChanelsModels: List<CampaignTimelineBoardViewerChanelsModel>,
+                boardTemplates: List<BoardTemplatesModel>,
+                boardsModel: List<BoardsModel>) => {
 
                 campaignTimelineBoardViewerChanelsModels.forEach((campaignTimelineBoardViewerChanelsModel: CampaignTimelineBoardViewerChanelsModel, v) => {
 

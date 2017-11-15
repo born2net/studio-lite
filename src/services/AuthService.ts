@@ -26,6 +26,7 @@ export class AuthService {
         private activatedRoute: ActivatedRoute) {
 
         this.store.select(store => {
+            console.log("%%%%%%%%",store);
             if (store.appDb) {
                 return store.appDb.userModel
 
@@ -210,6 +211,7 @@ export class AuthService {
     }
 
     public authUser(user: string, pass: string, rememberMe: boolean = false): void {
+        console.log("!!!!!",user,this.userModel);
         if (this.userModel)
             this.store.dispatch({
                 type: EFFECT_AUTH_START,

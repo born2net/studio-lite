@@ -10,7 +10,7 @@ import "rxjs/add/operator/startWith";
 @Component({
     selector: 'dash-panel-mini',
     styles: [`
-        a {     
+        a {
             font-size: 1.1em;
         }
 

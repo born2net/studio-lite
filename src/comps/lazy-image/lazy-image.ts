@@ -1,6 +1,8 @@
 import {Directive, ElementRef, EventEmitter, Input, NgZone, Output} from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import {Subject} from "rxjs/Subject";
+import "rxjs/add/observable/defer";
+import 'rxjs/add/operator/retryWhen';
 
 /**
  *  Usage

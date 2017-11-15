@@ -2,7 +2,7 @@ import {AfterViewInit, ChangeDetectorRef, Component, Input, ViewChild} from "@an
 import {Compbaser} from "ng-mslib";
 import {CampaignTimelineBoardViewerChanelsModel, CampaignTimelineChanelPlayersModel, CampaignTimelineChanelsModel, CampaignTimelinesModel} from "../../store/imsdb.interfaces_auto";
 import {BlockService, IBlockData} from "../blocks/block-service";
-import {Observable, Subject} from "rxjs";
+import {Observable, Subject} from "rxjs/Rx";
 import {RedPepperService} from "../../services/redpepper.service";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {Once} from "../../decorators/once-decorator";

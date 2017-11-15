@@ -352,18 +352,25 @@ export class CampaignStoryTimeline extends Compbaser implements AfterViewInit {
     }
 
     public closedGaps(){
+        if(this.timelineComponent)
         this.timelineComponent.closeGaps();
     }
 
     public resizeToLargest(){
+        if(this.timelineComponent)
+        
         this.timelineComponent.resizeToLargest();
     }
 
     public alignLeft(){
+        if(this.timelineComponent)
+        
         this.timelineComponent.alignLeft();
     }
 
     public alignRight(){
+        if(this.timelineComponent)
+        
         this.timelineComponent.alignRight();
     }
 

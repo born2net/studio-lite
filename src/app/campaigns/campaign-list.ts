@@ -1,9 +1,9 @@
 import {Component, ChangeDetectionStrategy, Input, Output, EventEmitter} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {CampaignsModelExt} from "../../store/model/msdb-models-extended";
 import {List} from "immutable";
 import {IUiState} from "../../store/store.data";
 import {SideProps} from "../../store/actions/appdb.actions";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'campaign-list',

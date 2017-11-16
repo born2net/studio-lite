@@ -1,11 +1,11 @@
 import {Component} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {Observable} from "rxjs";
 import {SideProps} from "../../store/actions/appdb.actions";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {ResourcesModel} from "../../store/imsdb.interfaces_auto";
 import {Lib} from "../../Lib";
 import {RedPepperService} from "../../services/redpepper.service";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'resource-props-manager',

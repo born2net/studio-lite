@@ -1,11 +1,11 @@
 import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input} from "@angular/core";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {BlockService, IBlockData} from "./block-service";
-import {Compbaser} from "ng-mslib";
 import * as _ from "lodash";
 import {Subject} from "rxjs";
 import {timeout} from "../../decorators/timeout-decorator";
 import {Lib} from "../../Lib";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'block-prop-fasterq',

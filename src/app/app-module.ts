@@ -7,7 +7,6 @@ import { AppComponent } from "./app-component";
 import { LocalStorage } from "../services/LocalStorage";
 import { RedPepperService } from "../services/redpepper.service";
 import { YellowPepperService } from "../services/yellowpepper.service";
-import { MsLibModule } from "ng-mslib/dist/mslib.module";
 import { ToastModule, ToastOptions } from "ng2-toastr";
 import { AccordionModule, AlertModule, ModalModule } from "ngx-bootstrap";
 import { DropdownModule, DropdownModule as DropdownModulePrime, InputTextModule, SelectButtonModule, TreeModule } from "primeng/primeng";
@@ -32,7 +31,6 @@ import { AppDbEffects } from "../store/effects/appdb.effects";
 import { MsdbEffects } from "../store/effects/msdb.effects";
 import { environment } from "../environments/environment";
 import { productionReducer } from "../store/store.data";
-import { NgmslibService } from "ng-mslib";
 import { SharedModule } from "../modules/shared.module";
 import { Dashboard } from "./dashboard/dashboard-navigation";
 import { Appwrap } from "./appwrap";
@@ -44,6 +42,8 @@ import "gsap/CSSPlugin";
 import "gsap/Draggable";
 import "gsap/TweenLite";
 import "gsap/ScrollToPlugin";
+import * as ss from 'string';
+// import * as _ from 'lodash';
 import { Lib } from "../Lib";
 import { FontLoaderService } from "../services/font-loader-service";
 import { SimpleGridModule } from "../comps/simple-grid-module/SimpleGridModule";
@@ -56,6 +56,7 @@ import { DashPanel } from "./dashboard/dash-panel";
 import { ServerAvg } from "./dashboard/server-avg";
 import { StorageUsed } from "./dashboard/storage-used";
 import { LiveLogModel } from "../models/live-log-model";
+
 
 // import "fabric"; // need to remove if we import via cli
 // import {ScreenTemplate} from "../comps/screen-template/screen-template";
@@ -84,7 +85,7 @@ export class CustomToastOption extends ToastOptions {
     titleClass: ""
 }
 
-export const providing = [CommBroker, WizardService, AUTH_PROVIDERS, RedPepperService, YellowPepperService, LocalStorage, StoreService, FontLoaderService, AppdbAction, {
+export const providing = [CommBroker, WizardService, AUTH_PROVIDERS, RedPepperService, YellowPepperService, NgmslibService, LocalStorage, StoreService, FontLoaderService, AppdbAction, {
     provide: "OFFLINE_ENV",
     useValue: window['offlineDevMode']
 },
@@ -103,6 +104,7 @@ export const providing = [CommBroker, WizardService, AUTH_PROVIDERS, RedPepperSe
 ];
 import {msDatabase} from "../store/reducers/msdb.reducer";
 import {appDb} from "../store/reducers/appdb.reducer";
+import {NgmslibService} from "../services/ngmslib.service";
 
 const decelerations = [AppComponent, AutoLogin, LoginPanel, Appwrap, Dashboard, Logout, NgMenu, NgMenuItem, ImgLoader, FasterqTerminal, DashPanel, ServerAvg, StorageUsed];
 
@@ -145,7 +147,6 @@ export const appReducer: ActionReducerMap<ApplicationState> = {msDatabase, appDb
         SharedModule.forRoot(),
         ToastModule.forRoot(),
         AlertModule.forRoot(),
-        MsLibModule.forRoot({ a: 1 }),
         ModalModule.forRoot(),
         DropdownModule,
         AccordionModule.forRoot(),
@@ -162,13 +163,24 @@ export const appReducer: ActionReducerMap<ApplicationState> = {msDatabase, appDb
 })
 
 export class AppModule {
-    constructor(private commBroker: CommBroker, private compiler: Compiler, private ngmslibService: NgmslibService, private yp: YellowPepperService, private fontLoaderService: FontLoaderService) {
+    constructor(private commBroker: CommBroker, private compiler: Compiler, private yp: YellowPepperService, private fontLoaderService: FontLoaderService) {
         Lib.Con(`running in dev mode: ${Lib.DevMode()}`);
         Lib.Con(`App in ${(compiler instanceof Compiler) ? 'AOT' : 'JIT'} mode`);
         window['business_id'] = -1;
         window['jQueryAny'] = jQuery;
         window['jXML'] = jQuery;
-        this.ngmslibService.globalizeStringJS();
+        // window['StringJS'] = ss.default;
+        MyS.prototype = ss('')
+        MyS.prototype.constructor = MyS;
+        function MyS(val) {
+            this.setValue(val);
+        }
+        window['StringJS'] = function (str) {
+            // if (_.isNull(str) || _.isUndefined(str))
+            if (str == null || str == undefined)
+                str = '';
+            return new MyS(str);
+        }
         Lib.Con(StringJS('app-loaded-and-ready').humanize().s);
         Lib.AlertOnLeave();
         this.yp.dispatch(({ type: ACTION_LIVELOG_UPDATE, payload: new LiveLogModel({ event: 'app started' }) }));

@@ -1,11 +1,11 @@
 import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild} from "@angular/core";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
-import {Compbaser, NgmslibService} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {RedPepperService} from "../../services/redpepper.service";
 import {timeout} from "../../decorators/timeout-decorator";
 import * as _ from "lodash";
 import {CampaignTimelineSchedulesModel} from "../../store/imsdb.interfaces_auto";
+import {Compbaser} from "../compbaser/compbaser";
 
 
 @Component({
@@ -32,7 +32,7 @@ export class CampaignSchedProps extends Compbaser implements AfterViewInit {
     private m_WEEKDAYS = [1, 2, 4, 8, 16, 32, 64];
     private m_WEEKDAYS_NAME = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-    constructor(private fb: FormBuilder, private el: ElementRef, private yp: YellowPepperService, private rp: RedPepperService, private cd: ChangeDetectorRef, private ngmslibService: NgmslibService) {
+    constructor(private fb: FormBuilder, private el: ElementRef, private yp: YellowPepperService, private rp: RedPepperService, private cd: ChangeDetectorRef) {
         super();
         this.contGroup = this.fb.group({
             'once': [],

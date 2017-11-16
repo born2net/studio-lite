@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {CampaignsModelExt} from "../../store/model/msdb-models-extended";
 import {Observable} from "rxjs";
+import {Compbaser} from "../compbaser/compbaser";
 
 
 @Component({

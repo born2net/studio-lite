@@ -1,10 +1,10 @@
 import {Component} from "@angular/core";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
-import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {RedPepperService} from "../../services/redpepper.service";
 import * as _ from "lodash";
 import {BoardTemplateViewersModel} from "../../store/imsdb.interfaces_auto";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'screen-layout-editor-props',

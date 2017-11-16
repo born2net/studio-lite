@@ -4,7 +4,6 @@ import {RedPepperService} from "../../services/redpepper.service";
 import {ResourcesModel} from "../../store/imsdb.interfaces_auto";
 import {List, Map} from "immutable";
 import {Observable} from "rxjs";
-import {Compbaser} from "ng-mslib";
 import {IUiState} from "../../store/store.data";
 import {ACTION_UISTATE_UPDATE, SideProps} from "../../store/actions/appdb.actions";
 import {BlockService} from "../blocks/block-service";
@@ -12,6 +11,7 @@ import {MainAppShowStateEnum} from "../app-component";
 import {EFFECT_LOAD_STATIONS} from "../../store/effects/appdb.effects";
 import {StationModel} from "../../models/StationModel";
 import * as _ from 'lodash';
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     // changeDetection: ChangeDetectionStrategy.OnPush,

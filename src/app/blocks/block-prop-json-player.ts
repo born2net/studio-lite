@@ -2,12 +2,12 @@ import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, In
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {BlockService, IBlockData} from "./block-service";
 import {RedPepperService} from "../../services/redpepper.service";
-import {Compbaser} from "ng-mslib";
 import {urlRegExp} from "../../Lib";
 import * as _ from "lodash";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {Once} from "../../decorators/once-decorator";
 import {SimpleGridTable} from "../../comps/simple-grid-module/SimpleGridTable";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'block-prop-json-player',

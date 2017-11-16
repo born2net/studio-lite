@@ -11,7 +11,7 @@ import * as _ from "lodash";
 import {ContextMenuService} from "ngx-contextmenu";
 import {Once} from "../../decorators/once-decorator";
 import {IScreenTemplateData} from "../../interfaces/IScreenTemplate";
-import {Compbaser} from "ng-mslib";
+import {Compbaser} from "../compbaser/compbaser";
 // import TweenLite = gsap.TweenLite;
 
 @Component({

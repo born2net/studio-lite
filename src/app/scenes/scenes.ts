@@ -1,11 +1,11 @@
 import {ChangeDetectionStrategy, Component, ViewChild} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {ACTION_UISTATE_UPDATE, SideProps} from "../../store/actions/appdb.actions";
 import {IUiState} from "../../store/store.data";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {RedPepperService} from "../../services/redpepper.service";
 import {PLACEMENT_SCENE} from "../../interfaces/Consts";
 import {ISliderItemData, Slideritem} from "../../comps/sliderpanel/Slideritem";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,

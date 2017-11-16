@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, VERSION } from "@angular/core";
-import { Compbaser } from "ng-mslib";
 import { YellowPepperService } from "../../services/yellowpepper.service";
 import { RedPepperService } from "../../services/redpepper.service";
 import { Observable } from "rxjs/Observable";
@@ -7,6 +6,7 @@ import * as packageJson from "../../../package.json";
 import "rxjs/add/observable/interval";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/startWith";
+import {Compbaser} from "../compbaser/compbaser";
 @Component({
     selector: 'dash-panel-mini',
     styles: [`

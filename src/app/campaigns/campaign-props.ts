@@ -1,6 +1,5 @@
 import {Component, Input} from "@angular/core";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Compbaser, NgmslibService} from "ng-mslib";
 import {CampaignsModelExt} from "../../store/model/msdb-models-extended";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {RedPepperService} from "../../services/redpepper.service";
@@ -11,6 +10,8 @@ import {ACTION_LIVELOG_UPDATE, ACTION_UISTATE_UPDATE, SideProps} from "../../sto
 import * as _ from "lodash";
 import {simpleRegExp} from "../../Lib";
 import {LiveLogModel} from "../../models/live-log-model";
+import {Compbaser} from "../compbaser/compbaser";
+import {NgmslibService} from "../../services/ngmslib.service";
 
 enum CampaignPlaylistModeEnum  {
     SEQUENCER,

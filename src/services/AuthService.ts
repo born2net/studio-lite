@@ -13,8 +13,8 @@ import { ApplicationState } from "../store/application.state";
 import { AuthenticateFlags } from "../store/actions/appdb.actions";
 import { UserModel } from "../models/UserModel";
 import { EFFECT_AUTH_START, EFFECT_TWO_FACTOR_AUTH } from "../store/effects/appdb.effects";
-import { NgmslibService } from "ng-mslib";
 import { Lib } from "../Lib";
+import {NgmslibService} from "./ngmslib.service";
 
 @Injectable()
 export class AuthService {

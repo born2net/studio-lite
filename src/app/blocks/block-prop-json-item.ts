@@ -1,10 +1,10 @@
 import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from "@angular/core";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {BlockService, IBlockData} from "./block-service";
-import {Compbaser, NgmslibService} from "ng-mslib";
 import * as _ from "lodash";
 import {IFontSelector} from "../../comps/font-selector/font-selector";
 import {Lib} from "../../Lib";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'block-prop-json-item',
@@ -92,7 +92,7 @@ export class BlockPropJsonItem extends Compbaser implements AfterViewInit {
     jsonItemDateSettings;
     jsonItemFontSettings;
 
-    constructor(private fb: FormBuilder, private cd: ChangeDetectorRef, private bs: BlockService, private ngmslibService: NgmslibService) {
+    constructor(private fb: FormBuilder, private cd: ChangeDetectorRef, private bs: BlockService) {
         super();
         this.m_contGroup = fb.group({
             'jsonItemField': [''],

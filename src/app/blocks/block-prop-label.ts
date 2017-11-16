@@ -2,10 +2,11 @@ import {AfterViewInit, ChangeDetectionStrategy, Component, Input} from "@angular
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {BlockService, IBlockData} from "./block-service";
 import {RedPepperService} from "../../services/redpepper.service";
-import {Compbaser, NgmslibService} from "ng-mslib";
 import {Lib, urlRegExp} from "../../Lib";
 import * as _ from "lodash";
 import {IFontSelector} from "../../comps/font-selector/font-selector";
+import {Compbaser} from "../compbaser/compbaser";
+import {NgmslibService} from "../../services/ngmslib.service";
 
 @Component({
     selector: 'block-prop-label',

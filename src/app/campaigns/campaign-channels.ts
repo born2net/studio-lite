@@ -1,5 +1,4 @@
 import {AfterViewInit, ChangeDetectorRef, Component, Input, ViewChild} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {CampaignTimelineBoardViewerChanelsModel, CampaignTimelineChanelPlayersModel, CampaignTimelineChanelsModel, CampaignTimelinesModel} from "../../store/imsdb.interfaces_auto";
 import {BlockService, IBlockData} from "../blocks/block-service";
 import {Observable, Subject} from "rxjs/Rx";
@@ -13,6 +12,7 @@ import {DraggableList} from "../../comps/draggable-list/draggable-list";
 import {IAddContents} from "../../interfaces/IAddContent";
 import {timeout} from "../../decorators/timeout-decorator";
 import {Lib} from "../../Lib";
+import {Compbaser} from "../compbaser/compbaser";
 
 
 @Component({

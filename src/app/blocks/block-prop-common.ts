@@ -4,10 +4,10 @@ import {BlockService, IBlockData} from "./block-service";
 import {timeout} from "../../decorators/timeout-decorator";
 import {Subject} from "rxjs";
 import {RedPepperService} from "../../services/redpepper.service";
-import {Compbaser} from "ng-mslib";
 import {Lib} from "../../Lib";
 import * as _ from "lodash";
 import {BlockLabels} from "../../interfaces/Consts";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'block-prop-common',

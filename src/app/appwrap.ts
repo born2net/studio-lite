@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
 import {Router} from "@angular/router";
-import {Compbaser} from "ng-mslib";
 import {Observable} from "rxjs/Observable";
 import {YellowPepperService} from "../services/yellowpepper.service";
+import {Compbaser} from "./compbaser/compbaser";
 
 @Component({
     template: `

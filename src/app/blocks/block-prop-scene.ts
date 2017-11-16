@@ -2,9 +2,9 @@ import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, In
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {BlockService, IBlockData} from "./block-service";
 import {RedPepperService} from "../../services/redpepper.service";
-import {Compbaser, NgmslibService} from "ng-mslib";
 import {Lib, urlRegExp} from "../../Lib";
 import * as _ from "lodash";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'block-prop-scene',
@@ -33,7 +33,7 @@ export class BlockPropScene extends Compbaser implements AfterViewInit {
     m_contGroup: FormGroup;
     m_blockData: IBlockData;
 
-    constructor(@Inject('BLOCK_PLACEMENT') private blockPlacement, private fb: FormBuilder, private cd: ChangeDetectorRef, private rp: RedPepperService, private bs: BlockService, private ngmslibService: NgmslibService) {
+    constructor(@Inject('BLOCK_PLACEMENT') private blockPlacement, private fb: FormBuilder, private cd: ChangeDetectorRef, private rp: RedPepperService, private bs: BlockService) {
         super();
         this.m_contGroup = fb.group({
             'name': []

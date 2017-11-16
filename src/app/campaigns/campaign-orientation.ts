@@ -1,9 +1,9 @@
 import {Component, EventEmitter, forwardRef, Inject, Output} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {Observable, Observer} from "rxjs";
 import {IUiState} from "../../store/store.data";
 import {ACTION_UISTATE_UPDATE} from "../../store/actions/appdb.actions";
 import {YellowPepperService} from "../../services/yellowpepper.service";
+import {Compbaser} from "../compbaser/compbaser";
 
 export enum OrientationEnum {
     HORIZONTAL,

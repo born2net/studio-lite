@@ -48,6 +48,7 @@
       "../node_modules/bootstrap/dist/js/bootstrap.js",
       "../node_modules/bootbox/bootbox.js",
       "../node_modules/platform/platform.js",
+      "../node_modules/string/dist/string.js",
       "./libs/fabric.require1-4-12.js",
       "./libs/minicolors/jquery.minicolors.js",
       "./libs/gradient/colorpicker.js",

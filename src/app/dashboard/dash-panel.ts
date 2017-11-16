@@ -1,5 +1,4 @@
 import {AfterViewInit, Component} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {EFFECT_LOAD_FASTERQ_LINES, EFFECT_LOAD_STATIONS} from "../../store/effects/appdb.effects";
 import {RedPepperService} from "../../services/redpepper.service";
@@ -8,6 +7,7 @@ import {StationModel} from "../../models/StationModel";
 import {Observable} from "rxjs/Observable";
 import {LiveLogModel} from "../../models/live-log-model";
 import {ACTION_LIVELOG_UPDATE} from "../../store/actions/appdb.actions";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'dash-panel',

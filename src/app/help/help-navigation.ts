@@ -1,10 +1,10 @@
 import {ChangeDetectionStrategy, Component, ViewChild} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {ModalComponent} from "ng2-bs3-modal/ng2-bs3-modal";
 import {MediaPlayer} from "../../comps/media-player/media-player";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {Observable} from "rxjs/Observable";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,

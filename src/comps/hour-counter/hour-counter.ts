@@ -1,5 +1,4 @@
 import {Component, ChangeDetectionStrategy, AfterViewInit, ElementRef, ViewChild, Input} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 
 @Component({
     selector: 'hour-counter',

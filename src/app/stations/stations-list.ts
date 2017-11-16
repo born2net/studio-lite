@@ -1,9 +1,9 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {List} from "immutable";
 import {BlockService} from "../blocks/block-service";
 import {StationModel} from "../../models/StationModel";
 import {timeout} from "../../decorators/timeout-decorator";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'stations-list',

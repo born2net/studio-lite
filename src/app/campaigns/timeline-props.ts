@@ -1,6 +1,5 @@
 import {ChangeDetectorRef, Component} from "@angular/core";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Compbaser, NgmslibService} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {RedPepperService} from "../../services/redpepper.service";
 import {timeout} from "../../decorators/timeout-decorator";
@@ -9,6 +8,8 @@ import {CampaignTimelinesModel} from "../../store/imsdb.interfaces_auto";
 import {Observable} from "rxjs";
 import {CampaignsModelExt} from "../../store/model/msdb-models-extended";
 import {simpleRegExp} from "../../Lib";
+import {NgmslibService} from "../../services/ngmslib.service";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'timeline-props',

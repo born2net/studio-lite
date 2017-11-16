@@ -1,9 +1,9 @@
 import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from "@angular/core";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {BlockService, IBlockData} from "./block-service";
-import {Compbaser, NgmslibService} from "ng-mslib";
 import {urlRegExp} from "../../Lib";
 import * as _ from "lodash";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'block-prop-mrss',
@@ -235,7 +235,7 @@ export class BlockPropMrss extends Compbaser implements AfterViewInit {
         '<Rss label="Custom" url=""/>' +
         '</TextRss>'
 
-    constructor(private fb: FormBuilder, private cd: ChangeDetectorRef, private bs: BlockService, private ngmslibService: NgmslibService) {
+    constructor(private fb: FormBuilder, private cd: ChangeDetectorRef, private bs: BlockService) {
         super();
         this.m_contGroup = fb.group({
             'url': ['', [Validators.pattern(urlRegExp)]],

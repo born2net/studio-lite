@@ -2,9 +2,9 @@ import {AfterViewInit, ChangeDetectionStrategy, Component, Input} from "@angular
 import {FormBuilder} from "@angular/forms";
 import {BlockService, IBlockData} from "./block-service";
 import {RedPepperService} from "../../services/redpepper.service";
-import {Compbaser} from "ng-mslib";
 import {IFontSelector} from "../../comps/font-selector/font-selector";
 import {Lib} from "../../Lib";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'block-prop-clock',

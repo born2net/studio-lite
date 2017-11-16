@@ -1,7 +1,6 @@
 import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostListener, Output} from "@angular/core";
 import {Observable} from "rxjs";
 import {List} from "immutable";
-import {Compbaser} from "ng-mslib";
 import {Router} from "@angular/router";
 import {UserModel} from "../../models/UserModel";
 import {RedPepperService} from "../../services/redpepper.service";
@@ -11,6 +10,7 @@ import {IUiState} from "../../store/store.data";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {MainAppShowStateEnum} from "../app-component";
 import {WizardService} from "../../services/wizard-service";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     // changeDetection: ChangeDetectionStrategy.OnPush,

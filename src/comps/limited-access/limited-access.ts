@@ -1,5 +1,4 @@
 import {Component, ChangeDetectionStrategy, AfterViewInit} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 
 @Component({
     selector: 'limited-access',

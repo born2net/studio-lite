@@ -10,12 +10,12 @@ import {ACTION_INJECT_SDK} from "../store/actions/appdb.actions";
 import {Store} from "@ngrx/store";
 import {ApplicationState} from "../store/application.state";
 import * as _ from "lodash";
-import {NgmslibService} from "ng-mslib";
 import {IAddContents} from "../interfaces/IAddContent";
 import {BlockLabels, PLACEMENT_CHANNEL} from "../interfaces/Consts";
 import * as X2JS from "x2js";
 import {BlockService} from "../app/blocks/block-service";
 import {Lib} from "../Lib";
+import {NgmslibService} from "./ngmslib.service";
 
 //// import X2JS from "x2js";
 //// import "x2js";

@@ -1,5 +1,4 @@
 import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {ACTION_UISTATE_UPDATE} from "../../store/actions/appdb.actions";
 import {IUiState} from "../../store/store.data";
@@ -8,6 +7,7 @@ import {CampaignTimelinesModel} from "../../store/imsdb.interfaces_auto";
 import {ISceneData} from "../blocks/block-service";
 import {CampaignsModelExt} from "../../store/model/msdb-models-extended";
 import {MainAppShowStateEnum} from "../app-component";
+import {Compbaser} from "../compbaser/compbaser";
 
 export enum PreviewModeEnum {
     NONE,

@@ -1,5 +1,4 @@
 import {AfterViewInit, ChangeDetectorRef, Component, ElementRef} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {FasterqQueueModel} from "../../models/fasterq-queue-model";
 import {FasterqLineModel} from "../../models/fasterq-line-model";
@@ -14,6 +13,7 @@ import {List} from "immutable";
 import {Lib} from "../../Lib";
 import * as _ from "lodash";
 import {timeout} from "../../decorators/timeout-decorator";
+import {Compbaser} from "../compbaser/compbaser";
 
 export interface IQueueSave {
     queue_id: number;

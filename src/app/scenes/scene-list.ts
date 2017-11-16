@@ -1,8 +1,8 @@
 import {Component, ChangeDetectionStrategy, Input, Output, EventEmitter} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {IUiState} from "../../store/store.data";
 import {SideProps} from "../../store/actions/appdb.actions";
 import {BlockService, ISceneData} from "../blocks/block-service";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'scene-list',

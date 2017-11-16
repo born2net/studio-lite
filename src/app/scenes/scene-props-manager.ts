@@ -1,5 +1,4 @@
 import {ChangeDetectionStrategy, Component} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {Observable} from "rxjs";
 import {ACTION_UISTATE_UPDATE, SideProps} from "../../store/actions/appdb.actions";
 import {YellowPepperService} from "../../services/yellowpepper.service";
@@ -7,6 +6,7 @@ import {BlockService, IBlockData, ISceneData} from "../blocks/block-service";
 import {IUiState} from "../../store/store.data";
 import * as _ from 'lodash';
 import {CommBroker} from "../../services/CommBroker";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'scene-props-manager',

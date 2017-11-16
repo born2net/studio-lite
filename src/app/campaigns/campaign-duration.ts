@@ -1,7 +1,7 @@
 import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {Observable} from "rxjs";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'campaign-duration',

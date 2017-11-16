@@ -1,5 +1,4 @@
 import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, NgZone, Output, ViewChild} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {BlockService, ISceneData} from "../blocks/block-service";
 import {CommBroker, IMessage} from "../../services/CommBroker";
@@ -19,6 +18,7 @@ import {AddContent} from "../campaigns/add-content";
 import {Lib} from "../../Lib";
 import {MainAppShowStateEnum} from "../app-component";
 import {PlayerDataModel} from "../../store/imsdb.interfaces_auto";
+import {Compbaser} from "../compbaser/compbaser";
 
 export const ADD_NEW_BLOCK_SCENE = 'ADD_NEW_BLOCK_SCENE';
 export const SCENE_BLOCK_CHANGE = 'SCENE_BLOCK_CHANGE';

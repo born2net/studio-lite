@@ -1,11 +1,11 @@
 import {ChangeDetectionStrategy, Component, ViewChild} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {ModalComponent} from "ng2-bs3-modal/ng2-bs3-modal";
 import {RedPepperService} from "../../services/redpepper.service";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {Observable} from "rxjs/Observable";
 import {UserModel} from "../../models/UserModel";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,

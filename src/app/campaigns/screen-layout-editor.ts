@@ -1,5 +1,4 @@
 import {AfterViewInit, Component, ComponentFactoryResolver, ComponentRef, ElementRef, EventEmitter, Output, ViewChild, ViewContainerRef} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {BoardTemplateViewersModel, CampaignTimelinesModel} from "../../store/imsdb.interfaces_auto";
 import {Observable} from "rxjs";
@@ -10,8 +9,8 @@ import {Lib} from "../../Lib";
 import {RedPepperService} from "../../services/redpepper.service";
 import {ACTION_UISTATE_UPDATE, SideProps} from "../../store/actions/appdb.actions";
 import {IUiState} from "../../store/store.data";
-import Any = jasmine.Any;
 import {IScreenTemplateData} from "../../interfaces/IScreenTemplate";
+import {Compbaser} from "../compbaser/compbaser";
 
 interface selectTimelineBoardIdResult {
     campaignTimelinesModel: CampaignTimelinesModel,

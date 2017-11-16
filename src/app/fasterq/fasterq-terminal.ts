@@ -1,5 +1,4 @@
 import {AfterViewInit, Component, ElementRef, NgZone} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {ActivatedRoute} from "@angular/router";
 import {FasterqLineModel} from "../../models/fasterq-line-model";
@@ -10,6 +9,7 @@ import {Http, RequestMethod, RequestOptionsArgs, Response} from "@angular/http";
 import {Lib} from "../../Lib";
 import {ToastsManager} from "ng2-toastr";
 import {LocalStorage} from "../../services/LocalStorage";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'fasterq-terminal',

@@ -9,9 +9,10 @@ import {ApplicationState} from "../../store/application.state";
 import {Store} from "@ngrx/store";
 import {UserModel} from "../../models/UserModel";
 import {AuthenticateFlags} from "../../store/actions/appdb.actions";
-import {Compbaser, NgmslibService} from "ng-mslib";
 import {RedPepperService} from "../../services/redpepper.service";
 import {Lib} from "../../Lib";
+import {Compbaser} from "../../app/compbaser/compbaser";
+import {NgmslibService} from "../../services/ngmslib.service";
 
 enum ViewMod {
     LOGIN,

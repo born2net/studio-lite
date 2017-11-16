@@ -1,7 +1,6 @@
 import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, ViewChild} from "@angular/core";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {BlockService, IBlockData} from "./block-service";
-import {Compbaser, NgmslibService} from "ng-mslib";
 import * as _ from "lodash";
 import {List} from "immutable";
 import {ISimpleGridEdit} from "../../comps/simple-grid-module/SimpleGrid";
@@ -18,6 +17,7 @@ import {RedPepperService} from "../../services/redpepper.service";
 import {IUiState} from "../../store/store.data";
 import {ACTION_UISTATE_UPDATE, SideProps} from "../../store/actions/appdb.actions";
 import {YellowPepperService} from "../../services/yellowpepper.service";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'block-prop-collection',

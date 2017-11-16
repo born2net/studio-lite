@@ -1,10 +1,10 @@
 import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {ResourcesModel} from "../../store/imsdb.interfaces_auto";
 import {List} from "immutable";
 import {BlockService} from "../blocks/block-service";
 import {IUiState} from "../../store/store.data";
 import {SideProps} from "../../store/actions/appdb.actions";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'resources-list',

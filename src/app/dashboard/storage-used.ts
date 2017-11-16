@@ -2,12 +2,12 @@ import {ChangeDetectorRef, Component, Input} from "@angular/core";
 import {Http} from "@angular/http";
 import * as _ from 'lodash';
 import {Observable} from "rxjs/Observable";
-import {Compbaser} from "ng-mslib";
 import {RedPepperService} from "../../services/redpepper.service";
 import {Lib} from "../../Lib";
 import {LiveLogModel} from "../../models/live-log-model";
 import {ACTION_LIVELOG_UPDATE} from "../../store/actions/appdb.actions";
 import {YellowPepperService} from "../../services/yellowpepper.service";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'storage-used',

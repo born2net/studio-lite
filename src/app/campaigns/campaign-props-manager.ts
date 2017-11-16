@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {Observable} from "rxjs";
 import {SideProps} from "../../store/actions/appdb.actions";
 import {YellowPepperService} from "../../services/yellowpepper.service";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'campaign-props-manager',

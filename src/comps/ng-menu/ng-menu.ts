@@ -2,8 +2,8 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from "@ang
 import {NgMenuItem} from "./ng-menu-item";
 import {CommBroker, IMessage} from "../../services/CommBroker";
 import {Router} from "@angular/router";
-import {Compbaser} from "ng-mslib";
 import {Consts} from "../../interfaces/Consts";
+import {Compbaser} from "../../app/compbaser/compbaser";
 
 @Component({
     selector: 'ng-menu',

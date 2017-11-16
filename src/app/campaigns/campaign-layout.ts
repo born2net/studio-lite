@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import * as screenTemplates from "../../libs/screen-templates.json";
 import * as _ from "lodash";
 import {OrientationEnum} from "./campaign-orientation";
@@ -11,6 +10,7 @@ import {RedPepperService} from "../../services/redpepper.service";
 import {IScreenTemplateData} from "../../interfaces/IScreenTemplate";
 import {ACTION_LIVELOG_UPDATE} from "../../store/actions/appdb.actions";
 import {LiveLogModel} from "../../models/live-log-model";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'campaign-layout',

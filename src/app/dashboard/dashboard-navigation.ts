@@ -1,5 +1,4 @@
 import {AfterViewInit, ChangeDetectionStrategy, Component} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {ToastsManager} from "ng2-toastr";
 import {timeout} from "../../decorators/timeout-decorator";

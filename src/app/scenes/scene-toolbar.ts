@@ -1,11 +1,11 @@
 import {Component, ChangeDetectionStrategy, AfterViewInit, Output, EventEmitter, Input, ChangeDetectorRef} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import * as _ from 'lodash';
 import {PlayerDataModelExt} from "../../store/model/msdb-models-extended";
 import {RedPepperService} from "../../services/redpepper.service";
 import {timeout} from "../../decorators/timeout-decorator";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'scene-toolbar',

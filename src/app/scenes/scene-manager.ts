@@ -1,6 +1,5 @@
 import {Component, ElementRef, EventEmitter, Output, ViewChild} from "@angular/core";
 import {Observable} from "rxjs";
-import {Compbaser} from "ng-mslib";
 import {Router} from "@angular/router";
 import {RedPepperService} from "../../services/redpepper.service";
 import {ACTION_UISTATE_UPDATE, SideProps} from "../../store/actions/appdb.actions";
@@ -10,6 +9,7 @@ import {ISceneData} from "../blocks/block-service";
 import {SceneList} from "./scene-list";
 import {ToastsManager} from "ng2-toastr";
 import {WizardService} from "../../services/wizard-service";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     // changeDetection: ChangeDetectionStrategy.OnPush,

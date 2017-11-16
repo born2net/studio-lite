@@ -1,5 +1,4 @@
 import {ChangeDetectionStrategy, Component, ViewChild} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {ISliderItemData, Slideritem} from "../../comps/sliderpanel/Slideritem";
 import {ACTION_UISTATE_UPDATE, SideProps} from "../../store/actions/appdb.actions";
 import {IUiState, IUiStateCampaign} from "../../store/store.data";
@@ -11,6 +10,7 @@ import {IAddContents} from "../../interfaces/IAddContent";
 import {CampaignTimelineBoardViewerChanelsModel, CampaignTimelinesModel} from "../../store/imsdb.interfaces_auto";
 import {BlockService} from "../blocks/block-service";
 import {IScreenTemplateData} from "../../interfaces/IScreenTemplate";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,5 +1,4 @@
 import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Inject, NgZone, Output, ViewChild} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {IUiState} from "../../store/store.data";
 import {ACTION_UISTATE_UPDATE} from "../../store/actions/appdb.actions";
@@ -11,6 +10,7 @@ import {CampaignTimelineChanelPlayersModel} from "../../store/imsdb.interfaces_a
 import {LocationMarkModel} from "../../models/LocationMarkModel";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import * as _ from 'lodash';
+import {Compbaser} from "../compbaser/compbaser";
 
 export declare var google: any;
 

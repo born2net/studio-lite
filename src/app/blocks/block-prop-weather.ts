@@ -1,9 +1,9 @@
 import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from "@angular/core";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {BlockService, IBlockData} from "./block-service";
-import {Compbaser, NgmslibService} from "ng-mslib";
 import {simpleRegExp} from "../../Lib";
 import * as _ from "lodash";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'block-prop-weather',
@@ -56,7 +56,7 @@ export class BlockPropWeather extends Compbaser implements AfterViewInit {
     m_contGroup: FormGroup;
     m_blockData: IBlockData;
 
-    constructor(private fb: FormBuilder, private cd: ChangeDetectorRef, private bs: BlockService, private ngmslibService: NgmslibService) {
+    constructor(private fb: FormBuilder, private cd: ChangeDetectorRef, private bs: BlockService) {
         super();
         this.m_contGroup = fb.group({
             'style': "",

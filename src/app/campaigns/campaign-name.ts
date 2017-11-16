@@ -1,8 +1,8 @@
 import {Component, ChangeDetectionStrategy, Output, EventEmitter} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {IUiState} from "../../store/store.data";
 import {ACTION_UISTATE_UPDATE} from "../../store/actions/appdb.actions";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'campaign-name',

@@ -1,11 +1,11 @@
 import {ChangeDetectionStrategy, Component} from "@angular/core";
 import {animate, state, style, transition, trigger} from "@angular/animations";
-import {Compbaser} from "ng-mslib";
 import {BlockService} from "../blocks/block-service";
 import {AppdbAction, AuthenticateFlags} from "../../store/actions/appdb.actions";
 import {PLACEMENT_CHANNEL} from "../../interfaces/Consts";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {UserModel} from "../../models/UserModel";
+import {Compbaser} from "../compbaser/compbaser";
 
 
 @Component({

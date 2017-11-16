@@ -1,5 +1,4 @@
 import {AfterViewInit, Component, EventEmitter, Inject, Input, Output} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {IUiState} from "../../store/store.data";
 import {ACTION_UISTATE_UPDATE, SideProps} from "../../store/actions/appdb.actions";
@@ -18,6 +17,7 @@ import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {Subject} from "rxjs/Subject";
 import {Observer} from "rxjs/Observer";
 import {Observable} from "rxjs/Observable";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'add-content',

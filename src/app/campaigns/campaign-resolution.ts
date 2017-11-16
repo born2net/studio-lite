@@ -1,5 +1,4 @@
 import {Component, ChangeDetectionStrategy, Input, Output, EventEmitter, ViewChild, ChangeDetectorRef} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import * as screenTemplates from "../../libs/screen-templates.json";
 import {OrientationEnum} from "./campaign-orientation";
 import {timeout} from "../../decorators/timeout-decorator";
@@ -8,6 +7,7 @@ import {YellowPepperService} from "../../services/yellowpepper.service";
 import {Once} from "../../decorators/once-decorator";
 import {IUiState, IUiStateCampaign} from "../../store/store.data";
 import {ACTION_UISTATE_UPDATE} from "../../store/actions/appdb.actions";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'campaign-resolution',

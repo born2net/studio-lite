@@ -1,5 +1,4 @@
 import {Component, ChangeDetectionStrategy, AfterViewInit} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {FasterqLineModel} from "../../models/fasterq-line-model";
 import {FormBuilder, FormGroup} from "@angular/forms";
@@ -10,6 +9,7 @@ import * as _ from 'lodash';
 import {FasterqQueueModel} from "../../models/fasterq-queue-model";
 import {RedPepperService} from "../../services/redpepper.service";
 import {Lib} from "../../Lib";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'fasterq-line-props',

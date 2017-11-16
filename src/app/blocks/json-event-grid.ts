@@ -1,5 +1,4 @@
 import {AfterViewInit, ChangeDetectionStrategy, Component, Input, ViewChild} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {ISimpleGridEdit} from "../../comps/simple-grid-module/SimpleGrid";
 import {StoreModel} from "../../store/model/StoreModel";
@@ -8,6 +7,7 @@ import {SimpleGridRecord} from "../../comps/simple-grid-module/SimpleGridRecord"
 import {SimpleGridTable} from "../../comps/simple-grid-module/SimpleGridTable";
 import {List} from "immutable";
 import * as _ from "lodash";
+import {Compbaser} from "../compbaser/compbaser";
 
 
 export class JsonEventResourceModel extends StoreModel {

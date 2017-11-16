@@ -1,5 +1,4 @@
 import {Component, ChangeDetectionStrategy, AfterViewInit, Output, EventEmitter, ViewChild} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {BlockService} from "../blocks/block-service";
 import * as _ from 'lodash';
@@ -12,6 +11,7 @@ import {ToastsManager} from "ng2-toastr";
 import {PLACEMENT_IS_SCENE} from "../../interfaces/Consts";
 import {MainAppShowStateEnum} from "../app-component";
 import {LiveLogModel} from "../../models/live-log-model";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'scene-creator',

@@ -1,10 +1,10 @@
 import {Component, ChangeDetectionStrategy, AfterViewInit, ViewChild} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {RedPepperService} from "../../services/redpepper.service";
 import {LazyImage} from "../lazy-image/lazy-image";
 import {UserModel} from "../../models/UserModel";
 import {Observable} from "rxjs/Observable";
+import {Compbaser} from "../../app/compbaser/compbaser";
 
 @Component({
     selector: 'reseller-logo',

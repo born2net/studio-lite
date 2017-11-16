@@ -1,6 +1,5 @@
 import {Component} from "@angular/core";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
-import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {RedPepperService} from "../../services/redpepper.service";
 import {timeout} from "../../decorators/timeout-decorator";
@@ -8,6 +7,7 @@ import * as _ from "lodash";
 import {CampaignTimelineChanelsModel} from "../../store/imsdb.interfaces_auto";
 import {Lib} from "../../Lib";
 import {Subject} from "rxjs/Subject";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'channel-props',

@@ -1,7 +1,7 @@
 import {ApplicationRef, ChangeDetectorRef, Component, DoCheck, Input, Output, TemplateRef, ViewContainerRef} from "@angular/core";
 import {Sliderpanel} from "./Sliderpanel";
 import {Observable, Subject} from "rxjs";
-import {Compbaser} from "ng-mslib";
+import {Compbaser} from "../../app/compbaser/compbaser";
 
 export interface ISliderItemData {
     to: string;

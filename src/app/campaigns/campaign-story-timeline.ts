@@ -3,7 +3,6 @@
  **/
 
 import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output, ViewChild} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {CampaignTimelineBoardViewerChanelsModel, CampaignTimelineChanelsModel, CampaignTimelinesModel} from "../../store/imsdb.interfaces_auto";
 import {RedPepperService} from "../../services/redpepper.service";
@@ -16,6 +15,7 @@ import {EventManager} from "@angular/platform-browser";
 import {Lib} from "../../Lib";
 import * as _ from "lodash";
 import {List, Map} from "immutable";
+import {Compbaser} from "../compbaser/compbaser";
 
 interface IChannelCollection {
     blocks: Array<number>;

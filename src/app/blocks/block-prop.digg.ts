@@ -1,8 +1,8 @@
 import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from "@angular/core";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {BlockService, IBlockData} from "./block-service";
-import {Compbaser, NgmslibService} from "ng-mslib";
 import * as _ from "lodash";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'block-prop-digg',

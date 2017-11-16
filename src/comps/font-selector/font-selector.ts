@@ -1,9 +1,9 @@
 import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import {Subject} from "rxjs";
 import {FontLoaderService} from "../../services/font-loader-service";
 import {timeout} from "../../decorators/timeout-decorator";
 import {Lib} from "../../Lib";
+import {Compbaser} from "../../app/compbaser/compbaser";
 
 export interface IFontSelector {
     bold: boolean;

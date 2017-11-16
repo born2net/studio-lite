@@ -1,12 +1,12 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from "@angular/core";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import * as _ from "lodash";
 import {BlockService, IBlockData, ISceneData} from "./block-service";
 import {RedPepperService} from "../../services/redpepper.service";
 import {timeout} from "../../decorators/timeout-decorator";
 import {BlockLabels} from "../../interfaces/Consts";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'block-prop-position',

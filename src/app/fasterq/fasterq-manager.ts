@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Output} from "@angular/core";
 import {Observable} from "rxjs";
-import {Compbaser} from "ng-mslib";
 import {RedPepperService} from "../../services/redpepper.service";
 import {ACTION_LIVELOG_UPDATE, ACTION_UISTATE_UPDATE, SideProps} from "../../store/actions/appdb.actions";
 import {IUiState} from "../../store/store.data";
@@ -10,6 +9,7 @@ import {EFFECT_ADD_FASTERQ_LINE, EFFECT_LOAD_FASTERQ_ANALYTICS, EFFECT_LOAD_FAST
 import {FasterqLineModel} from "../../models/fasterq-line-model";
 import {List} from "immutable";
 import {LiveLogModel} from "../../models/live-log-model";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'fasterq-manager',

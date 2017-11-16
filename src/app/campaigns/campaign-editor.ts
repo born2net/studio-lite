@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Output, ViewChild} from "@angular/core";
 import {animate, state, style, transition, trigger} from "@angular/animations";
-import {Compbaser} from "ng-mslib";
 import {CampaignsModelExt, CampaignTimelineChanelPlayersModelExt} from "../../store/model/msdb-models-extended";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {CampaignTimelineChanelsModel, CampaignTimelinesModel} from "../../store/imsdb.interfaces_auto";
@@ -13,6 +12,7 @@ import {RedPepperService} from "../../services/redpepper.service";
 import {MainAppShowStateEnum} from "../app-component";
 import {Lib} from "../../Lib";
 import {CampaignStoryTimeline, ITimelineState} from "./campaign-story-timeline";
+import {Compbaser} from "../compbaser/compbaser";
 
 // https://github.com/AlexWD/ds-timeline-widget
 

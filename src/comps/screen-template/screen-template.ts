@@ -18,11 +18,11 @@
  **/
 
 import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output} from "@angular/core";
-import {Compbaser} from "ng-mslib";
 import * as _ from "lodash";
 import {Lib} from "../../Lib";
 import {OrientationEnum} from "../../app/campaigns/campaign-orientation";
 import {IScreenTemplateData} from "../../interfaces/IScreenTemplate";
+import {Compbaser} from "../../app/compbaser/compbaser";
 
 
 @Component({

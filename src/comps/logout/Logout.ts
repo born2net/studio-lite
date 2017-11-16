@@ -5,8 +5,8 @@ import {MainAppShowStateEnum} from "../../app/app-component";
 import {ACTION_UISTATE_UPDATE} from "../../store/actions/appdb.actions";
 import {IUiState} from "../../store/store.data";
 import {YellowPepperService} from "../../services/yellowpepper.service";
-import {Compbaser} from "ng-mslib";
 import {timeout} from "../../decorators/timeout-decorator";
+import {Compbaser} from "../../app/compbaser/compbaser";
 
 @Component({
     selector: 'Logout',

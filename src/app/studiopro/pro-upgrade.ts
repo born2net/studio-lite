@@ -1,10 +1,10 @@
 import {Component} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
 import {RedPepperService} from "../../services/redpepper.service";
 import {NGValidators} from "ng-validators";
 import {equalValueValidator} from "../../Lib";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'pro-upgrade',

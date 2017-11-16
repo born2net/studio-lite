@@ -6,8 +6,8 @@ import {AppdbAction, AuthenticateFlags} from "../../store/actions/appdb.actions"
 import {UserModel} from "../../models/UserModel";
 import {Map} from "immutable";
 import {EFFECT_TWO_FACTOR_UPDATING} from "../../store/effects/appdb.effects";
-import {Compbaser} from "ng-mslib";
 import {YellowPepperService} from "../../services/yellowpepper.service";
+import {Compbaser} from "../compbaser/compbaser";
 
 @Component({
     selector: 'Twofactor',

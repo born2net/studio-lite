@@ -86,20 +86,21 @@ export class AppDbEffects {
     fasterQueueInFlight = false;
 
     constructor(private actions$: Actions,
-        private store: Store<ApplicationState>,
-        private rp: RedPepperService,
-        private yp: YellowPepperService,
-        private commBroker: CommBroker,
-        private localStorage: LocalStorage,
-        private toastr: ToastsManager,
-        private http: Http) {
+                private store: Store<ApplicationState>,
+                private rp: RedPepperService,
+                private yp: YellowPepperService,
+                private commBroker: CommBroker,
+                private localStorage: LocalStorage,
+                private toastr: ToastsManager,
+                private http: Http) {
 
         // todo: disabled injection as broken in AOT
         // @Inject('OFFLINE_ENV') private offlineEnv,
 
         this.yp.ngrxStore.select(store => {
+
             if (store.appDb) {
-                store.appDb.appBaseUrlServices
+                return store.appDb.appBaseUrlServices
 
             }
         })
@@ -455,7 +456,7 @@ export class AppDbEffects {
         .withLatestFrom(this.store.select(store => {
             if(store.appDb){
                 store.appDb.contact
-                
+
             }
         }))
         .switchMap((value: any) =>
@@ -463,8 +464,8 @@ export class AppDbEffects {
                 .catch(err => {
                     return Observable.of({ err: true, error: err });
                 }).map((v: any) => {
-                    return v.err ? formErrorAction('appDb.contact', 'problem connecting to server, please try later...') : formSuccessAction('appDb.contact');
-                })
+                return v.err ? formErrorAction('appDb.contact', 'problem connecting to server, please try later...') : formSuccessAction('appDb.contact');
+            })
         )
 
     private contactService(body: Map<any, any>) {
@@ -494,6 +495,7 @@ export class AppDbEffects {
     }
 
     private createServerCall(i_urlEndPoint, i_method, i_body): RequestOptionsArgs {
+        console.log(this.appBaseUrlServices);
         var credentials = Lib.EncryptUserPass(this.rp.getUserData().userName, this.rp.getUserData().userPass);
         var url = `${this.appBaseUrlServices}${i_urlEndPoint}`;
         var headers = new Headers();

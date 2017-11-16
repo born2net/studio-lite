@@ -186,7 +186,7 @@ export class Sequencer extends Compbaser {
                             campaign: i_campaignTimelinesModel
                         })
                     })
-            })
+            }).take(this.m_campaignTimelinesModels.toArray().length)
             .combineAll()
             .subscribe((i_orderedTimelines: any) => {
                 var orderedTimelines = _.sortBy(i_orderedTimelines, [function (o) {

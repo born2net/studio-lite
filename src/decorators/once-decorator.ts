@@ -5,7 +5,7 @@ export function Once(milliseconds: number = 0) {
         descriptor.value = function (...args) {
             var sub = originalMethod.apply(this, args);
             setTimeout(() => {
-                if (sub instanceof Subscriber) {
+                if (sub instanceof Subscriber || sub.unsubscribe) {
                     sub.unsubscribe();
                 } else if (sub instanceof Function) {
                     sub()

@@ -57,11 +57,10 @@ export class Compbaser {
     private ngOnDestroy() {
         // console.log('unsubscribing on behalf of ' + this.me);
         this.unsubFunctions.map((f: any) => {
-            if (f instanceof Subscriber) {
+            if (f instanceof Subscriber || f.unsubscribe) {
                 f.unsubscribe();
             } else {
-                //todo: fix
-                //f()
+                f()
             }
         });
         this.destroy();

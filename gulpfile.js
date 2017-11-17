@@ -22,7 +22,6 @@ gulp.task('cssRelease', function(){
         .pipe(gulp.dest('src/styles/'));
 });
 
-
 /** Dangerous, this will wipe your current source and sync with GitHub **/
 gulp.task('vanish***', function (done) {
     var c = 8;

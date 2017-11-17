@@ -26,7 +26,6 @@ export class AuthService {
         private activatedRoute: ActivatedRoute) {
 
         this.store.select(store => {
-            console.log("%%%%%%%%",store);
             if (store.appDb) {
                 return store.appDb.userModel
 

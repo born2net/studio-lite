@@ -37,7 +37,7 @@ import { LocalStorage } from "../../services/LocalStorage";
 import { formErrorAction, formSuccessAction } from "../../comps/connect-form/connect-form";
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/operators/map';
-
+import 'rxjs/add/operator/takeUntil';
 
 
 export const EFFECT_AUTH_START = 'EFFECT_AUTH_START';

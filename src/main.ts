@@ -3,6 +3,15 @@ import {enableProdMode} from "@angular/core";
 import {environment} from "./environments/environment";
 import {AppModule} from "./app/app-module";
 import {hmrBootstrap} from "./hmr";
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/mergeMap";
+import "rxjs/add/operator/merge";
+import "rxjs/add/operator/debounceTime";
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/withLatestFrom';
+import 'rxjs/add/operator/takeWhile';
+import 'rxjs/add/operator/takeUntil';
+
 // import { AppModule } from './app/';
 
 if (environment.production)

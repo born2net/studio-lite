@@ -887,6 +887,7 @@ export class BlockService {
         return self.m_fontAwesome[i_fontName]['image'];
     }
 
+    
     /**
      Get the  entire font awesome set
      @method getFontsAwesome

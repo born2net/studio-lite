@@ -19,6 +19,6 @@ export class BlurForwarder {
 
         }
 
-        // if you don't care about webworker compatibility
+        // you don't care about webworker compatibility
     }
 }

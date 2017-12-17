@@ -152,6 +152,9 @@ export class BlockFabric extends fabric.Group {
         return r;
     }
 
+
+
+    
     /**
      Convert the block into a fabric js compatible object, called externally on creation of block
      @Override

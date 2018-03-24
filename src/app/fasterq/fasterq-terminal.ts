@@ -53,13 +53,15 @@ import {LocalStorage} from "../../services/LocalStorage";
 
             <div id="printDiag" style="display: none">
                 <h1>You number is 123</h1>
-
                 <h3 id="printData">Oct 1 1973</h3>
             </div>
 
             <div id="terminalCarousel" class="carousel slide" data-interval="false" data-ride="carousel">
                 <div class="carousel-inner">
-
+                    <!--<div id="hiddenPrint" *ngIf="m_printing" >-->
+                        <!--<h2>{{m_serviceId}}</h2>-->
+                        <!--<h2>{{m_lineName}}</h2>-->
+                    <!--</div>-->
                     <div class="item active">
                         <div style="width: 100%; text-align: center">
                             <i style="font-size: 3em; padding-right: 40px" class="carouselLargeHeader fa fa-print"></i>
@@ -67,10 +69,14 @@ import {LocalStorage} from "../../services/LocalStorage";
                             <br/>
                             <br/>
                             <br/>
+                            
                             <a (click)="_onPrint($event)" id="fqPrintNumber" style="padding-left: 40px; padding-right: 40px; padding-top: 20px; padding-bottom: 20px" class="btn btn-large btn-danger" type="button" href="#">
                                 <span class="largeFont2em" data-localize="printIt">PRINT IT</span>
                             </a>
-                            <h1 id="fqDisplayPrintNumber">{{m_displayServiceId}}</h1>
+                            <div id="printArea" *ngIf="m_printing">
+                                <h2 id="fqDisplayPrintNumber">Your line#: {{m_displayServiceId}}</h2>
+                                <h2>Line name: {{m_lineName}}</h2>
+                            </div>
                             <br/>
                             <br/>
                             <br/>
@@ -168,6 +174,9 @@ export class FasterqTerminal extends Compbaser implements AfterViewInit {
     m_remoteStatusVerification;
     m_statusHandler;
     m_currentlyServing = 0;
+    m_printing = false;
+    m_serviceId = 0;
+    m_lineName = '';
 
     constructor(private toastr: ToastsManager, private http: Http, private yp: YellowPepperService, private router: ActivatedRoute, private el: ElementRef, private zone: NgZone, private simplestorage: LocalStorage) {
         super();
@@ -489,7 +498,19 @@ export class FasterqTerminal extends Compbaser implements AfterViewInit {
             .subscribe((i_response: Response) => {
                 var jData = i_response.json()
                 this.m_displayServiceId = jData.service_id;
-                this._printNumber(jData.service_id, jData.name);
+                this.m_serviceId = jData.service_id;
+                this.m_lineName = jData.name;
+                this.m_printing = true;
+                setTimeout(()=>{
+                    printJS('printArea', 'html')
+                },1000);
+                setTimeout(()=>{
+                    this.m_printing = false;
+                },2000)
+
+                return;
+
+                // this._printNumber(jData.service_id, jData.name);
             }, (e) => console.error(e));
     }
 
@@ -507,7 +528,8 @@ export class FasterqTerminal extends Compbaser implements AfterViewInit {
                 jQuery('body').append('<h2></h2>')
             }
             var arg = Lib.Base64Encode(i_service_id + ':_:' + name)
-            $printDiag.html('<iframe src="print.html?serviceId=' + arg + '" onload="this.contentWindow.print();"></iframe>');
+            // $printDiag.html('<iframe src="print.html?serviceId=' + arg + '" onload="this.contentWindow.print();"></iframe>');
+            $printDiag.html('<iframe src="print.html?serviceId=' + arg + '"></iframe>');
         })
 
         // $printDiag.find('h1').text('your number is ' + i_service_id);
@@ -546,5 +568,5 @@ export class FasterqTerminal extends Compbaser implements AfterViewInit {
         return `${this.appBaseUrlServices}/studioweb/index.html?mode=remoteStatus&param=${data}`;
     }
 
-    
+
 }

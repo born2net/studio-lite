@@ -141,6 +141,11 @@ interface JQuery {
 }
 
 declare var Draggable;
+
+declare function printJS(a:any, b:any): any;
+
+
+
 declare var con: Con;
 declare var jXML: JQueryStatic;
 declare var jQueryAny: JQueryStatic | any;

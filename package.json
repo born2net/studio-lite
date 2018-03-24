@@ -1,6 +1,6 @@
 {
   "name": "studioweb",
-  "version": "0.1.770",
+  "version": "0.1.774",
   "license": "Modified GPL (see readme.md)",
   "angular-cli": {},
   "scripts": {
@@ -14,7 +14,7 @@
     "x_prod_jit": "ng build --target=production --base-href ./ --aot fiw.alse",
     "x_prod_aot": "ng build --target=production --base-href ./ --aot true",
     "x_prod_aot_hebrew": "ng build --locale iw -i18n-file src/locale/iw.xtb --i18n-format xtb --target=production --base-href ./ --aot true",
-    "x_rsync": "rsync --progress  --chmod=ug=rwx --chmod=o=rx -av --stats -e ssh /cygdrive/c/msweb/studiolite/dist/ Sean@digitalsignage.com:/var/www/sites/dynasite/htdocs/_msportal/_js/_node/_studioweb",
+    "x_rsync": "rsync --progress  --chmod=ug=rwx --chmod=o=rx -av --stats -e ssh /cygdrive/c/msweb/studiolite/dist/ Sean@secure.digitalsignage.com:/var/www/sites/dynasite/htdocs/_msportal/_js/_node/_studioweb",
     "x_rsync_docs": "rsync --progress  --chmod=ug=rwx --chmod=o=rx -av --stats -e ssh /cygdrive/c/msweb/studiolite/documentation/ Sean@digitalsignage.com:/var/www/sites/mediasignage.com/htdocs/lite_docs",
     "x_rsync_iw": "rsync --progress  --chmod=ug=rwx --chmod=o=rx -av --stats -e ssh /cygdrive/c/msweb/studiolite/dist/ Sean@digitalsignage.com:/var/www/sites/dynasite/htdocs/_msportal/_js/_node/_studioweb/locale/iw",
     "x_sw": "sw-precache --root=dist --config=sw-precache-config.js",
@@ -79,6 +79,7 @@
     "ngx-contextmenu": "^1.0.3",
     "platform": "^1.3.3",
     "primeng": "^4.0.0-rc.2",
+    "print-js": "^1.0.34",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
     "reselect": "^2.5.4",

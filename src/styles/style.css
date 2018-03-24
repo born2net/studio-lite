@@ -8,6 +8,11 @@
 /*unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;*/
 /*}*/
 
+@media print {
+    @page { margin: 0; }
+    body { margin: 1.6cm; }
+}
+
 @font-face {
     font-family: 'Montserrat';
     font-style: normal;
@@ -1585,12 +1590,12 @@ div.kineticjs-content {
 /**dev_mode_start**/
 small.debug {
     color: red;
+    display: none !important;
 }
 
 small.release {
     text-transform: lowercase;
     color: #4c4c4c;
-    display: none !important;
 }
 /**dev_mode_end**/
 

@@ -37,6 +37,7 @@ import {SharedModule} from "../modules/shared.module";
 import {Dashboard} from "./dashboard/dashboard-navigation";
 import {Appwrap} from "./appwrap";
 import "hammerjs";
+import "print-js";
 import "gsap";
 import "gsap/CSSPlugin";
 import "gsap/Draggable";

@@ -172,7 +172,7 @@ export class FasterqEditor extends Compbaser {
             this.yp.ngrxStore.dispatch(({type: EFFECT_LOAD_FASTERQ_QUEUES, payload: {line_id: this.m_fasterqLineModel.lineId}}))
             this.yp.ngrxStore.dispatch(({type: EFFECT_LOAD_FASTERQ_ANALYTICS, payload: {line_id: this.m_fasterqLineModel.lineId}}))
             this._updateTotalToBeServiced();
-        }, 5000);
+        }, 25000);
     }
 
     /**

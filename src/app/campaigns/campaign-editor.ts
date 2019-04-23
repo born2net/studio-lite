@@ -88,6 +88,13 @@ export class CampaignEditor extends Compbaser {
         );
 
         this.cancelOnDestroy(
+            this.yp.getCampaignSimpleMode()
+                .subscribe((i_simpleModeValue:number) => {
+                    console.log(i_simpleModeValue);
+                }, (e) => console.error(e))
+        );
+
+        this.cancelOnDestroy(
             this.yp.listenTimelineSelected(true)
                 .subscribe((i_campaignTimelinesModel: CampaignTimelinesModel) => {
                     this.campaignTimelinesModel = i_campaignTimelinesModel;

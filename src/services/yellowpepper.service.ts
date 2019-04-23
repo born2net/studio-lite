@@ -705,6 +705,11 @@ export class YellowPepperService {
             .take(1)
     }
 
+    getCampaignSimpleMode(): Observable<number> {
+        return this.store.select(store => store.appDb.uiState.campaign.sceneSimpleSelected)
+            .take(1)
+    }
+
     /**
      Use a viewer_id to reverse enumerate over the mapping of viewers to channels via:
      campaign_timeline_viewer_chanels -> table_campaign_timeline_chanels

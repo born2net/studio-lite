@@ -12,6 +12,7 @@ import {IScreenTemplateData} from "../../interfaces/IScreenTemplate";
 import {ACTION_LIVELOG_UPDATE} from "../../store/actions/appdb.actions";
 import {LiveLogModel} from "../../models/live-log-model";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {PLACEMENT_IS_SCENE} from "../../interfaces/Consts";
 
 @Component({
     selector: 'campaign-layout',
@@ -104,6 +105,13 @@ export class CampaignLayout extends Compbaser {
                 .debounceTime(200)
                 .do(() => {
                     this.m_screenTemplateData['simpleMode'] = this.m_simpleMode;
+
+                    //todo: create a simple scene in rp via yp init
+                    // var player_data = this.bs.getBlockBoilerplate('3510').getDefaultPlayerData(PLACEMENT_IS_SCENE);
+                    // var sceneId = this.rp.createScene(player_data, '', i_name);
+                    // this.rp.reduxCommit();
+
+
                     this.onSelection.emit(this.m_screenTemplateData)
                 }).subscribe(() => {
             }, (e) => console.error(e))

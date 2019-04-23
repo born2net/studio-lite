@@ -59,8 +59,8 @@ export interface IUiStateCampaign {
     campaignCreateOrientation?: number,
     campaignCreateResolution?: string,
     campaignCreateName?: string,
-    campaignSimpleMode?: boolean,
     campaignSelected?: number;
+    sceneSimpleSelected?: number;
     timelineSelected?: number;
     blockChannelSelected?: number;
     storyBoardItemSelected?: number;

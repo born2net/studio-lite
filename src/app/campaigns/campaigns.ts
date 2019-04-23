@@ -185,7 +185,7 @@ export class Campaigns extends Compbaser {
         return this.yp.getNewCampaignParmas()
             .subscribe((value: IUiStateCampaign) => {
                 var campaignId = this.rp.createCampaignEntire(i_screenTemplateData.screenProps, i_screenTemplateData.name, value.campaignCreateResolution);
-                var uiState: IUiState = {campaign: {campaignSelected: campaignId}}
+                var uiState: IUiState = {campaign: {campaignSelected: campaignId, campaignSimpleMode: i_screenTemplateData.simpleMode}}
                 this.yp.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
             }, (e) => {
                 console.error(e)

@@ -11,6 +11,7 @@ import {RedPepperService} from "../../services/redpepper.service";
 import {IScreenTemplateData} from "../../interfaces/IScreenTemplate";
 import {ACTION_LIVELOG_UPDATE} from "../../store/actions/appdb.actions";
 import {LiveLogModel} from "../../models/live-log-model";
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
     selector: 'campaign-layout',
@@ -22,9 +23,39 @@ import {LiveLogModel} from "../../models/live-log-model";
     template: `
         <small class="debug">{{me}}</small>
         <h4 i18n>screen layout</h4>
-        <div id="screenLayoutList" style="min-width: 500px; min-height: 500px">
-            <div (click)="_nextClick.next(screenLayout)" style="float: left; padding: 20px" *ngFor="let screenLayout of m_screenLayouts">
-                <screen-template [mouseHoverEffect]="m_mouseHoverEffect" [setTemplate]="screenLayout"></screen-template>
+        <form novalidate autocomplete="off" class="inner5" [formGroup]="contGroup">
+            <div>
+                <select formControlName="selectSimpleMode" (change)="_onSheetSelected($event)" style="height: 50px; border: solid #cbcbcb 1px; width: 200px">
+                    <option selected="selected" value="true">Simple mode</option>
+                    <option value="false">Advanced mode</option>
+                </select>
+
+            </div>
+        </form>
+        <div *ngIf="m_simpleMode == true">
+            <h5 i18n>in this mode your entire layout consists of a single canvas (also known as scene).<br/> You don't need to worry about channels or timelines, it is super simple to get started (recommended).</h5>
+            <div style="padding: 10px" (click)="onSelectedSimpleMod()">
+
+                <!--<svg *ngIf="m_orientation==0" class="svgSD" id="svgScreenLayout_388" width="137.14285714285714" height="77.14285714285714" xmlns="http://www.w3.org/2000/svg">  <g><rect id="rectSD_389" data-campaign_timeline_board_viewer_id="undefined" data-campaign_timeline_id="undefined" x="0" y="0" width="137.14285714285714" height="77.14285714285714" data-sd="sd0" class="screenDivisionClass" style="fill:rgb(230,230,230);stroke-width:2;stroke:rgb(72,72,72)"></rect></g> </svg>-->
+                <div *ngIf="m_orientation==0" style="min-width: 500px; min-height: 500px">
+                    <div (click)="_nextClick.next(screenLayout)" style="float: left; padding: 20px" *ngFor="let screenLayout of m_screenLayoutsH">
+                        <screen-template [mouseHoverEffect]="m_mouseHoverEffect" [setTemplate]="screenLayout"></screen-template>
+                    </div>
+                </div>
+
+                <div *ngIf="m_orientation==1" style="min-width: 500px; min-height: 500px">
+                    <div (click)="_nextClick.next(screenLayout)" style="float: left; padding: 20px" *ngFor="let screenLayout of m_screenLayoutsV">
+                        <screen-template [mouseHoverEffect]="m_mouseHoverEffect" [setTemplate]="screenLayout"></screen-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="m_simpleMode == false">
+            <h5 i18n>in this mode you have more flexibility on timing, individual screen division assignments and channels, however it does a bit more of a learning curve.</h5>
+            <div id="screenLayoutList" style="min-width: 500px; min-height: 500px">
+                <div (click)="_nextClick.next(screenLayout)" style="float: left; padding: 20px" *ngFor="let screenLayout of m_screenLayouts">
+                    <screen-template [mouseHoverEffect]="m_mouseHoverEffect" [setTemplate]="screenLayout"></screen-template>
+                </div>
             </div>
         </div>
     `
@@ -33,16 +64,32 @@ export class CampaignLayout extends Compbaser {
 
     private m_resolution: string;
     private m_screenTemplateData: IScreenTemplateData;
-    private m_orientation: OrientationEnum;
+    m_orientation: OrientationEnum;
+    m_simpleMode: boolean = true;
+    contGroup: FormGroup;
     _nextClick: Observer<any>;
     m_addToExistingCampaignMode = false;
     m_screenLayouts: Array<IScreenTemplateData>;
+    m_screenLayoutsV: Array<IScreenTemplateData> = [];
+    m_screenLayoutsH: Array<IScreenTemplateData> = [];
     m_campaignName: string;
     m_onNewCampaignMode: boolean;
-    m_mouseHoverEffect:boolean = false;
+    m_mouseHoverEffect: boolean = false;
 
-    constructor(private yp: YellowPepperService, private rp: RedPepperService) {
+
+    constructor(private yp: YellowPepperService, private rp: RedPepperService, private fb: FormBuilder) {
         super();
+        this.contGroup = fb.group({
+            'selectSimpleMode': [true]
+        });
+    }
+
+    _onSheetSelected(event) {
+        this.m_simpleMode = event.target.value == 'true' ? true : false;
+    }
+
+    onSelectedSimpleMod() {
+
     }
 
     ngAfterViewInit() {
@@ -56,6 +103,7 @@ export class CampaignLayout extends Compbaser {
             })
                 .debounceTime(200)
                 .do(() => {
+                    this.m_screenTemplateData['simpleMode'] = this.m_simpleMode;
                     this.onSelection.emit(this.m_screenTemplateData)
                 }).subscribe(() => {
             }, (e) => console.error(e))
@@ -104,6 +152,7 @@ export class CampaignLayout extends Compbaser {
         if (_.isUndefined(this.m_orientation) || _.isUndefined(this.m_resolution))
             return;
         this.m_screenLayouts = [];
+        var c = 0;
         for (var screenType in screenTemplates[this.m_orientation][this.m_resolution]) {
             var screenTemplateData: IScreenTemplateData = {
                 orientation: this.m_orientation,
@@ -114,6 +163,11 @@ export class CampaignLayout extends Compbaser {
                 name: this.m_campaignName
             };
             this.m_screenLayouts.push(screenTemplateData);
+            if (c == 0) {
+                this.m_screenLayoutsH.push(screenTemplateData);
+                this.m_screenLayoutsV.push(screenTemplateData);
+            }
+            c++;
         }
     }
 

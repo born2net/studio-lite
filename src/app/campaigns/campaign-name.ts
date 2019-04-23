@@ -9,10 +9,10 @@ import {ACTION_UISTATE_UPDATE} from "../../store/actions/appdb.actions";
     // changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <small class="debug">{{me}}</small>
-        <h3 i18n>Select your campaign name</h3>
+        <h3 i18n>Name your configuration</h3>
         <input (keydown)="_onKeyDown($event)" id="newCampaignName" style="width: 50%" [(ngModel)]="m_campaignName"
                type="text" class="form-control"
-               value="My campaign" i18n-placeholder placeholder="Enter new campaign name">
+               value="My campaign" i18n-placeholder placeholder="Enter new name">
     `,
 })
 export class CampaignName extends Compbaser {

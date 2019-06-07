@@ -13,6 +13,7 @@ import {ACTION_LIVELOG_UPDATE} from "../../store/actions/appdb.actions";
 import {LiveLogModel} from "../../models/live-log-model";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {PLACEMENT_IS_SCENE} from "../../interfaces/Consts";
+import {BlockService} from "../blocks/block-service";
 
 @Component({
     selector: 'campaign-layout',
@@ -26,7 +27,7 @@ import {PLACEMENT_IS_SCENE} from "../../interfaces/Consts";
         <h4 i18n>screen layout</h4>
         <form novalidate autocomplete="off" class="inner5" [formGroup]="contGroup">
             <div>
-                <select formControlName="selectSimpleMode" (change)="_onSheetSelected($event)" style="height: 50px; border: solid #cbcbcb 1px; width: 200px">
+                <select formControlName="selectSimpleMode" (change)="_onSheetDropdownSelected($event)" style="height: 50px; border: solid #cbcbcb 1px; width: 200px">
                     <option selected="selected" value="true">Simple mode</option>
                     <option value="false">Advanced mode</option>
                 </select>
@@ -35,17 +36,17 @@ import {PLACEMENT_IS_SCENE} from "../../interfaces/Consts";
         </form>
         <div *ngIf="m_simpleMode == true">
             <h5 i18n>in this mode your entire layout consists of a single canvas (also known as scene).<br/> You don't need to worry about channels or timelines, it is super simple to get started (recommended).</h5>
-            <div style="padding: 10px" (click)="onSelectedSimpleMod()">
+            <div style="padding: 10px">
 
                 <!--<svg *ngIf="m_orientation==0" class="svgSD" id="svgScreenLayout_388" width="137.14285714285714" height="77.14285714285714" xmlns="http://www.w3.org/2000/svg">  <g><rect id="rectSD_389" data-campaign_timeline_board_viewer_id="undefined" data-campaign_timeline_id="undefined" x="0" y="0" width="137.14285714285714" height="77.14285714285714" data-sd="sd0" class="screenDivisionClass" style="fill:rgb(230,230,230);stroke-width:2;stroke:rgb(72,72,72)"></rect></g> </svg>-->
                 <div *ngIf="m_orientation==0" style="min-width: 500px; min-height: 500px">
-                    <div (click)="_nextClick.next(screenLayout)" style="float: left; padding: 20px" *ngFor="let screenLayout of m_screenLayoutsH">
+                    <div (click)="_nextClick.next({screenLayout: screenLayout, simpleCampaign: true})" style="float: left; padding: 20px" *ngFor="let screenLayout of m_screenLayoutsH">
                         <screen-template [mouseHoverEffect]="m_mouseHoverEffect" [setTemplate]="screenLayout"></screen-template>
                     </div>
                 </div>
 
                 <div *ngIf="m_orientation==1" style="min-width: 500px; min-height: 500px">
-                    <div (click)="_nextClick.next(screenLayout)" style="float: left; padding: 20px" *ngFor="let screenLayout of m_screenLayoutsV">
+                    <div (click)="_nextClick.next({screenLayout: screenLayout, simpleCampaign: true})" style="float: left; padding: 20px" *ngFor="let screenLayout of m_screenLayoutsV">
                         <screen-template [mouseHoverEffect]="m_mouseHoverEffect" [setTemplate]="screenLayout"></screen-template>
                     </div>
                 </div>
@@ -54,7 +55,7 @@ import {PLACEMENT_IS_SCENE} from "../../interfaces/Consts";
         <div *ngIf="m_simpleMode == false">
             <h5 i18n>in this mode you have more flexibility on timing, individual screen division assignments and channels, however it does a bit more of a learning curve.</h5>
             <div id="screenLayoutList" style="min-width: 500px; min-height: 500px">
-                <div (click)="_nextClick.next(screenLayout)" style="float: left; padding: 20px" *ngFor="let screenLayout of m_screenLayouts">
+                <div (click)="_nextClick.next({screenLayout: screenLayout, simpleCampaign: false})" style="float: left; padding: 20px" *ngFor="let screenLayout of m_screenLayouts">
                     <screen-template [mouseHoverEffect]="m_mouseHoverEffect" [setTemplate]="screenLayout"></screen-template>
                 </div>
             </div>
@@ -66,7 +67,6 @@ export class CampaignLayout extends Compbaser {
     private m_resolution: string;
     private m_screenTemplateData: IScreenTemplateData;
     m_orientation: OrientationEnum;
-    m_simpleMode: boolean = true;
     contGroup: FormGroup;
     _nextClick: Observer<any>;
     m_addToExistingCampaignMode = false;
@@ -75,22 +75,19 @@ export class CampaignLayout extends Compbaser {
     m_screenLayoutsH: Array<IScreenTemplateData> = [];
     m_campaignName: string;
     m_onNewCampaignMode: boolean;
+    m_simpleMode: boolean = true;
     m_mouseHoverEffect: boolean = false;
 
 
-    constructor(private yp: YellowPepperService, private rp: RedPepperService, private fb: FormBuilder) {
+    constructor(private yp: YellowPepperService, private rp: RedPepperService, private bs: BlockService,  private fb: FormBuilder) {
         super();
         this.contGroup = fb.group({
             'selectSimpleMode': [true]
         });
     }
 
-    _onSheetSelected(event) {
+    _onSheetDropdownSelected(event) {
         this.m_simpleMode = event.target.value == 'true' ? true : false;
-    }
-
-    onSelectedSimpleMod() {
-
     }
 
     ngAfterViewInit() {
@@ -98,20 +95,19 @@ export class CampaignLayout extends Compbaser {
         this.cancelOnDestroy(
             Observable.create(observer => {
                 this._nextClick = observer
-            }).map((i_screenTemplateData: IScreenTemplateData) => {
-                this.m_screenTemplateData = i_screenTemplateData;
-                return i_screenTemplateData;
+            }).map((i_data: {screenLayout:IScreenTemplateData, simpleCampaign:boolean}) => {
+                this.m_screenTemplateData = i_data.screenLayout;
+                return i_data.screenLayout;
             })
                 .debounceTime(200)
                 .do(() => {
-                    this.m_screenTemplateData['simpleMode'] = this.m_simpleMode;
 
                     //todo: create a simple scene in rp via yp init
                     // var player_data = this.bs.getBlockBoilerplate('3510').getDefaultPlayerData(PLACEMENT_IS_SCENE);
+                    // console.log(player_data);
                     // var sceneId = this.rp.createScene(player_data, '', i_name);
                     // this.rp.reduxCommit();
-
-
+                    this.m_screenTemplateData.campaignSimpleSceneOnly = this.m_simpleMode;
                     this.onSelection.emit(this.m_screenTemplateData)
                 }).subscribe(() => {
             }, (e) => console.error(e))
@@ -126,6 +122,9 @@ export class CampaignLayout extends Compbaser {
     @Input()
     set onNewCampaignMode(i_value: boolean) {
         this.m_onNewCampaignMode = i_value;
+        if (!this.m_onNewCampaignMode)
+            this.m_simpleMode = false;
+            // this.contGroup.controls.selectSimpleMode.setValue(false);
     }
 
     @Once()
@@ -168,7 +167,8 @@ export class CampaignLayout extends Compbaser {
                 screenType: screenType,
                 screenProps: screenTemplates[this.m_orientation][this.m_resolution][screenType],
                 scale: 14,
-                name: this.m_campaignName
+                name: this.m_campaignName,
+                campaignSimpleSceneOnly: false
             };
             this.m_screenLayouts.push(screenTemplateData);
             if (c == 0) {

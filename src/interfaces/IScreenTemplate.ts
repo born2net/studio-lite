@@ -9,5 +9,5 @@ export interface IScreenTemplateData {
     scale: number;
     campaignTimelineId?: number,
     campaignTimelineBoardTemplateId?: number
-    simpleMode?: boolean;
+    campaignSimpleSceneOnly?:boolean;
 }

@@ -13,7 +13,11 @@ https://github.com/videogular/videogular2/issues/442
 npm uninstall -g angular-cli @angular/cli
 npm cache clean
 npm install -g @angular/cli@latest
-OR npm install -g @angular/cli@1.2.6
+OR
+
+npm install -g @angular/cli@1.2.6
+npm install -g @angular/cli@8.0.2
+
 Local project package:
 
 rm -rf node_modules dist # use rmdir on Windows
@@ -23,8 +27,30 @@ npm install
 
 ng init --ng4
 
+==================================================================================================================
+
+
+------------------------------------
+>>> switch to StudioLite global env:
+------------------------------------
+nvm use 6.16.0 ; node --version;
+rm -r -f /cygdrive/c/Program\ Files/nodejs/node_modules/typescript;
+cp -r -f /cygdrive/c/Program\ Files/nodejs/node_modules/typescript-2.4.2/ /cygdrive/c/Program\ Files/nodejs/node_modules/typescript;
+npm remove  -g @angular/cli ;  npm install -g @angular/cli@1.2.4;
+
+
+------------------------------------
+>>> switch to latest global env:
+------------------------------------
+nvm use 10.15.0 ; node --version;
+rm -r -f /cygdrive/c/Program\ Files/nodejs/node_modules/typescript;
+cp -r -f /cygdrive/c/Program\ Files/nodejs/node_modules/typescript-3.5.1/ /cygdrive/c/Program\ Files/nodejs/node_modules/typescript;
+npm remove  -g @angular/cli ; npm install -g @angular/cli@8.0.2;
+
 
 ==================================================================================================================
+
+
 debug sessions:
 
 reflection:

@@ -234,15 +234,17 @@ export class CampaignEditor extends Compbaser {
     }
 
     _onCampaignPreview() {
-        let uiState: IUiState = {mainAppState: MainAppShowStateEnum.SAVE_AND_PREVIEW, previewMode: PreviewModeEnum.CAMPAIGN}
-        this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
+        return bootbox.alert('please install Desktop Signage Player');
+        // let uiState: IUiState = {mainAppState: MainAppShowStateEnum.SAVE_AND_PREVIEW, previewMode: PreviewModeEnum.CAMPAIGN}
+        // this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
     }
 
     _onTimelinePreview() {
-        if (_.isUndefined(this.campaignTimelinesModel))
-            return bootbox.alert('No timeline selected');
-        let uiState: IUiState = {mainAppState: MainAppShowStateEnum.SAVE_AND_PREVIEW, previewMode: PreviewModeEnum.TIMELINE}
-        this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
+        return bootbox.alert('please install Desktop Signage Player');
+        // if (_.isUndefined(this.campaignTimelinesModel))
+        //     return bootbox.alert('No timeline selected');
+        // let uiState: IUiState = {mainAppState: MainAppShowStateEnum.SAVE_AND_PREVIEW, previewMode: PreviewModeEnum.TIMELINE}
+        // this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
     }
 
     _onGoBack() {

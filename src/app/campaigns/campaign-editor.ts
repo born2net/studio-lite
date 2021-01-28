@@ -234,13 +234,13 @@ export class CampaignEditor extends Compbaser {
     }
 
     _onCampaignPreview() {
-        return bootbox.alert('please install Desktop Signage Player');
+        return bootbox.alert('HTML preview coming soon! for now preview using Desktop Signage Player');
         // let uiState: IUiState = {mainAppState: MainAppShowStateEnum.SAVE_AND_PREVIEW, previewMode: PreviewModeEnum.CAMPAIGN}
         // this.yp.ngrxStore.dispatch(({type: ACTION_UISTATE_UPDATE, payload: uiState}))
     }
 
     _onTimelinePreview() {
-        return bootbox.alert('please install Desktop Signage Player');
+        return bootbox.alert('HTML preview coming soon! for now preview using Desktop Signage Player');
         // if (_.isUndefined(this.campaignTimelinesModel))
         //     return bootbox.alert('No timeline selected');
         // let uiState: IUiState = {mainAppState: MainAppShowStateEnum.SAVE_AND_PREVIEW, previewMode: PreviewModeEnum.TIMELINE}

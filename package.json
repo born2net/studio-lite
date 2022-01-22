@@ -128,7 +128,7 @@
     "gulp-uglify": "^1.2.0",
     "gulp-util": "^3.0.7",
     "gulp-watch": "^4.2.4",
-    "node-fetch": "^1.6.3",
+    "node-fetch": "^3.1.1",
     "replace": "^0.3.0",
     "rsync": "^0.5.0",
     "run-sequence": "^1.2.2",

@@ -68,7 +68,7 @@
     "immutable": "^3.8.1",
     "jquery": "^3.1.1",
     "lodash": "^4.17.4",
-    "moment": "^2.17.1",
+    "moment": "^2.29.4",
     "ng-mslib": "^1.0.109",
     "ng-validators": "^0.2.1",
     "ng2-bs3-modal": "^0.10.4",

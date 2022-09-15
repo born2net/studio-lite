@@ -58,7 +58,7 @@
     "angular2-redux-util": "^0.8.86",
     "angular2-uuid": "^1.1.0",
     "bootbox": "^4.4.0",
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^3.4.1",
     "core-js": "^2.4.1",
     "fabric": "git://github.com/born2net/fabric.js.git",
     "font-awesome": "~4.7.0",

@@ -1,106 +1,28 @@
-StudioLite, Digital Signage for the rest of us
----------------------------------------
+# StudioLite is discontinued — the active product is SignStudio at DigitalSignage.com
 
-<!-- [![NPM](https://nodei.co/npm/studiolite.png)](https://nodei.co/npm/studiolite/) -->
+> **Status: archived, no longer maintained (2026).** This repository stays online for reference. If you forked StudioLite, your DigitalSignage.com account, screens and players keep working: **SignStudio**, the current editor, talks to the same cloud and the same players, and it is free with every account.
 
-<p align="center">  
-  <img src="http://www.digitalsignage.com/files/techlogos.png">
-</p>
+## Where the product lives now
 
+- **Platform:** [DigitalSignage.com](https://digitalsignage.com/) by MediaSignage Inc. (Westlake Village, California; operating the platform since 2006)
+- **Pricing:** first 3 screens **free forever** (no credit card, no ads); paid plans from **$3 per screen per month** with dynamic volume pricing ([public price calculator](https://galaxy.signage.me/signstudio/shopping-cart/price)); on-premise **mediaSERVER** one-time $895. Cross-vendor comparison: [State of Digital Signage Pricing 2026](https://digitalsignage.com/_html/digital_signage_pricing_2026.html) (CC BY 4.0 dataset).
+- **Editor:** SignStudio, browser-based, 180+ templates, scheduling, live data widgets, IoT triggers. [Create a free account](https://galaxy.signage.me/signstudio/getstarted/template)
+- **Players:** free SignPlayer for Windows, Mac, Linux, Android and Android TV, Chrome OS and Chrome OS Flex, Raspberry Pi, iPad, and any browser (embeddable web player).
+- **For developers:** open API and SDK, embeddable web player, XML/JSON data feeds, Raspberry Pi GPIO and Arduino event triggers. [Developer overview](https://digitalsignage.com/_html/open_source_digital_signage.html) · [API reference](https://digitalsignage.com/digital_signage/docs/technical/api-reference/) · [SDK documentation](https://digitalsignage.com/digital_signage/docs/technical/sdk-documentation/) · [IoT guide](https://digitalsignage.com/_html/internet_of_things_digital_signage.html)
+- **Documentation hub:** https://digitalsignage.com/digital_signage/docs/ · [Video tutorials](https://digitalsignage.com/_html/video_tutorials.html) · [Company facts and independent reviews](https://digitalsignage.com/_html/digitalsignage_reviews.html)
 
-------------------------------------------------------------------------
+## What this repository was
 
-StudioLite is an open source, 100% FREE, Digital Signage platform that was designed with ease of use in mind.
-With StudioLite anyone can have a Digital Signage solution that is entirely customizable. 
-Take the source code, modify it, brand it and build a product that's right for you and your customers.
-Best of all, you will take full advantage of the world's most popular Digital Signage cloud so you don't have to worry about backend programming or even setup a server, it's all done for you using the mediaCLOUD.
+StudioLite was an open-source (GNU GPL v3) digital signage studio built with Angular, TypeScript and ngrx on top of the DigitalSignage.com cloud (mediaCLOUD) and the on-premise mediaSERVER. It covered scenes, timelines, resources, station management and the FasterQ queue component, through a SOAP API with a helper SDK and a local offline database. The code remains available under its license for anyone who wants to study or reuse it; there is no roadmap, no releases and no support for it.
 
- - Based on the poplar SignageStudio Pro ( [MediaSignage]: http://www.DigitalSignage.com )
- - Connected to a private mediaSERVER or the public free mediaCLOUD
- - 100% open source based on GNU V3 license
- - Contributors are welcome, fork, modify and send pull requests
- - Powered by Google's Angular Framework + TypeScript +  ngrx 
+## Related repositories (reference code, not maintained products)
 
-Links:
-------------------------------------------------------------------------
-- StudioLite documentation: http://www.digitalsignage.com/lite_docs/
-- Cloud web app: http://go.digitalsignage.com
-- Home: http://lite.digitalsignage.com
-- Docs: http://www.digitalsignage.com/msdocs/
-- Support: http://script.digitalsignage.com/forum/index.php/board,9.0.html
-- Developer video tutorial: http://goo.gl/nkx7wr
-- StudioLite intro video: http://lite.digitalsignage.com/video1.html
-- StudioLite advanced  video: http://lite.digitalsignage.com/video2.html
-- Developers page: http://www.digitalsignage.com/_html/open_source_digital_signage.html
-- Angular: https://angular.io/
+- [signageplayer-core](https://github.com/born2net/signageplayer-core) — player core used by the web and embedded players
+- [mediaArduino](https://github.com/born2net/mediaArduino) — Arduino sketches that drive screens from sensors and relays
+- [msgetstarted](https://github.com/born2net/msgetstarted) — the former getting-started page
 
-Technical data:
-------------------------------------------------------------------------
-- Build on top the latest version Google's Angular framework with a clean MV* design
-- Developed using the latest version of TypeScript and ngrx store
-- Powered by Bootstrap using responsive design for phones, tablets and desktops
-- Lazy loaded modules for best user load experience
-- Driven using Soap API and includes Helper SDK
-- Uses a local msdb (database) through SDK for offline work
-- Support Angular AOT mode
-- Support available through the MediaSignage support forum
+## Support
 
-Installation:
-------------------------------------------------------------------------
-
-StudioLite can be downloaded directly from GitHub
-With git you will be able to easily update to the latest version of StudioLite as well as take advantage Angular CLI which is included in the bundle
-
-currently the application should run under:
-- typescript 2.4
-- node 6.x 
-
-to install and host:
-
-``` npm install -g npm``` (this will ensure npm 5.4.2 >)
-
-
-```
-git clone https://github.com/born2net/studio-lite.git
-cd studio-lite
-npm install -g @angular/cli@latest
-npm install
-open browser to: http://localhost:4208/
-```
-
-Customization:
-------------------------------------------------------------------------
-Keep in mind the SignageStudio lite as well as its related SDK Pepper are often released with new updates, so you will lose any changes you make to your code if you overwrite it with our release builds.
-
-To overcome this you can follow these guidelines:
-
-1.	Always be sure to override files and not modify the original source file. This is true for both CSS and JavaScript code. Simply load your version of the CSS after ours to apply your latest changes. HTML files can be diffed (see below).
-2.	Our code base is modulated and uses 100% object oriented design pattern. This allows you to sub class (aka inherit) from our classes and make your applied changes (use _.extend to mixin).
-3.	You can also use pre-processor scripts which replace code segments automatically using directives.
-4.	And finally, even while following steps 1-3 you may find that your code is broken due to design changes in the original repository. That’s when GitHub comes to the rescue. When your fork the source repository, you can always merge the tree onto your forked project. Use source control diff tool to merge the changes into your code and resolve any conflicts.
-
-With the above steps you can ensure that your source code is fully customizable while still keeping it synchronized with our ongoing development efforts.
-And if you built something wonderful, just send us a pull request so we check it out. 
-If we like what you did we we will merge it into our code base, so you will always receive it when you fetch our changes.
-
-If you are not a developer you can hire professional, inexpensive help from sites like oDesk and Freelancer.
-Since Angular is an opinionated framework, any developer who is verse in Angular, will be able to quickly customize a solution for your own business logic. 
-
-Videos:
-------------------------------------------------------------------------
-
-[![Development with StudioLite](http://img.youtube.com/vi/Znti-QVDjvg/0.jpg)](https://www.youtube.com/watch?v=Znti-QVDjvg&feature=youtu.be "Advanced angular tips and tricks")
-
-
-previous version:
-------------------------------------------------------------------------
-If you are looking for the previous version of StudioLite which was developed using BackboneJS, go to the branch:
- - https://github.com/born2net/studio-lite/tree/studiolite-backbone
-
-License:
-------------------------------------------------------------------------
-The SignageStudio Web Lite and Pepper SDK are available under GPL
- - V3 https://github.com/born2net/studio-lite/blob/master/LICENSE
-
+Questions about the platform go to the [documentation hub](https://digitalsignage.com/digital_signage/docs/) and the [support page](https://digitalsignage.com/_html/digital-signage-support.html). Issues opened here about StudioLite itself will not be worked on.
 
 
